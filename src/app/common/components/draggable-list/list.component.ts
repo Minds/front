@@ -1,4 +1,4 @@
-import { Component, ContentChild, Input, TemplateRef, } from '@angular/core';
+import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 import { DndDropEvent, EffectAllowed } from 'ngx-drag-drop';
 
 @Component({
@@ -43,8 +43,13 @@ export class DraggableListComponent {
   }
 
   onDrop(event: DndDropEvent) {
-    if (this.data && (event.dropEffect === 'copy' || event.dropEffect === 'move')) {
-      let dragIndex = this.data.findIndex(item => event.data[this.id] === item[this.id]);
+    if (
+      this.data &&
+      (event.dropEffect === 'copy' || event.dropEffect === 'move')
+    ) {
+      let dragIndex = this.data.findIndex(
+        item => event.data[this.id] === item[this.id]
+      );
       let dropIndex = event.index || this.data.length;
       // remove element
       this.data.splice(dragIndex, 1);
@@ -55,7 +60,6 @@ export class DraggableListComponent {
       }
 
       this.data.splice(dropIndex, 0, event.data);
-
     }
   }
 }

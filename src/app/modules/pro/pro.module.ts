@@ -32,6 +32,7 @@ import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { ForgotPasswordComponent } from '../auth/forgot-password/forgot-password.component';
 import { AuthModule } from '../auth/auth.module';
 import { ProHamburgerMenu } from './channel/hamburger-menu/hamburger-menu.component';
+import { SubscribeButtonComponent } from './channel/subscribe-button/subscribe-button.component';
 
 const routes: Routes = [
   {
@@ -154,6 +155,7 @@ export const PRO_DOMAIN_ROUTES = [
     ProGroupTileComponent,
     ProUnsubscribeModalComponent,
     ProHamburgerMenu,
+    SubscribeButtonComponent,
   ],
   exports: [ProChannelComponent],
   entryComponents: [

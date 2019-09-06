@@ -59,6 +59,16 @@ m-pro__hamburger-menu {
           }
         }
 
+        &.m-pro__hamburger-menu-menu__subscribe {
+          padding: 0 0 16px;
+          text-align: center;
+
+          .m-pro__subscribeButton {
+            width: calc(100% - 32px);
+            margin: 0;
+          }
+        }
+
         &.m-pro__hamburger-menu-menu__spacer {
           height: 0;
           border-top: 1px solid var(--m-pro--text-color);

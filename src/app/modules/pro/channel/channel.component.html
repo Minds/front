@@ -75,27 +75,7 @@
       >
         <a class="m-proChannelTopbar__navItem" (click)="wire()" i18n>Wire</a>
 
-        <button
-          class="m-proChannelTopbar__subscribe"
-          [class.m-proChannelTopbar__subscribe--subscribed]="channel.subscribed"
-          (click)="toggleSubscription($event)"
-        >
-          <span class="m-proChannelTopbar__subscribe--label">
-            <ng-container
-              *ngIf="!channel.subscribed; else subscribedActionButton"
-              i18n
-            >
-              Subscribe
-            </ng-container>
-            <ng-template #subscribedActionButton>
-              <ng-container i18n>Subscribed</ng-container>
-            </ng-template>
-          </span>
-
-          <span class="m-proChannelTopbar__subscribe--counter">
-            {{ subscribersCount | abbr: 0 }}
-          </span>
-        </button>
+        <m-pro__subscribeButton></m-pro__subscribeButton>
       </ng-container>
       <ng-template #ownerNavLinks>
         <a

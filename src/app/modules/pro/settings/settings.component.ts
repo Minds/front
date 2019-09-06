@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
 import { Router } from '@angular/router';

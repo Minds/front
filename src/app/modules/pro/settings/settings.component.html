@@ -213,16 +213,10 @@
                 Set up your category filter hashtags here.
               </p>
 
-              <m-draggable-list
-                [data]="settings.tag_list"
-                [id]="'tag'"
-              >
+              <m-draggable-list [data]="settings.tag_list" [id]="'tag'">
                 <ng-template let-tag="item" let-i="i">
-
                   <div class="m-pro--settings--field">
-                    <label i18n>
-                      Hashtag #{{ i + 1 }}
-                    </label>
+                    <label i18n> Hashtag #{{ i + 1 }} </label>
 
                     <div class="m-pro--settings--flex-inputs">
                       <input
@@ -231,7 +225,7 @@
                         [id]="'tag-label-' + i"
                         [name]="'tag[' + i + '][label]'"
                         [(ngModel)]="tag.label"
-                      >
+                      />
 
                       <input
                         type="text"
@@ -239,7 +233,7 @@
                         [id]="'tag-tag-' + i"
                         [name]="'tag[' + i + '][tag]'"
                         [(ngModel)]="tag.tag"
-                      >
+                      />
 
                       <i class="material-icons" (click)="removeTag(i)">
                         clear
@@ -279,16 +273,10 @@
                 />
               </div>
 
-              <m-draggable-list
-                [data]="settings.footer_links"
-                [id]="'title'"
-              >
+              <m-draggable-list [data]="settings.footer_links" [id]="'title'">
                 <ng-template let-link="item" let-i="i">
-
                   <div class="m-pro--settings--field">
-                    <label i18n>
-                      Link #{{ i + 1 }}
-                    </label>
+                    <label i18n> Link #{{ i + 1 }} </label>
 
                     <div class="m-pro--settings--flex-inputs">
                       <input
@@ -297,7 +285,7 @@
                         [id]="'footer_link-title-' + i"
                         [name]="'footer_link[' + i + '][title]'"
                         [(ngModel)]="link.title"
-                      >
+                      />
 
                       <input
                         type="text"
@@ -305,7 +293,7 @@
                         [id]="'footer_link-href-' + i"
                         [name]="'footer_link[' + i + '][href]'"
                         [(ngModel)]="link.href"
-                      >
+                      />
 
                       <i class="material-icons" (click)="removeFooterLink(i)">
                         clear
@@ -358,7 +346,7 @@
                 <a
                   class="m-btn m-link-btn m-btn--slim m-btn--destructive"
                   routerLink="/pro"
-                >Cancel Pro</a
+                  >Cancel Pro</a
                 >
               </div>
             </ng-template>
@@ -385,7 +373,7 @@
               class="m-btn m-link-btn m-btn--slim m-pro--settings--preview-btn"
               [routerLink]="previewRoute"
               i18n
-            >View your Pro channel</a
+              >View your Pro channel</a
             >
           </div>
         </form>

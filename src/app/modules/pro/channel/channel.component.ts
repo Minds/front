@@ -18,9 +18,8 @@ import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
 import { MindsTitle } from '../../../services/ux/title';
 import { ProChannelService } from './channel.service';
-import { SignupModalService } from '../../../modules/modals/signup/service';
+import { SignupModalService } from '../../modals/signup/service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { ProUnsubscribeModalComponent } from './unsubscribe-modal/modal.component';
 import { OverlayModalComponent } from '../../../common/components/overlay-modal/overlay-modal.component';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../services/site.service';
@@ -46,16 +45,12 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   collapseNavItems: boolean;
 
-  params$: Subscription;
+  protected params$: Subscription;
 
-  channel$: Subscription;
-
-  subscribersCount: number;
+  protected loggedIn$: Subscription;
 
   @ViewChild('overlayModal', { static: true })
   protected overlayModal: OverlayModalComponent;
-
-  protected isLoggedIn$: Subscription;
 
   constructor(
     protected element: ElementRef,
@@ -80,14 +75,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.listen();
     this.onResize();
-
-    this.isLoggedIn$ = this.session.loggedinEmitter.subscribe(is => {
-      if (!is && this.channel) {
-        this.channel.subscribed = false;
-      }
-
-      this.detectChanges();
-    });
   }
 
   ngAfterViewInit() {
@@ -119,12 +106,11 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    this.channel$ = this.channelService.subscriptionChange.subscribe(
-      subscribersCount => {
-        this.subscribersCount = subscribersCount;
-        this.load();
+    this.loggedIn$ = this.session.loggedinEmitter.subscribe(is => {
+      if (is) {
+        this.reload();
       }
-    );
+    });
   }
 
   setTitle() {
@@ -168,14 +154,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.params$) {
-      this.params$.unsubscribe();
-    }
-    if (this.channel$) {
-      this.channel$.unsubscribe();
-    }
-
-    this.isLoggedIn$.unsubscribe();
+    this.params$.unsubscribe();
   }
 
   async load() {
@@ -189,7 +168,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       await this.channelService.auth();
       this.channel = await this.channelService.load(this.username);
-      this.subscribersCount = this.channel.subscribers_count;
       this.bindCssVariables();
       this.setTitle();
     } catch (e) {
@@ -199,34 +177,14 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.detectChanges();
   }
 
-  toggleSubscription($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    if (!this.channel.subscribed) {
-      if (!this.session.isLoggedIn()) {
-        this.router.navigate(
-          this.site.isProDomain
-            ? this.channelService.getRouterLink('login')
-            : ['/login']
-        );
-
-        return false;
-      }
-
-      this.channelService.subscribe();
-    } else {
-      this.modalService
-        .create(
-          ProUnsubscribeModalComponent,
-          this.channel,
-          {
-            class: 'm-overlayModal--unsubscribe',
-          },
-          this.injector
-        )
-        .present();
+  async reload() {
+    try {
+      this.channel = await this.channelService.reload(this.username);
+    } catch (e) {
+      this.error = e.getMessage();
     }
+
+    this.detectChanges();
   }
 
   bindCssVariables() {

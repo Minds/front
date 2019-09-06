@@ -16,6 +16,13 @@
       />
     </li>
 
+    <li
+      class="m-pro__hamburger-menu-menu__subscribe"
+      *ngIf="currentUser?.guid != channel?.guid"
+    >
+      <m-pro__subscribeButton (onAction)="closeMenu()"></m-pro__subscribeButton>
+    </li>
+
     <li>
       <a
         [routerLink]="feedRouterLink"
@@ -66,7 +73,7 @@
       >
     </li>
 
-    <li>
+    <li *ngIf="currentUser?.guid != channel?.guid">
       <a (click)="wire(); closeMenu()">
         Wire
       </a>

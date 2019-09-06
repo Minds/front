@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { MindsChannelResponse } from '../../../interfaces/responses';
 import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
@@ -10,6 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../services/site.service';
+import { Subscription } from 'rxjs';
 
 export type RouterLinkToType =
   | 'home'
@@ -29,14 +30,14 @@ export interface NavItems {
 }
 
 @Injectable()
-export class ProChannelService {
+export class ProChannelService implements OnDestroy {
   currentChannel: MindsUser;
-
-  subscriptionChange: EventEmitter<number> = new EventEmitter<number>();
 
   protected featuredContent: Array<any> | null;
 
   protected menuNavItems: Array<NavItems> = [];
+
+  protected isLoggedIn$: Subscription;
 
   constructor(
     protected client: Client,
@@ -46,17 +47,27 @@ export class ProChannelService {
     protected modalService: OverlayModalService,
     protected sessionStorage: SessionsStorageService,
     protected site: SiteService
-  ) {}
+  ) {
+    this.listen();
+  }
+
+  listen() {
+    this.isLoggedIn$ = this.session.loggedinEmitter.subscribe(is => {
+      if (!is && this.currentChannel) {
+        this.currentChannel.subscribed = false;
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.isLoggedIn$.unsubscribe();
+  }
 
   async load(id: string) {
     try {
       this.currentChannel = void 0;
 
-      const response: MindsChannelResponse = (await this.client.get(
-        `api/v1/channel/${id}`
-      )) as MindsChannelResponse;
-
-      this.currentChannel = response.channel;
+      await this.reload(id);
 
       if (!this.currentChannel.pro_settings.tag_list) {
         this.currentChannel.pro_settings.tag_list = [];
@@ -73,6 +84,16 @@ export class ProChannelService {
         throw new Error("Sorry, the channel couldn't be found");
       }
     }
+  }
+
+  async reload(id: string) {
+    const response: MindsChannelResponse = (await this.client.get(
+      `api/v1/channel/${id}`
+    )) as MindsChannelResponse;
+
+    this.currentChannel = response.channel;
+
+    return this.currentChannel;
   }
 
   async getFeaturedContent(): Promise<Array<any>> {
@@ -232,34 +253,38 @@ export class ProChannelService {
 
   async subscribe() {
     this.currentChannel.subscribed = true;
+    this.currentChannel.subscribers_count += 1;
 
-    this.client
-      .post('api/v1/subscribe/' + this.currentChannel.guid, {})
-      .then((response: any) => {
-        if (response && response.error) {
-          throw 'error';
-        }
+    try {
+      const response = (await this.client.post(
+        'api/v1/subscribe/' + this.currentChannel.guid
+      )) as any;
 
-        this.currentChannel.subscribed = true;
-        this.subscriptionChange.emit(++this.currentChannel.subscribers_count);
-      })
-      .catch(e => {
-        this.currentChannel.subscribed = false;
-        alert("You can't subscribe to this user.");
-      });
+      if (!response || response.error) {
+        throw new Error(response.error || 'Invalid server response');
+      }
+    } catch (e) {
+      this.currentChannel.subscribed = false;
+      this.currentChannel.subscribers_count -= 1;
+    }
   }
 
   async unsubscribe() {
     this.currentChannel.subscribed = false;
-    this.client
-      .delete('api/v1/subscribe/' + this.currentChannel.guid, {})
-      .then((response: any) => {
-        this.currentChannel.subscribed = false;
-        this.subscriptionChange.emit(--this.currentChannel.subscribers_count);
-      })
-      .catch(e => {
-        this.currentChannel.subscribed = true;
-      });
+    this.currentChannel.subscribers_count -= 1;
+
+    try {
+      const response = (await this.client.delete(
+        'api/v1/subscribe/' + this.currentChannel.guid
+      )) as any;
+
+      if (!response || response.error) {
+        throw new Error(response.error || 'Invalid server response');
+      }
+    } catch (e) {
+      this.currentChannel.subscribed = true;
+      this.currentChannel.subscribers_count += 1;
+    }
   }
 
   async auth() {

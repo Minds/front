@@ -1,5 +1,11 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { ProChannelService } from '../channel.service';
+import { Session } from '../../../../services/session';
 
 @Component({
   selector: 'm-pro__hamburger-menu',
@@ -7,7 +13,10 @@ import { ProChannelService } from '../channel.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProHamburgerMenu {
-  constructor(protected service: ProChannelService) {}
+  constructor(
+    protected service: ProChannelService,
+    protected session: Session
+  ) {}
 
   toggleMenu() {
     if (document.body) {
@@ -26,6 +35,10 @@ export class ProHamburgerMenu {
     ) {
       document.body.classList.remove('hamburger-menu--open');
     }
+  }
+
+  wire() {
+    this.service.wire();
   }
 
   get homeRouterLink() {
@@ -52,15 +65,19 @@ export class ProHamburgerMenu {
     return this.service.getRouterLink('groups');
   }
 
-  wire() {
-    this.service.wire();
-  }
-
   get items() {
     return this.service.getMenuNavItems();
   }
 
   get channel() {
     return this.service.currentChannel;
+  }
+
+  get currentUser() {
+    if (!this.session.isLoggedIn()) {
+      return null;
+    }
+
+    return this.session.getLoggedInUser();
   }
 }
