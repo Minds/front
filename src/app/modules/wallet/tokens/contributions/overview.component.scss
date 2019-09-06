@@ -52,5 +52,15 @@
         color: themed($m-grey-900);
       }
     }
+
+    m-tooltip {
+      vertical-align: middle;
+      i {
+        font-size: 12px;
+        @include m-theme() {
+          color: themed($m-grey-500) !important;
+        }
+      }
+    }
   }
 }

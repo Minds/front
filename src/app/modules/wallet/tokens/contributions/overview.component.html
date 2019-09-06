@@ -55,6 +55,9 @@
         <ng-container *ngIf="overview.yourRewardFactor !== null">
           {{ overview.yourRewardFactor | number }}x
         </ng-container>
+        <m-tooltip icon="help">
+          Current User State: <ng-container *ngIf="user.user_state !== null">{{ user.user_state | titlecase }}</ng-container>
+        </m-tooltip>
       </div>
     </div>
   </div>

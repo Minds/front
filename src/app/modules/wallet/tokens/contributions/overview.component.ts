@@ -42,6 +42,7 @@ export class WalletTokenContributionsOverviewComponent
       jury_duty: null,
     },
   };
+  user = this.session.getLoggedInUser();
 
   protected updateTimer$;
 
