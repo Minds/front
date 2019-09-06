@@ -1,12 +1,21 @@
 context('Groups', () => {
-  beforeEach(() => {
-    cy.login(true);
+  before(() => {
+    cy.getCookie('minds_sess')
+    .then((sessionCookie) => {
+      if (sessionCookie === null) {
+        return cy.login(true);
+      }
+    });
+  });
 
-    cy.location('pathname', { timeout: 30000 })
-      .should('eq', `/newsfeed/subscriptions`);
-  })
+  beforeEach(()=> {
+    cy.preserveCookies();
+  });
 
   it('should create and edit a group', () => {
+
+    cy.server();
+    cy.route("POST", "**/api/v1/groups/group*").as("postGroup");
 
     cy.get('m-group--sidebar-markers li:first-child').contains('New group').click();
 
@@ -31,7 +40,10 @@ context('Groups', () => {
 
     cy.get('.m-groups-save > button').contains('Create').click();
 
-    cy.wait(1000);
+    cy.wait('@postGroup').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+      expect(xhr.response.body.status).to.equal('success');
+    });
 
     cy.get('.m-groupInfo__name').contains('test');
     cy.get('.m-groupInfo__description').contains('This is a test');
@@ -58,7 +70,9 @@ context('Groups', () => {
 
   it('should be able to toggle conversation and comment on it', () => {
 
-    cy.get('m-group--sidebar-markers li:nth-child(3)').contains('test group').click();
+    cy.get("m-group--sidebar-markers li:contains('test group')")
+      .first()
+      .click();
 
 
     // toggle the conversation
@@ -71,8 +85,6 @@ context('Groups', () => {
     cy.get('minds-groups-profile-conversation m-comments__tree minds-textarea .m-editor').type('lvl 1 comment');
     cy.get('minds-groups-profile-conversation m-comments__tree a.m-post-button').click();
 
-    cy.wait(500);
-
     // comment should appear on the list
     cy.get('minds-groups-profile-conversation m-comments__tree > m-comments__thread .m-commentBubble__message').contains('lvl 1 comment');
 
@@ -82,9 +94,9 @@ context('Groups', () => {
   })
 
   it('should post an activity inside the group and record the view when scrolling', () => {
-    cy.get('m-group--sidebar-markers li:nth-child(3)').contains('test group').click();
-
-    cy.wait(1000);
+    cy.get("m-group--sidebar-markers li:contains('test group')")
+      .first()
+      .click();
 
     cy.server();
     cy.route("POST", "**/api/v2/analytics/views/activity/*").as("view");
@@ -92,8 +104,6 @@ context('Groups', () => {
     cy.get('minds-newsfeed-poster textarea').type('This is a post');
 
     cy.get('.m-posterActionBar__PostButton').click();
-
-    cy.wait(500);
 
     // the activity should show that it was posted in this group
     cy.get('.minds-list minds-activity .body a:nth-child(2)').contains('(test group)');
@@ -105,11 +115,9 @@ context('Groups', () => {
 
     cy.get('.m-posterActionBar__PostButton').click();
 
-    cy.wait(200);
-
     cy.scrollTo(0, '20px');
 
-    cy.wait('@view', { requestTimeout: 2000 }).then((xhr) => {
+    cy.wait('@view').then((xhr) => {
       expect(xhr.status).to.equal(200);
       expect(xhr.response.body).to.deep.equal({ status: 'success' });
     });
@@ -117,8 +125,6 @@ context('Groups', () => {
 
   it('should delete a group', () => {
     cy.get('m-group--sidebar-markers li:nth-child(3)').contains('test group').click();
-
-    cy.wait(1000);
 
     // cleanup
     cy.get('minds-groups-settings-button > button').click();

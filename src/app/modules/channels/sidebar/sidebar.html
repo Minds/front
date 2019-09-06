@@ -205,6 +205,16 @@
     </div>
   </div>
 
+  <div
+    class="m-channel__channel-mode-selector"
+    *ngIf="featuresService.has('permissions')"
+  >
+    <m-channel-mode-selector
+      [user]="user"
+      [enabled]="session.isLoggedIn() && session.getLoggedInUser().guid === user.guid"
+    ></m-channel-mode-selector>
+  </div>
+
   <div class="m-channel--action-buttons">
     <minds-button-subscribe
       [user]="user"

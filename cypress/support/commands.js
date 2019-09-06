@@ -1,71 +1,228 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This is will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+import 'cypress-file-upload';
 
-// Staging requires cookie to be set
-Cypress.Cookies.defaults({
-  whitelist: 'staging'
-});
+/**
+ * @author Marcelo, Ben and Brian 
+ * @create date 2019-08-09 22:54:02
+ * @modify date 2019-08-09 22:54:02
+ * @desc Custom commands for access through cy.[cmd]();
+ *  
+ * For more comprehensive examples of custom
+ * commands please read more here:
+ * https://on.cypress.io/custom-commands
+ *
+ * -- This is a parent command --
+ * Cypress.Commands.add('login', (email, password) => { ... })
+ 
+ * -- This is a child command --
+ * Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
+ 
+ * -- This is a dual command --
+ * Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
+ 
+ * -- This is will overwrite an existing command --
+ * Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+ */
 
-Cypress.Commands.add('login', (canary) => {
+const onboarding = {
+  welcomeText: 'Welcome to Minds',
+  welcomeTextContainer: 'm-onboarding--topics > div > h2:nth-child(1)',
+  nextButton: '.m-channelOnboarding__next',
+};
+
+//Login and register
+const registerForm = {
+  username: 'minds-form-register #username',
+  email: 'minds-form-register #email',
+  password: 'minds-form-register #password',
+  password2: 'minds-form-register #password2',
+  checkbox: 'minds-form-register label:nth-child(2) .mdl-ripple--center',
+  submitButton: 'minds-form-register .mdl-card__actions button',
+};
+
+const settings = {
+  deleteAccountButton: 'm-settings--disable-channel > div:nth-child(2) > div > button',
+  deleteSubmitButton: 'm-confirm-password--modal > div > form > div:nth-child(2) > button',
+};
+const nav = {
+  hamburgerMenu: '.m-v2-topbar__UserMenu > m-user-menu > div.m-user-menu.m-dropdown > a',
+  logoutButton: '.m-user-menu.m-dropdown > ul > li:nth-child(11) > a',
+  byIndex: (i) => `.m-user-menu.m-dropdown > ul > li:nth-child(${i}) > a`,
+};
+
+const defaults = {
+  email: 'test@minds.com',
+}
+
+const loginForm = {
+  password: 'minds-form-login .m-login-box .mdl-cell:last-child input',
+  username: 'minds-form-login .m-login-box .mdl-cell:first-child input',
+  submit: 'minds-form-login .m-btn--login',
+}
+
+const poster = {
+  textArea: 'm-text-input--autocomplete-container textarea',
+  postButton: '.m-posterActionBar__PostButton',
+}
+
+/**
+ * Logs a user in.
+ * @param { boolean } canary - Currently not required
+ * @param { string } username - The username.
+ * @param { string } password - The users password.
+ * @returns void
+ */
+Cypress.Commands.add('login', (canary = false, username, password) => {
+  username =  username ? username : Cypress.env().username;
+  password =  password ? password : Cypress.env().password;
   cy.setCookie('staging', "1"); // Run in stagin mode. Note: does not impact review sites
 
   cy.visit('/login');
 
-  cy.get('.m-btn--login').click();
+  cy.server();
+  cy.route("POST", "/api/v1/authenticate").as("postLogin");
 
-  cy.get('minds-form-login .m-login-box .mdl-cell:first-child input').type(Cypress.env().username);
-  cy.get('minds-form-login .m-login-box .mdl-cell:last-child input').type(Cypress.env().password);
+  cy.get(loginForm.username).type(username);
+  cy.get(loginForm.password).type(password);
+  
+  cy.get(loginForm.submit).click();
 
-  cy.get('minds-form-login .m-btn--login').click();
+  cy.wait('@postLogin').then((xhr) => {
+    expect(xhr.status).to.equal(200);
+    expect(xhr.response.body.status).to.equal('success');
+  });
 });
 
+/**
+ * Logs a user out of their session using the menu.
+ * @returns void
+ */
+Cypress.Commands.add('logout', () => {
+  cy.get(nav.hamburgerMenu).click();
+  cy.get(nav.logoutButton).click();  
+});
+
+/**
+ * Register a user, be sure to delete the user following this.
+ * 
+ * ! LOG-OUT PRIOR TO CALLING !
+ * 
+ * @param { string } username - The username. Note that the requested username will NOT be freed up upon deletion
+ * @param { string } password - The users password.
+ * @returns void
+ */
+Cypress.Commands.add('newUser', (username = '', password = '') => {
+  cy.visit('/login');
+    
+  cy.location('pathname', { timeout: 30000 })
+    .should('eq', `/login`);
+
+  cy.server();
+  cy.route("POST", '**/api/v1/register').as('registerPOST');
+  
+  cy.get(registerForm.username).focus().type(username);
+  cy.get(registerForm.email).focus().type(defaults.email);
+  cy.get(registerForm.password).focus().type(password);
+  cy.wait(500); // give second password field chance to appear - not tied to a request.
+
+  cy.get(registerForm.password2).focus().type(password);
+  cy.get(registerForm.checkbox).click({force: true});
+
+  //submit.
+  cy.get(registerForm.submitButton).click({force: true})
+    .wait('@registerPOST').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+      expect(xhr.response.body.status).to.deep.equal("success");
+    });
+
+  //onboarding modal shown.
+  cy.get(onboarding.welcomeTextContainer)
+    .contains(onboarding.welcomeText);
+  
+  //skip onboarding.
+  cy.get(onboarding.nextButton).click()
+  cy.get(onboarding.nextButton).click()
+  cy.get(onboarding.nextButton).click()
+  cy.get(onboarding.nextButton).click()
+});
+
+Cypress.Commands.add('preserveCookies', () => {
+  Cypress.Cookies.preserveOnce('staging', 'minds_sess', 'mwa', 'XSRF-TOKEN');
+});
+
+/**
+ * Deletes a user. Use carefully on sandbox or you may lose your favorite test account.
+ * 
+ * ! LOG-IN PRIOR TO CALLING !
+ * 
+ * @param { string } username - The username. TODO: when both params provided log the user in too
+ * @param { string } password - The password.
+ * @returns void
+ */
+Cypress.Commands.add('deleteUser', (username, password) => {  
+  cy.server();
+  cy.route("POST", '**/api/v2/settings/password/validate').as('validatePost');
+  cy.route("POST", '**/api/v2/settings/delete').as('deletePOST');
+
+  cy.visit('/settings/disable');
+  cy.location('pathname', { timeout: 30000 })
+    .should('eq', `/settings/disable`);
+
+  cy.get(settings.deleteAccountButton).click({ force: true });
+  cy.get('#password').focus().type(password);
+
+  cy.get(settings.deleteSubmitButton).click({ force: true })  
+    .wait('@validatePost').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+      expect(xhr.response.body.status).to.deep.equal("success");
+    })
+    .wait('@deletePOST').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+      expect(xhr.response.body.status).to.deep.equal("success");
+    });
+});
+
+
+/**
+ * Uploads a file.
+ * @param { string } selector - The selector.
+ * @param { string } fileName - the file-name.
+ * @param { string } type - the file-type.
+ * @returns void
+ */
 Cypress.Commands.add('uploadFile', (selector, fileName, type = '') => {
-  cy.get(selector).then((subject) => {
-    cy.fixture(fileName, 'base64').then((content) => {
-      const el = subject[0];
-      const blob = b64toBlob(content, type);
-      cy.window().then((win) => {
-        const testFile = new win.File([blob], fileName, { type });
-        const dataTransfer = new DataTransfer();
-
-        dataTransfer.items.add(testFile);
-        el.files = dataTransfer.files;
-
-        // return cy.wrap(subject).trigger('change', {force: true});
-      });
+  cy.fixture(fileName).then((content) => {
+    cy.log("Content", fileName);
+    cy.get(selector).upload({
+      fileContent: content, 
+      fileName: fileName, 
+      mimeType: type 
     });
   });
-  // cy.get(selector).trigger('change', { force: true });
 });
 
+/**
+ * Creates a new post. Must be logged in.
+ * @param { string } message - The message to be posted
+ * @returns void
+ */
 Cypress.Commands.add('post', (message) => {
-  cy.get('m-text-input--autocomplete-container textarea').type(message);
-  cy.get('.m-posterActionBar__PostButton').click();
+  cy.server();
+  cy.route("POST", '**/v1/newsfeed**').as('postActivity');
+  cy.get(poster.textArea).type(message);
+  cy.get(poster.postButton).click();
+  cy.wait('@postActivity').then((xhr) => {
+    expect(xhr.status).to.equal(200);
+    expect(xhr.response.body.status).to.deep.equal("success");
+  });
 });
 
+/**
+ * Converts base64 to blob format
+ * @param { string } b64Data - The base64 data.
+ * @param { string } contentType - The type of content.
+ * @param { number } sliceSize - The size of the slice.
+ * @returns void
+ */
 function b64toBlob(b64Data, contentType, sliceSize = 512) {
   const byteCharacters = atob(b64Data);
   const byteArrays = [];

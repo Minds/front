@@ -1,19 +1,24 @@
 // import 'cypress-file-upload';
 
 context('Blogs', () => {
-  beforeEach(() => {
-    cy.login(true);
+  before(() => {
+    cy.clearCookies();
+    cy.getCookie('minds_sess')
+    .then((sessionCookie) => {
+      if (sessionCookie === null) {
+        return cy.login(true);
+      }
+    });
+  });
 
-    cy.location('pathname', { timeout: 30000 })
-      .should('eq', `/newsfeed/subscriptions`);
-  })
+  beforeEach(()=> {
+    cy.preserveCookies();
+  });
 
- it('should not be able to create a new blog if no title or banner are specified', () => {
+  it('should not be able to create a new blog if no title or banner are specified', () => {
     cy.visit('/blog/edit/new');
 
     cy.get('.m-button--submit').click();
-
-    cy.wait(100);
 
     cy.get('.m-blog--edit--error').contains('Error: You must provide a title');
 
@@ -26,34 +31,12 @@ context('Blogs', () => {
     cy.get('.m-blog--edit--error').contains('Error: You must upload a banner');
   })
 
-  // TODO: remove the x when we run tests in new users each time
-  xit("should not be able to create a new blog if the channel doesn't have an avatar", () => {
-    cy.visit('/blog/edit/new');
-
-    cy.uploadFile('minds-banner #file', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg');
-
-    cy.get('minds-textarea .m-editor').type('Title');
-
-    cy.get('m-inline-editor .medium-editor-element').type('Content\n');
-
-    cy.wait(1000);
-
-    cy.server();
-    cy.route("POST", "**!/api/v1/blog/new").as("newBlog");
-
-    cy.get('.m-button--submit').click({ force: true }); // TODO: Investigate why disabled flag is being detected
-
-    cy.get('h1.m-blog--edit--error').contains('Error: Please ensure your channel has an avatar before creating a blog');
-  });
-
   it('should be able to create a new blog', () => {
 
     // upload avatar first
     cy.visit(`/${Cypress.env().username}`);
 
     cy.get('.m-channel--name .minds-button-edit button:first-child').click();
-
-    cy.wait(100);
 
     cy.uploadFile('.minds-avatar input[type=file]', '../fixtures/avatar.jpeg', 'image/jpg');
 
@@ -106,14 +89,24 @@ context('Blogs', () => {
     cy.get('.m-mature-info a').click();
     cy.get('.m-mature-info a span').contains('Mature content');
 
+    cy.server();
+    cy.route("POST", "**/api/v1/blog/new").as("postBlog");
+    cy.route("GET", "**/api/v1/blog/**").as("getBlog");
+
     cy.get('.m-button--submit').click({ force: true }); // TODO: Investigate why disabled flag is being detected
-    cy.clock();
 
-    cy.clock().then((clock) => { clock.tick(1000); });
+    cy.wait('@postBlog').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+      expect(xhr.response.body.status).to.equal("success");
+    });
 
-    cy.wait(1000);
+    cy.wait('@getBlog').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+      expect(xhr.response.body.status).to.equal("success");
+      expect(xhr.response.body).to.have.property("blog");
+    });
 
-    cy.location('pathname', { timeout: 30000 })
+    cy.location('pathname')
       .should('contains', `/${Cypress.env().username}/blog`);
 
     cy.get('.m-blog--title').contains('Title');
