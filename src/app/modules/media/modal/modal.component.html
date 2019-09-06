@@ -52,18 +52,18 @@
               [isModal]="true"
               [autoplay]="true"
               [muted]="false"
-              [poster]="entity.custom_data.thumbnail_src"
+              [poster]="entity.thumbnail_src"
               [src]="[
                 {
                   res: '360',
-                  uri: 'api/v1/media/' + entity.custom_data.guid + '/play',
+                  uri: 'api/v1/media/' + entity.entity_guid + '/play',
                   type: 'video/mp4'
                 }
               ]"
-              [guid]="entity.custom_data.guid"
+              [guid]="entity.entity_guid"
               [playCount]="entity['play:count']"
               [torrent]="[
-                { res: '360', key: entity.custom_data.guid + '/360.mp4' }
+                { res: '360', key: entity.entity_guid + '/360.mp4' }
               ]"
               (videoCanPlayThrough)="isLoaded()"
               [@slowFadeAnimation]="isLoading ? 'out' : 'in'"

@@ -117,7 +117,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           this.entity.title ||
           `${this.entity.ownerObj.name}'s post`;
 
-        this.entity.guid = this.entity.entity_guid || this.entity.guid;
         this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.entity_guid}/xlarge`;
 
         switch (this.entity.custom_type) {
@@ -125,6 +124,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
             this.contentType = 'video';
             this.entity.width = this.entity.custom_data.width;
             this.entity.height = this.entity.custom_data.height;
+            this.entity.thumbnail_src = this.entity.custom_data.thumbnail_src;
             break;
           case 'batch':
             this.contentType = 'image';
