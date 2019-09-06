@@ -48,6 +48,17 @@
 
         <a
           class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="currentTab === 'domain'"
+          (click)="currentTab = 'domain'"
+        >
+          <span i18n>Domain</span>
+          <m-tooltip icon="help" i18n>
+            TBD
+          </m-tooltip>
+        </a>
+
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="currentTab === 'cancel'"
           (click)="currentTab = 'cancel'"
         >
@@ -73,19 +84,9 @@
 
             <ng-template ngSwitchCase="general">
               <p class="m-pro--settings--note" i18n>
-                Customize your domain, title and headline. This will be used as
+                Customize your title and headline. This will be used as
                 your SEO tags as well.
               </p>
-
-              <div class="m-pro--settings--field">
-                <label for="domain" i18n>Domain</label>
-                <input
-                  type="text"
-                  id="domain"
-                  name="domain"
-                  [(ngModel)]="settings.domain"
-                />
-              </div>
 
               <div class="m-pro--settings--field">
                 <label for="title" i18n>Title</label>
@@ -343,6 +344,24 @@
                 >
                   + Add Link
                 </button>
+              </div>
+            </ng-template>
+
+            <!-- Cancel -->
+
+            <ng-template ngSwitchCase="domain">
+              <p class="m-pro--settings--note" i18n>
+                Customize your domain and setup your HTTPS certificates.
+              </p>
+
+              <div class="m-pro--settings--field">
+                <label for="domain" i18n>Domain</label>
+                <input
+                  type="text"
+                  id="domain"
+                  name="domain"
+                  [(ngModel)]="settings.domain"
+                />
               </div>
             </ng-template>
 

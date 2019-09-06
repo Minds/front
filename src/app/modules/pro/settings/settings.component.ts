@@ -22,7 +22,7 @@ export class ProSettingsComponent implements OnInit {
 
   saved: boolean = false;
 
-  currentTab: 'general' | 'theme' | 'hashtags' | 'footer' | 'cancel' =
+  currentTab: 'general' | 'theme' | 'hashtags' | 'footer' | 'domain' | 'cancel' =
     'general';
 
   private currentDraggableEvent: DragEvent;
