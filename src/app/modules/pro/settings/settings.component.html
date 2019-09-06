@@ -136,9 +136,9 @@
               </div>
 
               <div class="m-pro--settings--field">
-                <label for="plain_background_color" i18n
-                  >Plain Background Color</label
-                >
+                <label for="plain_background_color" i18n>
+                  Plain Background Color
+                </label>
                 <input
                   type="color"
                   id="plain_background_color"
@@ -148,7 +148,9 @@
               </div>
 
               <div class="m-pro--settings--field">
-                <label i18n>Color Schema</label>
+                <label i18n>
+                  Color Schema
+                </label>
 
                 <input
                   type="radio"
@@ -157,9 +159,9 @@
                   value="light"
                   [(ngModel)]="settings.scheme"
                 />
-                <label for="scheme_light" class="m-pro--settings--inline-label"
-                  >Light</label
-                >
+                <label for="scheme_light" class="m-pro--settings--inline-label">
+                  Light
+                </label>
 
                 <input
                   type="radio"
@@ -168,9 +170,9 @@
                   value="dark"
                   [(ngModel)]="settings.scheme"
                 />
-                <label for="scheme_dark" class="m-pro--settings--inline-label"
-                  >Dark</label
-                >
+                <label for="scheme_dark" class="m-pro--settings--inline-label">
+                  Dark
+                </label>
               </div>
 
               <div class="m-pro--settings--field">
@@ -187,8 +189,9 @@
                   <label
                     [for]="'tile_ratio_' + ratio"
                     class="m-pro--settings--inline-label"
-                    >{{ ratio }}</label
                   >
+                    {{ ratio }}
+                  </label>
                 </ng-container>
               </div>
 
@@ -210,52 +213,24 @@
                 Set up your category filter hashtags here.
               </p>
 
-              <div
-                class="m-pro--settings--field"
-                *ngFor="let tag of settings.tag_list; let i = index"
+              <m-draggable-list
+                [data]="settings.tag_list"
+                [id]="'tag'"
               >
-                <label [for]="'tag-label-' + i" i18n
-                  >Hashtag #{{ i + 1 }}</label
-                >
-
-                <div class="m-pro--settings--flex-inputs">
-                  <input
-                    type="text"
-                    placeholder="Label"
-                    [id]="'tag-label-' + i"
-                    [name]="'tag[' + i + '][label]'"
-                    [(ngModel)]="tag.label"
-                    i18n-placeholder
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="#hashtag"
-                    [id]="'tag-tag-' + i"
-                    [name]="'tag[' + i + '][tag]'"
-                    [(ngModel)]="tag.tag"
-                    i18n-placeholder
-                  />
-
-                  <i class="material-icons" (click)="removeTag(i)">clear</i>
-                </div>
-              </div>
-
-              <!--<m-draggable-list
-                [data]="settings.tag_list">
                 <ng-template let-tag="item" let-i="i">
 
-                  <div class="m-pro&#45;&#45;settings&#45;&#45;field">
-                    <label for="headline" i18n>Hashtag #{{ i + 1 }}</label>
+                  <div class="m-pro--settings--field">
+                    <label i18n>
+                      Hashtag #{{ i + 1 }}
+                    </label>
 
-                    <div class="m-pro&#45;&#45;settings&#45;&#45;flex-inputs">
+                    <div class="m-pro--settings--flex-inputs">
                       <input
                         type="text"
                         placeholder="Label"
                         [id]="'tag-label-' + i"
                         [name]="'tag[' + i + '][label]'"
                         [(ngModel)]="tag.label"
-                        i18n-placeholder
                       >
 
                       <input
@@ -264,12 +239,15 @@
                         [id]="'tag-tag-' + i"
                         [name]="'tag[' + i + '][tag]'"
                         [(ngModel)]="tag.tag"
-                        i18n-placeholder
                       >
+
+                      <i class="material-icons" (click)="removeTag(i)">
+                        clear
+                      </i>
                     </div>
                   </div>
                 </ng-template>
-              </m-draggable-list>-->
+              </m-draggable-list>
 
               <div class="m-pro--settings--field">
                 <button
@@ -301,38 +279,41 @@
                 />
               </div>
 
-              <div
-                class="m-pro--settings--field"
-                *ngFor="let link of settings.footer_links; let i = index"
+              <m-draggable-list
+                [data]="settings.footer_links"
+                [id]="'title'"
               >
-                <label [for]="'footer-link-title-' + i" i18n
-                  >Link #{{ i + 1 }}</label
-                >
+                <ng-template let-link="item" let-i="i">
 
-                <div class="m-pro--settings--flex-inputs">
-                  <input
-                    type="text"
-                    placeholder="Title"
-                    [id]="'footer-link-title-' + i"
-                    [name]="'footer_link[' + i + '][title]'"
-                    [(ngModel)]="link.title"
-                    i18n-placeholder
-                  />
+                  <div class="m-pro--settings--field">
+                    <label i18n>
+                      Link #{{ i + 1 }}
+                    </label>
 
-                  <input
-                    type="text"
-                    placeholder="https://example.com/"
-                    [id]="'footer-link-href-' + i"
-                    [name]="'footer_link[' + i + '][href]'"
-                    [(ngModel)]="link.href"
-                    i18n-placeholder
-                  />
+                    <div class="m-pro--settings--flex-inputs">
+                      <input
+                        type="text"
+                        placeholder="Title"
+                        [id]="'footer_link-title-' + i"
+                        [name]="'footer_link[' + i + '][title]'"
+                        [(ngModel)]="link.title"
+                      >
 
-                  <i class="material-icons" (click)="removeFooterLink(i)"
-                    >clear</i
-                  >
-                </div>
-              </div>
+                      <input
+                        type="text"
+                        placeholder="https://example.com/"
+                        [id]="'footer_link-href-' + i"
+                        [name]="'footer_link[' + i + '][href]'"
+                        [(ngModel)]="link.href"
+                      >
+
+                      <i class="material-icons" (click)="removeFooterLink(i)">
+                        clear
+                      </i>
+                    </div>
+                  </div>
+                </ng-template>
+              </m-draggable-list>
 
               <div class="m-pro--settings--field">
                 <button
@@ -377,7 +358,7 @@
                 <a
                   class="m-btn m-link-btn m-btn--slim m-btn--destructive"
                   routerLink="/pro"
-                  >Cancel Pro</a
+                >Cancel Pro</a
                 >
               </div>
             </ng-template>
@@ -404,7 +385,7 @@
               class="m-btn m-link-btn m-btn--slim m-pro--settings--preview-btn"
               [routerLink]="previewRoute"
               i18n
-              >View your Pro channel</a
+            >View your Pro channel</a
             >
           </div>
         </form>

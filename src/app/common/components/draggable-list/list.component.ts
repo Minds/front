@@ -1,11 +1,5 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  ContentChild,
-  Input,
-  TemplateRef,
-} from '@angular/core';
-import { DndDropEvent, DropEffect, EffectAllowed } from 'ngx-drag-drop';
+import { Component, ContentChild, Input, TemplateRef, } from '@angular/core';
+import { DndDropEvent, EffectAllowed } from 'ngx-drag-drop';
 
 @Component({
   selector: 'm-draggable-list',
@@ -14,23 +8,20 @@ import { DndDropEvent, DropEffect, EffectAllowed } from 'ngx-drag-drop';
       dndDropzone
       [dndHorizontal]="false"
       [dndEffectAllowed]="dndEffectAllowed"
-      (dndDrop)="onDrop($event, data)"
+      (dndDrop)="onDrop($event)"
+      class="m-draggableList__list"
     >
       <div
         class="dndPlaceholder"
         dndPlaceholderRef
-        style="min-height:72px;border:1px dashed green;background-color:rgba(0, 0, 0, 0.1)"
+        style="min-height:100px;border:1px dashed green;background-color:rgba(0, 0, 0, 0.1)"
       ></div>
 
       <li
         *ngFor="let item of data; let i = index; trackBy: trackByFunction"
         [dndDraggable]="item"
         [dndEffectAllowed]="'move'"
-        (dndCopied)="onDragged(item, data, 'copy')"
-        (dndLinked)="onDragged(item, data, 'link')"
-        (dndMoved)="onDragged(item, data, 'move')"
-        (dndEnd)="onDragEnd(item, data, $event)"
-        (dndCanceled)="onDragged(item, data, 'none')"
+        class="m-draggableList__listItem"
       >
         <i class="handle material-icons" dndHandle>reorder</i>
         <ng-container
@@ -43,33 +34,28 @@ import { DndDropEvent, DropEffect, EffectAllowed } from 'ngx-drag-drop';
 })
 export class DraggableListComponent {
   @Input() data: Array<any>;
-  @Input() dndEffectAllowed: EffectAllowed = 'move';
+  @Input() dndEffectAllowed: EffectAllowed = 'copyMove';
+  @Input() id: string;
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
   trackByFunction(index, item) {
-    return item.tag + index;
+    return this.id ? item[this.id] + index : index;
   }
 
-  onDragged(item: any, list: any[], effect: DropEffect) {
-    // const index = list.indexOf(item);
-    // list.splice(index, 1);
-  }
+  onDrop(event: DndDropEvent) {
+    if (this.data && (event.dropEffect === 'copy' || event.dropEffect === 'move')) {
+      let dragIndex = this.data.findIndex(item => event.data[this.id] === item[this.id]);
+      let dropIndex = event.index || this.data.length;
+      // remove element
+      this.data.splice(dragIndex, 1);
 
-  onDragEnd(item: any, list: any[], event: DragEvent) {
-    const index = list.indexOf(item);
-    list.splice(index, 1);
-    console.warn('drag ended');
-  }
-
-  onDrop(event: DndDropEvent, list?: any[]) {
-    if (list && (event.dropEffect === 'copy' || event.dropEffect === 'move')) {
-      let index = event.index;
-
-      if (typeof index === 'undefined') {
-        index = list.length;
+      // add it back to new index
+      if (dragIndex < dropIndex) {
+        dropIndex--;
       }
 
-      list.splice(index, 0, event.data);
+      this.data.splice(dropIndex, 0, event.data);
+
     }
   }
 }

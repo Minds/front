@@ -1,14 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, } from '@angular/core';
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { MindsTitle } from '../../../services/ux/title';
-import { DndDropEvent, DropEffect } from 'ngx-drag-drop';
 
 @Component({
   selector: 'm-pro--settings',
@@ -29,9 +23,6 @@ export class ProSettingsComponent implements OnInit {
     | 'footer'
     | 'domain'
     | 'cancel' = 'general';
-
-  private currentDraggableEvent: DragEvent;
-  private currentDragEffectMsg: string;
 
   constructor(
     protected service: ProService,
@@ -110,35 +101,5 @@ export class ProSettingsComponent implements OnInit {
 
   get ratios() {
     return this.service.ratios;
-  }
-
-  onDragStart(event: DragEvent) {
-    this.currentDragEffectMsg = '';
-    this.currentDraggableEvent = event;
-  }
-
-  onDragged(item: any, list: any[], effect: DropEffect) {
-    this.currentDragEffectMsg = `Drag ended with effect "${effect}"!`;
-
-    if (effect === 'move') {
-      const index = list.indexOf(item);
-      list.splice(index, 1);
-    }
-  }
-
-  onDragEnd(event: DragEvent) {
-    this.currentDraggableEvent = event;
-  }
-
-  onDrop(event: DndDropEvent, list?: any[]) {
-    if (list && (event.dropEffect === 'copy' || event.dropEffect === 'move')) {
-      let index = event.index;
-
-      if (typeof index === 'undefined') {
-        index = list.length;
-      }
-
-      list.splice(index, 0, event.data);
-    }
   }
 }
