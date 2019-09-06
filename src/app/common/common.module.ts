@@ -102,6 +102,7 @@ import { SettingsService } from '../modules/settings/settings.service';
 import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
+import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
 import { ShareModalComponent } from '../modules/modals/share/share';
 
 @NgModule({
@@ -187,6 +188,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
+    ChannelModeSelectorComponent,
     NSFWSelectorComponent,
 
     SwitchComponent,
@@ -276,6 +278,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    ChannelModeSelectorComponent,
   ],
   providers: [
     {

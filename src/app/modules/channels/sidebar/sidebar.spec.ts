@@ -35,6 +35,9 @@ import { featuresServiceMock } from '../../../../tests/features-service-mock.spe
 import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ChannelMode } from '../../../interfaces/entities';
+import { ifStmt } from '@angular/compiler/src/output/output_ast';
+import { ChannelModulesComponent } from '../modules/modules';
 
 describe('ChannelSidebar', () => {
   let comp: ChannelSidebar;
@@ -99,6 +102,10 @@ describe('ChannelSidebar', () => {
           inputs: ['title', 'type', 'channel', 'linksTo', 'size'],
           outputs: [],
         }),
+        MockComponent({
+          selector: 'm-channel-mode-selector',
+          inputs: ['user', 'enabled'],
+        }),
         IfFeatureDirective,
       ],
       imports: [FormsModule, RouterTestingModule, NgCommonModule],
@@ -132,6 +139,7 @@ describe('ChannelSidebar', () => {
     jasmine.clock().install();
     fixture = TestBed.createComponent(ChannelSidebar);
     featuresServiceMock.mock('es-feeds', false);
+    featuresServiceMock.mock('permissions', true);
     clientMock.response = {};
     uploadMock.response = {};
     comp = fixture.componentInstance;
@@ -143,6 +151,7 @@ describe('ChannelSidebar', () => {
       icontime: 11111,
       subscribers_count: 182,
       impressions: 18200,
+      mode: ChannelMode.PUBLIC,
     };
     comp.editing = false;
     uploadMock.response[`api/v1/channel/avatar`] = {
@@ -334,5 +343,10 @@ describe('ChannelSidebar', () => {
     comp.toggleEditing();
     fixture.detectChanges();
     expect(comp.changeEditing.next).toHaveBeenCalled();
+  });
+
+  it('should set a channel to public', () => {
+    fixture.detectChanges();
+    expect(comp.user.mode).toEqual(ChannelMode.PUBLIC);
   });
 });

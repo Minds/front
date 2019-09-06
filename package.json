@@ -61,6 +61,7 @@
     "@types/node": "~10.12.18",
     "codelyzer": "^4.5.0",
     "cypress": "^3.4.1",
+    "cypress-file-upload": "^3.3.3",
     "gulp": "~4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-css-globbing": "^0.2.2",
