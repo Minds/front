@@ -41,6 +41,9 @@ export type FeedsServiceGetResponse = {
   next?: number;
 };
 
+/**
+ * Enables the grabbing of data through observable feeds.
+ */
 @Injectable()
 export class FeedsService {
   limit: BehaviorSubject<number> = new BehaviorSubject(12);
@@ -98,16 +101,28 @@ export class FeedsService {
     );
   }
 
+  /**
+   * Sets the endpoint for this instance.
+   * @param { string } endpoint - the endpoint for this instance. For example `api/v1/entities/owner`.
+   */
   setEndpoint(endpoint: string): FeedsService {
     this.endpoint = endpoint;
     return this;
   }
 
+  /**
+   * Sets the limit to be returned per next() call.
+   * @param { number } limit - the limit to retrieve.
+   */
   setLimit(limit: number): FeedsService {
     this.limit.next(limit);
     return this;
   }
 
+  /**
+   * Sets parameters to be used.
+   * @param { Object } params - parameters to be used.
+   */
   setParams(params): FeedsService {
     this.params = params;
     if (!params.sync) {
@@ -116,19 +131,31 @@ export class FeedsService {
     return this;
   }
 
+  /**
+   * Sets the offset of the request
+   * @param { number } offset - the offset of the request.
+   */
   setOffset(offset: number): FeedsService {
     this.offset.next(offset);
     return this;
   }
 
+  /**
+   * Sets castToActivities
+   * @param { boolean } cast - whether or not to set as_activities to true.
+   */
   setCastToActivities(cast: boolean): FeedsService {
     this.castToActivities = cast;
     return this;
   }
 
+  /**
+   * Fetches the data.
+   */
   fetch(): FeedsService {
-    if (!this.offset.getValue()) this.inProgress.next(true);
-
+    if (!this.offset.getValue()) {
+      this.inProgress.next(true);
+    }
     this.client
       .get(this.endpoint, {
         ...this.params,
@@ -139,8 +166,12 @@ export class FeedsService {
         },
       })
       .then((response: any) => {
-        if (!this.offset.getValue()) this.inProgress.next(false);
-
+        if (!this.offset.getValue()) {
+          this.inProgress.next(false);
+        }
+        if (!response.entities && response.activity) {
+          response.entities = response.activity;
+        }
         if (response.entities.length) {
           this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
           this.pagingToken = response['load-next'];
@@ -148,10 +179,13 @@ export class FeedsService {
           this.canFetchMore = false;
         }
       })
-      .catch(err => {});
+      .catch(e => console.log(e));
     return this;
   }
 
+  /**
+   * To be called upload loading more data
+   */
   loadMore(): FeedsService {
     if (!this.inProgress.getValue()) {
       this.setOffset(this.limit.getValue() + this.offset.getValue());
@@ -160,6 +194,9 @@ export class FeedsService {
     return this;
   }
 
+  /**
+   * To clear data.
+   */
   clear(): FeedsService {
     this.offset.next(0);
     this.pagingToken = '';
