@@ -62,9 +62,7 @@
               ]"
               [guid]="entity.entity_guid"
               [playCount]="entity['play:count']"
-              [torrent]="[
-                { res: '360', key: entity.entity_guid + '/360.mp4' }
-              ]"
+              [torrent]="[{ res: '360', key: entity.entity_guid + '/360.mp4' }]"
               (videoCanPlayThrough)="isLoaded()"
               [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
               #player

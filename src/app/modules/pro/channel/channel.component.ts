@@ -22,7 +22,8 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ProUnsubscribeModalComponent } from './unsubscribe-modal/modal.component';
 import { OverlayModalComponent } from '../../../common/components/overlay-modal/overlay-modal.component';
-import { SessionsStorageService } from "../../../services/session-storage.service";
+import { SessionsStorageService } from '../../../services/session-storage.service';
+import { SiteService } from '../../../services/site.service';
 
 @Component({
   providers: [ProChannelService, OverlayModalService],
@@ -68,12 +69,13 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected modal: SignupModalService,
     protected modalService: OverlayModalService,
     protected sessionStorage: SessionsStorageService,
-    protected injector: Injector,
+    protected site: SiteService,
+    protected injector: Injector
   ) {}
 
   ngOnInit() {
-    if (window.Minds.pro) {
-      this.username = window.Minds.pro.user_guid;
+    if (this.site.isProDomain) {
+      this.username = this.site.pro.user_guid;
     }
 
     this.listen();
@@ -133,8 +135,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const title = [
       (this.channel.pro_settings.title as string) ||
-      this.channel.name ||
-      this.channel.username,
+        this.channel.name ||
+        this.channel.username,
     ];
 
     switch (this.type) {
@@ -204,7 +206,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     if (!this.channel.subscribed) {
       if (!this.session.isLoggedIn()) {
         this.router.navigate(
-          window.Minds.pro
+          this.site.isProDomain
             ? this.channelService.getRouterLink('login')
             : ['/login']
         );
@@ -355,7 +357,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return window.Minds.site_url + 'pro/settings';
   }
 
-  get isStandalone() {
-    return Boolean(window.Minds.pro);
+  get isProDomain() {
+    return this.site.isProDomain;
   }
 }

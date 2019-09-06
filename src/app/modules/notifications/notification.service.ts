@@ -3,6 +3,7 @@ import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
 import { Session } from '../../services/session';
 import { MindsTitle } from '../../services/ux/title';
+import { SiteService } from '../../services/site.service';
 
 export class NotificationService {
   socketSubscriptions: any = {
@@ -14,20 +15,22 @@ export class NotificationService {
     session: Session,
     client: Client,
     sockets: SocketsService,
-    title: MindsTitle
+    title: MindsTitle,
+    site: SiteService
   ) {
-    return new NotificationService(session, client, sockets, title);
+    return new NotificationService(session, client, sockets, title, site);
   }
 
   constructor(
     public session: Session,
     public client: Client,
     public sockets: SocketsService,
-    public title: MindsTitle
+    public title: MindsTitle,
+    protected site: SiteService
   ) {
     if (!window.Minds.notifications_count) window.Minds.notifications_count = 0;
 
-    if (!window.Minds.pro) {
+    if (!this.site.isProDomain) {
       this.listen();
     }
   }

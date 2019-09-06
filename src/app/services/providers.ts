@@ -44,10 +44,11 @@ import { ThemeService } from '../common/services/theme.service';
 import { GlobalScrollService } from './ux/global-scroll.service';
 import { AuthService } from './auth.service';
 import { SiteService } from './site.service';
-import { SessionsStorageService } from "./session-storage.service";
+import { SessionsStorageService } from './session-storage.service';
 import { DiagnosticsService } from './diagnostics.service';
 
 export const MINDS_PROVIDERS: any[] = [
+  SiteService,
   {
     provide: ScrollService,
     useFactory: ScrollService._,
@@ -66,12 +67,12 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: Client,
     useFactory: Client._,
-    deps: [HttpClient, Location],
+    deps: [HttpClient, Location, SiteService],
   },
   {
     provide: Upload,
     useFactory: Upload._,
-    deps: [HttpClient],
+    deps: [HttpClient, SiteService],
   },
   {
     provide: Storage,
@@ -148,7 +149,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: MindsTitle,
     useFactory: MindsTitle._,
-    deps: [Title],
+    deps: [Title, SiteService],
   },
   {
     provide: GoogleChartsLoader,
@@ -233,5 +234,4 @@ export const MINDS_PROVIDERS: any[] = [
   },
   DiagnosticsService,
   AuthService,
-  SiteService,
 ];

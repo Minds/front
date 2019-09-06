@@ -1,7 +1,8 @@
 import { Cookie } from '../cookie';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
-import { Location } from "@angular/common";
+import { Location } from '@angular/common';
+import { SiteService } from '../site.service';
 
 /**
  * API Class
@@ -11,12 +12,16 @@ export class Client {
   origin: string = '';
   cookie: Cookie = new Cookie();
 
-  static _(http: HttpClient, location: Location) {
-    return new Client(http, location);
+  static _(http: HttpClient, location: Location, site: SiteService) {
+    return new Client(http, location, site);
   }
 
-  constructor(public http: HttpClient, public location: Location) {
-    if (window.Minds.pro) {
+  constructor(
+    public http: HttpClient,
+    public location: Location,
+    protected site: SiteService
+  ) {
+    if (this.site.isProDomain) {
       this.base = window.Minds.site_url;
       this.origin = document.location.host;
     }

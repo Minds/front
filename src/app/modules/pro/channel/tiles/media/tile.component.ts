@@ -14,6 +14,7 @@ import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { Router } from '@angular/router';
 import { ProChannelService } from '../../channel.service';
 import isMobile from '../../../../../helpers/is-mobile';
+import { SiteService } from '../../../../../services/site.service';
 
 @Component({
   selector: 'm-pro--channel-tile',
@@ -30,9 +31,9 @@ export class ProTileComponent {
     protected featuresService: FeaturesService,
     protected channelService: ProChannelService,
     protected modalService: OverlayModalService,
-    protected router: Router
-  ) {
-  }
+    protected router: Router,
+    protected site: SiteService
+  ) {}
 
   getType(entity: any) {
     return entity.type === 'object'
@@ -91,7 +92,7 @@ export class ProTileComponent {
         break;
       case 'object:blog':
         let url = `/blog/${this.entity.slug}-${this.entity.guid}`;
-        if (!window.Minds.pro) {
+        if (!this.site.isProDomain) {
           url = `${this.channelService.currentChannel.username}/${url}`;
         }
         this.router.navigate([url]);
@@ -130,7 +131,10 @@ export class ProTileComponent {
 
       const params: MediaModalParams = { entity: this.entity };
 
-      if (window.Minds.pro && this.getType(this.entity) === 'object:blog') {
+      if (
+        this.site.isProDomain &&
+        this.getType(this.entity) === 'object:blog'
+      ) {
         params.redirectUrl = `/blog/${this.entity.slug}-${this.entity.guid}`;
       }
 

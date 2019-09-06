@@ -18,7 +18,8 @@ import { FeaturesService } from './services/features.service';
 import { ThemeService } from './common/services/theme.service';
 import { BannedService } from './modules/report/banned/banned.service';
 import { DiagnosticsService } from './services/diagnostics.service';
-import { STANDALONE_ROUTES } from './modules/pro/pro.module';
+import { SiteService } from './services/site.service';
+import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
 
 @Component({
   moduleId: module.id,
@@ -34,8 +35,6 @@ export class Minds {
   showTOSModal: boolean = false;
 
   paramsSubscription;
-
-  standalone: boolean = false;
 
   constructor(
     public session: Session,
@@ -56,11 +55,12 @@ export class Minds {
     public themeService: ThemeService,
     private bannedService: BannedService,
     private diagnostics: DiagnosticsService,
+    private site: SiteService
   ) {
     this.name = 'Minds';
 
-    if (window.Minds.pro) {
-      this.router.resetConfig(STANDALONE_ROUTES);
+    if (this.site.isProDomain) {
+      this.router.resetConfig(PRO_DOMAIN_ROUTES);
     }
   }
 
@@ -68,18 +68,16 @@ export class Minds {
     this.diagnostics.setUser(this.minds.user);
     this.diagnostics.listen(); // Listen for user changes
 
-    this.standalone = Boolean(window.Minds.pro);
-
-    if (!this.standalone) {
+    if (!this.site.isProDomain) {
       this.notificationService.getNotifications();
     }
 
     this.session.isLoggedIn(async is => {
-      if (is && !this.standalone) {
-        // TODO remove window.Minds.pro check from this line
-        if (!this.standalone) {
+      if (is && !this.site.isProDomain) {
+        if (!this.site.isProDomain) {
           this.showOnboarding = await this.onboardingService.showModal();
         }
+
         if (this.minds.user.language !== this.minds.language) {
           console.log(
             '[app]:: language change',
@@ -124,5 +122,9 @@ export class Minds {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();
     this.paramsSubscription.unsubscribe();
+  }
+
+  get isProDomain() {
+    return this.site.isProDomain;
   }
 }

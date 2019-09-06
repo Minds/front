@@ -1,4 +1,4 @@
-<ng-container *ngIf="!standalone">
+<ng-container *ngIf="!isProDomain">
   <m-v2-topbar *mIfFeature="'top-feeds'; else legacyTopbar">
     <ng-container search>
       <m-search--bar [defaultSizes]="false"></m-search--bar>
@@ -30,7 +30,7 @@
 
 <m-body
   [class.has-v2-navbar]="featuresService.has('top-feeds')"
-  [class.is-standalone]="this.standalone"
+  [class.is-pro-domain]="isProDomain"
 >
   <m-announcement [id]="'blockchain:sale'" *ngIf="false">
     <span
@@ -45,7 +45,7 @@
   <router-outlet></router-outlet>
 </m-body>
 
-<m-messenger *ngIf="minds.LoggedIn && !this.standalone"></m-messenger>
+<m-messenger *ngIf="minds.LoggedIn && !isProDomain"></m-messenger>
 
 <m-hovercard-popup></m-hovercard-popup>
 
@@ -53,10 +53,10 @@
 <m--blockchain--transaction-overlay></m--blockchain--transaction-overlay>
 <m-modal--tos-updated *ngIf="session.isLoggedIn()"></m-modal--tos-updated>
 <m-juryDutySession__summons
-  *ngIf="session.isLoggedIn() && !this.standalone"
+  *ngIf="session.isLoggedIn() && !isProDomain"
 ></m-juryDutySession__summons>
 
-<m-modal-signup-on-scroll *ngIf="!this.standalone"></m-modal-signup-on-scroll>
+<m-modal-signup-on-scroll *ngIf="!isProDomain"></m-modal-signup-on-scroll>
 
 <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
 

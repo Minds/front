@@ -99,7 +99,7 @@
       </ng-container>
       <ng-template #ownerNavLinks>
         <a
-          *ngIf="isStandalone"
+          *ngIf="isProDomain"
           class="m-proChannelTopbar__navItem"
           [href]="proSettingsHref"
           target="root_minds"
@@ -109,7 +109,7 @@
         </a>
 
         <a
-          *ngIf="!isStandalone"
+          *ngIf="!isProDomain"
           class="m-proChannelTopbar__navItem"
           [routerLink]="proSettingsLink"
           i18n

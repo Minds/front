@@ -71,7 +71,7 @@ const routes: Routes = [
   },
 ];
 
-export const STANDALONE_ROUTES = [
+export const PRO_DOMAIN_ROUTES = [
   {
     path: '',
     component: ProChannelComponent,

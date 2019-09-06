@@ -1,7 +1,20 @@
-import { Component, HostListener, Input, OnDestroy, OnInit, ViewChild, } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
-import { animate, state, style, transition, trigger, } from '@angular/animations';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';

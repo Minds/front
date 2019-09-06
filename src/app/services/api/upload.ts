@@ -1,5 +1,6 @@
 import { Cookie } from '../cookie';
 import { HttpClient } from '@angular/common/http';
+import { SiteService } from '../site.service';
 
 /**
  * API Class
@@ -9,12 +10,12 @@ export class Upload {
   origin: string = '';
   cookie: Cookie = new Cookie();
 
-  static _(http: HttpClient) {
-    return new Upload(http);
+  static _(http: HttpClient, site: SiteService) {
+    return new Upload(http, site);
   }
 
-  constructor(public http: HttpClient) {
-    if (window.Minds.pro) {
+  constructor(public http: HttpClient, protected site: SiteService) {
+    if (this.site.isProDomain) {
       this.base = window.Minds.site_url;
       this.origin = document.location.host;
     }

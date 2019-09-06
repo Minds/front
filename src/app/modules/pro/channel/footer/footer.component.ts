@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProChannelService } from '../channel.service';
 import { Session } from '../../../../services/session';
 import { AuthService } from '../../../../services/auth.service';
+import { SiteService } from '../../../../services/site.service';
 
 export interface SocialProfileMeta {
   key: string;
@@ -20,7 +21,8 @@ export class ProChannelFooterComponent {
   constructor(
     protected channelService: ProChannelService,
     protected session: Session,
-    protected auth: AuthService
+    protected auth: AuthService,
+    protected site: SiteService
   ) {}
 
   private socialProfileMeta: SocialProfileMeta[] = [
@@ -304,7 +306,7 @@ export class ProChannelFooterComponent {
     return window.Minds.site_url + this.session.getLoggedInUser().username;
   }
 
-  get isStandalone() {
-    return Boolean(window.Minds.pro);
+  get isProDomain() {
+    return this.site.isProDomain;
   }
 }

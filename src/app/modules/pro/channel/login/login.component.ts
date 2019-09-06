@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { ProChannelService } from '../channel.service';
-import { Storage } from "../../../../services/storage";
+import { Storage } from '../../../../services/storage';
 
 @Component({
   selector: 'm-pro--channel-login',
@@ -55,7 +55,7 @@ export class ProChannelLoginComponent {
     public service: ProChannelService,
     private router: Router,
     private route: ActivatedRoute,
-    private storage: Storage,
+    private storage: Storage
   ) {
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['username']) {

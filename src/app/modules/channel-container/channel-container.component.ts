@@ -13,6 +13,7 @@ import { MindsChannelResponse } from '../../interfaces/responses';
 import { ChannelComponent } from '../channels/channel.component';
 import { ProChannelComponent } from '../pro/channel/channel.component';
 import { Session } from '../../services/session';
+import { SiteService } from '../../services/site.service';
 
 @Component({
   selector: 'm-channel-container',
@@ -38,7 +39,8 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     protected route: ActivatedRoute,
     protected router: Router,
     protected client: Client,
-    protected session: Session
+    protected session: Session,
+    protected site: SiteService
   ) {}
 
   ngOnInit(): void {
@@ -82,7 +84,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
       this.channel = response.channel;
 
       // NOTE: Temporary workaround until channel component supports children routes
-      if (!window.Minds.pro && this.channel.pro && !this.isOwner) {
+      if (!this.site.isProDomain && this.channel.pro && !this.isOwner) {
         this.router.navigate(['/pro', this.channel.username], {
           replaceUrl: true,
         });

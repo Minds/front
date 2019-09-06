@@ -8,7 +8,8 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Session } from '../../../services/session';
 import { ActivatedRoute } from '@angular/router';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
-import { SessionsStorageService } from "../../../services/session-storage.service";
+import { SessionsStorageService } from '../../../services/session-storage.service';
+import { SiteService } from '../../../services/site.service';
 
 export type RouterLinkToType =
   | 'home'
@@ -44,6 +45,7 @@ export class ProChannelService {
     protected route: ActivatedRoute,
     protected modalService: OverlayModalService,
     protected sessionStorage: SessionsStorageService,
+    protected site: SiteService
   ) {}
 
   async load(id: string) {
@@ -103,9 +105,9 @@ export class ProChannelService {
   }
 
   async getContent({
-                     limit,
-                     offset,
-                   }: { limit?: number; offset? } = {}): Promise<{
+    limit,
+    offset,
+  }: { limit?: number; offset? } = {}): Promise<{
     content: Array<any>;
     offset: any;
   }> {
@@ -177,7 +179,7 @@ export class ProChannelService {
 
     const route: any[] = [root];
 
-    if (!window.Minds.pro) {
+    if (!this.site.isProDomain) {
       route.push(this.currentChannel.username);
     }
 
@@ -261,8 +263,8 @@ export class ProChannelService {
   }
 
   async auth() {
-    if (!window.Minds.pro) {
-      // Not in standalone mode
+    if (!this.site.isProDomain) {
+      // Not in Pro domain mode, user already injected
       return;
     }
 
@@ -282,11 +284,11 @@ export class ProChannelService {
     this.modalService
       .create(WireCreatorComponent, this.currentChannel, {
         onComplete: () => {
-          this.sessionStorage.destroy('pro::wire-modal::open')
+          this.sessionStorage.destroy('pro::wire-modal::open');
         },
       })
       .onDidDismiss(() => {
-        this.sessionStorage.destroy('pro::wire-modal::open')
+        this.sessionStorage.destroy('pro::wire-modal::open');
       })
       .present();
   }
