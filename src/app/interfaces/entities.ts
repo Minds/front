@@ -42,6 +42,12 @@ export interface Tag {
   selected?: boolean;
 }
 
+export enum ChannelMode {
+  PUBLIC = 0,
+  MODERATED = 1,
+  CLOSED = 2,
+}
+
 export interface MindsUser {
   guid: string;
   name: string;
@@ -87,6 +93,7 @@ export interface MindsUser {
     tile_ratio?: string;
     styles?: { [key: string]: string };
   };
+  mode: ChannelMode;
 }
 
 export interface MindsGroup {

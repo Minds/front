@@ -150,6 +150,9 @@ export class EmbedImage {
     this.base.checkContentChanged();
   }
 
+  /**
+   * Event handler registration.
+   */
   public events() {
     /* prevent default image drag&drop */
     this.$element.addEventListener('dragover', e => {
@@ -227,8 +230,17 @@ export class EmbedImage {
     return data;
   }
 
+  /**
+   * On image select, responds to image click.
+   * @param { event }  e - event from DOM.
+   */
   public selectImage(e) {
     let $image = e.target;
+
+    if (!$image || $image.tagName === null) {
+      return;
+    }
+
     if ($image.tagName === 'SPAN') {
       $image = $image.parentNode.querySelector('img');
     }
@@ -254,11 +266,15 @@ export class EmbedImage {
     event.stopPropagation();
   }
 
+  /**
+   * On image deselect, called when image clicked away from.
+   * @param { event }  e - event from DOM.
+   */
   public unselectImage(e) {
     let $el = e.target,
       $image = document.querySelector('.medium-insert-image-active');
 
-    if (!$image) {
+    if (!$image || !$el || $el.tagName === null) {
       return;
     }
 

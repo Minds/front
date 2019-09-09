@@ -102,6 +102,7 @@ import { SettingsService } from '../modules/settings/settings.service';
 import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
+import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
 import { ShareModalComponent } from '../modules/modals/share/share';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
@@ -195,6 +196,7 @@ import { DndModule } from 'ngx-drag-drop';
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
+    ChannelModeSelectorComponent,
     NSFWSelectorComponent,
 
     SwitchComponent,
@@ -285,6 +287,7 @@ import { DndModule } from 'ngx-drag-drop';
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    ChannelModeSelectorComponent,
     DraggableListComponent,
   ],
   providers: [

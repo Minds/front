@@ -31,6 +31,8 @@ tmtags
 Thumbs.db
 Desktop.ini
 node_modules
+cypress/screenshots
+cypress/videos
 # don't ignore travis config
 !/.travis.yml
 !/.drone.yml
