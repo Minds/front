@@ -41,7 +41,6 @@ export class ProChannelService implements OnDestroy {
 
   protected isLoggedIn$: Subscription;
 
-
   constructor(
     protected client: Client,
     protected entitiesService: EntitiesService,
