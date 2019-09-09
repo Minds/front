@@ -1,0 +1,25 @@
+@import 'defaults';
+
+.m-wallet-container {
+  margin: 0 25%;
+  padding: $minds-padding 0;
+  @media only screen and (max-width: $min-desktop) {
+    margin: 0 15%;
+  }
+  @media only screen and (max-width: $min-tablet) {
+    margin: 0 5%;
+  }
+
+  h1 {
+    font-weight: 450;
+    font-size: 21pt;
+    letter-spacing: 2px;
+  }
+
+  .m-wallet-subtext {
+    margin: ($minds-padding * 3) 0;
+    @include m-theme() {
+      color: themed($m-grey-200);
+    }
+  }
+}

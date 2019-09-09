@@ -1,0 +1,69 @@
+<div class="m-walletSummary-container">
+  <!-- Currency selector -->
+  <div class="m-walletSummary-currencySelector">
+    <button
+      class="m-walletSummary-currency"
+      *ngFor="let currency of currencies"
+      (click)="onCurrencySelect(currency)"
+    >
+      {{ currency.title }}
+    </button>
+  </div>
+  <!-- Learn more -->
+  <div class="m-walletSummary-subtext">(?) <a>Learn more</a> about tokens.</div>
+  <!-- Message prompt -->
+  <div *ngIf="!state.setupWallet" class="m-walletSummary-setupPrompt-container">
+    <span *ngIf="!state.setupWallet" class="m-walletSummary-setupPrompt-text"
+      ><a href="/token" target="_blank">Setup your On-Chain wallet</a> to
+      receive wires and boosts.</span
+    >
+  </div>
+  <!-- Balance -->
+  <div class="m-walletSummary-balancesContainer">
+    <div class="m-walletSummary-totalBalance">
+      <a class="m-walletSummary-addTokensButton" href="/token"
+        ><i class="material-icons">add_circle</i></a
+      >
+
+      <div class="m-walletSummary-balanceGrid">
+        <div class="m-walletSummary-balanceGrid-header">
+          {{ state.activeCurrency.title }} Balance
+        </div>
+        <div class="m-walletSummary-balanceGrid-body">
+          0 {{ state.activeCurrency.symbol }}
+        </div>
+      </div>
+
+      <span
+        class="m-walletSummary-breakdown-operator"
+        *ngIf="state.activeCurrency.symbol === 'MINDS'"
+        >=</span
+      >
+    </div>
+
+    <div
+      class="m-walletSummary-breakdown-container"
+      *ngIf="state.activeCurrency.symbol === 'MINDS'"
+    >
+      <div class="m-walletSummary-balanceGrid">
+        <div class="m-walletSummary-balanceGrid-header">
+          Off-Chain (?)
+        </div>
+        <div class="m-walletSummary-balanceGrid-body">
+          0 {{ state.activeCurrency.symbol }}
+        </div>
+      </div>
+
+      <span class="m-walletSummary-breakdown-operator">+</span>
+
+      <div class="m-walletSummary-balanceGrid">
+        <div class="m-walletSummary-balanceGrid-header">
+          On-Chain (?)
+        </div>
+        <div class="m-walletSummary-balanceGrid-body">
+          0 {{ state.activeCurrency.symbol }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
