@@ -7,21 +7,11 @@
     />
 
     <div class="m-proChannelTopbar__SearchBox">
-      <div class="mdl-textfield mdl-js-textfield">
-        <i class="material-icons search">search</i>
-        <input
-          [(ngModel)]="query"
-          id="search"
-          autocomplete="off"
-          class="mdl-textfield__input ng-pristine ng-valid ng-touched"
-          type="text"
-          (keyup.enter)="search()"
-        />
-        <ng-container *ngIf="query">
-          <i class="material-icons clear" (click)="clearSearch()">close</i>
-        </ng-container>
-        <label class="mdl-textfield__label" for="search"></label>
-      </div>
+      <m-pro__searchBox
+        [(query)]="query"
+        (onSearch)="search()"
+        (onClearSearch)="clearSearch()"
+      ></m-pro__searchBox>
     </div>
 
     <ng-container *ngIf="!collapseNavItems">
@@ -99,7 +89,11 @@
       </ng-template>
     </ng-container>
 
-    <m-pro__hamburger-menu></m-pro__hamburger-menu>
+    <m-pro__hamburger-menu
+      [(query)]="query"
+      (onSearch)="search()"
+      (onClearSearch)="clearSearch()"
+    ></m-pro__hamburger-menu>
   </div>
 
   <div class="m-proChannel__body">

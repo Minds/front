@@ -33,6 +33,7 @@ import { ForgotPasswordComponent } from '../auth/forgot-password/forgot-password
 import { AuthModule } from '../auth/auth.module';
 import { ProHamburgerMenu } from './channel/hamburger-menu/hamburger-menu.component';
 import { SubscribeButtonComponent } from './channel/subscribe-button/subscribe-button.component';
+import { SearchBoxComponent } from './channel/search-box/search-box.component';
 
 const routes: Routes = [
   {
@@ -156,6 +157,7 @@ export const PRO_DOMAIN_ROUTES = [
     ProUnsubscribeModalComponent,
     ProHamburgerMenu,
     SubscribeButtonComponent,
+    SearchBoxComponent,
   ],
   exports: [ProChannelComponent],
   entryComponents: [

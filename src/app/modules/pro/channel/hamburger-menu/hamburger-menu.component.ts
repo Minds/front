@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  Input,
   Output,
 } from '@angular/core';
 import { ProChannelService } from '../channel.service';
@@ -13,6 +14,14 @@ import { Session } from '../../../../services/session';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProHamburgerMenu {
+  @Input() query: string = '';
+
+  @Output() queryChange: EventEmitter<string> = new EventEmitter<string>();
+
+  @Output() onSearch: EventEmitter<void> = new EventEmitter<void>();
+
+  @Output() onClearSearch: EventEmitter<void> = new EventEmitter<void>();
+
   constructor(
     protected service: ProChannelService,
     protected session: Session

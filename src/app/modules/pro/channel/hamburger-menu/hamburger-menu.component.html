@@ -79,6 +79,15 @@
       </a>
     </li>
 
+    <li class="m-pro__hamburger-menu-menu__search-box">
+      <m-pro__searchBox
+        [query]="query"
+        (queryChange)="queryChange.emit($event)"
+        (onSearch)="onSearch.emit($event); closeMenu()"
+        (onClearSearch)="onClearSearch.emit($event); closeMenu()"
+      ></m-pro__searchBox>
+    </li>
+
     <li class="m-pro__hamburger-menu-menu__spacer"></li>
 
     <ng-container *ngIf="items && items.length">

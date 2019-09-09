@@ -69,6 +69,19 @@ m-pro__hamburger-menu {
           }
         }
 
+        &.m-pro__hamburger-menu-menu__search-box {
+          > m-pro__searchbox {
+            width: 100%;
+            display: block;
+            margin: 0 auto 16px;
+
+            .mdl-textfield__input {
+              border: 1px solid var(--m-pro--text-color);
+              border-radius: 6px;
+            }
+          }
+        }
+
         &.m-pro__hamburger-menu-menu__spacer {
           height: 0;
           border-top: 1px solid var(--m-pro--text-color);
