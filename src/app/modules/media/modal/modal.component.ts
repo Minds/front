@@ -177,7 +177,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
         break;
     }
 
-    if (this.contentType !== 'blog') {
+    if (this.redirectUrl) {
+      this.pageUrl = this.redirectUrl;
+    } else if (this.contentType !== 'blog') {
       this.pageUrl = `/media/${this.entity.entity_guid}`;
     } else {
       this.pageUrl = this.entity.route
