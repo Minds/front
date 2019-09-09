@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../services/site.service';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 export type RouterLinkToType =
   | 'home'
@@ -33,11 +33,14 @@ export interface NavItems {
 export class ProChannelService implements OnDestroy {
   currentChannel: MindsUser;
 
+  readonly onChannelChange: BehaviorSubject<any> = new BehaviorSubject(null);
+
   protected featuredContent: Array<any> | null;
 
   protected menuNavItems: Array<NavItems> = [];
 
   protected isLoggedIn$: Subscription;
+
 
   constructor(
     protected client: Client,
@@ -92,6 +95,7 @@ export class ProChannelService implements OnDestroy {
     )) as MindsChannelResponse;
 
     this.currentChannel = response.channel;
+    this.onChannelChange.next(this.currentChannel);
 
     return this.currentChannel;
   }

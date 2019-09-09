@@ -31,6 +31,8 @@ export class SubscribeButtonComponent implements OnInit, OnDestroy {
 
   protected loggedIn$: Subscription;
 
+  protected channelChange$: Subscription;
+
   constructor(
     protected session: Session,
     protected router: Router,
@@ -44,6 +46,10 @@ export class SubscribeButtonComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.updateCount();
 
+    this.channelChange$ = this.channelService.onChannelChange.subscribe(() => {
+      this.updateCount();
+    });
+
     this.loggedIn$ = this.session.loggedinEmitter.subscribe(is => {
       if (!is) {
         this.subscribed = false;
@@ -54,6 +60,7 @@ export class SubscribeButtonComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.loggedIn$.unsubscribe();
+    this.channelChange$.unsubscribe();
   }
 
   async toggleSubscription() {
