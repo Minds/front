@@ -87,6 +87,7 @@ export class ChannelSidebar {
     }
 
     this.changeEditing.next(!this.editing);
+    this.minds.user.name = this.user.name; //no need to refresh for other pages to update.
   }
 
   upload_avatar(file) {
