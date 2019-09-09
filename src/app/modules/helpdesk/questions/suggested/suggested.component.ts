@@ -5,11 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'm-helpdesk--questions--suggested',
-  templateUrl: 'suggested.component.html'
+  templateUrl: 'suggested.component.html',
 })
-
 export class SuggestedQuestionsComponent implements OnInit {
-
   categories: any[] = [];
   topQuestions: any[] = [];
 
@@ -23,8 +21,7 @@ export class SuggestedQuestionsComponent implements OnInit {
     public session: Session,
     public router: Router,
     private route: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.load();
@@ -32,10 +29,10 @@ export class SuggestedQuestionsComponent implements OnInit {
 
   load() {
     switch (this.type) {
-      case "popular":
+      case 'popular':
         this.loadPopular();
         break;
-      case "category":
+      case 'category':
         this.loadCategory(this.question.category_uuid);
         break;
     }
@@ -43,9 +40,12 @@ export class SuggestedQuestionsComponent implements OnInit {
 
   async loadPopular() {
     try {
-      const response: any = await this.client.get(`api/v2/helpdesk/questions/top`, { 
-        limit: 8 
-      });
+      const response: any = await this.client.get(
+        `api/v2/helpdesk/questions/top`,
+        {
+          limit: 8,
+        }
+      );
       this.topQuestions = response.questions;
     } catch (e) {
       console.error(e);
@@ -54,9 +54,11 @@ export class SuggestedQuestionsComponent implements OnInit {
 
   async loadCategory(uuid: string) {
     try {
-      const response: any = await this.client.get(`api/v2/helpdesk/categories/category/${uuid}`);
+      const response: any = await this.client.get(
+        `api/v2/helpdesk/categories/category/${uuid}`
+      );
 
-      this.categories = [ response.category ];
+      this.categories = [response.category];
     } catch (e) {
       console.error(e);
     }
@@ -67,5 +69,4 @@ export class SuggestedQuestionsComponent implements OnInit {
       return a.position - b.position;
     });
   }
-
 }

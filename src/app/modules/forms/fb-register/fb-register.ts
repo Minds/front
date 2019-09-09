@@ -8,11 +8,9 @@ import { Session } from '../../../services/session';
   moduleId: module.id,
   selector: 'minds-form-fb-register',
   outputs: ['done'],
-  templateUrl: 'fb-register.html'
+  templateUrl: 'fb-register.html',
 })
-
 export class FbRegisterForm {
-
   minds = window.Minds;
 
   errorMessage: string = '';
@@ -26,7 +24,7 @@ export class FbRegisterForm {
 
   constructor(public session: Session, public client: Client, fb: FormBuilder) {
     this.form = fb.group({
-      username: [this.session.getLoggedInUser().username, Validators.required]
+      username: [this.session.getLoggedInUser().username, Validators.required],
     });
   }
 
@@ -35,9 +33,12 @@ export class FbRegisterForm {
     this.errorMessage = '';
 
     this.inProgress = true;
-    this.client.post('api/v1/thirdpartynetworks/facebook/complete-register', this.form.value)
+    this.client
+      .post(
+        'api/v1/thirdpartynetworks/facebook/complete-register',
+        this.form.value
+      )
       .then((data: any) => {
-
         this.inProgress = false;
         this.minds.user.username = this.form.value.username;
 
@@ -45,7 +46,7 @@ export class FbRegisterForm {
 
         this.done.next(true);
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
         this.inProgress = false;
         this.errorMessage = e.message;
@@ -53,5 +54,4 @@ export class FbRegisterForm {
         return;
       });
   }
-
 }

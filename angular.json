@@ -28,7 +28,6 @@
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
-              "src/shims/fontawesome.js",
               "src/shims/jitsi-api.min.js"
             ]
           },
@@ -82,7 +81,6 @@
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
-              "src/shims/fontawesome.js",
               "src/shims/jitsi-api.min.js"
             ],
             "assets": [

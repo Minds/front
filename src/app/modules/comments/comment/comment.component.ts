@@ -1,13 +1,14 @@
-import { 
+import {
   Component,
   EventEmitter,
   Output,
   ViewEncapsulation,
   forwardRef,
-  ChangeDetectorRef, 
+  ChangeDetectorRef,
   ChangeDetectionStrategy,
   OnChanges,
   Input,
+  ViewChild,
   ElementRef,
 } from '@angular/core';
 
@@ -21,14 +22,19 @@ import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { CommentsListComponent } from '../list/list.component';
 import { TimeDiffService } from '../../../services/timediff.service';
 import { Observable } from 'rxjs';
-import { map } from "rxjs/operators";
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { FeaturesService } from '../../../services/features.service';
+import { MindsVideoComponent } from '../../media/components/video/video.component';
+import { MediaModalComponent } from '../../media/modal/modal.component';
+import isMobile from '../../../helpers/is-mobile';
 
 @Component({
   selector: 'm-comment',
   changeDetection: ChangeDetectionStrategy.OnPush,
   outputs: ['_delete: delete', '_saved: saved'],
   host: {
-    '(keydown.esc)': 'editing = false'
+    '(keydown.esc)': 'editing = false',
   },
   templateUrl: 'comment.component.html',
   providers: [
@@ -36,12 +42,10 @@ import { map } from "rxjs/operators";
     {
       provide: CommentsListComponent,
       useValue: forwardRef(() => CommentsListComponent),
-     },
+    },
   ],
 })
-
 export class CommentComponentV2 implements OnChanges {
-
   comment: any;
   editing: boolean = false;
   minds = window.Minds;
@@ -67,18 +71,22 @@ export class CommentComponentV2 implements OnChanges {
     target: '',
     error: false,
     description: '',
-    source: null
+    source: null,
   };
   isTranslatable: boolean;
   translationInProgress: boolean;
   translateToggle: boolean = false;
   commentAge$: Observable<number>;
+
+  videoDimensions: Array<any> = null;
+  @ViewChild('player', { static: false }) player: MindsVideoComponent;
+  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
+
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
   @Input() hideToolbar: boolean = false;
 
   @Output() onReply = new EventEmitter();
-
 
   constructor(
     public session: Session,
@@ -88,13 +96,17 @@ export class CommentComponentV2 implements OnChanges {
     private overlayModal: OverlayModalService,
     private cd: ChangeDetectorRef,
     private timeDiffService: TimeDiffService,
-    private el: ElementRef
+    private el: ElementRef,
+    private router: Router,
+    protected featuresService: FeaturesService
   ) {}
 
   ngOnInit() {
-    this.commentAge$ = this.timeDiffService.source.pipe(map(secondsElapsed => {
-      return (this.comment.time_created - secondsElapsed * 0.01) * 1000;
-    }));
+    this.commentAge$ = this.timeDiffService.source.pipe(
+      map(secondsElapsed => {
+        return (this.comment.time_created - secondsElapsed * 0.01) * 1000;
+      })
+    );
   }
 
   ngAfterViewInit() {
@@ -108,8 +120,7 @@ export class CommentComponentV2 implements OnChanges {
 
   @Input('comment')
   set _comment(value: any) {
-    if (!value)
-      return;
+    if (!value) return;
     this.comment = value;
     this.attachment.load(this.comment);
 
@@ -121,7 +132,12 @@ export class CommentComponentV2 implements OnChanges {
   }
 
   saveEnabled() {
-    return !this.inProgress && this.canPost && ((this.comment.description && this.comment.description.trim() !== '') || this.attachment.has());
+    return (
+      !this.inProgress &&
+      this.canPost &&
+      ((this.comment.description && this.comment.description.trim() !== '') ||
+        this.attachment.has())
+    );
   }
 
   save() {
@@ -136,12 +152,13 @@ export class CommentComponentV2 implements OnChanges {
 
     this.editing = false;
     this.inProgress = true;
-    this.client.post('api/v1/comments/update/' + this.comment.guid, data)
+    this.client
+      .post('api/v1/comments/update/' + this.comment.guid, data)
       .then((response: any) => {
         this.inProgress = false;
         if (response.comment) {
           this._saved.next({
-            comment: response.comment
+            comment: response.comment,
           });
         }
         this.comment.edited = true;
@@ -175,12 +192,12 @@ export class CommentComponentV2 implements OnChanges {
   }
 
   delete() {
-    if (!confirm('Do you want to delete this comment?\n\nThere\'s no UNDO.')) {
+    if (!confirm("Do you want to delete this comment?\n\nThere's no UNDO.")) {
       return;
     }
 
     this.client.delete('api/v1/comments/' + this.comment.guid);
-    if(this.parent.type === 'comment'){
+    if (this.parent.type === 'comment') {
       this.parent.replies_count -= 1;
     }
     this._delete.next(true);
@@ -190,7 +207,8 @@ export class CommentComponentV2 implements OnChanges {
     this.canPost = false;
     this.triedToPost = false;
 
-    this.attachment.upload(file)
+    this.attachment
+      .upload(file)
       .then(guid => {
         this.canPost = true;
         this.triedToPost = false;
@@ -208,15 +226,18 @@ export class CommentComponentV2 implements OnChanges {
     this.canPost = false;
     this.triedToPost = false;
 
-    this.attachment.remove(file).then(() => {
-      this.canPost = true;
-      this.triedToPost = false;
-      file.value = '';
-    }).catch(e => {
-      console.error(e);
-      this.canPost = true;
-      this.triedToPost = false;
-    });
+    this.attachment
+      .remove(file)
+      .then(() => {
+        this.canPost = true;
+        this.triedToPost = false;
+        file.value = '';
+      })
+      .catch(e => {
+        console.error(e);
+        this.canPost = true;
+        this.triedToPost = false;
+      });
   }
 
   getPostPreview(message) {
@@ -237,12 +258,14 @@ export class CommentComponentV2 implements OnChanges {
     }
 
     this.translation.target = '';
-    this.translationService.getLanguageName($event.selected)
-      .then(name => this.translation.target = name);
+    this.translationService
+      .getLanguageName($event.selected)
+      .then(name => (this.translation.target = name));
 
     this.translationInProgress = true;
 
-    this.translationService.translate(this.comment.guid, $event.selected)
+    this.translationService
+      .translate(this.comment.guid, $event.selected)
       .then((translation: any) => {
         this.translationInProgress = false;
         this.translation.source = null;
@@ -253,8 +276,9 @@ export class CommentComponentV2 implements OnChanges {
 
           if (this.translation.source === null && translation[field].source) {
             this.translation.source = '';
-            this.translationService.getLanguageName(translation[field].source)
-              .then(name => this.translation.source = name);
+            this.translationService
+              .getLanguageName(translation[field].source)
+              .then(name => (this.translation.source = name));
           }
         }
       })
@@ -275,8 +299,7 @@ export class CommentComponentV2 implements OnChanges {
   }
 
   showReport() {
-    this.overlayModal.create(ReportCreatorComponent, this.comment)
-      .present();
+    this.overlayModal.create(ReportCreatorComponent, this.comment).present();
   }
 
   toggleReplies() {
@@ -284,7 +307,7 @@ export class CommentComponentV2 implements OnChanges {
   }
 
   ngOnChanges(changes) {
-  //  console.log('[comment:card]: on changes', changes);
+    //  console.log('[comment:card]: on changes', changes);
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
@@ -292,8 +315,8 @@ export class CommentComponentV2 implements OnChanges {
   ngDoCheck() {
     this.changesDetected = false;
     if (this.comment.error != this.error) {
-        this.error = this.comment.error;
-        this.changesDetected = true;
+      this.error = this.comment.error;
+      this.changesDetected = true;
     }
 
     if (this.changesDetected) {
@@ -301,4 +324,49 @@ export class CommentComponentV2 implements OnChanges {
     }
   }
 
+  // * ATTACHMENT MEDIA MODAL  * ---------------------------------------------------------------------
+
+  setVideoDimensions($event) {
+    this.videoDimensions = $event.dimensions;
+    this.comment.custom_data.dimensions = this.videoDimensions;
+  }
+
+  setImageDimensions() {
+    const img: HTMLImageElement = this.batchImage.nativeElement;
+    this.comment.custom_data[0].width = img.naturalWidth;
+    this.comment.custom_data[0].height = img.naturalHeight;
+  }
+
+  clickedImage() {
+    const isNotTablet = Math.min(screen.width, screen.height) < 768;
+    const pageUrl = `/media/${this.comment.entity_guid}`;
+
+    if (isMobile() && isNotTablet) {
+      this.router.navigate([pageUrl]);
+      return;
+    }
+
+    if (!this.featuresService.has('media-modal')) {
+      this.router.navigate([pageUrl]);
+      return;
+    } else {
+      if (
+        this.comment.custom_data[0].width === '0' ||
+        this.comment.custom_data[0].height === '0'
+      ) {
+        this.setImageDimensions();
+      }
+      this.openModal();
+    }
+  }
+
+  openModal() {
+    this.comment.modal_source_url = this.router.url;
+
+    this.overlayModal
+      .create(MediaModalComponent, this.comment, {
+        class: 'm-overlayModal--media',
+      })
+      .present();
+  }
 }

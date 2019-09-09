@@ -12,6 +12,7 @@ import { BlockchainModule } from '../blockchain/blockchain.module';
 import { PlusModule } from '../plus/plus.module';
 
 import { WalletComponent } from './wallet.component';
+import { NewWalletComponent } from '../wallet-v2/wallet.component';
 import { PointsOverviewComponent } from './points-overview.component';
 import { WalletOverviewComponent } from './overview/overview.component';
 import { WalletTransactionsComponent } from './transactions/transactions.component';
@@ -35,6 +36,8 @@ import { WalletUSDComponent } from './usd/usd.component';
 import { WalletUSDEarningsComponent } from './usd/earnings.component';
 import { WalletUSDPayoutsComponent } from './usd/payouts.component';
 import { WalletUSDSettingsComponent } from './usd/settings.component';
+import { WalletUSDOnboardingComponent } from './usd/onboarding/onboarding.component';
+import { WalletUSDTermsComponent } from './usd/terms.component';
 import { WalletTokenWithdrawLedgerComponent } from './tokens/withdraw/ledger/ledger.component';
 import { WalletTokenAddressesComponent } from './tokens/addresses/addresses.component';
 import { TokenOnboardingModule } from './tokens/onboarding/onboarding.module';
@@ -45,16 +48,17 @@ import { ModalsModule } from '../modals/modals.module';
 import { WalletTokenTestnetComponent } from './tokens/testnet/testnet.component';
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
-import { WalletSummaryComponent } from './wallet-summary.component';
-import { WalletTabsComponent } from './tabs/wallet-tabs.component';
-import { WalletSettingsComponent } from './tabs/wallet-settings.component';
-import { OldWalletComponent } from './old-wallet.component';
-import { VerifyMobileComponent } from './verify-mobile/verify-mobile.component';
-import { OnChainOnboardingComponent } from './tabs/onchain/onchain.component';
-import { OnboardingVideoComponent } from './tabs/onchain/video.component';
+import { WalletSummaryComponent } from '../wallet-v2/summary/wallet-summary.component';
+import { WalletTabsComponent } from '../wallet-v2/tabs/wallet-tabs.component';
+import { WalletSettingsComponent } from '../wallet-v2/tabs/wallet-settings.component';
+import { VerifyMobileComponent } from '../wallet-v2/onboarding/mobile/verify-mobile.component';
+import { OnChainOnboardingComponent } from '../wallet-v2/onboarding/onchain/onchain.component';
+import { OnboardingVideoComponent } from '../wallet-v2/onboarding/onchain/video.component';
 
 const walletRoutes: Routes = [
-  { path: 'wallet', component: OldWalletComponent,
+  {
+    path: 'wallet',
+    component: WalletComponent,
     children: [
       { path: '', redirectTo: 'tokens', pathMatch: 'full' },
       { path: 'overview', redirectTo: 'tokens', pathMatch: 'full' },
@@ -62,34 +66,46 @@ const walletRoutes: Routes = [
       // { path: 'overview', component: WalletOverviewComponent },
       // { path: 'points', component: WalletPointsComponent },
       // { path: 'points/purchase', component: WalletPurchaseComponent },
-      { path: 'tokens', component: WalletTokensComponent,
+      {
+        path: 'tokens',
+        component: WalletTokensComponent,
         children: [
           { path: '', redirectTo: 'contributions', pathMatch: 'full' },
-          { path: 'transactions/:contract', component: WalletTokenTransactionsComponent },
+          {
+            path: 'transactions/:contract',
+            component: WalletTokenTransactionsComponent,
+          },
           { path: 'transactions', component: WalletTokenTransactionsComponent },
           { path: 'withdraw', component: WalletTokenWithdrawComponent },
           { path: 'contributions/join', component: WalletTokenJoinComponent },
-          { path: 'contributions', component: WalletTokenContributionsComponent },
+          {
+            path: 'contributions',
+            component: WalletTokenContributionsComponent,
+          },
           { path: 'addresses', component: WalletTokenAddressesComponent },
           { path: '101', component: WalletToken101Component },
           { path: 'testnet', component: WalletTokenTestnetComponent },
           { path: 'referrals', component: ReferralsComponent },
-        ]
+        ],
       },
-      { path: 'usd', component: WalletUSDComponent,
+      {
+        path: 'usd',
+        component: WalletUSDComponent,
         children: [
           { path: '', redirectTo: 'earnings', pathMatch: 'full' },
           { path: 'earnings', component: WalletUSDEarningsComponent },
           { path: 'payouts', component: WalletUSDPayoutsComponent },
           { path: 'settings', component: WalletUSDSettingsComponent },
-        ]
+          { path: 'onboarding', component: WalletUSDOnboardingComponent },
+        ],
       },
       { path: 'wire', component: WalletWireComponent },
-      { path: 'new', component: WalletComponent },
+      { path: 'new', component: NewWalletComponent },
       { path: 'verify', component: VerifyMobileComponent },
+      { path: 'onchain', component: OnChainOnboardingComponent },
       { path: '**', component: WalletOverviewComponent },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
@@ -112,7 +128,6 @@ const walletRoutes: Routes = [
   ],
   declarations: [
     WalletComponent,
-    OldWalletComponent,
     PointsOverviewComponent,
     WalletOverviewComponent,
     WalletTransactionsComponent,
@@ -136,6 +151,8 @@ const walletRoutes: Routes = [
     WalletUSDEarningsComponent,
     WalletUSDPayoutsComponent,
     WalletUSDSettingsComponent,
+    WalletUSDOnboardingComponent,
+    WalletUSDTermsComponent,
     WalletTokenAddressesComponent,
     WalletTokenContributionsOverviewComponent,
     WalletTokenContributionsChartComponent,
@@ -146,11 +163,11 @@ const walletRoutes: Routes = [
     VerifyMobileComponent,
     WalletSettingsComponent,
     OnChainOnboardingComponent,
-    OnboardingVideoComponent
+    OnboardingVideoComponent,
+    NewWalletComponent,
   ],
   exports: [
     WalletComponent,
-    OldWalletComponent,
     PointsOverviewComponent,
     WalletTransactionsComponent,
     WalletPointsTransactionsComponent,
@@ -159,14 +176,15 @@ const walletRoutes: Routes = [
     WalletToggleComponent,
     WalletFlyoutComponent,
     WalletBalanceUSDComponent,
+    WalletBalanceTokensComponent,
     WalletSummaryComponent,
     WalletTabsComponent,
     VerifyMobileComponent,
     WalletSettingsComponent,
     OnChainOnboardingComponent,
-    OnboardingVideoComponent
+    OnboardingVideoComponent,
+    NewWalletComponent,
   ],
-  entryComponents: [ WalletComponent, OldWalletComponent ]
+  entryComponents: [WalletComponent, NewWalletComponent],
 })
-
 export class WalletModule {}

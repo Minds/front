@@ -3,20 +3,14 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-marketing--features',
-  templateUrl: 'features.component.html'
+  templateUrl: 'features.component.html',
 })
-
 export class MarketingFeaturesComponent {
-
   minds = window.Minds;
 
-  @Input() panels = { 
-    newsfeed: true
+  @Input() panels = {
+    newsfeed: true,
   };
 
-  constructor(
-  ) {
-
-  }
-
+  constructor() {}
 }

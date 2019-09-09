@@ -1,22 +1,31 @@
-
 <!-- START: Onboarding bio input -->
-<form (submit)="submit($event)" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form">
-
+<form
+  (submit)="submit($event)"
+  [formGroup]="form"
+  class="mdl-card mdl-color-text--blue-grey-400 m-form"
+>
   <div class="mdl-card__supporting-text mdl-grid">
-
     <div class="mdl-cell mdl-cell--4-col">
       <label i18n="@@FORMS__ONBOARDING__AVATAR_LABEL">Avatar</label>
     </div>
     <div class="mdl-cell mdl-cell--8-col">
-      <minds-avatar editMode="true" waitForDoneSignal="false" (added)="addAvatar($event)" [src]="session.getLoggedInUser().icontime ? '/icon/' + session.getLoggedInUser().guid + '/large/' + session.getLoggedInUser().icontime : null"></minds-avatar>
+      <minds-avatar
+        editMode="true"
+        waitForDoneSignal="false"
+        (added)="addAvatar($event)"
+        [src]="session.getLoggedInUser().icontime ? '/icon/' + session.getLoggedInUser().guid + '/large/' + session.getLoggedInUser().icontime : null"
+      ></minds-avatar>
     </div>
   </div>
 
   <div class="mdl-card__actions">
-    <button class="mdl-button mdl-button--colored m-register-btn" (click)="submit($event)" [disabled]="inProgress">
+    <button
+      class="mdl-button mdl-button--colored m-register-btn"
+      (click)="submit($event)"
+      [disabled]="inProgress"
+    >
       <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
     </button>
   </div>
-
 </form>
 <!-- END: Onboarding bio input-->

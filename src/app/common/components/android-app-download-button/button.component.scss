@@ -1,7 +1,7 @@
 .m-androidApp__download {
   box-sizing: border-box;
   border-radius: 8px;
-  @include m-theme(){
+  @include m-theme() {
     border: 1px solid rgba(themed($m-white-always), 0.7);
     background: themed($m-black-always);
   }
@@ -33,13 +33,13 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
 
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white-always);
     }
   }
 
   i.material-icons {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white-always);
     }
   }

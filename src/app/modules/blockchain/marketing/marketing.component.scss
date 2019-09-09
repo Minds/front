@@ -1,30 +1,24 @@
 m-blockchain--marketing {
-
 }
 
 .m-error--text {
   margin-left: 8px;
   font-size: 11px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-red);
   }
-
 }
 
 .m-blockchain--marketing {
-
   .m-marketing--hero {
-
     .m-marketing--hero--inner {
       flex-wrap: wrap;
     }
 
     .m-marketing--hero--slogans {
-
       h1 {
         font-size: 86px;
       }
-
     }
 
     .m-marketing--hero--actions {
@@ -42,7 +36,7 @@ m-blockchain--marketing {
 
         i {
           font-size: 36px;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white);
           }
         }
@@ -55,7 +49,7 @@ m-blockchain--marketing {
           font-weight: 600;
           text-align: right;
           min-width: 105px;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white);
             background-color: rgba(themed($m-white), 0.2);
           }
@@ -68,7 +62,7 @@ m-blockchain--marketing {
           margin: 16px 0;
           margin-left: 12px;
           white-space: nowrap;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white) !important;
             background-color: rgba(themed($m-white), 0.3) !important;
           }
@@ -77,13 +71,13 @@ m-blockchain--marketing {
         .m-blockchain--marketing--pledges--eth-label {
           font-size: 22px;
           margin: 0 0 0 0.35em;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white);
           }
         }
         .m-blockchain--marketing--pledges--eth-subtext {
           font-size: 11px;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white);
           }
         }
@@ -93,20 +87,18 @@ m-blockchain--marketing {
         button.mdl-button {
           width: 200px;
           font-size: 20px;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white);
             background-color: themed($m-blue) !important;
           }
         }
       }
     }
-
   }
 
   .m-blockchain--marketing--pledges {
     display: flex;
     flex-direction: row;
-
 
     .m-blockchain--marketing--pledges--amounts {
       padding: 24px 12px;
@@ -122,7 +114,7 @@ m-blockchain--marketing {
         font-size: 52px;
         font-weight: 600;
         text-align: right;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }
@@ -134,12 +126,12 @@ m-blockchain--marketing {
         text-transform: uppercase;
         letter-spacing: 1.5px;
         font-weight: 400;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-50);
         }
 
         @media screen and (max-width: 1000px) {
-            display: none;
+          display: none;
         }
       }
     }
@@ -154,11 +146,10 @@ m-blockchain--marketing {
   }
 
   m-video .minds-video-play-icon {
-    @include m-theme(){
+    @include m-theme() {
       text-shadow: 0 0 3px rgba(themed($m-black-always), 0.6);
     }
   }
-
 }
 
 .m-blockchain--marketing--links a {
@@ -179,7 +170,7 @@ m-blockchain--marketing {
 
   h2 {
     font-size: 30px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800) !important;
     }
   }
@@ -210,7 +201,6 @@ m-blockchain--marketing {
       height: 50px;
     }
   }
-
 }
 
 .m-blockchain--marketing--pledge--address-input {
@@ -228,8 +218,8 @@ m-blockchain--marketing {
     font-size: 16px;
     padding: 8px;
     letter-spacing: 1px;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-50);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-50);
     }
   }
 }
@@ -237,10 +227,9 @@ m-blockchain--marketing {
 .m-blockchain--marketing--pledge--address-warn {
   font-size: 0.85em;
   padding-bottom: 16px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-400);
   }
-
 }
 
 .m-blockchain--marketing--pledge--note {
@@ -250,7 +239,7 @@ m-blockchain--marketing {
 .m-blockchain--marketing--pledge--note,
 .m-blockchain--marketing--pledge--check-label {
   line-height: 1.35;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-800);
   }
 }
@@ -282,7 +271,7 @@ m-blockchain--marketing {
     font-size: 52px;
     letter-spacing: 2px;
     line-height: 1.5;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-blue);
     }
   }
@@ -293,7 +282,7 @@ m-blockchain--marketing {
     font-weight: 300;
     line-height: 1.5;
     text-transform: uppercase;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-400);
     }
     @media screen and (max-width: $max-mobile) {
@@ -315,7 +304,7 @@ m-blockchain--marketing {
     font-size: 16px;
     letter-spacing: 0.25px;
     padding: 16px 0;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-700);
       border-bottom: 1px solid themed($m-grey-50);
     }
@@ -348,7 +337,6 @@ m-blockchain--marketing {
       }
     }
   }
-
 }
 
 .m-blockchain--value-logos {
@@ -361,7 +349,6 @@ m-blockchain--marketing {
 }
 
 .m-blockchain--marketing--team {
-
   .m-marketing--section--grid {
     justify-content: center;
   }
@@ -386,8 +373,8 @@ m-blockchain--marketing {
     background-position: center;
     background-size: cover;
     border-radius: 50%;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-50);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-50);
     }
   }
 
@@ -411,15 +398,15 @@ m-blockchain--marketing {
       filter: grayscale(1);
       opacity: 0.62;
       &:hover {
-         filter: initial;
-         opacity: 1;
+        filter: initial;
+        opacity: 1;
       }
     }
   }
 
   .m-blockchain--marketing-person-title {
     font-size: 14px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-400);
     }
   }
@@ -481,19 +468,19 @@ m-blockchain--pre-register {
 }
 
 .m-marketing--section--subsection-video {
-  @include m-theme(){
-     border: 1px solid themed($m-grey-100);
+  @include m-theme() {
+    border: 1px solid themed($m-grey-100);
   }
 
   m-video {
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-50);
     }
   }
 }
 
 .m-marketing--section-economy {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-50);
   }
 }

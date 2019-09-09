@@ -8,20 +8,20 @@ import { FaqComponent } from './faq.component';
 
 @Component({
   selector: 'm-faq--page',
-  templateUrl: 'faq.page.html'
+  templateUrl: 'faq.page.html',
 })
-
 export class FaqPage implements OnInit {
-
   @ViewChild(FaqComponent, { static: true }) faq: FaqComponent;
   category: string = 'all';
   inProgress: boolean = false;
 
-  constructor(private client: Client,
-              public service: FaqService,
-              public title: MindsTitle,
-              public route: ActivatedRoute,
-              public router: Router) {
+  constructor(
+    private client: Client,
+    public service: FaqService,
+    public title: MindsTitle,
+    public route: ActivatedRoute,
+    public router: Router
+  ) {
     this.title.setTitle('FAQ');
   }
 
@@ -29,7 +29,7 @@ export class FaqPage implements OnInit {
     const categoryParam = this.route.snapshot.params.category;
     if (categoryParam) {
       this.inProgress = true;
-      this.service.get(categoryParam).then((faq) => {
+      this.service.get(categoryParam).then(faq => {
         if (faq.length === 0) {
           this.router.navigate(['/faq']);
         } else {
@@ -46,5 +46,4 @@ export class FaqPage implements OnInit {
       this.faq._category = this.category;
     }
   }
-
 }

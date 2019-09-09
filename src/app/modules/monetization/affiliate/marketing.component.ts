@@ -1,15 +1,17 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 
 import { Client } from '../../../common/api/client.service';
 
 @Component({
   selector: 'm-affiliate--marketing',
   templateUrl: 'marketing.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class AffiliateMarketingComponent {
-
   minds = window.Minds;
   user = window.Minds.user;
   showOnboarding: boolean = false;
@@ -17,16 +19,15 @@ export class AffiliateMarketingComponent {
 
   constructor(private client: Client, private cd: ChangeDetectorRef) {
     if (this.user)
-      this.link = this.minds.site_url + 'register;referrer=' + this.user.username;
+      this.link =
+        this.minds.site_url + 'register;referrer=' + this.user.username;
   }
 
   isAffiliate() {
-    if (!this.user)
-      return false;
+    if (!this.user) return false;
 
     for (let program of this.user.programs) {
-      if (program === 'affiliate')
-        return true;
+      if (program === 'affiliate') return true;
     }
 
     return false;
@@ -43,15 +44,14 @@ export class AffiliateMarketingComponent {
   }
 
   onboardCompleted(response) {
-
     this.user.merchant = {
       id: response.id,
       service: 'stripe',
       status: 'awaiting-document',
       exclusive: {
         enabled: true,
-        amount: 10
-      }
+        amount: 10,
+      },
     };
     this.showOnboarding = false;
 
@@ -64,5 +64,4 @@ export class AffiliateMarketingComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

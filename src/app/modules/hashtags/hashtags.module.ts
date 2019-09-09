@@ -10,7 +10,7 @@ import { TopbarHashtagsService } from './service/topbar.service';
 import { HashtagsTopbarSelectorComponent } from './topbar-selector/topbar-selector.component';
 import { SidebarSelectorComponent } from './sidebar-selector/sidebar-selector.component';
 import { SidebarSelectorItemComponent } from './sidebar-selector/item.component';
-import { TextInputAutocompleteModule } from "../../common/components/autocomplete";
+import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 
 @NgModule({
   imports: [
@@ -36,12 +36,7 @@ import { TextInputAutocompleteModule } from "../../common/components/autocomplet
     HashtagsTopbarSelectorComponent,
     SidebarSelectorComponent,
   ],
-  providers: [
-    TopbarHashtagsService,
-  ],
-  entryComponents: [
-    HashtagsSelectorModalComponent
-  ]
+  providers: [TopbarHashtagsService],
+  entryComponents: [HashtagsSelectorModalComponent],
 })
-export class HashtagsModule {
-}
+export class HashtagsModule {}

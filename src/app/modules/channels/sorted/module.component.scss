@@ -16,7 +16,7 @@ m-channels--sorted-module {
 
     > .mdl-card {
       transform-style: preserve-3d;
-      transform: translate(0,0);
+      transform: translate(0, 0);
       overflow: hidden;
     }
   }
@@ -44,7 +44,7 @@ m-channels--sorted-module {
         display: inline-block;
         background-position: center center;
         background-size: cover;
-        @include m-theme(){
+        @include m-theme() {
           background-color: themed($m-grey-900);
         }
       }
@@ -55,7 +55,7 @@ m-channels--sorted-module {
 
       &.m-mature-module-thumbnail {
         transform-style: preserve-3d;
-        @include m-theme(){
+        @include m-theme() {
           background-color: rgba(themed($m-black), 0.65);
         }
 
@@ -72,7 +72,7 @@ m-channels--sorted-module {
           left: 50%;
           transform: translate(-50%, -50%);
           font-size: 3em;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white);
           }
         }

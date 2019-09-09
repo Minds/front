@@ -4,12 +4,12 @@
   minds-activity {
     .item-image-video {
       video {
-        width:100%;
-        height:auto;
+        width: 100%;
+        height: auto;
         max-height: 400px;
       }
     }
-        
+
     .item-image {
       img {
         width: 100%;
@@ -38,7 +38,7 @@
 
     &.m-firehose__moderatorAction--leftButton {
       justify-content: right;
-    } 
+    }
 
     &.m-firehose__moderatorAction--rightButton {
       justify-content: left;
@@ -52,7 +52,7 @@
     justify-content: space-between;
     padding: 12px;
     margin-bottom: 16px;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
 

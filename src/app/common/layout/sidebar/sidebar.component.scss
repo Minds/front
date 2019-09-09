@@ -1,12 +1,12 @@
-m-sidebar{
+m-sidebar {
   border: 0;
   position: fixed;
   margin-top: 52px;
   height: calc(100% - 52px);
 
-  width:$layout-sidebar-width;
+  width: $layout-sidebar-width;
   transform: translateX(0px);
-  box-shadow:0;
+  box-shadow: 0;
 
   display: flex;
   flex-flow: column nowrap;
@@ -19,24 +19,24 @@ m-sidebar{
 
   transform: translateX(-250px);
   transform-style: preserve-3d;
-  transition-duration: .2s;
-  transition-timing-function: cubic-bezier(.4,0,.2,1);
+  transition-duration: 0.2s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-property: transform;
   overflow: hidden;
   z-index: 5;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-950);
     color: themed($m-grey-800);
   }
 
-  @media screen and (min-width: $min-tablet){
+  @media screen and (min-width: $min-tablet) {
     transform: translateX(0);
   }
-  &.is-visible{
+  &.is-visible {
     transform: translateX(0);
   }
 
-  nav{
-      width:$layout-sidebar-width;
+  nav {
+    width: $layout-sidebar-width;
   }
 }

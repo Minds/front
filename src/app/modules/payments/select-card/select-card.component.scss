@@ -1,0 +1,11 @@
+.m-paymentsSelectCard__addNewCard {
+  margin-top: 8px;
+
+  @include m-theme() {
+    border-top: 2px solid themed($m-grey-100);
+  }
+
+  iframe {
+    max-height: 112px;
+  }
+}

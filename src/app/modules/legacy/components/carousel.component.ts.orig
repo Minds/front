@@ -3,13 +3,8 @@ import { Component, EventEmitter } from '@angular/core';
 import { Client } from '../../../services/api';
 
 @Component({
-<<<<<<< a596794609983ebbce246788506c54ac2ace58a8
-  selector: 'm-channel--carousel',
-  inputs: ['_banners: banners', '_editMode: editMode'],
-=======
   selector: 'minds-carousel',
   inputs: ['_banners: banners', '_editMode: editMode', 'blurred'],
->>>>>>> (feat): mark a channel profile explicit
   outputs: ['done_event: done', 'delete_event: delete'],
   template: `
     <i class="material-icons left" (click)="prev()" [hidden]="banners.length <= 1">keyboard_arrow_left</i>

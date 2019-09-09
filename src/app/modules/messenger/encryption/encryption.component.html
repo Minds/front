@@ -1,29 +1,112 @@
-<div class="m-messenger--encryption-unlock" *ngIf="encryption.isSetup() && !encryption.reKeying">
-  <p class="m-messenger--encryption-setup-help" i18n="@@MESSENGER__ENCRYPTION__ENTER_CHAT_PWD_DESC">
-    Hey <b>{{ username }}</b>! Please enter your encrypted chat password to access your conversations. This password might be different than your account password.
+<div
+  class="m-messenger--encryption-unlock"
+  *ngIf="encryption.isSetup() && !encryption.reKeying"
+>
+  <p
+    class="m-messenger--encryption-setup-help"
+    i18n="@@MESSENGER__ENCRYPTION__ENTER_CHAT_PWD_DESC"
+  >
+    Hey <b>{{ username }}</b
+    >! Please enter your encrypted chat password to access your conversations.
+    This password might be different than your account password.
   </p>
-  <p [hidden]="!error" class="m-messenger--error mdl-color-text--red">{{error}}</p>
-  <input type="password" placeholder="Enter password" i18n-placeholder="@@MESSENGER__ENCRYPTION__ENTER_PWD_PH" #password (keydown.enter)="unlock(password)" />
-  <button class="mdl-button mdl-button--colored" (click)="unlock(password)" [disabled]="inProgress" i18n="@@MESSENGER__ENCRYPTION__UNLOCK">Unlock</button>
+  <p [hidden]="!error" class="m-messenger--error mdl-color-text--red">
+    {{ error }}
+  </p>
+  <input
+    type="password"
+    placeholder="Enter password"
+    i18n-placeholder="@@MESSENGER__ENCRYPTION__ENTER_PWD_PH"
+    #password
+    (keydown.enter)="unlock(password)"
+  />
+  <button
+    class="mdl-button mdl-button--colored"
+    (click)="unlock(password)"
+    [disabled]="inProgress"
+    i18n="@@MESSENGER__ENCRYPTION__UNLOCK"
+  >
+    Unlock
+  </button>
 </div>
 
-<div class="m-messenger--encryption-setup" *ngIf="!encryption.isSetup() && !encryption.reKeying">
-  <p class="m-messenger--encryption-setup-help" i18n="@@MESSENGER__ENCRYPTION__YOU_HAVENT_SETUP_PWD_DESC">
-    Hey <b>{{ username }}</b>! It looks like you haven't setup your encrypted chat password yet. We recommend that you use a different password than your account password for added security.
+<div
+  class="m-messenger--encryption-setup"
+  *ngIf="!encryption.isSetup() && !encryption.reKeying"
+>
+  <p
+    class="m-messenger--encryption-setup-help"
+    i18n="@@MESSENGER__ENCRYPTION__YOU_HAVENT_SETUP_PWD_DESC"
+  >
+    Hey <b>{{ username }}</b
+    >! It looks like you haven't setup your encrypted chat password yet. We
+    recommend that you use a different password than your account password for
+    added security.
   </p>
-  <p [hidden]="!error" class="m-messenger--error mdl-color-text--red">{{error}}</p>
-  <input type="password" placeholder="Enter a password" i18n-placeholder="@@MESSENGER__ENCRYPTION__ENTER_PWD_PH" #password1 />
-  <input type="password" placeholder="Confirm your password" i18n-placeholder="@@MESSENGER__ENCRYPTION__CONFIRM_PWD_PH" #password2 (keydown.enter)="setup(password1, password2)" />
-  <button class="mdl-button mdl-button--colored" (click)="setup(password1, password2)" [disabled]="inProgress" i18n="@@MESSENGER__ENCRYPTION__SETUP_ACTION">Setup</button>
+  <p [hidden]="!error" class="m-messenger--error mdl-color-text--red">
+    {{ error }}
+  </p>
+  <input
+    type="password"
+    placeholder="Enter a password"
+    i18n-placeholder="@@MESSENGER__ENCRYPTION__ENTER_PWD_PH"
+    #password1
+  />
+  <input
+    type="password"
+    placeholder="Confirm your password"
+    i18n-placeholder="@@MESSENGER__ENCRYPTION__CONFIRM_PWD_PH"
+    #password2
+    (keydown.enter)="setup(password1, password2)"
+  />
+  <button
+    class="mdl-button mdl-button--colored"
+    (click)="setup(password1, password2)"
+    [disabled]="inProgress"
+    i18n="@@MESSENGER__ENCRYPTION__SETUP_ACTION"
+  >
+    Setup
+  </button>
 </div>
 
-<div class="m-messenger--encryption-setup m-messenger--encryption-rekey" *ngIf="encryption.reKeying">
+<div
+  class="m-messenger--encryption-setup m-messenger--encryption-rekey"
+  *ngIf="encryption.reKeying"
+>
   <p class="mdl-color-text--grey-400 m-messenger-encryption-setup-note">
-    <ng-container i18n="@@MESSENGER__ENCRYPTION__CHANGING_PWD_NOTE">Changing your encryption password will cause your previous messages to be unreadable.</ng-container>
-    <a class="mdl-color-text--blue-grey-300" (click)="encryption.reKeying = false" i18n="@@MESSENGER__ENCRYPTION__CANCEL_ACTION">Cancel</a>
+    <ng-container i18n="@@MESSENGER__ENCRYPTION__CHANGING_PWD_NOTE"
+      >Changing your encryption password will cause your previous messages to be
+      unreadable.</ng-container
+    >
+    <a
+      class="mdl-color-text--blue-grey-300"
+      (click)="encryption.reKeying = false"
+      i18n="@@MESSENGER__ENCRYPTION__CANCEL_ACTION"
+      >Cancel</a
+    >
   </p>
-  <p [hidden]="!error" class="m-messenger--error mdl-color-text--red">{{error}}</p>
-  <input type="password" placeholder="Enter a password" i18n-placeholder="@@MESSENGER__ENCRYPTION__ENTER_PWD_PH" #password1 />
-  <input type="password" placeholder="Confirm your password" i18n-placeholder="@@MESSENGER__ENCRYPTION__CONFIRM_PWD_PH" #password2 (keydown.enter)="setup(password1, password2)" />
-  <button class="mdl-button mdl-button--colored" (click)="rekey(password1, password2)" [disabled]="inProgress" i18n="@@MESSENGER__ENCRYPTION__CHANGE_ACTION">Change</button>
+  <p [hidden]="!error" class="m-messenger--error mdl-color-text--red">
+    {{ error }}
+  </p>
+  <input
+    type="password"
+    placeholder="Enter a password"
+    i18n-placeholder="@@MESSENGER__ENCRYPTION__ENTER_PWD_PH"
+    #password1
+  />
+  <input
+    type="password"
+    placeholder="Confirm your password"
+    i18n-placeholder="@@MESSENGER__ENCRYPTION__CONFIRM_PWD_PH"
+    #password2
+    (keydown.enter)="setup(password1, password2)"
+  />
+  <button
+    class="mdl-button mdl-button--colored"
+    (click)="rekey(password1, password2)"
+    [disabled]="inProgress"
+    i18n="@@MESSENGER__ENCRYPTION__CHANGE_ACTION"
+  >
+    Change
+  </button>
 </div>

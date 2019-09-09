@@ -11,22 +11,19 @@ import { Session } from '../../services/session';
 import { WalletService } from '../../services/wallet';
 import { BlockchainService } from '../blockchain/blockchain.service';
 
-
 @Component({
   moduleId: module.id,
   selector: 'm-wallet',
-  templateUrl: 'wallet.component.html'
+  templateUrl: 'wallet.component.html',
 })
-
 export class WalletComponent {
-
   disablePointsAnimation: boolean = false;
 
   constructor(
     private session: Session,
     public storage: Storage,
     private router: Router,
-    private title: MindsTitle,
+    private title: MindsTitle
   ) {
     this.disablePointsAnimation = !!this.storage.get('disablePointsAnimation');
   }
@@ -36,9 +33,9 @@ export class WalletComponent {
       this.router.navigate(['/login']);
       return;
     }
+
     this.title.setTitle('Wallet');
   }
-
 
   // Animations
   setDisablePointsAnimation(value) {

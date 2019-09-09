@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service'; 
+import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
 
 @Injectable()
 export class NewsfeedService {
@@ -11,17 +11,22 @@ export class NewsfeedService {
   constructor(
     private client: Client,
     private session: Session,
-    private nsfwSelectorService: NSFWSelectorConsumerService,
-  ) {
-  }
+    private nsfwSelectorService: NSFWSelectorConsumerService
+  ) {}
 
   get nsfw(): Array<number> {
-    return this.nsfwSelectorService.build().reasons
-      .filter(reason => reason.selected)
+    return this.nsfwSelectorService
+      .build()
+      .reasons.filter(reason => reason.selected)
       .map(reason => reason.value);
   }
-  
-  public async recordView(entity, visible: boolean = true, channel = null, clientMeta = {}) {
+
+  public async recordView(
+    entity,
+    visible: boolean = true,
+    channel = null,
+    clientMeta = {}
+  ) {
     if (!this.session.isLoggedIn()) {
       return;
     }
@@ -30,20 +35,21 @@ export class NewsfeedService {
     if (entity.boosted_guid) {
       let url = `api/v2/analytics/views/boost/${entity.boosted_guid}`;
 
-      if (channel)
-        url += `/${channel.guid}`;
+      if (channel) url += `/${channel.guid}`;
 
-      if (!visible)
-        url += `/stop`;
+      if (!visible) url += `/stop`;
 
       return await this.client.post(url, {
         client_meta: clientMeta,
       });
     }
 
-    return await this.client.post(`api/v2/analytics/views/activity/${entity.guid}`, {
-      client_meta: clientMeta,
-    });
+    return await this.client.post(
+      `api/v2/analytics/views/activity/${entity.guid}`,
+      {
+        client_meta: clientMeta,
+      }
+    );
   }
 
   public reloadFeed(allHashtags: boolean = false) {
@@ -51,8 +57,7 @@ export class NewsfeedService {
     this.onReloadFeed.emit(allHashtags);
   }
 
-  setNSFW(reasons: Array<{ value, label, selected }>) {
+  setNSFW(reasons: Array<{ value; label; selected }>) {
     this.onReloadFeed.emit(this.allHashtags);
   }
-
 }

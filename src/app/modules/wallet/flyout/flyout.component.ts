@@ -7,16 +7,14 @@ import { WalletService } from '../../../services/wallet';
 
 @Component({
   selector: 'm-wallet--flyout',
-  templateUrl: 'flyout.component.html'
+  templateUrl: 'flyout.component.html',
 })
-
 export class WalletFlyoutComponent {
-
   address: string;
   balance: any = {
     points: -1,
     money: -1,
-    tokens: -1
+    tokens: -1,
   };
 
   @Output('close') closeEvt: EventEmitter<any> = new EventEmitter();
@@ -27,10 +25,8 @@ export class WalletFlyoutComponent {
     private router: Router,
     public client: Client,
     public wallet: WalletService,
-    public blockchain: BlockchainService,
-  ) {
-
-  }
+    public blockchain: BlockchainService
+  ) {}
 
   ngOnInit() {
     this.loadBalances();
@@ -56,5 +52,4 @@ export class WalletFlyoutComponent {
     const tokens = await this.blockchain.getBalance(true);
     this.balance.tokens = tokens;
   }
-
 }

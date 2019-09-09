@@ -10,27 +10,21 @@ import { AttachmentService } from '../../../services/attachment';
   templateUrl: 'tile.component.html',
   host: {
     //'[class]': 'm-media--images--tile-' + getFlex() + '-col'
-  }
+  },
 })
-
 export class MediaImagesTileComponent {
-
   @Input() entity;
 
-  constructor(
-    public session: Session,
-    public attachment: AttachmentService
-  ) {}
+  constructor(public session: Session, public attachment: AttachmentService) {}
 
   getClass() {
-    return 
+    return;
   }
 
   getWidth() {
     let width = 320;
 
-    if (!this.entity.width) 
-      return width;
+    if (!this.entity.width) return width;
 
     //work out aspect
     let aspect = this.entity.width / this.entity.height;
@@ -38,5 +32,4 @@ export class MediaImagesTileComponent {
 
     return width;
   }
-
 }

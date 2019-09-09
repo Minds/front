@@ -1,29 +1,23 @@
-@import "defaults";
+@import 'defaults';
 
-
-
-
-
-minds-admin-boosts{
+minds-admin-boosts {
   minds-button-comment {
     display: none !important;
   }
 
-  .boost{
+  .boost {
     width: auto;
     padding: 20px;
   }
 }
 
-
-.m-admin-pages{
-
-  .m-admin-pages-path{
-    padding:$minds-padding;
+.m-admin-pages {
+  .m-admin-pages-path {
+    padding: $minds-padding;
   }
 
-  .m-admin-pages-link-path{
-    padding:$minds-padding 0;
+  .m-admin-pages-link-path {
+    padding: $minds-padding 0;
 
     .m-form-input {
       display: block;
@@ -34,10 +28,9 @@ minds-admin-boosts{
     }
   }
 
-  .m-form-actions{
-    padding:$minds-padding 0;
+  .m-form-actions {
+    padding: $minds-padding 0;
   }
-
 }
 
 .m-admin-reports {
@@ -99,8 +92,8 @@ minds-admin-boosts{
     width: 100%;
     padding: 16px;
     box-sizing: border-box;
-    @include m-theme(){
-       border-bottom: 2px solid themed($m-grey-100);
+    @include m-theme() {
+      border-bottom: 2px solid themed($m-grey-100);
     }
 
     p {
@@ -118,27 +111,27 @@ minds-admin-boosts{
 }
 
 .m-admin-button--green {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-green);
   }
 }
 .m-admin-button--green-dark {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-green-dark);
   }
 }
-.m-admin-button--amber{
-  @include m-theme(){
+.m-admin-button--amber {
+  @include m-theme() {
     background-color: themed($m-amber);
   }
 }
 .m-admin-button--amber-dark {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-amber-dark);
   }
 }
 .m-admin-button--red {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-red);
   }
 }

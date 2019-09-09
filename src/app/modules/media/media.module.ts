@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule as NgFormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule as NgFormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
@@ -25,6 +28,7 @@ import { MediaModalComponent } from './modal/modal.component';
 import { ThumbnailSelectorComponent } from './components/thumbnail-selector.component';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
+import { BlogModule } from '../blogs/blog.module';
 
 const routes: Routes = [
   { path: 'media/videos/:filter', component: MediaVideosListComponent },
@@ -57,6 +61,7 @@ const routes: Routes = [
     PostMenuModule,
     VideoModule,
     HashtagsModule,
+    BlogModule,
   ],
   declarations: [
     MediaVideosListComponent,
@@ -77,8 +82,6 @@ const routes: Routes = [
     MediaEditComponent,
     MediaViewComponent,
     MediaModalComponent,
-  ]
+  ],
 })
-
-export class MediaModule {
-}
+export class MediaModule {}

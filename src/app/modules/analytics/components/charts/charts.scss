@@ -1,4 +1,4 @@
-@import "defaults";
+@import 'defaults';
 
 m-analyticscharts__posts,
 m-analyticscharts__comments,
@@ -17,8 +17,7 @@ m-analyticscharts__usersegments,
 m-analyticscharts__pageviews,
 m-analyticscharts__withdraw,
 m-analyticscharts__tokensales,
-m-analyticscharts__rewards
-{
+m-analyticscharts__rewards {
   width: auto;
 
   .m-chart {
@@ -40,17 +39,14 @@ m-analyticscharts__rewards
             }
           }
         }
-
       }
     }
-
   }
-
 }
 
 .m-analytics__averages {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   padding: 8px 0 16px;
   position: relative;
 

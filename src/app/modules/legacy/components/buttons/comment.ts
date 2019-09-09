@@ -7,22 +7,20 @@ import { Client } from '../../../../services/api';
   inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <a [ngClass]="{'selected': object['comments:count'] > 0 }">
+    <a [ngClass]="{ selected: object['comments:count'] > 0 }">
       <i class="material-icons">chat_bubble</i>
-      <span class="minds-counter" *ngIf="object['comments:count'] > 0">{{object['comments:count'] | number}}</span>
+      <span class="minds-counter" *ngIf="object['comments:count'] > 0">{{
+        object['comments:count'] | number
+      }}</span>
     </a>
-  `
+  `,
 })
-
 export class CommentButton {
-
   object;
 
-  constructor(public client : Client) {
-  }
+  constructor(public client: Client) {}
 
-  set _object(value : any){
+  set _object(value: any) {
     this.object = value;
   }
-
 }

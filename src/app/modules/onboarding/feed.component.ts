@@ -5,20 +5,14 @@ import { Session } from '../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'm-onboarding-feed',
-  templateUrl: 'feed.component.html'
+  templateUrl: 'feed.component.html',
 })
 export class OnboardingFeedComponent {
-
   paramsSubscription;
 
-  constructor(
-      private route: ActivatedRoute,
-      public session: Session,
-  ) { }
+  constructor(private route: ActivatedRoute, public session: Session) {}
 
   ngOnDestroy() {
-    if (this.paramsSubscription)
-      this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
   }
-
 }

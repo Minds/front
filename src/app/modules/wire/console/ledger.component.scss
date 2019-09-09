@@ -1,5 +1,5 @@
 .m-wire-console--ledger {
-  .mdl-tabs__tab-bar{
+  .mdl-tabs__tab-bar {
     justify-content: left;
     align-items: center;
   }
@@ -23,7 +23,7 @@
       position: relative;
       font-size: 12px;
       margin-left: $minds-padding;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-300);
       }
 
@@ -34,28 +34,28 @@
   }
 }
 
-.m-wire-console--ledger-table{
+.m-wire-console--ledger-table {
   margin-top: 16px;
 
-  table{
-    width:100%;
+  table {
+    width: 100%;
     font-family: 'Roboto', Helvetica, sans-serif;
   }
 
-  .m-wire-console--ledger-header{
-    th{
+  .m-wire-console--ledger-header {
+    th {
       font-size: 14px;
       letter-spacing: 1px;
       text-transform: uppercase;
     }
   }
 
-  .m-wire-console--ledger-row{
-    td{
+  .m-wire-console--ledger-row {
+    td {
       letter-spacing: 1px;
       text-transform: uppercase;
 
-      i{
+      i {
         cursor: pointer;
       }
     }
@@ -64,12 +64,12 @@
       cursor: pointer;
     }
 
-    .m-wire-console--ledger-amount{
+    .m-wire-console--ledger-amount {
       font-size: 26px;
       text-transform: lowercase;
     }
 
-    .m-wire-console--ledger-refunded{
+    .m-wire-console--ledger-refunded {
       border-radius: 3px;
       font-size: 11px;
       display: inline-block;
@@ -77,7 +77,7 @@
       vertical-align: middle;
       margin-top: -6px;
       margin-right: 8px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-400);
         border: 1px solid themed($m-grey-50);
       }
@@ -85,10 +85,9 @@
       > * {
         vertical-align: middle;
       }
-      m-tooltip i{
-        font-size:14px;
+      m-tooltip i {
+        font-size: 14px;
       }
     }
   }
-
 }

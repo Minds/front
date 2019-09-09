@@ -5,7 +5,7 @@
 .m-admin-boosts-statistics {
   margin-top: $minds-padding * 2;
   max-width: 600px - ($minds-padding * 2);
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-800);
   }
 
@@ -17,7 +17,7 @@
     margin: 0 0 0.61em 0;
     font-family: 'Roboto', Helvetica, sans-serif;
     letter-spacing: 0.5px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-50);
     }
   }
@@ -29,7 +29,7 @@
     font-family: 'Roboto', Helvetica;
     font-size: 26px;
     letter-spacing: 2px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white);
     }
   }
@@ -43,7 +43,7 @@
     font-size: 11px;
     text-transform: uppercase;
     text-align: center;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white);
     }
   }
@@ -55,7 +55,7 @@
     flex-grow: 1;
   }
 
-  input[type=text] {
+  input[type='text'] {
     width: 60px;
   }
 }
@@ -64,7 +64,7 @@
   align-items: center;
   margin: 16px;
   font-family: 'Roboto', Helvetica, sans-serif;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-red);
   }
 }

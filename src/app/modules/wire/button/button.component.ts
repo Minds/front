@@ -8,16 +8,24 @@ import { Session } from '../../../services/session';
 @Component({
   selector: 'm-wire-button',
   template: `
-    <button class="m-wire-button" (click)="wire()">
+    <button
+      class="m-btn m-btn--action m-btn--slim m-wire-button"
+      (click)="wire()"
+    >
       <i class="ion-icon ion-flash"></i>
+      <span>Wire</span>
     </button>
-  `
+  `,
 })
 export class WireButtonComponent {
   @Input() object: any;
   @Output('done') doneEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(public session: Session, private overlayModal: OverlayModalService, private modal: SignupModalService) { }
+  constructor(
+    public session: Session,
+    private overlayModal: OverlayModalService,
+    private modal: SignupModalService
+  ) {}
 
   wire() {
     if (!this.session.isLoggedIn()) {
@@ -26,16 +34,20 @@ export class WireButtonComponent {
       return;
     }
 
-    const creator = this.overlayModal.create(WireCreatorComponent, this.object, {
-      default: this.object && this.object.wire_threshold,
-      onComplete: (wire) => {
-        if (this.object.wire_totals) {
-          this.object.wire_totals[wire.currency] = wire.amount;
-        }
+    const creator = this.overlayModal.create(
+      WireCreatorComponent,
+      this.object,
+      {
+        default: this.object && this.object.wire_threshold,
+        onComplete: wire => {
+          if (this.object.wire_totals) {
+            this.object.wire_totals[wire.currency] = wire.amount;
+          }
 
-        this.doneEmitter.emit(wire);
+          this.doneEmitter.emit(wire);
+        },
       }
-    });
+    );
     creator.present();
   }
 }
