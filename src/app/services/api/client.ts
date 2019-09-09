@@ -47,8 +47,11 @@ export class Client {
             return reject(err || new Error('GET error'));
           }
           if (err.status === 401 && err.error.loggedin === false) {
-            localStorage.setItem('redirect', this.location.path());
-            window.location.href = '/login';
+            if (this.location.path() !== '/login') {
+              localStorage.setItem('redirect', this.location.path());
+              window.location.href = '/login';
+            }
+
             return reject(err);
           }
           return reject(err);
@@ -104,8 +107,11 @@ export class Client {
               return reject(err || new Error('POST error'));
             }
             if (err.status === 401 && err.error.loggedin === false) {
-              localStorage.setItem('redirect', this.location.path());
-              window.location.href = '/login';
+              if (this.location.path() !== '/login') {
+                localStorage.setItem('redirect', this.location.path());
+                window.location.href = '/login';
+              }
+
               return reject(err);
             }
             if (err.status !== 200) {
@@ -136,8 +142,11 @@ export class Client {
           },
           err => {
             if (err.status === 401 && err.data().loggedin === false) {
-              localStorage.setItem('redirect', this.location.path());
-              window.location.href = '/login';
+              if (this.location.path() !== '/login') {
+                localStorage.setItem('redirect', this.location.path());
+                window.location.href = '/login';
+              }
+
               return reject(err);
             }
             if (err.status !== 200) {
@@ -164,8 +173,11 @@ export class Client {
           },
           err => {
             if (err.status === 401 && err.error.loggedin === false) {
-              localStorage.setItem('redirect', this.location.path());
-              window.location.href = '/login';
+              if (this.location.path() !== '/login') {
+                localStorage.setItem('redirect', this.location.path());
+                window.location.href = '/login';
+              }
+
               return reject(err);
             }
             if (err.status !== 200) {
