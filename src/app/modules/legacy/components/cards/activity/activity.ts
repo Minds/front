@@ -20,13 +20,13 @@ import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
 import { MindsVideoComponent } from '../../../../media/components/video/video.component';
-import { EntitiesService } from "../../../../../common/services/entities.service";
-import { Router } from "@angular/router";
-import { BlockListService } from "../../../../../common/services/block-list.service";
-import { ActivityAnalyticsOnViewService } from "./activity-analytics-on-view.service";
-import { NewsfeedService } from "../../../../newsfeed/services/newsfeed.service";
-import { ClientMetaService } from "../../../../../common/services/client-meta.service";
-import { TopbarHashtagsService } from "../../../../hashtags/service/topbar.service";
+import { EntitiesService } from '../../../../../common/services/entities.service';
+import { Router } from '@angular/router';
+import { BlockListService } from '../../../../../common/services/block-list.service';
+import { ActivityAnalyticsOnViewService } from './activity-analytics-on-view.service';
+import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
+import { ClientMetaService } from '../../../../../common/services/client-meta.service';
+import { TopbarHashtagsService } from '../../../../hashtags/service/topbar.service';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
@@ -46,7 +46,11 @@ import isMobile from '../../../../../helpers/is-mobile';
     'showRatingToggle',
   ],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
-  providers: [ ClientMetaService, ActivityAnalyticsOnViewService, TopbarHashtagsService ],
+  providers: [
+    ClientMetaService,
+    ActivityAnalyticsOnViewService,
+    TopbarHashtagsService,
+  ],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -66,21 +70,21 @@ export class Activity implements OnInit {
   @Input()
   showBoostMenuOptions: boolean = false;
   @Input() slot: number = -1;
-  
+
   visibilityEvents: boolean = true;
   @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
     this.visibilityEvents = visibilityEvents;
-    
+
     if (this.activityAnalyticsOnViewService) {
       this.activityAnalyticsOnViewService.setEnabled(this.visibilityEvents);
     }
   }
-  
+
   type: string;
   element: any;
   visible: boolean = false;
-  
-  errorString : string = '';
+
+  errorString: string = '';
   editing: boolean = false;
   @Input() hideTabs: boolean;
 
@@ -244,7 +248,6 @@ export class Activity implements OnInit {
 
   save() {
     console.log('trying to save your changes to the server', this.activity);
-    console.log("hello");
     if (this.hashtagsService.sliceHashTags(this.activity.message).length > 5) {
       this.editing = true;
       this.errorString = `You have exceeded the maximum 5 hashtags in a post`;
