@@ -1,4 +1,7 @@
-<div class="m-proChannelTile__container" [ngSwitch]="getType(entity)">
+<div class="m-proChannelTile__container"
+     (click)="tileClicked()"
+     [ngSwitch]="getType(entity)"
+>
   <m-video
     *ngSwitchCase="'object:video'"
     width="100%"
@@ -16,7 +19,6 @@
     [playCount]="entity['play:count']"
     [torrent]="[{ res: '360', key: entity.guid + '/360.mp4' }]"
     (videoMetadataLoaded)="setVideoDimensions($event)"
-    (mediaModalRequested)="tileClicked()"
     [shouldPlayInModal]="true"
     #player
   ></m-video>
@@ -24,7 +26,6 @@
   <img
     *ngSwitchDefault
     [src]="entity.thumbnail_src"
-    (click)="tileClicked()"
     #img
   />
 </div>
