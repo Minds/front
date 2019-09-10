@@ -247,9 +247,7 @@ export class EmbedImage {
 
     if ($image.tagName === 'SPAN') {
       $image = $image.parentNode.querySelector('img');
-    }
-
-    if ($image.tagName !== 'IMG') {
+    } else if ($image.tagName !== 'IMG') {
       return;
     }
 
