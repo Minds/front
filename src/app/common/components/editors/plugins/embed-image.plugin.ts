@@ -197,6 +197,10 @@ export class EmbedImage {
           '.' + imgClass
         );
 
+        if (!image) {
+          return;
+        }
+
         const overlay = image.parentElement.querySelector(
           '.m-blog--image--in-progress-overlay'
         );
