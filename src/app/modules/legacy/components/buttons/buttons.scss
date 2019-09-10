@@ -71,24 +71,23 @@ minds-button-remind {
 
 .minds-boost-button {
   font-size: 12px;
+  font-weight: 400;
   height: auto;
   min-height: 0;
   line-height: 18px;
-  text-transform: capitalize;
+  text-transform: uppercase;
   align-self: center;
   padding: 3px 0;
-  min-width: 62px;
+  min-width: 72px;
   width: auto;
   margin: -3px 0;
   display: block;
-  @include m-theme() {
-    background-color: themed($m-blue) !important;
-  }
+  flex: 0 !important;
 
-  &:hover {
-    @include m-theme() {
-      background-color: rgba(themed($m-blue-dark), 0.9) !important;
-    }
+  span {
+    min-width: 72px;
+    text-align: center;
+    vertical-align: middle;
   }
 }
 

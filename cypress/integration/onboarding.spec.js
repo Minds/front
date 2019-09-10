@@ -24,6 +24,7 @@ context('Onboarding', () => {
   const getTopic = (i) => `m-onboarding--topics > div > ul > li:nth-child(${i}) span`;
 
   before(() => {
+    cy.clearCookies();
     cy.visit('/login');
 
     //type values

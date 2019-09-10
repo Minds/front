@@ -8,8 +8,12 @@ import { Session } from '../../../services/session';
 @Component({
   selector: 'm-wire-button',
   template: `
-    <button class="m-wire-button" (click)="wire()">
+    <button
+      class="m-btn m-btn--action m-btn--slim m-wire-button"
+      (click)="wire()"
+    >
       <i class="ion-icon ion-flash"></i>
+      <span>Wire</span>
     </button>
   `,
 })

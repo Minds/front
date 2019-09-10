@@ -122,6 +122,7 @@ export class NewsfeedBoostRotatorComponent {
 
   load() {
     try {
+      this.feedsService.clear(); // Fresh each time
       this.feedsService
         .setEndpoint('api/v2/boost/feed')
         .setParams({
@@ -262,8 +263,7 @@ export class NewsfeedBoostRotatorComponent {
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       //this.currentPosition = 0;
       try {
-        this.feedsService.fetch();
-        this.feedsService.loadMore();
+        this.load();
         this.currentPosition++;
       } catch (e) {
         this.currentPosition = 0;

@@ -32,6 +32,7 @@ import {
 import { Scheduler } from './components/scheduler/scheduler';
 import { Modal } from './components/modal/modal.component';
 import { MindsRichEmbed } from './components/rich-embed/rich-embed';
+import { QRCodeComponent } from './components/qr-code/qr-code.component';
 
 import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from './directives/autogrow';
@@ -101,6 +102,7 @@ import { SettingsService } from '../modules/settings/settings.service';
 import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
+import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
 import { ShareModalComponent } from '../modules/modals/share/share';
 
 @NgModule({
@@ -136,6 +138,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     MindsRichEmbed,
     TagcloudComponent,
     DropdownComponent,
+    QRCodeComponent,
 
     AutoGrow,
     InlineAutoGrow,
@@ -185,6 +188,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
+    ChannelModeSelectorComponent,
     NSFWSelectorComponent,
 
     SwitchComponent,
@@ -220,6 +224,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     MindsRichEmbed,
     TagcloudComponent,
     DropdownComponent,
+    QRCodeComponent,
 
     AutoGrow,
     InlineAutoGrow,
@@ -273,6 +278,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    ChannelModeSelectorComponent,
   ],
   providers: [
     {

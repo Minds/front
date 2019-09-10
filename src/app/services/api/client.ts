@@ -1,5 +1,6 @@
 import { Cookie } from '../cookie';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 /**
  * API Class
@@ -175,6 +176,7 @@ export class Client {
 
     const headers = new HttpHeaders({
       'X-XSRF-TOKEN': XSRF_TOKEN,
+      'X-VERSION': environment.version,
     });
 
     return Object.assign(options, {

@@ -6,6 +6,7 @@ import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { FaqModule } from '../faq/faq.module';
+import { PaymentsModule } from '../payments/payments.module';
 
 import { WireCreatorComponent } from './creator/creator.component';
 import { WirePaymentsCreatorComponent } from './payments-creator/creator.component';
@@ -39,6 +40,7 @@ const wireRoutes: Routes = [
     CommonModule,
     CheckoutModule,
     FaqModule,
+    PaymentsModule,
   ],
   declarations: [
     WireLockScreenComponent,

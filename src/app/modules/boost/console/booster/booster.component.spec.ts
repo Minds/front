@@ -11,10 +11,14 @@ import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs/internal/observable/of';
+import { FeedsService } from '../../../../common/services/feeds.service';
+import { feedsServiceMock } from '../../../../../tests/feed-service-mock.spec';
+import { BehaviorSubject } from 'rxjs';
 
 describe('BoostConsoleBooster', () => {
   let comp: BoostConsoleBooster;
   let fixture: ComponentFixture<BoostConsoleBooster>;
+  window.Minds.user = { guid: 123 };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -25,6 +29,11 @@ describe('BoostConsoleBooster', () => {
           inputs: ['object', 'hostClass'],
         }),
         MockComponent({ selector: 'minds-button', inputs: ['object', 'type'] }),
+        MockDirective({
+          selector: 'infinite-scroll',
+          inputs: ['moreData', 'inProgress'],
+          outputs: ['load'],
+        }),
         BoostConsoleBooster,
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
@@ -35,28 +44,15 @@ describe('BoostConsoleBooster', () => {
           provide: ActivatedRoute,
           useValue: { parent: { url: of([{ path: 'newsfeed' }]) } },
         },
+        { provide: FeedsService, useValue: feedsServiceMock },
       ],
     }).compileComponents();
   }));
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
-
     fixture = TestBed.createComponent(BoostConsoleBooster);
-
     comp = fixture.componentInstance;
-
-    clientMock.response = {};
-    clientMock.response['api/v1/newsfeed/personal'] = {
-      status: 'success',
-      activity: [{ guid: '123' }, { guid: '456' }],
-    };
-
-    clientMock.response['api/v1/entities/owner'] = {
-      status: 'success',
-      entities: [{ guid: '789' }, { guid: '101112' }],
-    };
-
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -70,8 +66,7 @@ describe('BoostConsoleBooster', () => {
   });
 
   it('should have loaded the lists', () => {
-    expect(comp.posts).toEqual([{ guid: '123' }, { guid: '456' }]);
-    expect(comp.media).toEqual([{ guid: '789' }, { guid: '101112' }]);
+    expect(comp.feed$).not.toBeFalsy();
   });
 
   it('should have a title', () => {
@@ -89,13 +84,14 @@ describe('BoostConsoleBooster', () => {
       By.css('.m-boost-console--booster--posts-list')
     );
     expect(list).not.toBeNull();
-    expect(list.nativeElement.children.length).toBe(2);
+    expect(list.nativeElement.children.length).toBe(1);
   });
 
   it("should have a poster if the user hasn't posted anything yet", () => {
+    comp.feed$ = of([]);
     fixture.detectChanges();
-    comp.posts = [];
-    fixture.detectChanges();
+
+    comp.feed$.subscribe(feed => expect(feed.length).toBe(0));
 
     const title = fixture.debugElement.query(
       By.css('.m-boost-console-booster--content h3')
@@ -106,9 +102,31 @@ describe('BoostConsoleBooster', () => {
     );
 
     const poster = fixture.debugElement.query(
-      By.css('.m-boost-console-booster--content div:last-child')
+      By.css('.m-boost-console-booster--content > div:nth-child(3)')
     );
     expect(poster).not.toBeNull();
-    expect(poster.nativeElement.hidden).toBeFalsy();
+  });
+
+  it('should not have a poster if the user has posted content', () => {
+    comp.feed$ = of([
+      BehaviorSubject.create({ id: 1 }),
+      BehaviorSubject.create({ id: 2 }),
+    ]);
+    fixture.detectChanges();
+
+    comp.feed$.subscribe(feed => expect(feed.length).toBe(2));
+
+    const title = fixture.debugElement.query(
+      By.css('.m-boost-console-booster--content h3')
+    );
+    expect(title).toBeDefined();
+    expect(title.nativeElement.textContent).toContain(
+      "You have no content yet. Why don't you post something?"
+    );
+
+    const poster = fixture.debugElement.query(
+      By.css('.m-boost-console-booster--content > div:nth-child(3)')
+    );
+    expect(poster).toBeDefined();
   });
 });

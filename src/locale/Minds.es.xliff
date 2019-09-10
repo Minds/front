@@ -2463,7 +2463,7 @@
         <target>Ver más</target>
       </trans-unit>
       <trans-unit id="M__COMMON__CONFIRM_18">
-        <source>Click to confirm your are 18+</source>
+        <source>Click to confirm you are 18+</source>
         <target>Haz clic para confirmar que eres mayor de 18 años</target>
       </trans-unit>
       <trans-unit id="M__COMMON__VIEWS_WITH_COUNT">

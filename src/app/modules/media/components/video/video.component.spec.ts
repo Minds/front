@@ -214,7 +214,7 @@ describe('MindsVideo', () => {
     // video.src = 'thisisavideo.mp4';
     const video = new HTMLVideoElementMock();
     comp.playerRef.getPlayer = () => <any>video;
-    comp.isActivity = false;
+    comp.shouldPlayInModal = false;
     comp.showControls = true;
 
     fixture.detectChanges(); // re-render

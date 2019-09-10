@@ -210,9 +210,7 @@
           i18n-title="@@M__COMMON__MATURE_CONTENT"
           >explicit</i
         >
-        <span i18n="@@M__COMMON__CONFIRM_18"
-          >Click to confirm your are 18+</span
-        >
+        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
     <minds-rich-embed [src]="activity" [maxheight]="480"></minds-rich-embed>
@@ -283,9 +281,7 @@
           i18n-title="@@M__COMMON__MATURE_CONTENT"
           >explicit</i
         >
-        <span i18n="@@M__COMMON__CONFIRM_18"
-          >Click to confirm your are 18+</span
-        >
+        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
 
@@ -298,9 +294,9 @@
       [guid]="activity.custom_data.guid"
       [playCount]="activity['play:count']"
       [torrent]="[{ res: '360', key: activity.custom_data.guid + '/360.mp4' }]"
-      [isActivity]="true"
+      [shouldPlayInModal]="true"
       (videoMetadataLoaded)="setVideoDimensions($event)"
-      (mediaModalRequested)="clickedVideo()"
+      (mediaModalRequested)="openModal()"
       #player
     >
       <video-ads [player]="player" *ngIf="activity.monetized"></video-ads>
@@ -321,9 +317,7 @@
           i18n-title="@@M__COMMON__MATURE_CONTENT"
           >explicit</i
         >
-        <span i18n="@@M__COMMON__CONFIRM_18"
-          >Click to confirm your are 18+</span
-        >
+        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
 
@@ -349,9 +343,7 @@
           i18n-title="@@M__COMMON__MATURE_CONTENT"
           >explicit</i
         >
-        <span i18n="@@M__COMMON__CONFIRM_18"
-          >Click to confirm your are 18+</span
-        >
+        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
     <a class="m-activity--image-link">
@@ -400,28 +392,28 @@
   <minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
   <minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
   <m-wire-button
-    *ngIf="session.getLoggedInUser().guid != (activity.remind_object ? activity.remind_object.owner_guid : activity.owner_guid)"
-    [object]="activity.remind_object ? activity.remind_object : activity"
+    *ngIf="session.getLoggedInUser().guid != activity.owner_guid"
+    [object]="activity"
     (done)="wireSubmitted($event)"
   ></m-wire-button>
+  <button
+    class="m-btn m-btn--action m-btn--slim minds-boost-button"
+    *ngIf="session.getLoggedInUser().guid == activity.owner_guid"
+    id="boost-actions"
+    (click)="showBoost()"
+  >
+    <span i18n="verb|@@M__ACTION__BOOST">Boost</span>
+  </button>
   <minds-button-comment
     [object]="activity"
     (click)="openComments()"
   ></minds-button-comment>
   <minds-button-remind [object]="activity"></minds-button-remind>
-  <a
-    class="mdl-button mdl-color-text--white mdl-button--colored minds-boost-button"
-    *ngIf="session.getLoggedInUser().guid == activity.owner_guid"
-    id="boost-actions"
-    (click)="showBoost()"
-  >
-    <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
-  </a>
 </div>
+
 <!-- Activity metrics -->
 <div
-  class="impressions-tag m-activity--metrics"
-  [class.m-activity--metrics-wire]="!session.getLoggedInUser() || session.getLoggedInUser().guid != activity.owner_guid"
+  class="impressions-tag m-activity--metrics m-activity--metrics-wire"
   *ngIf="!activity.hide_impressions && !hideTabs"
 >
   <div class="m-activity--metrics-inner m-border">

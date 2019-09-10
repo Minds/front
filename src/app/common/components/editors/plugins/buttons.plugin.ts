@@ -203,22 +203,23 @@ export class ButtonsPlugin {
    * Position buttons
    */
   public positionButtons(activeAddon) {
-    let $buttons = this.$element.querySelector('.medium-insert-buttons'),
-      $p = this.$element.querySelector('.medium-insert-active'),
-      $lastCaption = $p.classList.contains('medium-insert-images-grid')
-        ? []
-        : $p.querySelector(
-            '* .medium-insert-images:last-child .m-blog--image-caption'
-          ),
-      elementsContainer = (<any>this.base).options.elementsContainer,
-      elementsContainerAbsolute =
-        ['absolute', 'fixed'].indexOf(
-          window
-            .getComputedStyle(elementsContainer)
-            .getPropertyValue('position')
-        ) > -1;
+    let $buttons = this.$element.querySelector('.medium-insert-buttons');
+    let $p = this.$element.querySelector('.medium-insert-active');
 
-    if ($p) {
+    if ($p !== null) {
+      let $lastCaption = $p.classList.contains('medium-insert-images-grid')
+          ? []
+          : $p.querySelector(
+              '* .medium-insert-images:last-child .m-blog--image-caption'
+            ),
+        elementsContainer = (<any>this.base).options.elementsContainer,
+        elementsContainerAbsolute =
+          ['absolute', 'fixed'].indexOf(
+            window
+              .getComputedStyle(elementsContainer)
+              .getPropertyValue('position')
+          ) > -1;
+
       const pRect = $p.getBoundingClientRect();
 
       $buttons.style.left = pRect.left + document.body.scrollLeft - 40 + 'px';

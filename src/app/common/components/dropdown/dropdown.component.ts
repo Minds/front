@@ -35,11 +35,14 @@ import { Component, Input } from '@angular/core';
 })
 export class DropdownComponent {
   @Input() expanded: boolean = false;
+  @Input() enabled: boolean = true;
 
   toggled = false;
 
   toggle() {
-    this.toggled = !this.toggled;
+    if (this.enabled) {
+      this.toggled = !this.toggled;
+    }
   }
 
   close() {
