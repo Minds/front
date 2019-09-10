@@ -112,6 +112,14 @@ m-pro--channel-login {
     h2 {
       margin: 0;
       white-space: pre-wrap;
+      font-size: 56px;
+      letter-spacing: 1px;
+      line-height: 1.16;
+
+      @media screen and (max-width: 720px) {
+        margin: 0 8px 32px;
+        font-size: 36px;
+      }
     }
 
     h3 {
@@ -142,8 +150,9 @@ m-pro--channel-login {
     }
 
     .m-proChannelLogin--subtext {
+      display: block;
+      margin: 0 8px;
       font-size: 20px;
-      margin: 8px;
       color: var(--m-pro--text-color) !important;
 
       & > a {
