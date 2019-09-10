@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  NgZone,
+} from '@angular/core';
 
 import { NotificationService } from './modules/notifications/notification.service';
 import { AnalyticsService } from './services/analytics';
@@ -122,6 +127,14 @@ export class Minds {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();
     this.paramsSubscription.unsubscribe();
+  }
+
+  @HostBinding('class') get cssColorSchemeOverride() {
+    if (!this.site.isProDomain || !this.site.pro.scheme) {
+      return '';
+    }
+
+    return `m-theme--wrapper m-theme--wrapper__${this.site.pro.scheme}`;
   }
 
   get isProDomain() {
