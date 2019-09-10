@@ -82,6 +82,7 @@ export class Minds {
               }
 
               let url = navigationEvent.url.substring(1, navigationEvent.url.length)
+                .split('/')[0]
                 .split(';')[0]
                 .split('?')[0];
 
