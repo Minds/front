@@ -99,14 +99,13 @@ export class TopbarHashtagsService {
 
    *  Credit to Arnaud Valensi - http://geekcoder.org/js-extract-hashtags-from-text/
    */
-  sliceHashTags(inputText: any) {  
+  sliceHashTags(inputText: any) {
     const regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm;
     let matches = [];
     let match;
     while ((match = regex.exec(inputText))) {
-        matches.push(match[1]);
+      matches.push(match[1]);
     }
     return matches;
   }
-
 }
