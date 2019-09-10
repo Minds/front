@@ -18,7 +18,7 @@ import { ThemeService } from './common/services/theme.service';
 import { BannedService } from './modules/report/banned/banned.service';
 import { DiagnosticsService } from './services/diagnostics.service';
 import { SiteService } from './services/site.service';
-import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
+import { PRO_DOMAIN_ROUTES, proRoutes } from './modules/pro/pro.module';
 import { Subscription } from "rxjs";
 
 @Component({
@@ -37,19 +37,6 @@ export class Minds {
   paramsSubscription;
 
   protected router$: Subscription;
-
-  proRoutes = [
-    '/feed',
-    '/images',
-    '/videos',
-    '/articles',
-    '/groups',
-    '/login',
-    '/forgot_password',
-    '/newsfeed',
-    '/media',
-    '/blog'
-  ];
 
   constructor(
     public session: Session,
@@ -98,8 +85,8 @@ export class Minds {
                 .split(';')[0]
                 .split('?')[0];
 
-              if (!this.searchRoutes(url, this.proRoutes)) {
-                window.location.href = window.Minds.site_url + url;
+              if (!this.searchRoutes(url, proRoutes)) {
+                window.open(window.Minds.site_url + url, '_blank');
               }
             }
           } catch (e) {

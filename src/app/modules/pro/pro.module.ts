@@ -127,6 +127,19 @@ export const PRO_DOMAIN_ROUTES = [
   },
 ];
 
+export const proRoutes = [
+  '/feed',
+  '/images',
+  '/videos',
+  '/articles',
+  '/groups',
+  '/login',
+  '/forgot_password',
+  '/newsfeed',
+  '/media',
+  '/blog'
+];
+
 @NgModule({
   imports: [
     NgCommonModule,
