@@ -1,4 +1,13 @@
-import { Component, Input, Output, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+  EventEmitter,
+} from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
 import { Client } from '../../../../services/api/client';
@@ -6,12 +15,11 @@ import { Client } from '../../../../services/api/client';
 type CurrencyType = 'points' | 'usd' | 'tokens';
 
 @Component({
-  providers: [ CurrencyPipe ],
+  providers: [CurrencyPipe],
   selector: 'm-boost--creator-p2p-search',
-  templateUrl: 'p2p-search.component.html'
+  templateUrl: 'p2p-search.component.html',
 })
 export class BoostCreatorP2PSearchComponent {
-
   @Input() boost;
   @Output() boostChanged: EventEmitter<any> = new EventEmitter();
 
@@ -24,7 +32,7 @@ export class BoostCreatorP2PSearchComponent {
     tokens: 1000,
     minUsd: 1,
     priority: 1,
-    maxCategories: 3
+    maxCategories: 3,
   };
 
   query: string = '';
@@ -34,10 +42,7 @@ export class BoostCreatorP2PSearchComponent {
 
   @ViewChild('input', { static: true }) private input: ElementRef;
 
-  constructor(
-    private client: Client,
-    private cd: ChangeDetectorRef,
-  ) { }
+  constructor(private client: Client, private cd: ChangeDetectorRef) {}
 
   /**
    * Activates and sets focus on the target editor
@@ -47,7 +52,10 @@ export class BoostCreatorP2PSearchComponent {
     this.cd.detectChanges();
 
     if (this.input.nativeElement) {
-      setTimeout(() => (<HTMLInputElement>this.input.nativeElement).focus(), 100);
+      setTimeout(
+        () => (<HTMLInputElement>this.input.nativeElement).focus(),
+        100
+      );
     }
   }
 
@@ -82,11 +90,12 @@ export class BoostCreatorP2PSearchComponent {
     }
 
     this.throttle = setTimeout(() => {
-      this.client.get(`api/v2/search/suggest/user`, {
-        q: query,
-        limit: 8,
-        hydrate: 1
-      })
+      this.client
+        .get(`api/v2/search/suggest/user`, {
+          q: query,
+          limit: 8,
+          hydrate: 1,
+        })
         .then(({ entities }) => {
           if (!entities) {
             return;
@@ -116,5 +125,4 @@ export class BoostCreatorP2PSearchComponent {
   togglePostToFacebook() {
     this.boost.postToFacebook = !this.boost.postToFacebook;
   }
-
 }

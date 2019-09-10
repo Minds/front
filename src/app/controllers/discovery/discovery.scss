@@ -1,29 +1,29 @@
-.m-discovery-suggested{
-  margin-top:16px;
-  max-width:100%;
+.m-discovery-suggested {
+  margin-top: 16px;
+  max-width: 100%;
 
   .m-discovery-wrapper {
     overflow: hidden;
   }
 
-  .mdl-cell{
+  .mdl-cell {
     min-width: 100%;
-    margin:auto;
+    margin: auto;
 
-    .mdl-card{
-      z-index:1;
-      display:block;
+    .mdl-card {
+      z-index: 1;
+      display: block;
     }
 
-    minds-card-user{
+    minds-card-user {
       width: 400px;
       margin: 0 auto;
 
-      .minds-usercard-banner{
+      .minds-usercard-banner {
         display: none !important;
       }
 
-      .avatar{
+      .avatar {
         margin: 0 auto;
         width: 100%;
         height: 368px;
@@ -31,18 +31,18 @@
         text-align: center;
         vertical-align: middle;
         padding: 8px;
-        @include m-theme(){
+        @include m-theme() {
           background-color: themed($m-grey-50);
         }
-        img{
-          height:100%;
+        img {
+          height: 100%;
         }
       }
-      .minds-tabs{
+      .minds-tabs {
         //margin: -48px 12px 0 112px;
-        margin-bottom:8px;
+        margin-bottom: 8px;
       }
-      .minds-usercard-block{
+      .minds-usercard-block {
         display: block;
         margin-top: 0;
         width: 100%;
@@ -50,144 +50,140 @@
 
         .body {
           h3 {
-            @include m-theme(){
+            @include m-theme() {
               color: themed($m-grey-950);
             }
           }
 
           > span {
-            @include m-theme(){
+            @include m-theme() {
               color: themed($m-blue-grey-400);
             }
           }
         }
 
-        @media screen and (min-width: 400px){
-          h3{
+        @media screen and (min-width: 400px) {
+          h3 {
             font-size: 32px;
             line-height: normal;
           }
         }
       }
 
-      @media screen and (max-width:400px){
-        .minds-usercard-block{
+      @media screen and (max-width: 400px) {
+        .minds-usercard-block {
           display: block;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-grey-950);
           }
         }
-        .avatar{
-           width: 100%;
+        .avatar {
+          width: 100%;
         }
-        .body{
+        .body {
           margin: 16px 0 0;
         }
-        .m-usercard-bio{
-          margin-top:0 !important;
+        .m-usercard-bio {
+          margin-top: 0 !important;
         }
       }
 
-
-      .m-usercard-bio{
+      .m-usercard-bio {
         display: flex;
         padding: 8px;
-        margin-top:16px;
-        @include m-theme(){
+        margin-top: 16px;
+        @include m-theme() {
           color: themed($m-grey-950);
         }
 
-        > div{
-          font-size:12px;
+        > div {
+          font-size: 12px;
           //flex:1;
           margin-right: 16px;
-          display:flex;
-          flex-direction:row;
-          align-items:center;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
           max-height: 40px;
           overflow: hidden;
 
-          &.m-usercard-bio-brief{
-            align-items:flex-start;
+          &.m-usercard-bio-brief {
+            align-items: flex-start;
           }
 
-          > i{
-            vertical-align:middle;
-            margin-right:8px;
+          > i {
+            vertical-align: middle;
+            margin-right: 8px;
           }
         }
-
       }
 
-      minds-button-subscribe{
-        display:none
+      minds-button-subscribe {
+        display: none;
       }
     }
 
-    minds-card-video, minds-card-image{
-        .minds-video-thumbnail{
-            min-height:300px;
-            background-repeat: no-repeat !important;
-            background-size: contain !important;
-        }
+    minds-card-video,
+    minds-card-image {
+      .minds-video-thumbnail {
+        min-height: 300px;
+        background-repeat: no-repeat !important;
+        background-size: contain !important;
+      }
     }
 
-    .m-action-tabs{
-      display:none;
+    .m-action-tabs {
+      display: none;
     }
-
   }
 
-  .m-discovery-suggested-actions{
-    display:flex !important;
-    flex-flow:row nowrap;
-    align-items:center;
+  .m-discovery-suggested-actions {
+    display: flex !important;
+    flex-flow: row nowrap;
+    align-items: center;
     margin: -8px 12px;
     padding: 16px 0;
     z-index: 0 !important;
 
     .m-button {
-      flex:1;
-      text-align:center;
+      flex: 1;
+      text-align: center;
 
       > * {
         padding: 12px 32px;
 
         > i {
-          vertical-align:middle;
+          vertical-align: middle;
         }
       }
-
     }
-
   }
 
-  .m-discovery-suggested-location-bar{
-    width:100%;
-    margin:0 auto 16px auto;
-    text-align:center;
+  .m-discovery-suggested-location-bar {
+    width: 100%;
+    margin: 0 auto 16px auto;
+    text-align: center;
 
-    .m-discovery-suggested-location-inner{
-      min-width:50%;
-      margin:auto;
+    .m-discovery-suggested-location-inner {
+      min-width: 50%;
+      margin: auto;
     }
 
-    .m-discovery-suggested-location-toggle{
-      border-radius:3px;
-      padding:8px;
-      cursor:pointer;
+    .m-discovery-suggested-location-toggle {
+      border-radius: 3px;
+      padding: 8px;
+      cursor: pointer;
     }
 
-    .m-discovery-suggested-location-options{
-      select{
+    .m-discovery-suggested-location-options {
+      select {
         -webkit-appearance: none;
-        font-size:inherit;
-        font-weight:bold;
-        padding:8px;
-        font-family:inherit;
-        border:0;
+        font-size: inherit;
+        font-weight: bold;
+        padding: 8px;
+        font-family: inherit;
+        border: 0;
       }
-      input{
+      input {
         padding: 8px;
         margin-left: 12px;
         border: 0;
@@ -197,62 +193,59 @@
         font-family: inherit;
         color: inherit;
         width: 132px;
-        @media screen and (max-width: 330px){
-          width:80px
+        @media screen and (max-width: 330px) {
+          width: 80px;
         }
-        &::-webkit-input-placeholder{
-          @include m-theme(){
+        &::-webkit-input-placeholder {
+          @include m-theme() {
             color: themed($m-white);
           }
         }
-        &::-moz-placeholder{
-          @include m-theme(){
+        &::-moz-placeholder {
+          @include m-theme() {
             color: themed($m-white);
           }
         }
-        &:-moz-placeholder{
-          @include m-theme(){
+        &:-moz-placeholder {
+          @include m-theme() {
             color: themed($m-white);
           }
         }
         &:-ms-input-placeholder {
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white);
           }
         }
       }
     }
 
-    .m-discovery-cities{
+    .m-discovery-cities {
       width: 246px;
       text-align: left;
       margin: 16px auto;
       padding: 16px;
 
-      p{
-        margin:0;
-        padding:0;
-        font-size:12px;
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 12px;
       }
 
-      li{
+      li {
         list-style: none;
         padding: 12px 0;
         cursor: pointer;
-        @include m-theme(){
-           border-bottom: 1px solid themed($m-grey-50);
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-grey-50);
         }
       }
-
     }
-
   }
-
 }
 
 .m-discovery-suggested-channels {
   minds-button-feature {
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
   }
@@ -270,28 +263,28 @@
     }
 
     .m-button-pass {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
         border-color: themed($m-white);
         background-color: themed($m-red);
       }
 
       &:hover {
-        @include m-theme(){
+        @include m-theme() {
           background-color: themed($m-red-dark);
         }
       }
     }
 
     .minds-subscribe-button {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
         border-color: themed($m-white);
         background-color: themed($m-green);
       }
 
       &:hover {
-        @include m-theme(){
+        @include m-theme() {
           background-color: themed($m-green-dark);
         }
       }

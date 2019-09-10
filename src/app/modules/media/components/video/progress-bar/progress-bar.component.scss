@@ -1,35 +1,34 @@
-
-m-video--progress-bar{
-  flex:1;
-  display:flex;
+m-video--progress-bar {
+  flex: 1;
+  display: flex;
   padding: 12px;
 
-  .progress-bar{
+  .progress-bar {
     flex: 1;
     position: relative;
-    .minds-bar{
+    .minds-bar {
       position: absolute;
       left: 0px;
       height: 2px;
       vertical-align: middle;
       border-radius: 2px;
       margin-top: 10px;
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-white-always);
       }
-      &.total{
-        width:100%;
-        @include m-theme(){
+      &.total {
+        width: 100%;
+        @include m-theme() {
           background-color: rgba(themed($m-white-always), 0.5);
         }
       }
     }
   }
 
-  .progress-stamps{
+  .progress-stamps {
     font-size: 12px;
     font-weight: 600;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     padding: 0 12px;
     line-height: 24px;
 
@@ -68,7 +67,7 @@ m-video--progress-bar{
     padding: 0px;
     -webkit-transition: -webkit-transform 0.15s ease-in-out;
     transition: transform 0.15s ease-in-out;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white-always);
     }
   }

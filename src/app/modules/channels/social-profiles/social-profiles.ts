@@ -3,27 +3,22 @@ import { Component, EventEmitter } from '@angular/core';
 import { KeyVal } from '../../../interfaces/entities';
 
 export interface SocialProfileMeta {
-
   key: string;
   label: string;
   link: string;
   icon: string;
   customIcon?: boolean;
   domain: string;
-
 }
-
 
 @Component({
   moduleId: module.id,
   selector: 'm-channel--social-profiles',
   inputs: ['_user : user', 'editing'],
   outputs: ['changed'],
-  templateUrl: 'social-profiles.html'
+  templateUrl: 'social-profiles.html',
 })
-
 export class ChannelSocialProfiles {
-
   socialProfiles: KeyVal[] = [];
   editing: boolean = false;
   changed: EventEmitter<any> = new EventEmitter();
@@ -85,7 +80,7 @@ export class ChannelSocialProfiles {
       label: 'SoundCloud',
       link: 'https://soundcloud.com/:value',
       icon: 'soundcloud',
-      domain: 'soundcloud.com'
+      domain: 'soundcloud.com',
     },
     {
       key: 'tumblr',
@@ -113,14 +108,14 @@ export class ChannelSocialProfiles {
       label: 'Instagram',
       link: 'https://www.instagram.com/:value',
       icon: 'instagram',
-      domain: 'instagram.com'
+      domain: 'instagram.com',
     },
     {
       key: 'wikipedia_user',
       label: 'Wikipedia User',
       link: 'https://wikipedia.org/wiki/:value',
       icon: 'wikipedia-w',
-      domain: 'wikipedia.com'
+      domain: 'wikipedia.com',
     },
     {
       key: 'imdb_user',
@@ -225,8 +220,8 @@ export class ChannelSocialProfiles {
       label: 'Other',
       link: '',
       icon: 'link',
-      domain: ''
-    }
+      domain: '',
+    },
   ];
 
   set _user(value: any) {
@@ -273,7 +268,6 @@ export class ChannelSocialProfiles {
   }
 
   matchSocialProfile(index) {
-
     for (let sm of this.socialProfileMeta) {
       if (this.url.includes(sm.domain)) {
         this.socialProfiles[index].key = sm.key;
@@ -282,7 +276,6 @@ export class ChannelSocialProfiles {
         return;
       }
     }
-
   }
 
   polyfillLegacy(profiles) {
@@ -304,8 +297,11 @@ export class ChannelSocialProfiles {
 
   private getSocialProfileMeta(key: string): SocialProfileMeta {
     let defaultMeta: SocialProfileMeta = {
-      key: '', label: '',
-      link: '#', icon: 'link', domain: ''
+      key: '',
+      label: '',
+      link: '#',
+      icon: 'link',
+      domain: '',
     };
 
     if (!key) {
@@ -320,6 +316,4 @@ export class ChannelSocialProfiles {
 
     return defaultMeta;
   }
-
-
 }

@@ -1,5 +1,4 @@
 m-settings--emails {
-
   ul.m-settings--emails-campaigns {
     list-style: none;
     cursor: default;
@@ -12,7 +11,7 @@ m-settings--emails {
       flex-direction: row;
       align-items: center;
       letter-spacing: 0.25px;
-      font-family: 'Roboto';
+      font-family: 'Roboto', Helvetica, sans-serif;
       padding: 4px 0;
 
       &:first-child {
@@ -28,5 +27,4 @@ m-settings--emails {
       }
     }
   }
-
 }

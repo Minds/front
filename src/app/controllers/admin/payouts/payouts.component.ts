@@ -11,9 +11,7 @@ import { Client } from '../../../services/api';
   selector: 'minds-admin-payouts',
   templateUrl: 'payouts.component.html',
 })
-
 export class AdminPayouts {
-
   payouts: any[] = [];
 
   inProgress: boolean = false;
@@ -21,8 +19,7 @@ export class AdminPayouts {
   offset: string = '';
   reviewing: number | null = null;
 
-  constructor(public client: Client, private route: ActivatedRoute) {
-  }
+  constructor(public client: Client, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.load();
@@ -35,7 +32,11 @@ export class AdminPayouts {
 
     this.inProgress = true;
 
-    this.client.get(`api/v1/admin/monetization/payouts/queue`, { limit: 50, offset: this.offset })
+    this.client
+      .get(`api/v1/admin/monetization/payouts/queue`, {
+        limit: 50,
+        offset: this.offset,
+      })
       .then((response: any) => {
         if (!response.payouts) {
           this.inProgress = false;
@@ -73,7 +74,8 @@ export class AdminPayouts {
     this.inProgress = true;
     this.reviewing = null;
 
-    this.client.post(`api/v1/admin/monetization/payouts/${this.payouts[index].guid}`)
+    this.client
+      .post(`api/v1/admin/monetization/payouts/${this.payouts[index].guid}`)
       .then(response => {
         this.removeFromList(index);
         this.inProgress = false;

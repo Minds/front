@@ -2,7 +2,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef, Input,
+  ElementRef,
+  Input,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -23,10 +24,9 @@ import * as BN from 'bn.js';
 @Component({
   selector: 'm-blockchain__eth-modal',
   templateUrl: 'eth-modal.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlockchainEthModalComponent implements OnInit {
-
   @Input() rate = 1;
   @Output() close: EventEmitter<boolean> = new EventEmitter(true);
 
@@ -36,8 +36,8 @@ export class BlockchainEthModalComponent implements OnInit {
 
   constructor(
     private web3Wallet: Web3WalletService,
-    private cd: ChangeDetectorRef,
-  ) { }
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     // grab latest ETH rate
@@ -45,19 +45,19 @@ export class BlockchainEthModalComponent implements OnInit {
   }
 
   async detectMetamask() {
-    this.hasMetamask = !await this.web3Wallet.isLocal();
+    this.hasMetamask = !(await this.web3Wallet.isLocal());
     this.detectChanges();
   }
 
   get ethRate(): number {
-    const tokenUsdRate = 0.15;
+    const tokenUsdRate = 1.25;
     const tokenUsd = 1 / tokenUsdRate;
     const usd = this.rate / tokenUsd;
     return usd;
   }
 
   get eth(): number {
-    return this.usd / this.ethRate; 
+    return this.usd / this.ethRate;
   }
 
   setEth(eth) {
@@ -93,5 +93,4 @@ export class BlockchainEthModalComponent implements OnInit {
   isMobile() {
     return isMobile();
   }
-
 }

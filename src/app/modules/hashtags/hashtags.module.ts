@@ -5,12 +5,12 @@ import { TagsInput } from './tags-input/tags.component';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { CommonModule } from '../../common/common.module';
 import { FormsModule } from '@angular/forms';
-import { TextInputAutocompleteModule } from 'angular-text-input-autocomplete';
 import { TopbarHashtagsComponent } from './topbar/topbar.component';
 import { TopbarHashtagsService } from './service/topbar.service';
 import { HashtagsTopbarSelectorComponent } from './topbar-selector/topbar-selector.component';
 import { SidebarSelectorComponent } from './sidebar-selector/sidebar-selector.component';
 import { SidebarSelectorItemComponent } from './sidebar-selector/item.component';
+import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 
 @NgModule({
   imports: [
@@ -36,12 +36,7 @@ import { SidebarSelectorItemComponent } from './sidebar-selector/item.component'
     HashtagsTopbarSelectorComponent,
     SidebarSelectorComponent,
   ],
-  providers: [
-    TopbarHashtagsService,
-  ],
-  entryComponents: [
-    HashtagsSelectorModalComponent
-  ]
+  providers: [TopbarHashtagsService],
+  entryComponents: [HashtagsSelectorModalComponent],
 })
-export class HashtagsModule {
-}
+export class HashtagsModule {}

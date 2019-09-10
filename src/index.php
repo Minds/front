@@ -124,11 +124,13 @@
               "stripe_key" => Minds\Core\Config::_()->get('payments')['stripe']['public_key'],
               "recaptchaKey" => Minds\Core\Config::_()->get('google')['recaptcha']['site_key'],
               "max_video_length" => Minds\Core\Config::_()->get('max_video_length'),
+              "max_video_file_size" => Minds\Core\Config::_()->get('max_video_file_size'),
               "features" => (object) (Minds\Core\Config::_()->get('features') ?: []),
               "blockchain" => (object) Minds\Core\Di\Di::_()->get('Blockchain\Manager')->getPublicSettings(),
               "sale" => Minds\Core\Config::_()->get('blockchain')['sale'],
               "last_tos_update" => Minds\Core\Config::_()->get('last_tos_update') ?: time(),
-              "tags" => Minds\Core\Config::_()->get('tags') ?: []
+              "tags" => Minds\Core\Config::_()->get('tags') ?: [],
+              "environment" => getenv('MINDS_ENV') ?: 'development',
           ];
 
           if(Minds\Core\Session::isLoggedIn()){

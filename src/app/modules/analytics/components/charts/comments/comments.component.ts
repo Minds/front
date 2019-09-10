@@ -1,13 +1,27 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { Client } from "../../../../../services/api/client";
-import { MindsUser } from "../../../../../interfaces/entities";
-import { timespanOption } from "../timespanOption";
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { Client } from '../../../../../services/api/client';
+import { MindsUser } from '../../../../../interfaces/entities';
+import { timespanOption } from '../timespanOption';
+import { removeCurrentUnits } from '../../../util';
 
 @Component({
   selector: 'm-analyticscharts__comments',
   template: `
     <div class="m-chart" #chartContainer>
-      <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="inProgress"></div>
+      <div
+        class="mdl-spinner mdl-js-spinner is-active"
+        [mdl]
+        *ngIf="inProgress"
+      ></div>
 
       <m-graph
         [data]="data"
@@ -15,13 +29,13 @@ import { timespanOption } from "../timespanOption";
         *ngIf="!inProgress && !!data"
       ></m-graph>
     </div>
-  `
+  `,
 })
-
 export class CommentsChartComponent implements OnInit {
-  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
-
   @Input() user: MindsUser;
+  @Output() loaded: EventEmitter<Array<any>> = new EventEmitter<Array<any>>();
+
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
   init: boolean = false;
   timespan: timespanOption;
@@ -33,19 +47,19 @@ export class CommentsChartComponent implements OnInit {
     height: 0,
     title: '',
     font: {
-      family: 'Roboto'
+      family: 'Roboto',
     },
     titlefont: {
       family: 'Roboto',
       size: 24,
-      weight: 'bold'
+      weight: 'bold',
     },
     xaxis: {
       type: '-',
     },
     yaxis: {
       type: 'log',
-      dtick: 1
+      dtick: 1,
     },
     margin: {
       t: 16,
@@ -61,9 +75,7 @@ export class CommentsChartComponent implements OnInit {
     }
   }
 
-  constructor(private client: Client) {
-
-  }
+  constructor(private client: Client) {}
 
   ngOnInit() {
     this.applyDimensions();
@@ -84,7 +96,10 @@ export class CommentsChartComponent implements OnInit {
 
     try {
       const response: any = await this.client.get(url, opts);
-      this.data = response.data;
+      const [data, current] = removeCurrentUnits(response.data);
+      this.data = data;
+
+      this.loaded.emit(current);
     } catch (e) {
       console.error(e);
     }

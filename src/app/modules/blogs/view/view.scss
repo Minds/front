@@ -13,3 +13,11 @@
     justify-content: center;
   }
 }
+
+.m-share-buttons {
+  cursor: pointer;
+  padding-right: 8px;
+  @include m-theme() {
+    color: themed($m-green-light);
+  }
+}

@@ -2,7 +2,6 @@ import { TokenOnboardingService } from './onboarding.service';
 import { fakeAsync, tick } from '@angular/core/testing';
 
 describe('TokenOnboardingService', () => {
-
   let service: TokenOnboardingService;
 
   beforeEach(() => {
@@ -11,7 +10,7 @@ describe('TokenOnboardingService', () => {
     service = new TokenOnboardingService();
   });
 
-  afterEach(()=> {
+  afterEach(() => {
     jasmine.clock().uninstall();
   });
 
@@ -27,5 +26,4 @@ describe('TokenOnboardingService', () => {
     service.next();
     expect(service.currentSlide).toBe(1);
   });
-
 });

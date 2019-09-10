@@ -8,14 +8,9 @@ import { Session } from '../../../services/session';
   selector: 'm-channels--tile',
   templateUrl: 'tile.component.html',
 })
-
 export class ChannelsTileComponent {
-
   @Input() entity;
   minds = window.Minds;
 
-  constructor(
-    public session: Session
-  ) { }
-
+  constructor(public session: Session) {}
 }

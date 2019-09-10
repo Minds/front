@@ -1,4 +1,4 @@
-.m-boost-publisher--ledger{
+.m-boost-publisher--ledger {
   table {
     width: 100%;
   }
@@ -11,7 +11,7 @@
   padding: 8px;
   margin-bottom: 8px;
 
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -19,5 +19,4 @@
     margin-left: 8px;
     display: flex;
   }
-
 }

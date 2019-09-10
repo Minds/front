@@ -8,7 +8,8 @@
     Search {{ searchContext | async }}:
   </span>-->
 
-  <input [(ngModel)]="q"
+  <input
+    [(ngModel)]="q"
     (focus)="focus()"
     (blur)="blur()"
     name="q"
@@ -20,5 +21,10 @@
   />
   <label class="mdl-textfield__label" for="search"></label>
 
-  <m-search--bar-suggestions (click)="unsetFocus()" [q]="q" [active]="active" [disabled]="suggestionsDisabled"></m-search--bar-suggestions>
+  <m-search--bar-suggestions
+    (click)="unsetFocus()"
+    [q]="q"
+    [active]="active"
+    [disabled]="suggestionsDisabled"
+  ></m-search--bar-suggestions>
 </div>

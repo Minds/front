@@ -1,39 +1,78 @@
 <div class="m-settings--billing-subscriptions m-settings--section m-border">
-
   <h4 i18n="@@SETTINGS__SUBSCRIPTIONS__TITLE">Recurring Payments</h4>
 
   <div [hidden]="!inProgress" style="width:100%; text-align:center;">
-    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+    <div
+      class="mdl-spinner mdl-js-spinner is-active"
+      [mdl]
+      style="margin: 16px auto;"
+    ></div>
   </div>
 
   <div class="m-settings--billing-subscriptions--subscription">
     <ul>
-      <li *ngFor="let subscription of subscriptions; let i = index"
+      <li
+        *ngFor="let subscription of subscriptions; let i = index"
         class="m-settings--billing-subscriptions--subscription-item"
       >
         <span>
           <m-tooltip icon="info">
-            <span i18n="@@SETTINGS__SUBSCRIPTIONS__LAST_BILLING">Last billing: {{ subscription.last_billing * 1000 | date:'mediumDate' }}</span><br />
-            <span i18n="@@SETTINGS__SUBSCRIPTIONS__NEXT_BILLING">Next billing: {{ subscription.next_billing * 1000 | date:'mediumDate' }}</span>
+            <span i18n="@@SETTINGS__SUBSCRIPTIONS__LAST_BILLING"
+              >Last billing:
+              {{ subscription.last_billing * 1000 | date: 'mediumDate' }}</span
+            ><br />
+            <span i18n="@@SETTINGS__SUBSCRIPTIONS__NEXT_BILLING"
+              >Next billing:
+              {{ subscription.next_billing * 1000 | date: 'mediumDate' }}</span
+            >
           </m-tooltip>
         </span>
 
-        <span class="m-settings--billing-subscriptions--subscription-item-plan-id">{{ subscription.plan_id }}</span>
+        <span
+          class="m-settings--billing-subscriptions--subscription-item-plan-id"
+          >{{ subscription.plan_id }}</span
+        >
 
         <ng-container *ngIf="subscription.entity">
-          <span *ngIf="subscription.entity.type == 'user'"><i style="text-style:normal">@</i>{{subscription.entity.username}}</span>
-          <span *ngIf="subscription.entity.type != 'user'"><i style="text-style:normal">@</i>{{subscription.entity.ownerObj.username}}</span>
+          <span *ngIf="subscription.entity.type == 'user'"
+            ><i style="text-style:normal">@</i
+            >{{ subscription.entity.username }}</span
+          >
+          <span *ngIf="subscription.entity.type != 'user'"
+            ><i style="text-style:normal">@</i
+            >{{ subscription.entity.ownerObj.username }}</span
+          >
         </ng-container>
 
-        <span [ngSwitch]="subscription.payment_method" class="m-settings--billing-subscriptions--subscription-item-amount">
-          <ng-template ngSwitchCase="money">{{ subscription.amount | currency:'USD':true }}</ng-template>
-          <ng-template ngSwitchCase="tokens" i18n="@@SETTINGS__BILLING__SUBSCRIPTIONS__TOKENS_LABEL">{{ subscription.amount | token:18 | number }} Tokens</ng-template>
-          <ng-template ngSwitchCase="points" i18n="@@SETTINGS__BILLING__SUBSCRIPTIONS__POINTS_LABEL">{{ subscription.amount | number:'1.0-0' }} Points</ng-template>
+        <span
+          [ngSwitch]="subscription.payment_method"
+          class="m-settings--billing-subscriptions--subscription-item-amount"
+        >
+          <ng-template ngSwitchCase="money">{{
+            subscription.amount | currency: 'USD':true
+          }}</ng-template>
+          <ng-template
+            ngSwitchCase="tokens"
+            i18n="@@SETTINGS__BILLING__SUBSCRIPTIONS__TOKENS_LABEL"
+            >{{ subscription.amount | token: 18 | number }} Tokens</ng-template
+          >
+          <ng-template
+            ngSwitchCase="points"
+            i18n="@@SETTINGS__BILLING__SUBSCRIPTIONS__POINTS_LABEL"
+            >{{ subscription.amount | number: '1.0-0' }} Points</ng-template
+          >
+          <ng-template ngSwitchCase="usd"
+            >{{ subscription.amount | token: 2 }} USD</ng-template
+          >
         </span>
 
-        <span class="m-settings--billing-subscriptions--subscription-item-select" (click)="cancel(i)" i18n="@@M__ACTION__CANCEL">Cancel</span>
+        <span
+          class="m-settings--billing-subscriptions--subscription-item-select"
+          (click)="cancel(i)"
+          i18n="@@M__ACTION__CANCEL"
+          >Cancel</span
+        >
       </li>
     </ul>
   </div>
-
 </div>

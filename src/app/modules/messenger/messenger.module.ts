@@ -59,17 +59,14 @@ import { Session } from '../../services/session';
     {
       provide: MessengerConversationDockpanesService,
       useFactory: MessengerConversationDockpanesService._,
-      deps: [Session]
+      deps: [Session],
     },
     {
       provide: MessengerEncryptionService,
       useFactory: MessengerEncryptionService._,
-      deps: [ Client, Storage ]
-    }
+      deps: [Client, Storage],
+    },
   ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class MessengerModule {
-}
+export class MessengerModule {}

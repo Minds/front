@@ -2,9 +2,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'm-video--quality-selector',
-  templateUrl: 'quality-selector.component.html'
+  templateUrl: 'quality-selector.component.html',
 })
-
 export class MindsVideoQualitySelector {
   @Input() current: string;
   @Output('select') selectEmitter: EventEmitter<string> = new EventEmitter();

@@ -10,11 +10,9 @@ import { ThirdPartyNetworksService } from '../../../services/third-party-network
 @Component({
   moduleId: module.id,
   selector: 'm-settings--general',
-  templateUrl: 'general.component.html'
+  templateUrl: 'general.component.html',
 })
-
 export class SettingsGeneralComponent {
-
   minds: Minds;
   settings: string;
 
@@ -28,15 +26,16 @@ export class SettingsGeneralComponent {
   email: string;
   mature: boolean = false;
   enabled_mails: boolean = true;
+  toaster_notifications: boolean = true;
 
   password: string;
   password1: string;
   password2: string;
 
-  languages: Array<{code, name}> = [];
+  languages: Array<{ code; name }> = [];
   language: string = 'en';
 
-  categories: { id, label, selected }[];
+  categories: { id; label; selected }[];
   selectedCategories: string[] = [];
 
   paramsSubscription: Subscription;
@@ -48,7 +47,7 @@ export class SettingsGeneralComponent {
     public client: Client,
     public route: ActivatedRoute,
     public router: Router,
-    public thirdpartynetworks: ThirdPartyNetworksService,
+    public thirdpartynetworks: ThirdPartyNetworksService
   ) {
     this.minds = window.Minds;
     this.getCategories();
@@ -66,14 +65,19 @@ export class SettingsGeneralComponent {
     }
 
     this.paramsSubscription = this.route.params.subscribe(params => {
-      if (params['guid'] && params['guid'] === this.session.getLoggedInUser().guid) {
+      if (
+        params['guid'] &&
+        params['guid'] === this.session.getLoggedInUser().guid
+      ) {
         this.load(true);
       } else {
         this.load(false);
       }
 
       if (params['card'] && params['card'] !== '') {
-        const el = this.element.nativeElement.querySelector('.m-settings--' + params['card']);
+        const el = this.element.nativeElement.querySelector(
+          '.m-settings--' + params['card']
+        );
         if (el) {
           window.scrollTo(0, el.offsetTop - 64); // 64 comes from the topbar's height
         }
@@ -91,36 +95,37 @@ export class SettingsGeneralComponent {
       this.name = user.name;
     }
 
-    this.client.get('api/v1/settings/' + this.guid)
-      .then((response: any) => {
-        console.log('LOAD', response.channel);
-        this.email = response.channel.email;
-        this.mature = !!parseInt(response.channel.mature, 10);
-        this.enabled_mails = !parseInt(response.channel.disabled_emails, 10);
-        this.language = response.channel.language || 'en';
-        this.selectedCategories = response.channel.categories || [];
-        this.openSessions = response.channel.open_sessions || 1;
+    this.client.get('api/v1/settings/' + this.guid).then((response: any) => {
+      console.log('LOAD', response.channel);
+      this.email = response.channel.email;
+      this.mature = !!parseInt(response.channel.mature, 10);
+      this.enabled_mails = !parseInt(response.channel.disabled_emails, 10);
+      this.language = response.channel.language || 'en';
+      this.selectedCategories = response.channel.categories || [];
+      this.openSessions = response.channel.open_sessions || 1;
+      this.toaster_notifications = response.channel.toaster_notifications;
 
-        this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
+      this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
 
-        if (window.Minds.user) {
-          window.Minds.user.mature = this.mature;
-        }
-        if (this.selectedCategories.length > 0) {
-          this.selectedCategories.forEach((item, index, array) => {
-            const i: number = this.categories.findIndex(i => i.id === item);
-            if (i !== -1)
-              this.categories[i].selected = true;
-          });
-        }
-      });
+      if (window.Minds.user) {
+        window.Minds.user.mature = this.mature;
+      }
+      if (this.selectedCategories.length > 0) {
+        this.selectedCategories.forEach((item, index, array) => {
+          const i: number = this.categories.findIndex(i => i.id === item);
+          if (i !== -1) this.categories[i].selected = true;
+        });
+      }
+    });
   }
 
   canSubmit() {
-    if (!this.changed)
-      return false;
+    if (!this.changed) return false;
 
-    if (this.password && !this.password1 || this.password && !this.password2)
+    if (
+      (this.password && !this.password1) ||
+      (this.password && !this.password2)
+    )
       return false;
 
     if (this.password1 && !this.password) {
@@ -144,12 +149,11 @@ export class SettingsGeneralComponent {
   }
 
   save() {
-    if (!this.canSubmit())
-      return;
+    if (!this.canSubmit()) return;
 
     this.inProgress = true;
-    this.client.post('api/v1/settings/' + this.guid,
-      {
+    this.client
+      .post('api/v1/settings/' + this.guid, {
         name: this.name,
         email: this.email,
         password: this.password,
@@ -157,7 +161,8 @@ export class SettingsGeneralComponent {
         mature: this.mature ? 1 : 0,
         disabled_emails: this.enabled_mails ? 0 : 1,
         language: this.language,
-        categories: this.selectedCategories
+        categories: this.selectedCategories,
+        toaster_notifications: this.toaster_notifications,
       })
       .then((response: any) => {
         this.changed = false;
@@ -174,35 +179,35 @@ export class SettingsGeneralComponent {
           if (window.Minds.user.name !== this.name) {
             window.Minds.user.name = this.name;
           }
-
         }
 
         if (this.language !== window.Minds['language']) {
           window.location.reload(true);
         }
 
+        window.Minds.user.toaster_notifications = this.toaster_notifications;
+
         this.inProgress = false;
-      }).catch(e=> {
+      })
+      .catch(e => {
         this.inProgress = false;
         this.changed = false;
         this.error = e.message;
-      })
+      });
   }
 
   // Third Party Networks
 
   connectFb() {
-    this.thirdpartynetworks.connect('facebook')
-      .then(() => {
-        this.load();
-      });
+    this.thirdpartynetworks.connect('facebook').then(() => {
+      this.load();
+    });
   }
 
   connectTw() {
-    this.thirdpartynetworks.connect('twitter')
-      .then(() => {
-        this.load();
-      });
+    this.thirdpartynetworks.connect('twitter').then(() => {
+      this.load();
+    });
   }
 
   removeFbLogin() {
@@ -224,11 +229,11 @@ export class SettingsGeneralComponent {
       this.categories.push({
         id: category,
         label: window.Minds.categories[category],
-        selected: false
+        selected: false,
       });
     }
 
-    this.categories.sort((a, b) => a.label > b.label ? 1 : -1);
+    this.categories.sort((a, b) => (a.label > b.label ? 1 : -1));
   }
 
   onCategoryClick(category) {
@@ -237,7 +242,10 @@ export class SettingsGeneralComponent {
     if (category.selected) {
       this.selectedCategories.push(category.id);
     } else {
-      this.selectedCategories.splice(this.selectedCategories.indexOf(category.id), 1);
+      this.selectedCategories.splice(
+        this.selectedCategories.indexOf(category.id),
+        1
+      );
     }
 
     this.changed = true;

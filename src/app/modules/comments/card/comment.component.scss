@@ -12,7 +12,7 @@
   padding: 8px 16px;
   max-width: 75%;
   white-space: pre-line;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-50);
   }
 }
@@ -60,7 +60,7 @@
   margin-top: 8px;
 
   m-video {
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-black-always);
     }
   }
@@ -88,7 +88,7 @@
     }
 
     &.m-clickable {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue-grey-500);
       }
       .material-icons {
@@ -96,8 +96,14 @@
       }
 
       &:hover {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-blue-grey-700);
+        }
+      }
+
+      &.selected:hover {
+        @include m-theme() {
+          color: themed($m-blue-dark) !important;
         }
       }
 
@@ -113,17 +119,16 @@
       vertical-align: top;
     }
   }
-
 }
 
-.m-comment__toolbar  .m-edited-text {
+.m-comment__toolbar .m-edited-text {
   margin-left: 8px;
   vertical-align: middle;
   font-size: 10px;
   text-transform: uppercase;
   line-height: 13px;
   font-weight: 500;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-400);
   }
 }
@@ -132,11 +137,10 @@
   font-size: 10px;
   vertical-align: middle;
   line-height: 13px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-200);
   }
 }
-
 
 .m-comment .minds-avatar {
   margin-top: 0;
@@ -154,13 +158,13 @@
   font-size: 16px;
   cursor: pointer;
   outline: none;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-400);
     background-color: themed($m-white);
   }
 
   &:hover {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
     }
   }
@@ -195,12 +199,12 @@
     line-height: 16px;
     vertical-align: middle;
     margin-right: 8px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-400);
     }
 
     &:hover {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }
@@ -234,7 +238,7 @@
   }
 
   .m-comment--error-label {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red-dark);
     }
 

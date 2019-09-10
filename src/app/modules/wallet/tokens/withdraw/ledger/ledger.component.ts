@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Session } from '../../../../../services/session';
 import { Client } from '../../../../../services/api/client';
@@ -7,11 +13,9 @@ import { Client } from '../../../../../services/api/client';
   moduleId: module.id,
   selector: 'm-wallet-token--withdraw-ledger',
   templateUrl: 'ledger.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class WalletTokenWithdrawLedgerComponent implements OnInit {
-
   startDate: string;
   endDate: string;
   inProgress: boolean = false;
@@ -25,13 +29,10 @@ export class WalletTokenWithdrawLedgerComponent implements OnInit {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected router: Router,
-    protected session: Session,
-  ) {
-
-  }
+    protected session: Session
+  ) {}
 
   ngOnInit() {
-
     //if (!this.session.getLoggedInUser().rewards) {
     //  this.router.navigate(['/wallet/tokens/contributions/join']);
     //}
@@ -70,11 +71,14 @@ export class WalletTokenWithdrawLedgerComponent implements OnInit {
       startDate.setHours(0, 0, 0);
       endDate.setHours(23, 59, 59);
 
-      let response: any = await this.client.get(`api/v2/blockchain/transactions/withdrawals`, {
-        from: Math.floor(+startDate / 1000),
-        to: Math.floor(+endDate / 1000),
-        offset: this.offset
-      });
+      let response: any = await this.client.get(
+        `api/v2/blockchain/transactions/withdrawals`,
+        {
+          from: Math.floor(+startDate / 1000),
+          to: Math.floor(+endDate / 1000),
+          offset: this.offset,
+        }
+      );
 
       if (refresh) {
         this.withdrawals = [];

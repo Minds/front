@@ -1,11 +1,10 @@
 import { TransactionOverlayService } from './transaction-overlay.service';
 
 describe('TransactionOverlayService', () => {
-
   let service: TransactionOverlayService;
   let comp: any = <any>{
     show: jasmine.createSpy('show'),
-    hide: jasmine.createSpy('hide')
+    hide: jasmine.createSpy('hide'),
   };
 
   beforeEach(() => {

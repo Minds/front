@@ -1,10 +1,9 @@
 .m-reports__marketing {
-
- 
-
   .m-marketing__hero {
-    background-color: #132552 !important;
     padding-bottom: 72px;
+    @include m-theme() {
+      background-color: themed($m-blue-grey-800) !important;
+    }
 
     .m-marketingHero__inner {
       padding-top: 0;
@@ -12,24 +11,28 @@
     }
 
     .m-btn {
-      color: #FFF;
-      border-color: #FFF;
       margin-top: 32px;
+      @include m-theme() {
+        color: themed($m-white);
+        border-color: themed($m-white);
+      }
     }
   }
 
   .m-marketingHero__actions {
     i {
-      color: #FFF;
       font-size: 170px;
       text-align: center;
       width: 100%;
+      @include m-theme() {
+        color: themed($m-white);
+      }
     }
   }
 }
 
-.m-reportMarketing__stats, .m-reportMarketing__section  {
-
+.m-reportMarketing__stats,
+.m-reportMarketing__section {
   padding: 32px 100px 32px 52px !important;
 
   h4 {
@@ -39,7 +42,9 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
-    color: #666;
+    @include m-theme() {
+      color: themed($m-grey-600);
+    }
   }
 
   .m-layout__row {
@@ -56,8 +61,10 @@
   b {
     font-size: 72px;
     line-height: 1;
-    color: #444;
     display: block;
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
   }
 
   span {
@@ -65,29 +72,33 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     font-weight: 500;
-    color: #555;
     margin-top: 16px;
     display: block;
+    @include m-theme() {
+      color: themed($m-grey-700);
+    }
   }
-
 }
 
 .m-reportMarketing__list {
   list-style: decimal;
   font-size: 24px;
   font-weight: 800;
-  color: #aaa;
+  @include m-theme() {
+    color: themed($m-grey-200);
+  }
 
   li {
     padding: 16px;
 
     p {
       font-size: 24px;
-      color: #555;
       font-weight: 500;
+      @include m-theme() {
+        color: themed($m-grey-700);
+      }
     }
   }
-
 }
 
 .m-reportMarketingList__sublist {
@@ -97,12 +108,14 @@
 
   li {
     width: 50%;
-    color: #888;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
     cursor: default;
     padding: 0;
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
 
     @media screen and (max-width: 890px) {
       width: 100%;

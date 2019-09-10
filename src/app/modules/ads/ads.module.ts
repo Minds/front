@@ -9,22 +9,8 @@ import { RevContent } from './revcontent';
 import { PDAds } from './pd-ads';
 
 @NgModule({
-  imports: [
-    NgCommonModule,
-    CommonModule
-  ],
-  declarations: [
-    BoostAds,
-    GoogleAds,
-    RevContent,
-    PDAds
-  ],
-  exports: [
-    BoostAds,
-    GoogleAds,
-    RevContent,
-    PDAds
-  ]
+  imports: [NgCommonModule, CommonModule],
+  declarations: [BoostAds, GoogleAds, RevContent, PDAds],
+  exports: [BoostAds, GoogleAds, RevContent, PDAds],
 })
-export class AdsModule {
-}
+export class AdsModule {}

@@ -1,5 +1,13 @@
-import { Component, Injector, OnDestroy, OnInit, SkipSelf, ViewChild } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import {
+  Component,
+  Injector,
+  OnDestroy,
+  OnInit,
+  SkipSelf,
+  ViewChild,
+} from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { take, map, mergeMap } from 'rxjs/operators';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,25 +21,26 @@ import { SettingsService } from '../../settings/settings.service';
 import { PosterComponent } from '../poster/poster.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
-import { TopbarHashtagsService } from "../../hashtags/service/topbar.service";
-import { NewsfeedHashtagSelectorService } from "../services/newsfeed-hashtag-selector.service";
-import { FeedsService } from "../../../common/services/feeds.service";
-import { FeaturesService } from "../../../services/features.service";
-import { ClientMetaService } from "../../../common/services/client-meta.service";
+import { TopbarHashtagsService } from '../../hashtags/service/topbar.service';
+import { NewsfeedHashtagSelectorService } from '../services/newsfeed-hashtag-selector.service';
+import { FeedsService } from '../../../common/services/feeds.service';
+import { FeaturesService } from '../../../services/features.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   selector: 'm-newsfeed--sorted',
-  providers: [ ClientMetaService ],
+  providers: [
+    ClientMetaService,
+    FeedsService, // Fresh feeds per component
+  ],
   templateUrl: 'sorted.component.html',
 })
-
 export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   algorithm: string = 'hot';
   period: string = '12h';
   customType: string = 'activities';
   hashtag: string | null = null;
   all: boolean = false;
-  newsfeed: Array<Object>;
   prepended: Array<any> = [];
   offset: number = 0;
   inProgress: boolean = false;
@@ -63,10 +72,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected topbarHashtagsService: TopbarHashtagsService,
     protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
-    protected feedsService: FeedsService,
+    public feedsService: FeedsService,
     protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
+    @SkipSelf() injector: Injector
   ) {
     this.title.setTitle('Newsfeed');
 
@@ -79,17 +88,21 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       this.rating = this.session.getLoggedInUser().boost_rating;
     }
 
-    this.ratingSubscription = settingsService.ratingChanged.subscribe((event) => {
+    this.ratingSubscription = settingsService.ratingChanged.subscribe(event => {
       this.onRatingChanged(event);
     });
 
-    this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(() => {
-      this.load(true, true);
-    });
+    this.reloadFeedSubscription = this.newsfeedService.onReloadFeed.subscribe(
+      () => {
+        this.load(true, true);
+      }
+    );
 
-    this.selectionChangeSubscription = this.topbarHashtagsService.selectionChange.subscribe(() => {
-      this.load(true, true);
-    });
+    this.selectionChangeSubscription = this.topbarHashtagsService.selectionChange.subscribe(
+      () => {
+        this.load(true, true);
+      }
+    );
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       this.algorithm = params['algorithm'] || 'hot';
@@ -111,12 +124,13 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
         this.all = false;
       }
 
-      if (this.algorithm != 'top' 
-        && (this.customType === 'channels' || this.customType === 'groups')
+      if (
+        this.algorithm != 'top' &&
+        (this.customType === 'channels' || this.customType === 'groups')
       ) {
         this.algorithm = 'top';
         this.updateSortRoute();
-      } 
+      }
 
       this.load(true);
     });
@@ -126,29 +140,32 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     this.minds = window.Minds;
     this.context.set('activity');
 
-    this.hashtagFilterChangeSubscription = this.newsfeedHashtagSelectorService.subscribe(({ type, value }) => {
-      switch (type) {
-        case 'single':
-          this.hashtag = value;
-          this.all = false;
-          this.query = '';
-          break;
+    this.hashtagFilterChangeSubscription = this.newsfeedHashtagSelectorService.subscribe(
+      ({ type, value }) => {
+        switch (type) {
+          case 'single':
+            this.hashtag = value;
+            this.all = false;
+            this.query = '';
+            break;
 
-        case 'all':
-          this.hashtag = null;
-          this.all = true;
-          this.query = '';
-          break;
+          case 'all':
+            this.hashtag = null;
+            this.all = true;
+            this.query = '';
+            break;
 
-        case 'preferred':
-          this.hashtag = null;
-          this.all = false;
-          this.query = '';
-          break;
-      }
+          case 'preferred':
+            this.hashtag = null;
+            this.all = false;
+            this.query = '';
+            break;
+        }
 
-      this.updateSortRoute();
-    }, 300);
+        this.updateSortRoute();
+      },
+      300
+    );
   }
 
   ngOnDestroy() {
@@ -178,64 +195,42 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
    * @param {Boolean} forceSync
    */
   async load(refresh: boolean = false, forceSync: boolean = false) {
-    if (this.inProgress) {
-      return false;
-    }
-
-    if (this.featuresService.has('sync-feeds')) {
-      return await this.loadFromFeedsService(refresh, forceSync);
-    } else {
-      return await this.loadLegacy(refresh);
-    }
+    return await this.loadFromFeedsService(refresh, forceSync);
   }
 
   /**
    * @param {Boolean} refresh
    * @param {Boolean} forceSync
    */
-  async loadFromFeedsService(refresh: boolean = false, forceSync: boolean = false) {
-    if (forceSync) {
-      // TODO: Find a selective way to do it, in the future
-      await this.feedsService.destroy();
-      refresh = true;
-    }
-
+  async loadFromFeedsService(
+    refresh: boolean = false,
+    forceSync: boolean = false
+  ) {
     if (refresh) {
-      this.moreData = true;
-      this.offset = 0;
-      this.newsfeed = [];
+      this.feedsService.clear();
     }
 
     this.inProgress = true;
 
     try {
-      const limit = 12;
-
       const hashtags = this.hashtag ? encodeURIComponent(this.hashtag) : '';
       const period = this.period || '';
       const all = this.all ? '1' : '';
       const query = this.query ? encodeURIComponent(this.query) : '';
       const nsfw = (this.newsfeedService.nsfw || []).join(',');
 
-      const { entities, next } = await this.feedsService.get({
-        endpoint: `api/v2/feeds/global/${this.algorithm}/${this.customType}?hashtags=${hashtags}&period=${period}&all=${all}&query=${query}&nsfw=${nsfw}`,
-        timebased: false,
-        limit,
-        offset: <number> this.offset,
-        forceSync,
-      });
-
-      if (this.newsfeed && !refresh) {
-        this.newsfeed.push(...entities);
-      } else {
-        this.newsfeed = entities;
-      }
-
-      this.offset = next;
-
-      if (!this.offset) {
-        this.moreData = false;
-      }
+      this.feedsService
+        .setEndpoint(`api/v2/feeds/global/${this.algorithm}/${this.customType}`)
+        .setParams({
+          hashtags,
+          period,
+          all,
+          query,
+          nsfw,
+        })
+        .setLimit(12)
+        .setCastToActivities(true)
+        .fetch();
     } catch (e) {
       console.error('SortedComponent', e);
     }
@@ -243,50 +238,8 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     this.inProgress = false;
   }
 
-  /**
-   * @deprecated
-   * @param {Boolean} refresh
-   */
-  loadLegacy(refresh: boolean = false) {
-    if (refresh) {
-      this.moreData = true;
-      this.offset = null;
-      this.newsfeed = [];
-    }
-
-    this.inProgress = true;
-
-    this.client.get(`api/v2/feeds/global/${this.algorithm}/${this.customType}`, {
-      limit: 12,
-      offset: this.offset || '',
-      rating: this.rating || '',
-      hashtags: this.hashtag ? [this.hashtag] : '',
-      period: this.period || '',
-      all: this.all ? 1 : '',
-      query: this.query ? encodeURIComponent(this.query) : '',
-      nsfw: this.newsfeedService.nsfw,
-    }, {
-      cache: true
-    })
-      .then((data: any) => {
-        if (!data.entities || !data.entities.length) {
-          this.moreData = false;
-          this.inProgress = false;
-
-          return false;
-        }
-        if (this.newsfeed && !refresh) {
-          this.newsfeed = this.newsfeed.concat(data.entities);
-        } else {
-          this.newsfeed = data.entities;
-        }
-        this.offset = data['load-next'];
-        this.inProgress = false;
-      })
-      .catch((e) => {
-        console.log(e);
-        this.inProgress = false;
-      });
+  loadMore() {
+    this.feedsService.loadMore();
   }
 
   delete(activity) {
@@ -297,13 +250,12 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
         return;
       }
     }
-    for (i in this.newsfeed) {
-      if (this.newsfeed[i] === activity) {
-        this.newsfeed.splice(i, 1);
-        return;
-      }
-    }
-
+    // for (i in this.newsfeed) {
+    //   if (this.newsfeed[i] === activity) {
+    //     this.newsfeed.splice(i, 1);
+    //     return;
+    //   }
+    // }
   }
 
   prepend(activity: any) {
@@ -356,10 +308,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   }
 
   shouldShowBoost(i: number) {
-    if (this.query) {
-      return false;
-    }
+    //if (this.query) {
+    //  return false;
+    //}
 
-    return (i > 0 && (i % 8) === 0 && i <= 40) || i === 2;
+    return (i > 0 && i % 5 === 0) || i === 1;
   }
 }

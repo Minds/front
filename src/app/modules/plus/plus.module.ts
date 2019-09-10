@@ -10,9 +10,8 @@ import { PlusMarketingComponent } from './marketing.component';
 import { PlusSubscriptionComponent } from './subscription.component';
 import { PlusVerifyComponent } from './verify/verify.component';
 
-
-const plusRoutes : Routes = [
-  { path: 'plus',  component: PlusMarketingComponent }
+const plusRoutes: Routes = [
+  { path: 'plus', component: PlusMarketingComponent },
 ];
 
 @NgModule({
@@ -23,20 +22,14 @@ const plusRoutes : Routes = [
     CommonModule,
     CheckoutModule,
     FaqModule,
-    RouterModule.forChild(plusRoutes)
+    RouterModule.forChild(plusRoutes),
   ],
   declarations: [
     PlusMarketingComponent,
     PlusSubscriptionComponent,
-    PlusVerifyComponent
+    PlusVerifyComponent,
   ],
-  exports: [
-    PlusSubscriptionComponent,
-    PlusVerifyComponent
-  ],
-  entryComponents: [
-    PlusMarketingComponent,
-  ]
+  exports: [PlusSubscriptionComponent, PlusVerifyComponent],
+  entryComponents: [PlusMarketingComponent],
 })
-
 export class PlusModule {}

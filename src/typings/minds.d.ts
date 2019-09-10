@@ -20,11 +20,12 @@ interface Minds {
   stripe_key?: any;
   recaptchaKey?: string;
   max_video_length?: number;
+  max_video_file_size?: number;
   features?: any;
   blockchain?: any;
   sale?: boolean | string;
   last_tos_update: number;
-  tags: string[]
+  tags: string[];
 }
 
 interface MindsNavigation {

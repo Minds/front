@@ -6,16 +6,17 @@ type timespanOption = 'hourly' | 'daily' | 'monthly';
   selector: 'm-analytics__card',
   templateUrl: 'card.component.html',
   host: {
-    'class': 'm-border',
+    class: 'm-border',
   },
 })
-
 export class AnalyticsCardComponent implements OnInit {
   @Input() title: string;
   @Input() options: Array<timespanOption>;
   @Input() defaultOption: timespanOption = 'monthly';
 
-  @Output() selectedOptionChange: EventEmitter<timespanOption> = new EventEmitter<timespanOption>();
+  @Output() selectedOptionChange: EventEmitter<
+    timespanOption
+  > = new EventEmitter<timespanOption>();
 
   selectedOption: timespanOption;
 

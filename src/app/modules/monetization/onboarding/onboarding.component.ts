@@ -1,4 +1,11 @@
-import { Component, OnInit, Output, EventEmitter, Input, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from '../../../services/api';
 
@@ -6,10 +13,9 @@ import { requiredFor, optionalFor } from './onboarding.validators';
 
 @Component({
   selector: 'm-monetization--onboarding',
-  templateUrl: 'onboarding.component.html'
+  templateUrl: 'onboarding.component.html',
 })
 export class MonetizationOnboardingComponent implements OnInit {
-
   form: FormGroup;
   inProgress: boolean = false;
   restrictAsVerified: boolean = false;
@@ -22,13 +28,20 @@ export class MonetizationOnboardingComponent implements OnInit {
 
   @Output() completed: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private fb: FormBuilder, private client: Client, private cd: ChangeDetectorRef) { }
+  constructor(
+    private fb: FormBuilder,
+    private client: Client,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
       country: ['', Validators.required],
       ssn: ['', requiredFor(['US'], { ignore: this.edit })],
-      personalIdNumber: ['', requiredFor(['CA', 'HK', 'SG'], { ignore: this.edit })],
+      personalIdNumber: [
+        '',
+        requiredFor(['CA', 'HK', 'SG'], { ignore: this.edit }),
+      ],
       firstName: ['', optionalFor(['JP'])],
       lastName: ['', optionalFor(['JP'])],
       gender: ['', requiredFor(['JP'])],
@@ -38,7 +51,7 @@ export class MonetizationOnboardingComponent implements OnInit {
       state: ['', requiredFor(['AU', 'CA', 'IE', 'US'])],
       postCode: ['', optionalFor(['HK', 'IE', 'JP'])],
       phoneNumber: ['', requiredFor(['JP'])],
-      stripeAgree: ['', Validators.required]
+      stripeAgree: ['', Validators.required],
     });
 
     this.restrictAsVerified = false;
@@ -91,18 +104,18 @@ export class MonetizationOnboardingComponent implements OnInit {
     this.inProgress = true;
     this.error = '';
 
-    this.client.post('api/v1/merchant/onboard', this.form.value)
+    this.client
+      .post('api/v1/merchant/onboard', this.form.value)
       .then((response: any) => {
         this.inProgress = false;
 
-        if (!this.minds.user.programs)
-          this.minds.user.programs = [];
+        if (!this.minds.user.programs) this.minds.user.programs = [];
         this.minds.user.programs.push('affiliate');
 
         this.completed.emit(response);
         this.detectChanges();
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
         this.error = e.message;
         this.detectChanges();
@@ -117,13 +130,14 @@ export class MonetizationOnboardingComponent implements OnInit {
     this.inProgress = true;
     this.error = '';
 
-    this.client.post('api/v1/merchant/update', this.form.value)
+    this.client
+      .post('api/v1/merchant/update', this.form.value)
       .then((response: any) => {
         this.inProgress = false;
         this.completed.emit(response);
         this.detectChanges();
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
         this.error = e.message;
         this.detectChanges();
@@ -157,5 +171,4 @@ export class MonetizationOnboardingComponent implements OnInit {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

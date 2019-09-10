@@ -1,10 +1,11 @@
 context('Login', () => {
   beforeEach(() => {
+    cy.clearCookies();
     cy.visit('/')
   })
 
   it('should login', () => {
-    cy.get('.m-btn--login').click();
+    cy.get('.m-v2-topbar__Container__LoginWrapper > a').click();
 
     cy.location('pathname').should('eq', '/login');
 
@@ -17,11 +18,12 @@ context('Login', () => {
 
     cy.get('minds-form-login .m-btn--login').click();
 
-    cy.location('pathname').should('eq', '/newsfeed/subscriptions');
+    cy.location('pathname')
+      .should('eq', '/newsfeed/subscriptions');
   })
 
   it('should fail to login because of incorrect password', () => {
-    cy.get('.m-btn--login').click();
+    cy.get('.m-v2-topbar__Container__LoginWrapper > a').click();
 
     cy.location('pathname').should('eq', '/login');
 

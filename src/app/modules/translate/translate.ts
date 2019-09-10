@@ -8,9 +8,8 @@ import { TranslationService } from '../../services/translation';
   inputs: ['_open: open', '_entity: entity', '_translateEvent: translateEvent'],
   outputs: ['onTranslateInit', 'onTranslate', 'onTranslateError'],
   exportAs: 'translate',
-  templateUrl: 'translate.html'
+  templateUrl: 'translate.html',
 })
-
 export class Translate {
   onTranslateInit: EventEmitter<any> = new EventEmitter();
   onTranslate: EventEmitter<any> = new EventEmitter();
@@ -36,14 +35,14 @@ export class Translate {
     title: '',
     description: '',
     body: '',
-    source: ''
+    source: '',
   };
   translationInProgress: boolean;
 
   constructor(
     public translationService: TranslationService,
     public changeDetectorRef: ChangeDetectorRef
-  ) { }
+  ) {}
 
   set _open(value: any) {
     let wasOpened = !this.open && value;
@@ -72,7 +71,7 @@ export class Translate {
       return;
     }
 
-    this.translateEventSubscription = this.translateEvent.subscribe(($event) => {
+    this.translateEventSubscription = this.translateEvent.subscribe($event => {
       this.translate($event);
     });
   }
@@ -80,7 +79,8 @@ export class Translate {
   ngOnInit() {
     this.languagesInProgress = true;
 
-    this.translationService.getLanguages()
+    this.translationService
+      .getLanguages()
       .then((languages: any[]) => {
         this.languagesInProgress = false;
         this.parseLanguages(languages);
@@ -104,12 +104,11 @@ export class Translate {
   }
 
   onOpen() {
-    this.translationService.getUserDefaultLanguage()
-      .then((lang) => {
-        if (lang) {
-          this.select(lang);
-        }
-      });
+    this.translationService.getUserDefaultLanguage().then(lang => {
+      if (lang) {
+        this.select(lang);
+      }
+    });
   }
 
   changeDefaultLanguage() {
@@ -137,7 +136,7 @@ export class Translate {
 
     let $event = {
       entity: this.entity,
-      selected: language
+      selected: language,
     };
 
     this.onTranslateInit.emit($event);
@@ -158,15 +157,15 @@ export class Translate {
     }
 
     this.translation.target = '';
-    this.translationService.getLanguageName($event.selected)
-      .then(name => {
-        this.translation.target = name;
-        this.changeDetectorRef.markForCheck();
-      });
+    this.translationService.getLanguageName($event.selected).then(name => {
+      this.translation.target = name;
+      this.changeDetectorRef.markForCheck();
+    });
 
     this.translationInProgress = true;
 
-    this.translationService.translate(this.entity.guid, $event.selected)
+    this.translationService
+      .translate(this.entity.guid, $event.selected)
       .then((translation: any) => {
         this.translationInProgress = false;
         this.translation.source = null;
@@ -177,7 +176,8 @@ export class Translate {
 
           if (this.translation.source === null && translation[field].source) {
             this.translation.source = '';
-            this.translationService.getLanguageName(translation[field].source)
+            this.translationService
+              .getLanguageName(translation[field].source)
               .then(name => {
                 this.translation.source = name;
                 this.changeDetectorRef.markForCheck();
@@ -188,11 +188,10 @@ export class Translate {
         this.onTranslate.emit({
           entity: this.entity,
           translation: this.translation,
-          selected: $event.selected
+          selected: $event.selected,
         });
 
         this.changeDetectorRef.markForCheck();
-
       })
       .catch(e => {
         this.translationInProgress = false;
@@ -200,7 +199,7 @@ export class Translate {
 
         this.onTranslateError.emit({
           entity: this.entity,
-          selected: $event.selected
+          selected: $event.selected,
         });
 
         this.changeDetectorRef.markForCheck();

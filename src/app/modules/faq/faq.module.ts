@@ -11,7 +11,7 @@ import { FaqPage } from './faq.page';
 
 const faqRoutes = [
   { path: 'faq/:category', component: FaqPage },
-  { path: 'faq', component: FaqPage }
+  { path: 'faq', component: FaqPage },
 ];
 
 @NgModule({
@@ -22,19 +22,9 @@ const faqRoutes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    FaqComponent,
-    FaqPage,
-  ],
-  exports: [
-    FaqComponent,
-  ],
-  entryComponents: [
-    FaqPage,
-  ],
-  providers: [
-    FaqService,
-  ],
+  declarations: [FaqComponent, FaqPage],
+  exports: [FaqComponent],
+  entryComponents: [FaqPage],
+  providers: [FaqService],
 })
-export class FaqModule {
-}
+export class FaqModule {}

@@ -1,5 +1,5 @@
 @import 'themes';
-.m-h1-input{
+.m-h1-input {
   font-size: 56px;
   border: 0;
   background: none;
@@ -7,21 +7,21 @@
   font-weight: 400;
 }
 
-.m-input{
+.m-input {
   background: none;
   font-weight: 400;
   padding: 12px;
   font-size: 14px;
   width: 100%;
-  @include m-theme(){
-     border: 1px solid themed($m-grey-50);
-     background-color: themed($m-white) !important;
-     color: rgba(themed($m-black), 0.87) !important;
+  @include m-theme() {
+    border: 1px solid themed($m-grey-50);
+    background-color: themed($m-white) !important;
+    color: rgba(themed($m-black), 0.87) !important;
   }
 }
 
-
-.m-form-select, select.m-form-select{
+.m-form-select,
+select.m-form-select {
   width: auto;
   flex: 1;
   padding: 8px;
@@ -32,6 +32,6 @@
 }
 
 // No step spinners on ffox
-input[type="number"] {
+input[type='number'] {
   appearance: textfield;
 }

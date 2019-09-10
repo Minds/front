@@ -2,7 +2,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ElementRef, Input,
+  ElementRef,
+  Input,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -25,11 +26,10 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'm-blockchain--purchase',
   templateUrl: 'purchase.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlockchainPurchaseComponent implements OnInit {
-
-  stats: { amount, count, requested, issued } = {
+  stats: { amount; count; requested; issued } = {
     amount: 0,
     count: 0,
     requested: 0,
@@ -69,8 +69,8 @@ export class BlockchainPurchaseComponent implements OnInit {
     protected tde: TokenDistributionEventService,
     public session: Session,
     private route: ActivatedRoute,
-    protected router: Router,
-  ) { }
+    protected router: Router
+  ) {}
 
   ngOnInit() {
     this.loadWalletAddress();
@@ -99,7 +99,7 @@ export class BlockchainPurchaseComponent implements OnInit {
   set amount(value: number) {
     this.tokens = value * this.rate;
   }
-  
+
   async load() {
     this.inProgress = true;
     this.detectChanges();
@@ -114,7 +114,7 @@ export class BlockchainPurchaseComponent implements OnInit {
       };
       this.rate = response.rate;
       //this.amount = this.stats.pledged;
-    } catch (e) { }
+    } catch (e) {}
 
     this.inProgress = false;
     this.detectChanges();
@@ -158,7 +158,7 @@ export class BlockchainPurchaseComponent implements OnInit {
     let tx, amount;
 
     try {
-      let comp = 0.000000000000000001; 
+      let comp = 0.000000000000000001;
       amount = parseFloat((this.amount + comp).toFixed(18)); // Allow for small rounding discrepencies caused by recurring decimals
       tx = await this.tde.buy(amount, this.rate);
     } catch (err) {
@@ -169,9 +169,9 @@ export class BlockchainPurchaseComponent implements OnInit {
     }
 
     let response = await this.client.post('api/v2/blockchain/purchase', {
-        tx: tx,
-        amount: amount.toString(),
-        wallet_address: await this.web3Wallet.getCurrentWallet(true)
+      tx: tx,
+      amount: amount.toString(),
+      wallet_address: await this.web3Wallet.getCurrentWallet(true),
     });
 
     this.confirming = false;
@@ -187,10 +187,10 @@ export class BlockchainPurchaseComponent implements OnInit {
   purchaseEth() {
     this.showEthModal = true;
     this.detectChanges();
-  //let win = window.open('/checkout');
-  //win.onload = function() {
-  //  alert('opened');
-  //}
+    //let win = window.open('/checkout');
+    //win.onload = function() {
+    //  alert('opened');
+    //}
   }
 
   closePurchaseEth() {
@@ -211,12 +211,13 @@ export class BlockchainPurchaseComponent implements OnInit {
 
   promptTokenInput(input) {
     alert('Please enter how many tokens you wish to purchase');
-    setTimeout(() => { input.focus()}, 100);
+    setTimeout(() => {
+      input.focus();
+    }, 100);
   }
 
   detectChanges() {
     this.changeDetectorRef.markForCheck();
     this.changeDetectorRef.detectChanges();
   }
-
 }

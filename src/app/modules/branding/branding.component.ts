@@ -9,18 +9,12 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 
 @Component({
   selector: 'm-branding',
-  templateUrl: 'branding.component.html'
+  templateUrl: 'branding.component.html',
 })
-
 export class BrandingComponent {
-
   minds = window.Minds;
 
-  constructor(
-    public client: Client,
-    public title: MindsTitle,
-  ) {
+  constructor(public client: Client, public title: MindsTitle) {
     this.title.setTitle('Branding');
   }
-
 }
