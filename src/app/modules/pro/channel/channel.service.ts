@@ -303,7 +303,9 @@ export class ProChannelService implements OnDestroy {
         this.session.login(response.channel);
       }
     } catch (e) {
-      console.error(e);
+      if (!e || e.message !== 'The user could not be found') {
+        console.error(e);
+      }
     }
   }
 
