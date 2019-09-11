@@ -10,12 +10,13 @@
   <ng-container *ngIf="type == 'newsfeed' || type == 'offers'">
     <ng-container>
       <div class="m-boost-console--booster--posts-list">
-        <minds-card
-          [object]="entity | async"
-          class="m-border"
-          hostClass="mdl-card"
-          *ngFor="let entity of feed$ | async"
-        ></minds-card>
+        <ng-container *ngFor="let entity of feed$ | async">
+          <minds-card
+            [object]="entity | async"
+            class="m-border"
+            hostClass="mdl-card"
+          ></minds-card>
+        </ng-container>
       </div>
     </ng-container>
 
@@ -47,11 +48,13 @@
           class="mdl-cell mdl-cell--6-col"
           *ngFor="let entity of feed$ | async"
         >
-          <minds-card
-            [object]="entity | async"
-            hostClass="mdl-shadow--2dp"
-          ></minds-card>
-          <minds-button type="boost" [object]="entity | async"></minds-button>
+          <ng-container *ngIf="(entity | async)?.thumbnail_src">
+            <minds-card
+              [object]="entity | async"
+              hostClass="mdl-shadow--2dp"
+            ></minds-card>
+            <minds-button type="boost" [object]="entity | async"></minds-button>
+          </ng-container>
         </div>
       </div>
     </ng-container>
