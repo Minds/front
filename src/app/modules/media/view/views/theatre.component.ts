@@ -40,7 +40,7 @@ import { MindsVideoComponent } from '../../components/video/video.component';
       </div>
       <m-video
         [poster]="object.thumbnail_src"
-        [autoplay]="!object.monetized"
+        [autoplay]="false"
         [muted]="false"
         (finished)="loadNext()"
         [src]="[
