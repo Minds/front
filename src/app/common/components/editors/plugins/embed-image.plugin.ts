@@ -197,6 +197,10 @@ export class EmbedImage {
           '.' + imgClass
         );
 
+        if (!image) {
+          return;
+        }
+
         const overlay = image.parentElement.querySelector(
           '.m-blog--image--in-progress-overlay'
         );
@@ -243,9 +247,7 @@ export class EmbedImage {
 
     if ($image.tagName === 'SPAN') {
       $image = $image.parentNode.querySelector('img');
-    }
-
-    if ($image.tagName !== 'IMG') {
+    } else if ($image.tagName !== 'IMG') {
       return;
     }
 
