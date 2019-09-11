@@ -1757,6 +1757,17 @@
     </a>
   </ng-template>
 
+  <ng-template ngSwitchCase="rewards_state_decrease_today">
+    <a target="_blank" routerLink="/wallet/tokens/contributions">
+      <p i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__USER_STATE_DECREASE_TODAY">
+        It's not too late! You will drop down to a {{ notification.params.state }} user
+        by the end of today and your daily token reward multiplier will reduce to
+        {{ notification.params.reward_factor }}x.  Get liking and commenting to bring
+        your score back up!
+      </p>
+    </a>
+  </ng-template>
+
   <!-- Default -->
   <ng-template ngSwitchDefault>
     <i i18n="@@NOTIFICATIONS__NOTIFICATION__GENERAL_ERROR_VIEWING"
