@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { first, catchError } from 'rxjs/operators';
 import { Client } from '../../services/api';
 import { BlockListService } from './block-list.service';
 
@@ -64,8 +64,15 @@ export class EntitiesService {
     }
 
     for (const feedItem of feed) {
-      if (!blockedGuids || blockedGuids.indexOf(feedItem.owner_guid) < 0)
-        entities.push(this.entities.get(feedItem.urn));
+      if (
+        this.entities.has(feedItem.urn) &&
+        (!blockedGuids || blockedGuids.indexOf(feedItem.owner_guid) < 0)
+      )
+        entities.push(
+          this.entities
+            .get(feedItem.urn)
+            .pipe(catchError(err => new BehaviorSubject(null)))
+        );
     }
 
     return entities;
