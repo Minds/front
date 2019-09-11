@@ -9,7 +9,7 @@
         >
           <span i18n>General</span>
           <m-tooltip icon="help" i18n>
-            TBD
+            Customize your title and headline.
           </m-tooltip>
         </a>
 
@@ -20,7 +20,7 @@
         >
           <span i18n>Theme</span>
           <m-tooltip icon="help" i18n>
-            TBD
+            Set up your color scheme.
           </m-tooltip>
         </a>
 
@@ -31,7 +31,7 @@
         >
           <span i18n>Hashtags</span>
           <m-tooltip icon="help" i18n>
-            TBD
+            Set up category filters using hashtags.
           </m-tooltip>
         </a>
 
@@ -42,7 +42,7 @@
         >
           <span i18n>Footer</span>
           <m-tooltip icon="help" i18n>
-            TBD
+            Set up site footer items.
           </m-tooltip>
         </a>
 
@@ -53,18 +53,19 @@
         >
           <span i18n>Domain</span>
           <m-tooltip icon="help" i18n>
-            TBD
+            Configure your custom domain.
           </m-tooltip>
         </a>
 
         <a
+          *ngIf="!isRemote"
           class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="currentTab === 'cancel'"
           (click)="currentTab = 'cancel'"
         >
           <span i18n>Cancel</span>
           <m-tooltip icon="help" i18n>
-            TBD
+            Cancel your Pro subscription.
           </m-tooltip>
         </a>
       </div>
@@ -316,7 +317,7 @@
               </div>
             </ng-template>
 
-            <!-- Cancel -->
+            <!-- Domain -->
 
             <ng-template ngSwitchCase="domain">
               <p class="m-pro--settings--note" i18n>
@@ -331,6 +332,22 @@
                   name="domain"
                   [(ngModel)]="settings.domain"
                 />
+              </div>
+
+              <div class="m-pro--settings--field">
+                <label for="custom_head" i18n>Custom &lt;head&gt; Code</label>
+                <textarea
+                  class="m-pro--settings--code-textarea"
+                  id="custom_head"
+                  name="custom_head"
+                  [(ngModel)]="settings.custom_head"
+                  [readOnly]="!isAdmin"
+                ></textarea>
+
+                <p *ngIf="!isAdmin" class="m-pro--settings--note" i18n>
+                  In order to customize this field, please contact a Minds admin
+                  or email info@minds.com.
+                </p>
               </div>
             </ng-template>
 

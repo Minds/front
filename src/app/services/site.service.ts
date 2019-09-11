@@ -6,11 +6,15 @@ export class SiteService {
     return window.Minds.pro;
   }
 
-  get isProDomain() {
+  get isProDomain(): boolean {
     return Boolean(this.pro);
   }
 
-  get title() {
+  get title(): string {
     return this.isProDomain ? this.pro.title || '' : 'Minds';
+  }
+
+  get isAdmin(): boolean {
+    return window.Minds.Admin;
   }
 }

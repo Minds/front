@@ -84,7 +84,12 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
       this.channel = response.channel;
 
       // NOTE: Temporary workaround until channel component supports children routes
-      if (!this.site.isProDomain && this.channel.pro && !this.isOwner) {
+      if (
+        !this.site.isProDomain &&
+        this.channel.pro &&
+        !this.isOwner &&
+        !this.isAdmin
+      ) {
         this.router.navigate(['/pro', this.channel.username], {
           replaceUrl: true,
         });
@@ -99,5 +104,9 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   get isOwner() {
     const currentUser = this.session.getLoggedInUser();
     return this.channel && currentUser && this.channel.guid == currentUser.guid;
+  }
+
+  get isAdmin() {
+    return this.site.isAdmin;
   }
 }

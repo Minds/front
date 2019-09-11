@@ -57,6 +57,13 @@
       }
     </script>
 
+    <?php if ($pro && $pro->getCustomHead()): /* Blank line below IS IMPORTANT! Do not remove. */ ?>
+
+    <!-- Minds Pro: <?php echo $pro->getUserGuid(); ?> --><?php echo "\n" . $pro->getCustomHead() . "\n"; ?>
+    <!-- End -->
+
+    <?php endif; ?>
+
   </head>
   <body>
 

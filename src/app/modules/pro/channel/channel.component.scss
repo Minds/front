@@ -19,8 +19,17 @@ m-pro--channel {
     }
   }
 
-  m-blog-view.m-blog {
+  m-blog-view-infinite, m-blog-view {
+    background-color: transparent !important;
+  }
+
+  minds-textarea {
+    background-color: var(--m-pro--transparent-background-color) !important;
+  }
+
+  .m-blog-view m-blog-view.m-blog {
     color: var(--m-pro--text-color);
+    background-color: var(--m-pro--transparent-background-color) !important;
 
     .minds-blog-body > p,
     p,
@@ -36,7 +45,7 @@ m-pro--channel {
     }
 
     .blogs-grid {
-      background-color: var(--m-pro--transparent-background-color);
+      background-color: transparent !important;
     }
   }
 

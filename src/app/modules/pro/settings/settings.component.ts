@@ -2,19 +2,22 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MindsTitle } from '../../../services/ux/title';
+import { Subscription } from 'rxjs';
+import { SiteService } from '../../../services/site.service';
 
 @Component({
   selector: 'm-pro--settings',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'settings.component.html',
 })
-export class ProSettingsComponent implements OnInit {
+export class ProSettingsComponent implements OnInit, OnDestroy {
   settings: any;
 
   inProgress: boolean;
@@ -29,25 +32,41 @@ export class ProSettingsComponent implements OnInit {
     | 'domain'
     | 'cancel' = 'general';
 
+  user: string | null = null;
+
+  protected param$: Subscription;
+
   constructor(
     protected service: ProService,
     protected session: Session,
     protected router: Router,
+    protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
-    protected title: MindsTitle
+    protected title: MindsTitle,
+    protected site: SiteService
   ) {}
 
   ngOnInit() {
-    this.load();
+    this.param$ = this.route.params.subscribe(params => {
+      if (this.site.isAdmin) {
+        this.user = params['user'] || null;
+      }
+
+      this.load();
+    });
+  }
+
+  ngOnDestroy() {
+    this.param$.unsubscribe();
   }
 
   async load() {
     this.inProgress = true;
     this.detectChanges();
 
-    const { isActive, settings } = await this.service.get();
+    const { isActive, settings } = await this.service.get(this.user);
 
-    if (!isActive) {
+    if (!isActive && !this.user) {
       this.router.navigate(['/pro'], { replaceUrl: true });
       return;
     }
@@ -64,7 +83,7 @@ export class ProSettingsComponent implements OnInit {
     this.inProgress = true;
     this.detectChanges();
 
-    await this.service.set(this.settings);
+    await this.service.set(this.settings, this.user);
 
     this.saved = true;
     this.inProgress = false;
@@ -101,10 +120,18 @@ export class ProSettingsComponent implements OnInit {
   }
 
   get previewRoute() {
-    return ['/pro', this.session.getLoggedInUser().username];
+    return ['/pro', this.user || this.session.getLoggedInUser().username];
   }
 
   get ratios() {
     return this.service.ratios;
+  }
+
+  get isRemote() {
+    return Boolean(this.user);
+  }
+
+  get isAdmin() {
+    return this.site.isAdmin;
   }
 }

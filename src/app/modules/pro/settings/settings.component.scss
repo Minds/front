@@ -71,6 +71,17 @@
     textarea {
       height: 6em;
       resize: none;
+
+      &.m-pro--settings--code-textarea {
+        font-family: monospace;
+        font-size: 13px;
+        max-width: 49em;
+        height: 12em;
+
+        @media screen and (max-width: 768px) {
+          max-width: 100%;
+        }
+      }
     }
 
     &.m-pro--settings--field-actions {
