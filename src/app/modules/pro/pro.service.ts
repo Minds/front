@@ -28,9 +28,15 @@ export class ProService {
     return true;
   }
 
-  async get(): Promise<{ isActive; settings }> {
+  async get(remoteUser: string | null = null): Promise<{ isActive; settings }> {
+    const endpoint = ['api/v2/pro/settings'];
+
+    if (remoteUser) {
+      endpoint.push(remoteUser);
+    }
+
     const { isActive, settings } = (await this.client.get(
-      'api/v2/pro/settings',
+      endpoint.join('/'),
       {},
       { cache: false }
     )) as any;
@@ -56,8 +62,14 @@ export class ProService {
     return { isActive, settings };
   }
 
-  async set(settings): Promise<boolean> {
-    await this.client.post('api/v2/pro/settings', settings);
+  async set(settings, remoteUser: string | null = null): Promise<boolean> {
+    const endpoint = ['api/v2/pro/settings'];
+
+    if (remoteUser) {
+      endpoint.push(remoteUser);
+    }
+
+    await this.client.post(endpoint.join('/'), settings);
     return true;
   }
 }

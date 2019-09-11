@@ -159,4 +159,31 @@ export class ChannelSidebar {
       )
       .present();
   }
+
+  get showBecomeProButton() {
+    const isOwner =
+      this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().guid == this.user.guid;
+    return isOwner && !this.user.pro;
+  }
+
+  get showProSettings() {
+    const isOwner =
+      this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().guid == this.user.guid;
+    const isAdmin = window.Minds.Admin;
+    return (isOwner || isAdmin) && this.user.pro;
+  }
+
+  get proSettingsRouterLink() {
+    const isAdmin = window.Minds.Admin;
+
+    const route: any[] = ['/pro/settings'];
+
+    if (isAdmin) {
+      route.push({ user: this.user.username });
+    }
+
+    return route;
+  }
 }

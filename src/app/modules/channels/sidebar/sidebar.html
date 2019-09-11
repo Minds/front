@@ -262,25 +262,24 @@
         <span [hidden]="!editing" i18n="@@M__ACTION__SAVE">Save</span>
       </button>
     </div>
-    <ng-container *ngIf="session.getLoggedInUser()?.guid == user.guid">
-      <a
-        *ngIf="!user.pro"
-        class="m-btn m-link-btn m-btn--with-icon m-btn--slim m-btn--action"
-        routerLink="/pro"
-      >
-        <i class="material-icons">business_center</i>
-        <span i18n>Become Pro</span>
-      </a>
 
-      <a
-        *ngIf="user.pro"
-        class="m-btn m-link-btn m-btn--with-icon m-btn--slim"
-        routerLink="/pro/settings"
-      >
-        <i class="material-icons">business_center</i>
-        <span i18n>Pro</span>
-      </a>
-    </ng-container>
+    <a
+      *ngIf="showBecomeProButton"
+      class="m-btn m-link-btn m-btn--with-icon m-btn--slim m-btn--action"
+      routerLink="/pro"
+    >
+      <i class="material-icons">business_center</i>
+      <span i18n>Become Pro</span>
+    </a>
+
+    <a
+      *ngIf="showProSettings"
+      class="m-btn m-link-btn m-btn--with-icon m-btn--slim"
+      [routerLink]="proSettingsRouterLink"
+    >
+      <i class="material-icons">business_center</i>
+      <span i18n>Pro</span>
+    </a>
 
     <minds-button-boost
       *ngIf="session.getLoggedInUser().guid == user.guid"
