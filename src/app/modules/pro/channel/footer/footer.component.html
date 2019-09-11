@@ -4,6 +4,7 @@
       *ngFor="let link of footerLinks"
       class="m-pro--channel-footer--link"
       [href]="link.href"
+      target="_blank"
     >
       {{ link.title }}
     </a>
@@ -19,9 +20,11 @@
           @{{ currentUsername }}
         </a>
 
-        <a class="m-pro--channel-footer--link" (click)="logout()" i18n
-          >Logout</a
-        >
+        <a class="m-pro--channel-footer--link"
+           (click)="logout()"
+           i18n
+          >Logout
+        </a>
       </ng-container>
 
       <ng-container *ngIf="!isOwner">
@@ -41,8 +44,9 @@
         [href]="getSocialProfileURL(profile.value)"
         rel="noopener noreferrer"
         target="_blank"
-        ><i [ngClass]="[getSocialProfileIconClass(profile)]"></i
-      ></a>
+        >
+        <i [ngClass]="[getSocialProfileIconClass(profile)]"></i>
+      </a>
     </span>
   </div>
 
