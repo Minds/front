@@ -137,7 +137,8 @@ export const proRoutes = [
   '/forgot_password',
   '/newsfeed',
   '/media',
-  '/blog'
+  '/blog',
+  '/all',
 ];
 
 @NgModule({
