@@ -81,10 +81,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.modalService
       .setContainer(this.overlayModal)
       .setRoot(this.element.nativeElement);
-
-    if (this.sessionStorage.get('pro::wire-modal::open')) {
-      this.wire();
-    }
   }
 
   listen() {
@@ -170,6 +166,10 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.channel = await this.channelService.load(this.username);
       this.bindCssVariables();
       this.setTitle();
+
+      if (this.sessionStorage.get('pro::wire-modal::open')) {
+        this.wire();
+      }
     } catch (e) {
       this.error = e.getMessage();
     }
