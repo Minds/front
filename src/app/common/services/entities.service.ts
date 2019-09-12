@@ -67,12 +67,14 @@ export class EntitiesService {
       if (
         this.entities.has(feedItem.urn) &&
         (!blockedGuids || blockedGuids.indexOf(feedItem.owner_guid) < 0)
-      )
-        entities.push(
-          this.entities
-            .get(feedItem.urn)
-            .pipe(catchError(err => new BehaviorSubject(null)))
-        );
+      ) {
+        const entity = this.entities.get(feedItem.urn);
+        try {
+          if (await entity.pipe(first()).toPromise()) {
+            entities.push(entity);
+          }
+        } catch (err) {}
+      }
     }
 
     return entities;
