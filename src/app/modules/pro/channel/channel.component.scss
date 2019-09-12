@@ -4,6 +4,7 @@ m-pro--channel {
   --m-pro--primary-color: #4690df;
   --m-pro--plain-background-color: #ffffff;
   --m-pro--transparent-background-color: #ffffffa0;
+  --m-pro--more-transparent-background-color: #ffffff50;
   --m-pro--text-color: #000000;
   --m-pro--tile-ratio: 56.25%;
 
@@ -11,7 +12,7 @@ m-pro--channel {
   background: none no-repeat center fixed;
   background-size: cover;
   background-blend-mode: overlay;
-  background-color: var(--m-pro--transparent-background-color) !important;
+  background-color: var(--m-pro--more-transparent-background-color) !important;
 
   @media screen and (min-width: ($min-tablet + 1px)) {
     m-pro__hamburger-menu {
