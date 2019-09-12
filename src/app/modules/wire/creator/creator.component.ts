@@ -416,6 +416,7 @@ export class WireCreatorComponent {
 
     switch (this.wire.payloadType) {
       case 'onchain':
+      case 'eth':
         if (!this.wire.payload && !this.wire.payload.receiver) {
           throw new Error('Invalid receiver.');
         }
@@ -447,9 +448,11 @@ export class WireCreatorComponent {
         break;
 
       case 'usd':
-        //if (!this.wire.payload) {
-        //  throw new Error('Payment method not processed.');
-        //}
+        if (!this.owner.merchant || !this.owner.merchant.id) {
+          throw new VisibleWireError(
+            'This channel is not able to receive USD at the moment'
+          );
+        }
         break;
       case 'btc':
         if (!this.wire.payload.receiver) {
