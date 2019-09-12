@@ -26,6 +26,7 @@ import { SettingsWireComponent } from './wire/wire.component';
 import { WireModule } from '../wire/wire.module';
 import { SettingsP2PMediaComponent } from './p2pmedia/p2pmedia.component';
 import { SettingsBlockedChannelsComponent } from './blocked-channels/blocked-channels.component';
+import { SettingsTiersComponent } from './tiers/tiers.component';
 
 const settingsRoutes: Routes = [
   {
@@ -43,6 +44,7 @@ const settingsRoutes: Routes = [
       { path: 'reported-content', component: SettingsReportedContentComponent },
       { path: 'p2pmedia', component: SettingsP2PMediaComponent },
       { path: 'blocked-channels', component: SettingsBlockedChannelsComponent },
+      { path: 'tiers', component: SettingsTiersComponent },
     ],
   },
 ];
@@ -76,6 +78,7 @@ const settingsRoutes: Routes = [
     SettingsWireComponent,
     SettingsP2PMediaComponent,
     SettingsBlockedChannelsComponent,
+    SettingsTiersComponent,
   ],
   providers: [SettingsService],
   exports: [
