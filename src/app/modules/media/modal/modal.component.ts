@@ -155,11 +155,11 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           case 'image':
             this.contentType = 'image';
             this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
+            this.title = this.entity.title;
             this.entity.entity_guid = this.entity.guid;
             break;
           case 'blog':
             this.contentType = 'blog';
-            this.title = this.entity.title;
             this.entity.entity_guid = this.entity.guid;
         }
         break;
