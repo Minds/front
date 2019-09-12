@@ -2,10 +2,14 @@ m-pro--channel-list {
   display: block;
   padding: 0 32px;
 
-  h1 {
-    font-size: 72px;
-    font-weight: 600;
-    margin: 0 0 0.4em;
+  h1.m-proChannelList__title {
+    margin: 24px 0;
+    padding: 0;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    line-height: 1.25;
   }
 
   m-pro--channel--categories {

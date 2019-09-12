@@ -13,8 +13,12 @@ m-pro--channel {
   background-blend-mode: overlay;
   background-color: var(--m-pro--transparent-background-color) !important;
 
-  m-pro__hamburger-menu {
-    @media screen and (min-width: ($min-tablet + 1px)) {
+  @media screen and (min-width: ($min-tablet + 1px)) {
+    m-pro__hamburger-menu {
+      display: none;
+    }
+
+    .m-proChannelList__title {
       display: none;
     }
   }
