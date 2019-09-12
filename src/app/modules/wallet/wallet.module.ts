@@ -87,7 +87,7 @@ const walletRoutes: Routes = [
         path: 'usd',
         component: WalletUSDComponent,
         children: [
-          { path: '', redirectTo: 'earnings', pathMatch: 'full' },
+          { path: '', redirectTo: 'transactions', pathMatch: 'full' },
           { path: 'transactions', component: WalletUSDTransactionsComponent },
           { path: 'earnings', component: WalletUSDEarningsComponent },
           { path: 'payouts', component: WalletUSDPayoutsComponent },
