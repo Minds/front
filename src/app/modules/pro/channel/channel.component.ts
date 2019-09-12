@@ -117,8 +117,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const title = [
       (this.channel.pro_settings.title as string) ||
-        this.channel.name ||
-        this.channel.username,
+      this.channel.name ||
+      this.channel.username,
     ];
 
     switch (this.type) {
@@ -166,13 +166,11 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.channel = await this.channelService.load(this.username);
       this.bindCssVariables();
       this.setTitle();
-
-      if (this.sessionStorage.get('pro::wire-modal::open')) {
-        this.wire();
-      }
     } catch (e) {
       this.error = e.getMessage();
     }
+
+    this.shouldOpenWireModal();
 
     this.detectChanges();
   }
@@ -183,6 +181,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     } catch (e) {
       this.error = e.getMessage();
     }
+
+    this.shouldOpenWireModal();
 
     this.detectChanges();
   }
@@ -317,5 +317,11 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   get isProDomain() {
     return this.site.isProDomain;
+  }
+
+  private shouldOpenWireModal() {
+    if (this.sessionStorage.get('pro::wire-modal::open')) {
+      this.wire();
+    }
   }
 }

@@ -6,7 +6,7 @@ import { EntitiesService } from '../../../common/services/entities.service';
 import normalizeUrn from '../../../helpers/normalize-urn';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Session } from '../../../services/session';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../services/site.service';
@@ -29,6 +29,12 @@ export interface NavItems {
   isActive: () => boolean;
 }
 
+type PaginationParams = { limit?: number, offset?: any };
+type FeedsResponse = {
+  content: Array<any>;
+  offset: any;
+};
+
 @Injectable()
 export class ProChannelService implements OnDestroy {
   currentChannel: MindsUser;
@@ -48,7 +54,8 @@ export class ProChannelService implements OnDestroy {
     protected route: ActivatedRoute,
     protected modalService: OverlayModalService,
     protected sessionStorage: SessionsStorageService,
-    protected site: SiteService
+    protected router: Router,
+    protected site: SiteService,
   ) {
     this.listen();
   }
@@ -128,21 +135,15 @@ export class ProChannelService implements OnDestroy {
     return this.featuredContent;
   }
 
-  async getContent({
-    limit,
-    offset,
-  }: { limit?: number; offset? } = {}): Promise<{
-    content: Array<any>;
-    offset: any;
-  }> {
+  async getContent(params: PaginationParams = {}): Promise<FeedsResponse> {
     if (!this.currentChannel) {
       throw new Error('No channel');
     }
 
     const endpoint = `api/v2/feeds/channel/${this.currentChannel.guid}/all/top`;
     const qs = {
-      limit: limit || 24,
-      from_timestamp: offset || '',
+      limit: params.limit || 24,
+      from_timestamp: params.offset || '',
       sync: 1,
       exclude:
         (this.currentChannel.pro_settings.featured_content || []).join(',') ||
@@ -310,7 +311,18 @@ export class ProChannelService implements OnDestroy {
   }
 
   wire() {
+    // save into sessionStorage before doing the logged in check so the modal opens after logging in
     this.sessionStorage.set('pro::wire-modal::open', '1');
+
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    if (this.session.getLoggedInUser().guid == this.currentChannel.guid) {
+      return;
+    }
+
     this.modalService
       .create(WireCreatorComponent, this.currentChannel, {
         onComplete: () => {
