@@ -79,8 +79,12 @@ export class Upload {
       xhr.setRequestHeader('X-XSRF-TOKEN', XSRF_TOKEN);
 
       if (this.origin) {
-        xhr.setRequestHeader('X-MINDS-ORIGIN', this.origin);
+        const PRO_XSRF_JWT = this.cookie.get('PRO-XSRF-JWT') || '';
+
         xhr.withCredentials = true;
+
+        xhr.setRequestHeader('X-MINDS-ORIGIN', this.origin);
+        xhr.setRequestHeader('X-PRO-XSRF-JWT', PRO_XSRF_JWT);
       }
 
       xhr.send(formData);

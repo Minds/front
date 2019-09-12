@@ -202,17 +202,20 @@ export class Client {
   private buildOptions(options: Object) {
     const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN') || '';
 
-    const headers = new HttpHeaders({
+    const headers = {
       'X-XSRF-TOKEN': XSRF_TOKEN,
       'X-VERSION': environment.version,
-    });
+    };
 
     if (this.origin) {
+      const PRO_XSRF_JWT = this.cookie.get('PRO-XSRF-JWT') || '';
+
       headers['X-MINDS-ORIGIN'] = this.origin;
+      headers['X-PRO-XSRF-JWT'] = PRO_XSRF_JWT;
     }
 
     const builtOptions = {
-      headers: headers,
+      headers: new HttpHeaders(headers),
       cache: true,
     };
 
