@@ -52,6 +52,91 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('overlayModal', { static: true })
   protected overlayModal: OverlayModalComponent;
 
+  get currentUser() {
+    if (!this.session.isLoggedIn()) {
+      return null;
+    }
+
+    return this.session.getLoggedInUser();
+  }
+
+  get homeRouterLink() {
+    return this.channelService.getRouterLink('home');
+  }
+
+  get feedRouterLink() {
+    let params;
+
+    if (this.query) {
+      params = { query: this.query };
+    }
+
+    return this.channelService.getRouterLink('feed', params);
+  }
+
+  get videosRouterLink() {
+    let params;
+
+    if (this.query) {
+      params = { query: this.query };
+    }
+
+    return this.channelService.getRouterLink('videos', params);
+  }
+
+  get imagesRouterLink() {
+    let params;
+
+    if (this.query) {
+      params = { query: this.query };
+    }
+
+    return this.channelService.getRouterLink('images', params);
+  }
+
+  get articlesRouterLink() {
+    let params;
+
+    if (this.query) {
+      params = { query: this.query };
+    }
+
+    return this.channelService.getRouterLink('articles', params);
+  }
+
+  get groupsRouterLink() {
+    return this.channelService.getRouterLink('groups');
+  }
+
+  get proSettingsLink() {
+    return ['/pro/settings'];
+  }
+
+  get proSettingsHref() {
+    return window.Minds.site_url + 'pro/settings';
+  }
+
+  get isProDomain() {
+    return this.site.isProDomain;
+  }
+
+  @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
+    if (!this.channel) {
+      return 'none';
+    }
+
+    return `url(${this.channel.pro_settings.background_image})`;
+  }
+
+  @HostBinding('class') get cssColorSchemeOverride() {
+    if (!this.channel) {
+      return '';
+    }
+
+    return `m-theme--wrapper m-theme--wrapper__${this.channel.pro_settings
+      .scheme || 'light'}`;
+  }
+
   constructor(
     protected element: ElementRef,
     protected session: Session,
@@ -107,6 +192,10 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
         this.reload();
       }
     });
+  }
+
+  @HostListener('window:resize') onResize() {
+    this.collapseNavItems = window.innerWidth <= 768;
   }
 
   setTitle() {
@@ -213,27 +302,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.channelService.wire();
   }
 
-  @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
-    if (!this.channel) {
-      return 'none';
-    }
-
-    return `url(${this.channel.pro_settings.background_image})`;
-  }
-
-  @HostBinding('class') get cssColorSchemeOverride() {
-    if (!this.channel) {
-      return '';
-    }
-
-    return `m-theme--wrapper m-theme--wrapper__${this.channel.pro_settings
-      .scheme || 'light'}`;
-  }
-
-  @HostListener('window:resize') onResize() {
-    this.collapseNavItems = window.innerWidth <= 768;
-  }
-
   search(): Promise<boolean> {
     return this.router.navigate(
       this.channelService.getRouterLink('all', { query: this.query })
@@ -249,74 +317,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-  }
-
-  get currentUser() {
-    if (!this.session.isLoggedIn()) {
-      return null;
-    }
-
-    return this.session.getLoggedInUser();
-  }
-
-  get homeRouterLink() {
-    return this.channelService.getRouterLink('home');
-  }
-
-  get feedRouterLink() {
-    let params;
-
-    if (this.query) {
-      params = { query: this.query };
-    }
-
-    return this.channelService.getRouterLink('feed', params);
-  }
-
-  get videosRouterLink() {
-    let params;
-
-    if (this.query) {
-      params = { query: this.query };
-    }
-
-    return this.channelService.getRouterLink('videos', params);
-  }
-
-  get imagesRouterLink() {
-    let params;
-
-    if (this.query) {
-      params = { query: this.query };
-    }
-
-    return this.channelService.getRouterLink('images', params);
-  }
-
-  get articlesRouterLink() {
-    let params;
-
-    if (this.query) {
-      params = { query: this.query };
-    }
-
-    return this.channelService.getRouterLink('articles', params);
-  }
-
-  get groupsRouterLink() {
-    return this.channelService.getRouterLink('groups');
-  }
-
-  get proSettingsLink() {
-    return ['/pro/settings'];
-  }
-
-  get proSettingsHref() {
-    return window.Minds.site_url + 'pro/settings';
-  }
-
-  get isProDomain() {
-    return this.site.isProDomain;
   }
 
   private shouldOpenWireModal() {
