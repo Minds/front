@@ -88,7 +88,7 @@
             *ngIf="overlayVisible"
             @fastFadeAnimation
           >
-            <div class="m-mediaModal__overlayTitleWrapper">
+            <div class="m-mediaModal__overlayTitleWrapper" *ngIf="this.contentType !== 'blog'">
               <!-- TITLE -->
               <span
                 class="m-mediaModal__overlayTitle m-mediaModal__overlayTitle--notFullscreen"
