@@ -1,0 +1,20 @@
+.m-walletUsdTransactions__table {
+  width: 100%;
+
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+
+  > tr:first-of-type() {
+    font-weight: bold;
+  }
+
+  td {
+    padding: $minds-padding * 2;
+    font-size: 13px;
+
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-grey-50);
+    }
+  }
+}

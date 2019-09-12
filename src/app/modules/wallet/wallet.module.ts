@@ -33,6 +33,7 @@ import { WalletBalanceTokensComponent } from './balances/tokens/balance.componen
 import { WalletBalanceRewardsComponent } from './balances/rewards/balance.component';
 import { WalletUSDComponent } from './usd/usd.component';
 import { WalletUSDEarningsComponent } from './usd/earnings.component';
+import { WalletUSDTransactionsComponent } from './usd/transactions.component';
 import { WalletUSDPayoutsComponent } from './usd/payouts.component';
 import { WalletUSDSettingsComponent } from './usd/settings.component';
 import { WalletUSDOnboardingComponent } from './usd/onboarding/onboarding.component';
@@ -87,6 +88,7 @@ const walletRoutes: Routes = [
         component: WalletUSDComponent,
         children: [
           { path: '', redirectTo: 'earnings', pathMatch: 'full' },
+          { path: 'transactions', component: WalletUSDTransactionsComponent },
           { path: 'earnings', component: WalletUSDEarningsComponent },
           { path: 'payouts', component: WalletUSDPayoutsComponent },
           { path: 'settings', component: WalletUSDSettingsComponent },
@@ -140,6 +142,7 @@ const walletRoutes: Routes = [
     WalletBalanceRewardsComponent,
     WalletUSDComponent,
     WalletUSDEarningsComponent,
+    WalletUSDTransactionsComponent,
     WalletUSDPayoutsComponent,
     WalletUSDSettingsComponent,
     WalletUSDOnboardingComponent,
