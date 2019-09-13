@@ -26,6 +26,7 @@ import { WireMarketingComponent } from './marketing.component';
 import { WireConsoleOverviewComponent } from './console/overview/overview.component';
 import { WireConsoleRewardsInputsComponent } from './console/rewards-table/inputs/wire-console-rewards-inputs.component';
 import { WireConsoleRewardsComponent } from './console/rewards-table/rewards.component';
+import { WireSubscriptionTiersComponent } from './channel/tiers.component';
 
 const wireRoutes: Routes = [
   { path: 'wire', component: WireMarketingComponent },
@@ -60,6 +61,7 @@ const wireRoutes: Routes = [
     WireConsoleSettingsComponent,
     WireMarketingComponent,
     WireConsoleOverviewComponent,
+    WireSubscriptionTiersComponent,
   ],
   providers: [WireService],
   exports: [
@@ -75,6 +77,7 @@ const wireRoutes: Routes = [
     WireConsoleSettingsComponent,
     WireConsoleOverviewComponent,
     WireCreatorComponent,
+    WireSubscriptionTiersComponent,
   ],
   entryComponents: [
     WireCreatorComponent,

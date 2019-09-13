@@ -86,7 +86,8 @@ m-wire-channel {
   .m-wire-channel--description-editor {
     line-height: 1.3;
     letter-spacing: 0.5px;
-    margin: 0 0 ($minds-padding * 2);
+    margin: 0;
+    padding: $minds-padding * 2;
   }
 
   .m-wire-channel--description {
