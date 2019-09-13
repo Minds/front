@@ -24,10 +24,6 @@ m-pro--channel {
     }
   }
 
-  m-blog-view-infinite, m-blog-view {
-    background-color: transparent !important;
-  }
-
   minds-textarea {
     background-color: var(--m-pro--transparent-background-color) !important;
   }
@@ -145,6 +141,10 @@ m-pro--channel {
     @media screen and (max-width: $max-mobile) {
       grid-row: 2 / span 2;
       margin-bottom: 24px;
+    }
+
+    & > m-blog-view-infinite, m-blog-view {
+      background-color: transparent !important;
     }
   }
 
