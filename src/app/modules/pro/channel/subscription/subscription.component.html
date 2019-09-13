@@ -1,6 +1,7 @@
 <div *ngIf="isLoggedIn">
   <ng-container *ngIf="!inProgress; else inProgressSpinner">
     <button
+      [hidden]="true"
       *ngIf="!active"
       class="mdl-button mdl-button--colored mdl-color--green"
       [disabled]="inProgress || criticalError"

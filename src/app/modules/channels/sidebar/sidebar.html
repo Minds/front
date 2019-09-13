@@ -285,7 +285,18 @@
       *ngIf="session.getLoggedInUser().guid == user.guid"
       [object]="user"
     ></minds-button-boost>
+
     <m-channel--badges [user]="user"></m-channel--badges>
+
+    <a *ngIf="session.getLoggedInUser()?.is_admin" (click)="proAdminToggle()">
+      <m-tooltip
+        icon="business_center"
+        [iconClass]="user.pro ? 'selected' : ''"
+        i18n
+      >
+        Pro
+      </m-tooltip>
+    </a>
   </div>
 </div>
 

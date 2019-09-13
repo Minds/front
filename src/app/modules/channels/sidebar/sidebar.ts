@@ -160,6 +160,26 @@ export class ChannelSidebar {
       .present();
   }
 
+  async proAdminToggle() {
+    const value = !this.user.pro;
+    const method = value ? 'put' : 'delete';
+
+    this.user.pro = value;
+
+    try {
+      const response = (await this.client[method](
+        `api/v2/admin/pro/${this.user.guid}`
+      )) as any;
+
+      if (!response || response.status !== 'success') {
+        throw new Error('Invalid server response');
+      }
+    } catch (e) {
+      console.error(e);
+      this.user.pro = !value;
+    }
+  }
+
   get showBecomeProButton() {
     const isOwner =
       this.session.isLoggedIn() &&
