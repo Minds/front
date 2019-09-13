@@ -129,7 +129,9 @@
       <a
         class="m-page--sidebar--navigation--item"
         routerLink="/pro"
-        *ngIf="session.isLoggedIn() && !session.getLoggedInUser().pro"
+        *ngIf="
+          false && (session.isLoggedIn() && !session.getLoggedInUser().pro)
+        "
       >
         <i class="material-icons">business_center</i>
         <span>Become Pro</span>
