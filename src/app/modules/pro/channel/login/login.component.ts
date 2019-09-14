@@ -7,36 +7,7 @@ import { Storage } from '../../../../services/storage';
 
 @Component({
   selector: 'm-pro--channel-login',
-  template: `
-    <section class="m-ProChannelLogin--hero">
-      <div class="m-ProChannelLogin--hero--inner">
-        <div class="m-ProChannelLogin--hero--slogans">
-          <h2>{{ settings?.headline }}</h2>
-        </div>
-
-        <div class="m-ProChannelLogin--login">
-          <ng-container *ngIf="currentSection === 'login'">
-            <span class="m-proChannelLogin--subtext">
-              Not on {{ settings?.title }}?
-              <a (click)="currentSection = 'register'">Start a Minds channel</a>
-            </span>
-
-            <minds-form-login (done)="registered()"></minds-form-login>
-          </ng-container>
-
-          <ng-container *ngIf="currentSection === 'register'">
-            <span class="m-proChannelLogin--subtext">
-              <a (click)="currentSection = 'login'">
-                I already have a Minds account
-              </a>
-            </span>
-
-            <minds-form-register (done)="registered()"></minds-form-register>
-          </ng-container>
-        </div>
-      </div>
-    </section>
-  `,
+  templateUrl: 'login.component.html',
 })
 export class ProChannelLoginComponent {
   username: string;

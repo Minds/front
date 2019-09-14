@@ -8,22 +8,7 @@ import {
 
 @Component({
   selector: 'm-pro--channel--group-tile',
-  template: `
-    <div class="banner">
-      <img [src]="getBanner()" />
-    </div>
-    <div class="m-proChannelGroupTile__content">
-      <div class="avatar">
-        <img [src]="getAvatar()" />
-      </div>
-      <div class="body">
-        <h2>{{ this.entity.name }}</h2>
-        <p i18n>
-          Subscribers: <span>{{ this.entity['members:count'] }}</span>
-        </p>
-      </div>
-    </div>
-  `,
+  templateUrl: 'group-tile.component.html',
 })
 export class ProGroupTileComponent {
   @Input() entity: any;
