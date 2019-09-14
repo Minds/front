@@ -29,7 +29,7 @@ export interface NavItems {
   isActive: () => boolean;
 }
 
-type PaginationParams = { limit?: number, offset?: any };
+type PaginationParams = { limit?: number; offset?: any };
 type FeedsResponse = {
   content: Array<any>;
   offset: any;
@@ -55,7 +55,7 @@ export class ProChannelService implements OnDestroy {
     protected modalService: OverlayModalService,
     protected sessionStorage: SessionsStorageService,
     protected router: Router,
-    protected site: SiteService,
+    protected site: SiteService
   ) {
     this.listen();
   }
@@ -72,38 +72,57 @@ export class ProChannelService implements OnDestroy {
     this.isLoggedIn$.unsubscribe();
   }
 
-  async load(id: string) {
+  async loadAndAuth(id: string) {
     try {
       this.currentChannel = void 0;
 
-      await this.reload(id);
+      const response = (await this.client.get(`api/v2/pro/channel/${id}`)) as {
+        channel;
+        me?;
+      };
+
+      this.currentChannel = response.channel;
+
+      if (this.site.isProDomain && response.me) {
+        this.session.login(response.me);
+      }
 
       if (!this.currentChannel.pro_settings.tag_list) {
         this.currentChannel.pro_settings.tag_list = [];
       }
+
+      this.onChannelChange.next(this.currentChannel);
 
       this.featuredContent = null;
 
       return this.currentChannel;
     } catch (e) {
       if (e.status === 0) {
-        throw new Error('Sorry, there was a timeout error.');
+        throw new Error('Network error');
       } else {
-        console.log("couldn't load channel", e);
-        throw new Error("Sorry, the channel couldn't be found");
+        throw new Error('Error loading channel');
       }
     }
   }
 
   async reload(id: string) {
-    const response: MindsChannelResponse = (await this.client.get(
-      `api/v1/channel/${id}`
-    )) as MindsChannelResponse;
+    try {
+      const response = (await this.client.get(`api/v2/pro/channel/${id}`)) as {
+        channel;
+        me?;
+      };
 
-    this.currentChannel = response.channel;
-    this.onChannelChange.next(this.currentChannel);
+      this.currentChannel = response.channel;
+      this.onChannelChange.next(this.currentChannel);
 
-    return this.currentChannel;
+      return this.currentChannel;
+    } catch (e) {
+      if (e.status === 0) {
+        throw new Error('Network error');
+      } else {
+        throw new Error('Error loading channel');
+      }
+    }
   }
 
   async getFeaturedContent(): Promise<Array<any>> {
@@ -288,25 +307,6 @@ export class ProChannelService implements OnDestroy {
     } catch (e) {
       this.currentChannel.subscribed = true;
       this.currentChannel.subscribers_count += 1;
-    }
-  }
-
-  async auth() {
-    if (!this.site.isProDomain) {
-      // Not in Pro domain mode, user already injected
-      return;
-    }
-
-    try {
-      const response = (await this.client.get('api/v1/channel/me')) as any;
-
-      if (response && response.channel) {
-        this.session.login(response.channel);
-      }
-    } catch (e) {
-      if (!e || e.message !== 'The user could not be found') {
-        console.error(e);
-      }
     }
   }
 

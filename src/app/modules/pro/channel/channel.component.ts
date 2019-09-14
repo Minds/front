@@ -206,8 +206,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const title = [
       (this.channel.pro_settings.title as string) ||
-      this.channel.name ||
-      this.channel.username,
+        this.channel.name ||
+        this.channel.username,
     ];
 
     switch (this.type) {
@@ -251,8 +251,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.detectChanges();
 
     try {
-      await this.channelService.auth();
-      this.channel = await this.channelService.load(this.username);
+      this.channel = await this.channelService.loadAndAuth(this.username);
       this.bindCssVariables();
       this.setTitle();
     } catch (e) {
