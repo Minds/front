@@ -115,7 +115,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       params.sync = 1;
     }
 
-    let url = `api/v2/feeds/channel/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}`;
+    let url = `api/v2/pro/content/${this.channelService.currentChannel.guid}/${this.type}/${this.algorithm}`;
 
     try {
       this.feedsService

@@ -159,12 +159,14 @@ export class ProChannelService implements OnDestroy {
       throw new Error('No channel');
     }
 
-    const endpoint = `api/v2/feeds/channel/${this.currentChannel.guid}/all/top`;
+    const endpoint = `api/v2/pro/content/${this.currentChannel.guid}/all/top`;
     const qs = {
       limit: params.limit || 24,
       from_timestamp: params.offset || '',
       sync: 1,
-      exclude: (this.currentChannel.pro_settings.featured_content || []).join(',') || '',
+      exclude:
+        (this.currentChannel.pro_settings.featured_content || []).join(',') ||
+        '',
       cache: true,
     };
 
