@@ -34,6 +34,8 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   user: string | null = null;
 
+  error: string;
+
   protected param$: Subscription;
 
   constructor(
@@ -83,7 +85,11 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     this.inProgress = true;
     this.detectChanges();
 
-    await this.service.set(this.settings, this.user);
+    try {
+      await this.service.set(this.settings, this.user);
+    } catch (e) {
+      this.error = e.message;
+    }
 
     this.saved = true;
     this.inProgress = false;

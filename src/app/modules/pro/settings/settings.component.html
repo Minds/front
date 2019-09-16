@@ -370,6 +370,13 @@
           </ng-container>
 
           <div
+            class="m-pro--settings--error"
+            *ngIf="!!error"
+          >
+            {{ error }}
+          </div>
+
+          <div
             class="m-pro--settings--field m-pro--settings--field-actions"
             *ngIf="currentTab !== 'cancel'"
           >

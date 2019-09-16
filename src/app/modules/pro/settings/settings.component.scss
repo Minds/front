@@ -132,4 +132,12 @@
   .m-pro--settings--field-spinner {
     margin-left: 0.65em;
   }
+
+  .m-pro--settings--error {
+    margin: 16px 0;
+    font-size: 20px;
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
 }
