@@ -164,9 +164,8 @@ export class ProChannelService implements OnDestroy {
       limit: params.limit || 24,
       from_timestamp: params.offset || '',
       sync: 1,
-      exclude:
-        (this.currentChannel.pro_settings.featured_content || []).join(',') ||
-        '',
+      exclude: (this.currentChannel.pro_settings.featured_content || []).join(',') || '',
+      cache: true,
     };
 
     const {
