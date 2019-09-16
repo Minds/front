@@ -124,7 +124,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           this.entity.title ||
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.entity_guid || this.entity.guid;
-        this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.entity_guid}/xlarge`;
+        this.thumbnail = this.entity.thumbnails.xlarge;
         switch (this.entity.custom_type) {
           case 'video':
             this.contentType = 'video';
@@ -141,7 +141,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
             break;
           case 'image':
             this.contentType = 'image';
-            this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
+            // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
+            this.thumbnail = this.entity.thumbnail;
             break;
           case 'blog':
             this.contentType = 'blog';
@@ -160,7 +161,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.attachment_guid;
         this.entity.entity_guid = this.entity.attachment_guid;
-        this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.attachment_guid}/xlarge`;
+        // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.attachment_guid}/xlarge`;
+        this.thumbnail = this.entity.thumbnails.xlarge;
         break;
     }
 
