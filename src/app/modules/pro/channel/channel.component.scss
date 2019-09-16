@@ -59,8 +59,8 @@ m-pro--channel {
 }
 
 @media screen and (max-width: $max-mobile) {
-  .m-pro--channel {
-    .m-proChannelTopbar__SearchBox {
+  .m-pro__channel {
+    .m-proChannelTopbar__searchBox {
       display: none;
     }
 
@@ -70,7 +70,7 @@ m-pro--channel {
   }
 }
 
-.m-pro--channel {
+.m-pro__channel {
   max-width: 1296px;
   margin: 0 auto;
   display: grid;
@@ -107,7 +107,7 @@ m-pro--channel {
       padding: 0 16px 0 0;
     }
 
-    .m-proChannelTopbar__SearchBox {
+    .m-proChannelTopbar__searchBox {
       margin: 0 16px;
 
       @media screen and (max-width: 1081px) {

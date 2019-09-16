@@ -1,4 +1,4 @@
-.m-pro--settings {
+.m-pro__settings {
   max-width: 1280px;
   margin: auto;
 
@@ -7,7 +7,7 @@
   }
 }
 
-.m-pro--settings--page {
+.m-proSettings__page {
   padding-bottom: 24px;
 
   @include m-theme() {
@@ -23,7 +23,7 @@
     padding: 0;
   }
 
-  .m-pro--settings--field {
+  .m-proSettings__field {
     margin: 0 0 24px;
 
     &:last-child {
@@ -39,7 +39,7 @@
         color: themed($m-grey-800);
       }
 
-      &.m-pro--settings--inline-label {
+      &.m-proSettings__inlineLabel {
         display: inline-block;
         padding: 0;
         margin: 0 0.35em;
@@ -72,7 +72,7 @@
       height: 6em;
       resize: none;
 
-      &.m-pro--settings--code-textarea {
+      &.m-proSettings__codeTextarea {
         font-family: monospace;
         font-size: 13px;
         max-width: 49em;
@@ -84,7 +84,7 @@
       }
     }
 
-    &.m-pro--settings--field-actions {
+    &.m-proSettings__fieldActions {
       display: flex;
       flex-direction: row;
 
@@ -94,7 +94,7 @@
     }
   }
 
-  .m-pro--settings--preview-btn {
+  .m-proSettings__previewBtn {
     margin-left: 0.35em;
 
     @include m-theme() {
@@ -103,13 +103,13 @@
     }
   }
 
-  .m-pro--settings--note {
+  .m-proSettings__note {
     @include m-theme() {
       color: themed($m-grey-400);
     }
   }
 
-  .m-pro--settings--flex-inputs {
+  .m-proSettings__flexInputs {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -129,11 +129,11 @@
     }
   }
 
-  .m-pro--settings--field-spinner {
+  .m-proSettings__fieldSpinner {
     margin-left: 0.65em;
   }
 
-  .m-pro--settings--error {
+  .m-proSettings__error {
     margin: 16px 0;
     font-size: 20px;
     @include m-theme() {

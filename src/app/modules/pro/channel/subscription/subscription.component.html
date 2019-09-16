@@ -19,13 +19,13 @@
       Cancel Pro
     </button>
 
-    <span *ngIf="error" class="m-pro-subscription--error">
+    <span *ngIf="error" class="m-proSubscription__error">
       {{ error }}
     </span>
   </ng-container>
 
   <ng-template #inProgressSpinner>
-    <div class="m-pro-subscription--in-progress">
+    <div class="m-proSubscription__inProgress">
       <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
     </div>
   </ng-template>

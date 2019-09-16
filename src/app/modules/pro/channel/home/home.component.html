@@ -1,12 +1,12 @@
-<div class="m-pro--channel-home">
+<div class="m-proChannel__home">
   <m-pro--channel--categories
     [showAllTag]="false"
     [selectedHashtag]="''"
     (onSelectTag)="navigateToCategory($event)"
   ></m-pro--channel--categories>
 
-  <div class="m-pro--channel-home--section" *ngIf="featuredContent?.length">
-    <div class="m-pro--channel-home--featured-content">
+  <div class="m-proChannelHome__section" *ngIf="featuredContent?.length">
+    <div class="m-proChannelHome__featuredContent">
       <m-pro--channel-tile
         *ngFor="let entity of featuredContent"
         [entity]="entity"
@@ -15,14 +15,14 @@
     </div>
   </div>
 
-  <div class="m-pro--channel-home--section" *ngFor="let category of categories">
+  <div class="m-proChannelHome__section" *ngFor="let category of categories">
     <h2 i18n>
       <a [routerLink]="getCategoryRoute(category.tag?.tag)">{{
         category.tag?.label
       }}</a>
     </h2>
 
-    <div class="m-pro--channel-home--category-content">
+    <div class="m-proChannelHome__categoryContent">
       <ng-container *ngFor="let entity$ of category?.content">
         <m-pro--channel-tile
           *ngIf="entity$ | async as entity"
@@ -33,7 +33,7 @@
     </div>
   </div>
 
-  <div class="m-pro--channel-home--loader" *ngIf="inProgress">
+  <div class="m-proChannelHome__loader" *ngIf="inProgress">
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
 </div>

@@ -1,14 +1,14 @@
-<a class="m-pro__hamburger-menu__trigger" (click)="toggleMenu()">
+<a class="m-proHamburgerMenu__trigger" (click)="toggleMenu()">
   <i class="material-icons">menu</i>
 </a>
 
-<div class="m-pro__hamburger-menu__menu">
-  <a class="m-pro__hamburger-menu__close" (click)="closeMenu()">
+<div class="m-proHamburgerMenu__menu">
+  <a class="m-proHamburgerMenu__close" (click)="closeMenu()">
     <i class="material-icons">close</i>
   </a>
 
   <ul>
-    <li class="m-pro__hamburger-menu-menu__logo" *ngIf="channel">
+    <li class="m-proHamburgerMenu__logo" *ngIf="channel">
       <img
         [routerLink]="homeRouterLink"
         [src]="channel.pro_settings.logo_image"
@@ -17,7 +17,7 @@
     </li>
 
     <li
-      class="m-pro__hamburger-menu-menu__subscribe"
+      class="m-proHamburgerMenu__subscribe"
       *ngIf="currentUser?.guid != channel?.guid"
     >
       <m-pro__subscribeButton (onAction)="closeMenu()"></m-pro__subscribeButton>
@@ -26,7 +26,7 @@
     <li>
       <a
         [routerLink]="feedRouterLink"
-        routerLinkActive="m-pro__hamburger-menu-menu__item--active"
+        routerLinkActive="m-proHamburgerMenu__item--active"
         (click)="closeMenu()"
         i18n
         >Feed</a
@@ -36,7 +36,7 @@
     <li>
       <a
         [routerLink]="videosRouterLink"
-        routerLinkActive="m-pro__hamburger-menu-menu__item--active"
+        routerLinkActive="m-proHamburgerMenu__item--active"
         (click)="closeMenu()"
         i18n
         >Videos</a
@@ -46,7 +46,7 @@
     <li>
       <a
         [routerLink]="imagesRouterLink"
-        routerLinkActive="m-pro__hamburger-menu-menu__item--active"
+        routerLinkActive="m-proHamburgerMenu__item--active"
         (click)="closeMenu()"
         i18n
         >Images</a
@@ -56,7 +56,7 @@
     <li>
       <a
         [routerLink]="articlesRouterLink"
-        routerLinkActive="m-pro__hamburger-menu-menu__item--active"
+        routerLinkActive="m-proHamburgerMenu__item--active"
         (click)="closeMenu()"
         i18n
         >Articles</a
@@ -66,7 +66,7 @@
     <li>
       <a
         [routerLink]="groupsRouterLink"
-        routerLinkActive="m-pro__hamburger-menu-menu__item--active"
+        routerLinkActive="m-proHamburgerMenu__item--active"
         (click)="closeMenu()"
         i18n
         >Groups</a
@@ -79,7 +79,7 @@
       </a>
     </li>
 
-    <li class="m-pro__hamburger-menu-menu__search-box">
+    <li class="m-proHamburgerMenu__searchBox">
       <m-pro__searchBox
         [query]="query"
         (queryChange)="queryChange.emit($event)"
@@ -88,18 +88,18 @@
       ></m-pro__searchBox>
     </li>
 
-    <li class="m-pro__hamburger-menu-menu__spacer"></li>
+    <li class="m-proHamburgerMenu__spacer"></li>
 
     <ng-container *ngIf="items && items.length">
       <li *ngFor="let item of items">
         <a
-          [class.m-pro__hamburger-menu-menu__item--active]="item.isActive()"
+          [class.m-proHamburgerMenu__item--active]="item.isActive()"
           (click)="item.onClick(); closeMenu()"
           >{{ item.label }}</a
         >
       </li>
 
-      <li class="m-pro__hamburger-menu-menu__spacer"></li>
+      <li class="m-proHamburgerMenu__spacer"></li>
     </ng-container>
   </ul>
 

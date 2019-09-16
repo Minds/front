@@ -1,4 +1,4 @@
-<div class="m-pro--channel" *ngIf="channel">
+<div class="m-pro__channel" *ngIf="channel">
   <div class="m-proChannel__topbar">
     <img
       class="m-proChannelTopbar__logo"
@@ -6,7 +6,7 @@
       [routerLink]="homeRouterLink"
     />
 
-    <div class="m-proChannelTopbar__SearchBox">
+    <div class="m-proChannelTopbar__searchBox">
       <m-pro__searchBox
         [(query)]="query"
         (onSearch)="search()"

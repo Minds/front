@@ -9,11 +9,11 @@ m-pro--channel-login {
   }
 }
 
-.m-ProChannelLogin--hero {
+.m-proChannelLogin__hero {
   position: relative;
   width: 100%;
 
-  .m-ProChannelLogin--hero--inner {
+  .m-proChannelLoginHero__inner {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -55,7 +55,7 @@ m-pro--channel-login {
     }
   }
 
-  .m-ProChannelLogin--hero--video {
+  .m-proChannelLogin__hero--video {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -71,7 +71,7 @@ m-pro--channel-login {
     }
   }
 
-  .m-ProChannelLogin--hero--overlay {
+  .m-proChannelLogin__hero--overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -83,7 +83,7 @@ m-pro--channel-login {
     }
   }
 
-  .m-ProChannelLogin--hero--slogans {
+  .m-proChannelLoginHero__slogans {
     flex-grow: 1;
     z-index: 2;
 
@@ -137,7 +137,7 @@ m-pro--channel-login {
     }
   }
 
-  .m-ProChannelLogin--login {
+  .m-proChannelLogin__form {
     flex: 1;
     margin-left: 16px;
     z-index: 2;
@@ -149,7 +149,7 @@ m-pro--channel-login {
       min-width: initial;
     }
 
-    .m-proChannelLogin--subtext {
+    .m-proChannelLogin__subtext {
       display: block;
       margin: 0 8px;
       font-size: 20px;

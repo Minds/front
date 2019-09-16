@@ -1,7 +1,7 @@
 m-pro__hamburger-menu {
   position: relative;
 
-  .m-pro__hamburger-menu__menu {
+  .m-proHamburgerMenu__menu {
     right: -110%;
     visibility: hidden;
 
@@ -21,7 +21,7 @@ m-pro__hamburger-menu {
       visibility: visible;
     }
 
-    .m-pro__hamburger-menu__close {
+    .m-proHamburgerMenu__close {
       position: absolute;
       top: 30px;
       right: 40px;
@@ -49,7 +49,7 @@ m-pro__hamburger-menu {
         font-weight: 700;
         letter-spacing: 1px;
 
-        &.m-pro__hamburger-menu-menu__logo {
+        &.m-proHamburgerMenu__logo {
           height: 100px;
 
           > img {
@@ -59,7 +59,7 @@ m-pro__hamburger-menu {
           }
         }
 
-        &.m-pro__hamburger-menu-menu__subscribe {
+        &.m-proHamburgerMenu__subscribe {
           padding: 0 0 16px;
           text-align: center;
 
@@ -69,7 +69,7 @@ m-pro__hamburger-menu {
           }
         }
 
-        &.m-pro__hamburger-menu-menu__search-box {
+        &.m-proHamburgerMenu__searchBox {
           > m-pro__searchbox {
             width: 100%;
             display: block;
@@ -82,7 +82,7 @@ m-pro__hamburger-menu {
           }
         }
 
-        &.m-pro__hamburger-menu-menu__spacer {
+        &.m-proHamburgerMenu__spacer {
           height: 0;
           border-top: 1px solid var(--m-pro--text-color);
           margin: 16px 0;
@@ -94,7 +94,7 @@ m-pro__hamburger-menu {
           padding: 12px 0;
           display: block;
 
-          &.m-pro__hamburger-menu-menu__item--active {
+          &.m-proHamburgerMenu__item--active {
             color: var(--m-pro--primary-color) !important;
           }
         }
