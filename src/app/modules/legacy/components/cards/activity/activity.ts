@@ -84,7 +84,7 @@ export class Activity implements OnInit {
   type: string;
   element: any;
   visible: boolean = false;
-
+  deleted: boolean = false;
   editing: boolean = false;
   @Input() hideTabs: boolean;
 
@@ -275,6 +275,7 @@ export class Activity implements OnInit {
           $event.completed.emit(0);
         }
         this._delete.next(this.activity);
+        this.deleted = true;
       })
       .catch(e => {
         if ($event.inProgress) {

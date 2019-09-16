@@ -27,6 +27,7 @@ export class ActivityPreview {
   activity: any;
   hideTabs: boolean;
 
+  deleted: boolean = false;
   editing: boolean = false;
   commentsToggle: boolean = false;
   showBoostOptions: boolean = false;

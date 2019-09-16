@@ -38,6 +38,7 @@ export class Remind {
   events: EventEmitter<any>;
   eventsSubscription: any;
 
+  deleted: boolean = false;
   editing: boolean = false;
   commentsToggle: boolean = false;
   showBoostOptions: boolean = false;
