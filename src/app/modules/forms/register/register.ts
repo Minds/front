@@ -12,6 +12,7 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
   moduleId: module.id,
@@ -19,11 +20,15 @@ import { ExperimentsService } from '../../experiments/experiments.service';
   templateUrl: 'register.html',
 })
 export class RegisterForm {
+  @Input() referrer: string;
+  @Input() autoSubscribe: MindsUser;
+
+  @Output() done: EventEmitter<any> = new EventEmitter();
+
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
   inProgress: boolean = false;
-  @Input() referrer: string;
   captcha: string;
   takenUsername: boolean = false;
   usernameValidationTimeout: any;
@@ -33,8 +38,6 @@ export class RegisterForm {
   form: FormGroup;
   fbForm: FormGroup;
   minds = window.Minds;
-
-  @Output() done: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('reCaptcha', { static: false }) reCaptcha: ReCaptchaComponent;
 
@@ -87,8 +90,15 @@ export class RegisterForm {
     this.form.value.referrer = this.referrer;
 
     this.inProgress = true;
+
+    let opts = { ...this.form.value };
+
+    if (this.autoSubscribe) {
+      opts['from'] = this.autoSubscribe.guid;
+    }
+
     this.client
-      .post('api/v1/register', this.form.value)
+      .post('api/v1/register', opts)
       .then((data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 

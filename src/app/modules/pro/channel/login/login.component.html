@@ -11,7 +11,10 @@
           <a (click)="currentSection = 'register'">Start a Minds channel</a>
         </span>
 
-        <minds-form-login (done)="registered()"></minds-form-login>
+        <minds-form-login
+          [autoSubscribe]="autoSubscribe"
+          (done)="registered()"
+        ></minds-form-login>
       </ng-container>
 
       <ng-container *ngIf="currentSection === 'register'">
@@ -21,7 +24,10 @@
           </a>
         </span>
 
-        <minds-form-register (done)="registered()"></minds-form-register>
+        <minds-form-register
+          [autoSubscribe]="autoSubscribe"
+          (done)="registered()"
+        ></minds-form-register>
       </ng-container>
     </div>
   </div>
