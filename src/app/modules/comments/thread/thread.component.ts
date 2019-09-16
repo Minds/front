@@ -8,6 +8,8 @@ import {
   Output,
   Renderer,
   ViewChild,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
@@ -18,6 +20,9 @@ import { Textarea } from '../../../common/components/editors/textarea.component'
 import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
 import { BlockListService } from '../../../common/services/block-list.service';
+import { ActivityService } from '../../../common/services/activity.service';
+import { Subscription } from 'rxjs';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'm-comments__thread',
@@ -25,7 +30,7 @@ import { BlockListService } from '../../../common/services/block-list.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [CommentsService],
 })
-export class CommentsThreadComponent {
+export class CommentsThreadComponent implements OnInit {
   minds;
   @Input() parent;
   @Input() entity;
@@ -67,7 +72,8 @@ export class CommentsThreadComponent {
     public sockets: SocketsService,
     private renderer: Renderer,
     protected blockListService: BlockListService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public activityService: ActivityService
   ) {
     this.minds = window.Minds;
   }
@@ -198,7 +204,7 @@ export class CommentsThreadComponent {
 
         const parent_path = this.parent.child_path || '0:0:0';
 
-        let scrolledToBottom =
+        const scrolledToBottom =
           this.scrollView.nativeElement.scrollTop +
             this.scrollView.nativeElement.clientHeight >=
           this.scrollView.nativeElement.scrollHeight;
@@ -289,8 +295,6 @@ export class CommentsThreadComponent {
   }
 
   onPosted({ comment, index }) {
-    console.log('onPosted called');
-    console.log(comment, index);
     this.comments[index] = comment;
     this.detectChanges();
   }

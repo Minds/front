@@ -27,6 +27,7 @@ import { ActivityAnalyticsOnViewService } from './activity-analytics-on-view.ser
 import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
 import { ClientMetaService } from '../../../../../common/services/client-meta.service';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
+import { ActivityService } from '../../../../../common/services/activity.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
 
@@ -45,7 +46,11 @@ import isMobile from '../../../../../helpers/is-mobile';
     'showRatingToggle',
   ],
   outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
-  providers: [ClientMetaService, ActivityAnalyticsOnViewService],
+  providers: [
+    ClientMetaService,
+    ActivityAnalyticsOnViewService,
+    ActivityService,
+  ],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -60,6 +65,7 @@ export class Activity implements OnInit {
   translateToggle: boolean = false;
   translateEvent: EventEmitter<any> = new EventEmitter();
   showBoostOptions: boolean = false;
+  allowComments = true;
   @Input() boost: boolean = false;
   @Input('boost-toggle')
   @Input()
@@ -114,6 +120,7 @@ export class Activity implements OnInit {
           'set-explicit',
           'block',
           'rating',
+          'allow-comments',
         ];
       } else {
         return [
@@ -127,6 +134,7 @@ export class Activity implements OnInit {
           'set-explicit',
           'block',
           'rating',
+          'allow-comments',
         ];
       }
     } else {
@@ -140,6 +148,7 @@ export class Activity implements OnInit {
         'set-explicit',
         'block',
         'rating',
+        'allow-comments',
       ];
     }
   }
@@ -162,6 +171,7 @@ export class Activity implements OnInit {
     protected clientMetaService: ClientMetaService,
     protected featuresService: FeaturesService,
     public suggestions: AutocompleteSuggestionsService,
+    protected activityService: ActivityService,
     @SkipSelf() injector: Injector,
     elementRef: ElementRef
   ) {
@@ -222,6 +232,8 @@ export class Activity implements OnInit {
       this.translationService.isTranslatable(this.activity) ||
       (this.activity.remind_object &&
         this.translationService.isTranslatable(this.activity.remind_object));
+
+    this.allowComments = this.activity.allow_comments;
   }
 
   getOwnerIconTime() {
@@ -301,6 +313,9 @@ export class Activity implements OnInit {
   }*/
 
   openComments() {
+    if (!this.shouldShowComments()) {
+      return;
+    }
     this.commentsToggle = !this.commentsToggle;
     this.commentsOpened.emit(this.commentsToggle);
   }
@@ -399,10 +414,11 @@ export class Activity implements OnInit {
         this.translateToggle = true;
         break;
     }
+    this.detectChanges();
   }
 
   setExplicit(value: boolean) {
-    let oldValue = this.activity.mature,
+    const oldValue = this.activity.mature,
       oldMatureVisibility = this.activity.mature_visibility;
 
     this.activity.mature = value;
@@ -498,6 +514,10 @@ export class Activity implements OnInit {
 
   onRemindMatureVisibilityChange() {
     this.activity.mature_visibility = !this.activity.mature_visibility;
+  }
+
+  shouldShowComments() {
+    return this.activity.allow_comments || this.activity['comments:count'] >= 0;
   }
 
   setVideoDimensions($event) {

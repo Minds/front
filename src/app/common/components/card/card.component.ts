@@ -8,6 +8,8 @@ import {
   ChangeDetectorRef,
   ComponentRef,
   ElementRef,
+  Injector,
+  SkipSelf,
 } from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
@@ -20,12 +22,14 @@ import { VideoCard } from '../../../modules/legacy/components/cards/object/video
 import { AlbumCard } from '../../../modules/legacy/components/cards/object/album/album';
 import { BlogCard } from '../../../modules/blogs/card/card';
 import { CommentComponentV2 } from '../../../modules/comments/comment/comment.component';
+import { ActivityService } from '../../services/activity.service';
 
 @Component({
   selector: 'minds-card',
   template: `
     <ng-template dynamic-host></ng-template>
   `,
+  providers: [ActivityService],
 })
 export class MindsCard implements AfterViewInit {
   @ViewChild(DynamicHostDirective, { static: true })
@@ -43,7 +47,10 @@ export class MindsCard implements AfterViewInit {
 
   private initialized: boolean = false;
 
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver) {}
+  constructor(
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    private _injector: Injector
+  ) {}
 
   @Input('object') set _object(value: any) {
     const oldType = this.type;
@@ -121,7 +128,11 @@ export class MindsCard implements AfterViewInit {
 
     viewContainerRef.clear();
 
-    this.componentRef = viewContainerRef.createComponent(componentFactory);
+    this.componentRef = viewContainerRef.createComponent(
+      componentFactory,
+      undefined,
+      this._injector
+    );
     this.componentInstance = this.componentRef.instance;
     this.anchorRef = viewContainerRef.element;
 

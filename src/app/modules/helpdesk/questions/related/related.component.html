@@ -4,5 +4,6 @@
     *ngFor="let post of posts; let i = index"
     class="mdl-card item"
     [object]="post"
+    [attr.data-minds-activity-guid]="post.guid"
   ></minds-activity>
 </div>
