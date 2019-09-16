@@ -20,7 +20,7 @@ export class ProGroupTileComponent {
   minds = window.Minds;
 
   getBanner() {
-    return `/fs/v1/banners/${this.entity.guid}/${this.entity.banner_position}/'${this.entity.banner}`;
+    return `${this.minds.cdn_url}fs/v1/banners/${this.entity.guid}/${this.entity.banner_position}/'${this.entity.banner}`;
   }
 
   getAvatar() {
