@@ -21,6 +21,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { AnalyticsService } from '../../../services/analytics';
 import { MindsVideoComponent } from '../components/video/video.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
+import { ActivityService } from '../../../common/services/activity.service';
 
 @Component({
   selector: 'm-media--modal',
@@ -51,6 +52,7 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
       transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
     ]),
   ],
+  providers: [ActivityService],
 })
 export class MediaModalComponent implements OnInit, OnDestroy {
   minds = window.Minds;
