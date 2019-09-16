@@ -263,14 +263,16 @@
       </button>
     </div>
 
-    <a
-      *ngIf="false && showBecomeProButton"
-      class="m-btn m-link-btn m-btn--with-icon m-btn--slim m-btn--action"
-      routerLink="/pro"
-    >
-      <i class="material-icons">business_center</i>
-      <span i18n>Become Pro</span>
-    </a>
+    <ng-container *mIfFeature="'pro'">
+      <a
+        *ngIf="showBecomeProButton"
+        class="m-btn m-link-btn m-btn--with-icon m-btn--slim m-btn--action"
+        routerLink="/pro"
+      >
+        <i class="material-icons">business_center</i>
+        <span i18n>Become Pro</span>
+      </a>
+    </ng-container>
 
     <a
       *ngIf="showProSettings"

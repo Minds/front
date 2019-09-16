@@ -14,6 +14,7 @@ import { ChannelComponent } from '../channels/channel.component';
 import { ProChannelComponent } from '../pro/channel/channel.component';
 import { Session } from '../../services/session';
 import { SiteService } from '../../services/site.service';
+import { FeaturesService } from '../../services/features.service';
 
 @Component({
   selector: 'm-channel-container',
@@ -40,7 +41,8 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected client: Client,
     protected session: Session,
-    protected site: SiteService
+    protected site: SiteService,
+    protected features: FeaturesService
   ) {}
 
   ngOnInit(): void {
@@ -81,15 +83,18 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
       const response: MindsChannelResponse = (await this.client.get(
         `api/v1/channel/${this.username}`
       )) as MindsChannelResponse;
+
       this.channel = response.channel;
 
-      // NOTE: Temporary workaround until channel component supports children routes
-      if (
+      const shouldRedirectToProHandler =
         !this.site.isProDomain &&
         this.channel.pro &&
         !this.isOwner &&
-        !this.isAdmin
-      ) {
+        !this.isAdmin &&
+        this.proEnabled;
+
+      // NOTE: Temporary workaround until channel component supports children routes
+      if (shouldRedirectToProHandler) {
         this.router.navigate(['/pro', this.channel.username], {
           replaceUrl: true,
         });
@@ -108,5 +113,9 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
   get isAdmin() {
     return this.site.isAdmin;
+  }
+
+  get proEnabled() {
+    return this.features.has('pro');
   }
 }
