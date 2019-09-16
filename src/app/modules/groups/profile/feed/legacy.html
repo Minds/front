@@ -39,6 +39,7 @@
       [showRatingToggle]="true"
       [slot]="i + 1"
       class="mdl-card item"
+      [attr.data-minds-activity-guid]="activity.guid"
     >
     </minds-activity>
 
@@ -49,6 +50,7 @@
       [canDelete]="group['is:owner'] || group['is:moderator']"
       (delete)="delete(a)"
       [slot]="i + (pinned?.length || 0) + 1"
+      [attr.data-minds-activity-guid]="a.guid"
     >
       <!-- Menu Actions -->
       <li
