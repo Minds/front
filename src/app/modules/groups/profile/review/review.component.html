@@ -8,6 +8,7 @@
         [canDelete]="group['is:owner'] || group['is:moderator']"
         (delete)="delete(entity)"
         [hideTabs]="true"
+        [attr.data-minds-activity-guid]="entity.guid"
       >
         <!-- Menu Actions -->
 

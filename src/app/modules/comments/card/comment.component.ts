@@ -86,6 +86,7 @@ export class CommentComponent implements OnChanges {
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   @Input() canEdit: boolean = false;
+  @Input() canReply = true;
 
   @Output() onReply = new EventEmitter();
 

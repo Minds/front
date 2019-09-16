@@ -42,6 +42,7 @@
         [object]="entity"
         class="mdl-card"
         *ngIf="entity.type == 'activity'"
+        [attr.data-minds-activity-guid]="entity.guid"
       ></minds-activity>
 
       <div class="mdl-card__supporting-text m-action-buttons">
