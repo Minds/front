@@ -5,10 +5,12 @@ import { Subscription } from 'rxjs';
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
+import { ActivityService } from '../../common/services/activity.service';
 
 @Component({
   selector: 'minds-admin',
   templateUrl: 'admin.html',
+  providers: [ActivityService],
 })
 export class Admin {
   filter: string = '';

@@ -8,6 +8,7 @@ import { RejectionReasonModalComponent } from './modal/rejection-reason-modal.co
 import { Reason, rejectionReasons } from './rejection-reasons';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ActivityService } from '../../../common/services/activity.service';
 
 @Component({
   moduleId: module.id,
@@ -42,7 +43,8 @@ export class AdminBoosts {
   constructor(
     public client: Client,
     private overlayModal: OverlayModalService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    protected activityService: ActivityService
   ) {}
 
   ngOnInit() {
