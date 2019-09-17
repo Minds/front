@@ -220,9 +220,9 @@ export function getSocialProfileMeta(key: string): SocialProfileMeta {
     return defaultMeta;
   }
 
-  for (let i in this.socialProfilesMeta) {
-    if (this.socialProfilesMeta[i].key === key) {
-      return this.socialProfilesMeta[i];
+  for (let i in socialProfileMeta) {
+    if (socialProfileMeta[i].key === key) {
+      return socialProfileMeta[i];
     }
   }
 
