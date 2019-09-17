@@ -102,6 +102,7 @@ import { SettingsService } from '../modules/settings/settings.service';
 import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
+import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
 import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
 import { ShareModalComponent } from '../modules/modals/share/share';
 
@@ -194,6 +195,8 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     SwitchComponent,
 
     FeaturedContentComponent,
+
+    PosterDateSelectorComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -278,6 +281,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    PosterDateSelectorComponent,
     ChannelModeSelectorComponent,
   ],
   providers: [

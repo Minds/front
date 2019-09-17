@@ -7,6 +7,7 @@
   opacity: 0;
   transition: 200ms ease opacity;
   will-change: opacity;
+  z-index: 9999;
   @include m-theme() {
     background-color: rgba(themed($m-black-always), 0.541176);
   }
