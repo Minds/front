@@ -78,6 +78,10 @@ export class ActivityPreview {
     return false;
   }
 
+  isScheduled(time_created) {
+    return false;
+  }
+
   save() {
     /* NOOP */
   }
