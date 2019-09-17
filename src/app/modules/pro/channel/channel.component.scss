@@ -143,8 +143,25 @@ m-pro--channel {
       margin-bottom: 24px;
     }
 
-    & > m-blog-view-infinite, m-blog-view {
+    & > m-blog-view-infinite,
+    m-blog-view {
       background-color: transparent !important;
+    }
+
+    .m-proChannel__error {
+      display: inline-block;
+      margin: 16px 0;
+      padding: 17px 8px;
+      font-size: 40px;
+      text-align: center;
+
+      background: var(--m-pro--transparent-background-color);
+
+      border-radius: 4px;
+
+      @include m-theme() {
+        color: themed($m-red);
+      }
     }
   }
 

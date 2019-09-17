@@ -97,6 +97,10 @@
   </div>
 
   <div class="m-proChannel__body">
+    <div class="m-proChannel__error" *ngIf="error">
+      {{ error }}
+    </div>
+
     <router-outlet></router-outlet>
   </div>
 

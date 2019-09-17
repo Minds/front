@@ -243,6 +243,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async load() {
+    this.error = null;
+
     if (!this.username) {
       return;
     }
@@ -255,7 +257,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.bindCssVariables();
       this.setTitle();
     } catch (e) {
-      this.error = e.getMessage();
+      this.error = e.message;
     }
 
     this.shouldOpenWireModal();
@@ -264,10 +266,12 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   async reload() {
+    this.error = null;
+
     try {
       this.channel = await this.channelService.reload(this.username);
     } catch (e) {
-      this.error = e.getMessage();
+      this.error = e.message;
     }
 
     this.shouldOpenWireModal();
@@ -283,7 +287,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
         continue;
       }
 
-      let value = styles[style].trim();
+      let value =
+        typeof styles[style] === 'string' ? styles[style].trim() : null;
 
       if (!value) {
         continue;
