@@ -15,6 +15,7 @@ import { Session } from '../../../services/session';
 import { PosterComponent } from '../../newsfeed/poster/poster.component';
 import { SortedService } from './sorted.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { Client } from '../../../services/api';
 
 @Component({
   selector: 'm-channel--sorted',
@@ -60,7 +61,11 @@ export class ChannelSortedComponent implements OnInit {
 
   initialized: boolean = false;
 
+  viewScheduled: boolean = false;
+
   @ViewChild('poster', { static: false }) protected poster: PosterComponent;
+
+  scheduledCount: number = 0;
 
   constructor(
     public feedsService: FeedsService,
@@ -68,7 +73,8 @@ export class ChannelSortedComponent implements OnInit {
     protected session: Session,
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    public client: Client
   ) {
     this.clientMetaService
       .inherit(injector)
@@ -92,11 +98,18 @@ export class ChannelSortedComponent implements OnInit {
 
     this.detectChanges();
 
+    let endpoint = 'api/v2/feeds/container';
+    if (this.viewScheduled) {
+      endpoint = 'api/v2/feeds/scheduled';
+    }
+
     try {
       this.feedsService
-        .setEndpoint(`api/v2/feeds/container/${this.channel.guid}/${this.type}`)
+        .setEndpoint(`${endpoint}/${this.channel.guid}/${this.type}`)
         .setLimit(12)
         .fetch();
+
+      this.getScheduledCount();
     } catch (e) {
       console.error('ChannelsSortedComponent.load', e);
     }
@@ -169,5 +182,17 @@ export class ChannelSortedComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  toggleScheduled() {
+    this.viewScheduled = !this.viewScheduled;
+    this.load(true);
+  }
+
+  async getScheduledCount() {
+    const url = `api/v2/feeds/scheduled/${this.channel.guid}/count`;
+    const response: any = await this.client.get(url);
+    this.scheduledCount = response.count;
+    this.detectChanges();
   }
 }

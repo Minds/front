@@ -32,6 +32,7 @@ export class PosterComponent {
   meta: any = {
     message: '',
     wire_threshold: null,
+    time_created: null,
   };
   tags = [];
   minds = window.Minds;
@@ -174,6 +175,9 @@ export class PosterComponent {
       return;
     }
 
+    this.meta.time_created =
+      this.meta.time_created || Math.floor(Date.now() / 1000);
+
     this.errorMessage = '';
 
     let data = Object.assign(this.meta, this.attachment.exportMeta());
@@ -284,5 +288,13 @@ export class PosterComponent {
 
   onNSWFSelections(reasons: Array<{ value; label; selected }>) {
     this.attachment.setNSFW(reasons);
+  }
+
+  onTimeCreatedChange(newDate) {
+    this.meta.time_created = newDate;
+  }
+
+  posterDateSelectorError(msg) {
+    this.errorMessage = msg;
   }
 }

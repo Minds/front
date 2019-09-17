@@ -309,7 +309,6 @@ minds-blog-edit {
 
   m-wire-threshold-input {
     position: relative;
-    padding: 8px;
   }
 
   .m-additional-block m-wire-threshold-input {
@@ -366,6 +365,7 @@ minds-blog-edit {
   }
   .m-additional-block > * {
     flex: auto;
+    margin-right: 0px;
   }
 }
 

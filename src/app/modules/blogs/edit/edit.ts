@@ -30,7 +30,7 @@ export class BlogEdit {
     guid: 'new',
     title: '',
     description: '<p><br></p>',
-    time_created: Date.now(),
+    time_created: Math.floor(Date.now() / 1000),
     access_id: 2,
     tags: [],
     license: 'attribution-sharealike-cc',
@@ -68,6 +68,8 @@ export class BlogEdit {
   thresholdInput: WireThresholdInputComponent;
   @ViewChild('hashtagsSelector', { static: false })
   hashtagsSelector: HashtagsSelectorComponent;
+
+  protected time_created: any;
 
   constructor(
     public session: Session,
@@ -207,6 +209,9 @@ export class BlogEdit {
         if (!this.blog.category) this.blog.category = '';
 
         if (!this.blog.license) this.blog.license = '';
+
+        this.blog.time_created =
+          response.blog.time_created || Math.floor(Date.now() / 1000);
       }
     });
   }
@@ -234,6 +239,10 @@ export class BlogEdit {
     return true;
   }
 
+  posterDateSelectorError(msg) {
+    this.error = msg;
+  }
+
   save() {
     if (!this.canSave) return;
 
@@ -248,6 +257,8 @@ export class BlogEdit {
       blog.mature = blog.mature ? 1 : 0;
       blog.monetization = blog.monetization ? 1 : 0;
       blog.monetized = blog.monetized ? 1 : 0;
+      blog.time_created = blog.time_created || Math.floor(Date.now() / 1000);
+
       this.editing = false;
       this.inProgress = true;
       this.canSave = false;
@@ -258,6 +269,7 @@ export class BlogEdit {
             .then((response: any) => {
               this.inProgress = false;
               this.canSave = true;
+              this.blog.time_created = null;
 
               if (response.status !== 'success') {
                 this.error = response.message;
@@ -327,5 +339,22 @@ export class BlogEdit {
     } else {
       this.blog.categories.splice(this.blog.categories.indexOf(category.id), 1);
     }
+  }
+
+  onTimeCreatedChange(newDate) {
+    this.blog.time_created = newDate;
+  }
+
+  getTimeCreated() {
+    return this.blog.time_created > Math.floor(Date.now() / 1000)
+      ? this.blog.time_created
+      : null;
+  }
+
+  checkTimePublished() {
+    return (
+      !this.blog.time_published ||
+      this.blog.time_published > Math.floor(Date.now() / 1000)
+    );
   }
 }

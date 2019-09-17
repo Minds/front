@@ -79,6 +79,11 @@ describe('PosterComponent', () => {
           inputs: ['src', 'preview', 'maxheight', 'cropimage'],
         }),
         MockComponent({
+          selector: 'm-poster-date-selector',
+          inputs: ['date', 'dateFormat'],
+          outputs: ['dateChange'],
+        }),
+        MockComponent({
           selector: 'm-tooltip',
           template: '<ng-content></ng-content>',
         }),

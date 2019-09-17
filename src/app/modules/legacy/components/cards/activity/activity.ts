@@ -156,6 +156,8 @@ export class Activity implements OnInit {
   @ViewChild('player', { static: false }) player: MindsVideoComponent;
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
+  protected time_created: any;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -233,6 +235,9 @@ export class Activity implements OnInit {
       (this.activity.remind_object &&
         this.translationService.isTranslatable(this.activity.remind_object));
 
+    this.activity.time_created =
+      this.activity.time_created || Math.floor(Date.now() / 1000);
+
     this.allowComments = this.activity.allow_comments;
   }
 
@@ -255,6 +260,8 @@ export class Activity implements OnInit {
     console.log('trying to save your changes to the server', this.activity);
     this.editing = false;
     this.activity.edited = true;
+    this.activity.time_created =
+      this.activity.time_created || Math.floor(Date.now() / 1000);
 
     let data = this.activity;
     if (this.attachment.has()) {
@@ -494,6 +501,10 @@ export class Activity implements OnInit {
     return activity && activity.pending && activity.pending !== '0';
   }
 
+  isScheduled(time_created) {
+    return time_created && time_created * 1000 > Date.now();
+  }
+
   toggleMatureVisibility() {
     this.activity.mature_visibility = !this.activity.mature_visibility;
 
@@ -567,5 +578,25 @@ export class Activity implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  onTimeCreatedChange(newDate) {
+    this.activity.time_created = newDate;
+  }
+
+  posterDateSelectorError(msg) {
+    throw new Error(msg);
+  }
+
+  getTimeCreated() {
+    return this.activity.time_created > Math.floor(Date.now() / 1000)
+      ? this.activity.time_created
+      : null;
+  }
+
+  checkCreated() {
+    return this.activity.time_created > Math.floor(Date.now() / 1000)
+      ? true
+      : false;
   }
 }
