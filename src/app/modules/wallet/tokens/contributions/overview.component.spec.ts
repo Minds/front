@@ -3,34 +3,20 @@ import {
   ComponentFixture,
   TestBed,
   fakeAsync,
-  tick,
 } from '@angular/core/testing';
 
-import {
-  Component,
-  DebugElement,
-  ChangeDetectorRef,
-  Input,
-  Output,
-} from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { WalletTokenContributionsOverviewComponent } from './overview.component';
 import { clientMock } from '../../../../../tests/client-mock.spec';
 import { Client } from '../../../../services/api/client';
-import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { TokenPipe } from '../../../../common/pipes/token.pipe';
 import { TimediffPipe } from '../../../../common/pipes/timediff.pipe';
-import { of } from 'rxjs/internal/observable/of';
-import { ActivatedRoute, Router } from '@angular/router';
-import {
-  MockComponent,
-  MockDirective,
-  MockService,
-} from '../../../../utils/mock';
+import { Router } from '@angular/router';
 import { Session } from '../../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
-
+import { TooltipComponent } from '../../../../common/components/tooltip/tooltip.component';
 describe('WalletTokenContributionsOverviewComponent', () => {
   let comp: WalletTokenContributionsOverviewComponent;
   let fixture: ComponentFixture<WalletTokenContributionsOverviewComponent>;
@@ -41,6 +27,7 @@ describe('WalletTokenContributionsOverviewComponent', () => {
         WalletTokenContributionsOverviewComponent,
         TimediffPipe,
         TokenPipe,
+        TooltipComponent,
       ],
       providers: [
         { provide: Client, useValue: clientMock },
