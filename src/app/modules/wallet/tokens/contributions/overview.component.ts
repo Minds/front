@@ -41,6 +41,7 @@ export class WalletTokenContributionsOverviewComponent
       checkin: null,
       jury_duty: null,
     },
+    rewardFactors: {},
   };
   user = this.session.getLoggedInUser();
 
@@ -68,6 +69,7 @@ export class WalletTokenContributionsOverviewComponent
       this.overview.yourShare = result.yourShare;
       this.overview.yourRewardFactor = result.yourRewardFactor;
       this.overview.contributionValues = result.contributionValues;
+      this.overview.rewardFactors = result.rewardFactors;
 
       this.detectChanges();
     } catch (e) {
