@@ -10,6 +10,7 @@ m-pro--channel--group-tile {
     height: 320px;
 
     .banner {
+      width: 100%;
       height: 150px;
       position: absolute;
       z-index: 1;
@@ -34,6 +35,7 @@ m-pro--channel--group-tile {
   }
 
   .banner {
+    width: 100%;
     height: 100px;
     position: absolute;
     z-index: 1;
