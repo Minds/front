@@ -24,7 +24,7 @@ context('Pro Page', () => {
   });
 
   it('should load the feed tab', () => {
-    cy.route("GET", "**/api/v2/feeds/channel/*/activities/top**").as("activities");
+    cy.route("GET", "**/api/v2/pro/content/*/activities/top**").as("activities");
     cy.contains('Feed')
       .click()
       .wait('@activities').then((xhr) => {
@@ -33,7 +33,7 @@ context('Pro Page', () => {
   })
 
   it('should load the videos tab', () => {
-    cy.route("GET", "**/api/v2/feeds/channel/*/videos/top**").as("videos");
+    cy.route("GET", "**/api/v2/pro/content/*/videos/top**").as("videos");
     cy.contains('Videos')
       .click()
       .wait('@videos').then((xhr) => {
@@ -42,7 +42,7 @@ context('Pro Page', () => {
   })
 
   it('should load the images tab', () => {
-    cy.route("GET", "**/api/v2/feeds/channel/*/images/top**").as("images");
+    cy.route("GET", "**/api/v2/pro/content/*/images/top**").as("images");
     cy.contains('Images')
       .click()
       .wait('@images').then((xhr) => {
@@ -51,7 +51,7 @@ context('Pro Page', () => {
   })
 
   it('should load the articles tab', () => {
-    cy.route("GET", "**/api/v2/feeds/channel/*/blogs/top**").as("blogs");
+    cy.route("GET", "**/api/v2/pro/content/*/blogs/top**").as("blogs");
     cy.contains('Articles')
       .click()
       .wait('@blogs').then((xhr) => {
@@ -60,7 +60,7 @@ context('Pro Page', () => {
   })
 
   it('should load the groups tab', () => {
-    cy.route("GET", "**/api/v2/feeds/channel/*/groups/top**").as("groups");
+    cy.route("GET", "**/api/v2/pro/content/*/groups/top**").as("groups");
     cy.contains('Groups')
       .click()
       .wait('@groups').then((xhr) => {
