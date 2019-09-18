@@ -79,6 +79,10 @@ m-pro--channel {
   //min-height: calc(100vh - 52px); /* 52px is the topbar height */
   min-height: 100%;
 
+  .is-pro-domain & {
+    min-height: 100vh;
+  }
+
   .m-proChannel__topbar {
     width: 100%;
     box-sizing: border-box;
