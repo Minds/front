@@ -1,6 +1,7 @@
-<div class="m-proChannelTile__container"
-     (click)="tileClicked()"
-     [ngSwitch]="getType(entity)"
+<div
+  class="m-proChannelTile__container"
+  (click)="tileClicked()"
+  [ngSwitch]="getType(entity)"
 >
   <m-video
     *ngSwitchCase="'object:video'"
@@ -23,11 +24,7 @@
     #player
   ></m-video>
 
-  <img
-    *ngSwitchDefault
-    [src]="entity.thumbnail_src"
-    #img
-  />
+  <img *ngSwitchDefault [src]="entity.thumbnail_src" #img />
 </div>
 
 <div

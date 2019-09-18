@@ -46,8 +46,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected title: MindsTitle,
     protected site: SiteService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.param$ = this.route.params.subscribe(params => {

@@ -20,9 +20,7 @@
           @{{ currentUsername }}
         </a>
 
-        <a class="m-pro--channel-footer--link"
-           (click)="logout()"
-           i18n
+        <a class="m-pro--channel-footer--link" (click)="logout()" i18n
           >Logout
         </a>
       </ng-container>
@@ -44,7 +42,7 @@
         [href]="getSocialProfileURL(profile.value)"
         rel="noopener noreferrer"
         target="_blank"
-        >
+      >
         <i [ngClass]="[getSocialProfileIconClass(profile)]"></i>
       </a>
     </span>

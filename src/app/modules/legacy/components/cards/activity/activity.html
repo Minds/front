@@ -180,6 +180,12 @@
       [(threshold)]="activity.wire_threshold"
       [(enabled)]="activity.paywall"
     ></m-wire-threshold-input>
+    <m-poster-date-selector
+      *ngIf="checkCreated()"
+      [date]="getTimeCreated()"
+      (dateChange)="onTimeCreatedChange($event)"
+      (onError)="posterDateSelectorError($event)"
+    ></m-poster-date-selector>
     <button
       class="mdl-button mdl-button--raised mdl-color--blue-grey-100"
       (click)="messageEdit.value = activity.message; editing=false;"
@@ -502,4 +508,13 @@
   i18n="@@MINDS__CARDS__ACTIVITY__AWAITING_MODERATION"
 >
   This post is awaiting moderation.
+</div>
+
+<!-- Pending block -->
+<div
+  class="mdl-card__supporting-text m-activity--pending"
+  *ngIf="isScheduled(activity.time_created)"
+>
+  This activity is scheduled to be shown on {{activity.time_created * 1000 |
+  date:'medium'}}.
 </div>

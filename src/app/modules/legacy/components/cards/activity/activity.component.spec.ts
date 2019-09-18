@@ -451,6 +451,11 @@ describe('Activity', () => {
           inputs: ['selected'],
           outputs: ['selected'],
         }),
+        MockComponent({
+          selector: 'm-poster-date-selector',
+          inputs: ['date', 'dateFormat'],
+          outputs: ['dateChange'],
+        }),
         MockDirective({
           selector: '[mIfFeature]',
           inputs: ['mIfFeature'],

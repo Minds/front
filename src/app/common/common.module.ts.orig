@@ -203,8 +203,12 @@ import { DndModule } from 'ngx-drag-drop';
     SwitchComponent,
 
     FeaturedContentComponent,
-    PosterDateSelectorComponent,
+<<<<<<< HEAD
     DraggableListComponent,
+=======
+
+    PosterDateSelectorComponent,
+>>>>>>> origin/master
   ],
   exports: [
     MINDS_PIPES,

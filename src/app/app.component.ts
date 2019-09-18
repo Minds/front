@@ -1,4 +1,4 @@
-import { Component, HostBinding, } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 import { NotificationService } from './modules/notifications/notification.service';
 import { AnalyticsService } from './services/analytics';
@@ -19,7 +19,7 @@ import { BannedService } from './modules/report/banned/banned.service';
 import { DiagnosticsService } from './services/diagnostics.service';
 import { SiteService } from './services/site.service';
 import { PRO_DOMAIN_ROUTES, proRoutes } from './modules/pro/pro.module';
-import { Subscription } from "rxjs";
+import { Subscription } from 'rxjs';
 
 @Component({
   moduleId: module.id,
@@ -81,7 +81,8 @@ export class Minds {
                 return;
               }
 
-              let url = navigationEvent.url.substring(1, navigationEvent.url.length)
+              let url = navigationEvent.url
+                .substring(1, navigationEvent.url.length)
                 .split('/')[0]
                 .split(';')[0]
                 .split('?')[0];

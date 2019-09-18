@@ -6,14 +6,25 @@
 
 <div class="minds-list">
   <div>
-    <m-sort-selector
-      class="m-channel--sorted__SortSelector m-border"
-      [allowedAlgorithms]="false"
-      [allowedPeriods]="false"
-      [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
-      [customType]="type"
-      (onChange)="setFilter($event.customType)"
-    ></m-sort-selector>
+    <div class="m-mindsList__tools m-border">
+      <div
+        *ngIf="isOwner()"
+        class="m-mindsListTools__scheduled"
+        (click)="toggleScheduled()"
+        [class.selected]="viewScheduled"
+      >
+        <m-tooltip icon="date_range"> See Scheduled Activities </m-tooltip>
+        <span>scheduled: {{ scheduledCount }}</span>
+      </div>
+      <m-sort-selector
+        class="m-channel--sorted__SortSelector"
+        [allowedAlgorithms]="false"
+        [allowedPeriods]="false"
+        [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
+        [customType]="type"
+        (onChange)="setFilter($event.customType)"
+      ></m-sort-selector>
+    </div>
 
     <m-onboarding-feed *ngIf="isOwner()"></m-onboarding-feed>
 

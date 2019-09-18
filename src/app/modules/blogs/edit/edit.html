@@ -170,6 +170,15 @@
       (validThreshold)="validThreshold = $event"
       #thresholdInput
     ></m-wire-threshold-input>
+
+    <ng-container *mIfFeature="'post-scheduler'">
+      <m-poster-date-selector
+        *ngIf="checkTimePublished()"
+        [date]="getTimeCreated()"
+        (dateChange)="onTimeCreatedChange($event)"
+        (onError)="posterDateSelectorError($event)"
+      ></m-poster-date-selector>
+    </ng-container>
   </div>
 
   <div
