@@ -19,20 +19,20 @@ variables:
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
 
-test:
-  image: circleci/node:8-browsers
-  stage: test
-  script:
-    - npm ci
-    - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+# test:
+#   image: circleci/node:8-browsers
+#   stage: test
+#   script:
+#     - npm ci
+#     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
-lint:
-  stage: test
-  script:
-    - npm i -g prettier
-    - prettier --check "src/**/*.ts"
-    - prettier --check "src/**/*.scss"
-    - prettier --check "src/**/*.html"
+# lint:
+#   stage: test
+#   script:
+#     - npm i -g prettier
+#     - prettier --check "src/**/*.ts"
+#     - prettier --check "src/**/*.scss"
+#     - prettier --check "src/**/*.html"
 
 e2e:chrome:
   image: cypress/browsers:chrome67

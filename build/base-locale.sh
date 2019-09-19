@@ -1,3 +1,3 @@
 #!/bin/sh
-export NODE_OPTIONS="--max-old-space-size=3584"
+export NODE_OPTIONS="--max-old-space-size=1024"
 ng build --prod --vendor-chunk --output-path="$1/en/" --deploy-url="$2/en/" --build-optimizer=false 
