@@ -1,27 +1,26 @@
 context('Boost Creation', () => {
+  
   const duplicateError = "There's already an ongoing boost for this entity";
   const postContent = "Test boost, please reject..." + Math.random().toString(36).substring(8);
   const nonParticipationError = 'Boost target should participate in the Rewards program.'
 
-  before(() => {
-    cy.server();
-  })
-  
   beforeEach(() => {
+    cy.server()
+      .route("GET", '**/api/v2/boost/prepare/**').as('prepare')
+      .route("POST", '**/api/v2/boost/activity/**').as('activity')
+      .route("GET", '**/api/v2/blockchain/wallet/balance*').as('balance')
+      .route("GET", '**/api/v2/search/suggest/**').as('suggest');
+
     cy.getCookie('minds_sess')
     .then((sessionCookie) => {
       if (sessionCookie === null) {
         return cy.login(true);
       }
     });
-    cy.visit('/newsfeed/subscriptions');  
-    cy.location('pathname')
-      .should('eq', `/newsfeed/subscriptions`);
 
-    cy.route("GET", '**/api/v2/boost/prepare/**').as('prepare');
-    cy.route("POST", '**/api/v2/boost/activity/**').as('activity');  
-    cy.route("GET", '**/api/v2/blockchain/wallet/balance*').as('balance');
-    cy.route("GET", '**/api/v2/search/suggest/**').as('suggest');
+    cy.visit('/newsfeed/subscriptions')
+      .location('pathname')
+      .should('eq', `/newsfeed/subscriptions`);
 
   });
 
