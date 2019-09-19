@@ -306,6 +306,7 @@ deploy:production:
 cleanup:review: # We stop the review site after the e2e tests have run
   <<: *cleanup_review
   stage: cleanup
+  when: manual
   except:
     refs:
       - master
