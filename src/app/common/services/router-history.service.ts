@@ -21,7 +21,6 @@ export class RouterHistoryService {
   }
 
   getPreviousUrl(): string {
-    console.log(this.history);
     return this.history[this.history.length - 1];
   }
 }
