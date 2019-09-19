@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { NavItems, ProChannelService } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { MindsTitle } from '../../../../services/ux/title';
 
 @Component({
   selector: 'm-pro--channel-home',
@@ -31,12 +32,14 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected channelService: ProChannelService,
     protected modalService: OverlayModalService,
+    protected title: MindsTitle,
     protected cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.load();
     this.setMenuNavItems();
+    this.setTitle();
   }
 
   ngOnDestroy() {
@@ -90,6 +93,10 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
     }));
 
     this.channelService.pushMenuNavItems(navItems, true);
+  }
+
+  setTitle() {
+    this.title.setTitle('Home');
   }
 
   getCategoryRoute(tag) {

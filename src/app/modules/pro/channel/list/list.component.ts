@@ -15,6 +15,7 @@ import {
   RouterLinkToType,
 } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { MindsTitle } from '../../../../services/ux/title';
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -43,6 +44,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     public feedsService: FeedsService,
     protected modalService: OverlayModalService,
     protected channelService: ProChannelService,
+    protected title: MindsTitle,
     protected route: ActivatedRoute,
     protected router: Router,
     protected cd: ChangeDetectorRef,
@@ -82,6 +84,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       this.period = params['period'] || '';
       this.selectedHashtag = params['hashtag'] || 'all';
 
+      this.setTitle();
+
       this.load(true);
       this.setMenuNavItems();
     });
@@ -93,6 +97,18 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     }
 
     this.channelService.destroyMenuNavItems();
+  }
+
+  setTitle() {
+    if (!this.channelService.currentChannel) {
+      this.title.setTitle(
+        this.channelService.currentChannel.username || 'Minds Pro',
+        false
+      );
+      return;
+    }
+
+    this.title.setTitle(this.type.charAt(0).toUpperCase() + this.type.slice(1));
   }
 
   async load(refresh: boolean = false) {

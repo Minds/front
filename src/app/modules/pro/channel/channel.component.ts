@@ -176,7 +176,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (params['type']) {
         this.type = params['type'];
-        this.setTitle();
       }
 
       if (
@@ -198,46 +197,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.collapseNavItems = window.innerWidth <= 768;
   }
 
-  setTitle() {
-    if (!this.channel) {
-      this.title.setTitle(this.username || 'Minds Pro');
-      return;
-    }
-
-    const title = [
-      (this.channel.pro_settings.title as string) ||
-        this.channel.name ||
-        this.channel.username,
-    ];
-
-    switch (this.type) {
-      case 'feed':
-        title.push('Feed');
-        break;
-      case 'videos':
-        title.push('Videos');
-        break;
-      case 'images':
-        title.push('Images');
-        break;
-      case 'articles':
-        title.push('Articles');
-        break;
-      case 'groups':
-        title.push('Groups');
-        break;
-      case 'donate':
-        title.push('Donate');
-        break;
-    }
-
-    if (this.channel.pro_settings.one_line_headline) {
-      title.push(this.channel.pro_settings.one_line_headline);
-    }
-
-    this.title.setTitle(title.join(' - '));
-  }
-
   ngOnDestroy() {
     this.params$.unsubscribe();
   }
@@ -255,7 +214,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     try {
       this.channel = await this.channelService.loadAndAuth(this.username);
       this.bindCssVariables();
-      this.setTitle();
     } catch (e) {
       this.error = e.message;
     }

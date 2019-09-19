@@ -14,6 +14,10 @@ export class SiteService {
     return this.isProDomain ? this.pro.title || '' : 'Minds';
   }
 
+  get oneLineHeadline(): string {
+    return this.isProDomain ? this.pro.one_line_headline || '' : '';
+  }
+
   get isAdmin(): boolean {
     return window.Minds.Admin;
   }

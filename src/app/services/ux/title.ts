@@ -13,7 +13,7 @@ export class MindsTitle {
 
   constructor(public title: Title, protected site: SiteService) {
     if (this.site.isProDomain) {
-      this.default_title = '';
+      this.default_title = this.site.oneLineHeadline + ' | ' + this.site.title;
     }
   }
 
