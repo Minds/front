@@ -239,30 +239,34 @@ export class EmbedImage {
    * @param { event }  e - event from DOM.
    */
   public selectImage(e) {
-    let $image = e.target;
+    try {
+      let $image = e.target;
 
-    if (!$image || $image.tagName === null) {
-      return;
-    }
-
-    if ($image.tagName === 'SPAN') {
-      $image = $image.parentNode.querySelector('img');
-    } else if ($image.tagName !== 'IMG') {
-      return;
-    }
-
-    this.$currentImage = $image;
-
-    $image.classList.add('medium-insert-image-active');
-    (<any>$image.parentNode).setAttribute('contenteditable', 'true');
-
-    const caption: HTMLSpanElement = $image.nextSibling;
-    caption.setAttribute('contenteditable', 'true');
-
-    if (caption === e.target) {
-      if (caption.textContent.trim() === this.options.placeholder) {
-        caption.textContent = '';
+      if (!$image || $image.tagName === null) {
+        return;
       }
+
+      if ($image.tagName === 'SPAN') {
+        $image = $image.parentNode.querySelector('img');
+      } else if ($image.tagName !== 'IMG') {
+        return;
+      }
+
+      this.$currentImage = $image;
+
+      $image.classList.add('medium-insert-image-active');
+      (<any>$image.parentNode).setAttribute('contenteditable', 'true');
+
+      const caption: HTMLSpanElement = $image.nextSibling;
+      caption.setAttribute('contenteditable', 'true');
+
+      if (caption === e.target) {
+        if (caption.textContent.trim() === this.options.placeholder) {
+          caption.textContent = '';
+        }
+      }
+    } catch (e) {
+      // catching non-existent images
     }
 
     event.stopPropagation();
@@ -273,42 +277,46 @@ export class EmbedImage {
    * @param { event }  e - event from DOM.
    */
   public unselectImage(e) {
-    let $el = e.target,
-      $image = document.querySelector('.medium-insert-image-active');
+    try {
+      let $el = e.target,
+        $image = document.querySelector('.medium-insert-image-active');
 
-    if (!$image || !$el || $el.tagName === null) {
-      return;
-    }
-
-    if (
-      $el.tagName === 'IMG' &&
-      $el.classList.contains('medium-insert-image-active')
-    ) {
-      if ($image !== $el) {
-        $image.classList.remove('medium-insert-image-active');
-        (<any>$image.parentNode).setAttribute('contenteditable', 'false');
-        const caption = $el.nextSibling;
-        caption.setAttribute('contenteditable', false);
-        if (caption.textContent.includes(this.options.placeholder)) {
-          caption.textContent = '';
-        }
-
+      if (!$image || !$el || $el.tagName === null) {
         return;
       }
-    } else if ($el.tagName === 'SPAN' && $image.nextSibling === $el) {
-      return;
+
+      if (
+        $el.tagName === 'IMG' &&
+        $el.classList.contains('medium-insert-image-active')
+      ) {
+        if ($image !== $el) {
+          $image.classList.remove('medium-insert-image-active');
+          (<any>$image.parentNode).setAttribute('contenteditable', 'false');
+          const caption = $el.nextSibling;
+          caption.setAttribute('contenteditable', false);
+          if (caption.textContent.includes(this.options.placeholder)) {
+            caption.textContent = '';
+          }
+
+          return;
+        }
+      } else if ($el.tagName === 'SPAN' && $image.nextSibling === $el) {
+        return;
+      }
+
+      $image.classList.remove('medium-insert-image-active');
+      (<any>$image.parentNode).setAttribute('contenteditable', 'false');
+
+      const caption = $image.nextSibling;
+      (<any>caption).setAttribute('contenteditable', false);
+      if (caption.textContent.trim() === '') {
+        caption.textContent = this.options.placeholder;
+      }
+
+      this.$currentImage = null;
+    } catch (e) {
+      // catching non-existent images
     }
-
-    $image.classList.remove('medium-insert-image-active');
-    (<any>$image.parentNode).setAttribute('contenteditable', 'false');
-
-    const caption = $image.nextSibling;
-    (<any>caption).setAttribute('contenteditable', false);
-    if (caption.textContent.trim() === '') {
-      caption.textContent = this.options.placeholder;
-    }
-
-    this.$currentImage = null;
   }
 
   /**
