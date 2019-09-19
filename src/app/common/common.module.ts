@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -105,6 +105,7 @@ import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/link
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
 import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
 import { ShareModalComponent } from '../modules/modals/share/share';
+import { RouterHistoryService } from './services/router-history.service';
 
 @NgModule({
   imports: [NgCommonModule, RouterModule, FormsModule, ReactiveFormsModule],
@@ -341,6 +342,11 @@ import { ShareModalComponent } from '../modules/modals/share/share';
       useFactory: boostedContentService =>
         new FeaturedContentService(boostedContentService),
       deps: [FeedsService],
+    },
+    {
+      provide: RouterHistoryService,
+      useFactory: router => new RouterHistoryService(router),
+      deps: [Router],
     },
   ],
   entryComponents: [
