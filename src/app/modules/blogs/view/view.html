@@ -75,7 +75,7 @@
         >
       </div>
     </div>
-    <div class="mdl-cell mdl-cell--7-col m-actions-block">
+    <div class="mdl-cell mdl-cell--7-col m-actions-block" *ngIf="showActions">
       <div class="mdl-layout-spacer"></div>
       <m-post-menu
         [entity]="blog"
@@ -144,7 +144,11 @@
   #lockScreen
 ></m-wire--lock-screen>
 
-<div class="mdl-grid blogs-grid" style="max-width:660px" *ngIf="blog.guid">
+<div
+  class="mdl-grid blogs-grid"
+  style="max-width:660px"
+  *ngIf="showComments && blog.guid"
+>
   <m-comments__tree [entity]="blog"> </m-comments__tree>
 </div>
 

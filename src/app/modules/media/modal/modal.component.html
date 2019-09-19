@@ -79,7 +79,11 @@
             [style.height]="mediaHeight + 'px'"
             [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
           >
-            <m-blog-view [blog]="entity"></m-blog-view>
+            <m-blog-view
+              [blog]="entity"
+              [showActions]="false"
+              [showComments]="false"
+            ></m-blog-view>
           </div>
 
           <!-- OVERLAY -->
