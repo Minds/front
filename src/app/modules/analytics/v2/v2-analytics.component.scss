@@ -1,0 +1,14 @@
+m-v2Analytics {
+  margin: 24px;
+}
+.m-analytics_tabHeaders {
+  display: flex;
+
+  .m-analytics_tab {
+    padding: 8px;
+    &.m-analytics_tab--active {
+      color: #4690df;
+      font-weight: bold;
+    }
+  }
+}

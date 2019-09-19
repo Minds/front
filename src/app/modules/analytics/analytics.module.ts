@@ -49,6 +49,18 @@ import { ActiveUsersChartComponent } from './components/charts/active-users/acti
 import { Graph } from './graph.component';
 import { PageviewsCardComponent } from './components/cards/pageviews/pageviews.component';
 import { PageviewsChartComponent } from './components/charts/pageviews/pageviews.component';
+import { AnalyticsDropdownComponent } from './v2/components/dropdown/dropdown.component';
+import { AnalyticsSubtotalsGridComponent } from './v2/components/subtotals-grid/subtotals-grid.component';
+import { AnalyticsLayoutFilterableChartComponent } from './v2/layouts/filterable-chart/filterable-chart.component';
+import { AnalyticsLayoutDashboardComponent } from './v2/layouts/dashboard/dashboard.component';
+import { AnalyticsLayoutListComponent } from './v2/layouts/list/list.component';
+import { V2AnalyticsComponent } from './v2/v2-analytics.component';
+import { AnalyticsChartComponent } from './v2/components/chart/chart.component';
+import { AnalyticsFiltersGridComponent } from './v2/components/filters-grid/filters-grid.component';
+import { AnalyticsTabSummaryComponent } from './v2/tabs/summary/summary.component';
+import { AnalyticsTabTrafficComponent } from './v2/tabs/traffic/traffic.component';
+import { AnalyticsSubtotalComponent } from './v2/components/subtotal/subtotal.component';
+import { AnalyticsFilterComponent } from './v2/components/filter/filter.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -76,6 +88,10 @@ const routes: Routes = [
           { path: 'token', component: SiteTokenTransactionsAnalyticsComponent },
           // { path: 'plus', component: OffChainBoostsCardComponent},
         ],
+      },
+      {
+        path: 'v2',
+        component: V2AnalyticsComponent,
       },
     ],
   },
@@ -138,6 +154,18 @@ const routes: Routes = [
     PageviewsChartComponent,
     PageviewsCardComponent,
     Graph,
+    V2AnalyticsComponent,
+    AnalyticsDropdownComponent,
+    AnalyticsChartComponent,
+    AnalyticsSubtotalComponent,
+    AnalyticsSubtotalsGridComponent,
+    AnalyticsFilterComponent,
+    AnalyticsFiltersGridComponent,
+    AnalyticsLayoutFilterableChartComponent,
+    AnalyticsLayoutDashboardComponent,
+    AnalyticsLayoutListComponent,
+    AnalyticsTabSummaryComponent,
+    AnalyticsTabTrafficComponent,
   ],
   providers: [],
 })

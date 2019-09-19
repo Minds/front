@@ -1,0 +1,15 @@
+<h1>
+  Analytics
+</h1>
+<div class="m-analytics__tabHeaders">
+  <ng-container *ngFor="let tab of tabs">
+    <p
+      class="m-analytics__tab"
+      [ngClass]="{ 'm-analytics_tab--active': tab.name === activeTab }"
+    >
+      {{ tab.name | titlecase }}
+    </p>
+  </ng-container>
+</div>
+<m-analytics__dropdown [filter]="time"></m-analytics__dropdown>
+<m-analyticsLayout__filterableChart></m-analyticsLayout__filterableChart>
