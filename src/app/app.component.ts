@@ -20,6 +20,7 @@ import { DiagnosticsService } from './services/diagnostics.service';
 import { SiteService } from './services/site.service';
 import { PRO_DOMAIN_ROUTES, proRoutes } from './modules/pro/pro.module';
 import { Subscription } from 'rxjs';
+import { RouterHistoryService } from './common/services/router-history.service';
 
 @Component({
   moduleId: module.id,
@@ -57,6 +58,7 @@ export class Minds {
     public themeService: ThemeService,
     private bannedService: BannedService,
     private diagnostics: DiagnosticsService,
+    private routerHistoryService: RouterHistoryService,
     private site: SiteService
   ) {
     this.name = 'Minds';

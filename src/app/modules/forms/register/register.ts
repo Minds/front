@@ -12,6 +12,7 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
@@ -32,6 +33,7 @@ export class RegisterForm {
   captcha: string;
   takenUsername: boolean = false;
   usernameValidationTimeout: any;
+  @Input() parentId: string = '';
 
   showFbForm: boolean = false;
 
@@ -46,7 +48,8 @@ export class RegisterForm {
     public client: Client,
     fb: FormBuilder,
     public zone: NgZone,
-    private experiments: ExperimentsService
+    private experiments: ExperimentsService,
+    private routerHistoryService: RouterHistoryService
   ) {
     this.form = fb.group({
       username: ['', Validators.required],
@@ -56,6 +59,7 @@ export class RegisterForm {
       tos: [false],
       exclusive_promotions: [false],
       captcha: [''],
+      previousUrl: this.routerHistoryService.getPreviousUrl(),
     });
   }
 
@@ -88,6 +92,7 @@ export class RegisterForm {
     }
 
     this.form.value.referrer = this.referrer;
+    this.form.value.parentId = this.parentId;
 
     this.inProgress = true;
 

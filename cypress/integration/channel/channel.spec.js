@@ -1,4 +1,5 @@
-context('Channel', () => {
+// skipped until feat release
+context.skip('Channel', () => {
   before(() => {
     cy.getCookie('minds_sess')
     .then((sessionCookie) => {
