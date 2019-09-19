@@ -188,10 +188,10 @@ context('Pro Page', () => {
 
   it('should have a footer', () => {
     // should have a footer text
-    cy.get('.m-pro--channel-footer--text').contains('This is the footer text');
+    cy.get('.m-proChannelFooter__text').contains('This is the footer text');
 
     // should have footer links
-    cy.get('.m-proChannel__footer .m-pro--channel-footer .m-pro--channel-footer--link').should('be.visible').each(($el, $index) => {
+    cy.get('.m-proChannel__footer .m-pro--channel-footer .m-proChannelFooter__link').should('be.visible').each(($el, $index) => {
       expect($el.text()).to.contain(footerLinks[$index].label);
       expect($el.attr('href')).to.contain(footerLinks[$index].link);
     });
