@@ -13,6 +13,7 @@ context('Blogs', () => {
 
   beforeEach(()=> {
     cy.preserveCookies();
+    cy.server();
   });
 
   it('should not be able to create a new blog if no title or banner are specified', () => {
@@ -89,7 +90,6 @@ context('Blogs', () => {
     cy.get('.m-mature-info a').click();
     cy.get('.m-mature-info a span').contains('Mature content');
 
-    cy.server();
     cy.route("POST", "**/api/v1/blog/new").as("postBlog");
     cy.route("GET", "**/api/v1/blog/**").as("getBlog");
 
