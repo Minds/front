@@ -195,7 +195,7 @@ export class MindsVideoTorrentPlayer
         this.loadTorrent();
       }
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
@@ -205,7 +205,7 @@ export class MindsVideoTorrentPlayer
     try {
       player.pause();
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
@@ -220,6 +220,7 @@ export class MindsVideoTorrentPlayer
   }
 
   resumeFromTime(time: number = 0) {
+    // TODO detect if it's still transcoding
     const player = this.getPlayer();
 
     try {
@@ -234,7 +235,7 @@ export class MindsVideoTorrentPlayer
         }
       }
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
