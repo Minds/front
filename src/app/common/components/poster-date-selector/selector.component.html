@@ -1,0 +1,18 @@
+<div
+  class="m-poster-date-selector__input"
+  [class.selected]="hasDateSelected()"
+  mdl-datetime-picker
+  [date]="getDate()"
+  (dateChange)="onDateChange($event)"
+>
+  <input
+    type="text"
+    [ngModel]="date | date: dateFormat"
+    (ngModelChange)="onDateChange($event)"
+    [hidden]="true"
+  />
+  <m-tooltip icon="date_range">
+    {{ getDate() || 'Post Immediately' }}
+  </m-tooltip>
+  <span></span>
+</div>

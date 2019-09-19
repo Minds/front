@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NewsfeedHashtagSelectorService } from '../../../modules/newsfeed/services/newsfeed-hashtag-selector.service';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
-
+import { ActivityService } from '../../../common/services/activity.service';
 @Component({
   moduleId: module.id,
   selector: 'minds-admin-firehose',
@@ -30,7 +30,8 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
     public router: Router,
     public route: ActivatedRoute,
     protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    protected activityService: ActivityService
   ) {
     this.paramsSubscription = this.route.params.subscribe(params => {
       this.algorithm = params['algorithm'] || 'latest';

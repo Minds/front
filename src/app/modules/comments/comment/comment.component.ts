@@ -10,6 +10,9 @@ import {
   Input,
   ViewChild,
   ElementRef,
+  OnInit,
+  OnDestroy,
+  AfterViewInit,
 } from '@angular/core';
 
 import { Session } from '../../../services/session';
@@ -21,8 +24,9 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { CommentsListComponent } from '../list/list.component';
 import { TimeDiffService } from '../../../services/timediff.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ActivityService } from '../../../common/services/activity.service';
 import { Router } from '@angular/router';
 import { FeaturesService } from '../../../services/features.service';
 import { MindsVideoComponent } from '../../media/components/video/video.component';
@@ -45,7 +49,8 @@ import isMobile from '../../../helpers/is-mobile';
     },
   ],
 })
-export class CommentComponentV2 implements OnChanges {
+export class CommentComponentV2
+  implements OnChanges, OnInit, OnDestroy, AfterViewInit {
   comment: any;
   editing: boolean = false;
   minds = window.Minds;
@@ -78,6 +83,7 @@ export class CommentComponentV2 implements OnChanges {
   translateToggle: boolean = false;
   commentAge$: Observable<number>;
 
+  canReply = true;
   videoDimensions: Array<any> = null;
   @ViewChild('player', { static: false }) player: MindsVideoComponent;
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
@@ -98,6 +104,7 @@ export class CommentComponentV2 implements OnChanges {
     private timeDiffService: TimeDiffService,
     private el: ElementRef,
     private router: Router,
+    protected activityService: ActivityService,
     protected featuresService: FeaturesService
   ) {}
 
@@ -118,9 +125,13 @@ export class CommentComponentV2 implements OnChanges {
     }
   }
 
+  ngOnDestroy() {}
+
   @Input('comment')
   set _comment(value: any) {
-    if (!value) return;
+    if (!value) {
+      return;
+    }
     this.comment = value;
     this.attachment.load(this.comment);
 
@@ -147,7 +158,7 @@ export class CommentComponentV2 implements OnChanges {
       return;
     }
 
-    let data = this.attachment.exportMeta();
+    const data = this.attachment.exportMeta();
     data['comment'] = this.comment.description;
 
     this.editing = false;

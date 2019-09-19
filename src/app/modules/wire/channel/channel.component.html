@@ -34,38 +34,8 @@
     </span>
   </div>
 
-  <div
-    class="mdl-card__supporting-text mdl-color-text--grey-600 m-wire-channel--rewards"
-  >
-    <p
-      *ngIf="!editing && rewards.description"
-      class="m-wire-channel--description"
-      [innerText]="rewards.description"
-    ></p>
-
-    <textarea
-      *ngIf="editing"
-      class="m-wire-channel--description-editor"
-      [(ngModel)]="rewards.description"
-      [autoGrow]
-      placeholder="About your offerings. eg. Describe what your supporters will receive…"
-      i18n-placeholder="@@WIRE__CHANNEL__REWARD_DESCRIPTION_PLACEHOLDER"
-    ></textarea>
-
-    <m-wire-channel-table
-      type="tokens"
-      [(rewards)]="rewards.rewards.tokens"
-      [(editing)]="editing"
-      [channel]="channel"
-    ></m-wire-channel-table>
-
-    <p
-      class="m-wire-channel--disclaimer"
-      *ngIf="false"
-      i18n="@@WIRE__CHANNEL__REWARD_CHANGE_NOTICE"
-    >
-      <span>@</span>{{ channel.username }} reserves the right to change rewards
-      at anytime without notice
-    </p>
-  </div>
+  <m-wire__subscriptionTiers
+    [user]="channel"
+    [editing]="editing"
+  ></m-wire__subscriptionTiers>
 </div>

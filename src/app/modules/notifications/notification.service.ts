@@ -3,12 +3,16 @@ import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
 import { Session } from '../../services/session';
 import { MindsTitle } from '../../services/ux/title';
+import { Subscription, timer } from 'rxjs';
 
 export class NotificationService {
   socketSubscriptions: any = {
     notification: null,
   };
   onReceive: EventEmitter<any> = new EventEmitter();
+  notificationPollTimer;
+
+  private updateNotificationCountSubscription: Subscription;
 
   static _(
     session: Session,
@@ -71,22 +75,26 @@ export class NotificationService {
    * Return the notifications
    */
   getNotifications() {
-    var self = this;
-    setInterval(function() {
-      // console.log('getting notifications');
+    const pollIntervalSeconds = 60;
+    this.notificationPollTimer = timer(0, pollIntervalSeconds * 1000);
+    this.updateNotificationCountSubscription = this.notificationPollTimer.subscribe(
+      () => this.updateNotificationCount()
+    );
+  }
 
-      if (!self.session.isLoggedIn()) return;
+  updateNotificationCount() {
+    if (!this.session.isLoggedIn()) {
+      return;
+    }
 
-      if (!window.Minds.notifications_count)
-        window.Minds.notifications_count = 0;
+    if (!window.Minds.notifications_count) {
+      window.Minds.notifications_count = 0;
+    }
 
-      self.client
-        .get('api/v1/notifications/count', {})
-        .then((response: any) => {
-          window.Minds.notifications_count = response.count;
-          self.sync();
-        });
-    }, 60000);
+    this.client.get('api/v1/notifications/count', {}).then((response: any) => {
+      window.Minds.notifications_count = response.count;
+      this.sync();
+    });
   }
 
   /**
@@ -100,5 +108,9 @@ export class NotificationService {
       }
     }
     this.title.setCounter(window.Minds.notifications_count);
+  }
+
+  ngOnDestroy() {
+    this.notificationPollTimer.unsubscribe();
   }
 }
