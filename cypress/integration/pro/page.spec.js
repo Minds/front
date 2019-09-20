@@ -123,7 +123,7 @@ context('Pro Page', () => {
   });
 
   it('should load the feed tab', () => {
-    cy.route("GET", "**!/api/v2/pro/content/!*!/activities/top**").as("activities");
+    cy.route("GET", "**/api/v2/pro/content/*/activities/top**").as("activities");
     cy.contains('Feed')
       .click()
       .wait('@activities').then((xhr) => {
@@ -132,7 +132,7 @@ context('Pro Page', () => {
   })
 
   it('should load the videos tab', () => {
-    cy.route("GET", "**!/api/v2/pro/content/!*!/videos/top**").as("videos");
+    cy.route("GET", "**/api/v2/pro/content/*/videos/top**").as("videos");
     cy.contains('Videos')
       .click()
       .wait('@videos').then((xhr) => {
@@ -169,7 +169,7 @@ context('Pro Page', () => {
   })
 
   it('should load the articles tab', () => {
-    cy.route("GET", "**!/api/v2/pro/content/!*!/blogs/top**").as("blogs");
+    cy.route("GET", "**/api/v2/pro/content/*/blogs/top**").as("blogs");
     cy.contains('Articles')
       .click()
       .wait('@blogs').then((xhr) => {
@@ -178,7 +178,7 @@ context('Pro Page', () => {
   })
 
   it('should load the groups tab', () => {
-    cy.route("GET", "**!/api/v2/pro/content/!*!/groups/top**").as("groups");
+    cy.route("GET", "**/api/v2/pro/content/*/groups/top**").as("groups");
     cy.contains('Groups')
       .click()
       .wait('@groups').then((xhr) => {
@@ -191,7 +191,7 @@ context('Pro Page', () => {
     cy.get('.m-proChannelFooter__text').contains('This is the footer text');
 
     // should have footer links
-    cy.get('.m-proChannel__footer .m-pro--channel-footer .m-proChannelFooter__link').should('be.visible').each(($el, $index) => {
+    cy.get('.m-proChannel__footer .m-proChannelFooter .m-proChannelFooter__link').should('be.visible').each(($el, $index) => {
       expect($el.text()).to.contain(footerLinks[$index].label);
       expect($el.attr('href')).to.contain(footerLinks[$index].link);
     });
