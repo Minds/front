@@ -88,11 +88,13 @@ export class NewsfeedSingleComponent {
           case 'video':
           case 'album':
             this.router.navigate(['/media', this.activity.guid], {
+              queryParams: { comment_guid: this.focusedCommentGuid },
               replaceUrl: true,
             });
             break;
           case 'blog':
             this.router.navigate(['/blog/view', this.activity.guid], {
+              queryParams: { comment_guid: this.focusedCommentGuid },
               replaceUrl: true,
             });
             break;

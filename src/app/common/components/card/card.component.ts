@@ -130,6 +130,9 @@ export class MindsCard implements AfterViewInit {
       case 'activity':
         url = `/newsfeed/${this.object.guid}`;
         break;
+      case 'comment':
+        url = `/newsfeed/${this.object.entity_guid}`;
+        break;
       case 'object:image':
       case 'object:video':
       case 'object:album':
