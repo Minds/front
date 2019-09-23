@@ -17,14 +17,6 @@ export class ProChannelLoginComponent {
 
   redirectTo: string;
 
-  get settings() {
-    return this.service.currentChannel.pro_settings;
-  }
-
-  get autoSubscribe() {
-    return window.Minds.pro ? this.service.currentChannel : null;
-  }
-
   constructor(
     public session: Session,
     public service: ProChannelService,
@@ -45,6 +37,14 @@ export class ProChannelLoginComponent {
 
   ngOnInit() {
     this.redirectTo = this.storage.get('redirect');
+  }
+
+  get settings() {
+    return this.service.currentChannel.pro_settings;
+  }
+
+  get referrer() {
+    return this.service.currentChannel.username;
   }
 
   registered() {

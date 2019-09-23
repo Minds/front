@@ -13,7 +13,6 @@ import { Session } from '../../../services/session';
 import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
-import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
   moduleId: module.id,
@@ -22,7 +21,6 @@ import { MindsUser } from '../../../interfaces/entities';
 })
 export class RegisterForm {
   @Input() referrer: string;
-  @Input() autoSubscribe: MindsUser;
 
   @Output() done: EventEmitter<any> = new EventEmitter();
 
@@ -97,10 +95,6 @@ export class RegisterForm {
     this.inProgress = true;
 
     let opts = { ...this.form.value };
-
-    if (this.autoSubscribe) {
-      opts['from'] = this.autoSubscribe.guid;
-    }
 
     this.client
       .post('api/v1/register', opts)

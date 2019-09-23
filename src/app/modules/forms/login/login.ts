@@ -11,8 +11,6 @@ import { MindsUser } from '../../../interfaces/entities';
   templateUrl: 'login.html',
 })
 export class LoginForm {
-  @Input() autoSubscribe: MindsUser;
-
   @Output() done: EventEmitter<any> = new EventEmitter();
   @Output() doneRegistered: EventEmitter<any> = new EventEmitter();
 
@@ -61,10 +59,6 @@ export class LoginForm {
       username: username,
       password: this.form.value.password,
     };
-
-    if (this.autoSubscribe) {
-      opts['from'] = this.autoSubscribe.guid;
-    }
 
     this.client
       .post('api/v1/authenticate', opts)
