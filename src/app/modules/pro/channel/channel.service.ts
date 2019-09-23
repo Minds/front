@@ -11,6 +11,7 @@ import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../services/site.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { AnalyticsService } from '../../../services/analytics';
 
 export type RouterLinkToType =
   | 'home'
@@ -55,7 +56,8 @@ export class ProChannelService implements OnDestroy {
     protected modalService: OverlayModalService,
     protected sessionStorage: SessionsStorageService,
     protected router: Router,
-    protected site: SiteService
+    protected site: SiteService,
+    protected analytics: AnalyticsService
   ) {
     this.listen();
   }
@@ -334,6 +336,10 @@ export class ProChannelService implements OnDestroy {
         this.sessionStorage.destroy('pro::wire-modal::open');
       })
       .present();
+
+    this.analytics.send('pageview', {
+      url: `/pro/${this.currentChannel.guid}/wire?ismodal=true`,
+    });
   }
 
   pushMenuNavItems(navItems: Array<NavItems>, clean?: boolean) {

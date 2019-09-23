@@ -22,6 +22,7 @@ import { AnalyticsService } from '../../../services/analytics';
 import { MindsVideoComponent } from '../components/video/video.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { ActivityService } from '../../../common/services/activity.service';
+import { SiteService } from '../../../services/site.service';
 
 export type MediaModalParams = {
   redirectUrl?: string;
@@ -118,7 +119,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     public analyticsService: AnalyticsService,
     private overlayModal: OverlayModalService,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private site: SiteService
   ) {}
 
   ngOnInit() {
@@ -204,8 +206,14 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isTablet =
       isMobileOrTablet() && Math.min(screen.width, screen.height) >= 768;
 
+    let url = `${this.pageUrl}?ismodal=true`;
+
+    if (this.site.isProDomain) {
+      url = `/pro/${this.site.pro.user_guid}${url}`;
+    }
+
     this.analyticsService.send('pageview', {
-      url: `${this.pageUrl}?ismodal=true`,
+      url,
     });
 
     // * LOCATION & ROUTING * -----------------------------------------------------------------------------------

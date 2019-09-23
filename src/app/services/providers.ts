@@ -121,7 +121,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: AnalyticsService,
     useFactory: AnalyticsService._,
-    deps: [Router, Client],
+    deps: [Router, Client, SiteService],
   },
   {
     provide: Navigation,
