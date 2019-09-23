@@ -28,10 +28,16 @@ import { ActivityService } from '../../services/activity.service';
   selector: 'minds-card',
   template: `
     <ng-template dynamic-host></ng-template>
+    <div
+      class="m-mindsCard__overlay"
+      (click)="goToEntityPage()"
+      *ngIf="openInNewTab"
+    ></div>
   `,
   providers: [ActivityService],
 })
 export class MindsCard implements AfterViewInit {
+  @Input() openInNewTab: boolean = false;
   @ViewChild(DynamicHostDirective, { static: true })
   cardHost: DynamicHostDirective;
 
@@ -93,25 +99,50 @@ export class MindsCard implements AfterViewInit {
       return null;
     }
 
-    if (object.type === 'user') {
-      return UserCard;
-    } else if (object.type === 'activity') {
-      return Activity;
-    } else if (object.type === 'group') {
-      return GroupsCard;
-    } else if (object.subtype === 'image') {
-      return ImageCard;
-    } else if (object.subtype === 'video') {
-      return VideoCard;
-    } else if (object.subtype === 'blog') {
-      return BlogCard;
-    } else if (object.subtype === 'album') {
-      return AlbumCard;
-    } else if (object.type === 'comment') {
-      return CommentComponentV2;
+    switch (this.getType(this.object)) {
+      case 'user':
+        return UserCard;
+      case 'activity':
+        return Activity;
+      case 'comment':
+        return CommentComponentV2;
+      case 'group':
+        return GroupsCard;
+      case 'object:image':
+        return ImageCard;
+      case 'object:video':
+        return VideoCard;
+      case 'object:blog':
+        return BlogCard;
+      case 'object:album':
+        return AlbumCard;
     }
 
     return null;
+  }
+
+  goToEntityPage() {
+    let url: string;
+    switch (this.getType(this.object)) {
+      case 'user':
+        url = `/${this.object.username}`;
+        break;
+      case 'activity':
+        url = `/newsfeed/${this.object.guid}`;
+        break;
+      case 'object:image':
+      case 'object:video':
+      case 'object:album':
+        url = `/media/${this.object.guid}`;
+        break;
+      case 'object:blog':
+        url = this.object.route;
+        break;
+    }
+
+    if (url) {
+      window.open(url, '_blank');
+    }
   }
 
   loadComponent() {
@@ -175,5 +206,11 @@ export class MindsCard implements AfterViewInit {
 
     // @note: find a better way (when Angular implements one)
     this.anchorRef.nativeElement.nextSibling.className = this.cssClasses;
+  }
+
+  private getType(entity: any): string {
+    return entity.type === 'object'
+      ? `${entity.type}:${entity.subtype}`
+      : entity.type;
   }
 }
