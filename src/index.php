@@ -2,6 +2,11 @@
     $meta = Minds\Core\SEO\Manager::get();
     $pro = Minds\Core\Di\Di::_()->get('Pro\Domain')->lookup($_SERVER['HTTP_HOST'] ?? null);
 
+    $cypressCookie = $_COOKIE['cypress:pro-standalone'];
+    if ($cypressCookie) {
+        $pro = Minds\Core\Di\Di::_()->get('Pro\Domain')->lookup($_COOKIE['cypress:pro-standalone']);
+    }
+
     if (!defined('__MINDS_CONTEXT__')) {
         define('__MINDS_CONTEXT__', 'app');
     }
@@ -158,6 +163,6 @@
       ?>
       window.Minds = <?= json_encode($minds) ?>;
     </script>
-  
+
   </body>
 </html>
