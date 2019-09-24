@@ -18,7 +18,7 @@ m-overlay-modal {
   .m-overlay-modal--backdrop {
     z-index: 9999995;
     @include m-theme() {
-      background-color: rgba(themed($m-black-always), 0.85);
+      background-color: rgba(themed($m-black-always), 0.8);
     }
   }
 
@@ -144,9 +144,6 @@ m-overlay-modal {
       left: unquote('calc(50% - 50px)');
     }
     m-video--progress-bar {
-      .seeker-ball {
-        top: 4px;
-      }
       .progress-bar {
         margin-right: 8px;
       }
