@@ -16,11 +16,13 @@
 
       <a
         class="m-page--sidebar--navigation--item"
-        routerLink="/wallet/usd/earnings"
+        routerLink="/wallet/usd/transactions"
         routerLinkActive="m-page--sidebar--navigation--item-active"
       >
         <i class="material-icons">history</i>
-        <span i18n="@@MONETIZATION__REVENUE__CONSOLE__EARNINGS">Earnings</span>
+        <span i18n="@@MONETIZATION__REVENUE__CONSOLE__EARNINGS"
+          >Transactions</span
+        >
       </a>
 
       <a
@@ -50,6 +52,7 @@
       </i>
       <span>Back to the Token Wallet</span>
     </a>
+    <m-walletUsd__balance></m-walletUsd__balance>
     <router-outlet></router-outlet>
   </div>
 </div>

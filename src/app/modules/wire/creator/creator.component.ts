@@ -322,13 +322,24 @@ export class WireCreatorComponent {
       return;
     }
 
+    if (amount.indexOf('.') === 0) {
+      if (amount.length === 1) {
+        return; // not propogration
+      }
+      amount = `0${amount}`;
+    }
+
     if (typeof amount === 'number') {
       this.wire.amount = amount;
+      console.log('amount is a number');
       return;
     }
 
     amount = amount.replace(/,/g, '');
-    this.wire.amount = parseFloat(amount);
+    const amountAsFloat = parseFloat(amount);
+    if (amountAsFloat) {
+      this.wire.amount = amountAsFloat;
+    }
   }
 
   /**
@@ -355,11 +366,11 @@ export class WireCreatorComponent {
   }
 
   /**
-   * Round by 4
+   * Round by 6
    */
   roundAmount() {
     this.wire.amount =
-      Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
+      Math.round(parseFloat(`${this.wire.amount}`) * 1000000) / 1000000;
   }
 
   // Charge and rates
@@ -416,6 +427,7 @@ export class WireCreatorComponent {
 
     switch (this.wire.payloadType) {
       case 'onchain':
+      case 'eth':
         if (!this.wire.payload && !this.wire.payload.receiver) {
           throw new Error('Invalid receiver.');
         }
@@ -447,9 +459,11 @@ export class WireCreatorComponent {
         break;
 
       case 'usd':
-        //if (!this.wire.payload) {
-        //  throw new Error('Payment method not processed.');
-        //}
+        if (!this.owner.merchant || !this.owner.merchant.id) {
+          throw new VisibleWireError(
+            'This channel is not able to receive USD at the moment'
+          );
+        }
         break;
       case 'btc':
         if (!this.wire.payload.receiver) {

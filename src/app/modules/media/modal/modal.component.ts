@@ -21,6 +21,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { AnalyticsService } from '../../../services/analytics';
 import { MindsVideoComponent } from '../components/video/video.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
+import { ActivityService } from '../../../common/services/activity.service';
 
 @Component({
   selector: 'm-media--modal',
@@ -51,6 +52,7 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
       transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
     ]),
   ],
+  providers: [ActivityService],
 })
 export class MediaModalComponent implements OnInit, OnDestroy {
   minds = window.Minds;
@@ -122,7 +124,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           this.entity.title ||
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.entity_guid || this.entity.guid;
-        this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.entity_guid}/xlarge`;
+        this.thumbnail = this.entity.thumbnails.xlarge;
         switch (this.entity.custom_type) {
           case 'video':
             this.contentType = 'video';
@@ -139,7 +141,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
             break;
           case 'image':
             this.contentType = 'image';
-            this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
+            // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
+            this.thumbnail = this.entity.thumbnail;
             break;
           case 'blog':
             this.contentType = 'blog';
@@ -158,7 +161,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.attachment_guid;
         this.entity.entity_guid = this.entity.attachment_guid;
-        this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.attachment_guid}/xlarge`;
+        // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.attachment_guid}/xlarge`;
+        this.thumbnail = this.entity.thumbnails.xlarge;
         break;
     }
 

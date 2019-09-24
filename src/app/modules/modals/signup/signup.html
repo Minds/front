@@ -8,7 +8,7 @@
     [hidden]="display == 'onboarding' || display == 'categories'"
   >
     <img
-      src="{{minds.cdn_assets_url}}assets/logos/logo.svg"
+      src="{{ minds.cdn_assets_url }}assets/logos/logo.svg"
       (click)="close()"
     />
   </div>
@@ -69,6 +69,7 @@
     (done)="done('register')"
     (canceled)="close()"
     *ngIf="display == 'register'"
+    parentId="/modal"
   ></minds-form-register>
   <!-- FB Signin final phase -->
   <minds-form-fb-register

@@ -28,6 +28,7 @@ import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service'
 import { ClientMetaService } from '../../../../../common/services/client-meta.service';
 import { TopbarHashtagsService } from '../../../../hashtags/service/topbar.service';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
+import { ActivityService } from '../../../../../common/services/activity.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
 
@@ -50,6 +51,7 @@ import isMobile from '../../../../../helpers/is-mobile';
     ClientMetaService,
     ActivityAnalyticsOnViewService,
     TopbarHashtagsService,
+    ActivityService,
   ],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -65,6 +67,7 @@ export class Activity implements OnInit {
   translateToggle: boolean = false;
   translateEvent: EventEmitter<any> = new EventEmitter();
   showBoostOptions: boolean = false;
+  allowComments = true;
   @Input() boost: boolean = false;
   @Input('boost-toggle')
   @Input()
@@ -120,6 +123,7 @@ export class Activity implements OnInit {
           'set-explicit',
           'block',
           'rating',
+          'allow-comments',
         ];
       } else {
         return [
@@ -133,6 +137,7 @@ export class Activity implements OnInit {
           'set-explicit',
           'block',
           'rating',
+          'allow-comments',
         ];
       }
     } else {
@@ -146,12 +151,15 @@ export class Activity implements OnInit {
         'set-explicit',
         'block',
         'rating',
+        'allow-comments',
       ];
     }
   }
 
   @ViewChild('player', { static: false }) player: MindsVideoComponent;
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
+
+  protected time_created: any;
 
   constructor(
     public session: Session,
@@ -169,6 +177,7 @@ export class Activity implements OnInit {
     private hashtagsService: TopbarHashtagsService,
     protected featuresService: FeaturesService,
     public suggestions: AutocompleteSuggestionsService,
+    protected activityService: ActivityService,
     @SkipSelf() injector: Injector,
     elementRef: ElementRef
   ) {
@@ -229,6 +238,11 @@ export class Activity implements OnInit {
       this.translationService.isTranslatable(this.activity) ||
       (this.activity.remind_object &&
         this.translationService.isTranslatable(this.activity.remind_object));
+
+    this.activity.time_created =
+      this.activity.time_created || Math.floor(Date.now() / 1000);
+
+    this.allowComments = this.activity.allow_comments;
   }
 
   getOwnerIconTime() {
@@ -258,6 +272,8 @@ export class Activity implements OnInit {
     this.errorString = '';
     this.editing = false;
     this.activity.edited = true;
+    this.activity.time_created =
+      this.activity.time_created || Math.floor(Date.now() / 1000);
 
     let data = this.activity;
     if (this.attachment.has()) {
@@ -316,6 +332,9 @@ export class Activity implements OnInit {
   }*/
 
   openComments() {
+    if (!this.shouldShowComments()) {
+      return;
+    }
     this.commentsToggle = !this.commentsToggle;
     this.commentsOpened.emit(this.commentsToggle);
   }
@@ -414,10 +433,11 @@ export class Activity implements OnInit {
         this.translateToggle = true;
         break;
     }
+    this.detectChanges();
   }
 
   setExplicit(value: boolean) {
-    let oldValue = this.activity.mature,
+    const oldValue = this.activity.mature,
       oldMatureVisibility = this.activity.mature_visibility;
 
     this.activity.mature = value;
@@ -493,6 +513,10 @@ export class Activity implements OnInit {
     return activity && activity.pending && activity.pending !== '0';
   }
 
+  isScheduled(time_created) {
+    return time_created && time_created * 1000 > Date.now();
+  }
+
   toggleMatureVisibility() {
     this.activity.mature_visibility = !this.activity.mature_visibility;
 
@@ -513,6 +537,10 @@ export class Activity implements OnInit {
 
   onRemindMatureVisibilityChange() {
     this.activity.mature_visibility = !this.activity.mature_visibility;
+  }
+
+  shouldShowComments() {
+    return this.activity.allow_comments || this.activity['comments:count'] >= 0;
   }
 
   setVideoDimensions($event) {
@@ -562,5 +590,25 @@ export class Activity implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  onTimeCreatedChange(newDate) {
+    this.activity.time_created = newDate;
+  }
+
+  posterDateSelectorError(msg) {
+    throw new Error(msg);
+  }
+
+  getTimeCreated() {
+    return this.activity.time_created > Math.floor(Date.now() / 1000)
+      ? this.activity.time_created
+      : null;
+  }
+
+  checkCreated() {
+    return this.activity.time_created > Math.floor(Date.now() / 1000)
+      ? true
+      : false;
   }
 }

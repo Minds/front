@@ -4,7 +4,10 @@
  */
 import generateRandomId from '../support/utilities';
 
-context('Notification', () => {
+// Skipped until notifications are fixed on sandboxes
+// See https://gitlab.com/minds/engine/issues/732
+
+context.skip('Notification', () => {
 
   //secondary user for testing.
   let username = '';

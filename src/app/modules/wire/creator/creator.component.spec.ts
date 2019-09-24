@@ -47,6 +47,7 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-mock.spec';
 import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 import { FeaturesService } from '../../../services/features.service';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { MockComponent } from '../../../utils/mock';
 
 /* tslint:disable */
@@ -219,7 +220,7 @@ describe('WireCreatorComponent', () => {
         { provide: WireContractService, useValue: wireContractServiceMock },
         { provide: WireService, useValue: wireServiceMock },
         Web3WalletService,
-        FeaturesService,
+        { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: Web3WalletService, useValue: web3WalletServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: TokenContractService, useValue: tokenContractServiceMock },
@@ -238,7 +239,7 @@ describe('WireCreatorComponent', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(WireCreatorComponent);
-
+    featuresServiceMock.mock('wire-multi-currency', true);
     comp = fixture.componentInstance; // LoginForm test instance
     clientMock.response = {};
     clientMock.response[`api/v2/boost/rates`] = {

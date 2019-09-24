@@ -1,4 +1,11 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  ChangeDetectorRef,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
@@ -12,6 +19,7 @@ import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 
 @Component({
@@ -22,8 +30,9 @@ import { ShareModalComponent } from '../../../modules/modals/share/share';
     class: 'm-blog',
   },
   templateUrl: 'view.html',
+  providers: [ActivityService],
 })
-export class BlogView {
+export class BlogView implements OnInit, OnDestroy {
   minds;
   guid: string;
   blog: MindsBlogEntity;
@@ -50,6 +59,7 @@ export class BlogView {
     'set-explicit',
     'remove-explicit',
     'rating',
+    'allow-comments',
   ];
 
   @ViewChild('lockScreen', { read: ElementRef, static: false }) lockScreen;
@@ -65,6 +75,8 @@ export class BlogView {
     private context: ContextService,
     public analytics: AnalyticsService,
     public analyticsService: AnalyticsService,
+    protected activityService: ActivityService,
+    private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService
   ) {
     this.minds = window.Minds;
@@ -78,7 +90,7 @@ export class BlogView {
   }
 
   isVisible() {
-    //listens every 0.6 seconds
+    // listens every 0.6 seconds
     this.scroll_listener = this.scroll.listen(
       e => {
         const bounds = this.element.getBoundingClientRect();
@@ -132,7 +144,9 @@ export class BlogView {
   }
 
   ngOnDestroy() {
-    if (this.scroll_listener) this.scroll.unListen(this.scroll_listener);
+    if (this.scroll_listener) {
+      this.scroll.unListen(this.scroll_listener);
+    }
   }
 
   menuOptionSelected(option: string) {
@@ -165,7 +179,9 @@ export class BlogView {
   }
 
   calculateLockScreenHeight() {
-    if (!this.lockScreen) return;
+    if (!this.lockScreen) {
+      return;
+    }
     const lockScreenOverlay = this.lockScreen.nativeElement.querySelector(
       '.m-wire--lock-screen'
     );

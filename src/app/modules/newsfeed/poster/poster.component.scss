@@ -259,7 +259,7 @@ m-hashtags-selector {
     }
 
     > * {
-      padding: 4px 8px;
+      padding: 4px 4px;
       position: relative;
       white-space: nowrap;
       text-decoration: none;
@@ -287,6 +287,11 @@ m-hashtags-selector {
         white-space: normal;
       }
     }
+
+    m-poster-date-selector {
+      padding-right: $minds-padding;
+    }
+
     .m-posterActionBar__CreateBlog {
       cursor: pointer;
     }
@@ -305,13 +310,15 @@ m-hashtags-selector {
     }
 
     .material-icons.m-posterActionBar__Icon,
-    .m-posterActionBar__IconAndLabel i.material-icons {
+    .m-posterActionBar__IconAndLabel i.material-icons,
+    .m-tooltip > i {
       font-size: 20px;
       transform: rotate(0.03deg) translateY(-1px); // Jagged lines hack
     }
 
     .m-posterActionBar__Label,
-    .m-posterActionBar__IconAndLabel > span {
+    .m-posterActionBar__IconAndLabel > span,
+    .m-poster-date-selector--input > span {
       font-size: 12px;
       font-family: 'Roboto', sans-serif;
       text-transform: uppercase;

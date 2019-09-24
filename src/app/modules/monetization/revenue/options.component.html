@@ -1,4 +1,45 @@
 <div class="m-revenue--options m-border">
+  <div class="m-revenue--options-requirements" *ngIf="account.requirement">
+    <h3>Account Requirements</h3>
+    <p>
+      You are required to complete the following action in order to receive
+      payouts:
+      <ng-container
+        *ngIf="account.requirement === 'individual.verification.document'"
+      >
+        <b (click)="file.click()">Upload Photo ID</b>
+        <br />
+        <br />
+        <button (click)="file.click()" class="m-btn m-btn--action m-btn--slim">
+          <ng-container *ngIf="!editing">Select & Upload</ng-container>
+          <ng-container *ngIf="editing">Uploading...</ng-container>
+        </button>
+        <input
+          type="file"
+          #file
+          name="file"
+          (change)="uploadRequirement(file)"
+          accept="image/*"
+          style="display: none;"
+        />
+      </ng-container>
+      <ng-container *ngIf="account.requirement.indexOf('tos_acceptance.') > -1">
+        <b>
+          Accept the
+          <a href="https://stripe.com/legal" target="_blank">
+            Stripe Services Agreement
+          </a>
+        </b>
+        <br />
+        <br />
+        <button (click)="acceptTos()" class="m-btn m-btn--action m-btn--slim">
+          <ng-container *ngIf="!editing">Accept Terms</ng-container>
+          <ng-container *ngIf="editing">Accepting...</ng-container>
+        </button>
+      </ng-container>
+    </p>
+  </div>
+
   <div class="m-revenue--options-payout-method">
     <h3 i18n="@@MONETIZATION__REVENUE__OPTIONS__PAYOUT_METHOD_TITLE">
       Payout Method

@@ -22,10 +22,12 @@ import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.comp
 import { VideoChatService } from '../../videochat/videochat.service';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { filter, map, startWith, throttle } from 'rxjs/operators';
+import { ActivityService } from '../../../common/services/activity.service';
 
 @Component({
   selector: 'm-groups--profile',
   templateUrl: 'profile.html',
+  providers: [ActivityService],
 })
 export class GroupsProfile {
   guid;

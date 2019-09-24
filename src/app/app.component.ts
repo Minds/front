@@ -18,6 +18,7 @@ import { FeaturesService } from './services/features.service';
 import { ThemeService } from './common/services/theme.service';
 import { BannedService } from './modules/report/banned/banned.service';
 import { DiagnosticsService } from './services/diagnostics.service';
+import { RouterHistoryService } from './common/services/router-history.service';
 
 @Component({
   moduleId: module.id,
@@ -52,7 +53,8 @@ export class Minds {
     public featuresService: FeaturesService,
     public themeService: ThemeService,
     private bannedService: BannedService,
-    private diagnostics: DiagnosticsService
+    private diagnostics: DiagnosticsService,
+    private routerHistoryService: RouterHistoryService
   ) {
     this.name = 'Minds';
   }

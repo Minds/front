@@ -1,0 +1,43 @@
+.m-wire-channel--rewards > tr > td {
+  padding: $minds-padding * 2;
+  margin-bottom: $minds-margin * 2;
+
+  label {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 26px;
+  }
+}
+
+.m-wire-channel--reward-amount {
+  display: inline-flex;
+  align-items: center;
+
+  .m-input {
+    flex: 1;
+    border-radius: 24px;
+  }
+  > span {
+    flex: 1;
+  }
+}
+
+.m-wire-channel--rewards--is-editing {
+  .m-wire-channel--rewards {
+    padding: $minds-padding $minds-padding * 2;
+  }
+  .m-wire-channel--reward-amount > span {
+    margin-left: $minds-margin * 2;
+  }
+}
+
+.m-wire-channel--reward-description {
+  margin-top: $minds-margin * 2;
+}
+
+.m-wire-channel--rewards--add-tier {
+  line-height: 56px;
+  .m-btn > * {
+    vertical-align: middle;
+  }
+}
