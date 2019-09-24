@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "preinstall": "git config core.hooksPath .githooks",
+    "preinstall": "git config core.hooksPath .git/hooks/",
     "prebuild": "gulp build.sass",
     "build": "ng build --prod",
     "prebuild-dev": "gulp build.sass --deploy-url=http://localhost/en",
@@ -61,12 +61,14 @@
     "@types/node": "~10.12.18",
     "codelyzer": "^4.5.0",
     "cypress": "^3.4.1",
+    "cypress-file-upload": "^3.3.3",
     "gulp": "~4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-css-globbing": "^0.2.2",
     "gulp-minify-css": "^1.1.6",
     "gulp-sass": "^4.0.2",
     "gulp-template": "^5.0.0",
+    "husky": "^3.0.4",
     "jasmine-core": "~2.99.0",
     "jasmine-spec-reporter": "~4.2.1",
     "jasmine-ts-async": "^1.0.0",
@@ -77,9 +79,15 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-mocha-reporter": "^2.2.5",
     "prettier": "1.18.2",
+    "pretty-quick": "^1.11.1",
     "protractor": "~5.4.2",
     "ts-node": "~7.0.0",
     "tslint": "~5.12.0",
     "typescript": "~3.4.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": ".githooks/pre-commit && pretty-quick --staged --bail --pattern '**/*.*(ts|html|scss)'"
+    }
   }
 }

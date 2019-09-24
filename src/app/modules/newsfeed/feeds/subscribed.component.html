@@ -21,6 +21,7 @@
     (delete)="delete(preActivity)"
     [showRatingToggle]="true"
     class="mdl-card m-border item"
+    [attr.minds-data-activity-guid]="preActivity.guid"
   ></minds-activity>
 
   <m-newsfeed--boost-rotator
@@ -46,6 +47,7 @@
       (delete)="delete(activity)"
       [showRatingToggle]="true"
       [slot]="i + 1"
+      [attr.data-minds-activity-guid]="activity.guid"
     ></minds-activity>
   </ng-container>
 

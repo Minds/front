@@ -21,6 +21,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { AnalyticsService } from '../../../services/analytics';
 import { MindsVideoComponent } from '../components/video/video.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
+import { ActivityService } from '../../../common/services/activity.service';
 
 @Component({
   selector: 'm-media--modal',
@@ -51,6 +52,7 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
       transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
     ]),
   ],
+  providers: [ActivityService],
 })
 export class MediaModalComponent implements OnInit, OnDestroy {
   minds = window.Minds;
@@ -61,7 +63,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   isTablet: boolean = false;
   isFullscreen: boolean = false;
-  isVideo: boolean = false; // Otherwise it's an image
+  contentType: string = '';
 
   aspectRatio: number;
   modalWidth: number;
@@ -69,8 +71,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   stageHeight: number;
   mediaWidth: number;
   mediaHeight: number;
-  entityWidth: number;
-  entityHeight: number;
+  entityWidth: number = 0;
+  entityHeight: number = 0;
 
   maxStageWidth: number;
   maxHeight: number;
@@ -84,9 +86,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   thumbnail: string = '';
   boosted: boolean = false;
   ownerIconTime: string = '';
-  permalinkGuid: string = '';
-  hasMessage: boolean = true;
-  message: string = '';
+  pageUrl: string = '';
 
   // Used for backdrop click detection hack
   isOpen: boolean = false;
@@ -99,8 +99,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   @Input('entity') set data(entity) {
     this.entity = entity;
-    this.entityWidth = 0;
-    this.entityHeight = 0;
   }
 
   // Used to make sure video progress bar seeker / hover works
@@ -119,23 +117,65 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
 
-    this.boosted = this.entity.boosted || this.entity.p2p_boosted;
-
-    // Set title
-    if (!this.entity.title) {
-      if (!this.entity.message) {
-        this.title = `${this.entity.ownerObj.name}'s post`;
-        this.hasMessage = false;
-      } else {
-        this.title = this.entity.message;
-      }
-    } else {
-      this.title = this.entity.title;
+    switch (this.entity.type) {
+      case 'activity':
+        this.title =
+          this.entity.message ||
+          this.entity.title ||
+          `${this.entity.ownerObj.name}'s post`;
+        this.entity.guid = this.entity.entity_guid || this.entity.guid;
+        this.thumbnail = this.entity.thumbnails.xlarge;
+        switch (this.entity.custom_type) {
+          case 'video':
+            this.contentType = 'video';
+            break;
+          case 'batch':
+            this.contentType = 'image';
+        }
+        break;
+      case 'object':
+        switch (this.entity.subtype) {
+          case 'video':
+            this.contentType = 'video';
+            this.title = this.entity.title;
+            break;
+          case 'image':
+            this.contentType = 'image';
+            // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
+            this.thumbnail = this.entity.thumbnail;
+            break;
+          case 'blog':
+            this.contentType = 'blog';
+            this.title = this.entity.title;
+            this.entity.guid = this.entity.guid;
+            this.entity.entity_guid = this.entity.guid;
+        }
+        break;
+      case 'comment':
+        this.contentType =
+          this.entity.custom_type === 'video' ? 'video' : 'image';
+        this.title =
+          this.entity.message ||
+          this.entity.title ||
+          this.entity.description ||
+          `${this.entity.ownerObj.name}'s post`;
+        this.entity.guid = this.entity.attachment_guid;
+        this.entity.entity_guid = this.entity.attachment_guid;
+        // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.attachment_guid}/xlarge`;
+        this.thumbnail = this.entity.thumbnails.xlarge;
+        break;
     }
 
-    this.message = this.hasMessage ? this.title : null;
+    if (this.contentType !== 'blog') {
+      this.pageUrl = `/media/${this.entity.entity_guid}`;
+    } else {
+      this.pageUrl = this.entity.route
+        ? `/${this.entity.route}`
+        : `/blog/view${this.entity.guid}`;
+    }
 
-    // Set ownerIconTime
+    this.boosted = this.entity.boosted || this.entity.p2p_boosted || false;
+
     const session = this.session.getLoggedInUser();
     if (session && session.guid === this.entity.ownerObj.guid) {
       this.ownerIconTime = session.icontime;
@@ -143,28 +183,17 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       this.ownerIconTime = this.entity.ownerObj.icontime;
     }
 
-    this.permalinkGuid = this.entity.guid
-      ? this.entity.guid
-      : this.entity.entity_guid;
-
-    // Allow comment tree to work
-    if (!this.entity.guid) {
-      this.entity.guid = this.entity.entity_guid;
-    }
-
     this.isTablet =
       isMobileOrTablet() && Math.min(screen.width, screen.height) >= 768;
 
-    this.isVideo = this.entity.custom_type === 'video';
-
     this.analyticsService.send('pageview', {
-      url: `/media/${this.entity.entity_guid}?ismodal=true`,
+      url: `${this.pageUrl}?ismodal=true`,
     });
 
     // * LOCATION & ROUTING * -----------------------------------------------------------------------------------
     // Change the url to point to media page so user can easily share link
     // (but don't actually redirect)
-    this.location.replaceState(`/media/${this.entity.entity_guid}`);
+    this.location.replaceState(this.pageUrl);
 
     // When user clicks a link from inside the modal
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
@@ -185,15 +214,18 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     // * DIMENSION CALCULATIONS * ---------------------------------------------------------------------
 
-    if (!this.isVideo) {
-      // Image
-      this.entityWidth = this.entity.custom_data[0].width;
-      this.entityHeight = this.entity.custom_data[0].height;
-      this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.entity_guid}/xlarge`;
-    } else {
-      this.entityWidth = this.entity.custom_data.dimensions.width;
-      this.entityHeight = this.entity.custom_data.dimensions.height;
-      this.thumbnail = this.entity.custom_data.thumbnail_src; // Not currently used
+    switch (this.contentType) {
+      case 'video':
+        this.entityWidth = this.entity.custom_data.dimensions.width;
+        this.entityHeight = this.entity.custom_data.dimensions.height;
+        break;
+      case 'image':
+        this.entityWidth = this.entity.custom_data[0].width;
+        this.entityHeight = this.entity.custom_data[0].height;
+        break;
+      case 'blog':
+        this.entityWidth = window.innerWidth;
+        this.entityHeight = window.innerHeight;
     }
 
     this.aspectRatio = this.entityWidth / this.entityHeight;
@@ -208,6 +240,26 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   calculateDimensions() {
     if (!this.isFullscreen) {
+      if (this.contentType === 'blog') {
+        this.mediaHeight = Math.max(
+          this.minStageHeight,
+          window.innerHeight - this.padding * 2
+        );
+        this.mediaWidth = Math.max(
+          this.minStageWidth,
+          window.innerWidth - this.contentWidth - this.padding * 2
+        );
+        this.stageHeight = this.mediaHeight;
+        this.stageWidth = this.mediaWidth;
+        this.modalWidth = this.stageWidth + this.contentWidth;
+
+        if (this.isLoading) {
+          this.isLoaded();
+        }
+
+        return;
+      }
+
       this.setHeightsAsTallAsPossible();
 
       // After heights are set, check that scaled width isn't too wide or narrow
@@ -243,16 +295,23 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       this.stageWidth = windowWidth;
       this.stageHeight = windowHeight;
 
-      if (this.entity.custom_type === 'image') {
-        // For images, set mediaHeight as tall as possible but not taller than instrinsic height
-        this.mediaHeight =
-          this.entityHeight < windowHeight ? this.entityHeight : windowHeight;
-      } else {
-        // It's ok if videos are taller than intrinsic height
-        this.mediaHeight = windowHeight;
+      switch (this.contentType) {
+        case 'blog':
+          this.mediaHeight = windowHeight;
+          this.mediaWidth = windowWidth;
+          return;
+        case 'image':
+          // For images, set mediaHeight as tall as possible but not taller than instrinsic height
+          this.mediaHeight =
+            this.entityHeight < windowHeight ? this.entityHeight : windowHeight;
+          break;
+        case 'video':
+          // It's ok if videos are taller than intrinsic height
+          this.mediaHeight = windowHeight;
       }
 
-      this.mediaWidth = this.scaleWidth();
+      this.mediaWidth =
+        this.contentType === 'blog' ? windowWidth : this.scaleWidth();
 
       if (this.mediaWidth > windowWidth) {
         // Width was too wide, need to rescale heights so width fits
@@ -261,7 +320,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       }
     }
 
-    if (this.isVideo) {
+    if (this.contentType === 'video') {
       this.entityHeight = this.mediaHeight;
       this.entityWidth = this.mediaWidth;
     }
@@ -276,7 +335,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.stageHeight = Math.max(this.maxHeight, this.minStageHeight);
 
     // Set mediaHeight as tall as stage but no larger than intrinsic height
-    if (!this.isVideo && this.entityHeight < this.stageHeight) {
+    if (this.contentType !== 'video' && this.entityHeight < this.stageHeight) {
       // Image is shorter than stage; scale down stage
       this.mediaHeight = this.entityHeight;
       this.stageHeight = Math.max(this.mediaHeight, this.minStageHeight);
@@ -286,7 +345,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       this.mediaHeight = this.stageHeight;
     }
 
-    // Scale width according to aspect ratio
     this.mediaWidth = this.scaleWidth();
   }
 
@@ -417,7 +475,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   onMouseEnterStage() {
     this.overlayVisible = true;
 
-    if (this.isVideo) {
+    if (this.contentType === 'video') {
       // Make sure progress bar seeker is updating when video controls are visible
       this.videoComponent.stageHover = true;
       this.videoComponent.onMouseEnter();
@@ -427,7 +485,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   onMouseLeaveStage() {
     this.overlayVisible = false;
 
-    if (this.isVideo) {
+    if (this.contentType === 'video') {
       // Stop updating progress bar seeker when controls aren't visible
       this.videoComponent.stageHover = false;
       this.videoComponent.onMouseLeave();

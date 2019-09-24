@@ -17,6 +17,7 @@
       (delete)="delete(activity)"
       [slot]="i + 1"
       class="mdl-card m-border item"
+      [attr.data-minds-activity-guid]="activity.guid"
     >
     </minds-activity>
   </ng-container>

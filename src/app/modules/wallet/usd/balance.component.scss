@@ -1,0 +1,23 @@
+.m-walletUsd__balance {
+  padding: $minds-padding * 2;
+  margin-bottom: $minds-margin * 2;
+
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+  label {
+    font-weight: 600;
+  }
+  span {
+    margin-left: 8px;
+  }
+
+  m-tooltip {
+    vertical-align: middle;
+    i {
+      font-size: 16px;
+      color: #666;
+      margin-left: 4px;
+    }
+  }
+}

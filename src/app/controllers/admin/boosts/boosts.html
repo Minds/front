@@ -102,6 +102,7 @@
         [object]="boost.entity"
         class="mdl-card mdl-shadow--8dp"
         *ngIf="boost.entity.type == 'activity'"
+        [attr.data-minds-activity-guid]="boost.entity.guid"
       ></minds-activity>
       <minds-card-group
         [group]="boost.entity"

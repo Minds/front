@@ -17,6 +17,8 @@ import { BlockListService } from './common/services/block-list.service';
 import { FeaturesService } from './services/features.service';
 import { ThemeService } from './common/services/theme.service';
 import { BannedService } from './modules/report/banned/banned.service';
+import { DiagnosticsService } from './services/diagnostics.service';
+import { RouterHistoryService } from './common/services/router-history.service';
 
 @Component({
   moduleId: module.id,
@@ -50,12 +52,17 @@ export class Minds {
     public blockListService: BlockListService,
     public featuresService: FeaturesService,
     public themeService: ThemeService,
-    private bannedService: BannedService
+    private bannedService: BannedService,
+    private diagnostics: DiagnosticsService,
+    private routerHistoryService: RouterHistoryService
   ) {
     this.name = 'Minds';
   }
 
   async ngOnInit() {
+    this.diagnostics.setUser(this.minds.user);
+    this.diagnostics.listen(); // Listen for user changes
+
     this.notificationService.getNotifications();
 
     this.session.isLoggedIn(async is => {

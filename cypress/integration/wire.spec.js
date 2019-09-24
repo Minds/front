@@ -10,12 +10,21 @@ context('Wire', () => {
   const sendButton = '.m-wire--creator-section--last > div > button';
   const modal = 'm-overlay-modal > div.m-overlay-modal';
 
-  beforeEach(() => {
-    cy.login();
-    cy.wait(2000);
+  before(() => {
+    cy.getCookie('minds_sess')
+    .then((sessionCookie) => {
+      if (sessionCookie === null) {
+        return cy.login(true);
+      }
+    });
   });
 
-  it('should allow a user to send a wire to another user', () => {
+  beforeEach(()=> {
+    cy.preserveCookies();
+  });
+
+  //TODO: Remove me when we get user to user wires working on the review environment 
+  it.skip('should allow a user to send a wire to another user', () => {
     // Visit users page.
     cy.visit('/minds');
 

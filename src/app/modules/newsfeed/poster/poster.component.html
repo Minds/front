@@ -96,6 +96,13 @@
           (validThreshold)="validThreshold = $event"
         ></m-wire-threshold-input>
 
+        <m-poster-date-selector
+          [date]="meta.time_created"
+          (dateChange)="onTimeCreatedChange($event)"
+          (onError)="posterDateSelectorError($event)"
+          *mIfFeature="'post-scheduler'"
+        ></m-poster-date-selector>
+
         <button
           type="submit"
           class="m-posterActionBar__PostButton"

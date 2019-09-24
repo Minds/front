@@ -5,14 +5,31 @@
     (added)="upload_avatar($event)"
   ></minds-avatar>
   <div class="m-channel--name">
-    <h2>{{user.name}}</h2>
+    <h2 [hidden]="editing">{{user.name}}</h2>
+    <div
+      class="minds-editable-container mdl-card__supporting-text m-channel--name--editor"
+      *ngIf="editing && isOwner()"
+    >
+      <input
+        [autoGrow]
+        class="mdl-textfield__input"
+        type="text"
+        name="briefdescription"
+        [(ngModel)]="user.name"
+      />
+    </div>
     <span
       class="minds-button-edit"
       (click)="toggleEditing()"
       *ngIf="session.getLoggedInUser().guid == user.guid"
     >
       <button class="material-icons" [hidden]="editing">edit</button>
-      <button class="material-icons" [hidden]="!editing">done</button>
+      <button
+        class="material-icons m-channel-button-edit--done"
+        [hidden]="!editing"
+      >
+        done
+      </button>
     </span>
     <minds-button-user-dropdown
       [(user)]="user"
@@ -203,6 +220,16 @@
         >close</i
       >
     </div>
+  </div>
+
+  <div
+    class="m-channel__channel-mode-selector"
+    *ngIf="featuresService.has('permissions')"
+  >
+    <m-channel-mode-selector
+      [user]="user"
+      [enabled]="session.isLoggedIn() && session.getLoggedInUser().guid === user.guid"
+    ></m-channel-mode-selector>
   </div>
 
   <div class="m-channel--action-buttons">

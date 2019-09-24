@@ -1,10 +1,19 @@
 context('Newsfeed', () => {
-  beforeEach(() => {
-    cy.login(true);
-
-    cy.location('pathname', { timeout: 30000 })
-      .should('eq', '/newsfeed/subscriptions');
+  before(() => {
+    cy.getCookie('minds_sess')
+    .then((sessionCookie) => {
+      if (sessionCookie === null) {
+        return cy.login(true);
+      }
+    });  
   })
+
+  beforeEach(()=> {
+    cy.preserveCookies();
+    cy.server();
+    cy.route("POST", "**/api/v1/newsfeed").as("newsfeedPOST");
+    cy.route("POST", "**/api/v1/media").as("mediaPOST");  
+  });
 
   it('should post an activity picking hashtags from the dropdown', () => {
     cy.get('minds-newsfeed-poster').should('be.visible');
@@ -20,14 +29,18 @@ context('Newsfeed', () => {
     // type in another hashtag manually
     cy.get('minds-newsfeed-poster m-hashtags-selector m-form-tags-input input').type('hashtag{enter}').click();
 
-    // click away
-    cy.get('minds-newsfeed-poster m-hashtags-selector .minds-bg-overlay').click();
-
+    // click away on arbitrary area.
+    cy.get('minds-newsfeed-poster m-hashtags-selector .minds-bg-overlay').click({force: true});
+  
+    // define request
     cy.get('.m-posterActionBar__PostButton').click();
+ 
+    //await response
+    cy.wait('@newsfeedPOST').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+    });
 
-    cy.wait(100);
-
-    cy.get('.minds-list > minds-activity:first-child .message').contains('This is a post #art #hashtag');
+    cy.get('.mdl-card__supporting-text.message.m-mature-message > span').first().contains('This is a post #art #hashtag');
 
     cy.get('.minds-list > minds-activity:first-child .message a:first-child').contains('#art').should('have.attr', 'href', '/newsfeed/global/top;hashtag=art;period=24h');
     cy.get('.minds-list > minds-activity:first-child .message a:last-child').contains('#hashtag').should('have.attr', 'href', '/newsfeed/global/top;hashtag=hashtag;period=24h');
@@ -38,19 +51,116 @@ context('Newsfeed', () => {
     cy.get('.minds-list > minds-activity:first-child m-post-menu m-modal-confirm .mdl-button--colored').click();
   })
 
+  it('should be able to post an activity picking a scheduled date and the edit it', () => {
+    cy.get('minds-newsfeed-poster').then((poster) => {
+      if (poster.find('.m-poster-date-selector__input').length > 0) {
+        cy.get('minds-newsfeed-poster textarea').type('This is a post');
+
+        // set scheduled date
+        cy.get('.m-poster-date-selector__input').click();
+        cy.get('button.c-datepicker__next').click();
+        cy.get('tr.c-datepicker__days-row:nth-child(2) td.c-datepicker__day-body:first-child').click();
+        cy.get('a.c-btn.c-btn--flat.js-ok').click();
+
+        // get setted date to compare
+        let scheduledDate;
+        cy.get('div.m-poster-date-selector__input div.m-tooltip--bubble')
+          .invoke('text').then((text) => {
+            scheduledDate = text;
+          });
+
+        cy.get('.m-posterActionBar__PostButton').click();
+
+        cy.wait(100);
+
+        // compare setted date with time_created
+        cy.get('.minds-list > minds-activity:first-child div.mdl-card__supporting-text > div.body > a.permalink > span')
+          .invoke('text').then((text) => {
+            const time_created = new Date(text).getTime();
+            scheduledDate = new Date(scheduledDate).getTime();
+            expect(scheduledDate).to.equal(time_created);
+          });
+
+        // prepare to listen
+        cy.server();
+        cy.route("POST", '**/api/v1/newsfeed/**').as("saveEdited");
+
+        // edit the activity
+        cy.get('.minds-list > minds-activity:first-child m-post-menu > button.minds-more').click();
+        cy.get('.minds-list > minds-activity:first-child li.mdl-menu__item:first-child').click();
+        cy.get('.minds-list > minds-activity:first-child .m-poster-date-selector__input').click();
+        cy.get('button.c-datepicker__next').click();
+        cy.get('tr.c-datepicker__days-row:nth-child(3) td.c-datepicker__day-body:first-child').click();
+        cy.get('a.c-btn.c-btn--flat.js-ok').click();
+
+        // get setted date to compare
+        cy.get('.minds-list > minds-activity:first-child div.m-poster-date-selector__input div.m-tooltip--bubble')
+          .invoke('text').then((text) => {
+            scheduledDate = text;
+          });
+
+        // compare setted date with time_created
+        cy.get('.minds-list > minds-activity:first-child div.mdl-card__supporting-text > div.body > a.permalink > span')
+          .invoke('text').then((text) => {
+            const time_created = new Date(text).getTime();
+            scheduledDate = new Date(scheduledDate).getTime();
+            expect(scheduledDate).to.equal(time_created);
+          });
+
+        // Save
+        cy.get('.minds-list > minds-activity:first-child button.mdl-button.mdl-button--colored').click();
+        cy.wait('@saveEdited', { requestTimeout: 5000 }).then((xhr) => {
+          expect(xhr.status).to.equal(200, '**/api/v1/newsfeed/** request status');
+        });
+
+        // cleanup
+        cy.get('.minds-list > minds-activity:first-child m-post-menu .minds-more').click();
+        cy.get('.minds-list > minds-activity:first-child m-post-menu .minds-dropdown-menu .mdl-menu__item:nth-child(4)').click();
+        cy.get('.minds-list > minds-activity:first-child m-post-menu m-modal-confirm .mdl-button--colored').click();
+      }
+    });    
+  })
+
+  it('should list scheduled activies', () => {
+    cy.get('minds-newsfeed-poster').then((poster) => {
+      if (poster.find('.m-poster-date-selector__input').length > 0) {
+        cy.server();
+        cy.route("GET", '**/api/v2/feeds/scheduled/**/count?').as("scheduledCount");
+        cy.route("GET", '**/api/v2/feeds/scheduled/**/activities?**').as("scheduledActivities");
+
+        cy.visit(`/${Cypress.env().username}`);
+
+        cy.wait('@scheduledCount', { requestTimeout: 2000 }).then((xhr) => {
+          expect(xhr.status).to.equal(200, 'feeds/scheduled/**/count request status');
+        });
+
+        cy.get('div.m-mindsListTools__scheduled').click();
+
+        cy.wait('@scheduledActivities', { requestTimeout: 2000 }).then((xhr) => {
+          expect(xhr.status).to.equal(200, 'feeds/scheduled/**/activities request status');
+        });
+      }
+    });
+  })
+
   it('should post an activity with an image attachment', () => {
     cy.get('minds-newsfeed-poster').should('be.visible');
 
     cy.get('minds-newsfeed-poster textarea').type('This is a post with an image');
 
     cy.uploadFile('#attachment-input-poster', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg');
-
-    cy.wait(1000);
-
+    
+    cy.wait('@mediaPOST').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+    });
+    
     cy.get('.m-posterActionBar__PostButton').click();
-
-    cy.wait(300);
-
+ 
+    //await response
+    cy.wait('@newsfeedPOST').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+    });
+    
     cy.get('.minds-list > minds-activity:first-child .message').contains('This is a post with an image');
 
     // assert image
@@ -77,7 +187,10 @@ context('Newsfeed', () => {
 
     cy.get('.m-posterActionBar__PostButton').click();
 
-    cy.wait(100);
+    //await response
+    cy.wait('@newsfeedPOST').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+    });
 
     // should have the mature text toggle
     cy.get('.minds-list > minds-activity:first-child .message .m-mature-text-toggle').should('not.have.class', 'mdl-color-text--red-500');
@@ -139,6 +252,7 @@ context('Newsfeed', () => {
   })
 
   it('should have a "Buy Tokens" button and it should redirect to /token', () => {
+    cy.visit('/');
     cy.get('.m-page--sidebar--navigation a.m-page--sidebar--navigation--item:last-child span')
       .contains('Buy Tokens');
 
@@ -149,6 +263,8 @@ context('Newsfeed', () => {
   })
 
   it('"create blog" button in poster should redirect to /blog/edit/new', () => {
+    cy.visit('/');
+
     cy.get('minds-newsfeed-poster .m-posterActionBar__CreateBlog')
       .contains('Create blog')
       .click();
@@ -157,6 +273,8 @@ context('Newsfeed', () => {
   })
 
   it('clicking on "create blog" button in poster should prompt a confirm dialog and open a new blog with the currently inputted text', () => {
+    cy.visit('/');
+
     cy.get('minds-newsfeed-poster textarea').type('thegreatmigration'); // TODO: fix UX issue when hashtag element is overlapping input
 
     const stub = cy.stub();
@@ -173,6 +291,8 @@ context('Newsfeed', () => {
   })
 
   it('should record a view when the user scrolls and an activity is visible', () => {
+    cy.visit('/');
+
     cy.server();
     cy.route("POST", "**/api/v2/analytics/views/activity/*").as("view");
     // create the post
@@ -180,13 +300,14 @@ context('Newsfeed', () => {
 
     cy.get('.m-posterActionBar__PostButton').click();
 
-    cy.wait(200);
+    //await response
+    cy.wait('@newsfeedPOST').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+    });
 
     cy.scrollTo(0, '20px');
 
-    cy.wait(600);
-
-    cy.wait('@view', { requestTimeout: 2000 }).then((xhr) => {
+    cy.wait('@view').then((xhr) => {
       expect(xhr.status).to.equal(200);
       expect(xhr.response.body).to.deep.equal({ status: 'success' });
     });

@@ -19,8 +19,16 @@
       <i class="material-icons mdl-color-text--blue-grey-100" [hidden]="live"
         >sync_problem</i
       >
-      <i class="material-icons" (click)="ribbonToggle()">more_vert</i>
-      <i class="material-icons" (click)="dockpanes.close(conversation)"
+      <i
+        class="material-icons"
+        (click)="ribbonToggle()"
+        data-cy="data-minds-conversation-options"
+        >more_vert</i
+      >
+      <i
+        class="material-icons"
+        (click)="dockpanes.close(conversation)"
+        data-cy="data-minds-conversation-close"
         >close</i
       >
     </div>
@@ -35,6 +43,7 @@
       <div
         class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300"
         (click)="deleteHistory(); ribbonOpened = false"
+        data-cy="data-minds-conversation-destroy"
       >
         <i
           class="material-icons mdl-color-text--blue-grey-100"
@@ -244,6 +253,7 @@
       <i
         class="material-icons mdl-color-text--blue-grey-600"
         (click)="send($event); emoji.close()"
+        data-cy="data-minds-conversation-send"
         >send_arrow</i
       >
       <minds-emoji [localDirective]="emoji"></minds-emoji>

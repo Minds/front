@@ -68,7 +68,7 @@
               >explicit</i
             >
             <span i18n="@@M__COMMON__CONFIRM_18"
-              >Click to confirm your are 18+</span
+              >Click to confirm you are 18+</span
             >
           </span>
         </div>
@@ -275,7 +275,7 @@
         <!-- Don't show comments for albums -->
         <div
           class="mdl-grid m-media-content--comments mdl-color--white"
-          *ngIf="entity.guid && entity.subtype != 'album'"
+          *ngIf="canShowComments() || (activityService.allowComment$ | async)"
         >
           <m-comments__tree [entity]="entity"> </m-comments__tree>
         </div>

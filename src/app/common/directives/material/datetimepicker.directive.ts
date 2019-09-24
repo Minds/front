@@ -29,7 +29,11 @@ export class MaterialDateTimePickerDirective {
   @HostListener('keydown.enter')
   onHostClick() {
     if (!this.open) {
-      this.picker = new DateTimePicker()
+      let options = {};
+      if (this.date) {
+        options = { default: new Date(this.date).toString() };
+      }
+      this.picker = new DateTimePicker(options)
         .on('submit', this.submitCallback.bind(this))
         .on('close', this.close.bind(this));
       this.open = true;

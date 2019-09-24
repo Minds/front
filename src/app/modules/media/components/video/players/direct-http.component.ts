@@ -121,7 +121,7 @@ export class MindsVideoDirectHttpPlayer
     try {
       player.play();
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
@@ -131,7 +131,7 @@ export class MindsVideoDirectHttpPlayer
     try {
       player.pause();
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
@@ -146,13 +146,14 @@ export class MindsVideoDirectHttpPlayer
   }
 
   resumeFromTime(time: number = 0) {
+    // TODO detect if it's still transcoding
     const player = this.getPlayer();
 
     try {
       player.currentTime = time;
       this.play();
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
