@@ -68,6 +68,8 @@ import { IssuesModule } from './modules/issues/issues.module';
 import { CanaryModule } from './modules/canary/canary.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { ProModule } from './modules/pro/pro.module';
+import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 
 import * as Sentry from '@sentry/browser';
 
@@ -104,6 +106,7 @@ export class SentryErrorHandler implements ErrorHandler {
     RouterModule.forRoot(MindsAppRoutes, { onSameUrlNavigation: 'reload' }),
     CaptchaModule,
     CommonModule,
+    ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
     AnalyticsModule,
     WalletModule,
     //CheckoutModule,
@@ -143,9 +146,10 @@ export class SentryErrorHandler implements ErrorHandler {
     MobileModule,
     IssuesModule,
     CanaryModule,
+    ChannelsModule,
 
     //last due to :username route
-    ChannelsModule,
+    ChannelContainerModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },

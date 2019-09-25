@@ -5,6 +5,7 @@
       [style.width]="modalWidth + 'px'"
       [style.height]="stageHeight + 'px'"
     >
+      <!-- The stageWrapper is the element that goes into fullscreen -->
       <div
         class="m-mediaModal__stageWrapper"
         [style.width]="stageWidth + 'px'"
@@ -51,21 +52,20 @@
               [isModal]="true"
               [autoplay]="true"
               [muted]="false"
-              [poster]="entity.custom_data.thumbnail_src"
+              [poster]="entity.thumbnail_src"
               [src]="[
                 {
                   res: '360',
-                  uri: 'api/v1/media/' + entity.custom_data.guid + '/play',
+                  uri: 'api/v1/media/' + entity.entity_guid + '/play',
                   type: 'video/mp4'
                 }
               ]"
-              [guid]="entity.custom_data.guid"
+              [guid]="entity.entity_guid"
               [playCount]="entity['play:count']"
-              [torrent]="[
-                { res: '360', key: entity.custom_data.guid + '/360.mp4' }
-              ]"
+              [torrent]="[{ res: '360', key: entity.entity_guid + '/360.mp4' }]"
               (videoCanPlayThrough)="isLoaded()"
               [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
+              #player
             >
               <video-ads [player]="player" *ngIf="entity.monetized"></video-ads>
             </m-video>
@@ -79,7 +79,11 @@
             [style.height]="mediaHeight + 'px'"
             [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
           >
-            <m-blog-view [blog]="entity"></m-blog-view>
+            <m-blog-view
+              [blog]="entity"
+              [showActions]="false"
+              [showComments]="false"
+            ></m-blog-view>
           </div>
 
           <!-- OVERLAY -->
@@ -88,7 +92,10 @@
             *ngIf="overlayVisible"
             @fastFadeAnimation
           >
-            <div class="m-mediaModal__overlayTitleWrapper">
+            <div
+              class="m-mediaModal__overlayTitleWrapper"
+              *ngIf="this.contentType !== 'blog'"
+            >
               <!-- TITLE -->
               <span
                 class="m-mediaModal__overlayTitle m-mediaModal__overlayTitle--notFullscreen"
