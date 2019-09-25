@@ -158,15 +158,14 @@ m-pro--channel {
     }
 
     .m-proChannel__error {
+      width: 100%;
       display: inline-block;
       margin: 16px 0;
       padding: 17px 8px;
-      font-size: 40px;
+      font-size: 24px;
       text-align: center;
-
+      text-transform: uppercase;
       background: var(--m-pro--transparent-background-color);
-
-      border-radius: 4px;
 
       @include m-theme() {
         color: themed($m-red);
