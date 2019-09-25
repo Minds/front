@@ -91,7 +91,7 @@
     </div>
   </div>
 
-  <div style="width:100%; padding:8px; position:relative;">
+  <div style="width:100%; padding:8px; position:relative;" *ngIf="canView()">
     <div
       class="mdl-cell mdl-cell--12-col minds-blog-body"
       [innerHtml]="blog.description | safe"
@@ -140,7 +140,8 @@
 
 <m-wire--lock-screen
   [(entity)]="blog"
-  *ngIf="blog.paywall"
+  (update)="onUnlock($event)"
+  *ngIf="blog.paywall && !canView()"
   #lockScreen
 ></m-wire--lock-screen>
 

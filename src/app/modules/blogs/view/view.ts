@@ -43,7 +43,7 @@ export class BlogView implements OnInit, OnDestroy {
   inProgress: boolean = false;
   moreData: boolean = true;
   activeBlog: number = 0;
-
+  unlocked: boolean = false;
   visible: boolean = false;
   index: number = 0;
 
@@ -217,5 +217,26 @@ export class BlogView implements OnInit, OnDestroy {
    */
   onResize(event: Event) {
     this.calculateLockScreenHeight();
+  }
+
+  /**
+   * Called on wire-threshold component event.
+   * Sets local state to unlocked.
+   * @param $event
+   */
+  onUnlock($event: any) {
+    this.unlocked = true;
+  }
+
+  /**
+   * Determines if a user can view the blog.
+   */
+  canView() {
+    return (
+      !this.blog.paywall ||
+      this.unlocked ||
+      this.blog.ownerObj.guid === this.session.getLoggedInUser().guid ||
+      this.session.isAdmin()
+    );
   }
 }
