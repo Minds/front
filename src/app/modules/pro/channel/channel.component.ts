@@ -213,12 +213,23 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     try {
       this.channel = await this.channelService.loadAndAuth(this.username);
+
       this.bindCssVariables();
+      this.shouldOpenWireModal();
     } catch (e) {
       this.error = e.message;
-    }
 
-    this.shouldOpenWireModal();
+      if (e.message === 'E_NOT_PRO') {
+        if (this.site.isProDomain) {
+          this.error = 'This is not a Minds Pro channel...';
+        } else {
+          this.router.navigate(['/', this.username || ''], {
+            replaceUrl: true,
+          });
+          return;
+        }
+      }
+    }
 
     this.detectChanges();
   }
@@ -228,11 +239,11 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     try {
       this.channel = await this.channelService.reload(this.username);
+
+      this.shouldOpenWireModal();
     } catch (e) {
       this.error = e.message;
     }
-
-    this.shouldOpenWireModal();
 
     this.detectChanges();
   }

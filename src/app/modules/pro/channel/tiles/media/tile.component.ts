@@ -117,8 +117,7 @@ export class ProTileComponent {
       }
 
       if (this.getEntityType(this.entity) === 'object:video') {
-        this.entity.width = this.videoDimensions.width;
-        this.entity.height = this.videoDimensions.height;
+        this.entity.dimensions = this.videoDimensions;
       } else if (this.getEntityType(this.entity) === 'object:image') {
         // Image
         // Set image dimensions if they're not already there
