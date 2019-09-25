@@ -1,4 +1,5 @@
 import { Title } from '@angular/platform-browser';
+import { SiteService } from '../../common/services/site.service';
 
 export class MindsTitle {
   private counter: number;
@@ -6,17 +7,23 @@ export class MindsTitle {
   private default_title = 'Minds';
   private text: string = '';
 
-  static _(title: Title) {
-    return new MindsTitle(title);
+  static _(title: Title, site: SiteService) {
+    return new MindsTitle(title, site);
   }
 
-  constructor(public title: Title) {}
+  constructor(public title: Title, protected site: SiteService) {
+    if (this.site.isProDomain) {
+      this.default_title = this.site.title + ' - ' + this.site.oneLineHeadline;
+    }
+  }
 
   setTitle(value: string, join = true) {
     let title;
 
     if (value && join) {
-      title = [value, this.default_title].join(this.sep);
+      title = [value, this.default_title]
+        .filter(fragment => Boolean(fragment))
+        .join(this.sep);
     } else if (value) {
       title = value;
     } else {

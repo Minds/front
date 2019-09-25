@@ -80,6 +80,8 @@ export class ChannelComponent {
         } else {
           this.filter = params['filter'];
         }
+      } else {
+        this.filter = 'feed';
       }
 
       if (params['editToggle']) {

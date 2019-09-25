@@ -122,7 +122,8 @@
   }
 }
 
-body.m-overlay-modal--shown {
+.m-overlay-modal--shown,
+.m-overlay-modal--shown--no-scroll {
   overflow: hidden;
 }
 

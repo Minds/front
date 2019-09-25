@@ -4,6 +4,8 @@ import {
   ViewChild,
   ElementRef,
   ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
@@ -87,6 +89,8 @@ export class WireCreatorComponent {
 
   protected submitted: boolean;
 
+  @Input() inModal: boolean = true;
+
   @Input('object') set data(object) {
     this.wire.guid = object ? object.guid : null;
 
@@ -110,6 +114,8 @@ export class WireCreatorComponent {
   }
 
   _opts: any;
+
+  @Input('opts')
   set opts(opts: any) {
     this._opts = opts;
     this.setDefaults();
@@ -561,9 +567,11 @@ export class WireCreatorComponent {
           this._opts.onComplete(this.wire);
         }
 
-        setTimeout(() => {
-          this.overlayModal.dismiss();
-        }, 2500);
+        if (this.inModal) {
+          setTimeout(() => {
+            this.overlayModal.dismiss();
+          }, 2500);
+        }
       }
     } catch (e) {
       this.error = (e && e.message) || 'Sorry, something went wrong';

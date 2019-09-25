@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Storage } from '../../../services/storage';
+import { SiteService } from '../../services/site.service';
 
 @Component({
   selector: 'm-cookies-notice',
@@ -21,7 +22,11 @@ export class DismissableNoticeComponent {
 
   cookiesEnabled: boolean = true;
 
-  constructor(private client: Client, private storage: Storage) {
+  constructor(
+    private client: Client,
+    private storage: Storage,
+    private site: SiteService
+  ) {
     if (this.storage.get('cookies-notice-dismissed')) {
       this.hidden = true;
     }
@@ -52,5 +57,9 @@ export class DismissableNoticeComponent {
     } else {
       this.client.delete(url);
     }
+  }
+
+  get siteTitle() {
+    return this.site.title;
   }
 }

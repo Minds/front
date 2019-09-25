@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 export class Storage {
   static _() {
     return new Storage();

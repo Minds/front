@@ -1,0 +1,31 @@
+<section class="m-proChannelLogin__hero">
+  <div class="m-proChannelLoginHero__inner">
+    <div class="m-proChannelLoginHero__slogans">
+      <h2>{{ settings?.headline }}</h2>
+    </div>
+
+    <div class="m-proChannelLogin__form">
+      <ng-container *ngIf="currentSection === 'login'">
+        <span class="m-proChannelLogin__subtext">
+          Not on {{ settings?.title }}?
+          <a (click)="currentSection = 'register'">Start a Minds channel</a>
+        </span>
+
+        <minds-form-login (done)="registered()"></minds-form-login>
+      </ng-container>
+
+      <ng-container *ngIf="currentSection === 'register'">
+        <span class="m-proChannelLogin__subtext">
+          <a (click)="currentSection = 'login'">
+            I already have a Minds account
+          </a>
+        </span>
+
+        <minds-form-register
+          [referrer]="referrer"
+          (done)="registered()"
+        ></minds-form-register>
+      </ng-container>
+    </div>
+  </div>
+</section>

@@ -1,10 +1,11 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
-  ViewChild,
-  ChangeDetectorRef,
-  OnInit,
+  Input,
   OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -25,7 +26,6 @@ import { ShareModalComponent } from '../../../modules/modals/share/share';
 @Component({
   moduleId: module.id,
   selector: 'm-blog-view',
-  inputs: ['_blog: blog', '_index: index'],
   host: {
     class: 'm-blog',
   },
@@ -61,6 +61,27 @@ export class BlogView implements OnInit, OnDestroy {
     'rating',
     'allow-comments',
   ];
+
+  @Input() showActions: boolean = true;
+  @Input() showComments: boolean = true;
+
+  @Input('blog') set _blog(value: MindsBlogEntity) {
+    this.blog = value;
+    setTimeout(() => {
+      this.calculateLockScreenHeight();
+    });
+  }
+
+  @Input('index') set _index(value: number) {
+    this.index = value;
+    if (this.index === 0) {
+      this.visible = true;
+    }
+  }
+
+  set data(value: any) {
+    this.blog = value;
+  }
 
   @ViewChild('lockScreen', { read: ElementRef, static: false }) lockScreen;
 
@@ -119,20 +140,6 @@ export class BlogView implements OnInit, OnDestroy {
       0,
       300
     );
-  }
-
-  set _blog(value: MindsBlogEntity) {
-    this.blog = value;
-    setTimeout(() => {
-      this.calculateLockScreenHeight();
-    });
-  }
-
-  set _index(value: number) {
-    this.index = value;
-    if (this.index === 0) {
-      this.visible = true;
-    }
   }
 
   delete() {

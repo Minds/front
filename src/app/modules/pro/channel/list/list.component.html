@@ -1,0 +1,92 @@
+<m-pro--channel--categories
+  [selectedHashtag]="selectedHashtag"
+  (onSelectTag)="selectHashtag($event)"
+  [style.visibility]="shouldShowCategories ? 'visible' : 'hidden'"
+></m-pro--channel--categories>
+
+<h1 class="m-proChannelList__title" [ngSwitch]="type">
+  <ng-container *ngSwitchCase="'all'" i18n>
+    All
+  </ng-container>
+  <ng-container *ngSwitchCase="'videos'" i18n>
+    Videos
+  </ng-container>
+  <ng-container *ngSwitchCase="'images'" i18n>
+    Images
+  </ng-container>
+  <ng-container *ngSwitchCase="'blogs'" i18n>
+    Articles
+  </ng-container>
+  <ng-container *ngSwitchCase="'groups'" i18n>
+    Groups
+  </ng-container>
+  <ng-container *ngSwitchCase="'activities'" i18n>
+    Feed
+  </ng-container>
+</h1>
+
+<div class="m-proChannelList__tools" *ngIf="query !== ''">
+  <div class="m-proChannelListTools__searchResult">
+    <span>
+      Showing results for: <strong> {{ query }}</strong></span
+    >
+  </div>
+</div>
+
+<div class="m-proChannelList__content">
+  <ul
+    class="m-proChannelListContent__list"
+    [class.m-proChannelListContent__normalList]="type === 'activities'"
+  >
+    <li *ngFor="let entity$ of entities$ | async; let i = index">
+      <ng-container *ngIf="entity$ | async as entity">
+        <ng-container
+          *ngIf="
+            type === 'all' ||
+            type === 'images' ||
+            type === 'videos' ||
+            type === 'blogs'
+          "
+        >
+          <m-pro--channel-tile
+            [entity]="entity"
+            (click)="onTileClicked(entity)"
+          ></m-pro--channel-tile>
+        </ng-container>
+
+        <ng-container *ngIf="type === 'groups'">
+          <m-pro--channel--group-tile
+            [entity]="entity"
+            (onOpen)="onTileClicked(entity)"
+            [class.big]="i === 0 || i === 1"
+          ></m-pro--channel--group-tile>
+        </ng-container>
+
+        <ng-container *ngIf="type === 'activities'">
+          <minds-activity [object]="entity"></minds-activity>
+        </ng-container>
+      </ng-container>
+    </li>
+  </ul>
+
+  <ng-container *ngIf="!(inProgress$ | async)">
+    <div
+      *ngIf="hasMore$ | async; else noMore"
+      class="m-proChannelListContent__loadMore"
+      (click)="loadMore()"
+      i18n
+    >
+      Click to load more
+    </div>
+
+    <ng-template #noMore>
+      <div class="m-proChannelListContent__loadMore" i18n>
+        Nothing more to load
+      </div>
+    </ng-template>
+  </ng-container>
+
+  <div class="m-proChannelList__loader" *ngIf="inProgress$ | async">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+</div>

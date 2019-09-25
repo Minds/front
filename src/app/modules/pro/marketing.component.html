@@ -1,0 +1,35 @@
+<div class="m-marketing m-marketing__Pro">
+  <div class="m-marketing--hero">
+    <div class="m-marketing--hero--video">
+      <img [src]="minds.cdn_assets_url + 'assets/photos/fractal.jpg'" />
+    </div>
+
+    <div class="m-marketing--hero--inner">
+      <div class="m-marketing--hero--overlay"></div>
+
+      <div class="m-marketing--hero--slogans">
+        <h1 i18n>Minds Pro</h1>
+
+        <h3 i18n>
+          The ultimate platform for independent content creators on the
+          Internet.
+        </h3>
+
+        <ul>
+          <li i18n>Unlimited HD video</li>
+          <li i18n>Custom domains</li>
+          <li i18n>Complete monetization</li>
+          <li i18n>Full analytics console</li>
+          <li i18n>Access to every Minds user</li>
+          <li i18n>Custom branding</li>
+        </ul>
+      </div>
+
+      <div class="m-marketing--hero--actions m-marketing--action-button">
+        <m-pro--subscription (onEnable)="goToSettings()"></m-pro--subscription>
+      </div>
+    </div>
+  </div>
+</div>
+
+<m-footer></m-footer>

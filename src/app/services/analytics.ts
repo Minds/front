@@ -1,18 +1,20 @@
 import { Inject, Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Client } from './api/client';
+import { SiteService } from '../common/services/site.service';
 
 @Injectable()
 export class AnalyticsService {
   private defaultPrevented: boolean = false;
 
-  static _(router: Router, client: Client) {
-    return new AnalyticsService(router, client);
+  static _(router: Router, client: Client, site: SiteService) {
+    return new AnalyticsService(router, client, site);
   }
 
   constructor(
     @Inject(Router) public router: Router,
-    @Inject(Client) public client: Client
+    @Inject(Client) public client: Client,
+    @Inject(SiteService) public site: SiteService
   ) {
     this.onRouterInit();
 
@@ -39,8 +41,14 @@ export class AnalyticsService {
 
   onRouteChanged(path) {
     if (!this.defaultPrevented) {
+      let url = path;
+
+      if (this.site.isProDomain) {
+        url = `/pro/${this.site.pro.user_guid}${url}`;
+      }
+
       this.send('pageview', {
-        url: path,
+        url,
         referrer: document.referrer,
       });
     }

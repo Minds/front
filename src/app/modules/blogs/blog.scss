@@ -65,6 +65,10 @@
       font-family: 'Roboto', Helvetica, sans-serif;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
+
+      @media only screen and (max-width: $min-tablet) {
+        font-size: 24px;
+      }
     }
     .minds-blog-body img {
       @media screen and (max-width: 891px) {
@@ -129,6 +133,18 @@ m-blog-view {
     margin: 0;
     @media screen and (max-width: $max-mobile) {
       font-size: 28px;
+    }
+  }
+
+  .minds-body {
+    a {
+      color: #607d8b;
+    }
+  }
+
+  .blogs-grid {
+    @include m-theme() {
+      background-color: themed($m-white) !important;
     }
   }
 
