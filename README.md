@@ -34,3 +34,4 @@ Please report all security issues to [security@minds.com](mailto:security@minds.
 ___Copyright Minds 2012 - 2019___
 
 Copyright for portions of Minds are held by [Elgg](http://elgg.org), 2013 as part of the [Elgg](http://elgg.org) project. All other copyright for Minds is held by Minds, Inc.
+
