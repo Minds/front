@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
 import { DialogService } from '../../common/services/confirm-leave-dialog.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
+import { AnalyticsService } from '../../services/analytics';
 
 @Component({
   moduleId: module.id,
@@ -53,7 +54,8 @@ export class ChannelComponent {
     private recent: RecentService,
     private context: ContextService,
     private dialogService: DialogService,
-    private blockListService: BlockListService
+    private blockListService: BlockListService,
+    private analyticsService: AnalyticsService
   ) {}
 
   ngOnInit() {
@@ -132,6 +134,8 @@ export class ChannelComponent {
         if (this.session.getLoggedInUser()) {
           this.addRecent();
         }
+
+        this.recordAnalytics();
       })
       .catch(e => {
         if (e.status === 0) {
@@ -233,6 +237,14 @@ export class ChannelComponent {
     this.recent
       .store('recent', this.user, entry => entry.guid == this.user.guid)
       .splice('recent', 50);
+  }
+
+  recordAnalytics() {
+    this.analyticsService.recordView(this.user, {
+      position: -1,
+      source: 'single',
+      medium: 'single',
+    });
   }
 
   /**

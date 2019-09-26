@@ -212,6 +212,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       url = `/pro/${this.site.pro.user_guid}${url}`;
     }
 
+    this.recordAnalytics();
     this.analyticsService.send('pageview', {
       url,
     });
@@ -562,5 +563,13 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     if (!this.navigatedAway) {
       this.location.replaceState(this.entity.modal_source_url);
     }
+  }
+
+  recordAnalytics() {
+    this.analyticsService.recordView(this.entity, {
+      position: -1,
+      source: 'single',
+      medium: 'modal',
+    });
   }
 }

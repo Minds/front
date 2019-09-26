@@ -11,6 +11,7 @@ import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { MindsTitle } from '../../../services/ux/title';
 import { ActivityService } from '../../../common/services/activity.service';
+import { AnalyticsService } from '../../../services/analytics';
 
 @Component({
   moduleId: module.id,
@@ -63,7 +64,8 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     public attachment: AttachmentService,
     public context: ContextService,
     private cd: ChangeDetectorRef,
-    protected activityService: ActivityService
+    protected activityService: ActivityService,
+    private analyticsService: AnalyticsService
   ) {}
 
   ngOnInit() {
@@ -84,6 +86,12 @@ export class MediaViewComponent implements OnInit, OnDestroy {
         }
       }
     );
+
+    this.analyticsService.recordView(this.entity, {
+      position: -1,
+      source: 'single',
+      medium: 'single',
+    });
   }
 
   ngOnDestroy() {

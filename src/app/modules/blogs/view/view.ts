@@ -108,6 +108,7 @@ export class BlogView implements OnInit, OnDestroy {
   ngOnInit() {
     this.isVisible();
     this.context.set('object:blog');
+    this.recordAnalytics();
   }
 
   isVisible() {
@@ -217,5 +218,13 @@ export class BlogView implements OnInit, OnDestroy {
    */
   onResize(event: Event) {
     this.calculateLockScreenHeight();
+  }
+
+  recordAnalytics() {
+    this.analyticsService.recordView(this.blog, {
+      position: -1,
+      source: 'single',
+      medium: 'single',
+    });
   }
 }
