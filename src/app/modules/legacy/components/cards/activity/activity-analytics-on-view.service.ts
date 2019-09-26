@@ -61,32 +61,37 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
         }
       });
 
-    this.scroll$ = this.scroll.listenForView().subscribe(() => {
-      if (!this.element) {
-        console.warn('Missing element ref');
-        return;
-      }
+    this.scroll$ = this.scroll.listenForView().subscribe(this.checkVisibility);
 
-      if (!this.element.offsetHeight || !this.enabled) {
-        return;
-      }
+    // Do a check for the initial posts
+    this.checkVisibility();
+  }
 
-      const top = this.element.offsetTop;
-      const bottom = top + this.element.offsetHeight;
-      const vpTop = this.scroll.view.scrollTop;
-      const vpBottom = vpTop + this.scroll.view.clientHeight;
-      const totalH = Math.max(bottom, vpBottom) - Math.min(top, vpTop);
-      const vpComp = totalH - this.scroll.view.clientHeight;
-      const vpEl = this.element.offsetHeight - vpComp;
-      const visible = vpEl <= 0 ? 0 : vpEl / this.element.offsetHeight;
+  checkVisibility() {
+    if (!this.element) {
+      console.warn('Missing element ref');
+      return;
+    }
 
-      if (visible > 0 && !this.visible) {
-        this.visible = true;
-        this.visibilitySubject.next(this.visible);
-      } else {
-        this.visible = false;
-      }
-    });
+    if (!this.element.offsetHeight || !this.enabled) {
+      return;
+    }
+
+    const top = this.element.offsetTop;
+    const bottom = top + this.element.offsetHeight;
+    const vpTop = this.scroll.view.scrollTop;
+    const vpBottom = vpTop + this.scroll.view.clientHeight;
+    const totalH = Math.max(bottom, vpBottom) - Math.min(top, vpTop);
+    const vpComp = totalH - this.scroll.view.clientHeight;
+    const vpEl = this.element.offsetHeight - vpComp;
+    const visible = vpEl <= 0 ? 0 : vpEl / this.element.offsetHeight;
+
+    if (visible > 0 && !this.visible) {
+      this.visible = true;
+      this.visibilitySubject.next(this.visible);
+    } else {
+      this.visible = false;
+    }
   }
 
   ngOnDestroy() {
