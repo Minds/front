@@ -106,6 +106,11 @@ describe('ChannelSidebar', () => {
           selector: 'm-channel-mode-selector',
           inputs: ['user', 'enabled'],
         }),
+        MockComponent({
+          selector: 'm-tooltip',
+          template: '<ng-content></ng-content>',
+          inputs: ['icon', 'iconClass'],
+        }),
         IfFeatureDirective,
       ],
       imports: [FormsModule, RouterTestingModule, NgCommonModule],
@@ -140,6 +145,7 @@ describe('ChannelSidebar', () => {
     fixture = TestBed.createComponent(ChannelSidebar);
     featuresServiceMock.mock('es-feeds', false);
     featuresServiceMock.mock('permissions', true);
+    featuresServiceMock.mock('pro', true);
     clientMock.response = {};
     uploadMock.response = {};
     comp = fixture.componentInstance;

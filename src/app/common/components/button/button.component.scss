@@ -59,6 +59,15 @@ a.m-btn {
   text-decoration: none;
 }
 
+a.m-link-btn {
+  display: inline-block;
+  padding: 8px !important;
+  line-height: 1.2;
+  height: auto;
+  text-decoration: none;
+  font-weight: inherit;
+}
+
 .m-btn--slim {
   height: 32px;
 }

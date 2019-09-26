@@ -71,6 +71,12 @@ m-wire--lock-screen {
 
   .m-wire--lock-screen-introduction {
     flex: 1;
+
+    & > p {
+      @include m-theme() {
+        color: themed($m-grey-800) !important;
+      }
+    }
   }
 
   button {

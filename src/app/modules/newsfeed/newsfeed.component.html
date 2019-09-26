@@ -126,6 +126,17 @@
         <span>Upgrade to Plus</span>
       </a>
 
+      <ng-container *mIfFeature="'pro'">
+        <a
+          class="m-page--sidebar--navigation--item"
+          routerLink="/pro"
+          *ngIf="session.isLoggedIn() && !session.getLoggedInUser().pro"
+        >
+          <i class="material-icons">business_center</i>
+          <span>Become Pro</span>
+        </a>
+      </ng-container>
+
       <a
         class="m-page--sidebar--navigation--item"
         routerLink="/tokens"

@@ -74,6 +74,7 @@ const routes: Routes = [
     ChannelSocialProfiles,
     ChannelFeedComponent,
     ChannelSidebar,
+    ChannelComponent,
   ],
   entryComponents: [ChannelComponent, ChannelsListComponent],
 })

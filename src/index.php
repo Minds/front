@@ -1,8 +1,7 @@
 <?php
     $meta = Minds\Core\SEO\Manager::get();
-?>
+    $pro = Minds\Core\Di\Di::_()->get('Pro\Domain')->lookup($_SERVER['HTTP_HOST'] ?? null);
 
-<?php
     if (!defined('__MINDS_CONTEXT__')) {
         define('__MINDS_CONTEXT__', 'app');
     }
@@ -12,11 +11,17 @@
     <base href="/" />
 
     <meta charset="utf-8">
-    <link rel="icon" type="image/svg" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb-apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb-16x16.png">
+    <?php if ($pro): ?>
+      <link rel="icon" type="image/jpeg" href="<?php echo Minds\Core\Di\Di::_()->get('Pro\Domain')->getIcon($pro) ?>" />
+    <?php else: ?>
+      <link rel="icon" type="image/svg" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb.svg" />
+      <link rel="apple-touch-icon" sizes="180x180" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb-apple-touch-icon.png">
+      <link rel="icon" type="image/png" sizes="32x32" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb-32x32.png">
+      <link rel="icon" type="image/png" sizes="16x16" href="<?php echo Minds\Core\Config::_()->get('cdn_assets_url') ?>assets/logos/bulb-16x16.png">
+    <?php endif; ?>
+
     <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+
     <?php
       foreach($meta as $name => $content){
         $name = strip_tags($name);
@@ -49,6 +54,13 @@
           window.location.href = window.location.href.replace('<?= Minds\Core\Config::_()->get('site_url') ?>', 'https://www.minds.com/not-supported');
       }
     </script>
+
+    <?php if ($pro && $pro->getCustomHead()): /* Blank line below IS IMPORTANT! Do not remove. */ ?>
+
+    <!-- Minds Pro: <?php echo $pro->getUserGuid(); ?> --><?php echo "\n" . $pro->getCustomHead() . "\n"; ?>
+    <!-- End -->
+
+    <?php endif; ?>
 
   </head>
   <body>
@@ -130,6 +142,7 @@
               "sale" => Minds\Core\Config::_()->get('blockchain')['sale'],
               "last_tos_update" => Minds\Core\Config::_()->get('last_tos_update') ?: time(),
               "tags" => Minds\Core\Config::_()->get('tags') ?: [],
+              "pro" => $pro,
               "environment" => getenv('MINDS_ENV') ?: 'development',
           ];
 

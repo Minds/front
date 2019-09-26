@@ -42,9 +42,13 @@ import { InMemoryStorageService } from './in-memory-storage.service';
 import { FeedsService } from '../common/services/feeds.service';
 import { ThemeService } from '../common/services/theme.service';
 import { GlobalScrollService } from './ux/global-scroll.service';
+import { AuthService } from './auth.service';
+import { SiteService } from '../common/services/site.service';
+import { SessionsStorageService } from './session-storage.service';
 import { DiagnosticsService } from './diagnostics.service';
 
 export const MINDS_PROVIDERS: any[] = [
+  SiteService,
   {
     provide: ScrollService,
     useFactory: ScrollService._,
@@ -63,16 +67,21 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: Client,
     useFactory: Client._,
-    deps: [HttpClient],
+    deps: [HttpClient, Location, SiteService],
   },
   {
     provide: Upload,
     useFactory: Upload._,
-    deps: [HttpClient],
+    deps: [HttpClient, SiteService],
   },
   {
     provide: Storage,
     useFactory: Storage._,
+    deps: [],
+  },
+  {
+    provide: SessionsStorageService,
+    useFactory: SessionsStorageService._,
     deps: [],
   },
   {
@@ -112,7 +121,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: AnalyticsService,
     useFactory: AnalyticsService._,
-    deps: [Router, Client],
+    deps: [Router, Client, SiteService],
   },
   {
     provide: Navigation,
@@ -140,7 +149,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: MindsTitle,
     useFactory: MindsTitle._,
-    deps: [Title],
+    deps: [Title, SiteService],
   },
   {
     provide: GoogleChartsLoader,
@@ -224,4 +233,5 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [RendererFactory2, Client, Session, Storage],
   },
   DiagnosticsService,
+  AuthService,
 ];

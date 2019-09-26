@@ -115,7 +115,7 @@ describe('LoginComponent', () => {
     );
     expect(h3).not.toBeNull();
     expect(h3.nativeElement.textContent).toContain(
-      'Not on Minds? Start a channel'
+      'Not on Minds? Start a Minds channel'
     );
     expect(
       fixture.debugElement.query(By.css('minds-form-register'))

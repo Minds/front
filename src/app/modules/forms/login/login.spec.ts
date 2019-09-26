@@ -28,9 +28,6 @@ describe('LoginForm', () => {
   let loginButton: DebugElement;
   let errorMessage: DebugElement;
 
-  let twoFactorForm: DebugElement;
-  let twoFactorCode: DebugElement;
-  let twoFactorLoginButton: DebugElement;
   let session: Session;
 
   function login(response, _username = 'username') {
@@ -52,6 +49,7 @@ describe('LoginForm', () => {
   }
 
   function twoFactorLogin(response) {
+    const twoFactorCode = getTwoFactorCode();
     twoFactorCode.nativeElement.value = '123123';
     twoFactorCode.nativeElement.dispatchEvent(new Event('input'));
 
@@ -62,10 +60,22 @@ describe('LoginForm', () => {
     tick();
     fixture.detectChanges();
 
-    twoFactorLoginButton.nativeElement.click();
+    getTwoFactorLoginButton().nativeElement.click();
 
     tick();
     fixture.detectChanges();
+  }
+
+  function getTwoFactorForm() {
+    return fixture.debugElement.query(By.css('.minds-login-box:last-of-type'));
+  }
+
+  function getTwoFactorCode() {
+    return fixture.debugElement.query(By.css('#code'));
+  }
+
+  function getTwoFactorLoginButton() {
+    return fixture.debugElement.query(By.css('.mdl-card > button'));
   }
 
   beforeEach(async(() => {
@@ -95,13 +105,6 @@ describe('LoginForm', () => {
     password = fixture.debugElement.query(By.css('#password'));
     loginButton = fixture.debugElement.query(By.css('.m-btn--login'));
     errorMessage = fixture.debugElement.query(By.css('.m-error-box'));
-    twoFactorForm = fixture.debugElement.query(
-      By.css('.minds-login-box:last-of-type')
-    );
-    twoFactorCode = fixture.debugElement.query(By.css('#code'));
-    twoFactorLoginButton = fixture.debugElement.query(
-      By.css('.mdl-card > button')
-    );
 
     session = comp.session;
 
@@ -244,7 +247,8 @@ describe('LoginForm', () => {
     login({ status: 'error', code: '403', message: 'imaprettymessage' });
 
     expect(loginForm.nativeElement.hidden).toBeTruthy();
-    expect(twoFactorForm.nativeElement.hidden).toBeFalsy();
+
+    expect(getTwoFactorForm().nativeElement.hidden).toBeFalsy();
   }));
 
   it('should spawn error message when incorrect code is written', fakeAsync(() => {

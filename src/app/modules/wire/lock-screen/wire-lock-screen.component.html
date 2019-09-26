@@ -9,7 +9,7 @@
 
 <div class="m-wire--lock-screen--button">
   <div class="m-wire--lock-screen-introduction">
-    <p class="mdl-color-text--grey-800" *ngIf="!isOwner()">
+    <p *ngIf="!isOwner()">
       <b>&ldquo;</b>
 
       <ng-container
@@ -51,7 +51,7 @@
 
       <b>&rdquo;</b>
     </p>
-    <p class="mdl-color-text--grey-800" *ngIf="isOwner()">
+    <p *ngIf="isOwner()">
       <ng-container i18n="@@WIRE__LOCK_SCREEN__ONLY_SUPPORTERS_TITLE_PART"
         >Only supporters who wire you over</ng-container
       >
