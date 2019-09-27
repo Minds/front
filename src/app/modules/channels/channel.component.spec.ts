@@ -37,6 +37,8 @@ import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelMode } from '../../interfaces/entities';
+import { AnalyticsService } from '../../services/analytics';
+import { analyticsServiceMock } from '../../../tests/analytics-service-mock.spec';
 
 describe('ChannelComponent', () => {
   let comp: ChannelComponent;
@@ -105,6 +107,7 @@ describe('ChannelComponent', () => {
         },
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: BlockListService, useValue: MockService(BlockListService) },
+        { provide: AnalyticsService, useValue: analyticsServiceMock },
       ],
     }).compileComponents(); // compile template and css
   }));
