@@ -61,10 +61,9 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
         }
       });
 
-    this.scroll$ = this.scroll.listenForView().subscribe(this.checkVisibility);
-
-    // Do a check for the initial posts
-    this.checkVisibility();
+    this.scroll$ = this.scroll.listenForView().subscribe(() => {
+      this.checkVisibility();
+    });
   }
 
   checkVisibility() {

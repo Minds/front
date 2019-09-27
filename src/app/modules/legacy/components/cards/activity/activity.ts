@@ -239,6 +239,8 @@ export class Activity implements OnInit {
       this.activity.time_created || Math.floor(Date.now() / 1000);
 
     this.allowComments = this.activity.allow_comments;
+
+    this.activityAnalyticsOnViewService.checkVisibility(); // perform check
   }
 
   getOwnerIconTime() {

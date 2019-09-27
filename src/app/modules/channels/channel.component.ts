@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, SkipSelf, Injector } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -17,12 +17,13 @@ import { Observable } from 'rxjs';
 import { DialogService } from '../../common/services/confirm-leave-dialog.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
-import { AnalyticsService } from '../../services/analytics';
+import { ClientMetaService } from '../../common/services/client-meta.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-channel',
   templateUrl: 'channel.component.html',
+  providers: [ClientMetaService],
 })
 export class ChannelComponent {
   minds = window.Minds;
@@ -55,8 +56,14 @@ export class ChannelComponent {
     private context: ContextService,
     private dialogService: DialogService,
     private blockListService: BlockListService,
-    private analyticsService: AnalyticsService
-  ) {}
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector
+  ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('single');
+  }
 
   ngOnInit() {
     this.title.setTitle('Channel');
@@ -135,7 +142,7 @@ export class ChannelComponent {
           this.addRecent();
         }
 
-        this.recordAnalytics();
+        this.clientMetaService.recordView(this.user);
       })
       .catch(e => {
         if (e.status === 0) {
@@ -237,14 +244,6 @@ export class ChannelComponent {
     this.recent
       .store('recent', this.user, entry => entry.guid == this.user.guid)
       .splice('recent', 50);
-  }
-
-  recordAnalytics() {
-    this.analyticsService.recordView(this.user, {
-      position: -1,
-      source: 'single',
-      medium: 'single',
-    });
   }
 
   /**

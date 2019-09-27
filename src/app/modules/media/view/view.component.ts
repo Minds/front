@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  OnDestroy,
+  SkipSelf,
+  Injector,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -12,6 +19,7 @@ import { ContextService } from '../../../services/context.service';
 import { MindsTitle } from '../../../services/ux/title';
 import { ActivityService } from '../../../common/services/activity.service';
 import { AnalyticsService } from '../../../services/analytics';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   moduleId: module.id,
@@ -24,6 +32,7 @@ import { AnalyticsService } from '../../../services/analytics';
       deps: [Client],
     },
     ActivityService,
+    ClientMetaService,
   ],
 })
 export class MediaViewComponent implements OnInit, OnDestroy {
@@ -65,8 +74,14 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     public context: ContextService,
     private cd: ChangeDetectorRef,
     protected activityService: ActivityService,
-    private analyticsService: AnalyticsService
-  ) {}
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector
+  ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('single');
+  }
 
   ngOnInit() {
     this.title.setTitle('');
@@ -86,12 +101,6 @@ export class MediaViewComponent implements OnInit, OnDestroy {
         }
       }
     );
-
-    this.analyticsService.recordView(this.entity, {
-      position: -1,
-      source: 'single',
-      medium: 'single',
-    });
   }
 
   ngOnDestroy() {
@@ -132,6 +141,8 @@ export class MediaViewComponent implements OnInit, OnDestroy {
             this.title.setTitle(this.entity.title);
           }
         }
+
+        this.clientMetaService.recordView(this.entity);
 
         this.detectChanges();
       })

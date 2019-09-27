@@ -63,16 +63,4 @@ export class AnalyticsService {
   wasDefaultPrevented() {
     return this.defaultPrevented;
   }
-
-  async recordView(
-    entity,
-    meta: {
-      campaign?: string;
-      position?: number;
-      source: string;
-      medium: string;
-    }
-  ) {
-    await this.client.post('api/v2/analytics/entity/' + entity.guid, meta);
-  }
 }
