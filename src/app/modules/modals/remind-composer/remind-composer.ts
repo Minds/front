@@ -8,6 +8,7 @@ import {
 import { DynamicHostDirective } from '../../../common/directives/dynamic-host.directive';
 import { ActivityPreview } from '../../legacy/components/cards/activity/preview';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
+import { TopbarHashtagsService } from '../../hashtags/service/topbar.service';
 
 // had forwardRef(() => ActivityPreview)
 @Component({
@@ -38,7 +39,7 @@ import { AutocompleteSuggestionsService } from '../../suggestions/services/autoc
             [selectChoice]="selectChoice"
           ></m-post-autocomplete-item-renderer>
         </ng-template>
-
+        <minds-error-box [errorString]="errorString"></minds-error-box>
         <m-text-input--autocomplete-container>
           <textarea
             name="message"
@@ -70,7 +71,7 @@ export class RemindComposerModal {
   closed: EventEmitter<any> = new EventEmitter();
   post: EventEmitter<any> = new EventEmitter();
   object: any = {};
-
+  errorString: string = '';
   message: string = '';
 
   @ViewChild(DynamicHostDirective, { static: true })
@@ -78,7 +79,8 @@ export class RemindComposerModal {
 
   constructor(
     public suggestions: AutocompleteSuggestionsService,
-    private _componentFactoryResolver: ComponentFactoryResolver
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    private hashtagsService: TopbarHashtagsService
   ) {}
 
   set _object(object: any) {
@@ -99,6 +101,11 @@ export class RemindComposerModal {
   }
 
   send() {
+    if (this.hashtagsService.sliceHashTags(this.message).length > 5) {
+      this.errorString = `You have exceeded the maximum 5 hashtags in a post`;
+      return;
+    }
+
     this.post.next({
       message: this.message,
     });
