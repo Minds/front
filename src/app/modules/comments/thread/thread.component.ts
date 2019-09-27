@@ -23,6 +23,8 @@ import { BlockListService } from '../../../common/services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { Subscription } from 'rxjs';
 import { TouchSequence } from 'selenium-webdriver';
+import { FeaturesService } from '../../../services/features.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 @Component({
   selector: 'm-comments__thread',
@@ -33,7 +35,12 @@ import { TouchSequence } from 'selenium-webdriver';
 export class CommentsThreadComponent implements OnInit {
   minds;
   @Input() parent;
-  @Input() entity;
+  @Input('entity') set _entity(value: any) {
+    this.entity = value;
+
+    this.checkPermissions();
+  }
+  entity;
   @Input() entityGuid;
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
@@ -66,16 +73,30 @@ export class CommentsThreadComponent implements OnInit {
     comment: null,
   };
 
+  canPost: boolean = true;
+
   constructor(
     public session: Session,
     private commentsService: CommentsService,
     public sockets: SocketsService,
     private renderer: Renderer,
     protected blockListService: BlockListService,
+    private featuresService: FeaturesService,
+    protected permissionsService: PermissionsService,
     private cd: ChangeDetectorRef,
     public activityService: ActivityService
   ) {
     this.minds = window.Minds;
+  }
+
+  private async checkPermissions() {
+    if (this.featuresService.has('permissions')) {
+      // TODO: maybe there should be a "view comment" flag?
+      this.canPost = await this.permissionsService.canInteract(
+        this.entity,
+        'create_comment'
+      );
+    }
   }
 
   ngOnInit() {

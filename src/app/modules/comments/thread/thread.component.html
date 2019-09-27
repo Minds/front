@@ -113,7 +113,7 @@
 </div>
 
 <m-comment__poster
-  *ngIf="activityService.allowComment$ | async"
+  *ngIf="canPost && activityService.allowComment$ | async"
   [guid]="guid"
   [parent]="parent"
   [entity]="entity"
