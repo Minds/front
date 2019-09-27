@@ -26,6 +26,7 @@ import { ErrorBox } from '../../common/components/error/error.component';
     ReactiveFormsModule,
     MindsFormsModule,
     TextInputAutocompleteModule,
+    ErrorBox,
   ],
   declarations: [
     ConfirmModal,
