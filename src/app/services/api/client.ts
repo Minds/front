@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 import { SiteService } from '../../common/services/site.service';
-import { Subject } from 'rxjs';
 
 /**
  * API Class
@@ -12,8 +11,6 @@ export class Client {
   base: string = '/';
   origin: string = '';
   cookie: Cookie = new Cookie();
-
-  permissionsSubject: Subject<any> = new Subject();
 
   static _(http: HttpClient, location: Location, site: SiteService) {
     return new Client(http, location, site);
@@ -42,10 +39,6 @@ export class Client {
         res => {
           var data: any = res;
           if (!data || data.status !== 'success') return reject(data);
-
-          if (data.permissions) {
-            this.permissionsSubject.next(data.permissions);
-          }
 
           return resolve(data);
         },
@@ -107,10 +100,6 @@ export class Client {
             var data: any = res;
             if (!data || data.status !== 'success') return reject(data);
 
-            if (data.permissions) {
-              this.permissionsSubject.next(data.permissions);
-            }
-
             return resolve(data);
           },
           err => {
@@ -149,10 +138,6 @@ export class Client {
             var data: any = res;
             if (!data || data.status !== 'success') return reject(data);
 
-            if (data.permissions) {
-              this.permissionsSubject.next(data.permissions);
-            }
-
             return resolve(data);
           },
           err => {
@@ -183,10 +168,6 @@ export class Client {
           res => {
             var data: any = res;
             if (!data || data.status !== 'success') return reject(data);
-
-            if (data.permissions) {
-              this.permissionsSubject.next(data.permissions);
-            }
 
             return resolve(data);
           },
