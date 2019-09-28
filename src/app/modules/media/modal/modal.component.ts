@@ -5,6 +5,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  SkipSelf,
+  Injector,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
@@ -23,6 +25,7 @@ import { MindsVideoComponent } from '../components/video/video.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 export type MediaModalParams = {
   redirectUrl?: string;
@@ -58,7 +61,7 @@ export type MediaModalParams = {
       transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
     ]),
   ],
-  providers: [ActivityService],
+  providers: [ActivityService, ClientMetaService],
 })
 export class MediaModalComponent implements OnInit, OnDestroy {
   minds = window.Minds;
@@ -120,8 +123,15 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private overlayModal: OverlayModalService,
     private router: Router,
     private location: Location,
-    private site: SiteService
-  ) {}
+    private site: SiteService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector
+  ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('modal');
+  }
 
   ngOnInit() {
     // Prevent dismissal of modal when it's just been opened
@@ -212,6 +222,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       url = `/pro/${this.site.pro.user_guid}${url}`;
     }
 
+    this.clientMetaService.recordView(this.entity);
     this.analyticsService.send('pageview', {
       url,
     });

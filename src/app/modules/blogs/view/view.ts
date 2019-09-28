@@ -6,6 +6,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  Injector,
+  SkipSelf,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -22,6 +24,7 @@ import { optimizedResize } from '../../../utils/optimized-resize';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   moduleId: module.id,
@@ -30,7 +33,7 @@ import { ShareModalComponent } from '../../../modules/modals/share/share';
     class: 'm-blog',
   },
   templateUrl: 'view.html',
-  providers: [ActivityService],
+  providers: [ActivityService, ClientMetaService],
 })
 export class BlogView implements OnInit, OnDestroy {
   minds;
@@ -98,8 +101,15 @@ export class BlogView implements OnInit, OnDestroy {
     public analyticsService: AnalyticsService,
     protected activityService: ActivityService,
     private cd: ChangeDetectorRef,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector
   ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('single');
+
     this.minds = window.Minds;
     this.element = _element.nativeElement;
     optimizedResize.add(this.onResize.bind(this));
@@ -108,6 +118,7 @@ export class BlogView implements OnInit, OnDestroy {
   ngOnInit() {
     this.isVisible();
     this.context.set('object:blog');
+    this.clientMetaService.recordView(this.blog);
   }
 
   isVisible() {
