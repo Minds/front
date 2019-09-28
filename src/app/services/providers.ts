@@ -70,11 +70,7 @@ export const MINDS_PROVIDERS: any[] = [
     useFactory: Client._,
     deps: [HttpClient, Location, SiteService],
   },
-  {
-    provide: PermissionsService,
-    useFactory: PermissionsService._,
-    deps: [Client],
-  },
+  PermissionsService,
   {
     provide: Upload,
     useFactory: Upload._,
