@@ -100,8 +100,39 @@ m-channel {
     }
   }
 
-  .m-channel--blocked {
+  .m-channel--closed {
+    display: flex;
+    justify-content: center;
+
+    & > * {
+      margin: $minds-margin 0;
+    }
+  }
+
+  .m-channel--blocked,
+  .m-channel--closed {
     margin: 100px auto;
+
+    minds-avatar {
+      margin: -75px auto 0;
+
+      .minds-avatar {
+        margin: auto;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background-size: cover;
+        background-position: center center;
+
+        img {
+          display: none;
+        }
+      }
+    }
+
     h3 {
       font-size: 26px;
       text-align: center;

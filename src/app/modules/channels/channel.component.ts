@@ -17,6 +17,7 @@ import { Observable } from 'rxjs';
 import { DialogService } from '../../common/services/confirm-leave-dialog.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
+import { PermissionsService } from '../../common/services/permissions.service';
 
 @Component({
   moduleId: module.id,
@@ -53,7 +54,8 @@ export class ChannelComponent {
     private recent: RecentService,
     private context: ContextService,
     private dialogService: DialogService,
-    private blockListService: BlockListService
+    private blockListService: BlockListService,
+    private permissions: PermissionsService
   ) {}
 
   ngOnInit() {
@@ -141,6 +143,10 @@ export class ChannelComponent {
           console.log('couldnt load channel', e);
         }
       });
+  }
+
+  onSubscribed() {
+    // TODO do something here
   }
 
   isOwner() {
