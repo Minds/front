@@ -1,6 +1,9 @@
-<ng-container *ngIf="channel; else loader">
+<ng-container *ngIf="error || channel; else loader">
   <ng-container
-    *ngIf="!proEnabled || !channel.pro || isOwner || isAdmin; else isProChannel"
+    *ngIf="
+      error || !proEnabled || !channel.pro || isOwner || isAdmin;
+      else isProChannel
+    "
   >
     <m-channel #channelComponent></m-channel>
   </ng-container>
