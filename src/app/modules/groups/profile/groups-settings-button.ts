@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { GroupsService } from '../groups-service';
@@ -6,6 +6,8 @@ import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
+import { FeaturesService } from '../../../services/features.service';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 @Component({
   selector: 'minds-groups-settings-button',
@@ -15,8 +17,9 @@ import { Session } from '../../../services/session';
       <i
         *ngIf="group['is:muted']"
         class="minds-groups-button-badge material-icons"
-        >notifications_off</i
       >
+        notifications_off
+      </i>
     </button>
 
     <ul class="minds-dropdown-menu" [hidden]="!showMenu">
@@ -171,12 +174,12 @@ import { Session } from '../../../services/session';
     <m-modal [open]="featureModalOpen" (closed)="onFeatureModalClose($event)">
       <div class="m-button-feature-modal">
         <select [(ngModel)]="category">
-          <option value="not-selected" i18n="@@M__COMMON__SELECT_A_CATEGORY"
-            >-- SELECT A CATEGORY --</option
-          >
-          <option *ngFor="let category of categories" [value]="category.id">{{
-            category.label
-          }}</option>
+          <option value="not-selected" i18n="@@M__COMMON__SELECT_A_CATEGORY">
+            -- SELECT A CATEGORY --
+          </option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.label }}
+          </option>
         </select>
 
         <button
@@ -222,7 +225,9 @@ export class GroupsSettingsButton {
     public client: Client,
     public session: Session,
     public overlayService: OverlayModalService,
-    public router: Router
+    public router: Router,
+    private featuresService: FeaturesService,
+    private permissionsService: PermissionsService
   ) {}
 
   ngOnInit() {
@@ -304,11 +309,22 @@ export class GroupsSettingsButton {
     this.overlayService.create(ReportCreatorComponent, this.group).present();
   }
 
+  checkDeletePermissions() {
+    if (this.featuresService.has('permissions')) {
+      return this.permissionsService.canInteract(this.group, 'delete_group');
+    }
+
+    return true;
+  }
+
   /**
    * deletePrompt
    * Displays the delete prompt if deletion is possible
    */
   async deletePrompt() {
+    if (!this.checkDeletePermissions()) {
+      alert(`You don't have permissions to delete a group`);
+    }
     if ((await this.service.countMembers(this.group.guid)) !== 1) {
       alert('You cannot delete a group that has members.');
       return;
