@@ -32,6 +32,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { MindsVideoComponent } from '../../media/components/video/video.component';
 import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 @Component({
   selector: 'm-comment',
@@ -105,7 +106,8 @@ export class CommentComponentV2
     private el: ElementRef,
     private router: Router,
     protected activityService: ActivityService,
-    protected featuresService: FeaturesService
+    protected featuresService: FeaturesService,
+    protected permissionsService: PermissionsService
   ) {}
 
   ngOnInit() {
@@ -379,5 +381,33 @@ export class CommentComponentV2
         class: 'm-overlayModal--media',
       })
       .present();
+  }
+
+  checkEditPermissions() {
+    if (this.featuresService.has('permissions')) {
+      return this.permissionsService.canInteract(this.comment, 'edit_comment');
+    }
+
+    return (
+      this.comment.owner_guid == this.session.getLoggedInUser().guid ||
+      this.session.isAdmin() ||
+      this.canEdit
+    );
+  }
+
+  checkDeletePermissions() {
+    if (this.featuresService.has('permissions')) {
+      return this.permissionsService.canInteract(
+        this.comment,
+        'delete_comment'
+      );
+    }
+
+    return (
+      this.comment.owner_guid == this.session.getLoggedInUser().guid ||
+      this.session.isAdmin() ||
+      this.parent.owner_guid == this.session.getLoggedInUser().guid ||
+      this.canDelete
+    );
   }
 }
