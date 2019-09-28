@@ -1,16 +1,20 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { SignupModalService } from '../../../../modules/modals/signup/service';
+import { PermissionsService } from '../../../../common/services/permissions.service';
+import { FeaturesService } from '../../../../services/features.service';
 
 // had forwardRef(() => RemindComposerModal)
 @Component({
   selector: 'minds-button-remind',
-  inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <a (click)="remind()" [ngClass]="{ selected: object.reminded }">
+    <a
+      (click)="remind()"
+      [ngClass]="{ selected: object.reminded, disabled: !enabled }"
+    >
       <i class="material-icons">repeat</i>
       <span class="minds-counter" *ngIf="object.reminds > 0">{{
         object.reminds | number
@@ -36,15 +40,31 @@ export class RemindButton {
   constructor(
     public session: Session,
     public client: Client,
-    private modal: SignupModalService
+    private modal: SignupModalService,
+    private permissionsService: PermissionsService,
+    private featuresService: FeaturesService
   ) {}
 
-  set _object(value: any) {
+  @Input('object') set _object(value: any) {
     this.object = value;
+
+    this.checkPermissions();
+  }
+
+  enabled: boolean = true;
+
+  private checkPermissions() {
+    if (this.featuresService.has('permissions')) {
+      this.enabled = this.permissionsService.canInteract(this.object, 'remind');
+    } else {
+      this.enabled = true;
+    }
   }
 
   remind() {
-    var self = this;
+    if (!this.enabled) {
+      return;
+    }
 
     if (this.object.reminded) return false;
 

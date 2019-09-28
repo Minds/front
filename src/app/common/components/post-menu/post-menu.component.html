@@ -16,11 +16,7 @@
   </li>
   <li
     class="mdl-menu__item"
-    *ngIf="
-      (options.indexOf('edit') !== -1 &&
-        entity.owner_guid == session.getLoggedInUser().guid) ||
-      session.isAdmin()
-    "
+    *ngIf="options.indexOf('edit') !== -1 && checkEditPermissions()"
     (click)="selectOption('edit')"
     i18n="@@M__ACTION__EDIT"
   >
@@ -116,12 +112,7 @@
   <!-- DELETE -->
   <li
     class="mdl-menu__item"
-    *ngIf="
-      (options.indexOf('delete') !== -1 &&
-        entity.owner_guid == session.getLoggedInUser().guid) ||
-      session.isAdmin() ||
-      canDelete
-    "
+    *ngIf="options.indexOf('delete') !== -1 && checkDeletePermissions()"
     (click)="deleteToggle = true"
     i18n="@@M__ACTION__DELETE"
   >

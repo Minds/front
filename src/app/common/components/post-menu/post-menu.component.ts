@@ -5,18 +5,17 @@ import {
   EventEmitter,
   Input,
   Output,
-  OnInit,
 } from '@angular/core';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
-import { MindsUser } from '../../../interfaces/entities';
 import { SignupModalService } from '../../../modules/modals/signup/service';
 import { BlockListService } from '../../services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
+import { PermissionsService } from '../../services/permissions.service';
 
 type Option =
   | 'edit'
@@ -45,14 +44,15 @@ type Option =
   templateUrl: 'post-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostMenuComponent implements OnInit {
+export class PostMenuComponent {
   @Input() entity: any;
   @Input() options: Array<Option>;
-  @Output() optionSelected: EventEmitter<Option> = new EventEmitter<Option>();
   @Input() canDelete: boolean = false;
   @Input() isTranslatable: boolean = false;
   @Input() askForCategoriesWhenFeaturing: boolean = false;
   @Input() user: any;
+
+  @Output() optionSelected: EventEmitter<Option> = new EventEmitter<Option>();
 
   featuredCategory: string = 'not-selected';
 
@@ -76,12 +76,11 @@ export class PostMenuComponent implements OnInit {
     public signupModal: SignupModalService,
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
-    public featuresService: FeaturesService
+    public featuresService: FeaturesService,
+    private permissionsService: PermissionsService
   ) {
     this.initCategories();
   }
-
-  ngOnInit() {}
 
   initCategories() {
     for (let category in window.Minds.categories) {
@@ -369,5 +368,28 @@ export class PostMenuComponent implements OnInit {
       .present();
 
     this.selectOption('share');
+  }
+
+  checkEditPermissions() {
+    if (this.featuresService.has('permissions')) {
+      return this.permissionsService.canInteract(this.entity, 'edit_post');
+    }
+
+    return (
+      this.entity.owner_guid == this.session.getLoggedInUser().guid ||
+      this.session.isAdmin()
+    );
+  }
+
+  checkDeletePermissions() {
+    if (this.featuresService.has('permissions')) {
+      return this.permissionsService.canInteract(this.entity, 'delete_post');
+    }
+
+    return (
+      this.entity.owner_guid == this.session.getLoggedInUser().guid ||
+      this.session.isAdmin() ||
+      this.canDelete
+    );
   }
 }
