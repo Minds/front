@@ -57,13 +57,14 @@
   </div>
   <h3
     class="mdl-color-text--blue-grey-300"
-    i18n="@@MINDS__CHANNELS__BLOCKED_NOTICE"
+    i18n="@@MINDS__CHANNELS__THIS_IS_A_CLOSED_CHANNEL"
   >
-    @{{ user.username }}
+    This is a closed channel
   </h3>
   <minds-button-subscribe
     [user]="user"
     (subscribed)="onSubscribed()"
+    [request]="true"
   ></minds-button-subscribe>
 </div>
 

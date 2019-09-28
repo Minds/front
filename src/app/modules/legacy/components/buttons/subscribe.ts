@@ -14,7 +14,15 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
     >
       <i class="material-icons">person_add</i>
       <span>
-        <ng-container i18n="@@M__ACTION__SUBSCRIBE">Subscribe</ng-container>
+        <ng-container i18n="@@M__ACTION__SUBSCRIBE" *ngIf="!request">
+          Subscribe
+        </ng-container>
+        <ng-container
+          i18n="@@M__ACTION__SEND_SUBSCRIPTION_REQUEST"
+          *ngIf="request"
+        >
+          Send Subscription Request
+        </ng-container>
       </span>
     </button>
     <button
@@ -24,9 +32,9 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
     >
       <i class="material-icons">close</i>
       <span>
-        <ng-container i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL"
-          >Unsubscribe</ng-container
-        >
+        <ng-container i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL">
+          Unsubscribe
+        </ng-container>
       </span>
     </button>
   `,
@@ -39,6 +47,7 @@ export class SubscribeButton {
   _content: any;
   _listener: Function;
   showModal: boolean = false;
+  @Input() request: boolean = false;
   @Output('subscribed') onSubscribed: EventEmitter<any> = new EventEmitter();
 
   constructor(
