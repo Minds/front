@@ -74,7 +74,7 @@ export class ProChannelService implements OnDestroy {
     this.isLoggedIn$.unsubscribe();
   }
 
-  async loadAndAuth(id: string) {
+  async loadAndAuth(id: string): Promise<MindsUser> {
     try {
       this.currentChannel = void 0;
 
@@ -100,9 +100,9 @@ export class ProChannelService implements OnDestroy {
       return this.currentChannel;
     } catch (e) {
       if (e.status === 0) {
-        throw new Error('Network error');
+        throw new Error('Connectivity error. Are you offline?');
       } else {
-        throw new Error('Error loading channel');
+        throw new Error(e.message || 'There was an issue loading this channel');
       }
     }
   }
