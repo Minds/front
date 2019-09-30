@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, SkipSelf, Injector } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -18,11 +18,13 @@ import { DialogService } from '../../common/services/confirm-leave-dialog.servic
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { PermissionsService } from '../../common/services/permissions.service';
+import { ClientMetaService } from '../../common/services/client-meta.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-channel',
   templateUrl: 'channel.component.html',
+  providers: [ClientMetaService],
 })
 export class ChannelComponent {
   minds = window.Minds;
@@ -56,7 +58,14 @@ export class ChannelComponent {
     private dialogService: DialogService,
     private blockListService: BlockListService,
     private permissions: PermissionsService
-  ) {}
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector
+  ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('single');
+  }
 
   ngOnInit() {
     this.title.setTitle('Channel');
@@ -134,6 +143,8 @@ export class ChannelComponent {
         if (this.session.getLoggedInUser()) {
           this.addRecent();
         }
+
+        this.clientMetaService.recordView(this.user);
       })
       .catch(e => {
         if (e.status === 0) {
