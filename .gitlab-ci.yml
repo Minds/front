@@ -9,7 +9,7 @@ stages:
   - prepare
   - review
   - deploy:staging
-  - test:e2e
+  - qa
   - deploy:canary
   - deploy:production
   - cleanup
@@ -34,9 +34,13 @@ lint:
     - prettier --check "src/**/*.scss"
     - prettier --check "src/**/*.html"
 
-e2e:chrome:
+############
+# QA Stage #
+############
+
+qa:e2e:
   image: cypress/browsers:chrome67
-  stage: test:e2e
+  stage: qa
   variables:
     CYPRESS_INSTALL_BINARY: 3.4.1
   script:
@@ -60,6 +64,16 @@ e2e:chrome:
       - .npm
       - cache/Cypress
   allow_failure: true #manual inspection in case of timeouts
+
+qa:manual:
+  stage: qa
+  script:
+    - echo "Manually approved"
+  when: manual
+  only:
+    refs:
+      - master
+      - test/gitlab-ci
 
 ###############
 # Build Stage #
