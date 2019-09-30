@@ -114,9 +114,9 @@ export class NewsfeedBoostRotatorComponent {
       if (this.currentPosition >= this.boosts.length) {
         this.currentPosition = 0;
       }
-      if (this.currentPosition === 0) {
-        this.recordImpression(this.currentPosition, true);
-      }
+      // if (this.currentPosition === 0) {
+      //   this.recordImpression(this.currentPosition, true);
+      // }
     });
   }
 
