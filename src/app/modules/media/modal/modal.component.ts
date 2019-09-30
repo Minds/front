@@ -144,7 +144,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           this.entity.title ||
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.entity_guid || this.entity.guid;
-        this.thumbnail = this.entity.thumbnails.xlarge;
+        this.thumbnail = this.entity.thumbnails
+          ? this.entity.thumbnails.xlarge
+          : null;
 
         switch (this.entity.custom_type) {
           case 'video':
