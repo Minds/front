@@ -57,7 +57,7 @@ export class ChannelComponent {
     private context: ContextService,
     private dialogService: DialogService,
     private blockListService: BlockListService,
-    private permissions: PermissionsService
+    private permissions: PermissionsService,
     private clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector
   ) {
