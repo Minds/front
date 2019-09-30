@@ -1,0 +1,49 @@
+<div class="page" *ngIf="vm$ | async as vm">
+  <section class="sidebar">
+    <h3>Analytics</h3>
+    <div class="catContainer">
+      <i *ngIf="isMobile" class="material-icons">menu</i>
+      <div *ngIf="isMobile" class="selectedCatLabel">
+        {{ selectedCat.label }}
+      </div>
+      <div class="cat" *ngFor="let cat of cats">
+        <!-- <span [ngClass]="{ selected: cat.id === selectedCat.id }">{{
+          vm$.category.label
+        }}</span> -->
+      </div>
+    </div>
+  </section>
+  <section class="main">
+    <div class="mainHeader">
+      <h3 class="selectedCatLabel">
+        {{ selectedCat.label }}
+      </h3>
+      <div class="globalFilters">
+        <div class="channelSearch">
+          (todo: Channel search)
+          <!-- <input
+            type="text"
+            [formControl]="channelSearch"
+            placeholder="Search for a channel"
+          /> -->
+        </div>
+
+        <!-- <div class="timespanFilter">
+          <m-analytics__filter [filter]="timespanFilter"></m-analytics__filter>
+        </div> -->
+      </div>
+    </div>
+    <m-analytics__layout--chart
+      class="m-analytics__layout"
+      *ngIf="selectedCat.type === 'chart'"
+    ></m-analytics__layout--chart>
+    <m-analytics__layout--table
+      class="m-analytics__layout"
+      *ngIf="selectedCat.type === 'table'"
+    ></m-analytics__layout--table>
+    <m-analytics__layout--summary
+      class="m-analytics__layout"
+      *ngIf="selectedCat.type === 'summary'"
+    ></m-analytics__layout--summary>
+  </section>
+</div>

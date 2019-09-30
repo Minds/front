@@ -1,0 +1,22 @@
+<div class="metricsContainer">
+  <div
+    class="metric"
+    *ngFor="let metric of metrics"
+    (click)="updateMetric(metric)"
+    [ngClass]="{ active: metric.id === activeMetric }"
+  >
+    <div class="metricLabel">{{ metric.label }}</div>
+    <!-- TODO change this pipe so it can handle diff decimals/currency formats -->
+    <div class="metricSummary">
+      {{ metric.summary.current_value | number }}
+    </div>
+    <div
+      class="metricDelta"
+      [ngClass]="{ goodChange: metric.positive, badChange: !metric.positive }"
+    >
+      <i class="material-icons" *ngIf="metric.delta > 0">arrow_upward</i>
+      <i class="material-icons" *ngIf="metric.delta < 0">arrow_downward</i>
+      <span>{{ metric.delta | percent: '1.0-1' }}</span>
+    </div>
+  </div>
+</div>

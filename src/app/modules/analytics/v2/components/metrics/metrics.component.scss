@@ -1,0 +1,49 @@
+.metricsContainer {
+  display: flex;
+  width: 100%;
+
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-grey-50);
+    box-shadow: 0px 0px 10px -3px rgba(themed($m-black-always), 0.3);
+  }
+
+  .metric {
+    width: 20%;
+    padding: 16px;
+    font-size: 12px;
+    @include m-theme() {
+      border-bottom: 5px solid themed($m-white);
+      color: themed($m-grey-200);
+    }
+    &.active,
+    &:hover {
+      cursor: pointer;
+      @include m-theme() {
+        border-bottom: 5px solid themed($m-blue);
+      }
+    }
+    .metricLabel {
+    }
+    .metricSummary {
+      font-size: 16px;
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+    .metricDelta {
+      .material-icons {
+        transform: scaleX(0.7);
+        font-size: 12px;
+        font-weight: bold;
+      }
+      @include m-theme() {
+        &.goodChange {
+          color: themed($m-green);
+        }
+        &.badChange {
+          color: themed($m-red);
+        }
+      }
+    }
+  }
+}

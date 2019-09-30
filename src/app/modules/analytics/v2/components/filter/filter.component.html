@@ -1,0 +1,24 @@
+<div class="filterWrapper" [ngClass]="{ expanded: expanded }">
+  <div class="filterHeader" (click)="expanded = !expanded">
+    <span *ngIf="showLabel" class="filterLabel">{{ filter.label }}</span>
+    <span class="option option--selected">
+      <span>{{ selectedOption.label }}</span>
+    </span>
+    <i class="material-icons" *ngIf="!expanded"> keyboard_arrow_down</i>
+    <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
+  </div>
+  <div class="unselectedOptionsContainer">
+    <ng-container *ngFor="let option of options">
+      <div
+        class="option"
+        (click)="clickedOption(option)"
+        *ngIf="option.label !== selectedOption.label"
+        [ngClass]="{
+          unavailable: !option.available
+        }"
+      >
+        <span>{{ option.label }}</span>
+      </div>
+    </ng-container>
+  </div>
+</div>

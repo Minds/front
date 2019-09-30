@@ -49,6 +49,16 @@ import { ActiveUsersChartComponent } from './components/charts/active-users/acti
 import { Graph } from './graph.component';
 import { PageviewsCardComponent } from './components/cards/pageviews/pageviews.component';
 import { PageviewsChartComponent } from './components/charts/pageviews/pageviews.component';
+import { AnalyticsDashboardComponent } from './v2/dashboard.component';
+import { AnalyticsLayoutChartComponent } from './v2/layouts/layout-chart/layout-chart.component';
+import { AnalyticsLayoutTableComponent } from './v2/layouts/layout-table/layout-table.component';
+import { AnalyticsLayoutSummaryComponent } from './v2/layouts/layout-summary/layout-summary.component';
+import { AnalyticsMetricsComponent } from './v2/components/metrics/metrics.component';
+import { AnalyticsFiltersComponent } from './v2/components/filters/filters.component';
+import { AnalyticsFilterComponent } from './v2/components/filter/filter.component';
+import { AnalyticsChartComponent } from './v2/components/chart/chart.component';
+import { AnalyticsTableComponent } from './v2/components/table/table.component';
+import { AnalyticsDashboardService } from './v2/dashboard.service';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -76,6 +86,11 @@ const routes: Routes = [
           { path: 'token', component: SiteTokenTransactionsAnalyticsComponent },
           // { path: 'plus', component: OffChainBoostsCardComponent},
         ],
+      },
+      {
+        path: 'dashboard',
+        component: AnalyticsDashboardComponent,
+        // children: [{ path: '', redirectTo: 'traffic', pathMatch: 'full' }],
       },
     ],
   },
@@ -138,7 +153,16 @@ const routes: Routes = [
     PageviewsChartComponent,
     PageviewsCardComponent,
     Graph,
+    AnalyticsDashboardComponent,
+    AnalyticsLayoutChartComponent,
+    AnalyticsLayoutTableComponent,
+    AnalyticsLayoutSummaryComponent,
+    AnalyticsMetricsComponent,
+    AnalyticsFiltersComponent,
+    AnalyticsFilterComponent,
+    AnalyticsChartComponent,
+    AnalyticsTableComponent,
   ],
-  providers: [],
+  providers: [AnalyticsDashboardService],
 })
 export class AnalyticsModule {}

@@ -1,0 +1,62 @@
+.filterWrapper {
+  cursor: pointer;
+  border-radius: 3px;
+  margin: 16px 16px 0 0;
+  @include m-theme() {
+    background-color: white;
+    border: 1px solid themed($m-grey-100);
+    color: rgba(themed($m-grey-200), 0.7);
+  }
+
+  &.expanded {
+    @include m-theme() {
+      border-color: themed($m-blue);
+    }
+    .unselectedOptionsContainer {
+      visibility: visible;
+      height: auto;
+    }
+    .option {
+      &:hover:not(.unavailable) {
+        @include m-theme() {
+          color: themed($m-grey-500);
+        }
+      }
+    }
+  }
+}
+.option {
+  padding: 4px 8px;
+
+  &.unavailable {
+    text-decoration: line-through;
+    @include m-theme() {
+      color: themed($m-grey-50);
+    }
+  }
+}
+
+.filterHeader {
+  display: flex;
+  justify-content: space-between;
+  .filterLabel {
+    padding: 4px 0 4px 8px;
+  }
+  i {
+    flex-grow: 0;
+    margin: 4px 4px 0 0;
+  }
+}
+.option--selected {
+  @include m-theme() {
+    color: themed($m-grey-500);
+  }
+}
+
+.unselectedOptionsContainer {
+  visibility: hidden;
+  height: 0px;
+  @include m-theme() {
+    border-top: 1px solid themed($m-grey-100);
+  }
+}
