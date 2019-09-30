@@ -38,6 +38,7 @@ import { NewsfeedModule } from '../newsfeed/newsfeed.module';
 import { GroupsProfileReviewComponent } from './profile/review/review.component';
 import { GroupsKickModalComponent } from './kick-modal/kick-modal.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
+import { CanCreateGroupGuardService } from './create/can-create-group-guard.service';
 
 const routes: Routes = [
   {
@@ -54,7 +55,11 @@ const routes: Routes = [
       { path: 'requests', component: GroupsProfileRequests },
     ],
   },
-  { path: 'groups/create', component: GroupsCreator },
+  {
+    path: 'groups/create',
+    component: GroupsCreator,
+    canActivate: [CanCreateGroupGuardService],
+  },
   { path: 'groups/:filter', component: GroupsListComponent },
   { path: 'groups', redirectTo: '/groups/top', pathMatch: 'full' },
 ];
@@ -117,6 +122,6 @@ const routes: Routes = [
     GroupsSidebarMarkersComponent,
   ],
   entryComponents: [GroupsCard, GroupsSidebarMarkersComponent],
-  providers: [CanDeactivateGroupService],
+  providers: [CanCreateGroupGuardService, CanDeactivateGroupService],
 })
 export class GroupsModule {}
