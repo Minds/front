@@ -26,6 +26,7 @@ interface Minds {
   sale?: boolean | string;
   last_tos_update: number;
   tags: string[];
+  pro?: any;
 }
 
 interface MindsNavigation {

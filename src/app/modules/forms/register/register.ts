@@ -20,23 +20,24 @@ import { RouterHistoryService } from '../../../common/services/router-history.se
   templateUrl: 'register.html',
 })
 export class RegisterForm {
+  @Input() referrer: string;
+  @Input() parentId: string = '';
+
+  @Output() done: EventEmitter<any> = new EventEmitter();
+
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
   inProgress: boolean = false;
-  @Input() referrer: string;
   captcha: string;
   takenUsername: boolean = false;
   usernameValidationTimeout: any;
-  @Input() parentId: string = '';
 
   showFbForm: boolean = false;
 
   form: FormGroup;
   fbForm: FormGroup;
   minds = window.Minds;
-
-  @Output() done: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('reCaptcha', { static: false }) reCaptcha: ReCaptchaComponent;
 
@@ -92,8 +93,11 @@ export class RegisterForm {
     this.form.value.parentId = this.parentId;
 
     this.inProgress = true;
+
+    let opts = { ...this.form.value };
+
     this.client
-      .post('api/v1/register', this.form.value)
+      .post('api/v1/register', opts)
       .then((data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 

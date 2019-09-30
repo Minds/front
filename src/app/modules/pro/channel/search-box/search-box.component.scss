@@ -1,0 +1,49 @@
+div.mdl-textfield.mdl-js-textfield.m-pro__searchBox {
+  width: 100%;
+  transition: width ease-in-out 0.2s;
+  padding: 8px 0;
+
+  i.search {
+    position: absolute;
+    margin: 6px;
+    font-size: 20px;
+
+    @include m-theme() {
+      color: themed($m-black);
+    }
+  }
+
+  i.clear {
+    font-size: 16px;
+
+    border-radius: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 16px;
+    right: 10px;
+
+    @include m-theme() {
+      color: themed($m-black);
+    }
+  }
+
+  input {
+    height: 32px;
+    border-radius: 18px;
+    font-family: Roboto, sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    padding: 8px 8px 8px 32px;
+    box-sizing: border-box;
+
+    color: var(--m-pro--text-color);
+    background-color: var(--m-pro--transparent-background-color);
+  }
+
+  label {
+    display: none;
+  }
+}

@@ -5,14 +5,9 @@ import { Capture } from '../controllers/capture/capture';
 import { Discovery } from '../controllers/discovery/discovery';
 import { Admin } from '../controllers/admin/admin';
 import { Pages } from '../controllers/pages/pages';
-
-import { ChannelComponent } from '../modules/channels/channel.component';
-/**
- * TODO: Load these automagically from gulp
- */
-
 import { CanDeactivateGuardService } from '../services/can-deactivate-guard';
 import { RewardsComponent } from '../controllers/rewards/rewards';
+import { ChannelContainerComponent } from '../modules/channel-container/channel-container.component';
 
 export const MindsAppRoutes: Routes = [
   { path: 'capture', redirectTo: 'media/images/suggested' },
@@ -41,11 +36,11 @@ export const MindsAppRoutes: Routes = [
 
   { path: 'claim-rewards/:uuid', component: RewardsComponent },
 
-  // TODO: Find a way to move Channel routes onto Channel Module. They take priority and groups/blogs cannot be accessed
-  { path: ':username/:filter', component: ChannelComponent },
+  // TODO: Find a way to move channel routes onto its own Module. They take priority and groups/blogs cannot be accessed
+  { path: ':username', redirectTo: ':username/', pathMatch: 'full' },
   {
-    path: ':username',
-    component: ChannelComponent,
+    path: ':username/:filter',
+    component: ChannelContainerComponent,
     canDeactivate: [CanDeactivateGuardService],
   },
 ];

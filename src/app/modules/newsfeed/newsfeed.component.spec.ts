@@ -122,6 +122,7 @@ describe('NewsfeedComponent', () => {
     clientMock.response = {};
     featuresServiceMock.mock('top-feeds', false);
     featuresServiceMock.mock('suggested-users', false);
+    featuresServiceMock.mock('pro', false);
 
     sessionMock.user.admin = false;
     sessionMock.loggedIn = true;

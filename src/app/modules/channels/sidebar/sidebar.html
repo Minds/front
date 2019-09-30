@@ -262,11 +262,43 @@
         <span [hidden]="!editing" i18n="@@M__ACTION__SAVE">Save</span>
       </button>
     </div>
+
+    <ng-container *mIfFeature="'pro'">
+      <a
+        *ngIf="showBecomeProButton"
+        class="m-btn m-link-btn m-btn--with-icon m-btn--slim m-btn--action"
+        routerLink="/pro"
+      >
+        <i class="material-icons">business_center</i>
+        <span i18n>Become Pro</span>
+      </a>
+    </ng-container>
+
+    <a
+      *ngIf="showProSettings"
+      class="m-btn m-link-btn m-btn--with-icon m-btn--slim"
+      [routerLink]="proSettingsRouterLink"
+    >
+      <i class="material-icons">business_center</i>
+      <span i18n>Pro</span>
+    </a>
+
     <minds-button-boost
       *ngIf="session.getLoggedInUser().guid == user.guid"
       [object]="user"
     ></minds-button-boost>
+
     <m-channel--badges [user]="user"></m-channel--badges>
+
+    <a *ngIf="session.getLoggedInUser()?.is_admin" (click)="proAdminToggle()">
+      <m-tooltip
+        icon="business_center"
+        [iconClass]="user.pro ? 'selected' : ''"
+        i18n
+      >
+        Pro
+      </m-tooltip>
+    </a>
   </div>
 </div>
 

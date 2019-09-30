@@ -106,9 +106,18 @@ import { PosterDateSelectorComponent } from './components/poster-date-selector/s
 import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
 import { ShareModalComponent } from '../modules/modals/share/share';
 import { RouterHistoryService } from './services/router-history.service';
+import { DraggableListComponent } from './components/draggable-list/list.component';
+import { DndModule } from 'ngx-drag-drop';
+import { SiteService } from './services/site.service';
 
 @NgModule({
-  imports: [NgCommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    NgCommonModule,
+    DndModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     MINDS_PIPES,
 
@@ -196,8 +205,8 @@ import { RouterHistoryService } from './services/router-history.service';
     SwitchComponent,
 
     FeaturedContentComponent,
-
     PosterDateSelectorComponent,
+    DraggableListComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -284,8 +293,10 @@ import { RouterHistoryService } from './services/router-history.service';
     FeaturedContentComponent,
     PosterDateSelectorComponent,
     ChannelModeSelectorComponent,
+    DraggableListComponent,
   ],
   providers: [
+    SiteService,
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
@@ -301,7 +312,7 @@ import { RouterHistoryService } from './services/router-history.service';
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
-      deps: [HttpClient],
+      deps: [HttpClient, SiteService],
     },
     {
       provide: NSFWSelectorCreatorService,

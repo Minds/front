@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, SkipSelf, Injector } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -17,11 +17,13 @@ import { Observable } from 'rxjs';
 import { DialogService } from '../../common/services/confirm-leave-dialog.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
+import { ClientMetaService } from '../../common/services/client-meta.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-channel',
   templateUrl: 'channel.component.html',
+  providers: [ClientMetaService],
 })
 export class ChannelComponent {
   minds = window.Minds;
@@ -53,8 +55,15 @@ export class ChannelComponent {
     private recent: RecentService,
     private context: ContextService,
     private dialogService: DialogService,
-    private blockListService: BlockListService
-  ) {}
+    private blockListService: BlockListService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector
+  ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('single');
+  }
 
   ngOnInit() {
     this.title.setTitle('Channel');
@@ -80,6 +89,8 @@ export class ChannelComponent {
         } else {
           this.filter = params['filter'];
         }
+      } else {
+        this.filter = 'feed';
       }
 
       if (params['editToggle']) {
@@ -130,6 +141,8 @@ export class ChannelComponent {
         if (this.session.getLoggedInUser()) {
           this.addRecent();
         }
+
+        this.clientMetaService.recordView(this.user);
       })
       .catch(e => {
         if (e.status === 0) {

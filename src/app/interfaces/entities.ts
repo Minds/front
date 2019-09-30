@@ -38,6 +38,12 @@ export interface KeyVal {
   value: any;
 }
 
+export interface Tag {
+  tag: string;
+  label: string;
+  selected?: boolean;
+}
+
 export enum ChannelMode {
   PUBLIC = 0,
   MODERATED = 1,
@@ -74,6 +80,22 @@ export interface MindsUser {
   mature_lock?: boolean;
   tags?: Array<string>;
   toaster_notifications?: boolean;
+  pro?: boolean;
+  pro_settings?: {
+    logo_image: string;
+    logo_guid: string;
+    tag_list?: Tag[];
+    background_image: string;
+    title: string;
+    headline: string;
+    one_line_headline: string;
+    footer_text: string;
+    footer_links: { href: string; title: string }[];
+    scheme: string;
+    featured_content?: Array<string>;
+    tile_ratio?: string;
+    styles?: { [key: string]: string };
+  };
   mode: ChannelMode;
 }
 

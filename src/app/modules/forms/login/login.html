@@ -115,10 +115,7 @@
 <!-- END: LOGIN -->
 
 <!-- START: TWOFACTOR -->
-<div
-  class="mdl-card mdl-shadow--2dp minds-login-box"
-  [hidden]="!twofactorToken"
->
+<div class="mdl-card mdl-shadow--2dp minds-login-box" *ngIf="twofactorToken">
   <div class="mdl-card__title">
     <h2 class="mdl-card__title-text" i18n="@@FORMS__LOGIN__2FA_LOGIN_TITLE">
       Twofactor Login

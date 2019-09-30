@@ -2,7 +2,8 @@
 // Colors change when .theme__light/.theme__dark classes are toggled on body tag
 @mixin m-theme() {
   @each $theme, $colors in $themes {
-    body.m-theme__#{$theme} & {
+    body.m-theme__#{$theme} &,
+    body .m-theme--wrapper.m-theme--wrapper__#{$theme} & {
       $theme-map: () !global;
       @each $color-name, $color in $colors {
         $value: map-get(map-get($themes, $theme), '#{$color-name}');
