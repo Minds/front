@@ -1,4 +1,4 @@
-<div class="page" *ngIf="vm$ | async as vm">
+<div class="page" *ngIf="vm$ | async as vm" [ngClass]="{ isMobile: isMobile }">
   <section class="sidebar">
     <h3>Analytics</h3>
     <div class="catContainer">
@@ -7,9 +7,9 @@
         {{ selectedCat.label }}
       </div>
       <div class="cat" *ngFor="let cat of cats">
-        <!-- <span [ngClass]="{ selected: cat.id === selectedCat.id }">{{
-          vm$.category.label
-        }}</span> -->
+        <span [ngClass]="{ selected: cat.id === selectedCat.id }">{{
+          cat.label
+        }}</span>
       </div>
     </div>
   </section>
@@ -35,15 +35,14 @@
     </div>
     <m-analytics__layout--chart
       class="m-analytics__layout"
-      *ngIf="selectedCat.type === 'chart'"
     ></m-analytics__layout--chart>
-    <m-analytics__layout--table
+    <!-- <m-analytics__layout--table
       class="m-analytics__layout"
       *ngIf="selectedCat.type === 'table'"
     ></m-analytics__layout--table>
     <m-analytics__layout--summary
       class="m-analytics__layout"
       *ngIf="selectedCat.type === 'summary'"
-    ></m-analytics__layout--summary>
+    ></m-analytics__layout--summary> -->
   </section>
 </div>

@@ -1,6 +1,36 @@
-plotly-plot {
+m-analytics__chart {
+  position: relative;
+  .js-plotly-plot,
+  .plot-container {
+    height: 44vh;
+  }
+}
+#chartContainer {
+  position: relative;
   g,
   g > * {
     cursor: default;
+  }
+}
+
+.hoverInfo {
+  // display: none; // TODO: uncomment
+  padding: 16px;
+  position: absolute;
+  pointer-events: none;
+  border-radius: 2px;
+  font-size: 11px;
+  @include m-theme() {
+    background-color: themed($m-white);
+    box-shadow: 0 0 4px rgba(themed($m-black), 0.3);
+    color: themed($m-grey-200);
+  }
+
+  .hoverInfo__row--primary {
+    font-size: 14px;
+    font-weight: bold;
+    @include m-theme() {
+      color: themed($m-grey-500);
+    }
   }
 }

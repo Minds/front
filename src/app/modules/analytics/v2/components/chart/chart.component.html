@@ -1,3 +1,13 @@
-<div class="chart-container" #chartContainer>
-  <m-graph [data]="data4" [layout]="layout"></m-graph>
+<div id="chartContainer" class="chart-container"></div>
+
+<div
+  id="hoverInfo"
+  class="hoverInfo"
+  [style.top]="'closestHoverPointPositionX' + 'px'"
+  [style.left]="'closestHoverPointPositionY' + 'px'"
+>
+  <div id="hoverInfo__x" class="hoverInfo__row--secondary">x</div>
+  <div id="hoverInfo__y" class="hoverInfo__row--primary">y</div>
+  <div id="hoverInfo__comparisonXy" class="hoverInfo__row--secondary">z</div>
 </div>
+<!-- <div *ngIf="(the vm.metric with the visualisation is type=chart)"> -->

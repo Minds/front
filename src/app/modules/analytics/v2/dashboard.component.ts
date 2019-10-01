@@ -48,8 +48,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     label: 'timespan',
     options: [],
   };
-  // vm$: Observable<UserState> = this.analyticsService.vm$;
-  vm$ = this.analyticsService.vm$;
+  vm$: Observable<UserState> = this.analyticsService.vm$;
 
   constructor(
     public client: Client,
@@ -63,8 +62,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     this.isMobile = isMobileOrTablet();
     this.title.setTitle('Analytics');
 
-    console.log(this.route);
-    console.log(this.route.snapshot.url);
+    // console.log(this.route);
+    // console.log(this.route.snapshot.url);
 
     // TODO: implement channel filter
     // const {channelGuid} = this.analyticsService.getStateSnapshot();
@@ -81,7 +80,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       // TODO: something similar for category
 
       this.selectedCat = this.cats.find(
-        // cat => cat.id === this.vm$.category;
+        // cat => cat.id === this.vm$.category
         cat => cat.id === 'traffic'
       );
     });
