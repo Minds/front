@@ -120,6 +120,9 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
   }
 
   reset() {
+    const interval = 1000 * 60 * 5;
+    const date = new Date();
+    const start = new Date(Math.ceil(date.getTime() / interval) * interval);
     this.campaign = {
       name: '',
       type: 'newsfeed',
@@ -128,8 +131,8 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       entity_urns: [],
       nsfw: [],
       hashtags: [],
-      start: Date.now(),
-      end: Date.now() + 5 * 24 * 60 * 60 * 1000,
+      start: start.getTime(),
+      end: start.getTime() + 5 * 24 * 60 * 60 * 1000,
       impressions: 0,
     };
 

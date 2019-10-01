@@ -144,14 +144,11 @@
       <div class="m-form--field">
         <label for="boost-creator__start" class="m-form--field-label">
           <span i18n>Start</span>
-          <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </label>
 
         <div
           class="m-date-selector--input"
           mdl-datetime-picker
-          [dateFormat]="'MM/DD/YY, h:mm a Z'"
-          [useUTC]="true"
           [date]="campaign.start"
           (dateChange)="onStartDateChange($event); triggerPreview()"
         >
@@ -160,7 +157,7 @@
             type="text"
             placeholder="Now"
             i18n
-            [value]="campaign.start | utcDate | date: 'MMM dd'"
+            [value]="campaign.start | date: 'MMM dd HH:mm'"
             readonly
           />
           <i class="material-icons">keyboard_arrow_down</i>
@@ -170,7 +167,6 @@
       <div class="m-form--field">
         <label for="boost-creator__end" class="m-form--field-label">
           <span i18n>End</span>
-          <m-tooltip icon="help" i18n>TBD</m-tooltip>
         </label>
 
         <div
@@ -182,9 +178,8 @@
           <input
             id="boost-creator__end"
             type="text"
-            placeholder="End of times"
             i18n
-            [value]="campaign.end | utcDate | date: 'MMM dd'"
+            [value]="campaign.end | date: 'MMM dd HH:mm'"
             readonly
           />
           <i class="material-icons">keyboard_arrow_down</i>
