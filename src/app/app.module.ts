@@ -70,9 +70,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { ProModule } from './modules/pro/pro.module';
 import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
+import { UpgradesModule } from './modules/upgrades/upgrades.module';
 
 import * as Sentry from '@sentry/browser';
-import { UpgradesModule } from './modules/upgrades/upgrades.module';
 
 Sentry.init({
   dsn: 'https://3f786f8407e042db9053434a3ab527a2@sentry.io/1538008', // TODO: do not hardcard

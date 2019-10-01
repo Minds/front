@@ -1,0 +1,127 @@
+m-upgrades__upgradeOptions {
+  display: block;
+}
+
+.m-upgrades__upgradeOptions {
+  .m-upgradesUpgradeOptions__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    h2 {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 43px;
+    }
+
+    .m-upgradesUpgradeOptionsHeader__toggleContainer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .m-upgradesUpgradeOptionsHeader__toggle {
+        margin-right: 50px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .m-upgradesUpgradeOptions__plans {
+    display: grid;
+    grid-gap: 65px;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 40px 60px 60px;
+
+    @include m-theme() {
+      background-color: lighten(themed($m-grey-50), 5%);
+    }
+  }
+
+  .m-upgradesUpgradeOptions__plan {
+    position: relative;
+    padding-bottom: 75px;
+
+    h3 {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 37px;
+      padding: 0 0 2px;
+      margin: 0;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 21px;
+      margin: 0 0 31px;
+
+      &.m-upgradesUpgradeOptionsPlan__targetAudience {
+        @include m-theme() {
+          color: themed($m-green);
+        }
+      }
+
+      &.m-upgradesUpgradeOptionsPlan__description {
+        @include m-theme() {
+          color: themed($m-grey-600);
+        }
+      }
+    }
+
+    ul {
+      padding: 0 12px;
+      margin: 0 0 16px;
+
+      li {
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+    }
+
+    .m-upgradesUpgradeOptionsPlan__moreInfo {
+      font-size: 14px;
+      line-height: 19px;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+
+    .m-upgradesUpgradeOptionsPlan__pricing {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 24px;
+
+      @include m-theme() {
+        color: themed($m-grey-600);
+      }
+
+      span {
+        font-size: 24px;
+
+        @include m-theme() {
+          color: themed($m-black);
+        }
+      }
+    }
+
+    .m-upgradesUpgradeOptionsPlan__offer {
+      margin: -32px 0 0 0;
+      font-size: 14px;
+      text-decoration: line-through;
+
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
+
+    .m-upgradesUpgradeOptionsPlan__action {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}
