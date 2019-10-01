@@ -71,29 +71,34 @@ export class CampaignsService {
       throw new Error('End date not defined');
     }
 
-    // start date should be before end date
     if (campaign.start >= campaign.end) {
-      throw new Error('End date should be a after the start date');
+      throw new Error('End date must be after start date');
     }
 
-    // if we're editing, end date can't be modified to an earlier date
+    const oneMonthFromStart = new Date(campaign.start);
+    oneMonthFromStart.setMonth(oneMonthFromStart.getMonth() + 1);
+    if (campaign.end > oneMonthFromStart.getTime()) {
+      throw new Error(
+        'Campaign end date can not be more than one month from start'
+      );
+    }
+
     if (
       campaign.delivery_status &&
-      campaign.delivery_status == 'created' &&
+      campaign.delivery_status === 'created' &&
       campaign.original_campaign &&
       campaign.end < campaign.original_campaign.end
     ) {
       throw new Error(
-        'You can only change End date to a later one from the original'
+        'Changing end to an earlier date is not allowed while campaign is running'
       );
     }
 
-    // budget should be bigger than zero integer
     if (!campaign.budget || campaign.budget === 0 || !isInt(campaign.budget)) {
       throw new Error('Budget must be a bigger-than-zero integer');
     }
 
-    if (!campaign.entity_urns || campaign.entity_urns.length == 0) {
+    if (!campaign.entity_urns || campaign.entity_urns.length === 0) {
       throw new Error('You must include something to boost');
     }
 
