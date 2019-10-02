@@ -170,6 +170,11 @@ m-overlay-modal {
   m-video {
     position: static;
 
+    video {
+      width: 100%;
+      height: 100%;
+    }
+
     .minds-video-bar-full {
       .m-video--progress-bar {
         padding-right: 0;
