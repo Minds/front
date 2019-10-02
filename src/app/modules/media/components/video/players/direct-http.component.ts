@@ -115,33 +115,33 @@ export class MindsVideoDirectHttpPlayer
     return this.player.nativeElement;
   }
 
-  play() {
+  async play() {
     const player = this.getPlayer();
 
     try {
-      player.play();
+      await player.play();
     } catch (e) {
       console.log(e);
     }
   }
 
-  pause() {
+  async pause() {
     const player = this.getPlayer();
 
     try {
-      player.pause();
+      await player.pause();
     } catch (e) {
       console.log(e);
     }
   }
 
-  toggle() {
+  async toggle() {
     const player = this.getPlayer();
 
     if (player.paused) {
-      this.play();
+      await this.play();
     } else {
-      this.pause();
+      await this.pause();
     }
   }
 
