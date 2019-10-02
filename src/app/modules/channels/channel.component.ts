@@ -9,7 +9,7 @@ import { Session } from '../../services/session';
 import { ScrollService } from '../../services/ux/scroll';
 import { RecentService } from '../../services/ux/recent';
 
-import { MindsUser } from '../../interfaces/entities';
+import { ChannelMode, MindsUser } from '../../interfaces/entities';
 import { MindsChannelResponse } from '../../interfaces/responses';
 import { ContextService } from '../../services/context.service';
 import { FeaturesService } from '../../services/features.service';
@@ -46,7 +46,14 @@ export class ChannelComponent {
   @ViewChild('feed', { static: false }) private feed: ChannelSortedComponent;
 
   get canView() {
-    return this.permissions.canInteract(this.user, Flags.VIEW);
+    if (this.features.has('permissions')) {
+      return this.permissions.canInteract(this.user, Flags.VIEW);
+    }
+    return (
+      this.user.mode !== ChannelMode.CLOSED ||
+      this.user.subscribed ||
+      this.user.guid === this.session.getLoggedInUser().guid
+    );
   }
 
   constructor(
