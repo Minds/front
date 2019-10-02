@@ -19,6 +19,7 @@ import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { PermissionsService } from '../../common/services/permissions/permissions.service';
 import { ClientMetaService } from '../../common/services/client-meta.service';
+import { Flags } from '../../common/services/permissions/flags';
 
 @Component({
   moduleId: module.id,
@@ -43,6 +44,10 @@ export class ChannelComponent {
   paramsSubscription: Subscription;
 
   @ViewChild('feed', { static: false }) private feed: ChannelSortedComponent;
+
+  get canView() {
+    return this.permissions.canInteract(this.user, Flags.VIEW);
+  }
 
   constructor(
     public session: Session,

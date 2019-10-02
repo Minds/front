@@ -50,7 +50,7 @@
 <div
   class="mdl-grid channel-grid m-channel--closed"
   style="max-width:900px"
-  *ngIf="user && !user.blocked && !user.subscribed && user.mode !== 0"
+  *ngIf="user && !user.blocked && !user.subscribed && !canView"
 >
   <div class="m-groupSplash__avatar">
     <minds-avatar [object]="user"></minds-avatar>
@@ -87,7 +87,7 @@
 <div
   class="mdl-grid channel-grid"
   style="max-width:990px"
-  *ngIf="user && !user?.blocked && (user.mode === 0 || user.subscribed)"
+  *ngIf="user && !user?.blocked && canView"
 >
   <section class="mdl-cell mdl-cell--4-col m-channel-sidebar">
     <m-channel--sidebar
@@ -164,7 +164,10 @@
   </section>
 
   <!-- Subscriptions list -->
-  <section class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'subscribers'">
+  <section
+    class="mdl-cell mdl-cell--8-col"
+    *ngIf="filter == 'subscribers' || filter == 'requests'"
+  >
     <div class="mdl-card m-channel--subscribers-tabs">
       <div class="mdl-tabs__tab-bar">
         <a
