@@ -19,6 +19,9 @@ import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { GroupsService } from '../groups-service';
+import { FeaturesService } from '../../../services/features.service';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { PermissionsService } from '../../../common/services/permissions.service';
 
 let groupConfig = {
   countMembers: Promise.resolve(1),
@@ -63,11 +66,17 @@ describe('GroupsSettingsButton', () => {
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
       ],
     }).compileComponents();
   }));
 
   beforeEach(() => {
+    featuresServiceMock.mock('permissions', false);
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     jasmine.clock().uninstall();
     jasmine.clock().install();

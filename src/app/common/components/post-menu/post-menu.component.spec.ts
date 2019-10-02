@@ -26,6 +26,9 @@ import { FeaturesService } from '../../../services/features.service';
 import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
 import { storageMock } from '../../../../tests/storage-mock.spec';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { Storage } from '../../../services/storage';
+import { PermissionsService } from '../../services/permissions.service';
+import { MockService } from '../../../utils/mock';
 /* tslint:disable */
 
 /* Mock section */
@@ -99,6 +102,10 @@ describe('PostMenuComponent', () => {
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: ActivityService, useValue: activityServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
         { provide: Storage, useValue: storageMock },
         {
           provide: BlockListService,
@@ -114,6 +121,7 @@ describe('PostMenuComponent', () => {
   // synchronous beforeEach
   beforeEach(() => {
     featuresServiceMock.mock('allow-comments-toggle', true);
+    featuresServiceMock.mock('permissions', false);
     fixture = TestBed.createComponent(PostMenuComponent);
 
     comp = fixture.componentInstance;
