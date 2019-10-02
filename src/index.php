@@ -146,10 +146,21 @@
               "environment" => getenv('MINDS_ENV') ?: 'development',
           ];
 
-          if(Minds\Core\Session::isLoggedIn()){
-              $minds['user'] = Minds\Core\Session::getLoggedinUser()->export();
-              $minds['user']['rewards'] = !!Minds\Core\Session::getLoggedinUser()->getPhoneNumberHash();
-              $minds['wallet'] = array('balance' => Minds\Helpers\Counters::get(Minds\Core\Session::getLoggedinUser()->guid, 'points', false));
+          if (Minds\Core\Session::isLoggedIn()) {
+            $user = Minds\Core\Session::getLoggedinUser();
+            $minds['user'] = $user->export();
+            $minds['user']['rewards'] = !!Minds\Core\Session::getLoggedinUser()->getPhoneNumberHash();
+            $minds['wallet'] = array('balance' => Minds\Helpers\Counters::get(Minds\Core\Session::getLoggedinUser()->guid, 'points', false));
+
+            if(Minds\Core\Di\Di::_()->get('Features\Manager')->has('permissions')) {
+                /** @var Minds\Core\Permissions\Manager $permissionsManager */
+                $permissionsManager = Minds\Core\Di\Di::_()->get('Permissions\Manager');
+                $permissions = $permissionsManager->getList([
+                    'user_guid' => $user,
+                    'entities' => [$user],
+                ]);
+                $minds['user']['permissions'] = $permissions->exportPermission($user->getGuid());
+            }
           }
 
           if (__MINDS_CONTEXT__ === 'embed') {
@@ -158,6 +169,6 @@
       ?>
       window.Minds = <?= json_encode($minds) ?>;
     </script>
-  
+
   </body>
 </html>
