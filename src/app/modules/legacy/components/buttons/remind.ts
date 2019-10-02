@@ -3,8 +3,9 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { SignupModalService } from '../../../../modules/modals/signup/service';
-import { PermissionsService } from '../../../../common/services/permissions.service';
+import { PermissionsService } from '../../../../common/services/permissions/permissions.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { Flags } from '../../../../common/services/permissions/flags';
 
 // had forwardRef(() => RemindComposerModal)
 @Component({
@@ -55,7 +56,10 @@ export class RemindButton {
 
   private checkPermissions() {
     if (this.featuresService.has('permissions')) {
-      this.enabled = this.permissionsService.canInteract(this.object, 'remind');
+      this.enabled = this.permissionsService.canInteract(
+        this.object,
+        Flags.REMIND
+      );
     } else {
       this.enabled = true;
     }

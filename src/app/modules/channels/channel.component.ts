@@ -17,7 +17,7 @@ import { Observable } from 'rxjs';
 import { DialogService } from '../../common/services/confirm-leave-dialog.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
-import { PermissionsService } from '../../common/services/permissions.service';
+import { PermissionsService } from '../../common/services/permissions/permissions.service';
 import { ClientMetaService } from '../../common/services/client-meta.service';
 
 @Component({

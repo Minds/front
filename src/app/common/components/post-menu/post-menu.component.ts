@@ -15,7 +15,8 @@ import { BlockListService } from '../../services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
-import { PermissionsService } from '../../services/permissions.service';
+import { PermissionsService } from '../../services/permissions/permissions.service';
+import { Flags } from '../../services/permissions/flags';
 
 type Option =
   | 'edit'
@@ -372,7 +373,7 @@ export class PostMenuComponent {
 
   checkEditPermissions() {
     if (this.featuresService.has('permissions')) {
-      return this.permissionsService.canInteract(this.entity, 'edit_post');
+      return this.permissionsService.canInteract(this.entity, Flags.EDIT_POST);
     }
 
     return (
@@ -383,7 +384,10 @@ export class PostMenuComponent {
 
   checkDeletePermissions() {
     if (this.featuresService.has('permissions')) {
-      return this.permissionsService.canInteract(this.entity, 'delete_post');
+      return this.permissionsService.canInteract(
+        this.entity,
+        Flags.DELETE_POST
+      );
     }
 
     return (

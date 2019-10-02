@@ -1,10 +1,12 @@
+import { Flags } from './flags';
+
 export type Permissions = {
   name: string;
   permissions: string[];
 };
 
 export class PermissionsService {
-  canInteract(entity: any, permission: string) {
+  canInteract(entity: any, permission: Flags) {
     let permissions: Permissions = entity.permissions;
 
     if (!permissions) {

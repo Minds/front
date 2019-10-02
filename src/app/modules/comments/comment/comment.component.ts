@@ -32,7 +32,8 @@ import { FeaturesService } from '../../../services/features.service';
 import { MindsVideoComponent } from '../../media/components/video/video.component';
 import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
-import { PermissionsService } from '../../../common/services/permissions.service';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { Flags } from '../../../common/services/permissions/flags';
 
 @Component({
   selector: 'm-comment',
@@ -385,7 +386,10 @@ export class CommentComponentV2
 
   checkEditPermissions() {
     if (this.featuresService.has('permissions')) {
-      return this.permissionsService.canInteract(this.comment, 'edit_comment');
+      return this.permissionsService.canInteract(
+        this.comment,
+        Flags.EDIT_COMMENT
+      );
     }
 
     return (
@@ -399,7 +403,7 @@ export class CommentComponentV2
     if (this.featuresService.has('permissions')) {
       return this.permissionsService.canInteract(
         this.comment,
-        'delete_comment'
+        Flags.DELETE_COMMENT
       );
     }
 

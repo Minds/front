@@ -7,7 +7,8 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { FeaturesService } from '../../../services/features.service';
-import { PermissionsService } from '../../../common/services/permissions.service';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { Flags } from '../../../common/services/permissions/flags';
 
 @Component({
   selector: 'minds-groups-settings-button',
@@ -311,7 +312,10 @@ export class GroupsSettingsButton {
 
   checkDeletePermissions() {
     if (this.featuresService.has('permissions')) {
-      return this.permissionsService.canInteract(this.group, 'delete_group');
+      return this.permissionsService.canInteract(
+        this.group,
+        Flags.DELETE_GROUP
+      );
     }
 
     return true;

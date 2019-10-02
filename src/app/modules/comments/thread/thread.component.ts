@@ -24,7 +24,8 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { Subscription } from 'rxjs';
 import { TouchSequence } from 'selenium-webdriver';
 import { FeaturesService } from '../../../services/features.service';
-import { PermissionsService } from '../../../common/services/permissions.service';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { Flags } from '../../../common/services/permissions/flags';
 
 @Component({
   selector: 'm-comments__thread',
@@ -94,7 +95,7 @@ export class CommentsThreadComponent implements OnInit {
       // TODO: maybe there should be a "view comment" flag?
       this.canPost = await this.permissionsService.canInteract(
         this.entity,
-        'create_comment'
+        Flags.CREATE_COMMENT
       );
     }
   }
