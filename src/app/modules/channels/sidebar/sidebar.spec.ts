@@ -90,7 +90,7 @@ describe('ChannelSidebar', () => {
         }),
         MockComponent({
           selector: 'minds-button-subscribe',
-          inputs: ['user'],
+          inputs: ['user', 'request'],
         }),
         MockComponent({
           selector: 'm-hashtags-selector',

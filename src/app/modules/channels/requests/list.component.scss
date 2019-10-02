@@ -1,0 +1,48 @@
+.m-subscriptionsRequests__list {
+  //  @include m-theme() {
+  //    background-color: themed($m-white);
+  //  }
+  position: relative;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.m-subscriptionRequest__card {
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+  padding: $minds-padding * 2;
+  margin-bottom: $minds-margin;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .m-subscriptionRequestCard__avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+  }
+
+  .m-subscriptionRequestCard__body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin-left: $minds-margin * 2;
+
+    h4 {
+      padding: 0;
+      margin: 0;
+      font-weight: 600;
+      font-size: 16px;
+    }
+    span {
+      font-size: 11px;
+      color: #888;
+    }
+    .m-btn {
+      margin-left: $minds-margin;
+    }
+  }
+}

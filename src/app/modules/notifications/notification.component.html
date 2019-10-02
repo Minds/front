@@ -42,6 +42,41 @@
     </a>
   </ng-template>
 
+  <!-- subscription_request_declined -->
+  <ng-template ngSwitchCase="subscription_request_declined">
+    <a [routerLink]="['/', notification.fromObj.username || '']">
+      <p>
+        <span class="pseudo-link mdl-color-text--blue-grey-400">{{
+          notification.fromObj.name
+        }}</span>
+        rejected your subscription request.
+      </p>
+    </a>
+  </ng-template>
+
+  <!-- subscription_request_accepted -->
+  <ng-template ngSwitchCase="subscription_request_accepted">
+    <a [routerLink]="['/', notification.fromObj.username || '']">
+      <p>
+        <span class="pseudo-link mdl-color-text--blue-grey-400">{{
+          notification.fromObj.name
+        }}</span>
+        accepted your subscription request. You are now subscribed.
+      </p>
+    </a>
+  </ng-template>
+
+  <ng-template ngSwitchCase="subscription_request_received">
+    <a [routerLink]="['/', session.getLoggedInUser().username, 'requests']">
+      <p>
+        <span class="pseudo-link mdl-color-text--blue-grey-400">{{
+          notification.fromObj.name
+        }}</span>
+        has requested to subscribe to you.
+      </p>
+    </a>
+  </ng-template>
+
   <!-- referral ping -->
   <ng-template ngSwitchCase="referral_ping">
     <a [routerLink]="['/wallet/tokens/contributions']">

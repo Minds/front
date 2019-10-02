@@ -1,0 +1,10 @@
+<ul class="m-subscriptionsRequests__list">
+  <li
+    *ngFor="let request of requests"
+    class="m-subscriptionsRequestsList__item"
+  >
+    <m-subscriptionsRequests__request
+      [request]="request"
+    ></m-subscriptionsRequests__request>
+  </li>
+</ul>

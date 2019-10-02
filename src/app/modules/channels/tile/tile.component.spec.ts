@@ -50,7 +50,7 @@ describe('ChannelsTileComponent', () => {
         }),
         MockComponent({
           selector: 'minds-button-subscribe',
-          inputs: ['user'],
+          inputs: ['user', 'request'],
         }),
         MockComponent({
           selector: 'm-safe-toggle',

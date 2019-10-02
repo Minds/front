@@ -1,0 +1,29 @@
+<a class="m-subscriptionRequest__card m-border">
+  <div
+    class="m-subscriptionRequestCard__avatar"
+    [style.background-image]="
+      'url(' + minds.cdn_url + '/icon/' + request.subscriber.guid + ')'
+    "
+  ></div>
+  <div class="m-subscriptionRequestCard__body">
+    <div [title]="request.subscriber.briefdescription">
+      <h4>{{ request.subscriber.username }}</h4>
+      <span>{{ request.subscriber.briefdescription }}</span>
+    </div>
+    <div class="m-layout__spacer"></div>
+    <ng-container *ngIf="!request.completed; else completed">
+      <button class="m-btn m-btn--action m-btn--slim" (click)="accept($event)">
+        Accept
+      </button>
+      <button
+        class="m-btn m-btn--destructive m-btn--slim"
+        (click)="decline($event)"
+      >
+        Decline
+      </button>
+    </ng-container>
+    <ng-template #completed>
+      Saved
+    </ng-template>
+  </div>
+</a>
