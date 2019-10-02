@@ -21,6 +21,6 @@ export enum Flags {
   SUBSCRIBE = 'subscribe',
   TAG = 'tag',
   REMIND = 'remind',
-  VIEW = 'wire',
+  VIEW = 'view',
   VOTE = 'vote',
 }
