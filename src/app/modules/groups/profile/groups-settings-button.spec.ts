@@ -21,7 +21,7 @@ import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service
 import { GroupsService } from '../groups-service';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
-import { PermissionsService } from '../../../common/services/permissions.service';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
 
 let groupConfig = {
   countMembers: Promise.resolve(1),

@@ -7,13 +7,13 @@ import {
   tick,
 } from '@angular/core/testing';
 
-import { MockComponent, MockDirective, MockService } from '../../utils/mock';
+import { MockComponent, MockService } from '../../utils/mock';
 
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Client } from '../../services/api/client';
-import { By, Title } from '@angular/platform-browser';
+import { By } from '@angular/platform-browser';
 import { clientMock } from '../../../tests/client-mock.spec';
 import { uploadMock } from '../../../tests/upload-mock.spec';
 import { sessionMock } from '../../../tests/session-mock.spec';
@@ -39,7 +39,7 @@ import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelMode } from '../../interfaces/entities';
 import { ClientMetaService } from '../../common/services/client-meta.service';
 import { clientMetaServiceMock } from '../../../tests/client-meta-service-mock.spec';
-import { PermissionsService } from '../../common/services/permissions.service';
+import { PermissionsService } from '../../common/services/permissions/permissions.service';
 
 describe('ChannelComponent', () => {
   let comp: ChannelComponent;
@@ -185,27 +185,39 @@ describe('ChannelComponent', () => {
     const carousel = fixture.debugElement.query(By.css('m-channel--carousel'));
     const sidebar = fixture.debugElement.query(By.css('m-channel--sidebar'));
     const feed = fixture.debugElement.query(By.css('m-channel--feed'));
+
     expect(carousel).not.toBeNull();
     expect(sidebar).not.toBeNull();
     expect(feed).not.toBeNull();
+
     comp.filter = 'supporters';
     fixture.detectChanges();
+
     const supporters = fixture.debugElement.query(
       By.css('m-channel--supporters')
     );
     expect(supporters).not.toBeNull();
+
     comp.filter = 'subscribers';
     fixture.detectChanges();
     const subscribers = fixture.debugElement.query(
+      By.css('m-channel--subscribers')
+    );
+    expect(subscribers).not.toBeNull();
+
+    comp.filter = 'subscriptions';
+    fixture.detectChanges();
+    const subscriptions = fixture.debugElement.query(
       By.css('m-channel--subscriptions')
     );
-    expect(supporters).not.toBeNull();
-    comp.filter = 'subscriptors';
+    expect(subscriptions).not.toBeNull();
+
+    comp.filter = 'requests';
     fixture.detectChanges();
-    const subscriptors = fixture.debugElement.query(
-      By.css('minds-channel-subscriptors')
+    const requests = fixture.debugElement.query(
+      By.css('m-subscriptionsRequests__list')
     );
-    expect(supporters).not.toBeNull();
+    expect(requests).not.toBeNull();
   });
 
   it('should load() on init', () => {

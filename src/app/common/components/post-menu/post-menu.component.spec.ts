@@ -27,7 +27,7 @@ import { activityServiceMock } from '../../../../tests/activity-service-mock.spe
 import { storageMock } from '../../../../tests/storage-mock.spec';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { Storage } from '../../../services/storage';
-import { PermissionsService } from '../../services/permissions.service';
+import { PermissionsService } from '../../services/permissions/permissions.service';
 import { MockService } from '../../../utils/mock';
 /* tslint:disable */
 
