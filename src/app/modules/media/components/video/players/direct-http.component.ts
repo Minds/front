@@ -125,11 +125,11 @@ export class MindsVideoDirectHttpPlayer
     }
   }
 
-  async pause() {
+  pause() {
     const player = this.getPlayer();
 
     try {
-      await player.pause();
+      player.pause();
     } catch (e) {
       console.log(e);
     }
@@ -141,7 +141,7 @@ export class MindsVideoDirectHttpPlayer
     if (player.paused) {
       await this.play();
     } else {
-      await this.pause();
+      this.pause();
     }
   }
 
