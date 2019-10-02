@@ -37,7 +37,10 @@
 
   <ng-container *ngIf="playerRef">
     <i
-      *ngIf="!playerRef.isPlaying() && !playerRef.isLoading()"
+      *ngIf="
+        (!playerRef.isPlaying() && !playerRef.isLoading()) ||
+        (shouldPlayInModal && !playerRef.isPlaying())
+      "
       class="material-icons minds-video-play-icon"
       (click)="clickedVideo()"
       >play_circle_outline</i
