@@ -126,7 +126,14 @@
   </section>
 
   <!-- Subscriptions list -->
-  <section class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'subscriptions'">
+  <section
+    class="mdl-cell mdl-cell--8-col"
+    *ngIf="
+      filter == 'subscriptions' ||
+      filter == 'subscribers' ||
+      filter == 'requests'
+    "
+  >
     <div class="mdl-card m-channel--subscribers-tabs">
       <div class="mdl-tabs__tab-bar">
         <a
@@ -160,52 +167,18 @@
     <m-channel--subscriptions
       [channel]="user"
       class="mdl-grid"
+      *ngIf="filter === 'subscriptions'"
     ></m-channel--subscriptions>
-  </section>
-
-  <!-- Subscriptions list -->
-  <section
-    class="mdl-cell mdl-cell--8-col"
-    *ngIf="filter == 'subscribers' || filter == 'requests'"
-  >
-    <div class="mdl-card m-channel--subscribers-tabs">
-      <div class="mdl-tabs__tab-bar">
-        <a
-          [routerLink]="['/', user.username, 'subscribers']"
-          class="mdl-tabs__tab"
-          [ngClass]="{ 'is-active': filter === 'subscribers' }"
-          i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT"
-        >
-          Subscribers ({{ user.subscribers_count }})
-        </a>
-        <a
-          [routerLink]="['/', user.username, 'subscriptions']"
-          class="mdl-tabs__tab"
-          [ngClass]="{ 'is-active': filter === 'subscriptions' }"
-          i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT"
-        >
-          Subscriptions ({{ user.subscriptions_count }})
-        </a>
-
-        <a
-          [routerLink]="['/', user.username, 'requests']"
-          *ngIf="user.mode === 2 && user.guid == session.getLoggedInUser().guid"
-          class="mdl-tabs__tab"
-          [ngClass]="{ 'is-active': filter === 'requests' }"
-        >
-          Requests
-        </a>
-      </div>
-    </div>
 
     <m-channel--subscribers
       [channel]="user"
       class="mdl-grid"
+      *ngIf="filter === 'subscribers'"
     ></m-channel--subscribers>
-  </section>
 
-  <section class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'requests'">
-    <m-subscriptionsRequests__list></m-subscriptionsRequests__list>
+    <m-subscriptionsRequests__list
+      *ngIf="filter == 'requests'"
+    ></m-subscriptionsRequests__list>
   </section>
 </div>
 
