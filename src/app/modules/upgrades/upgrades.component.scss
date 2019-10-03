@@ -7,15 +7,19 @@ m-upgrades {
 }
 
 .m-upgrades {
-  max-width: ((12 * 72px) + (11 * 20px));
+  $cols: 12;
+  $width: 72px;
+  $gap: 20px;
+
+  max-width: (($cols * $width) + (($cols - 1) * $gap));
   margin: 0 auto;
 
   section.m-upgrades__grid {
     display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(12, 1fr);
+    grid-gap: $gap;
+    grid-template-columns: repeat($cols, 1fr);
 
-    @for $i from 1 through 12 {
+    @for $i from 1 through $cols {
       .m-upgrades__gridColumn--#{$i} {
         grid-column: auto / span $i;
       }
@@ -75,7 +79,7 @@ m-upgrades {
   }
 
   .m-upgrades__mainFeatures {
-    padding-bottom: 75px;
+    padding: 96px 0 75px;
   }
 
   h1 {
@@ -144,5 +148,9 @@ m-upgrades {
         }
       }
     }
+  }
+
+  m-upgrades__upgradeOptions {
+    margin-bottom: 110px;
   }
 }
