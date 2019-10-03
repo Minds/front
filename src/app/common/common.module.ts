@@ -109,6 +109,8 @@ import { RouterHistoryService } from './services/router-history.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
+import { MarketingComponent } from './components/marketing/marketing.component';
+import { MarketingFooterComponent } from './components/marketing/footer.component';
 
 @NgModule({
   imports: [
@@ -207,6 +209,8 @@ import { SiteService } from './services/site.service';
     FeaturedContentComponent,
     PosterDateSelectorComponent,
     DraggableListComponent,
+    MarketingComponent,
+    MarketingFooterComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -294,6 +298,7 @@ import { SiteService } from './services/site.service';
     PosterDateSelectorComponent,
     ChannelModeSelectorComponent,
     DraggableListComponent,
+    MarketingComponent,
   ],
   providers: [
     SiteService,
