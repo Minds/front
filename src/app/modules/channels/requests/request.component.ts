@@ -1,5 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { Client } from '../../../services/api';
+import { FeaturesService } from '../../../services/features.service';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { Session } from '../../../services/session';
+import { Flags } from '../../../common/services/permissions/flags';
 
 @Component({
   selector: 'm-subscriptionsRequests__request',
@@ -9,7 +13,30 @@ export class SubscriptionsRequestsRequestComponent {
   minds = window.Minds;
   @Input() request;
 
-  constructor(private client: Client) {}
+  get canApprove() {
+    if (this.featuresService.has('permissions')) {
+      return this.permissionsService.canInteract(
+        this.session.getLoggedInUser(),
+        Flags.APPROVE_SUBSCRIBER
+      );
+    }
+  }
+
+  get canDecline() {
+    if (this.featuresService.has('permissions')) {
+      return this.permissionsService.canInteract(
+        this.session.getLoggedInUser(),
+        Flags.APPROVE_SUBSCRIBER
+      );
+    }
+  }
+
+  constructor(
+    private client: Client,
+    private session: Session,
+    private featuresService: FeaturesService,
+    private permissionsService: PermissionsService
+  ) {}
 
   async accept() {
     this.request.declined = false;

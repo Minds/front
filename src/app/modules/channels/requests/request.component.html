@@ -12,12 +12,17 @@
     </div>
     <div class="m-layout__spacer"></div>
     <ng-container *ngIf="!request.completed; else completed">
-      <button class="m-btn m-btn--action m-btn--slim" (click)="accept($event)">
+      <button
+        class="m-btn m-btn--action m-btn--slim"
+        (click)="accept()"
+        [disabled]="!canApprove"
+      >
         Accept
       </button>
       <button
         class="m-btn m-btn--destructive m-btn--slim"
-        (click)="decline($event)"
+        (click)="decline()"
+        [disabled]="!canDecline"
       >
         Decline
       </button>
