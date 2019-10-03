@@ -5,4 +5,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'upgrade-options.component.html',
 })
-export class UpgradeOptionsComponent {}
+export class UpgradeOptionsComponent {
+  interval: string = 'yearly';
+  currency: string = 'tokens';
+}

@@ -21,6 +21,10 @@ m-upgrades__upgradeOptions {
       align-items: center;
 
       .m-upgradesUpgradeOptionsHeader__toggle {
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: stretch;
         margin-right: 50px;
 
         &:last-child {

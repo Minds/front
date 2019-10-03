@@ -111,6 +111,7 @@ import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
 import { MarketingComponent } from './components/marketing/marketing.component';
 import { MarketingFooterComponent } from './components/marketing/footer.component';
+import { ToggleComponent } from './components/toggle/toggle.component';
 
 @NgModule({
   imports: [
@@ -209,6 +210,7 @@ import { MarketingFooterComponent } from './components/marketing/footer.componen
     FeaturedContentComponent,
     PosterDateSelectorComponent,
     DraggableListComponent,
+    ToggleComponent,
     MarketingComponent,
     MarketingFooterComponent,
   ],
@@ -298,6 +300,7 @@ import { MarketingFooterComponent } from './components/marketing/footer.componen
     PosterDateSelectorComponent,
     ChannelModeSelectorComponent,
     DraggableListComponent,
+    ToggleComponent,
     MarketingComponent,
   ],
   providers: [

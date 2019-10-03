@@ -5,12 +5,24 @@
     <div class="m-upgradesUpgradeOptionsHeader__toggleContainer">
       <div class="m-upgradesUpgradeOptionsHeader__toggle">
         <span class="">Yearly</span>
-        <!-- TODO: left/right toggle -->
+        <span
+          ><m-toggle
+            [(mModel)]="interval"
+            leftValue="yearly"
+            rightValue="monthly"
+          ></m-toggle
+        ></span>
         <span class="">Monthly</span>
       </div>
       <div class="m-upgradesUpgradeOptionsHeader__toggle">
         <span class="">USD</span>
-        <!-- TODO: left/right toggle -->
+        <span
+          ><m-toggle
+            [(mModel)]="currency"
+            leftValue="usd"
+            rightValue="tokens"
+          ></m-toggle
+        ></span>
         <span class="">Tokens</span>
       </div>
     </div>
