@@ -1,13 +1,30 @@
-<div id="chartContainer" class="chart-container"></div>
+<!-- TODO: Make this into a different component -->
+<!-- <m-chart [buckets]="(vm$.thecurrentvisualisation" | async)></m-chart> -->
 
-<div
-  id="hoverInfo"
-  class="hoverInfo"
-  [style.top]="'closestHoverPointPositionX' + 'px'"
-  [style.left]="'closestHoverPointPositionY' + 'px'"
->
-  <div id="hoverInfo__x" class="hoverInfo__row--secondary">x</div>
-  <div id="hoverInfo__y" class="hoverInfo__row--primary">y</div>
-  <div id="hoverInfo__comparisonXy" class="hoverInfo__row--secondary">z</div>
+<!-- TODO: then all this becomes m-plotlyChart -->
+<!-- <div *ngIf="vm$ | async as vm"> -->
+<div>
+  <!-- <div id="graphDiv"></div> -->
+  <plotly-plot
+    [divId]="graphDiv"
+    [data]="data"
+    [layout]="layout"
+    [config]="config"
+    [useResizeHandler]="true"
+    [style]="{ position: 'relative' }"
+    (hover)="onHover($event)"
+    (unhover)="onUnhover($event)"
+    (afterPlot)="updateGraph($event)"
+  >
+  </plotly-plot>
+
+  <div id="hoverInfo" class="hoverInfo">
+    <div id="hoverInfo__x" class="hoverInfo__row">
+      Wed 2 October 2019
+    </div>
+    <div id="hoverInfo__y" class="hoverInfo__row--primary">789012</div>
+    <div id="hoverInfo__comparisonXy" class="hoverInfo__row">
+      vs 567890 on Tues 1 October
+    </div>
+  </div>
 </div>
-<!-- <div *ngIf="(the vm.metric with the visualisation is type=chart)"> -->

@@ -1,5 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import {
   AnalyticsDashboardService,
   Category,
@@ -7,7 +12,7 @@ import {
   Dashboard,
   Filter,
   Option,
-  Metric,
+  Metric as MetricBase,
   Summary,
   Visualisation,
   Bucket,
@@ -15,43 +20,54 @@ import {
   UserState,
 } from '../../dashboard.service';
 
+interface MetricExtended extends MetricBase {
+  delta: number;
+  hasChanged: boolean;
+  positiveTrend: boolean;
+}
+export { MetricExtended as Metric };
+
 @Component({
   selector: 'm-analytics__metrics',
   templateUrl: './metrics.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnalyticsMetricsComponent implements OnInit {
+export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
   data;
-  metrics: Array<any>;
-  activeMetric: string = '';
+  subscription: Subscription;
+
+  //TODO: (maybe) interface ViewMetric implements Metric {}
   vm$: Observable<UserState> = this.analyticsService.vm$;
+  vm: UserState;
+
   constructor(private analyticsService: AnalyticsDashboardService) {}
 
   ngOnInit() {
-    this.data = this.analyticsService.getData();
-
-    this.metrics = this.data.metrics;
-    this.activeMetric = this.data.metric;
-
-    this.metrics.forEach(metric => {
+    this.subscription = this.vm$.subscribe(viewModel => (this.vm = viewModel));
+    this.vm.metrics.forEach(metric => {
       const delta =
         (metric.summary.current_value - metric.summary.comparison_value) /
         metric.summary.comparison_value;
 
-      metric.delta = delta;
+      metric['delta'] = delta;
+      metric['hasChanged'] = delta === 0 ? false : true;
+
       if (
-        (delta > 0 && metric.comparison_positive_inclination) ||
-        (delta < 0 && !metric.comparison_positive_inclination)
+        (delta > 0 && metric.summary.comparison_positive_inclination) ||
+        (delta < 0 && !metric.summary.comparison_positive_inclination)
       ) {
-        metric.positive = true;
+        metric['positiveTrend'] = true;
       } else {
-        metric.positive = false;
+        metric['positiveTrend'] = false;
       }
     });
   }
 
   updateMetric(metric) {
-    this.activeMetric = metric;
-    console.log('updated metric: ' + metric.id);
+    this.analyticsService.updateMetric(metric);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

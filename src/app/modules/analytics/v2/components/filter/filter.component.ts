@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
+  OnDestroy,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -27,34 +28,64 @@ import {
   templateUrl: 'filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnalyticsFilterComponent implements OnInit {
+export class AnalyticsFilterComponent implements OnInit, OnDestroy {
+  // TODO: extend Filter interface to allow additional fields (like for timespans?)
   @Input() filter: Filter;
 
-  @Output() filterChanged: EventEmitter<{
-    selectedFilterStr;
-  }> = new EventEmitter();
-
-  expanded: boolean = false;
+  expanded = false;
   options: Array<any> = [];
-  selectedOption = {};
-  selectedFilterStr;
+  selectedOption: Option;
+  subscription;
   vm$: Observable<UserState> = this.analyticsService.vm$;
+  vm: UserState;
   constructor(private analyticsService: AnalyticsDashboardService) {}
 
   ngOnInit() {
+    this.subscription = this.vm$.subscribe(viewModel => (this.vm = viewModel));
     this.options = this.filter.options;
 
     this.selectedOption =
       this.options.find(option => option.selected === true) || this.options[0];
   }
 
-  // TODO: make this work for multiple filters
-  changeFilterOption(option: Option) {
+  updateFilter(option: Option) {
     this.expanded = false;
     this.selectedOption = option;
-    this.selectedFilterStr = `${this.filter.id}::${option.id}`;
+    const selectedFilterStr = `${this.filter.id}::${option.id}`;
 
-    // this.filterChanged.emit(this.selectedFilterStr);
-    this.analyticsService.updateFilter(this.selectedFilterStr);
+    if (
+      this.vm.filter.includes(selectedFilterStr) ||
+      !this.selectedOption.available
+    ) {
+      return;
+    }
+
+    console.log(this.vm.filter);
+
+    const filterArr = this.vm.filter;
+    const activeFilterIds = filterArr.map(filterStr => {
+      return filterStr.split('::')[0];
+    });
+    console.log(activeFilterIds);
+    const filterIndex = activeFilterIds.findIndex(
+      filterId => filterId === this.filter.id
+    );
+
+    console.log(filterIndex);
+
+    if (activeFilterIds.includes(selectedFilterStr)) {
+      filterArr.splice(filterIndex, 1, selectedFilterStr);
+    } else {
+      filterArr.push(selectedFilterStr);
+    }
+    console.log(filterArr);
+
+    //TODO make incoming string filterStr instead of option
+    // const filterStr = somethingToDoWith_optionLabel;
+    this.analyticsService.updateFilter(filterArr);
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

@@ -1,13 +1,11 @@
 <div class="page" *ngIf="vm$ | async as vm" [ngClass]="{ isMobile: isMobile }">
   <section class="sidebar">
     <h3>Analytics</h3>
+    <div *ngIf="isMobile">{{ vm.category }}</div>
     <div class="catContainer">
-      <i *ngIf="isMobile" class="material-icons">menu</i>
-      <div *ngIf="isMobile" class="selectedCatLabel">
-        {{ selectedCat.label }}
-      </div>
+      <i class="material-icons">menu</i>
       <div class="cat" *ngFor="let cat of cats">
-        <span [ngClass]="{ selected: cat.id === selectedCat.id }">{{
+        <span [ngClass]="{ selected: cat.id === vm.category }">{{
           cat.label
         }}</span>
       </div>
@@ -27,7 +25,6 @@
             placeholder="Search for a channel"
           /> -->
         </div>
-
         <!-- <div class="timespanFilter">
           <m-analytics__filter [filter]="timespanFilter"></m-analytics__filter>
         </div> -->

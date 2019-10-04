@@ -1,6 +1,10 @@
-<div class="filterWrapper" [ngClass]="{ expanded: expanded }">
+<div
+  class="filterWrapper"
+  *ngIf="vm$ | async as vm"
+  [ngClass]="{ expanded: expanded }"
+>
   <div class="filterHeader" (click)="expanded = !expanded">
-    <span *ngIf="showLabel" class="filterLabel">{{ filter.label }}</span>
+    <span class="filterLabel">{{ filter.label }}</span>
     <span class="option option--selected">
       <span>{{ selectedOption.label }}</span>
     </span>
@@ -11,7 +15,7 @@
     <ng-container *ngFor="let option of options">
       <div
         class="option"
-        (click)="clickedOption(option)"
+        (click)="updateFilter(option)"
         *ngIf="option.label !== selectedOption.label"
         [ngClass]="{
           unavailable: !option.available

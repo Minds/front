@@ -34,7 +34,7 @@ export interface Dashboard {
   category: string;
   timespan: string;
   timespans: Timespan[];
-  metric: string;
+  metric: Metric;
   metrics: Metric[];
   filter: string[];
   filters: Filter[];
@@ -92,7 +92,7 @@ export interface UserState {
   category: string;
   timespan: string;
   timespans: Timespan[];
-  metric: string;
+  metric: Metric;
   metrics: Metric[];
   filter: string[];
   filters: Filter[];
@@ -101,39 +101,39 @@ export interface UserState {
 
 let _state: UserState = {
   category: 'traffic',
-  timespan: 'mtd',
+  timespan: '30d',
   timespans: [
     {
       id: 'today',
       label: 'today',
       interval: 'day',
       comparison_interval: 1,
-      from_ts_ms: 1569542400000,
-      from_ts_iso: '2019-09-27T00:00:00+00:00',
+      from_ts_ms: 1569888000000,
+      from_ts_iso: '2019-10-01T00:00:00+00:00',
     },
     {
       id: '30d',
       label: 'Last 30 days',
       interval: 'day',
       comparison_interval: 28,
-      from_ts_ms: 1566950400000,
-      from_ts_iso: '2019-08-28T00:00:00+00:00',
+      from_ts_ms: 1567296000000,
+      from_ts_iso: '2019-09-01T00:00:00+00:00',
     },
     {
       id: '1y',
       label: '1 year ago',
       interval: 'month',
       comparison_interval: 365,
-      from_ts_ms: 1538006400000,
-      from_ts_iso: '2018-09-27T00:00:00+00:00',
+      from_ts_ms: 1538352000000,
+      from_ts_iso: '2018-10-01T00:00:00+00:00',
     },
     {
       id: 'mtd',
       label: 'month to date',
       interval: 'day',
       comparison_interval: 28,
-      from_ts_ms: 1567296000000,
-      from_ts_iso: '2019-09-01T00:00:00+00:00',
+      from_ts_ms: 1569888000000,
+      from_ts_iso: '2019-10-01T00:00:00+00:00',
     },
     {
       id: 'ytd',
@@ -144,11 +144,161 @@ let _state: UserState = {
       from_ts_iso: '2019-01-01T00:00:00+00:00',
     },
   ],
-  metric: 'views',
+  metric: {
+    id: 'views',
+    label: 'views',
+    permissions: ['admin'],
+    summary: {
+      current_value: 83898,
+      comparison_value: 0,
+      comparison_interval: 28,
+      comparison_positive_inclination: true,
+    },
+    visualisation: {
+      type: 'chart',
+      buckets: [
+        {
+          key: 1567296000000,
+          date: '2019-09-01T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1567382400000,
+          date: '2019-09-02T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1567468800000,
+          date: '2019-09-03T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1567555200000,
+          date: '2019-09-04T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1567641600000,
+          date: '2019-09-05T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1567728000000,
+          date: '2019-09-06T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1567814400000,
+          date: '2019-09-07T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1567900800000,
+          date: '2019-09-08T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1567987200000,
+          date: '2019-09-09T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1568073600000,
+          date: '2019-09-10T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1568160000000,
+          date: '2019-09-11T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1568246400000,
+          date: '2019-09-12T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1568332800000,
+          date: '2019-09-13T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1568419200000,
+          date: '2019-09-14T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1568505600000,
+          date: '2019-09-15T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1568592000000,
+          date: '2019-09-16T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1568678400000,
+          date: '2019-09-17T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1568764800000,
+          date: '2019-09-18T00:00:00+00:00',
+          value: 0,
+        },
+        {
+          key: 1568851200000,
+          date: '2019-09-19T00:00:00+00:00',
+          value: 9565,
+        },
+        {
+          key: 1568937600000,
+          date: '2019-09-20T00:00:00+00:00',
+          value: 10821,
+        },
+        {
+          key: 1569024000000,
+          date: '2019-09-21T00:00:00+00:00',
+          value: 10674,
+        },
+        {
+          key: 1569110400000,
+          date: '2019-09-22T00:00:00+00:00',
+          value: 10494,
+        },
+        {
+          key: 1569196800000,
+          date: '2019-09-23T00:00:00+00:00',
+          value: 11203,
+        },
+        {
+          key: 1569283200000,
+          date: '2019-09-24T00:00:00+00:00',
+          value: 14034,
+        },
+        {
+          key: 1569369600000,
+          date: '2019-09-25T00:00:00+00:00',
+          value: 11618,
+        },
+        {
+          key: 1569456000000,
+          date: '2019-09-26T00:00:00+00:00',
+          value: 5489,
+        },
+        {
+          key: 1569542400000,
+          date: '2019-09-27T00:00:00+00:00',
+          value: 0,
+        },
+      ],
+    },
+  },
   metrics: [
     {
       id: 'active_users',
-      label: 'active users',
+      label: 'Active Users',
       permissions: ['admin'],
       summary: {
         current_value: 120962,
@@ -160,7 +310,7 @@ let _state: UserState = {
     },
     {
       id: 'signups',
-      label: 'signups',
+      label: 'Signups',
       permissions: ['admin'],
       summary: {
         current_value: 53060,
@@ -172,7 +322,7 @@ let _state: UserState = {
     },
     {
       id: 'views',
-      label: 'views',
+      label: 'Pageviews',
       permissions: ['admin'],
       summary: {
         current_value: 83898,
@@ -186,147 +336,62 @@ let _state: UserState = {
           {
             key: 1567296000000,
             date: '2019-09-01T00:00:00+00:00',
-            value: 0,
+            value: 1,
           },
           {
             key: 1567382400000,
             date: '2019-09-02T00:00:00+00:00',
-            value: 0,
+            value: 2,
           },
           {
             key: 1567468800000,
             date: '2019-09-03T00:00:00+00:00',
-            value: 0,
+            value: 3,
           },
           {
             key: 1567555200000,
             date: '2019-09-04T00:00:00+00:00',
-            value: 0,
+            value: 4,
           },
           {
             key: 1567641600000,
             date: '2019-09-05T00:00:00+00:00',
-            value: 0,
+            value: 5,
           },
           {
-            key: 1567728000000,
-            date: '2019-09-06T00:00:00+00:00',
-            value: 0,
+            key: 1567296000000,
+            date: '2019-08-01T00:00:00+00:00',
+            value: 5.5,
           },
           {
-            key: 1567814400000,
-            date: '2019-09-07T00:00:00+00:00',
-            value: 0,
+            key: 1567382400000,
+            date: '2019-08-02T00:00:00+00:00',
+            value: 4.5,
           },
           {
-            key: 1567900800000,
-            date: '2019-09-08T00:00:00+00:00',
-            value: 0,
+            key: 1567468800000,
+            date: '2019-08-03T00:00:00+00:00',
+            value: 3.5,
           },
           {
-            key: 1567987200000,
-            date: '2019-09-09T00:00:00+00:00',
-            value: 0,
+            key: 1567555200000,
+            date: '2019-08-04T00:00:00+00:00',
+            value: 2.5,
           },
           {
-            key: 1568073600000,
-            date: '2019-09-10T00:00:00+00:00',
-            value: 0,
-          },
-          {
-            key: 1568160000000,
-            date: '2019-09-11T00:00:00+00:00',
-            value: 0,
-          },
-          {
-            key: 1568246400000,
-            date: '2019-09-12T00:00:00+00:00',
-            value: 0,
-          },
-          {
-            key: 1568332800000,
-            date: '2019-09-13T00:00:00+00:00',
-            value: 0,
-          },
-          {
-            key: 1568419200000,
-            date: '2019-09-14T00:00:00+00:00',
-            value: 0,
-          },
-          {
-            key: 1568505600000,
-            date: '2019-09-15T00:00:00+00:00',
-            value: 0,
-          },
-          {
-            key: 1568592000000,
-            date: '2019-09-16T00:00:00+00:00',
-            value: 0,
-          },
-          {
-            key: 1568678400000,
-            date: '2019-09-17T00:00:00+00:00',
-            value: 0,
-          },
-          {
-            key: 1568764800000,
-            date: '2019-09-18T00:00:00+00:00',
-            value: 0,
-          },
-          {
-            key: 1568851200000,
-            date: '2019-09-19T00:00:00+00:00',
-            value: 9565,
-          },
-          {
-            key: 1568937600000,
-            date: '2019-09-20T00:00:00+00:00',
-            value: 10821,
-          },
-          {
-            key: 1569024000000,
-            date: '2019-09-21T00:00:00+00:00',
-            value: 10674,
-          },
-          {
-            key: 1569110400000,
-            date: '2019-09-22T00:00:00+00:00',
-            value: 10494,
-          },
-          {
-            key: 1569196800000,
-            date: '2019-09-23T00:00:00+00:00',
-            value: 11203,
-          },
-          {
-            key: 1569283200000,
-            date: '2019-09-24T00:00:00+00:00',
-            value: 14034,
-          },
-          {
-            key: 1569369600000,
-            date: '2019-09-25T00:00:00+00:00',
-            value: 11618,
-          },
-          {
-            key: 1569456000000,
-            date: '2019-09-26T00:00:00+00:00',
-            value: 5489,
-          },
-          {
-            key: 1569542400000,
-            date: '2019-09-27T00:00:00+00:00',
-            value: 0,
+            key: 1567641600000,
+            date: '2019-08-05T00:00:00+00:00',
+            value: 1.5,
           },
         ],
       },
     },
   ],
-  filter: ['view_type::single'],
+  filter: ['platform::all', 'view_type::single', 'channel::all'],
   filters: [
     {
       id: 'platform',
-      label: 'Platform type',
+      label: 'Platform',
       options: [
         { id: 'all', label: 'All', available: true, selected: false },
         {
@@ -340,14 +405,14 @@ let _state: UserState = {
     },
     {
       id: 'view_type',
-      label: 'View types',
+      label: 'View Type',
       options: [
-        { id: 'total', label: 'Total', available: false, selected: false },
+        { id: 'total', label: 'Total', available: true, selected: false },
         {
           id: 'organic',
           label: 'Organic',
-          available: false,
-          selected: false,
+          available: true,
+          selected: true,
         },
         {
           id: 'boosted',
@@ -355,7 +420,7 @@ let _state: UserState = {
           available: false,
           selected: false,
         },
-        { id: 'single', label: 'Single', available: true, selected: true },
+        { id: 'single', label: 'Single', available: true, selected: false },
       ],
     },
   ],
@@ -446,11 +511,31 @@ export class AnalyticsDashboardService {
   );
 
   /**
-   * Watch 4 streams to trigger user loads and state updates
-   * TODO: 5 streams when channel filter is implemented
+   * Watch 5 streams to trigger user loads and state updates
    */
-  // TODO: replace with - constructor(private client: Client) {
-  constructor(private httpClient: HttpClient) {
+  // TODO:  remove one of these later
+  constructor(private client: Client, private httpClient: HttpClient) {
+    // combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
+    //   .pipe(
+    //     switchMap(([category, timespan, metric, filter]) => {
+    //       return this.getDashboardResponse(category, timespan, metric, filter);
+    //     })
+    //   )
+    //   .subscribe(response => {
+    //     const dashboard = response.dashboard;
+
+    //     this.updateState({
+    //       ..._state,
+    //       category: dashboard.category,
+    //       timespan: dashboard.timespan,
+    //       filter: dashboard.filter,
+    //       loading: false,
+    //     });
+    //   });
+    this.loadFromRemote();
+  }
+
+  loadFromRemote() {
     combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
       .pipe(
         switchMap(([category, timespan, metric, filter]) => {
@@ -495,6 +580,7 @@ export class AnalyticsDashboardService {
   //   return channelSearch;
   // }
 
+  // TODO: this in UpdateFilter() instead
   // updateSearchCriteria(criteria: string) {
   //   this.updateState({ ..._state, criteria, loading: true });
   // }
@@ -505,11 +591,12 @@ export class AnalyticsDashboardService {
   updateTimespan(timespan: string) {
     this.updateState({ ..._state, timespan, loading: true });
   }
-  updateMetric(metric: string) {
+  updateMetric(metric: Metric) {
     this.updateState({ ..._state, metric, loading: true });
   }
   updateFilter(filter: string[]) {
     // TODO: this should replace the sameFilterId::filterOption
+    // there should always be a channel filter?
     // const filterStr = { ..._state.filter, currentPage, selectedSize };
     this.updateState({ ..._state, filter, loading: true });
   }
@@ -525,10 +612,11 @@ export class AnalyticsDashboardService {
   private getDashboardResponse(
     category: string,
     timespan: string,
-    metric: string,
+    metric: Metric,
     filter: string[]
   ): Observable<Response> {
     const url = buildQueryUrl(category, timespan, metric, filter);
+    // return this.client.get<Response>(url).pipe(map(response => response));
     return this.httpClient.get<Response>(url).pipe(map(response => response));
   }
 
@@ -540,18 +628,20 @@ export class AnalyticsDashboardService {
 function buildQueryUrl(
   category: string,
   timespan: string,
-  metric: string,
+  metric: Metric,
   filter: string[]
 ): string {
   const url = 'https://walrus.minds.com/api/v2/analytics/dashboards/';
   const filterStr: string = filter.join();
+  const metricId: string = metric.id;
 
-  return `${url}/${category}?metric=${metric}&timespan=${timespan}&filter=${filterStr}`;
+  return `${url}${category}?metric=${metricId}&timespan=${timespan}&filter=${filterStr}`;
 }
 
-// https://walrus.minds.com/api/v2/analytics/dashboards/traffic?metric=views&timespan=mtd&filters=view_type::single
-// const response: any = await this.client.get(`api/v2/hashtags/suggested`, {
-//   limit: limit,
-//   trending: opts.trending ? 1 : '',
-//   defaults: opts.defaults ? 1 : '',
-// });
+// https://walrus.minds.com/api/v2/analytics/dashboards/traffic?metric=views&timespan=mtd&filters=view_type::single,channel::self
+// async getData() {
+//   const response: any = await this.client.get(
+//     `api/v2/analytics/offchainwire`,
+//     { timespan: this.timespan }
+//   );
+// }

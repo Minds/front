@@ -1,5 +1,10 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+} from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import {
   AnalyticsDashboardService,
   Category,
@@ -20,14 +25,19 @@ import {
   templateUrl: './filters.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnalyticsFiltersComponent implements OnInit {
-  filters: Filter[];
+export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
+  subscription: Subscription;
   vm$: Observable<UserState> = this.analyticsService.vm$;
+  vm: UserState;
   constructor(private analyticsService: AnalyticsDashboardService) {}
 
   ngOnInit() {
-    // console.log(this.analyticsService.getData());
-    this.filters = this.analyticsService.getData().filters;
-    // this.filters = this.vm$.filters;
+    // TODO: remove subscription because everything is happening in html
+    // TODO: might even be fine to just get rid of this component and put it in dashboard.ts
+    this.subscription = this.vm$.subscribe(viewModel => (this.vm = viewModel));
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

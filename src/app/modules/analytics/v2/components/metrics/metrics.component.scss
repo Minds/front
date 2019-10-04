@@ -1,6 +1,7 @@
 .metricsContainer {
   display: flex;
   width: 100%;
+  padding: 0 16px;
 
   @include m-theme() {
     border-bottom: 1px solid themed($m-grey-50);
@@ -15,14 +16,19 @@
       border-bottom: 5px solid themed($m-white);
       color: themed($m-grey-200);
     }
-    &.active,
-    &:hover {
-      cursor: pointer;
+    &.active {
       @include m-theme() {
         border-bottom: 5px solid themed($m-blue);
       }
     }
-    .metricLabel {
+
+    &:hover:not(.active) {
+      cursor: pointer;
+      @include m-theme() {
+        background-color: rgba(themed($m-blue-grey-300), 0.08);
+        border-bottom: 5px solid themed($m-blue);
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      }
     }
     .metricSummary {
       font-size: 16px;

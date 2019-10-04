@@ -5,7 +5,7 @@ m-analytics__chart {
     height: 44vh;
   }
 }
-#chartContainer {
+#graphDiv {
   position: relative;
   g,
   g > * {
@@ -14,12 +14,15 @@ m-analytics__chart {
 }
 
 .hoverInfo {
-  // display: none; // TODO: uncomment
+  width: 160px;
   padding: 16px;
   position: absolute;
   pointer-events: none;
-  border-radius: 2px;
-  font-size: 11px;
+  border-radius: 3px;
+  font-size: 12px;
+  z-index: 9999999999; // TODO fix
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
   @include m-theme() {
     background-color: themed($m-white);
     box-shadow: 0 0 4px rgba(themed($m-black), 0.3);
