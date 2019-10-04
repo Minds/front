@@ -39,14 +39,15 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   //TODO: (maybe) interface ViewMetric implements Metric {}
-  vm$: Observable<UserState> = this.analyticsService.vm$;
   metrics$;
 
   constructor(private analyticsService: AnalyticsDashboardService) {}
 
   ngOnInit() {
-    this.metrics$ = this.vm$.pipe(map(vm => {
-      const metrics = vm.metrics.map(metric => ({...metric})); // Clone to avoid updating
+    this.metrics$ = this.analyticsService.metrics$
+      .pipe(
+        map(_metrics => {
+      const metrics = _metrics.map(metric => ({...metric})); // Clone to avoid updating
 
       for (let metric of metrics) {
         const delta =
@@ -72,7 +73,7 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
   }
 
   updateMetric(metric) {
-    this.analyticsService.updateMetric(metric);
+    this.analyticsService.updateMetric(metric.id);
   }
 
   ngOnDestroy() {

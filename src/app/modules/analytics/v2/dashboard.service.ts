@@ -35,7 +35,7 @@ export interface Dashboard {
   category: string;
   timespan: string;
   timespans: Timespan[];
-  metric: Metric;
+  metric: string;
   metrics: Metric[];
   filter: string[];
   filters: Filter[];
@@ -93,7 +93,7 @@ export interface UserState {
   category: string;
   timespan: string;
   timespans: Timespan[];
-  metric: Metric;
+  metric:  string;
   metrics: Metric[];
   filter: string[];
   filters: Filter[];
@@ -107,7 +107,7 @@ let _state: UserState = {
   timespans: [],
   filter: [ "platform::browser" ],
   filters: [ ],
-  metric: { id: 'views' },
+  metric: 'views',
   metrics: [],
 };
 
@@ -144,12 +144,17 @@ export class AnalyticsDashboardService {
   );
   metric$ = this.state$.pipe(
     map(state => state.metric),
-    distinctUntilChanged(deepDiff),
+    //distinctUntilChanged(deepDiff),
+    distinctUntilChanged((prev, curr) => {
+      console.log('distinctUntilChanged() on metric$');
+      console.log(JSON.stringify(prev), JSON.stringify(curr));
+      return deepDiff(prev, curr);
+    }),
     tap(metric => console.log('metric changed', metric))
   );
   metrics$ = this.state$.pipe(
     map(state => state.metrics),
-    distinctUntilChanged(deepDiff),
+    //distinctUntilChanged(deepDiff),
     distinctUntilChanged((prev, curr) => {
       console.log(JSON.stringify(prev), JSON.stringify(curr));
       return deepDiff(prev, curr);
@@ -172,7 +177,7 @@ export class AnalyticsDashboardService {
   /**
    * Viewmodel that resolves once all the data is ready (or updated)
    */
-  vm$: Observable<UserState> = combineLatest(
+   /*vm$: Observable<UserState> = combineLatest(
     this.category$,
     this.timespan$,
     this.timespans$,
@@ -205,7 +210,8 @@ export class AnalyticsDashboardService {
         };
       }
     ),
-  );
+  );*/
+  vm$: Observable<UserState> = new BehaviorSubject(_state);
 
   /**
    * Watch 5 streams to trigger user loads and state updates
@@ -218,7 +224,7 @@ export class AnalyticsDashboardService {
   loadFromRemote() {
     combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
       .pipe(
-        debounceTime(300),
+       ///debounceTime(300),
         tap(() => console.log('load from remote called')),
         distinctUntilChanged(deepDiff),
         switchMap(([category, timespan, metric, filter]) => {
@@ -280,7 +286,7 @@ export class AnalyticsDashboardService {
   updateTimespan(timespan: string) {
     this.updateState({ ..._state, timespan, loading: true });
   }
-  updateMetric(metric: Metric) {
+  updateMetric(metric: string) {
     this.updateState({ ..._state, metric, loading: true });
   }
   updateFilter(filter: string[]) {
@@ -302,7 +308,7 @@ export class AnalyticsDashboardService {
   private getDashboardResponse(
     category: string,
     timespan: string,
-    metric: Metric,
+    metric: string,
     filter: string[]
   ): Observable<Response> {
     const url = buildQueryUrl(category, timespan, metric, filter);
@@ -317,12 +323,12 @@ export class AnalyticsDashboardService {
 function buildQueryUrl(
   category: string,
   timespan: string,
-  metric: Metric,
+  metric: string,
   filter: string[]
 ): string {
   const url = 'https://walrus.minds.com/api/v2/analytics/dashboards/';
   const filterStr: string = filter.join();
-  const metricId: string = metric.id;
+  const metricId: string = metric;
 
   return `${url}${category}?metric=${metricId}&timespan=${timespan}&filter=${filterStr}`;
 }

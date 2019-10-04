@@ -1,11 +1,11 @@
-<div class="page" *ngIf="vm$ | async as vm" [ngClass]="{ isMobile: isMobile }">
+<div class="page" [ngClass]="{ isMobile: isMobile }">
   <section class="sidebar">
     <h3>Analytics</h3>
-    <div *ngIf="isMobile">{{ vm.category }}</div>
+    <div *ngIf="isMobile">{{ category$ | async }}</div>
     <div class="catContainer">
       <i class="material-icons">menu</i>
       <div class="cat" *ngFor="let cat of cats">
-        <span [ngClass]="{ selected: cat.id === vm.category }">{{
+        <span [ngClass]="{ selected: cat.id === (category$ | async) }">{{
           cat?.label
         }}</span>
       </div>

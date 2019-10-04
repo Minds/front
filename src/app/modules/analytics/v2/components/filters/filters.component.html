@@ -1,5 +1,5 @@
-<div class="filtersContainer" *ngIf="vm$ | async as vm">
-  <ng-container *ngFor="let filter of vm.filters">
+<div class="filtersContainer">
+  <ng-container *ngFor="let filter of (filters$ | async)">
     <m-analytics__filter class="filter" [filter]="filter"></m-analytics__filter>
   </ng-container>
 </div>

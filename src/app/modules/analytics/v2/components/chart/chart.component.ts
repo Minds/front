@@ -113,8 +113,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   // ---------------------------------------------------
 
   visualisation: Visualisation;
-  vm$: Observable<UserState> = this.analyticsService.vm$;
-  vm: UserState;
 
   isDark: boolean = false;
   subscription: Subscription;
@@ -218,7 +216,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.vm$.subscribe(viewModel => (this.vm = viewModel));
     this.themeService.isDark$.subscribe(isDark => (this.isDark = isDark));
 
     this.graphDiv = document.getElementById('graphDiv');
@@ -377,9 +374,7 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       { interval: 'day', tickFormat: '%m/%d' },
       { interval: 'month', tickFormat: '%d/%y' },
     ];
-    const selectedInterval = this.vm.timespans.find(
-      t => t.id === this.vm.timespan
-    ).interval;
+    const selectedInterval = 'monthly';
     return timespanTickFormats.find(t => t.interval === selectedInterval)
       .tickFormat;
   }
@@ -396,8 +391,9 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
 
   updateGraph() {
     // TODO: add latest shapes and marker settings to the updates
-    const dataUpdate = this.setData();
-    const layoutUpdate = this.setLayout();
+    // THIS IS CAUSING A LOOP (MH)
+    //const dataUpdate = this.setData();
+    //const layoutUpdate = this.setLayout();
 
     // Plotly.update('graphDiv', dataUpdate, layoutUpdate);
   }
@@ -465,7 +461,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
     this.themeSubscription.unsubscribe();
   }
 }

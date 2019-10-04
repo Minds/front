@@ -27,17 +27,16 @@ import {
 })
 export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
   subscription: Subscription;
-  vm$: Observable<UserState> = this.analyticsService.vm$;
-  vm: UserState;
+
+  filters$ = this.analyticsService.filters$;
+
   constructor(private analyticsService: AnalyticsDashboardService) {}
 
   ngOnInit() {
     // TODO: remove subscription because everything is happening in html
     // TODO: might even be fine to just get rid of this component and put it in dashboard.ts
-    this.subscription = this.vm$.subscribe(viewModel => (this.vm = viewModel));
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }
