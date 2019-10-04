@@ -296,7 +296,7 @@
       height="300px"
       [muted]="false"
       [poster]="activity.custom_data.thumbnail_src"
-      [src]="[{ 'res': '360', 'uri': 'api/v1/media/' + activity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
+      [src]="[{ 'res': '360', 'uri': 'api/v1/media/' + activity.custom_data.guid + '/play?s=activity', 'type': 'video/mp4' }]"
       [guid]="activity.custom_data.guid"
       [playCount]="activity['play:count']"
       [torrent]="[{ res: '360', key: activity.custom_data.guid + '/360.mp4' }]"

@@ -184,7 +184,10 @@
             [src]="[
               {
                 res: '360',
-                uri: 'api/v1/media/' + comment.custom_data.guid + '/play',
+                uri:
+                  'api/v1/media/' +
+                  comment.custom_data.guid +
+                  '/play?s=comment',
                 type: 'video/mp4'
               }
             ]"
