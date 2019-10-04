@@ -2,6 +2,12 @@
 .m-marketing__section {
   // Common
 
+  .m-marketing--hideMobile {
+    @media screen and (max-width: $m-grid-min-vp) {
+      display: none;
+    }
+  }
+
   .m-marketing--title,
   h1 {
     font-weight: 900;
@@ -9,10 +15,22 @@
     line-height: 44px;
     margin: 0 0 23px;
 
+    @media screen and (max-width: $m-grid-min-vp) {
+      font-size: 32px;
+      line-height: 34px;
+      margin: 0 0 18px;
+    }
+
     &.m-marketing--title__bigger-title {
       font-size: 48px;
       line-height: 53px;
-      margin-bottom: 26px;
+      margin: 0 0 26px;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        font-size: 38px;
+        line-height: 46px;
+        margin: 0 0 21px;
+      }
     }
 
     em {
@@ -59,7 +77,7 @@
 
   // Style 1
 
-  .m-marketing__section--style-1 {
+  &.m-marketing__section--style-1 {
     @include m-theme() {
       background: linear-gradient(
         180deg,
@@ -70,6 +88,17 @@
 
     .m-marketing__wrapper {
       padding: 95px 0 85px;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        padding: 30px 0;
+        margin: 0 20px;
+      }
+    }
+
+    p.m-marketing__description {
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
     }
   }
 }

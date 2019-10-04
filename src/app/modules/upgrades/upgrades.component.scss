@@ -1,45 +1,4 @@
 .m-upgrades {
-  .m-upgrades__mainFeatures {
-    padding: 96px 0 75px;
-  }
-
-  h1 {
-    font-size: 48px;
-    font-weight: 900;
-    line-height: 53px;
-    padding-right: 35px;
-    margin: 0 0 26px 0;
-  }
-
-  p {
-    font-size: 16px;
-    line-height: 23px;
-
-    &.m-upgrades__description {
-      margin-bottom: 36px;
-
-      @include m-theme() {
-        color: themed($m-grey-200);
-      }
-    }
-  }
-
-  ul {
-    &.m-upgrades__features {
-      margin-bottom: 45px;
-
-      li {
-        font-size: 16px;
-        line-height: 21px;
-        margin-bottom: 19px;
-
-        &:last-child {
-          margin-bottom: 0;
-        }
-      }
-    }
-  }
-
   .m-upgrades__featuredIn {
     display: flex;
     flex-direction: row;
