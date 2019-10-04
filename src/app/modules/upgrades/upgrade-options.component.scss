@@ -11,7 +11,7 @@ m-upgrades__upgradeOptions {
 
     @media screen and (max-width: $m-grid-min-vp) {
       display: block;
-      margin: 0 40px 25px;
+      margin: 0 40px 20px;
     }
 
     h2 {
@@ -147,7 +147,6 @@ m-upgrades__upgradeOptions {
     }
 
     .m-upgradesUpgradeOptionsPlan__action {
-      display: inline-block;
       margin-top: 25px;
     }
   }

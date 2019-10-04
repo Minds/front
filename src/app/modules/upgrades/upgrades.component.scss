@@ -73,5 +73,9 @@
 
   m-upgrades__upgradeOptions {
     margin-bottom: 110px;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      margin-bottom: 40px;
+    }
   }
 }

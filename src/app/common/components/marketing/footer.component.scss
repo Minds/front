@@ -4,10 +4,14 @@ m-marketing__footer {
   display: block;
   margin-top: 105px;
 
+  @media screen and (max-width: $m-grid-min-vp) {
+    margin-top: 80px;
+  }
+
   @include m-theme() {
     background: linear-gradient(
       180deg,
-      themed($m-grey-50) 0.01%,
+      themed($m-bg-gradient-start) 0%,
       themed($m-white) 100%
     );
   }

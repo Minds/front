@@ -3,17 +3,28 @@ m-upgrades__buyTokens {
 }
 
 .m-upgrades__buyTokens {
-  position: relative;
-  padding: 40px 60px 60px;
   margin-bottom: 105px;
-  background: #726061;
-  color: #ffffff;
+
+  .m-upgradesBuyTokens__wrapper {
+    padding: 40px 60px 60px;
+    background: url('http://placekitten.com/591/362') no-repeat right center
+      #726061;
+    background-size: contain;
+    color: #ffffff;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      background-image: none;
+      padding: 30px;
+      margin: 0 20px;
+    }
+  }
 
   .m-upgradesBuyTokens__body {
     max-width: 320px;
   }
 
   h2 {
+    margin: 0 0 12px;
     font-size: 32px;
     font-weight: 900;
     line-height: 43px;
@@ -27,6 +38,7 @@ m-upgrades__buyTokens {
     }
 
     &.m-upgradesBuyTokens__description {
+      margin-bottom: 25px;
       opacity: 0.6;
     }
   }
@@ -50,6 +62,10 @@ m-upgrades__buyTokens {
     .upgradesBuyTokens__rate {
       @include m-theme() {
         color: themed($m-grey-300);
+      }
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        display: none;
       }
     }
 
@@ -93,7 +109,21 @@ m-upgrades__buyTokens {
             box-shadow: 0 1px 0 rgba(themed($m-black), 0.2);
           }
         }
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          max-width: calc(100% - 20px);
+        }
       }
+    }
+  }
+
+  .m-upgradesBuyTokens__overflownRate {
+    display: none;
+    margin: 24px 0 0;
+    color: #9b9b9b;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      display: block;
     }
   }
 }

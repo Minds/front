@@ -1,3 +1,6 @@
+@import './grid-values';
+@import '../../stylesheets/themes';
+
 .mf-button {
   display: inline-block;
   padding: 14px 32px;
@@ -8,11 +11,25 @@
   font-weight: 400;
   cursor: pointer;
   user-select: none;
+  white-space: nowrap;
+  text-align: center;
 
   @include m-theme() {
     background: themed($m-blue);
     color: themed($m-white-always);
     border-color: themed($m-blue);
+  }
+
+  @media screen and (max-width: $m-grid-min-vp) {
+    display: block;
+    font-size: 15px;
+    padding: 12px 15px;
+  }
+
+  &.mf-button--always-inline {
+    @media screen and (max-width: $m-grid-min-vp) {
+      display: inline-block;
+    }
   }
 
   &.mf-button--hollow {

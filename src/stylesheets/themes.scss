@@ -121,6 +121,7 @@ $themes: (
     m-white: $white,
     m-white-always: $white,
     m-body-bg: #f8f8f8,
+    m-bg-gradient-start: #f9fafc,
     m-warn-bg: $amber-light,
     m-warn-fg: $black,
     m-facebook: $facebook,
@@ -159,6 +160,7 @@ $themes: (
     m-white: lighten($grey-990, $percent),
     m-white-always: $white,
     m-body-bg: lighten(#080808, $percent),
+    m-bg-gradient-start: #292827,
     m-blue-dark: lighten($blue-bright, 15%),
     m-blue: $blue-bright,
     m-blue-light: $blue-dark,
@@ -215,6 +217,7 @@ $m-black-always: 'm-black-always';
 $m-white: 'm-white';
 $m-white-always: 'm-white-always';
 $m-body-bg: 'm-body-bg';
+$m-bg-gradient-start: 'm-bg-gradient-start';
 
 $m-blue-dark: 'm-blue-dark';
 $m-blue: 'm-blue';
