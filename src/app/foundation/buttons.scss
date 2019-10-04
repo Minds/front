@@ -4,6 +4,7 @@
 .mf-button {
   display: inline-block;
   padding: 14px 32px;
+  font: inherit;
   font-size: 18px;
   line-height: 24px;
   border: 1px solid;
@@ -13,6 +14,8 @@
   user-select: none;
   white-space: nowrap;
   text-align: center;
+  appearance: none;
+  text-decoration: none;
 
   @include m-theme() {
     background: themed($m-blue);

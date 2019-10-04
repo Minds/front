@@ -1,10 +1,12 @@
 <div class="m-marketing">
-  <ng-content select=".m-marketing__main"></ng-content>
+  <div class="m-marketing__mainWrapper">
+    <ng-content select=".m-marketing__main"></ng-content>
+  </div>
 
   <div class="m-marketing__sep" *ngIf="bodyWrapper?.children?.length > 0"></div>
 
-  <div class="m-marketing__bodyWrapper" #bodyWrapper>
-    <ng-content select=".m-marketing__body"></ng-content>
+  <div class="m-marketing__extrasWrapper" #bodyWrapper>
+    <ng-content select=".m-marketing__extras"></ng-content>
   </div>
 </div>
 

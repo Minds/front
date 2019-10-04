@@ -37,11 +37,10 @@ m-marketing {
     }
   }
 
-  .m-marketing__body {
-    > * > * {
-      max-width: 1084px;
-      margin: 0 auto;
-      box-sizing: border-box;
-    }
+  .m-marketing__wrapper,
+  .m-marketing__extras > * > * {
+    max-width: 1084px;
+    margin: 0 auto;
+    box-sizing: border-box;
   }
 }

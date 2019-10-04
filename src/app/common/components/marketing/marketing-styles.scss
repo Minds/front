@@ -1,0 +1,75 @@
+.m-marketing__main,
+.m-marketing__section {
+  // Common
+
+  .m-marketing--title,
+  h1 {
+    font-weight: 900;
+    font-size: 42px;
+    line-height: 44px;
+    margin: 0 0 23px;
+
+    &.m-marketing--title__bigger-title {
+      font-size: 48px;
+      line-height: 53px;
+      margin-bottom: 26px;
+    }
+
+    em {
+      font-style: inherit;
+      text-decoration: inherit;
+      white-space: nowrap;
+      position: relative;
+
+      &::after {
+        content: '';
+        display: inline-block;
+        position: absolute;
+        background: rgba(80, 226, 195, 0.3);
+        top: 0.36em;
+        left: -0.03em;
+        right: -0.03em;
+        bottom: 0.22em;
+        pointer-events: none;
+      }
+    }
+  }
+
+  p.m-marketing__description {
+    font-size: 18px;
+    line-height: 27px;
+    margin: 0 0 36px;
+  }
+
+  ul.m-marketing__points {
+    list-style: disc;
+    margin: 0 0 45px;
+    padding: 0 0 0 1em;
+    font-size: 16px;
+    line-height: 21px;
+
+    > li {
+      margin-bottom: 19px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  // Style 1
+
+  .m-marketing__section--style-1 {
+    @include m-theme() {
+      background: linear-gradient(
+        180deg,
+        themed($m-white) 0%,
+        themed($m-bg-gradient-start) 100%
+      );
+    }
+
+    .m-marketing__wrapper {
+      padding: 95px 0 85px;
+    }
+  }
+}
