@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/modal.component';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { FeaturesService } from '../../../services/features.service';
+import { Flags } from '../../../common/services/permissions/flags';
+import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -11,18 +15,26 @@ import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/mod
   inputs: ['object'],
   templateUrl: 'disable.component.html',
 })
-export class SettingsDisableChannelComponent {
+export class SettingsDisableChannelComponent implements OnInit {
   minds: Minds;
   user: any;
   settings: string;
   object: any;
+  enabled: boolean = true;
 
   constructor(
     public client: Client,
     public router: Router,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    private session: Session,
+    private permissionsService: PermissionsService,
+    private featuresService: FeaturesService
   ) {
     this.minds = window.Minds;
+  }
+
+  ngOnInit() {
+    this.checkPermissions();
   }
 
   disable() {
@@ -62,5 +74,16 @@ export class SettingsDisableChannelComponent {
       }
     );
     creator.present();
+  }
+
+  private checkPermissions() {
+    if (this.featuresService.has('permissions')) {
+      this.enabled = this.permissionsService.canInteract(
+        this.session.getLoggedInUser(),
+        Flags.DELETE_CHANNEL
+      );
+    } else {
+      this.enabled = true;
+    }
   }
 }

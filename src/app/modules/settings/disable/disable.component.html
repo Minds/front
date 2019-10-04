@@ -11,6 +11,7 @@
     <button
       class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red"
       (click)="disable()"
+      [disabled]="!enabled"
     >
       <ng-container i18n="@@MINDS__SETTINGS__DISABLE_CONFIRM"
         >I'm sure - Disable</ng-container
@@ -30,6 +31,7 @@
     <button
       class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red"
       (click)="delete()"
+      [disabled]="!enabled"
     >
       <ng-container i18n="@@MINDS__SETTINGS__DELETE_CONFIRM"
         >I'm sure - Delete</ng-container
