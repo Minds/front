@@ -1,5 +1,11 @@
 <div class="m-marketing">
-  <ng-content></ng-content>
+  <ng-content select=".m-marketing__main"></ng-content>
+
+  <div class="m-marketing__sep" *ngIf="bodyWrapper?.children?.length > 0"></div>
+
+  <div class="m-marketing__bodyWrapper" #bodyWrapper>
+    <ng-content select=".m-marketing__body"></ng-content>
+  </div>
 </div>
 
 <m-marketing__footer></m-marketing__footer>

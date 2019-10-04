@@ -9,10 +9,20 @@ m-upgrades__upgradeOptions {
     align-items: center;
     justify-content: space-between;
 
+    @media screen and (max-width: $m-grid-min-vp) {
+      display: block;
+      margin: 0 40px 25px;
+    }
+
     h2 {
       font-size: 32px;
       font-weight: 900;
       line-height: 43px;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        font-size: 24px;
+        margin: 0 0 20px;
+      }
     }
 
     .m-upgradesUpgradeOptionsHeader__toggleContainer {
@@ -36,18 +46,30 @@ m-upgrades__upgradeOptions {
 
   .m-upgradesUpgradeOptions__plans {
     display: grid;
-    grid-gap: 65px;
+    grid-auto-flow: column;
+    grid-column-gap: 65px;
+    grid-row-gap: 0;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, auto);
     padding: 40px 60px 60px;
 
     @include m-theme() {
       background-color: lighten(themed($m-grey-50), 5%);
     }
-  }
 
-  .m-upgradesUpgradeOptions__plan {
-    position: relative;
-    padding-bottom: 75px;
+    @media screen and (max-width: $m-grid-min-vp) {
+      display: block;
+      margin: 0 20px;
+      padding: 40px;
+
+      .m-upgradesUpgradeOptionsPlan__row.m-upgradesUpgradeOptionsPlan__row--first {
+        margin-top: 40px;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
 
     h3 {
       font-size: 28px;
@@ -99,6 +121,7 @@ m-upgrades__upgradeOptions {
       font-size: 18px;
       font-weight: bold;
       line-height: 24px;
+      margin-bottom: 0;
 
       @include m-theme() {
         color: themed($m-grey-600);
@@ -114,9 +137,9 @@ m-upgrades__upgradeOptions {
     }
 
     .m-upgradesUpgradeOptionsPlan__offer {
-      margin: -32px 0 0 0;
       font-size: 14px;
       text-decoration: line-through;
+      margin-bottom: 0;
 
       @include m-theme() {
         color: themed($m-red);
@@ -124,8 +147,8 @@ m-upgrades__upgradeOptions {
     }
 
     .m-upgradesUpgradeOptionsPlan__action {
-      position: absolute;
-      bottom: 0;
+      display: inline-block;
+      margin-top: 25px;
     }
   }
 }

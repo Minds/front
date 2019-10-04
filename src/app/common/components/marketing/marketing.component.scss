@@ -1,6 +1,14 @@
 @import '../../../foundation/grid-values';
 
 m-marketing {
+  display: block;
+  font-family: Roboto, sans-serif;
+
+  @include m-theme() {
+    background: themed($m-white);
+    color: themed($m-grey-800);
+  }
+
   .m-marketing {
     font-family: Roboto, sans-serif;
     font-weight: 400;
@@ -26,6 +34,14 @@ m-marketing {
 
     @include m-theme() {
       border-color: themed($m-grey-50);
+    }
+  }
+
+  .m-marketing__body {
+    > * > * {
+      max-width: 1084px;
+      margin: 0 auto;
+      box-sizing: border-box;
     }
   }
 }

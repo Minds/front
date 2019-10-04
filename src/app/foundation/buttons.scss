@@ -1,0 +1,25 @@
+.mf-button {
+  display: inline-block;
+  padding: 14px 32px;
+  font-size: 18px;
+  line-height: 24px;
+  border: 1px solid;
+  border-radius: 2px;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
+
+  @include m-theme() {
+    background: themed($m-blue);
+    color: themed($m-white-always);
+    border-color: themed($m-blue);
+  }
+
+  &.mf-button--hollow {
+    @include m-theme() {
+      background: themed($m-white);
+      color: themed($m-black);
+      border-color: themed($m-blue);
+    }
+  }
+}

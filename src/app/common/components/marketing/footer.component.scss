@@ -2,6 +2,7 @@
 
 m-marketing__footer {
   display: block;
+  margin-top: 105px;
 
   @include m-theme() {
     background: linear-gradient(
