@@ -3,6 +3,8 @@ import {
   ElementRef,
   EventEmitter,
   HostListener,
+  Input,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { Session } from '../../../services/session';
@@ -18,16 +20,18 @@ import { debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
+import { FeaturesService } from '../../../services/features.service';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { Flags } from '../../../common/services/permissions/flags';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-newsfeed-poster',
-  inputs: ['_container_guid: containerGuid', 'accessId', 'message'],
-  outputs: ['load'],
   providers: [AttachmentService],
   templateUrl: 'poster.component.html',
 })
 export class PosterComponent {
+  container: any;
   content = '';
   meta: any = {
     message: '',
@@ -36,7 +40,6 @@ export class PosterComponent {
   };
   tags = [];
   minds = window.Minds;
-  load: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
 
   canPost: boolean = true;
@@ -56,6 +59,26 @@ export class PosterComponent {
 
   protected resizeSubject: Subject<number> = new Subject<number>();
 
+  @Input('container') set _container_guid(container: any) {
+    this.container = container;
+    this.attachment.setContainer(container.guid);
+  }
+
+  @Input('accessId') set accessId(access_id: any) {
+    this.attachment.setAccessId(access_id);
+  }
+
+  @Input('message') set message(value: any) {
+    if (value) {
+      value = decodeURIComponent(value.replace(/\+/g, '%20'));
+      this.meta.message = value;
+      this.showTagsError();
+      this.getPostPreview({ value: value }); //a little ugly here!
+    }
+  }
+
+  @Output() load: EventEmitter<any> = new EventEmitter();
+
   constructor(
     public session: Session,
     public client: Client,
@@ -64,7 +87,9 @@ export class PosterComponent {
     public suggestions: AutocompleteSuggestionsService,
     protected elementRef: ElementRef,
     protected router: Router,
-    protected inMemoryStorageService: InMemoryStorageService
+    protected inMemoryStorageService: InMemoryStorageService,
+    private featuresService: FeaturesService,
+    private permissionsService: PermissionsService
   ) {}
 
   @HostListener('window:resize') _widthDetection() {
@@ -72,6 +97,8 @@ export class PosterComponent {
   }
 
   ngOnInit() {
+    this.checkPermissions();
+
     this.resizeSubscription = this.resizeSubject
       .pipe(debounceTime(1000 / 30))
       .subscribe(() => this.onResize());
@@ -97,23 +124,6 @@ export class PosterComponent {
       this.lastWidth = width;
 
       this.showActionBarLabels = width >= 580;
-    }
-  }
-
-  set _container_guid(guid: any) {
-    this.attachment.setContainer(guid);
-  }
-
-  set accessId(access_id: any) {
-    this.attachment.setAccessId(access_id);
-  }
-
-  set message(value: any) {
-    if (value) {
-      value = decodeURIComponent(value.replace(/\+/g, '%20'));
-      this.meta.message = value;
-      this.showTagsError();
-      this.getPostPreview({ value: value }); //a little ugly here!
     }
   }
 
@@ -296,5 +306,20 @@ export class PosterComponent {
 
   posterDateSelectorError(msg) {
     this.errorMessage = msg;
+  }
+
+  private checkPermissions() {
+    // check whether we're posting to a group or a channel
+    const entity: any = this.container
+      ? this.container
+      : this.session.getLoggedInUser();
+    if (this.featuresService.has('permissions')) {
+      this.canPost = this.permissionsService.canInteract(
+        entity,
+        Flags.CREATE_POST
+      );
+    }
+
+    this.canPost = true;
   }
 }

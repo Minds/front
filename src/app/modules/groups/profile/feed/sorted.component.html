@@ -1,7 +1,7 @@
 <minds-newsfeed-poster
   *ngIf="isMember()"
   (load)="prepend($event)"
-  [containerGuid]="group.guid"
+  [container]="group"
   [accessId]="group.guid"
   #poster
 ></minds-newsfeed-poster>

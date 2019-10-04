@@ -2,7 +2,7 @@
   <minds-newsfeed-poster
     #poster
     (load)="prepend($event)"
-    [containerGuid]="group.guid"
+    [container]="group"
     [accessId]="group.guid"
     *ngIf="filter == 'activity' && group['is:member']"
   >
