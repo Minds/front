@@ -3,19 +3,22 @@ import {
   ChangeDetectorRef,
   Component,
   DoCheck,
+  Input,
 } from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { SignupModalService } from '../../../modules/modals/signup/service';
+import { Flags } from '../../services/permissions/flags';
+import { PermissionsService } from '../../services/permissions/permissions.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'minds-button-thumbs-down',
-  inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <a (click)="thumb()" [ngClass]="{ selected: has() }">
+    <a (click)="thumb()" [ngClass]="{ selected: has(), disabled: !enabled }">
       <i class="material-icons">thumb_down</i>
       <span class="minds-counter" *ngIf="object['thumbs:down:count'] > 0">{{
         object['thumbs:down:count'] | number
@@ -34,19 +37,35 @@ export class ThumbsDownButton implements DoCheck {
   changesDetected: boolean = false;
   object;
   showModal: boolean = false;
+  enabled: boolean = true;
 
   constructor(
     private cd: ChangeDetectorRef,
     public session: Session,
     public client: Client,
     public wallet: WalletService,
-    private modal: SignupModalService
+    private modal: SignupModalService,
+    private permissionsService: PermissionsService,
+    private featuresService: FeaturesService
   ) {}
 
-  set _object(value: any) {
+  @Input('object') set _object(value: any) {
     this.object = value;
     if (!this.object['thumbs:down:user_guids'])
       this.object['thumbs:down:user_guids'] = [];
+
+    this.checkPermissions();
+  }
+
+  private checkPermissions() {
+    if (this.featuresService.has('permissions')) {
+      this.enabled = this.permissionsService.canInteract(
+        this.object,
+        Flags.VOTE
+      );
+    } else {
+      this.enabled = true;
+    }
   }
 
   thumb() {

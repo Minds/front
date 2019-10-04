@@ -4,19 +4,22 @@ import {
   Component,
   DoCheck,
   OnChanges,
+  Input,
 } from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { SignupModalService } from '../../../modules/modals/signup/service';
+import { Flags } from '../../services/permissions/flags';
+import { PermissionsService } from '../../services/permissions/permissions.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'minds-button-thumbs-up',
-  inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <a (click)="thumb()" [ngClass]="{ selected: has() }">
+    <a (click)="thumb()" [ngClass]="{ selected: has(), disabled: !enabled }">
       <i class="material-icons">thumb_up</i>
       <span class="minds-counter" *ngIf="object['thumbs:up:count'] > 0">{{
         object['thumbs:up:count'] | number
@@ -39,20 +42,36 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     'thumbs:up:user_guids': [],
   };
   showModal: boolean = false;
+  enabled: boolean = true;
 
   constructor(
     public session: Session,
     public client: Client,
     public wallet: WalletService,
     private modal: SignupModalService,
+    private permissionsService: PermissionsService,
+    private featuresService: FeaturesService,
     private cd: ChangeDetectorRef
   ) {}
 
-  set _object(value: any) {
+  @Input('object') set _object(value: any) {
     if (!value) return;
     this.object = value;
     if (!this.object['thumbs:up:user_guids'])
       this.object['thumbs:up:user_guids'] = [];
+
+    this.checkPermissions();
+  }
+
+  private checkPermissions() {
+    if (this.featuresService.has('permissions')) {
+      this.enabled = this.permissionsService.canInteract(
+        this.object,
+        Flags.VOTE
+      );
+    } else {
+      this.enabled = true;
+    }
   }
 
   thumb() {
@@ -60,6 +79,10 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
       this.modal.setSubtitle('You need to have a channel to vote').open();
       this.showModal = true;
       return false;
+    }
+
+    if (!this.enabled) {
+      return;
     }
 
     this.client.put('api/v1/thumbs/' + this.object.guid + '/up', {});
