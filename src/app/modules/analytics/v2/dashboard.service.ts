@@ -10,6 +10,7 @@ import {
   tap,
   delay,
   debounceTime,
+  throttleTime,
 } from 'rxjs/operators';
 
 import { Client } from '../../../services/api/client';
@@ -100,339 +101,23 @@ export interface UserState {
 }
 
 let _state: UserState = {
+  loading: false,
   category: 'traffic',
   timespan: '30d',
-  timespans: [
-    {
-      id: 'today',
-      label: 'today',
-      interval: 'day',
-      comparison_interval: 1,
-      from_ts_ms: 1569888000000,
-      from_ts_iso: '2019-10-01T00:00:00+00:00',
-    },
-    {
-      id: '30d',
-      label: 'Last 30 days',
-      interval: 'day',
-      comparison_interval: 28,
-      from_ts_ms: 1567296000000,
-      from_ts_iso: '2019-09-01T00:00:00+00:00',
-    },
-    {
-      id: '1y',
-      label: '1 year ago',
-      interval: 'month',
-      comparison_interval: 365,
-      from_ts_ms: 1538352000000,
-      from_ts_iso: '2018-10-01T00:00:00+00:00',
-    },
-    {
-      id: 'mtd',
-      label: 'month to date',
-      interval: 'day',
-      comparison_interval: 28,
-      from_ts_ms: 1569888000000,
-      from_ts_iso: '2019-10-01T00:00:00+00:00',
-    },
-    {
-      id: 'ytd',
-      label: 'year to date',
-      interval: 'month',
-      comparison_interval: 365,
-      from_ts_ms: 1546300800000,
-      from_ts_iso: '2019-01-01T00:00:00+00:00',
-    },
-  ],
-  metric: {
-    id: 'views',
-    label: 'views',
-    permissions: ['admin'],
-    summary: {
-      current_value: 83898,
-      comparison_value: 0,
-      comparison_interval: 28,
-      comparison_positive_inclination: true,
-    },
-    visualisation: {
-      type: 'chart',
-      buckets: [
-        {
-          key: 1567296000000,
-          date: '2019-09-01T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1567382400000,
-          date: '2019-09-02T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1567468800000,
-          date: '2019-09-03T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1567555200000,
-          date: '2019-09-04T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1567641600000,
-          date: '2019-09-05T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1567728000000,
-          date: '2019-09-06T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1567814400000,
-          date: '2019-09-07T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1567900800000,
-          date: '2019-09-08T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1567987200000,
-          date: '2019-09-09T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1568073600000,
-          date: '2019-09-10T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1568160000000,
-          date: '2019-09-11T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1568246400000,
-          date: '2019-09-12T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1568332800000,
-          date: '2019-09-13T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1568419200000,
-          date: '2019-09-14T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1568505600000,
-          date: '2019-09-15T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1568592000000,
-          date: '2019-09-16T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1568678400000,
-          date: '2019-09-17T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1568764800000,
-          date: '2019-09-18T00:00:00+00:00',
-          value: 0,
-        },
-        {
-          key: 1568851200000,
-          date: '2019-09-19T00:00:00+00:00',
-          value: 9565,
-        },
-        {
-          key: 1568937600000,
-          date: '2019-09-20T00:00:00+00:00',
-          value: 10821,
-        },
-        {
-          key: 1569024000000,
-          date: '2019-09-21T00:00:00+00:00',
-          value: 10674,
-        },
-        {
-          key: 1569110400000,
-          date: '2019-09-22T00:00:00+00:00',
-          value: 10494,
-        },
-        {
-          key: 1569196800000,
-          date: '2019-09-23T00:00:00+00:00',
-          value: 11203,
-        },
-        {
-          key: 1569283200000,
-          date: '2019-09-24T00:00:00+00:00',
-          value: 14034,
-        },
-        {
-          key: 1569369600000,
-          date: '2019-09-25T00:00:00+00:00',
-          value: 11618,
-        },
-        {
-          key: 1569456000000,
-          date: '2019-09-26T00:00:00+00:00',
-          value: 5489,
-        },
-        {
-          key: 1569542400000,
-          date: '2019-09-27T00:00:00+00:00',
-          value: 0,
-        },
-      ],
-    },
-  },
-  metrics: [
-    {
-      id: 'active_users',
-      label: 'Active Users',
-      permissions: ['admin'],
-      summary: {
-        current_value: 120962,
-        comparison_value: 120962,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
-      visualisation: null,
-    },
-    {
-      id: 'signups',
-      label: 'Signups',
-      permissions: ['admin'],
-      summary: {
-        current_value: 53060,
-        comparison_value: 60577,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
-      visualisation: null,
-    },
-    {
-      id: 'views',
-      label: 'Pageviews',
-      permissions: ['admin'],
-      summary: {
-        current_value: 83898,
-        comparison_value: 0,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
-      visualisation: {
-        type: 'chart',
-        buckets: [
-          {
-            key: 1567296000000,
-            date: '2019-09-01T00:00:00+00:00',
-            value: 1,
-          },
-          {
-            key: 1567382400000,
-            date: '2019-09-02T00:00:00+00:00',
-            value: 2,
-          },
-          {
-            key: 1567468800000,
-            date: '2019-09-03T00:00:00+00:00',
-            value: 3,
-          },
-          {
-            key: 1567555200000,
-            date: '2019-09-04T00:00:00+00:00',
-            value: 4,
-          },
-          {
-            key: 1567641600000,
-            date: '2019-09-05T00:00:00+00:00',
-            value: 5,
-          },
-          {
-            key: 1567296000000,
-            date: '2019-08-01T00:00:00+00:00',
-            value: 5.5,
-          },
-          {
-            key: 1567382400000,
-            date: '2019-08-02T00:00:00+00:00',
-            value: 4.5,
-          },
-          {
-            key: 1567468800000,
-            date: '2019-08-03T00:00:00+00:00',
-            value: 3.5,
-          },
-          {
-            key: 1567555200000,
-            date: '2019-08-04T00:00:00+00:00',
-            value: 2.5,
-          },
-          {
-            key: 1567641600000,
-            date: '2019-08-05T00:00:00+00:00',
-            value: 1.5,
-          },
-        ],
-      },
-    },
-  ],
-  filter: ['platform::all', 'view_type::single', 'channel::all'],
-  filters: [
-    {
-      id: 'platform',
-      label: 'Platform',
-      options: [
-        { id: 'all', label: 'All', available: true, selected: false },
-        {
-          id: 'browser',
-          label: 'Browser',
-          available: true,
-          selected: false,
-        },
-        { id: 'mobile', label: 'Mobile', available: true, selected: false },
-      ],
-    },
-    {
-      id: 'view_type',
-      label: 'View Type',
-      options: [
-        { id: 'total', label: 'Total', available: true, selected: false },
-        {
-          id: 'organic',
-          label: 'Organic',
-          available: true,
-          selected: true,
-        },
-        {
-          id: 'boosted',
-          label: 'Boosted',
-          available: false,
-          selected: false,
-        },
-        { id: 'single', label: 'Single', available: true, selected: false },
-      ],
-    },
-  ],
-  loading: false,
+  timespans: [],
+  filter: [ "platform::browser" ],
+  filters: [ ],
+  metric: { id: 'views' },
+  metrics: [],
 };
+
+const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 
 // **********************************************************************
 // **********************************************************************
 
 @Injectable()
 export class AnalyticsDashboardService {
-  data = fakeData;
 
   /**
    * Initialize the state subject and make it an observable
@@ -444,33 +129,45 @@ export class AnalyticsDashboardService {
   // that are emitted only when something inside changes
   category$ = this.state$.pipe(
     map(state => state.category),
-    distinctUntilChanged()
+    distinctUntilChanged(deepDiff),
+    tap(category => console.log('category changed', category)),
   );
   timespan$ = this.state$.pipe(
     map(state => state.timespan),
-    distinctUntilChanged()
+    distinctUntilChanged(deepDiff),
+    tap(timespan => console.log('timespan changed', timespan))
   );
   timespans$ = this.state$.pipe(
     map(state => state.timespans),
-    distinctUntilChanged()
+    distinctUntilChanged(deepDiff),
+    tap(timespans => console.log('timespans changed', timespans)),
   );
   metric$ = this.state$.pipe(
     map(state => state.metric),
-    distinctUntilChanged()
+    distinctUntilChanged(deepDiff),
+    tap(metric => console.log('metric changed', metric))
   );
   metrics$ = this.state$.pipe(
     map(state => state.metrics),
-    distinctUntilChanged()
+    distinctUntilChanged(deepDiff),
+    distinctUntilChanged((prev, curr) => {
+      console.log(JSON.stringify(prev), JSON.stringify(curr));
+      return deepDiff(prev, curr);
+    }),
+    tap(metrics => console.log('metrics changed', metrics))
   );
   filter$ = this.state$.pipe(
     map(state => state.filter),
-    distinctUntilChanged()
+    distinctUntilChanged(deepDiff),
+    tap(filter => console.log('filter changed', filter)),
   );
   filters$ = this.state$.pipe(
     map(state => state.filters),
-    distinctUntilChanged()
+    distinctUntilChanged(deepDiff),
+    tap(filters => console.log('filters changed', filters)),
   );
-  loading$ = this.state$.pipe(map(state => state.loading));
+  loading$ = this.state$.pipe(map(state => state.loading), distinctUntilChanged());
+  ready$ = new BehaviorSubject<boolean>(false);
 
   /**
    * Viewmodel that resolves once all the data is ready (or updated)
@@ -507,7 +204,7 @@ export class AnalyticsDashboardService {
           loading,
         };
       }
-    )
+    ),
   );
 
   /**
@@ -515,41 +212,33 @@ export class AnalyticsDashboardService {
    */
   // TODO:  remove one of these later
   constructor(private client: Client, private httpClient: HttpClient) {
-    // combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
-    //   .pipe(
-    //     switchMap(([category, timespan, metric, filter]) => {
-    //       return this.getDashboardResponse(category, timespan, metric, filter);
-    //     })
-    //   )
-    //   .subscribe(response => {
-    //     const dashboard = response.dashboard;
-
-    //     this.updateState({
-    //       ..._state,
-    //       category: dashboard.category,
-    //       timespan: dashboard.timespan,
-    //       filter: dashboard.filter,
-    //       loading: false,
-    //     });
-    //   });
     this.loadFromRemote();
   }
 
   loadFromRemote() {
     combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
       .pipe(
+        debounceTime(300),
+        tap(() => console.log('load from remote called')),
+        distinctUntilChanged(deepDiff),
         switchMap(([category, timespan, metric, filter]) => {
+          console.log(category, timespan,  metric, filter);
           return this.getDashboardResponse(category, timespan, metric, filter);
         })
       )
       .subscribe(response => {
         const dashboard = response.dashboard;
-
+        this.ready$.next(true);
+        
         this.updateState({
           ..._state,
           category: dashboard.category,
           timespan: dashboard.timespan,
+          timespans: dashboard.timespans,
           filter: dashboard.filter,
+          filters: dashboard.filters,
+          metric: dashboard.metric,
+          metrics: dashboard.metrics,
           loading: false,
         });
       });
@@ -597,7 +286,7 @@ export class AnalyticsDashboardService {
   updateFilter(filter: string[]) {
     // TODO: this should replace the sameFilterId::filterOption
     // there should always be a channel filter?
-    // const filterStr = { ..._state.filter, currentPage, selectedSize };
+    //const filterStr = { ..._state.filter, currentPage, selectedSize };
     this.updateState({ ..._state, filter, loading: true });
   }
 
@@ -605,6 +294,7 @@ export class AnalyticsDashboardService {
 
   /** Update internal state cache and emit from store... */
   private updateState(state: UserState) {
+    console.log('update state called');
     this.store.next((_state = state));
   }
 
@@ -616,12 +306,11 @@ export class AnalyticsDashboardService {
     filter: string[]
   ): Observable<Response> {
     const url = buildQueryUrl(category, timespan, metric, filter);
-    // return this.client.get<Response>(url).pipe(map(response => response));
     return this.httpClient.get<Response>(url).pipe(map(response => response));
   }
 
   getData() {
-    return this.data[0].dashboard;
+    console.warn('call was made to legacy function DashboardService.getData()');
   }
 }
 
@@ -638,10 +327,3 @@ function buildQueryUrl(
   return `${url}${category}?metric=${metricId}&timespan=${timespan}&filter=${filterStr}`;
 }
 
-// https://walrus.minds.com/api/v2/analytics/dashboards/traffic?metric=views&timespan=mtd&filters=view_type::single,channel::self
-// async getData() {
-//   const response: any = await this.client.get(
-//     `api/v2/analytics/offchainwire`,
-//     { timespan: this.timespan }
-//   );
-// }

@@ -6,15 +6,15 @@
       <i class="material-icons">menu</i>
       <div class="cat" *ngFor="let cat of cats">
         <span [ngClass]="{ selected: cat.id === vm.category }">{{
-          cat.label
+          cat?.label
         }}</span>
       </div>
     </div>
   </section>
-  <section class="main">
+  <section class="main" *ngIf="(ready$ | async)">
     <div class="mainHeader">
       <h3 class="selectedCatLabel">
-        {{ selectedCat.label }}
+        {{ selectedCat?.label }}
       </h3>
       <div class="globalFilters">
         <div class="channelSearch">
@@ -35,11 +35,11 @@
     ></m-analytics__layout--chart>
     <!-- <m-analytics__layout--table
       class="m-analytics__layout"
-      *ngIf="selectedCat.type === 'table'"
+      *ngIf="selectedCat?.type === 'table'"
     ></m-analytics__layout--table>
     <m-analytics__layout--summary
       class="m-analytics__layout"
-      *ngIf="selectedCat.type === 'summary'"
+      *ngIf="selectedCat?.type === 'summary'"
     ></m-analytics__layout--summary> -->
   </section>
 </div>

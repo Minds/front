@@ -399,7 +399,7 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
     const dataUpdate = this.setData();
     const layoutUpdate = this.setLayout();
 
-    Plotly.update('graphDiv', dataUpdate, layoutUpdate);
+    // Plotly.update('graphDiv', dataUpdate, layoutUpdate);
   }
 
   // GRAPH /\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
@@ -407,11 +407,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
     // // -------------------------------------------
     // // DRAW THE GRAPH ----------------------------
     // -------------------------------------------
-    Plotly.plot('graphDiv', this.data, this.layout, {
-      displayModeBar: false,
-      responsive: true, // Doesn't do anything
-    });
-    this.setVertLineHeights();
   }
 
   setVertLineHeights() {
@@ -435,61 +430,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
     this.hoverVertLines.shapes[this.thisPoint].line.color = this.getColor(
       'm-grey-50'
     );
-    Plotly.relayout('graphDiv', this.hoverVertLines);
-
-    // SHOW MARKER
-    Plotly.restyle('graphDiv', {
-      marker: {
-        opacity: this.hoverMarkerOpacities,
-        size: this.defaultMarkerSize,
-      },
-    });
-
-    // SHOW TOOLTIP
-    const xaxis = $event.points[0].xaxis,
-      yaxis = $event.points[0].yaxis,
-      tooltipDistX = xaxis.d2p($event.points[0].x),
-      tooltipDistY = yaxis.d2p($event.points[0].y);
-
-    this.hoverInfoDiv.style.opacity = 1;
-
-    // console.log(xaxis._offset);
-    // console.log(yaxis._offset);
-    if (this.thisPoint < this.segmentLength / 2) {
-      this.hoverInfoDiv.style.top = tooltipDistX + xaxis._offset + 20 + 'px';
-      this.hoverInfoDiv.style.left = tooltipDistY + yaxis._offset + 20 + 'px';
-    } else {
-      // TODO move the second half of tooltips to the left of points
-      // TODO also shift down/up if with x% of rangeMin/rangeMax???
-      this.hoverInfoDiv.style.top = tooltipDistX + xaxis._offset + 20 + 'px';
-      this.hoverInfoDiv.style.left = tooltipDistY + yaxis._offset + 20 + 'px';
-    }
-    // // Plotly.restyle(this.graphDiv, this.hoverStyles, 0);
-
-    // this.hoverInfoTextX = $event.points.map(function(d) {
-    //   return '' + d.x;
-    // });
-
-    // this.hoverInfoTextY = $event.points.map(function(d) {
-    //   return d.y.toPrecision(3) + ' borks';
-    // });
-
-    // this.hoverInfoComparisonTextXy = $event.points.map(function(d) {
-    //   // TODO: how best to connect current with comparison segment data
-    //   return 'vs 700 Tues Oct 1st';
-    // });
-
-    // const xaxis = $event.points[0].xaxis,
-    //   yaxis = $event.points[0].yaxis;
-
-    // $event.points.forEach(function(p) {
-    //   this.closestHoverPointPositionX = xaxis.d2p(p.x);
-    //   this.closestHoverPointPositionY = yaxis.d2p(p.x);
-    // });
-
-    // this.hoverInfoXDiv.textContent = this.hoverInfoXText.join();
-    // this.hoverInfoYDiv.textContent = this.hoverInfoYText.join();
-    // this.hoverInfoComparisonXyDiv.textContent = this.hoverInfoComparisonXyText.join();
   }
 
   // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -500,12 +440,10 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
     this.hoverVertLines.shapes[this.thisPoint].line.color = this.getColor(
       'm-grey-50-transparent'
     );
-    Plotly.relayout('graphDiv', this.hoverVertLines);
 
     // HIDE MARKER
     this.hoverInfoDiv.style.opacity = 0;
     this.hoverMarkerOpacities[this.thisPoint] = this.defaultMarkerOpacity;
-    Plotly.restyle('graphDiv', 'marker.opacity', this.hoverMarkerOpacities);
   }
 
   // // TODO: reimplement bc plotly responsive config doesn't work

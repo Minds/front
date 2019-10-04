@@ -5,6 +5,8 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 import {
   AnalyticsDashboardService,
   Category,
@@ -38,29 +40,35 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
 
   //TODO: (maybe) interface ViewMetric implements Metric {}
   vm$: Observable<UserState> = this.analyticsService.vm$;
-  vm: UserState;
+  metrics$;
 
   constructor(private analyticsService: AnalyticsDashboardService) {}
 
   ngOnInit() {
-    this.subscription = this.vm$.subscribe(viewModel => (this.vm = viewModel));
-    this.vm.metrics.forEach(metric => {
-      const delta =
-        (metric.summary.current_value - metric.summary.comparison_value) /
-        metric.summary.comparison_value;
+    this.metrics$ = this.vm$.pipe(map(vm => {
+      const metrics = vm.metrics.map(metric => ({...metric})); // Clone to avoid updating
 
-      metric['delta'] = delta;
-      metric['hasChanged'] = delta === 0 ? false : true;
+      for (let metric of metrics) {
+        const delta =
+          (metric.summary.current_value - metric.summary.comparison_value) /
+          metric.summary.comparison_value;
 
-      if (
-        (delta > 0 && metric.summary.comparison_positive_inclination) ||
-        (delta < 0 && !metric.summary.comparison_positive_inclination)
-      ) {
-        metric['positiveTrend'] = true;
-      } else {
-        metric['positiveTrend'] = false;
+        metric['delta'] = delta;
+        metric['hasChanged'] = delta === 0 ? false : true;
+
+        if (
+          (delta > 0 && metric.summary.comparison_positive_inclination) ||
+          (delta < 0 && !metric.summary.comparison_positive_inclination)
+        ) {
+          metric['positiveTrend'] = true;
+          metric['positiveTrendy'] = true;
+        } else {
+          metric['positiveTrend'] = false;
+        }
       }
-    });
+
+      return metrics;
+    }));
   }
 
   updateMetric(metric) {
@@ -68,6 +76,6 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+  // this.subscription.unsubscribe();
   }
 }

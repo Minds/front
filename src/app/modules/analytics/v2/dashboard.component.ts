@@ -53,6 +53,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     options: [],
   };
   vm$: Observable<UserState> = this.analyticsService.vm$;
+  ready$: Observable<boolean> = this.analyticsService.ready$;
   vm: UserState;
 
   constructor(

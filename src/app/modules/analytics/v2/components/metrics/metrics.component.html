@@ -1,9 +1,9 @@
-<div class="metricsContainer" *ngIf="vm$ | async as vm">
+<div class="metricsContainer" *ngIf="metrics$ | async as metrics">
   <div
     class="metric"
-    *ngFor="let metric of vm.metrics"
+    *ngFor="let metric of metrics"
     (click)="updateMetric(metric)"
-    [ngClass]="{ active: metric.id === vm.metric.id }"
+    [ngClass]="{ active: metric.visualisation }"
   >
     <div class="metricLabel">{{ metric.label }}</div>
     <!-- TODO the "| number" pipe should be from backend so it can dynamically handle diff decimals/currency formats -->
