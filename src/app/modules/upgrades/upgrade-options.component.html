@@ -4,7 +4,7 @@
 
     <div class="m-upgradesUpgradeOptionsHeader__toggleContainer">
       <div class="m-upgradesUpgradeOptionsHeader__toggle">
-        <span class="">Yearly</span>
+        <span>Yearly</span>
         <span
           ><m-toggle
             [(mModel)]="interval"
@@ -12,10 +12,10 @@
             rightValue="monthly"
           ></m-toggle
         ></span>
-        <span class="">Monthly</span>
+        <span>Monthly</span>
       </div>
       <div class="m-upgradesUpgradeOptionsHeader__toggle">
-        <span class="">USD</span>
+        <span>USD</span>
         <span
           ><m-toggle
             [(mModel)]="currency"
@@ -23,7 +23,7 @@
             rightValue="tokens"
           ></m-toggle
         ></span>
-        <span class="">Tokens</span>
+        <span>Tokens</span>
       </div>
     </div>
   </div>
@@ -53,24 +53,33 @@
       </ul>
 
       <p>
-        <a class="m-upgradesUpgradeOptionsPlan__moreInfo" routerLink="/plus"
-          >More info</a
+        <a
+          class="m-upgradesUpgradeOptionsPlan__moreInfo"
+          [routerLink]="plusRouterLink"
         >
+          More info
+        </a>
       </p>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <p class="m-upgradesUpgradeOptionsPlan__pricing">
-        <span>$5</span> per month
+        <span>{{ plusPricing.amount }}</span> per month
       </p>
 
-      <p class="m-upgradesUpgradeOptionsPlan__offer">
-        $7 per month
+      <p
+        class="m-upgradesUpgradeOptionsPlan__offer"
+        *ngIf="plusPricing.offerFrom"
+      >
+        {{ plusPricing.offerFrom }} per month
       </p>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <a class="mf-button m-upgradesUpgradeOptionsPlan__action">
+      <a
+        class="mf-button m-upgradesUpgradeOptionsPlan__action"
+        [routerLink]="plusRouterLink"
+      >
         Upgrade to Plus
       </a>
     </div>
@@ -99,24 +108,33 @@
       </ul>
 
       <p>
-        <a class="m-upgradesUpgradeOptionsPlan__moreInfo" routerLink="/pro"
-          >More info</a
+        <a
+          class="m-upgradesUpgradeOptionsPlan__moreInfo"
+          [routerLink]="proRouterLink"
         >
+          More info
+        </a>
       </p>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <p class="m-upgradesUpgradeOptionsPlan__pricing">
-        <span>$50</span> per month
+        <span>{{ proPricing.amount }}</span> per month
       </p>
 
-      <p class="m-upgradesUpgradeOptionsPlan__offer">
-        $60 per month
+      <p
+        class="m-upgradesUpgradeOptionsPlan__offer"
+        *ngIf="proPricing.offerFrom"
+      >
+        {{ proPricing.offerFrom }} per month
       </p>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <a class="mf-button m-upgradesUpgradeOptionsPlan__action">
+      <a
+        class="mf-button m-upgradesUpgradeOptionsPlan__action"
+        [routerLink]="proRouterLink"
+      >
         Upgrade to Pro
       </a>
     </div>
@@ -145,7 +163,9 @@
       </ul>
 
       <p>
-        <a class="m-upgradesUpgradeOptionsPlan__moreInfo" href="#">More info</a>
+        <a class="m-upgradesUpgradeOptionsPlan__moreInfo" routerLink="/node">
+          More info
+        </a>
       </p>
     </div>
 
@@ -156,7 +176,10 @@
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <a class="mf-button m-upgradesUpgradeOptionsPlan__action">
+      <a
+        class="mf-button m-upgradesUpgradeOptionsPlan__action"
+        routerLink="/node"
+      >
         Contact us
       </a>
     </div>
