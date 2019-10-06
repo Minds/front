@@ -13,7 +13,7 @@ export class MessengerSounds {
   };
 
   play(sound: string) {
-    if (this.canPlay()) this.sounds[sound].play();
+    // if (this.canPlay()) this.sounds[sound].play();
   }
 
   canPlay() {
