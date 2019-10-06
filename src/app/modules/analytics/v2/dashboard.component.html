@@ -5,13 +5,17 @@
     <div class="catContainer">
       <i class="material-icons">menu</i>
       <div class="cat" *ngFor="let cat of cats">
-        <span [ngClass]="{ selected: cat.id === (category$ | async) }">{{
+        <a [routerLink]="'./' + cat.id" routerLinkActive="selected">{{
           cat?.label
-        }}</span>
+        }}</a>
+
+        <!-- <span [ngClass]="{ selected: cat.id === (category$ | async) }">{{
+          cat?.label
+        }}</span> -->
       </div>
     </div>
   </section>
-  <section class="main" *ngIf="(ready$ | async)">
+  <section class="main" *ngIf="ready$ | async">
     <div class="mainHeader">
       <h3 class="selectedCatLabel">
         {{ selectedCat?.label }}

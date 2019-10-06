@@ -90,7 +90,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: AnalyticsDashboardComponent,
-        // children: [{ path: '', redirectTo: 'traffic', pathMatch: 'full' }],
+        children: [
+          { path: '', redirectTo: 'traffic', pathMatch: 'full' },
+          { path: ':category', component: AnalyticsDashboardComponent },
+        ],
       },
     ],
   },

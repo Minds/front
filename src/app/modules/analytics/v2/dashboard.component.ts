@@ -40,7 +40,6 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   isMobile: boolean;
 
-  // TODO: get this from backend
   cats = categories;
 
   subscription: Subscription;
@@ -74,11 +73,11 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     this.isMobile = isMobileOrTablet();
     this.title.setTitle('Analytics');
 
-    // TODO: Autoset activeCat from url segment[2]
-    // console.log(this.route);
-    // console.log(this.route.snapshot.url);
+    this.route.params.subscribe(params => {
+      this.updateCategory(params['category']);
+    });
 
-    // TODO: make timespans[] into a filter
+    // TODO: make timespans[] into type Filter
 
     // TODO: implement channel filter
     // const {channelGuid} = this.analyticsService.getStateSnapshot();
@@ -88,15 +87,11 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
       // TODO: do the same filter, metric, channel
-      // TODO: something similar for category
       if (params['timespan'] && params['timespan'] !== this.vm.timespan) {
         this.updateTimespan(params['timespan']);
       }
 
-      this.selectedCat = this.cats.find(
-        // TODO get this from url segment[2]
-        cat => cat.id === this.vm.category
-      );
+      this.selectedCat = this.cats.find(cat => cat.id === this.vm.category);
     });
   }
 
@@ -109,7 +104,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   updateCategory(categoryId) {
     // TODO
     // update url
-    // this.analyticsService.updateTimespan(categoryId);
+    // this.analyticsService.updateCategory(categoryId);
   }
 
   ngOnDestroy() {

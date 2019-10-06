@@ -6,7 +6,7 @@
     [ngClass]="{ active: metric.visualisation }"
   >
     <div class="metricLabel">{{ metric.label }}</div>
-    <!-- TODO the "| number" pipe should be from backend so it can dynamically handle diff decimals/currency formats -->
+    <!-- TODO the "number" pipe should be from backend so it can dynamically handle diff decimals/currency formats -->
     <div class="metricSummary">
       {{ metric.summary.current_value | number }}
     </div>
