@@ -1,21 +1,22 @@
 @import '../../../foundation/grid-values';
 
 .m-marketing__asFeaturedIn {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   max-width: 1084px;
   margin: 40px auto 0;
 
   @media screen and (max-width: $m-grid-min-vp) {
-    display: block;
+    &.m-grid {
+      display: block;
+    }
+
     margin: 20px 0 45px;
     padding: 0 12px;
   }
 
   .m-marketingAsFeaturedIn__title {
-    margin-right: 96px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     @include m-theme() {
       color: themed($m-grey-400);
