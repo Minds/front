@@ -112,6 +112,7 @@ import { SiteService } from './services/site.service';
 import { MarketingComponent } from './components/marketing/marketing.component';
 import { MarketingFooterComponent } from './components/marketing/footer.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
+import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 
 @NgModule({
   imports: [
@@ -213,6 +214,7 @@ import { ToggleComponent } from './components/toggle/toggle.component';
     ToggleComponent,
     MarketingComponent,
     MarketingFooterComponent,
+    MarketingAsFeaturedInComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -302,6 +304,7 @@ import { ToggleComponent } from './components/toggle/toggle.component';
     DraggableListComponent,
     ToggleComponent,
     MarketingComponent,
+    MarketingAsFeaturedInComponent,
   ],
   providers: [
     SiteService,

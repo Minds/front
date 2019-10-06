@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'm-upgrades__buyTokens',
+  selector: 'm-marketing__asFeaturedIn',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'buy-tokens.component.html',
+  templateUrl: 'as-featured-in.component.html',
 })
-export class BuyTokensComponent {
+export class MarketingAsFeaturedInComponent {
   readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 }

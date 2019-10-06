@@ -3,6 +3,8 @@
     <ng-content select=".m-marketing__main"></ng-content>
   </div>
 
+  <ng-content select="[slot=2]"></ng-content>
+
   <div class="m-marketing__sep" *ngIf="bodyWrapper?.children?.length > 0"></div>
 
   <div class="m-marketing__extrasWrapper" #bodyWrapper>

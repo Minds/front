@@ -7,8 +7,8 @@ m-upgrades__buyTokens {
 
   .m-upgradesBuyTokens__wrapper {
     padding: 40px 60px 60px;
-    background: url('http://placekitten.com/591/362') no-repeat right center
-      #726061;
+    background: url('<%= APP_CDN %>/assets/marketing/buytokens_bg.jpg')
+      no-repeat right center #726061;
     background-size: contain;
     color: #ffffff;
 
