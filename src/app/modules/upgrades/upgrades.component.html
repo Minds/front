@@ -16,13 +16,18 @@
         <li>Aperiam laudantium nemo non soluta.</li>
       </ul>
 
-      <a class="mf-button mf-button--hollow m-marketing--hideMobile" i18n>
+      <a
+        class="mf-button mf-button--hollow m-marketing--hideMobile"
+        (click)="upgradeNow(); $event.preventDefault()"
+        i18n
+      >
         Upgrade now
       </a>
     </div>
   </div>
 
   <div class="m-marketing__extras">
+    <div class="mf-jumpAnchor" #upgradeOptionsAnchor></div>
     <m-upgrades__upgradeOptions></m-upgrades__upgradeOptions>
   </div>
 
