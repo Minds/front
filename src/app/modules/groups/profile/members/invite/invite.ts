@@ -2,6 +2,9 @@ import { Component, EventEmitter } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { GroupsService } from '../../../groups-service';
+import { PermissionsService } from '../../../../../common/services/permissions/permissions.service';
+import { FeaturesService } from '../../../../../services/features.service';
+import { Flags } from '../../../../../common/services/permissions/flags';
 
 @Component({
   moduleId: module.id,
@@ -28,7 +31,12 @@ export class GroupsProfileMembersInvite {
 
   timeout;
 
-  constructor(public client: Client, public service: GroupsService) {}
+  constructor(
+    public client: Client,
+    public service: GroupsService,
+    private permissionsService: PermissionsService,
+    private featuresService: FeaturesService
+  ) {}
 
   set _group(value: any) {
     this.group = value;
@@ -37,6 +45,13 @@ export class GroupsProfileMembersInvite {
   invite(user) {
     if (!user.subscriber) {
       return alert('You can only invite users who are subscribed to you');
+    }
+
+    if (
+      this.featuresService.has('permissions') &&
+      !this.permissionsService.canInteract(this.group, Flags.INVITE)
+    ) {
+      return alert("You're not allowed to invite users to this group");
     }
 
     this.invited.next(user);
