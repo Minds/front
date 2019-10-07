@@ -6,6 +6,7 @@
 <div>
   <!-- <div id="graphDiv"></div> -->
   <plotly-plot
+    id="graphDiv"
     [divId]="graphDiv"
     [data]="data"
     [layout]="layout"
@@ -14,9 +15,9 @@
     [style]="{ position: 'relative' }"
     (hover)="onHover($event)"
     (unhover)="onUnhover($event)"
-    (afterPlot)="updateGraph($event)"
   >
   </plotly-plot>
+  <!-- (afterPlot)="afterPlot()" -->
 
   <div id="hoverInfo" class="hoverInfo">
     <div id="hoverInfo__x" class="hoverInfo__row">

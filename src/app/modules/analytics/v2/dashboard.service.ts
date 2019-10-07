@@ -50,8 +50,12 @@ export interface Filter {
 export interface Option {
   id: string;
   label: string;
-  available: boolean;
-  selected: boolean;
+  available?: boolean;
+  selected?: boolean;
+  interval?: string;
+  comparison_interval?: number;
+  from_ts_ms?: number;
+  from_ts_iso?: string;
 }
 
 export interface Metric {
@@ -71,9 +75,12 @@ export interface Summary {
 
 export interface Visualisation {
   type: string;
-  buckets: Bucket[];
+  segments: Array<Buckets>;
 }
 
+export interface Buckets {
+  buckets: Bucket[];
+}
 export interface Bucket {
   key: number;
   date: string;
@@ -93,22 +100,178 @@ export interface UserState {
   category: string;
   timespan: string;
   timespans: Timespan[];
-  metric:  string;
+  metric: string;
   metrics: Metric[];
   filter: string[];
   filters: Filter[];
   loading: boolean;
 }
 
+// ¯\_(ツ)_/¯
 let _state: UserState = {
   loading: false,
   category: 'traffic',
-  timespan: '30d',
-  timespans: [],
-  filter: [ "platform::browser" ],
-  filters: [ ],
+  timespan: '1y',
+  timespans: [
+    {
+      id: '30d',
+      label: 'Last 30 days',
+      interval: 'day',
+      comparison_interval: 28,
+      from_ts_ms: 1567296000000,
+      from_ts_iso: '2019-09-01T00:00:00+00:00',
+    },
+    {
+      id: '1y',
+      label: '1 year ago',
+      interval: 'month',
+      comparison_interval: 365,
+      from_ts_ms: 1538352000000,
+      from_ts_iso: '2018-10-01T00:00:00+00:00',
+    },
+  ],
+  filter: ['platform::all', 'view_type::single', 'channel::all'],
+  filters: [
+    {
+      id: 'platform',
+      label: 'Platform',
+      options: [
+        { id: 'all', label: 'All', available: true, selected: false },
+        {
+          id: 'browser',
+          label: 'Browser',
+          available: true,
+          selected: false,
+        },
+        { id: 'mobile', label: 'Mobile', available: true, selected: false },
+      ],
+    },
+    {
+      id: 'view_type',
+      label: 'View Type',
+      options: [
+        { id: 'total', label: 'Total', available: true, selected: false },
+        {
+          id: 'organic',
+          label: 'Organic',
+          available: true,
+          selected: true,
+        },
+        {
+          id: 'boosted',
+          label: 'Boosted',
+          available: false,
+          selected: false,
+        },
+        { id: 'single', label: 'Single', available: true, selected: false },
+      ],
+    },
+  ],
   metric: 'views',
-  metrics: [],
+  metrics: [
+    {
+      id: 'active_users',
+      label: 'Active Users',
+      permissions: ['admin'],
+      summary: {
+        current_value: 120962,
+        comparison_value: 120962,
+        comparison_interval: 28,
+        comparison_positive_inclination: true,
+      },
+      visualisation: null,
+    },
+    {
+      id: 'signups',
+      label: 'Signups',
+      permissions: ['admin'],
+      summary: {
+        current_value: 53060,
+        comparison_value: 60577,
+        comparison_interval: 28,
+        comparison_positive_inclination: true,
+      },
+      visualisation: null,
+    },
+    {
+      id: 'views',
+      label: 'Pageviews',
+      permissions: ['admin'],
+      summary: {
+        current_value: 83898,
+        comparison_value: 0,
+        comparison_interval: 28,
+        comparison_positive_inclination: true,
+      },
+      visualisation: {
+        type: 'chart',
+        segments: [
+          {
+            buckets: [
+              {
+                key: 1567296000000,
+                date: '2019-09-01T00:00:00+00:00',
+                value: 11,
+              },
+              {
+                key: 1567382400000,
+                date: '2019-09-02T00:00:00+00:00',
+                value: 12,
+              },
+              {
+                key: 1567468800000,
+                date: '2019-09-03T00:00:00+00:00',
+                value: 13,
+              },
+              {
+                key: 1567555200000,
+                date: '2019-09-04T00:00:00+00:00',
+                value: 9,
+              },
+              {
+                key: 1567641600000,
+                date: '2019-09-05T00:00:00+00:00',
+                value: 5,
+              },
+            ],
+          },
+          {
+            buckets: [
+              {
+                key: 1567296000000,
+                date: '2019-09-01T00:00:00+00:00',
+                value: 1,
+              },
+              {
+                key: 1567382400000,
+                date: '2019-09-02T00:00:00+00:00',
+                value: 2,
+              },
+              {
+                key: 1567468800000,
+                date: '2019-09-03T00:00:00+00:00',
+                value: 3,
+              },
+              {
+                key: 1567555200000,
+                date: '2019-09-04T00:00:00+00:00',
+                value: 4,
+              },
+              {
+                key: 1567641600000,
+                date: '2019-09-05T00:00:00+00:00',
+                value: 5,
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+  // filter: ['platform::browser'],
+  // filters: [],
+  // metric: 'views',
+  // metrics: [],
 };
 
 const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
@@ -118,7 +281,6 @@ const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 
 @Injectable()
 export class AnalyticsDashboardService {
-
   /**
    * Initialize the state subject and make it an observable
    */
@@ -130,7 +292,7 @@ export class AnalyticsDashboardService {
   category$ = this.state$.pipe(
     map(state => state.category),
     distinctUntilChanged(deepDiff),
-    tap(category => console.log('category changed', category)),
+    tap(category => console.log('category changed', category))
   );
   timespan$ = this.state$.pipe(
     map(state => state.timespan),
@@ -140,7 +302,7 @@ export class AnalyticsDashboardService {
   timespans$ = this.state$.pipe(
     map(state => state.timespans),
     distinctUntilChanged(deepDiff),
-    tap(timespans => console.log('timespans changed', timespans)),
+    tap(timespans => console.log('timespans changed', timespans))
   );
   metric$ = this.state$.pipe(
     map(state => state.metric),
@@ -164,20 +326,23 @@ export class AnalyticsDashboardService {
   filter$ = this.state$.pipe(
     map(state => state.filter),
     distinctUntilChanged(deepDiff),
-    tap(filter => console.log('filter changed', filter)),
+    tap(filter => console.log('filter changed', filter))
   );
   filters$ = this.state$.pipe(
     map(state => state.filters),
     distinctUntilChanged(deepDiff),
-    tap(filters => console.log('filters changed', filters)),
+    tap(filters => console.log('filters changed', filters))
   );
-  loading$ = this.state$.pipe(map(state => state.loading), distinctUntilChanged());
+  loading$ = this.state$.pipe(
+    map(state => state.loading),
+    distinctUntilChanged()
+  );
   ready$ = new BehaviorSubject<boolean>(false);
 
   /**
    * Viewmodel that resolves once all the data is ready (or updated)
    */
-   /*vm$: Observable<UserState> = combineLatest(
+  /*vm$: Observable<UserState> = combineLatest(
     this.category$,
     this.timespan$,
     this.timespans$,
@@ -224,18 +389,18 @@ export class AnalyticsDashboardService {
   loadFromRemote() {
     combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
       .pipe(
-       ///debounceTime(300),
+        ///debounceTime(300),
         tap(() => console.log('load from remote called')),
         distinctUntilChanged(deepDiff),
         switchMap(([category, timespan, metric, filter]) => {
-          console.log(category, timespan,  metric, filter);
+          console.log(category, timespan, metric, filter);
           return this.getDashboardResponse(category, timespan, metric, filter);
         })
       )
       .subscribe(response => {
         const dashboard = response.dashboard;
         this.ready$.next(true);
-        
+
         this.updateState({
           ..._state,
           category: dashboard.category,
@@ -276,23 +441,46 @@ export class AnalyticsDashboardService {
   // }
 
   // TODO: this in UpdateFilter() instead
-  // updateSearchCriteria(criteria: string) {
+  // updateChannel(channel: string) {
   //   this.updateState({ ..._state, criteria, loading: true });
   // }
 
   updateCategory(category: string) {
+    console.log('update category called: ' + category);
     this.updateState({ ..._state, category, loading: true });
   }
   updateTimespan(timespan: string) {
+    console.log('update timespan called: ' + timespan);
+    // if (timespan === _state.timespan) {
+    //   return;
+    // }
     this.updateState({ ..._state, timespan, loading: true });
   }
   updateMetric(metric: string) {
+    console.log('update metric called: ' + metric);
     this.updateState({ ..._state, metric, loading: true });
   }
-  updateFilter(filter: string[]) {
-    // TODO: this should replace the sameFilterId::filterOption
-    // there should always be a channel filter?
-    //const filterStr = { ..._state.filter, currentPage, selectedSize };
+  updateFilter(selectedFilterStr: string) {
+    if (_state.filter.includes(selectedFilterStr)) {
+      return;
+    }
+    const selectedFilterId = selectedFilterStr.split('::')[0];
+    const filter = _state.filter;
+    const activeFilterIds = filter.map(filterStr => {
+      return filterStr.split('::')[0];
+    });
+    const filterIndex = activeFilterIds.findIndex(
+      filterId => filterId === selectedFilterId
+    );
+
+    if (activeFilterIds.includes(selectedFilterId)) {
+      filter.splice(filterIndex, 1, selectedFilterStr);
+    } else {
+      filter.push(selectedFilterStr);
+    }
+    console.log('update filter called: ' + selectedFilterStr);
+    console.log(filter);
+
     this.updateState({ ..._state, filter, loading: true });
   }
 
@@ -329,7 +517,7 @@ function buildQueryUrl(
   const url = 'https://walrus.minds.com/api/v2/analytics/dashboards/';
   const filterStr: string = filter.join();
   const metricId: string = metric;
+  const queryStr = `?metric=${metricId}&timespan=${timespan}&filter=${filterStr}`;
 
-  return `${url}${category}?metric=${metricId}&timespan=${timespan}&filter=${filterStr}`;
+  return `${url}${category}${queryStr}`;
 }
-

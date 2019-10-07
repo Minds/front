@@ -8,36 +8,37 @@
         <a [routerLink]="'./' + cat.id" routerLinkActive="selected">{{
           cat?.label
         }}</a>
-
-        <!-- <span [ngClass]="{ selected: cat.id === (category$ | async) }">{{
-          cat?.label
-        }}</span> -->
       </div>
     </div>
   </section>
-  <section class="main" *ngIf="ready$ | async">
+  <!-- <section class="main" *ngIf="ready$ | async"> -->
+  <section class="main">
     <div class="mainHeader">
       <h3 class="selectedCatLabel">
         {{ selectedCat?.label }}
       </h3>
       <div class="globalFilters">
+        <!-- TODO enable only show to admins -->
+        <!-- <div *ngIf="session.isAdmin()" class="channelSearch"> -->
         <div class="channelSearch">
           (todo: Channel search)
           <!-- <input
+
             type="text"
             [formControl]="channelSearch"
             placeholder="Search for a channel"
           /> -->
         </div>
-        <!-- <div class="timespanFilter">
+        <div class="timespanFilter">
           <m-analytics__filter [filter]="timespanFilter"></m-analytics__filter>
-        </div> -->
+        </div>
       </div>
     </div>
-    <m-analytics__layout--chart
-      class="m-analytics__layout"
-    ></m-analytics__layout--chart>
-    <!-- <m-analytics__layout--table
+    <div class="layoutWrapper">
+      <m-analytics__layout--chart
+        class="m-analytics__layout"
+      ></m-analytics__layout--chart>
+      <!-- <m-analytics__layout--table
       class="m-analytics__layout"
       *ngIf="selectedCat?.type === 'table'"
     ></m-analytics__layout--table>
@@ -45,5 +46,6 @@
       class="m-analytics__layout"
       *ngIf="selectedCat?.type === 'summary'"
     ></m-analytics__layout--summary> -->
+    </div>
   </section>
 </div>

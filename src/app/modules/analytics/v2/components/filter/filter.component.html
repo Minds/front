@@ -18,7 +18,7 @@
         (click)="updateFilter(option)"
         *ngIf="option.label !== selectedOption.label"
         [ngClass]="{
-          unavailable: !option.available
+          unavailable: option.available === false
         }"
       >
         <span>{{ option.label }}</span>

@@ -44,45 +44,64 @@ export class AnalyticsFilterComponent implements OnInit, OnDestroy {
     this.subscription = this.vm$.subscribe(viewModel => (this.vm = viewModel));
     this.options = this.filter.options;
 
-    this.selectedOption =
-      this.options.find(option => option.selected === true) || this.options[0];
+    if (this.filter.id === 'timespan') {
+      this.selectedOption =
+        this.options.find(option => option.id === this.vm.timespan) ||
+        this.options[0];
+
+      // TODO: make selected option at top of array?
+    } else {
+      this.selectedOption =
+        this.options.find(option => option.selected === true) ||
+        this.options[0];
+    }
   }
 
   updateFilter(option: Option) {
     this.expanded = false;
     this.selectedOption = option;
-    const selectedFilterStr = `${this.filter.id}::${option.id}`;
 
-    if (
-      this.vm.filter.includes(selectedFilterStr) ||
-      !this.selectedOption.available
-    ) {
+    if (this.filter.id === 'timespan') {
+      this.analyticsService.updateTimespan(option.id);
       return;
     }
 
-    console.log(this.vm.filter);
-
-    const filterArr = this.vm.filter;
-    const activeFilterIds = filterArr.map(filterStr => {
-      return filterStr.split('::')[0];
-    });
-    console.log(activeFilterIds);
-    const filterIndex = activeFilterIds.findIndex(
-      filterId => filterId === this.filter.id
-    );
-
-    console.log(filterIndex);
-
-    if (activeFilterIds.includes(selectedFilterStr)) {
-      filterArr.splice(filterIndex, 1, selectedFilterStr);
-    } else {
-      filterArr.push(selectedFilterStr);
+    if (!this.selectedOption.available) {
+      return;
     }
-    console.log(filterArr);
+    const selectedFilterStr = `${this.filter.id}::${option.id}`;
+    this.analyticsService.updateFilter(selectedFilterStr);
 
-    //TODO make incoming string filterStr instead of option
-    // const filterStr = somethingToDoWith_optionLabel;
-    this.analyticsService.updateFilter(filterArr);
+    // if (
+    //   this.vm.filter.includes(selectedFilterStr) ||
+    //   !this.selectedOption.available
+    // ) {
+    //   return;
+    // }
+
+    // console.log(this.vm.filter);
+
+    // const filterArr = this.vm.filter;
+    // const activeFilterIds = filterArr.map(filterStr => {
+    //   return filterStr.split('::')[0];
+    // });
+    // console.log(activeFilterIds);
+    // const filterIndex = activeFilterIds.findIndex(
+    //   filterId => filterId === this.filter.id
+    // );
+
+    // console.log(filterIndex);
+
+    // if (activeFilterIds.includes(selectedFilterStr)) {
+    //   filterArr.splice(filterIndex, 1, selectedFilterStr);
+    // } else {
+    //   filterArr.push(selectedFilterStr);
+    // }
+    // console.log(filterArr);
+
+    // //TODO make incoming string filterStr instead of option
+    // // const filterStr = somethingToDoWith_optionLabel;
+    // this.analyticsService.updateFilter(filterArr);
   }
 
   ngOnDestroy() {

@@ -28,7 +28,7 @@ import {
   UserState,
 } from './dashboard.service';
 
-import fakeData from './fake';
+// import fakeData from './fake';
 import categories from './categories.default';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 
@@ -48,7 +48,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   selectedTimespan; //string? or Timespan?
   timespanFilter: Filter = {
     id: 'timespan',
-    label: 'timespan',
+    label: 'Timespan',
     options: [],
   };
   vm$: Observable<UserState> = this.analyticsService.vm$;
@@ -77,8 +77,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       this.updateCategory(params['category']);
     });
 
-    // TODO: make timespans[] into type Filter
-
     // TODO: implement channel filter
     // const {channelGuid} = this.analyticsService.getStateSnapshot();
     // this.searchTerm = this.analyticsService.buildSearchTermControl();
@@ -90,9 +88,10 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       if (params['timespan'] && params['timespan'] !== this.vm.timespan) {
         this.updateTimespan(params['timespan']);
       }
-
       this.selectedCat = this.cats.find(cat => cat.id === this.vm.category);
     });
+
+    this.timespanFilter.options = this.vm.timespans;
   }
 
   updateTimespan(timespanId) {
