@@ -36,25 +36,22 @@ export class AnalyticsFilterComponent implements OnInit, OnDestroy {
   options: Array<any> = [];
   selectedOption: Option;
   subscription;
-  vm$: Observable<UserState> = this.analyticsService.vm$;
-  vm: UserState;
   constructor(private analyticsService: AnalyticsDashboardService) {}
 
   ngOnInit() {
-    this.subscription = this.vm$.subscribe(viewModel => (this.vm = viewModel));
-    this.options = this.filter.options;
+    this.subscription = this.analyticsService.timespan$.subscribe(timespan => {
+      if (this.filter.id === 'timespan') {
+        this.selectedOption =
+          this.filter.options.find(option => option.id === timespan) ||
+          this.filter.options[0];
 
-    if (this.filter.id === 'timespan') {
-      this.selectedOption =
-        this.options.find(option => option.id === this.vm.timespan) ||
-        this.options[0];
-
-      // TODO: make selected option at top of array?
-    } else {
-      this.selectedOption =
-        this.options.find(option => option.selected === true) ||
-        this.options[0];
-    }
+        // TODO: make selected option at top of array?
+      } else {
+        this.selectedOption =
+          this.filter.options.find(option => option.selected === true) ||
+          this.filter.options[0];
+      }
+    });
   }
 
   updateFilter(option: Option) {
@@ -71,37 +68,6 @@ export class AnalyticsFilterComponent implements OnInit, OnDestroy {
     }
     const selectedFilterStr = `${this.filter.id}::${option.id}`;
     this.analyticsService.updateFilter(selectedFilterStr);
-
-    // if (
-    //   this.vm.filter.includes(selectedFilterStr) ||
-    //   !this.selectedOption.available
-    // ) {
-    //   return;
-    // }
-
-    // console.log(this.vm.filter);
-
-    // const filterArr = this.vm.filter;
-    // const activeFilterIds = filterArr.map(filterStr => {
-    //   return filterStr.split('::')[0];
-    // });
-    // console.log(activeFilterIds);
-    // const filterIndex = activeFilterIds.findIndex(
-    //   filterId => filterId === this.filter.id
-    // );
-
-    // console.log(filterIndex);
-
-    // if (activeFilterIds.includes(selectedFilterStr)) {
-    //   filterArr.splice(filterIndex, 1, selectedFilterStr);
-    // } else {
-    //   filterArr.push(selectedFilterStr);
-    // }
-    // console.log(filterArr);
-
-    // //TODO make incoming string filterStr instead of option
-    // // const filterStr = somethingToDoWith_optionLabel;
-    // this.analyticsService.updateFilter(filterArr);
   }
 
   ngOnDestroy() {

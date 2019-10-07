@@ -111,7 +111,7 @@ export interface UserState {
 let _state: UserState = {
   loading: false,
   category: 'traffic',
-  timespan: '1y',
+  timespan: '30d',
   timespans: [
     {
       id: '30d',
@@ -291,47 +291,47 @@ export class AnalyticsDashboardService {
   // that are emitted only when something inside changes
   category$ = this.state$.pipe(
     map(state => state.category),
-    distinctUntilChanged(deepDiff),
-    tap(category => console.log('category changed', category))
+    distinctUntilChanged(deepDiff)
+    //tap(category => console.log('category changed', category))
   );
   timespan$ = this.state$.pipe(
     map(state => state.timespan),
-    distinctUntilChanged(deepDiff),
-    tap(timespan => console.log('timespan changed', timespan))
+    distinctUntilChanged(deepDiff)
+    //tap(timespan => console.log('timespan changed', timespan))
   );
   timespans$ = this.state$.pipe(
     map(state => state.timespans),
-    distinctUntilChanged(deepDiff),
-    tap(timespans => console.log('timespans changed', timespans))
+    distinctUntilChanged(deepDiff)
+    //tap(timespans => console.log('timespans changed', timespans))
   );
   metric$ = this.state$.pipe(
     map(state => state.metric),
-    //distinctUntilChanged(deepDiff),
-    distinctUntilChanged((prev, curr) => {
-      console.log('distinctUntilChanged() on metric$');
-      console.log(JSON.stringify(prev), JSON.stringify(curr));
-      return deepDiff(prev, curr);
-    }),
-    tap(metric => console.log('metric changed', metric))
+    distinctUntilChanged(deepDiff)
+    //distinctUntilChanged((prev, curr) => {
+    //  console.log('distinctUntilChanged() on metric$');
+    //  console.log(JSON.stringify(prev), JSON.stringify(curr));
+    //  return deepDiff(prev, curr);
+    //}),
+    //tap(metric => console.log('metric changed', metric))
   );
   metrics$ = this.state$.pipe(
     map(state => state.metrics),
     //distinctUntilChanged(deepDiff),
     distinctUntilChanged((prev, curr) => {
-      console.log(JSON.stringify(prev), JSON.stringify(curr));
+      //console.log(JSON.stringify(prev), JSON.stringify(curr));
       return deepDiff(prev, curr);
     }),
     tap(metrics => console.log('metrics changed', metrics))
   );
   filter$ = this.state$.pipe(
     map(state => state.filter),
-    distinctUntilChanged(deepDiff),
-    tap(filter => console.log('filter changed', filter))
+    distinctUntilChanged(deepDiff)
+    //tap(filter => console.log('filter changed', filter))
   );
   filters$ = this.state$.pipe(
     map(state => state.filters),
-    distinctUntilChanged(deepDiff),
-    tap(filters => console.log('filters changed', filters))
+    distinctUntilChanged(deepDiff)
+    //tap(filters => console.log('filters changed', filters))
   );
   loading$ = this.state$.pipe(
     map(state => state.loading),

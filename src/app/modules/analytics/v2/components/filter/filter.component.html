@@ -1,8 +1,4 @@
-<div
-  class="filterWrapper"
-  *ngIf="vm$ | async as vm"
-  [ngClass]="{ expanded: expanded }"
->
+<div class="filterWrapper" [ngClass]="{ expanded: expanded }">
   <div class="filterHeader" (click)="expanded = !expanded">
     <span class="filterLabel">{{ filter.label }}</span>
     <span class="option option--selected">
@@ -12,11 +8,10 @@
     <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
   </div>
   <div class="unselectedOptionsContainer">
-    <ng-container *ngFor="let option of options">
+    <ng-container *ngFor="let option of filter.options">
       <div
         class="option"
         (click)="updateFilter(option)"
-        *ngIf="option.label !== selectedOption.label"
         [ngClass]="{
           unavailable: option.available === false
         }"

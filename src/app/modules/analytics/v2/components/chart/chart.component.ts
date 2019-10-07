@@ -11,6 +11,7 @@ import {
   Input,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   AnalyticsDashboardService,
   Category,
@@ -38,14 +39,17 @@ import { ThemeService } from '../../../../../common/services/theme.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsChartComponent implements OnInit, OnDestroy {
-  // @Input('buckets') set bucket(buckets) {
-  //   this.x = buckets.map((row) => row.date)); // or key(ms)?
-  //   this.y = buckets.map((row) => row.value));
-  // };
-
   subscription: Subscription;
-  vm$: Observable<UserState> = this.analyticsService.vm$;
-  vm: UserState;
+  selectedMetric$ = this.analyticsService.metrics$.pipe(
+    map(metrics => {
+      console.log(
+        metrics,
+        metrics.find(metric => metric.visualisation !== null)
+      );
+      return metrics.find(metric => metric.visualisation !== null);
+    })
+  );
+  selectedMetric;
 
   themeSubscription: Subscription;
   isDark: boolean = false;
@@ -88,7 +92,14 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.vm$.subscribe(viewModel => (this.vm = viewModel));
+    this.subscription = this.selectedMetric$.subscribe(metric => {
+      this.selectedMetric = metric;
+      try {
+        this.updateGraph();
+      } catch (err) {
+        console.log(err);
+      }
+    });
 
     this.themeService.isDark$.subscribe(isDark => (this.isDark = isDark));
 
@@ -102,16 +113,20 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
     this.hoverInfoComparisonXyDiv = document.getElementById(
       'hoverInfo__comparisonXy'
     );
+  }
 
-    this.segments = this.vm.metrics.find(
-      metric => metric.id === this.vm.metric
-    ).visualisation.segments;
+  updateGraph() {
+    this.data = [];
+    this.shapes = [];
+    this.markerOpacities = [];
+    this.segments = this.selectedMetric.visualisation.segments;
 
+    console.log('segments', this.segments);
     this.segmentLength = this.segments[0].buckets.length;
 
-    this.timespan = this.vm.timespans.find(
-      timespan => timespan.id === this.vm.timespan
-    );
+    // this.timespan = this.vm.timespans.find(
+    //   timespan => timespan.id === this.vm.timespan
+    // );
 
     // ----------------------------------------------
     for (let i = 0; i < this.segmentLength; i++) {
@@ -120,16 +135,17 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       this.shapes[i] = {
         type: 'line',
         layer: 'below',
-        x0: i,
+        x0: this.segments[0].buckets[i].date.slice(0, 10),
         y0: 0,
-        x1: i,
-        y1: 0,
+        x1: this.segments[0].buckets[i].date.slice(0, 10),
+        y1: this.segments[0].buckets[i].value,
         line: {
           color: this.getColor('m-transparent'),
           width: 2,
         },
       };
     }
+
     // ----------------------------------------------
     // LAYOUT
 
@@ -228,17 +244,25 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       this.data[1].line.dash = 'dot';
     }
 
-    // Plotly.newPlot('graphDiv', this.data, this.layout);
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+
+    //Plotly.purge('graphDiv');
+    //Plotly.newPlot('graphDiv', this.data, this.layout, { displayModeBar: false });
   }
 
   restyle() {
     const dataUpdate = this.data;
-    Plotly.restyle('graphDiv', dataUpdate);
+    // Plotly.restyle('graphDiv', dataUpdate);
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   relayout() {
-    const layoutUpdate = this.layout;
-    Plotly.relayout('graphDiv', layoutUpdate);
+    //const layoutUpdate = this.layout;
+    //Plotly.relayout('graphDiv', layoutUpdate);
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   drawGraph() {}
@@ -295,9 +319,8 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
 
     // SHOW VERTICAL LINE
     this.shapes[this.hoverPoint].line.color = this.getColor('m-grey-50');
+    this.layout.shapes[this.hoverPoint].line.color = this.getColor('m-grey-50');
 
-    // this.updateGraph();
-    this.restyle();
     this.relayout();
   }
 
@@ -306,12 +329,14 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
     this.shapes[this.hoverPoint].line.color = this.getColor(
       'm-grey-50-transparent'
     );
+    // this.layout.shapes[this.hoverPoint].line.color = this.getColor(
+    //   'm-grey-50-transparent'
+    // );
 
     // HIDE MARKER
     this.hoverInfoDiv.style.opacity = 0;
     this.markerOpacities[this.hoverPoint] = 0;
 
-    this.restyle();
     this.relayout();
   }
 

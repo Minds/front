@@ -37,6 +37,5 @@ export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
     // TODO: might even be fine to just get rid of this component and put it in dashboard.ts
   }
 
-  ngOnDestroy() {
-  }
+  ngOnDestroy() {}
 }

@@ -3,6 +3,7 @@ m-analytics__chart {
   .js-plotly-plot,
   .plot-container {
     height: 44vh;
+    display: block;
   }
 }
 #graphDiv {

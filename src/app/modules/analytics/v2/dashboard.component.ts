@@ -4,6 +4,7 @@ import {
   OnDestroy,
   Input,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -44,16 +45,15 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
   paramsSubscription: Subscription;
+  category$ = this.analyticsService.category$;
   selectedCat: Category;
+
   selectedTimespan; //string? or Timespan?
   timespanFilter: Filter = {
     id: 'timespan',
     label: 'Timespan',
     options: [],
   };
-  vm$: Observable<UserState> = this.analyticsService.vm$;
-  ready$: Observable<boolean> = this.analyticsService.ready$;
-  vm: UserState;
 
   constructor(
     public client: Client,
@@ -61,7 +61,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     private router: Router,
     public session: Session,
     public title: MindsTitle,
-    public analyticsService: AnalyticsDashboardService
+    public analyticsService: AnalyticsDashboardService,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -81,17 +82,19 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     // const {channelGuid} = this.analyticsService.getStateSnapshot();
     // this.searchTerm = this.analyticsService.buildSearchTermControl();
     // this.searchTerm.patchValue(channelGuid, { emitEvent: false });
-    this.subscription = this.vm$.subscribe(viewModel => (this.vm = viewModel));
 
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
       // TODO: do the same filter, metric, channel
-      if (params['timespan'] && params['timespan'] !== this.vm.timespan) {
-        this.updateTimespan(params['timespan']);
-      }
-      this.selectedCat = this.cats.find(cat => cat.id === this.vm.category);
+      //if (params['timespan'] && params['timespan'] !== this.vm.timespan) {
+      //  this.updateTimespan(params['timespan']);
+      //}
+      //this.selectedCat = this.cats.find(cat => cat.id === this.vm.category);
     });
 
-    this.timespanFilter.options = this.vm.timespans;
+    this.analyticsService.timespans$.subscribe(timespans => {
+      this.timespanFilter.options = timespans;
+      this.detectChanges();
+    });
   }
 
   updateTimespan(timespanId) {
@@ -106,8 +109,12 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     // this.analyticsService.updateCategory(categoryId);
   }
 
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
   ngOnDestroy() {
-    this.subscription.unsubscribe();
     this.paramsSubscription.unsubscribe();
   }
 }
