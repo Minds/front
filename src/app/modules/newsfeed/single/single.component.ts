@@ -10,6 +10,8 @@ import { EntitiesService } from '../../../common/services/entities.service';
 import { Client } from '../../../services/api/client';
 import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { Flags } from '../../../common/services/permissions/flags';
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -33,6 +35,7 @@ export class NewsfeedSingleComponent {
     public entitiesService: EntitiesService,
     protected client: Client,
     protected featuresService: FeaturesService,
+    protected permissionsService: PermissionsService,
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector
   ) {
@@ -79,6 +82,13 @@ export class NewsfeedSingleComponent {
       (activity: any) => {
         if (activity === null) {
           return; // Not yet loaded
+        }
+        if (
+          this.featuresService.has('permissions') &&
+          !this.permissionsService.canInteract(activity, Flags.VIEW)
+        ) {
+          this.error = "Sorry, we couldn't load the activity";
+          return;
         }
 
         this.activity = activity;

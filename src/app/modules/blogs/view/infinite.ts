@@ -10,6 +10,9 @@ import { AnalyticsService } from '../../../services/analytics';
 
 import { MindsBlogResponse } from '../../../interfaces/responses';
 import { MindsBlogEntity } from '../../../interfaces/entities';
+import { Flags } from '../../../common/services/permissions/flags';
+import { FeaturesService } from '../../../services/features.service';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
 
 @Component({
   moduleId: module.id,
@@ -37,7 +40,9 @@ export class BlogViewInfinite {
     public title: MindsTitle,
     private applicationRef: ApplicationRef,
     private cd: ChangeDetectorRef,
-    private analytics: AnalyticsService
+    private analytics: AnalyticsService,
+    private featuresService: FeaturesService,
+    private permissionsService: PermissionsService
   ) {}
 
   ngOnInit() {
@@ -96,7 +101,12 @@ export class BlogViewInfinite {
             },
             response.blog.guid
           );
-        } else if (this.blogs.length === 0) {
+        } else if (
+          this.blogs.length === 0 ||
+          (this.featuresService.has('permissions') &&
+            !this.permissionsService.canInteract(this.blogs[0], Flags.VIEW))
+        ) {
+          this.blogs = [];
           this.error = "Sorry, we couldn't load the blog";
         }
         //hack: ios rerun on low memory

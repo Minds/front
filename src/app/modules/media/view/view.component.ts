@@ -1,10 +1,10 @@
 import {
   ChangeDetectorRef,
   Component,
-  OnInit,
-  OnDestroy,
-  SkipSelf,
   Injector,
+  OnDestroy,
+  OnInit,
+  SkipSelf,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,8 +18,10 @@ import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { MindsTitle } from '../../../services/ux/title';
 import { ActivityService } from '../../../common/services/activity.service';
-import { AnalyticsService } from '../../../services/analytics';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FeaturesService } from '../../../services/features.service';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { Flags } from '../../../common/services/permissions/flags';
 
 @Component({
   moduleId: module.id,
@@ -75,6 +77,8 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     protected activityService: ActivityService,
     private clientMetaService: ClientMetaService,
+    private featuresService: FeaturesService,
+    private permissionsService: PermissionsService,
     @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
@@ -122,6 +126,12 @@ export class MediaViewComponent implements OnInit, OnDestroy {
           return;
         }
         if (response.entity) {
+          if (
+            this.featuresService.has('permissions') &&
+            !this.permissionsService.canInteract(response.entity, Flags.VIEW)
+          ) {
+            throw new Error('Insufficient permissions');
+          }
           this.entity = response.entity;
           this.allowComments = this.entity['allow_comments'];
           switch (this.entity.subtype) {
