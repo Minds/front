@@ -67,6 +67,10 @@
         z-index: -1;
       }
     }
+
+    em + em::after {
+      left: -0.25em;
+    }
   }
 
   p.m-marketing__description {
