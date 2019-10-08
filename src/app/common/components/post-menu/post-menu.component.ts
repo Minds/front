@@ -371,7 +371,7 @@ export class PostMenuComponent {
     this.selectOption('share');
   }
 
-  checkEditPermissions() {
+  checkEditPermissions(): boolean {
     if (this.featuresService.has('permissions')) {
       return this.permissionsService.canInteract(this.entity, Flags.EDIT_POST);
     }
@@ -382,7 +382,7 @@ export class PostMenuComponent {
     );
   }
 
-  checkDeletePermissions() {
+  checkDeletePermissions(): boolean {
     if (this.featuresService.has('permissions')) {
       return this.permissionsService.canInteract(
         this.entity,

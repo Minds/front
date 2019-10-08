@@ -310,7 +310,7 @@ export class GroupsSettingsButton {
     this.overlayService.create(ReportCreatorComponent, this.group).present();
   }
 
-  checkDeletePermissions() {
+  checkDeletePermissions(): boolean {
     if (this.featuresService.has('permissions')) {
       return this.permissionsService.canInteract(
         this.group,

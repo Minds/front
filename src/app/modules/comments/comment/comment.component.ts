@@ -384,7 +384,7 @@ export class CommentComponentV2
       .present();
   }
 
-  checkEditPermissions() {
+  checkEditPermissions(): boolean {
     if (this.featuresService.has('permissions')) {
       return this.permissionsService.canInteract(
         this.comment,
@@ -399,7 +399,7 @@ export class CommentComponentV2
     );
   }
 
-  checkDeletePermissions() {
+  checkDeletePermissions(): boolean {
     if (this.featuresService.has('permissions')) {
       return this.permissionsService.canInteract(
         this.comment,

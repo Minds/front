@@ -6,8 +6,8 @@ export type Permissions = {
 };
 
 export class PermissionsService {
-  canInteract(entity: any, permission: Flags) {
-    let permissions: Permissions = entity.permissions;
+  canInteract(entity: any, permission: Flags): boolean {
+    const permissions: Permissions = entity.permissions;
 
     if (!permissions) {
       return false;
