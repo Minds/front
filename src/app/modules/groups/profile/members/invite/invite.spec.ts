@@ -16,6 +16,9 @@ import { clientMock } from '../../../../../../tests/client-mock.spec';
 import { Client } from '../../../../../services/api/client';
 import { MockDirective, MockService } from '../../../../../utils/mock';
 import { GroupsService } from '../../../groups-service';
+import { PermissionsService } from '../../../../../common/services/permissions/permissions.service';
+import { FeaturesService } from '../../../../../services/features.service';
+import { featuresServiceMock } from '../../../../../../tests/features-service-mock.spec';
 
 const user = {
   guid: '1000',
@@ -54,11 +57,17 @@ describe('GroupsProfileMembersInvite', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: GroupsService, useValue: groupsServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
       ],
     }).compileComponents();
   }));
 
   beforeEach(done => {
+    featuresServiceMock.mock('permissions', false);
     fixture = TestBed.createComponent(GroupsProfileMembersInvite);
 
     comp = fixture.componentInstance;

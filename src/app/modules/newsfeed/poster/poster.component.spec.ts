@@ -34,6 +34,9 @@ import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-
 import { TextInputAutocompleteModule } from '../../../common/components/autocomplete';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FeaturesService } from '../../../services/features.service';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
 
 @Component({
   selector: 'minds-third-party-networks-selector',
@@ -122,6 +125,11 @@ describe('PosterComponent', () => {
           provide: AutocompleteSuggestionsService,
           useValue: MockService(AutocompleteSuggestionsService),
         },
+        { provide: FeaturesService, useValue: featuresServiceMock },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -131,6 +139,8 @@ describe('PosterComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
+
+    featuresServiceMock.mock('permissions', false);
 
     fixture = TestBed.createComponent(PosterComponent);
 

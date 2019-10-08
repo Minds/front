@@ -26,6 +26,7 @@ import { EntitiesService } from '../../../common/services/entities.service';
 import { MockService } from '../../../utils/mock';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
 
 @Component({
   selector: 'minds-activity',
@@ -67,6 +68,10 @@ describe('NewsfeedSingleComponent', () => {
         { provide: Router, useValue: routerMock },
         { provide: EntitiesService, useValue: MockService(EntitiesService) },
         { provide: FeaturesService, useValue: featuresServiceMock },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
       ],
     }).compileComponents();
   }));
@@ -75,6 +80,9 @@ describe('NewsfeedSingleComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
+
+    featuresServiceMock.mock('permissions', false);
+
     fixture = TestBed.createComponent(NewsfeedSingleComponent);
 
     comp = fixture.componentInstance;
