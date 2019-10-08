@@ -8,7 +8,7 @@ m-analytics__filter {
   cursor: pointer;
   border-radius: 3px;
   @include m-theme() {
-    background-color: white;
+    background-color: themed($m-white);
     border: 1px solid themed($m-grey-100);
     color: rgba(themed($m-grey-200), 0.7);
   }
@@ -58,6 +58,7 @@ m-analytics__filter {
   }
 }
 .option--selected {
+  border-radius: 3px;
   @include m-theme() {
     color: themed($m-grey-500);
   }
@@ -75,5 +76,10 @@ m-analytics__filter {
     border: 1px solid themed($m-blue);
     border-top: 1px solid themed($m-grey-100);
     background-color: themed($m-white);
+  }
+
+  .option:last-child {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
   }
 }

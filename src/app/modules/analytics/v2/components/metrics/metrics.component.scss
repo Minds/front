@@ -1,25 +1,20 @@
 m-analytics__metrics {
   position: relative;
-  z-index: 999;
 }
 .metricsContainer {
   display: flex;
-  // position: relative;
   width: 95%;
   padding: 0 16px;
-
   @include m-theme() {
-    box-shadow: 0px 0px 10px -3px rgba(themed($m-black-always), 0.3);
+    box-shadow: 0 7px 15px -7px rgba(themed($m-black-always), 0.1);
   }
 
   .metric {
     width: 20%;
-    padding: 20px;
+    padding: 24px 20px 20px 20px;
     font-size: 12px;
     box-sizing: border-box;
     @include m-theme() {
-      // border-bottom: 5px solid themed($m-white);
-      // border-bottom: 5px solid transparent;
       color: themed($m-grey-200);
     }
     &.active {

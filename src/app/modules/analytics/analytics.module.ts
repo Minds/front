@@ -59,6 +59,10 @@ import { AnalyticsFilterComponent } from './v2/components/filter/filter.componen
 import { AnalyticsChartComponent } from './v2/components/chart/chart.component';
 import { AnalyticsTableComponent } from './v2/components/table/table.component';
 import { AnalyticsDashboardService } from './v2/dashboard.service';
+import { SearchModule } from '../search/search.module';
+import { AnalyticsSearchComponent } from './v2/components/search/search.component';
+import { FormsModule } from '@angular/forms';
+import { AnalyticsSearchSuggestionsComponent } from './v2/components/search-suggestions/search-suggestions.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -88,13 +92,11 @@ const routes: Routes = [
         ],
       },
       {
-        path: 'dashboard',
-        component: AnalyticsDashboardComponent,
-        children: [
-          { path: '', redirectTo: 'traffic', pathMatch: 'full' },
-          { path: ':category', component: AnalyticsDashboardComponent },
-        ],
+        path: 'dashboard/',
+        redirectTo: 'dashboard/traffic',
+        pathMatch: 'full',
       },
+      { path: 'dashboard/:category', component: AnalyticsDashboardComponent },
     ],
   },
 ];
@@ -105,6 +107,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     PlotlyModule,
+    SearchModule,
+    FormsModule,
   ],
   exports: [
     AdminAnalyticsComponent,
@@ -165,6 +169,8 @@ const routes: Routes = [
     AnalyticsFilterComponent,
     AnalyticsChartComponent,
     AnalyticsTableComponent,
+    AnalyticsSearchComponent,
+    AnalyticsSearchSuggestionsComponent,
   ],
   providers: [AnalyticsDashboardService],
 })

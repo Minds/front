@@ -379,9 +379,9 @@ export class AnalyticsDashboardService {
   vm$: Observable<UserState> = new BehaviorSubject(_state);
 
   /**
-   * Watch 5 streams to trigger user loads and state updates
+   * Watch 4 streams to trigger user loads and state updates
    */
-  // TODO:  remove one of these later
+  // TODO:  remove one of these clients later
   constructor(private client: Client, private httpClient: HttpClient) {
     this.loadFromRemote();
   }

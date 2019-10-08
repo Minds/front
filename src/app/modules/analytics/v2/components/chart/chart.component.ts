@@ -101,7 +101,10 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.themeService.isDark$.subscribe(isDark => (this.isDark = isDark));
+    this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
+      this.isDark = isDark;
+      // TODO: relayout and restyle when theme changes
+    });
 
     this.graphDiv = document.getElementById('graphDiv');
 
@@ -124,10 +127,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
     console.log('segments', this.segments);
     this.segmentLength = this.segments[0].buckets.length;
 
-    // this.timespan = this.vm.timespans.find(
-    //   timespan => timespan.id === this.vm.timespan
-    // );
-
     // ----------------------------------------------
     for (let i = 0; i < this.segmentLength; i++) {
       this.markerOpacities[i] = 0;
@@ -136,9 +135,9 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
         type: 'line',
         layer: 'below',
         x0: this.segments[0].buckets[i].date.slice(0, 10),
-        y0: 0,
+        y0: 0, // this should be graph y min
         x1: this.segments[0].buckets[i].date.slice(0, 10),
-        y1: this.segments[0].buckets[i].value,
+        y1: this.segments[0].buckets[i].value, // this should be graph y max
         line: {
           color: this.getColor('m-transparent'),
           width: 2,
@@ -259,13 +258,13 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   }
 
   relayout() {
-    //const layoutUpdate = this.layout;
+    // const layoutUpdate = this.layout;
     //Plotly.relayout('graphDiv', layoutUpdate);
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
 
-  drawGraph() {}
+  // drawGraph() {}
 
   // UTILITY \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
   unpack(rows, key) {
@@ -302,7 +301,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   }
 
   setLineHeights() {
-    console.log(this.graphDiv.layout);
     this.shapes.forEach(shape => {
       shape.y0 = this.graphDiv.layout.yaxis.range[0];
       shape.y1 = this.graphDiv.layout.yaxis.range[1];
@@ -310,11 +308,11 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   }
 
   onHover($event) {
-    console.log('hovering');
-    console.log($event);
+    // console.log('hovering');
+    // console.log($event);
     this.hoverPoint = $event.points[0].pointIndex;
 
-    console.log(this.shapes);
+    // console.log(this.shapes);
     this.markerOpacities[this.hoverPoint] = 1;
 
     // SHOW VERTICAL LINE
@@ -326,12 +324,7 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
 
   onUnhover($event) {
     // HIDE VERTICAL LINE
-    this.shapes[this.hoverPoint].line.color = this.getColor(
-      'm-grey-50-transparent'
-    );
-    // this.layout.shapes[this.hoverPoint].line.color = this.getColor(
-    //   'm-grey-50-transparent'
-    // );
+    this.shapes[this.hoverPoint].line.color = this.getColor('m-transparent');
 
     // HIDE MARKER
     this.hoverInfoDiv.style.opacity = 0;
@@ -348,7 +341,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize')
   applyDimensions() {
-    console.log('windowresize');
     // this.layout = this.relayout();
     // this.setLineHeights();
     // this.layout = {
@@ -361,8 +353,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-    console.log('change detected');
-    // this.updateGraph(); // Does this run every time a change is made to vm$ as well?
   }
 
   ngOnDestroy() {

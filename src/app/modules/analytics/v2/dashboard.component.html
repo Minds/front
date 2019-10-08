@@ -1,11 +1,11 @@
 <div class="page" [ngClass]="{ isMobile: isMobile }">
   <section class="sidebar">
     <h3>Analytics</h3>
-    <div *ngIf="isMobile">{{ category$ | async }}</div>
+    <div *ngIf="isMobile">{{ category$ | async | titlecase }}</div>
     <div class="catContainer">
       <i class="material-icons">menu</i>
       <div class="cat" *ngFor="let cat of cats">
-        <a [routerLink]="'./' + cat.id" routerLinkActive="selected">{{
+        <a [routerLink]="'../' + cat.id" routerLinkActive="selected">{{
           cat?.label
         }}</a>
       </div>
@@ -15,20 +15,16 @@
   <section class="main">
     <div class="mainHeader">
       <h3 class="selectedCatLabel">
-        {{ category$ | async }}
+        {{ category$ | async | titlecase }}
       </h3>
       <div class="globalFilters">
-        <!-- TODO enable only show to admins -->
+        <!-- TODO: ngIf for global_filter bool -->
+        <!-- TODO: enable only show to admins -->
         <!-- <div *ngIf="session.isAdmin()" class="channelSearch"> -->
         <div class="channelSearch">
-          (todo: Channel search)
-          <!-- <input
-
-            type="text"
-            [formControl]="channelSearch"
-            placeholder="Search for a channel"
-          /> -->
+          <m-analytics__search></m-analytics__search>
         </div>
+        <!-- TODO: timespan filter will be a date filter -->
         <div class="timespanFilter">
           <m-analytics__filter [filter]="timespanFilter"></m-analytics__filter>
         </div>

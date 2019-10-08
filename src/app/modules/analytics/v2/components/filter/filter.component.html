@@ -1,4 +1,8 @@
-<div class="filterWrapper" [ngClass]="{ expanded: expanded }">
+<div
+  class="filterWrapper"
+  [ngClass]="{ expanded: expanded }"
+  (blur)="expanded = false"
+>
   <div class="filterHeader" (click)="expanded = !expanded">
     <span class="filterLabel">{{ filter.label }}</span>
     <span class="option option--selected">

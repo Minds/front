@@ -7,7 +7,12 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  ParamMap,
+  RoutesRecognized,
+} from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 
 import { MindsTitle } from '../../../services/ux/title';
@@ -29,7 +34,6 @@ import {
   UserState,
 } from './dashboard.service';
 
-// import fakeData from './fake';
 import categories from './categories.default';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 
@@ -46,7 +50,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   paramsSubscription: Subscription;
   category$ = this.analyticsService.category$;
-  selectedCat: Category;
+  selectedCat: string;
 
   selectedTimespan; //string? or Timespan?
   timespanFilter: Filter = {
@@ -74,8 +78,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     this.isMobile = isMobileOrTablet();
     this.title.setTitle('Analytics');
 
-    this.route.params.subscribe(params => {
-      this.updateCategory(params['category']);
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.updateCategory(params.get('category'));
     });
 
     // TODO: implement channel filter
@@ -85,10 +89,19 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
       // TODO: do the same filter, metric, channel
-      //if (params['timespan'] && params['timespan'] !== this.vm.timespan) {
-      //  this.updateTimespan(params['timespan']);
-      //}
-      //this.selectedCat = this.cats.find(cat => cat.id === this.vm.category);
+
+      if (params['timespan'] && params['timespan'] !== 'bork') {
+        // this.updateTimespan(params['timespan']);
+        console.log('bork');
+      }
+
+      // TODO:  if (there's no channel filter in the url) {
+      if (!this.session.isAdmin()) {
+        const selection = 'self';
+      } else {
+        const selection = 'all';
+      }
+      // }
     });
 
     this.analyticsService.timespans$.subscribe(timespans => {
@@ -104,9 +117,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   }
 
   updateCategory(categoryId) {
-    // TODO
-    // update url
-    // this.analyticsService.updateCategory(categoryId);
+    this.analyticsService.updateCategory(categoryId);
   }
 
   detectChanges() {
