@@ -163,6 +163,13 @@ export class MediaViewComponent implements OnInit, OnDestroy {
   }
 
   delete() {
+    if (
+      this.featuresService.has('permissions') &&
+      !this.permissionsService.canInteract(this.entity, Flags.DELETE_POST)
+    ) {
+      return;
+    }
+
     this.client
       .delete('api/v1/media/' + this.guid)
       .then((response: any) => {
@@ -198,6 +205,12 @@ export class MediaViewComponent implements OnInit, OnDestroy {
   menuOptionSelected(option: string) {
     switch (option) {
       case 'edit':
+        if (
+          this.featuresService.has('permissions') &&
+          !this.permissionsService.canInteract(this.entity, Flags.EDIT_POST)
+        ) {
+          return;
+        }
         this.router.navigate(['/media/edit', this.entity.guid]);
         break;
       case 'delete':
