@@ -308,7 +308,7 @@ export class PosterComponent {
     this.errorMessage = msg;
   }
 
-  private checkPermissions() {
+  private checkPermissions(): void {
     // check whether we're posting to a group or a channel
     const entity: any = this.container
       ? this.container

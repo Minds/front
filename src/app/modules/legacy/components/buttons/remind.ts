@@ -54,7 +54,7 @@ export class RemindButton {
 
   enabled: boolean = true;
 
-  private checkPermissions() {
+  private checkPermissions(): void {
     if (this.featuresService.has('permissions')) {
       this.enabled = this.permissionsService.canInteract(
         this.object,

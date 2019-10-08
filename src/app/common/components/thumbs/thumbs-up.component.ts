@@ -63,7 +63,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     this.checkPermissions();
   }
 
-  private checkPermissions() {
+  private checkPermissions(): void {
     if (this.featuresService.has('permissions')) {
       this.enabled = this.permissionsService.canInteract(
         this.object,

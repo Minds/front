@@ -76,7 +76,7 @@ export class SettingsDisableChannelComponent implements OnInit {
     creator.present();
   }
 
-  private checkPermissions() {
+  private checkPermissions(): void {
     if (this.featuresService.has('permissions')) {
       this.enabled = this.permissionsService.canInteract(
         this.session.getLoggedInUser(),
