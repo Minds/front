@@ -6,8 +6,8 @@ import {
   Directive,
   EventEmitter,
   Input,
-  Output,
   NO_ERRORS_SCHEMA,
+  Output,
 } from '@angular/core';
 
 import { Activity } from './activity';
@@ -43,15 +43,17 @@ import {
   MockDirective,
   MockService,
 } from '../../../../../utils/mock';
-import { IfFeatureDirective } from '../../../../../common/directives/if-feature.directive';
 import { NSFWSelectorConsumerService } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import { BlockListService } from '../../../../../common/services/block-list.service';
 import { ClientMetaService } from '../../../../../common/services/client-meta.service';
 import { clientMetaServiceMock } from '../../../../../../tests/client-meta-service-mock.spec';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
+import { PermissionsService } from '../../../../../common/services/permissions/permissions.service';
+import { featuresServiceMock } from '../../../../../../tests/features-service-mock.spec';
 
 /* tslint:disable */
+
 // START MOCKS
 @Component({
   selector: 'm-wire--lock-screen',
@@ -369,6 +371,7 @@ export class SafeToggleComponentMock {
     any
   >();
 }
+
 // END MOCKS
 
 describe('Activity', () => {
@@ -481,7 +484,7 @@ describe('Activity', () => {
         },
         {
           provide: FeaturesService,
-          useValue: MockService(FeaturesService),
+          useValue: featuresServiceMock,
         },
         NewsfeedService,
         {
@@ -492,6 +495,10 @@ describe('Activity', () => {
           provide: AutocompleteSuggestionsService,
           useValue: MockService(AutocompleteSuggestionsService),
         },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents(); // compile template and css
@@ -499,6 +506,7 @@ describe('Activity', () => {
 
   // synchronous beforeEach
   beforeEach(() => {
+    featuresServiceMock.mock('permissions', false);
     fixture = TestBed.createComponent(Activity);
 
     comp = fixture.componentInstance; // LoginForm test instance
