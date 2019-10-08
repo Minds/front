@@ -1,14 +1,14 @@
 import {
-  Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  EventEmitter,
+  Component,
   ElementRef,
+  EventEmitter,
+  Injector,
   Input,
-  ViewChild,
   OnInit,
   SkipSelf,
-  Injector,
+  ViewChild,
 } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
@@ -30,6 +30,8 @@ import { AutocompleteSuggestionsService } from '../../../../suggestions/services
 import { ActivityService } from '../../../../../common/services/activity.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
+import { PermissionsService } from '../../../../../common/services/permissions/permissions.service';
+import { Flags } from '../../../../../common/services/permissions/flags';
 
 @Component({
   moduleId: module.id,
@@ -174,6 +176,7 @@ export class Activity implements OnInit {
     protected featuresService: FeaturesService,
     public suggestions: AutocompleteSuggestionsService,
     protected activityService: ActivityService,
+    protected permissionsService: PermissionsService,
     @SkipSelf() injector: Injector,
     elementRef: ElementRef
   ) {
@@ -273,6 +276,12 @@ export class Activity implements OnInit {
   }
 
   delete($event: any = {}) {
+    if (
+      this.featuresService.has('permissions') &&
+      !this.permissionsService.canInteract(this.activity, Flags.DELETE_POST)
+    ) {
+      return;
+    }
     if ($event.inProgress) {
       $event.inProgress.emit(true);
     }
@@ -408,6 +417,12 @@ export class Activity implements OnInit {
         this.router.navigate(['/newsfeed', this.activity.guid]);
         break;
       case 'edit':
+        if (
+          this.featuresService.has('permissions') &&
+          !this.permissionsService.canInteract(this.activity, Flags.EDIT_POST)
+        ) {
+          return;
+        }
         this.editing = true;
         break;
       case 'delete':

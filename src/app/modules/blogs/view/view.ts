@@ -23,8 +23,11 @@ import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
-import { ShareModalComponent } from '../../../modules/modals/share/share';
+import { ShareModalComponent } from '../../modals/share/share';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { Flags } from '../../../common/services/permissions/flags';
+import { FeaturesService } from '../../../services/features.service';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
 
 @Component({
   moduleId: module.id,
@@ -103,6 +106,8 @@ export class BlogView implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private clientMetaService: ClientMetaService,
+    private featuresService: FeaturesService,
+    private permissionsService: PermissionsService,
     @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
@@ -154,6 +159,13 @@ export class BlogView implements OnInit, OnDestroy {
   }
 
   delete() {
+    if (
+      this.featuresService.has('permissions') &&
+      !this.permissionsService.canInteract(this.blog, Flags.EDIT_POST)
+    ) {
+      return;
+    }
+
     this.client
       .delete('api/v1/blog/' + this.blog.guid)
       .then((response: any) => {
@@ -170,6 +182,12 @@ export class BlogView implements OnInit, OnDestroy {
   menuOptionSelected(option: string) {
     switch (option) {
       case 'edit':
+        if (
+          this.featuresService.has('permissions') &&
+          !this.permissionsService.canInteract(this.blog, Flags.EDIT_POST)
+        ) {
+          return;
+        }
         this.router.navigate(['/blog/edit', this.blog.guid]);
         break;
       case 'delete':

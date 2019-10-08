@@ -30,6 +30,10 @@ import { AnalyticsService } from '../../../services/analytics';
 import { analyticsServiceMock } from '../../../../tests/analytics-service-mock.spec';
 import { ActivityService } from '../../../common/services/activity.service';
 import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
+import { FeaturesService } from '../../../services/features.service';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { MockService } from '../../../utils/mock';
 
 describe('Blog view component', () => {
   let comp: BlogView;
@@ -55,6 +59,11 @@ describe('Blog view component', () => {
         { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: Session, useValue: sessionMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })
@@ -64,6 +73,7 @@ describe('Blog view component', () => {
 
   // synchronous beforeEach
   beforeEach(() => {
+    featuresServiceMock.mock('permissions', false);
     fixture = TestBed.createComponent(BlogView);
     comp = fixture.componentInstance;
     comp.blog = blog;
