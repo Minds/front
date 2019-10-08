@@ -60,6 +60,7 @@ $blue-light: #71aae7;
 $green-dark: #388e3c;
 $green: #4caf50;
 $green-light: #8bc34a;
+$aqua: #4fc3a9;
 $amber-dark: #ffa000;
 $amber: #ffc108;
 $amber-light: #ffecb3;
@@ -107,6 +108,7 @@ $themes: (
     m-blue-dark: $blue-dark,
     m-blue: $blue,
     m-blue-light: $blue-light,
+    m-aqua: $aqua,
     m-green-dark: $green-dark,
     m-green: $green,
     m-green-light: $green-light,
@@ -164,6 +166,7 @@ $themes: (
     m-blue-dark: lighten($blue-bright, 15%),
     m-blue: $blue-bright,
     m-blue-light: $blue-dark,
+    m-aqua: $aqua,
     m-green-dark: lighten($green-dark, $percent),
     m-green: lighten($green, $percent),
     m-green-light: lighten($green-light, $percent),
@@ -222,6 +225,7 @@ $m-bg-gradient-start: 'm-bg-gradient-start';
 $m-blue-dark: 'm-blue-dark';
 $m-blue: 'm-blue';
 $m-blue-light: 'm-blue-light';
+$m-aqua: 'm-aqua';
 $m-green-dark: 'm-green-dark';
 $m-green: 'm-green';
 $m-green-light: 'm-green-light';

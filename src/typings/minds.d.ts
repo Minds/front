@@ -27,6 +27,7 @@ interface Minds {
   last_tos_update: number;
   tags: string[];
   pro?: any;
+  handlers?: { pro: string; plus: string };
 }
 
 interface MindsNavigation {

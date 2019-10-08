@@ -6,8 +6,11 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Session } from '../../../../services/session';
-import { ProService } from '../../pro.service';
+import { Session } from '../../../services/session';
+import { ProService } from '../pro.service';
+import { WireCreatorComponent } from '../../wire/creator/creator.component';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { EntitiesService } from '../../../common/services/entities.service';
 
 @Component({
   selector: 'm-pro--subscription',
@@ -34,6 +37,8 @@ export class ProSubscriptionComponent implements OnInit {
   constructor(
     protected service: ProService,
     protected session: Session,
+    protected overlayModal: OverlayModalService,
+    protected entities: EntitiesService,
     protected cd: ChangeDetectorRef
   ) {}
 
@@ -67,17 +72,32 @@ export class ProSubscriptionComponent implements OnInit {
     this.detectChanges();
 
     try {
-      await this.service.enable();
-      this.active = true;
-      this.minds.user.pro = true;
-      this.onEnable.emit(Date.now());
+      const proHandler = ((await this.entities
+        .setCastToActivities(false)
+        .fetch([`urn:user:${this.minds.handlers.pro}`])) as any).entities[0];
+
+      this.overlayModal
+        .create(WireCreatorComponent, proHandler, {
+          onComplete: () => {
+            this.active = true;
+            this.minds.user.pro = true;
+            this.onEnable.emit(Date.now());
+            this.inProgress = false;
+            this.detectChanges();
+          },
+        })
+        .onDidDismiss(() => {
+          this.inProgress = false;
+          this.detectChanges();
+        })
+        .present();
     } catch (e) {
       this.active = false;
       this.minds.user.pro = false;
       this.error = (e && e.message) || 'Unknown error';
+      this.inProgress = false;
     }
 
-    this.inProgress = false;
     this.detectChanges();
   }
 

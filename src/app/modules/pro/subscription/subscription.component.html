@@ -2,11 +2,11 @@
   <ng-container *ngIf="!inProgress; else inProgressSpinner">
     <button
       *ngIf="!active"
-      class="mdl-button mdl-button--colored mdl-color--green"
+      class="mf-button mf-button--alt"
       [disabled]="inProgress || criticalError"
       (click)="enable()"
     >
-      Become Pro
+      Upgrade to Pro
     </button>
 
     <button

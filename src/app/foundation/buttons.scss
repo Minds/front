@@ -23,6 +23,14 @@
     border-color: themed($m-blue);
   }
 
+  &.mf-button--alt {
+    @include m-theme() {
+      background: themed($m-aqua);
+      border-color: themed($m-aqua);
+      color: themed($m-white-always);
+    }
+  }
+
   @media screen and (max-width: $m-grid-min-vp) {
     display: block;
     font-size: 15px;
