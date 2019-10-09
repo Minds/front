@@ -1,8 +1,25 @@
 <div
   class="filterWrapper"
-  [ngClass]="{ expanded: expanded, isMobile: isMobile }"
+  [ngClass]="{
+    expanded: expanded,
+    isMobile: isMobileOrTablet(),
+    dropup: dropup
+  }"
   (blur)="expanded = false"
 >
+  <div class="unselectedOptionsContainer" *ngIf="dropup">
+    <ng-container *ngFor="let option of filter.options">
+      <div
+        class="option"
+        (click)="updateFilter(option)"
+        [ngClass]="{
+          unavailable: option.available === false
+        }"
+      >
+        <span>{{ option.label }}</span>
+      </div>
+    </ng-container>
+  </div>
   <div class="filterHeader" (click)="expanded = !expanded">
     <span class="filterLabel">{{ filter.label }}</span>
     <span class="option option--selected">
@@ -11,7 +28,7 @@
     <i class="material-icons" *ngIf="!expanded"> keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
   </div>
-  <div class="unselectedOptionsContainer">
+  <div class="unselectedOptionsContainer" *ngIf="!dropup">
     <ng-container *ngFor="let option of filter.options">
       <div
         class="option"

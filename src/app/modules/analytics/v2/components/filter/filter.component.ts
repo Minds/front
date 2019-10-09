@@ -32,6 +32,7 @@ import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 export class AnalyticsFilterComponent implements OnInit, OnDestroy {
   // TODO: extend Filter interface to allow additional fields (like for timespans?)
   @Input() filter: Filter;
+  @Input() dropup: boolean = false;
 
   isMobile: boolean;
   expanded = false;

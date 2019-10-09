@@ -4,6 +4,11 @@ m-analytics__filter {
   z-index: 2;
 }
 
+.filterHeader,
+.unselectedOptionsContainer {
+  padding: 10px 18px;
+}
+
 .filterWrapper {
   cursor: pointer;
   border-radius: 3px;
@@ -32,7 +37,7 @@ m-analytics__filter {
   }
 }
 .option {
-  padding: 4px 8px;
+  border-radius: 3px;
   @include m-theme() {
     background-color: themed($m-white);
   }
@@ -50,15 +55,14 @@ m-analytics__filter {
   display: flex;
   justify-content: space-between;
   .filterLabel {
-    padding: 4px 0 4px 8px;
+    margin-right: 8px;
   }
   i {
     flex-grow: 0;
-    margin: 4px 4px 0 0;
+    margin-left: 8px;
   }
 }
 .option--selected {
-  border-radius: 3px;
   @include m-theme() {
     color: themed($m-grey-500);
   }
@@ -77,10 +81,8 @@ m-analytics__filter {
     border-top: 1px solid themed($m-blue);
     background-color: themed($m-white);
   }
-
-  .option:last-child {
-    border-bottom-left-radius: 3px;
-    border-bottom-right-radius: 3px;
+  .option {
+    padding: 4px 0;
   }
 }
 
