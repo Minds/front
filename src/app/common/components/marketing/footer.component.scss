@@ -11,7 +11,7 @@ m-marketing__footer {
   @include m-theme() {
     background: linear-gradient(
       180deg,
-      themed($m-bg-gradient-start) 0%,
+      themed($m-marketing-bg-gradient-start) 0%,
       themed($m-white) 100%
     );
   }

@@ -102,7 +102,7 @@
       background: linear-gradient(
         180deg,
         themed($m-white) 0%,
-        themed($m-bg-gradient-start) 100%
+        themed($m-marketing-bg-gradient-start) 100%
       );
     }
 
@@ -151,12 +151,15 @@
         left: 0;
         transform: translate(-86px, -56px);
         clip-path: polygon(0% 0%, 0% 100%, 100% 92%, 100% 0%);
-        background: linear-gradient(
-          180deg,
-          #f6eded 0%,
-          #f5f5fe 99.99%
-        ); // TODO: Theme
         z-index: -1;
+
+        @include m-theme() {
+          background: linear-gradient(
+            180deg,
+            themed($m-marketing-bg-colored-gradient-start) 0%,
+            themed($m-marketing-bg-colored-gradient-end) 99.99%
+          );
+        }
 
         @media screen and (max-width: $m-grid-min-vp) {
           right: 0;
@@ -167,6 +170,10 @@
       }
 
       h1 {
+        @include m-on-theme(dark) {
+          color: #ffffff;
+        }
+
         @media screen and (max-width: $m-grid-min-vp) {
           margin: 15px 0 15px;
           text-align: center;
@@ -174,6 +181,10 @@
       }
 
       h2 {
+        @include m-on-theme(dark) {
+          color: #ffffff;
+        }
+
         @media screen and (max-width: $m-grid-min-vp) {
           font-size: 28px;
           line-height: 32px;
@@ -189,6 +200,10 @@
 
       @include m-theme() {
         color: themed($m-grey-300);
+      }
+
+      @include m-on-theme(dark) {
+        color: #ffffff;
       }
 
       @media screen and (max-width: $m-grid-min-vp) {
