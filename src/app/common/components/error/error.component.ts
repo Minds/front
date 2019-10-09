@@ -1,20 +1,15 @@
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'minds-error-box',
-  inputs: ['errorString'],
+  selector: 'm-error-box',
   template: `
-    <div
-      class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp"
-      style="min-height:0;"
-      *ngIf="errorString"
-    >
-      <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-        {{ errorString }}
+    <div class="m-errorBox__container" *ngIf="message">
+      <div class="m-errorBox__text">
+        {{ message }}
       </div>
     </div>
   `,
 })
-export class ErrorBox {
-  @Input() errorString = '';
+export class ErrorBoxComponent {
+  @Input() message: string;
 }

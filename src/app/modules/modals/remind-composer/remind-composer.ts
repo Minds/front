@@ -39,7 +39,7 @@ import { TopbarHashtagsService } from '../../hashtags/service/topbar.service';
             [selectChoice]="selectChoice"
           ></m-post-autocomplete-item-renderer>
         </ng-template>
-        <minds-error-box [errorString]="errorString"></minds-error-box>
+        <m-error-box [message]="errorString"></m-error-box>
         <m-text-input--autocomplete-container>
           <textarea
             name="message"

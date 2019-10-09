@@ -15,7 +15,7 @@ import { ConfirmPasswordModalComponent } from './confirm-password/modal.componen
 import { SignupModal } from './signup/signup';
 import { TOSUpdatedModal } from './tos-updated/tos.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
-import { ErrorBox } from '../../common/components/error/error.component';
+import { ErrorBoxComponent } from '../../common/components/error/error.component';
 
 @NgModule({
   imports: [
@@ -36,7 +36,7 @@ import { ErrorBox } from '../../common/components/error/error.component';
     SignupModal,
     ConfirmPasswordModalComponent,
     TOSUpdatedModal,
-    ErrorBox,
+    ErrorBoxComponent,
   ],
   entryComponents: [ConfirmPasswordModalComponent],
   exports: [
