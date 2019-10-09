@@ -17,13 +17,12 @@ import { Client } from '../../../services/api/client';
 
 // TEMPORARY
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import fakeData from './fake';
 
 export interface Category {
   id: string;
   label: string;
-  type?: string; // TODO: probably remove this because it's in visualisations
-  metrics?: string[]; // TODO: probably remove this too
+  metrics?: string[]; // TODO: remove this
+  permissions?: string[];
 }
 
 export interface Response {
@@ -266,6 +265,66 @@ let _state: UserState = {
           },
         ],
       },
+    },
+    {
+      id: 'active_users',
+      label: 'Active Users2',
+      permissions: ['admin'],
+      summary: {
+        current_value: 120962,
+        comparison_value: 120962,
+        comparison_interval: 28,
+        comparison_positive_inclination: true,
+      },
+      visualisation: null,
+    },
+    {
+      id: 'active_users',
+      label: 'Active Users3',
+      permissions: ['admin'],
+      summary: {
+        current_value: 120962,
+        comparison_value: 120962,
+        comparison_interval: 28,
+        comparison_positive_inclination: true,
+      },
+      visualisation: null,
+    },
+    {
+      id: 'active_users',
+      label: 'Active Users4',
+      permissions: ['admin'],
+      summary: {
+        current_value: 120962,
+        comparison_value: 120962,
+        comparison_interval: 28,
+        comparison_positive_inclination: true,
+      },
+      visualisation: null,
+    },
+    {
+      id: 'active_users',
+      label: 'Active Users5',
+      permissions: ['admin'],
+      summary: {
+        current_value: 120962,
+        comparison_value: 120962,
+        comparison_interval: 28,
+        comparison_positive_inclination: true,
+      },
+      visualisation: null,
+    },
+    {
+      id: 'active_users',
+      label: 'Active Users6',
+      permissions: ['admin'],
+      summary: {
+        current_value: 120962,
+        comparison_value: 120962,
+        comparison_interval: 28,
+        comparison_positive_inclination: true,
+      },
+      visualisation: null,
     },
   ],
   // filter: ['platform::browser'],

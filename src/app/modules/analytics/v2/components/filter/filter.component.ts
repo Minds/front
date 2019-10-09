@@ -22,6 +22,7 @@ import {
   Timespan,
   UserState,
 } from '../../dashboard.service';
+import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
 @Component({
   selector: 'm-analytics__filter',
@@ -32,6 +33,7 @@ export class AnalyticsFilterComponent implements OnInit, OnDestroy {
   // TODO: extend Filter interface to allow additional fields (like for timespans?)
   @Input() filter: Filter;
 
+  isMobile: boolean;
   expanded = false;
   options: Array<any> = [];
   selectedOption: Option;
@@ -52,6 +54,7 @@ export class AnalyticsFilterComponent implements OnInit, OnDestroy {
           this.filter.options[0];
       }
     });
+    this.isMobile = isMobileOrTablet();
   }
 
   updateFilter(option: Option) {

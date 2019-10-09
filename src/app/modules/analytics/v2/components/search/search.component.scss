@@ -15,10 +15,11 @@ m-analytics__search {
         background-color: themed($m-white);
         border: 1px solid rgba(themed($m-black), 0.12);
       }
-      &:placeholder {
+      &::placeholder {
         @include m-theme() {
           color: themed($m-grey-200);
-          font-weight: 200;
+          font-weight: 400;
+          letter-spacing: normal;
         }
       }
     }
@@ -27,10 +28,6 @@ m-analytics__search {
       padding: $minds-padding $minds-padding $minds-padding $minds-padding * 4;
       box-sizing: border-box;
     }
-  }
-
-  .m-search-bar--context {
-    display: none;
   }
 
   .mdl-textfield .mdl-textfield__input {

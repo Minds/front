@@ -63,6 +63,7 @@ import { SearchModule } from '../search/search.module';
 import { AnalyticsSearchComponent } from './v2/components/search/search.component';
 import { FormsModule } from '@angular/forms';
 import { AnalyticsSearchSuggestionsComponent } from './v2/components/search-suggestions/search-suggestions.component';
+import { AnalyticsMenuComponent } from './v2/components/menu/menu.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -171,6 +172,7 @@ const routes: Routes = [
     AnalyticsTableComponent,
     AnalyticsSearchComponent,
     AnalyticsSearchSuggestionsComponent,
+    AnalyticsMenuComponent,
   ],
   providers: [AnalyticsDashboardService],
 })

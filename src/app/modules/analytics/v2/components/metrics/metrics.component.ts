@@ -21,6 +21,7 @@ import {
   Timespan,
   UserState,
 } from '../../dashboard.service';
+import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
 interface MetricExtended extends MetricBase {
   delta: number;
@@ -37,9 +38,10 @@ export { MetricExtended as Metric };
 export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
   data;
   subscription: Subscription;
+  isMobile: boolean;
 
-  //TODO: (maybe) interface ViewMetric implements Metric {}
   metrics$;
+  isOverflown = { left: false, right: false };
 
   constructor(private analyticsService: AnalyticsDashboardService) {}
 
@@ -69,6 +71,7 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
         return metrics;
       })
     );
+    this.isMobile = isMobileOrTablet();
   }
 
   updateMetric(metric) {
@@ -77,5 +80,9 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // this.subscription.unsubscribe();
+  }
+
+  checkOverflow() {
+    // element.scrollWidth - element.clientWidth
   }
 }

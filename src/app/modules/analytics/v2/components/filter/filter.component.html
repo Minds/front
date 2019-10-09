@@ -1,6 +1,6 @@
 <div
   class="filterWrapper"
-  [ngClass]="{ expanded: expanded }"
+  [ngClass]="{ expanded: expanded, isMobile: isMobile }"
   (blur)="expanded = false"
 >
   <div class="filterHeader" (click)="expanded = !expanded">

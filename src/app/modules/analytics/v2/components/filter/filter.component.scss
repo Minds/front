@@ -1,7 +1,7 @@
 m-analytics__filter {
   position: relative;
   margin: 16px 16px 0 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 .filterWrapper {
@@ -74,12 +74,20 @@ m-analytics__filter {
   left: 0px;
   @include m-theme() {
     border: 1px solid themed($m-blue);
-    border-top: 1px solid themed($m-grey-100);
+    border-top: 1px solid themed($m-blue);
     background-color: themed($m-white);
   }
 
   .option:last-child {
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
+  }
+}
+
+.isMobile {
+  .filterHeader {
+    i {
+      display: none;
+    }
   }
 }

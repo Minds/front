@@ -1,3 +1,22 @@
+// ----------------------------------------
+// MOBILE
+.isMobile {
+  &.page {
+    padding: 0;
+  }
+  .layoutWrapper {
+    box-shadow: none;
+    padding: 0;
+  }
+  .main {
+    padding: 0;
+  }
+  .m-analytics__menu {
+    padding: 0 8px;
+  }
+}
+// ----------------------------------------
+
 .page {
   padding: 16px;
   display: flex;
@@ -13,32 +32,6 @@
   }
 }
 
-.sidebar {
-  padding: 16px 16px 16px 16px;
-  flex: 1 1 0px;
-  i {
-    display: none;
-  }
-  .catContainer {
-    .cat {
-      padding: 6px 0;
-      a {
-        text-decoration: none;
-        font-weight: 400;
-        @include m-theme() {
-          color: themed($m-grey-200);
-        }
-      }
-      a.selected,
-      &:hover {
-        cursor: pointer;
-        @include m-theme() {
-          color: themed($m-blue);
-        }
-      }
-    }
-  }
-}
 .main {
   flex: 4 1 0px;
   padding: 16px;

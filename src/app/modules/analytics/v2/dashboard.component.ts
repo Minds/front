@@ -45,7 +45,7 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   isMobile: boolean;
 
-  cats = categories;
+  // cats = categories;
 
   subscription: Subscription;
   paramsSubscription: Subscription;
@@ -76,6 +76,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       return;
     }
     this.isMobile = isMobileOrTablet();
+
     this.title.setTitle('Analytics');
 
     this.route.paramMap.subscribe((params: ParamMap) => {
