@@ -103,6 +103,13 @@
       >
         Error: You must upload a banner
       </h1>
+      <h1
+        class="m-blog--edit--error"
+        i18n="@@M__COMMON__ERROR_GATEWAY_TIMEOUT"
+        *ngSwitchCase="'error:gateway-timeout'"
+      >
+        Error: Gateway Time-out
+      </h1>
       <h1 class="m-blog--edit--error" *ngSwitchDefault>
         Error: {{error}}
       </h1>

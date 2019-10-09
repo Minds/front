@@ -69,7 +69,11 @@ export class Upload {
           progress(100);
           resolve(JSON.parse(this.response));
         } else {
-          reject(this.response);
+          if (this.status === 504) {
+            reject('error:gateway-timeout');
+          } else {
+            reject(this.response);
+          }
         }
       };
       xhr.onreadystatechange = function() {

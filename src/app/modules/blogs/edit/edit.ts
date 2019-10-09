@@ -282,6 +282,7 @@ export class BlogEdit {
               );
             })
             .catch(e => {
+              this.error = e;
               this.canSave = true;
               this.inProgress = false;
             });
