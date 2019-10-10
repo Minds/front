@@ -86,6 +86,9 @@ export class ProSubscriptionComponent implements OnInit {
           WirePaymentsCreatorComponent,
           await this.wirePaymentHandlers.get('pro'),
           {
+            interval: this.interval,
+            currency: this.currency,
+            amount: this.minds.upgrades.pro[this.interval][this.currency],
             onComplete: () => {
               this.active = true;
               this.minds.user.pro = true;

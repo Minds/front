@@ -33,7 +33,6 @@ export class PlusSubscriptionComponent {
   active: boolean = false;
   @Output('completed') completed$: EventEmitter<any> = new EventEmitter();
   @Input('showSubscription') showSubscription: boolean;
-  payment: any = {};
   payload: any;
   minds = window.Minds;
 
@@ -71,7 +70,7 @@ export class PlusSubscriptionComponent {
     this.purchase();
   }
 
-  async purchase(amount: number = 20, period: 'month' | 'year' = 'month') {
+  async purchase(/*amount: number = 20, period: 'month' | 'year' = 'month'*/) {
     if (!this.session.isLoggedIn()) {
       this.modal.open();
       return;
@@ -81,7 +80,9 @@ export class PlusSubscriptionComponent {
       WirePaymentsCreatorComponent,
       await this.wirePaymentHandlers.get('plus'),
       {
-        default: this.payment,
+        interval: 'monthly',
+        currency: 'tokens',
+        amount: this.minds.upgrades.plus['monthly']['tokens'],
         onComplete: wire => {
           this.completed = true;
           this.user.plus = true;
