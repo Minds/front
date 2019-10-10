@@ -14,13 +14,13 @@ context('Boost Console', () => {
         return cy.login(true);
       }
     });
-    newBoost(postContent, 100);
+    newBoost(postContent, 500);
   });
 
   beforeEach(() => {
+    cy.preserveCookies();
     cy.server();
     cy.route("POST", '**/api/v2/boost/**').as('boostPost');
-    cy.preserveCookies();
     cy.visit('/boost/console/newsfeed/history');  
   });
   

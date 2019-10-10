@@ -6,7 +6,9 @@ context('Discovery', () => {
         return cy.login(true);
       }
     });
-    cy.visit('/newsfeed/global/top');
+    cy.visit('/newsfeed/global/top')
+      .location('pathname')
+      .should('eq', '/newsfeed/global/top');
   });
   
   beforeEach(()=> {

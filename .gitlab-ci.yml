@@ -48,12 +48,14 @@ qa:e2e:
     - >
       if [ "$CI_BUILD_REF_NAME" == "master" ]; then
         export E2E_DOMAIN=https://www.minds.com
+        export PRODUCTION=true
       else
         export E2E_DOMAIN=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+        export PRODUCTION=false
       fi
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
-    - $(npm bin)/cypress run --browser chrome --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN
+    - $(npm bin)/cypress run --browser chrome --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN,production=$PRODUCTION
   artifacts:
     when: always
     paths:
