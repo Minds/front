@@ -76,6 +76,7 @@ export interface MindsUser {
   subscribed?: boolean;
   rating?: number;
   eth_wallet?: string;
+  is_admin?: boolean;
   is_mature?: boolean;
   mature_lock?: boolean;
   tags?: Array<string>;

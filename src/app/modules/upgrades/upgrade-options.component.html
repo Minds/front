@@ -55,7 +55,8 @@
       <p>
         <a
           class="m-upgradesUpgradeOptionsPlan__moreInfo"
-          [routerLink]="plusRouterLink"
+          routerLink="/plus"
+          [queryParams]="intervalCurrencyQueryParams"
         >
           More info
         </a>
@@ -78,7 +79,8 @@
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <a
         class="mf-button m-upgradesUpgradeOptionsPlan__action"
-        [routerLink]="plusRouterLink"
+        routerLink="/plus"
+        [queryParams]="intervalCurrencyQueryParams"
       >
         Upgrade to Plus
       </a>
@@ -110,7 +112,8 @@
       <p>
         <a
           class="m-upgradesUpgradeOptionsPlan__moreInfo"
-          [routerLink]="proRouterLink"
+          routerLink="/pro"
+          [queryParams]="intervalCurrencyQueryParams"
         >
           More info
         </a>
@@ -133,7 +136,8 @@
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <a
         class="mf-button m-upgradesUpgradeOptionsPlan__action"
-        [routerLink]="proRouterLink"
+        routerLink="/pro"
+        [queryParams]="intervalCurrencyQueryParams"
       >
         Upgrade to Pro
       </a>

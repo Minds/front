@@ -14,8 +14,9 @@ import { WireService } from '../wire/wire.service';
 import { WireStruc } from '../wire/creator/creator.component';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { SignupModalService } from '../modals/signup/service';
-import { WirePaymentsCreatorComponent } from '../wire/payments-creator/creator.component';
 import { Session } from '../../services/session';
+import { WirePaymentsCreatorComponent } from '../wire/creator/payments/payments.creator.component';
+import { WirePaymentHandlersService } from '../wire/wire-payment-handlers.service';
 
 @Component({
   selector: 'm-plus--subscription',
@@ -34,6 +35,7 @@ export class PlusSubscriptionComponent {
   @Input('showSubscription') showSubscription: boolean;
   payment: any = {};
   payload: any;
+  minds = window.Minds;
 
   constructor(
     private client: Client,
@@ -42,6 +44,7 @@ export class PlusSubscriptionComponent {
     private web3Wallet: Web3WalletService,
     private overlayModal: OverlayModalService,
     private modal: SignupModalService,
+    private wirePaymentHandlers: WirePaymentHandlersService,
     public session: Session,
     private cd: ChangeDetectorRef
   ) {}
@@ -74,15 +77,9 @@ export class PlusSubscriptionComponent {
       return;
     }
 
-    this.payment.period = period;
-    this.payment.amount = amount;
-    this.payment.recurring = true;
-    this.payment.entity_guid = '730071191229833224';
-    this.payment.receiver = this.blockchain.plus_address;
-
     const creator = this.overlayModal.create(
       WirePaymentsCreatorComponent,
-      this.payment,
+      await this.wirePaymentHandlers.get('plus'),
       {
         default: this.payment,
         onComplete: wire => {

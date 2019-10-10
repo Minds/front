@@ -1,14 +1,10 @@
-export type Currency = 'usd' | 'tokens';
+export type Currency = 'tokens' | 'usd';
 
-export const tokenRate = 4;
-
-// TODO: Move to an async service
-
-export default function currency(tokens: number, currency: Currency): string {
-  switch (currency) {
-    case 'usd':
-      return `$${(tokens / tokenRate).toLocaleString()}`;
+export default function currency(value: number, type: Currency) {
+  switch (type) {
     case 'tokens':
-      return `${tokens.toLocaleString()} tokens`;
+      return `${value.toLocaleString()} tokens`;
+    case 'usd':
+      return `$ ${value.toLocaleString()}`;
   }
 }

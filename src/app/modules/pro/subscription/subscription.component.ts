@@ -8,9 +8,14 @@ import {
 } from '@angular/core';
 import { Session } from '../../../services/session';
 import { ProService } from '../pro.service';
-import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { EntitiesService } from '../../../common/services/entities.service';
+import { WirePaymentsCreatorComponent } from '../../wire/creator/payments/payments.creator.component';
+import { WirePaymentHandlersService } from '../../wire/wire-payment-handlers.service';
+import {
+  UpgradeOptionCurrency,
+  UpgradeOptionInterval,
+} from '../../upgrades/upgrade-options.component';
+import currency from '../../../helpers/currency';
 
 @Component({
   selector: 'm-pro--subscription',
@@ -21,6 +26,10 @@ export class ProSubscriptionComponent implements OnInit {
   @Output() onEnable: EventEmitter<any> = new EventEmitter();
 
   @Output() onDisable: EventEmitter<any> = new EventEmitter();
+
+  interval: UpgradeOptionInterval = 'yearly';
+
+  currency: UpgradeOptionCurrency = 'tokens';
 
   isLoggedIn: boolean = false;
 
@@ -38,7 +47,7 @@ export class ProSubscriptionComponent implements OnInit {
     protected service: ProService,
     protected session: Session,
     protected overlayModal: OverlayModalService,
-    protected entities: EntitiesService,
+    protected wirePaymentHandlers: WirePaymentHandlersService,
     protected cd: ChangeDetectorRef
   ) {}
 
@@ -72,20 +81,20 @@ export class ProSubscriptionComponent implements OnInit {
     this.detectChanges();
 
     try {
-      const proHandler = ((await this.entities
-        .setCastToActivities(false)
-        .fetch([`urn:user:${this.minds.handlers.pro}`])) as any).entities[0];
-
       this.overlayModal
-        .create(WireCreatorComponent, proHandler, {
-          onComplete: () => {
-            this.active = true;
-            this.minds.user.pro = true;
-            this.onEnable.emit(Date.now());
-            this.inProgress = false;
-            this.detectChanges();
-          },
-        })
+        .create(
+          WirePaymentsCreatorComponent,
+          await this.wirePaymentHandlers.get('pro'),
+          {
+            onComplete: () => {
+              this.active = true;
+              this.minds.user.pro = true;
+              this.onEnable.emit(Date.now());
+              this.inProgress = false;
+              this.detectChanges();
+            },
+          }
+        )
         .onDidDismiss(() => {
           this.inProgress = false;
           this.detectChanges();
@@ -119,6 +128,29 @@ export class ProSubscriptionComponent implements OnInit {
 
     this.inProgress = false;
     this.detectChanges();
+  }
+
+  get pricing() {
+    if (this.interval === 'yearly') {
+      return {
+        amount: currency(
+          this.minds.upgrades.pro.yearly[this.currency] / 12,
+          this.currency
+        ),
+        offerFrom: currency(
+          this.minds.upgrades.pro.monthly[this.currency],
+          this.currency
+        ),
+      };
+    } else if (this.interval === 'monthly') {
+      return {
+        amount: currency(
+          this.minds.upgrades.pro.monthly[this.currency],
+          this.currency
+        ),
+        offerFrom: null,
+      };
+    }
   }
 
   detectChanges() {

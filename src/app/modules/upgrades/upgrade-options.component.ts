@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import currency, { Currency } from '../../helpers/currency';
 
-type UpgradeOptionInterval = 'yearly' | 'monthly';
+export type UpgradeOptionInterval = 'yearly' | 'monthly';
 
-type UpgradeOptionCurrency = Currency;
+export type UpgradeOptionCurrency = Currency;
 
 @Component({
   selector: 'm-upgrades__upgradeOptions',
@@ -11,27 +11,34 @@ type UpgradeOptionCurrency = Currency;
   templateUrl: 'upgrade-options.component.html',
 })
 export class UpgradeOptionsComponent {
+  minds = window.Minds;
+
   interval: UpgradeOptionInterval = 'yearly';
 
   currency: UpgradeOptionCurrency = 'tokens';
 
-  get plusRouterLink() {
-    return ['/plus', { i: this.interval, c: this.currency }];
-  }
-
-  get proRouterLink() {
-    return ['/pro', { i: this.interval, c: this.currency }];
+  get intervalCurrencyQueryParams() {
+    return { i: this.interval, c: this.currency };
   }
 
   get plusPricing() {
     if (this.interval === 'yearly') {
       return {
-        amount: currency(20, this.currency),
-        offerFrom: currency(28, this.currency),
+        amount: currency(
+          this.minds.upgrades.plus.yearly[this.currency] / 12,
+          this.currency
+        ),
+        offerFrom: currency(
+          this.minds.upgrades.plus.monthly[this.currency],
+          this.currency
+        ),
       };
     } else if (this.interval === 'monthly') {
       return {
-        amount: currency(28, this.currency),
+        amount: currency(
+          this.minds.upgrades.plus.monthly[this.currency],
+          this.currency
+        ),
         offerFrom: null,
       };
     }
@@ -40,12 +47,21 @@ export class UpgradeOptionsComponent {
   get proPricing() {
     if (this.interval === 'yearly') {
       return {
-        amount: currency(200, this.currency),
-        offerFrom: currency(240, this.currency),
+        amount: currency(
+          this.minds.upgrades.pro.yearly[this.currency] / 12,
+          this.currency
+        ),
+        offerFrom: currency(
+          this.minds.upgrades.pro.monthly[this.currency],
+          this.currency
+        ),
       };
     } else if (this.interval === 'monthly') {
       return {
-        amount: currency(240, this.currency),
+        amount: currency(
+          this.minds.upgrades.pro.monthly[this.currency],
+          this.currency
+        ),
         offerFrom: null,
       };
     }
