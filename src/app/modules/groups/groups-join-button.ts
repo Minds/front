@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { GroupsService } from './groups-service';
 import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
+import { PermissionsService } from '../../common/services/permissions/permissions.service';
+import { FeaturesService } from '../../services/features.service';
+import { Flags } from '../../common/services/permissions/flags';
 
 @Component({
   selector: 'minds-groups-join-button',
@@ -79,7 +82,9 @@ export class GroupsJoinButton {
     public session: Session,
     public service: GroupsService,
     private router: Router,
-    private loginReferrer: LoginReferrerService
+    private loginReferrer: LoginReferrerService,
+    private featuresService: FeaturesService,
+    private permissionsService: PermissionsService
   ) {
     this.minds = window.Minds;
   }
@@ -116,6 +121,14 @@ export class GroupsJoinButton {
       this.router.navigate(['/login']);
       return;
     }
+
+    if (
+      this.featuresService.has('permissions') &&
+      !this.permissionsService.canInteract(this.group, Flags.JOIN)
+    ) {
+      return;
+    }
+
     this.inProgress = true;
     this.service
       .join(this.group)
