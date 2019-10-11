@@ -16,6 +16,10 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 import { RouterTestingModule } from '@angular/router/testing';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
+import { FeaturesService } from '../../services/features.service';
+import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
+import { PermissionsService } from '../../common/services/permissions/permissions.service';
+import { MockService } from '../../utils/mock';
 
 describe('GroupsJoinButton', () => {
   let fixture: ComponentFixture<GroupsJoinButton>;
@@ -63,11 +67,21 @@ describe('GroupsJoinButton', () => {
         { provide: Session, useValue: sessionMock },
         { provide: GroupsService, deps: [clientMock, uploadMock] },
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
+        {
+          provide: FeaturesService,
+          useValue: featuresServiceMock,
+        },
+        {
+          provide: PermissionsService,
+          useValue: MockService(PermissionsService),
+        },
       ],
     }).compileComponents();
   }));
 
   beforeEach(() => {
+    featuresServiceMock.mock('permissions', false);
+
     fixture = TestBed.createComponent(GroupsJoinButton);
     comp = fixture.componentInstance;
 
