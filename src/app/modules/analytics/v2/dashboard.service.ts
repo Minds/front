@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, of } from 'rxjs';
 import {
   map,
   distinctUntilChanged,
@@ -11,6 +11,7 @@ import {
   delay,
   debounceTime,
   throttleTime,
+  catchError,
 } from 'rxjs/operators';
 
 import { Client } from '../../../services/api/client';
@@ -494,12 +495,30 @@ export class AnalyticsDashboardService {
         ///debounceTime(300),
         tap(() => console.log('load from remote called')),
         distinctUntilChanged(deepDiff),
+        catchError(_ => {
+          console.log('caught error');
+          return of(null);
+        }),
         switchMap(([category, timespan, metric, filter]) => {
           console.log(category, timespan, metric, filter);
-          return this.getDashboardResponse(category, timespan, metric, filter);
-        })
+          try {
+            const response = this.getDashboardResponse(
+              category,
+              timespan,
+              metric,
+              filter
+            );
+            return response;
+          } catch (err) {
+            return null;
+          }
+        }),
+        catchError(_ => of(null))
       )
       .subscribe(response => {
+        if (!response) {
+          return;
+        }
         const dashboard = response.dashboard;
         this.ready$.next(true);
 
@@ -549,7 +568,7 @@ export class AnalyticsDashboardService {
 
   updateCategory(category: string) {
     console.log('update category called: ' + category);
-    this.updateState({ ..._state, category, loading: true });
+    this.updateState({ ..._state, category, metrics: [], loading: true });
   }
   updateTimespan(timespan: string) {
     console.log('update timespan called: ' + timespan);
@@ -602,7 +621,10 @@ export class AnalyticsDashboardService {
     filter: string[]
   ): Observable<Response> {
     const url = buildQueryUrl(category, timespan, metric, filter);
-    return this.httpClient.get<Response>(url).pipe(map(response => response));
+    return this.httpClient.get<Response>(url).pipe(
+      catchError(_ => of(null)),
+      map(response => response)
+    );
   }
 
   getData() {

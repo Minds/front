@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AnalyticsDashboardService } from '../../dashboard.service';
@@ -20,15 +25,21 @@ export class AnalyticsLayoutChartComponent implements OnInit {
     })
   );
   selectedMetric;
-  constructor(private analyticsService: AnalyticsDashboardService) {}
+
+  constructor(
+    private analyticsService: AnalyticsDashboardService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.subscription = this.selectedMetric$.subscribe(metric => {
       this.selectedMetric = metric;
-      try {
-      } catch (err) {
-        console.log(err);
-      }
+      this.detectChanges();
     });
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

@@ -239,7 +239,7 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       this.data.push(segment);
     });
 
-    if (this.segmentLength === 2) {
+    if (this.segmentLength === 2 && this.data[1]) {
       this.data[1].line.dash = 'dot';
     }
 

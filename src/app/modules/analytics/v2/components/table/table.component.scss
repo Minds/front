@@ -53,8 +53,8 @@
           }
         }
         .entityDetails {
-          display: flex;
-          justify-content: space-between;
+          display: inline;
+          //justify-content: space-between;
           @include m-theme() {
             color: themed($m-grey-200);
           }
@@ -62,6 +62,7 @@
             @include m-theme() {
               color: themed($m-grey-200);
             }
+            margin-right: $minds-margin;
           }
         }
       }

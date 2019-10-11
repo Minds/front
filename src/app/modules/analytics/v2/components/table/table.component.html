@@ -14,14 +14,16 @@
     <!-- TODO: make some sort of a map thing to make the entity fields have the same name for different entity types. Currently only made it to 'work' with fake image and fake blog but even those are streching it -->
     <ng-container *ngFor="let row of reformattedBuckets">
       <div class="row">
-        <div class="entity col">
+        <div class="entity col" *ngIf="row.entity">
           <div class="entityTitle">
-            <a [routerLink]="'/' + row.entity.route">{{ row.entity.title }}</a
-            ><i class="material-icons">open_in_new</i>
+            <a [routerLink]="'/newsfeed/' + row.entity?.guid">
+              <span>{{ row.entity.title || 'Post' }}</span>
+              <i class="material-icons">open_in_new</i>
+            </a>
           </div>
           <div class="entityDetails">
-            <a [routerLink]="'/' + row.entity.ownerObj.guid">{{
-              row.entity.ownerObj.name
+            <a [routerLink]="'/' + row.entity.ownerObj?.guid">{{
+              row.entity.ownerObj?.name
             }}</a>
             <span>{{ row.entity.subtype | titlecase }}</span>
             <span>Published {{ row.entity.time_created * 1000 | date }}</span>

@@ -27,7 +27,7 @@ import {
 @Component({
   selector: 'm-analytics__table',
   templateUrl: './table.component.html',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsTableComponent implements OnInit, OnDestroy {
   subscription: Subscription;
@@ -47,8 +47,10 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
     })
   );
   selectedMetric;
+
   constructor(
-    private analyticsService: AnalyticsDashboardService // protected cd: ChangeDetectorRef
+    private analyticsService: AnalyticsDashboardService,
+    protected cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -60,10 +62,12 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
       );
 
       this.reformatBuckets();
+      this.detectChanges();
     });
   }
 
   reformatBuckets() {
+    this.reformattedBuckets = [];
     this.visualisation.buckets.forEach(bucket => {
       const reformattedBucket = {};
       const reformattedValues = [];
@@ -77,7 +81,13 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
       reformattedBucket['values'] = reformattedValues;
       this.reformattedBuckets.push(reformattedBucket);
     });
+    console.log(this.reformattedBuckets);
     // TODO: reformat diff entity objs so template fields match
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   ngOnDestroy() {

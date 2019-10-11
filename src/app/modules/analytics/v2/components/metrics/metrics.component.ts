@@ -54,7 +54,7 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
           if (metric.summary) {
             const delta =
               (metric.summary.current_value - metric.summary.comparison_value) /
-              metric.summary.comparison_value;
+              (metric.summary.comparison_value || 0);
 
             metric['delta'] = delta;
             metric['hasChanged'] = delta === 0 ? false : true;

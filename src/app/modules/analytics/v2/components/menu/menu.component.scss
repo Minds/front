@@ -128,8 +128,9 @@ m-analytics__menu {
   .catContainer {
     cursor: pointer;
     .cat {
-      padding: 6px 0;
       a {
+        display: block;
+        padding: 6px 0;
         text-decoration: none;
         font-weight: 400;
         @include m-theme() {

@@ -14,7 +14,13 @@
         <div class="metricLabel">{{ metric.label }}</div>
         <!-- TODO the "number" pipe should be from backend so it can dynamically handle diff decimals/currency formats -->
         <div class="metricSummary" *ngIf="metric.summary">
-          {{ metric.summary.current_value | number }}
+          <ng-container *ngIf="metric.unit === 'number'">
+            {{ metric.summary.current_value | number }}
+          </ng-container>
+          <ng-container *ngIf="metric.unit === 'usd'">
+            <span>$</span
+            >{{ metric.summary.current_value / 100 | number: '1.2-2' }}
+          </ng-container>
         </div>
 
         <div

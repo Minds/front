@@ -97,6 +97,12 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       this.timespanFilter.options = timespans;
       this.detectChanges();
     });
+    this.analyticsService.category$.subscribe(category => {
+      this.detectChanges();
+    });
+    this.analyticsService.metrics$.subscribe(metrics => {
+      this.detectChanges();
+    });
   }
 
   updateTimespan(timespanId) {
