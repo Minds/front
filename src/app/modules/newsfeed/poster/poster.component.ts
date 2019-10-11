@@ -236,6 +236,7 @@ export class PosterComponent {
   removeAttachment(file: HTMLInputElement) {
     if (this.inProgress) {
       this.attachment.abort();
+      this.attachment.progress.unsubscribe();
       this.canPost = true;
       this.inProgress = false;
       this.errorMessage = '';
