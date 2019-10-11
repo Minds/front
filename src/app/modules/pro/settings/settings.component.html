@@ -107,6 +107,18 @@
                   [(ngModel)]="settings.headline"
                 ></textarea>
               </div>
+
+              <div class="m-proSettings__field">
+                <label for="publish" i18n style="display: inline"
+                  >Enable PRO theme for Channel</label
+                >
+                <input
+                  type="checkbox"
+                  id="publish"
+                  name="publish"
+                  [(ngModel)]="settings.published"
+                />
+              </div>
             </ng-template>
 
             <!-- Theme -->

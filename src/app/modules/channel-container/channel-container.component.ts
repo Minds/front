@@ -89,7 +89,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
       const shouldRedirectToProHandler =
         !this.site.isProDomain &&
-        this.channel.pro &&
+        this.channel.pro_published &&
         !this.isOwner &&
         !this.isAdmin &&
         this.proEnabled;
