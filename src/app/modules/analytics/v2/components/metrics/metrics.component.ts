@@ -51,20 +51,22 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
         const metrics = _metrics.map(metric => ({ ...metric })); // Clone to avoid updating
 
         for (let metric of metrics) {
-          const delta =
-            (metric.summary.current_value - metric.summary.comparison_value) /
-            metric.summary.comparison_value;
+          if (metric.summary) {
+            const delta =
+              (metric.summary.current_value - metric.summary.comparison_value) /
+              metric.summary.comparison_value;
 
-          metric['delta'] = delta;
-          metric['hasChanged'] = delta === 0 ? false : true;
+            metric['delta'] = delta;
+            metric['hasChanged'] = delta === 0 ? false : true;
 
-          if (
-            (delta > 0 && metric.summary.comparison_positive_inclination) ||
-            (delta < 0 && !metric.summary.comparison_positive_inclination)
-          ) {
-            metric['positiveTrend'] = true;
-          } else {
-            metric['positiveTrend'] = false;
+            if (
+              (delta > 0 && metric.summary.comparison_positive_inclination) ||
+              (delta < 0 && !metric.summary.comparison_positive_inclination)
+            ) {
+              metric['positiveTrend'] = true;
+            } else {
+              metric['positiveTrend'] = false;
+            }
           }
         }
 

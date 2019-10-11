@@ -6,27 +6,36 @@ m-analytics__filter {
 
 .filterHeader,
 .unselectedOptionsContainer {
-  padding: 10px 18px;
+  padding: 10px 8px 8px 10px;
 }
 
 .filterWrapper {
   cursor: pointer;
   border-radius: 3px;
+  // display: flex;
+  // flex-direction: column;
+  transition: border-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
   @include m-theme() {
     background-color: themed($m-white);
     border: 1px solid themed($m-grey-100);
     color: rgba(themed($m-grey-200), 0.7);
   }
-
+  &.dropUp {
+    flex-direction: column-reverse;
+  }
   &.expanded {
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
     @include m-theme() {
       border-color: themed($m-blue);
+      box-shadow: 0px 1px 15px 0 rgba(themed($m-black), 0.1);
+    }
+    &:not(.dropUp) {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
     }
     .unselectedOptionsContainer {
       display: block;
     }
+
     .option {
       &:hover:not(.unavailable) {
         @include m-theme() {
@@ -34,6 +43,9 @@ m-analytics__filter {
         }
       }
     }
+  }
+  .row {
+    display: flex;
   }
 }
 .option {
@@ -55,14 +67,14 @@ m-analytics__filter {
   display: flex;
   justify-content: space-between;
   .filterLabel {
-    margin-right: 8px;
+    margin-right: 10px;
   }
   i {
     flex-grow: 0;
-    margin-left: 8px;
   }
 }
 .option--selected {
+  margin-right: 8px;
   @include m-theme() {
     color: themed($m-grey-500);
   }
@@ -82,7 +94,7 @@ m-analytics__filter {
     background-color: themed($m-white);
   }
   .option {
-    padding: 4px 0;
+    padding: 5px 0;
   }
 }
 

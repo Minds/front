@@ -135,9 +135,9 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
         type: 'line',
         layer: 'below',
         x0: this.segments[0].buckets[i].date.slice(0, 10),
-        y0: 0, // this should be graph y min
+        y0: 0, // this should be rendered graph y min
         x1: this.segments[0].buckets[i].date.slice(0, 10),
-        y1: this.segments[0].buckets[i].value, // this should be graph y max
+        y1: this.segments[0].buckets[i].value, // should be rendered graph y max
         line: {
           color: this.getColor('m-transparent'),
           width: 2,

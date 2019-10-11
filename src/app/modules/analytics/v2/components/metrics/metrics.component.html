@@ -1,8 +1,8 @@
 <section class="metricsSection" [ngClass]="{ isMobile: isMobile }">
-  <div class="overflowFade--left"></div>
+  <!-- <div class="overflowFade--left"></div>
   <div class="overflowScrollButton--left">
     <i class="material-icons">chevron_left</i>
-  </div>
+  </div> -->
   <div class="metricsWrapper">
     <div class="metricsContainer" *ngIf="metrics$ | async as metrics">
       <div
@@ -13,11 +13,12 @@
       >
         <div class="metricLabel">{{ metric.label }}</div>
         <!-- TODO the "number" pipe should be from backend so it can dynamically handle diff decimals/currency formats -->
-        <div class="metricSummary">
+        <div class="metricSummary" *ngIf="metric.summary">
           {{ metric.summary.current_value | number }}
         </div>
 
         <div
+          *ngIf="metric.summary"
           class="metricDelta"
           [ngClass]="{
             goodChange: metric.hasChanged && metric.positiveTrend,
@@ -31,8 +32,8 @@
       </div>
     </div>
   </div>
-  <div class="overflowFade--right"></div>
+  <!-- <div class="overflowFade--right"></div>
   <div class="overflowScrollButton--right">
     <i class="material-icons">chevron_right</i>
-  </div>
+  </div> -->
 </section>

@@ -60,8 +60,8 @@ export interface Option {
 export interface Metric {
   id: string;
   label: string;
-  permissions: string[];
-  summary: Summary;
+  permissions?: string[];
+  summary?: Summary;
   visualisation: Visualisation | null;
 }
 
@@ -74,16 +74,19 @@ export interface Summary {
 
 export interface Visualisation {
   type: string;
-  segments: Array<Buckets>;
+  segments?: Buckets[];
+  buckets?: Bucket[];
+  columns?: Array<any>;
 }
 
 export interface Buckets {
   buckets: Bucket[];
 }
 export interface Bucket {
-  key: number;
-  date: string;
-  value: number;
+  key: number | string;
+  date?: string;
+  value?: number;
+  values?: {};
 }
 
 export interface Timespan {
@@ -101,8 +104,8 @@ export interface UserState {
   timespans: Timespan[];
   metric: string;
   metrics: Metric[];
-  filter: string[];
-  filters: Filter[];
+  filter?: string[];
+  filters?: Filter[];
   loading: boolean;
 }
 
@@ -129,202 +132,242 @@ let _state: UserState = {
       from_ts_iso: '2018-10-01T00:00:00+00:00',
     },
   ],
-  filter: ['platform::all', 'view_type::single', 'channel::all'],
-  filters: [
-    {
-      id: 'platform',
-      label: 'Platform',
-      options: [
-        { id: 'all', label: 'All', available: true, selected: false },
-        {
-          id: 'browser',
-          label: 'Browser',
-          available: true,
-          selected: false,
-        },
-        { id: 'mobile', label: 'Mobile', available: true, selected: false },
-      ],
-    },
-    {
-      id: 'view_type',
-      label: 'View Type',
-      options: [
-        { id: 'total', label: 'Total', available: true, selected: false },
-        {
-          id: 'organic',
-          label: 'Organic',
-          available: true,
-          selected: true,
-        },
-        {
-          id: 'boosted',
-          label: 'Boosted',
-          available: false,
-          selected: false,
-        },
-        { id: 'single', label: 'Single', available: true, selected: false },
-      ],
-    },
-  ],
-  metric: 'views',
+  filter: ['channel::all'],
+  // filter: ['platform::all', 'view_type::single', 'channel::all'],
+  // filters: [
+  //   {
+  //     id: 'platform',
+  //     label: 'Platform',
+  //     options: [
+  //       { id: 'all', label: 'All', available: true, selected: false },
+  //       {
+  //         id: 'browser',
+  //         label: 'Browser',
+  //         available: true,
+  //         selected: false,
+  //       },
+  //       { id: 'mobile', label: 'Mobile', available: true, selected: false },
+  //     ],
+  //   },
+  //   {
+  //     id: 'view_type',
+  //     label: 'View Type',
+  //     options: [
+  //       { id: 'total', label: 'Total', available: true, selected: false },
+  //       {
+  //         id: 'organic',
+  //         label: 'Organic',
+  //         available: true,
+  //         selected: true,
+  //       },
+  //       {
+  //         id: 'boosted',
+  //         label: 'Boosted',
+  //         available: false,
+  //         selected: false,
+  //       },
+  //       { id: 'single', label: 'Single', available: true, selected: false },
+  //     ],
+  //   },
+  // ],
+  // metric: 'views',
+  metric: 'views_table',
   metrics: [
     {
       id: 'active_users',
       label: 'Active Users',
       permissions: ['admin'],
-      summary: {
-        current_value: 120962,
-        comparison_value: 120962,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
+      // summary: {
+      //   current_value: 120962,
+      //   comparison_value: 120962,
+      //   comparison_interval: 28,
+      //   comparison_positive_inclination: true,
+      // },
       visualisation: null,
     },
     {
       id: 'signups',
       label: 'Signups',
       permissions: ['admin'],
-      summary: {
-        current_value: 53060,
-        comparison_value: 60577,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
+      // summary: {
+      //   current_value: 53060,
+      //   comparison_value: 60577,
+      //   comparison_interval: 28,
+      //   comparison_positive_inclination: true,
+      // },
       visualisation: null,
     },
+    // {
+    //   id: 'views',
+    //   label: 'Pageviews',
+    //   permissions: ['admin'],
+    //   summary: {
+    //     current_value: 83898,
+    //     comparison_value: 0,
+    //     comparison_interval: 28,
+    //     comparison_positive_inclination: true,
+    //   },
+    //   visualisation: {
+    //     type: 'chart',
+    //     segments: [
+    //       {
+    //         buckets: [
+    //           {
+    //             key: 1567296000000,
+    //             date: '2019-09-01T00:00:00+00:00',
+    //             value: 11,
+    //           },
+    //           {
+    //             key: 1567382400000,
+    //             date: '2019-09-02T00:00:00+00:00',
+    //             value: 12,
+    //           },
+    //           {
+    //             key: 1567468800000,
+    //             date: '2019-09-03T00:00:00+00:00',
+    //             value: 13,
+    //           },
+    //           {
+    //             key: 1567555200000,
+    //             date: '2019-09-04T00:00:00+00:00',
+    //             value: 9,
+    //           },
+    //           {
+    //             key: 1567641600000,
+    //             date: '2019-09-05T00:00:00+00:00',
+    //             value: 5,
+    //           },
+    //         ],
+    //       },
+    //       {
+    //         buckets: [
+    //           {
+    //             key: 1567296000000,
+    //             date: '2019-09-01T00:00:00+00:00',
+    //             value: 1,
+    //           },
+    //           {
+    //             key: 1567382400000,
+    //             date: '2019-09-02T00:00:00+00:00',
+    //             value: 2,
+    //           },
+    //           {
+    //             key: 1567468800000,
+    //             date: '2019-09-03T00:00:00+00:00',
+    //             value: 3,
+    //           },
+    //           {
+    //             key: 1567555200000,
+    //             date: '2019-09-04T00:00:00+00:00',
+    //             value: 4,
+    //           },
+    //           {
+    //             key: 1567641600000,
+    //             date: '2019-09-05T00:00:00+00:00',
+    //             value: 5,
+    //           },
+    //         ],
+    //       },
+    //     ],
+    //   },
+    // },
     {
-      id: 'views',
-      label: 'Pageviews',
+      id: 'views_table',
+      label: 'Views',
       permissions: ['admin'],
-      summary: {
-        current_value: 83898,
-        comparison_value: 0,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
+      // summary: {
+      //   current_value: 83898,
+      //   comparison_value: 0,
+      //   comparison_interval: 28,
+      //   comparison_positive_inclination: true,
+      // },
       visualisation: {
-        type: 'chart',
-        segments: [
+        type: 'table',
+        buckets: [
+          // {
+          //   key: 'urn:video:937185401872453632',
+          //   values: {
+          //     'views::total': 26,
+          //     'views::organic': 26,
+          //     'views::single': 26,
+          //   },
+          // },
           {
-            buckets: [
-              {
-                key: 1567296000000,
-                date: '2019-09-01T00:00:00+00:00',
-                value: 11,
+            key: 'urn:image:937185477660028928',
+            values: {
+              'views::total': 22,
+              'views::organic': 22,
+              'views::single': 16,
+              entity: {
+                time_created: '1570569175',
+                title: 'My cool image',
+                subtype: 'image',
+                route: 'media/937185477660028928',
+                ownerObj: {
+                  guid: '1234567',
+                  name: 'dogPhotographer',
+                },
               },
-              {
-                key: 1567382400000,
-                date: '2019-09-02T00:00:00+00:00',
-                value: 12,
-              },
-              {
-                key: 1567468800000,
-                date: '2019-09-03T00:00:00+00:00',
-                value: 13,
-              },
-              {
-                key: 1567555200000,
-                date: '2019-09-04T00:00:00+00:00',
-                value: 9,
-              },
-              {
-                key: 1567641600000,
-                date: '2019-09-05T00:00:00+00:00',
-                value: 5,
-              },
-            ],
+            },
           },
           {
-            buckets: [
-              {
-                key: 1567296000000,
-                date: '2019-09-01T00:00:00+00:00',
-                value: 1,
+            key: 'urn:blog:920262483603046400',
+            values: {
+              'views::total': 11,
+              'views::organic': 11,
+              'views::single': 11,
+              entity: {
+                time_created: '1568665493',
+                title: 'My cool blog',
+                route:
+                  'minds/blog/announcing-post-scheduling-bitcoin-usd-and-ethereum-payments-1020417032624504832',
+                subtype: 'blog',
+                ownerObj: {
+                  guid: '100000000000000000',
+                  name: 'Minds Official',
+                },
               },
-              {
-                key: 1567382400000,
-                date: '2019-09-02T00:00:00+00:00',
-                value: 2,
-              },
-              {
-                key: 1567468800000,
-                date: '2019-09-03T00:00:00+00:00',
-                value: 3,
-              },
-              {
-                key: 1567555200000,
-                date: '2019-09-04T00:00:00+00:00',
-                value: 4,
-              },
-              {
-                key: 1567641600000,
-                date: '2019-09-05T00:00:00+00:00',
-                value: 5,
-              },
-            ],
+            },
           },
+          // {
+          //   key: 'urn:video:895432241855463424',
+          //   values: {
+          //     'views::total': 9,
+          //     'views::organic': 9,
+          //     'views::single': 9,
+          //   },
+          // },
+          // {
+          //   key: 'urn:image:1017095547862175744',
+          //   values: {
+          //     'views::total': 6,
+          //     'views::organic': 6,
+          //     'views::single': 6,
+          //   },
+          // },
+          // {
+          //   key: 'urn:video:1001848211025559552',
+          //   values: {
+          //     'views::total': 6,
+          //     'views::organic': 6,
+          //     'views::single': 6,
+          //   },
+          // },
+          // {
+          //   key: 'urn:activity:895432367722332160',
+          //   values: {
+          //     'views::total': 5,
+          //     'views::organic': 5,
+          //     'views::single': 3,
+          //   },
+        ],
+        columns: [
+          { id: 'views::total', label: 'Total', order: 1 },
+          { id: 'views::organic', label: 'Organic', order: 2 },
+          { id: 'views::single', label: 'Single', order: 3 },
+          { id: 'entity', label: 'Views', order: 0 },
         ],
       },
-    },
-    {
-      id: 'active_users',
-      label: 'Active Users2',
-      permissions: ['admin'],
-      summary: {
-        current_value: 120962,
-        comparison_value: 120962,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
-      visualisation: null,
-    },
-    {
-      id: 'active_users',
-      label: 'Active Users3',
-      permissions: ['admin'],
-      summary: {
-        current_value: 120962,
-        comparison_value: 120962,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
-      visualisation: null,
-    },
-    {
-      id: 'active_users',
-      label: 'Active Users4',
-      permissions: ['admin'],
-      summary: {
-        current_value: 120962,
-        comparison_value: 120962,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
-      visualisation: null,
-    },
-    {
-      id: 'active_users',
-      label: 'Active Users5',
-      permissions: ['admin'],
-      summary: {
-        current_value: 120962,
-        comparison_value: 120962,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
-      visualisation: null,
-    },
-    {
-      id: 'active_users',
-      label: 'Active Users6',
-      permissions: ['admin'],
-      summary: {
-        current_value: 120962,
-        comparison_value: 120962,
-        comparison_interval: 28,
-        comparison_positive_inclination: true,
-      },
-      visualisation: null,
     },
   ],
   // filter: ['platform::browser'],

@@ -19,22 +19,10 @@ import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 
-import {
-  AnalyticsDashboardService,
-  Category,
-  Response,
-  Dashboard,
-  Filter,
-  Option,
-  Metric,
-  Summary,
-  Visualisation,
-  Bucket,
-  Timespan,
-  UserState,
-} from './dashboard.service';
+import { AnalyticsDashboardService } from './dashboard.service';
+import { Filter } from './../../../interfaces/dashboard';
 
-import categories from './categories.default';
+// import categories from './categories.default';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 
 @Component({
