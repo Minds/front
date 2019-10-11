@@ -1,6 +1,6 @@
 <ng-container *ngIf="current">
   <m-video--direct-http-player
-    *ngIf="current.type === 'direct-http'"
+    *ngIf="current.type === 'direct-http' || true"
     class="m-video--player"
     [src]="current.src"
     [poster]="poster"
@@ -18,7 +18,7 @@
   ></m-video--direct-http-player>
 
   <m-video--torrent-player
-    *ngIf="current.type === 'torrent'"
+    *ngIf="current.type === 'torrent' && false"
     class="m-video--player"
     [src]="current.src"
     [poster]="poster"
@@ -39,7 +39,7 @@
     <i
       *ngIf="
         (!playerRef.isPlaying() && !playerRef.isLoading()) ||
-        (isActivity && metadataLoaded && !playerRef.isPlaying())
+        (shouldPlayInModal && !playerRef.isPlaying())
       "
       class="material-icons minds-video-play-icon"
       (click)="clickedVideo()"

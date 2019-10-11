@@ -435,9 +435,9 @@ export class MindsVideoComponent implements OnDestroy {
   }
 
   clickedVideo() {
-    if (!this.metadataLoaded) {
-      return;
-    }
+    // if (!this.metadataLoaded) {
+    //   return;
+    // }
 
     const isNotTablet = Math.min(screen.width, screen.height) < 768;
 

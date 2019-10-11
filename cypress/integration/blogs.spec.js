@@ -2,24 +2,29 @@
 
 context('Blogs', () => {
   before(() => {
-    cy.clearCookies();
-    cy.getCookie('minds_sess').then(sessionCookie => {
-      if (sessionCookie === null) {
-        return cy.login(true);
-      }
-    });
+    cy.getCookie('minds_sess')
+      .then((sessionCookie) => {
+        if (sessionCookie === null) {
+          return cy.login(true);
+        }
+      });
   });
 
   beforeEach(() => {
     cy.preserveCookies();
     cy.server();
     cy.route('POST', '**/api/v1/blog/new').as('postBlog');
+    cy.route('POST', '**/api/v1/media**').as('postMedia');
     cy.route('GET', '**/api/v1/blog/**').as('getBlog');
     cy.route('DELETE', '**/api/v1/blog/**').as('deleteBlog');
+
+    cy.visit('/newsfeed/global/top')
+      .location('pathname')
+      .should('eq', '/newsfeed/global/top');
   });
 
   const uploadAvatar = () => {
-    cy.visit(`/${Cypress.env().username}`, { timeout: 30000 });
+    cy.visit(`/${Cypress.env().username}`);
     cy.get('.m-channel--name .minds-button-edit button:first-child').click();
     cy.uploadFile(
       '.minds-avatar input[type=file]',
@@ -30,7 +35,7 @@ context('Blogs', () => {
   };
 
   const createBlogPost = (title, body, nsfw = false, schedule = false) => {
-    cy.visit('/blog/edit/new', { timeout: 30000 });
+    cy.visit('/blog/edit/new');
 
     cy.uploadFile(
       '.minds-banner input[type=file]',
@@ -41,12 +46,17 @@ context('Blogs', () => {
     cy.get('minds-textarea .m-editor').type(title);
     cy.get('m-inline-editor .medium-editor-element').type(body);
 
-    // click on plus button
-    cy.get('.medium-editor-element > .medium-insert-buttons > button.medium-insert-buttons-show').click();
-    // click on camera
-    cy.get('ul.medium-insert-buttons-addons > li > button.medium-insert-action:first-child').contains('photo_camera').click();
+    // // click on plus button
+    // cy.get('.medium-editor-element > .medium-insert-buttons > button.medium-insert-buttons-show').click();
+    // // click on camera
+    // cy.get('ul.medium-insert-buttons-addons > li > button.medium-insert-action:first-child').contains('photo_camera').click();
+    
     // upload the image
-    cy.uploadFile('.medium-media-file-input', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg');
+    cy.uploadFile('.medium-media-file-input', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg')
+      .wait('@postMedia').then(xhr => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal('success');
+      });
 
     // open license dropdown & select first license
     cy.get('.m-license-info select').select('All rights reserved');
@@ -108,23 +118,20 @@ context('Blogs', () => {
         });
     }
 
-    cy.get('.m-button--submit', { timeout: 5000 }).click({ force: true }); // TODO: Investigate why disabled flag is being detected
-
-    cy.wait('@postBlog').then(xhr => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.equal('success');
-
-      cy.wait('@getBlog').then(xhr => {
+    cy.get('.m-button--submit')
+      .click({ force: true }) // TODO: Investigate why disabled flag is being detected
+      .wait('@postBlog').then(xhr => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal('success');
+      })
+      .wait('@getBlog').then(xhr => {
         expect(xhr.status).to.equal(200);
         expect(xhr.response.body.status).to.equal('success');
         expect(xhr.response.body).to.have.property('blog');
       });
-    });
 
-    cy.location('pathname', { timeout: 30000 }).should(
-      'contains',
-      `/${Cypress.env().username}/blog`
-    );
+    cy.location('pathname')
+      .should('contains', `/${Cypress.env().username}/blog`);
 
     cy.get('.m-blog--title').contains(title);
     cy.get('.minds-blog-body p').contains(body);
@@ -191,14 +198,8 @@ context('Blogs', () => {
     cy.get('.minds-blog-body p').contains(body);
   };
 
-  it('should be able to create a new scheduled blog', () => {
-    uploadAvatar();
-    createBlogPost('Title', 'Content', true, true);
-    deleteBlogPost();
-  });
-
   it('should not be able to create a new blog if no title or banner are specified', () => {
-    cy.visit('/blog/edit/new', { timeout: 30000 });
+    cy.visit('/blog/edit/new');
     cy.get('.m-button--submit').click();
     cy.get('.m-blog--edit--error').contains('Error: You must provide a title');
     cy.get('minds-textarea .m-editor').type('Title');
@@ -215,7 +216,21 @@ context('Blogs', () => {
     deleteBlogPost();
   });
 
-  it('should create an activity for the blog post', () => {
+  /**
+   * Skipping until the scheduling options are visible on sandboxes
+   * currently they are not, missing setting perhaps?
+   */ 
+  it.skip('should be able to create a new scheduled blog', () => {
+    uploadAvatar();
+    createBlogPost('Title', 'Content', true, true);
+    deleteBlogPost();
+  });
+
+  /**
+   * Skipping until sandbox behaves consistently as currently when posting,
+   * on the sandbox it does not update the newsfeed and channel straight away as it does on prod.
+   */ 
+  it.skip('should create an activity for the blog post', () => {
     const identifier = Math.floor(Math.random() * 100);
     const title = 'Test Post for Activity ' + identifier;
     const body = 'Some content here ' + identifier;
@@ -244,7 +259,11 @@ context('Blogs', () => {
     );
   });
 
-  it('should update the activity when blog is updated', () => {
+  /**
+   * Skipping until sandbox behaves consistently as currently when posting,
+   * on the sandbox it does not update the newsfeed and channel straight away as it does on prod.
+   */ 
+  it.skip('should update the activity when blog is updated', () => {
     const identifier = Math.floor(Math.random() * 100);
     const title = 'Test Post for Activity ' + identifier;
     const body = 'Some content here ' + identifier;

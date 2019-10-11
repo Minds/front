@@ -356,9 +356,15 @@ export class CommentComponent implements OnChanges {
     this.comment.modal_source_url = this.router.url;
 
     this.overlayModal
-      .create(MediaModalComponent, this.comment, {
-        class: 'm-overlayModal--media',
-      })
+      .create(
+        MediaModalComponent,
+        {
+          entity: this.comment,
+        },
+        {
+          class: 'm-overlayModal--media',
+        }
+      )
       .present();
   }
 }

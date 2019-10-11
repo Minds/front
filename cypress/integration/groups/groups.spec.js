@@ -32,15 +32,19 @@ context('Groups', () => {
     // click on hashtags dropdown
     cy.get('m-hashtags-selector .m-dropdown--label-container').click();
     // select #ART
-    cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div > span').contains('#art').click();
+    cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div > span').contains('art').click();
     // type in another hashtag manually
     cy.get('m-hashtags-selector m-form-tags-input input').type('hashtag{enter}').click();
     // click away
     cy.get('m-hashtags-selector .minds-bg-overlay').click();
 
     cy.get('.m-groups-save > button').contains('Create').click();
+    cy.route("POST", "**/api/v1/groups/group/*/banner*").as("postBanner");
 
     cy.wait('@postGroup').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+      expect(xhr.response.body.status).to.equal('success');
+    }).wait('@postBanner').then((xhr) => {
       expect(xhr.status).to.equal(200);
       expect(xhr.response.body.status).to.equal('success');
     });

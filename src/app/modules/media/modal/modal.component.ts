@@ -109,7 +109,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
 
   @Input('entity') set data(params: MediaModalParams) {
-    this.entity = JSON.parse(JSON.stringify(params.entity)); // deep clone
+    this.entity = params.entity && JSON.parse(JSON.stringify(params.entity)); // deep clone
     this.redirectUrl = params.redirectUrl || null;
   }
 
@@ -144,13 +144,19 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           this.entity.title ||
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.entity_guid || this.entity.guid;
-        this.thumbnail = this.entity.thumbnails.xlarge;
+        this.thumbnail = this.entity.thumbnails
+          ? this.entity.thumbnails.xlarge
+          : null;
 
         switch (this.entity.custom_type) {
           case 'video':
             this.contentType = 'video';
-            this.entity.width = this.entity.custom_data.dimensions.width;
-            this.entity.height = this.entity.custom_data.dimensions.height;
+            this.entity.width = this.entity.custom_data.dimensions
+              ? this.entity.custom_data.dimensions.width
+              : 1280;
+            this.entity.height = this.entity.custom_data.dimensions
+              ? this.entity.custom_data.dimensions.height
+              : 720;
             this.entity.thumbnail_src = this.entity.custom_data.thumbnail_src;
             break;
           case 'batch':
