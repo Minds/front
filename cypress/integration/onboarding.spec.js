@@ -43,28 +43,22 @@ context('Onboarding', () => {
       .contains(welcomeText);
   });
 
-  it('should allow a user to register', () => {
-      //select topics
-      cy.get(getTopic(3)).click().should('have.class', 'selected')
-      cy.get(getTopic(4)).click().should('have.class', 'selected')
-      cy.get(getTopic(5)).click().should('have.class', 'selected')
+  it('should allow a user to run through onboarding modals', () => {
+    //select topics
+    cy.get(getTopic(3)).click().should('have.class', 'selected')
+    cy.get(getTopic(4)).click().should('have.class', 'selected')
+    cy.get(getTopic(5)).click().should('have.class', 'selected')
       
-      //click
-      cy.get(nextButton).click();
-  });
-
-  it('should skip over subscribed channels', () => {
+    //click
+    cy.get(nextButton).click();
+  
     //TODO: Skipped over for now as subscribed channels is not working on staging environment.  
     cy.get(nextButton).click();
-  });
-
-  it('should let a user change their display name and description', () => {  
+ 
     cy.get(nameField).clear().type(name);
     cy.get(descriptionfield).type(description);
     cy.get(nextButton).click();
-  });
-
-  it('should allow a user to select their country', () => {
+  
     //set dialcode
     cy.get(countryDropdown).click();
     cy.get(ukOption).click();

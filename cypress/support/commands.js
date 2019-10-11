@@ -72,21 +72,23 @@ const poster = {
  * @returns void
  */
 Cypress.Commands.add('login', (canary = false, username, password) => {
+  cy.clearCookies();
+  cy.setCookie('staging', "1"); // Run in staging mode. Note: does not impact review sites
   username =  username ? username : Cypress.env().username;
   password =  password ? password : Cypress.env().password;
-  cy.setCookie('staging', "1"); // Run in stagin mode. Note: does not impact review sites
 
   cy.visit('/login');
 
   cy.server();
   cy.route("POST", "/api/v1/authenticate").as("postLogin");
 
-  cy.get(loginForm.username).type(username);
-  cy.get(loginForm.password).type(password);
+  cy.get(loginForm.username).focus().type(username);
+  cy.get(loginForm.password).focus().type(password);
   
-  cy.get(loginForm.submit).click();
-
-  cy.wait('@postLogin').then((xhr) => {
+  cy.get(loginForm.submit)
+    .focus()
+    .click({force: true})
+    .wait('@postLogin').then((xhr) => {
     expect(xhr.status).to.equal(200);
     expect(xhr.response.body.status).to.equal('success');
   });
@@ -97,8 +99,7 @@ Cypress.Commands.add('login', (canary = false, username, password) => {
  * @returns void
  */
 Cypress.Commands.add('logout', () => {
-  cy.get(nav.hamburgerMenu).click();
-  cy.get(nav.logoutButton).click();  
+  cy.visit('/logout')
 });
 
 /**
@@ -111,9 +112,8 @@ Cypress.Commands.add('logout', () => {
  * @returns void
  */
 Cypress.Commands.add('newUser', (username = '', password = '') => {
-  cy.visit('/login');
-    
-  cy.location('pathname', { timeout: 30000 })
+  cy.visit('/login')
+    .location('pathname')
     .should('eq', `/login`);
 
   cy.server();
@@ -146,7 +146,7 @@ Cypress.Commands.add('newUser', (username = '', password = '') => {
 });
 
 Cypress.Commands.add('preserveCookies', () => {
-  Cypress.Cookies.preserveOnce('staging', 'minds_sess', 'mwa', 'XSRF-TOKEN');
+  Cypress.Cookies.preserveOnce('staging', 'minds_sess', 'mwa', 'XSRF-TOKEN', 'staging-features');
 });
 
 /**
@@ -215,6 +215,17 @@ Cypress.Commands.add('post', (message) => {
     expect(xhr.response.body.status).to.deep.equal("success");
   });
 });
+
+/**
+ * Sets the feature flag cookie.
+ * @param { Object } flags - JSON object containing flags to turn on 
+ * e.g. { dark mode:false, es-feeds: true }
+ * @returns void
+ */
+// Cypress.Commands.add('overrideFeatureFlag', (flags) => {
+//   const base64 = Buffer.from(JSON.stringify(flags)).toString("base64");
+//   cy.setCookie('staging-features', base64);
+// });
 
 /**
  * Converts base64 to blob format
