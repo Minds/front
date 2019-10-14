@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
@@ -7,6 +7,7 @@ import { ChannelOnboardingService } from '../../onboarding/channel/onboarding.se
 import { Storage } from '../../../services/storage';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReferralsLinksComponent } from '../../wallet/tokens/referrals/links/links.component';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   moduleId: module.id,
@@ -28,7 +29,7 @@ export class ChannelSidebar {
 
   @Output() changeEditing = new EventEmitter<boolean>();
 
-  //@todo make a re-usable city selection module to avoid duplication here
+  // @todo make a re-usable city selection module to avoid duplication here
   cities: Array<any> = [];
 
   constructor(
@@ -37,13 +38,15 @@ export class ChannelSidebar {
     public session: Session,
     public onboardingService: ChannelOnboardingService,
     protected storage: Storage,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    public featuresService: FeaturesService
   ) {
-    if (onboardingService && onboardingService.onClose)
+    if (onboardingService && onboardingService.onClose) {
       onboardingService.onClose.subscribe(progress => {
         this.onboardingProgress = -1;
         this.checkProgress();
       });
+    }
   }
 
   ngOnInit() {
@@ -84,6 +87,7 @@ export class ChannelSidebar {
     }
 
     this.changeEditing.next(!this.editing);
+    this.minds.user.name = this.user.name; //no need to refresh for other pages to update.
   }
 
   upload_avatar(file) {
@@ -154,5 +158,52 @@ export class ChannelSidebar {
         }
       )
       .present();
+  }
+
+  async proAdminToggle() {
+    const value = !this.user.pro;
+    const method = value ? 'put' : 'delete';
+
+    this.user.pro = value;
+
+    try {
+      const response = (await this.client[method](
+        `api/v2/admin/pro/${this.user.guid}`
+      )) as any;
+
+      if (!response || response.status !== 'success') {
+        throw new Error('Invalid server response');
+      }
+    } catch (e) {
+      console.error(e);
+      this.user.pro = !value;
+    }
+  }
+
+  get showBecomeProButton() {
+    const isOwner =
+      this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().guid == this.user.guid;
+    return isOwner && !this.user.pro;
+  }
+
+  get showProSettings() {
+    const isOwner =
+      this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().guid == this.user.guid;
+    const isAdmin = window.Minds.Admin;
+    return (isOwner || isAdmin) && this.user.pro;
+  }
+
+  get proSettingsRouterLink() {
+    const isAdmin = window.Minds.Admin;
+
+    const route: any[] = ['/pro/settings'];
+
+    if (isAdmin) {
+      route.push({ user: this.user.username });
+    }
+
+    return route;
   }
 }

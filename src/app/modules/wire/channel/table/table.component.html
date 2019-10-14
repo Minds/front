@@ -1,6 +1,7 @@
 <table
   class="m-wire-channel--rewards"
   [ngClass]="['m-wire-channel--rewards-' + type]"
+  [class.m-wire-channel--rewards--is-editing]="editing"
   cellspacing="0"
   cellspacing="0"
 >
@@ -8,7 +9,8 @@
     *ngFor="let reward of rewards; let i = index"
     (click)="openWireModal(reward)"
   >
-    <td>
+    <td [class.m-border]="editing">
+      <label *ngIf="editing">Threshold</label>
       <div class="m-wire-channel--reward-amount">
         <span *ngIf="!editing && type == 'money'"
           >{{ reward.amount || 0 | currency: 'USD':true:'1.0-0' }}+</span
@@ -30,6 +32,7 @@
           [ngModel]="reward.amount"
           (ngModelChange)="setAmount(i, $event)"
           [placeholder]="getAmountPlaceholder()"
+          class="m-input"
         />
         <ng-container *ngIf="type == 'points'" i18n="@@M__COMMON__POINTS_SUFFIX"
           >points</ng-container
@@ -43,26 +46,29 @@
 
       <div class="m-wire-channel--reward-description">
         <p *ngIf="!editing">{{ reward.description }}</p>
-        <textarea
-          *ngIf="editing"
-          [ngModel]="reward.description"
-          (ngModelChange)="setDescription(i, $event)"
-          class="m-border"
-          [autoGrow]
-          placeholder="Describe the reward"
-          i18n-placeholder="@@WIRE__CHANNEL__TABLE__REWARD_PLACEHOLDER"
-        >
-        </textarea>
+        <ng-container *ngIf="editing">
+          <label>Description</label>
+          <textarea
+            *ngIf="editing"
+            [ngModel]="reward.description"
+            (ngModelChange)="setDescription(i, $event)"
+            class="m-border"
+            [autoGrow]
+            placeholder="Describe the reward"
+            i18n-placeholder="@@WIRE__CHANNEL__TABLE__REWARD_PLACEHOLDER"
+          >
+          </textarea>
+        </ng-container>
       </div>
     </td>
   </tr>
 </table>
 
 <div
-  class="m-wire-channel--rewards--add-tier m-border"
+  class="m-wire-channel--rewards--add-tier"
   *ngIf="session.getLoggedInUser().guid == channel.guid"
 >
-  <a (click)="addTier()">
+  <a (click)="addTier()" class="m-btn m-btn--action m-btn--slim">
     <i class="material-icons">playlist_add</i>
     <span i18n="@@WIRE__CHANNEL__TABLE__ADD_REWARD_ACTION">Add Reward</span>
   </a>

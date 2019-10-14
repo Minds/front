@@ -87,6 +87,7 @@
         font-weight: 400;
         margin-bottom: 0;
         padding-left: $minds-margin * 2;
+        padding-right: $minds-padding * 3;
         line-height: 16px;
       }
     }
@@ -208,7 +209,12 @@
           display: inline-block;
         }
         > i {
-          font-size: 42px;
+          font-size: 52px;
+          display: block;
+          margin-left: -12px;
+        }
+        > img {
+          height: 52px;
           display: block;
         }
       }
@@ -395,16 +401,16 @@
       appearance: none;
       padding: 8px 32px;
       background: none;
-      border-radius: 0;
+      //border-radius: 0;
       font-family: inherit;
       font-size: inherit;
       font-weight: inherit;
       text-transform: uppercase;
       cursor: pointer;
-      @include m-theme() {
-        border: 1px solid themed($m-grey-700);
-        color: themed($m-grey-700);
-      }
+      //@include m-theme(){
+      //  border: 1px solid themed($m-grey-700);
+      //  color: themed($m-grey-700);
+      //}
 
       &[disabled] {
         cursor: default;
@@ -657,6 +663,7 @@
     &:not(.m-wire--creator-selector--highlight) .m-wire--creator-selector-type {
       > i,
       h5 > span,
+      img,
       .m-boost--creator-selector--hoverable,
       .material-icons {
         opacity: 0.5;
@@ -834,22 +841,10 @@
 
 // Creator Rewards component
 
-.m-wire--creator-rewards {
-  display: block;
-  //border-left: 1px solid rgba(0, 0, 0, 0.2);
-  //padding: ($minds-padding * 3) 0 ($minds-padding * 3) 60px;
-  font-family: inherit;
-  font-weight: 200;
+.m-wire--creator-rewards,
+.m-wireCreator__rewardSelector {
   @include m-theme() {
     color: themed($m-grey-700);
-  }
-
-  @media screen and (max-width: $max-mobile) {
-    position: initial;
-    max-width: none;
-    border: none;
-    padding: 0 ($minds-padding * 2);
-    margin: ($minds-padding * 2) 0;
   }
 
   .m-wire--creator-rewards--title {
@@ -873,11 +868,8 @@
     }
   }
 
-  .m-wire--creator-rewards--list {
+  m-wirecreator__rewards {
     //max-width: 360px;
-    display: flex;
-    flex-direction: row;
-    list-style: none;
     margin: 0;
     padding: 0;
     @include m-theme() {
@@ -909,13 +901,19 @@
       letter-spacing: 2.5px;
     }
 
-    .m-wire--creator-rewards--description p {
-      font-family: 'Roboto', Helvetica, sans-serif;
-      padding: 0;
-      margin: 4px 0;
-      line-height: 1.1;
-      font-size: 12px;
-      font-weight: 400;
+    .m-wire--creator-rewards--description {
+      padding: $minds-padding;
+      > * {
+        display: inline;
+      }
+      p {
+        font-family: 'Roboto', Helvetica, sans-serif;
+        padding: 0;
+        margin: 4px 0;
+        line-height: 1.1;
+        font-size: 12px;
+        font-weight: 400;
+      }
     }
   }
 }
@@ -969,4 +967,9 @@
       color: themed($m-grey-300);
     }
   }
+}
+
+.m-wireCreator__rewardSelector {
+  margin-right: 64px;
+  margin-bottom: 16px;
 }

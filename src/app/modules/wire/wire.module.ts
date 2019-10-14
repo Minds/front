@@ -6,6 +6,7 @@ import { CommonModule } from '../../common/common.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { FaqModule } from '../faq/faq.module';
+import { PaymentsModule } from '../payments/payments.module';
 
 import { WireCreatorComponent } from './creator/creator.component';
 import { WirePaymentsCreatorComponent } from './payments-creator/creator.component';
@@ -25,6 +26,7 @@ import { WireMarketingComponent } from './marketing.component';
 import { WireConsoleOverviewComponent } from './console/overview/overview.component';
 import { WireConsoleRewardsInputsComponent } from './console/rewards-table/inputs/wire-console-rewards-inputs.component';
 import { WireConsoleRewardsComponent } from './console/rewards-table/rewards.component';
+import { WireSubscriptionTiersComponent } from './channel/tiers.component';
 
 const wireRoutes: Routes = [
   { path: 'wire', component: WireMarketingComponent },
@@ -39,6 +41,7 @@ const wireRoutes: Routes = [
     CommonModule,
     CheckoutModule,
     FaqModule,
+    PaymentsModule,
   ],
   declarations: [
     WireLockScreenComponent,
@@ -58,6 +61,7 @@ const wireRoutes: Routes = [
     WireConsoleSettingsComponent,
     WireMarketingComponent,
     WireConsoleOverviewComponent,
+    WireSubscriptionTiersComponent,
   ],
   providers: [WireService],
   exports: [
@@ -72,6 +76,8 @@ const wireRoutes: Routes = [
     WireConsoleRewardsComponent,
     WireConsoleSettingsComponent,
     WireConsoleOverviewComponent,
+    WireCreatorComponent,
+    WireSubscriptionTiersComponent,
   ],
   entryComponents: [
     WireCreatorComponent,

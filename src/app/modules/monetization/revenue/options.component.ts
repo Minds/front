@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ChartColumn } from '../../../common/components/chart/chart.component';
-import { Client } from '../../../services/api';
+import { Client, Upload } from '../../../services/api';
 
 @Component({
   moduleId: module.id,
@@ -18,12 +18,14 @@ export class RevenueOptionsComponent {
     account: null,
     country: 'US',
   };
+  account;
   error: string = '';
   leaving: boolean = false;
   leaveError: string = '';
 
   constructor(
     private client: Client,
+    private upload: Upload,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
     private router: Router
@@ -40,29 +42,29 @@ export class RevenueOptionsComponent {
 
   getSettings() {
     this.inProgress = true;
-    this.client
-      .get('api/v1/monetization/settings')
-      .then(({ bank, country }) => {
-        this.inProgress = false;
-        this.payoutMethod.country = country;
-        this.form.controls.country.setValue(country);
-        if (bank.last4) {
-          this.payoutMethod.account = bank;
-        }
-        this.detectChanges();
-      });
+    this.client.get('api/v2/payments/stripe/connect').then(({ account }) => {
+      this.inProgress = false;
+      this.account = account;
+      this.payoutMethod.country = account.country;
+      this.form.controls.country.setValue(account.country);
+      if (account.bankAccount.last4) {
+        this.payoutMethod.account = account.bankAccount;
+      }
+      this.detectChanges();
+    });
   }
 
   addBankAccount() {
     this.inProgress = true;
     this.error = '';
-    this.editing = false;
+    // this.editing = false;
     this.detectChanges();
 
     this.client
-      .post('api/v1/monetization/settings', this.form.value)
+      .post('api/v2/payments/stripe/connect/bank', this.form.value)
       .then((response: any) => {
         this.inProgress = false;
+        this.editing = false;
         this.getSettings();
       })
       .catch(e => {
@@ -76,7 +78,7 @@ export class RevenueOptionsComponent {
     this.leaving = true;
     this.detectChanges();
     this.client
-      .delete('api/v1/monetization/settings/account')
+      .delete('api/v2/payments/stripe/connect')
       .then((response: any) => {
         (<any>window).Minds.user.merchant = [];
         this.router.navigate(['/newsfeed']);
@@ -96,6 +98,25 @@ export class RevenueOptionsComponent {
   cancelEditing() {
     this.editing = false;
     this.detectChanges();
+  }
+
+  async uploadRequirement(fileInput: HTMLInputElement) {
+    const file = fileInput ? fileInput.files[0] : null;
+    this.editing = true;
+    this.detectChanges();
+    await this.upload.post('api/v2/payments/stripe/connect/photoid', [file]);
+    this.editing = false;
+    this.account = null;
+    this.getSettings();
+  }
+
+  async acceptTos() {
+    this.editing = true;
+    this.detectChanges();
+    await this.client.put('api/v2/payments/stripe/connect/terms');
+    this.editing = false;
+    this.account = null;
+    this.getSettings();
   }
 
   detectChanges() {

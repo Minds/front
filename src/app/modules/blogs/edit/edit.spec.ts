@@ -26,7 +26,7 @@ import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { MockComponent } from '../../../utils/mock';
+import { MockComponent, MockDirective } from '../../../utils/mock';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-service-mock.spec';
 
@@ -239,6 +239,15 @@ describe('BlogEdit', () => {
           selector: 'm-hashtags-selector',
           inputs: ['tags', 'alignLeft'],
           outputs: ['tagsChange', 'tagsAdded', 'tagsRemoved'],
+        }),
+        MockComponent({
+          selector: 'm-poster-date-selector',
+          inputs: ['date', 'dateFormat'],
+          outputs: ['dateChange'],
+        }),
+        MockDirective({
+          selector: '[mIfFeature]',
+          inputs: ['mIfFeature'],
         }),
         BlogEdit,
         MDLMock,

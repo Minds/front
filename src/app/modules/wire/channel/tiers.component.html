@@ -1,0 +1,31 @@
+<div class="m-wire-channel--rewards">
+  <p
+    *ngIf="!editing && rewards.description"
+    class="m-wire-channel--description"
+    [innerText]="rewards.description"
+  ></p>
+
+  <textarea
+    *ngIf="editing"
+    class="m-wire-channel--description-editor m-border"
+    [(ngModel)]="rewards.description"
+    [autoGrow]
+    placeholder="About your offerings. eg. Describe what your supporters will receive…"
+    i18n-placeholder="@@WIRE__CHANNEL__REWARD_DESCRIPTION_PLACEHOLDER"
+  ></textarea>
+
+  <m-wire-channel-table
+    type="tokens"
+    [(rewards)]="rewards.rewards.tokens"
+    [(editing)]="editing"
+    [channel]="user"
+  ></m-wire-channel-table>
+
+  <m-wire-channel-table
+    type="money"
+    [(rewards)]="rewards.rewards.money"
+    [(editing)]="editing"
+    [channel]="user"
+    *mIfFeature="'wire-multi-currency'"
+  ></m-wire-channel-table>
+</div>

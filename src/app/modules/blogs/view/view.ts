@@ -1,4 +1,14 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  Injector,
+  SkipSelf,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
@@ -12,18 +22,20 @@ import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { optimizedResize } from '../../../utils/optimized-resize';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-blog-view',
-  inputs: ['_blog: blog', '_index: index'],
   host: {
     class: 'm-blog',
   },
   templateUrl: 'view.html',
+  providers: [ActivityService, ClientMetaService],
 })
-export class BlogView {
+export class BlogView implements OnInit, OnDestroy {
   minds;
   guid: string;
   blog: MindsBlogEntity;
@@ -50,7 +62,29 @@ export class BlogView {
     'set-explicit',
     'remove-explicit',
     'rating',
+    'allow-comments',
   ];
+
+  @Input() showActions: boolean = true;
+  @Input() showComments: boolean = true;
+
+  @Input('blog') set _blog(value: MindsBlogEntity) {
+    this.blog = value;
+    setTimeout(() => {
+      this.calculateLockScreenHeight();
+    });
+  }
+
+  @Input('index') set _index(value: number) {
+    this.index = value;
+    if (this.index === 0) {
+      this.visible = true;
+    }
+  }
+
+  set data(value: any) {
+    this.blog = value;
+  }
 
   @ViewChild('lockScreen', { read: ElementRef, static: false }) lockScreen;
 
@@ -65,8 +99,17 @@ export class BlogView {
     private context: ContextService,
     public analytics: AnalyticsService,
     public analyticsService: AnalyticsService,
-    private overlayModal: OverlayModalService
+    protected activityService: ActivityService,
+    private cd: ChangeDetectorRef,
+    private overlayModal: OverlayModalService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector
   ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('single');
+
     this.minds = window.Minds;
     this.element = _element.nativeElement;
     optimizedResize.add(this.onResize.bind(this));
@@ -75,10 +118,11 @@ export class BlogView {
   ngOnInit() {
     this.isVisible();
     this.context.set('object:blog');
+    this.clientMetaService.recordView(this.blog);
   }
 
   isVisible() {
-    //listens every 0.6 seconds
+    // listens every 0.6 seconds
     this.scroll_listener = this.scroll.listen(
       e => {
         const bounds = this.element.getBoundingClientRect();
@@ -109,20 +153,6 @@ export class BlogView {
     );
   }
 
-  set _blog(value: MindsBlogEntity) {
-    this.blog = value;
-    setTimeout(() => {
-      this.calculateLockScreenHeight();
-    });
-  }
-
-  set _index(value: number) {
-    this.index = value;
-    if (this.index === 0) {
-      this.visible = true;
-    }
-  }
-
   delete() {
     this.client
       .delete('api/v1/blog/' + this.blog.guid)
@@ -132,7 +162,9 @@ export class BlogView {
   }
 
   ngOnDestroy() {
-    if (this.scroll_listener) this.scroll.unListen(this.scroll_listener);
+    if (this.scroll_listener) {
+      this.scroll.unListen(this.scroll_listener);
+    }
   }
 
   menuOptionSelected(option: string) {
@@ -165,7 +197,9 @@ export class BlogView {
   }
 
   calculateLockScreenHeight() {
-    if (!this.lockScreen) return;
+    if (!this.lockScreen) {
+      return;
+    }
     const lockScreenOverlay = this.lockScreen.nativeElement.querySelector(
       '.m-wire--lock-screen'
     );

@@ -23,8 +23,8 @@
         <div class="m-mediaModal__stage">
           <!-- MEDIA: IMAGE -->
           <div
-            class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--image"
-            *ngIf="!isVideo"
+            class="m-mediaModal__mediaWrapper"
+            *ngIf="contentType === 'image'"
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
             [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
@@ -40,8 +40,8 @@
 
           <!-- MEDIA: VIDEO -->
           <div
-            class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--video"
-            *ngIf="isVideo"
+            class="m-mediaModal__mediaWrapper"
+            *ngIf="contentType === 'video'"
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
           >
@@ -52,24 +52,38 @@
               [isModal]="true"
               [autoplay]="true"
               [muted]="false"
-              [poster]="entity.custom_data.thumbnail_src"
+              [poster]="entity.thumbnail_src"
               [src]="[
                 {
                   res: '360',
-                  uri: 'api/v1/media/' + entity.custom_data.guid + '/play',
+                  uri: 'api/v1/media/' + entity.entity_guid + '/play?s=modal',
                   type: 'video/mp4'
                 }
               ]"
-              [guid]="entity.custom_data.guid"
+              [guid]="entity.entity_guid"
               [playCount]="entity['play:count']"
-              [torrent]="[
-                { res: '360', key: entity.custom_data.guid + '/360.mp4' }
-              ]"
+              [torrent]="[{ res: '360', key: entity.entity_guid + '/360.mp4' }]"
               (videoCanPlayThrough)="isLoaded()"
               [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
+              #player
             >
               <video-ads [player]="player" *ngIf="entity.monetized"></video-ads>
             </m-video>
+          </div>
+
+          <!-- MEDIA: BLOG -->
+          <div
+            class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--blog"
+            *ngIf="contentType === 'blog'"
+            [style.width]="mediaWidth + 'px'"
+            [style.height]="mediaHeight + 'px'"
+            [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
+          >
+            <m-blog-view
+              [blog]="entity"
+              [showActions]="false"
+              [showComments]="false"
+            ></m-blog-view>
           </div>
 
           <!-- OVERLAY -->
@@ -78,14 +92,17 @@
             *ngIf="overlayVisible"
             @fastFadeAnimation
           >
-            <div class="m-mediaModal__overlayTitleWrapper">
+            <div
+              class="m-mediaModal__overlayTitleWrapper"
+              *ngIf="this.contentType !== 'blog'"
+            >
               <!-- TITLE -->
               <span
                 class="m-mediaModal__overlayTitle m-mediaModal__overlayTitle--notFullscreen"
                 *ngIf="!isFullscreen"
               >
                 <a
-                  [routerLink]="['/media', entity.entity_guid]"
+                  [routerLink]="[pageUrl]"
                   (click)="$event.stopPropagation()"
                   >{{ title }}</a
                 >
@@ -116,7 +133,7 @@
                 </a>
                 <div class="m-mediaModal__overlayTitleSeparator"></div>
                 <a
-                  [routerLink]="['/media', entity.entity_guid]"
+                  [routerLink]="[pageUrl]"
                   (click)="$event.stopPropagation()"
                   >{{ title }}</a
                 >
@@ -212,7 +229,7 @@
                   </a>
                   <!-- PERMALINK -->
                   <a
-                    [routerLink]="['/newsfeed', permalinkGuid]"
+                    [routerLink]="[pageUrl]"
                     class="permalink m-ownerBlock__permalink"
                   >
                     <span class="m-ownerBlock__permalinkDate">{{
@@ -251,12 +268,17 @@
               <div
                 class="m-mediaModal__message mdl-card__supporting-text"
                 m-read-more
-                *ngIf="hasMessage"
+                *ngIf="
+                  this.contentType !== 'blog' &&
+                  (this.entity.title ||
+                    this.entity.message ||
+                    this.entity.description)
+                "
                 [maxHeightAllowed]="136"
               >
                 <span
                   class="m-mature-message-content"
-                  [innerHtml]="message | tags"
+                  [innerHtml]="title | tags"
                 >
                 </span>
                 <m-read-more--button></m-read-more--button>
@@ -264,17 +286,17 @@
               <!-- ACTION BUTTONS -->
               <div class="m-mediaModal__actionButtonsWrapper">
                 <div class="m-mediaModal__actionButtonsRow m-action-tabs">
-                  <m-wire-button
-                    *ngIf="session.getLoggedInUser().guid != entity.owner_guid"
-                    [object]="entity"
-                    (done)="wireSubmitted($event)"
-                  ></m-wire-button>
                   <minds-button-thumbs-up
                     [object]="entity"
                   ></minds-button-thumbs-up>
                   <minds-button-thumbs-down
                     [object]="entity"
                   ></minds-button-thumbs-down>
+                  <m-wire-button
+                    *ngIf="session.getLoggedInUser().guid != entity.owner_guid"
+                    [object]="entity"
+                    (done)="wireSubmitted($event)"
+                  ></m-wire-button>
                   <minds-button-remind [object]="entity"></minds-button-remind>
                 </div>
               </div>

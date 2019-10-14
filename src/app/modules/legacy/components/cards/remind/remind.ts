@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
+import { ActivityService } from '../../../../../common/services/activity.service';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { FeaturesService } from '../../../../../services/features.service';
@@ -23,6 +24,7 @@ import isMobile from '../../../../../helpers/is-mobile';
   moduleId: module.id,
   selector: 'minds-remind',
   inputs: ['object', '_events: events'],
+  providers: [ActivityService],
   templateUrl: '../activity/activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -138,6 +140,10 @@ export class Remind {
     return activity && activity.pending && activity.pending !== '0';
   }
 
+  isScheduled(time_created) {
+    return false;
+  }
+
   openComments() {
     /* NOOP */
   }
@@ -166,6 +172,7 @@ export class Remind {
 
   setVideoDimensions($event) {
     this.videoDimensions = $event.dimensions;
+    this.activity.custom_data.dimensions = this.videoDimensions;
   }
 
   setImageDimensions() {
@@ -175,14 +182,15 @@ export class Remind {
   }
 
   clickedImage() {
-    // Check if is mobile (not tablet)
-    if (isMobile() && Math.min(screen.width, screen.height) < 768) {
-      this.goToMediaPage();
+    const isNotTablet = Math.min(screen.width, screen.height) < 768;
+    const pageUrl = `/media/${this.activity.entity_guid}`;
+
+    if (isMobile() && isNotTablet) {
+      this.router.navigate([pageUrl]);
     }
 
     if (!this.featuresService.has('media-modal')) {
-      // Non-canary
-      this.goToMediaPage();
+      this.router.navigate([pageUrl]);
     } else {
       // Canary
       if (
@@ -195,24 +203,17 @@ export class Remind {
     }
   }
 
-  clickedVideo() {
-    // Already filtered out mobile users/non-canary in video.component.ts
-    // So this is just applicable to desktop/tablet in canary and should always show modal
-    this.activity.custom_data.dimensions = this.videoDimensions;
-    this.openModal();
-  }
-
   openModal() {
     this.activity.modal_source_url = this.router.url;
 
     this.overlayModal
-      .create(MediaModalComponent, this.activity, {
-        class: 'm-overlayModal--media',
-      })
+      .create(
+        MediaModalComponent,
+        { entity: this.activity },
+        {
+          class: 'm-overlayModal--media',
+        }
+      )
       .present();
-  }
-
-  goToMediaPage() {
-    this.router.navigate([`/media/${this.activity.entity_guid}`]);
   }
 }

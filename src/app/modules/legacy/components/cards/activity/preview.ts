@@ -9,6 +9,7 @@ import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 
 import { AttachmentService } from '../../../../../services/attachment';
+import { ActivityService } from '../../../../../common/services/activity.service';
 
 @Component({
   moduleId: module.id,
@@ -18,6 +19,7 @@ import { AttachmentService } from '../../../../../services/attachment';
   host: {
     class: 'mdl-shadow--8dp',
   },
+  providers: [ActivityService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActivityPreview {
@@ -73,6 +75,10 @@ export class ActivityPreview {
   }
 
   isPending(activity) {
+    return false;
+  }
+
+  isScheduled(time_created) {
     return false;
   }
 

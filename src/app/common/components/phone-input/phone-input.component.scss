@@ -4,8 +4,20 @@
 m-phone-input {
   position: relative;
   display: inline-flex;
+  margin-bottom: $minds-padding;
+  @media (max-width: $max-mobile) {
+    width: 100%;
+    input {
+      width: 100%;
+    }
+  }
 
   .m-phone-input--wrapper {
+    display: flex;
+    @media (min-width: $max-mobile) {
+      flex-flow: row wrap;
+      justify-content: flex-end;
+    }
     margin-bottom: $minds-padding;
     @include m-theme() {
       background-color: themed($m-white);

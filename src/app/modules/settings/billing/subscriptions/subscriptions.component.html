@@ -61,6 +61,9 @@
             i18n="@@SETTINGS__BILLING__SUBSCRIPTIONS__POINTS_LABEL"
             >{{ subscription.amount | number: '1.0-0' }} Points</ng-template
           >
+          <ng-template ngSwitchCase="usd"
+            >{{ subscription.amount | token: 2 }} USD</ng-template
+          >
         </span>
 
         <span

@@ -28,6 +28,7 @@ import { MediaModalComponent } from './modal/modal.component';
 import { ThumbnailSelectorComponent } from './components/thumbnail-selector.component';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
+import { BlogModule } from '../blogs/blog.module';
 
 const routes: Routes = [
   { path: 'media/videos/:filter', component: MediaVideosListComponent },
@@ -60,6 +61,7 @@ const routes: Routes = [
     PostMenuModule,
     VideoModule,
     HashtagsModule,
+    BlogModule,
   ],
   declarations: [
     MediaVideosListComponent,

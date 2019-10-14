@@ -1,60 +1,62 @@
-context('Boost Impressions', () => {
-  
-  beforeEach(() => {
-    cy.login(true);
-
-    cy.location('pathname', { timeout: 30000 })
-      .should('eq', '/newsfeed/subscriptions');
-  });
-
-  it('should register views on scroll', () => {
-    //stub endpoint
-    cy.server();
-    cy.route("POST", "**/api/v2/analytics/views/activity/*").as("analytics");
-    
-    //load, scroll, wait to trigger analytics
-    cy.wait(3000);
-    cy.scrollTo(0, 500);
-    cy.wait(3000);
-    
-    //assert
-    cy.wait('@analytics', { requestTimeout: 5000 }).then((xhr) => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body).to.deep.equal({ status: 'success' });
+// Cannot test until env behaves consistently else, 
+// the test will frequently error when it cant see a boost.
+context.skip('Boost Impressions', () => {
+  before(() => {
+    cy.getCookie('minds_sess')
+    .then((sessionCookie) => {
+      if (sessionCookie === null) {
+        return cy.login(true);
+      }
     });
   });
 
-  it('should register views on boost rotate forward', () => {
-    //stub endpoint
+  beforeEach(()=> {
     cy.server();
-    cy.route("POST", "**/api/v2/analytics/views/boost/*").as("analytics");
-    cy.wait(3000);
+    cy.route("POST", "**api/v2/analytics/views/boost/*").as("analytics");
+    cy.route("GET", "**/api/v2/feeds/subscribed/activities**").as("activities");
 
+    cy.preserveCookies();
+    cy.visit('/newsfeed/subscriptions')
+      .location('pathname')
+      .should('eq', `/newsfeed/subscriptions`)
+      .wait('@activities').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+      });
+  });
+
+  afterEach(()=> {
+    cy.reload();
+  })
+
+  it('should register views on scroll', () => {
+    //smooth scroll
+    cy.scrollTo('0', '1%', { duration: 100 });
+
+    //assert
+    cy.wait('@analytics').then((xhr) => {
+      expect(xhr.status).to.equal(200);
+    });
+  });
+
+  it('should register views on boost rotate', () => {
     //rotate forward and wait to trigger analytics
-    cy.get('m-newsfeed--boost-rotator > div > ul > li:nth-child(2) > i')
+    cy.get('m-newsfeed--boost-rotator')
+      .find('chevron_right')
       .click();
-    cy.wait(3000);
     
     //assert
-    cy.wait('@analytics', { requestTimeout: 5000 }).then((xhr) => {
+    cy.wait('@analytics').then((xhr) => {
       expect(xhr.status).to.equal(200);
       expect(xhr.response.body.status).to.deep.equal("success");
     });
-  });
-
-  it('should register views on boost rotate backward', () => {
-    //stub endpoint
-    cy.server();
-    cy.route("POST", "**/api/v2/analytics/views/boost/*").as("analytics");
-    cy.wait(3000);
 
     //rotate forward and wait to trigger analytics
-    cy.get('m-newsfeed--boost-rotator > div > ul > li:nth-child(1) > i')
+    cy.get('m-newsfeed--boost-rotator')
+      .find('chevron_left')
       .click();
-    cy.wait(3000);
     
     //assert
-    cy.wait('@analytics', { requestTimeout: 5000 }).then((xhr) => {
+    cy.wait('@analytics').then((xhr) => {
       expect(xhr.status).to.equal(200);
       expect(xhr.response.body.status).to.deep.equal("success");
     });

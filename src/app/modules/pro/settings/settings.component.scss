@@ -1,0 +1,143 @@
+.m-pro__settings {
+  max-width: 1280px;
+  margin: auto;
+
+  .m-toolbar {
+    padding-top: 4px;
+  }
+}
+
+.m-proSettings__page {
+  padding-bottom: 24px;
+
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+
+  h4 {
+    margin: 0 0 8px;
+  }
+
+  form {
+    margin: 0;
+    padding: 0;
+  }
+
+  .m-proSettings__field {
+    margin: 0 0 24px;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    label {
+      display: block;
+      font-weight: 300;
+      margin-bottom: 4px;
+
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+
+      &.m-proSettings__inlineLabel {
+        display: inline-block;
+        padding: 0;
+        margin: 0 0.35em;
+      }
+    }
+
+    input[type='text'],
+    input[type='password'],
+    input[type='search'],
+    input[type='date'],
+    textarea {
+      appearance: none;
+      border: 1px solid;
+      border-radius: 6px;
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      max-width: 40em;
+
+      @media screen and (max-width: 768px) {
+        max-width: 100%;
+      }
+
+      @include m-theme() {
+        border-color: themed($m-grey-50);
+      }
+    }
+
+    textarea {
+      height: 6em;
+      resize: none;
+
+      &.m-proSettings__codeTextarea {
+        font-family: monospace;
+        font-size: 13px;
+        max-width: 49em;
+        height: 12em;
+
+        @media screen and (max-width: 768px) {
+          max-width: 100%;
+        }
+      }
+    }
+
+    &.m-proSettings__fieldActions {
+      display: flex;
+      flex-direction: row;
+
+      > *:last-child {
+        margin-left: auto;
+      }
+    }
+  }
+
+  .m-proSettings__previewBtn {
+    margin-left: 0.35em;
+
+    @include m-theme() {
+      color: themed($m-grey-600);
+      border-color: themed($m-grey-600);
+    }
+  }
+
+  .m-proSettings__note {
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+  }
+
+  .m-proSettings__flexInputs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 40em;
+
+    @media screen and (max-width: 768px) {
+      max-width: 100%;
+    }
+
+    > input {
+      margin-right: 8px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  .m-proSettings__fieldSpinner {
+    margin-left: 0.65em;
+  }
+
+  .m-proSettings__error {
+    margin: 16px 0;
+    font-size: 20px;
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
+}

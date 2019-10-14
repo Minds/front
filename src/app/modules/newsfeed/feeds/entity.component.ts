@@ -6,6 +6,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Output,
+  EventEmitter,
   ViewChild,
 } from '@angular/core';
 
@@ -18,6 +20,7 @@ import { DynamicHostDirective } from '../../../common/directives/dynamic-host.di
   templateUrl: 'entity.component.html',
 })
 export class NewsfeedEntityComponent {
+  @Output() deleted = new EventEmitter<boolean>();
   @ViewChild(DynamicHostDirective, { static: false })
   host: DynamicHostDirective;
   entity;
@@ -64,5 +67,13 @@ export class NewsfeedEntityComponent {
       componentRef.instance.entity = this.entity;
       componentRef.changeDetectorRef.detectChanges();
     }
+  }
+
+  /**
+   * Sets entity to null and by extension hides it.
+   */
+  delete(): void {
+    this.entity = null;
+    this.deleted.emit(true);
   }
 }

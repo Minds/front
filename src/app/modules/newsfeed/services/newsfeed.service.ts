@@ -27,9 +27,9 @@ export class NewsfeedService {
     channel = null,
     clientMeta = {}
   ) {
-    if (!this.session.isLoggedIn()) {
-      return;
-    }
+    // if (!this.session.isLoggedIn()) {
+    //   return;
+    // }
 
     // if it's a boost we record the boost view AND the activity view
     if (entity.boosted_guid) {

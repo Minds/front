@@ -24,7 +24,10 @@
     </div>
 
     <div class="m-homepage--signup" [hidden]="session.isLoggedIn()">
-      <minds-form-register (done)="registered()"></minds-form-register>
+      <minds-form-register
+        (done)="registered()"
+        parentId="/"
+      ></minds-form-register>
 
       <div class="m-homepage--app-buttons">
         <div class="m-homepage--app-buttons__iosBanner">

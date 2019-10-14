@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -32,6 +32,7 @@ import {
 import { Scheduler } from './components/scheduler/scheduler';
 import { Modal } from './components/modal/modal.component';
 import { MindsRichEmbed } from './components/rich-embed/rich-embed';
+import { QRCodeComponent } from './components/qr-code/qr-code.component';
 
 import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from './directives/autogrow';
@@ -101,10 +102,22 @@ import { SettingsService } from '../modules/settings/settings.service';
 import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
+import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
+import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
 import { ShareModalComponent } from '../modules/modals/share/share';
+import { RouterHistoryService } from './services/router-history.service';
+import { DraggableListComponent } from './components/draggable-list/list.component';
+import { DndModule } from 'ngx-drag-drop';
+import { SiteService } from './services/site.service';
 
 @NgModule({
-  imports: [NgCommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    NgCommonModule,
+    DndModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     MINDS_PIPES,
 
@@ -136,6 +149,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     MindsRichEmbed,
     TagcloudComponent,
     DropdownComponent,
+    QRCodeComponent,
 
     AutoGrow,
     InlineAutoGrow,
@@ -185,11 +199,14 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
+    ChannelModeSelectorComponent,
     NSFWSelectorComponent,
 
     SwitchComponent,
 
     FeaturedContentComponent,
+    PosterDateSelectorComponent,
+    DraggableListComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -220,6 +237,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     MindsRichEmbed,
     TagcloudComponent,
     DropdownComponent,
+    QRCodeComponent,
 
     AutoGrow,
     InlineAutoGrow,
@@ -273,8 +291,12 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    PosterDateSelectorComponent,
+    ChannelModeSelectorComponent,
+    DraggableListComponent,
   ],
   providers: [
+    SiteService,
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
@@ -290,7 +312,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
-      deps: [HttpClient],
+      deps: [HttpClient, SiteService],
     },
     {
       provide: NSFWSelectorCreatorService,
@@ -331,6 +353,11 @@ import { ShareModalComponent } from '../modules/modals/share/share';
       useFactory: boostedContentService =>
         new FeaturedContentService(boostedContentService),
       deps: [FeedsService],
+    },
+    {
+      provide: RouterHistoryService,
+      useFactory: router => new RouterHistoryService(router),
+      deps: [Router],
     },
   ],
   entryComponents: [

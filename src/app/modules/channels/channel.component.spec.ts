@@ -36,6 +36,9 @@ import { IfFeatureDirective } from '../../common/directives/if-feature.directive
 import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { BlockListService } from '../../common/services/block-list.service';
+import { ChannelMode } from '../../interfaces/entities';
+import { ClientMetaService } from '../../common/services/client-meta.service';
+import { clientMetaServiceMock } from '../../../tests/client-meta-service-mock.spec';
 
 describe('ChannelComponent', () => {
   let comp: ChannelComponent;
@@ -104,6 +107,7 @@ describe('ChannelComponent', () => {
         },
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: BlockListService, useValue: MockService(BlockListService) },
+        { provide: ClientMetaService, useValue: clientMetaServiceMock },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -127,6 +131,7 @@ describe('ChannelComponent', () => {
       icontime: 11111,
       subscribers_count: 182,
       impressions: 18200,
+      mode: ChannelMode.PUBLIC,
     };
     comp.editing = false;
     fixture.detectChanges();

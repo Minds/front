@@ -52,7 +52,15 @@
 }
 
 .m-token--onboarding--slide {
+  @media (max-width: $max-mobile) {
+    div p {
+      font-size: 12pt;
+    }
+  }
   .m-phone-input {
+    @media (max-width: $max-mobile) {
+      width: 100%;
+    }
     input {
       max-width: 140px;
     }
