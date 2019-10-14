@@ -35,7 +35,12 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
 
   currentError: string = '';
 
-  preview: CampaignPreview = {};
+  preview: CampaignPreview = {
+    canBeDelivered: true,
+    durationDays: 0,
+    globalViewsPerDay: 0,
+    viewsPerDayRequested: 0,
+  };
 
   protected route$: Subscription;
 
@@ -68,7 +73,7 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
     this.preview$ = this.previewSubject
       .pipe(debounceTime(600))
       .subscribe(async (campaign: Campaign) => {
-        this.preview = (await this.service.preview(campaign)) || {};
+        this.preview = (await this.service.preview(campaign)) || this.preview;
         this.detectChanges();
       });
   }

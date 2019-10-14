@@ -49,5 +49,8 @@ export type CampaignPayment = {
 };
 
 export type CampaignPreview = {
-  cannot_fulfill_daily?: boolean;
+  canBeDelivered: boolean;
+  durationDays: number;
+  globalViewsPerDay: number;
+  viewsPerDayRequested: number;
 };

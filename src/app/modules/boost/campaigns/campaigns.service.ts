@@ -249,4 +249,8 @@ export class CampaignsService {
       },
     ];
   }
+
+  async rate(): Promise<number> {
+    return ((await this.client.get(`api/v2/boost/campaigns/rate`)) as any).rate;
+  }
 }
