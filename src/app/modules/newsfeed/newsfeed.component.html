@@ -95,7 +95,6 @@
         <m-hashtags--sidebar-selector
           [disabled]="!isSorted"
           [currentHashtag]="hashtag"
-          [preferred]="!all && !hashtag"
           (filterChange)="hashtagFilterChange($event)"
           (switchAttempt)="navigateToGlobal()"
         ></m-hashtags--sidebar-selector>
