@@ -12,11 +12,15 @@ m-analytics__chart {
   g > * {
     cursor: default;
   }
+
+  > * {
+    transition: background-color 0.3s ease-in;
+  }
 }
 
-.hoverInfo {
+.hoverInfoDiv {
   width: 160px;
-  padding: 16px;
+  padding: 12px;
   position: absolute;
   pointer-events: none;
   border-radius: 3px;
@@ -30,11 +34,14 @@ m-analytics__chart {
     color: themed($m-grey-200);
   }
 
+  [class*='hoverInfo__row'] {
+    padding-bottom: 4px;
+  }
   .hoverInfo__row--primary {
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 15px;
+    // font-weight: bold;
     @include m-theme() {
-      color: themed($m-grey-500);
+      color: themed($m-grey-600);
     }
   }
 }

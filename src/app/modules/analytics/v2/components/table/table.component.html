@@ -1,42 +1,48 @@
-<div class="tableWrapper">
+<div class="spinnerContainer">
+  <div
+    class="mdl-spinner mdl-js-spinner is-active"
+    [mdl]
+    [hidden]="!loading"
+  ></div>
+</div>
+<div class="tableWrapper" [hidden]="loading">
   <div class="header row">
     <div
       *ngFor="let col of visualisation.columns; let first = first"
       [ngClass]="{
         first: first
       }"
-      class="col"
+      class="cell"
     >
       {{ col.label }}
     </div>
   </div>
   <div class="body">
-    <!-- TODO: make some sort of a map thing to make the entity fields have the same name for different entity types. Currently only made it to 'work' with fake image and fake blog but even those are streching it -->
     <ng-container *ngFor="let row of reformattedBuckets">
-      <div class="row">
-        <div class="entity col" *ngIf="row.entity">
+      <a class="row" [routerLink]="row.entity.route">
+        <div class="entity cell" *ngIf="row.entity">
           <div class="entityTitle">
-            <a [routerLink]="'/newsfeed/' + row.entity?.guid">
-              <span>{{ row.entity.title || 'Post' }}</span>
-              <i class="material-icons">open_in_new</i>
-            </a>
+            <span>{{ row.entity.title }}</span>
+            <i class="material-icons">open_in_new</i>
           </div>
           <div class="entityDetails">
-            <a [routerLink]="'/' + row.entity.ownerObj?.guid">{{
-              row.entity.ownerObj?.name
-            }}</a>
-            <span>{{ row.entity.subtype | titlecase }}</span>
-            <span>Published {{ row.entity.time_created * 1000 | date }}</span>
+            <span class="usernameWrapper">
+              <a [routerLink]="'/' + row.entity.name"
+                >@{{ row.entity.username }}</a
+              >
+            </span>
+            <span *ngIf="!isMobile">{{ row.entity.type | titlecase }}</span>
+            <span *ngIf="!isMobile"
+              >Published {{ row.entity.time_created * 1000 | date }}</span
+            >
           </div>
         </div>
-        <ng-container *ngFor="let value of row.values">
-          <div class="col">{{ value }}</div>
-        </ng-container>
-      </div>
+        <div class="valuesContainer">
+          <ng-container *ngFor="let value of row.values">
+            <div class="value cell">{{ value | abbr }}</div>
+          </ng-container>
+        </div>
+      </a>
     </ng-container>
   </div>
 </div>
-
-<!-- <ng-template #entityCol>
-
-</ng-template> -->

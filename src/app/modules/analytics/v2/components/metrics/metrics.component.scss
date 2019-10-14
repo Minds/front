@@ -84,6 +84,7 @@ m-analytics__metrics {
   // }
 
   .metric {
+    cursor: pointer;
     scroll-snap-align: start;
     flex: 0 0 auto;
     width: 20%;
@@ -91,10 +92,14 @@ m-analytics__metrics {
     font-size: 14px;
     box-sizing: border-box;
     @include m-theme() {
+      border-bottom: 8px solid themed($m-white);
+    }
+    @include m-theme() {
       color: themed($m-grey-200);
     }
     &.active {
       @include m-theme() {
+        background-color: rgba(themed($m-blue-grey-100), 0.15);
         border-bottom: 8px solid themed($m-blue);
       }
     }
@@ -106,11 +111,10 @@ m-analytics__metrics {
     }
 
     &:hover:not(.active) {
-      cursor: pointer;
       @include m-theme() {
-        background-color: rgba(themed($m-blue-grey-300), 0.08);
-        border-bottom: 8px solid themed($m-blue);
-        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        background-color: rgba(themed($m-blue-grey-100), 0.15);
+        border-bottom: 8px solid rgba(0, 0, 0, 0);
+        transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       }
     }
     .metricSummary {
@@ -121,9 +125,13 @@ m-analytics__metrics {
       }
     }
     .metricDelta {
+      display: flex;
+      align-items: baseline;
+      padding-top: 4px;
+      font-size: 11px;
       .material-icons {
         transform: scaleX(0.7);
-        font-size: 12px;
+        font-size: 11px;
         font-weight: bold;
       }
       @include m-theme() {
@@ -133,6 +141,19 @@ m-analytics__metrics {
         &.badChange {
           color: themed($m-red);
         }
+      }
+    }
+  }
+  .m-tooltip {
+    i {
+      font-size: 14px;
+    }
+    .m-tooltip--bubble {
+      z-index: 9999;
+      font-size: 11px;
+      @include m-theme() {
+        color: themed($m-white);
+        background-color: themed($m-blue);
       }
     }
   }

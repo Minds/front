@@ -15,6 +15,7 @@ import {
 } from 'rxjs/operators';
 
 import { Client } from '../../../services/api/client';
+import fakeData from './fake-data';
 
 // TEMPORARY
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -52,10 +53,11 @@ export interface Option {
   label: string;
   available?: boolean;
   selected?: boolean;
-  interval?: string;
-  comparison_interval?: number;
-  from_ts_ms?: number;
-  from_ts_iso?: string;
+  description?: string;
+  // interval?: string;
+  // comparison_interval?: number;
+  // from_ts_ms?: number;
+  // from_ts_iso?: string;
 }
 
 export interface Metric {
@@ -63,6 +65,8 @@ export interface Metric {
   label: string;
   permissions?: string[];
   summary?: Summary;
+  unit?: string;
+  description?: string;
   visualisation: Visualisation | null;
 }
 
@@ -110,272 +114,15 @@ export interface UserState {
   loading: boolean;
 }
 
-// ¯\_(ツ)_/¯
-let _state: UserState = {
-  loading: false,
-  category: 'traffic',
-  timespan: '30d',
-  timespans: [
-    {
-      id: '30d',
-      label: 'Last 30 days',
-      interval: 'day',
-      comparison_interval: 28,
-      from_ts_ms: 1567296000000,
-      from_ts_iso: '2019-09-01T00:00:00+00:00',
-    },
-    {
-      id: '1y',
-      label: '1 year ago',
-      interval: 'month',
-      comparison_interval: 365,
-      from_ts_ms: 1538352000000,
-      from_ts_iso: '2018-10-01T00:00:00+00:00',
-    },
-  ],
-  filter: ['channel::all'],
-  // filter: ['platform::all', 'view_type::single', 'channel::all'],
-  // filters: [
-  //   {
-  //     id: 'platform',
-  //     label: 'Platform',
-  //     options: [
-  //       { id: 'all', label: 'All', available: true, selected: false },
-  //       {
-  //         id: 'browser',
-  //         label: 'Browser',
-  //         available: true,
-  //         selected: false,
-  //       },
-  //       { id: 'mobile', label: 'Mobile', available: true, selected: false },
-  //     ],
-  //   },
-  //   {
-  //     id: 'view_type',
-  //     label: 'View Type',
-  //     options: [
-  //       { id: 'total', label: 'Total', available: true, selected: false },
-  //       {
-  //         id: 'organic',
-  //         label: 'Organic',
-  //         available: true,
-  //         selected: true,
-  //       },
-  //       {
-  //         id: 'boosted',
-  //         label: 'Boosted',
-  //         available: false,
-  //         selected: false,
-  //       },
-  //       { id: 'single', label: 'Single', available: true, selected: false },
-  //     ],
-  //   },
-  // ],
-  // metric: 'views',
-  metric: 'views_table',
-  metrics: [
-    {
-      id: 'active_users',
-      label: 'Active Users',
-      permissions: ['admin'],
-      // summary: {
-      //   current_value: 120962,
-      //   comparison_value: 120962,
-      //   comparison_interval: 28,
-      //   comparison_positive_inclination: true,
-      // },
-      visualisation: null,
-    },
-    {
-      id: 'signups',
-      label: 'Signups',
-      permissions: ['admin'],
-      // summary: {
-      //   current_value: 53060,
-      //   comparison_value: 60577,
-      //   comparison_interval: 28,
-      //   comparison_positive_inclination: true,
-      // },
-      visualisation: null,
-    },
-    // {
-    //   id: 'views',
-    //   label: 'Pageviews',
-    //   permissions: ['admin'],
-    //   summary: {
-    //     current_value: 83898,
-    //     comparison_value: 0,
-    //     comparison_interval: 28,
-    //     comparison_positive_inclination: true,
-    //   },
-    //   visualisation: {
-    //     type: 'chart',
-    //     segments: [
-    //       {
-    //         buckets: [
-    //           {
-    //             key: 1567296000000,
-    //             date: '2019-09-01T00:00:00+00:00',
-    //             value: 11,
-    //           },
-    //           {
-    //             key: 1567382400000,
-    //             date: '2019-09-02T00:00:00+00:00',
-    //             value: 12,
-    //           },
-    //           {
-    //             key: 1567468800000,
-    //             date: '2019-09-03T00:00:00+00:00',
-    //             value: 13,
-    //           },
-    //           {
-    //             key: 1567555200000,
-    //             date: '2019-09-04T00:00:00+00:00',
-    //             value: 9,
-    //           },
-    //           {
-    //             key: 1567641600000,
-    //             date: '2019-09-05T00:00:00+00:00',
-    //             value: 5,
-    //           },
-    //         ],
-    //       },
-    //       {
-    //         buckets: [
-    //           {
-    //             key: 1567296000000,
-    //             date: '2019-09-01T00:00:00+00:00',
-    //             value: 1,
-    //           },
-    //           {
-    //             key: 1567382400000,
-    //             date: '2019-09-02T00:00:00+00:00',
-    //             value: 2,
-    //           },
-    //           {
-    //             key: 1567468800000,
-    //             date: '2019-09-03T00:00:00+00:00',
-    //             value: 3,
-    //           },
-    //           {
-    //             key: 1567555200000,
-    //             date: '2019-09-04T00:00:00+00:00',
-    //             value: 4,
-    //           },
-    //           {
-    //             key: 1567641600000,
-    //             date: '2019-09-05T00:00:00+00:00',
-    //             value: 5,
-    //           },
-    //         ],
-    //       },
-    //     ],
-    //   },
-    // },
-    {
-      id: 'views_table',
-      label: 'Views',
-      permissions: ['admin'],
-      // summary: {
-      //   current_value: 83898,
-      //   comparison_value: 0,
-      //   comparison_interval: 28,
-      //   comparison_positive_inclination: true,
-      // },
-      visualisation: {
-        type: 'table',
-        buckets: [
-          // {
-          //   key: 'urn:video:937185401872453632',
-          //   values: {
-          //     'views::total': 26,
-          //     'views::organic': 26,
-          //     'views::single': 26,
-          //   },
-          // },
-          {
-            key: 'urn:image:937185477660028928',
-            values: {
-              'views::total': 22,
-              'views::organic': 22,
-              'views::single': 16,
-              entity: {
-                time_created: '1570569175',
-                title: 'My cool image',
-                subtype: 'image',
-                route: 'media/937185477660028928',
-                ownerObj: {
-                  guid: '1234567',
-                  name: 'dogPhotographer',
-                },
-              },
-            },
-          },
-          {
-            key: 'urn:blog:920262483603046400',
-            values: {
-              'views::total': 11,
-              'views::organic': 11,
-              'views::single': 11,
-              entity: {
-                time_created: '1568665493',
-                title: 'My cool blog',
-                route:
-                  'minds/blog/announcing-post-scheduling-bitcoin-usd-and-ethereum-payments-1020417032624504832',
-                subtype: 'blog',
-                ownerObj: {
-                  guid: '100000000000000000',
-                  name: 'Minds Official',
-                },
-              },
-            },
-          },
-          // {
-          //   key: 'urn:video:895432241855463424',
-          //   values: {
-          //     'views::total': 9,
-          //     'views::organic': 9,
-          //     'views::single': 9,
-          //   },
-          // },
-          // {
-          //   key: 'urn:image:1017095547862175744',
-          //   values: {
-          //     'views::total': 6,
-          //     'views::organic': 6,
-          //     'views::single': 6,
-          //   },
-          // },
-          // {
-          //   key: 'urn:video:1001848211025559552',
-          //   values: {
-          //     'views::total': 6,
-          //     'views::organic': 6,
-          //     'views::single': 6,
-          //   },
-          // },
-          // {
-          //   key: 'urn:activity:895432367722332160',
-          //   values: {
-          //     'views::total': 5,
-          //     'views::organic': 5,
-          //     'views::single': 3,
-          //   },
-        ],
-        columns: [
-          { id: 'views::total', label: 'Total', order: 1 },
-          { id: 'views::organic', label: 'Organic', order: 2 },
-          { id: 'views::single', label: 'Single', order: 3 },
-          { id: 'entity', label: 'Views', order: 0 },
-        ],
-      },
-    },
-  ],
-  // filter: ['platform::browser'],
-  // filters: [],
-  // metric: 'views',
-  // metrics: [],
-};
+// ʕ •ᴥ•ʔ
+let _state: UserState = fakeData[0];
+// {
+//   // loading: false,
+//   // filter: ['platform::browser'],
+//   // filters: [],
+//   // metric: 'views',
+//   // metrics: [],
+// };
 
 const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 
@@ -421,7 +168,7 @@ export class AnalyticsDashboardService {
     map(state => state.metrics),
     //distinctUntilChanged(deepDiff),
     distinctUntilChanged((prev, curr) => {
-      //console.log(JSON.stringify(prev), JSON.stringify(curr));
+      console.log(JSON.stringify(prev), JSON.stringify(curr));
       return deepDiff(prev, curr);
     }),
     tap(metrics => console.log('metrics changed', metrics))
@@ -568,13 +315,12 @@ export class AnalyticsDashboardService {
 
   updateCategory(category: string) {
     console.log('update category called: ' + category);
-    this.updateState({ ..._state, category, metrics: [], loading: true });
+    // TODO: uncomment this
+    // this.updateState({ ..._state, category, metrics: [], loading: true });
+    this.updateState({ ..._state, category, loading: true });
   }
   updateTimespan(timespan: string) {
     console.log('update timespan called: ' + timespan);
-    // if (timespan === _state.timespan) {
-    //   return;
-    // }
     this.updateState({ ..._state, timespan, loading: true });
   }
   updateMetric(metric: string) {

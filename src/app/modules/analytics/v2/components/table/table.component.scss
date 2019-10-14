@@ -1,6 +1,9 @@
-.filterableChartWrapper {
+div.filterableChartWrapper {
   padding: 0;
   width: 100%;
+}
+div.filtersContainer {
+  display: none;
 }
 .tableWrapper {
   font-size: 13px;
@@ -8,45 +11,62 @@
   @include m-theme() {
     color: themed($m-grey-800);
   }
+  a {
+    text-decoration: none;
+    font-weight: normal;
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
   .row {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 48px;
     &.header {
       @include m-theme() {
         border-bottom: 1px solid themed($m-grey-50);
         color: themed($m-grey-200);
       }
-      .col {
+      .cell {
         flex: 1 1 0;
         &.first {
-          flex: 4 1 0;
+          flex: 7 2 0;
         }
       }
     }
-    .col {
+    .cell {
       flex: 1 1 0;
+      display: flex;
+      // align-items: center;
+      flex-direction: column;
+      overflow: hidden;
+      white-space: nowrap;
+      height: 50px;
+      padding: 8px 8px 8px 0;
+
       &.entity {
-        flex: 4 1 0;
-        // @include m-theme() {
-        //   border-right: 1px solid themed($m-grey-50);
-        // }
+        padding-left: 5%;
+        min-width: 200px;
+        flex: 7 2 0;
+
+        @include m-theme() {
+          border-right: 1px solid themed($m-grey-50);
+        }
         a {
           font-weight: 400;
           text-decoration: none;
         }
         .entityTitle {
           display: flex;
-          align-items: center;
+          // align-items: center;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
 
           i {
             font-size: 13px;
             display: none;
-          }
-          a,
-          i {
             @include m-theme() {
               color: themed($m-grey-800);
             }
@@ -54,22 +74,43 @@
         }
         .entityDetails {
           display: inline;
-          //justify-content: space-between;
           @include m-theme() {
             color: themed($m-grey-200);
+          }
+          > * {
+            margin-right: $minds-margin;
+          }
+          .usernameWrapper {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
           a {
             @include m-theme() {
               color: themed($m-grey-200);
             }
-            margin-right: $minds-margin;
           }
+        }
+      }
+      &.value {
+        &:first-of-type {
+          padding-left: 8px;
+        }
+        &:last-of-type {
+          padding-right: 5%;
         }
       }
     }
   }
+  .valuesContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex: 3 1 0;
+  }
   .body {
     .row {
+      transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       &:hover {
         @include m-theme() {
           background-color: rgba(themed($m-blue-grey-50), 0.5);
@@ -79,5 +120,15 @@
         }
       }
     }
+  }
+}
+.spinnerContainer {
+  height: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include m-theme() {
+    background-color: themed($m-white);
   }
 }

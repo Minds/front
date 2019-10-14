@@ -1,100 +1,128 @@
+$rounded-top: 3px 3px 0 0;
+$rounded-bottom: 0 0 3px 3px;
+
 m-analytics__filter {
   position: relative;
   margin: 16px 16px 0 0;
   z-index: 2;
 }
 
-.filterHeader,
-.unselectedOptionsContainer {
-  padding: 10px 8px 8px 10px;
-}
-
 .filterWrapper {
   cursor: pointer;
-  border-radius: 3px;
-  // display: flex;
-  // flex-direction: column;
-  transition: border-color 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-  @include m-theme() {
-    background-color: themed($m-white);
-    border: 1px solid themed($m-grey-100);
-    color: rgba(themed($m-grey-200), 0.7);
-  }
-  &.dropUp {
-    flex-direction: column-reverse;
-  }
+
   &.expanded {
     @include m-theme() {
-      border-color: themed($m-blue);
-      box-shadow: 0px 1px 15px 0 rgba(themed($m-black), 0.1);
+      box-shadow: 0px 1px 15px 0 rgba(themed($m-black), 0.15);
     }
-    &:not(.dropUp) {
-      border-bottom-left-radius: 0px;
-      border-bottom-right-radius: 0px;
+    .filterHeader {
+      @include m-theme() {
+        border-color: themed($m-blue);
+      }
     }
     .unselectedOptionsContainer {
-      display: block;
+      // display: block;
+      visibility: visible;
+      @include m-theme() {
+        box-shadow: 0px 1px 15px 0 rgba(themed($m-black), 0.15);
+      }
     }
 
-    .option {
-      &:hover:not(.unavailable) {
+    &:not(.dropUp) {
+      .filterHeader {
         @include m-theme() {
-          color: themed($m-grey-500);
+          // border-bottom: none;
+          border-radius: $rounded-top;
         }
+      }
+      .unselectedOptionsContainer {
+        border-top: none;
+        border-radius: $rounded-bottom;
+      }
+    }
+    &.dropUp {
+      .filterHeader {
+        border-radius: $rounded-bottom;
+        // border-top: none;
+      }
+      .unselectedOptionsContainer {
+        bottom: 100%;
+        border-radius: $rounded-top;
+        border-bottom: none;
       }
     }
   }
-  .row {
-    display: flex;
-  }
-}
-.option {
-  border-radius: 3px;
-  @include m-theme() {
-    background-color: themed($m-white);
-  }
 
-  &.unavailable {
-    text-decoration: line-through;
+  .filterHeader {
+    position: relative;
+    // display: flex;
+    width: 100%;
+    // justify-content: space-between;
+    padding: 10px 8px 8px 10px;
+    border-radius: 3px;
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+
     @include m-theme() {
-      color: themed($m-grey-50);
+      background-color: themed($m-white);
+      color: rgba(themed($m-grey-200), 0.9);
+    }
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
+    }
+    .filterLabel {
+      margin-right: 10px;
+    }
+    i {
+      flex-grow: 0;
+    }
+    .option--selected {
+      margin-right: 8px;
+      @include m-theme() {
+        color: themed($m-grey-500);
+      }
     }
   }
-}
 
-.filterHeader {
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  .filterLabel {
-    margin-right: 10px;
+  .unselectedOptionsContainer {
+    position: absolute;
+    // display: none;
+    visibility: hidden;
+    width: 100%;
+    padding: 10px 8px 8px 10px;
+    border-radius: 3px;
+    left: 0px;
+    transition: box-shadow 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    @include m-theme() {
+      border: 1px solid themed($m-blue);
+      border-top: 1px solid themed($m-blue);
+      background-color: themed($m-white);
+    }
+    .option {
+      padding: 5px 0;
+    }
   }
-  i {
-    flex-grow: 0;
-  }
-}
-.option--selected {
-  margin-right: 8px;
-  @include m-theme() {
-    color: themed($m-grey-500);
-  }
-}
 
-.unselectedOptionsContainer {
-  position: absolute;
-  display: none;
-  width: 100%;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-  box-sizing: border-box;
-  left: 0px;
-  @include m-theme() {
-    border: 1px solid themed($m-blue);
-    border-top: 1px solid themed($m-blue);
-    background-color: themed($m-white);
+  .row {
+    display: flex;
+    justify-content: space-between;
   }
   .option {
-    padding: 5px 0;
+    border-radius: 3px;
+    @include m-theme() {
+      background-color: themed($m-white);
+      color: rgba(themed($m-grey-200), 0.9);
+    }
+
+    &.unavailable {
+      text-decoration: line-through;
+      @include m-theme() {
+        color: themed($m-grey-50);
+      }
+    }
+    &:hover:not(.unavailable) {
+      @include m-theme() {
+        color: themed($m-grey-500);
+      }
+    }
   }
 }
 

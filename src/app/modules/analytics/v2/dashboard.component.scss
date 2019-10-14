@@ -21,6 +21,8 @@
   padding: 16px;
   display: flex;
   flex-direction: row;
+  height: 100%;
+  // width: 100%;
   @include m-theme() {
     background-color: themed($m-white);
     color: themed($m-grey-800);

@@ -1,4 +1,3 @@
-// TODO: rework with angular-plotly
 // Working version: https://codepen.io/omadrid/pen/NWKZYrV?editors=0010
 
 import {
@@ -9,22 +8,14 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Input,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   AnalyticsDashboardService,
-  Category,
-  Response,
-  Dashboard,
-  Filter,
-  Option,
-  Metric,
-  Summary,
-  Visualisation,
-  Bucket,
   Timespan,
-  UserState,
   Buckets,
 } from '../../dashboard.service';
 
@@ -39,49 +30,48 @@ import { ThemeService } from '../../../../../common/services/theme.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsChartComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
+  @ViewChild('graphDiv', { static: true }) graphDivEl: ElementRef;
+  @ViewChild('hoverInfoDiv', { static: true }) hoverInfoDivEl: ElementRef;
+
+  graphDiv: any;
+  hoverInfoDiv: any;
+  hoverInfo: any = {};
+
+  metricSubscription: Subscription;
   selectedMetric$ = this.analyticsService.metrics$.pipe(
     map(metrics => {
-      console.log(
-        metrics,
-        metrics.find(metric => metric.visualisation !== null)
-      );
       return metrics.find(metric => metric.visualisation !== null);
     })
   );
   selectedMetric;
 
+  timespanSubscription: Subscription;
+  timespan: string;
+
+  timespansSubscription: Subscription;
+  timespans: Timespan[];
+
   themeSubscription: Subscription;
   isDark: boolean = false;
 
   segments: Buckets[];
-
-  timespan: Timespan;
+  isComparison: boolean = false;
 
   data: Array<any> = [];
   layout: any;
   config: any = {
     displayModeBar: false,
-    responsive: true,
+    // responsive: true,
   };
 
   segmentLength: number;
   hoverPoint: number;
 
   markerOpacities: Array<number> = [];
-  shapes = [];
+  shapes: Array<any> = [];
 
-  graphDiv: any;
-  hoverInfoDiv: any;
-
-  // TODO: get these from parent instead
-  hoverInfoXDiv: any;
-  hoverInfoYDiv: any;
-  hoverInfoComparisonXyDiv: any;
-
-  hoverInfoTextX: string;
-  hoverInfoTextY: string;
-  hoverInfoTextComparisonXy: string;
+  datePipe: string = 'EEE MMM d YYYY';
+  tickFormat: string = '%m/%d';
 
   // ***********************************************************************************
 
@@ -92,181 +82,209 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription = this.selectedMetric$.subscribe(metric => {
+    this.graphDiv = this.graphDivEl.nativeElement;
+    this.hoverInfoDiv = this.hoverInfoDivEl.nativeElement;
+
+    this.metricSubscription = this.selectedMetric$.subscribe(metric => {
       this.selectedMetric = metric;
       try {
-        this.updateGraph();
+        this.initPlot();
       } catch (err) {
         console.log(err);
       }
     });
 
+    this.timespanSubscription = this.analyticsService.timespan$.subscribe(
+      timespan => {
+        this.timespan = timespan;
+
+        // const selectedInterval = this.timespans.find(
+        //   ts => ts.id === this.timespan
+        // ).interval;
+
+        // const timespanFormats = [
+        //   { interval: 'day', tickFormat: '%m/%d', datePipe: 'EEE MMM d YYYY' },
+        //   { interval: 'month', tickFormat: '%m/%y', datePipe: 'MMM YYYY' },
+        // ];
+        // const timespanFormat =
+        //   timespanFormats.find(t => t.interval === selectedInterval) ||
+        //   timespanFormats[0];
+
+        // this.tickFormat = timespanFormat.tickFormat;
+        // this.datePipe = timespanFormat.datePipe;
+
+        // console.log(this.tickFormat);
+        this.detectChanges();
+      }
+    );
+
+    this.timespansSubscription = this.analyticsService.timespans$.subscribe(
+      timespans => {
+        this.timespans = timespans;
+        this.detectChanges();
+      }
+    );
+
     this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
       this.isDark = isDark;
-      // TODO: relayout and restyle when theme changes
+
+      // this.relayout(this.getLayout());
+      // this.restyle(this.getData());
+      this.detectChanges();
     });
-
-    this.graphDiv = document.getElementById('graphDiv');
-
-    // TODO: make sure these outliers end up with proper m- prefix
-    this.hoverInfoDiv = document.getElementById('hoverInfo');
-
-    this.hoverInfoXDiv = document.getElementById('hoverInfo__x'); // Date
-    this.hoverInfoYDiv = document.getElementById('hoverInfo__y'); // Value
-    this.hoverInfoComparisonXyDiv = document.getElementById(
-      'hoverInfo__comparisonXy'
-    );
   }
 
-  updateGraph() {
+  initPlot() {
     this.data = [];
     this.shapes = [];
     this.markerOpacities = [];
     this.segments = this.selectedMetric.visualisation.segments;
-
-    console.log('segments', this.segments);
     this.segmentLength = this.segments[0].buckets.length;
 
-    // ----------------------------------------------
     for (let i = 0; i < this.segmentLength; i++) {
       this.markerOpacities[i] = 0;
 
       this.shapes[i] = {
         type: 'line',
         layer: 'below',
-        x0: this.segments[0].buckets[i].date.slice(0, 10),
-        y0: 0, // this should be rendered graph y min
-        x1: this.segments[0].buckets[i].date.slice(0, 10),
-        y1: this.segments[0].buckets[i].value, // should be rendered graph y max
+        x0: this.segments[0].buckets[i].date,
+        y0: 0,
+        x1: this.segments[0].buckets[i].date,
+        y1: 0,
         line: {
           color: this.getColor('m-transparent'),
           width: 2,
         },
       };
     }
+    this.data = this.getData();
+    this.layout = this.getLayout();
 
-    // ----------------------------------------------
-    // LAYOUT
+    Plotly.newPlot('graphDiv', this.data, this.layout, this.config);
+    this.setLineHeights();
 
-    this.layout = {
-      hovermode: 'x',
-      paper_bgcolor: this.getColor('m-white'),
-      plot_bgcolor: this.getColor('m-white'),
-      font: {
-        family: 'Roboto',
-      },
-      xaxis: {
-        // type: 'date',
-        tickformat: '',
-        // tickformat: getDateTickFormat(),
-        // tickmode: 'auto', //or array, linear
-        // nticks: 3, //TODO, depends on this.segmentLength
-        // tickvals, // TODO: lookup
-        // ticktext: // TODO: lookup
-        tickangle: -45,
-        tickfont: {
-          color: this.getColor('m-grey-130'),
-        },
-        showgrid: false,
-        showline: true,
-        linecolor: this.getColor('m-grey-300'),
-        linewidth: 1, // 2
-        zeroline: false,
-        fixedrange: true,
-        text: 'mycooltextX',
-      },
-      yaxis: {
-        ticks: '',
-        showgrid: true,
-        gridcolor: this.getColor('m-grey-70'),
-        zeroline: false,
-        side: 'right',
-        tickfont: {
-          color: this.getColor('m-grey-130'),
-        },
-        fixedrange: true,
-        text: 'mycooltextY',
-      },
-      margin: {
-        t: 16,
-        b: 64,
-        l: 24,
-        r: 16,
-        pad: 16,
-      },
-      shapes: this.shapes,
-    };
-
-    // ----------------------------------------------
-    // DATA
-
-    const globalSegmentSettings: any = {
-      type: 'scatter',
-      mode: 'lines+markers',
-      line: {
-        width: 2,
-        dash: 'solid',
-      },
-      marker: {
-        size: 10,
-        opacity: 0,
-      },
-      showlegend: false,
-      hoverinfo: 'text',
-      x: this.unpack(this.segments[0].buckets, 'date'),
-    };
-
-    // ----------------------------------------------
-    const segmentColorIds = [
-      'm-blue',
-      'm-grey-160',
-      'm-amber-dark',
-      'm-green-dark',
-      'm-red-dark',
-      'm-blue-grey-500',
-    ];
-
-    this.segments.forEach((s, i) => {
-      const segment = {
-        ...globalSegmentSettings,
-        line: {
-          ...globalSegmentSettings.line,
-          color: this.getColor(segmentColorIds[i]),
-        },
-        y: this.unpack(this.segments[i].buckets, 'value'),
-      };
-
-      this.data.push(segment);
+    this.graphDiv.on('plotly_hover', $event => {
+      this.onHover($event);
     });
 
-    if (this.segmentLength === 2 && this.data[1]) {
-      this.data[1].line.dash = 'dot';
+    this.graphDiv.on('plotly_unhover', $event => {
+      this.onUnhover($event);
+    });
+
+    this.detectChanges();
+  }
+  // ----------------------------------------------
+  // EVENT: HOVER
+  // ----------------------------------------------
+  onHover($event) {
+    // TODO: return if filters.component filter is expanded
+    this.hoverPoint = $event.points[0].pointIndex;
+    this.showMarkers();
+    this.showShapes();
+    this.positionHoverInfo($event);
+    this.populateHoverInfo();
+    this.showHoverInfo();
+
+    this.detectChanges();
+  }
+
+  // ----------------------------------------------
+  // EVENT: UNHOVER
+  // ----------------------------------------------
+  onUnhover($event) {
+    this.hideMarkers();
+    this.hideShapes();
+    this.hideHoverInfo();
+  }
+
+  showMarkers() {
+    this.markerOpacities[this.hoverPoint] = 1;
+
+    Plotly.restyle(this.graphDiv, {
+      marker: { opacity: this.markerOpacities },
+    });
+  }
+
+  hideMarkers() {
+    this.markerOpacities[this.hoverPoint] = 0;
+    Plotly.restyle(this.graphDiv, {
+      marker: { opacity: this.markerOpacities },
+    });
+  }
+
+  showShapes() {
+    this.layout.shapes[this.hoverPoint].line.color = this.getColor('m-grey-50');
+
+    this.relayout(this.layout);
+  }
+
+  hideShapes() {
+    // HIDE VERTICAL LINE
+    this.layout.shapes[this.hoverPoint].line.color = this.getColor(
+      'm-transparent'
+    );
+    this.relayout(this.layout);
+  }
+
+  populateHoverInfo() {
+    // TODO: format value strings here and remove ngSwitch from template?
+    this.hoverInfo['date'] = this.segments[0].buckets[this.hoverPoint].date;
+    this.hoverInfo['value'] = this.segments[0].buckets[this.hoverPoint].value;
+
+    if (this.isComparison) {
+      this.hoverInfo['comparisonValue'] = this.segments[1].buckets[
+        this.hoverPoint
+      ].value;
+
+      this.hoverInfo['comparisonDate'] = this.segments[1].buckets[
+        this.hoverPoint
+      ].date;
     }
-
-    this.cd.markForCheck();
-    this.cd.detectChanges();
-
-    //Plotly.purge('graphDiv');
-    //Plotly.newPlot('graphDiv', this.data, this.layout, { displayModeBar: false });
   }
 
-  restyle() {
-    const dataUpdate = this.data;
-    // Plotly.restyle('graphDiv', dataUpdate);
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+  positionHoverInfo($event) {
+    const xAxis = $event.points[0].xaxis,
+      yAxis = $event.points[0].yaxis,
+      tooltipXDist = xAxis.d2p($event.points[0].x) + 16,
+      tooltipYDist = yAxis.d2p($event.points[0].y) + 16;
+
+    // if (this.hoverPoint < this.segmentLength / 2) {
+    this.hoverInfoDiv.style.top = tooltipYDist + yAxis._offset + 'px';
+    this.hoverInfoDiv.style.left = tooltipXDist + xAxis._offset + 'px';
+    // } else {
+    //   // TODO move the second half of tooltips to the left of points
+    //   // TODO also shift down/up if with x% of rangeMin/rangeMax???
+    //   this.hoverInfoDiv.style.top = tooltipYDist + xAxis._offset + 'px';
+    //   this.hoverInfoDiv.style.left = tooltipXDist + yAxis._offset + 'px';
+    // }
   }
 
-  relayout() {
-    // const layoutUpdate = this.layout;
-    //Plotly.relayout('graphDiv', layoutUpdate);
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+  showHoverInfo() {
+    this.hoverInfoDiv.style.opacity = 1;
   }
 
-  // drawGraph() {}
-
+  hideHoverInfo() {
+    this.hoverInfoDiv.style.opacity = 0;
+  }
   // UTILITY \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+  update(data, layout) {
+    this.data = data;
+    this.layout = layout;
+    Plotly.update('graphDiv', data, layout);
+  }
+
+  restyle(data) {
+    this.data = data;
+    Plotly.restyle(this.graphDiv, data);
+    this.detectChanges();
+  }
+
+  relayout(layout) {
+    this.layout = layout;
+    Plotly.relayout(this.graphDiv, layout);
+    this.detectChanges();
+  }
+
   unpack(rows, key) {
     return rows.map(row => {
       if (key === 'date') {
@@ -275,17 +293,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
         return row[key];
       }
     });
-  }
-
-  getDateTickFormat() {
-    // TODO add the rest of them
-    const timespanTickFormats = [
-      { interval: 'day', tickFormat: '%m/%d' },
-      { interval: 'month', tickFormat: '%d/%y' },
-    ];
-    const selectedInterval = 'monthly';
-    return timespanTickFormats.find(t => t.interval === selectedInterval)
-      .tickFormat;
   }
 
   getColor(colorId) {
@@ -305,49 +312,124 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       shape.y0 = this.graphDiv.layout.yaxis.range[0];
       shape.y1 = this.graphDiv.layout.yaxis.range[1];
     });
+
+    console.log('setLineHeights()');
+    this.relayout(this.getLayout());
   }
 
-  onHover($event) {
-    // console.log('hovering');
-    // console.log($event);
-    this.hoverPoint = $event.points[0].pointIndex;
+  getData() {
+    const globalSegmentSettings: any = {
+      type: 'scatter',
+      mode: 'lines+markers',
+      line: {
+        width: 2,
+        dash: 'solid',
+      },
+      marker: {
+        size: 10,
+        opacity: 0,
+      },
+      showlegend: false,
+      hoverinfo: 'text',
+      x: this.unpack(this.segments[0].buckets, 'date'),
+    };
 
-    // console.log(this.shapes);
-    this.markerOpacities[this.hoverPoint] = 1;
+    // COLORS FOR UP TO 6 SEGMENTS
+    const segmentColorIds = [
+      'm-blue',
+      'm-grey-160',
+      'm-amber-dark',
+      'm-green-dark',
+      'm-red-dark',
+      'm-blue-grey-500',
+    ];
 
-    // SHOW VERTICAL LINE
-    this.shapes[this.hoverPoint].line.color = this.getColor('m-grey-50');
-    this.layout.shapes[this.hoverPoint].line.color = this.getColor('m-grey-50');
+    this.segments.forEach((s, i) => {
+      const segment = {
+        ...globalSegmentSettings,
+        line: {
+          ...globalSegmentSettings.line,
+          color: this.getColor(segmentColorIds[i]),
+        },
+        y: this.unpack(this.segments[i].buckets, 'value'),
+      };
 
-    this.relayout();
+      this.data[i] = segment;
+    });
+
+    if (this.segments.length === 2) {
+      this.isComparison = true;
+      this.data[1].line.dash = 'dot';
+    }
+    return this.data;
   }
 
-  onUnhover($event) {
-    // HIDE VERTICAL LINE
-    this.shapes[this.hoverPoint].line.color = this.getColor('m-transparent');
-
-    // HIDE MARKER
-    this.hoverInfoDiv.style.opacity = 0;
-    this.markerOpacities[this.hoverPoint] = 0;
-
-    this.relayout();
+  getLayout() {
+    return {
+      width: 0,
+      height: 0,
+      hovermode: 'x',
+      paper_bgcolor: this.getColor('m-white'),
+      plot_bgcolor: this.getColor('m-white'),
+      font: {
+        family: 'Roboto',
+      },
+      xaxis: {
+        // type: 'date',
+        // tickformat: '',
+        tickformat: this.tickFormat,
+        tickmode: 'array', //or array, linear
+        nticks: this.segmentLength,
+        // tickvals, // TODO: lookup
+        ticks: 'outside',
+        tickson: 'labels',
+        tickcolor: this.getColor('m-grey-130'),
+        tickangle: -45,
+        tickfont: {
+          color: this.getColor('m-grey-300'),
+        },
+        showgrid: false,
+        showline: true,
+        linecolor: this.getColor('m-grey-300'),
+        linewidth: 1,
+        zeroline: false,
+        fixedrange: true,
+        // range: [
+        //   this.segments[0].buckets[0].date.slice(0, 10),
+        //   this.segments[0].buckets[this.segmentLength - 1].date.slice(0, 10),
+        // ],
+      },
+      yaxis: {
+        ticks: '',
+        showgrid: true,
+        gridcolor: this.getColor('m-grey-70'),
+        zeroline: false,
+        side: 'right',
+        tickfont: {
+          color: this.getColor('m-grey-130'),
+        },
+        fixedrange: true,
+      },
+      margin: {
+        t: 16,
+        b: 80,
+        l: 24,
+        r: 16,
+        pad: 16,
+      },
+      shapes: this.shapes,
+    };
   }
-
-  // afterPlot($event) {
-  //   console.log('afterplot');
-  //   this.setLineHeights();
-  //   this.relayout();
-  // }
 
   @HostListener('window:resize')
   applyDimensions() {
-    // this.layout = this.relayout();
-    // this.setLineHeights();
-    // this.layout = {
-    //   ...this.layout,
-    //   width: this.graphDiv.nativeElement.clientWidth,
-    //   height: this.graphDiv.nativeElement.clientHeight - 35,
-    // };
+    this.layout = {
+      ...this.layout,
+      width: this.graphDiv.clientWidth - 16,
+      height: this.graphDiv.clientHeight - 16,
+    };
+    this.setLineHeights();
+    this.detectChanges();
   }
 
   detectChanges() {
@@ -356,7 +438,9 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.metricSubscription.unsubscribe();
+    this.timespanSubscription.unsubscribe();
+    this.timespansSubscription.unsubscribe();
     this.themeSubscription.unsubscribe();
   }
 }

@@ -21,12 +21,14 @@ import {
   Timespan,
   UserState,
 } from '../../dashboard.service';
+import { Session } from '../../../../../services/session';
 import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
 interface MetricExtended extends MetricBase {
   delta: number;
   hasChanged: boolean;
   positiveTrend: boolean;
+  permissionGranted: boolean;
 }
 export { MetricExtended as Metric };
 
@@ -39,22 +41,44 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
   data;
   subscription: Subscription;
   isMobile: boolean;
+  user;
+  userRoles: string[] = ['user'];
 
   metrics$;
   isOverflown = { left: false, right: false };
 
-  constructor(private analyticsService: AnalyticsDashboardService) {}
+  constructor(
+    private analyticsService: AnalyticsDashboardService,
+    public session: Session
+  ) {}
 
   ngOnInit() {
+    this.user = this.session.getLoggedInUser();
+    if (this.user.isAdmin) {
+      this.userRoles.push('admin');
+    }
+    if (this.user.pro) {
+      this.userRoles.push('pro');
+    }
+
     this.metrics$ = this.analyticsService.metrics$.pipe(
       map(_metrics => {
         const metrics = _metrics.map(metric => ({ ...metric })); // Clone to avoid updating
 
-        for (let metric of metrics) {
+        for (const metric of metrics) {
+          metric['permissionGranted'] = metric.permissions.some(role =>
+            this.userRoles.includes(role)
+          );
           if (metric.summary) {
-            const delta =
-              (metric.summary.current_value - metric.summary.comparison_value) /
-              (metric.summary.comparison_value || 0);
+            let delta;
+            if (metric.summary.comparison_value !== 0) {
+              delta =
+                (metric.summary.current_value -
+                  metric.summary.comparison_value) /
+                (metric.summary.comparison_value || 0);
+            } else {
+              delta = 1;
+            }
 
             metric['delta'] = delta;
             metric['hasChanged'] = delta === 0 ? false : true;
