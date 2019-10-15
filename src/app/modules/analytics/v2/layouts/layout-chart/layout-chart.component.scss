@@ -1,0 +1,12 @@
+.filterableChartWrapper {
+  position: relative;
+  padding: 16px;
+  width: 100%;
+  @include m-theme() {
+    border-top: 1px solid themed($m-grey-50);
+  }
+  &.isTable {
+    padding: 0;
+    width: 100%;
+  }
+}
