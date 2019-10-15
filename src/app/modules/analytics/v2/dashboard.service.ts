@@ -168,11 +168,11 @@ export class AnalyticsDashboardService {
   );
   metrics$ = this.state$.pipe(
     map(state => state.metrics),
-    //distinctUntilChanged(deepDiff),
-    distinctUntilChanged((prev, curr) => {
-      // console.log(JSON.stringify(prev), JSON.stringify(curr));
-      return deepDiff(prev, curr);
-    }),
+    distinctUntilChanged(deepDiff),
+    //distinctUntilChanged((prev, curr) => {
+    //  console.log(JSON.stringify(prev), JSON.stringify(curr));
+    //  return deepDiff(prev, curr);
+    //}),
     tap(metrics => console.log('metrics changed', metrics))
   );
   filter$ = this.state$.pipe(
@@ -319,7 +319,7 @@ export class AnalyticsDashboardService {
     console.log('update category called: ' + category);
     // TODO: uncomment this
     // this.updateState({ ..._state, category, metrics: [], loading: true });
-    this.updateState({ ..._state, category, loading: true });
+    this.updateState({ ..._state, category, metrics: [], loading: true });
   }
   updateTimespan(timespan: string) {
     console.log('update timespan called: ' + timespan);

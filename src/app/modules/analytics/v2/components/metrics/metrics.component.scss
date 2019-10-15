@@ -121,6 +121,10 @@ m-analytics__metrics {
     .metricLabel {
       white-space: nowrap;
     }
+    m-tooltip {
+      vertical-align: middle;
+      margin-left: 4px;
+    }
     .metricSummary {
       font-size: 17px;
       margin-top: 8px;

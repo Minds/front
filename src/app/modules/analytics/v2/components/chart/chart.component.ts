@@ -99,6 +99,7 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       } catch (err) {
         console.log(err);
       }
+      this.detectChanges();
     });
 
     this.timespansSubscription = this.analyticsService.timespans$.subscribe(

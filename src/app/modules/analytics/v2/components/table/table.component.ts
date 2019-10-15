@@ -72,6 +72,8 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
       const reformattedBucket = {};
       const reformattedValues = [];
 
+      if (!bucket.values['entity']) return;
+
       this.columns.forEach((column, i) => {
         if (i === 0) {
           reformattedBucket['entity'] = this.reformatEntity(
@@ -123,12 +125,12 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
     const routesByType = [
       {
         ids: ['image', 'video'],
-        route: 'media/' + entity.urn.split(':')[2],
+        route: '/media/' + entity.urn.split(':')[2],
       },
 
       {
         ids: ['activity', 'remind'],
-        route: `newsfeed/${entity.urn.split(':')[2]}`,
+        route: `/newsfeed/${entity.urn.split(':')[2]}`,
       },
       {
         ids: ['blog'],
@@ -136,7 +138,7 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
       },
       {
         ids: ['channel'],
-        route: entity.name,
+        route: '/' + entity.name,
       },
     ];
 
