@@ -1,13 +1,4 @@
-import {
-  Component,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
-
-import { PlusSubscriptionComponent } from './subscription.component';
-import { Client } from '../../common/api/client.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'm-plus--marketing',
@@ -15,12 +6,5 @@ import { Client } from '../../common/api/client.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlusMarketingComponent {
-  @ViewChild('subscription', { static: false })
-  private subscription: PlusSubscriptionComponent;
-
-  user = window.Minds.user;
-  minds = window.Minds;
-  showVerify: boolean = false;
-
-  constructor(private client: Client, private cd: ChangeDetectorRef) {}
+  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 }

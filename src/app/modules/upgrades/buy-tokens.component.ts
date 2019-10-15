@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-upgrades__buyTokens',
@@ -7,4 +8,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class BuyTokensComponent {
   readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+
+  constructor(protected router: Router) {}
+
+  navigateToTokensPage() {
+    this.router.navigate(['/token']);
+  }
 }

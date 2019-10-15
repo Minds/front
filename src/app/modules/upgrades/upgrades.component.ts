@@ -11,6 +11,8 @@ import {
   templateUrl: 'upgrades.component.html',
 })
 export class UpgradesComponent {
+  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+
   @ViewChild('upgradeOptionsAnchor', { static: false })
   readonly upgradeOptionsAnchor: ElementRef;
 
