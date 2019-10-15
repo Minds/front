@@ -15,7 +15,7 @@ export class UpgradeOptionsComponent {
 
   interval: UpgradeOptionInterval = 'yearly';
 
-  currency: UpgradeOptionCurrency = 'tokens';
+  currency: UpgradeOptionCurrency = 'usd';
 
   get intervalCurrencyQueryParams() {
     return { i: this.interval, c: this.currency };

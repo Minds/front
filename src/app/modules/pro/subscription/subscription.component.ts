@@ -6,6 +6,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { Session } from '../../../services/session';
 import { ProService } from '../pro.service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -29,7 +32,9 @@ export class ProSubscriptionComponent implements OnInit {
 
   interval: UpgradeOptionInterval = 'yearly';
 
-  currency: UpgradeOptionCurrency = 'tokens';
+  currency: UpgradeOptionCurrency = 'usd';
+
+  paramSubscription: Subscription;
 
   isLoggedIn: boolean = false;
 
@@ -48,7 +53,8 @@ export class ProSubscriptionComponent implements OnInit {
     protected session: Session,
     protected overlayModal: OverlayModalService,
     protected wirePaymentHandlers: WirePaymentHandlersService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    protected route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -57,6 +63,15 @@ export class ProSubscriptionComponent implements OnInit {
     if (this.isLoggedIn) {
       this.load();
     }
+
+    this.paramSubscription = this.route.queryParams.subscribe(
+      (params: Params) => {
+        this.currency = params.c || 'usd';
+        this.interval = params.i || 'yearly';
+
+        if (params.c || params.i) this.enable();
+      }
+    );
   }
 
   async load() {
@@ -159,5 +174,9 @@ export class ProSubscriptionComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  ngOnDestroy() {
+    this.paramSubscription.unsubscribe();
   }
 }
