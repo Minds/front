@@ -51,7 +51,7 @@ export class AnalyticsSearchSuggestionsComponent implements OnInit {
 
   constructor(
     private analyticsService: AnalyticsDashboardService,
-    private session: Session,
+    public session: Session,
     public client: Client,
     public recentService: RecentService,
     private cd: ChangeDetectorRef
