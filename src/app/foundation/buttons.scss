@@ -31,6 +31,14 @@
     }
   }
 
+  &.mf-button--destructive {
+    @include m-theme() {
+      background: themed($m-red);
+      border-color: themed($m-red);
+      color: themed($m-white-always);
+    }
+  }
+
   @media screen and (max-width: $m-grid-min-vp) {
     display: block;
     font-size: 15px;

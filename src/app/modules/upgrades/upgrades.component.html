@@ -5,7 +5,7 @@
 >
   <div class="m-marketing__main m-marketing__section--style-1">
     <div class="m-grid m-marketing__wrapper">
-      <div class="m-grid__column-5 m-grid__column-12--mobile m-upgrades__body">
+      <div class="m-grid__column-5 m-grid__column-12--mobile m-marketing__body">
         <h2 class="m-marketing__subtitle--asTitle" i18n>
           Upgrade your Minds experience
         </h2>
@@ -32,8 +32,25 @@
         </a>
       </div>
 
-      <div class="m-grid__column-7 m-grid__column-12--mobile m-upgrades__image">
-        <!-- Image -->
+      <div
+        class="m-grid__column-7 m-grid__column-12--mobile m-marketing__image"
+      >
+        <span>
+          <img
+            class="m-marketing__image--1"
+            [src]="cdnAssetsUrl + 'assets/marketing/upgrades-1.jpg'"
+          />
+
+          <img
+            class="m-marketing__image--2"
+            [src]="cdnAssetsUrl + 'assets/marketing/upgrades-2.jpg'"
+          />
+
+          <img
+            class="m-marketing__image--3"
+            [src]="cdnAssetsUrl + 'assets/marketing/upgrades-3.jpg'"
+          />
+        </span>
       </div>
     </div>
   </div>
