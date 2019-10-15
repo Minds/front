@@ -67,6 +67,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   minds = window.Minds;
 
   entity: any = {};
+  originalEntity: any = null;
   redirectUrl: string;
   isLoading: boolean = true;
   navigatedAway: boolean = false;
@@ -109,6 +110,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
 
   @Input('entity') set data(params: MediaModalParams) {
+    this.originalEntity = params.entity;
     this.entity = params.entity && JSON.parse(JSON.stringify(params.entity)); // deep clone
     this.redirectUrl = params.redirectUrl || null;
   }

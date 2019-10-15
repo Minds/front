@@ -287,17 +287,19 @@
               <div class="m-mediaModal__actionButtonsWrapper">
                 <div class="m-mediaModal__actionButtonsRow m-action-tabs">
                   <minds-button-thumbs-up
-                    [object]="entity"
+                    [object]="originalEntity"
                   ></minds-button-thumbs-up>
                   <minds-button-thumbs-down
-                    [object]="entity"
+                    [object]="originalEntity"
                   ></minds-button-thumbs-down>
                   <m-wire-button
                     *ngIf="session.getLoggedInUser().guid != entity.owner_guid"
                     [object]="entity"
                     (done)="wireSubmitted($event)"
                   ></m-wire-button>
-                  <minds-button-remind [object]="entity"></minds-button-remind>
+                  <minds-button-remind
+                    [object]="originalEntity"
+                  ></minds-button-remind>
                 </div>
               </div>
 
