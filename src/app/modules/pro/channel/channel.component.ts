@@ -25,7 +25,7 @@ import { SessionsStorageService } from '../../../services/session-storage.servic
 import { SiteService } from '../../../common/services/site.service';
 
 @Component({
-  providers: [ProChannelService, OverlayModalService],
+  providers: [ProChannelService, OverlayModalService, SignupModalService],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
   changeDetection: ChangeDetectionStrategy.Default,

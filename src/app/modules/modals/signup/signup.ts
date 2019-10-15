@@ -11,6 +11,7 @@ import { SignupModalService } from './service';
 import { Session } from '../../../services/session';
 import { AnalyticsService } from '../../../services/analytics';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
+import { SiteService } from '../../../common/services/site.service';
 
 @Component({
   selector: 'm-modal-signup',
@@ -27,6 +28,12 @@ export class SignupModal {
   display: string = 'initial';
   overrideOnboarding: boolean = false;
 
+  get logo() {
+    return this.site.isProDomain
+      ? `${this.minds.cdn_url}fs/v1/thumbnail/${this.site.pro.logo_guid}/master`
+      : `${this.minds.cdn_assets_url}assets/logos/logo.svg`;
+  }
+
   constructor(
     public session: Session,
     private router: Router,
@@ -36,13 +43,14 @@ export class SignupModal {
     private zone: NgZone,
     private applicationRef: ApplicationRef,
     private loginReferrer: LoginReferrerService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private site: SiteService
   ) {
     this.listen();
     this.service.isOpen.subscribe({
       next: open => {
         this.open = open;
-        //hack: nasty ios work around
+        // hack: nasty ios work around
         this.applicationRef.tick();
         this.listen();
       },

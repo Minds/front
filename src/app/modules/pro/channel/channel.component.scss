@@ -56,6 +56,17 @@ m-pro--channel {
       z-index: 9999990;
     }
   }
+
+  m-modal-signup {
+    m-modal .m-modal-container .mdl-card {
+      background-color: var(--m-pro--transparent-background-color);
+      color: var(--m-pro--text-color);
+
+      .m-modal-signup-apps {
+        display: none;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: $max-mobile) {
