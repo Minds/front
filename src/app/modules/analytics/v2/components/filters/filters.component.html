@@ -1,0 +1,9 @@
+<div class="filtersContainer">
+  <ng-container *ngFor="let filter of filters$ | async">
+    <m-analytics__filter
+      class="filter"
+      [filter]="filter"
+      [dropUp]="true"
+    ></m-analytics__filter>
+  </ng-container>
+</div>
