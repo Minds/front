@@ -1,0 +1,74 @@
+<div *ngIf="isLoggedIn || true">
+  <ng-container *ngIf="!inProgress; else inProgressSpinner">
+    <div>
+      <div class="m-proSubscriptionPlan__toggleContainer">
+        <div class="m-proSubscriptionPlan__toggle">
+          <span>Yearly</span>
+          <span
+            ><m-toggle
+              [(mModel)]="interval"
+              leftValue="yearly"
+              rightValue="monthly"
+            ></m-toggle
+          ></span>
+          <span>Monthly</span>
+        </div>
+
+        <div class="m-proSubscriptionPlan__toggle">
+          <span>USD</span>
+          <span
+            ><m-toggle
+              [(mModel)]="currency"
+              leftValue="usd"
+              rightValue="tokens"
+            ></m-toggle
+          ></span>
+          <span>Tokens</span>
+        </div>
+      </div>
+
+      <div class="m-proSubscriptionPlan__pricing">
+        <span class="m-proSubscriptionPlanPricing__amount">
+          <span>{{ pricing.amount }}</span> per month
+        </span>
+
+        <span
+          class="m-proSubscriptionPlanPricing__offer"
+          *ngIf="pricing.offerFrom"
+        >
+          {{ pricing.offerFrom }} per month
+        </span>
+      </div>
+
+      <div>
+        <button
+          *ngIf="!active"
+          class="mf-button mf-button--alt"
+          [disabled]="inProgress || criticalError"
+          (click)="enable()"
+        >
+          Upgrade to Pro
+        </button>
+      </div>
+    </div>
+
+    <button
+      *ngIf="active"
+      class="mdl-button mdl-button--colored mdl-color--red"
+      [disabled]="inProgress || criticalError"
+      (click)="disable()"
+    >
+      Cancel Pro
+    </button>
+
+    <span *ngIf="error" class="m-proSubscription__error">
+      {{ error }}
+    </span>
+  </ng-container>
+
+  <ng-template #inProgressSpinner>
+    <div class="m-proSubscription__inProgress">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+    </div>
+  </ng-template>
+</div>

@@ -6,6 +6,8 @@ import {
   Output,
   Input,
 } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Client } from '../../common/api/client.service';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
@@ -14,8 +16,9 @@ import { WireService } from '../wire/wire.service';
 import { WireStruc } from '../wire/creator/creator.component';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { SignupModalService } from '../modals/signup/service';
-import { WirePaymentsCreatorComponent } from '../wire/payments-creator/creator.component';
 import { Session } from '../../services/session';
+import { WirePaymentsCreatorComponent } from '../wire/creator/payments/payments.creator.component';
+import { WirePaymentHandlersService } from '../wire/wire-payment-handlers.service';
 
 @Component({
   selector: 'm-plus--subscription',
@@ -32,8 +35,12 @@ export class PlusSubscriptionComponent {
   active: boolean = false;
   @Output('completed') completed$: EventEmitter<any> = new EventEmitter();
   @Input('showSubscription') showSubscription: boolean;
-  payment: any = {};
   payload: any;
+  minds = window.Minds;
+
+  currency: string;
+  interval: string;
+  paramSubscription: Subscription;
 
   constructor(
     private client: Client,
@@ -42,9 +49,22 @@ export class PlusSubscriptionComponent {
     private web3Wallet: Web3WalletService,
     private overlayModal: OverlayModalService,
     private modal: SignupModalService,
+    private wirePaymentHandlers: WirePaymentHandlersService,
     public session: Session,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) {}
+
+  ngOnInit() {
+    this.paramSubscription = this.route.queryParams.subscribe(
+      (params: Params) => {
+        this.currency = params.c || 'tokens';
+        this.interval = params.i || 'yearly';
+
+        if (params.c || params.i) this.purchase();
+      }
+    );
+  }
 
   load(): Promise<any> {
     return this.client
@@ -68,23 +88,19 @@ export class PlusSubscriptionComponent {
     this.purchase();
   }
 
-  async purchase(amount: number = 20, period: 'month' | 'year' = 'month') {
+  async purchase(/*amount: number = 20, period: 'month' | 'year' = 'month'*/) {
     if (!this.session.isLoggedIn()) {
       this.modal.open();
       return;
     }
 
-    this.payment.period = period;
-    this.payment.amount = amount;
-    this.payment.recurring = true;
-    this.payment.entity_guid = '730071191229833224';
-    this.payment.receiver = this.blockchain.plus_address;
-
     const creator = this.overlayModal.create(
       WirePaymentsCreatorComponent,
-      this.payment,
+      await this.wirePaymentHandlers.get('plus'),
       {
-        default: this.payment,
+        interval: this.interval,
+        currency: this.currency,
+        amount: this.minds.upgrades.plus[this.interval][this.currency],
         onComplete: wire => {
           this.completed = true;
           this.user.plus = true;
@@ -114,5 +130,9 @@ export class PlusSubscriptionComponent {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  ngOnDestroy() {
+    this.paramSubscription.unsubscribe();
   }
 }
