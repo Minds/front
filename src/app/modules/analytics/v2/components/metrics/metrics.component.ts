@@ -2,6 +2,7 @@ import {
   Component,
   OnInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   OnDestroy,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
@@ -49,12 +50,13 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
 
   constructor(
     private analyticsService: AnalyticsDashboardService,
-    public session: Session
+    public session: Session,
+    private cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
-    if (this.user.isAdmin) {
+    if (this.session.isAdmin()) {
       this.userRoles.push('admin');
     }
     if (this.user.pro) {
@@ -102,6 +104,11 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
 
   updateMetric(metric) {
     this.analyticsService.updateMetric(metric.id);
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   ngOnDestroy() {

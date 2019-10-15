@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AnalyticsDashboardService } from '../../dashboard.service';
 
@@ -15,13 +15,14 @@ import { AnalyticsDashboardService } from '../../dashboard.service';
 })
 export class AnalyticsLayoutChartComponent implements OnInit {
   subscription: Subscription;
-  selectedMetric$ = this.analyticsService.metrics$.pipe(
-    map(metrics => {
-      console.log(
-        metrics,
-        metrics.find(metric => metric.visualisation !== null)
-      );
-      return metrics.find(metric => metric.visualisation !== null);
+  loading$ = this.analyticsService.loading$;
+  selectedMetric$ = combineLatest(
+    this.analyticsService.metrics$,
+    this.analyticsService.metric$,
+    this.analyticsService.category$
+  ).pipe(
+    map(([metrics, id, category]) => {
+      return metrics.find(metric => metric.id == id);
     })
   );
   selectedMetric;
@@ -33,6 +34,7 @@ export class AnalyticsLayoutChartComponent implements OnInit {
 
   ngOnInit() {
     this.subscription = this.selectedMetric$.subscribe(metric => {
+      console.log('new metric');
       this.selectedMetric = metric;
       this.detectChanges();
     });
@@ -41,5 +43,9 @@ export class AnalyticsLayoutChartComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

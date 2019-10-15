@@ -92,6 +92,7 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       } catch (err) {
         console.log(err);
       }
+      this.detectChanges();
     });
 
     this.timespanSubscription = this.analyticsService.timespan$.subscribe(
@@ -231,7 +232,7 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
     this.hoverInfo['date'] = this.segments[0].buckets[this.hoverPoint].date;
     this.hoverInfo['value'] = this.segments[0].buckets[this.hoverPoint].value;
 
-    if (this.isComparison) {
+    if (this.isComparison && this.segments[1]) {
       this.hoverInfo['comparisonValue'] = this.segments[1].buckets[
         this.hoverPoint
       ].value;
