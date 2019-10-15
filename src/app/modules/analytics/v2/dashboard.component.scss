@@ -43,6 +43,16 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+
+    h3 {
+      line-height: 0;
+      margin-top: 40px;
+    }
+    p {
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+    }
   }
 
   .globalFilters {

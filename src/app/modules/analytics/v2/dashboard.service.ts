@@ -14,11 +14,8 @@ import {
   catchError,
 } from 'rxjs/operators';
 
-import { Client } from '../../../services/api/client';
+import { MindsHttpClient } from '../../../common/api/client.service';
 import fakeData from './fake-data';
-
-// TEMPORARY
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export interface Category {
   id: string;
@@ -107,6 +104,7 @@ export interface Timespan {
 
 export interface UserState {
   category: string;
+  description?: string;
   timespan: string;
   timespans: Timespan[];
   metric: string;
@@ -144,46 +142,34 @@ export class AnalyticsDashboardService {
   category$ = this.state$.pipe(
     map(state => state.category),
     distinctUntilChanged(deepDiff)
-    //tap(category => console.log('category changed', category))
+  );
+  description$ = this.state$.pipe(
+    map(state => state.description),
+    distinctUntilChanged()
   );
   timespan$ = this.state$.pipe(
     map(state => state.timespan),
     distinctUntilChanged(deepDiff)
-    //tap(timespan => console.log('timespan changed', timespan))
   );
   timespans$ = this.state$.pipe(
     map(state => state.timespans),
     distinctUntilChanged(deepDiff)
-    //tap(timespans => console.log('timespans changed', timespans))
   );
   metric$ = this.state$.pipe(
     map(state => state.metric),
     distinctUntilChanged(deepDiff)
-    //distinctUntilChanged((prev, curr) => {
-    //  console.log('distinctUntilChanged() on metric$');
-    //  console.log(JSON.stringify(prev), JSON.stringify(curr));
-    //  return deepDiff(prev, curr);
-    //}),
-    //tap(metric => console.log('metric changed', metric))
   );
   metrics$ = this.state$.pipe(
     map(state => state.metrics),
-    distinctUntilChanged(deepDiff),
-    //distinctUntilChanged((prev, curr) => {
-    //  console.log(JSON.stringify(prev), JSON.stringify(curr));
-    //  return deepDiff(prev, curr);
-    //}),
-    tap(metrics => console.log('metrics changed', metrics))
+    distinctUntilChanged(deepDiff)
   );
   filter$ = this.state$.pipe(
     map(state => state.filter),
     distinctUntilChanged(deepDiff)
-    //tap(filter => console.log('filter changed', filter))
   );
   filters$ = this.state$.pipe(
     map(state => state.filters),
     distinctUntilChanged(deepDiff)
-    //tap(filters => console.log('filters changed', filters))
   );
   loading$ = this.state$.pipe(
     map(state => state.loading),
@@ -194,55 +180,15 @@ export class AnalyticsDashboardService {
   /**
    * Viewmodel that resolves once all the data is ready (or updated)
    */
-  /*vm$: Observable<UserState> = combineLatest(
-    this.category$,
-    this.timespan$,
-    this.timespans$,
-    this.metric$,
-    this.metrics$,
-    this.filter$,
-    this.filters$,
-    this.loading$
-  ).pipe(
-    map(
-      ([
-        category,
-        timespan,
-        timespans,
-        metric,
-        metrics,
-        filter,
-        filters,
-        loading,
-      ]) => {
-        return {
-          category,
-          timespan,
-          timespans,
-          metric,
-          metrics,
-          filter,
-          filters,
-          loading,
-        };
-      }
-    ),
-  );*/
   vm$: Observable<UserState> = new BehaviorSubject(_state);
 
-  /**
-   * Watch 4 streams to trigger user loads and state updates
-   */
-  // TODO:  remove one of these clients later
-  constructor(private client: Client, private httpClient: HttpClient) {
+  constructor(private http: MindsHttpClient) {
     this.loadFromRemote();
   }
 
   loadFromRemote() {
     combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
       .pipe(
-        ///debounceTime(300),
-        // tap(() => console.log('load from remote called')),
         distinctUntilChanged(deepDiff),
         catchError(_ => {
           console.log('caught error');
@@ -274,6 +220,7 @@ export class AnalyticsDashboardService {
         this.updateState({
           ..._state,
           category: dashboard.category,
+          description: dashboard.description,
           timespan: dashboard.timespan,
           timespans: dashboard.timespans,
           filter: dashboard.filter,
@@ -316,17 +263,22 @@ export class AnalyticsDashboardService {
   // }
 
   updateCategory(category: string) {
-    console.log('update category called: ' + category);
-    // TODO: uncomment this
-    // this.updateState({ ..._state, category, metrics: [], loading: true });
-    this.updateState({ ..._state, category, metrics: [], loading: true });
+    this.updateState({
+      ..._state,
+      category,
+      description: null,
+      metrics: [],
+      loading: true,
+    });
   }
   updateTimespan(timespan: string) {
-    console.log('update timespan called: ' + timespan);
-    this.updateState({ ..._state, timespan, loading: true });
+    this.updateState({
+      ..._state,
+      timespan,
+      loading: true,
+    });
   }
   updateMetric(metric: string) {
-    console.log('update metric called: ' + metric);
     this.updateState({ ..._state, metric, loading: true });
   }
   updateFilter(selectedFilterStr: string) {
@@ -368,28 +320,19 @@ export class AnalyticsDashboardService {
     metric: string,
     filter: string[]
   ): Observable<Response> {
-    const url = buildQueryUrl(category, timespan, metric, filter);
-    return this.httpClient.get<Response>(url).pipe(
-      catchError(_ => of(null)),
-      map(response => response)
-    );
+    return this.http
+      .get(`api/v2/analytics/dashboards/${category}`, {
+        metric,
+        timespan,
+        filter: filter.join(),
+      })
+      .pipe(
+        catchError(_ => of(null)),
+        map(response => response)
+      );
   }
 
   getData() {
     console.warn('call was made to legacy function DashboardService.getData()');
   }
-}
-
-function buildQueryUrl(
-  category: string,
-  timespan: string,
-  metric: string,
-  filter: string[]
-): string {
-  const url = 'https://walrus.minds.com/api/v2/analytics/dashboards/';
-  const filterStr: string = filter.join();
-  const metricId: string = metric;
-  const queryStr = `?metric=${metricId}&timespan=${timespan}&filter=${filterStr}`;
-
-  return `${url}${category}${queryStr}`;
 }

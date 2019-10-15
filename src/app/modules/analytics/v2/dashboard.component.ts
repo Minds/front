@@ -31,6 +31,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   // subscription: Subscription;
   paramsSubscription: Subscription;
   category$ = this.analyticsService.category$;
+  description$ = this.analyticsService.description$;
   selectedCat: string;
 
   selectedTimespan; //string? or Timespan?

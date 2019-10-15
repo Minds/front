@@ -24,7 +24,7 @@ const fakeData: Array<any> = [
         selected: false,
       },
     ],
-    filter: ['platform::all', 'view_type::single', 'channel::all'],
+    filter: ['platform::all', 'view_type::total', 'channel::all'],
     filters: [
       {
         id: 'platform',

@@ -5,9 +5,17 @@
   <!-- <section class="main" *ngIf="ready$ | async"> -->
   <section class="main" [ngClass]="{ isMobile: isMobile }">
     <div class="mainHeader">
-      <h3 class="selectedCatLabel">
-        {{ category$ | async | titlecase }}
-      </h3>
+      <div class="dashboardTitle">
+        <h3 class="selectedCatLabel">
+          {{ category$ | async | titlecase }}
+        </h3>
+        <p
+          class="selectedCatDescription"
+          *ngIf="description$ | async as description"
+        >
+          {{ description }}
+        </p>
+      </div>
       <div class="globalFilters">
         <!-- TODO: *ngIf for global_filter bool -->
         <!-- TODO: enable only show to admins -->

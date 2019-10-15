@@ -38,7 +38,10 @@ export class AnalyticsLayoutChartComponent implements OnInit {
       console.log('new metric');
       this.selectedMetric = metric;
 
-      this.isTable = this.selectedMetric.visualisation.type === 'table';
+      this.isTable =
+        this.selectedMetric &&
+        this.selectedMetric.visualisation &&
+        this.selectedMetric.visualisation.type === 'table';
       this.detectChanges();
     });
   }
