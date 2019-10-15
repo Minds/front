@@ -29,6 +29,7 @@
         <span style="position: relative">
           <minds-button-user-dropdown
             [user]="user"
+            (userChanged)="onUserChange()"
           ></minds-button-user-dropdown>
         </span>
       </ng-container>
