@@ -6,6 +6,8 @@ import {
   Output,
   Input,
 } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Client } from '../../common/api/client.service';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
@@ -36,6 +38,10 @@ export class PlusSubscriptionComponent {
   payload: any;
   minds = window.Minds;
 
+  currency: string;
+  interval: string;
+  paramSubscription: Subscription;
+
   constructor(
     private client: Client,
     private tokenContract: TokenContractService,
@@ -45,8 +51,20 @@ export class PlusSubscriptionComponent {
     private modal: SignupModalService,
     private wirePaymentHandlers: WirePaymentHandlersService,
     public session: Session,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) {}
+
+  ngOnInit() {
+    this.paramSubscription = this.route.queryParams.subscribe(
+      (params: Params) => {
+        this.currency = params.c || 'tokens';
+        this.interval = params.i || 'yearly';
+
+        if (params.c || params.i) this.purchase();
+      }
+    );
+  }
 
   load(): Promise<any> {
     return this.client
@@ -80,9 +98,9 @@ export class PlusSubscriptionComponent {
       WirePaymentsCreatorComponent,
       await this.wirePaymentHandlers.get('plus'),
       {
-        interval: 'monthly',
-        currency: 'tokens',
-        amount: this.minds.upgrades.plus['monthly']['tokens'],
+        interval: this.interval,
+        currency: this.currency,
+        amount: this.minds.upgrades.plus[this.interval][this.currency],
         onComplete: wire => {
           this.completed = true;
           this.user.plus = true;
@@ -112,5 +130,9 @@ export class PlusSubscriptionComponent {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  ngOnDestroy() {
+    this.paramSubscription.unsubscribe();
   }
 }
