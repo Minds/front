@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AnalyticsSearchSuggestionsComponent } from './analytics-search-suggestions.component';
+import { AnalyticsSearchSuggestionsComponent } from './search-suggestions.component';
 
 describe('AnalyticsSearchSuggestionsComponent', () => {
   let component: AnalyticsSearchSuggestionsComponent;
