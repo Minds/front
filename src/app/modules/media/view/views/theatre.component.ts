@@ -44,10 +44,12 @@ import { MindsVideoComponent } from '../../components/video/video.component';
         [muted]="false"
         (finished)="loadNext()"
         [src]="[
+          { res: '1080', uri: object.src['1080.mp4'] },
           { res: '720', uri: object.src['720.mp4'] },
           { res: '360', uri: object.src['360.mp4'] }
         ]"
         [torrent]="[
+          { res: '1080', key: object.guid + '/1080.mp4' },
           { res: '720', key: object.guid + '/720.mp4' },
           { res: '360', key: object.guid + '/360.mp4' }
         ]"
