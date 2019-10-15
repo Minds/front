@@ -15,7 +15,7 @@ import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   AnalyticsDashboardService,
-  Timespan,
+  Timespan as TimespanBase,
   Buckets,
 } from '../../dashboard.service';
 
@@ -23,6 +23,12 @@ import * as Plotly from 'plotly.js';
 import { Config, Data, Layout } from 'plotly.js'; // TODO: remove this?
 import chartPalette from '../../chart-palette.default';
 import { ThemeService } from '../../../../../common/services/theme.service';
+
+interface TimespanExtended extends TimespanBase {
+  tickFormat?: string;
+  datePipe?: string;
+}
+export { TimespanExtended as Timespan };
 
 @Component({
   selector: 'm-analytics__chart',
@@ -45,11 +51,8 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   );
   selectedMetric;
 
-  timespanSubscription: Subscription;
-  timespan: string;
-
   timespansSubscription: Subscription;
-  timespans: Timespan[];
+  selectedTimespan;
 
   themeSubscription: Subscription;
   isDark: boolean = false;
@@ -70,8 +73,12 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   markerOpacities: Array<number> = [];
   shapes: Array<any> = [];
 
-  datePipe: string = 'EEE MMM d YYYY';
-  tickFormat: string = '%m/%d';
+  timespanFormats = [
+    { interval: 'day', tickFormat: '%m/%d', datePipe: 'EEE MMM d, y' },
+    { interval: 'month', tickFormat: '%m/%y', datePipe: 'MMM y' },
+  ];
+  datePipe: string = this.timespanFormats[0].datePipe;
+  tickFormat: string = this.timespanFormats[0].tickFormat;
 
   // ***********************************************************************************
 
@@ -94,33 +101,20 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.timespanSubscription = this.analyticsService.timespan$.subscribe(
-      timespan => {
-        this.timespan = timespan;
-
-        // const selectedInterval = this.timespans.find(
-        //   ts => ts.id === this.timespan
-        // ).interval;
-
-        // const timespanFormats = [
-        //   { interval: 'day', tickFormat: '%m/%d', datePipe: 'EEE MMM d YYYY' },
-        //   { interval: 'month', tickFormat: '%m/%y', datePipe: 'MMM YYYY' },
-        // ];
-        // const timespanFormat =
-        //   timespanFormats.find(t => t.interval === selectedInterval) ||
-        //   timespanFormats[0];
-
-        // this.tickFormat = timespanFormat.tickFormat;
-        // this.datePipe = timespanFormat.datePipe;
-
-        // console.log(this.tickFormat);
-        this.detectChanges();
-      }
-    );
-
     this.timespansSubscription = this.analyticsService.timespans$.subscribe(
       timespans => {
-        this.timespans = timespans;
+        this.selectedTimespan = timespans.find(
+          timespan => timespan.selected === true
+        );
+
+        const timespanFormat =
+          this.timespanFormats.find(
+            t => t.interval === this.selectedTimespan.interval
+          ) || this.timespanFormats[0];
+
+        this.tickFormat = timespanFormat.tickFormat;
+        this.datePipe = timespanFormat.datePipe;
+
         this.detectChanges();
       }
     );
@@ -156,6 +150,10 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
           width: 2,
         },
       };
+
+      // if (this.selectedMetric.unit === 'usd'){
+      // this.segments.forEach(segment =>{ segment.buckets})
+      // }
     }
     this.data = this.getData();
     this.layout = this.getLayout();
@@ -229,12 +227,16 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   populateHoverInfo() {
     // TODO: format value strings here and remove ngSwitch from template?
     this.hoverInfo['date'] = this.segments[0].buckets[this.hoverPoint].date;
-    this.hoverInfo['value'] = this.segments[0].buckets[this.hoverPoint].value;
+    this.hoverInfo['value'] =
+      this.selectedMetric.unit !== 'usd'
+        ? this.segments[0].buckets[this.hoverPoint].value
+        : this.segments[0].buckets[this.hoverPoint].value / 100;
 
-    if (this.isComparison) {
-      this.hoverInfo['comparisonValue'] = this.segments[1].buckets[
-        this.hoverPoint
-      ].value;
+    if (this.isComparison && this.segments[1]) {
+      this.hoverInfo['comparisonValue'] =
+        this.selectedMetric.unit !== 'usd'
+          ? this.segments[1].buckets[this.hoverPoint].value
+          : this.segments[1].buckets[this.hoverPoint].value / 100;
 
       this.hoverInfo['comparisonDate'] = this.segments[1].buckets[
         this.hoverPoint
@@ -289,6 +291,8 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
     return rows.map(row => {
       if (key === 'date') {
         return row[key].slice(0, 10);
+      } else if (this.selectedMetric.unit === 'usd') {
+        return row[key] / 100;
       } else {
         return row[key];
       }
@@ -313,7 +317,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       shape.y1 = this.graphDiv.layout.yaxis.range[1];
     });
 
-    console.log('setLineHeights()');
     this.relayout(this.getLayout());
   }
 
@@ -366,8 +369,8 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
 
   getLayout() {
     return {
-      width: 0,
-      height: 0,
+      // width: 0,
+      // height: 0,
       hovermode: 'x',
       paper_bgcolor: this.getColor('m-white'),
       plot_bgcolor: this.getColor('m-white'),
@@ -375,18 +378,13 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
         family: 'Roboto',
       },
       xaxis: {
-        // type: 'date',
-        // tickformat: '',
         tickformat: this.tickFormat,
-        tickmode: 'array', //or array, linear
-        nticks: this.segmentLength,
-        // tickvals, // TODO: lookup
-        ticks: 'outside',
+        tickmode: 'array', // || linear || auto
         tickson: 'labels',
         tickcolor: this.getColor('m-grey-130'),
         tickangle: -45,
         tickfont: {
-          color: this.getColor('m-grey-300'),
+          color: this.getColor('m-grey-130'),
         },
         showgrid: false,
         showline: true,
@@ -394,40 +392,37 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
         linewidth: 1,
         zeroline: false,
         fixedrange: true,
-        // range: [
-        //   this.segments[0].buckets[0].date.slice(0, 10),
-        //   this.segments[0].buckets[this.segmentLength - 1].date.slice(0, 10),
-        // ],
       },
       yaxis: {
         ticks: '',
         showgrid: true,
         gridcolor: this.getColor('m-grey-70'),
         zeroline: false,
+        visible: true,
         side: 'right',
         tickfont: {
           color: this.getColor('m-grey-130'),
         },
         fixedrange: true,
       },
-      margin: {
-        t: 16,
-        b: 80,
-        l: 24,
-        r: 16,
-        pad: 16,
-      },
+      // margin: {
+      //   t: 16,
+      //   b: 80,
+      //   l: 24,
+      //   r: 80,
+      //   pad: 16,
+      // },
       shapes: this.shapes,
     };
   }
 
   @HostListener('window:resize')
   applyDimensions() {
-    this.layout = {
-      ...this.layout,
-      width: this.graphDiv.clientWidth - 16,
-      height: this.graphDiv.clientHeight - 16,
-    };
+    // this.layout = {
+    //   ...this.layout,
+    //   width: this.graphDiv.clientWidth, //-16
+    //   height: this.graphDiv.clientHeight, //-16
+    // };
     this.setLineHeights();
     this.detectChanges();
   }
@@ -439,7 +434,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.metricSubscription.unsubscribe();
-    this.timespanSubscription.unsubscribe();
     this.timespansSubscription.unsubscribe();
     this.themeSubscription.unsubscribe();
   }

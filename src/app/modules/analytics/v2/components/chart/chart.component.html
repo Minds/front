@@ -19,6 +19,10 @@
   >
   </plotly-plot> -->
 
+  <!-- <div class="hoverInfo__row">
+    {{ hoverInfo.date | date: selectedTimespan.datePipe }}
+  </div> -->
+
   <div #hoverInfoDiv id="hoverInfoDiv" class="hoverInfoDiv">
     <div class="hoverInfo__row">
       {{ hoverInfo.date | date: datePipe }}
@@ -27,7 +31,7 @@
       <ng-template ngSwitchCase="number">
         {{ hoverInfo.value | number }} {{ selectedMetric.label | lowercase }}
       </ng-template>
-      <ng-template ngSwitchCase="USD">
+      <ng-template ngSwitchCase="usd">
         {{ hoverInfo.value | currency }} USD
       </ng-template>
       <ng-template ngSwitchDefault>
@@ -40,7 +44,7 @@
         <ng-template ngSwitchCase="number">
           {{ hoverInfo.comparisonValue | number }}
         </ng-template>
-        <ng-template ngSwitchCase="USD">
+        <ng-template ngSwitchCase="usd">
           {{ hoverInfo.comparisonValue | currency }} USD
         </ng-template>
         <ng-template ngSwitchDefault>
@@ -48,7 +52,7 @@
           {{ selectedMetric.unit }}
         </ng-template>
       </ng-container>
-      on {{ hoverInfo.comparisonDate | date: datePipe }}
+      on {{ hoverInfo.comparisonDate | date }}
     </div>
   </div>
 </div>

@@ -17,14 +17,11 @@ export class AnalyticsLayoutChartComponent implements OnInit {
   subscription: Subscription;
   selectedMetric$ = this.analyticsService.metrics$.pipe(
     map(metrics => {
-      console.log(
-        metrics,
-        metrics.find(metric => metric.visualisation !== null)
-      );
       return metrics.find(metric => metric.visualisation !== null);
     })
   );
   selectedMetric;
+  isTable: boolean = false;
 
   constructor(
     private analyticsService: AnalyticsDashboardService,
@@ -34,6 +31,8 @@ export class AnalyticsLayoutChartComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.selectedMetric$.subscribe(metric => {
       this.selectedMetric = metric;
+
+      this.isTable = this.selectedMetric.visualisation.type === 'table';
       this.detectChanges();
     });
   }

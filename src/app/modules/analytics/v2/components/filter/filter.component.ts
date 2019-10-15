@@ -5,7 +5,6 @@ import {
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
-  OnDestroy,
 } from '@angular/core';
 import { Observable } from 'rxjs';
 import {
@@ -23,13 +22,14 @@ import {
   UserState,
 } from '../../dashboard.service';
 import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
+import { Session } from '../../../../../services/session';
 
 @Component({
   selector: 'm-analytics__filter',
   templateUrl: 'filter.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnalyticsFilterComponent implements OnInit, OnDestroy {
+export class AnalyticsFilterComponent implements OnInit {
   @Input() filter: Filter;
   @Input() dropUp: boolean = false;
 
@@ -37,23 +37,32 @@ export class AnalyticsFilterComponent implements OnInit, OnDestroy {
   expanded = false;
   options: Array<any> = [];
   selectedOption: Option;
-  subscription;
-  constructor(private analyticsService: AnalyticsDashboardService) {}
+  // subscription;
+  constructor(
+    private analyticsService: AnalyticsDashboardService,
+    public session: Session
+  ) {}
 
   ngOnInit() {
-    this.subscription = this.analyticsService.timespan$.subscribe(timespan => {
-      if (this.filter.id === 'timespan') {
-        this.selectedOption =
-          this.filter.options.find(option => option.id === timespan) ||
-          this.filter.options[0];
+    // this.subscription = this.analyticsService.timespan$.subscribe(timespan => {
+    // if (this.filter.id === 'timespan') {
+    //   this.selectedOption =
+    //     this.filter.options.find(option => option.id === timespan) ||
+    //     this.filter.options[0];
 
-        // TODO: make selected option at top of array?
-      } else {
-        this.selectedOption =
-          this.filter.options.find(option => option.selected === true) ||
-          this.filter.options[0];
-      }
-    });
+    //   // TODO: make selected option at top of array?
+    // } else {
+    // this.selectedOption =
+    //   this.filter.options.find(option => option.selected === true) ||
+    //   this.filter.options[0];
+    // }
+    // });
+
+    console.log(this.filter, this.filter.id);
+
+    this.selectedOption =
+      this.filter.options.find(option => option.selected === true) ||
+      this.filter.options[0];
     this.isMobile = isMobileOrTablet();
   }
 
@@ -71,9 +80,5 @@ export class AnalyticsFilterComponent implements OnInit, OnDestroy {
     }
     const selectedFilterStr = `${this.filter.id}::${option.id}`;
     this.analyticsService.updateFilter(selectedFilterStr);
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
   }
 }

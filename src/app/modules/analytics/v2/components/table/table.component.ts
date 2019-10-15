@@ -102,9 +102,9 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
       name = entity.ownerObj.name;
     }
 
-    titleType = type;
+    titleType = type.charAt(0).toUpperCase() + type.slice(1);
     if (type === 'activity') {
-      titleType = 'post';
+      titleType = 'Post';
     }
 
     const reformattedEntity = {

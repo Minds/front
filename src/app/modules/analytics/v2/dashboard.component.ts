@@ -7,12 +7,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-  ParamMap,
-  RoutesRecognized,
-} from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 
 import { MindsTitle } from '../../../services/ux/title';
@@ -33,9 +28,7 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   isMobile: boolean;
 
-  // cats = categories;
-
-  subscription: Subscription;
+  // subscription: Subscription;
   paramsSubscription: Subscription;
   category$ = this.analyticsService.category$;
   selectedCat: string;
@@ -71,26 +64,11 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       this.updateCategory(params.get('category'));
     });
 
-    // TODO: implement channel filter
-    // const {channelGuid} = this.analyticsService.getStateSnapshot();
-    // this.searchTerm = this.analyticsService.buildSearchTermControl();
-    // this.searchTerm.patchValue(channelGuid, { emitEvent: false });
-
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
-      // TODO: do the same filter, metric, channel
-
-      if (params['timespan'] && params['timespan'] !== 'bork') {
+      // TODO: handleUrl
+      if (params['timespan']) {
         // this.updateTimespan(params['timespan']);
-        console.log('bork');
       }
-
-      // TODO:  if (there's no channel filter in the url) {
-      if (!this.session.isAdmin()) {
-        const selection = 'self';
-      } else {
-        const selection = 'all';
-      }
-      // }
     });
 
     this.analyticsService.timespans$.subscribe(timespans => {
@@ -103,6 +81,12 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     this.analyticsService.metrics$.subscribe(metrics => {
       this.detectChanges();
     });
+
+    if (!this.session.isAdmin()) {
+      this.analyticsService.updateFilter('channel::self');
+    } else {
+      this.analyticsService.updateFilter('channel::all');
+    }
   }
 
   updateTimespan(timespanId) {

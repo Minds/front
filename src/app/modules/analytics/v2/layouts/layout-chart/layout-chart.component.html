@@ -2,13 +2,15 @@
   <m-analytics__metrics
     *ngIf="selectedMetric.visualisation.type === 'chart'"
   ></m-analytics__metrics>
-  <div class="filterableChartWrapper">
+  <div class="filterableChartWrapper" [ngClass]="{ isTable: isTable }">
     <m-analytics__chart
       *ngIf="selectedMetric.visualisation.type === 'chart'"
     ></m-analytics__chart>
     <m-analytics__table
       *ngIf="selectedMetric.visualisation.type === 'table'"
     ></m-analytics__table>
-    <m-analytics__filters></m-analytics__filters>
+    <m-analytics__filters
+      *ngIf="selectedMetric.visualisation.type === 'chart'"
+    ></m-analytics__filters>
   </div>
 </ng-container>

@@ -12,6 +12,7 @@ const fakeData: Array<any> = [
         comparison_interval: 28,
         from_ts_ms: 1567296000000,
         from_ts_iso: '2019-09-01T00:00:00+00:00',
+        selected: true,
       },
       {
         id: '1y',
@@ -20,6 +21,7 @@ const fakeData: Array<any> = [
         comparison_interval: 365,
         from_ts_ms: 1538352000000,
         from_ts_iso: '2018-10-01T00:00:00+00:00',
+        selected: false,
       },
     ],
     filter: ['platform::all', 'view_type::single', 'channel::all'],
@@ -27,6 +29,7 @@ const fakeData: Array<any> = [
       {
         id: 'platform',
         label: 'Platform',
+        description: 'Filter by platform type:',
         options: [
           { id: 'all', label: 'All', available: true, selected: false },
           {
@@ -39,8 +42,37 @@ const fakeData: Array<any> = [
         ],
       },
       {
+        id: 'channel',
+        label: 'Channel',
+        description: 'Filter by channel type:',
+        options: [
+          {
+            id: 'all',
+            label: 'All',
+            available: true,
+            selected: false,
+            description: 'bibbble',
+          },
+          {
+            id: 'browser',
+            label: 'Browser',
+            available: true,
+            selected: false,
+            description: 'bliblabla',
+          },
+          {
+            id: 'mobile',
+            label: 'Mobile',
+            available: true,
+            selected: false,
+            description: 'blubber',
+          },
+        ],
+      },
+      {
         id: 'view_type',
         label: 'View Type',
+        description: 'Filter by view type:',
         options: [
           { id: 'total', label: 'Total', available: true, selected: false },
           {
@@ -48,14 +80,22 @@ const fakeData: Array<any> = [
             label: 'Organic',
             available: true,
             selected: true,
+            description: 'bobloblaw',
           },
           {
             id: 'boosted',
             label: 'Boosted',
             available: false,
             selected: false,
+            description: 'blablablabla',
           },
-          { id: 'single', label: 'Single', available: true, selected: false },
+          {
+            id: 'single',
+            label: 'Single',
+            available: true,
+            selected: false,
+            description: null,
+          },
         ],
       },
     ],
@@ -101,7 +141,7 @@ const fakeData: Array<any> = [
           comparison_interval: 28,
           comparison_positive_inclination: true,
         },
-        unit: 'number',
+        unit: 'usd',
         description:
           'At vero eos et accusamus et iusto odio dignissimos ducimus qui',
         visualisation: {
@@ -134,34 +174,104 @@ const fakeData: Array<any> = [
                   date: '2019-09-05T00:00:00+00:00',
                   value: 5,
                 },
+                {
+                  key: 1567296000000,
+                  date: '2019-09-06T00:00:00+00:00',
+                  value: 11,
+                },
+                {
+                  key: 1567382400000,
+                  date: '2019-09-07T00:00:00+00:00',
+                  value: 12,
+                },
+                {
+                  key: 1567468800000,
+                  date: '2019-09-08T00:00:00+00:00',
+                  value: 13,
+                },
+                {
+                  key: 1567555200000,
+                  date: '2019-09-09T00:00:00+00:00',
+                  value: 9,
+                },
+                {
+                  key: 1567641600000,
+                  date: '2019-09-10T00:00:00+00:00',
+                  value: 7,
+                },
+                {
+                  key: 1567555200000,
+                  date: '2019-09-11T00:00:00+00:00',
+                  value: 9,
+                },
+                {
+                  key: 1567641600000,
+                  date: '2019-09-12T00:00:00+00:00',
+                  value: 10.2,
+                },
               ],
             },
             {
               buckets: [
                 {
                   key: 1567296000000,
-                  date: '2019-09-01T00:00:00+00:00',
+                  date: '2019-08-01T00:00:00+00:00',
                   value: 1,
                 },
                 {
                   key: 1567382400000,
-                  date: '2019-09-02T00:00:00+00:00',
+                  date: '2019-08-02T00:00:00+00:00',
                   value: 2,
                 },
                 {
                   key: 1567468800000,
-                  date: '2019-09-03T00:00:00+00:00',
-                  value: 3,
+                  date: '2019-08-03T00:00:00+00:00',
+                  value: 11,
                 },
                 {
                   key: 1567555200000,
-                  date: '2019-09-04T00:00:00+00:00',
+                  date: '2019-08-04T00:00:00+00:00',
                   value: 4,
                 },
                 {
                   key: 1567641600000,
-                  date: '2019-09-05T00:00:00+00:00',
+                  date: '2019-08-05T00:00:00+00:00',
                   value: 5,
+                },
+                {
+                  key: 1567296000000,
+                  date: '2019-08-06T00:00:00+00:00',
+                  value: 12,
+                },
+                {
+                  key: 1567382400000,
+                  date: '2019-08-07T00:00:00+00:00',
+                  value: 2,
+                },
+                {
+                  key: 1567468800000,
+                  date: '2019-08-08T00:00:00+00:00',
+                  value: 11,
+                },
+                {
+                  key: 1567555200000,
+                  date: '2019-08-09T00:00:00+00:00',
+                  value: 4,
+                },
+                {
+                  key: 1567641600000,
+                  date: '2019-08-10T00:00:00+00:00',
+                  value: 5,
+                },
+                {
+                  key: 1567555200000,
+                  date: '2019-08-11T00:00:00+00:00',
+                  value: 4,
+                },
+                {
+                  key: 1567641600000,
+                  date: '2019-08-12T00:00:00+00:00',
+                  value: 0.5,
                 },
               ],
             },

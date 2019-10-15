@@ -46,6 +46,7 @@ export interface Filter {
   id: string;
   label: string;
   options: Option[];
+  description: string;
 }
 
 export interface Option {
@@ -54,10 +55,10 @@ export interface Option {
   available?: boolean;
   selected?: boolean;
   description?: string;
-  // interval?: string;
-  // comparison_interval?: number;
-  // from_ts_ms?: number;
-  // from_ts_iso?: string;
+  interval?: string;
+  comparison_interval?: number;
+  from_ts_ms?: number;
+  from_ts_iso?: string;
 }
 
 export interface Metric {
@@ -101,6 +102,7 @@ export interface Timespan {
   comparison_interval: number;
   from_ts_ms: number;
   from_ts_iso: string;
+  selected: boolean;
 }
 
 export interface UserState {
@@ -168,7 +170,7 @@ export class AnalyticsDashboardService {
     map(state => state.metrics),
     //distinctUntilChanged(deepDiff),
     distinctUntilChanged((prev, curr) => {
-      console.log(JSON.stringify(prev), JSON.stringify(curr));
+      // console.log(JSON.stringify(prev), JSON.stringify(curr));
       return deepDiff(prev, curr);
     }),
     tap(metrics => console.log('metrics changed', metrics))
@@ -240,14 +242,14 @@ export class AnalyticsDashboardService {
     combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
       .pipe(
         ///debounceTime(300),
-        tap(() => console.log('load from remote called')),
+        // tap(() => console.log('load from remote called')),
         distinctUntilChanged(deepDiff),
         catchError(_ => {
           console.log('caught error');
           return of(null);
         }),
         switchMap(([category, timespan, metric, filter]) => {
-          console.log(category, timespan, metric, filter);
+          // console.log(category, timespan, metric, filter);
           try {
             const response = this.getDashboardResponse(
               category,
