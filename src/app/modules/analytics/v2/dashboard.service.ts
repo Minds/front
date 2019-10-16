@@ -112,18 +112,9 @@ export interface UserState {
   metrics: Metric[];
   filter?: string[];
   filters?: Filter[];
-  loading: boolean;
 }
 
-// ʕ •ᴥ•ʔ
 let _state: UserState = fakeData[0];
-// {
-//   // loading: false,
-//   // filter: ['platform::browser'],
-//   // filters: [],
-//   // metric: 'views',
-//   // metrics: [],
-// };
 
 const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 
@@ -172,10 +163,7 @@ export class AnalyticsDashboardService {
     map(state => state.filters),
     distinctUntilChanged(deepDiff)
   );
-  loading$ = this.state$.pipe(
-    map(state => state.loading),
-    distinctUntilChanged()
-  );
+  loading$ = new BehaviorSubject<boolean>(false);
   ready$ = new BehaviorSubject<boolean>(false);
 
   /**
@@ -195,6 +183,7 @@ export class AnalyticsDashboardService {
           console.log('caught error');
           return of(null);
         }),
+        tap(() => this.loading$.next(true)),
         switchMap(([category, timespan, metric, filter]) => {
           // console.log(category, timespan, metric, filter);
           try {
@@ -228,8 +217,8 @@ export class AnalyticsDashboardService {
           filters: dashboard.filters,
           metric: dashboard.metric,
           metrics: dashboard.metrics,
-          loading: false,
         });
+        this.loading$.next(false);
       });
   }
 
@@ -264,18 +253,16 @@ export class AnalyticsDashboardService {
       category,
       description: null,
       metrics: [],
-      loading: true,
     });
   }
   updateTimespan(timespan: string) {
     this.updateState({
       ..._state,
       timespan,
-      loading: true,
     });
   }
   updateMetric(metric: string) {
-    this.updateState({ ..._state, metric, loading: true });
+    this.updateState({ ..._state, metric });
   }
   updateFilter(selectedFilterStr: string) {
     if (_state.filter.includes(selectedFilterStr)) {
@@ -298,7 +285,7 @@ export class AnalyticsDashboardService {
     console.log('update filter called: ' + selectedFilterStr);
     console.log(filter);
 
-    this.updateState({ ..._state, filter, loading: true });
+    this.updateState({ ..._state, filter });
   }
 
   //   // ------- Private Methods ------------------------
@@ -316,6 +303,7 @@ export class AnalyticsDashboardService {
     metric: string,
     filter: string[]
   ): Observable<Response> {
+    this.loading$.next(true);
     return this.http
       .get(`api/v2/analytics/dashboards/${category}`, {
         metric,
