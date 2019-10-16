@@ -103,6 +103,9 @@ m-pro--channel {
     minds-avatar {
       width: 90px;
       height: 90px;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
     }
 
     .m-proChannelTopbar__logo {
