@@ -1,0 +1,14 @@
+<dialog class="mdl-dialog" #dialog>
+  <h3 class="mdl-dialog__title">{{ title }}</h3>
+  <div class="mdl-dialog__content">
+    <p>{{ message }}</p>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button type="button" class="mdl-button" (click)="confirmClick()">
+      {{ confirmButtonText }}
+    </button>
+    <button type="button" class="mdl-button" (click)="cancelClick()">
+      {{ cancelButtonText }}
+    </button>
+  </div>
+</dialog>

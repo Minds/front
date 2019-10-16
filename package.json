@@ -33,6 +33,7 @@
     "braintree-web": "3.41.0",
     "core-js": "~2.6.2",
     "dexie": "^2.0.4",
+    "dialog-polyfill": "^0.5.0",
     "ethjs": "~0.4.0",
     "ethjs-account": "^0.1.4",
     "ethjs-provider-signer": "^0.1.4",
