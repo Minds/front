@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Session } from '../../services/session';
 import currency, { Currency } from '../../helpers/currency';
 
 export type UpgradeOptionInterval = 'yearly' | 'monthly';
@@ -16,6 +17,8 @@ export class UpgradeOptionsComponent {
   interval: UpgradeOptionInterval = 'yearly';
 
   currency: UpgradeOptionCurrency = 'usd';
+
+  constructor(public session: Session) {}
 
   get intervalCurrencyQueryParams() {
     return { i: this.interval, c: this.currency };
