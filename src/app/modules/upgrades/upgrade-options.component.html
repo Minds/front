@@ -127,14 +127,24 @@
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <a
-        class="mf-button m-upgradesUpgradeOptionsPlan__action"
-        routerLink="/pro"
-        [queryParams]="intervalCurrencyQueryParams"
-        *ngIf="!session.getLoggedInUser()?.pro"
-      >
-        Upgrade to Pro
-      </a>
+      <ng-container *mIfFeature="'purchase-pro'; else comingSoon">
+        <a
+          class="mf-button m-upgradesUpgradeOptionsPlan__action"
+          routerLink="/pro"
+          [queryParams]="intervalCurrencyQueryParams"
+          *ngIf="!session.getLoggedInUser()?.pro"
+        >
+          Upgrade to Pro
+        </a>
+      </ng-container>
+      <ng-template #comingSoon>
+        <a
+          class="mf-button m-upgradesUpgradeOptionsPlan__action"
+          routerLink="/pro"
+        >
+          Coming soon
+        </a>
+      </ng-template>
     </div>
 
     <div
