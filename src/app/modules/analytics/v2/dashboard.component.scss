@@ -30,6 +30,7 @@ m-analytics__dashboard {
 .page {
   padding: 16px;
   display: flex;
+  box-sizing: border-box;
   flex-direction: row;
   height: 100%;
   width: 100%;

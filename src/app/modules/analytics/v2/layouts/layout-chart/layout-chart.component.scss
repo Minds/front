@@ -1,7 +1,7 @@
 .filterableChartWrapper {
   position: relative;
   padding: 16px;
-  width: 80%;
+  // width: 80%;
   @include m-theme() {
     border-top: 1px solid themed($m-grey-50);
   }

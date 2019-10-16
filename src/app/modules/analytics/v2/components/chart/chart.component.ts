@@ -408,9 +408,9 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       },
       margin: {
         t: 16,
-        b: 80,
+        b: 40,
         l: 24,
-        r: 80,
+        r: 40,
         // pad: 16,
       },
       shapes: this.shapes,
