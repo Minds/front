@@ -15,10 +15,20 @@
         >
           {{ description }}
           <ng-container *ngIf="(category$ | async) === 'earnings'">
-            <a *ngIf="!session.getLoggedInUser().pro" routerLink="/pro">Upgrade to PRO</a>
-            <a *ngIf="session.getLoggedInUser().pro && !(session.getLoggedInUser().merchant && session.getLoggedInUser().merchant['id'])"
+            <a *ngIf="!session.getLoggedInUser().pro" routerLink="/pro"
+              >Upgrade to PRO</a
+            >
+            <a
+              *ngIf="
+                session.getLoggedInUser().pro &&
+                !(
+                  session.getLoggedInUser().merchant &&
+                  session.getLoggedInUser().merchant['id']
+                )
+              "
               routerLink="/wallet/usd"
-            >Enable payouts</a>.
+              >Enable payouts</a
+            >.
           </ng-container>
         </p>
       </div>
