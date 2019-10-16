@@ -16,6 +16,7 @@ import {
 } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MindsTitle } from '../../../../services/ux/title';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -166,7 +167,9 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
   }
 
   get entities$() {
-    return this.feedsService.feed;
+    return this.feedsService.feed.pipe(
+      filter((entity: any) => !!entity.thumbnail_src)
+    );
   }
 
   get hasMore$() {
