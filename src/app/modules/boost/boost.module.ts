@@ -35,6 +35,7 @@ import { BoostCampaignsCreatorComponent } from './campaigns/creator/creator.comp
 import { BoostCampaignsViewComponent } from './campaigns/view/view.component';
 import { BoostCampaignsListComponent } from './campaigns/list/list.component';
 import { BoostCampaignsCreatorContentSelectorComponent } from './campaigns/creator/content-selector.component';
+import { MindsDialog } from '../../common/components/dialog/dialog.component';
 
 const boostRoutes: Routes = [
   { path: 'boost', component: BoostMarketingComponent, pathMatch: 'full' },
@@ -170,6 +171,7 @@ const boostRoutes: Routes = [
     BoostCampaignsCreatorComponent,
     BoostCampaignsCreatorContentSelectorComponent,
     BoostCampaignsViewComponent,
+    MindsDialog,
   ],
   exports: [
     BoostConsoleNetworkListComponent,

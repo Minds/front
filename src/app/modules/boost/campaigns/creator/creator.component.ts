@@ -13,10 +13,10 @@ import {
   CampaignPreview,
 } from '../campaigns.type';
 import { CampaignsService } from '../campaigns.service';
-import { Subject, Subscription } from 'rxjs';
+import { Observable, of, Subject, Subscription } from 'rxjs';
 import { Tag } from '../../../hashtags/types/tag';
 import { CampaignPaymentsService } from '../campaign-payments.service';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 @Component({
   providers: [CampaignsService, CampaignPaymentsService],
@@ -36,16 +36,18 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
   currentError: string = '';
 
   preview: CampaignPreview = {
-    canBeDelivered: true,
+    canBeDelivered: false,
     durationDays: 0,
     globalViewsPerDay: 0,
     viewsPerDayRequested: 0,
   };
 
+  showCampaignWarningDialog = false;
+  confirmCampaignWarningDialog: Observable<boolean>;
+  dialogWaitActionSubscription;
+
   protected route$: Subscription;
-
   protected previewSubject: Subject<Campaign> = new Subject();
-
   protected preview$: Subscription;
 
   constructor(
@@ -58,6 +60,7 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.reset();
+    of(this.confirmCampaignWarningDialog, false);
 
     this.route$ = this.route.params.subscribe(params => {
       if (params.from || params.type) {
@@ -206,6 +209,21 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       return;
     }
 
+    if (this.preview.canBeDelivered) {
+      this.submitAction();
+    } else {
+      this.showCampaignWarningDialog = true;
+    }
+  }
+
+  getCampaignWarningDialogStatus(status: boolean) {
+    this.showCampaignWarningDialog = false;
+    if (status) {
+      this.submitAction();
+    }
+  }
+
+  async submitAction() {
     this.currentError = '';
     this.inProgress = true;
     this.detectChanges();
