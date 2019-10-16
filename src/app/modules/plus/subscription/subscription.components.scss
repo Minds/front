@@ -1,0 +1,86 @@
+@import '../../../foundation/grid-values';
+
+m-plus--subscription {
+  .m-plusSubscriptionPlan__toggleContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 23px;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+  }
+
+  .m-plusSubscriptionPlan__toggle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: stretch;
+    margin-right: 50px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .m-plusSubscriptionPlan__pricing {
+    margin-bottom: 24px;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .m-plusSubscriptionPlanPricing__amount {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 24px;
+
+      @include m-theme() {
+        color: themed($m-grey-600);
+      }
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        display: block;
+      }
+
+      span {
+        font-size: 24px;
+
+        @include m-theme() {
+          color: themed($m-black);
+        }
+      }
+    }
+
+    .m-plusSubscriptionPlanPricing__offer {
+      display: inline-block;
+      font-size: 14px;
+      text-decoration: line-through;
+      margin-left: 10px;
+
+      @include m-theme() {
+        color: themed($m-red);
+      }
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        display: block;
+        margin-left: 0;
+      }
+    }
+  }
+
+  .m-plusSubscription__error {
+    display: block;
+    font-weight: bold;
+    margin: 8px 0 0 5px;
+
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
+}

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProMarketingComponent {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 
   constructor(protected router: Router) {}
 

@@ -1,0 +1,21 @@
+<div class="mdl-textfield mdl-js-textfield">
+  <i class="material-icons" (click)="setFocus()">search</i>
+  <input
+    [(ngModel)]="q"
+    (focus)="focus()"
+    (blur)="blur()"
+    name="q"
+    class="mdl-textfield__input"
+    type="text"
+    id="search"
+    autocomplete="off"
+    placeholder="Filter by channel"
+    #searchInput
+  />
+  <!-- <label class="mdl-textfield__label" for="search">abc</label> -->
+
+  <m-analytics__searchSuggestions
+    [q]="q"
+    [active]="active"
+  ></m-analytics__searchSuggestions>
+</div>

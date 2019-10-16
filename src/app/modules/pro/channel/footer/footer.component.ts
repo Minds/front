@@ -69,6 +69,10 @@ export class ProChannelFooterComponent {
     this.auth.logout();
   }
 
+  onUserChange() {
+    this.channelService.onChannelChange.next(this.user);
+  }
+
   get user() {
     return this.channelService.currentChannel;
   }

@@ -1,0 +1,56 @@
+m-analytics__chart {
+  display: block;
+  position: relative;
+  .js-plotly-plot,
+  .plot-container {
+    height: 44vh;
+    display: block;
+  }
+}
+#graphDiv {
+  position: relative;
+  g,
+  g > * {
+    cursor: default;
+  }
+
+  > * {
+    transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+      color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .main-svg {
+    max-width: 100%;
+  }
+}
+
+.hoverInfoDiv {
+  width: 160px;
+  padding: 12px;
+  position: absolute;
+  pointer-events: none;
+  border-radius: 3px;
+  font-size: 12px;
+  z-index: 9999999999; // TODO fix
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+  @include m-theme() {
+    background-color: themed($m-white);
+    box-shadow: 0 0 4px rgba(themed($m-black), 0.3);
+    color: themed($m-grey-200);
+  }
+
+  [class*='hoverInfo__row'] {
+    padding-bottom: 4px;
+    &:last-of-type {
+      padding-top: 2px;
+    }
+  }
+  .hoverInfo__row--primary {
+    font-size: 15px;
+    // font-weight: bold;
+    @include m-theme() {
+      color: themed($m-grey-600);
+    }
+  }
+}
