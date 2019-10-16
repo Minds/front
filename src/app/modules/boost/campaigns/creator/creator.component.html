@@ -34,7 +34,6 @@
     <div class="m-form--field">
       <label class="m-form--field-label" for="boost-creator__name">
         <span i18n>Name</span>
-        <m-tooltip icon="help" i18n>TBD</m-tooltip>
       </label>
 
       <input
@@ -49,7 +48,9 @@
     <div class="m-form--field">
       <label class="m-form--field-label">
         <span i18n>Type</span>
-        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+        <m-tooltip icon="help" i18n
+          >Media type to use in the campaign</m-tooltip
+        >
       </label>
 
       <ng-container *ngFor="let type of types">
@@ -81,7 +82,9 @@
       <label class="m-form--field-label" [ngSwitch]="campaign.type">
         <ng-container *ngSwitchCase="'newsfeed'">
           <span i18n>Posts</span>
-          <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          <m-tooltip icon="help" i18n
+            >Search for the post to promote in this campaign</m-tooltip
+          >
         </ng-container>
 
         <ng-container *ngSwitchCase="'content'">
@@ -190,7 +193,10 @@
     <div class="m-form--field">
       <label class="m-form--field-label" for="boost-creator__budget">
         <span i18n>Budget</span>
-        <m-tooltip icon="help" i18n>TBD</m-tooltip>
+        <m-tooltip icon="help" i18n
+          >Set the token budget for this campaign (1 Token = 1000
+          Impressions)</m-tooltip
+        >
       </label>
 
       <div class="m-form--composite-input">
