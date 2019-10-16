@@ -24,6 +24,7 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
   selector: 'm-analytics__dashboard',
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [AnalyticsDashboardService],
 })
 export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   isMobile: boolean;
