@@ -30,16 +30,18 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
 
   // subscription: Subscription;
   paramsSubscription: Subscription;
+
   category$ = this.analyticsService.category$;
   description$ = this.analyticsService.description$;
   selectedCat: string;
 
-  selectedTimespan; //string? or Timespan?
+  selectedTimespan;
   timespanFilter: Filter = {
     id: 'timespan',
     label: 'Timespan',
     options: [],
   };
+  channelFilter: Filter;
 
   constructor(
     public client: Client,
@@ -80,6 +82,16 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       this.detectChanges();
     });
     this.analyticsService.metrics$.subscribe(metrics => {
+      this.detectChanges();
+    });
+    this.analyticsService.filters$.subscribe(filters => {
+      this.channelFilter = filters.find(filter => filter.id === 'channel');
+
+      // TODO: remove this once channel search is ready
+      // Temporarily remove channel search from filter options
+      this.channelFilter.options = this.channelFilter.options.filter(option => {
+        return option.id === 'all' || option.id === 'self';
+      });
       this.detectChanges();
     });
 

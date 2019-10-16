@@ -3,7 +3,7 @@ $rounded-bottom: 0 0 3px 3px;
 
 m-analytics__filter {
   position: relative;
-  margin: 16px 24px 0 0;
+  margin: 0 36px 0 0;
   z-index: 2;
 }
 .filterLabelWrapper {
@@ -12,6 +12,12 @@ m-analytics__filter {
   white-space: nowrap;
   @include m-theme() {
     color: rgba(themed($m-grey-200), 0.9);
+  }
+  m-tooltip {
+    margin-right: 4px;
+  }
+  > * {
+    display: inline-block;
   }
   .m-tooltip {
     i {
@@ -96,7 +102,7 @@ m-analytics__filter {
   .filterHeader {
     position: relative;
     width: 100%;
-    padding: 6px 6px 6px 8px;
+    padding: 8px 6px 6px 10px;
     border-radius: 3px;
     transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -126,7 +132,7 @@ m-analytics__filter {
     // display: none;
     visibility: hidden;
     width: 100%;
-    padding: 6px 6px 6px 8px;
+    padding: 8px 6px 6px 10px;
     border-radius: 3px;
     left: 0px;
     transition: box-shadow 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -166,7 +172,7 @@ m-analytics__filter {
   }
 }
 
-.isMobile {
+.filterWrapper.isMobile {
   .filterHeader {
     i {
       display: none;

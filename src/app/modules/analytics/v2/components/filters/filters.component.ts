@@ -3,22 +3,10 @@ import {
   OnInit,
   OnDestroy,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
 } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import {
-  AnalyticsDashboardService,
-  Category,
-  Response,
-  Dashboard,
-  Filter,
-  Option,
-  Metric,
-  Summary,
-  Visualisation,
-  Bucket,
-  Timespan,
-  UserState,
-} from '../../dashboard.service';
+import { Subscription } from 'rxjs';
+import { AnalyticsDashboardService, Filter } from '../../dashboard.service';
 
 @Component({
   selector: 'm-analytics__filters',
@@ -29,12 +17,35 @@ export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   filters$ = this.analyticsService.filters$;
+  filters: Filter[];
 
-  constructor(private analyticsService: AnalyticsDashboardService) {}
+  constructor(
+    private analyticsService: AnalyticsDashboardService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    // TODO: remove subscription because everything is happening in html
-    // TODO: might even be fine to just get rid of this component and put it in dashboard.ts
+    // TODO: remove all of this once channel search is ready
+    // Temporarily remove channel search from channel filter options
+    this.analyticsService.filters$.subscribe(filters => {
+      this.filters = filters;
+      const channelFilter = filters.find(filter => filter.id === 'channel');
+
+      channelFilter.options = channelFilter.options.filter(option => {
+        return option.id === 'all' || option.id === 'self';
+      });
+
+      this.filters.find(filter => filter.id === 'channel').options =
+        channelFilter.options;
+
+      this.detectChanges();
+    });
+  }
+
+  // TODO: remove all of this once channel search is ready
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   ngOnDestroy() {}

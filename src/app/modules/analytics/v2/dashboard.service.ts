@@ -31,6 +31,7 @@ export interface Response {
 
 export interface Dashboard {
   category: string;
+  description?: string;
   timespan: string;
   timespans: Timespan[];
   metric: string;
@@ -255,11 +256,6 @@ export class AnalyticsDashboardService {
   //     .subscribe(value => this.updateSearchCriteria(value));
 
   //   return channelSearch;
-  // }
-
-  // TODO: this in UpdateFilter() instead
-  // updateChannel(channel: string) {
-  //   this.updateState({ ..._state, criteria, loading: true });
   // }
 
   updateCategory(category: string) {

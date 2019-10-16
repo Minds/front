@@ -1,41 +1,38 @@
-<div class="tableWrapper" [hidden]="loading">
-  <div class="header row">
-    <div
-      *ngFor="let col of visualisation.columns; let first = first"
-      [ngClass]="{
-        first: first
-      }"
-      class="cell"
-    >
+<div class="tableWrapper" [hidden]="loading" [ngClass]="{ isMobile: isMobile }">
+  <div class="row--header">
+    <div *ngFor="let col of columns | slice: 0:1" class="col--entity cell">
       {{ col.label }}
     </div>
+    <div class="col--values">
+      <ng-container *ngFor="let col of columns | slice: 1">
+        <div class="subCol--value cell">{{ col.label }}</div>
+      </ng-container>
+    </div>
   </div>
-  <div class="body">
-    <ng-container *ngFor="let row of reformattedBuckets">
-      <a class="row" [routerLink]="row.entity.route">
-        <div class="entity cell" *ngIf="row.entity">
-          <div class="entityTitle">
-            <span>{{ row.entity.title }}</span>
-            <i class="material-icons">open_in_new</i>
-          </div>
-          <div class="entityDetails">
-            <span class="usernameWrapper">
-              <a [routerLink]="'/' + row.entity.name"
-                >@{{ row.entity.username }}</a
-              >
-            </span>
-            <span *ngIf="!isMobile">{{ row.entity.type | titlecase }}</span>
-            <span *ngIf="!isMobile"
-              >Published {{ row.entity.time_created * 1000 | date }}</span
+  <ng-container *ngFor="let row of reformattedBuckets">
+    <a class="row--data" [routerLink]="row.entity.route">
+      <div class="col--entity cell" *ngIf="row.entity">
+        <div class="entityTitle">
+          <span>{{ row.entity.title }}</span>
+          <i class="material-icons">open_in_new</i>
+        </div>
+        <div class="entityDetails">
+          <span class="usernameWrapper">
+            <a [routerLink]="'/' + row.entity.name"
+              >@{{ row.entity.username }}</a
             >
-          </div>
+          </span>
+          <span *ngIf="!isMobile">{{ row.entity.type | titlecase }}</span>
+          <span *ngIf="!isMobile"
+            >Published {{ row.entity.time_created * 1000 | date }}</span
+          >
         </div>
-        <div class="valuesContainer">
-          <ng-container *ngFor="let value of row.values">
-            <div class="value cell">{{ value | abbr }}</div>
-          </ng-container>
-        </div>
-      </a>
-    </ng-container>
-  </div>
+      </div>
+      <div class="col--values">
+        <ng-container *ngFor="let value of row.values">
+          <div class="subCol--value cell">{{ value | abbr }}</div>
+        </ng-container>
+      </div>
+    </a>
+  </ng-container>
 </div>

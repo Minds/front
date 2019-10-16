@@ -169,3 +169,10 @@ m-analytics__metrics {
     }
   }
 }
+.metricsSection.isMobile {
+  .metricsContainer {
+    .metric {
+      flex: 1 0 auto;
+    }
+  }
+}

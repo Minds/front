@@ -1,16 +1,26 @@
+m-analytics__dashboard {
+  display: block;
+  width: 100%;
+}
 // ----------------------------------------
 // MOBILE
 .isMobile {
   &.page {
     padding: 0;
+    .main {
+      padding: 0;
+      .mainHeader {
+        padding-left: 24px;
+        display: block;
+      }
+
+      .layoutWrapper {
+        box-shadow: none;
+        padding: 0;
+      }
+    }
   }
-  .layoutWrapper {
-    box-shadow: none;
-    padding: 0;
-  }
-  .main {
-    padding: 0;
-  }
+
   .m-analytics__menu {
     padding: 0 8px;
   }
@@ -22,7 +32,7 @@
   display: flex;
   flex-direction: row;
   height: 100%;
-  // width: 100%;
+  width: 100%;
   @include m-theme() {
     background-color: themed($m-white);
     color: themed($m-grey-800);
@@ -37,17 +47,16 @@
 .main {
   flex: 4 1 0px;
   padding: 16px;
-  min-width: 600px;
 
   .mainHeader {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 
-    h3 {
-      line-height: 0;
-      margin-top: 40px;
-    }
+    // h3 {
+    //   line-height: 0;
+    //   margin-top: 40px;
+    // }
     p {
       @include m-theme() {
         color: themed($m-grey-300);
@@ -88,6 +97,8 @@
 
   .m-analytics__layout {
     position: relative;
+    display: block;
+    width: 100%;
   }
 }
 

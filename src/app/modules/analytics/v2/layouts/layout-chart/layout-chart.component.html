@@ -5,7 +5,10 @@
   <m-analytics__metrics
     *ngIf="selectedMetric.visualisation.type === 'chart'"
   ></m-analytics__metrics>
-  <div class="filterableChartWrapper" [ngClass]="{ isTable: isTable }">
+  <div
+    class="filterableChartWrapper"
+    [ngClass]="{ isTable: isTable, isMobile: isMobile }"
+  >
     <m-analytics__chart
       *ngIf="selectedMetric.visualisation.type === 'chart'"
     ></m-analytics__chart>

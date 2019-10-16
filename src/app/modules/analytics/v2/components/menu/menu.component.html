@@ -18,10 +18,12 @@
       />
       <div class="details">
         <div class="name">{{ user.name }}</div>
+        <!-- TODO: remove username once subscriberCount is working -->
+        <div class="username">@{{ user.username }}</div>
         <!-- TODO: get subscriberCount -->
-        <div class="subscribers">
+        <!-- <div class="subscribers">
           {{ user.subscribers_count | abbr }} subscribers
-        </div>
+        </div> -->
       </div>
     </a>
 

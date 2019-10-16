@@ -31,6 +31,7 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
   isMobile: boolean;
   loadingSubscription: Subscription;
   loading: boolean;
+  valueColCount: number = 1;
 
   selectedMetric$ = this.analyticsService.metrics$.pipe(
     map(metrics => {
@@ -50,10 +51,8 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
       this.selectedMetric = metric;
       this.visualisation = metric.visualisation;
       this.columns = metric.visualisation.columns;
+      this.valueColCount = this.columns.length - 1;
 
-      // .sort((a, b) =>
-      //   a.order > b.order ? 1 : -1
-      // );
       this.loadingSubscription = this.analyticsService.loading$.subscribe(
         loading => {
           this.loading = loading;

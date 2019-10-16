@@ -3,7 +3,14 @@
 //   display: none;
 // }
 
+.page.isMobile m-analytics__menu {
+  margin-right: -32px;
+  flex: 0 1 0px;
+}
+
 m-analytics__menu {
+  display: block;
+  max-width: 160px;
   // ----------------------------------------
   // MOBILE
 
@@ -60,7 +67,7 @@ m-analytics__menu {
       position: fixed;
       top: 0;
       bottom: 0;
-      left: -340px;
+      left: -360px;
       transition: left 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
       padding: 0 24px;
       width: 300px;
@@ -107,10 +114,15 @@ m-analytics__menu {
           .name {
             font-weight: bold;
           }
+          .username {
+            @include m-theme() {
+              color: themed($m-grey-200);
+            }
+          }
           .subscribers {
             font-size: 11px;
             @include m-theme() {
-              color: themed($m-grey-300);
+              color: themed($m-grey-200);
             }
           }
         }

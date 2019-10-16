@@ -7,6 +7,7 @@ import {
 import { Observable, Subscription, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AnalyticsDashboardService } from '../../dashboard.service';
+import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
 @Component({
   selector: 'm-analytics__layout--chart',
@@ -27,6 +28,7 @@ export class AnalyticsLayoutChartComponent implements OnInit {
   );
   selectedMetric;
   isTable: boolean = false;
+  isMobile: boolean;
 
   constructor(
     private analyticsService: AnalyticsDashboardService,
@@ -44,6 +46,7 @@ export class AnalyticsLayoutChartComponent implements OnInit {
         this.selectedMetric.visualisation.type === 'table';
       this.detectChanges();
     });
+    this.isMobile = isMobileOrTablet();
   }
 
   detectChanges() {

@@ -25,7 +25,7 @@
 
   <div #hoverInfoDiv id="hoverInfoDiv" class="hoverInfoDiv">
     <div class="hoverInfo__row">
-      {{ hoverInfo.date | date: datePipe }}
+      {{ hoverInfo.date | utcDate | date: datePipe }}
     </div>
     <div [ngSwitch]="selectedMetric.unit" class="hoverInfo__row--primary">
       <ng-template ngSwitchCase="number">
@@ -52,7 +52,7 @@
           {{ selectedMetric.unit }}
         </ng-template>
       </ng-container>
-      on {{ hoverInfo.comparisonDate | date }}
+      on {{ hoverInfo.comparisonDate | utcDate | date: datePipe }}
     </div>
   </div>
 </div>

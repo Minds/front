@@ -11,7 +11,7 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
   AnalyticsDashboardService,
@@ -20,7 +20,6 @@ import {
 } from '../../dashboard.service';
 
 import * as Plotly from 'plotly.js';
-import { Config, Data, Layout } from 'plotly.js'; // TODO: remove this?
 import chartPalette from '../../chart-palette.default';
 import { ThemeService } from '../../../../../common/services/theme.service';
 
@@ -122,6 +121,7 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
 
     this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
       this.isDark = isDark;
+      this.applyDimensions();
 
       // this.relayout(this.getLayout());
       // this.restyle(this.getData());
@@ -370,8 +370,8 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
 
   getLayout() {
     return {
-      // width: 0,
-      // height: 0,
+      width: 0,
+      height: 0,
       hovermode: 'x',
       paper_bgcolor: this.getColor('m-white'),
       plot_bgcolor: this.getColor('m-white'),
@@ -406,24 +406,24 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
         },
         fixedrange: true,
       },
-      // margin: {
-      //   t: 16,
-      //   b: 80,
-      //   l: 24,
-      //   r: 80,
-      //   pad: 16,
-      // },
+      margin: {
+        t: 16,
+        b: 80,
+        l: 24,
+        r: 80,
+        // pad: 16,
+      },
       shapes: this.shapes,
     };
   }
 
   @HostListener('window:resize')
   applyDimensions() {
-    // this.layout = {
-    //   ...this.layout,
-    //   width: this.graphDiv.clientWidth, //-16
-    //   height: this.graphDiv.clientHeight, //-16
-    // };
+    this.layout = {
+      ...this.layout,
+      width: this.graphDiv.clientWidth - 32,
+      height: this.graphDiv.clientHeight - 32,
+    };
     this.setLineHeights();
     this.detectChanges();
   }

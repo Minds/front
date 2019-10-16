@@ -3,6 +3,7 @@ const fakeData: Array<any> = [
     // CHART TESTS
     loading: false,
     category: 'traffic',
+    description: 'imma traffic description',
     timespan: '30d',
     timespans: [
       {
@@ -44,28 +45,28 @@ const fakeData: Array<any> = [
       {
         id: 'channel',
         label: 'Channel',
-        description: 'Filter by channel type:',
+        description: null,
         options: [
           {
             id: 'all',
             label: 'All',
             available: true,
-            selected: false,
-            description: 'bibbble',
+            selected: true,
+            description: null,
           },
           {
-            id: 'browser',
-            label: 'Browser',
+            id: 'self',
+            label: 'Self',
             available: true,
             selected: false,
-            description: 'bliblabla',
+            description: null,
           },
           {
-            id: 'mobile',
-            label: 'Mobile',
+            id: 'search',
+            label: 'Search',
             available: true,
             selected: false,
-            description: 'blubber',
+            description: null,
           },
         ],
       },
@@ -287,6 +288,7 @@ const fakeData: Array<any> = [
   {
     loading: false,
     category: 'earnings',
+    description: 'imma earnings description',
     timespan: '30d',
     timespans: [
       {
@@ -308,6 +310,34 @@ const fakeData: Array<any> = [
     ],
     filter: ['channel::all'],
     filters: [
+      {
+        id: 'channel',
+        label: 'Channel',
+        description: 'Filter by channel type:',
+        options: [
+          {
+            id: 'all',
+            label: 'All',
+            available: true,
+            selected: true,
+            description: 'bibbble',
+          },
+          {
+            id: 'self',
+            label: 'Self',
+            available: true,
+            selected: false,
+            description: 'bliblabla',
+          },
+          {
+            id: 'search',
+            label: 'cantSeeMe',
+            available: true,
+            selected: false,
+            description: 'should not be shown',
+          },
+        ],
+      },
       {
         id: 'platform',
         label: 'Platform',

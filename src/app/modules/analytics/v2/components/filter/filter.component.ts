@@ -37,7 +37,6 @@ export class AnalyticsFilterComponent implements OnInit {
   expanded = false;
   options: Array<any> = [];
   selectedOption: Option;
-  // subscription;
   constructor(
     private analyticsService: AnalyticsDashboardService,
     public session: Session
@@ -57,8 +56,6 @@ export class AnalyticsFilterComponent implements OnInit {
     //   this.filter.options[0];
     // }
     // });
-
-    console.log(this.filter, this.filter.id);
 
     this.selectedOption =
       this.filter.options.find(option => option.selected === true) ||
