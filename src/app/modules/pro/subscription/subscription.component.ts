@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Session } from '../../../services/session';
@@ -54,7 +54,8 @@ export class ProSubscriptionComponent implements OnInit {
     protected overlayModal: OverlayModalService,
     protected wirePaymentHandlers: WirePaymentHandlersService,
     protected cd: ChangeDetectorRef,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected router: Router
   ) {}
 
   ngOnInit() {
@@ -69,7 +70,9 @@ export class ProSubscriptionComponent implements OnInit {
         this.currency = params.c || 'usd';
         this.interval = params.i || 'yearly';
 
-        if (params.c || params.i) this.enable();
+        if (params.c || params.i) {
+          this.enable();
+        }
       }
     );
   }
@@ -91,6 +94,15 @@ export class ProSubscriptionComponent implements OnInit {
   }
 
   async enable() {
+    if (!this.session.isLoggedIn()) {
+      localStorage.setItem(
+        'redirect',
+        `/pro?c=${this.currency}&i=${this.interval}`
+      );
+      this.router.navigate(['/login']);
+      return;
+    }
+
     this.inProgress = true;
     this.error = '';
     this.detectChanges();

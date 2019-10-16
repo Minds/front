@@ -66,17 +66,33 @@ export class LoginComponent {
 
   loggedin() {
     if (this.referrer) this.router.navigateByUrl(this.referrer);
-    else if (this.redirectTo) this.router.navigate([this.redirectTo]);
+    else if (this.redirectTo) this.navigateToRedirection();
     else this.loginReferrer.navigate();
   }
 
   registered() {
-    if (this.redirectTo) this.router.navigate([this.redirectTo]);
+    if (this.redirectTo) this.navigateToRedirection();
     else {
       this.modal.setDisplay('categories').open();
       this.loginReferrer.navigate({
         defaultUrl: '/' + this.session.getLoggedInUser().username,
       });
     }
+  }
+
+  navigateToRedirection() {
+    const uri = this.redirectTo.split('?', 2);
+    const extras = {};
+
+    if (uri[1]) {
+      extras['queryParams'] = {};
+
+      for (const queryParamString of uri[1].split('&')) {
+        const queryParam = queryParamString.split('=');
+        extras['queryParams'][queryParam[0]] = queryParam[1];
+      }
+    }
+
+    this.router.navigate([uri[0]], extras);
   }
 }
