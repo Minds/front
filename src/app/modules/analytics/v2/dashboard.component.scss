@@ -61,6 +61,12 @@ m-analytics__dashboard {
       @include m-theme() {
         color: themed($m-grey-300);
       }
+      a {
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+        text-decoration: none;
+      }
     }
   }
 
