@@ -1,0 +1,25 @@
+.filterableChartWrapper {
+  position: relative;
+  padding: 16px;
+  // width: 80%;
+  @include m-theme() {
+    border-top: 1px solid themed($m-grey-50);
+  }
+  &.isTable {
+    padding: 0;
+    width: 100%;
+  }
+  &.isMobile {
+    border-top: none;
+  }
+}
+.spinnerContainer {
+  height: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+}

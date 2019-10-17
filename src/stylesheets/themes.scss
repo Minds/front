@@ -1,9 +1,16 @@
+// General rules for themes
+@mixin m-on-theme($theme) {
+  body.m-theme__#{$theme} &,
+  body .m-theme--wrapper.m-theme--wrapper__#{$theme} & {
+    @content;
+  }
+}
+
 // Create css selectors for themes
 // Colors change when .theme__light/.theme__dark classes are toggled on body tag
 @mixin m-theme() {
   @each $theme, $colors in $themes {
-    body.m-theme__#{$theme} &,
-    body .m-theme--wrapper.m-theme--wrapper__#{$theme} & {
+    @include m-on-theme($theme) {
       $theme-map: () !global;
       @each $color-name, $color in $colors {
         $value: map-get(map-get($themes, $theme), '#{$color-name}');
@@ -60,6 +67,7 @@ $blue-light: #71aae7;
 $green-dark: #388e3c;
 $green: #4caf50;
 $green-light: #8bc34a;
+$aqua: #4fc3a9;
 $amber-dark: #ffa000;
 $amber: #ffc108;
 $amber-light: #ffecb3;
@@ -107,6 +115,7 @@ $themes: (
     m-blue-dark: $blue-dark,
     m-blue: $blue,
     m-blue-light: $blue-light,
+    m-aqua: $aqua,
     m-green-dark: $green-dark,
     m-green: $green,
     m-green-light: $green-light,
@@ -121,6 +130,9 @@ $themes: (
     m-white: $white,
     m-white-always: $white,
     m-body-bg: #f8f8f8,
+    m-marketing-bg-gradient-start: #f9fafc,
+    m-marketing-bg-colored-gradient-start: #f6eded,
+    m-marketing-bg-colored-gradient-end: #f5f5fe,
     m-warn-bg: $amber-light,
     m-warn-fg: $black,
     m-facebook: $facebook,
@@ -159,9 +171,13 @@ $themes: (
     m-white: lighten($grey-990, $percent),
     m-white-always: $white,
     m-body-bg: lighten(#080808, $percent),
+    m-marketing-bg-gradient-start: #292827,
+    m-marketing-bg-colored-gradient-start: #4e5965,
+    m-marketing-bg-colored-gradient-end: #58565c,
     m-blue-dark: lighten($blue-bright, 15%),
     m-blue: $blue-bright,
     m-blue-light: $blue-dark,
+    m-aqua: $aqua,
     m-green-dark: lighten($green-dark, $percent),
     m-green: lighten($green, $percent),
     m-green-light: lighten($green-light, $percent),
@@ -215,10 +231,13 @@ $m-black-always: 'm-black-always';
 $m-white: 'm-white';
 $m-white-always: 'm-white-always';
 $m-body-bg: 'm-body-bg';
-
+$m-marketing-bg-gradient-start: 'm-marketing-bg-gradient-start';
+$m-marketing-bg-colored-gradient-start: 'm-marketing-bg-colored-gradient-start';
+$m-marketing-bg-colored-gradient-end: 'm-marketing-bg-colored-gradient-end';
 $m-blue-dark: 'm-blue-dark';
 $m-blue: 'm-blue';
 $m-blue-light: 'm-blue-light';
+$m-aqua: 'm-aqua';
 $m-green-dark: 'm-green-dark';
 $m-green: 'm-green';
 $m-green-light: 'm-green-light';

@@ -1,0 +1,129 @@
+m-analytics__dashboard {
+  display: block;
+  width: 100%;
+}
+// ----------------------------------------
+// MOBILE
+.isMobile {
+  &.page {
+    padding: 0;
+    .main {
+      padding: 0;
+      .mainHeader {
+        padding-left: 24px;
+        display: block;
+      }
+
+      .layoutWrapper {
+        box-shadow: none;
+        padding: 0;
+      }
+    }
+  }
+
+  .m-analytics__menu {
+    padding: 0 8px;
+  }
+}
+// ----------------------------------------
+
+.page {
+  padding: 16px;
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: row;
+  height: 100%;
+  width: 100%;
+  @include m-theme() {
+    background-color: themed($m-white);
+    color: themed($m-grey-800);
+  }
+
+  h3 {
+    font-size: 26px;
+    font-weight: 500;
+  }
+}
+
+.main {
+  flex: 4 1 0px;
+  padding: 16px;
+
+  .mainHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    // h3 {
+    //   line-height: 0;
+    //   margin-top: 40px;
+    // }
+    p {
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+      a {
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+        text-decoration: none;
+      }
+    }
+  }
+
+  .globalFilters {
+    margin: 24px 0;
+    display: flex;
+    align-items: baseline;
+    .channelSearch {
+      // border-radius: 5px;
+      margin-right: 8px;
+      @include m-theme() {
+        border: themed($m-grey-50);
+        color: themed($m-grey-100);
+      }
+    }
+
+    m-analytics__filter {
+      display: table;
+    }
+    .timespanFilter {
+      .filterWrapper {
+        margin-top: 0px;
+      }
+      .filterLabel {
+        display: none;
+      }
+    }
+  }
+  .layoutWrapper {
+    @include m-theme() {
+      box-shadow: 0px 0px 10px -3px rgba(themed($m-black-always), 0.3);
+    }
+  }
+
+  .m-analytics__layout {
+    position: relative;
+    display: block;
+    width: 100%;
+  }
+}
+
+// *************************************
+
+// @media screen and (max-width: $min-tablet) {
+@media screen and (max-width: 300px) {
+  .page {
+    flex-direction: column;
+    .sidebar {
+      .catContainer {
+        @include m-theme() {
+          background-color: themed($m-grey-200);
+          color: themed($m-white);
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: $max-mobile) {
+}

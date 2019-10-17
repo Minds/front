@@ -56,6 +56,10 @@ m-pro--channel {
       z-index: 9999990;
     }
   }
+
+  minds-button-boost {
+    display: none !important;
+  }
 }
 
 @media screen and (max-width: $max-mobile) {
@@ -99,6 +103,9 @@ m-pro--channel {
     minds-avatar {
       width: 90px;
       height: 90px;
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
     }
 
     .m-proChannelTopbar__logo {

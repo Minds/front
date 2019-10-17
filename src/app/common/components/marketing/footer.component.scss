@@ -1,0 +1,114 @@
+@import '../../../foundation/grid-values';
+
+m-marketing__footer {
+  display: block;
+  margin-top: 105px;
+
+  @media screen and (max-width: $m-grid-min-vp) {
+    margin-top: 80px;
+  }
+
+  @include m-theme() {
+    background: linear-gradient(
+      180deg,
+      themed($m-marketing-bg-gradient-start) 0%,
+      themed($m-white) 100%
+    );
+  }
+}
+
+.m-marketing__footer {
+  padding: 60px 0 48px;
+
+  @media screen and (max-width: $m-grid-min-vp) {
+    padding: 32px 0;
+  }
+
+  @include m-theme() {
+    color: themed($m-grey-800);
+  }
+
+  .m-marketingFooter__columns {
+    max-width: 1084px;
+    margin: 0 auto;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      padding: 0 32px;
+    }
+  }
+
+  .m-marketingFooter__column {
+    @media screen and (max-width: $m-grid-min-vp) {
+      margin-bottom: 32px;
+
+      &:last-child,
+      &.m-marketingFooter__column--noMobileSpacing {
+        margin-bottom: 0;
+      }
+    }
+
+    h4 {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 21px;
+      margin: 0 0 26px;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        margin: 0 0 8px;
+      }
+
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+
+    .m-marketingFooter__text {
+      font-size: 14px;
+      line-height: 26px;
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      > li {
+        @extend .m-marketingFooter__text;
+
+        @include m-theme() {
+          color: themed($m-grey-300);
+        }
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          display: inline-block;
+          margin-right: 1em;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+
+        a {
+          color: inherit;
+          font-weight: 300;
+          text-decoration: none;
+        }
+      }
+
+      &.m-marketingFooter__inlineList {
+        > li {
+          display: inline-block;
+          margin-right: 40px;
+
+          @media screen and (max-width: $m-grid-min-vp) {
+            margin-right: 1em;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
