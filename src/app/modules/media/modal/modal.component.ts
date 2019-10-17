@@ -132,7 +132,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       },
     ];
 
-    if (this.entity.full_hd) {
+    if (this.entity.custom_data.full_hd) {
       sources.push({
         res: '1080',
         uri:
@@ -150,7 +150,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       { res: '360', key: this.entity.entity_guid + '/360.mp4' },
     ];
 
-    if (this.entity.full_hd) {
+    if (this.entity.custom_data.full_hd) {
       sources.push({ res: '1080', key: this.entity.entity_guid + '/1080.mp4' });
     }
 
