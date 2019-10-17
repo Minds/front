@@ -142,6 +142,10 @@ export class PlusSubscriptionComponent implements OnInit {
   }
 
   async disable() {
+    if (!confirm('Click OK if you want to cancel your Plus subscription...')) {
+      return;
+    }
+
     this.inProgress = true;
     this.error = '';
     this.detectChanges();

@@ -16,7 +16,29 @@
         </p>
 
         <div class="m-plusMarketing__subscription">
-          <m-plus--subscription></m-plus--subscription>
+          <m-plus--subscription
+            (onEnable)="detectChanges()"
+            (onDisable)="detectChanges()"
+          ></m-plus--subscription>
+        </div>
+
+        <div class="m-plusMarketing__verify" *ngIf="isPlus">
+          <i
+            class="material-icons"
+            [class.m-plusMarketingVerify__verifiedIcon]="isVerified"
+            [class.m-plusMarketingVerify__unverifiedIcon]="!isVerified"
+            >verified_user</i
+          >
+
+          <ng-container *ngIf="!isVerified; else alreadyVerifiedView">
+            <a (click)="openVerifyModal()" i18n
+              >Click here to request to be verified</a
+            >
+          </ng-container>
+
+          <ng-template #alreadyVerifiedView>
+            <span i18n>You are verified!</span>
+          </ng-template>
         </div>
       </div>
 
@@ -36,3 +58,8 @@
 
   <m-marketing__asFeaturedIn slot="2"></m-marketing__asFeaturedIn>
 </m-marketing>
+
+<m-plus--verify
+  *ngIf="showVerifyModal"
+  (closed)="closeVerifyModal()"
+></m-plus--verify>
