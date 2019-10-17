@@ -57,7 +57,7 @@ export class SidebarSelectorComponent implements OnInit {
   }
 
   async load() {
-    console.log("testtesttest<<<<<<<<");
+    console.log('testtesttest<<<<<<<<');
     console.log(this.preferred);
     this.loading = true;
     this.detectChanges();
