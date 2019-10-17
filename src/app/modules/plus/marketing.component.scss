@@ -1,18 +1,43 @@
+@import '../../foundation/grid-values';
+
 .m-plus__marketing {
-  .m-marketing--hero--slogans ul {
-    font-size: 20px;
-    padding: 0 0 0 16px;
-    margin: 32px 0;
+  .m-plusMarketing__verify {
+    margin-top: 50px;
 
     @include m-theme() {
-      color: themed($m-white);
+      color: themed($m-black);
     }
 
-    li {
-      margin-bottom: 8px;
+    @media screen and (max-width: $m-grid-min-vp) {
+      margin-top: 30px;
+      text-align: center;
+    }
 
-      &:last-child {
-        margin-bottom: 0;
+    > * {
+      vertical-align: middle;
+      color: inherit;
+    }
+
+    > i.material-icons {
+      margin-right: 0.35em;
+
+      &.m-plusMarketingVerify__verifiedIcon {
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+      }
+
+      &.m-plusMarketingVerify__unverifiedIcon {
+        opacity: 0.2;
+      }
+    }
+
+    > a {
+      border-bottom: 1px solid;
+      cursor: pointer;
+
+      @include m-theme() {
+        border-color: themed($m-grey-400);
       }
     }
   }
