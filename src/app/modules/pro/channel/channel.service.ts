@@ -143,7 +143,9 @@ export class ProChannelService implements OnDestroy {
           );
           const { entities } = (await this.entitiesService.fetch(urns)) as any;
 
-          this.featuredContent = entities;
+          this.featuredContent = entities.filter(
+            entity => !!entity.thumbnail_src
+          );
         } catch (e) {
           this.featuredContent = null;
           return [];

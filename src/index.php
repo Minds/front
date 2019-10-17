@@ -143,6 +143,11 @@
               "last_tos_update" => Minds\Core\Config::_()->get('last_tos_update') ?: time(),
               "tags" => Minds\Core\Config::_()->get('tags') ?: [],
               "pro" => $pro,
+              'handlers' => [
+                'plus' => Minds\Core\Di\Di::_()->get('Config')->get('plus')['handler'] ?? null,
+                'pro' => Minds\Core\Di\Di::_()->get('Config')->get('pro')['handler'] ?? null,
+              ],
+              'upgrades' => Minds\Core\Di\Di::_()->get('Config')->get('upgrades'),
               "environment" => getenv('MINDS_ENV') ?: 'development',
           ];
 

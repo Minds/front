@@ -17,12 +17,6 @@ export class ProService {
     return Boolean(result.isActive);
   }
 
-  async enable(): Promise<boolean> {
-    // TODO: Payments
-    await this.client.post('api/v2/pro');
-    return true;
-  }
-
   async disable(): Promise<boolean> {
     await this.client.delete('api/v2/pro');
     return true;

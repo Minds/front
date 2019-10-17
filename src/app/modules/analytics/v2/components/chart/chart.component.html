@@ -1,0 +1,58 @@
+<!-- TODO: Make this into a different component -->
+<!-- <m-chart [buckets]="(vm$.thecurrentvisualisation" | async)></m-chart> -->
+
+<!-- TODO: then all this becomes m-plotlyChart -->
+<!-- <div *ngIf="vm$ | async as vm"> -->
+<div>
+  <div #graphDiv id="graphDiv"></div>
+  <!-- <plotly-plot
+    id="graphDiv"
+    [divId]="graphDiv"
+    [data]="data"
+    [layout]="layout"
+    [config]="config"
+    [useResizeHandler]="true"
+    [style]="{ position: 'relative' }"
+    (hover)="onHover($event)"
+    (unhover)="onUnhover($event)"
+    (afterPlot)="afterPlot()"
+  >
+  </plotly-plot> -->
+
+  <!-- <div class="hoverInfo__row">
+    {{ hoverInfo.date | date: selectedTimespan.datePipe }}
+  </div> -->
+
+  <div #hoverInfoDiv id="hoverInfoDiv" class="hoverInfoDiv">
+    <div class="hoverInfo__row">
+      {{ hoverInfo.date | utcDate | date: datePipe }}
+    </div>
+    <div [ngSwitch]="selectedMetric.unit" class="hoverInfo__row--primary">
+      <ng-template ngSwitchCase="number">
+        {{ hoverInfo.value | number }} {{ selectedMetric.label | lowercase }}
+      </ng-template>
+      <ng-template ngSwitchCase="usd">
+        {{ hoverInfo.value | currency }} USD
+      </ng-template>
+      <ng-template ngSwitchDefault>
+        {{ hoverInfo.value | number: '1.1-3' }} {{ selectedMetric.unit }}
+      </ng-template>
+    </div>
+    <div class="hoverInfo__row" *ngIf="isComparison">
+      vs
+      <ng-container [ngSwitch]="selectedMetric.unit" class="hoverInfo__row">
+        <ng-template ngSwitchCase="number">
+          {{ hoverInfo.comparisonValue | number }}
+        </ng-template>
+        <ng-template ngSwitchCase="usd">
+          {{ hoverInfo.comparisonValue | currency }} USD
+        </ng-template>
+        <ng-template ngSwitchDefault>
+          {{ hoverInfo.comparisonValue | number: '1.1-3' }}
+          {{ selectedMetric.unit }}
+        </ng-template>
+      </ng-container>
+      on {{ hoverInfo.comparisonDate | utcDate | date: datePipe }}
+    </div>
+  </div>
+</div>

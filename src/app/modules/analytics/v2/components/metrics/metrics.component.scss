@@ -1,0 +1,178 @@
+m-analytics__metrics {
+  .metricsSection {
+    position: relative;
+
+    [class*='overflowFade--'] {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 24px;
+      z-index: 1;
+      &.overflowFade--right {
+        @include m-theme() {
+          right: 0;
+          background: linear-gradient(
+            to right,
+            rgba(themed($m-white), 0) 0,
+            themed($m-white) 50%
+          );
+        }
+      }
+      &.overflowFade--left {
+        @include m-theme() {
+          left: 0;
+          background: linear-gradient(
+            to left,
+            rgba(themed($m-white), 0) 0,
+            themed($m-white) 50%
+          );
+        }
+      }
+    }
+
+    [class*='overflowScrollButton--'] {
+      position: absolute;
+      top: 50%;
+      border-radius: 50%;
+      box-sizing: border-box;
+      z-index: 2;
+      transform: translateY(-50%);
+      transition: all 0.2s ease-in;
+      cursor: pointer;
+      @include m-theme() {
+        background-color: themed($m-white);
+        box-shadow: 0px 0px 10px -3px rgba(themed($m-black-always), 0.3);
+        border: 1px solid themed($m-white);
+      }
+      &:hover {
+        @include m-theme() {
+          border: 1px solid themed($m-blue);
+        }
+      }
+      &.overflowScrollButton--right {
+        right: -12;
+      }
+      &.overflowScrollButton--left {
+        left: -12;
+      }
+      i {
+        @include m-theme() {
+          color: themed($m-grey-200);
+        }
+      }
+    }
+  }
+}
+.metricsWrapper {
+  position: relative;
+  // overflow: hidden;
+  width: 100%;
+  @include m-theme() {
+    box-shadow: 0 7px 15px -7px rgba(themed($m-black-always), 0.1);
+  }
+}
+.metricsContainer {
+  scroll-snap-type: x mandatory;
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+  // overflow-x: auto;
+
+  // padding: 0 16px;
+
+  // &.metricsContainer::-webkit-scrollbar {
+  //   display: none;
+  // }
+
+  .metric {
+    cursor: pointer;
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+    width: 20%;
+    padding: 24px 20px 20px 20px;
+    font-size: 14px;
+    box-sizing: border-box;
+    @include m-theme() {
+      border-bottom: 8px solid themed($m-white);
+    }
+    @include m-theme() {
+      color: themed($m-grey-200);
+    }
+    &.active {
+      @include m-theme() {
+        background-color: rgba(themed($m-grey-100), 0.2);
+        border-bottom: 8px solid themed($m-blue);
+      }
+    }
+    &:first-child {
+      margin-left: 16px;
+    }
+    &:last-child {
+      margin-right: 16px;
+    }
+
+    &:hover:not(.active) {
+      @include m-theme() {
+        background-color: rgba(themed($m-grey-100), 0.2);
+        border-bottom: 8px solid rgba(0, 0, 0, 0);
+        transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      }
+    }
+    .metricLabel {
+      white-space: nowrap;
+    }
+    m-tooltip {
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+    .metricSummary {
+      font-size: 17px;
+      margin-top: 8px;
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+    .metricDelta {
+      display: flex;
+      align-items: baseline;
+      padding-top: 4px;
+      font-size: 11px;
+      .material-icons {
+        transform: scaleX(0.7);
+        font-size: 11px;
+        font-weight: bold;
+      }
+      @include m-theme() {
+        &.goodChange {
+          color: themed($m-green);
+        }
+        &.badChange {
+          color: themed($m-red);
+        }
+      }
+    }
+  }
+  .m-tooltip {
+    i {
+      font-size: 12px;
+      @include m-theme() {
+        color: rgba(themed($m-grey-200), 0.7);
+      }
+    }
+    .m-tooltip--bubble {
+      z-index: 9999;
+      font-size: 11px;
+      @include m-theme() {
+        color: themed($m-white);
+        background-color: themed($m-blue);
+      }
+    }
+  }
+}
+.metricsSection.isMobile {
+  .metricsContainer {
+    .metric {
+      flex: 1 0 auto;
+    }
+  }
+}

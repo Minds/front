@@ -9,7 +9,6 @@ import { FaqModule } from '../faq/faq.module';
 import { PaymentsModule } from '../payments/payments.module';
 
 import { WireCreatorComponent } from './creator/creator.component';
-import { WirePaymentsCreatorComponent } from './payments-creator/creator.component';
 import { WireButtonComponent } from './button/button.component';
 import { WireChannelComponent } from './channel/channel.component';
 import { WireChannelTableComponent } from './channel/table/table.component';
@@ -27,6 +26,8 @@ import { WireConsoleOverviewComponent } from './console/overview/overview.compon
 import { WireConsoleRewardsInputsComponent } from './console/rewards-table/inputs/wire-console-rewards-inputs.component';
 import { WireConsoleRewardsComponent } from './console/rewards-table/rewards.component';
 import { WireSubscriptionTiersComponent } from './channel/tiers.component';
+import { WirePaymentsCreatorComponent } from './creator/payments/payments.creator.component';
+import { WirePaymentHandlersService } from './wire-payment-handlers.service';
 
 const wireRoutes: Routes = [
   { path: 'wire', component: WireMarketingComponent },
@@ -63,7 +64,7 @@ const wireRoutes: Routes = [
     WireConsoleOverviewComponent,
     WireSubscriptionTiersComponent,
   ],
-  providers: [WireService],
+  providers: [WireService, WirePaymentHandlersService],
   exports: [
     WireLockScreenComponent,
     WireButtonComponent,
