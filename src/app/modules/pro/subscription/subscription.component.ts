@@ -141,6 +141,10 @@ export class ProSubscriptionComponent implements OnInit {
   }
 
   async disable() {
+    if (!confirm('Click OK if you want to cancel your Pro subscription...')) {
+      return;
+    }
+
     this.inProgress = true;
     this.error = '';
     this.detectChanges();
