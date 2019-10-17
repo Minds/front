@@ -3,6 +3,8 @@ import {
   ChangeDetectorRef,
   NgZone,
   ApplicationRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
@@ -19,6 +21,7 @@ import { SiteService } from '../../../common/services/site.service';
   templateUrl: 'signup.html',
 })
 export class SignupModal {
+  @Output('onClose') onClosed: EventEmitter<any> = new EventEmitter<any>();
   open: boolean = false;
   route: string = '';
   minds = window.Minds;
@@ -74,6 +77,7 @@ export class SignupModal {
         break;
       default:
         this.service.close();
+        this.onClosed.emit();
     }
   }
 
@@ -174,6 +178,7 @@ export class SignupModal {
 
   onClose(e: boolean) {
     this.service.close();
+    this.onClosed.emit();
     if (
       this.display === 'login' ||
       this.display === 'register' ||
