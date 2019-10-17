@@ -15,7 +15,9 @@ minds-notification.mdl-card {
 
     img {
       border-radius: 50%;
-      max-height: 50px;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
     }
   }
 
