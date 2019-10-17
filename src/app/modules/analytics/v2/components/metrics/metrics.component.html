@@ -1,24 +1,27 @@
-<section class="metricsSection" [ngClass]="{ isMobile: isMobile }">
-  <!-- <div class="overflowFade--left"></div>
-  <div class="overflowScrollButton--left">
+<section class="m-analytics__metricsSection" [ngClass]="{ isMobile: isMobile }">
+  <!-- <div class="m-analytics__metricsOverflowFade--left"></div>
+  <div class="m-analytics__metricsOverflowScrollButton--left">
     <i class="material-icons">chevron_left</i>
   </div> -->
-  <div class="metricsWrapper">
-    <div class="metricsContainer" *ngIf="metrics$ | async as metrics">
+  <div class="m-analytics__metricsWrapper">
+    <div
+      class="m-analytics__metricsContainer"
+      *ngIf="metrics$ | async as metrics"
+    >
       <ng-container *ngFor="let metric of metrics">
         <div
-          class="metric"
+          class="m-analytics__metric"
           (click)="updateMetric(metric)"
           [ngClass]="{ active: metric.visualisation }"
           *ngIf="metric.permissionGranted"
         >
-          <div class="metricLabel">
+          <div class="m-analytics__metricLabel">
             <span>{{ metric.label }}</span>
             <m-tooltip [anchor]="top" icon="help">
               {{ metric.description }}
             </m-tooltip>
           </div>
-          <div class="metricSummary" *ngIf="metric.summary">
+          <div class="m-analytics__metricSummary" *ngIf="metric.summary">
             <ng-container *ngIf="metric.unit === 'number'">
               {{ metric.summary.current_value | number }}
             </ng-container>
@@ -30,7 +33,7 @@
 
           <div
             *ngIf="metric.summary"
-            class="metricDelta"
+            class="m-analytics__metricDelta"
             [ngClass]="{
               goodChange: metric.hasChanged && metric.positiveTrend,
               badChange: metric.hasChanged && !metric.positiveTrend
@@ -46,8 +49,8 @@
       </ng-container>
     </div>
   </div>
-  <!-- <div class="overflowFade--right"></div>
-  <div class="overflowScrollButton--right">
+  <!-- <div class="m-analytics__metricsOverflowFade--right"></div>
+  <div class="m-analytics__metricsOverflowScrollButton--right">
     <i class="material-icons">chevron_right</i>
   </div> -->
 </section>

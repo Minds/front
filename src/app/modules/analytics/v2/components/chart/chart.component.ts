@@ -151,10 +151,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
           width: 2,
         },
       };
-
-      // if (this.selectedMetric.unit === 'usd'){
-      // this.segments.forEach(segment =>{ segment.buckets})
-      // }
     }
     this.data = this.getData();
     this.layout = this.getLayout();

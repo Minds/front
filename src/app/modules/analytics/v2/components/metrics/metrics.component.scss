@@ -1,14 +1,14 @@
 m-analytics__metrics {
-  .metricsSection {
+  .m-analytics__metricsSection {
     position: relative;
 
-    [class*='overflowFade--'] {
+    [class*='m-analytics__metricsOverflowFade--'] {
       position: absolute;
       top: 0;
       bottom: 0;
       width: 24px;
       z-index: 1;
-      &.overflowFade--right {
+      &.m-analytics__metricsOverflowFade--right {
         @include m-theme() {
           right: 0;
           background: linear-gradient(
@@ -18,7 +18,7 @@ m-analytics__metrics {
           );
         }
       }
-      &.overflowFade--left {
+      &.m-analytics__metricsOverflowFade--left {
         @include m-theme() {
           left: 0;
           background: linear-gradient(
@@ -30,7 +30,7 @@ m-analytics__metrics {
       }
     }
 
-    [class*='overflowScrollButton--'] {
+    [class*='m-analytics__metricsOverflowScrollButton--'] {
       position: absolute;
       top: 50%;
       border-radius: 50%;
@@ -49,10 +49,10 @@ m-analytics__metrics {
           border: 1px solid themed($m-blue);
         }
       }
-      &.overflowScrollButton--right {
+      &.m-analytics__metricsOverflowScrollButton--right {
         right: -12;
       }
-      &.overflowScrollButton--left {
+      &.m-analytics__metricsOverflowScrollButton--left {
         left: -12;
       }
       i {
@@ -63,7 +63,7 @@ m-analytics__metrics {
     }
   }
 }
-.metricsWrapper {
+.m-analytics__metricsWrapper {
   position: relative;
   // overflow: hidden;
   width: 100%;
@@ -71,7 +71,7 @@ m-analytics__metrics {
     box-shadow: 0 7px 15px -7px rgba(themed($m-black-always), 0.1);
   }
 }
-.metricsContainer {
+.m-analytics__metricsContainer {
   scroll-snap-type: x mandatory;
   position: relative;
   display: flex;
@@ -84,7 +84,7 @@ m-analytics__metrics {
   //   display: none;
   // }
 
-  .metric {
+  .m-analytics__metric {
     cursor: pointer;
     scroll-snap-align: start;
     flex: 0 0 auto;
@@ -118,21 +118,21 @@ m-analytics__metrics {
         transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       }
     }
-    .metricLabel {
+    .m-analytics__metricLabel {
       white-space: nowrap;
     }
     m-tooltip {
       vertical-align: middle;
       margin-left: 4px;
     }
-    .metricSummary {
+    .m-analytics__metricSummary {
       font-size: 17px;
       margin-top: 8px;
       @include m-theme() {
         color: themed($m-grey-800);
       }
     }
-    .metricDelta {
+    .m-analytics__metricDelta {
       display: flex;
       align-items: baseline;
       padding-top: 4px;
@@ -169,9 +169,9 @@ m-analytics__metrics {
     }
   }
 }
-.metricsSection.isMobile {
-  .metricsContainer {
-    .metric {
+.m-analytics__metricsSection.isMobile {
+  .m-analytics__metricsContainer {
+    .m-analytics__metric {
       flex: 1 0 auto;
     }
   }

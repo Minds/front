@@ -24,7 +24,7 @@ m-analytics__chart {
   }
 }
 
-.hoverInfoDiv {
+.m-analyticsChart__hoverInfoDiv {
   width: 160px;
   padding: 12px;
   position: absolute;
@@ -40,15 +40,14 @@ m-analytics__chart {
     color: themed($m-grey-200);
   }
 
-  [class*='hoverInfo__row'] {
+  [class*='m-analyticsChart__hoverInfo__row'] {
     padding-bottom: 4px;
     &:last-of-type {
       padding-top: 2px;
     }
   }
-  .hoverInfo__row--primary {
+  .m-analyticsChart__hoverInfo__row--primary {
     font-size: 15px;
-    // font-weight: bold;
     @include m-theme() {
       color: themed($m-grey-600);
     }

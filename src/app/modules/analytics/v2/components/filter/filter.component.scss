@@ -6,7 +6,7 @@ m-analytics__filter {
   margin: 0 36px 0 0;
   z-index: 2;
 }
-.filterLabelWrapper {
+.m-analytics__filterLabelWrapper {
   position: absolute;
   bottom: 110%;
   white-space: nowrap;
@@ -48,28 +48,25 @@ m-analytics__filter {
         margin-block-end: 4px;
         li {
           padding-bottom: 8px;
-          .filterOption__descLabel {
-            // font-weight: bold;
-          }
         }
       }
     }
   }
 }
 
-.filterWrapper {
+.m-analytics__filterWrapper {
   cursor: pointer;
 
   &.expanded {
     @include m-theme() {
       box-shadow: 0px 1px 15px 0 rgba(themed($m-black), 0.15);
     }
-    .filterHeader {
+    .m-analytics__filterHeader {
       @include m-theme() {
         border-color: themed($m-blue);
       }
     }
-    .unselectedOptionsContainer {
+    .m-analytics__filterUnselectedOptionsContainer {
       visibility: visible;
       // @include m-theme() {
       //   box-shadow: 0px 1px 15px 0 rgba(themed($m-black), 0.15);
@@ -77,21 +74,21 @@ m-analytics__filter {
     }
 
     &:not(.dropUp) {
-      .filterHeader {
+      .m-analytics__filterHeader {
         @include m-theme() {
           border-radius: $rounded-top;
         }
       }
-      .unselectedOptionsContainer {
+      .m-analytics__filterUnselectedOptionsContainer {
         border-top: none;
         border-radius: $rounded-bottom;
       }
     }
     &.dropUp {
-      .filterHeader {
+      .m-analytics__filterHeader {
         border-radius: $rounded-bottom;
       }
-      .unselectedOptionsContainer {
+      .m-analytics__filterUnselectedOptionsContainer {
         bottom: 100%;
         border-radius: $rounded-top;
         border-bottom: none;
@@ -99,7 +96,7 @@ m-analytics__filter {
     }
   }
 
-  .filterHeader {
+  .m-analytics__filterHeader {
     position: relative;
     width: 100%;
     padding: 8px 6px 6px 10px;
@@ -113,13 +110,13 @@ m-analytics__filter {
     @include m-theme() {
       border: 1px solid themed($m-grey-100);
     }
-    .filterLabel {
+    .m-analytics__filterLabel {
       margin-right: 10px;
     }
     i {
       flex-grow: 0;
     }
-    .option--selected {
+    .m-analytics__filterOption--selected {
       margin-right: 8px;
       @include m-theme() {
         color: themed($m-grey-500);
@@ -127,7 +124,7 @@ m-analytics__filter {
     }
   }
 
-  .unselectedOptionsContainer {
+  .m-analytics__filterUnselectedOptionsContainer {
     position: absolute;
     // display: none;
     visibility: hidden;
@@ -141,16 +138,16 @@ m-analytics__filter {
       border-top: 1px solid themed($m-blue);
       background-color: themed($m-white);
     }
-    .option {
+    .m-analytics__filterOption {
       padding: 5px 0;
     }
   }
 
-  .row {
+  .m-analytics__filterRow {
     display: flex;
     justify-content: space-between;
   }
-  .option {
+  .m-analytics__filterOption {
     border-radius: 3px;
     white-space: nowrap;
     @include m-theme() {
@@ -172,13 +169,13 @@ m-analytics__filter {
   }
 }
 
-.filterWrapper.isMobile {
-  .filterHeader {
+.m-analytics__filterWrapper.isMobile {
+  .m-analytics__filterHeader {
     i {
       display: none;
     }
   }
-  .option--selected {
+  .m-analytics__filterOption--selected {
     margin-right: 0;
   }
 }

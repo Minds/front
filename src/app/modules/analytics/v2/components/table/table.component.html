@@ -1,23 +1,35 @@
-<div class="tableWrapper" [hidden]="loading" [ngClass]="{ isMobile: isMobile }">
-  <div class="row--header">
-    <div *ngFor="let col of columns | slice: 0:1" class="col--entity cell">
+<div
+  class="m-analytics__tableWrapper"
+  [hidden]="loading"
+  [ngClass]="{ isMobile: isMobile }"
+>
+  <div class="m-analytics__row--header">
+    <div
+      *ngFor="let col of columns | slice: 0:1"
+      class="m-analytics__col--entity m-analytics__cell"
+    >
       {{ col.label }}
     </div>
-    <div class="col--values">
+    <div class="m-analytics__col--values">
       <ng-container *ngFor="let col of columns | slice: 1">
-        <div class="subCol--value cell">{{ col.label }}</div>
+        <div class="m-analytics__subCol--value m-analytics__cell">
+          {{ col.label }}
+        </div>
       </ng-container>
     </div>
   </div>
   <ng-container *ngFor="let row of reformattedBuckets">
-    <a class="row--data" [routerLink]="row.entity.route">
-      <div class="col--entity cell" *ngIf="row.entity">
-        <div class="entityTitle">
+    <a class="m-analytics__row--data" [routerLink]="row.entity.route">
+      <div
+        class="m-analytics__col--entity m-analytics__cell"
+        *ngIf="row.entity"
+      >
+        <div class="m-analytics__entityTitle">
           <span>{{ row.entity.title }}</span>
           <i class="material-icons">open_in_new</i>
         </div>
-        <div class="entityDetails">
-          <span class="usernameWrapper">
+        <div class="m-analytics__entityDetails">
+          <span class="m-analytics__usernameWrapper">
             <a [routerLink]="'/' + row.entity.name"
               >@{{ row.entity.username }}</a
             >
@@ -28,9 +40,11 @@
           >
         </div>
       </div>
-      <div class="col--values">
+      <div class="m-analytics__col--values">
         <ng-container *ngFor="let value of row.values">
-          <div class="subCol--value cell">{{ value | abbr }}</div>
+          <div class="m-analytics__subCol--value m-analytics__cell">
+            {{ value | abbr }}
+          </div>
         </ng-container>
       </div>
     </a>

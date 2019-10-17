@@ -1,42 +1,51 @@
-<section class="menu" [ngClass]="{ isMobile: isMobile }">
-  <div class="topbar" *ngIf="isMobile">
+<section class="m-analyticsMenu" [ngClass]="{ isMobile: isMobile }">
+  <div class="m-analyticsMenu__topbar" *ngIf="isMobile">
     <i class="material-icons" (click)="expanded = true">menu</i>
-    <div class="pageTitle">
+    <div class="m-analyticsMenu__pageTitle">
       Analytics
     </div>
   </div>
   <div
-    class="overlay"
+    class="m-analyticsMenu__overlay"
     [ngClass]="{ expanded: expanded }"
     (click)="expanded = false"
   ></div>
-  <div class="sidebar" [ngClass]="{ expanded: expanded }">
-    <a class="profile" *ngIf="isMobile" [routerLink]="['/', user.username]">
+  <div class="m-analyticsMenu__sidebar" [ngClass]="{ expanded: expanded }">
+    <a
+      class="m-analyticsMenu__userProfile"
+      *ngIf="isMobile"
+      [routerLink]="['/', user.username]"
+    >
       <img
-        class="avatar"
+        class="m-analyticsMenu__userAvatar"
         [src]="minds.cdn_url + 'icon/' + user.guid + '/small/' + user.icontime"
       />
-      <div class="details">
-        <div class="name">{{ user.name }}</div>
+      <div class="m-analyticsMenu__userDetails">
+        <div class="m-analyticsMenu__userDetails__name">{{ user.name }}</div>
         <!-- TODO: remove username once subscriberCount is working -->
-        <div class="username">@{{ user.username }}</div>
+        <div class="m-analyticsMenu__userDetails__username">
+          @{{ user.username }}
+        </div>
         <!-- TODO: get subscriberCount -->
-        <!-- <div class="subscribers">
+        <!-- <div class="m-analyticsMenu__userDetails__subscribers">
           {{ user.subscribers_count | abbr }} subscribers
         </div> -->
       </div>
     </a>
 
-    <div class="sidebarTitle">
+    <div class="m-analyticsMenu__sidebarTitle">
       <h3>Analytics</h3>
-      <i class="material-icons" *ngIf="isMobile" (click)="expanded = false"
+      <i
+        class="m-analyticsMenu__material-icons"
+        *ngIf="isMobile"
+        (click)="expanded = false"
         >keyboard_arrow_up</i
       >
     </div>
 
-    <div class="catContainer">
+    <div class="m-analyticsMenu__catContainer">
       <!-- TODO: apply permissions from categories.default to cats sidebar -->
-      <div class="cat" *ngFor="let cat of cats">
+      <div class="m-analyticsMenu__cat" *ngFor="let cat of cats">
         <a
           (click)="expanded = false"
           [routerLink]="'../' + cat.id"

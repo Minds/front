@@ -3,6 +3,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  OnDestroy,
 } from '@angular/core';
 import { Observable, Subscription, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,7 +15,7 @@ import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
   templateUrl: './layout-chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnalyticsLayoutChartComponent implements OnInit {
+export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   loading$ = this.analyticsService.loading$;
   selectedMetric$ = combineLatest(

@@ -1,12 +1,16 @@
-<div class="filterLabelWrapper" *ngIf="filter.id !== 'timespan'">
+<div class="m-analytics__filterLabelWrapper" *ngIf="filter.id !== 'timespan'">
   <span>{{ filter.label }}</span>
   <m-tooltip icon="help">
-    <div class="filterDesc">{{ filter?.description }}</div>
-    <ul class="filterOptions__descContainer">
+    <div class="m-analytics__filterDesc">{{ filter?.description }}</div>
+    <ul class="m-analytics__filterOptions__descContainer">
       <ng-container *ngFor="let option of filter.options">
-        <li class="filterOption__desc">
-          <span class="filterOption__descLabel">{{ option.label }}</span
-          ><span class="filterOption__desc" *ngIf="option.description"
+        <li class="m-analytics__filterOption__desc">
+          <span class="m-analytics__filterOption__descLabel">{{
+            option.label
+          }}</span
+          ><span
+            class="m-analytics__filterOption__desc"
+            *ngIf="option.description"
             >: {{ option.description }}</span
           >
         </li>
@@ -15,7 +19,7 @@
   </m-tooltip>
 </div>
 <div
-  class="filterWrapper"
+  class="m-analytics__filterWrapper"
   [ngClass]="{
     expanded: expanded,
     isMobile: isMobile,
@@ -24,19 +28,21 @@
   (focus)="expanded = true"
   (blur)="expanded = false"
 >
-  <div class="filterHeader" (click)="expanded = !expanded">
-    <div class="row">
-      <span class="option option--selected">
+  <div class="m-analytics__filterHeader" (click)="expanded = !expanded">
+    <div class="m-analytics__filterRow">
+      <span
+        class="m-analytics__filterOption m-analytics__filterOption--selected"
+      >
         {{ selectedOption.label }}
       </span>
       <i class="material-icons" *ngIf="!expanded">keyboard_arrow_down</i>
       <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
     </div>
   </div>
-  <div class="unselectedOptionsContainer">
+  <div class="m-analytics__filterUnselectedOptionsContainer">
     <ng-container *ngFor="let option of filter.options">
       <div
-        class="option row"
+        class="m-analytics__filterOption m-analytics__filterRow"
         (click)="updateFilter(option)"
         [ngClass]="{
           unavailable: option.available === false

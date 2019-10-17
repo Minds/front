@@ -1,7 +1,4 @@
-.tableWrapper {
-  // * {
-  //   border: 1px solid salmon;
-  // }
+.m-analytics__tableWrapper {
   font-size: 13px;
   font-weight: 400;
   @include m-theme() {
@@ -14,57 +11,53 @@
       color: themed($m-grey-800);
     }
   }
-  [class*='row'] {
+  [class*='m-analytics__row'] {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    &.row--header {
+    &.m-analytics__row--header {
       @include m-theme() {
         border-bottom: 1px solid themed($m-grey-50);
         color: themed($m-grey-200);
       }
-      .col--entity {
+      .m-analytics__col--entity {
         flex-direction: row;
         align-items: flex-end;
       }
-      .col--values {
-        .subCol--value.cell {
+      .m-analytics__col--values {
+        .m-analytics__subCol--value {
           align-items: flex-end;
         }
       }
     }
-    &.row--data {
+    &.m-analytics__row--data {
       &:hover {
         @include m-theme() {
           background-color: rgba(themed($m-blue-grey-50), 0.5);
         }
-        .col--entity .entityTitle i {
+        .m-analytics__col--entity .m-analytics__entityTitle i {
           display: inline-block;
         }
       }
-      .col--entity {
+      .m-analytics__col--entity {
         @include m-theme() {
           border-right: 1px solid themed($m-grey-50);
         }
       }
 
-      // .col--entity,
-      // .col--entity *,
-      // .col--values,
-      // .col--values *,
-      [class*='col'],
-      [class*='col'] * {
+      [class*='m-analytics__col'],
+      [class*='m-analytics__col'] * {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      // .subCol--value  {
+      // .m-analytics__subCol--value  {
       //   align-items: center;
       // }
     }
-    .cell {
+    .m-analytics__cell {
       display: flex;
       overflow: hidden;
       white-space: nowrap;
@@ -72,16 +65,16 @@
       padding: 8px 8px 8px 0;
     }
 
-    .col--entity {
+    .m-analytics__col--entity {
       flex-direction: column;
       padding-left: 24px;
       // flex-basis: 20vw;
 
-      .usernameWrapper a {
+      .m-analytics__usernameWrapper a {
         font-weight: 400;
         text-decoration: none;
       }
-      .entityTitle {
+      .m-analytics__entityTitle {
         display: flex;
         > * {
           display: inline-block;
@@ -97,7 +90,7 @@
           }
         }
       }
-      .entityDetails {
+      .m-analytics__entityDetails {
         display: inline;
         @include m-theme() {
           color: themed($m-grey-200);
@@ -105,7 +98,7 @@
         > * {
           margin-right: $minds-margin;
         }
-        .usernameWrapper {
+        .m-analytics__usernameWrapper {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -117,11 +110,11 @@
         }
       }
     }
-    .col--values {
+    .m-analytics__col--values {
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
-      .subCol--value {
+      .m-analytics__subCol--value {
         flex: 1 1 16vw;
 
         &:first-of-type {
@@ -135,26 +128,26 @@
   }
 }
 
-.col--entity {
+.m-analytics__col--entity {
   flex: 2 3 0;
 }
-.col--values {
+.m-analytics__col--values {
   flex: 1 2 0;
 }
 // MOBILE /////////////////////
-.tableWrapper.isMobile {
-  .col--entity {
+.m-analytics__tableWrapper.isMobile {
+  .m-analytics__col--entity {
     flex: 1 3 0;
   }
-  .col--values {
+  .m-analytics__col--values {
     flex: 2 1 0;
   }
 
-  .row--header {
+  .m-analytics__row--header {
     border: none !important;
   }
-  .row--data {
-    .col--entity.cell {
+  .m-analytics__row--data {
+    .m-analytics__col--entity.m-analytics__cell {
       border: none !important;
     }
   }

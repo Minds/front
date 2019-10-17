@@ -3,7 +3,7 @@
 //   display: none;
 // }
 
-.page.isMobile m-analytics__menu {
+.m-analytics__page.isMobile m-analytics__menu {
   margin-right: -32px;
   flex: 0 1 0px;
 }
@@ -15,7 +15,7 @@ m-analytics__menu {
   // MOBILE
 
   .isMobile {
-    .topbar {
+    .m-analyticsMenu__topbar {
       z-index: 99999;
       position: fixed;
       top: 0;
@@ -39,12 +39,12 @@ m-analytics__menu {
           color: themed($m-grey-700);
         }
       }
-      .pageTitle {
+      .m-analyticsMenu__pageTitle {
         font-size: 20px;
         margin: 0;
       }
     }
-    .overlay {
+    .m-analyticsMenu__overlay {
       position: fixed;
       top: 0;
       bottom: 0;
@@ -62,7 +62,7 @@ m-analytics__menu {
         }
       }
     }
-    .sidebar {
+    .m-analyticsMenu__sidebar {
       z-index: 999999;
       position: fixed;
       top: 0;
@@ -79,7 +79,7 @@ m-analytics__menu {
       &.expanded {
         left: 0;
       }
-      .sidebarTitle {
+      .m-analyticsMenu__sidebarTitle {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -96,30 +96,30 @@ m-analytics__menu {
         }
       }
 
-      .profile {
+      .m-analyticsMenu__userProfile {
         display: flex;
         text-decoration: none;
         margin: 24px 0;
         @include m-theme() {
           color: themed($m-grey-800);
         }
-        .avatar {
+        .m-analyticsMenu__userAvatar {
           border-radius: 50%;
           margin-right: 16px;
         }
-        .details {
+        .m-analyticsMenu__userDetails {
           & > {
             padding: 8px 0;
           }
-          .name {
+          .m-analyticsMenu__userDetails__name {
             font-weight: bold;
           }
-          .username {
+          .m-analyticsMenu__userDetails__username {
             @include m-theme() {
               color: themed($m-grey-200);
             }
           }
-          .subscribers {
+          .m-analyticsMenu__userDetails__subscribers {
             font-size: 11px;
             @include m-theme() {
               color: themed($m-grey-200);
@@ -137,9 +137,9 @@ m-analytics__menu {
   i {
     display: none;
   }
-  .catContainer {
+  .m-analyticsMenu__catContainer {
     cursor: pointer;
-    .cat {
+    .m-analyticsMenu__cat {
       a {
         display: block;
         padding: 6px 0;
