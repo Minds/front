@@ -1,17 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Session } from '../../../services/session';
 import { ScrollService } from '../../../services/ux/scroll';
+import { SignupModal } from './signup';
+import { Storage } from '../../../services/storage';
 
 @Component({
   selector: 'm-modal-signup-on-scroll',
   template: `
-    <m-modal-signup open="true" *ngIf="open"></m-modal-signup>
+    <m-modal-signup (onClose)="onModalClosed()" #modal></m-modal-signup>
   `,
 })
-export class SignupOnScrollModal {
+export class SignupOnScrollModal implements OnInit, OnDestroy {
   open: boolean = false;
   route: string = '';
   scroll_listener;
@@ -21,10 +23,13 @@ export class SignupOnScrollModal {
 
   routerSubscription: Subscription;
 
+  @ViewChild('modal', { static: true }) modal: SignupModal;
+
   constructor(
     public session: Session,
     public router: Router,
-    public scroll: ScrollService
+    public scroll: ScrollService,
+    private storage: Storage
   ) {}
 
   ngOnInit() {
@@ -66,9 +71,13 @@ export class SignupOnScrollModal {
               default:
                 this.scroll_listener = this.scroll.listen(e => {
                   if (this.scroll.view.scrollTop > 20) {
-                    if (window.localStorage.getItem('hideSignupModal'))
+                    if (window.localStorage.getItem('hideSignupModal')) {
                       this.open = false;
-                    else this.open = true;
+                      this.modal.open = false;
+                    } else {
+                      this.open = true;
+                      this.modal.open = true;
+                    }
                   }
                 }, 100);
             }
@@ -88,6 +97,13 @@ export class SignupOnScrollModal {
   private unlistenScroll() {
     if (this.scroll_listener) {
       this.scroll.unListen(this.scroll_listener);
+    }
+  }
+
+  onModalClosed() {
+    if (this.open) {
+      this.storage.set('hideSignupModal', '1');
+      this.open = false;
     }
   }
 }
