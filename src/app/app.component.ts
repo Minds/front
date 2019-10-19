@@ -35,8 +35,6 @@ export class Minds {
 
   showTOSModal: boolean = false;
 
-  paramsSubscription;
-
   protected router$: Subscription;
 
   constructor(
@@ -125,7 +123,6 @@ export class Minds {
   ngOnDestroy() {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();
-    this.paramsSubscription.unsubscribe();
   }
 
   @HostBinding('class') get cssColorSchemeOverride() {
