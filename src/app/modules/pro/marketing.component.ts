@@ -7,7 +7,7 @@ import {
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'm-pro--marketing',
+  selector: 'm-pro__marketing',
   templateUrl: 'marketing.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

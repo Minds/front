@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'm-plus--marketing',
+  selector: 'm-plus__marketing',
   templateUrl: 'marketing.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

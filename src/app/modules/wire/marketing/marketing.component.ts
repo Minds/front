@@ -7,11 +7,11 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'm-nodes__marketing',
+  selector: 'm-pay__marketing',
   templateUrl: 'marketing.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NodesMarketingComponent {
+export class PayMarketingComponent {
   readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 
   @ViewChild('topAnchor', { static: false })

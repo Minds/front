@@ -1,46 +1,32 @@
 <div class="mf-jumpAnchor" #topAnchor></div>
 
-<m-marketing class="m-plus__marketing" pageTitle="Minds Plus" i18n-pageTitle>
+<m-marketing class="m-nodes__marketing" pageTitle="Minds Pay" i18n-pageTitle>
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
       <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
         <h1 i18n>
-          Minds Plus
+          Minds Pay
         </h1>
 
         <h2 ngPreserveWhitespaces i18n>
-          Upgrade your channel and <em>unlock premium features</em>
+          Send and receive payments in
+          <em>USD, BTC, ETH and Tokens</em>
         </h2>
 
         <p class="m-marketing__description" i18n>
-          Support Minds and unlock features such as hiding ads, accessing
-          exclusive content, receiving a badge and verifying your channel.
+          Enable your channel to receive payments from your supporters in both
+          fiat and crypto. Get paid for tips on your content or different
+          subscription tiers you want to offer.
         </p>
 
-        <div class="m-plusMarketing__subscription">
-          <m-plus--subscription
-            (onEnable)="detectChanges()"
-            (onDisable)="detectChanges()"
-          ></m-plus--subscription>
-        </div>
-
-        <div class="m-plusMarketing__verify" *ngIf="isPlus">
-          <i
-            class="material-icons"
-            [class.m-plusMarketingVerify__verifiedIcon]="isVerified"
-            [class.m-plusMarketingVerify__unverifiedIcon]="!isVerified"
-            >verified_user</i
+        <div class="">
+          <button
+            class="mf-button mf-button--alt"
+            (click)="$event.preventDefault()"
+            i18n
           >
-
-          <ng-container *ngIf="!isVerified; else alreadyVerifiedView">
-            <a (click)="openVerifyModal()" i18n
-              >Click here to request to be verified</a
-            >
-          </ng-container>
-
-          <ng-template #alreadyVerifiedView>
-            <span i18n>You are verified!</span>
-          </ng-template>
+            Monetize your channel
+          </button>
         </div>
       </div>
 
@@ -68,13 +54,16 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Hide boosted content</h2>
+          <h2 i18n>Multi-currency support</h2>
 
           <p class="m-marketing__description" i18n>
-            Tired of seeing ads? All Plus users have the option of hiding all
-            boosted content from their feeds. Just click on the settings icon on
-            the Boost rotator in your newsfeed and select “Hide Boosts” to turn
-            this on.
+            Receive tips and subscription payments in USD, Bitcoin, Ether or
+            Minds Tokens by linking your crypto addresses and bank account.
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            Manage your accounts and keep track of all of your transactions in
+            your Minds Wallet.
           </p>
         </div>
         <div
@@ -104,12 +93,21 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Access exclusive content</h2>
+          <h2 i18n>Subscription Tiers</h2>
 
           <p class="m-marketing__description" i18n>
-            View the latest behind-the-scenes content from the Minds team. Plus
-            members will also gain access to exclusive content from MindsTV
-            (coming soon).
+            Set up different subscription tiers to offer your fans in exchange
+            for recurring monthly payments in USD or Minds Tokens (BTC and ETH
+            not yet supported).
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            Post content behind paywalls that is only accessible to the
+            subscription tiers you select.
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            Start building your own revenue streams today!
           </p>
         </div>
         <div
@@ -139,16 +137,13 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Verify your channel</h2>
+          <h2 i18n>Tipping</h2>
 
           <p class="m-marketing__description" i18n>
-            Plus members are able to request to verify their channel and receive
-            a verified badge.
-          </p>
-
-          <p class="m-marketing__description" i18n>
-            Just post your Minds channel URL to two other social networks where
-            you have the same identify and provide us with the proof.
+            Every post on Minds has a button to send a tip to the author in
+            Minds Tokens, USD, Bitcoin and Ether. Tipping is a great way to show
+            your support for your favorite channels and allow them to keep
+            creating!
           </p>
         </div>
         <div
@@ -178,44 +173,11 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Other Plus features</h2>
-        </div>
-
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h3 i18n>Receive a badge</h3>
-
-          <p class="m-marketing__description" i18n>
-            Plus members receive a badge for their channel to indicate they are
-            part of the community.
-          </p>
-        </div>
-
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h3 i18n>Support Minds</h3>
-
-          <p class="m-marketing__description" i18n>
-            Buying Plus is a great way to keep Minds independent and show your
-            support for Internet freedom.
-          </p>
-        </div>
-
-        <div
-          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
-        >
           <button class="mf-button mf-button--alt" (click)="scrollToTop()" i18n>
-            Upgrade to Plus
+            Monetize your channel
           </button>
         </div>
       </div>
     </div>
   </ng-container>
 </m-marketing>
-
-<m-plus--verify
-  *ngIf="showVerifyModal"
-  (closed)="closeVerifyModal()"
-></m-plus--verify>

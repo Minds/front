@@ -1,27 +1,24 @@
 <div class="mf-jumpAnchor" #topAnchor></div>
 
-<m-marketing class="m-pro__marketing" pageTitle="Minds Pro" i18n-pageTitle>
+<m-marketing class="m-nodes__marketing" pageTitle="Nodes" i18n-pageTitle>
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
       <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
         <h1 i18n>
-          Minds Pro
+          Tokens
         </h1>
 
         <h2 ngPreserveWhitespaces i18n>
-          The ultimate platform for <em>creators and brands</em>
+          The <em>fuel</em> of the Minds network
         </h2>
 
         <p class="m-marketing__description" i18n>
-          Earn revenue for your content and upgrade your channel into an
-          independent website with all the professional tools you need to do
-          what you love.
+          Buy tokens to support Minds and your favorite channels. Unlock premium
+          features and launch advertising campaigns to expand your reach.
         </p>
 
-        <div class="m-proMarketing__subscription">
-          <m-pro--subscription
-            (onEnable)="goToSettings()"
-          ></m-pro--subscription>
+        <div class="">
+          [Buy Tokens]
         </div>
       </div>
 
@@ -29,7 +26,11 @@
         class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
       >
         <span>
-          <img [src]="cdnAssetsUrl + 'assets/photos/podcast-people.jpg'" />
+          <img
+            [src]="
+              cdnAssetsUrl + 'assets/photos/browsing-mobileapp-discovery.jpg'
+            "
+          />
         </span>
       </div>
     </div>
@@ -45,27 +46,23 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Get paid for your work</h2>
+          <h2 i18n>Expand your reach</h2>
 
           <p class="m-marketing__description" i18n>
-            Receive tips and subscription payments in USD, Bitcoin, Ether or
-            Minds Tokens. Earn money for driving pageviews, referring active
-            users and sales.
+            1 token = 1,000 boosted views from the network. Expand your reach
+            and grow your channel to new levels with Minds Tokens.
           </p>
 
-          <ul class="m-marketing__points">
-            <li i18n>
-              $1 for every 1,000 pageviews
-            </li>
+          <div class="m-marketing__actionButtons">
+            <a class="mf-button mf-button--smaller mf-button--hollow-mono" i18n>
+              <span>Download Whitepaper</span>
+              <i class="material-icons">cloud_download</i>
+            </a>
 
-            <li i18n>
-              $0.10 for every referred active user
-            </li>
-
-            <li i18n>
-              25% commission on all referred sales
-            </li>
-          </ul>
+            <a class="mf-button mf-button--smaller mf-button--hollow-mono" i18n>
+              <span>Setup Wallet</span>
+            </a>
+          </div>
         </div>
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
@@ -94,30 +91,12 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Build your own website</h2>
+          <h2 i18n>Buy premium subscriptions</h2>
 
           <p class="m-marketing__description" i18n>
-            Morph your channel into a full blown website with your own
-            sub-domain or custom domain, logo, theme, categories and footer.
+            Spend your Minds Tokens to upgrade your channel to Pro or Plus. Buy
+            premium subscriptions from your favorite content creators.
           </p>
-
-          <ul class="m-marketing__points">
-            <li i18n>
-              Upload videos and photos
-            </li>
-
-            <li i18n>
-              Publish blogs in an easy-to-use editor
-            </li>
-
-            <li i18n>
-              Create your own groups
-            </li>
-
-            <li i18n>
-              Track all of your analytics
-            </li>
-          </ul>
         </div>
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
@@ -146,16 +125,11 @@
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Regain your freedom</h2>
+          <h2 i18n>Send tips and support other channels</h2>
 
           <p class="m-marketing__description" i18n>
-            Tired of the manipulation and unfair treatment from traditional
-            social networks?
-          </p>
-
-          <p class="m-marketing__description" i18n>
-            Minds offers a fully transparent, privacy-focused platform with no
-            bias, hidden algorithms or censorship.
+            Enjoy a post from another channel? Send them Minds Tokens to show
+            your support and help them Boost it and reach new audiences.
           </p>
         </div>
         <div
@@ -178,46 +152,6 @@
       </div>
     </div>
 
-    <!-- Section 5 -->
-
-    <div class="m-marketing__section m-marketing__section--style-4">
-      <div class="m-grid m-marketing__wrapper">
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
-        >
-          <h2 i18n>If we make money, you make money.</h2>
-
-          <p class="m-marketing__description" i18n>
-            Minds is initially putting $250,000 directly towards compensating
-            Pro sites, initially without any ads.
-          </p>
-
-          <p class="m-marketing__description" i18n>
-            In order for this program to continue, we need your help in growing
-            both revenue and the Minds Token economy so that there is a constant
-            source of funding.
-          </p>
-        </div>
-        <div
-          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
-        >
-          <span>
-            <img
-              class="m-marketing__image--1"
-              [src]="
-                cdnAssetsUrl + 'assets/photos/browsing-mobileapp-discovery.jpg'
-              "
-            />
-
-            <img
-              class="m-marketing__image--2"
-              [src]="cdnAssetsUrl + 'assets/photos/ui-demo-2.png'"
-            />
-          </span>
-        </div>
-      </div>
-    </div>
-
     <!-- Final section -->
 
     <div class="m-marketing__section m-marketing__section--tail">
@@ -225,37 +159,39 @@
         <div
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2 i18n>Other Pro features</h2>
+          <h2 i18n>Other features</h2>
         </div>
 
         <div
           class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
         >
-          <h3 i18n>Professional media</h3>
+          <h3 i18n>Decentralized</h3>
 
           <p class="m-marketing__description" i18n>
-            Upload and share up to 500 GB of HD video and photography (1080p).
+            An ERC-20 token harnessing the Ethereum blockchain to give you full
+            control over your crypto.
           </p>
         </div>
 
         <div
           class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
         >
-          <h3 i18n>Unlock all Plus features</h3>
+          <h3 i18n>Earn daily rewards</h3>
 
           <p class="m-marketing__description" i18n>
-            Turn off ads, verify your channel, earn a badge and access exclusive
-            content.
+            Don’t have the funds to buy tokens? You can also earn them as
+            rewards for your contribution to the network each day.
           </p>
         </div>
 
         <div
           class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
         >
-          <h3 i18n>Expand your reach</h3>
+          <h3 i18n>Support Minds</h3>
 
           <p class="m-marketing__description" i18n>
-            Get free promotion for your website and access millions of minds.
+            Buying tokens is one of the best ways to keep Minds independent and
+            support Internet freedom.
           </p>
         </div>
 
@@ -263,7 +199,7 @@
           class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
         >
           <button class="mf-button mf-button--alt" (click)="scrollToTop()" i18n>
-            Upgrade to Pro
+            Buy Tokens
           </button>
         </div>
       </div>

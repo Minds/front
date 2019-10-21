@@ -7,11 +7,11 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'm-nodes__marketing',
-  templateUrl: 'marketing.component.html',
+  selector: 'm-blockchainMarketing__rewards',
+  templateUrl: 'rewards.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NodesMarketingComponent {
+export class BlockchainMarketingRewardsComponent {
   readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 
   @ViewChild('topAnchor', { static: false })

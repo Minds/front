@@ -96,6 +96,16 @@
     }
   }
 
+  .m-marketing__actionButtons {
+    > * {
+      margin-right: 25px;
+
+      &:last-child {
+        margin-right: initial;
+      }
+    }
+  }
+
   // Style 1
 
   &.m-marketing__section--style-1 {
