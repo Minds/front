@@ -1,12 +1,36 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
-  moduleId: module.id,
-  selector: 'm-boost--marketing',
+  selector: 'm-boost__marketing',
   templateUrl: 'marketing.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoostMarketingComponent {
-  minds = window.Minds;
-  user = window.Minds.user;
+  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+
+  @ViewChild('topAnchor', { static: false })
+  readonly topAnchor: ElementRef;
+
+  constructor(protected cd: ChangeDetectorRef) {}
+
+  scrollToTop() {
+    if (this.topAnchor.nativeElement) {
+      this.topAnchor.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
 }
