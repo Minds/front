@@ -1,10 +1,12 @@
+@import '../../../../foundation/grid-values';
+
 .m-marketing__main,
 .m-marketing__section {
   &.m-marketing__section--style-3 {
     .m-marketing__wrapper {
       position: relative;
       z-index: 0;
-      padding: 72px 0 32px;
+      padding: 80px 0 80px;
 
       @media screen and (max-width: $m-grid-min-vp) {
         padding: 0;
@@ -13,20 +15,22 @@
 
     .m-marketing__body {
       position: relative;
+      padding: 95px 0 0;
 
       @media screen and (max-width: $m-grid-min-vp) {
-        padding: 0 30px 30px;
+        padding: 0 30px 0;
       }
 
       &::before {
         content: '';
         position: absolute;
         top: 0;
-        right: -290px;
-        bottom: -56px;
+        right: -360px;
         left: 0;
-        transform: translate(-86px, -56px);
-        clip-path: polygon(0% 0%, 0% 100%, 100% 92%, 100% 0%);
+        bottom: auto;
+        height: calc(100% + 160px);
+        transform: translate(-230px, -80px);
+        clip-path: polygon(0% 6%, 0% 95%, 100% 100%, 100% 0%);
         z-index: -1;
 
         @include m-theme() {
@@ -38,21 +42,8 @@
         }
 
         @media screen and (max-width: $m-grid-min-vp) {
-          right: 0;
-          bottom: -3vw;
-          transform: none;
-          clip-path: none;
-        }
-      }
-
-      h1 {
-        @include m-on-theme(dark) {
-          color: #ffffff;
-        }
-
-        @media screen and (max-width: $m-grid-min-vp) {
-          margin: 15px 0 15px;
-          text-align: center;
+          content: initial;
+          display: none;
         }
       }
 
@@ -64,7 +55,7 @@
         @media screen and (max-width: $m-grid-min-vp) {
           font-size: 28px;
           line-height: 32px;
-          margin: 0 0 17px;
+          margin: 20px 0 17px;
           text-align: center;
         }
       }
@@ -94,53 +85,57 @@
     .m-marketing__image {
       position: relative;
       z-index: 0;
+      grid-column-start: 1;
+      grid-row: 1;
 
-      img {
+      img.m-marketing__image--1 {
         object-fit: contain;
-        clip-path: polygon(0% 1%, 0% 97%, 100% 100%, 100% 0%);
+        clip-path: polygon(0% 1%, 0% 100%, 100% 96%, 100% 0%);
 
         @media screen and (max-width: $m-grid-min-vp) {
           width: 100vw;
           height: 100vw;
           object-fit: cover;
-          clip-path: polygon(0% 2%, 0% 97%, 100% 100%, 100% 0%);
+          clip-path: polygon(0% 1%, 0% 100%, 100% 97%, 100% 0%);
+        }
+      }
+
+      img.m-marketing__image--2 {
+        position: absolute;
+        right: 0;
+        bottom: 35px;
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          right: auto;
+          left: 50%;
+          bottom: 0;
+          transform: translate(-50%, 40px);
+          max-width: 75vw;
+          max-height: 50vw;
+          object-fit: contain;
         }
       }
 
       span {
         display: inline-block;
         position: relative;
+        width: 100%;
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          margin-bottom: 40px;
+        }
 
         // Deco
-
-        &::before {
-          content: '';
-          display: block;
-          position: absolute;
-          width: 393px;
-          height: 193px;
-          bottom: 0;
-          right: 0;
-          transform: translate(45px, 32px);
-          background: url('<%= APP_CDN %>/assets/marketing/deco_1.svg')
-            no-repeat;
-          z-index: -1;
-
-          @media screen and (max-width: $m-grid-min-vp) {
-            content: initial;
-            display: none;
-          }
-        }
 
         &::after {
           content: '';
           display: block;
           position: absolute;
           top: 0;
-          right: 0;
+          left: 0;
           width: 284px;
           height: 262px;
-          transform: translate(35px, -35px);
+          transform: translate(-60px, -50px);
           background: url('<%= APP_CDN %>/assets/marketing/deco_2-straight.svg')
             no-repeat;
           z-index: -1;

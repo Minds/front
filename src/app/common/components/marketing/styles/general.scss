@@ -1,7 +1,21 @@
+@import '../../../../foundation/grid-values';
+
 .m-marketing__main,
 .m-marketing__section {
   // Common
-  overflow-x: hidden;
+  // overflow-x: hidden; // Add back???
+
+  &.m-marketing__section {
+    margin-top: 110px;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      margin-top: 80px;
+
+      &:first-child {
+        margin-top: 60px;
+      }
+    }
+  }
 
   .m-marketing--hideMobile {
     @media screen and (max-width: $m-grid-min-vp) {
@@ -98,7 +112,11 @@
 
   .m-marketing__actionButtons {
     > * {
-      margin-right: 25px;
+      margin: 0 25px 0 0;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        margin: 0 0 20px;
+      }
 
       &:last-child {
         margin-right: initial;
