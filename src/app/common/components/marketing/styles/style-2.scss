@@ -98,13 +98,14 @@
       z-index: 0;
 
       img {
-        object-fit: contain;
+        object-fit: cover;
+        width: 438px;
+        height: 547px;
         clip-path: polygon(0% 1%, 0% 97%, 100% 100%, 100% 0%);
 
         @media screen and (max-width: $m-grid-min-vp) {
           width: 100vw;
           height: 100vw;
-          object-fit: cover;
           clip-path: polygon(0% 2%, 0% 97%, 100% 100%, 100% 0%);
         }
       }

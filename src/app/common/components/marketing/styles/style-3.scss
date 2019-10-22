@@ -89,18 +89,22 @@
       grid-row: 1;
 
       img.m-marketing__image--1 {
-        object-fit: contain;
+        object-fit: cover;
+        width: 438px;
+        height: 518px;
         clip-path: polygon(0% 1%, 0% 100%, 100% 96%, 100% 0%);
 
         @media screen and (max-width: $m-grid-min-vp) {
           width: 100vw;
           height: 100vw;
-          object-fit: cover;
           clip-path: polygon(0% 1%, 0% 100%, 100% 97%, 100% 0%);
         }
       }
 
       img.m-marketing__image--2 {
+        object-fit: contain;
+        width: 328px;
+        height: 160px;
         position: absolute;
         right: 0;
         bottom: 35px;
@@ -112,7 +116,6 @@
           transform: translate(-50%, 40px);
           max-width: 75vw;
           max-height: 50vw;
-          object-fit: contain;
         }
       }
 
