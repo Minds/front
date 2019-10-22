@@ -90,7 +90,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": ".githooks/pre-commit && pretty-quick --staged --bail --pattern '**/*.*(ts|html|scss)'"
+      "pre-commit": "sh .githooks/pre-commit && pretty-quick --staged --bail --pattern \"**/*.*(ts|html|scss)\""
     }
   }
 }
