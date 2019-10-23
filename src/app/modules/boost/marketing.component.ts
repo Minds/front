@@ -5,6 +5,8 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
+import { Router } from '@angular/router';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'm-boost__marketing',
@@ -17,7 +19,11 @@ export class BoostMarketingComponent {
   @ViewChild('topAnchor', { static: false })
   readonly topAnchor: ElementRef;
 
-  constructor(protected cd: ChangeDetectorRef) {}
+  constructor(
+    protected router: Router,
+    protected session: Session,
+    protected cd: ChangeDetectorRef
+  ) {}
 
   scrollToTop() {
     if (this.topAnchor.nativeElement) {
@@ -27,6 +33,16 @@ export class BoostMarketingComponent {
         inline: 'nearest',
       });
     }
+  }
+
+  action() {
+    if (!this.session.isLoggedIn()) {
+      localStorage.setItem('redirect', '/boost/console/newsfeed/create');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.router.navigate(['/boost/console/newsfeed/create']);
   }
 
   detectChanges() {

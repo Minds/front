@@ -5,6 +5,7 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-blockchainMarketing__token',
@@ -17,7 +18,7 @@ export class BlockchainMarketingTokenComponent {
   @ViewChild('topAnchor', { static: false })
   readonly topAnchor: ElementRef;
 
-  constructor(protected cd: ChangeDetectorRef) {}
+  constructor(protected router: Router, protected cd: ChangeDetectorRef) {}
 
   scrollToTop() {
     if (this.topAnchor.nativeElement) {
@@ -27,6 +28,10 @@ export class BlockchainMarketingTokenComponent {
         inline: 'nearest',
       });
     }
+  }
+
+  setupWalletAction() {
+    this.router.navigate(['/wallet']);
   }
 
   detectChanges() {

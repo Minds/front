@@ -31,7 +31,7 @@
         <div class="">
           <button
             class="mf-button mf-button--alt"
-            (click)="$event.preventDefault()"
+            (click)="action(); $event.preventDefault()"
             i18n
           >
             Join Rewards
@@ -194,7 +194,12 @@
           </p>
 
           <div class="m-marketing__actionButtons">
-            <a class="mf-button mf-button--smaller mf-button--hollow-mono" i18n>
+            <a
+              class="mf-button mf-button--smaller mf-button--hollow-mono"
+              href="https://gitlab.com/minds"
+              target="_blank"
+              i18n
+            >
               View Sourcecode
             </a>
           </div>

@@ -29,6 +29,13 @@ export class NodesMarketingComponent {
     }
   }
 
+  action() {
+    window.open(
+      `mailto:info@minds.com?subject=${encodeURIComponent('re: Minds Nodes')}`,
+      'minds_mail'
+    );
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

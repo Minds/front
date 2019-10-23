@@ -52,12 +52,21 @@
           </p>
 
           <div class="m-marketing__actionButtons">
-            <a class="mf-button mf-button--smaller mf-button--hollow-mono" i18n>
+            <a
+              class="mf-button mf-button--smaller mf-button--hollow-mono"
+              [href]="cdnAssetsUrl + 'assets/documents/Whitepaper-v0.5.pdf'"
+              target="_blank"
+              i18n
+            >
               <span>Download Whitepaper</span>
               <i class="material-icons">cloud_download</i>
             </a>
 
-            <a class="mf-button mf-button--smaller mf-button--hollow-mono" i18n>
+            <a
+              class="mf-button mf-button--smaller mf-button--hollow-mono"
+              (click)="setupWalletAction(); $event.preventDefault()"
+              i18n
+            >
               <span>Setup Wallet</span>
             </a>
           </div>
