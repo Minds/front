@@ -126,19 +126,20 @@
 
       img.m-marketing__image--2 {
         object-fit: contain;
-        width: 328px;
-        height: 160px;
+        width: 358px;
+        height: 191px;
         position: absolute;
         right: 0;
         bottom: 35px;
+        transform: translate(15px, 0);
 
         @media screen and (max-width: $m-grid-min-vp) {
           right: auto;
           left: 50%;
           bottom: 0;
-          transform: translate(-50%, 40px);
-          max-width: 75vw;
-          max-height: 50vw;
+          transform: translate(-50%, 50%);
+          width: 85vw;
+          height: 45.35vw;
         }
       }
 
@@ -148,7 +149,13 @@
         width: 100%;
 
         @media screen and (max-width: $m-grid-min-vp) {
-          margin-bottom: 40px;
+          margin-bottom: calc(
+            20vw + 40px
+          ); // A little bit less than half UX image + normal margin
+
+          &.m-marketing__image--noUxSample {
+            margin-bottom: 40px;
+          }
         }
 
         // Deco
