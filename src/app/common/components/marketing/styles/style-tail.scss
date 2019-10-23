@@ -41,6 +41,19 @@
         @include m-theme() {
           color: themed($m-grey-300);
         }
+
+        em {
+          font-style: normal;
+
+          @include m-theme() {
+            color: themed($m-black);
+          }
+
+          @include m-on-theme(dark) {
+            color: #ffffff;
+            font-weight: bold;
+          }
+        }
       }
 
       &.m-marketing__body--extra {

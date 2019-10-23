@@ -14,6 +14,9 @@ import {
 export class BlockchainMarketingRewardsComponent {
   readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 
+  readonly contributionValues: { [key: string]: number } =
+    window.Minds.contribution_values;
+
   @ViewChild('topAnchor', { static: false })
   readonly topAnchor: ElementRef;
 

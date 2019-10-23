@@ -70,13 +70,41 @@
           </p>
 
           <ul class="m-marketing__points">
-            <li i18n>Votes = <em>TBD</em></li>
+            <li i18n>
+              Votes =
+              <em
+                >{contributionValues.votes, plural, =1
+                {{{contributionValues.votes}} point} other
+                {{{contributionValues.votes}} points}}</em
+              >
+            </li>
 
-            <li i18n>Comments = <em>TBD</em></li>
+            <li i18n>
+              Comments =
+              <em
+                >{contributionValues.comments, plural, =1
+                {{{contributionValues.comments}} point} other
+                {{{contributionValues.comments}} points}}</em
+              >
+            </li>
 
-            <li i18n>Subscribers = <em>TBD</em></li>
+            <li i18n>
+              Subscribers =
+              <em
+                >{contributionValues.subscribers, plural, =1
+                {{{contributionValues.subscribers}} point} other
+                {{{contributionValues.subscribers}} points}}</em
+              >
+            </li>
 
-            <li i18n>Reminds = <em>TBD</em></li>
+            <li i18n>
+              Reminds =
+              <em
+                >{contributionValues.reminds, plural, =1
+                {{{contributionValues.reminds}} point} other
+                {{{contributionValues.reminds}} points}}</em
+              >
+            </li>
           </ul>
         </div>
         <div
@@ -117,7 +145,14 @@
           </p>
 
           <ul class="m-marketing__points">
-            <li i18n>Referrals = <em>TBD</em></li>
+            <li i18n>
+              Referrals =
+              <em
+                >{contributionValues.referrals, plural, =1
+                {{{contributionValues.referrals}} point} other
+                {{{contributionValues.referrals}} points}}</em
+              >
+            </li>
           </ul>
         </div>
         <div
@@ -204,8 +239,14 @@
           <h3 i18n>OnChain Transactions</h3>
 
           <p class="m-marketing__description" i18n>
-            Earn <em>TBD</em> every time you perform an OnChain transaction with
-            your Minds Tokens.
+            Earn
+            <em
+              >{contributionValues.onchain_tx, plural, =1
+              {{{contributionValues.onchain_tx}} point} other
+              {{{contributionValues.onchain_tx}} points}}</em
+            >
+            every time you perform an OnChain transaction with your Minds
+            Tokens.
           </p>
         </div>
 
@@ -215,8 +256,14 @@
           <h3 i18n>Jury Duty</h3>
 
           <p class="m-marketing__description" i18n>
-            Earn <em>TBD</em> every time you participate in our Jury system to
-            review appeals on content moderation decisions.
+            Earn
+            <em
+              >{contributionValues.jury_duty, plural, =1
+              {{{contributionValues.jury_duty}} point} other
+              {{{contributionValues.jury_duty}} points}}</em
+            >
+            every time you participate in our Jury system to review appeals on
+            content moderation decisions.
           </p>
         </div>
 
@@ -226,8 +273,14 @@
           <h3 i18n>Hourly Check-ins</h3>
 
           <p class="m-marketing__description" i18n>
-            Earn <em>TBD</em> every hour that you check in to the app and
-            perform an action, such as voting or commenting.
+            Earn
+            <em
+              >{contributionValues.checkin, plural, =1
+              {{{contributionValues.checkin}} point} other
+              {{{contributionValues.checkin}} points}}</em
+            >
+            every hour that you check in to the app and perform an action, such
+            as voting or commenting.
           </p>
         </div>
       </div>
