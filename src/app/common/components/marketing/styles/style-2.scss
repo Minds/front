@@ -6,10 +6,12 @@
     .m-marketing__wrapper {
       position: relative;
       z-index: 0;
-      padding: 72px 0 32px;
+      padding: 72px 0 0;
+      margin-bottom: 95px;
 
       @media screen and (max-width: $m-grid-min-vp) {
         padding: 0;
+        margin-bottom: 15px;
       }
     }
 

@@ -2,21 +2,6 @@
 
 .m-marketing__main,
 .m-marketing__section {
-  // Common
-  // overflow-x: hidden; // Add back???
-
-  &.m-marketing__section {
-    margin-top: 110px;
-
-    @media screen and (max-width: $m-grid-min-vp) {
-      margin-top: 80px;
-
-      &:first-child {
-        margin-top: 60px;
-      }
-    }
-  }
-
   .m-marketing--hideMobile {
     @media screen and (max-width: $m-grid-min-vp) {
       display: none;
