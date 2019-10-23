@@ -9,7 +9,7 @@ export class PermissionsService {
   canInteract(entity: any, permission: Flags): boolean {
     const permissions: Permissions = entity.permissions;
 
-    if (!permissions) {
+    if (!permissions || !permissions.permissions) {
       return false;
     }
 
