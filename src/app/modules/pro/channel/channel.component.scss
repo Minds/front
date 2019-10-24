@@ -60,6 +60,21 @@ m-pro--channel {
   minds-button-boost {
     display: none !important;
   }
+
+  m-modal-signup {
+    m-modal {
+      z-index: 9999999;
+
+      .m-modal-container .mdl-card {
+        background-color: var(--m-pro--transparent-background-color);
+        color: var(--m-pro--text-color);
+
+        .m-modal-signup-apps {
+          display: none;
+        }
+      }
+    }
+  }
 }
 
 @media screen and (max-width: $max-mobile) {

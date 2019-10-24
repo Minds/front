@@ -50,6 +50,12 @@ export class ProTileComponent {
         return this.entity.title && this.entity.title.trim() !== ''
           ? this.entity.title
           : this.entity.message;
+      case 'activity':
+        return this.entity.title && this.entity.title.trim() !== ''
+          ? this.entity.title
+          : this.entity.blurb
+          ? this.entity.blurb
+          : this.entity.message;
       default:
         return '';
     }
@@ -62,6 +68,8 @@ export class ProTileComponent {
       case 'object:image':
       case 'object:video':
         return this.entity.description;
+      case 'activity':
+        return this.entity.blurb ? this.entity.blurb : this.entity.message;
       default:
         return '';
     }
