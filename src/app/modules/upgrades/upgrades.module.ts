@@ -3,6 +3,7 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '../../common/common.module';
+import { BlockchainModule } from '../blockchain/blockchain.module';
 import { UpgradesComponent } from './upgrades.component';
 import { UpgradeOptionsComponent } from './upgrade-options.component';
 import { BuyTokensComponent } from './buy-tokens.component';
@@ -19,6 +20,7 @@ export const routes = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    BlockchainModule,
   ],
   declarations: [
     UpgradesComponent,

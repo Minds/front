@@ -37,7 +37,7 @@ export class BlockchainPurchaseComponent implements OnInit {
   };
 
   //amount: number = 0.25;
-  tokens: number = 30;
+  tokens: number = 0;
 
   address: string = '';
   ofac: boolean = false;
@@ -54,9 +54,10 @@ export class BlockchainPurchaseComponent implements OnInit {
   confirmed: boolean = false;
   error: string;
 
-  @Input() phase: string = 'presale';
+  @Input() phase: string = 'sale';
   inProgress: boolean = false;
   rate: number = 0;
+  cpm: number = 1;
 
   paramsSubscription: Subscription;
 
@@ -96,8 +97,21 @@ export class BlockchainPurchaseComponent implements OnInit {
     return Math.ceil(newAmnt * wei) / wei; // Rounds up amount and add 1/1000th ETH to compensate for rounding
   }
 
+  get calculatedViews() {
+    return Math.floor(this.tokens / (this.cpm / 1000));
+  }
+
   set amount(value: number) {
     this.tokens = value * this.rate;
+  }
+
+  selectAllInput(input: HTMLInputElement) {
+    setTimeout(() => {
+      try {
+        input.select();
+        input.setSelectionRange(0, input.value.length);
+      } catch (e) {}
+    }, 50);
   }
 
   async load() {

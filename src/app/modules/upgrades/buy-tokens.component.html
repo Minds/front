@@ -1,7 +1,3 @@
-<ng-template #buyTokensRateTpl>
-  32 tokens = 32,000 page views
-</ng-template>
-
 <div class="m-upgrades__buyTokens">
   <div class="m-upgradesBuyTokens__wrapper">
     <div class="m-upgradesBuyTokens__body">
@@ -17,32 +13,9 @@
       </p>
     </div>
 
-    <div class="m-upgradesBuyTokens__form">
-      <div class="upgradesBuyTokens__amount" style="visibility: hidden;">
-        <label for="m-upgradesBuyTokens__amountInput">$</label>
-        <input
-          type="number"
-          name="amount"
-          id="m-upgradesBuyTokens__amountInput"
-        />
-      </div>
-
-      <div class="upgradesBuyTokens__rate">
-        <ng-container *ngTemplateOutlet="buyTokensRateTpl"></ng-container>
-      </div>
-
-      <div class="upgradesBuyTokens__action">
-        <button
-          class="mf-button"
-          (click)="navigateToTokensPage(); $event.preventDefault()"
-        >
-          Buy Tokens
-        </button>
-      </div>
-    </div>
-
-    <div class="m-upgradesBuyTokens__overflownRate">
-      <ng-container *ngTemplateOutlet="buyTokensRateTpl"></ng-container>
-    </div>
+    <m-blockchain--purchase
+      class="m-upgradesBuyTokens__purchase"
+      (onComplete)="onPurchaseComplete($event)"
+    ></m-blockchain--purchase>
   </div>
 </div>

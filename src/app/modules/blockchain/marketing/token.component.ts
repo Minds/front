@@ -30,6 +30,8 @@ export class BlockchainMarketingTokenComponent {
     }
   }
 
+  onPurchaseComplete(purchase: any) {}
+
   setupWalletAction() {
     this.router.navigate(['/wallet']);
   }
