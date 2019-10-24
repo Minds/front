@@ -25,13 +25,11 @@
     class="m-analyticsFilter__header m-analyticsFilter__row"
     (click)="expanded = !expanded"
   >
-    <!-- <div class="m-analyticsFilter__row"> -->
     <span class="m-analyticsFilter__option m-analyticsFilter__option--selected">
       {{ selectedOption.label }}
     </span>
     <i class="material-icons" *ngIf="!expanded">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
-    <!-- </div> -->
   </div>
   <div class="m-analyticsFilter__optionsContainer">
     <ng-container *ngFor="let option of filter.options">
@@ -42,7 +40,8 @@
           unavailable: option.available === false
         }"
       >
-        <span>{{ option.label }}</span>
+        {{ option.label }}
+        <!-- <span>{{ option.label }}</span> -->
       </div>
     </ng-container>
   </div>

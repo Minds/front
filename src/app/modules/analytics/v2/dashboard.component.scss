@@ -34,24 +34,9 @@ m-analytics__dashboard {
     m-analytics__filter {
       margin: 0;
       .m-analyticsFilter__wrapper {
-        .m-analyticsFilter__header {
+        > * {
           width: 180px;
         }
-        .m-analyticsFilter__optionsContainer {
-          width: inherit;
-        }
-      }
-    }
-    .m-analytics__selectedCatDescription {
-      margin: 0 16px 32px 0px;
-      @include m-theme() {
-        color: themed($m-grey-300);
-      }
-      a {
-        @include m-theme() {
-          color: themed($m-blue);
-        }
-        text-decoration: none;
       }
     }
 
@@ -75,6 +60,18 @@ m-analytics__dashboard {
           display: none;
         }
       }
+    }
+  }
+  .m-analytics__selectedCatDescription {
+    margin: 8px 16px 32px 0;
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
+    a {
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+      text-decoration: none;
     }
   }
   .m-analytics__layoutWrapper {
@@ -102,15 +99,15 @@ m-analytics__dashboard {
           padding-left: 24px;
           m-analytics__filter {
             margin: 0 32px 8px 0;
-            .m-analyticsFilter__wrapper {
-              .m-analyticsFilter__header {
-                width: 120px;
-              }
-            }
+            // .m-analyticsFilter__wrapper {
+            //   > * {
+            //     width: 120px;
+            //   }
+            // }
           }
         }
         .m-analytics__selectedCatDescription {
-          margin: 0 24px 16px 24px;
+          margin: 0 24px 24px 24px;
         }
         .m-analytics__layoutWrapper {
           padding: 0;

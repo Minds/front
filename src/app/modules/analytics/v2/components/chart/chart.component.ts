@@ -119,8 +119,10 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
 
     this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
       this.isDark = isDark;
-      this.getData();
-      this.getLayout();
+      if (this.init) {
+        this.getData('themesubs');
+        this.getLayout();
+      }
       this.detectChanges();
     });
     this.metricSubscription = this.selectedMetric$.subscribe(metric => {
@@ -162,6 +164,7 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
 
       // Reverse the segments so comparison line is layered behind current line
       this.segments.reverse();
+      console.log(this.segments);
 
       // Current line should be blue
       this.swapSegmentColors();
@@ -184,15 +187,18 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
       };
     }
 
-    this.getMarkerFills(); // change to set?
-    this.getData();
+    this.getMarkerFills();
+    this.getData('initplot');
     this.getLayout();
     this.init = true;
 
     this.detectChanges();
   }
 
-  getData() {
+  getData(source) {
+    console.log('getData called by:', source);
+    console.log(this.segments[0]);
+
     const globalSegmentSettings = {
       type: 'scatter',
       mode: 'lines+markers',
@@ -261,6 +267,7 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
         linewidth: 1,
         zeroline: false,
         fixedrange: true,
+        automargin: true, // TODOOJM this is a test
         // rangemode: 'nonnegative',
       },
       yaxis: {
@@ -277,6 +284,7 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
           color: this.getColor('m-grey-130'),
         },
         fixedrange: true,
+        // automargin: true,
         // rangemode: 'nonnegative',
       },
       margin: {
@@ -291,6 +299,7 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   }
 
   onHover($event) {
+    console.log($event);
     this.hoverPoint = $event.points[0].pointIndex;
     this.addMarkerFill();
     this.showShape($event);
@@ -304,6 +313,8 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
     this.emptyMarkerFill();
     this.hideShape();
     this.hoverInfoDiv.style.opacity = 0;
+    // this.hoverInfoDiv.style.top = '0px';
+    // this.hoverInfoDiv.style.left = '0px';
     this.detectChanges();
   }
 
@@ -369,26 +380,34 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   }
 
   positionHoverInfo($event) {
-    let targetPoint = 0;
+    let pt = 0;
     if (this.isComparison) {
-      targetPoint = 1;
+      pt = 1;
     }
     const xAxis = $event.points[0].xaxis,
       yAxis = $event.points[0].yaxis,
-      tooltipXDist = xAxis.d2p($event.points[targetPoint].x) + 16,
-      tooltipYDist = yAxis.d2p($event.points[targetPoint].y) + 16;
+      tooltipXDist = xAxis.d2p($event.points[pt].x) + 16,
+      tooltipYDist = yAxis.d2p($event.points[pt].y) + 16;
 
     // if (this.hoverPoint < this.pointsPerSegment / 2) {
     this.hoverInfoDiv.style.top = tooltipYDist + yAxis._offset + 'px';
     this.hoverInfoDiv.style.left = tooltipXDist + xAxis._offset + 'px';
 
     console.log('-------------');
-    console.log('this hoverPoint', this.hoverPoint);
-    console.log('tooltipXDist', tooltipXDist);
-    console.log('xAxis._offset', xAxis._offset);
+    console.log(
+      'point #' +
+        this.hoverPoint +
+        ': (' +
+        (tooltipXDist + xAxis._offset) +
+        ',' +
+        (tooltipYDist + yAxis._offset) +
+        ')'
+    );
+    // console.log('tooltipXDist', tooltipXDist);
+    // console.log('xAxis._offset', xAxis._offset);
 
-    console.log('tooltipYDist', tooltipYDist);
-    console.log('yAxis._offset', yAxis._offset);
+    // console.log('tooltipYDist', tooltipYDist);
+    // console.log('yAxis._offset', yAxis._offset);
     // } else {
     //   this.hoverInfoDiv.style.top = tooltipYDist + xAxis._offset + 'px';
     //   this.hoverInfoDiv.style.left = tooltipXDist + yAxis._offset + 'px';
@@ -400,8 +419,8 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
     if (this.init) {
       this.layout = {
         ...this.layout,
-        width: this.chartContainer.nativeElement.clientWidth - 32,
-        height: this.chartContainer.nativeElement.clientHeight - 32,
+        width: this.chartContainer.nativeElement.clientWidth, // - 32,
+        height: this.chartContainer.nativeElement.clientHeight, // - 32,
       };
       this.newLineRange = true;
       this.detectChanges();

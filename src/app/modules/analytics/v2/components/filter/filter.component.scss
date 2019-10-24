@@ -10,7 +10,7 @@ m-analytics__filter {
 }
 .m-analyticsFilter__labelWrapper {
   position: absolute;
-  bottom: 110%;
+  bottom: 115%;
   white-space: nowrap;
   @include m-theme() {
     color: themed($m-grey-300);
@@ -62,11 +62,15 @@ m-analytics__filter {
   &:focus {
     outline: 0;
   }
-  .m-analyticsFilter__header {
-    width: 160px;
+  > * {
+    width: 180px;
+    box-sizing: border-box;
   }
   .m-analyticsFilter__optionsContainer {
-    width: inherit;
+    padding: 8px 0;
+    .m-analyticsFilter__option {
+      transform: translateY(25%);
+    }
   }
 
   &.expanded {
@@ -126,7 +130,6 @@ m-analytics__filter {
       height: 24px;
     }
     .m-analyticsFilter__option--selected {
-      margin-right: 8px;
       @include m-theme() {
         color: themed($m-grey-500);
       }
@@ -139,7 +142,6 @@ m-analytics__filter {
     border-radius: 3px;
     left: 0px;
     transition: box-shadow 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-    box-sizing: border-box;
     @include m-theme() {
       border: 1px solid themed($m-blue);
       border-top: 1px solid themed($m-blue);
@@ -151,19 +153,22 @@ m-analytics__filter {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 24px;
-    padding: 10px 20px;
+    height: 46px;
+    padding: 0 20px;
     &.m-analyticsFilter__header {
       padding-right: 10px;
     }
   }
   .m-analyticsFilter__option {
+    display: inline-block;
+    box-sizing: border-box;
+    width: inherit;
     border-radius: 3px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
     @include m-theme() {
-      background-color: themed($m-white);
       color: themed($m-grey-300);
     }
 
@@ -184,12 +189,9 @@ m-analytics__filter {
 @media screen and (max-width: $min-tablet) {
   m-analytics__filter {
     .m-analyticsFilter__wrapper {
-      .m-analyticsFilter__header {
-        width: 100px;
+      > * {
+        width: 140px;
       }
-      // .m-analyticsFilter__optionsContainer {
-      //   width: inherit;
-      // }
     }
   }
 }
@@ -205,7 +207,8 @@ m-analytics__filter {
         }
       }
       .m-analyticsFilter__row {
-        padding: 8px 18px;
+        padding: 0 18px;
+        height: 40px;
         &.m-analyticsFilter__header {
           padding-right: 10px;
         }
