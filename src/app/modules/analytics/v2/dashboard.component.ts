@@ -18,7 +18,6 @@ import { AnalyticsDashboardService } from './dashboard.service';
 import { Filter } from './../../../interfaces/dashboard';
 
 // import categories from './categories.default';
-import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 
 @Component({
   selector: 'm-analytics__dashboard',
@@ -27,9 +26,6 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
   providers: [AnalyticsDashboardService],
 })
 export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
-  isMobile: boolean;
-
-  // subscription: Subscription;
   paramsSubscription: Subscription;
 
   ready$ = this.analyticsService.ready$;
@@ -61,7 +57,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/login']);
       return;
     }
-    this.isMobile = isMobileOrTablet();
 
     this.title.setTitle('Analytics');
 
@@ -120,6 +115,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 }

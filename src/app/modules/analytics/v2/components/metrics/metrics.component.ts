@@ -4,26 +4,17 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   OnDestroy,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
   AnalyticsDashboardService,
-  Category,
-  Response,
-  Dashboard,
-  Filter,
-  Option,
   Metric as MetricBase,
-  Summary,
-  Visualisation,
-  Bucket,
-  Timespan,
-  UserState,
 } from '../../dashboard.service';
 import { Session } from '../../../../../services/session';
-import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
 interface MetricExtended extends MetricBase {
   delta: number;
@@ -39,13 +30,14 @@ export { MetricExtended as Metric };
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
+  @ViewChild('metricsWrapper', { static: true }) metricsWrapper: ElementRef;
   data;
   subscription: Subscription;
-  isMobile: boolean;
   user;
   userRoles: string[] = ['user'];
 
   metrics$;
+  overflowing: boolean = false;
   isOverflown = { left: false, right: false };
 
   constructor(
@@ -99,12 +91,32 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
         return metrics;
       })
     );
-    this.isMobile = isMobileOrTablet();
+    this.checkOverflow();
   }
 
   updateMetric(metric) {
     this.analyticsService.updateMetric(metric.id);
   }
+
+  checkOverflow() {
+    // console.log(this.metricsWrapper);
+    const metricsWrapper = this.metricsWrapper.nativeElement;
+    this.overflowing =
+      metricsWrapper.scrollWidth - metricsWrapper.clientWidth > 0;
+    console.log(
+      'overflowing?',
+      this.overflowing,
+      'scrollWidth:',
+      metricsWrapper.scrollWidth,
+      'clientWidth:',
+      metricsWrapper.clientWidth
+    );
+  }
+
+  // scrollIntoView() {
+  //   element.scrollIntoView();
+  // e.target.parentNode.scrollLeft = e.target.offsetLeft
+  // }
 
   detectChanges() {
     this.cd.markForCheck();
@@ -113,9 +125,5 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     // this.subscription.unsubscribe();
-  }
-
-  checkOverflow() {
-    // element.scrollWidth - element.clientWidth
   }
 }

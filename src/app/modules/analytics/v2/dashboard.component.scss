@@ -1,14 +1,14 @@
 m-analytics__dashboard {
   display: block;
+  position: relative;
   width: 100%;
 }
 
-.m-analytics__page {
+.m-analytics__dashboard {
   padding: 16px;
   display: flex;
   box-sizing: border-box;
   flex-direction: row;
-  height: 100%;
   width: 100%;
   @include m-theme() {
     background-color: themed($m-white);
@@ -18,6 +18,7 @@ m-analytics__dashboard {
   h3 {
     font-size: 26px;
     font-weight: 500;
+    margin: 24px 16px 24px 0;
   }
 }
 
@@ -30,11 +31,19 @@ m-analytics__dashboard {
     justify-content: space-between;
     align-items: flex-start;
 
-    // h3 {
-    //   line-height: 0;
-    //   margin-top: 40px;
-    // }
-    p {
+    m-analytics__filter {
+      margin: 0;
+      .m-analyticsFilter__wrapper {
+        .m-analyticsFilter__header {
+          width: 180px;
+        }
+        .m-analyticsFilter__optionsContainer {
+          width: inherit;
+        }
+      }
+    }
+    .m-analytics__selectedCatDescription {
+      margin: 0 16px 32px 0px;
       @include m-theme() {
         color: themed($m-grey-300);
       }
@@ -45,30 +54,26 @@ m-analytics__dashboard {
         text-decoration: none;
       }
     }
-  }
 
-  .m-analytics__globalFilters {
-    margin: 24px 0;
-    display: flex;
-    align-items: baseline;
-    .m-analytics__channelSearch {
-      // border-radius: 5px;
-      margin-right: 8px;
-      @include m-theme() {
-        border: themed($m-grey-50);
-        color: themed($m-grey-100);
+    .m-analytics__globalFilters {
+      margin: 24px 0;
+      display: flex;
+      align-items: baseline;
+      .m-analytics__channelSearch {
+        margin-right: 8px;
+        @include m-theme() {
+          border: themed($m-grey-50);
+          color: themed($m-grey-100);
+        }
       }
-    }
 
-    m-analytics__filter {
-      display: table;
-    }
-    .m-analytics__timespanFilter {
-      .m-analytics__filterWrapper {
-        margin-top: 0px;
-      }
-      .m-analytics__filterLabel {
-        display: none;
+      .m-analytics__timespanFilter {
+        .m-analytics__filterWrapper {
+          margin-top: 0px;
+        }
+        .m-analytics__filterLabel {
+          display: none;
+        }
       }
     }
   }
@@ -85,44 +90,35 @@ m-analytics__dashboard {
   }
 }
 
-// *************************************
+@media screen and (max-width: $min-tablet) {
+  m-analytics__dashboard {
+    .m-analytics__dashboard {
+      padding: 0;
+      flex-direction: column;
 
-// @media screen and (max-width: $min-tablet) {
-@media screen and (max-width: 300px) {
-  .m-analytics__page {
-    flex-direction: column;
-    .m-analytics__sidebar {
-      .m-analytics__catContainer {
-        @include m-theme() {
-          background-color: themed($m-grey-200);
-          color: themed($m-white);
+      .m-analytics__main {
+        padding: 0;
+        .m-analytics__mainHeader {
+          padding-left: 24px;
+          m-analytics__filter {
+            margin: 0 32px 8px 0;
+            .m-analyticsFilter__wrapper {
+              .m-analyticsFilter__header {
+                width: 120px;
+              }
+            }
+          }
+        }
+        .m-analytics__selectedCatDescription {
+          margin: 0 24px 16px 24px;
+        }
+        .m-analytics__layoutWrapper {
+          padding: 0;
+          @include m-theme() {
+            box-shadow: none;
+          }
         }
       }
     }
-  }
-}
-@media screen and (max-width: $max-mobile) {
-}
-// ----------------------------------------
-// MOBILE
-.isMobile {
-  &.m-analytics__page {
-    padding: 0;
-    .m-analytics__main {
-      padding: 0;
-      .m-analytics__mainHeader {
-        padding-left: 24px;
-        display: block;
-      }
-
-      .m-analytics__layoutWrapper {
-        box-shadow: none;
-        padding: 0;
-      }
-    }
-  }
-
-  .m-analytics__menu {
-    padding: 0 8px;
   }
 }

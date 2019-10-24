@@ -1,21 +1,41 @@
-m-analytics__menu {
+m-sidebarMenu {
   display: block;
-  max-width: 160px;
-  padding: 16px 16px 16px 16px;
+  min-width: 180px;
+  padding: 16px 16px 16px 80px;
   flex: 1 1 0px;
   i {
     display: none;
     cursor: pointer;
   }
-  .m-analyticsMenu__topbar,
-  .m-analyticsMenu__userProfile,
-  .m-analyticsMenu__catTitle i {
+  .m-sidebarMenu__topbar,
+  .m-sidebarMenu__userWrapper {
     display: none;
   }
+  .m-sidebarMenu__catContainer {
+    .m-sidebarMenu__subcatContainer {
+      display: block;
+      cursor: pointer;
+    }
+  }
+  // .m-sidebarMenu__sidebar {
+  // position: fixed;
+  // top: 0;
+  // bottom: 0;
+  // }
 
-  .m-analyticsMenu__subcatContainer {
+  .m-sidebarMenu__catLabel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    i {
+      display: none;
+    }
+  }
+
+  .m-sidebarMenu__subcatContainer {
     cursor: pointer;
-    .m-analyticsMenu__subcat {
+    display: none;
+    .m-sidebarMenu__subcat {
       a {
         display: block;
         padding: 6px 0;
@@ -34,16 +54,18 @@ m-analytics__menu {
     }
   }
 }
-
+// --------------------------------------------------
+// --------------------------------------------------
 @media screen and (max-width: $min-tablet) {
-  m-analytics__menu {
+  m-sidebarMenu {
     margin-right: -32px;
     flex: 0 1 0px;
-    .m-analytics__menu {
+    padding: 0;
+    .m-sidebarMenu {
       padding: 0 8px;
     }
 
-    .m-analyticsMenu__topbar {
+    .m-sidebarMenu__topbar {
       display: block;
       z-index: 99999;
       position: fixed;
@@ -53,7 +75,7 @@ m-analytics__menu {
       padding: 16px;
       text-align: center;
       @include m-theme() {
-        background-color: themed($m-grey-100);
+        background-color: themed($m-grey-50);
         color: themed($m-grey-800);
       }
 
@@ -64,16 +86,16 @@ m-analytics__menu {
         left: 16px;
         transform: translateY(-50%);
         @include m-theme() {
-          background-color: themed($m-grey-100);
-          color: themed($m-grey-700);
+          color: themed($m-grey-300);
         }
       }
-      .m-analyticsMenu__pageTitle {
+      .m-sidebarMenu__topbarCatLabel {
         font-size: 20px;
-        margin: 0;
+        margin: 0 0 0 -24px;
+        min-height: 20px;
       }
     }
-    .m-analyticsMenu__overlay {
+    .m-sidebarMenu__overlay {
       position: fixed;
       top: 0;
       bottom: 0;
@@ -82,14 +104,14 @@ m-analytics__menu {
       z-index: -1;
       background-color: transparent;
       transition: background-color 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
-      &.expanded {
+      &.mobileMenuExpanded {
         z-index: 999998;
         @include m-theme() {
           background-color: rgba(themed($m-grey-700), 0.2);
         }
       }
     }
-    .m-analyticsMenu__sidebar {
+    .m-sidebarMenu__sidebar {
       z-index: 999999;
       position: fixed;
       top: 0;
@@ -103,51 +125,61 @@ m-analytics__menu {
       @include m-theme() {
         background-color: themed($m-white);
       }
-      &.expanded {
+      &.mobileMenuExpanded {
         left: 0;
       }
-      .m-analyticsMenu__sidebarTitle {
+      .m-sidebarMenu__catContainer {
+        .m-sidebarMenu__subcatContainer {
+          display: none;
+        }
+        &.expanded {
+          .m-sidebarMenu__subcatContainer {
+            display: block;
+          }
+        }
+      }
+      .m-sidebarMenu__catLabel {
         display: flex;
         justify-content: space-between;
         align-items: center;
 
         h3 {
           font-size: 20px;
-          margin: 0;
+          margin: 16px 0;
         }
         i {
           display: inline-block;
-          font-size: 20px;
+          font-size: 26px;
           @include m-theme() {
             color: themed($m-grey-200);
           }
         }
       }
 
-      .m-analyticsMenu__userProfile {
+      .m-sidebarMenu__userWrapper {
         display: flex;
         text-decoration: none;
         margin: 24px 0;
         @include m-theme() {
           color: themed($m-grey-800);
         }
-        .m-analyticsMenu__userAvatar {
+        .m-sidebarMenu__userAvatar {
           border-radius: 50%;
           margin-right: 16px;
         }
-        .m-analyticsMenu__userDetails {
+        .m-sidebarMenu__userDetails {
           & > {
             padding: 8px 0;
           }
-          .m-analyticsMenu__userDetails__name {
+          .m-sidebarMenu__userDetails__name {
             font-weight: bold;
           }
-          .m-analyticsMenu__userDetails__username {
+          .m-sidebarMenu__userDetails__username {
             @include m-theme() {
               color: themed($m-grey-200);
             }
           }
-          .m-analyticsMenu__userDetails__subscribers {
+          .m-sidebarMenu__userDetails__subscribers {
             font-size: 11px;
             @include m-theme() {
               color: themed($m-grey-200);

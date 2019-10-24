@@ -13,7 +13,6 @@ import {
   AnalyticsDashboardService,
   Visualisation,
 } from '../../dashboard.service';
-import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
 @Component({
   selector: 'm-analytics__table',
@@ -28,7 +27,6 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
   reformattedBuckets: Array<any> = [];
   minds = window.Minds;
   user;
-  isMobile: boolean;
   loadingSubscription: Subscription;
   loading: boolean;
   valueColCount: number = 1;
@@ -46,7 +44,6 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.isMobile = isMobileOrTablet();
     this.metricSubscription = this.selectedMetric$.subscribe(metric => {
       this.selectedMetric = metric;
       this.visualisation = metric.visualisation;

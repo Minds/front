@@ -3,18 +3,20 @@ $rounded-bottom: 0 0 3px 3px;
 
 m-analytics__filter {
   position: relative;
-  margin: 0 36px 0 0;
+  margin: 0 24px 36px 0;
   z-index: 2;
+  display: block;
+  // min-width: 140px;
 }
-.m-analytics__filterLabelWrapper {
+.m-analyticsFilter__labelWrapper {
   position: absolute;
   bottom: 110%;
   white-space: nowrap;
   @include m-theme() {
-    color: rgba(themed($m-grey-200), 0.9);
+    color: themed($m-grey-300);
   }
   m-tooltip {
-    margin-right: 4px;
+    margin-left: 4px;
   }
   > * {
     display: inline-block;
@@ -23,7 +25,7 @@ m-analytics__filter {
     i {
       font-size: 12px;
       @include m-theme() {
-        color: rgba(themed($m-grey-200), 0.7);
+        color: rgba(themed($m-grey-300), 0.7);
       }
     }
     .m-tooltip--bubble {
@@ -54,41 +56,48 @@ m-analytics__filter {
   }
 }
 
-.m-analytics__filterWrapper {
+.m-analyticsFilter__wrapper {
   cursor: pointer;
+
+  &:focus {
+    outline: 0;
+  }
+  .m-analyticsFilter__header {
+    width: 160px;
+  }
+  .m-analyticsFilter__optionsContainer {
+    width: inherit;
+  }
 
   &.expanded {
     @include m-theme() {
       box-shadow: 0px 1px 15px 0 rgba(themed($m-black), 0.15);
     }
-    .m-analytics__filterHeader {
+    .m-analyticsFilter__header {
       @include m-theme() {
         border-color: themed($m-blue);
       }
     }
-    .m-analytics__filterUnselectedOptionsContainer {
-      visibility: visible;
-      // @include m-theme() {
-      //   box-shadow: 0px 1px 15px 0 rgba(themed($m-black), 0.15);
-      // }
+    .m-analyticsFilter__optionsContainer {
+      display: block;
     }
 
     &:not(.dropUp) {
-      .m-analytics__filterHeader {
+      .m-analyticsFilter__header {
         @include m-theme() {
           border-radius: $rounded-top;
         }
       }
-      .m-analytics__filterUnselectedOptionsContainer {
+      .m-analyticsFilter__optionsContainer {
         border-top: none;
         border-radius: $rounded-bottom;
       }
     }
     &.dropUp {
-      .m-analytics__filterHeader {
+      .m-analyticsFilter__header {
         border-radius: $rounded-bottom;
       }
-      .m-analytics__filterUnselectedOptionsContainer {
+      .m-analyticsFilter__optionsContainer {
         bottom: 100%;
         border-radius: $rounded-top;
         border-bottom: none;
@@ -96,27 +105,27 @@ m-analytics__filter {
     }
   }
 
-  .m-analytics__filterHeader {
+  .m-analyticsFilter__header {
     position: relative;
-    width: 100%;
-    padding: 8px 6px 6px 10px;
     border-radius: 3px;
     transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 
     @include m-theme() {
       background-color: themed($m-white);
-      color: rgba(themed($m-grey-200), 0.9);
+      color: themed($m-grey-300);
     }
     @include m-theme() {
       border: 1px solid themed($m-grey-100);
     }
-    .m-analytics__filterLabel {
+    .m-analyticsFilter__label {
       margin-right: 10px;
     }
     i {
       flex-grow: 0;
+      width: 24px;
+      height: 24px;
     }
-    .m-analytics__filterOption--selected {
+    .m-analyticsFilter__option--selected {
       margin-right: 8px;
       @include m-theme() {
         color: themed($m-grey-500);
@@ -124,35 +133,38 @@ m-analytics__filter {
     }
   }
 
-  .m-analytics__filterUnselectedOptionsContainer {
+  .m-analyticsFilter__optionsContainer {
     position: absolute;
-    // display: none;
-    visibility: hidden;
-    width: 100%;
-    padding: 8px 6px 6px 10px;
+    display: none;
     border-radius: 3px;
     left: 0px;
     transition: box-shadow 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    box-sizing: border-box;
     @include m-theme() {
       border: 1px solid themed($m-blue);
       border-top: 1px solid themed($m-blue);
       background-color: themed($m-white);
     }
-    .m-analytics__filterOption {
-      padding: 5px 0;
-    }
   }
 
-  .m-analytics__filterRow {
+  .m-analyticsFilter__row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    height: 24px;
+    padding: 10px 20px;
+    &.m-analyticsFilter__header {
+      padding-right: 10px;
+    }
   }
-  .m-analytics__filterOption {
+  .m-analyticsFilter__option {
     border-radius: 3px;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     @include m-theme() {
       background-color: themed($m-white);
-      color: rgba(themed($m-grey-200), 0.9);
+      color: themed($m-grey-300);
     }
 
     &.unavailable {
@@ -163,19 +175,44 @@ m-analytics__filter {
     }
     &:hover:not(.unavailable) {
       @include m-theme() {
-        color: themed($m-grey-500);
+        color: themed($m-grey-600);
       }
     }
   }
 }
 
-.m-analytics__filterWrapper.isMobile {
-  .m-analytics__filterHeader {
-    i {
-      display: none;
+@media screen and (max-width: $min-tablet) {
+  m-analytics__filter {
+    .m-analyticsFilter__wrapper {
+      .m-analyticsFilter__header {
+        width: 100px;
+      }
+      // .m-analyticsFilter__optionsContainer {
+      //   width: inherit;
+      // }
     }
   }
-  .m-analytics__filterOption--selected {
-    margin-right: 0;
+}
+
+@media screen and (max-width: $max-mobile) {
+  m-analytics__filter {
+    // min-width: 100px;
+    // flex: 0 1 35%;
+    .m-analyticsFilter__wrapper {
+      .m-analyticsFilter__header {
+        i {
+          display: none;
+        }
+      }
+      .m-analyticsFilter__row {
+        padding: 8px 18px;
+        &.m-analyticsFilter__header {
+          padding-right: 10px;
+        }
+      }
+      .m-analyticsFilter__option--selected {
+        margin-right: 0;
+      }
+    }
   }
 }

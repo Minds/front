@@ -1,58 +1,62 @@
-<section class="m-analyticsMenu" [ngClass]="{ isMobile: isMobile }">
-  <div class="m-analyticsMenu__topbar" *ngIf="isMobile">
-    <i class="material-icons" (click)="expanded = true">menu</i>
+<section class="m-analyticsMenu">
+  <div class="m-analyticsMenu__topbar">
+    <i class="material-icons" (click)="menuExpanded = true">menu</i>
     <div class="m-analyticsMenu__pageTitle">
       Analytics
     </div>
   </div>
   <div
     class="m-analyticsMenu__overlay"
-    [ngClass]="{ expanded: expanded }"
-    (click)="expanded = false"
+    [ngClass]="{ menuExpanded: menuExpanded }"
+    (click)="menuExpanded = false"
   ></div>
-  <div class="m-analyticsMenu__sidebar" [ngClass]="{ expanded: expanded }">
-    <a
-      class="m-analyticsMenu__userProfile"
-      *ngIf="isMobile"
-      [routerLink]="['/', user.username]"
-    >
+  <div
+    class="m-analyticsMenu__sidebar"
+    [ngClass]="{ menuExpanded: menuExpanded }"
+  >
+    <a class="m-analyticsMenu__userProfile" [routerLink]="['/', user.username]">
       <img
         class="m-analyticsMenu__userAvatar"
         [src]="minds.cdn_url + 'icon/' + user.guid + '/small/' + user.icontime"
       />
       <div class="m-analyticsMenu__userDetails">
         <div class="m-analyticsMenu__userDetails__name">{{ user.name }}</div>
-        <!-- TODO: remove username once subscriberCount is working -->
         <div class="m-analyticsMenu__userDetails__username">
           @{{ user.username }}
         </div>
-        <!-- TODO: get subscriberCount -->
+        <!-- TODO: get subscriberCount and remove username -->
         <!-- <div class="m-analyticsMenu__userDetails__subscribers">
           {{ user.subscribers_count | abbr }} subscribers
         </div> -->
       </div>
     </a>
+    <!-- <ng-container *ngFor="let cat of cats">
+      <div class="m-analyticsMenu__catContainer">
+        <div class="m-analyticsMenu__catTitle">
+          <h3>{{ cat.category.label }}</h3>
+          <i class="material-icons" (click)="menuExpanded = false"
+            >keyboard_arrow_up</i
+          >
+          <i class="material-icons" (click)="menuExpanded = false"
+            >keyboard_arrow_down</i
+          >
+        </div>
 
-    <div class="m-analyticsMenu__sidebarTitle">
-      <h3>Analytics</h3>
-      <i
-        class="m-analyticsMenu__material-icons"
-        *ngIf="isMobile"
-        (click)="expanded = false"
-        >keyboard_arrow_up</i
-      >
-    </div>
-
-    <div class="m-analyticsMenu__catContainer">
-      <!-- TODO: apply permissions from categories.default to cats sidebar -->
-      <div class="m-analyticsMenu__cat" *ngFor="let cat of cats">
-        <a
-          (click)="expanded = false"
-          [routerLink]="'../' + cat.id"
-          routerLinkActive="selected"
-          >{{ cat?.label }}</a
-        >
+        <div class="m-analyticsMenu__subcatContainer"> -->
+    <!-- TODO: apply permissions from categories.default to category sidebar -->
+    <!-- <div
+            class="m-analyticsMenu__subcat"
+            *ngFor="let subcat of cat.subcategories"
+          >
+            <a
+              (click)="menuExpanded = false"
+              [routerLink]="'../' + subcat.id"
+              routerLinkActive="selected"
+              >{{ subcat.label }}</a
+            >
+          </div>
+        </div>
       </div>
-    </div>
+    </ng-container> -->
   </div>
 </section>

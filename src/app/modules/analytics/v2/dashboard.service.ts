@@ -45,6 +45,7 @@ export interface Filter {
   label: string;
   options: Option[];
   description: string;
+  expanded?: boolean;
 }
 
 export interface Option {
@@ -118,14 +119,8 @@ let _state: UserState = fakeData[0];
 
 const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 
-// **********************************************************************
-// **********************************************************************
-
 @Injectable()
 export class AnalyticsDashboardService {
-  /**
-   * Initialize the state subject and make it an observable
-   */
   private store = new BehaviorSubject<UserState>(_state);
   private state$ = this.store.asObservable();
 
@@ -207,16 +202,17 @@ export class AnalyticsDashboardService {
         const dashboard = response.dashboard;
         this.ready$.next(true);
 
+        // TODOOJM: uncomment before push
         this.updateState({
           ..._state,
-          category: dashboard.category,
-          description: dashboard.description,
-          timespan: dashboard.timespan,
-          timespans: dashboard.timespans,
-          filter: dashboard.filter,
-          filters: dashboard.filters,
-          metric: dashboard.metric,
-          metrics: dashboard.metrics,
+          // category: dashboard.category,
+          // description: dashboard.description,
+          // timespan: dashboard.timespan,
+          // timespans: dashboard.timespans,
+          // filter: dashboard.filter,
+          // filters: dashboard.filters,
+          // metric: dashboard.metric,
+          // metrics: dashboard.metrics,
         });
         this.loading$.next(false);
       });
@@ -247,13 +243,14 @@ export class AnalyticsDashboardService {
   //   return channelSearch;
   // }
 
+  // TODOOJM: uncomment before push
   updateCategory(category: string) {
-    this.updateState({
-      ..._state,
-      category,
-      description: null,
-      metrics: [],
-    });
+    // this.updateState({
+    //   ..._state,
+    //   category,
+    //   description: null,
+    //   metrics: [],
+    // });
   }
   updateTimespan(timespan: string) {
     this.updateState({
@@ -282,8 +279,8 @@ export class AnalyticsDashboardService {
     } else {
       filter.push(selectedFilterStr);
     }
-    console.log('update filter called: ' + selectedFilterStr);
-    console.log(filter);
+    // console.log('update filter called: ' + selectedFilterStr);
+    // console.log(filter);
 
     this.updateState({ ..._state, filter });
   }
@@ -292,7 +289,7 @@ export class AnalyticsDashboardService {
 
   /** Update internal state cache and emit from store... */
   private updateState(state: UserState) {
-    console.log('update state called');
+    // console.log('update state called');
     this.store.next((_state = state));
   }
 
@@ -314,9 +311,5 @@ export class AnalyticsDashboardService {
         catchError(_ => of(null)),
         map(response => response)
       );
-  }
-
-  getData() {
-    console.warn('call was made to legacy function DashboardService.getData()');
   }
 }

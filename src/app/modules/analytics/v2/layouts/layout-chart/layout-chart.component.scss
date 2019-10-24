@@ -1,19 +1,17 @@
 .m-analytics__filterableChartWrapper {
   position: relative;
-  padding: 16px;
-  // width: 80%;
+  margin-bottom: 48px;
   @include m-theme() {
     border-top: 1px solid themed($m-grey-50);
+    background-color: themed($m-white);
   }
   &.isTable {
-    padding: 0;
     width: 100%;
-  }
-  &.isMobile {
-    border-top: none;
   }
 }
 .m-analytics__spinnerContainer {
+  // TODOOJM: remove display none
+  display: none !important;
   height: 30%;
   width: 100%;
   display: flex;

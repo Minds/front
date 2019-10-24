@@ -8,7 +8,6 @@ import {
 import { Observable, Subscription, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AnalyticsDashboardService } from '../../dashboard.service';
-import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
 @Component({
   selector: 'm-analytics__layout--chart',
@@ -29,7 +28,6 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
   );
   selectedMetric;
   isTable: boolean = false;
-  isMobile: boolean;
 
   constructor(
     private analyticsService: AnalyticsDashboardService,
@@ -38,7 +36,6 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.selectedMetric$.subscribe(metric => {
-      console.log('new metric');
       this.selectedMetric = metric;
 
       this.isTable =
@@ -47,7 +44,6 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
         this.selectedMetric.visualisation.type === 'table';
       this.detectChanges();
     });
-    this.isMobile = isMobileOrTablet();
   }
 
   detectChanges() {

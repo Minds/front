@@ -1,9 +1,12 @@
 m-analytics__chart {
   display: block;
   position: relative;
+  margin-left: 40px;
+
   .js-plotly-plot,
   .plot-container {
     height: 44vh;
+    min-height: 44vh;
     display: block;
   }
 }
@@ -37,7 +40,7 @@ m-analytics__chart {
   @include m-theme() {
     background-color: themed($m-white);
     box-shadow: 0 0 4px rgba(themed($m-black), 0.3);
-    color: themed($m-grey-200);
+    color: themed($m-grey-300);
   }
 
   [class*='m-analyticsChart__hoverInfo__row'] {
@@ -51,5 +54,35 @@ m-analytics__chart {
     @include m-theme() {
       color: themed($m-grey-600);
     }
+  }
+
+  i {
+    // TODOOJM: uncomment me
+    //display: none;
+    display: block;
+    font-size: 15px;
+    position: absolute;
+    cursor: pointer;
+    top: 10px;
+    right: 10px;
+    transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
+    &:hover {
+      @include m-theme() {
+        color: themed($m-grey-500);
+      }
+    }
+  }
+}
+
+.isTouchDevice .m-analyticsChart__hoverInfoDiv i {
+  display: block;
+}
+
+@media screen and (max-width: $min-tablet) {
+  m-analytics__chart {
+    margin-left: 16px;
   }
 }

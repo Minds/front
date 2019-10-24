@@ -1,8 +1,9 @@
-const menuCategories = [
+const sidebarMenuCategories = [
   {
     category: {
       id: 'analytics',
       label: 'Analytics',
+      path: '/analytics/dashboard/',
       permissions: ['admin', 'user'],
     },
     subcategories: [
@@ -57,6 +58,33 @@ const menuCategories = [
       // },
     ],
   },
+  {
+    category: {
+      id: 'test1',
+      label: 'Test1',
+      permissions: ['admin', 'user'],
+      path: '/somepath/bork',
+    },
+    subcategories: [
+      {
+        id: 'nodes',
+        label: 'Nodes',
+        permissions: ['admin'],
+      },
+      {
+        id: 'nodes2',
+        label: 'Nodes2',
+        permissions: ['admin'],
+      },
+    ],
+  },
+  {
+    category: {
+      id: 'test2',
+      label: 'Test2',
+      path: '/anotherpath/test2',
+    },
+  },
 ];
 
-export default menuCategories;
+export default sidebarMenuCategories;

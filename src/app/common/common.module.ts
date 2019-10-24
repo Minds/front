@@ -113,6 +113,7 @@ import { MarketingComponent } from './components/marketing/marketing.component';
 import { MarketingFooterComponent } from './components/marketing/footer.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
+import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
 
 @NgModule({
   imports: [
@@ -215,6 +216,7 @@ import { MarketingAsFeaturedInComponent } from './components/marketing/as-featur
     MarketingComponent,
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
+    SidebarMenuComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -305,6 +307,7 @@ import { MarketingAsFeaturedInComponent } from './components/marketing/as-featur
     ToggleComponent,
     MarketingComponent,
     MarketingAsFeaturedInComponent,
+    SidebarMenuComponent,
   ],
   providers: [
     SiteService,

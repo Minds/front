@@ -1,48 +1,46 @@
-<div
-  class="m-analytics__tableWrapper"
-  [hidden]="loading"
-  [ngClass]="{ isMobile: isMobile }"
->
-  <div class="m-analytics__row--header">
+<div class="m-analyticsTable__wrapper" [hidden]="loading">
+  <div class="m-analyticsTable__row--header">
     <div
       *ngFor="let col of columns | slice: 0:1"
-      class="m-analytics__col--entity m-analytics__cell"
+      class="m-analyticsTable__col--entity m-analyticsTable__cell"
     >
       {{ col.label }}
     </div>
-    <div class="m-analytics__col--values">
+    <div class="m-analyticsTable__col--values">
       <ng-container *ngFor="let col of columns | slice: 1">
-        <div class="m-analytics__subCol--value m-analytics__cell">
+        <div class="m-analyticsTable__subCol--value m-analyticsTable__cell">
           {{ col.label }}
         </div>
       </ng-container>
     </div>
   </div>
   <ng-container *ngFor="let row of reformattedBuckets">
-    <a class="m-analytics__row--data" [routerLink]="row.entity.route">
+    <a class="m-analyticsTable__row--data" [routerLink]="row.entity.route">
       <div
-        class="m-analytics__col--entity m-analytics__cell"
+        class="m-analyticsTable__col--entity m-analyticsTable__cell"
         *ngIf="row.entity"
       >
-        <div class="m-analytics__entityTitle">
+        <div class="m-analyticsTable__entityTitle">
           <span>{{ row.entity.title }}</span>
           <i class="material-icons">open_in_new</i>
         </div>
-        <div class="m-analytics__entityDetails">
-          <span class="m-analytics__usernameWrapper">
+        <div class="m-analyticsTable__entityDetails">
+          <span class="m-analyticsTable__usernameWrapper">
             <a [routerLink]="'/' + row.entity.name"
               >@{{ row.entity.username }}</a
             >
           </span>
-          <span *ngIf="!isMobile">{{ row.entity.type | titlecase }}</span>
-          <span *ngIf="!isMobile"
+          <span class="m-analyticsTable__entityType">{{
+            row.entity.type | titlecase
+          }}</span>
+          <span class="m-analyticsTable__entityPublishDate"
             >Published {{ row.entity.time_created * 1000 | date }}</span
           >
         </div>
       </div>
-      <div class="m-analytics__col--values">
+      <div class="m-analyticsTable__col--values">
         <ng-container *ngFor="let value of row.values">
-          <div class="m-analytics__subCol--value m-analytics__cell">
+          <div class="m-analyticsTable__subCol--value m-analyticsTable__cell">
             {{ value | abbr }}
           </div>
         </ng-container>

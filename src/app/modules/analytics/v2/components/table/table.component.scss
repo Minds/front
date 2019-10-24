@@ -1,63 +1,63 @@
-.m-analytics__tableWrapper {
+.m-analyticsTable__wrapper {
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 300;
   @include m-theme() {
     color: themed($m-grey-800);
   }
   a {
     text-decoration: none;
-    font-weight: normal;
+    font-weight: 300;
     @include m-theme() {
       color: themed($m-grey-800);
     }
   }
-  [class*='m-analytics__row'] {
+  [class*='m-analyticsTable__row'] {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    &.m-analytics__row--header {
+    &.m-analyticsTable__row--header {
       @include m-theme() {
         border-bottom: 1px solid themed($m-grey-50);
         color: themed($m-grey-200);
       }
-      .m-analytics__col--entity {
+      .m-analyticsTable__col--entity {
         flex-direction: row;
         align-items: flex-end;
       }
-      .m-analytics__col--values {
-        .m-analytics__subCol--value {
-          align-items: flex-end;
+      .m-analyticsTable__col--values {
+        .m-analyticsTable__subCol--value {
+          align-items: center;
         }
       }
     }
-    &.m-analytics__row--data {
+    &.m-analyticsTable__row--data {
       &:hover {
         @include m-theme() {
           background-color: rgba(themed($m-blue-grey-50), 0.5);
         }
-        .m-analytics__col--entity .m-analytics__entityTitle i {
+        .m-analyticsTable__col--entity .m-analyticsTable__entityTitle i {
           display: inline-block;
         }
       }
-      .m-analytics__col--entity {
+      .m-analyticsTable__col--entity {
         @include m-theme() {
           border-right: 1px solid themed($m-grey-50);
         }
       }
 
-      [class*='m-analytics__col'],
-      [class*='m-analytics__col'] * {
+      [class*='m-analyticsTable__col'],
+      [class*='m-analyticsTable__col'] * {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      // .m-analytics__subCol--value  {
+      // .m-analyticsTable__subCol--value  {
       //   align-items: center;
       // }
     }
-    .m-analytics__cell {
+    .m-analyticsTable__cell {
       display: flex;
       overflow: hidden;
       white-space: nowrap;
@@ -65,16 +65,16 @@
       padding: 8px 8px 8px 0;
     }
 
-    .m-analytics__col--entity {
+    .m-analyticsTable__col--entity {
       flex-direction: column;
       padding-left: 24px;
       // flex-basis: 20vw;
 
-      .m-analytics__usernameWrapper a {
-        font-weight: 400;
+      .m-analyticsTable__usernameWrapper a {
+        font-weight: 300;
         text-decoration: none;
       }
-      .m-analytics__entityTitle {
+      .m-analyticsTable__entityTitle {
         display: flex;
         > * {
           display: inline-block;
@@ -90,7 +90,7 @@
           }
         }
       }
-      .m-analytics__entityDetails {
+      .m-analyticsTable__entityDetails {
         display: inline;
         @include m-theme() {
           color: themed($m-grey-200);
@@ -98,7 +98,7 @@
         > * {
           margin-right: $minds-margin;
         }
-        .m-analytics__usernameWrapper {
+        .m-analyticsTable__usernameWrapper {
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -110,11 +110,11 @@
         }
       }
     }
-    .m-analytics__col--values {
+    .m-analyticsTable__col--values {
       display: flex;
       flex-direction: row;
       flex-wrap: nowrap;
-      .m-analytics__subCol--value {
+      .m-analyticsTable__subCol--value {
         flex: 1 1 16vw;
 
         &:first-of-type {
@@ -128,31 +128,40 @@
   }
 }
 
-.m-analytics__col--entity {
+.m-analyticsTable__col--entity {
   flex: 2 3 0;
 }
-.m-analytics__col--values {
+.m-analyticsTable__col--values {
   flex: 1 2 0;
 }
-// MOBILE /////////////////////
-.m-analytics__tableWrapper.isMobile {
-  .m-analytics__col--entity {
-    flex: 1 3 0;
-  }
-  .m-analytics__col--values {
-    flex: 2 1 0;
-  }
 
-  .m-analytics__row--header {
-    border: none !important;
-  }
-  .m-analytics__row--data {
-    .m-analytics__col--entity.m-analytics__cell {
-      border: none !important;
+@media screen and (max-width: $min-tablet) {
+  .m-analyticsTable__wrapper {
+    .m-analyticsTable__col--entity {
+      flex: 1 3 0;
+      .m-analyticsTable__entityType,
+      .m-analyticsTable__entityPublishDate {
+        display: none;
+      }
+    }
+    .m-analyticsTable__col--values {
+      flex: 2 1 0;
+    }
+
+    .m-analyticsTable__row--header {
+      @include m-theme() {
+        border: none !important;
+      }
+    }
+    .m-analyticsTable__row--data {
+      .m-analyticsTable__col--entity {
+        @include m-theme() {
+          border: none !important;
+        }
+      }
     }
   }
 }
-///////////////////////////@at-root  @media screen and (max-width: 800px) {
 
 // @media screen and (max-width: 910px) {
 //   .m-referrals-dashboard__row.m-referrals-dashboard__headerRow {
