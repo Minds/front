@@ -91,5 +91,10 @@
       color: themed($m-black);
       border-color: themed($m-grey-200);
     }
+
+    &[disabled] {
+      cursor: default;
+      opacity: 0.6;
+    }
   }
 }

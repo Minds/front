@@ -74,11 +74,6 @@
     (canceled)="close()"
     *ngIf="display == 'fb-complete'"
   ></minds-form-fb-register>
-  <!-- Categories selector -->
-  <minds-onboarding-categories-selector
-    (done)="done('categories')"
-    *ngIf="display == 'categories'"
-  ></minds-onboarding-categories-selector>
   <!-- Tutorial Display -->
   <minds-tutorial *ngIf="display == 'tutorial'"></minds-tutorial>
 </m-modal>

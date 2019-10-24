@@ -3,6 +3,8 @@ import { Client } from '../../services/api/client';
 
 @Injectable()
 export class PlusService {
+  protected cachedResponse: any;
+
   constructor(protected client: Client) {}
 
   async isActive(): Promise<boolean> {
@@ -12,7 +14,17 @@ export class PlusService {
       throw new Error('Unable to check your Plus status');
     }
 
+    this.cachedResponse = result;
+
     return Boolean(result.active);
+  }
+
+  async canBeCancelled(): Promise<boolean> {
+    if (!this.cachedResponse) {
+      await this.isActive();
+    }
+
+    return Boolean(this.cachedResponse.can_be_cancelled);
   }
 
   async disable(): Promise<boolean> {

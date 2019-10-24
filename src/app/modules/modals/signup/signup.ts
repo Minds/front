@@ -132,9 +132,6 @@ export class SignupModal {
           'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=600, height=400, top=100, left=100'
         );
         break;
-      case 'categories':
-        this.display = 'tutorial';
-        break;
     }
   }
 
@@ -164,10 +161,6 @@ export class SignupModal {
           extraParams: `ref=signup-modal&ts=${Date.now()}`,
         });
         this.display = 'fb-username';
-        break;
-      case 'categories':
-        this.display = 'initial';
-        this.close();
         break;
       case 'tutorial':
         this.display = 'initial';
