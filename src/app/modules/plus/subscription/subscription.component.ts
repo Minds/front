@@ -43,6 +43,8 @@ export class PlusSubscriptionComponent implements OnInit {
 
   active: boolean;
 
+  canBeCancelled: boolean;
+
   criticalError: boolean = false;
 
   error: string = '';
@@ -85,6 +87,7 @@ export class PlusSubscriptionComponent implements OnInit {
 
     try {
       this.active = await this.service.isActive();
+      this.canBeCancelled = await this.service.canBeCancelled();
     } catch (e) {
       this.criticalError = true;
       this.error = (e && e.message) || 'Unknown error';
