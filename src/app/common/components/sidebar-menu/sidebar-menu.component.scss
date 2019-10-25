@@ -113,9 +113,10 @@ m-sidebarMenu {
     }
     .m-sidebarMenu__sidebar {
       z-index: 999999;
-      position: fixed;
-      top: 0;
-      bottom: 0;
+      position: relative;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 16px;
       left: -360px;
       transition: left 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
       padding: 0 24px;
@@ -126,7 +127,10 @@ m-sidebarMenu {
         background-color: themed($m-white);
       }
       &.mobileMenuExpanded {
+        position: fixed;
+        top: 0;
         left: 0;
+        bottom: 0;
       }
       .m-sidebarMenu__catContainer {
         .m-sidebarMenu__subcatContainer {
