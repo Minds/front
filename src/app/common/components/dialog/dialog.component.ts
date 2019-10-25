@@ -5,6 +5,8 @@ import {
   Input,
   Output,
   ViewChild,
+  OnInit,
+  OnChanges,
 } from '@angular/core';
 import dialogPolyfill from 'dialog-polyfill';
 
@@ -12,7 +14,7 @@ import dialogPolyfill from 'dialog-polyfill';
   selector: 'minds-dialog',
   templateUrl: 'dialog.component.html',
 })
-export class MindsDialog {
+export class MindsDialogComponent implements OnInit, OnChanges {
   @Input() id: string;
   @Input() title = 'Minds Dialog';
   @Input() message = 'Confirm to continue';
@@ -23,7 +25,7 @@ export class MindsDialog {
   @Output() confirmed: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild('dialog', { static: true }) dialogElement: ElementRef;
-  private nativeDialogElement: any;
+  public nativeDialogElement: any;
 
   ngOnInit() {
     dialogPolyfill.registerDialog(this.dialogElement.nativeElement);
