@@ -60,4 +60,9 @@
       border-color: themed($m-blue);
     }
   }
+
+  &[disabled] {
+    cursor: default;
+    opacity: 0.6;
+  }
 }
