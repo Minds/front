@@ -1,8 +1,10 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Injector,
+  Input,
   OnDestroy,
   OnInit,
 } from '@angular/core';
@@ -18,6 +20,7 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MindsTitle } from '../../../../services/ux/title';
 import { filter } from 'rxjs/operators';
 import { map } from 'rxjs/operators';
+import { SiteService } from '../../../../common/services/site.service';
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -25,22 +28,46 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [FeedsService],
 })
-export class ProChannelListComponent implements OnInit, OnDestroy {
+export class ProChannelListComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   paramsType: string; // exact string that came from the router params
 
-  type: string;
+  type: string = 'feed';
+  @Input() algorithm: string = 'top';
+  @Input() query: string;
+  @Input() period: string;
+  @Input() selectedHashtag: string;
+
+  @Input('type') set _type(value: string) {
+    switch (value) {
+      case 'all':
+        this.type = 'all';
+        break;
+      case 'videos':
+        this.type = 'videos';
+        break;
+      case 'images':
+        this.type = 'images';
+        break;
+      case 'articles':
+        this.type = 'blogs';
+        break;
+      case 'groups':
+        this.type = 'groups';
+        break;
+      case 'feed':
+        this.type = 'activities';
+        break;
+      default:
+        throw new Error('Unknown type');
+    }
+
+    this.updateAndLoad();
+  }
 
   params$: Subscription;
 
   entities: any[] = [];
-
-  algorithm: string;
-
-  query: string;
-
-  period: string;
-
-  selectedHashtag: string = 'all';
 
   entities$;
 
@@ -48,6 +75,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     public feedsService: FeedsService,
     protected modalService: OverlayModalService,
     protected channelService: ProChannelService,
+    protected siteService: SiteService,
     protected title: MindsTitle,
     protected route: ActivatedRoute,
     protected router: Router,
@@ -102,11 +130,14 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       this.period = params['period'] || '';
       this.selectedHashtag = params['hashtag'] || 'all';
 
-      this.setTitle();
-
-      this.load(true);
-      this.setMenuNavItems();
+      this.updateAndLoad();
     });
+  }
+
+  ngAfterViewInit() {
+    if (!this.siteService.isProDomain) {
+      this.updateAndLoad();
+    }
   }
 
   ngOnDestroy() {
@@ -218,6 +249,13 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     return (
       this.paramsType !== 'groups' && this.paramsType !== 'feed' && !this.query
     );
+  }
+
+  updateAndLoad() {
+    this.setTitle();
+
+    this.load(true);
+    this.setMenuNavItems();
   }
 
   detectChanges() {

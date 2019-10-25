@@ -5,8 +5,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { NavItems, ProChannelService } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MindsTitle } from '../../../../services/ux/title';
@@ -28,8 +28,13 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
 
   moreData: boolean = true;
 
+  filter: string = '';
+
+  private param$: Subscription;
+
   constructor(
     protected router: Router,
+    protected route: ActivatedRoute,
     protected channelService: ProChannelService,
     protected modalService: OverlayModalService,
     protected title: MindsTitle,

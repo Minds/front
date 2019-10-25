@@ -47,18 +47,23 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.param$ = this.route.params.subscribe(params => {
-      if (params['username']) {
-        this.username = params['username'];
+    if (this.site.isProDomain) {
+      this.username = this.site.pro.user_guid;
+      this.load();
+    } else {
+      this.param$ = this.route.params.subscribe(params => {
+        if (params['username']) {
+          this.username = params['username'];
 
-        if (
-          this.username &&
-          (!this.channel || this.channel.username != this.username)
-        ) {
-          this.load();
+          if (
+            this.username &&
+            (!this.channel || this.channel.username != this.username)
+          ) {
+            this.load();
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   canDeactivate(): boolean | Observable<boolean> {
@@ -87,7 +92,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
       this.channel = response.channel;
 
-      const shouldRedirectToProHandler =
+      /*  const shouldRedirectToProHandler =
         !this.site.isProDomain &&
         this.channel.pro_published &&
         !this.isOwner &&
@@ -99,7 +104,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
         this.router.navigate(['/pro', this.channel.username], {
           replaceUrl: true,
         });
-      }
+      }*/
     } catch (e) {
       this.error = e.message;
       console.error(e);
@@ -119,5 +124,9 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
   get proEnabled() {
     return this.features.has('pro');
+  }
+
+  get isProDomain() {
+    return this.site.isProDomain;
   }
 }

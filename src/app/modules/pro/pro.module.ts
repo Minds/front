@@ -35,8 +35,28 @@ import { BlogViewInfinite } from '../blogs/view/infinite';
 import { BlogEdit } from '../blogs/edit/edit';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { ModalsModule } from '../modals/modals.module';
+import { ChannelContainerComponent } from '../channel-container/channel-container.component';
 
-const routes: Routes = [
+export const channelRoutes: Routes = [
+  {
+    path: '',
+    component: ProChannelHomeComponent,
+  },
+  {
+    path: 'login',
+    component: ProChannelLoginComponent,
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+  },
+  {
+    path: ':type',
+    component: ProChannelListComponent,
+  },
+];
+
+export const siteRoutes: Routes = [
   {
     path: 'pro',
     children: [
@@ -47,28 +67,6 @@ const routes: Routes = [
       {
         path: 'settings',
         component: ProSettingsComponent,
-      },
-      {
-        path: ':username',
-        component: ProChannelComponent,
-        children: [
-          {
-            path: '',
-            component: ProChannelHomeComponent,
-          },
-          {
-            path: 'login',
-            component: ProChannelLoginComponent,
-          },
-          {
-            path: 'forgot-password',
-            component: ForgotPasswordComponent,
-          },
-          {
-            path: ':type',
-            component: ProChannelListComponent,
-          },
-        ],
       },
     ],
   },
@@ -134,7 +132,6 @@ export const PRO_DOMAIN_ROUTES = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    RouterModule.forChild(routes),
     MindsFormsModule,
     NewsfeedModule,
     LegacyModule,
@@ -142,6 +139,7 @@ export const PRO_DOMAIN_ROUTES = [
     VideoModule,
     AuthModule,
     ModalsModule,
+    RouterModule.forChild(siteRoutes),
   ],
   providers: [ProService],
   declarations: [
@@ -163,6 +161,7 @@ export const PRO_DOMAIN_ROUTES = [
   ],
   exports: [ProChannelComponent],
   entryComponents: [
+    ProChannelComponent,
     MediaModalComponent,
     ProUnsubscribeModalComponent,
     BlogView,

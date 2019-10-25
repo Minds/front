@@ -35,7 +35,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   type: string;
 
-  query: string;
+  query: string = '';
 
   channel: MindsUser;
 
@@ -44,6 +44,11 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   error: string;
 
   collapseNavItems: boolean;
+
+  filter: string = '';
+  hashtag: string;
+  period: string;
+  algorithm: string;
 
   protected params$: Subscription;
 
@@ -169,22 +174,50 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   listen() {
-    this.params$ = this.route.params.subscribe(params => {
-      if (params['username']) {
-        this.username = params['username'];
-      }
+    if (!this.isProDomain) {
+      this.params$ = this.route.params.subscribe(params => {
+        if (params['username']) {
+          this.username = params['username'];
+        }
 
-      if (params['type']) {
-        this.type = params['type'];
-      }
+        if (params['type']) {
+          this.type = params['type'];
+        }
 
-      if (
-        this.username &&
-        (!this.channel || this.channel.username != this.username)
-      ) {
-        this.load();
-      }
-    });
+        if (params['filter'] !== undefined) {
+          this.filter = params['filter'];
+        }
+
+        if (this.filter === 'blogs') {
+          this.router.navigate(this.channelService.getRouterLink('articles'));
+        }
+
+        if (params['algorithm']) {
+          this.algorithm = params['algorithm'];
+        }
+
+        if (params['query']) {
+          this.query = params['query'];
+        }
+
+        if (params['period']) {
+          this.period = params['period'];
+        }
+
+        if (params['hashtag']) {
+          this.hashtag = params['hashtag'];
+        }
+
+        this.detectChanges();
+      });
+    }
+
+    if (
+      this.username &&
+      (!this.channel || this.channel.username != this.username)
+    ) {
+      this.load();
+    }
 
     this.loggedIn$ = this.session.loggedinEmitter.subscribe(is => {
       if (is) {

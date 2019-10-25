@@ -106,7 +106,23 @@
     </div>
 
     <div class="m-proChannel__body">
-      <router-outlet></router-outlet>
+      <router-outlet *ngIf="isProDomain; else componentsBlock"></router-outlet>
+
+      <ng-template #componentsBlock>
+        <m-pro--channel-home *ngIf="filter === ''"></m-pro--channel-home>
+
+        <m-pro--channel-list
+          [type]="filter"
+          [algorithm]="algorithm"
+          [query]="query"
+          [period]="period"
+          [selectedHashtag]="hashtag"
+          *ngIf="
+            filter !== '' && filter !== 'login' && filter !== 'forgot-password'
+          "
+        ></m-pro--channel-list>
+      </ng-template>
+      <!--      <router-outlet></router-outlet>-->
     </div>
 
     <div class="m-proChannel__footer">

@@ -4,9 +4,16 @@ import { ChannelsModule } from '../channels/channels.module';
 import { ProModule } from '../pro/pro.module';
 import { ChannelContainerComponent } from './channel-container.component';
 import { CommonModule } from '../../common/common.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [NgCommonModule, CommonModule, ProModule, ChannelsModule],
+  imports: [
+    NgCommonModule,
+    CommonModule,
+    ProModule,
+    ChannelsModule,
+    RouterModule,
+  ],
   declarations: [ChannelContainerComponent],
   entryComponents: [ChannelContainerComponent],
 })

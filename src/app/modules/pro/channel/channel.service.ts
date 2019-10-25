@@ -221,7 +221,7 @@ export class ProChannelService implements OnDestroy {
     if (this.route.parent) {
       root = this.route.parent.pathFromRoot
         .map(route =>
-          route.snapshot.url.map(urlSegment => urlSegment.toString()).join('')
+          route.snapshot.url.map(urlSegment => urlSegment.toString()).join('/')
         )
         .join('/');
     }

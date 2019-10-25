@@ -8,6 +8,8 @@ import { Pages } from '../controllers/pages/pages';
 import { CanDeactivateGuardService } from '../services/can-deactivate-guard';
 import { RewardsComponent } from '../controllers/rewards/rewards';
 import { ChannelContainerComponent } from '../modules/channel-container/channel-container.component';
+import { channelRoutes, siteRoutes } from '../modules/pro/pro.module';
+import { ChannelComponent } from '../modules/channels/channel.component';
 
 export const MindsAppRoutes: Routes = [
   { path: 'capture', redirectTo: 'media/images/suggested' },
@@ -42,6 +44,7 @@ export const MindsAppRoutes: Routes = [
     path: ':username/:filter',
     component: ChannelContainerComponent,
     canDeactivate: [CanDeactivateGuardService],
+    children: [...channelRoutes],
   },
 ];
 
