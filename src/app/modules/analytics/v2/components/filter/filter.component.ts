@@ -47,6 +47,7 @@ export class AnalyticsFilterComponent implements OnInit {
 
     if (this.filter.id === 'timespan') {
       this.analyticsService.updateTimespan(option.id);
+      console.log('upDateFilter ', option.id);
       return;
     }
 

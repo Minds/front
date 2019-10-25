@@ -108,10 +108,10 @@ m-analytics__metrics {
     }
 
     &:hover:not(.active) {
+      transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       @include m-theme() {
         background-color: rgba(themed($m-grey-100), 0.2);
         border-bottom: 8px solid rgba(0, 0, 0, 0);
-        transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       }
     }
     .m-analytics__metricLabel {

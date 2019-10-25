@@ -11,6 +11,19 @@
       color: themed($m-grey-800);
     }
   }
+  .m-analyticsTable__cell {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 76px;
+    // padding: 8px 8px 8px 0;
+  }
+  .m-analyticsTable__subCol--value {
+    white-space: normal;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
   [class*='m-analyticsTable__row'] {
     display: flex;
     flex-direction: row;
@@ -24,11 +37,11 @@
       }
       .m-analyticsTable__col--entity {
         flex-direction: row;
-        align-items: flex-end;
+        align-items: center;
       }
       .m-analyticsTable__col--values {
         .m-analyticsTable__subCol--value {
-          align-items: center;
+          white-space: normal;
         }
       }
     }
@@ -53,22 +66,11 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      // .m-analyticsTable__subCol--value  {
-      //   align-items: center;
-      // }
-    }
-    .m-analyticsTable__cell {
-      display: flex;
-      overflow: hidden;
-      white-space: nowrap;
-      height: 50px;
-      padding: 8px 8px 8px 0;
     }
 
     .m-analyticsTable__col--entity {
       flex-direction: column;
-      padding-left: 24px;
-      // flex-basis: 20vw;
+      padding-left: 50px;
 
       .m-analyticsTable__usernameWrapper a {
         font-weight: 300;
@@ -78,7 +80,6 @@
         display: flex;
         > * {
           display: inline-block;
-          max-width: 200px;
         }
 
         i {
@@ -115,13 +116,14 @@
       flex-direction: row;
       flex-wrap: nowrap;
       .m-analyticsTable__subCol--value {
-        flex: 1 1 16vw;
+        flex: 1 1 0;
+        align-items: center;
 
-        &:first-of-type {
-          padding-left: 24px;
-        }
+        // &:first-of-type {
+        //   padding-left: 24px;
+        // }
         &:last-of-type {
-          padding-right: 16px;
+          padding-right: 50px;
         }
       }
     }
@@ -132,7 +134,7 @@
   flex: 2 3 0;
 }
 .m-analyticsTable__col--values {
-  flex: 1 2 0;
+  flex: 2 2 0;
 }
 
 @media screen and (max-width: $min-tablet) {
@@ -145,61 +147,28 @@
       }
     }
     .m-analyticsTable__col--values {
-      flex: 2 1 0;
-    }
+      flex: 2 2 0;
 
-    .m-analyticsTable__row--header {
-      @include m-theme() {
-        border: none !important;
+      .m-analyticsTable__subCol--value:last-of-type {
+        padding-right: 16px;
       }
-    }
-    .m-analyticsTable__row--data {
-      .m-analyticsTable__col--entity {
+
+      .m-analyticsTable__row--header {
         @include m-theme() {
           border: none !important;
         }
       }
+      .m-analyticsTable__row--data {
+        .m-analyticsTable__col--entity {
+          padding-left: 16px;
+          @include m-theme() {
+            border: none !important;
+          }
+        }
+      }
+      .m-analyticsTable__cell {
+        height: 48px;
+      }
     }
   }
 }
-
-// @media screen and (max-width: 910px) {
-//   .m-referrals-dashboard__row.m-referrals-dashboard__headerRow {
-//     span {
-//       white-space: normal !important;
-//       max-width: 35px;
-//     }
-//     .m-referrals-dashboard__registerCol,
-//     .m-referrals-dashboard__rewardsCol {
-//       align-items: flex-start !important;
-//     }
-//     .m-referrals-dashboard__rewardsCol span {
-//       max-width: 46px;
-//     }
-//   }
-//   .m-referrals-dashboard__cell.m-referrals-dashboard__rewardsCol {
-//     flex: 2 3 0;
-
-//     .m-referrals-dashboard__pingButtonContainer button {
-//       padding: 8px;
-
-//       span {
-//         display: none;
-//       }
-//     }
-//   }
-// }
-
-//   .m-referrals-dashboard__cell.m-referrals-dashboard__registerCol {
-//     display: none;
-//   }
-//   .m-referrals-dashboard__userCol {
-//     min-width: 100px;
-//   }
-//   .m-referrals-dashboard__statusCol {
-//     min-width: 60px;
-//   }
-//   .m-referrals-dashboard__rewardsCol {
-//     max-width: 75px;
-//   }
-// }

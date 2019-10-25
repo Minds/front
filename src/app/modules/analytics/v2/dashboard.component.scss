@@ -25,6 +25,7 @@ m-analytics__dashboard {
 .m-analytics__main {
   flex: 4 1 0px;
   padding: 16px;
+  // max-width: 60%;
 
   .m-analytics__mainHeader {
     display: flex;
@@ -90,20 +91,22 @@ m-analytics__dashboard {
 @media screen and (max-width: $min-tablet) {
   m-analytics__dashboard {
     .m-analytics__dashboard {
+      display: block;
       padding: 0;
-      flex-direction: column;
+      // flex-direction: column;
 
       .m-analytics__main {
         padding: 0;
+        max-width: none;
         .m-analytics__mainHeader {
           padding-left: 24px;
           m-analytics__filter {
             margin: 0 32px 8px 0;
-            // .m-analyticsFilter__wrapper {
-            //   > * {
-            //     width: 120px;
-            //   }
-            // }
+            .m-analyticsFilter__wrapper {
+              > * {
+                width: 160px;
+              }
+            }
           }
         }
         .m-analytics__selectedCatDescription {
@@ -119,3 +122,22 @@ m-analytics__dashboard {
     }
   }
 }
+
+// :(
+// @media screen and (max-width: $max-mobile) {
+//   m-analytics__dashboard {
+//     .m-analytics__dashboard {
+//       .m-analytics__main {
+//         .m-analytics__mainHeader {
+//           m-analytics__filter {
+//             .m-analyticsFilter__wrapper {
+//               > * {
+//                 width: 140px;
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

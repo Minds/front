@@ -237,7 +237,7 @@ const fakeData: Array<any> = [
                 {
                   key: 1567641600000,
                   date: '2019-09-05T00:00:00+00:00',
-                  value: 5,
+                  value: 1,
                 },
                 {
                   key: 1567296000000,

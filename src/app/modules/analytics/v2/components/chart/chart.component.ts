@@ -120,7 +120,7 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
     this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
       this.isDark = isDark;
       if (this.init) {
-        this.getData('themesubs');
+        this.getData();
         this.getLayout();
       }
       this.detectChanges();
@@ -144,17 +144,6 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
     const tempPaletteItem = chartPalette.segmentColorIds[0];
     chartPalette.segmentColorIds[0] = chartPalette.segmentColorIds[1];
     chartPalette.segmentColorIds[1] = tempPaletteItem;
-  }
-
-  getMarkerFills() {
-    this.markerFills = [];
-    this.segments.forEach((segment, index) => {
-      const segmentMarkerFills = [];
-      for (let i = 0; i < this.pointsPerSegment; i++) {
-        segmentMarkerFills[i] = this.getColor('m-white');
-      }
-      this.markerFills.push(segmentMarkerFills);
-    });
   }
 
   initPlot() {
@@ -187,17 +176,22 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
       };
     }
 
-    this.getMarkerFills();
-    this.getData('initplot');
+    this.getData();
     this.getLayout();
     this.init = true;
 
     this.detectChanges();
   }
 
-  getData(source) {
-    console.log('getData called by:', source);
-    console.log(this.segments[0]);
+  getData() {
+    this.markerFills = [];
+    this.segments.forEach((segment, index) => {
+      const segmentMarkerFills = [];
+      for (let i = 0; i < this.pointsPerSegment; i++) {
+        segmentMarkerFills[i] = this.getColor('m-white');
+      }
+      this.markerFills.push(segmentMarkerFills);
+    });
 
     const globalSegmentSettings = {
       type: 'scatter',
@@ -267,7 +261,7 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
         linewidth: 1,
         zeroline: false,
         fixedrange: true,
-        automargin: true, // TODOOJM this is a test
+        // automargin: true,
         // rangemode: 'nonnegative',
       },
       yaxis: {
@@ -360,68 +354,76 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   }
 
   populateHoverInfo() {
+    const pt = this.isComparison ? 1 : 0;
     // TODO: format value strings here and remove ngSwitch from template?
-    this.hoverInfo['date'] = this.segments[0].buckets[this.hoverPoint].date;
+    this.hoverInfo['date'] = this.segments[pt].buckets[this.hoverPoint].date;
     this.hoverInfo['value'] =
       this.selectedMetric.unit !== 'usd'
-        ? this.segments[0].buckets[this.hoverPoint].value
-        : this.segments[0].buckets[this.hoverPoint].value / 100;
+        ? this.segments[pt].buckets[this.hoverPoint].value
+        : this.segments[pt].buckets[this.hoverPoint].value / 100;
 
     if (this.isComparison && this.segments[1]) {
       this.hoverInfo['comparisonValue'] =
         this.selectedMetric.unit !== 'usd'
-          ? this.segments[1].buckets[this.hoverPoint].value
-          : this.segments[1].buckets[this.hoverPoint].value / 100;
+          ? this.segments[0].buckets[this.hoverPoint].value
+          : this.segments[0].buckets[this.hoverPoint].value / 100;
 
-      this.hoverInfo['comparisonDate'] = this.segments[1].buckets[
+      this.hoverInfo['comparisonDate'] = this.segments[0].buckets[
         this.hoverPoint
       ].date;
     }
   }
 
   positionHoverInfo($event) {
-    let pt = 0;
-    if (this.isComparison) {
-      pt = 1;
-    }
-    const xAxis = $event.points[0].xaxis,
-      yAxis = $event.points[0].yaxis,
-      tooltipXDist = xAxis.d2p($event.points[pt].x) + 16,
-      tooltipYDist = yAxis.d2p($event.points[pt].y) + 16;
-
-    // if (this.hoverPoint < this.pointsPerSegment / 2) {
-    this.hoverInfoDiv.style.top = tooltipYDist + yAxis._offset + 'px';
-    this.hoverInfoDiv.style.left = tooltipXDist + xAxis._offset + 'px';
+    const pad = 16,
+      pt = this.isComparison ? 1 : 0,
+      xAxis = $event.points[pt].xaxis,
+      yAxis = $event.points[pt].yaxis,
+      pointXDist = xAxis.d2p($event.points[pt].x) + xAxis._offset,
+      pointYDist = yAxis.d2p($event.points[pt].y) + yAxis._offset,
+      plotRect = document
+        .querySelector('.js-plotly-plot')
+        .getBoundingClientRect(),
+      hoverInfoRect = this.hoverInfoDiv.getBoundingClientRect();
 
     console.log('-------------');
     console.log(
-      'point #' +
-        this.hoverPoint +
-        ': (' +
-        (tooltipXDist + xAxis._offset) +
-        ',' +
-        (tooltipYDist + yAxis._offset) +
-        ')'
+      'point #' + this.hoverPoint + ': (' + pointXDist + ',' + pointYDist + ')'
     );
-    // console.log('tooltipXDist', tooltipXDist);
-    // console.log('xAxis._offset', xAxis._offset);
 
-    // console.log('tooltipYDist', tooltipYDist);
-    // console.log('yAxis._offset', yAxis._offset);
-    // } else {
-    //   this.hoverInfoDiv.style.top = tooltipYDist + xAxis._offset + 'px';
-    //   this.hoverInfoDiv.style.left = tooltipXDist + yAxis._offset + 'px';
-    // }
+    if (pointYDist < plotRect.height / 2) {
+      // If point is in top half of plot, hoverinfo should go beneath it
+      this.hoverInfoDiv.style.top = pointYDist + pad + 'px';
+    } else {
+      this.hoverInfoDiv.style.top =
+        pointYDist - pad - hoverInfoRect.height + 'px';
+    }
+
+    if (pointXDist < plotRect.width / 2) {
+      // If point is in left half of plot, hoverinfo should go on the right
+      this.hoverInfoDiv.style.left = pointXDist + pad + 'px';
+    } else {
+      this.hoverInfoDiv.style.left =
+        pointXDist - pad - hoverInfoRect.width + 'px';
+    }
   }
 
   @HostListener('window:resize')
   applyDimensions() {
     if (this.init) {
-      this.layout = {
-        ...this.layout,
-        width: this.chartContainer.nativeElement.clientWidth, // - 32,
-        height: this.chartContainer.nativeElement.clientHeight, // - 32,
-      };
+      console.log(
+        'chartcontainer: W ' +
+          this.chartContainer.nativeElement.clientWidth +
+          ', H ' +
+          this.chartContainer.nativeElement.clientHeight
+      );
+      this.layout.width = this.chartContainer.nativeElement.clientWidth - 56; //- 32;
+      this.layout.height = this.chartContainer.nativeElement.clientHeight;
+      // this.layout = {
+      //   ...this.layout,
+      //   width: this.chartContainer.nativeElement.clientWidth, // - 32,
+      //   height: this.chartContainer.nativeElement.clientHeight, // - 32,
+      // };
       this.newLineRange = true;
       this.detectChanges();
     }
