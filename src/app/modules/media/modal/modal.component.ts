@@ -1,19 +1,21 @@
 import {
   Component,
-  OnInit,
-  OnDestroy,
-  Input,
   HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
   ViewChild,
+  SkipSelf,
+  Injector,
 } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, Event, NavigationStart } from '@angular/router';
+import { Event, NavigationStart, Router } from '@angular/router';
 import {
-  trigger,
+  animate,
   state,
   style,
-  animate,
   transition,
+  trigger,
 } from '@angular/animations';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
@@ -22,6 +24,13 @@ import { AnalyticsService } from '../../../services/analytics';
 import { MindsVideoComponent } from '../components/video/video.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { ActivityService } from '../../../common/services/activity.service';
+import { SiteService } from '../../../common/services/site.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
+
+export type MediaModalParams = {
+  redirectUrl?: string;
+  entity: any;
+};
 
 @Component({
   selector: 'm-media--modal',
@@ -52,11 +61,14 @@ import { ActivityService } from '../../../common/services/activity.service';
       transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
     ]),
   ],
-  providers: [ActivityService],
+  providers: [ActivityService, ClientMetaService],
 })
 export class MediaModalComponent implements OnInit, OnDestroy {
   minds = window.Minds;
+
   entity: any = {};
+  originalEntity: any = null;
+  redirectUrl: string;
   isLoading: boolean = true;
   navigatedAway: boolean = false;
   fullscreenHovering: boolean = false; // Used for fullscreen button transformation
@@ -97,8 +109,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   routerSubscription: Subscription;
 
-  @Input('entity') set data(entity) {
-    this.entity = entity;
+  @Input('entity') set data(params: MediaModalParams) {
+    this.originalEntity = params.entity;
+    this.entity = params.entity && JSON.parse(JSON.stringify(params.entity)); // deep clone
+    this.redirectUrl = params.redirectUrl || null;
   }
 
   // Used to make sure video progress bar seeker / hover works
@@ -110,8 +124,16 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     public analyticsService: AnalyticsService,
     private overlayModal: OverlayModalService,
     private router: Router,
-    private location: Location
-  ) {}
+    private location: Location,
+    private site: SiteService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector
+  ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('modal');
+  }
 
   ngOnInit() {
     // Prevent dismissal of modal when it's just been opened
@@ -124,13 +146,25 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           this.entity.title ||
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.entity_guid || this.entity.guid;
-        this.thumbnail = this.entity.thumbnails.xlarge;
+        this.thumbnail = this.entity.thumbnails
+          ? this.entity.thumbnails.xlarge
+          : null;
+
         switch (this.entity.custom_type) {
           case 'video':
             this.contentType = 'video';
+            this.entity.width = this.entity.custom_data.dimensions
+              ? this.entity.custom_data.dimensions.width
+              : 1280;
+            this.entity.height = this.entity.custom_data.dimensions
+              ? this.entity.custom_data.dimensions.height
+              : 720;
+            this.entity.thumbnail_src = this.entity.custom_data.thumbnail_src;
             break;
           case 'batch':
             this.contentType = 'image';
+            this.entity.width = this.entity.custom_data[0].width;
+            this.entity.height = this.entity.custom_data[0].height;
         }
         break;
       case 'object':
@@ -138,16 +172,17 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           case 'video':
             this.contentType = 'video';
             this.title = this.entity.title;
+            this.entity.entity_guid = this.entity.guid;
             break;
           case 'image':
             this.contentType = 'image';
             // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
             this.thumbnail = this.entity.thumbnail;
+            this.title = this.entity.title;
+            this.entity.entity_guid = this.entity.guid;
             break;
           case 'blog':
             this.contentType = 'blog';
-            this.title = this.entity.title;
-            this.entity.guid = this.entity.guid;
             this.entity.entity_guid = this.entity.guid;
         }
         break;
@@ -166,7 +201,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
         break;
     }
 
-    if (this.contentType !== 'blog') {
+    if (this.redirectUrl) {
+      this.pageUrl = this.redirectUrl;
+    } else if (this.contentType !== 'blog') {
       this.pageUrl = `/media/${this.entity.entity_guid}`;
     } else {
       this.pageUrl = this.entity.route
@@ -176,6 +213,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     this.boosted = this.entity.boosted || this.entity.p2p_boosted || false;
 
+    // Set ownerIconTime
     const session = this.session.getLoggedInUser();
     if (session && session.guid === this.entity.ownerObj.guid) {
       this.ownerIconTime = session.icontime;
@@ -186,8 +224,15 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isTablet =
       isMobileOrTablet() && Math.min(screen.width, screen.height) >= 768;
 
+    let url = `${this.pageUrl}?ismodal=true`;
+
+    if (this.site.isProDomain) {
+      url = `/pro/${this.site.pro.user_guid}${url}`;
+    }
+
+    this.clientMetaService.recordView(this.entity);
     this.analyticsService.send('pageview', {
-      url: `${this.pageUrl}?ismodal=true`,
+      url,
     });
 
     // * LOCATION & ROUTING * -----------------------------------------------------------------------------------
@@ -216,16 +261,14 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     switch (this.contentType) {
       case 'video':
-        this.entityWidth = this.entity.custom_data.dimensions.width;
-        this.entityHeight = this.entity.custom_data.dimensions.height;
-        break;
       case 'image':
-        this.entityWidth = this.entity.custom_data[0].width;
-        this.entityHeight = this.entity.custom_data[0].height;
+        this.entityWidth = this.entity.width;
+        this.entityHeight = this.entity.height;
         break;
       case 'blog':
-        this.entityWidth = window.innerWidth;
-        this.entityHeight = window.innerHeight;
+        this.entityWidth = window.innerWidth * 0.6;
+        this.entityHeight = window.innerHeight * 0.6;
+        break;
     }
 
     this.aspectRatio = this.entityWidth / this.entityHeight;
@@ -243,11 +286,11 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       if (this.contentType === 'blog') {
         this.mediaHeight = Math.max(
           this.minStageHeight,
-          window.innerHeight - this.padding * 2
+          window.innerHeight * 0.9 - this.padding * 2
         );
         this.mediaWidth = Math.max(
           this.minStageWidth,
-          window.innerWidth - this.contentWidth - this.padding * 2
+          window.innerWidth * 0.9 - this.contentWidth - this.padding * 2
         );
         this.stageHeight = this.mediaHeight;
         this.stageWidth = this.mediaWidth;
@@ -345,6 +388,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       this.mediaHeight = this.stageHeight;
     }
 
+    // Scale width according to aspect ratio
     this.mediaWidth = this.scaleWidth();
   }
 
@@ -389,6 +433,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   scaleHeight() {
     return Math.round(this.mediaWidth / this.aspectRatio);
   }
+
   scaleWidth() {
     return Math.round(this.mediaHeight * this.aspectRatio);
   }

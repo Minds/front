@@ -9,7 +9,7 @@ stages:
   - prepare
   - review
   - deploy:staging
-  - test:e2e
+  - qa
   - deploy:canary
   - deploy:production
   - cleanup
@@ -34,9 +34,13 @@ lint:
     - prettier --check "src/**/*.scss"
     - prettier --check "src/**/*.html"
 
-e2e:chrome:
+############
+# QA Stage #
+############
+
+qa:e2e:
   image: cypress/browsers:chrome67
-  stage: test:e2e
+  stage: qa
   variables:
     CYPRESS_INSTALL_BINARY: 3.4.1
   script:
@@ -44,12 +48,14 @@ e2e:chrome:
     - >
       if [ "$CI_BUILD_REF_NAME" == "master" ]; then
         export E2E_DOMAIN=https://www.minds.com
+        export PRODUCTION=true
       else
         export E2E_DOMAIN=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+        export PRODUCTION=false
       fi
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
-    - $(npm bin)/cypress run --browser chrome --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN
+    - $(npm bin)/cypress run --browser chrome --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN,production=$PRODUCTION
   artifacts:
     when: always
     paths:
@@ -60,6 +66,17 @@ e2e:chrome:
       - .npm
       - cache/Cypress
   allow_failure: true #manual inspection in case of timeouts
+
+qa:manual:
+  stage: qa
+  script:
+    - echo "Manually approved"
+  when: manual
+  only:
+    refs:
+      - master
+      - test/gitlab-ci
+  allow_failure: false
 
 ###############
 # Build Stage #

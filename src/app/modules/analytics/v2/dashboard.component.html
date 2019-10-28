@@ -1,0 +1,65 @@
+<div class="page" [ngClass]="{ isMobile: isMobile }">
+  <m-analytics__menu></m-analytics__menu>
+
+  <section
+    class="main"
+    *ngIf="ready$ | async"
+    [ngClass]="{ isMobile: isMobile }"
+  >
+    <!-- <section class="main" [ngClass]="{ isMobile: isMobile }"> -->
+    <div class="mainHeader">
+      <div class="dashboardTitle">
+        <h3 class="selectedCatLabel">
+          {{ category$ | async | titlecase }}
+        </h3>
+        <p
+          class="selectedCatDescription"
+          *ngIf="description$ | async as description"
+        >
+          {{ description }}
+          <ng-container *ngIf="(category$ | async) === 'earnings'">
+            <a *ngIf="!session.getLoggedInUser().pro" routerLink="/pro"
+              >Upgrade to PRO</a
+            >
+            <a
+              *ngIf="
+                session.getLoggedInUser().pro &&
+                !(
+                  session.getLoggedInUser().merchant &&
+                  session.getLoggedInUser().merchant['id']
+                )
+              "
+              routerLink="/wallet/usd"
+              >Enable payouts</a
+            >.
+          </ng-container>
+        </p>
+      </div>
+      <div class="globalFilters">
+        <!-- <div *ngIf="session.isAdmin()" class="channelSearch"> -->
+        <!-- <div class="channelSearch">
+          <m-analytics__search></m-analytics__search>
+        </div> -->
+        <div class="channelFilter" *ngIf="session.isAdmin()">
+          <m-analytics__filter [filter]="channelFilter"></m-analytics__filter>
+        </div>
+        <div class="timespanFilter">
+          <m-analytics__filter [filter]="timespanFilter"></m-analytics__filter>
+        </div>
+      </div>
+    </div>
+    <div class="layoutWrapper">
+      <m-analytics__layout--chart
+        class="m-analytics__layout"
+      ></m-analytics__layout--chart>
+      <!-- <m-analytics__layout--table
+      class="m-analytics__layout"
+      *ngIf="(category$ | async).type === 'table'"
+    ></m-analytics__layout--table>
+    <m-analytics__layout--summary
+      class="m-analytics__layout"
+      *ngIf="(category$ | async).type === 'summary'"
+    ></m-analytics__layout--summary> -->
+    </div>
+  </section>
+</div>

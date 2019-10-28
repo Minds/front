@@ -20,7 +20,7 @@ context('Topbar', () => {
       .contains('View Channel')
       .click();
 
-    cy.location('pathname').should('eq', `/${Cypress.env().username}`);
+    cy.location('pathname').should('eq', `/${Cypress.env().username}/`);
   });
 
   it('clicking on the dropdown on the right should allow to go to settings', () => {

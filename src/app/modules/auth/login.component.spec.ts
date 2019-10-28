@@ -115,7 +115,7 @@ describe('LoginComponent', () => {
     );
     expect(h3).not.toBeNull();
     expect(h3.nativeElement.textContent).toContain(
-      'Not on Minds? Start a channel'
+      'Not on Minds? Start a Minds channel'
     );
     expect(
       fixture.debugElement.query(By.css('minds-form-register'))
@@ -128,11 +128,11 @@ describe('LoginComponent', () => {
 
   it('should redirect after registering', () => {
     comp.registered();
-    expect(signupModalServiceMock.setDisplay).toHaveBeenCalled();
-    expect(signupModalServiceMock.setDisplay.calls.mostRecent().args[0]).toBe(
-      'categories'
-    );
-    expect(signupModalServiceMock.open).toHaveBeenCalled();
+    // expect(signupModalServiceMock.setDisplay).toHaveBeenCalled();
+    // expect(signupModalServiceMock.setDisplay.calls.mostRecent().args[0]).toBe(
+    //   'categories'
+    // );
+    // expect(signupModalServiceMock.open).toHaveBeenCalled();
     expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();
     expect(
       loginReferrerServiceMock.navigate.calls.mostRecent().args[0]

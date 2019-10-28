@@ -58,6 +58,15 @@ describe('TagPipe', () => {
     );
   });
 
+  it('should transform uppercase text following # to lower case ', () => {
+    const pipe = new TagsPipe(featuresServiceMock);
+    const string = 'textString #NaMe';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain(
+      '<a href="/newsfeed/global/top;hashtag=name;period=24h'
+    );
+  });
+
   it('should correctly parse when duplicates substrings present', () => {
     const pipe = new TagsPipe(featuresServiceMock);
     const string = '#hash #hashlonger';

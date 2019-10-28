@@ -1,0 +1,15 @@
+<div class="m-marketing">
+  <div class="m-marketing__mainWrapper">
+    <ng-content select=".m-marketing__main"></ng-content>
+  </div>
+
+  <ng-content select="[slot=2]"></ng-content>
+
+  <div class="m-marketing__sep" *ngIf="bodyWrapper?.children?.length > 0"></div>
+
+  <div class="m-marketing__extrasWrapper" #bodyWrapper>
+    <ng-content select=".m-marketing__extras"></ng-content>
+  </div>
+</div>
+
+<m-marketing__footer></m-marketing__footer>

@@ -239,6 +239,8 @@ export class Activity implements OnInit {
       this.activity.time_created || Math.floor(Date.now() / 1000);
 
     this.allowComments = this.activity.allow_comments;
+
+    this.activityAnalyticsOnViewService.checkVisibility(); // perform check
   }
 
   getOwnerIconTime() {
@@ -569,9 +571,13 @@ export class Activity implements OnInit {
     this.activity.modal_source_url = this.router.url;
 
     this.overlayModal
-      .create(MediaModalComponent, this.activity, {
-        class: 'm-overlayModal--media',
-      })
+      .create(
+        MediaModalComponent,
+        { entity: this.activity },
+        {
+          class: 'm-overlayModal--media',
+        }
+      )
       .present();
   }
 

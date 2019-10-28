@@ -26,6 +26,18 @@ interface Minds {
   sale?: boolean | string;
   last_tos_update: number;
   tags: string[];
+  pro?: any;
+  handlers?: { pro: string; plus: string };
+  upgrades?: {
+    pro: {
+      monthly: { tokens: number; usd: number };
+      yearly: { tokens: number; usd: number };
+    };
+    plus: {
+      monthly: { tokens: number; usd: number };
+      yearly: { tokens: number; usd: number };
+    };
+  };
 }
 
 interface MindsNavigation {

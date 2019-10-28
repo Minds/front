@@ -106,9 +106,22 @@ import { PosterDateSelectorComponent } from './components/poster-date-selector/s
 import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
 import { ShareModalComponent } from '../modules/modals/share/share';
 import { RouterHistoryService } from './services/router-history.service';
+import { DraggableListComponent } from './components/draggable-list/list.component';
+import { DndModule } from 'ngx-drag-drop';
+import { SiteService } from './services/site.service';
+import { MarketingComponent } from './components/marketing/marketing.component';
+import { MarketingFooterComponent } from './components/marketing/footer.component';
+import { ToggleComponent } from './components/toggle/toggle.component';
+import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 
 @NgModule({
-  imports: [NgCommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    NgCommonModule,
+    DndModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     MINDS_PIPES,
 
@@ -196,8 +209,12 @@ import { RouterHistoryService } from './services/router-history.service';
     SwitchComponent,
 
     FeaturedContentComponent,
-
     PosterDateSelectorComponent,
+    DraggableListComponent,
+    ToggleComponent,
+    MarketingComponent,
+    MarketingFooterComponent,
+    MarketingAsFeaturedInComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -284,8 +301,13 @@ import { RouterHistoryService } from './services/router-history.service';
     FeaturedContentComponent,
     PosterDateSelectorComponent,
     ChannelModeSelectorComponent,
+    DraggableListComponent,
+    ToggleComponent,
+    MarketingComponent,
+    MarketingAsFeaturedInComponent,
   ],
   providers: [
+    SiteService,
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
@@ -301,7 +323,7 @@ import { RouterHistoryService } from './services/router-history.service';
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
-      deps: [HttpClient],
+      deps: [HttpClient, SiteService],
     },
     {
       provide: NSFWSelectorCreatorService,

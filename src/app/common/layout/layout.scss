@@ -12,4 +12,9 @@ m-body {
   &.has-v2-navbar {
     margin-top: 52px;
   }
+
+  &.is-pro-domain {
+    margin-top: 0;
+    padding-bottom: 0;
+  }
 }

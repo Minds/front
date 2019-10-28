@@ -159,4 +159,51 @@ export class ChannelSidebar {
       )
       .present();
   }
+
+  async proAdminToggle() {
+    const value = !this.user.pro;
+    const method = value ? 'put' : 'delete';
+
+    this.user.pro = value;
+
+    try {
+      const response = (await this.client[method](
+        `api/v2/admin/pro/${this.user.guid}`
+      )) as any;
+
+      if (!response || response.status !== 'success') {
+        throw new Error('Invalid server response');
+      }
+    } catch (e) {
+      console.error(e);
+      this.user.pro = !value;
+    }
+  }
+
+  get showBecomeProButton() {
+    const isOwner =
+      this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().guid == this.user.guid;
+    return isOwner && !this.user.pro;
+  }
+
+  get showProSettings() {
+    const isOwner =
+      this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().guid == this.user.guid;
+    const isAdmin = window.Minds.Admin;
+    return (isOwner || isAdmin) && this.user.pro;
+  }
+
+  get proSettingsRouterLink() {
+    const isAdmin = window.Minds.Admin;
+
+    const route: any[] = ['/pro/settings'];
+
+    if (isAdmin) {
+      route.push({ user: this.user.username });
+    }
+
+    return route;
+  }
 }

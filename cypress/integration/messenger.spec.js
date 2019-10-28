@@ -52,6 +52,7 @@ context('Messenger', () => {
 
   after(() => {
     cy.deleteUser(testUsername, testPassword);
+    cy.clearCookies({log: true})
   });
 
   it('should allow a new user to set a password and send a message', () => {
