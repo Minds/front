@@ -1,16 +1,18 @@
 <section class="m-analytics__metricsSection">
-  <div *ngIf="overflowing" class="m-analytics__metricsOverflowFade--left"></div>
+  <div *ngIf="isOverflown" class="m-analytics__metricsOverflowFade--left"></div>
   <div
-    *ngIf="overflowing"
+    [ngClass]="{ showButton: showButton.left }"
     class="m-analytics__metricsOverflowScrollButton--left"
+    (click)="slideLeft()"
   >
     <i class="material-icons">chevron_left</i>
   </div>
   <div class="m-analytics__metricsWrapper" #metricsWrapper>
     <div
-      class="m-analytics__metricsContainer"
       #metricsContainer
       *ngIf="metrics$ | async as metrics"
+      class="m-analytics__metricsContainer disable-scrollbars"
+      (scroll)="onScroll($event)"
     >
       <ng-container *ngFor="let metric of metrics">
         <div
@@ -54,12 +56,13 @@
     </div>
   </div>
   <div
-    *ngIf="overflowing"
+    *ngIf="isOverflown"
     class="m-analytics__metricsOverflowFade--right"
   ></div>
   <div
-    *ngIf="overflowing"
+    [ngClass]="{ showButton: showButton.right }"
     class="m-analytics__metricsOverflowScrollButton--right"
+    (click)="slideRight()"
   >
     <i class="material-icons">chevron_right</i>
   </div>

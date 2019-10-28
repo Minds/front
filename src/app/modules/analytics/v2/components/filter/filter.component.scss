@@ -6,7 +6,6 @@ m-analytics__filter {
   margin: 0 24px 36px 0;
   z-index: 2;
   display: block;
-  // min-width: 140px;
 }
 .m-analyticsFilter__labelWrapper {
   position: absolute;
@@ -28,29 +27,30 @@ m-analytics__filter {
         color: rgba(themed($m-grey-300), 0.7);
       }
     }
-    .m-tooltip--bubble {
-      letter-spacing: 1.2px;
-      line-height: 16px;
-      z-index: 9999;
+  }
+  .m-tooltip--bubble {
+    letter-spacing: 1.2px;
+    line-height: 16px;
+    z-index: 9999;
+    font-size: 11px;
+    bottom: 110%;
+    left: 0;
+    width: 160px;
+    @include m-theme() {
+      color: themed($m-white);
+      background-color: themed($m-blue);
+    }
+    > * {
       font-size: 11px;
-      bottom: 85%;
-      left: 100%;
-      @include m-theme() {
-        color: themed($m-white);
-        background-color: themed($m-blue);
-      }
-      > * {
-        font-size: 11px;
-        font-weight: 300;
-        line-height: inherit;
-        letter-spacing: inherit;
-      }
-      ul {
-        padding-inline-start: 16px;
-        margin-block-end: 4px;
-        li {
-          padding-bottom: 8px;
-        }
+      font-weight: 300;
+      line-height: inherit;
+      letter-spacing: inherit;
+    }
+    ul {
+      padding-inline-start: 16px;
+      margin-block-end: 4px;
+      li {
+        padding-bottom: 8px;
       }
     }
   }
@@ -188,6 +188,11 @@ m-analytics__filter {
 
 @media screen and (max-width: $min-tablet) {
   m-analytics__filter {
+    .m-analyticsFilter__labelWrapper {
+      .m-tooltip--bubble {
+        width: 120px;
+      }
+    }
     .m-analyticsFilter__wrapper {
       > * {
         width: 140px;
@@ -198,8 +203,6 @@ m-analytics__filter {
 
 @media screen and (max-width: $max-mobile) {
   m-analytics__filter {
-    // min-width: 100px;
-    // flex: 0 1 35%;
     .m-analyticsFilter__wrapper {
       .m-analyticsFilter__header {
         i {

@@ -46,11 +46,13 @@ m-analytics__chart {
 
   [class*='m-analyticsChart__hoverInfo__row'] {
     padding-bottom: 4px;
+    font-weight: 300;
     &:last-of-type {
       padding-top: 2px;
     }
   }
   .m-analyticsChart__hoverInfo__row--primary {
+    font-weight: 400;
     font-size: 15px;
     @include m-theme() {
       color: themed($m-grey-600);

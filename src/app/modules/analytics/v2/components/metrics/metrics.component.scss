@@ -1,7 +1,9 @@
 m-analytics__metrics {
   display: block;
+  width: 100%;
   .m-analytics__metricsSection {
     position: relative;
+    width: 100%;
 
     [class*='m-analytics__metricsOverflowFade--'] {
       position: absolute;
@@ -38,7 +40,11 @@ m-analytics__metrics {
       box-sizing: border-box;
       z-index: 2;
       transform: translateY(-50%);
-      transition: all 0.2s ease-in;
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+      &.showButton {
+        opacity: 1;
+      }
       cursor: pointer;
       @include m-theme() {
         background-color: themed($m-white);
@@ -68,18 +74,33 @@ m-analytics__metrics {
   position: relative;
   overflow: hidden;
   width: 100%;
+  height: 124px;
   @include m-theme() {
     box-shadow: 0 7px 15px -7px rgba(themed($m-black-always), 0.1);
   }
 }
+
 .m-analytics__metricsContainer {
+  overflow-x: scroll;
   position: relative;
+  scroll-snap-type: x mandatory;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  // overflow-x: hidden;
+  overflow-y: hidden;
   display: flex;
   flex-wrap: nowrap;
-  overflow-x: scroll;
-  // &.metricsContainer::-webkit-scrollbar {
-  //   display: none;
-  // }
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+
+  &.disable-scrollbars {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    &::-webkit-scrollbar {
+      width: 0px;
+      background: transparent; /* Chrome/Safari/Webkit */
+    }
+  }
 
   .m-analytics__metric {
     cursor: pointer;
@@ -168,8 +189,15 @@ m-analytics__metrics {
 
 @media screen and (max-width: $min-tablet) {
   .m-analytics__metricsSection {
+    [class*='m-analytics__metricsOverflowScrollButton--'] {
+      display: none;
+    }
     .m-analytics__metricsContainer {
+      overflow-x: scroll;
+      position: relative;
+      scroll-snap-type: x mandatory;
       .m-analytics__metric {
+        scroll-snap-align: start;
         &:first-child {
           margin-left: 16px;
         }

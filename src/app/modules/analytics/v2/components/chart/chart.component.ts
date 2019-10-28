@@ -65,7 +65,6 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   layout;
   config = {
     displayModeBar: false,
-    // responsive: true,
   };
 
   pointsPerSegment = 1;
@@ -89,7 +88,8 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   constructor(
     private analyticsService: AnalyticsDashboardService,
     private themeService: ThemeService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    private hostElement: ElementRef
   ) {}
 
   ngOnInit() {
@@ -153,7 +153,6 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
 
       // Reverse the segments so comparison line is layered behind current line
       this.segments.reverse();
-      console.log(this.segments);
 
       // Current line should be blue
       this.swapSegmentColors();
@@ -293,7 +292,6 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   }
 
   onHover($event) {
-    console.log($event);
     this.hoverPoint = $event.points[0].pointIndex;
     this.addMarkerFill();
     this.showShape($event);
@@ -307,8 +305,6 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
     this.emptyMarkerFill();
     this.hideShape();
     this.hoverInfoDiv.style.opacity = 0;
-    // this.hoverInfoDiv.style.top = '0px';
-    // this.hoverInfoDiv.style.left = '0px';
     this.detectChanges();
   }
 
@@ -386,11 +382,6 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
         .getBoundingClientRect(),
       hoverInfoRect = this.hoverInfoDiv.getBoundingClientRect();
 
-    console.log('-------------');
-    console.log(
-      'point #' + this.hoverPoint + ': (' + pointXDist + ',' + pointYDist + ')'
-    );
-
     if (pointYDist < plotRect.height / 2) {
       // If point is in top half of plot, hoverinfo should go beneath it
       this.hoverInfoDiv.style.top = pointYDist + pad + 'px';
@@ -411,19 +402,13 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   @HostListener('window:resize')
   applyDimensions() {
     if (this.init) {
-      console.log(
-        'chartcontainer: W ' +
-          this.chartContainer.nativeElement.clientWidth +
-          ', H ' +
-          this.chartContainer.nativeElement.clientHeight
-      );
-      this.layout.width = this.chartContainer.nativeElement.clientWidth - 56; //- 32;
+      // this.layout.width = this.hostElement.nativeElement.clientWidth;
+      // this.layout.height = this.hostElement.nativeElement.clientHeight;
+
+      this.layout.width = this.chartContainer.nativeElement.clientWidth;
+      //-32; //- 56;
       this.layout.height = this.chartContainer.nativeElement.clientHeight;
-      // this.layout = {
-      //   ...this.layout,
-      //   width: this.chartContainer.nativeElement.clientWidth, // - 32,
-      //   height: this.chartContainer.nativeElement.clientHeight, // - 32,
-      // };
+
       this.newLineRange = true;
       this.detectChanges();
     }

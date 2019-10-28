@@ -1,8 +1,11 @@
 m-sidebarMenu {
   display: block;
-  min-width: 180px;
-  padding: 16px 16px 16px 80px;
-  flex: 1 1 0px;
+  // min-width: 180px;
+  // padding: 16px 16px 16px 80px;
+  // flex: 1 1 0px;
+  .m-sidebarMenu {
+    padding: 16px 16px 16px 80px;
+  }
   i {
     display: none;
     cursor: pointer;

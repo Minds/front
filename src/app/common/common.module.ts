@@ -114,6 +114,8 @@ import { MarketingFooterComponent } from './components/marketing/footer.componen
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
+import { ChartV2Component } from './components/chart-v2/chart-v2.component';
+import { MiniChartComponent } from './components/mini-chart/mini-chart.component';
 
 @NgModule({
   imports: [
@@ -217,6 +219,8 @@ import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.com
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
+    ChartV2Component,
+    MiniChartComponent,
   ],
   exports: [
     MINDS_PIPES,

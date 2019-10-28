@@ -14,6 +14,8 @@ import {
   Visualisation,
 } from '../../dashboard.service';
 
+import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
+
 @Component({
   selector: 'm-analytics__table',
   templateUrl: './table.component.html',
@@ -37,13 +39,16 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
     })
   );
   selectedMetric;
-
+  isTouchDevice: boolean;
   constructor(
     private analyticsService: AnalyticsDashboardService,
-    protected cd: ChangeDetectorRef // public session: Session
+    protected cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
+    this.isTouchDevice = true;
+    // TODOOJM: uncomment
+    // this.isTouchDevice = isMobileOrTablet();
     this.metricSubscription = this.selectedMetric$.subscribe(metric => {
       this.selectedMetric = metric;
       this.visualisation = metric.visualisation;
@@ -68,7 +73,9 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
       const reformattedBucket = {};
       const reformattedValues = [];
 
-      if (!bucket.values['entity']) return;
+      if (!bucket.values['entity']) {
+        return;
+      }
 
       this.columns.forEach((column, i) => {
         if (i === 0) {

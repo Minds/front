@@ -1,4 +1,5 @@
 <div class="m-analyticsTable__wrapper" [hidden]="loading">
+  <!-- [ngClass]="{ isTouchDevice: isTouchDevice }" -->
   <div class="m-analyticsTable__row--header">
     <div
       *ngFor="let col of columns | slice: 0:1"
@@ -20,22 +21,24 @@
         class="m-analyticsTable__col--entity m-analyticsTable__cell"
         *ngIf="row.entity"
       >
-        <div class="m-analyticsTable__entityTitle">
-          <span>{{ row.entity.title }}</span>
-          <i class="material-icons">open_in_new</i>
-        </div>
-        <div class="m-analyticsTable__entityDetails">
-          <span class="m-analyticsTable__usernameWrapper">
-            <a [routerLink]="'/' + row.entity.name"
-              >@{{ row.entity.username }}</a
+        <div class="m-analyticsTable__entityWrapper">
+          <div class="m-analyticsTable__entityTitle">
+            <span>{{ row.entity.title }}</span>
+            <i class="material-icons">open_in_new</i>
+          </div>
+          <div class="m-analyticsTable__entityDetails">
+            <span class="m-analyticsTable__usernameWrapper">
+              <a [routerLink]="'/' + row.entity.name"
+                >@{{ row.entity.username }}</a
+              >
+            </span>
+            <span class="m-analyticsTable__entityType">{{
+              row.entity.type | titlecase
+            }}</span>
+            <span class="m-analyticsTable__entityPublishDate"
+              >Published {{ row.entity.time_created * 1000 | date }}</span
             >
-          </span>
-          <span class="m-analyticsTable__entityType">{{
-            row.entity.type | titlecase
-          }}</span>
-          <span class="m-analyticsTable__entityPublishDate"
-            >Published {{ row.entity.time_created * 1000 | date }}</span
-          >
+          </div>
         </div>
       </div>
       <div class="m-analyticsTable__col--values">
