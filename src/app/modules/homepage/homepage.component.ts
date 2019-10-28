@@ -12,17 +12,7 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
   templateUrl: 'homepage.component.html',
 })
 export class HomepageComponent {
-  videos: Array<any> = [];
-  blogs: Array<any> = [];
-  channels: Array<any> = [];
-  stream = {
-    1: [],
-    2: [],
-    3: [],
-  };
-  offset: string = '';
-  inProgress: boolean = false;
-  videoError: boolean = false;
+  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 
   minds = window.Minds;
 
@@ -39,7 +29,6 @@ export class HomepageComponent {
     public session: Session
   ) {
     this.title.setTitle('Minds Social Network', false);
-    this.loadStream();
 
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
@@ -51,39 +40,8 @@ export class HomepageComponent {
     }
   }
 
-  loadStream(refresh: boolean = false) {
-    this.inProgress = true;
-    this.client
-      .get('api/v1/newsfeed/featured', { limit: 24, offset: this.offset })
-      .then((response: any) => {
-        let col = 0;
-        for (let activity of response.activity) {
-          //split stream into 3 columns
-          if (col++ >= 3) col = 1;
-          this.stream[col].push(activity);
-        }
-        this.offset = response['load-next'];
-        this.inProgress = false;
-      })
-      .catch(() => {
-        this.inProgress = false;
-      });
-  }
-
-  loadVideos() {
-    this.client
-      .get('api/v1/entities/featured/videos', { limit: 4 })
-      .then((response: any) => {
-        this.videos = response.entities;
-      });
-  }
-
-  loadBlogs() {
-    this.client
-      .get('api/v1/blog/featured', { limit: 4 })
-      .then((response: any) => {
-        this.blogs = response.blogs;
-      });
+  goToLoginPage() {
+    this.router.navigate(['/login']);
   }
 
   registered() {
@@ -91,9 +49,5 @@ export class HomepageComponent {
       defaultUrl:
         '/' + this.session.getLoggedInUser().username + ';onboarding=1',
     });
-  }
-
-  onSourceError() {
-    console.log('video failed');
   }
 }
