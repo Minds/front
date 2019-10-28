@@ -263,7 +263,7 @@
       </button>
     </div>
 
-    <ng-container *mIfFeature="'pro'">
+    <ng-container *mIfFeature="'purchase-pro'">
       <a
         *ngIf="showBecomeProButton"
         class="m-btn m-link-btn m-btn--with-icon m-btn--slim m-btn--action"
@@ -278,6 +278,7 @@
       *ngIf="showProSettings"
       class="m-btn m-link-btn m-btn--with-icon m-btn--slim"
       [routerLink]="proSettingsRouterLink"
+      data-cy="data-minds-sidebar-admin-pro-button"
     >
       <i class="material-icons">business_center</i>
       <span i18n>Pro</span>

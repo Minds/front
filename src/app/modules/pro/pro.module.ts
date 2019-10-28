@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../common/common.module';
 import { ProService } from './pro.service';
 import { ProMarketingComponent } from './marketing.component';
-import { ProSubscriptionComponent } from './channel/subscription/subscription.component';
+import { ProSubscriptionComponent } from './subscription/subscription.component';
 import { ProChannelComponent } from './channel/channel.component';
 import { ProChannelLoginComponent } from './channel/login/login.component';
 import { MindsFormsModule } from '../forms/forms.module';
@@ -34,6 +34,7 @@ import { MediaEditComponent } from '../media/edit/edit.component';
 import { BlogViewInfinite } from '../blogs/view/infinite';
 import { BlogEdit } from '../blogs/edit/edit';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
+import { ModalsModule } from '../modals/modals.module';
 
 const routes: Routes = [
   {
@@ -140,6 +141,7 @@ export const PRO_DOMAIN_ROUTES = [
     WireModule,
     VideoModule,
     AuthModule,
+    ModalsModule,
   ],
   providers: [ProService],
   declarations: [

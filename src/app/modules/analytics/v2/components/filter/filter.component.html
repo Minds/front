@@ -1,0 +1,49 @@
+<div class="filterLabelWrapper" *ngIf="filter.id !== 'timespan'">
+  <span>{{ filter.label }}</span>
+  <m-tooltip icon="help">
+    <div class="filterDesc">{{ filter?.description }}</div>
+    <ul class="filterOptions__descContainer">
+      <ng-container *ngFor="let option of filter.options">
+        <li class="filterOption__desc">
+          <span class="filterOption__descLabel">{{ option.label }}</span
+          ><span class="filterOption__desc" *ngIf="option.description"
+            >: {{ option.description }}</span
+          >
+        </li>
+      </ng-container>
+    </ul>
+  </m-tooltip>
+</div>
+<div
+  class="filterWrapper"
+  [ngClass]="{
+    expanded: expanded,
+    isMobile: isMobile,
+    dropUp: dropUp
+  }"
+  (focus)="expanded = true"
+  (blur)="expanded = false"
+>
+  <div class="filterHeader" (click)="expanded = !expanded">
+    <div class="row">
+      <span class="option option--selected">
+        {{ selectedOption.label }}
+      </span>
+      <i class="material-icons" *ngIf="!expanded">keyboard_arrow_down</i>
+      <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
+    </div>
+  </div>
+  <div class="unselectedOptionsContainer">
+    <ng-container *ngFor="let option of filter.options">
+      <div
+        class="option row"
+        (click)="updateFilter(option)"
+        [ngClass]="{
+          unavailable: option.available === false
+        }"
+      >
+        <span>{{ option.label }}</span>
+      </div>
+    </ng-container>
+  </div>
+</div>

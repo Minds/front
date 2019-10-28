@@ -1,0 +1,203 @@
+.tableWrapper {
+  // * {
+  //   border: 1px solid salmon;
+  // }
+  font-size: 13px;
+  font-weight: 400;
+  @include m-theme() {
+    color: themed($m-grey-800);
+  }
+  a {
+    text-decoration: none;
+    font-weight: normal;
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
+  [class*='row'] {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    &.row--header {
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-grey-50);
+        color: themed($m-grey-200);
+      }
+      .col--entity {
+        flex-direction: row;
+        align-items: flex-end;
+      }
+      .col--values {
+        .subCol--value.cell {
+          align-items: flex-end;
+        }
+      }
+    }
+    &.row--data {
+      &:hover {
+        @include m-theme() {
+          background-color: rgba(themed($m-blue-grey-50), 0.5);
+        }
+        .col--entity .entityTitle i {
+          display: inline-block;
+        }
+      }
+      .col--entity {
+        @include m-theme() {
+          border-right: 1px solid themed($m-grey-50);
+        }
+      }
+
+      // .col--entity,
+      // .col--entity *,
+      // .col--values,
+      // .col--values *,
+      [class*='col'],
+      [class*='col'] * {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      // .subCol--value  {
+      //   align-items: center;
+      // }
+    }
+    .cell {
+      display: flex;
+      overflow: hidden;
+      white-space: nowrap;
+      height: 50px;
+      padding: 8px 8px 8px 0;
+    }
+
+    .col--entity {
+      flex-direction: column;
+      padding-left: 24px;
+      // flex-basis: 20vw;
+
+      .usernameWrapper a {
+        font-weight: 400;
+        text-decoration: none;
+      }
+      .entityTitle {
+        display: flex;
+        > * {
+          display: inline-block;
+          max-width: 200px;
+        }
+
+        i {
+          font-size: 12px;
+          margin: 3px 0 0 3px;
+          display: none;
+          @include m-theme() {
+            color: themed($m-grey-800);
+          }
+        }
+      }
+      .entityDetails {
+        display: inline;
+        @include m-theme() {
+          color: themed($m-grey-200);
+        }
+        > * {
+          margin-right: $minds-margin;
+        }
+        .usernameWrapper {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        a {
+          @include m-theme() {
+            color: themed($m-grey-300);
+          }
+        }
+      }
+    }
+    .col--values {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      .subCol--value {
+        flex: 1 1 16vw;
+
+        &:first-of-type {
+          padding-left: 24px;
+        }
+        &:last-of-type {
+          padding-right: 16px;
+        }
+      }
+    }
+  }
+}
+
+.col--entity {
+  flex: 2 3 0;
+}
+.col--values {
+  flex: 1 2 0;
+}
+// MOBILE /////////////////////
+.tableWrapper.isMobile {
+  .col--entity {
+    flex: 1 3 0;
+  }
+  .col--values {
+    flex: 2 1 0;
+  }
+
+  .row--header {
+    border: none !important;
+  }
+  .row--data {
+    .col--entity.cell {
+      border: none !important;
+    }
+  }
+}
+///////////////////////////@at-root  @media screen and (max-width: 800px) {
+
+// @media screen and (max-width: 910px) {
+//   .m-referrals-dashboard__row.m-referrals-dashboard__headerRow {
+//     span {
+//       white-space: normal !important;
+//       max-width: 35px;
+//     }
+//     .m-referrals-dashboard__registerCol,
+//     .m-referrals-dashboard__rewardsCol {
+//       align-items: flex-start !important;
+//     }
+//     .m-referrals-dashboard__rewardsCol span {
+//       max-width: 46px;
+//     }
+//   }
+//   .m-referrals-dashboard__cell.m-referrals-dashboard__rewardsCol {
+//     flex: 2 3 0;
+
+//     .m-referrals-dashboard__pingButtonContainer button {
+//       padding: 8px;
+
+//       span {
+//         display: none;
+//       }
+//     }
+//   }
+// }
+
+//   .m-referrals-dashboard__cell.m-referrals-dashboard__registerCol {
+//     display: none;
+//   }
+//   .m-referrals-dashboard__userCol {
+//     min-width: 100px;
+//   }
+//   .m-referrals-dashboard__statusCol {
+//     min-width: 60px;
+//   }
+//   .m-referrals-dashboard__rewardsCol {
+//     max-width: 75px;
+//   }
+// }

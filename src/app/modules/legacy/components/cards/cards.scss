@@ -319,7 +319,9 @@ minds-activity-preview {
       margin-right: 12px;
     }
     .avatar img {
-      max-height: 24px;
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
     }
     .body {
       margin-left: 12px;

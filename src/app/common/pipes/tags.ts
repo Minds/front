@@ -32,7 +32,11 @@ export class TagsPipe implements PipeTransform {
       rule: /(^|\s||)#(\w+)/gim,
       replace: m => {
         if (this.featureService.has('top-feeds')) {
-          return `${m.match[1]}<a href="/newsfeed/global/top;hashtag=${m.match[2]};period=24h">#${m.match[2]}</a>`;
+          return `${
+            m.match[1]
+          }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=24h">#${
+            m.match[2]
+          }</a>`;
         }
         return `${m.match[1]}<a href="/newsfeed/tag/${m.match[2]};ref=hashtag">#${m.match[2]}</a>`;
       },

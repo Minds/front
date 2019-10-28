@@ -1,0 +1,184 @@
+$rounded-top: 3px 3px 0 0;
+$rounded-bottom: 0 0 3px 3px;
+
+m-analytics__filter {
+  position: relative;
+  margin: 0 36px 0 0;
+  z-index: 2;
+}
+.filterLabelWrapper {
+  position: absolute;
+  bottom: 110%;
+  white-space: nowrap;
+  @include m-theme() {
+    color: rgba(themed($m-grey-200), 0.9);
+  }
+  m-tooltip {
+    margin-right: 4px;
+  }
+  > * {
+    display: inline-block;
+  }
+  .m-tooltip {
+    i {
+      font-size: 12px;
+      @include m-theme() {
+        color: rgba(themed($m-grey-200), 0.7);
+      }
+    }
+    .m-tooltip--bubble {
+      letter-spacing: 1.2px;
+      line-height: 16px;
+      z-index: 9999;
+      font-size: 11px;
+      bottom: 85%;
+      left: 100%;
+      @include m-theme() {
+        color: themed($m-white);
+        background-color: themed($m-blue);
+      }
+      > * {
+        font-size: 11px;
+        font-weight: 300;
+        line-height: inherit;
+        letter-spacing: inherit;
+      }
+      ul {
+        padding-inline-start: 16px;
+        margin-block-end: 4px;
+        li {
+          padding-bottom: 8px;
+          .filterOption__descLabel {
+            // font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+.filterWrapper {
+  cursor: pointer;
+
+  &.expanded {
+    @include m-theme() {
+      box-shadow: 0px 1px 15px 0 rgba(themed($m-black), 0.15);
+    }
+    .filterHeader {
+      @include m-theme() {
+        border-color: themed($m-blue);
+      }
+    }
+    .unselectedOptionsContainer {
+      visibility: visible;
+      // @include m-theme() {
+      //   box-shadow: 0px 1px 15px 0 rgba(themed($m-black), 0.15);
+      // }
+    }
+
+    &:not(.dropUp) {
+      .filterHeader {
+        @include m-theme() {
+          border-radius: $rounded-top;
+        }
+      }
+      .unselectedOptionsContainer {
+        border-top: none;
+        border-radius: $rounded-bottom;
+      }
+    }
+    &.dropUp {
+      .filterHeader {
+        border-radius: $rounded-bottom;
+      }
+      .unselectedOptionsContainer {
+        bottom: 100%;
+        border-radius: $rounded-top;
+        border-bottom: none;
+      }
+    }
+  }
+
+  .filterHeader {
+    position: relative;
+    width: 100%;
+    padding: 8px 6px 6px 10px;
+    border-radius: 3px;
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    @include m-theme() {
+      background-color: themed($m-white);
+      color: rgba(themed($m-grey-200), 0.9);
+    }
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
+    }
+    .filterLabel {
+      margin-right: 10px;
+    }
+    i {
+      flex-grow: 0;
+    }
+    .option--selected {
+      margin-right: 8px;
+      @include m-theme() {
+        color: themed($m-grey-500);
+      }
+    }
+  }
+
+  .unselectedOptionsContainer {
+    position: absolute;
+    // display: none;
+    visibility: hidden;
+    width: 100%;
+    padding: 8px 6px 6px 10px;
+    border-radius: 3px;
+    left: 0px;
+    transition: box-shadow 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    @include m-theme() {
+      border: 1px solid themed($m-blue);
+      border-top: 1px solid themed($m-blue);
+      background-color: themed($m-white);
+    }
+    .option {
+      padding: 5px 0;
+    }
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+  .option {
+    border-radius: 3px;
+    white-space: nowrap;
+    @include m-theme() {
+      background-color: themed($m-white);
+      color: rgba(themed($m-grey-200), 0.9);
+    }
+
+    &.unavailable {
+      text-decoration: line-through;
+      @include m-theme() {
+        color: themed($m-grey-50);
+      }
+    }
+    &:hover:not(.unavailable) {
+      @include m-theme() {
+        color: themed($m-grey-500);
+      }
+    }
+  }
+}
+
+.filterWrapper.isMobile {
+  .filterHeader {
+    i {
+      display: none;
+    }
+  }
+  .option--selected {
+    margin-right: 0;
+  }
+}

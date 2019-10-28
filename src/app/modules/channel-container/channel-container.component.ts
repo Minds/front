@@ -23,6 +23,7 @@ import { FeaturesService } from '../../services/features.service';
 })
 export class ChannelContainerComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
+  error: string;
 
   channel: MindsUser;
 
@@ -88,7 +89,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
       const shouldRedirectToProHandler =
         !this.site.isProDomain &&
-        this.channel.pro &&
+        this.channel.pro_published &&
         !this.isOwner &&
         !this.isAdmin &&
         this.proEnabled;
@@ -100,6 +101,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
         });
       }
     } catch (e) {
+      this.error = e.message;
       console.error(e);
     }
 

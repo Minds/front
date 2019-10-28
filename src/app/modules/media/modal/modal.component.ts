@@ -5,6 +5,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  SkipSelf,
+  Injector,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
@@ -23,6 +25,7 @@ import { MindsVideoComponent } from '../components/video/video.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 export type MediaModalParams = {
   redirectUrl?: string;
@@ -58,12 +61,13 @@ export type MediaModalParams = {
       transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
     ]),
   ],
-  providers: [ActivityService],
+  providers: [ActivityService, ClientMetaService],
 })
 export class MediaModalComponent implements OnInit, OnDestroy {
   minds = window.Minds;
 
   entity: any = {};
+  originalEntity: any = null;
   redirectUrl: string;
   isLoading: boolean = true;
   navigatedAway: boolean = false;
@@ -106,7 +110,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
 
   @Input('entity') set data(params: MediaModalParams) {
-    this.entity = JSON.parse(JSON.stringify(params.entity)); // deep clone
+    this.originalEntity = params.entity;
+    this.entity = params.entity && JSON.parse(JSON.stringify(params.entity)); // deep clone
     this.redirectUrl = params.redirectUrl || null;
   }
 
@@ -120,8 +125,15 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private overlayModal: OverlayModalService,
     private router: Router,
     private location: Location,
-    private site: SiteService
-  ) {}
+    private site: SiteService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector
+  ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('modal');
+  }
 
   ngOnInit() {
     // Prevent dismissal of modal when it's just been opened
@@ -134,13 +146,19 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           this.entity.title ||
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.entity_guid || this.entity.guid;
-        this.thumbnail = this.entity.thumbnails.xlarge;
+        this.thumbnail = this.entity.thumbnails
+          ? this.entity.thumbnails.xlarge
+          : null;
 
         switch (this.entity.custom_type) {
           case 'video':
             this.contentType = 'video';
-            this.entity.width = this.entity.custom_data.dimensions.width;
-            this.entity.height = this.entity.custom_data.dimensions.height;
+            this.entity.width = this.entity.custom_data.dimensions
+              ? this.entity.custom_data.dimensions.width
+              : 1280;
+            this.entity.height = this.entity.custom_data.dimensions
+              ? this.entity.custom_data.dimensions.height
+              : 720;
             this.entity.thumbnail_src = this.entity.custom_data.thumbnail_src;
             break;
           case 'batch':
@@ -212,6 +230,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       url = `/pro/${this.site.pro.user_guid}${url}`;
     }
 
+    this.clientMetaService.recordView(this.entity);
     this.analyticsService.send('pageview', {
       url,
     });

@@ -7,7 +7,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import {
   NavItems,
@@ -16,6 +16,8 @@ import {
 } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MindsTitle } from '../../../../services/ux/title';
+import { filter } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -40,6 +42,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   selectedHashtag: string = 'all';
 
+  entities$;
+
   constructor(
     public feedsService: FeedsService,
     protected modalService: OverlayModalService,
@@ -49,7 +53,21 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected cd: ChangeDetectorRef,
     protected injector: Injector
-  ) {}
+  ) {
+    this.entities$ = this.feedsService.feed.pipe(
+      map((elements: BehaviorSubject<any>[]) => {
+        return elements.filter((element: BehaviorSubject<any>) => {
+          const entity = element.getValue();
+          return (
+            entity.type === 'group' ||
+            (!!entity.thumbnail_src ||
+              !!entity.custom_data ||
+              (entity.thumbnails && entity.thumbnails.length > 0))
+          );
+        });
+      })
+    );
+  }
 
   ngOnInit() {
     this.params$ = this.route.params.subscribe(params => {
@@ -163,10 +181,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     }));
 
     this.channelService.pushMenuNavItems(navItems, true);
-  }
-
-  get entities$() {
-    return this.feedsService.feed;
   }
 
   get hasMore$() {
