@@ -20,7 +20,6 @@ import { NewsfeedService } from '../services/newsfeed.service';
 import { NewsfeedBoostService } from '../newsfeed-boost.service';
 import { SettingsService } from '../../settings/settings.service';
 import { FeaturesService } from '../../../services/features.service';
-import { BoostedContentService } from '../../../common/services/boosted-content.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 
@@ -115,9 +114,6 @@ export class NewsfeedBoostRotatorComponent {
       if (this.currentPosition >= this.boosts.length) {
         this.currentPosition = 0;
       }
-      // if (this.currentPosition === 0) {
-      //   this.recordImpression(this.currentPosition, true);
-      // }
     });
   }
 
@@ -181,7 +177,6 @@ export class NewsfeedBoostRotatorComponent {
       }
 
       this.next();
-      //this.recordImpression(this.currentPosition);
     }, this.interval * 1000);
   }
 
@@ -263,9 +258,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   async next() {
-    //this.activities.toArray()[this.currentPosition].hide();
     if (this.currentPosition + 1 > this.boosts.length - 1) {
-      //this.currentPosition = 0;
       try {
         this.load();
         this.currentPosition++;
