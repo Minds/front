@@ -202,17 +202,16 @@ export class AnalyticsDashboardService {
         const dashboard = response.dashboard;
         this.ready$.next(true);
 
-        // TODOOJM: uncomment before push
         this.updateState({
           ..._state,
-          // category: dashboard.category,
-          // description: dashboard.description,
-          // timespan: dashboard.timespan,
-          // timespans: dashboard.timespans,
-          // filter: dashboard.filter,
-          // filters: dashboard.filters,
-          // metric: dashboard.metric,
-          // metrics: dashboard.metrics,
+          category: dashboard.category,
+          description: dashboard.description,
+          timespan: dashboard.timespan,
+          timespans: dashboard.timespans,
+          filter: dashboard.filter,
+          filters: dashboard.filters,
+          metric: dashboard.metric,
+          metrics: dashboard.metrics,
         });
         this.loading$.next(false);
       });
@@ -243,14 +242,13 @@ export class AnalyticsDashboardService {
   //   return channelSearch;
   // }
 
-  // TODOOJM: uncomment before push
   updateCategory(category: string) {
-    // this.updateState({
-    //   ..._state,
-    //   category,
-    //   description: null,
-    //   metrics: [],
-    // });
+    this.updateState({
+      ..._state,
+      category,
+      description: null,
+      metrics: [],
+    });
   }
   updateTimespan(timespan: string) {
     this.updateState({

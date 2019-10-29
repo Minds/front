@@ -17,8 +17,6 @@ import { Session } from '../../../services/session';
 import { AnalyticsDashboardService } from './dashboard.service';
 import { Filter } from './../../../interfaces/dashboard';
 
-// import categories from './categories.default';
-
 @Component({
   selector: 'm-analytics__dashboard',
   templateUrl: './dashboard.component.html',
@@ -52,7 +50,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // TODO: why wasn't this working? didn't reroute
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;
@@ -100,8 +97,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   }
 
   updateTimespan(timespanId) {
-    // TODO
-    // update url
+    // TODO: update url
     // this.analyticsService.updateTimespan(timespanId);
   }
 

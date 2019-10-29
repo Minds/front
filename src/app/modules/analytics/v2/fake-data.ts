@@ -137,57 +137,27 @@ const fakeData: Array<any> = [
         visualisation: null,
       },
       {
+        id: 'active_users',
+        label: 'Active UsersA',
+        permissions: ['admin', 'user'],
+        summary: {
+          current_value: 120962,
+          comparison_value: 120962,
+          comparison_interval: 28,
+          comparison_positive_inclination: true,
+        },
+        unit: 'number',
+        description:
+          'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentiuti atque corrupti quos dolores',
+        visualisation: null,
+      },
+      {
         id: 'signups',
         label: 'Signups',
         permissions: ['admin', 'user'],
         summary: {
           current_value: 53060,
           comparison_value: 60577,
-          comparison_interval: 28,
-          comparison_positive_inclination: true,
-        },
-        unit: 'number',
-        description:
-          'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentiuti atque corrupti quos dolores',
-        visualisation: null,
-      },
-      {
-        id: 'signups3',
-        label: 'Signups3',
-        permissions: ['admin', 'user'],
-        summary: {
-          current_value: 53060,
-          comparison_value: 60577,
-          comparison_interval: 28,
-          comparison_positive_inclination: true,
-        },
-        unit: 'number',
-        description:
-          'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentiuti atque corrupti quos dolores',
-        visualisation: null,
-      },
-      {
-        id: 'signups4',
-        label: 'Signups4',
-        permissions: ['admin', 'user'],
-        summary: {
-          current_value: 53060,
-          comparison_value: 60577,
-          comparison_interval: 28,
-          comparison_positive_inclination: true,
-        },
-        unit: 'number',
-        description:
-          'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentiuti atque corrupti quos dolores',
-        visualisation: null,
-      },
-      {
-        id: 'active_users2',
-        label: 'Active Users2',
-        permissions: ['admin', 'user'],
-        summary: {
-          current_value: 120962,
-          comparison_value: 120962,
           comparison_interval: 28,
           comparison_positive_inclination: true,
         },

@@ -14,8 +14,6 @@ import {
   Visualisation,
 } from '../../dashboard.service';
 
-import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
-
 @Component({
   selector: 'm-analytics__table',
   templateUrl: './table.component.html',
@@ -39,16 +37,12 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
     })
   );
   selectedMetric;
-  isTouchDevice: boolean;
   constructor(
     private analyticsService: AnalyticsDashboardService,
     protected cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.isTouchDevice = true;
-    // TODOOJM: uncomment
-    // this.isTouchDevice = isMobileOrTablet();
     this.metricSubscription = this.selectedMetric$.subscribe(metric => {
       this.selectedMetric = metric;
       this.visualisation = metric.visualisation;

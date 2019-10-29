@@ -42,7 +42,7 @@ m-sidebarMenu {
     .m-sidebarMenu__subcat {
       a {
         display: block;
-        padding: 6px 0;
+        padding: 8px 0;
         text-decoration: none;
         font-weight: 400;
         @include m-theme() {
@@ -59,6 +59,7 @@ m-sidebarMenu {
   }
 }
 // --------------------------------------------------
+// TABLET & MOBILE
 // --------------------------------------------------
 @media screen and (max-width: $min-tablet) {
   m-sidebarMenu {
@@ -139,6 +140,11 @@ m-sidebarMenu {
         &.expanded {
           .m-sidebarMenu__subcatContainer {
             display: block;
+            .m-sidebarMenu__subcat {
+              a {
+                padding: 6px 0;
+              }
+            }
           }
         }
       }

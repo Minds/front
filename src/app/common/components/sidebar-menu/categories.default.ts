@@ -58,33 +58,33 @@ const sidebarMenuCategories = [
       // },
     ],
   },
-  {
-    category: {
-      id: 'test1',
-      label: 'Test1',
-      permissions: ['admin', 'user'],
-      path: '/somepath/bork',
-    },
-    subcategories: [
-      {
-        id: 'nodes',
-        label: 'Nodes',
-        permissions: ['admin'],
-      },
-      {
-        id: 'nodes2',
-        label: 'Nodes2',
-        permissions: ['admin'],
-      },
-    ],
-  },
-  {
-    category: {
-      id: 'test2',
-      label: 'Test2',
-      path: '/anotherpath/test2',
-    },
-  },
+  // {
+  //   category: {
+  //     id: 'test1',
+  //     label: 'Test1',
+  //     permissions: ['admin', 'user'],
+  //     path: '/somepath/bork',
+  //   },
+  //   subcategories: [
+  //     {
+  //       id: 'nodes',
+  //       label: 'Nodes',
+  //       permissions: ['admin'],
+  //     },
+  //     {
+  //       id: 'nodes2',
+  //       label: 'Nodes2',
+  //       permissions: ['admin'],
+  //     },
+  //   ],
+  // },
+  // {
+  //   category: {
+  //     id: 'test2',
+  //     label: 'Test2 no subcats',
+  //     path: '/anotherpath/test2',
+  //   },
+  // },
 ];
 
 export default sidebarMenuCategories;

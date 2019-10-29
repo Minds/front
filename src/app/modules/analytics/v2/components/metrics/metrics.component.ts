@@ -4,12 +4,11 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  OnDestroy,
   ViewChild,
   ElementRef,
   HostListener,
 } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
@@ -31,10 +30,10 @@ export { MetricExtended as Metric };
   templateUrl: './metrics.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnalyticsMetricsComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+export class AnalyticsMetricsComponent implements OnInit, AfterViewInit {
   @ViewChild('metricsContainer', { static: false })
-  metricsContainer: ElementRef;
+  metricsContainerEl: ElementRef;
+  metricsContainer;
 
   data;
   subscription: Subscription;
@@ -43,10 +42,11 @@ export class AnalyticsMetricsComponent
   init = false;
 
   metrics$;
-  metricsLength: number;
-  firstVisibleMetricIndex = 0;
-  metricsContainerScrollLeft = 0;
+  metricClientWidth: number;
+  faderWidth = 24;
   isOverflown: boolean = false;
+  isAtScrollEnd = false;
+  isAtScrollStart = true;
   showButton = { left: false, right: false };
 
   constructor(
@@ -67,7 +67,6 @@ export class AnalyticsMetricsComponent
     this.metrics$ = this.analyticsService.metrics$.pipe(
       map(_metrics => {
         const metrics = _metrics.map(metric => ({ ...metric })); // Clone to avoid updating
-        this.metricsLength = metrics.length;
         for (const metric of metrics) {
           metric['permissionGranted'] = metric.permissions.some(role =>
             this.userRoles.includes(role)
@@ -96,17 +95,17 @@ export class AnalyticsMetricsComponent
             }
           }
         }
-
         return metrics;
       })
     );
+    // TODO: if selected metric is not fully visible, slide() until it is
   }
   ngAfterViewInit() {
-    this.init = true;
     this.checkOverflow();
   }
 
   updateMetric(metric) {
+    // TODO: if clicked metric is not fully visible, slide() until it is
     this.analyticsService.updateMetric(metric.id);
   }
 
@@ -120,35 +119,59 @@ export class AnalyticsMetricsComponent
   }
 
   checkOverflow() {
-    const metricsContainer = this.metricsContainer.nativeElement;
     const firstMetric = document.querySelector('.m-analytics__metric');
-    const metricClientWidth = firstMetric.clientWidth;
+    this.metricClientWidth = firstMetric.clientWidth;
 
+    this.metricsContainer = this.metricsContainerEl.nativeElement;
     this.isOverflown =
-      metricsContainer.scrollWidth - metricsContainer.clientWidth > 0;
+      this.metricsContainer.scrollWidth - this.metricsContainer.clientWidth > 0;
 
-    this.showButton.left = this.isOverflown && metricsContainer.scrollLeft > 24;
+    this.isAtScrollStart = this.metricsContainer.scrollLeft < this.faderWidth;
+    this.showButton.left = this.isOverflown && !this.isAtScrollStart;
+
+    this.isAtScrollEnd =
+      !this.isOverflown ||
+      this.metricsContainer.scrollWidth -
+        (this.metricsContainer.scrollLeft + this.metricsContainer.clientWidth) <
+        this.faderWidth;
 
     this.showButton.right =
       this.isOverflown &&
-      (metricsContainer.scrollLeft >= 0 ||
-        metricsContainer.scrollWidth - metricsContainer.scrollLeft <
-          metricsContainer.clientWidth);
+      this.metricsContainer.scrollLeft >= 0 &&
+      !this.isAtScrollEnd;
     this.detectChanges();
   }
 
-  slideLeft() {
-    this.metricsContainer.nativeElement.scrollTo({
-      top: 0,
-      left: 0,
-      behavior: 'smooth',
-    });
-  }
+  slide(direction) {
+    let currentScrollLeft = this.metricsContainer.scrollLeft;
+    let targetScrollLeft;
+    let scrollEndOffset = 0;
+    const partiallyVisibleMetricWidth =
+      this.metricsContainer.clientWidth % this.metricClientWidth;
+    const completelyVisibleMetricsWidth =
+      this.metricsContainer.clientWidth - partiallyVisibleMetricWidth;
 
-  slideRight() {
-    this.metricsContainer.nativeElement.scrollTo({
+    if (direction === 'right') {
+      if (currentScrollLeft < this.faderWidth) {
+        currentScrollLeft = this.faderWidth;
+      }
+      targetScrollLeft = Math.min(
+        currentScrollLeft + completelyVisibleMetricsWidth,
+        this.metricsContainer.scrollWidth - completelyVisibleMetricsWidth
+      );
+    } else {
+      if (this.isAtScrollEnd) {
+        scrollEndOffset = partiallyVisibleMetricWidth - this.faderWidth;
+      }
+      targetScrollLeft = Math.max(
+        currentScrollLeft - completelyVisibleMetricsWidth + scrollEndOffset,
+        0
+      );
+    }
+
+    this.metricsContainer.scrollTo({
       top: 0,
-      left: 300,
+      left: targetScrollLeft,
       behavior: 'smooth',
     });
   }
@@ -156,9 +179,5 @@ export class AnalyticsMetricsComponent
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-  }
-
-  ngOnDestroy() {
-    // this.subscription.unsubscribe();
   }
 }

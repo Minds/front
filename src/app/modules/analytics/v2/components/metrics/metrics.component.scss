@@ -1,16 +1,14 @@
 m-analytics__metrics {
   display: block;
-  width: 100%;
   .m-analytics__metricsSection {
     position: relative;
-    width: 100%;
 
     [class*='m-analytics__metricsOverflowFade--'] {
       position: absolute;
       top: 0;
       bottom: 0;
       width: 24px;
-      z-index: 1;
+      z-index: 2;
       &.m-analytics__metricsOverflowFade--right {
         @include m-theme() {
           right: 0;
@@ -72,22 +70,14 @@ m-analytics__metrics {
 }
 .m-analytics__metricsWrapper {
   position: relative;
-  overflow: hidden;
-  width: 100%;
-  height: 124px;
+  z-index: 1;
   @include m-theme() {
     box-shadow: 0 7px 15px -7px rgba(themed($m-black-always), 0.1);
   }
 }
 
 .m-analytics__metricsContainer {
-  overflow-x: scroll;
-  position: relative;
-  scroll-snap-type: x mandatory;
-  // position: absolute;
-  // top: 0;
-  // left: 0;
-  // overflow-x: hidden;
+  overflow-x: hidden;
   overflow-y: hidden;
   display: flex;
   flex-wrap: nowrap;
@@ -109,6 +99,7 @@ m-analytics__metrics {
     padding: 24px 20px 20px 20px;
     font-size: 14px;
     box-sizing: border-box;
+    overflow: visible;
     @include m-theme() {
       border-bottom: 8px solid themed($m-white);
     }
@@ -179,6 +170,7 @@ m-analytics__metrics {
     .m-tooltip--bubble {
       z-index: 9999;
       font-size: 11px;
+      width: 160px;
       @include m-theme() {
         color: themed($m-white);
         background-color: themed($m-blue);

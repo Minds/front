@@ -41,11 +41,10 @@ export class SidebarMenuComponent implements OnInit {
   }
 
   getUserRoles() {
-    // TODOOJM: uncomment
-    // if (this.session.isAdmin()) {
-    this.userRoles.push('admin');
-    // }
-    // TODO: define userRole options, e.g. admin, pro, loggedIn
+    if (this.session.isAdmin()) {
+      this.userRoles.push('admin');
+    }
+    // TODO: define & handle other userRole options, e.g. pro, loggedIn
   }
 
   grantPermissionsAndFindActiveCat() {
