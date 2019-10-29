@@ -1,10 +1,6 @@
 <div class="mf-jumpAnchor" #topAnchor></div>
 
-<m-marketing
-  class="m-token__marketing"
-  pageTitle="Minds Social Network"
-  i18n-pageTitle
->
+<m-marketing class="m-homepage" pageTitle="Minds Social Network" i18n-pageTitle>
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
       <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
@@ -20,7 +16,7 @@
           and rewards
         </p>
 
-        <div class="m-tokenMarketing__purchase">
+        <div class="m-homepage__joinMindsNow">
           <button
             class="mf-button mf-button--alt"
             (click)="goToLoginPage()"
@@ -30,14 +26,20 @@
           </button>
         </div>
 
-        <div class="app-buttons">
-          <div style="height:40px; width:120px">
-            Download from the App Store
-          </div>
+        <div class="m-homepage__appButtons">
+          <a
+            href="https://itunes.apple.com/app/minds-com/id961771928"
+            target="_blank"
+          >
+            <img [src]="cdnAssetsUrl + 'assets/app-store.png'" />
+          </a>
 
-          <div style="height:40px; width:120px">
-            Get it on Google Play
-          </div>
+          <a
+            href="https://play.google.com/store/apps/details?id=com.minds.mobile"
+            target="_blank"
+          >
+            <img [src]="cdnAssetsUrl + 'assets/google-play.png'" />
+          </a>
         </div>
       </div>
 
@@ -46,7 +48,8 @@
       >
         <span>
           <img
-            [src]="cdnAssetsUrl + 'assets/product-pages/token/token-1.jpg'"
+            class="m-homepage__cellphone"
+            [src]="cdnAssetsUrl + 'assets/homepage/homepage-1.svg'"
           />
         </span>
       </div>
