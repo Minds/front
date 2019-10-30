@@ -139,10 +139,20 @@
   }
 
   .m-marketing__quotation {
-    h1 {
-    }
-    h2 {
-      text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+
+    width: 50%;
+    margin: 0 auto;
+
+    h4 {
+      font-size: 14px;
+      margin: 0;
+
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
     }
   }
 }
