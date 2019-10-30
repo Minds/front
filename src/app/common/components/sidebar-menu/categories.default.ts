@@ -7,11 +7,11 @@ const sidebarMenuCategories = [
       permissions: ['admin', 'user'],
     },
     subcategories: [
-      // {
-      //   id: 'summary',
-      //   label: 'Summary',
-      //   permissions: ['admin', 'user'],
-      // },
+      {
+        id: 'summary',
+        label: 'Summary',
+        permissions: ['admin'],
+      },
       {
         id: 'traffic',
         label: 'Traffic',

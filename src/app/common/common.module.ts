@@ -117,6 +117,10 @@ import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.com
 import { ChartV2Component } from './components/chart-v2/chart-v2.component';
 import { MiniChartComponent } from './components/mini-chart/mini-chart.component';
 
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+PlotlyModule.plotlyjs = PlotlyJS;
+
 @NgModule({
   imports: [
     NgCommonModule,
@@ -124,6 +128,7 @@ import { MiniChartComponent } from './components/mini-chart/mini-chart.component
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    PlotlyModule,
   ],
   declarations: [
     MINDS_PIPES,
@@ -312,6 +317,8 @@ import { MiniChartComponent } from './components/mini-chart/mini-chart.component
     MarketingComponent,
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
+    ChartV2Component,
+    MiniChartComponent,
   ],
   providers: [
     SiteService,

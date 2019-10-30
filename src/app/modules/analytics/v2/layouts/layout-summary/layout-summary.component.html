@@ -1,3 +1,57 @@
-<p>
-  analytics__layout--summary works!
-</p>
+<div class="m-analytics__spinnerContainer" *ngIf="loading">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+
+<!-- TILES -->
+<div class="m-analyticsSummary__tilesContainer">
+  <ng-container *ngFor="let tile of tiles">
+    <div
+      class="m-analyticsSummary__tile"
+      [ngClass]="{ noChart: !tile.visualisation }"
+    >
+      <div class="m-analyticsSummary__benchmarkContainer">
+        <div class="m-analyticsSummary__benchmarkLabelWrapper">
+          <span class="m-analyticsSummary__benchmarkLabel">{{
+            tile.label
+          }}</span>
+          <m-tooltip icon="help">
+            {{ tile.description }}
+          </m-tooltip>
+        </div>
+        <div class="m-analyticsSummary__benchmarkValueWrapper">
+          <span class="m-analyticsSummary__benchmarkValue">{{
+            tile.benchmark.value
+          }}</span
+          ><span class="m-analyticsSummary__benchmarkUnit" *ngIf="tile.unit">{{
+            tile.unit
+          }}</span>
+        </div>
+      </div>
+      <!-- <m-miniChart [data]="chart.data"></m-miniChart> -->
+      <m-miniChart *ngIf="tile.visualisation"></m-miniChart>
+    </div>
+  </ng-container>
+</div>
+
+<!-- BOOST BACKLOG -->
+<div class="m-analyticsSummary__boostBacklogWrapper">
+  <div class="m-analyticsSummary__boostBacklogTitle">Boost Backlog</div>
+  <div class="m-analyticsSummary__boostTypesContainer">
+    <!-- *ngFor="let boostType of boosts.buckets | slice: 0:2 -->
+    <ng-container *ngFor="let boostType of boosts.buckets">
+      <div class="m-analyticsSummary__boostType">
+        <div class="m-analyticsSummary__benchmarkContainer">
+          <div class="m-analyticsSummary__benchmarkLabel">
+            {{ boostType.label }}
+          </div>
+          <div class="m-analyticsSummary__benchmarkValueWrapper">
+            <span class="m-analyticsSummary__benchmarkValue">{{
+              boostType.value
+            }}</span>
+            <span class="m-analyticsSummary__benchmarkUnit">hrs</span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

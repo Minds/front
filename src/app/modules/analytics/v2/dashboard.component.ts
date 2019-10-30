@@ -38,6 +38,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     options: [],
   };
   channelFilter: Filter;
+  layout = 'chart';
 
   constructor(
     public client: Client,
@@ -58,7 +59,11 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     this.title.setTitle('Analytics');
 
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.updateCategory(params.get('category'));
+      const cat = params.get('category');
+      this.updateCategory(cat);
+      if (cat === 'summary') {
+        this.layout = 'summary';
+      }
     });
 
     this.paramsSubscription = this.route.queryParams.subscribe(params => {

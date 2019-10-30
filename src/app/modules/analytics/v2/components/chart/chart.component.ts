@@ -34,7 +34,7 @@ export { TimespanExtended as Timespan };
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsChartComponent implements OnDestroy, OnInit {
-  @ViewChild('graphDiv', { static: true }) graphDiv;
+  // @ViewChild('graphDiv', { static: true }) graphDiv;
   @ViewChild('hoverInfoDiv', { static: true }) hoverInfoDivEl: ElementRef;
   @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
@@ -80,7 +80,6 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   ];
   datePipe: string = this.timespanFormats[0].datePipe;
   xTickFormat: string = this.timespanFormats[0].xTickFormat;
-  // yTickPrefix: string = '';
   yTickFormat: string = '';
 
   // ***********************************************************
@@ -88,8 +87,7 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   constructor(
     private analyticsService: AnalyticsDashboardService,
     private themeService: ThemeService,
-    protected cd: ChangeDetectorRef,
-    private hostElement: ElementRef
+    protected cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -402,11 +400,7 @@ export class AnalyticsChartComponent implements OnDestroy, OnInit {
   @HostListener('window:resize')
   applyDimensions() {
     if (this.init) {
-      // this.layout.width = this.hostElement.nativeElement.clientWidth;
-      // this.layout.height = this.hostElement.nativeElement.clientHeight;
-
       this.layout.width = this.chartContainer.nativeElement.clientWidth;
-      //-32; //- 56;
       this.layout.height = this.chartContainer.nativeElement.clientHeight;
 
       this.newLineRange = true;

@@ -14,25 +14,14 @@ m-analytics__filter {
   @include m-theme() {
     color: themed($m-grey-300);
   }
-  m-tooltip {
-    margin-left: 4px;
-  }
+
   > * {
     display: inline-block;
   }
-  .m-tooltip {
-    i {
-      font-size: 12px;
-      @include m-theme() {
-        color: rgba(themed($m-grey-300), 0.7);
-      }
-    }
-  }
+
   .m-tooltip--bubble {
     letter-spacing: 1.2px;
     line-height: 16px;
-    z-index: 9999;
-    font-size: 11px;
     bottom: 110%;
     left: 0;
     width: 160px;

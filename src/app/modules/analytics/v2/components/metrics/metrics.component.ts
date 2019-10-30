@@ -35,7 +35,7 @@ export class AnalyticsMetricsComponent implements OnInit, AfterViewInit {
   metricsContainerEl: ElementRef;
   metricsContainer;
 
-  data;
+  // data;
   subscription: Subscription;
   user;
   userRoles: string[] = ['user'];

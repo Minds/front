@@ -1,0 +1,87 @@
+// -----------------------------------------
+// LAYOUT
+// -----------------------------------------
+.m-analyticsSummary__tilesContainer {
+  display: flex;
+  flex-flow: row wrap;
+}
+.m-analyticsSummary__tile {
+  border: 1px solid salmon;
+  min-width: 160px;
+  height: 160px;
+  box-sizing: border-box;
+  flex: 0 1 33%;
+  &.noChart {
+    .m-analyticsSummary__benchmarkValue {
+      font-size: 42px;
+    }
+  }
+}
+
+// -----------------------------------------
+// BOOST BACKLOG
+// -----------------------------------------
+.m-analyticsSummary__boostBacklogWrapper {
+  margin-top: 36px;
+  .m-analyticsSummary__boostBacklogTitle {
+    font-size: 18px;
+  }
+}
+.m-analyticsSummary__boostTypesContainer {
+  display: flex;
+  flex-flow: row wrap;
+  @include m-theme() {
+    border-top: 1px solid themed($m-grey-50);
+    border-left: 1px solid themed($m-grey-50);
+  }
+}
+.m-analyticsSummary__boostType {
+  padding: 30px;
+  flex: 0 1 25%;
+  @include m-theme() {
+    border-right: 1px solid themed($m-grey-50);
+    border-bottom: 1px solid themed($m-grey-50);
+  }
+}
+// -----------------------------------------
+// TEXT
+// -----------------------------------------
+.m-analyticsSummary__benchmarkLabel {
+  font-size: 18px;
+  @include m-theme() {
+    color: themed($m-grey-300);
+  }
+}
+
+.m-analyticsSummary__boostBacklogTitle,
+.m-analyticsSummary__benchmarkValue {
+  font-size: 24px;
+  @include m-theme() {
+    color: themed($m-grey-800);
+  }
+}
+// ------------------------------------------
+// MOBILE & TABLET
+// -----------------------------------------
+// TODO: remove this after generic layout component
+@media screen and (max-width: $min-tablet) {
+  m-analytics__layout--summary {
+    padding: 0 24px 48px 24px;
+  }
+}
+// .whatflex {
+//   display: flex;
+//   flex-wrap: wrap;
+// }
+
+// .con {
+//   flex: 0 0 100%;
+// }
+
+// @media only screen and (min-width: 769px){
+//   .con{ flex-basis: 50%; }
+// }
+
+// @media only screen and (min-width: 1024px){
+//   .con{ flex-basis: 25%; }
+// }
