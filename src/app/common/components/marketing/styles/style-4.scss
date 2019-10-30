@@ -113,6 +113,7 @@
         left: 0;
         bottom: 35px;
         transform: translate(-15px, 0);
+        z-index: 2;
 
         @media screen and (max-width: $m-grid-min-vp) {
           right: auto;
@@ -124,7 +125,7 @@
         }
       }
 
-      span {
+      span:not(.m-marketing__imageUX):not(.m-marketing__imageTick) {
         display: inline-block;
         position: relative;
         width: 100%;

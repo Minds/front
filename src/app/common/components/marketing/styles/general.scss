@@ -108,4 +108,41 @@
       }
     }
   }
+
+  span.m-marketing__imageUX {
+    span.m-marketing__imageTick {
+      border-radius: 50%;
+      background-color: #4fc3a9;
+      color: white;
+
+      width: 63px;
+      height: 63px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      box-shadow: 0 0 39px -4px rgba(0, 0, 0, 0.5);
+
+      z-index: 3;
+    }
+
+    .m-marketing__imageTick--left {
+      position: absolute;
+      bottom: 21px;
+      left: -45px;
+    }
+
+    img {
+      box-shadow: 0 0 39px -4px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .m-marketing__quotation {
+    h1 {
+    }
+    h2 {
+      text-align: right;
+    }
+  }
 }
