@@ -2,11 +2,8 @@ import {
   Component,
   OnInit,
   Input,
-  Output,
-  EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Observable } from 'rxjs';
 import {
   AnalyticsDashboardService,
   Filter,
@@ -40,30 +37,17 @@ export class AnalyticsFilterComponent implements OnInit {
 
   updateFilter(option: Option) {
     this.expanded = false;
-    if (!option.available) {
+    if ('available' in option && !option.available) {
       return;
     }
     this.selectedOption = option;
 
     if (this.filter.id === 'timespan') {
       this.analyticsService.updateTimespan(option.id);
-      console.log('upDateFilter ', option.id);
       return;
     }
 
     const selectedFilterStr = `${this.filter.id}::${option.id}`;
     this.analyticsService.updateFilter(selectedFilterStr);
   }
-
-  // clickHeader() {
-  //   if (this.expanded) {
-  //     console.log('its expanded');
-  //     setTimeout(() => {
-  //       this.expanded = false;
-  //     });
-  //   } else {
-  //     console.log('itsnot expanded');
-  //   }
-  // document.getElementById("myAnchor").blur();
-  // }
 }
