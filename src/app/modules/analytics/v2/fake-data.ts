@@ -3,36 +3,16 @@ const fakeData: Array<any> = [
     // CHART TESTS
     loading: false,
     category: 'traffic',
-    description:
-      'imma traffic description imma traffic description imma traffic description imma traffic description imma traffic description',
-    timespan: '28d',
+    timespan: '30d',
     timespans: [
-      // {
-      //   id: '30d',
-      //   label: 'Last 30 days',
-      //   interval: 'day',
-      //   comparison_interval: 28,
-      //   from_ts_ms: 1567296000000,
-      //   from_ts_iso: '2019-09-01T00:00:00+00:00',
-      //   selected: false,
-      // },
-      // {
-      //   id: '1y',
-      //   label: '1 year ago',
-      //   interval: 'month',
-      //   comparison_interval: 365,
-      //   from_ts_ms: 1538352000000,
-      //   from_ts_iso: '2018-10-01T00:00:00+00:00',
-      //   selected: false,
-      // },
       {
-        id: '28d',
-        label: 'Last 28 Days',
+        id: '30d',
+        label: 'Last 30 days',
         interval: 'day',
-        comparison_interval: 365,
-        from_ts_ms: 1538352000000,
-        from_ts_iso: '2018-10-01T00:00:00+00:00',
-        selected: true,
+        comparison_interval: 28,
+        from_ts_ms: 1567296000000,
+        from_ts_iso: '2019-09-01T00:00:00+00:00',
+        selected: false,
       },
       {
         id: '12m',
@@ -54,7 +34,7 @@ const fakeData: Array<any> = [
           { id: 'all', label: 'All', available: true, selected: false },
           {
             id: 'browser',
-            label: 'BrowserBrowserBrowserBrowserBrowser',
+            label: 'Browser',
             available: true,
             selected: false,
           },

@@ -75,13 +75,10 @@ export class ChartV2Component implements OnInit, OnDestroy {
     this.segments = this.rawData.visualisation.segments;
     if (this.segments.length === 2) {
       this.isComparison = true;
-      console.log('**isCom');
       // Reverse the segments so comparison line is layered behind current line
       this.segments.reverse();
       // Current line should be blue, not grey
       this.swapSegmentColors();
-    } else {
-      console.log('**seglenght', this.segments.length);
     }
     this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
       this.isDark = isDark;
@@ -139,7 +136,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
         dash: 'solid',
       },
       marker: {
-        size: 7,
+        size: this.isMini ? 5 : 7,
       },
       showlegend: false,
       hoverinfo: 'text',
@@ -196,7 +193,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       height: 0,
       autoexpand: 'true',
       autosize: 'true',
-      hovermode: 'x',
+      hovermode: this.isMini ? 'closest' : 'x',
       paper_bgcolor: this.getColor('m-white'),
       plot_bgcolor: this.getColor('m-white'),
       font: {
@@ -262,7 +259,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
   onUnhover($event) {
     this.emptyMarkerFill();
     this.hideShape();
-    this.hoverInfoDiv.style.opacity = 1; // TODOOJM change back to 0
+    this.hoverInfoDiv.style.opacity = 0;
     this.detectChanges();
   }
 
@@ -331,10 +328,10 @@ export class ChartV2Component implements OnInit, OnDestroy {
         .querySelector('.js-plotly-plot')
         .getBoundingClientRect(),
       hoverInfoRect = this.hoverInfoDiv.getBoundingClientRect(),
-      pad = this.isMini ? 8 : 16;
+      pad = this.isMini ? 4 : 16;
 
     if (this.isMini) {
-      this.hoverInfoDiv.style.top = pointYDist + 2 + 'px';
+      this.hoverInfoDiv.style.top = pointYDist - 2 + 'px';
     } else if (pointYDist < plotRect.height / 2) {
       this.hoverInfoDiv.style.top = pointYDist + pad + 'px';
     } else {

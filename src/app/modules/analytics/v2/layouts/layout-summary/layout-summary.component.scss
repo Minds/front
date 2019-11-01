@@ -4,16 +4,21 @@
 .m-analyticsSummary__tilesContainer {
   display: flex;
   flex-flow: row wrap;
+  padding-top: 18px;
 }
 .m-analyticsSummary__tile {
-  border: 1px solid salmon;
   min-width: 160px;
   height: 160px;
   box-sizing: border-box;
   flex: 0 1 33%;
+  margin-right: 20px;
+
   &.noChart {
     .m-analyticsSummary__benchmarkValue {
       font-size: 42px;
+    }
+    .m-analyticsSummary__benchmarkLabelWrapper {
+      padding-bottom: 18px;
     }
   }
 }
@@ -25,6 +30,11 @@
   margin-top: 36px;
   .m-analyticsSummary__boostBacklogTitle {
     font-size: 18px;
+  }
+  .m-analyticsSummary__benchmarkUnit {
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
   }
 }
 .m-analyticsSummary__boostTypesContainer {
@@ -46,6 +56,16 @@
 // -----------------------------------------
 // TEXT
 // -----------------------------------------
+.m-analyticsSummary__benchmarkValueWrapper > div {
+  display: inline-block;
+}
+.m-analyticsSummary__benchmarkLabelWrapper {
+  padding-bottom: 12px;
+  & > div {
+    display: inline-block;
+  }
+}
+
 .m-analyticsSummary__benchmarkLabel {
   font-size: 18px;
   @include m-theme() {
@@ -53,12 +73,19 @@
   }
 }
 
+.m-analyticsSummary__boostBacklogTitle {
+  padding-bottom: 18px;
+}
 .m-analyticsSummary__boostBacklogTitle,
 .m-analyticsSummary__benchmarkValue {
   font-size: 24px;
   @include m-theme() {
     color: themed($m-grey-800);
   }
+}
+
+.m-analyticsSummary__benchmarkUnit {
+  padding-left: 6px;
 }
 // ------------------------------------------
 // MOBILE & TABLET

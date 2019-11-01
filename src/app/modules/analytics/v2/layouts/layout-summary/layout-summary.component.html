@@ -4,6 +4,25 @@
 
 <!-- TILES -->
 <div class="m-analyticsSummary__tilesContainer">
+  <!-- ACTIVE USERS (PLACEHOLDER) -->
+  <div class="m-analyticsSummary__tile noChart">
+    <div class="m-analyticsSummary__benchmarkContainer">
+      <div class="m-analyticsSummary__benchmarkLabelWrapper">
+        <div class="m-analyticsSummary__benchmarkLabel">
+          Active Users On Site
+        </div>
+        <m-tooltip icon="help">
+          Coming soon! Realtime count of all users on web and mobile
+        </m-tooltip>
+      </div>
+      <div class="m-analyticsSummary__benchmarkValueWrapper">
+        <div class="m-analyticsSummary__benchmarkValue">
+          ʕ •ᴥ•ʔ
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- CHART TILES -->
   <ng-container *ngFor="let tile of tiles">
     <div
       class="m-analyticsSummary__tile"
@@ -11,44 +30,48 @@
     >
       <div class="m-analyticsSummary__benchmarkContainer">
         <div class="m-analyticsSummary__benchmarkLabelWrapper">
-          <span class="m-analyticsSummary__benchmarkLabel">{{
-            tile.label
-          }}</span>
+          <div class="m-analyticsSummary__benchmarkLabel">{{ tile.label }}</div>
           <m-tooltip icon="help">
             {{ tile.description }}
           </m-tooltip>
         </div>
         <div class="m-analyticsSummary__benchmarkValueWrapper">
-          <span class="m-analyticsSummary__benchmarkValue">{{
-            tile.benchmark.value
-          }}</span
-          ><span class="m-analyticsSummary__benchmarkUnit" *ngIf="tile.unit">{{
-            tile.unit
-          }}</span>
+          <div class="m-analyticsSummary__benchmarkValue">
+            {{ tile.benchmark.value }}
+          </div>
+          <div class="m-analyticsSummary__benchmarkUnit" *ngIf="tile.unit">
+            {{ tile.unit }}
+          </div>
         </div>
       </div>
-      <!-- <m-miniChart [data]="chart.data"></m-miniChart> -->
-      <m-miniChart *ngIf="tile.visualisation"></m-miniChart>
+      <m-chartV2
+        *ngIf="tile.visualisation"
+        [rawData]="tile"
+        [interval]="day"
+        [isMini]="true"
+      ></m-chartV2>
     </div>
   </ng-container>
 </div>
 
 <!-- BOOST BACKLOG -->
+
 <div class="m-analyticsSummary__boostBacklogWrapper">
   <div class="m-analyticsSummary__boostBacklogTitle">Boost Backlog</div>
   <div class="m-analyticsSummary__boostTypesContainer">
-    <!-- *ngFor="let boostType of boosts.buckets | slice: 0:2 -->
     <ng-container *ngFor="let boostType of boosts.buckets">
       <div class="m-analyticsSummary__boostType">
         <div class="m-analyticsSummary__benchmarkContainer">
-          <div class="m-analyticsSummary__benchmarkLabel">
-            {{ boostType.label }}
+          <div class="m-analyticsSummary__benchmarkLabelWrapper">
+            <div class="m-analyticsSummary__benchmarkLabel">
+              {{ boostType.label }}
+            </div>
           </div>
           <div class="m-analyticsSummary__benchmarkValueWrapper">
-            <span class="m-analyticsSummary__benchmarkValue">{{
-              boostType.value
-            }}</span>
-            <span class="m-analyticsSummary__benchmarkUnit">hrs</span>
+            <div class="m-analyticsSummary__benchmarkValue">
+              {{ boostType.value }}
+            </div>
+            <div class="m-analyticsSummary__benchmarkUnit">hrs</div>
           </div>
         </div>
       </div>
