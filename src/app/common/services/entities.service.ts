@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { first, catchError } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { Client } from '../../services/api';
 import { BlockListService } from './block-list.service';
-
-import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHttpAdapter.js';
-import browserStorageAdapterFactory from '../../helpers/browser-storage-adapter-factory';
-import EntitiesSync from '../../lib/minds-sync/services/EntitiesSync.js';
-import AsyncStatus from '../../helpers/async-status';
-import normalizeUrn from '../../helpers/normalize-urn';
 
 type EntityObservable = BehaviorSubject<Object>;
 type EntityObservables = Map<string, EntityObservable>;

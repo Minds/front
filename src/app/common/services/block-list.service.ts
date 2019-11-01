@@ -4,13 +4,6 @@ import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 
-import AsyncLock from '../../helpers/async-lock';
-
-import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHttpAdapter.js';
-import browserStorageAdapterFactory from '../../helpers/browser-storage-adapter-factory';
-import BlockListSync from '../../lib/minds-sync/services/BlockListSync.js';
-import AsyncStatus from '../../helpers/async-status';
-
 @Injectable()
 export class BlockListService {
   blocked: BehaviorSubject<string[]>;
