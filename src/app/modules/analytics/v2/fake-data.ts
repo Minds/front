@@ -12,7 +12,7 @@ const fakeData: Array<any> = [
         comparison_interval: 28,
         from_ts_ms: 1567296000000,
         from_ts_iso: '2019-09-01T00:00:00+00:00',
-        selected: false,
+        selected: true,
       },
       {
         id: '12m',
@@ -963,24 +963,24 @@ const fakeData: Array<any> = [
   },
   {
     tiles: [
-      {
-        id: 'active_users',
-        label: 'Active Users On Site',
-        summary: {
-          current_value: 83898,
-          comparison_value: 0,
-          comparison_interval: 28,
-          comparison_positive_inclination: true,
-        },
-        description:
-          'At vero eos et accusamus et iusto odio dignissimos ducimus qui',
-        benchmark: {
-          key: 1567382400000,
-          date: '2019-09-07T00:00:00+00:00',
-          value: 455,
-        },
-        visualisation: null,
-      },
+      // {
+      //   id: 'active_users',
+      //   label: 'Active Users On Site',
+      //   summary: {
+      //     current_value: 83898,
+      //     comparison_value: 0,
+      //     comparison_interval: 28,
+      //     comparison_positive_inclination: true,
+      //   },
+      //   description:
+      //     'At vero eos et accusamus et iusto odio dignissimos ducimus qui',
+      //   benchmark: {
+      //     key: 1567382400000,
+      //     date: '2019-09-07T00:00:00+00:00',
+      //     value: 455,
+      //   },
+      //   visualisation: null,
+      // },
       {
         id: 'daily_active_users',
         label: 'Daily Active Users',

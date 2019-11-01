@@ -47,7 +47,7 @@
 }
 .m-analyticsSummary__boostType {
   padding: 30px;
-  flex: 0 1 25%;
+  flex: 0 0 100%;
   @include m-theme() {
     border-right: 1px solid themed($m-grey-50);
     border-bottom: 1px solid themed($m-grey-50);
@@ -96,19 +96,10 @@
     padding: 0 24px 48px 24px;
   }
 }
-// .whatflex {
-//   display: flex;
-//   flex-wrap: wrap;
-// }
 
-// .con {
-//   flex: 0 0 100%;
-// }
-
-// @media only screen and (min-width: 769px){
-//   .con{ flex-basis: 50%; }
-// }
-
-// @media only screen and (min-width: 1024px){
-//   .con{ flex-basis: 25%; }
-// }
+// TODOOJM: fix after generic layout component
+@media only screen and (min-width: 1024px) {
+  .m-analyticsSummary__boostType {
+    flex-basis: 25%;
+  }
+}

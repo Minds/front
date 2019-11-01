@@ -193,7 +193,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       height: 0,
       autoexpand: 'true',
       autosize: 'true',
-      hovermode: this.isMini ? 'closest' : 'x',
+      hovermode: 'x',
       paper_bgcolor: this.getColor('m-white'),
       plot_bgcolor: this.getColor('m-white'),
       font: {
