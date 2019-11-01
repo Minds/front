@@ -14,6 +14,8 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 export class HomepageComponent {
   readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 
+  topbar: HTMLElement;
+
   minds = window.Minds;
 
   flags = {
@@ -28,6 +30,8 @@ export class HomepageComponent {
     private loginReferrer: LoginReferrerService,
     public session: Session
   ) {
+    this.topbar = document.querySelector('.m-v2-topbar__Top');
+
     this.title.setTitle('Minds Social Network', false);
 
     if (this.session.isLoggedIn()) {
@@ -38,6 +42,12 @@ export class HomepageComponent {
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
+
+    this.topbar.classList.add('m-v2-topbar__noBackground');
+  }
+
+  ngOnDestroy() {
+    this.topbar.classList.remove('m-v2-topbar__noBackground');
   }
 
   goToLoginPage() {

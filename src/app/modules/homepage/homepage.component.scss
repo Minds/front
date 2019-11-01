@@ -5,8 +5,8 @@ m-homepage {
     &.m-marketing__section--style-2 {
       .m-marketing__body {
         &::before {
-          transform: translate(200px, -80px);
-          clip-path: polygon(57% 0, 100% 0, 100% 23%, 23% 74%);
+          transform: translate(311px, -80px);
+          clip-path: polygon(57% 0, 100% 0, 100% 15%, 18% 87%);
           bottom: -80px;
 
           @include m-theme() {
@@ -41,6 +41,7 @@ m-homepage {
           height: auto !important;
           object-fit: initial !important;
           width: 333px !important;
+          transform: translateY(-25px);
         }
       }
     }
@@ -82,4 +83,8 @@ m-homepage {
       max-width: 100%;
     }
   }
+}
+
+.m-homepage {
+  margin-top: -52px;
 }
