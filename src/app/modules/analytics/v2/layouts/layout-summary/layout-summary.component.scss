@@ -30,63 +30,36 @@
   margin-top: 36px;
   .m-analyticsSummary__boostBacklogTitle {
     font-size: 18px;
+    padding-bottom: 18px;
   }
-  .m-analyticsSummary__benchmarkUnit {
+  .m-analytics__benchmarkUnit {
+    padding-left: 2px;
     @include m-theme() {
       color: themed($m-grey-300);
     }
   }
 }
-.m-analyticsSummary__boostTypesContainer {
+.m-analyticsSummary__boostRowsContainer {
   display: flex;
   flex-flow: row wrap;
   @include m-theme() {
-    border-top: 1px solid themed($m-grey-50);
-    border-left: 1px solid themed($m-grey-50);
+    border: 1px solid themed($m-grey-50);
   }
+}
+.m-analyticsSummary__boostRow {
+  display: flex;
+  flex-flow: row wrap;
+  flex: 1 0 auto;
 }
 .m-analyticsSummary__boostType {
   padding: 30px;
-  flex: 0 0 100%;
+  flex: 1 0 50%;
+  box-sizing: border-box;
   @include m-theme() {
-    border-right: 1px solid themed($m-grey-50);
-    border-bottom: 1px solid themed($m-grey-50);
-  }
-}
-// -----------------------------------------
-// TEXT
-// -----------------------------------------
-.m-analyticsSummary__benchmarkValueWrapper > div {
-  display: inline-block;
-}
-.m-analyticsSummary__benchmarkLabelWrapper {
-  padding-bottom: 12px;
-  & > div {
-    display: inline-block;
+    border: 1px solid themed($m-grey-50);
   }
 }
 
-.m-analyticsSummary__benchmarkLabel {
-  font-size: 18px;
-  @include m-theme() {
-    color: themed($m-grey-300);
-  }
-}
-
-.m-analyticsSummary__boostBacklogTitle {
-  padding-bottom: 18px;
-}
-.m-analyticsSummary__boostBacklogTitle,
-.m-analyticsSummary__benchmarkValue {
-  font-size: 24px;
-  @include m-theme() {
-    color: themed($m-grey-800);
-  }
-}
-
-.m-analyticsSummary__benchmarkUnit {
-  padding-left: 6px;
-}
 // ------------------------------------------
 // MOBILE & TABLET
 // -----------------------------------------
@@ -94,12 +67,5 @@
 @media screen and (max-width: $min-tablet) {
   m-analytics__layout--summary {
     padding: 0 24px 48px 24px;
-  }
-}
-
-// TODOOJM: fix after generic layout component
-@media only screen and (min-width: 1024px) {
-  .m-analyticsSummary__boostType {
-    flex-basis: 25%;
   }
 }

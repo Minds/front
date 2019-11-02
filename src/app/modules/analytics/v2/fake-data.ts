@@ -989,8 +989,9 @@ const fakeData: Array<any> = [
         benchmark: {
           key: 1567382400000,
           date: '2019-09-07T00:00:00+00:00',
-          value: 12,
+          value: 120000000,
         },
+        value: 120000000,
         visualisation: {
           type: 'chart',
           segments: [
@@ -999,37 +1000,37 @@ const fakeData: Array<any> = [
                 {
                   key: 1567296000000,
                   date: '2019-09-01T00:00:00+00:00',
-                  value: 11,
+                  value: 1100000,
                 },
                 {
                   key: 1567382400000,
                   date: '2019-09-02T00:00:00+00:00',
-                  value: 12,
+                  value: 1200000,
                 },
                 {
                   key: 1567468800000,
                   date: '2019-09-03T00:00:00+00:00',
-                  value: 13,
+                  value: 1300000,
                 },
                 {
                   key: 1567555200000,
                   date: '2019-09-04T00:00:00+00:00',
-                  value: 9,
+                  value: 900000,
                 },
                 {
                   key: 1567641600000,
                   date: '2019-09-05T00:00:00+00:00',
-                  value: 1,
+                  value: 100000,
                 },
                 {
                   key: 1567296000000,
                   date: '2019-09-06T00:00:00+00:00',
-                  value: 11,
+                  value: 1100000,
                 },
                 {
                   key: 1567382400000,
                   date: '2019-09-07T00:00:00+00:00',
-                  value: 12,
+                  value: 1200000,
                 },
               ],
             },
@@ -1046,6 +1047,7 @@ const fakeData: Array<any> = [
           date: '2019-09-07T00:00:00+00:00',
           value: 12,
         },
+        value: 13,
         visualisation: {
           type: 'chart',
           segments: [
@@ -1099,6 +1101,7 @@ const fakeData: Array<any> = [
           date: '2019-09-07T00:00:00+00:00',
           value: 12,
         },
+        value: 1200000000,
         description:
           'At vero eos et accusamus et iusto odio dignissimos ducimus qui',
         visualisation: {
@@ -1156,6 +1159,7 @@ const fakeData: Array<any> = [
           date: '2019-09-07T00:00:00+00:00',
           value: 12,
         },
+        value: 1200,
         visualisation: {
           type: 'chart',
           segments: [
@@ -1211,6 +1215,7 @@ const fakeData: Array<any> = [
           date: '2019-09-07T00:00:00+00:00',
           value: 12,
         },
+        value: 12.689,
         visualisation: {
           type: 'chart',
           segments: [
@@ -1261,12 +1266,13 @@ const fakeData: Array<any> = [
         label: 'Token Sales (ETH)',
         description:
           'At vero eos et accusamus et iusto odio dignissimos ducimus qui',
-        unit: 'ETH',
+        unit: 'eth',
         benchmark: {
           key: 1567382400000,
           date: '2019-09-07T00:00:00+00:00',
           value: 1.2,
         },
+        value: 1.0673492,
         visualisation: {
           type: 'chart',
           segments: [
@@ -1323,12 +1329,12 @@ const fakeData: Array<any> = [
         {
           id: 'safe_newsfeed',
           label: 'Safe Newsfeed',
-          value: 11,
+          value: 11.079184,
         },
         {
           id: 'open_newsfeed',
           label: 'Open Newsfeed',
-          value: 12,
+          value: 0.12,
         },
         {
           id: 'safe_sidebar',
@@ -1338,7 +1344,7 @@ const fakeData: Array<any> = [
         {
           id: 'open_sidebar',
           label: 'Open Sidebar',
-          value: 9,
+          value: 1,
         },
       ],
       // visualisation: {

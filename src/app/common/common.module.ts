@@ -115,7 +115,6 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
 import { ChartV2Component } from './components/chart-v2/chart-v2.component';
-import { MiniChartComponent } from './components/mini-chart/mini-chart.component';
 
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
@@ -225,7 +224,6 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
     ChartV2Component,
-    MiniChartComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -318,7 +316,6 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
     ChartV2Component,
-    MiniChartComponent,
   ],
   providers: [
     SiteService,

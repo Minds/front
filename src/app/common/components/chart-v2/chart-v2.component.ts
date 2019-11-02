@@ -72,7 +72,9 @@ export class ChartV2Component implements OnInit, OnDestroy {
   ngOnInit() {
     this.isTouchDevice = isMobileOrTablet();
     this.hoverInfoDiv = this.hoverInfoDivEl.nativeElement;
-    this.segments = this.rawData.visualisation.segments;
+    this.segments = this.isMini
+      ? this.rawData.visualisation.segments[0]
+      : this.rawData.visualisation.segments;
     if (this.segments.length === 2) {
       this.isComparison = true;
       // Reverse the segments so comparison line is layered behind current line
@@ -90,6 +92,12 @@ export class ChartV2Component implements OnInit, OnDestroy {
     });
 
     this.initPlot();
+  }
+
+  swapSegmentColors() {
+    const tempPaletteItem = chartPalette.segmentColorIds[0];
+    chartPalette.segmentColorIds[0] = chartPalette.segmentColorIds[1];
+    chartPalette.segmentColorIds[1] = tempPaletteItem;
   }
 
   // * PREPARE PLOT -----------------------------
@@ -387,12 +395,6 @@ export class ChartV2Component implements OnInit, OnDestroy {
       ];
     }
     return colorCode;
-  }
-
-  swapSegmentColors() {
-    const tempPaletteItem = chartPalette.segmentColorIds[0];
-    chartPalette.segmentColorIds[0] = chartPalette.segmentColorIds[1];
-    chartPalette.segmentColorIds[1] = tempPaletteItem;
   }
 
   detectChanges() {

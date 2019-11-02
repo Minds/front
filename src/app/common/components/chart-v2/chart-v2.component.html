@@ -36,7 +36,8 @@
         class="m-chartV2__hoverInfo__row--primary"
       >
         <ng-template ngSwitchCase="number">
-          {{ hoverInfo.value | number }} {{ rawData.label | lowercase }}
+          {{ hoverInfo.value | number: '1.0-0' | abbr }}
+          {{ rawData.label | lowercase }}
         </ng-template>
         <ng-template ngSwitchCase="usd">
           {{ hoverInfo.value | currency }} USD
@@ -52,7 +53,7 @@
           class="m-chartV2__hoverInfo__row"
         >
           <ng-template ngSwitchCase="number">
-            {{ hoverInfo.comparisonValue | number }}
+            {{ hoverInfo.comparisonValue | number: '1.0-0' | abbr }}
           </ng-template>
           <ng-template ngSwitchCase="usd">
             {{ hoverInfo.comparisonValue | currency }}
