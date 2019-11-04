@@ -105,7 +105,7 @@ m-overlay-modal {
   text-align: left;
 
   @include m-theme() {
-    color: themed($m-white-always);
+    color: themed($m-black);
   }
 
   h1.m-blog--title {
@@ -124,7 +124,7 @@ m-overlay-modal {
 
   p {
     @include m-theme() {
-      color: themed($m-white-always);
+      color: themed($m-black);
     }
   }
 
@@ -140,7 +140,7 @@ m-overlay-modal {
 
   .m-blog--image--caption {
     @include m-theme() {
-      color: themed($m-white-always);
+      color: themed($m-black);
     }
   }
 }
