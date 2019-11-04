@@ -1,10 +1,16 @@
 <ng-container m-pageLayout__main>
-  <div class="m-analytics__spinnerContainer" *ngIf="loading">
+  <div
+    class="m-analytics__spinnerContainer"
+    *ngIf="loading && this.session.isAdmin()"
+  >
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
 
   <!-- TILES CONTAINER -->
-  <div class="m-analyticsSummary__tilesContainer" *ngIf="!loading">
+  <div
+    class="m-analyticsSummary__tilesContainer"
+    *ngIf="!loading && this.session.isAdmin()"
+  >
     <!-- ACTIVE USERS TILE (TEMP PLACEHOLDER) -->
     <div class="m-analyticsSummary__tile">
       <m-analytics__benchmark
@@ -37,7 +43,7 @@
   </div>
 
   <!-- BOOST BACKLOG -->
-  <div class="m-analyticsSummary__boostBacklogWrapper">
+  <div class="m-analyticsSummary__boostBacklogWrapper" *ngIf="boosts">
     <div class="m-analyticsSummary__boostBacklogTitle">Boost Backlog</div>
     <div class="m-analyticsSummary__boostRowsContainer">
       <ng-container *ngFor="let boostRow of boostRows">

@@ -73,7 +73,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
     this.isTouchDevice = isMobileOrTablet();
     this.hoverInfoDiv = this.hoverInfoDivEl.nativeElement;
     this.segments = this.isMini
-      ? this.rawData.visualisation.segments[0]
+      ? this.rawData.visualisation.segments.slice(0, 1)
       : this.rawData.visualisation.segments;
     if (this.segments.length === 2) {
       this.isComparison = true;

@@ -20,7 +20,7 @@ m-analytics__dashboard {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  .m-analytics__headerFilters {
+  .m-analyticsDashboard__headerFilters {
     display: flex;
     align-items: baseline;
     .m-analytics__channelSearch {
@@ -39,7 +39,7 @@ m-analytics__dashboard {
       width: 180px;
     }
   }
-  .m-analytics__timespanFilter {
+  .m-analyticsDashboard__timespanFilter {
     .m-analytics__filterWrapper {
       margin-top: 0px;
     }

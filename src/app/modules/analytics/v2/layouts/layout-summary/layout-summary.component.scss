@@ -10,19 +10,20 @@ m-analytics__layout--summary {
   padding-top: 18px;
 }
 .m-analyticsSummary__tile {
-  min-width: 160px;
   height: 160px;
   box-sizing: border-box;
-  flex: 0 1 33%;
-  min-width: 180px;
+  min-width: 200px;
   padding-right: 20px;
+  margin-bottom: 20px;
+  flex: 0 1 33%;
 
   &.noChart {
     .m-analyticsSummary__benchmarkValue {
       font-size: 42px;
     }
     .m-analyticsSummary__benchmarkLabelWrapper {
-      padding-bottom: 18px;
+      padding-bottom: 30px;
+      // 18px when emoji is removed
     }
   }
 }
@@ -47,7 +48,7 @@ m-analytics__layout--summary {
   display: flex;
   flex-flow: row wrap;
   @include m-theme() {
-    border: 1px solid themed($m-grey-50);
+    border: 1px solid rgba(themed($m-grey-50), 0.5);
   }
 }
 .m-analyticsSummary__boostRow {
@@ -60,17 +61,14 @@ m-analytics__layout--summary {
   flex: 1 0 50%;
   box-sizing: border-box;
   @include m-theme() {
-    border: 1px solid themed($m-grey-50);
+    border: 1px solid rgba(themed($m-grey-50), 0.5);
   }
 }
 
 // ------------------------------------------
 // MOBILE & TABLET
 // -----------------------------------------
-// TODOOJM: fix this so tile title doesn't wrap
-
-// TODO: remove this after generic layout component
-@media screen and (max-width: 914px) {
+@media screen and (max-width: 1022px) {
   .m-analyticsSummary__tile {
     flex-basis: 50%;
   }
@@ -84,12 +82,15 @@ m-analytics__layout--summary {
   }
 }
 
-@media screen and (max-width: 588px) {
+@media screen and (max-width: 648px) {
   .m-analyticsSummary__tile {
     flex-basis: 50%;
   }
 }
-@media screen and (max-width: 440px) {
+@media screen and (max-width: 448px) {
+  .m-analyticsSummary__tile {
+    flex-basis: 100%;
+  }
   .m-analyticsSummary__boostBacklogWrapper {
     .m-analyticsSummary__boostRow {
       flex-basis: 100%;

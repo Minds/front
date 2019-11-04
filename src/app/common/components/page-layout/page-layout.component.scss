@@ -32,6 +32,9 @@ m-sidebarMenu {
   box-sizing: border-box;
   padding-left: 105px;
   width: 245px;
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
 }
 .m-pageLayout__main {
   margin-left: 350px;

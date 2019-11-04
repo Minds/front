@@ -92,14 +92,14 @@ m-chartV2 {
 // ----------------------------------------------------
 m-chartV2.isMini {
   margin-left: 0;
-  margin-top: 11px;
+  margin-top: 24px;
   .js-plotly-plot,
   .plot-container {
-    height: 50px;
-    min-height: 50px;
+    height: 40px;
+    min-height: 40px;
   }
   .m-chartV2__chartContainer {
-    margin-right: 24px;
+    // margin-right: 24px;
   }
   .m-chartV2__hoverInfoDiv {
     width: 150px;

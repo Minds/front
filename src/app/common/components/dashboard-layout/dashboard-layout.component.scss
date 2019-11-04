@@ -9,7 +9,6 @@ m-dashboardLayout {
     font-weight: 500;
     margin-top: 0;
     margin-right: 24px;
-    // margin: 24px 16px 24px 0;
   }
 }
 .m-dashboardLayout__body {
@@ -20,7 +19,6 @@ m-dashboardLayout {
 
 @media screen and (max-width: $min-tablet) {
   m-dashboardLayout {
-    // OJMTODO test this :host
     display: block;
     padding: 0;
     max-width: none;
