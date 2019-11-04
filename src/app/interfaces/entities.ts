@@ -85,7 +85,6 @@ export interface MindsUser {
   pro_published?: boolean;
   pro_settings?: {
     logo_image: string;
-    logo_guid: string;
     tag_list?: Tag[];
     background_image: string;
     title: string;
@@ -97,6 +96,8 @@ export interface MindsUser {
     featured_content?: Array<string>;
     tile_ratio?: string;
     styles?: { [key: string]: string };
+    has_custom_logo?: boolean;
+    has_custom_background?: boolean;
   };
   mode: ChannelMode;
 }

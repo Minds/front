@@ -1,7 +1,9 @@
 <div class="m-pro__channel">
   <ng-container *ngIf="channel">
     <div class="m-proChannel__topbar">
-      <ng-container *ngIf="!channel.pro_settings.logo_guid; else customLogo">
+      <ng-container
+        *ngIf="!channel.pro_settings.has_custom_logo; else customLogo"
+      >
         <minds-avatar
           [object]="channel"
           [routerLink]="homeRouterLink"
