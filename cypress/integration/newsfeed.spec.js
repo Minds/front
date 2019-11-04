@@ -149,7 +149,7 @@ context('Newsfeed', () => {
   /**
    * Commenting out until scheduling is enabled properly on sandboxes
    */
-  it('should be able to post an activity picking a scheduled date and the edit it', () => {
+  xit('should be able to post an activity picking a scheduled date and the edit it', () => {
     cy.get('minds-newsfeed-poster').then((poster) => {
       if (poster.find('.m-poster-date-selector__input').length > 0) {
         cy.get('minds-newsfeed-poster textarea').type('This is a post');
