@@ -96,6 +96,7 @@ export interface MindsUser {
     featured_content?: Array<string>;
     tile_ratio?: string;
     styles?: { [key: string]: string };
+    domain: string;
     has_custom_logo?: boolean;
     has_custom_background?: boolean;
   };
