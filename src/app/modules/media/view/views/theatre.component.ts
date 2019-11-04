@@ -43,14 +43,8 @@ import { MindsVideoComponent } from '../../components/video/video.component';
         [autoplay]="!object.monetized"
         [muted]="false"
         (finished)="loadNext()"
-        [src]="[
-          { res: '720', uri: object.src['720.mp4'] },
-          { res: '360', uri: object.src['360.mp4'] }
-        ]"
-        [torrent]="[
-          { res: '720', key: object.guid + '/720.mp4' },
-          { res: '360', key: object.guid + '/360.mp4' }
-        ]"
+        [src]="videoDirectSrc"
+        [torrent]="videoTorrentSrc"
         [log]="object.guid"
         [playCount]="false"
         #player
@@ -76,6 +70,44 @@ export class MediaTheatreComponent {
 
   @ViewChild(MindsVideoComponent, { static: false })
   videoComponent: MindsVideoComponent;
+
+  get videoDirectSrc() {
+    const sources = [
+      {
+        res: '720',
+        uri: 'api/v1/media/' + this.object.guid + '/play?s=modal&res=720',
+        type: 'video/mp4',
+      },
+      {
+        res: '360',
+        uri: 'api/v1/media/' + this.object.guid + '/play?s=modal',
+        type: 'video/mp4',
+      },
+    ];
+
+    if (this.object.flags.full_hd) {
+      sources.push({
+        res: '1080',
+        uri: 'api/v1/media/' + this.object.guid + '/play?s=modal&res=1080',
+        type: 'video/mp4',
+      });
+    }
+
+    return sources;
+  }
+
+  get videoTorrentSrc() {
+    const sources = [
+      { res: '720', key: this.object.guid + '/720.mp4' },
+      { res: '360', key: this.object.guid + '/360.mp4' },
+    ];
+
+    if (this.object.flags.full_hd) {
+      sources.push({ res: '1080', key: this.object.guid + '/1080.mp4' });
+    }
+
+    return sources;
+  }
 
   constructor(
     public session: Session,

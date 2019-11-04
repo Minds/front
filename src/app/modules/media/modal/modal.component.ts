@@ -119,6 +119,46 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   @ViewChild(MindsVideoComponent, { static: false })
   videoComponent: MindsVideoComponent;
 
+  get videoDirectSrc() {
+    const sources = [
+      {
+        res: '720',
+        uri:
+          'api/v1/media/' + this.entity.entity_guid + '/play?s=modal&res=720',
+        type: 'video/mp4',
+      },
+      {
+        res: '360',
+        uri: 'api/v1/media/' + this.entity.entity_guid + '/play?s=modal',
+        type: 'video/mp4',
+      },
+    ];
+
+    if (this.entity.custom_data.full_hd) {
+      sources.push({
+        res: '1080',
+        uri:
+          'api/v1/media/' + this.entity.entity_guid + '/play?s=modal&res=1080',
+        type: 'video/mp4',
+      });
+    }
+
+    return sources;
+  }
+
+  get videoTorrentSrc() {
+    const sources = [
+      { res: '720', key: this.entity.entity_guid + '/720.mp4' },
+      { res: '360', key: this.entity.entity_guid + '/360.mp4' },
+    ];
+
+    if (this.entity.custom_data.full_hd) {
+      sources.push({ res: '1080', key: this.entity.entity_guid + '/1080.mp4' });
+    }
+
+    return sources;
+  }
+
   constructor(
     public session: Session,
     public analyticsService: AnalyticsService,
