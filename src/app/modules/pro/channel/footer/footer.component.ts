@@ -8,14 +8,7 @@ import {
   socialProfileMeta,
 } from '../../../channels/social-profiles/meta';
 
-export interface SocialProfileMeta {
-  key: string;
-  label: string;
-  link: string;
-  icon: string;
-  customIcon?: boolean;
-  domain: string;
-}
+export type FooterLink = { title: string; href: string };
 
 @Component({
   selector: 'm-pro--channel-footer',
@@ -33,7 +26,7 @@ export class ProChannelFooterComponent {
     return socialProfileMeta;
   }
 
-  get footerLinks() {
+  get footerLinks(): FooterLink[] {
     return this.channelService.currentChannel.pro_settings.footer_links;
   }
 
@@ -43,30 +36,6 @@ export class ProChannelFooterComponent {
 
   get footerSocialProfiles() {
     return this.channelService.currentChannel.social_profiles;
-  }
-
-  getSocialProfileURL(url: string) {
-    if (url.includes('http://') || url.includes('https://')) {
-      return url;
-    } else {
-      return 'http://' + url;
-    }
-  }
-
-  getSocialProfileIconClass({ key = '' }) {
-    let meta = getSocialProfileMeta(key),
-      domClass;
-
-    if (meta.customIcon) {
-      domClass = `m-custom-icon m-custom-icon-${meta.icon}`;
-    } else {
-      domClass = `fa fa-fw fa-${meta.icon}`;
-    }
-    return domClass;
-  }
-
-  logout() {
-    this.auth.logout();
   }
 
   onUserChange() {
@@ -98,5 +67,37 @@ export class ProChannelFooterComponent {
 
   get isProDomain() {
     return this.site.isProDomain;
+  }
+
+  getSocialProfileURL(url: string) {
+    if (url.includes('http://') || url.includes('https://')) {
+      return url;
+    } else {
+      return 'http://' + url;
+    }
+  }
+
+  getSocialProfileIconClass({ key = '' }) {
+    let meta = getSocialProfileMeta(key),
+      domClass;
+
+    if (meta.customIcon) {
+      domClass = `m-custom-icon m-custom-icon-${meta.icon}`;
+    } else {
+      domClass = `fa fa-fw fa-${meta.icon}`;
+    }
+    return domClass;
+  }
+
+  logout() {
+    this.auth.logout();
+  }
+
+  getTarget(link: FooterLink) {
+    const domain = this.isProDomain
+      ? this.user.pro_settings.domain
+      : window.Minds.site_url;
+    const regex = new RegExp(`/${domain}/`);
+    return regex.exec(link.href) ? '_self' : '_blank';
   }
 }
