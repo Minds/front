@@ -88,7 +88,7 @@ export const REASONS: Array<any> = [
   },
   {
     value: 10,
-    label: 'Infringes my copyright',
+    label: 'Violates copyright',
     hasMore: true,
   },
   {
