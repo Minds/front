@@ -3,22 +3,21 @@ const fakeData: Array<any> = [
     // CHART TESTS
     loading: false,
     category: 'traffic',
-    description: 'imma traffic description',
     timespan: '30d',
     timespans: [
       {
         id: '30d',
         label: 'Last 30 days',
         interval: 'day',
-        comparison_interval: 28,
+        comparison_interval: 30,
         from_ts_ms: 1567296000000,
         from_ts_iso: '2019-09-01T00:00:00+00:00',
-        selected: true,
+        selected: false,
       },
       {
-        id: '1y',
-        label: '1 year ago',
-        interval: 'month',
+        id: '12m',
+        label: 'Last 12 months',
+        interval: 'day',
         comparison_interval: 365,
         from_ts_ms: 1538352000000,
         from_ts_iso: '2018-10-01T00:00:00+00:00',
@@ -118,9 +117,24 @@ const fakeData: Array<any> = [
         visualisation: null,
       },
       {
+        id: 'active_users',
+        label: 'Active UsersA',
+        permissions: ['admin', 'user'],
+        summary: {
+          current_value: 120962,
+          comparison_value: 120962,
+          comparison_interval: 28,
+          comparison_positive_inclination: true,
+        },
+        unit: 'number',
+        description:
+          'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentiuti atque corrupti quos dolores',
+        visualisation: null,
+      },
+      {
         id: 'signups',
         label: 'Signups',
-        permissions: ['admin'],
+        permissions: ['admin', 'user'],
         summary: {
           current_value: 53060,
           comparison_value: 60577,
@@ -173,7 +187,7 @@ const fakeData: Array<any> = [
                 {
                   key: 1567641600000,
                   date: '2019-09-05T00:00:00+00:00',
-                  value: 5,
+                  value: 1,
                 },
                 {
                   key: 1567296000000,
@@ -345,7 +359,7 @@ const fakeData: Array<any> = [
           { id: 'all', label: 'All', available: true, selected: false },
           {
             id: 'browser',
-            label: 'Browser',
+            label: 'BrowserBrowserBrowserBrowserBrowserBrowser',
             available: true,
             selected: false,
           },
@@ -498,7 +512,7 @@ const fakeData: Array<any> = [
           ],
           columns: [
             { id: 'entity', label: 'Views' },
-            { id: 'views::total', label: 'Total' },
+            { id: 'views::total', label: 'Total Views' },
             { id: 'views::organic', label: 'Organic' },
             { id: 'views::single', label: 'Single' },
           ],

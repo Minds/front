@@ -51,7 +51,6 @@ import { PageviewsCardComponent } from './components/cards/pageviews/pageviews.c
 import { PageviewsChartComponent } from './components/charts/pageviews/pageviews.component';
 import { AnalyticsDashboardComponent } from './v2/dashboard.component';
 import { AnalyticsLayoutChartComponent } from './v2/layouts/layout-chart/layout-chart.component';
-import { AnalyticsLayoutTableComponent } from './v2/layouts/layout-table/layout-table.component';
 import { AnalyticsLayoutSummaryComponent } from './v2/layouts/layout-summary/layout-summary.component';
 import { AnalyticsMetricsComponent } from './v2/components/metrics/metrics.component';
 import { AnalyticsFiltersComponent } from './v2/components/filters/filters.component';
@@ -63,7 +62,6 @@ import { SearchModule } from '../search/search.module';
 import { AnalyticsSearchComponent } from './v2/components/search/search.component';
 import { FormsModule } from '@angular/forms';
 import { AnalyticsSearchSuggestionsComponent } from './v2/components/search-suggestions/search-suggestions.component';
-import { AnalyticsMenuComponent } from './v2/components/menu/menu.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -163,7 +161,6 @@ const routes: Routes = [
     Graph,
     AnalyticsDashboardComponent,
     AnalyticsLayoutChartComponent,
-    AnalyticsLayoutTableComponent,
     AnalyticsLayoutSummaryComponent,
     AnalyticsMetricsComponent,
     AnalyticsFiltersComponent,
@@ -172,7 +169,6 @@ const routes: Routes = [
     AnalyticsTableComponent,
     AnalyticsSearchComponent,
     AnalyticsSearchSuggestionsComponent,
-    AnalyticsMenuComponent,
   ],
   providers: [AnalyticsDashboardService],
 })

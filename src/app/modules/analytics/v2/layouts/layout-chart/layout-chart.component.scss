@@ -1,19 +1,16 @@
-.filterableChartWrapper {
+.m-analytics__filterableChartWrapper {
   position: relative;
-  padding: 16px;
-  // width: 80%;
+  margin-bottom: 48px;
   @include m-theme() {
-    border-top: 1px solid themed($m-grey-50);
+    border-top: 1px solid rgba(themed($m-grey-50), 0.5);
+    background-color: themed($m-white);
   }
   &.isTable {
-    padding: 0;
     width: 100%;
-  }
-  &.isMobile {
-    border-top: none;
+    min-width: 420px;
   }
 }
-.spinnerContainer {
+.m-analytics__spinnerContainer {
   height: 30%;
   width: 100%;
   display: flex;
