@@ -111,7 +111,7 @@ export interface UserState {
   filters?: Filter[];
 }
 
-let _state: UserState = fakeData[2];
+let _state: UserState = fakeData[0];
 
 const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 

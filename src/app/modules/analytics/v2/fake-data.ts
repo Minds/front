@@ -3,6 +3,8 @@ const fakeData: Array<any> = [
     // CHART TESTS
     loading: false,
     category: 'traffic',
+    description:
+      'traffic description traffic description traffic description traffic description traffic description traffic description traffic description',
     timespan: '30d',
     timespans: [
       {

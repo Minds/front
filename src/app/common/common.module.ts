@@ -115,9 +115,11 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
 import { ChartV2Component } from './components/chart-v2/chart-v2.component';
-
 import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
+import { PageLayoutComponent } from './components/page-layout/page-layout.component';
+import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
+
 PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
@@ -224,6 +226,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
     ChartV2Component,
+    PageLayoutComponent,
+    DashboardLayoutComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -316,6 +320,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
     ChartV2Component,
+    PageLayoutComponent,
+    DashboardLayoutComponent,
   ],
   providers: [
     SiteService,

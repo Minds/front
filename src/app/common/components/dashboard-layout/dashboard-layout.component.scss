@@ -1,0 +1,35 @@
+m-dashboardLayout {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+.m-dashboardLayout__header {
+  h3 {
+    font-size: 26px;
+    font-weight: 500;
+    margin-top: 0;
+    margin-right: 24px;
+    // margin: 24px 16px 24px 0;
+  }
+}
+.m-dashboardLayout__body {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+@media screen and (max-width: $min-tablet) {
+  m-dashboardLayout {
+    // OJMTODO test this :host
+    display: block;
+    padding: 0;
+    max-width: none;
+    width: 100%;
+  }
+  .m-dashboardLayout__header {
+    padding-left: 24px;
+  }
+}
+
+@media screen and (max-width: $max-mobile) {
+}

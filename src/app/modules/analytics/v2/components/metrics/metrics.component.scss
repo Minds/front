@@ -184,4 +184,9 @@ m-analytics__metrics {
       }
     }
   }
+  .m-analytics__metricsWrapper {
+    @include m-theme() {
+      box-shadow: none;
+    }
+  }
 }

@@ -1,12 +1,12 @@
 const sidebarMenuCategories = [
   {
-    category: {
+    header: {
       id: 'analytics',
       label: 'Analytics',
       path: '/analytics/dashboard/',
       permissions: ['admin', 'user'],
     },
-    subcategories: [
+    links: [
       {
         id: 'summary',
         label: 'Summary',
@@ -22,11 +22,12 @@ const sidebarMenuCategories = [
         label: 'Earnings',
         permissions: ['admin', 'user'],
       },
-      // {
-      //   id: 'engagement',
-      //   label: 'Engagement',
-      //   permissions: ['admin', 'user'],
-      // },
+      {
+        id: 'engagement',
+        label: 'Engagement',
+        permissions: ['admin', 'user'],
+        // path: '/some/path/outside/header/path',
+      },
       {
         id: 'trending',
         label: 'Trending',
@@ -58,33 +59,6 @@ const sidebarMenuCategories = [
       // },
     ],
   },
-  // {
-  //   category: {
-  //     id: 'test1',
-  //     label: 'Test1',
-  //     permissions: ['admin', 'user'],
-  //     path: '/somepath/bork',
-  //   },
-  //   subcategories: [
-  //     {
-  //       id: 'nodes',
-  //       label: 'Nodes',
-  //       permissions: ['admin'],
-  //     },
-  //     {
-  //       id: 'nodes2',
-  //       label: 'Nodes2',
-  //       permissions: ['admin'],
-  //     },
-  //   ],
-  // },
-  // {
-  //   category: {
-  //     id: 'test2',
-  //     label: 'Test2 no subcats',
-  //     path: '/anotherpath/test2',
-  //   },
-  // },
 ];
 
 export default sidebarMenuCategories;

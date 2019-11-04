@@ -1,6 +1,9 @@
 // -----------------------------------------
 // LAYOUT
 // -----------------------------------------
+m-analytics__layout--summary {
+  display: block;
+}
 .m-analyticsSummary__tilesContainer {
   display: flex;
   flex-flow: row wrap;
@@ -11,7 +14,8 @@
   height: 160px;
   box-sizing: border-box;
   flex: 0 1 33%;
-  margin-right: 20px;
+  min-width: 180px;
+  padding-right: 20px;
 
   &.noChart {
     .m-analyticsSummary__benchmarkValue {
@@ -63,9 +67,35 @@
 // ------------------------------------------
 // MOBILE & TABLET
 // -----------------------------------------
+// TODOOJM: fix this so tile title doesn't wrap
+
 // TODO: remove this after generic layout component
+@media screen and (max-width: 914px) {
+  .m-analyticsSummary__tile {
+    flex-basis: 50%;
+  }
+}
 @media screen and (max-width: $min-tablet) {
   m-analytics__layout--summary {
     padding: 0 24px 48px 24px;
+  }
+  .m-analyticsSummary__tile {
+    flex-basis: 33%;
+  }
+}
+
+@media screen and (max-width: 588px) {
+  .m-analyticsSummary__tile {
+    flex-basis: 50%;
+  }
+}
+@media screen and (max-width: 440px) {
+  .m-analyticsSummary__boostBacklogWrapper {
+    .m-analyticsSummary__boostRow {
+      flex-basis: 100%;
+    }
+    .m-analyticsSummary__boostType {
+      flex-basis: 100%;
+    }
   }
 }
