@@ -1,5 +1,3 @@
-// Working version: https://codepen.io/omadrid/pen/NWKZYrV?editors=0010
-
 import {
   Component,
   OnInit,
@@ -22,9 +20,10 @@ import {
 import * as Plotly from 'plotly.js';
 import chartPalette from '../../chart-palette.default';
 import { ThemeService } from '../../../../../common/services/theme.service';
+import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
 interface TimespanExtended extends TimespanBase {
-  tickFormat?: string;
+  xTickFormat?: string;
   datePipe?: string;
 }
 export { TimespanExtended as Timespan };
@@ -34,11 +33,14 @@ export { TimespanExtended as Timespan };
   templateUrl: 'chart.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnalyticsChartComponent implements OnInit, OnDestroy {
-  @ViewChild('graphDiv', { static: true }) graphDivEl: ElementRef;
+export class AnalyticsChartComponent implements OnDestroy, OnInit {
+  @ViewChild('graphDiv', { static: true }) graphDiv;
   @ViewChild('hoverInfoDiv', { static: true }) hoverInfoDivEl: ElementRef;
+  @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
-  graphDiv: any;
+  isTouchDevice: boolean;
+  init: boolean = false;
+
   hoverInfoDiv: any;
   hoverInfo: any = {};
 
@@ -59,47 +61,40 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   segments: Buckets[];
   isComparison: boolean = false;
 
-  data: Array<any> = [];
-  layout: any;
-  config: any = {
+  data = [];
+  layout;
+  config = {
     displayModeBar: false,
-    // responsive: true,
   };
 
-  segmentLength: number;
+  pointsPerSegment = 1;
   hoverPoint: number;
+  lineRange: Array<any>;
+  newLineRange = true;
 
-  markerOpacities: Array<number> = [];
-  shapes: Array<any> = [];
-
+  markerFills;
+  shapes = [];
   timespanFormats = [
-    { interval: 'day', tickFormat: '%m/%d', datePipe: 'EEE MMM d, y' },
-    { interval: 'month', tickFormat: '%m/%y', datePipe: 'MMM y' },
+    { interval: 'day', xTickFormat: '%m/%d', datePipe: 'EEE MMM d, y' },
+    { interval: 'month', xTickFormat: '%m/%Y', datePipe: 'MMM y' },
   ];
   datePipe: string = this.timespanFormats[0].datePipe;
-  tickFormat: string = this.timespanFormats[0].tickFormat;
+  xTickFormat: string = this.timespanFormats[0].xTickFormat;
+  // yTickPrefix: string = '';
+  yTickFormat: string = '';
 
-  // ***********************************************************************************
+  // ***********************************************************
 
   constructor(
     private analyticsService: AnalyticsDashboardService,
     private themeService: ThemeService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    private hostElement: ElementRef
   ) {}
 
   ngOnInit() {
-    this.graphDiv = this.graphDivEl.nativeElement;
+    this.isTouchDevice = isMobileOrTablet();
     this.hoverInfoDiv = this.hoverInfoDivEl.nativeElement;
-
-    this.metricSubscription = this.selectedMetric$.subscribe(metric => {
-      this.selectedMetric = metric;
-      try {
-        this.initPlot();
-      } catch (err) {
-        console.log(err);
-      }
-      this.detectChanges();
-    });
 
     this.timespansSubscription = this.analyticsService.timespans$.subscribe(
       timespans => {
@@ -112,33 +107,60 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
             t => t.interval === this.selectedTimespan.interval
           ) || this.timespanFormats[0];
 
-        this.tickFormat = timespanFormat.tickFormat;
+        this.xTickFormat = timespanFormat.xTickFormat;
         this.datePipe = timespanFormat.datePipe;
 
+        if (this.init) {
+          this.layout.xaxis.tickformat = this.xTickFormat;
+        }
         this.detectChanges();
       }
     );
 
     this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
       this.isDark = isDark;
-      this.applyDimensions();
-
-      // this.relayout(this.getLayout());
-      // this.restyle(this.getData());
+      if (this.init) {
+        this.getData();
+        this.getLayout();
+      }
+      this.detectChanges();
+    });
+    this.metricSubscription = this.selectedMetric$.subscribe(metric => {
+      this.init = false;
+      this.selectedMetric = metric;
+      if (metric.unit && metric.unit === 'usd') {
+        this.yTickFormat = '$.2f';
+      }
+      try {
+        this.initPlot();
+      } catch (err) {
+        console.log(err);
+      }
       this.detectChanges();
     });
   }
 
+  swapSegmentColors() {
+    const tempPaletteItem = chartPalette.segmentColorIds[0];
+    chartPalette.segmentColorIds[0] = chartPalette.segmentColorIds[1];
+    chartPalette.segmentColorIds[1] = tempPaletteItem;
+  }
+
   initPlot() {
-    this.data = [];
-    this.shapes = [];
-    this.markerOpacities = [];
     this.segments = this.selectedMetric.visualisation.segments;
-    this.segmentLength = this.segments[0].buckets.length;
+    if (this.segments.length === 2) {
+      this.isComparison = true;
 
-    for (let i = 0; i < this.segmentLength; i++) {
-      this.markerOpacities[i] = 0;
+      // Reverse the segments so comparison line is layered behind current line
+      this.segments.reverse();
 
+      // Current line should be blue
+      this.swapSegmentColors();
+    }
+
+    this.pointsPerSegment = this.segments[0].buckets.length;
+
+    for (let i = 0; i < this.pointsPerSegment; i++) {
       this.shapes[i] = {
         type: 'line',
         layer: 'below',
@@ -147,146 +169,252 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
         x1: this.segments[0].buckets[i].date,
         y1: 0,
         line: {
-          color: this.getColor('m-transparent'),
+          color: 'rgba(0, 0, 0, 0)',
           width: 2,
         },
       };
-
-      // if (this.selectedMetric.unit === 'usd'){
-      // this.segments.forEach(segment =>{ segment.buckets})
-      // }
     }
-    this.data = this.getData();
-    this.layout = this.getLayout();
 
-    Plotly.newPlot('graphDiv', this.data, this.layout, this.config);
-    this.setLineHeights();
-
-    this.graphDiv.on('plotly_hover', $event => {
-      this.onHover($event);
-    });
-
-    this.graphDiv.on('plotly_unhover', $event => {
-      this.onUnhover($event);
-    });
+    this.getData();
+    this.getLayout();
+    this.init = true;
 
     this.detectChanges();
   }
-  // ----------------------------------------------
-  // EVENT: HOVER
-  // ----------------------------------------------
+
+  getData() {
+    this.markerFills = [];
+    this.segments.forEach((segment, index) => {
+      const segmentMarkerFills = [];
+      for (let i = 0; i < this.pointsPerSegment; i++) {
+        segmentMarkerFills[i] = this.getColor('m-white');
+      }
+      this.markerFills.push(segmentMarkerFills);
+    });
+
+    const globalSegmentSettings = {
+      type: 'scatter',
+      mode: 'lines+markers',
+      line: {
+        width: 1,
+        dash: 'solid',
+      },
+      marker: {
+        size: 7,
+      },
+      showlegend: false,
+      hoverinfo: 'text',
+      x: this.unpack(this.segments[0].buckets, 'date'),
+    };
+
+    this.segments.forEach((s, i) => {
+      const segment = {
+        ...globalSegmentSettings,
+        line: {
+          ...globalSegmentSettings.line,
+          color: this.getColor(chartPalette.segmentColorIds[i]),
+        },
+        marker: {
+          ...globalSegmentSettings.marker,
+          color: this.markerFills[i],
+          line: {
+            color: this.getColor(chartPalette.segmentColorIds[i]),
+            width: 1,
+          },
+        },
+        y: this.unpack(this.segments[i].buckets, 'value'),
+      };
+
+      this.data[i] = segment;
+    });
+
+    if (this.isComparison) {
+      this.data[0].line.dash = 'dot';
+    }
+  }
+
+  getLayout() {
+    this.layout = {
+      width: 0,
+      height: 0,
+      autoexpand: 'true',
+      autosize: 'true',
+      hovermode: 'x',
+      paper_bgcolor: this.getColor('m-white'),
+      plot_bgcolor: this.getColor('m-white'),
+      font: {
+        family: 'Roboto',
+      },
+      xaxis: {
+        tickformat: this.xTickFormat,
+        tickmode: 'array',
+        tickson: 'labels',
+        tickcolor: this.getColor('m-grey-130'),
+        tickangle: -45,
+        tickfont: {
+          color: this.getColor('m-grey-130'),
+        },
+        showgrid: false,
+        showline: true,
+        linecolor: this.getColor('m-grey-300'),
+        linewidth: 1,
+        zeroline: false,
+        fixedrange: true,
+        // automargin: true,
+        // rangemode: 'nonnegative',
+      },
+      yaxis: {
+        ticks: '',
+        tickformat: this.yTickFormat,
+        tickmode: 'array',
+        tickson: 'labels',
+        showgrid: true,
+        gridcolor: this.getColor('m-grey-70'),
+        zeroline: false,
+        visible: true,
+        side: 'right',
+        tickfont: {
+          color: this.getColor('m-grey-130'),
+        },
+        fixedrange: true,
+        // automargin: true,
+        // rangemode: 'nonnegative',
+      },
+      margin: {
+        t: 16,
+        b: 80,
+        l: 0,
+        r: 80,
+        pad: 16,
+      },
+      shapes: this.shapes,
+    };
+  }
+
   onHover($event) {
-    // TODO: return if filters.component filter is expanded
     this.hoverPoint = $event.points[0].pointIndex;
-    this.showMarkers();
-    this.showShapes();
+    this.addMarkerFill();
+    this.showShape($event);
     this.positionHoverInfo($event);
     this.populateHoverInfo();
-    this.showHoverInfo();
-
+    this.hoverInfoDiv.style.opacity = 1;
     this.detectChanges();
   }
 
-  // ----------------------------------------------
-  // EVENT: UNHOVER
-  // ----------------------------------------------
   onUnhover($event) {
-    this.hideMarkers();
-    this.hideShapes();
-    this.hideHoverInfo();
+    this.emptyMarkerFill();
+    this.hideShape();
+    this.hoverInfoDiv.style.opacity = 0;
+    this.detectChanges();
   }
 
-  showMarkers() {
-    this.markerOpacities[this.hoverPoint] = 1;
+  onClick($event) {
+    if (!this.isTouchDevice) {
+      return;
+    }
+    // TODO: use this for non-hover devices
+  }
 
-    Plotly.restyle(this.graphDiv, {
-      marker: { opacity: this.markerOpacities },
+  addMarkerFill() {
+    this.data.forEach((segment, i) => {
+      this.markerFills[i][this.hoverPoint] = this.getColor(
+        chartPalette.segmentColorIds[i]
+      );
     });
   }
 
-  hideMarkers() {
-    this.markerOpacities[this.hoverPoint] = 0;
-    Plotly.restyle(this.graphDiv, {
-      marker: { opacity: this.markerOpacities },
+  emptyMarkerFill() {
+    this.data.forEach((segment, i) => {
+      this.markerFills[i][this.hoverPoint] = this.getColor('m-white');
+      segment.marker.color = this.markerFills[i];
     });
   }
 
-  showShapes() {
-    this.layout.shapes[this.hoverPoint].line.color = this.getColor('m-grey-50');
+  showShape($event) {
+    const hoverLine = this.shapes[this.hoverPoint];
+    // Without this, entire graph resizes on every hover
+    if (this.newLineRange) {
+      this.newLineRange = false;
+      this.lineRange = $event.yaxes[0].range;
+    }
 
-    this.relayout(this.layout);
+    hoverLine.y0 = this.lineRange[0];
+    hoverLine.y1 = this.lineRange[1] * 0.99;
+    hoverLine.line.color = this.getColor('m-grey-70');
+    this.layout.shapes = this.shapes;
   }
 
-  hideShapes() {
-    // HIDE VERTICAL LINE
-    this.layout.shapes[this.hoverPoint].line.color = this.getColor(
-      'm-transparent'
-    );
-    this.relayout(this.layout);
+  hideShape() {
+    this.shapes[this.hoverPoint].line.color = 'rgba(0, 0, 0, 0)';
+    this.layout.shapes = this.shapes;
   }
 
   populateHoverInfo() {
+    const pt = this.isComparison ? 1 : 0;
     // TODO: format value strings here and remove ngSwitch from template?
-    this.hoverInfo['date'] = this.segments[0].buckets[this.hoverPoint].date;
+    this.hoverInfo['date'] = this.segments[pt].buckets[this.hoverPoint].date;
     this.hoverInfo['value'] =
       this.selectedMetric.unit !== 'usd'
-        ? this.segments[0].buckets[this.hoverPoint].value
-        : this.segments[0].buckets[this.hoverPoint].value / 100;
+        ? this.segments[pt].buckets[this.hoverPoint].value
+        : this.segments[pt].buckets[this.hoverPoint].value / 100;
 
     if (this.isComparison && this.segments[1]) {
       this.hoverInfo['comparisonValue'] =
         this.selectedMetric.unit !== 'usd'
-          ? this.segments[1].buckets[this.hoverPoint].value
-          : this.segments[1].buckets[this.hoverPoint].value / 100;
+          ? this.segments[0].buckets[this.hoverPoint].value
+          : this.segments[0].buckets[this.hoverPoint].value / 100;
 
-      this.hoverInfo['comparisonDate'] = this.segments[1].buckets[
+      this.hoverInfo['comparisonDate'] = this.segments[0].buckets[
         this.hoverPoint
       ].date;
     }
   }
 
   positionHoverInfo($event) {
-    const xAxis = $event.points[0].xaxis,
-      yAxis = $event.points[0].yaxis,
-      tooltipXDist = xAxis.d2p($event.points[0].x) + 16,
-      tooltipYDist = yAxis.d2p($event.points[0].y) + 16;
+    const pad = 16,
+      pt = this.isComparison ? 1 : 0,
+      xAxis = $event.points[pt].xaxis,
+      yAxis = $event.points[pt].yaxis,
+      pointXDist = xAxis.d2p($event.points[pt].x) + xAxis._offset,
+      pointYDist = yAxis.d2p($event.points[pt].y) + yAxis._offset,
+      plotRect = document
+        .querySelector('.js-plotly-plot')
+        .getBoundingClientRect(),
+      hoverInfoRect = this.hoverInfoDiv.getBoundingClientRect();
 
-    // if (this.hoverPoint < this.segmentLength / 2) {
-    this.hoverInfoDiv.style.top = tooltipYDist + yAxis._offset + 'px';
-    this.hoverInfoDiv.style.left = tooltipXDist + xAxis._offset + 'px';
-    // } else {
-    //   // TODO move the second half of tooltips to the left of points
-    //   // TODO also shift down/up if with x% of rangeMin/rangeMax???
-    //   this.hoverInfoDiv.style.top = tooltipYDist + xAxis._offset + 'px';
-    //   this.hoverInfoDiv.style.left = tooltipXDist + yAxis._offset + 'px';
-    // }
-  }
+    if (pointYDist < plotRect.height / 2) {
+      // If point is in top half of plot, hoverinfo should go beneath it
+      this.hoverInfoDiv.style.top = pointYDist + pad + 'px';
+    } else {
+      this.hoverInfoDiv.style.top =
+        pointYDist - pad - hoverInfoRect.height + 'px';
+    }
 
-  showHoverInfo() {
-    this.hoverInfoDiv.style.opacity = 1;
-  }
-
-  hideHoverInfo() {
-    this.hoverInfoDiv.style.opacity = 0;
-  }
-  // UTILITY \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
-  update(data, layout) {
-    this.data = data;
-    this.layout = layout;
-    Plotly.update('graphDiv', data, layout);
+    if (pointXDist < plotRect.width / 2) {
+      // If point is in left half of plot, hoverinfo should go on the right
+      this.hoverInfoDiv.style.left = pointXDist + pad + 'px';
+    } else {
+      this.hoverInfoDiv.style.left =
+        pointXDist - pad - hoverInfoRect.width + 'px';
+    }
   }
 
-  restyle(data) {
-    this.data = data;
-    Plotly.restyle(this.graphDiv, data);
-    this.detectChanges();
+  @HostListener('window:resize')
+  applyDimensions() {
+    if (this.init) {
+      // this.layout.width = this.hostElement.nativeElement.clientWidth;
+      // this.layout.height = this.hostElement.nativeElement.clientHeight;
+
+      this.layout.width = this.chartContainer.nativeElement.clientWidth;
+      //-32; //- 56;
+      this.layout.height = this.chartContainer.nativeElement.clientHeight;
+
+      this.newLineRange = true;
+      this.detectChanges();
+    }
   }
 
-  relayout(layout) {
-    this.layout = layout;
-    Plotly.relayout(this.graphDiv, layout);
-    this.detectChanges();
-  }
+  // * UTILITY -----------------------------------
 
   unpack(rows, key) {
     return rows.map(row => {
@@ -301,7 +429,7 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
   }
 
   getColor(colorId) {
-    const palette = chartPalette;
+    const palette = chartPalette.themeMaps;
     let colorCode = '#607d8b';
 
     if (palette.find(color => color.id === colorId)) {
@@ -310,122 +438,6 @@ export class AnalyticsChartComponent implements OnInit, OnDestroy {
       ];
     }
     return colorCode;
-  }
-
-  setLineHeights() {
-    this.shapes.forEach(shape => {
-      shape.y0 = this.graphDiv.layout.yaxis.range[0];
-      shape.y1 = this.graphDiv.layout.yaxis.range[1];
-    });
-
-    this.relayout(this.getLayout());
-  }
-
-  getData() {
-    const globalSegmentSettings: any = {
-      type: 'scatter',
-      mode: 'lines+markers',
-      line: {
-        width: 2,
-        dash: 'solid',
-      },
-      marker: {
-        size: 10,
-        opacity: 0,
-      },
-      showlegend: false,
-      hoverinfo: 'text',
-      x: this.unpack(this.segments[0].buckets, 'date'),
-    };
-
-    // COLORS FOR UP TO 6 SEGMENTS
-    const segmentColorIds = [
-      'm-blue',
-      'm-grey-160',
-      'm-amber-dark',
-      'm-green-dark',
-      'm-red-dark',
-      'm-blue-grey-500',
-    ];
-
-    this.segments.forEach((s, i) => {
-      const segment = {
-        ...globalSegmentSettings,
-        line: {
-          ...globalSegmentSettings.line,
-          color: this.getColor(segmentColorIds[i]),
-        },
-        y: this.unpack(this.segments[i].buckets, 'value'),
-      };
-
-      this.data[i] = segment;
-    });
-
-    if (this.segments.length === 2) {
-      this.isComparison = true;
-      this.data[1].line.dash = 'dot';
-    }
-    return this.data;
-  }
-
-  getLayout() {
-    return {
-      width: 0,
-      height: 0,
-      hovermode: 'x',
-      paper_bgcolor: this.getColor('m-white'),
-      plot_bgcolor: this.getColor('m-white'),
-      font: {
-        family: 'Roboto',
-      },
-      xaxis: {
-        tickformat: this.tickFormat,
-        tickmode: 'array', // || linear || auto
-        tickson: 'labels',
-        tickcolor: this.getColor('m-grey-130'),
-        tickangle: -45,
-        tickfont: {
-          color: this.getColor('m-grey-130'),
-        },
-        showgrid: false,
-        showline: true,
-        linecolor: this.getColor('m-grey-300'),
-        linewidth: 1,
-        zeroline: false,
-        fixedrange: true,
-      },
-      yaxis: {
-        ticks: '',
-        showgrid: true,
-        gridcolor: this.getColor('m-grey-70'),
-        zeroline: false,
-        visible: true,
-        side: 'right',
-        tickfont: {
-          color: this.getColor('m-grey-130'),
-        },
-        fixedrange: true,
-      },
-      margin: {
-        t: 16,
-        b: 40,
-        l: 24,
-        r: 40,
-        // pad: 16,
-      },
-      shapes: this.shapes,
-    };
-  }
-
-  @HostListener('window:resize')
-  applyDimensions() {
-    this.layout = {
-      ...this.layout,
-      width: this.graphDiv.clientWidth - 32,
-      height: this.graphDiv.clientHeight - 32,
-    };
-    this.setLineHeights();
-    this.detectChanges();
   }
 
   detectChanges() {
