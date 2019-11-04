@@ -22,11 +22,11 @@ const sidebarMenuCategories = [
         label: 'Earnings',
         permissions: ['admin', 'user'],
       },
-      // {
-      //   id: 'engagement',
-      //   label: 'Engagement',
-      //   permissions: ['admin', 'user'],
-      // },
+      {
+        id: 'engagement',
+        label: 'Engagement',
+        permissions: ['admin', 'user'],
+      },
       {
         id: 'trending',
         label: 'Trending',
