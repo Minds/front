@@ -7,12 +7,13 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MindsTitle } from '../../../services/ux/title';
-import { Subscription } from 'rxjs';
 import { SiteService } from '../../../common/services/site.service';
+import { debounceTime } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
@@ -38,9 +39,15 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   user: string | null = null;
 
+  isDomainValid: boolean | null = null;
+
   error: string;
 
+  domainValidationSubject: Subject<any> = new Subject<any>();
+
   protected param$: Subscription;
+
+  protected domainValidation$: Subscription;
 
   @ViewChild('logoField', { static: false })
   protected logoField: ElementRef<HTMLInputElement>;
@@ -67,10 +74,15 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
       this.load();
     });
+
+    this.domainValidation$ = this.domainValidationSubject
+      .pipe(debounceTime(300))
+      .subscribe(() => this.validateDomain());
   }
 
   ngOnDestroy() {
     this.param$.unsubscribe();
+    this.domainValidation$.unsubscribe();
   }
 
   async load() {
@@ -89,6 +101,25 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     this.title.setTitle('Pro Settings');
 
     this.inProgress = false;
+    this.detectChanges();
+  }
+
+  async validateDomain() {
+    this.isDomainValid = null;
+    this.detectChanges();
+
+    try {
+      const { isValid } = await this.service.domainCheck(
+        this.settings.domain,
+        this.user
+      );
+
+      this.isDomainValid = isValid;
+    } catch (e) {
+      this.isDomainValid = null;
+      this.error = (e && e.message) || 'Error checking domain';
+    }
+
     this.detectChanges();
   }
 

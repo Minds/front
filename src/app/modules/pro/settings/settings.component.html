@@ -406,12 +406,32 @@
 
               <div class="m-proSettings__field">
                 <label for="domain" i18n>Domain</label>
+
                 <input
+                  class="m-proSettingsField__input--hasIcon"
                   type="text"
                   id="domain"
                   name="domain"
                   [(ngModel)]="settings.domain"
+                  (keydown)="domainValidationSubject.next($event)"
                 />
+
+                <m-tooltip
+                  *ngIf="isDomainValid !== null"
+                  [icon]="isDomainValid ? 'check' : 'close'"
+                  class="m-proSettingsDomain__validIcon"
+                  [class.m-proSettingsDomain__validIcon--true]="isDomainValid"
+                  [class.m-proSettingsDomain__validIcon--false]="!isDomainValid"
+                >
+                  <ng-container *ngIf="isDomainValid; else notValidDomain" i18n>
+                    This domain is available
+                  </ng-container>
+                  <ng-template #notValidDomain>
+                    <ng-container i18n>
+                      This domain is taken
+                    </ng-container>
+                  </ng-template>
+                </m-tooltip>
               </div>
 
               <div class="m-proSettings__field">

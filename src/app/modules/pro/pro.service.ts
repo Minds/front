@@ -68,6 +68,27 @@ export class ProService {
     return true;
   }
 
+  async domainCheck(
+    domain: string,
+    remoteUser: string | null = null
+  ): Promise<{ isValid: boolean }> {
+    const endpoint = ['api/v2/pro/settings/domain'];
+
+    if (remoteUser) {
+      endpoint.push(remoteUser);
+    }
+
+    const { isValid } = (await this.client.get(
+      endpoint.join('/'),
+      {
+        domain,
+      },
+      { cache: false }
+    )) as any;
+
+    return { isValid };
+  }
+
   async upload(type: string, file, remoteUser: string | null = null) {
     const endpoint = ['api/v2/pro/settings/assets', type];
 
