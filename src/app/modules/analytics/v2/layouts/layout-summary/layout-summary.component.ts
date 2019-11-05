@@ -67,34 +67,32 @@ export class AnalyticsLayoutSummaryComponent implements OnInit {
     // TODO: confirm how permissions/security will work
     this.fakeTiles = fakeData[3].tiles;
 
-    // TODO: uncomment this boost backlog stuff when endpoint is ready.
+    // TODO: enable boost backlog stuff when endpoint is ready.
     // Ideally the response will be formatted as an array of 4 objs,
     // each with id, label, and value (in hours)
     // this.boosts = fakeData[4].boosts.buckets;
     // this.boostRows = [this.boosts.slice(0, 2), this.boosts.slice(2, 4)];
 
-    // TODOOJM uncomment me
-    // this.getTiles();
+    this.getTiles();
     this.loading = false;
   }
-  // TODOOJM uncomment everything below
-  // async getTiles() {
-  //   this.tiles.forEach(tile => {
-  //     this.client
-  //       .get(tile.endpoint)
-  //       .then((response: any) => {
-  //         this.formatResponse(tile, response);
-  //       })
-  //       .catch(e => {
-  //         console.error(e);
-  //       });
-  //   });
-  // }
+  async getTiles() {
+    this.tiles.forEach(tile => {
+      this.client
+        .get(tile.endpoint)
+        .then((response: any) => {
+          this.formatResponse(tile, response);
+        })
+        .catch(e => {
+          console.error(e);
+        });
+    });
+  }
 
-  // formatResponse(tile, response) {
-  //   const metric = response.dashboard.metrics.find(m => m.id === tile.id);
-  //   tile['metric'] = metric;
-  //   tile['value'] = metric.visualisation.segments[0].buckets.slice(-1).value;
-  //   tile['description'] = response.description;
-  // }
+  formatResponse(tile, response) {
+    const metric = response.dashboard.metrics.find(m => m.id === tile.id);
+    tile['metric'] = metric;
+    tile['value'] = metric.visualisation.segments[0].buckets.slice(-1).value;
+    tile['description'] = response.description;
+  }
 }
