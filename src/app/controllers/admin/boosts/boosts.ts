@@ -184,45 +184,20 @@ export class AdminBoosts {
   }
 
   onKeyPress(e: KeyboardEvent) {
-    if (this.reasonModalOpened || e.ctrlKey || e.altKey || e.shiftKey) {
+    //If an input is focused, disregard.
+    if (document.activeElement.tagName === 'INPUT') {
       return;
     }
     e.stopPropagation();
 
     // numbers
-
     switch (e.key.toLowerCase()) {
-      case '1':
-      case '2':
-      case '3':
-      case '4':
-      case '5':
-      case '6':
-      case '7':
-      case '8':
-      case '9':
-      case '0':
-        const keyValue = Number.parseInt(e.key);
-        this.boosts[0].quality = keyValue > 0 ? keyValue * 10 : 100;
-        break;
-      case 'arrowleft':
-        return this.accept();
-      case 'arrowright':
-        return this.openReasonsModal();
-
-      case 'e':
-        //mark as nsfw and reject
-        this.eTag(this.boosts[0]);
-        break;
       case 'n':
         //mark as nsfw and accept
         this.accept(this.boosts[0], true);
         break;
       case 'a':
         this.accept();
-        break;
-      case 'r':
-        this.openReasonsModal();
         break;
     }
   }
