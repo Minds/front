@@ -22,9 +22,11 @@ import { TokenDistributionEventService } from './contracts/token-distribution-ev
 import { LocalWalletService } from './local-wallet.service';
 import { OffchainPaymentService } from './offchain-payment.service';
 import { Client } from '../../services/api/client';
-import { MarketingModule } from '../marketing/marketing.module';
-import { BlockchainMarketingModule } from './marketing/marketing.module';
 import { GetMetamaskComponent } from './metamask/getmetamask.component';
+import { BlockchainEthModalComponent } from './eth-modal/eth-modal.component';
+import { BlockchainMarketingOnboardComponent } from './token-purchase/onboard.component';
+import { BlockchainPurchaseComponent } from './token-purchase/purchase.component';
+import { ModalsModule } from '../modals/modals.module';
 
 const cryptoRoutes: Routes = [
   {
@@ -45,7 +47,7 @@ const cryptoRoutes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     FaqModule,
-    //    BlockchainMarketingModule,
+    ModalsModule,
   ],
   declarations: [
     BlockchainConsoleComponent,
@@ -54,6 +56,9 @@ const cryptoRoutes: Routes = [
     TransactionOverlayComponent,
     BlockchainTdeBuyComponent,
     GetMetamaskComponent,
+    BlockchainEthModalComponent,
+    BlockchainMarketingOnboardComponent,
+    BlockchainPurchaseComponent,
   ],
   providers: [
     TransactionOverlayService,
@@ -104,6 +109,8 @@ const cryptoRoutes: Routes = [
     TransactionOverlayComponent,
     BlockchainTdeBuyComponent,
     GetMetamaskComponent,
+    BlockchainEthModalComponent,
+    BlockchainPurchaseComponent,
   ],
   entryComponents: [BlockchainTdeBuyComponent],
 })

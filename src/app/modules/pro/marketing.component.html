@@ -1,3 +1,5 @@
+<div class="mf-jumpAnchor" #topAnchor></div>
+
 <m-marketing class="m-pro__marketing" pageTitle="Minds Pro" i18n-pageTitle>
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
@@ -11,9 +13,8 @@
         </h2>
 
         <p class="m-marketing__description" i18n>
-          Earn revenue for your content and upgrade your channel into an
-          independent website with all the professional tools you need to do
-          what you love.
+          Earn revenue for your content and upgrade your channel into a full
+          blown website with professional tools you need to do what you love.
         </p>
 
         <div class="m-proMarketing__subscription">
@@ -27,11 +28,252 @@
         class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
       >
         <span>
-          <img [src]="cdnAssetsUrl + 'assets/photos/podcast-people.jpg'" />
+          <img [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-1.jpg'" />
         </span>
       </div>
     </div>
   </div>
 
-  <m-marketing__asFeaturedIn slot="2"></m-marketing__asFeaturedIn>
+  <ng-container slot="2">
+    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
+
+    <!-- Section 2 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Get paid for your work</h2>
+
+          <p class="m-marketing__description" i18n>
+            Receive tips and subscription payments in USD, Bitcoin, Ether or
+            Minds Tokens. Earn money for driving pageviews, referring active
+            users and sales.
+          </p>
+
+          <ul class="m-marketing__points">
+            <li i18n>
+              $1 for every 1,000 pageviews
+            </li>
+
+            <li i18n>
+              $0.10 for every referred active user
+            </li>
+
+            <li i18n>
+              25% commission on all referred sales
+            </li>
+          </ul>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-2.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-2-ux.png'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Build your own website</h2>
+
+          <p class="m-marketing__description" i18n>
+            Morph your channel into a full blown website with your own subdomain
+            or custom domain, logo, theme, categories and footer.
+          </p>
+
+          <ul class="m-marketing__points">
+            <li i18n>
+              Upload videos and photos
+            </li>
+
+            <li i18n>
+              Publish blogs in an easy-to-use editor
+            </li>
+
+            <li i18n>
+              Create your own groups
+            </li>
+
+            <li i18n>
+              Track all of your analytics
+            </li>
+          </ul>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-3.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-3-ux.png'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Regain your freedom</h2>
+
+          <p class="m-marketing__description" i18n>
+            Tired of the manipulation and unfair treatment from traditional
+            social networks?
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            Minds offers a fully transparent, privacy-focused platform with no
+            bias, hidden algorithms or censorship.
+          </p>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span class="m-marketing__image--noUxSample">
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-4.jpg'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5 -->
+
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>A sustainable revenue model for everyone.</h2>
+
+          <p class="m-marketing__description" i18n>
+            We are you. We are sharing our revenue with you to directly
+            compensate for contributions to the network. As a community-owned
+            company, it is essential to keep everyone's incentives aligned and
+            inspired.
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            The more traffic and revenue that you drive, the more you earn and
+            the healthier the ecosystem becomes.
+          </p>
+
+          <div class="m-marketing__actionButtons">
+            <a
+              class="mf-button mf-button--smaller mf-button--hollow-mono"
+              routerLink="/upgrades"
+              target="_blank"
+              i18n
+            >
+              Learn About Upgrades
+            </a>
+          </div>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-5.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/pro/pro-5-ux.png'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final section -->
+
+    <div class="m-marketing__section m-marketing__section--tail">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Other Pro features</h2>
+        </div>
+      </div>
+
+      <div class="m-grid m-marketing__wrapper m-marketingSectionTail__table">
+        <div
+          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Professional media</h3>
+
+          <p class="m-marketing__description" i18n>
+            Upload and share up to 500 GB of HD video and photography (1080p).
+          </p>
+        </div>
+
+        <div
+          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Unlock all Plus features</h3>
+
+          <p class="m-marketing__description" i18n>
+            Turn off ads, verify your channel, earn a badge and access exclusive
+            content.
+          </p>
+
+          <p class="m-marketing__description">
+            <a routerLink="/plus" target="_blank" i18n>Learn About Plus</a>
+          </p>
+        </div>
+
+        <div
+          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Harness the network</h3>
+
+          <p class="m-marketing__description" i18n>
+            Why separate your website from your social network? Join forces with
+            our community of millions of minds.
+          </p>
+        </div>
+      </div>
+
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
+        >
+          <button class="mf-button mf-button--alt" (click)="scrollToTop()" i18n>
+            Upgrade to Pro
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </m-marketing>

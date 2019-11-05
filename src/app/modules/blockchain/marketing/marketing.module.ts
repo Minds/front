@@ -3,28 +3,27 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
 import { CommonModule } from '../../../common/common.module';
-import { FaqModule } from '../../faq/faq.module';
-import { VideoModule } from '../../media/components/video/video.module';
-import { MarketingModule } from '../../marketing/marketing.module';
-import { OnboardingModule } from '../../onboarding/onboarding.module';
-import { BlogModule } from '../../blogs/blog.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BlockchainMarketingComponent } from './marketing.component';
-import { BlockchainPurchaseComponent } from './purchase.component';
-import { BlockchainMarketingOnboardComponent } from './onboard.component';
-import { BlockchainMarketingBlogsComponent } from './blogs.component';
-import { BlockchainMarketingCountdownComponent } from './countdown.component';
-import { BlockchainEthModalComponent } from './eth-modal.component';
-import { ModalsModule } from '../../modals/modals.module';
+import { BlockchainModule } from '../blockchain.module';
+import { BlockchainMarketingTokenComponent } from './token.component';
+import { BlockchainMarketingRewardsComponent } from './rewards.component';
 
 const routes: Routes = [
   {
     path: 'tokens',
-    redirectTo: '/token',
+    redirectTo: 'token',
   },
   {
     path: 'token',
-    component: BlockchainMarketingComponent,
+    component: BlockchainMarketingTokenComponent,
+  },
+  {
+    path: 'reward',
+    redirectTo: 'rewards',
+  },
+  {
+    path: 'rewards',
+    component: BlockchainMarketingRewardsComponent,
   },
 ];
 
@@ -35,21 +34,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    FaqModule,
-    MarketingModule,
-    ModalsModule,
-    BlogModule,
-    VideoModule,
+    BlockchainModule,
   ],
   declarations: [
-    BlockchainMarketingComponent,
-    BlockchainMarketingOnboardComponent,
-    BlockchainPurchaseComponent,
-    BlockchainMarketingBlogsComponent,
-    BlockchainMarketingCountdownComponent,
-    BlockchainEthModalComponent,
+    BlockchainMarketingTokenComponent,
+    BlockchainMarketingRewardsComponent,
   ],
-  exports: [BlockchainMarketingComponent],
-  entryComponents: [BlockchainMarketingComponent],
 })
 export class BlockchainMarketingModule {}
