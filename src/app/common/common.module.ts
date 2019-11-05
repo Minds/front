@@ -119,6 +119,8 @@ import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
+import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
+import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -228,6 +230,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ChartV2Component,
     PageLayoutComponent,
     DashboardLayoutComponent,
+    ShadowboxLayoutComponent,
+    ShadowboxHeaderComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -322,6 +326,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ChartV2Component,
     PageLayoutComponent,
     DashboardLayoutComponent,
+    ShadowboxLayoutComponent,
   ],
   providers: [
     SiteService,
