@@ -200,7 +200,6 @@ export class SidebarSelectorComponent implements OnInit {
   toggleTrending() {
     this.showTrending = !this.showTrending;
     this.hashtags = [];
-    console.log(`-----------`);
     this.load();
   }
 
