@@ -38,6 +38,7 @@ interface Minds {
       yearly: { tokens: number; usd: number };
     };
   };
+  contribution_values: { [key: string]: number };
 }
 
 interface MindsNavigation {

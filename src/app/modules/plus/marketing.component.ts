@@ -2,10 +2,12 @@ import {
   Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 
 @Component({
-  selector: 'm-plus--marketing',
+  selector: 'm-plus__marketing',
   templateUrl: 'marketing.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -16,6 +18,9 @@ export class PlusMarketingComponent {
 
   readonly minds = window.Minds;
 
+  @ViewChild('topAnchor', { static: false })
+  readonly topAnchor: ElementRef;
+
   constructor(protected cd: ChangeDetectorRef) {}
 
   openVerifyModal() {
@@ -25,6 +30,16 @@ export class PlusMarketingComponent {
   closeVerifyModal() {
     this.showVerifyModal = false;
     this.detectChanges();
+  }
+
+  scrollToTop() {
+    if (this.topAnchor.nativeElement) {
+      this.topAnchor.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
   }
 
   detectChanges() {

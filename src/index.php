@@ -148,6 +148,7 @@
                 'pro' => Minds\Core\Di\Di::_()->get('Config')->get('pro')['handler'] ?? null,
               ],
               'upgrades' => Minds\Core\Di\Di::_()->get('Config')->get('upgrades'),
+              'contribution_values' => Minds\Core\Rewards\Contributions\ContributionValues::export(),
               "environment" => getenv('MINDS_ENV') ?: 'development',
           ];
 

@@ -7,4 +7,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 })
 export class MarketingFooterComponent {
   readonly year: number = new Date().getFullYear();
+
+  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 }
