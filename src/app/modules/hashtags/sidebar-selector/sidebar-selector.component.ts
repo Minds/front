@@ -57,8 +57,6 @@ export class SidebarSelectorComponent implements OnInit {
   }
 
   async load() {
-    console.log('testtesttest<<<<<<<<');
-    console.log(this.preferred);
     this.loading = true;
     this.detectChanges();
 
@@ -71,9 +69,13 @@ export class SidebarSelectorComponent implements OnInit {
     } catch (e) {
       console.error('SidebarSelector', e);
     }
-    this.filterChange.emit({
-      type: this.preferred ? 'preferred' : 'all',
-    });
+
+    if (this.initialized) {
+      this.filterChange.emit({
+        type: this.preferred ? 'preferred' : 'all',
+      });
+    }
+
     this.loading = false;
     this.detectChanges();
   }
@@ -198,7 +200,7 @@ export class SidebarSelectorComponent implements OnInit {
   toggleTrending() {
     this.showTrending = !this.showTrending;
     this.hashtags = [];
-
+    console.log(`-----------`);
     this.load();
   }
 
