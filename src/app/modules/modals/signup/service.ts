@@ -1,8 +1,9 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ScrollService } from '../../../services/ux/scroll';
 import { Subscription } from 'rxjs';
 
+@Injectable()
 export class SignupModalService {
   defaultSubtitle: string =
     'Signup to comment, upload, vote and earn 100+ free views on your content daily.';

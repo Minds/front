@@ -23,9 +23,18 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { OverlayModalComponent } from '../../../common/components/overlay-modal/overlay-modal.component';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../common/services/site.service';
+import { ScrollService } from '../../../services/ux/scroll';
 
 @Component({
-  providers: [ProChannelService, OverlayModalService],
+  providers: [
+    ProChannelService,
+    OverlayModalService,
+    {
+      provide: SignupModalService,
+      useFactory: SignupModalService._,
+      deps: [Router, ScrollService],
+    },
+  ],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
   changeDetection: ChangeDetectionStrategy.Default,

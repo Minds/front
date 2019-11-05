@@ -26,6 +26,17 @@
 
         <a
           class="m-topbar--navigation--item"
+          [class.m-topbar--navigation--item-active]="currentTab === 'assets'"
+          (click)="currentTab = 'assets'"
+        >
+          <span i18n>Assets</span>
+          <m-tooltip icon="help" i18n>
+            Upload a custom logo and background.
+          </m-tooltip>
+        </a>
+
+        <a
+          class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="currentTab === 'hashtags'"
           (click)="currentTab = 'hashtags'"
         >
@@ -207,15 +218,72 @@
                   </label>
                 </ng-container>
               </div>
+            </ng-template>
+
+            <!-- Assets -->
+
+            <ng-template ngSwitchCase="assets">
+              <p class="m-proSettings__note" i18n>
+                Upload a custom logo and background.
+              </p>
 
               <div class="m-proSettings__field">
-                <label for="logo_guid" i18n>Logo Asset GUID</label>
-                <input
-                  type="text"
-                  id="logo_guid"
-                  name="logo_guid"
-                  [(ngModel)]="settings.logo_guid"
-                />
+                <label for="logo" i18n>Logo Image</label>
+
+                <label
+                  for="logo"
+                  class="m-proSettingsField__filePreview m-proSettingsField__logoFilePreview"
+                  [ngStyle]="{
+                    backgroundColor: settings.plain_background_color
+                  }"
+                >
+                  <input
+                    type="file"
+                    id="logo"
+                    name="logo"
+                    accept="image/*"
+                    (change)="onAssetFileSelect('logo', logoField.files)"
+                    #logoField
+                  />
+
+                  <img
+                    *ngIf="getPreviewAssetSrc('logo')"
+                    [src]="getPreviewAssetSrc('logo')"
+                  />
+
+                  <span class="m-proSettingsFieldFilePreview__overlay">
+                    <i class="material-icons">cloud_upload</i>
+                  </span>
+                </label>
+              </div>
+
+              <div class="m-proSettings__field">
+                <label for="background" i18n>Background</label>
+
+                <label
+                  for="background"
+                  class="m-proSettingsField__filePreview m-proSettingsField__backgroundFilePreview"
+                >
+                  <input
+                    type="file"
+                    id="background"
+                    name="background"
+                    accept="image/*"
+                    (change)="
+                      onAssetFileSelect('background', backgroundField.files)
+                    "
+                    #backgroundField
+                  />
+
+                  <img
+                    *ngIf="getPreviewAssetSrc('background')"
+                    [src]="getPreviewAssetSrc('background')"
+                  />
+
+                  <span class="m-proSettingsFieldFilePreview__overlay">
+                    <i class="material-icons">cloud_upload</i>
+                  </span>
+                </label>
               </div>
             </ng-template>
 
@@ -338,12 +406,32 @@
 
               <div class="m-proSettings__field">
                 <label for="domain" i18n>Domain</label>
+
                 <input
+                  class="m-proSettingsField__input--hasIcon"
                   type="text"
                   id="domain"
                   name="domain"
                   [(ngModel)]="settings.domain"
+                  (keydown)="domainValidationSubject.next($event)"
                 />
+
+                <m-tooltip
+                  *ngIf="isDomainValid !== null"
+                  [icon]="isDomainValid ? 'check' : 'close'"
+                  class="m-proSettingsDomain__validIcon"
+                  [class.m-proSettingsDomain__validIcon--true]="isDomainValid"
+                  [class.m-proSettingsDomain__validIcon--false]="!isDomainValid"
+                >
+                  <ng-container *ngIf="isDomainValid; else notValidDomain" i18n>
+                    This domain is available
+                  </ng-container>
+                  <ng-template #notValidDomain>
+                    <ng-container i18n>
+                      This domain is taken
+                    </ng-container>
+                  </ng-template>
+                </m-tooltip>
               </div>
 
               <div class="m-proSettings__field">
@@ -381,8 +469,8 @@
             </ng-template>
           </ng-container>
 
-          <div class="m-proSettings__error" *ngIf="!!error">
-            {{ error }}
+          <div class="m-proSettings__error" *ngIf="error">
+            Error: {{ error }}
           </div>
 
           <div

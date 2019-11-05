@@ -2,15 +2,19 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
+import { Subject, Subscription } from 'rxjs';
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MindsTitle } from '../../../services/ux/title';
-import { Subscription } from 'rxjs';
 import { SiteService } from '../../../common/services/site.service';
+import { debounceTime } from 'rxjs/operators';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'm-pro--settings',
@@ -27,6 +31,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
   currentTab:
     | 'general'
     | 'theme'
+    | 'assets'
     | 'hashtags'
     | 'footer'
     | 'domain'
@@ -34,9 +39,21 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   user: string | null = null;
 
+  isDomainValid: boolean | null = null;
+
   error: string;
 
+  domainValidationSubject: Subject<any> = new Subject<any>();
+
   protected param$: Subscription;
+
+  protected domainValidation$: Subscription;
+
+  @ViewChild('logoField', { static: false })
+  protected logoField: ElementRef<HTMLInputElement>;
+
+  @ViewChild('backgroundField', { static: false })
+  protected backgroundField: ElementRef<HTMLInputElement>;
 
   constructor(
     protected service: ProService,
@@ -45,7 +62,8 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
     protected title: MindsTitle,
-    protected site: SiteService
+    protected site: SiteService,
+    protected sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -56,10 +74,15 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
       this.load();
     });
+
+    this.domainValidation$ = this.domainValidationSubject
+      .pipe(debounceTime(300))
+      .subscribe(() => this.validateDomain());
   }
 
   ngOnDestroy() {
     this.param$.unsubscribe();
+    this.domainValidation$.unsubscribe();
   }
 
   async load() {
@@ -81,12 +104,93 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
+  async validateDomain() {
+    this.isDomainValid = null;
+    this.detectChanges();
+
+    try {
+      const { isValid } = await this.service.domainCheck(
+        this.settings.domain,
+        this.user
+      );
+
+      this.isDomainValid = isValid;
+    } catch (e) {
+      this.isDomainValid = null;
+      this.error = (e && e.message) || 'Error checking domain';
+    }
+
+    this.detectChanges();
+  }
+
+  onAssetFileSelect(type: string, files: FileList | null) {
+    if (!files || !files.item(0)) {
+      this.settings[type] = null;
+      this.detectChanges();
+      return;
+    }
+
+    this.settings[type] = files.item(0);
+    this.detectChanges();
+  }
+
+  protected async uploadAsset(
+    type: string,
+    file: File,
+    htmlInputFileElementRef: ElementRef<HTMLInputElement> | null = null
+  ): Promise<void> {
+    await this.service.upload(type, file, this.user);
+
+    if (htmlInputFileElementRef && htmlInputFileElementRef.nativeElement) {
+      try {
+        htmlInputFileElementRef.nativeElement.value = '';
+      } catch (e) {
+        console.warn(`Browser prevented ${type} field resetting`);
+      }
+    }
+  }
+
+  getPreviewAssetSrc(type: string): string | SafeUrl {
+    if (this.settings[type]) {
+      if (!this.settings[type]._mindsBlobUrl) {
+        this.settings[type]._mindsBlobUrl = URL.createObjectURL(this.settings[
+          type
+        ] as File);
+      }
+
+      return this.sanitizer.bypassSecurityTrustUrl(
+        this.settings[type]._mindsBlobUrl
+      );
+    }
+
+    return this.settings[`${type}_image`];
+  }
+
   async save() {
     this.error = null;
     this.inProgress = true;
     this.detectChanges();
 
     try {
+      const { logo, background, ...settings } = this.settings;
+
+      const uploads: Promise<any>[] = [];
+
+      if (logo) {
+        uploads.push(this.uploadAsset('logo', logo, this.logoField));
+        settings.has_custom_logo = true;
+      }
+
+      if (background) {
+        uploads.push(
+          this.uploadAsset('background', background, this.backgroundField)
+        );
+        settings.has_custom_background = true;
+      }
+
+      await Promise.all(uploads);
+
+      this.settings = settings;
       await this.service.set(this.settings, this.user);
     } catch (e) {
       this.error = e.message;

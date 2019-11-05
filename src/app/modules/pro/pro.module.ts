@@ -34,6 +34,7 @@ import { MediaEditComponent } from '../media/edit/edit.component';
 import { BlogViewInfinite } from '../blogs/view/infinite';
 import { BlogEdit } from '../blogs/edit/edit';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
+import { ModalsModule } from '../modals/modals.module';
 
 const routes: Routes = [
   {
@@ -140,6 +141,7 @@ export const PRO_DOMAIN_ROUTES = [
     WireModule,
     VideoModule,
     AuthModule,
+    ModalsModule,
   ],
   providers: [ProService],
   declarations: [

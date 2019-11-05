@@ -27,10 +27,6 @@
   <img *ngSwitchDefault [src]="entity.thumbnail_src" #img />
 </div>
 
-<div
-  class="m-proChannelTile__text"
-  (click)="tileClicked()"
-  *ngIf="getTitle() || getText()"
->
+<div class="m-proChannelTile__text" (click)="tileClicked()" *ngIf="getTitle()">
   <h2 [title]="getTitle()">{{ getTitle() }}</h2>
 </div>

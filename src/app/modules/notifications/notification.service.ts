@@ -116,6 +116,6 @@ export class NotificationService {
   }
 
   ngOnDestroy() {
-    this.notificationPollTimer.unsubscribe();
+    this.updateNotificationCountSubscription.unsubscribe();
   }
 }
