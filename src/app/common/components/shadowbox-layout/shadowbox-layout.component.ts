@@ -6,6 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ShadowboxLayoutComponent implements OnInit {
   @Input() scrollableHeader: boolean = true;
+  @Input() hasHeader: boolean = true;
   constructor() {}
 
   ngOnInit() {}

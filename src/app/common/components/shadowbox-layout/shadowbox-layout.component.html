@@ -1,4 +1,5 @@
 <m-shadowboxHeader
+  *ngIf="hasHeader"
   [isScrollable]="scrollableHeader"
   [ngClass]="{ isScrollable: scrollableHeader }"
   ><ng-content

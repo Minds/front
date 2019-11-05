@@ -1,7 +1,10 @@
 <div class="m-analytics__spinnerContainer" *ngIf="loading$ | async">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
-<m-shadowboxLayout *ngIf="selectedMetric && selectedMetric.visualisation">
+<m-shadowboxLayout
+  *ngIf="selectedMetric && selectedMetric.visualisation"
+  [hasHeader]="selectedMetric.visualisation.type === 'chart'"
+>
   <m-analytics__metrics
     class="m-shadowboxLayout__header"
     *ngIf="selectedMetric.visualisation.type === 'chart'"
