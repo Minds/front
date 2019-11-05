@@ -21,16 +21,17 @@ import { WireConsoleSupporterComponent } from './console/supporter/supporter.com
 import { WireConsoleSettingsComponent } from './console/settings/settings.component';
 import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.component';
 import { WireService } from './wire.service';
-import { WireMarketingComponent } from './marketing.component';
 import { WireConsoleOverviewComponent } from './console/overview/overview.component';
 import { WireConsoleRewardsInputsComponent } from './console/rewards-table/inputs/wire-console-rewards-inputs.component';
 import { WireConsoleRewardsComponent } from './console/rewards-table/rewards.component';
 import { WireSubscriptionTiersComponent } from './channel/tiers.component';
 import { WirePaymentsCreatorComponent } from './creator/payments/payments.creator.component';
 import { WirePaymentHandlersService } from './wire-payment-handlers.service';
+import { PayMarketingComponent } from './marketing/marketing.component';
 
 const wireRoutes: Routes = [
-  { path: 'wire', component: WireMarketingComponent },
+  { path: 'wire', redirectTo: 'pay' },
+  { path: 'pay', component: PayMarketingComponent },
 ];
 
 @NgModule({
@@ -60,7 +61,7 @@ const wireRoutes: Routes = [
     WireConsoleLedgerComponent,
     WireConsoleSupporterComponent,
     WireConsoleSettingsComponent,
-    WireMarketingComponent,
+    PayMarketingComponent,
     WireConsoleOverviewComponent,
     WireSubscriptionTiersComponent,
   ],
@@ -83,7 +84,6 @@ const wireRoutes: Routes = [
   entryComponents: [
     WireCreatorComponent,
     WireConsoleComponent,
-    WireMarketingComponent,
     WirePaymentsCreatorComponent,
     WireLockScreenComponent,
     WireConsoleRewardsInputsComponent,

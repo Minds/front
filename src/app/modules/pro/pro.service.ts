@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
+import { Upload } from '../../services/api/upload';
 
 @Injectable()
 export class ProService {
   public readonly ratios = ['16:9', '16:10', '4:3', '1:1'];
 
-  constructor(protected client: Client) {}
+  constructor(protected client: Client, protected uploadClient: Upload) {}
 
   async isActive(): Promise<boolean> {
     const result: any = await this.client.get('api/v2/pro');
@@ -64,6 +65,45 @@ export class ProService {
     }
 
     await this.client.post(endpoint.join('/'), settings);
+    return true;
+  }
+
+  async domainCheck(
+    domain: string,
+    remoteUser: string | null = null
+  ): Promise<{ isValid: boolean }> {
+    const endpoint = ['api/v2/pro/settings/domain'];
+
+    if (remoteUser) {
+      endpoint.push(remoteUser);
+    }
+
+    const { isValid } = (await this.client.get(
+      endpoint.join('/'),
+      {
+        domain,
+      },
+      { cache: false }
+    )) as any;
+
+    return { isValid };
+  }
+
+  async upload(type: string, file, remoteUser: string | null = null) {
+    const endpoint = ['api/v2/pro/settings/assets', type];
+
+    if (remoteUser) {
+      endpoint.push(remoteUser);
+    }
+
+    const response = (await this.uploadClient.post(endpoint.join('/'), [
+      file,
+    ])) as any;
+
+    if (!response || response.status !== 'success') {
+      throw new Error(response.message || 'Invalid server response');
+    }
+
     return true;
   }
 }

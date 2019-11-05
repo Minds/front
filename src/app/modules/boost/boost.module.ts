@@ -99,10 +99,6 @@ const boostRoutes: Routes = [
     BoostConsoleCard,
     BoostConsoleBooster,
   ],
-  entryComponents: [
-    BoostCreatorComponent,
-    BoostConsoleComponent,
-    BoostMarketingComponent,
-  ],
+  entryComponents: [BoostCreatorComponent, BoostConsoleComponent],
 })
 export class BoostModule {}

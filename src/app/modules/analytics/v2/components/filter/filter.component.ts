@@ -44,10 +44,23 @@ export class AnalyticsFilterComponent implements OnInit {
 
     if (this.filter.id === 'timespan') {
       this.analyticsService.updateTimespan(option.id);
+      console.log('upDateFilter ', option.id);
       return;
     }
 
     const selectedFilterStr = `${this.filter.id}::${option.id}`;
     this.analyticsService.updateFilter(selectedFilterStr);
   }
+
+  // clickHeader() {
+  //   if (this.expanded) {
+  //     console.log('its expanded');
+  //     setTimeout(() => {
+  //       this.expanded = false;
+  //     });
+  //   } else {
+  //     console.log('itsnot expanded');
+  //   }
+  // document.getElementById("myAnchor").blur();
+  // }
 }

@@ -4,7 +4,7 @@
       *ngFor="let link of footerLinks"
       class="m-proChannelFooter__link"
       [href]="link.href"
-      target="_blank"
+      [target]="getTarget(link)"
     >
       {{ link.title }}
     </a>

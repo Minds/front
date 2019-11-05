@@ -8,7 +8,7 @@ m-upgrades__buyTokens {
   .m-upgradesBuyTokens__wrapper {
     padding: 40px 60px 60px;
     background: url('<%= APP_CDN %>/assets/marketing/buytokens_bg.jpg')
-      no-repeat right center #726061;
+      no-repeat 382px center #726061;
     background-size: contain;
     color: #ffffff;
 
@@ -43,87 +43,27 @@ m-upgrades__buyTokens {
     }
   }
 
-  .m-upgradesBuyTokens__form {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+  .m-upgradesBuyTokens__purchase {
+    display: block;
     max-width: 640px;
-    border-radius: 2px;
-    padding: 20px 35px;
     margin-top: 40px;
-    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.07);
 
     @include m-theme() {
-      background: themed($m-white);
-      color: themed($m-black);
+      color: themed($m-black); // Back to default color
     }
 
-    .upgradesBuyTokens__rate {
-      @include m-theme() {
-        color: themed($m-grey-300);
-      }
-
-      @media screen and (max-width: $m-grid-min-vp) {
-        display: none;
-      }
+    .m-blockchainTokenPurchase {
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.07);
     }
 
-    .upgradesBuyTokens__amount {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: flex-start;
-      font-size: 24px;
+    .m-blockchainTokenPurchase__ethRate {
+      color: #9b9b9b;
 
-      label {
-        display: inline-block;
-        font: inherit;
-        margin-right: 0.1em;
-
-        @include m-theme() {
-          color: themed($m-grey-300);
-        }
+      a {
+        color: inherit;
+        font-weight: bold;
+        text-decoration: underline;
       }
-
-      input {
-        display: inline-block;
-        font: inherit;
-        appearance: none;
-        border: none;
-        margin: 0;
-        padding: 0;
-        line-height: 1;
-        vertical-align: top;
-        border-radius: 0;
-        width: 4em;
-
-        &:focus {
-          outline: none !important;
-        }
-
-        @include m-theme() {
-          color: themed($m-black);
-
-          &:focus {
-            box-shadow: 0 1px 0 rgba(themed($m-black), 0.2);
-          }
-        }
-
-        @media screen and (max-width: $m-grid-min-vp) {
-          max-width: calc(100% - 20px);
-        }
-      }
-    }
-  }
-
-  .m-upgradesBuyTokens__overflownRate {
-    display: none;
-    margin: 24px 0 0;
-    color: #9b9b9b;
-
-    @media screen and (max-width: $m-grid-min-vp) {
-      display: block;
     }
   }
 }

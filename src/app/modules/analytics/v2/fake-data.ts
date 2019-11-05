@@ -10,10 +10,10 @@ const fakeData: Array<any> = [
         id: '30d',
         label: 'Last 30 days',
         interval: 'day',
-        comparison_interval: 28,
+        comparison_interval: 30,
         from_ts_ms: 1567296000000,
         from_ts_iso: '2019-09-01T00:00:00+00:00',
-        selected: true,
+        selected: false,
       },
       {
         id: '12m',
@@ -105,6 +105,21 @@ const fakeData: Array<any> = [
       {
         id: 'active_users',
         label: 'Active Users',
+        permissions: ['admin', 'user'],
+        summary: {
+          current_value: 120962,
+          comparison_value: 120962,
+          comparison_interval: 28,
+          comparison_positive_inclination: true,
+        },
+        unit: 'number',
+        description:
+          'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentiuti atque corrupti quos dolores',
+        visualisation: null,
+      },
+      {
+        id: 'active_users',
+        label: 'Active UsersA',
         permissions: ['admin', 'user'],
         summary: {
           current_value: 120962,

@@ -50,6 +50,7 @@ import { BlockListService } from '../../../../../common/services/block-list.serv
 import { ClientMetaService } from '../../../../../common/services/client-meta.service';
 import { clientMetaServiceMock } from '../../../../../../tests/client-meta-service-mock.spec';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
+import { SiteService } from '../../../../../common/services/site.service';
 
 /* tslint:disable */
 // START MOCKS
@@ -491,6 +492,14 @@ describe('Activity', () => {
         {
           provide: AutocompleteSuggestionsService,
           useValue: MockService(AutocompleteSuggestionsService),
+        },
+        {
+          provide: SiteService,
+          useValue: MockService(SiteService, {
+            props: {
+              isProDomain: { get: () => false },
+            },
+          }),
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

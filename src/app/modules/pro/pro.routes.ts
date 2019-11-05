@@ -6,7 +6,7 @@ export const proRoutes = [
   '/articles',
   '/groups',
   '/login',
-  '/forgot_password',
+  '/forgot-password',
   '/newsfeed',
   '/media',
   '/blog',
