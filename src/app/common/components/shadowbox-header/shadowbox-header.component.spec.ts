@@ -1,4 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+  HostListener,
+} from '@angular/core';
 
 import { ShadowboxHeaderComponent } from './shadowbox-header.component';
 

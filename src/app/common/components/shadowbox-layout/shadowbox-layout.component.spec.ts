@@ -1,6 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Component, Input } from '@angular/core';
 import { ShadowboxLayoutComponent } from './shadowbox-layout.component';
+
+@Component({
+  selector: 'm-shadowboxHeader',
+  template: '',
+})
+class ShadowboxHeaderComponentMock {
+  @Input() isScrollable;
+}
 
 describe('ShadowboxLayoutComponent', () => {
   let component: ShadowboxLayoutComponent;
@@ -8,7 +16,7 @@ describe('ShadowboxLayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ShadowboxLayoutComponent],
+      declarations: [ShadowboxLayoutComponent, ShadowboxHeaderComponentMock],
     }).compileComponents();
   }));
 

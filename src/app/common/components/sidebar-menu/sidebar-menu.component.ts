@@ -52,7 +52,6 @@ export class SidebarMenuComponent implements OnInit {
 
   grantPermissionsAndFindActiveCat() {
     // this.cat.forEach(this.cat => {
-
     this.cat.header['permissionGranted'] = this.cat.header.permissions
       ? this.checkForRoleMatch(this.cat.header.permissions)
       : true;

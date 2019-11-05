@@ -1,4 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TooltipComponentMock } from '../../../../../mocks/common/components/tooltip/tooltip.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AnalyticsBenchmarkComponent } from './benchmark.component';
 
@@ -8,7 +10,8 @@ describe('AnalyticsBenchmarkComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AnalyticsBenchmarkComponent],
+      declarations: [AnalyticsBenchmarkComponent, TooltipComponentMock],
+      // schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

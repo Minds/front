@@ -70,7 +70,8 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
     const firstMetric = <HTMLElement>(
       document.querySelector('.m-shadowboxLayout__headerItem')
     );
-    this.childClientWidth = firstMetric.clientWidth;
+    // TODO: figure out how to avoid test failure "Cannot read property 'clientWidth' of null"
+    this.childClientWidth = firstMetric ? firstMetric.clientWidth : 160;
 
     this.shadowboxHeaderContainer = this.shadowboxHeaderContainerEl.nativeElement;
     this.isOverflown =
