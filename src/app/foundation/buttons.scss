@@ -17,10 +17,34 @@
   appearance: none;
   text-decoration: none;
 
+  > * {
+    vertical-align: middle;
+    margin-right: 0.35em; // A space
+
+    &:last-child {
+      margin-right: initial;
+    }
+  }
+
+  i.material-icons {
+    line-height: 1em;
+    font-size: 20px;
+    height: auto;
+    color: inherit;
+    opacity: 0.4;
+  }
+
   @include m-theme() {
     background: themed($m-blue);
     color: themed($m-white-always);
     border-color: themed($m-blue);
+  }
+
+  &.mf-button--smaller {
+    font-size: 15px;
+    line-height: 21px;
+    padding: 10px 20px;
+    border-radius: 3px;
   }
 
   &.mf-button--alt {
@@ -55,9 +79,17 @@
 
   &.mf-button--hollow {
     @include m-theme() {
-      background: themed($m-white);
+      background: transparent; // Within theme because of cascading
       color: themed($m-black);
       border-color: themed($m-blue);
+    }
+  }
+
+  &.mf-button--hollow-mono {
+    @include m-theme() {
+      background: transparent; // Within theme because of cascading
+      color: themed($m-black);
+      border-color: themed($m-grey-200);
     }
   }
 

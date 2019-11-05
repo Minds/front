@@ -74,7 +74,9 @@ export class GroupsSidebarMarkersComponent {
   }
 
   ngOnDestroy() {
-    this.$updateMarker.unsubscribe();
+    if (this.$updateMarker) {
+      this.$updateMarker.unsubscribe();
+    }
   }
 
   async load(refresh: boolean = false) {

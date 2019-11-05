@@ -2,14 +2,19 @@
 
 .m-marketing__asFeaturedIn {
   max-width: 1084px;
-  margin: 40px auto 0;
+  margin: 45px auto 80px;
+
+  .m-marketing__asFeaturedIn--noMargin & {
+    margin-bottom: 0;
+  }
 
   @media screen and (max-width: $m-grid-min-vp) {
     &.m-grid {
       display: block;
+      margin-bottom: 45px;
     }
 
-    margin: 20px 0 45px;
+    margin: 20px 0 50px;
     padding: 0 12px;
   }
 
@@ -45,20 +50,8 @@
         object-fit: contain;
 
         @media screen and (max-width: $m-grid-min-vp) {
-          width: 40px;
-          height: 40px;
-        }
-      }
-
-      &.m-marketingAsFeaturedIn__item--bigger {
-        img {
-          width: 96px;
-          height: 96px;
-
-          @media screen and (max-width: $m-grid-min-vp) {
-            width: 40px;
-            height: 40px;
-          }
+          width: 32px;
+          height: 32px;
         }
       }
     }

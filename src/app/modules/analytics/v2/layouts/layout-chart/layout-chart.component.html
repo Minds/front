@@ -1,4 +1,4 @@
-<div class="spinnerContainer" *ngIf="loading$ | async">
+<div class="m-analytics__spinnerContainer" *ngIf="loading$ | async">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
 <ng-container *ngIf="selectedMetric && selectedMetric.visualisation">
@@ -6,7 +6,7 @@
     *ngIf="selectedMetric.visualisation.type === 'chart'"
   ></m-analytics__metrics>
   <div
-    class="filterableChartWrapper"
+    class="m-analytics__filterableChartWrapper"
     [ngClass]="{ isTable: isTable, isMobile: isMobile }"
   >
     <m-analytics__chart

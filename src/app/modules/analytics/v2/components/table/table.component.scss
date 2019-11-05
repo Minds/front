@@ -1,203 +1,209 @@
-.tableWrapper {
-  // * {
-  //   border: 1px solid salmon;
-  // }
+.m-analyticsTable__wrapper {
   font-size: 13px;
-  font-weight: 400;
+  font-weight: 300;
+  overflow-x: scroll;
   @include m-theme() {
     color: themed($m-grey-800);
   }
   a {
     text-decoration: none;
-    font-weight: normal;
+    font-weight: 300;
     @include m-theme() {
       color: themed($m-grey-800);
     }
   }
-  [class*='row'] {
-    display: flex;
+}
+.m-analyticsTable__cell {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 76px;
+}
+.m-analyticsTable__subCol--value {
+  white-space: normal;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-width: 50px;
+}
+[class*='m-analyticsTable__row'] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+// ***********************************************
+
+.m-analyticsTable__row--header {
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-grey-50);
+    color: themed($m-grey-200);
+  }
+  .m-analyticsTable__col--entity {
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    &.row--header {
-      @include m-theme() {
-        border-bottom: 1px solid themed($m-grey-50);
-        color: themed($m-grey-200);
-      }
-      .col--entity {
-        flex-direction: row;
-        align-items: flex-end;
-      }
-      .col--values {
-        .subCol--value.cell {
-          align-items: flex-end;
-        }
-      }
+  }
+  .m-analyticsTable__col--values {
+    .m-analyticsTable__subCol--value {
+      white-space: normal;
+      text-align: center;
     }
-    &.row--data {
-      &:hover {
-        @include m-theme() {
-          background-color: rgba(themed($m-blue-grey-50), 0.5);
-        }
-        .col--entity .entityTitle i {
-          display: inline-block;
-        }
-      }
-      .col--entity {
-        @include m-theme() {
-          border-right: 1px solid themed($m-grey-50);
-        }
-      }
+  }
+}
 
-      // .col--entity,
-      // .col--entity *,
-      // .col--values,
-      // .col--values *,
-      [class*='col'],
-      [class*='col'] * {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      // .subCol--value  {
-      //   align-items: center;
-      // }
+// ***********************************************
+
+.m-analyticsTable__row--data {
+  &:hover {
+    @include m-theme() {
+      background-color: rgba(themed($m-blue-grey-50), 0.5);
     }
-    .cell {
+    .m-analyticsTable__col--entity .m-analyticsTable__entityTitle i {
+      visibility: visible;
+    }
+  }
+  .m-analyticsTable__col--entity {
+    flex-direction: row;
+    align-items: center;
+    @include m-theme() {
+      border-right: 1px solid themed($m-grey-50);
+    }
+
+    .m-analyticsTable__entityWrapper {
       display: flex;
-      overflow: hidden;
-      white-space: nowrap;
-      height: 50px;
-      padding: 8px 8px 8px 0;
-    }
-
-    .col--entity {
       flex-direction: column;
-      padding-left: 24px;
-      // flex-basis: 20vw;
+      width: 87%;
+    }
+  }
 
-      .usernameWrapper a {
-        font-weight: 400;
-        text-decoration: none;
-      }
-      .entityTitle {
-        display: flex;
-        > * {
-          display: inline-block;
-          max-width: 200px;
-        }
+  [class*='m-analyticsTable__col'],
+  [class*='m-analyticsTable__col'] * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
 
-        i {
-          font-size: 12px;
-          margin: 3px 0 0 3px;
-          display: none;
-          @include m-theme() {
-            color: themed($m-grey-800);
-          }
-        }
-      }
-      .entityDetails {
-        display: inline;
-        @include m-theme() {
-          color: themed($m-grey-200);
-        }
-        > * {
-          margin-right: $minds-margin;
-        }
-        .usernameWrapper {
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        a {
-          @include m-theme() {
-            color: themed($m-grey-300);
-          }
-        }
+// ***********************************************
+
+.m-analyticsTable__col--values {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  .m-analyticsTable__subCol--value {
+    flex: 1 1 0;
+    align-items: center;
+
+    &:last-of-type {
+      padding-right: 50px;
+    }
+  }
+}
+
+// ***********************************************
+
+.m-analyticsTable__col--entity {
+  flex-direction: column;
+  padding-left: 50px;
+  min-width: 170px;
+
+  .m-analyticsTable__usernameWrapper a {
+    font-weight: 300;
+    text-decoration: none;
+  }
+  .m-analyticsTable__entityTitle {
+    display: flex;
+    > * {
+      display: inline-block;
+    }
+    span {
+      max-width: 90%;
+    }
+
+    i {
+      font-size: 12px;
+      margin: 3px 0 0 3px;
+      visibility: hidden;
+      @include m-theme() {
+        color: themed($m-grey-800);
       }
     }
-    .col--values {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      .subCol--value {
-        flex: 1 1 16vw;
-
-        &:first-of-type {
-          padding-left: 24px;
-        }
-        &:last-of-type {
-          padding-right: 16px;
-        }
+  }
+  .m-analyticsTable__entityDetails {
+    display: inline;
+    @include m-theme() {
+      color: themed($m-grey-200);
+    }
+    > * {
+      margin-right: $minds-margin;
+    }
+    .m-analyticsTable__usernameWrapper {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    a {
+      @include m-theme() {
+        color: themed($m-grey-300);
       }
     }
   }
 }
 
-.col--entity {
+// ***********************************************
+
+.m-analyticsTable__col--entity {
   flex: 2 3 0;
 }
-.col--values {
-  flex: 1 2 0;
+.m-analyticsTable__col--values {
+  flex: 2 2 0;
 }
-// MOBILE /////////////////////
-.tableWrapper.isMobile {
-  .col--entity {
-    flex: 1 3 0;
-  }
-  .col--values {
-    flex: 2 1 0;
-  }
 
-  .row--header {
-    border: none !important;
-  }
-  .row--data {
-    .col--entity.cell {
-      border: none !important;
+// ***********************************************
+
+@media screen and (max-width: $min-tablet) {
+  .m-analyticsTable__wrapper {
+    .m-analyticsTable__col--entity {
+      flex: 3 1 0;
+      .m-analyticsTable__entityType,
+      .m-analyticsTable__entityPublishDate {
+        display: none;
+      }
+    }
+    .m-analyticsTable__col--values {
+      flex: 2 2 0;
+
+      .m-analyticsTable__subCol--value:last-of-type {
+        padding-right: 16px;
+      }
+
+      .m-analyticsTable__row--header {
+        @include m-theme() {
+          border: none !important;
+        }
+      }
+      .m-analyticsTable__row--data {
+        .m-analyticsTable__col--entity {
+          padding-left: 16px;
+          @include m-theme() {
+            border: none !important;
+          }
+        }
+      }
+      .m-analyticsTable__cell {
+        height: 48px;
+      }
     }
   }
 }
-///////////////////////////@at-root  @media screen and (max-width: 800px) {
 
-// @media screen and (max-width: 910px) {
-//   .m-referrals-dashboard__row.m-referrals-dashboard__headerRow {
-//     span {
-//       white-space: normal !important;
-//       max-width: 35px;
-//     }
-//     .m-referrals-dashboard__registerCol,
-//     .m-referrals-dashboard__rewardsCol {
-//       align-items: flex-start !important;
-//     }
-//     .m-referrals-dashboard__rewardsCol span {
-//       max-width: 46px;
-//     }
-//   }
-//   .m-referrals-dashboard__cell.m-referrals-dashboard__rewardsCol {
-//     flex: 2 3 0;
-
-//     .m-referrals-dashboard__pingButtonContainer button {
-//       padding: 8px;
-
-//       span {
-//         display: none;
-//       }
-//     }
-//   }
-// }
-
-//   .m-referrals-dashboard__cell.m-referrals-dashboard__registerCol {
-//     display: none;
-//   }
-//   .m-referrals-dashboard__userCol {
-//     min-width: 100px;
-//   }
-//   .m-referrals-dashboard__statusCol {
-//     min-width: 60px;
-//   }
-//   .m-referrals-dashboard__rewardsCol {
-//     max-width: 75px;
-//   }
-// }
+@media screen and (max-width: $max-mobile) {
+  .m-analyticsTable__wrapper {
+    .m-analyticsTable__col--entity {
+      flex: 2 1 0;
+      padding-left: 24px;
+    }
+  }
+}

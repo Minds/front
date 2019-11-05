@@ -1,48 +1,47 @@
-<div class="filterLabelWrapper" *ngIf="filter.id !== 'timespan'">
+<div class="m-analyticsFilter__labelWrapper" *ngIf="showLabel">
   <span>{{ filter.label }}</span>
   <m-tooltip icon="help">
-    <div class="filterDesc">{{ filter?.description }}</div>
-    <ul class="filterOptions__descContainer">
+    <div>{{ filter?.description }}</div>
+    <ul>
       <ng-container *ngFor="let option of filter.options">
-        <li class="filterOption__desc">
-          <span class="filterOption__descLabel">{{ option.label }}</span
-          ><span class="filterOption__desc" *ngIf="option.description"
-            >: {{ option.description }}</span
-          >
+        <li>
+          <span>{{ option.label }}</span
+          ><span *ngIf="option.description">: {{ option.description }}</span>
         </li>
       </ng-container>
     </ul>
   </m-tooltip>
 </div>
 <div
-  class="filterWrapper"
+  class="m-analyticsFilter__wrapper"
   [ngClass]="{
     expanded: expanded,
-    isMobile: isMobile,
     dropUp: dropUp
   }"
-  (focus)="expanded = true"
   (blur)="expanded = false"
+  tabindex="0"
 >
-  <div class="filterHeader" (click)="expanded = !expanded">
-    <div class="row">
-      <span class="option option--selected">
-        {{ selectedOption.label }}
-      </span>
-      <i class="material-icons" *ngIf="!expanded">keyboard_arrow_down</i>
-      <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
-    </div>
+  <div
+    class="m-analyticsFilter__header m-analyticsFilter__row"
+    (click)="expanded = !expanded"
+  >
+    <span class="m-analyticsFilter__option m-analyticsFilter__option--selected">
+      {{ selectedOption.label }}
+    </span>
+    <i class="material-icons" *ngIf="!expanded">keyboard_arrow_down</i>
+    <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
   </div>
-  <div class="unselectedOptionsContainer">
+  <div class="m-analyticsFilter__optionsContainer">
     <ng-container *ngFor="let option of filter.options">
       <div
-        class="option row"
+        class="m-analyticsFilter__option m-analyticsFilter__row"
         (click)="updateFilter(option)"
         [ngClass]="{
           unavailable: option.available === false
         }"
       >
-        <span>{{ option.label }}</span>
+        {{ option.label }}
+        <!-- <span>{{ option.label }}</span> -->
       </div>
     </ng-container>
   </div>

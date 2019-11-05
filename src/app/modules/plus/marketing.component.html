@@ -1,3 +1,5 @@
+<div class="mf-jumpAnchor" #topAnchor></div>
+
 <m-marketing class="m-plus__marketing" pageTitle="Minds Plus" i18n-pageTitle>
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
@@ -46,17 +48,168 @@
         class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
       >
         <span>
-          <img
-            [src]="
-              cdnAssetsUrl + 'assets/photos/browsing-mobileapp-discovery.jpg'
-            "
-          />
+          <img [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-1.jpg'" />
         </span>
       </div>
     </div>
   </div>
 
-  <m-marketing__asFeaturedIn slot="2"></m-marketing__asFeaturedIn>
+  <ng-container slot="2">
+    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
+
+    <!-- Section 2 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Hide boosted content</h2>
+
+          <p class="m-marketing__description" i18n>
+            Tired of seeing ads? All Plus users have the option of hiding all
+            boosted content from their feeds. Just click on the settings icon on
+            the Boost rotator in your newsfeed and select “Hide Boosts” to turn
+            this on.
+          </p>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-2.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-2-ux.png'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Access exclusive content</h2>
+
+          <p class="m-marketing__description" i18n>
+            View the latest behind-the-scenes content from the Minds team. Plus
+            members will also gain access to exclusive content from MindsTV
+            (coming soon).
+          </p>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-3.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-3-ux.png'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Verify your channel</h2>
+
+          <p class="m-marketing__description" i18n>
+            Plus members are able to request to
+            <a (click)="scrollToTop(); $event.preventDefault()"
+              >verify their channel</a
+            >
+            and receive a verified badge.
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            Just post your Minds channel URL to two other social networks where
+            you have the same identify and provide us with the proof.
+          </p>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-4.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-4-ux.png'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final section -->
+
+    <div class="m-marketing__section m-marketing__section--tail">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Other Plus features</h2>
+        </div>
+      </div>
+
+      <div class="m-grid m-marketing__wrapper m-marketingSectionTail__table">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Receive a badge</h3>
+
+          <p class="m-marketing__description" i18n>
+            Plus members receive a badge for their channel to indicate they are
+            part of the community.
+          </p>
+        </div>
+
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Support Minds</h3>
+
+          <p class="m-marketing__description" i18n>
+            Buying Plus is a great way to keep Minds independent and show your
+            support for Internet freedom.
+          </p>
+        </div>
+      </div>
+
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
+        >
+          <button class="mf-button mf-button--alt" (click)="scrollToTop()" i18n>
+            Upgrade to Plus
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 </m-marketing>
 
 <m-plus--verify
