@@ -1,89 +1,218 @@
-<div class="m-marketing">
-  <div class="m-marketing--hero">
-    <div class="m-marketing--hero--video">
-      <img [src]="minds.cdn_assets_url + 'assets/photos/fractal.jpg'" />
-    </div>
+<div class="mf-jumpAnchor" #topAnchor></div>
 
-    <div class="m-marketing--hero--inner">
-      <div class="m-marketing--hero--overlay"></div>
+<m-marketing class="m-plus__marketing" pageTitle="Minds Plus" i18n-pageTitle>
+  <div class="m-marketing__main m-marketing__section--style-2">
+    <div class="m-grid m-marketing__wrapper">
+      <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
+        <h1 i18n>
+          Minds Plus
+        </h1>
 
-      <div class="m-marketing--hero--slogans">
-        <h1 i18n="@@PLUS__MKT__PLUS_TITLE">Minds Plus</h1>
-        <h3 i18n="@@PLUS__MKT__PLUS_DESC">
-          Upgrade your channel and unlock premium features
-        </h3>
+        <h2 ngPreserveWhitespaces i18n>
+          Upgrade your channel and <em>unlock premium features</em>
+        </h2>
+
+        <p class="m-marketing__description" i18n>
+          Support Minds and unlock features such as hiding ads, accessing
+          exclusive content, receiving a badge and verifying your channel.
+        </p>
+
+        <div class="m-plusMarketing__subscription">
+          <m-plus--subscription
+            (onEnable)="detectChanges()"
+            (onDisable)="detectChanges()"
+          ></m-plus--subscription>
+        </div>
+
+        <div class="m-plusMarketing__verify" *ngIf="isPlus">
+          <i
+            class="material-icons"
+            [class.m-plusMarketingVerify__verifiedIcon]="isVerified"
+            [class.m-plusMarketingVerify__unverifiedIcon]="!isVerified"
+            >verified_user</i
+          >
+
+          <ng-container *ngIf="!isVerified; else alreadyVerifiedView">
+            <a (click)="openVerifyModal()" i18n
+              >Click here to request to be verified</a
+            >
+          </ng-container>
+
+          <ng-template #alreadyVerifiedView>
+            <span i18n>You are verified!</span>
+          </ng-template>
+        </div>
       </div>
 
-      <div class="m-marketing--hero--actions m-marketing--action-button">
-        <m-plus--subscription></m-plus--subscription>
+      <div
+        class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
+      >
+        <span>
+          <img [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-1.jpg'" />
+        </span>
       </div>
     </div>
   </div>
 
-  <div class="m-marketing--contents m-layout--row">
-    <div
-      class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone"
-    >
-      <i class="material-icons mdl-color-text--blue-grey-700">trending_up</i>
-      <h2 i18n="@@PLUS__MKT__HIDE_BOOST_TITLE">Hide Boosts</h2>
-      <span i18n="@@PLUS__MKT__HIDE_BOOST_DESC"
-        >Hide all boosted content from your newsfeed and sidebars
-        (optional)</span
-      >
-    </div>
-    <div
-      class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone"
-    >
-      <i class="material-icons mdl-color-text--blue-grey-700">favorite</i>
-      <h2 i18n="@@PLUS__MKT__EXCLUSIVE_TITLE">Exclusive</h2>
-      <span i18n="@@PLUS__MKT__EXCLUSIVE_DESC"
-        >Access exclusive Minds content</span
-      >
-    </div>
-    <div
-      class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone"
-    >
-      <i class="material-icons mdl-color-text--blue-grey-700">verified_user</i>
-      <h2 i18n="@@PLUS__MKT__VERIFIED_TITLE">Verified</h2>
-      <span *ngIf="!user || !user.plus" i18n="@@PLUS__MKT__VERIFIED_DESC"
-        >Request to verify your channel</span
-      >
-      <span
-        *ngIf="user && user.plus && !user.verified"
-        i18n="@@PLUS__MKT__VERIFY_LINK"
-      >
-        <a (click)="showVerify = true; detectChanges()" style="cursor:pointer"
-          >Click here</a
+  <ng-container slot="2">
+    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
+
+    <!-- Section 2 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-        to request to be verified
-      </span>
-      <span
-        *ngIf="user && user.plus && user.verified"
-        i18n="@@PLUS__MKT__YOURE_VERIFIED_LEGEND"
-        >You are verified!</span
-      >
+          <h2 i18n>Hide boosted content</h2>
+
+          <p class="m-marketing__description" i18n>
+            Tired of seeing ads? All Plus users have the option of hiding all
+            boosted content from their feeds. Just click on the settings icon on
+            the Boost rotator in your newsfeed and select “Hide Boosts” to turn
+            this on.
+          </p>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-2.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-2-ux.png'"
+            />
+          </span>
+        </div>
+      </div>
     </div>
-    <div
-      class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--6-col-phone"
-    >
-      <i class="material-icons mdl-color-text--blue-grey-700"
-        >add_circle_outline</i
-      >
-      <h2 i18n="@@PLUS__MKT__BADGE_TITLE">Badge</h2>
-      <span i18n="@@PLUS__MKT__BADGE_DESC"
-        >Make your channel stand out with a Minds Plus badge</span
-      >
+
+    <!-- Section 3 -->
+
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Access exclusive content</h2>
+
+          <p class="m-marketing__description" i18n>
+            View the latest behind-the-scenes content from the Minds team. Plus
+            members will also gain access to exclusive content from MindsTV
+            (coming soon).
+          </p>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-3.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-3-ux.png'"
+            />
+          </span>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <div class="m-marketing--faq">
-    <m-faq category="plus"></m-faq>
-  </div>
+    <!-- Section 4 -->
 
-  <m-plus--verify
-    *ngIf="showVerify"
-    (closed)="showVerify = false; detectChanges()"
-  ></m-plus--verify>
-</div>
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Verify your channel</h2>
 
-<m-footer></m-footer>
+          <p class="m-marketing__description" i18n>
+            Plus members are able to request to
+            <a (click)="scrollToTop(); $event.preventDefault()"
+              >verify their channel</a
+            >
+            and receive a verified badge.
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            Just post your Minds channel URL to two other social networks where
+            you have the same identify and provide us with the proof.
+          </p>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-4.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/plus/plus-4-ux.png'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final section -->
+
+    <div class="m-marketing__section m-marketing__section--tail">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Other Plus features</h2>
+        </div>
+      </div>
+
+      <div class="m-grid m-marketing__wrapper m-marketingSectionTail__table">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Receive a badge</h3>
+
+          <p class="m-marketing__description" i18n>
+            Plus members receive a badge for their channel to indicate they are
+            part of the community.
+          </p>
+        </div>
+
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Support Minds</h3>
+
+          <p class="m-marketing__description" i18n>
+            Buying Plus is a great way to keep Minds independent and show your
+            support for Internet freedom.
+          </p>
+        </div>
+      </div>
+
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
+        >
+          <button class="mf-button mf-button--alt" (click)="scrollToTop()" i18n>
+            Upgrade to Plus
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</m-marketing>
+
+<m-plus--verify
+  *ngIf="showVerifyModal"
+  (closed)="closeVerifyModal()"
+></m-plus--verify>

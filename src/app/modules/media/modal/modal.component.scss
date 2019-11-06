@@ -18,7 +18,7 @@ m-overlay-modal {
   .m-overlay-modal--backdrop {
     z-index: 9999995;
     @include m-theme() {
-      background-color: rgba(themed($m-black-always), 0.85);
+      background-color: rgba(themed($m-black-always), 0.8);
     }
   }
 
@@ -99,6 +99,52 @@ m-overlay-modal {
   }
 }
 
+.m-mediaModal__mediaWrapper--blog {
+  line-height: initial;
+  overflow-y: auto;
+  text-align: left;
+
+  @include m-theme() {
+    color: themed($m-black);
+  }
+
+  h1.m-blog--title {
+    font-weight: 600;
+    font-size: 42px;
+    letter-spacing: 1.5px;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    text-align: left;
+
+    @media only screen and (max-width: $min-tablet) {
+      font-size: 24px;
+    }
+  }
+
+  p {
+    @include m-theme() {
+      color: themed($m-black);
+    }
+  }
+
+  .minds-blog-body img {
+    @media screen and (max-width: 891px) {
+      width: 100vw;
+    }
+    max-width: initial;
+    height: auto;
+    width: 80%;
+    margin: 0 -100px;
+  }
+
+  .m-blog--image--caption {
+    @include m-theme() {
+      color: themed($m-black);
+    }
+  }
+}
+
 .m-mediaModal__stage {
   display: flex;
   align-items: center;
@@ -124,6 +170,11 @@ m-overlay-modal {
   m-video {
     position: static;
 
+    video {
+      width: 100%;
+      height: 100%;
+    }
+
     .minds-video-bar-full {
       .m-video--progress-bar {
         padding-right: 0;
@@ -144,9 +195,6 @@ m-overlay-modal {
       left: unquote('calc(50% - 50px)');
     }
     m-video--progress-bar {
-      .seeker-ball {
-        top: 4px;
-      }
       .progress-bar {
         margin-right: 8px;
       }
@@ -161,11 +209,6 @@ m-overlay-modal {
 
     .m-blog--image > img {
       max-width: 100%;
-    }
-
-    .m-actions-block,
-    m-comments__tree {
-      display: none;
     }
   }
 }

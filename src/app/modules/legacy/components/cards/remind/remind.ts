@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
+import { ActivityService } from '../../../../../common/services/activity.service';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { FeaturesService } from '../../../../../services/features.service';
@@ -23,6 +24,7 @@ import isMobile from '../../../../../helpers/is-mobile';
   moduleId: module.id,
   selector: 'minds-remind',
   inputs: ['object', '_events: events'],
+  providers: [ActivityService],
   templateUrl: '../activity/activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -138,6 +140,10 @@ export class Remind {
     return activity && activity.pending && activity.pending !== '0';
   }
 
+  isScheduled(time_created) {
+    return false;
+  }
+
   openComments() {
     /* NOOP */
   }
@@ -201,9 +207,13 @@ export class Remind {
     this.activity.modal_source_url = this.router.url;
 
     this.overlayModal
-      .create(MediaModalComponent, this.activity, {
-        class: 'm-overlayModal--media',
-      })
+      .create(
+        MediaModalComponent,
+        { entity: this.activity },
+        {
+          class: 'm-overlayModal--media',
+        }
+      )
       .present();
   }
 }

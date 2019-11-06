@@ -4,6 +4,8 @@ import {
   ViewChild,
   ElementRef,
   ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
@@ -87,6 +89,8 @@ export class WireCreatorComponent {
 
   protected submitted: boolean;
 
+  @Input() inModal: boolean = true;
+
   @Input('object') set data(object) {
     this.wire.guid = object ? object.guid : null;
 
@@ -110,6 +114,8 @@ export class WireCreatorComponent {
   }
 
   _opts: any;
+
+  @Input('opts')
   set opts(opts: any) {
     this._opts = opts;
     this.setDefaults();
@@ -322,13 +328,24 @@ export class WireCreatorComponent {
       return;
     }
 
+    if (amount.indexOf('.') === 0) {
+      if (amount.length === 1) {
+        return; // not propogration
+      }
+      amount = `0${amount}`;
+    }
+
     if (typeof amount === 'number') {
       this.wire.amount = amount;
+      console.log('amount is a number');
       return;
     }
 
     amount = amount.replace(/,/g, '');
-    this.wire.amount = parseFloat(amount);
+    const amountAsFloat = parseFloat(amount);
+    if (amountAsFloat) {
+      this.wire.amount = amountAsFloat;
+    }
   }
 
   /**
@@ -355,11 +372,11 @@ export class WireCreatorComponent {
   }
 
   /**
-   * Round by 4
+   * Round by 6
    */
   roundAmount() {
     this.wire.amount =
-      Math.round(parseFloat(`${this.wire.amount}`) * 10000) / 10000;
+      Math.round(parseFloat(`${this.wire.amount}`) * 1000000) / 1000000;
   }
 
   // Charge and rates
@@ -550,9 +567,11 @@ export class WireCreatorComponent {
           this._opts.onComplete(this.wire);
         }
 
-        setTimeout(() => {
-          this.overlayModal.dismiss();
-        }, 2500);
+        if (this.inModal) {
+          setTimeout(() => {
+            this.overlayModal.dismiss();
+          }, 2500);
+        }
       }
     } catch (e) {
       this.error = (e && e.message) || 'Sorry, something went wrong';

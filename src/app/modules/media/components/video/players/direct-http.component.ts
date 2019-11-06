@@ -115,13 +115,13 @@ export class MindsVideoDirectHttpPlayer
     return this.player.nativeElement;
   }
 
-  play() {
+  async play() {
     const player = this.getPlayer();
 
     try {
-      player.play();
+      await player.play();
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
@@ -131,28 +131,29 @@ export class MindsVideoDirectHttpPlayer
     try {
       player.pause();
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
-  toggle() {
+  async toggle() {
     const player = this.getPlayer();
 
     if (player.paused) {
-      this.play();
+      await this.play();
     } else {
       this.pause();
     }
   }
 
   resumeFromTime(time: number = 0) {
+    // TODO detect if it's still transcoding
     const player = this.getPlayer();
 
     try {
       player.currentTime = time;
       this.play();
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 

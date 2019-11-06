@@ -1,0 +1,21 @@
+<div class="m-upgrades__buyTokens">
+  <div class="m-upgradesBuyTokens__wrapper">
+    <div class="m-upgradesBuyTokens__body">
+      <h2>Buy Tokens</h2>
+
+      <p class="m-upgradesBuyTokens__description">
+        Buy tokens to support Minds and your favorite channels. Unlock premium
+        features and launch advertising campaigns to expand your reach.
+      </p>
+
+      <p>
+        <a routerLink="/token">Learn more about tokens</a>
+      </p>
+    </div>
+
+    <m-blockchain--purchase
+      class="m-upgradesBuyTokens__purchase"
+      (onComplete)="onPurchaseComplete($event)"
+    ></m-blockchain--purchase>
+  </div>
+</div>

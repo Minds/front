@@ -24,6 +24,8 @@ import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TokenPipe } from '../../../common/pipes/token.pipe';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ActivityService } from '../../../common/services/activity.service';
+import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 
 @Component({
@@ -144,6 +146,7 @@ describe('AdminBoosts', () => {
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        { provide: ActivityService, useValue: activityServiceMock },
       ],
     }).compileComponents(); // compile template and css
   }));

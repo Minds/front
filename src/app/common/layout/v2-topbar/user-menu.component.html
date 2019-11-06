@@ -42,10 +42,10 @@
 
     <li
       class="m-dropdownList__item m-user-menuDropdown__Item"
-      *ngIf="isAdmin()"
       (click)="closeMenu()"
+      *ngIf="getCurrentUser()?.pro"
     >
-      <a routerLink="/analytics/admin/network">
+      <a routerLink="/analytics/dashboard/traffic">
         <i class="material-icons">timeline</i>
         <span i18n>Analytics</span>
       </a>

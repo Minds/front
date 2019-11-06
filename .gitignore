@@ -38,3 +38,5 @@ cypress/videos
 !/.drone.yml
 !/.gitlab
 !/.githooks
+!/.prettierrc
+!.gitattributes

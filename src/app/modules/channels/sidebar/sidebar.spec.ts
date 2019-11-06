@@ -38,6 +38,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ChannelMode } from '../../../interfaces/entities';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { ChannelModulesComponent } from '../modules/modules';
+import { SiteService } from '../../../common/services/site.service';
 
 describe('ChannelSidebar', () => {
   let comp: ChannelSidebar;
@@ -106,6 +107,11 @@ describe('ChannelSidebar', () => {
           selector: 'm-channel-mode-selector',
           inputs: ['user', 'enabled'],
         }),
+        MockComponent({
+          selector: 'm-tooltip',
+          template: '<ng-content></ng-content>',
+          inputs: ['icon', 'iconClass'],
+        }),
         IfFeatureDirective,
       ],
       imports: [FormsModule, RouterTestingModule, NgCommonModule],
@@ -129,6 +135,14 @@ describe('ChannelSidebar', () => {
           provide: OverlayModalService,
           useValue: overlayModalServiceMock,
         },
+        {
+          provide: SiteService,
+          useValue: MockService(SiteService, {
+            props: {
+              isProDomain: { get: () => false },
+            },
+          }),
+        },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -140,6 +154,8 @@ describe('ChannelSidebar', () => {
     fixture = TestBed.createComponent(ChannelSidebar);
     featuresServiceMock.mock('es-feeds', false);
     featuresServiceMock.mock('permissions', true);
+    featuresServiceMock.mock('pro', true);
+    featuresServiceMock.mock('purchase-pro', true);
     clientMock.response = {};
     uploadMock.response = {};
     comp = fixture.componentInstance;

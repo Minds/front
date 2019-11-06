@@ -70,7 +70,7 @@
         <input
           type="text"
           class="m-wire--creator-wide-input--edit"
-          [ngModel]="wire.amount | number"
+          [ngModel]="wire.amount"
           (ngModelChange)="setAmount($event)"
           (focus)="amountEditorFocus()"
           (blur)="amountEditorBlur()"

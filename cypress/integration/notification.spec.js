@@ -4,28 +4,25 @@
  */
 import generateRandomId from '../support/utilities';
 
-context('Notification', () => {
+context.skip('Notification', () => {
 
   //secondary user for testing.
-  let username = '';
-  let password = '';
+  const username = generateRandomId();
+  const password = generateRandomId()+'X#';
 
-  const commentText = 'test comment';
-  const postText = 'test comment'
+  const commentText = generateRandomId();
+  const postText = generateRandomId();
   const postCommentButton = 'm-comment__poster > div > div.minds-body > div > div > a.m-post-button';
   const commentButton = 'minds-activity > div.tabs > minds-button-comment > a'; 
   const commentInput = 'm-comment__poster minds-textarea > div';
   const commentContent ='.m-comment__bubble > p';
   const notificationBell = 'm-notifications--topbar-toggle > a > i';
-
+  const notification = 'minds-notification';
   /**
    * Before all, generate username and password, login as the new user and log out.
    * Next login to env user, make a post, and log out.
    */
   before(() => {
-    username = generateRandomId(); 
-    password = generateRandomId()+'X#';
-
     cy.newUser(username, password);
     cy.logout();
   
@@ -39,7 +36,9 @@ context('Notification', () => {
    */
   after(() => {
     cy.clearCookies();
+  
     cy.login(true, username, password);
+    cy.visit(`/${Cypress.env().username}`);
     cy.deleteUser(username, password);
   });
 
@@ -49,6 +48,8 @@ context('Notification', () => {
    * then switch users and check for the notification.
    */
   beforeEach(() => {
+    cy.route("GET", '**/api/v1/notifications/all**').as('notifications');
+
     cy.clearCookies();
     cy.login(false, username, password);
     
@@ -70,13 +71,16 @@ context('Notification', () => {
     cy.login();
   
     // Open their notifications
-    cy.get(notificationBell).click();    
+    cy.get(notificationBell).click()
+      .wait('@notifications').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+      });
 
-    /**
-     * Notifications not working on test env. 
-     * TODO: Check for notification - follow it 
-     * through and check it leads to the post with postText.
-     */
+    cy.get(notification)
+      .first()
+      .click();
+    
+    cy.contains(commentText);
   });
 
 })

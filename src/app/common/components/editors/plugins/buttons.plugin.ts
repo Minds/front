@@ -206,6 +206,10 @@ export class ButtonsPlugin {
     let $buttons = this.$element.querySelector('.medium-insert-buttons');
     let $p = this.$element.querySelector('.medium-insert-active');
 
+    if (!$buttons) {
+      return;
+    }
+
     if ($p !== null) {
       let $lastCaption = $p.classList.contains('medium-insert-images-grid')
           ? []
@@ -439,7 +443,9 @@ export class ButtonsPlugin {
     const $input = this.$element.querySelector('.medium-media-buttons');
 
     if ($input) {
-      $input.parentNode.removeChild($input);
+      try {
+        $input.parentNode.removeChild($input);
+      } catch (e) {}
     }
   }
 

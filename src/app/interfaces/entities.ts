@@ -6,6 +6,7 @@ import { WireRewardsStruc } from '../modules/wire/interfaces/wire.interfaces';
 export interface MindsActivityObject {
   activity: Array<any>;
   pinned: Array<any>;
+  allow_comments: boolean;
 }
 
 export interface MindsBlogEntity {
@@ -27,6 +28,7 @@ export interface MindsBlogEntity {
   time_published?: number;
   access_id?: number;
   license?: string;
+  allow_comments: boolean;
 }
 
 export interface Message {}
@@ -34,6 +36,12 @@ export interface Message {}
 export interface KeyVal {
   key: string;
   value: any;
+}
+
+export interface Tag {
+  tag: string;
+  label: string;
+  selected?: boolean;
 }
 
 export enum ChannelMode {
@@ -68,10 +76,30 @@ export interface MindsUser {
   subscribed?: boolean;
   rating?: number;
   eth_wallet?: string;
+  is_admin?: boolean;
   is_mature?: boolean;
   mature_lock?: boolean;
   tags?: Array<string>;
   toaster_notifications?: boolean;
+  pro?: boolean;
+  pro_published?: boolean;
+  pro_settings?: {
+    logo_image: string;
+    tag_list?: Tag[];
+    background_image: string;
+    title: string;
+    headline: string;
+    one_line_headline: string;
+    footer_text: string;
+    footer_links: { href: string; title: string }[];
+    scheme: string;
+    featured_content?: Array<string>;
+    tile_ratio?: string;
+    styles?: { [key: string]: string };
+    domain: string;
+    has_custom_logo?: boolean;
+    has_custom_background?: boolean;
+  };
   mode: ChannelMode;
 }
 

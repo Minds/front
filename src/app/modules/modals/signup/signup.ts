@@ -3,6 +3,8 @@ import {
   ChangeDetectorRef,
   NgZone,
   ApplicationRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
@@ -11,6 +13,7 @@ import { SignupModalService } from './service';
 import { Session } from '../../../services/session';
 import { AnalyticsService } from '../../../services/analytics';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
+import { SiteService } from '../../../common/services/site.service';
 
 @Component({
   selector: 'm-modal-signup',
@@ -18,6 +21,7 @@ import { LoginReferrerService } from '../../../services/login-referrer.service';
   templateUrl: 'signup.html',
 })
 export class SignupModal {
+  @Output('onClose') onClosed: EventEmitter<any> = new EventEmitter<any>();
   open: boolean = false;
   route: string = '';
   minds = window.Minds;
@@ -26,6 +30,12 @@ export class SignupModal {
     'Signup to comment, upload, vote and receive 100 free views on your content.';
   display: string = 'initial';
   overrideOnboarding: boolean = false;
+
+  get logo() {
+    return this.site.isProDomain
+      ? `${this.minds.cdn_url}fs/v1/thumbnail/${this.site.pro.logo_guid}/master`
+      : `${this.minds.cdn_assets_url}assets/logos/logo.svg`;
+  }
 
   constructor(
     public session: Session,
@@ -36,13 +46,14 @@ export class SignupModal {
     private zone: NgZone,
     private applicationRef: ApplicationRef,
     private loginReferrer: LoginReferrerService,
-    private analyticsService: AnalyticsService
+    private analyticsService: AnalyticsService,
+    private site: SiteService
   ) {
     this.listen();
     this.service.isOpen.subscribe({
       next: open => {
         this.open = open;
-        //hack: nasty ios work around
+        // hack: nasty ios work around
         this.applicationRef.tick();
         this.listen();
       },
@@ -66,6 +77,7 @@ export class SignupModal {
         break;
       default:
         this.service.close();
+        this.onClosed.emit();
     }
   }
 
@@ -120,9 +132,6 @@ export class SignupModal {
           'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=600, height=400, top=100, left=100'
         );
         break;
-      case 'categories':
-        this.display = 'tutorial';
-        break;
     }
   }
 
@@ -153,10 +162,6 @@ export class SignupModal {
         });
         this.display = 'fb-username';
         break;
-      case 'categories':
-        this.display = 'initial';
-        this.close();
-        break;
       case 'tutorial':
         this.display = 'initial';
         this.close();
@@ -166,6 +171,7 @@ export class SignupModal {
 
   onClose(e: boolean) {
     this.service.close();
+    this.onClosed.emit();
     if (
       this.display === 'login' ||
       this.display === 'register' ||
@@ -177,5 +183,13 @@ export class SignupModal {
       });
       this.router.navigateByUrl(this.route);
     }
+  }
+
+  get description() {
+    if (!this.site.isProDomain) {
+      return '';
+    }
+
+    return this.site.pro.one_line_headline || '';
   }
 }

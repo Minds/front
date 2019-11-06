@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -102,11 +102,29 @@ import { SettingsService } from '../modules/settings/settings.service';
 import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
+import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
 import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
 import { ShareModalComponent } from '../modules/modals/share/share';
+import { RouterHistoryService } from './services/router-history.service';
+import { DraggableListComponent } from './components/draggable-list/list.component';
+import { DndModule } from 'ngx-drag-drop';
+import { SiteService } from './services/site.service';
+import { MarketingComponent } from './components/marketing/marketing.component';
+import { MarketingFooterComponent } from './components/marketing/footer.component';
+import { ToggleComponent } from './components/toggle/toggle.component';
+import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
+import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
+import { ChartV2Component } from './components/chart-v2/chart-v2.component';
+import { MiniChartComponent } from './components/mini-chart/mini-chart.component';
 
 @NgModule({
-  imports: [NgCommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    NgCommonModule,
+    DndModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   declarations: [
     MINDS_PIPES,
 
@@ -194,6 +212,15 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     SwitchComponent,
 
     FeaturedContentComponent,
+    PosterDateSelectorComponent,
+    DraggableListComponent,
+    ToggleComponent,
+    MarketingComponent,
+    MarketingFooterComponent,
+    MarketingAsFeaturedInComponent,
+    SidebarMenuComponent,
+    ChartV2Component,
+    MiniChartComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -278,9 +305,16 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    PosterDateSelectorComponent,
     ChannelModeSelectorComponent,
+    DraggableListComponent,
+    ToggleComponent,
+    MarketingComponent,
+    MarketingAsFeaturedInComponent,
+    SidebarMenuComponent,
   ],
   providers: [
+    SiteService,
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
@@ -296,7 +330,7 @@ import { ShareModalComponent } from '../modules/modals/share/share';
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
-      deps: [HttpClient],
+      deps: [HttpClient, SiteService],
     },
     {
       provide: NSFWSelectorCreatorService,
@@ -337,6 +371,11 @@ import { ShareModalComponent } from '../modules/modals/share/share';
       useFactory: boostedContentService =>
         new FeaturedContentService(boostedContentService),
       deps: [FeedsService],
+    },
+    {
+      provide: RouterHistoryService,
+      useFactory: router => new RouterHistoryService(router),
+      deps: [Router],
     },
   ],
   entryComponents: [

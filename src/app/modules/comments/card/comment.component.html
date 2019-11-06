@@ -184,7 +184,10 @@
             [src]="[
               {
                 res: '360',
-                uri: 'api/v1/media/' + comment.custom_data.guid + '/play',
+                uri:
+                  'api/v1/media/' +
+                  comment.custom_data.guid +
+                  '/play?s=comment',
                 type: 'video/mp4'
               }
             ]"
@@ -385,7 +388,7 @@
           <span *ngIf="comment.replies_count > 0"
             >{{ comment.replies_count }} Replies</span
           >
-          <span *ngIf="comment.replies_count <= 0">Reply</span>
+          <span *ngIf="comment.replies_count <= 0 && canReply">Reply</span>
         </span>
       </div>
 

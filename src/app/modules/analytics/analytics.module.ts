@@ -49,6 +49,19 @@ import { ActiveUsersChartComponent } from './components/charts/active-users/acti
 import { Graph } from './graph.component';
 import { PageviewsCardComponent } from './components/cards/pageviews/pageviews.component';
 import { PageviewsChartComponent } from './components/charts/pageviews/pageviews.component';
+import { AnalyticsDashboardComponent } from './v2/dashboard.component';
+import { AnalyticsLayoutChartComponent } from './v2/layouts/layout-chart/layout-chart.component';
+import { AnalyticsLayoutSummaryComponent } from './v2/layouts/layout-summary/layout-summary.component';
+import { AnalyticsMetricsComponent } from './v2/components/metrics/metrics.component';
+import { AnalyticsFiltersComponent } from './v2/components/filters/filters.component';
+import { AnalyticsFilterComponent } from './v2/components/filter/filter.component';
+import { AnalyticsChartComponent } from './v2/components/chart/chart.component';
+import { AnalyticsTableComponent } from './v2/components/table/table.component';
+import { AnalyticsDashboardService } from './v2/dashboard.service';
+import { SearchModule } from '../search/search.module';
+import { AnalyticsSearchComponent } from './v2/components/search/search.component';
+import { FormsModule } from '@angular/forms';
+import { AnalyticsSearchSuggestionsComponent } from './v2/components/search-suggestions/search-suggestions.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -77,6 +90,12 @@ const routes: Routes = [
           // { path: 'plus', component: OffChainBoostsCardComponent},
         ],
       },
+      {
+        path: 'dashboard/',
+        redirectTo: 'dashboard/traffic',
+        pathMatch: 'full',
+      },
+      { path: 'dashboard/:category', component: AnalyticsDashboardComponent },
     ],
   },
 ];
@@ -87,6 +106,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     PlotlyModule,
+    SearchModule,
+    FormsModule,
   ],
   exports: [
     AdminAnalyticsComponent,
@@ -138,7 +159,17 @@ const routes: Routes = [
     PageviewsChartComponent,
     PageviewsCardComponent,
     Graph,
+    AnalyticsDashboardComponent,
+    AnalyticsLayoutChartComponent,
+    AnalyticsLayoutSummaryComponent,
+    AnalyticsMetricsComponent,
+    AnalyticsFiltersComponent,
+    AnalyticsFilterComponent,
+    AnalyticsChartComponent,
+    AnalyticsTableComponent,
+    AnalyticsSearchComponent,
+    AnalyticsSearchSuggestionsComponent,
   ],
-  providers: [],
+  providers: [AnalyticsDashboardService],
 })
 export class AnalyticsModule {}

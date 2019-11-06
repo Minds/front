@@ -183,7 +183,7 @@ export class MindsVideoComponent implements OnDestroy {
   }
 
   onError({ player, e }: { player?; e? } = {}) {
-    console.error('Received error when trying to reproduce video', e, player);
+    console.log('Received error when trying to reproduce video', e, player);
 
     setTimeout(() => this.fallback(), 0);
   }
@@ -435,9 +435,9 @@ export class MindsVideoComponent implements OnDestroy {
   }
 
   clickedVideo() {
-    if (!this.metadataLoaded) {
-      return;
-    }
+    // if (!this.metadataLoaded) {
+    //   return;
+    // }
 
     const isNotTablet = Math.min(screen.width, screen.height) < 768;
 
