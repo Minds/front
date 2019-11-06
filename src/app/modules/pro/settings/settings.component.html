@@ -294,7 +294,11 @@
                 Set up your category filter hashtags here.
               </p>
 
-              <m-draggable-list [data]="settings.tag_list" [id]="'tag'">
+              <m-draggable-list
+                [data]="settings.tag_list"
+                [id]="'tag'"
+                #tagsList
+              >
                 <ng-template let-tag="item" let-i="i">
                   <div class="m-proSettings__field">
                     <label i18n> Hashtag #{{ i + 1 }} </label>
@@ -306,6 +310,8 @@
                         [id]="'tag-label-' + i"
                         [name]="'tag[' + i + '][label]'"
                         [(ngModel)]="tag.label"
+                        (focusin)="tagsList.toggleDraggable(false, $event)"
+                        (focusout)="tagsList.toggleDraggable(true, $event)"
                       />
 
                       <input
@@ -314,6 +320,8 @@
                         [id]="'tag-tag-' + i"
                         [name]="'tag[' + i + '][tag]'"
                         [(ngModel)]="tag.tag"
+                        (focusin)="tagsList.toggleDraggable(false, $event)"
+                        (focusout)="tagsList.toggleDraggable(true, $event)"
                       />
 
                       <i class="material-icons" (click)="removeTag(i)">
@@ -354,7 +362,11 @@
                 />
               </div>
 
-              <m-draggable-list [data]="settings.footer_links" [id]="'title'">
+              <m-draggable-list
+                [data]="settings.footer_links"
+                [id]="'title'"
+                #footerList
+              >
                 <ng-template let-link="item" let-i="i">
                   <div class="m-proSettings__field">
                     <label i18n> Link #{{ i + 1 }} </label>
@@ -366,6 +378,8 @@
                         [id]="'footer_link-title-' + i"
                         [name]="'footer_link[' + i + '][title]'"
                         [(ngModel)]="link.title"
+                        (focusin)="footerList.toggleDraggable(false, $event)"
+                        (focusout)="footerList.toggleDraggable(true, $event)"
                       />
 
                       <input
@@ -374,6 +388,8 @@
                         [id]="'footer_link-href-' + i"
                         [name]="'footer_link[' + i + '][href]'"
                         [(ngModel)]="link.href"
+                        (focusin)="footerList.toggleDraggable(false, $event)"
+                        (focusout)="footerList.toggleDraggable(true, $event)"
                       />
 
                       <i class="material-icons" (click)="removeFooterLink(i)">

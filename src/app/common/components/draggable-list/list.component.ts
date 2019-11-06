@@ -1,5 +1,17 @@
-import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
-import { DndDropEvent, EffectAllowed } from 'ngx-drag-drop';
+import {
+  AfterViewInit,
+  Component,
+  ContentChild,
+  ElementRef,
+  Input,
+  TemplateRef,
+  ViewChild,
+} from '@angular/core';
+import {
+  DndDraggableDirective,
+  DndDropEvent,
+  EffectAllowed,
+} from 'ngx-drag-drop/dist';
 
 @Component({
   selector: 'm-draggable-list',
@@ -36,6 +48,9 @@ export class DraggableListComponent {
   @Input() data: Array<any>;
   @Input() dndEffectAllowed: EffectAllowed = 'copyMove';
   @Input() id: string;
+  @ViewChild(DndDraggableDirective, { static: false })
+  draggableDirective: DndDraggableDirective;
+
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
 
   trackByFunction(index, item) {
@@ -61,5 +76,9 @@ export class DraggableListComponent {
 
       this.data.splice(dropIndex, 0, event.data);
     }
+  }
+
+  toggleDraggable(value: boolean, event: any) {
+    this.draggableDirective.toggleDragLock(!value, event.target);
   }
 }
