@@ -14,23 +14,27 @@ export function getInfoHash(value) {
     return `${value} [?]`;
   }
 
-  return value.split('?')[1].split('&').find(q => q.startsWith('xt=')).substr(3);
+  return value
+    .split('?')[1]
+    .split('&')
+    .find(q => q.startsWith('xt='))
+    .substr(3);
 }
 
-const log =
-  (magnetUri, ...args) =>
-    console.log(`[WebTorrent ${getInfoHash(magnetUri)}]`, ...args);
+const log = (magnetUri, ...args) =>
+  console.log(`[WebTorrent ${getInfoHash(magnetUri)}]`, ...args);
 
 export class WebtorrentService {
   protected supported: boolean;
   protected client: WebTorrent;
-  protected torrentRefs: { [index:string]: number } = {};
-  protected torrentPurgeTimers: { [index:string]: any } = {};
+  protected torrentRefs: { [index: string]: number } = {};
+  protected torrentPurgeTimers: { [index: string]: any } = {};
 
-  constructor(
-    protected storage: Storage,
-  ) {
-    if (!this.isBrowserSupported() && !this.storage.get('webtorrent:disabled')) {
+  constructor(protected storage: Storage) {
+    if (
+      !this.isBrowserSupported() &&
+      !this.storage.get('webtorrent:disabled')
+    ) {
       this.storage.set('webtorrent:disabled', JSON.stringify(true));
     }
   }
@@ -77,7 +81,7 @@ export class WebtorrentService {
     return new Promise((resolve, reject) => {
       client.destroy(err => {
         if (err) {
-          reject(err)
+          reject(err);
         } else {
           resolve(this);
         }
@@ -88,8 +92,7 @@ export class WebtorrentService {
   // Enable/Disable; Support
 
   isEnabled() {
-    if (!window.Minds.user)
-      return false;
+    if (!window.Minds.user) return false;
     const enabled = window.Minds.user.p2p_media_enabled;
 
     return enabled && this.isBrowserSupported();
@@ -108,7 +111,7 @@ export class WebtorrentService {
   }
 
   setUpSupport() {
-    this.supported = ('MediaStream' in window) && WebTorrent.WEBRTC_SUPPORT;
+    this.supported = 'MediaStream' in window && WebTorrent.WEBRTC_SUPPORT;
 
     return this;
   }
@@ -145,7 +148,9 @@ export class WebtorrentService {
     return new Promise((resolve, reject) => {
       log(infoHash, 'Adding new');
       try {
-        const torrent = this.client.add(torrentData, torrent => resolve(torrent));
+        const torrent = this.client.add(torrentData, torrent =>
+          resolve(torrent)
+        );
 
         torrent.on('error', err => {
           console.error('Torrent error', infoHash, err);
@@ -195,5 +200,5 @@ export class WebtorrentService {
     return new WebtorrentService(storage);
   }
 
-  static _deps: any[] = [ Storage ];
+  static _deps: any[] = [Storage];
 }

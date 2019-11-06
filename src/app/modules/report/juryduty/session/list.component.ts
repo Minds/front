@@ -1,4 +1,11 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
@@ -7,20 +14,14 @@ import { JurySessionService } from './session.service';
 
 @Component({
   selector: 'm-jurydutySession__list',
-  templateUrl: 'list.component.html'
+  templateUrl: 'list.component.html',
 })
-
 export class JuryDutySessionListComponent implements AfterViewInit {
-
   @Input() juryType = 'appeal';
   reports: Array<any> = [];
   inProgress: boolean = true;
 
-  constructor(
-    private sessionService: JurySessionService,
-  ) {
-
-  }
+  constructor(private sessionService: JurySessionService) {}
 
   ngOnInit() {
     this.load();
@@ -35,8 +36,5 @@ export class JuryDutySessionListComponent implements AfterViewInit {
     this.reports = result.reports;
   }
 
-  ngAfterViewInit() {
-
-  }
-
+  ngAfterViewInit() {}
 }

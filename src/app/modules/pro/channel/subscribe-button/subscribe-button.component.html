@@ -1,0 +1,18 @@
+<button
+  class="m-pro__subscribeButton"
+  [class.m-pro__subscribeButton--subscribed]="subscribed"
+  (click)="toggleSubscription(); $event.preventDefault()"
+>
+  <span class="m-proSubscribeButton__label">
+    <ng-container *ngIf="!subscribed; else subscribedActionButton" i18n>
+      Subscribe
+    </ng-container>
+    <ng-template #subscribedActionButton>
+      <ng-container i18n>Subscribed</ng-container>
+    </ng-template>
+  </span>
+
+  <span class="m-proSubscribeButton__counter">
+    {{ count | abbr: 0 }}
+  </span>
+</button>

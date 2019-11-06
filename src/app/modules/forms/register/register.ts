@@ -1,24 +1,34 @@
-import { Component, EventEmitter, ViewChild, Input, Output, NgZone } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  ViewChild,
+  Input,
+  Output,
+  NgZone,
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
+import { RouterHistoryService } from '../../../common/services/router-history.service';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-form-register',
-  templateUrl: 'register.html'
+  templateUrl: 'register.html',
 })
-
 export class RegisterForm {
+  @Input() referrer: string;
+  @Input() parentId: string = '';
+
+  @Output() done: EventEmitter<any> = new EventEmitter();
 
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
   inProgress: boolean = false;
-  @Input() referrer: string;
   captcha: string;
   takenUsername: boolean = false;
   usernameValidationTimeout: any;
@@ -29,8 +39,6 @@ export class RegisterForm {
   fbForm: FormGroup;
   minds = window.Minds;
 
-  @Output() done: EventEmitter<any> = new EventEmitter();
-
   @ViewChild('reCaptcha', { static: false }) reCaptcha: ReCaptchaComponent;
 
   constructor(
@@ -39,6 +47,7 @@ export class RegisterForm {
     fb: FormBuilder,
     public zone: NgZone,
     private experiments: ExperimentsService,
+    private routerHistoryService: RouterHistoryService
   ) {
     this.form = fb.group({
       username: ['', Validators.required],
@@ -48,8 +57,8 @@ export class RegisterForm {
       tos: [false],
       exclusive_promotions: [false],
       captcha: [''],
+      previousUrl: this.routerHistoryService.getPreviousUrl(),
     });
-
   }
 
   ngOnInit() {
@@ -62,12 +71,14 @@ export class RegisterForm {
     e.preventDefault();
     this.errorMessage = '';
     if (!this.form.value.tos) {
-      this.errorMessage = 'To create an account you need to accept terms and conditions.';
+      this.errorMessage =
+        'To create an account you need to accept terms and conditions.';
       return;
     }
 
     //re-enable cookies
-    document.cookie = 'disabled_cookies=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie =
+      'disabled_cookies=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
     if (this.form.value.password !== this.form.value.password2) {
       if (this.reCaptcha) {
@@ -79,9 +90,14 @@ export class RegisterForm {
     }
 
     this.form.value.referrer = this.referrer;
+    this.form.value.parentId = this.parentId;
 
     this.inProgress = true;
-    this.client.post('api/v1/register', this.form.value)
+
+    let opts = { ...this.form.value };
+
+    this.client
+      .post('api/v1/register', opts)
       .then((data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 
@@ -90,7 +106,7 @@ export class RegisterForm {
 
         this.done.next(data.user);
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
         this.inProgress = false;
         if (this.reCaptcha) {
@@ -106,7 +122,7 @@ export class RegisterForm {
           this.errorMessage = e.message;
           this.session.logout();
         } else {
-          this.errorMessage = "Sorry, there was an error. Please try again.";
+          this.errorMessage = 'Sorry, there was an error. Please try again.';
         }
 
         return;
@@ -115,10 +131,11 @@ export class RegisterForm {
 
   validateUsername() {
     if (this.form.value.username) {
-      this.client.get('api/v1/register/validate/' + this.form.value.username)
+      this.client
+        .get('api/v1/register/validate/' + this.form.value.username)
         .then((data: any) => {
           if (data.exists) {
-            this.form.controls.username.setErrors({ 'exists': true });
+            this.form.controls.username.setErrors({ exists: true });
             this.errorMessage = data.message;
             this.takenUsername = true;
           } else {
@@ -126,7 +143,7 @@ export class RegisterForm {
             this.errorMessage = '';
           }
         })
-        .catch((e) => {
+        .catch(e => {
           console.log(e);
         });
     }
@@ -138,7 +155,9 @@ export class RegisterForm {
 
   validationTimeoutHandler() {
     clearTimeout(this.usernameValidationTimeout);
-    this.usernameValidationTimeout = setTimeout(this.validateUsername.bind(this), 500);
+    this.usernameValidationTimeout = setTimeout(
+      this.validateUsername.bind(this),
+      500
+    );
   }
-
 }

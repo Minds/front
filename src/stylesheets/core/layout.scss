@@ -1,7 +1,8 @@
-@import "defaults";
+@import 'defaults';
 
-.m-layout__hero, .m-layout__section {
-    width: 100%;
+.m-layout__hero,
+.m-layout__section {
+  width: 100%;
 }
 
 .m-layout__inner {
@@ -9,7 +10,7 @@
   margin: auto;
   max-width: 1280px;
 
-  @media screen and (max-width: 1000px){
+  @media screen and (max-width: 1000px) {
     padding: 120px 16px;
   }
   @media screen and (max-width: $max-mobile) {
@@ -17,25 +18,30 @@
   }
 }
 
-.m-layout--row, .m-layout__row {
+.m-layout--row,
+.m-layout__row {
   display: flex;
   flex-direction: row;
 }
 
-.m-layout--wrap, .m-layout__wrap {
+.m-layout--wrap,
+.m-layout__wrap {
   flex-wrap: wrap;
 }
 
-.m-layout--cell, .m-layout__cell {
+.m-layout--cell,
+.m-layout__cell {
   flex: 1;
 }
 
-.m-layout--column, .m-layout__column {
+.m-layout--column,
+.m-layout__column {
   display: flex;
   flex-direction: column;
 }
 
-.m-layout--spacer, .m-layout__spacer{
+.m-layout--spacer,
+.m-layout__spacer {
   flex: 1;
 }
 

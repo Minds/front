@@ -3,29 +3,50 @@
 </div>
 
 <header>
-  <minds-banner [editMode]="editing" [done]="editDone" (added)="addBanner($event)"></minds-banner>
+  <minds-banner
+    [editMode]="editing"
+    [done]="editDone"
+    (added)="addBanner($event)"
+  ></minds-banner>
   <div class="avatar-wrapper">
-    <minds-avatar [editMode]="editing" (added)="addAvatar($event)"></minds-avatar>
+    <minds-avatar
+      [editMode]="editing"
+      (added)="addAvatar($event)"
+    ></minds-avatar>
   </div>
 </header>
 
-<form (submit)="save($event)" class="mdl-grid groups-grid" style="max-width:900px">
-
+<form
+  (submit)="save($event)"
+  class="mdl-grid groups-grid"
+  style="max-width:900px"
+>
   <div class="mdl-cell mdl-cell--8-col m-group-info">
-
     <div class="mdl-card mdl-shadow--2dp" style="overflow: visible">
-
       <div class="m-group-info-name mdl-color-text--blue-grey-300">
-        <input type="text" class="h1" name="name" [(ngModel)]="group.name" placeholder="Enter a name" i18n-placeholder="@@GROUPS__NAME_PLACEHOLDER" />
+        <input
+          type="text"
+          class="h1"
+          name="name"
+          [(ngModel)]="group.name"
+          placeholder="Enter a name"
+          i18n-placeholder="@@GROUPS__NAME_PLACEHOLDER"
+        />
       </div>
 
       <div class="m-group-info-brief-description mdl-color-text--blue-grey-300">
-        <textarea name="briefdescription" [(ngModel)]="group.briefdescription" placeholder="Enter a brief description" i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"></textarea>
+        <textarea
+          name="briefdescription"
+          [(ngModel)]="group.briefdescription"
+          placeholder="Enter a brief description"
+          i18n-placeholder="@@GROUPS__DESCRIPTION_PLACEHOLDER"
+        ></textarea>
       </div>
 
       <div class="m-group-info-tags mdl-color-text--blue-grey-300">
         <i class="material-icons mdl-color-text--blue-grey-300">local_offer</i>
-        <m-hashtags-selector #hashtagsSelector
+        <m-hashtags-selector
+          #hashtagsSelector
           [alignLeft]="true"
           (tagsChange)="onTagsChange($event)"
           (tagsAdded)="onTagsAdded($event)"
@@ -35,35 +56,68 @@
       </div>
 
       <div class="m-group-info-membership mdl-color-text--blue-grey-300">
-          <i class="material-icons mdl-color-text--blue-grey-300">{{ group.membership == 2 ? 'public' : 'lock' }}</i>
-          <select class="icon-prefix" name="membership" [ngModel]="group.membership" (change)="group.membership = $event.target.value">
-            <option value="2" i18n="@@GROUPS__OPEN_GROUP">Open Group</option>
-            <option value="0" i18n="@@GROUPS__CLOSED_GROUP">Closed Group</option>
-          </select>
+        <i class="material-icons mdl-color-text--blue-grey-300"
+          >{{ group.membership == 2 ? 'public' : 'lock' }}</i
+        >
+        <select
+          class="icon-prefix"
+          name="membership"
+          [ngModel]="group.membership"
+          (change)="group.membership = $event.target.value"
+        >
+          <option value="2" i18n="@@GROUPS__OPEN_GROUP">Open Group</option>
+          <option value="0" i18n="@@GROUPS__CLOSED_GROUP">Closed Group</option>
+        </select>
       </div>
 
       <div class="m-group-info-moderated mdl-color-text--blue-grey-300">
-          <i class="material-icons mdl-color-text--blue-grey-300">rate_review</i>
-          <select class="icon-prefix" name="moderated" [ngModel]="group.moderated" (change)="group.moderated = $event.target.value">
-            <option value="0" i18n="@@GROUPS__ANYONE_CAN_POST">Anyone can post</option>
-            <option value="1" i18n="@@GROUPS__POSTS_ARE_MODERATED">Posts are moderated</option>
-          </select>
+        <i class="material-icons mdl-color-text--blue-grey-300">rate_review</i>
+        <select
+          class="icon-prefix"
+          name="moderated"
+          [ngModel]="group.moderated"
+          (change)="group.moderated = $event.target.value"
+        >
+          <option value="0" i18n="@@GROUPS__ANYONE_CAN_POST"
+            >Anyone can post</option
+          >
+          <option value="1" i18n="@@GROUPS__POSTS_ARE_MODERATED"
+            >Posts are moderated</option
+          >
+        </select>
       </div>
 
       <div class="m-group-info-default-view mdl-color-text--blue-grey-300">
-          <i class="material-icons mdl-color-text--blue-grey-300" title="Default view" i18n="@@GROUPS__DEFAULT_VIEW_TOOLTIP">pageview</i>
-          <select class="icon-prefix" name="default_view" [ngModel]="group.default_view" (change)="group.default_view = $event.target.value">
-            <option value="0" i18n="@@GROUPS__DEFAULT_VIEW_FEED">Default view: Feed</option>
-            <option value="1" i18n="@@GROUPS__DEFAULT_VIEW_CONVERSATIONS">Default view: Conversations</option>
-          </select>
+        <i
+          class="material-icons mdl-color-text--blue-grey-300"
+          title="Default view"
+          i18n="@@GROUPS__DEFAULT_VIEW_TOOLTIP"
+          >pageview</i
+        >
+        <select
+          class="icon-prefix"
+          name="default_view"
+          [ngModel]="group.default_view"
+          (change)="group.default_view = $event.target.value"
+        >
+          <option value="0" i18n="@@GROUPS__DEFAULT_VIEW_FEED"
+            >Default view: Feed</option
+          >
+          <option value="1" i18n="@@GROUPS__DEFAULT_VIEW_CONVERSATIONS"
+            >Default view: Conversations</option
+          >
+        </select>
       </div>
 
       <div class="m-groups-save">
-       <button class="mdl-button mdl-button--raised mdl-button--colored" [disabled]="!group.name" i18n="@@M__ACTION__CREATE">Create</button>
+        <button
+          class="mdl-button mdl-button--raised mdl-button--colored"
+          [disabled]="!group.name"
+          i18n="@@M__ACTION__CREATE"
+        >
+          Create
+        </button>
       </div>
-
     </div>
-
   </div>
-
 </form>

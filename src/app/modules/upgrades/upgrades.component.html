@@ -1,0 +1,78 @@
+<m-marketing
+  class="m-upgrades"
+  pageTitle="Upgrade your Minds experience"
+  i18n-pageTitle
+>
+  <div class="m-marketing__main m-marketing__section--style-1">
+    <div class="m-grid m-marketing__wrapper">
+      <div class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body">
+        <h2 class="m-marketing__subtitle--asTitle" i18n>
+          Upgrade your Minds experience
+        </h2>
+
+        <p class="m-marketing__description" i18n>
+          Minds offers a unique range of powerful upgrades that will supercharge
+          your Minds experience.
+        </p>
+
+        <ul class="m-marketing__points">
+          <li i18n>
+            Join Plus to hide boosts, access exclusive content and more
+          </li>
+
+          <li i18n>
+            Launch Pro to build your own website and get paid for your work
+          </li>
+
+          <li i18n>
+            Buy Minds Tokens to boost content and support creators
+          </li>
+        </ul>
+
+        <a
+          class="mf-button mf-button--hollow m-marketing--hideMobile"
+          (click)="upgradeNow(); $event.preventDefault()"
+          data-cy="m-upgrades__upgrade-now-button"
+          i18n
+        >
+          Upgrade now
+        </a>
+      </div>
+
+      <div
+        class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+      >
+        <span>
+          <img
+            class="m-marketing__image--1"
+            [src]="cdnAssetsUrl + 'assets/marketing/upgrades-1.jpg'"
+          />
+
+          <img
+            class="m-marketing__image--2"
+            [src]="cdnAssetsUrl + 'assets/marketing/upgrades-2.jpg'"
+          />
+
+          <img
+            class="m-marketing__image--3"
+            [src]="cdnAssetsUrl + 'assets/marketing/upgrades-3.jpg'"
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <m-marketing__asFeaturedIn
+    slot="2"
+    class="m-marketing__asFeaturedIn--noMargin"
+  ></m-marketing__asFeaturedIn>
+
+  <div class="m-marketing__extras">
+    <div class="mf-jumpAnchor" #upgradeOptionsAnchor></div>
+    <m-upgrades__upgradeOptions></m-upgrades__upgradeOptions>
+  </div>
+
+  <div class="m-marketing__extras">
+    <m-upgrades__buyTokens></m-upgrades__buyTokens>
+  </div>
+</m-marketing>

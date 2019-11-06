@@ -50,12 +50,11 @@
         max-height: 60vh;
         height: 60vh;
 
-        @media screen and (max-width: 720px){
+        @media screen and (max-width: 720px) {
           height: 25vh;
         }
       }
     }
-
   }
 
   .m-blog-container {
@@ -66,6 +65,10 @@
       font-family: 'Roboto', Helvetica, sans-serif;
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
+
+      @media only screen and (max-width: $min-tablet) {
+        font-size: 24px;
+      }
     }
     .minds-blog-body img {
       @media screen and (max-width: 891px) {
@@ -96,13 +99,13 @@
       margin: 0;
     }
   }
-
 }
 
-minds-blog-view, m-blog-view {
+minds-blog-view,
+m-blog-view {
   display: block;
   padding-top: 0;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -133,6 +136,18 @@ minds-blog-view, m-blog-view {
     }
   }
 
+  .minds-body {
+    a {
+      color: #607d8b;
+    }
+  }
+
+  .blogs-grid {
+    @include m-theme() {
+      background-color: themed($m-white) !important;
+    }
+  }
+
   .m-actions-block {
     & > * {
       margin-right: 12px;
@@ -143,7 +158,7 @@ minds-blog-view, m-blog-view {
   }
 
   a {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-950);
     }
   }
@@ -157,7 +172,8 @@ minds-blog-view, m-blog-view {
   }
 }
 
-m-blog-view, minds-blog-edit {
+m-blog-view,
+minds-blog-edit {
   img.m--img-not-found {
     width: 500px !important;
     height: 300px !important;
@@ -169,7 +185,7 @@ m-blog-view, minds-blog-edit {
     font-weight: 500;
     margin: 0;
     padding: 20px 0 0 0;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
       border-top: 1px solid themed($m-grey-100);
     }
@@ -181,7 +197,7 @@ m-blog-view, minds-blog-edit {
       padding: 0 6px;
 
       &:not(.selected):hover {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-900);
         }
       }
@@ -194,7 +210,7 @@ minds-blog-edit {
     font-size: 14px;
     display: inline-block;
     margin: 8px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red);
     }
   }
@@ -211,12 +227,15 @@ minds-blog-edit {
     list-style: decimal;
   }
 
-  br, p, ul, ol {
+  br,
+  p,
+  ul,
+  ol {
     font-size: 16px;
     font-family: Roboto, Helvetica, Arial, sans-serif;
     font-weight: 400;
     line-height: 30px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
     }
   }
@@ -228,21 +247,26 @@ minds-blog-edit {
     font-size: 21px;
     line-height: 1.58;
     letter-spacing: 0.5px;
-    letter-spacing: -.003em;
+    letter-spacing: -0.003em;
     font-family: 'Roboto', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    @include m-theme(){
+    @include m-theme() {
       color: rgba(themed($m-black), 0.84);
     }
   }
 
-  h1,h2,h3,h4,h5 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     font-weight: 600;
   }
 
-  ul, ol {
+  ul,
+  ol {
     margin: 0 0 0.5em 1em;
 
     li {
@@ -287,7 +311,7 @@ minds-blog-edit {
   font-size: 12px;
   border-radius: 2px;
   text-transform: uppercase;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-blue-grey-400);
     border: 1px solid themed($m-blue-grey-400);
   }
@@ -295,13 +319,12 @@ minds-blog-edit {
 
 minds-blog-edit {
   display: block;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
   m-wire-threshold-input {
     position: relative;
-    padding: 8px;
   }
 
   .m-additional-block m-wire-threshold-input {
@@ -325,26 +348,30 @@ minds-blog-edit {
     line-height: 1.2em;
     height: auto;
   }
-  h1,h2,h3,h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-weight: 600;
     letter-spacing: 1.5px;
     font-family: 'Roboto', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
   }
-  m-inline-editor, m-inline-editor p {
+  m-inline-editor,
+  m-inline-editor p {
     margin-bottom: 0.5em;
     font-weight: 400;
     font-style: normal;
     font-size: 21px;
     line-height: 1.58;
     letter-spacing: 0.5px;
-    letter-spacing: -.003em;
+    letter-spacing: -0.003em;
     font-family: 'Roboto', Helvetica, sans-serif;
     margin-top: 29px;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    @include m-theme(){
+    @include m-theme() {
       color: rgba(themed($m-black), 0.84);
     }
 
@@ -353,7 +380,8 @@ minds-blog-edit {
     }
   }
   .m-additional-block > * {
-    flex:auto;
+    flex: auto;
+    margin-right: 0px;
   }
 }
 
@@ -361,7 +389,7 @@ minds-card-blog {
   min-height: 242px !important;
 
   .mdl-card__title {
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-900);
     }
   }
@@ -374,7 +402,7 @@ minds-card-blog {
     width: 100%;
     left: 0;
     box-sizing: border-box;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
   }
@@ -389,7 +417,7 @@ minds-card-blog {
     text-align: center;
     font-size: 16px;
     font-style: italic;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
     }
   }
@@ -397,13 +425,15 @@ minds-card-blog {
 
 minds-blog-edit {
   minds-banner {
-    .minds-banner-overlay, .save-bar .save-button {
-      display:none !important;
+    .minds-banner-overlay,
+    .save-bar .save-button {
+      display: none !important;
     }
   }
-  .m-button--draft, .m-button--submit {
+  .m-button--draft,
+  .m-button--submit {
     cursor: pointer;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
       background-color: themed($m-amber);
     }
@@ -428,8 +458,8 @@ minds-blog-edit {
 
   .m-blog-edit--fields {
     padding: $minds-padding * 2;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-50);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-50);
     }
   }
 
@@ -443,15 +473,16 @@ minds-blog-edit {
       letter-spacing: 1.5px;
     }
 
-    input, textarea {
+    input,
+    textarea {
       width: 100%;
       padding: $minds-padding;
       font-family: inherit;
       font-size: 14px;
       letter-spacing: inherit;
-      @include m-theme(){
-         border: 1px solid themed($m-grey-50);
-         color: themed($m-grey-900) !important;
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
+        color: themed($m-grey-900) !important;
       }
     }
   }

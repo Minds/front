@@ -1,0 +1,43 @@
+<div class="m-settings--section m-layout__row m-border">
+  <div
+    class="minds-error mdl-color--red mdl-color-text--white"
+    [hidden]="!error"
+  >
+    {{ error }}
+  </div>
+  <div class="m-layout__spacer"></div>
+
+  <button
+    class="m-btn m-btn--slim m-btn--action"
+    *ngIf="!isSaving && !isSaved"
+    (click)="save()"
+  >
+    <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
+  </button>
+  <button class="m-btn  m-btn--slim" *ngIf="isSaved">
+    <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
+  </button>
+  <div
+    id="p2"
+    class="mdl-progress mdl-js-progress mdl-progress__indeterminate"
+    [hidden]="!isSaving"
+  ></div>
+</div>
+
+<div class="m-border m-settings--section">
+  <h4>Subscription Tiers</h4>
+
+  <p>
+    Create tiers below to incentivise supporters to wire you. These tiers will
+    be displayed on the sidebar of your channel page on in the wire screen.
+  </p>
+
+  <m-wire__subscriptionTiers
+    [user]="session.getLoggedInUser()"
+    [editing]="true"
+    (isSaving)="isSaving = $event"
+    (isSaved)="isSaved = $event"
+    [saveEventListener]="triggerSave"
+  >
+  </m-wire__subscriptionTiers>
+</div>

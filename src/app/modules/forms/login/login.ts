@@ -1,4 +1,4 @@
-import { Component, EventEmitter, NgZone } from '@angular/core';
+import { Component, EventEmitter, NgZone, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client } from '../../../services/api';
@@ -7,11 +7,12 @@ import { Session } from '../../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'minds-form-login',
-  outputs: ['done', 'doneRegistered'],
-  templateUrl: 'login.html'
+  templateUrl: 'login.html',
 })
-
 export class LoginForm {
+  @Output() done: EventEmitter<any> = new EventEmitter();
+  @Output() doneRegistered: EventEmitter<any> = new EventEmitter();
+
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
@@ -21,24 +22,25 @@ export class LoginForm {
 
   form: FormGroup;
 
-  done: EventEmitter<any> = new EventEmitter();
-  doneRegistered: EventEmitter<any> = new EventEmitter();
-  
   //Taken from advice in https://stackoverflow.com/a/1373724
-  private emailRegex: RegExp = new RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
+  private emailRegex: RegExp = new RegExp(
+    "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+  );
 
-  constructor(public session: Session, public client: Client, fb: FormBuilder, private zone: NgZone) {
-
+  constructor(
+    public session: Session,
+    public client: Client,
+    fb: FormBuilder,
+    private zone: NgZone
+  ) {
     this.form = fb.group({
       username: ['', Validators.required],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
-
   }
 
   login() {
-    if (this.inProgress)
-      return;
+    if (this.inProgress) return;
 
     let username = this.form.value.username.trim();
     if (this.emailRegex.test(username)) {
@@ -46,19 +48,26 @@ export class LoginForm {
       return;
     }
     //re-enable cookies
-    document.cookie = 'disabled_cookies=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    document.cookie =
+      'disabled_cookies=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
     this.errorMessage = '';
     this.inProgress = true;
-    this.client.post('api/v1/authenticate', { username: username, password: this.form.value.password })
+
+    let opts = {
+      username: username,
+      password: this.form.value.password,
+    };
+
+    this.client
+      .post('api/v1/authenticate', opts)
       .then((data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
         this.inProgress = false;
         this.session.login(data.user);
         this.done.next(data.user);
       })
-      .catch((e) => {
-      
+      .catch(e => {
         this.inProgress = false;
 
         if (!e) {
@@ -69,7 +78,10 @@ export class LoginForm {
           this.errorMessage = 'LoginException::AuthenticationFailed';
           this.session.logout();
         } else if (e.status === 'error') {
-          if (e.message === 'LoginException:BannedUser' || e.message === 'LoginException::AttemptsExceeded') {
+          if (
+            e.message === 'LoginException:BannedUser' ||
+            e.message === 'LoginException::AttemptsExceeded'
+          ) {
             this.session.logout();
           }
 
@@ -79,17 +91,20 @@ export class LoginForm {
         } else {
           this.errorMessage = 'LoginException::Unknown';
         }
-
       });
   }
 
   twofactorAuth(code) {
-    this.client.post('api/v1/twofactor/authenticate', { token: this.twofactorToken, code: code.value })
+    this.client
+      .post('api/v1/twofactor/authenticate', {
+        token: this.twofactorToken,
+        code: code.value,
+      })
       .then((data: any) => {
         this.session.login(data.user);
         this.done.next(data.user);
       })
-      .catch((e) => {
+      .catch(e => {
         this.errorMessage = e.message;
         this.twofactorToken = '';
         this.hideLogin = false;

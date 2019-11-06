@@ -1,23 +1,57 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
-
-import { PlusSubscriptionComponent } from './subscription.component';
-import { Client } from '../../common/api/client.service';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 
 @Component({
-  selector: 'm-plus--marketing',
+  selector: 'm-plus__marketing',
   templateUrl: 'marketing.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class PlusMarketingComponent {
-  @ViewChild('subscription', { static: false }) private subscription: PlusSubscriptionComponent;
+  showVerifyModal: boolean = false;
 
-  user = window.Minds.user;
-  minds = window.Minds;
-  showVerify: boolean = false;
+  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 
-  constructor(private client: Client, private cd: ChangeDetectorRef) {
+  readonly minds = window.Minds;
+
+  @ViewChild('topAnchor', { static: false })
+  readonly topAnchor: ElementRef;
+
+  constructor(protected cd: ChangeDetectorRef) {}
+
+  openVerifyModal() {
+    this.showVerifyModal = true;
   }
 
+  closeVerifyModal() {
+    this.showVerifyModal = false;
+    this.detectChanges();
+  }
 
+  scrollToTop() {
+    if (this.topAnchor.nativeElement) {
+      this.topAnchor.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'nearest',
+      });
+    }
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
+  get isPlus() {
+    return this.minds.user && this.minds.user.plus;
+  }
+
+  get isVerified() {
+    return this.minds.user && this.minds.user.verified;
+  }
 }

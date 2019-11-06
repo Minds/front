@@ -1,6 +1,6 @@
 .m-blockchain--options {
-  max-width:900px;
-  @include m-theme(){
+  max-width: 900px;
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -9,7 +9,7 @@
     padding: $minds-padding * 2;
     box-sizing: border-box;
 
-    h3{
+    h3 {
       margin: 0;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -51,7 +51,7 @@
     font-size: 1em;
     position: relative;
     top: 0.1em;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-100) !important;
     }
   }
@@ -60,7 +60,7 @@
     margin: ($minds-padding * 2) 0;
   }
 
-  .m-error{
+  .m-error {
     padding: $minds-padding * 2;
     letter-spacing: 2px;
     font-size: 14px;

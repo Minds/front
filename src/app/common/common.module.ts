@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -32,6 +32,7 @@ import {
 import { Scheduler } from './components/scheduler/scheduler';
 import { Modal } from './components/modal/modal.component';
 import { MindsRichEmbed } from './components/rich-embed/rich-embed';
+import { QRCodeComponent } from './components/qr-code/qr-code.component';
 
 import { MDL_DIRECTIVES } from './directives/material';
 import { AutoGrow } from './directives/autogrow';
@@ -56,7 +57,7 @@ import { ChartComponent } from './components/chart/chart.component';
 import { DateSelectorComponent } from './components/date-selector/date-selector.component';
 import { AdminActionsButtonComponent } from './components/button/admin-actions/admin-actions.component';
 import { InlineEditorComponent } from './components/editors/inline-editor.component';
-import { AttachmentService } from "../services/attachment";
+import { AttachmentService } from '../services/attachment';
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
 import { IfFeatureDirective } from './directives/if-feature.directive';
 import { MindsEmoji } from './components/emoji/emoji';
@@ -81,30 +82,45 @@ import { PieGraph } from './components/graphs/pie-graph';
 import { GraphSVG } from './components/graphs/svg';
 import { GraphPoints } from './components/graphs/points';
 import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-form.component';
-import { SortSelectorComponent } from "./components/sort-selector/sort-selector.component";
+import { SortSelectorComponent } from './components/sort-selector/sort-selector.component';
 
 import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
 import { Storage } from '../services/storage';
-import { HttpClient } from "@angular/common/http";
-import { AndroidAppDownloadComponent } from "./components/android-app-download-button/button.component";
-import { SwitchComponent } from "./components/switch/switch.component";
-import { V2TopbarComponent } from "./layout/v2-topbar/v2-topbar.component";
-import { UserMenuComponent } from "./layout/v2-topbar/user-menu.component";
-import { FeaturedContentComponent } from "./components/featured-content/featured-content.component";
-import { FeaturedContentService } from "./components/featured-content/featured-content.service";
-import { BoostedContentService } from "./services/boosted-content.service";
+import { HttpClient } from '@angular/common/http';
+import { AndroidAppDownloadComponent } from './components/android-app-download-button/button.component';
+import { SwitchComponent } from './components/switch/switch.component';
+import { V2TopbarComponent } from './layout/v2-topbar/v2-topbar.component';
+import { UserMenuComponent } from './layout/v2-topbar/user-menu.component';
+import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
+import { FeaturedContentService } from './components/featured-content/featured-content.service';
+import { BoostedContentService } from './services/boosted-content.service';
 import { FeedsService } from './services/feeds.service';
-import { EntitiesService } from "./services/entities.service";
-import { BlockListService } from "./services/block-list.service";
-import { SettingsService } from "../modules/settings/settings.service";
-import { ThemeService } from "./services/theme.service";
-import { HorizontalInfiniteScroll } from "./components/infinite-scroll/horizontal-infinite-scroll.component";
+import { EntitiesService } from './services/entities.service';
+import { BlockListService } from './services/block-list.service';
+import { SettingsService } from '../modules/settings/settings.service';
+import { ThemeService } from './services/theme.service';
+import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
+import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
+import { ChannelModeSelectorComponent } from './components/channel-mode-selector/channel-mode-selector.component';
+import { ShareModalComponent } from '../modules/modals/share/share';
+import { RouterHistoryService } from './services/router-history.service';
+import { DraggableListComponent } from './components/draggable-list/list.component';
+import { DndModule } from 'ngx-drag-drop';
+import { SiteService } from './services/site.service';
+import { MarketingComponent } from './components/marketing/marketing.component';
+import { MarketingFooterComponent } from './components/marketing/footer.component';
+import { ToggleComponent } from './components/toggle/toggle.component';
+import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
+import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
+import { ChartV2Component } from './components/chart-v2/chart-v2.component';
+import { MiniChartComponent } from './components/mini-chart/mini-chart.component';
 
 @NgModule({
   imports: [
     NgCommonModule,
+    DndModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
@@ -140,6 +156,7 @@ import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/link
     MindsRichEmbed,
     TagcloudComponent,
     DropdownComponent,
+    QRCodeComponent,
 
     AutoGrow,
     InlineAutoGrow,
@@ -189,11 +206,21 @@ import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/link
     DynamicFormComponent,
     AndroidAppDownloadComponent,
     SortSelectorComponent,
+    ChannelModeSelectorComponent,
     NSFWSelectorComponent,
 
     SwitchComponent,
 
     FeaturedContentComponent,
+    PosterDateSelectorComponent,
+    DraggableListComponent,
+    ToggleComponent,
+    MarketingComponent,
+    MarketingFooterComponent,
+    MarketingAsFeaturedInComponent,
+    SidebarMenuComponent,
+    ChartV2Component,
+    MiniChartComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -224,6 +251,7 @@ import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/link
     MindsRichEmbed,
     TagcloudComponent,
     DropdownComponent,
+    QRCodeComponent,
 
     AutoGrow,
     InlineAutoGrow,
@@ -277,48 +305,83 @@ import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/link
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    PosterDateSelectorComponent,
+    ChannelModeSelectorComponent,
+    DraggableListComponent,
+    ToggleComponent,
+    MarketingComponent,
+    MarketingAsFeaturedInComponent,
+    SidebarMenuComponent,
   ],
   providers: [
+    SiteService,
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
-      deps: [Session, Client, Upload, HttpClient ]
+      deps: [Session, Client, Upload, HttpClient],
     },
     {
       provide: UpdateMarkersService,
-      useFactory: (_http, _session, _sockets) => { return new UpdateMarkersService(_http, _session, _sockets); },
-      deps: [ MindsHttpClient, Session, SocketsService ],
+      useFactory: (_http, _session, _sockets) => {
+        return new UpdateMarkersService(_http, _session, _sockets);
+      },
+      deps: [MindsHttpClient, Session, SocketsService],
     },
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
-      deps: [HttpClient]
+      deps: [HttpClient, SiteService],
     },
     {
       provide: NSFWSelectorCreatorService,
-      useFactory: (_storage) => new NSFWSelectorCreatorService(_storage),
-      deps: [ Storage ],
+      useFactory: _storage => new NSFWSelectorCreatorService(_storage),
+      deps: [Storage],
     },
     {
       provide: NSFWSelectorConsumerService,
-      useFactory: (_storage) => new NSFWSelectorConsumerService(_storage),
-      deps: [ Storage ],
+      useFactory: _storage => new NSFWSelectorConsumerService(_storage),
+      deps: [Storage],
     },
     {
       provide: BoostedContentService,
-      useFactory: (client, session, entitiesService, blockListService, settingsService) => new BoostedContentService(client, session, entitiesService, blockListService, settingsService),
-      deps: [ Client, Session, EntitiesService, BlockListService, SettingsService ]
+      useFactory: (
+        client,
+        session,
+        entitiesService,
+        blockListService,
+        settingsService
+      ) =>
+        new BoostedContentService(
+          client,
+          session,
+          entitiesService,
+          blockListService,
+          settingsService
+        ),
+      deps: [
+        Client,
+        Session,
+        EntitiesService,
+        BlockListService,
+        SettingsService,
+      ],
     },
     {
       provide: FeaturedContentService,
-      useFactory: boostedContentService => new FeaturedContentService(boostedContentService),
-      deps: [ FeedsService ],
-    }
+      useFactory: boostedContentService =>
+        new FeaturedContentService(boostedContentService),
+      deps: [FeedsService],
+    },
+    {
+      provide: RouterHistoryService,
+      useFactory: router => new RouterHistoryService(router),
+      deps: [Router],
+    },
   ],
   entryComponents: [
     NotificationsToasterComponent,
     ReferralsLinksComponent,
-  ]
+    ShareModalComponent,
+  ],
 })
-
 export class CommonModule {}

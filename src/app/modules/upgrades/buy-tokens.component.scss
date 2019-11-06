@@ -1,0 +1,69 @@
+m-upgrades__buyTokens {
+  display: block;
+}
+
+.m-upgrades__buyTokens {
+  margin-bottom: 105px;
+
+  .m-upgradesBuyTokens__wrapper {
+    padding: 40px 60px 60px;
+    background: url('<%= APP_CDN %>/assets/marketing/buytokens_bg.jpg')
+      no-repeat 382px center #726061;
+    background-size: contain;
+    color: #ffffff;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      background-image: none;
+      padding: 30px;
+      margin: 0 20px;
+    }
+  }
+
+  .m-upgradesBuyTokens__body {
+    max-width: 320px;
+  }
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 43px;
+  }
+
+  p {
+    a {
+      color: #4690df !important;
+      text-decoration: underline;
+      font-weight: 400;
+    }
+
+    &.m-upgradesBuyTokens__description {
+      margin-bottom: 25px;
+      opacity: 0.6;
+    }
+  }
+
+  .m-upgradesBuyTokens__purchase {
+    display: block;
+    max-width: 640px;
+    margin-top: 40px;
+
+    @include m-theme() {
+      color: themed($m-black); // Back to default color
+    }
+
+    .m-blockchainTokenPurchase {
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.07);
+    }
+
+    .m-blockchainTokenPurchase__ethRate {
+      color: #9b9b9b;
+
+      a {
+        color: inherit;
+        font-weight: bold;
+        text-decoration: underline;
+      }
+    }
+  }
+}

@@ -17,7 +17,10 @@ export class PerfInstance {
     this.stepNum++;
     this.stepTs = now;
 
-    console.info(`${this.label} - ${label} - Step ${this.stepNum}`, last ? `- ${now - last}ms` : '')
+    console.info(
+      `${this.label} - ${label} - Step ${this.stepNum}`,
+      last ? `- ${now - last}ms` : ''
+    );
   }
 
   end() {

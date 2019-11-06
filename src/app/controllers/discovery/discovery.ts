@@ -11,11 +11,9 @@ import { ContextService } from '../../services/context.service';
 @Component({
   moduleId: module.id,
   selector: 'minds-discovery',
-  templateUrl: 'discovery.html'
+  templateUrl: 'discovery.html',
 })
-
 export class Discovery {
-
   _filter: string = 'featured';
   _owner: string = '';
   _type: string = 'all';
@@ -32,13 +30,19 @@ export class Discovery {
   paramsSubscription: Subscription;
   searching;
 
-  constructor(public session: Session, public client: Client, public router: Router, public route: ActivatedRoute, public title: MindsTitle,
-    private context: ContextService) { }
+  constructor(
+    public session: Session,
+    public client: Client,
+    public router: Router,
+    public route: ActivatedRoute,
+    public title: MindsTitle,
+    private context: ContextService
+  ) {}
 
   ngOnInit() {
     this.title.setTitle('Discovery');
 
-    this.paramsSubscription = this.route.params.subscribe((params) => {
+    this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
         this._filter = params['filter'];
 
@@ -102,26 +106,23 @@ export class Discovery {
   }
 
   load(refresh: boolean = false) {
+    if (this.inProgress) return false;
 
-    if (this.inProgress)
-      return false;
-
-    if (refresh)
-      this.offset = '';
+    if (refresh) this.offset = '';
 
     this.inProgress = true;
 
     var filter = this._filter;
-    if (this._owner)
-      filter = 'owner';
+    if (this._owner) filter = 'owner';
 
-    this.client.get('api/v1/entities/' + filter + '/' + this._type + '/' + this._owner, {
-      limit: 24,
-      offset: this.offset,
-      skip: 0,
-      nearby: this.nearby,
-      distance: this.distance
-    })
+    this.client
+      .get('api/v1/entities/' + filter + '/' + this._type + '/' + this._owner, {
+        limit: 24,
+        offset: this.offset,
+        skip: 0,
+        nearby: this.nearby,
+        distance: this.distance,
+      })
       .then((data: any) => {
         if (!data.entities) {
           if (this.nearby) {
@@ -140,17 +141,15 @@ export class Discovery {
         if (refresh) {
           this.entities = data.entities;
         } else {
-          if (this.offset && filter != 'trending')
-            data.entities.shift();
+          if (this.offset && filter != 'trending') data.entities.shift();
           this.entities = this.entities.concat(data.entities);
         }
 
         this.offset = data['load-next'];
         this.inProgress = false;
-        if (!this.offset) 
-          this.moreData = false;
+        if (!this.offset) this.moreData = false;
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
         if (this.nearby) {
           this.setNearby(false);
@@ -177,7 +176,8 @@ export class Discovery {
       clearTimeout(this.searching);
     }
     this.searching = setTimeout(() => {
-      this.client.get('api/v1/geolocation/list', { q: q })
+      this.client
+        .get('api/v1/geolocation/list', { q: q })
         .then((response: any) => {
           this.cities = response.results;
         });
@@ -186,17 +186,16 @@ export class Discovery {
 
   setCity(row: any) {
     this.cities = [];
-    if (row.address.city)
-      window.Minds.user.city = row.address.city;
-    if (row.address.town)
-      window.Minds.user.city = row.address.town;
+    if (row.address.city) window.Minds.user.city = row.address.city;
+    if (row.address.town) window.Minds.user.city = row.address.town;
     this.city = window.Minds.user.city;
     this.entities = [];
     this.inProgress = true;
-    this.client.post('api/v1/channel/info', {
-      coordinates: row.lat + ',' + row.lon,
-      city: window.Minds.user.city
-    })
+    this.client
+      .post('api/v1/channel/info', {
+        coordinates: row.lat + ',' + row.lon,
+        city: window.Minds.user.city,
+      })
       .then((response: any) => {
         this.inProgress = false;
         this.setNearby(true);
@@ -208,5 +207,4 @@ export class Discovery {
     this.entities = [];
     this.load(true);
   }
-
 }

@@ -1,5 +1,11 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 
 import { MockComponent, MockDirective, MockService } from '../../utils/mock';
 
@@ -26,49 +32,51 @@ import { RecentService } from '../../services/ux/recent';
 import { contextServiceMock } from '../../../tests/context-service-mock.spec';
 import { ContextService } from '../../services/context.service';
 import { from } from 'rxjs/internal/observable/from';
-import { IfFeatureDirective } from "../../common/directives/if-feature.directive";
-import { FeaturesService } from "../../services/features.service";
-import { featuresServiceMock } from "../../../tests/features-service-mock.spec";
+import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
+import { FeaturesService } from '../../services/features.service';
+import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { BlockListService } from '../../common/services/block-list.service';
+import { ChannelMode } from '../../interfaces/entities';
+import { ClientMetaService } from '../../common/services/client-meta.service';
+import { clientMetaServiceMock } from '../../../tests/client-meta-service-mock.spec';
 
 describe('ChannelComponent', () => {
-
   let comp: ChannelComponent;
   let fixture: ComponentFixture<ChannelComponent>;
-  
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        MaterialMock, 
+        MaterialMock,
         MaterialSwitchMock,
-        ChannelComponent,  
-        MockComponent({ 
+        ChannelComponent,
+        MockComponent({
           selector: 'm-channel--supporters',
-          inputs: [ 'channel' ],
-        }), 
-        MockComponent({ 
+          inputs: ['channel'],
+        }),
+        MockComponent({
           selector: 'm-channel--subscriptions',
-          inputs: [ 'channel' ],
-        }), 
-        MockComponent({ 
+          inputs: ['channel'],
+        }),
+        MockComponent({
           selector: 'm-channel--subscribers',
-          inputs: [ 'channel' ],
+          inputs: ['channel'],
         }),
-        MockComponent({ 
+        MockComponent({
           selector: 'm-channel--carousel',
-          inputs: [ 'banners', 'editMode' ],
-        }), 
-        MockComponent({ 
-          selector: 'm-channel--feed',
-          inputs: [ 'user', 'isSorting', 'algorithm', 'period', 'customType' ],
+          inputs: ['banners', 'editMode'],
         }),
-        MockComponent({ 
+        MockComponent({
+          selector: 'm-channel--feed',
+          inputs: ['user', 'isSorting', 'algorithm', 'period', 'customType'],
+        }),
+        MockComponent({
           selector: 'm-channel--sidebar',
-          inputs: [ 'user', 'editing' ],
+          inputs: ['user', 'editing'],
         }),
         MockComponent({
           selector: 'm-channel--explicit-overlay',
-          inputs: [ 'channel' ]
+          inputs: ['channel'],
         }),
         MockComponent({
           selector: 'm-sort-selector',
@@ -82,29 +90,29 @@ describe('ChannelComponent', () => {
         }),
         IfFeatureDirective,
       ],
-      imports: [
-        FormsModule,
-        RouterTestingModule,
-        NgCommonModule
-      ],
+      imports: [FormsModule, RouterTestingModule, NgCommonModule],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Session, useValue: sessionMock },
-        { provide: MindsTitle, useValue: mindsTitleMock},
-        { provide: ScrollService, useValue: scrollServiceMock},
-        { provide: RecentService, useValue: recentServiceMock},
-        { provide: ContextService, useValue: contextServiceMock},
-        { provide: ActivatedRoute, useValue: { 'params': from([{ 'filter': 'feed', 'username': 'username' }]) } },
+        { provide: MindsTitle, useValue: mindsTitleMock },
+        { provide: ScrollService, useValue: scrollServiceMock },
+        { provide: RecentService, useValue: recentServiceMock },
+        { provide: ContextService, useValue: contextServiceMock },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: from([{ filter: 'feed', username: 'username' }]),
+          },
+        },
         { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: BlockListService, useValue: MockService(BlockListService) }
-      ]
-    })
-      .compileComponents();  // compile template and css
+        { provide: BlockListService, useValue: MockService(BlockListService) },
+        { provide: ClientMetaService, useValue: clientMetaServiceMock },
+      ],
+    }).compileComponents(); // compile template and css
   }));
 
-  beforeEach((done) => {
-
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -122,17 +130,25 @@ describe('ChannelComponent', () => {
       username: 'username',
       icontime: 11111,
       subscribers_count: 182,
-      impressions: 18200
+      impressions: 18200,
+      mode: ChannelMode.PUBLIC,
     };
     comp.editing = false;
     fixture.detectChanges();
 
     clientMock.response[`api/v1/channel/username`] = {
-      'status': 'success',
-      'channel' : { guid: 'guidguid', name: 'name', username: 'username', icontime: 11111, subscribers_count:182, impressions:18200}
+      status: 'success',
+      channel: {
+        guid: 'guidguid',
+        name: 'name',
+        username: 'username',
+        icontime: 11111,
+        subscribers_count: 182,
+        impressions: 18200,
+      },
     };
 
-    clientMock.response['api/v1/channel/info'] = {status: 'success'};
+    clientMock.response['api/v1/channel/info'] = { status: 'success' };
 
     if (fixture.isStable()) {
       done();
@@ -156,22 +172,30 @@ describe('ChannelComponent', () => {
     expect(feed).not.toBeNull();
     comp.filter = 'supporters';
     fixture.detectChanges();
-    const supporters = fixture.debugElement.query(By.css('m-channel--supporters'));
+    const supporters = fixture.debugElement.query(
+      By.css('m-channel--supporters')
+    );
     expect(supporters).not.toBeNull();
     comp.filter = 'subscribers';
     fixture.detectChanges();
-    const subscribers = fixture.debugElement.query(By.css('m-channel--subscriptions'));
+    const subscribers = fixture.debugElement.query(
+      By.css('m-channel--subscriptions')
+    );
     expect(supporters).not.toBeNull();
     comp.filter = 'subscriptors';
     fixture.detectChanges();
-    const subscriptors = fixture.debugElement.query(By.css('minds-channel-subscriptors'));
+    const subscriptors = fixture.debugElement.query(
+      By.css('minds-channel-subscriptors')
+    );
     expect(supporters).not.toBeNull();
   });
 
   it('should load() on init', () => {
     comp.load();
     fixture.detectChanges();
-    expect(clientMock.get.calls.mostRecent().args[0]).toEqual('api/v1/channel/username');
+    expect(clientMock.get.calls.mostRecent().args[0]).toEqual(
+      'api/v1/channel/username'
+    );
   });
 
   it('toggle editing should upload', fakeAsync(() => {
@@ -182,33 +206,40 @@ describe('ChannelComponent', () => {
     fixture.detectChanges();
 
     expect(comp.editing).toBe(false);
-    expect(clientMock.post.calls.mostRecent().args[0]).toEqual('api/v1/channel/info');
+    expect(clientMock.post.calls.mostRecent().args[0]).toEqual(
+      'api/v1/channel/info'
+    );
   }));
 
   it('update carousel makes post call if arg is correct', () => {
-    let arg = [ {guid: '1111', top: '111', file: {}}];
+    let arg = [{ guid: '1111', top: '111', file: {} }];
     comp.toggleEditing();
     fixture.detectChanges();
     expect(comp.editing).toBe(true);
     comp.updateCarousels(arg);
     fixture.detectChanges();
-    expect(uploadMock.post.calls.mostRecent().args[0]).toEqual('api/v1/channel/carousel');
+    expect(uploadMock.post.calls.mostRecent().args[0]).toEqual(
+      'api/v1/channel/carousel'
+    );
   });
 
   it('remove carousel makes delete call if arg is correct', () => {
-    let arg = {guid: '1111', top: '111', file: {}};
+    let arg = { guid: '1111', top: '111', file: {} };
     comp.toggleEditing();
     fixture.detectChanges();
     expect(comp.editing).toBe(true);
     comp.removeCarousel(arg);
     fixture.detectChanges();
-    expect(clientMock.delete.calls.mostRecent().args[0]).toEqual('api/v1/channel/carousel/1111');
+    expect(clientMock.delete.calls.mostRecent().args[0]).toEqual(
+      'api/v1/channel/carousel/1111'
+    );
   });
 
   it('unblock should make the request ', () => {
     comp.unBlock();
     fixture.detectChanges();
-    expect(clientMock.delete.calls.mostRecent().args[0]).toEqual('api/v1/block/guidguid');
+    expect(clientMock.delete.calls.mostRecent().args[0]).toEqual(
+      'api/v1/block/guidguid'
+    );
   });
-
 });

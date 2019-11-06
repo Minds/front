@@ -14,7 +14,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'minds-button-thumbs-up',
-  template: ''
+  template: '',
 })
 class ThumbsUpMock {
   @Input() object: any;
@@ -22,7 +22,7 @@ class ThumbsUpMock {
 
 @Component({
   selector: 'minds-button-thumbs-down',
-  template: ''
+  template: '',
 })
 class ThumbsDownMock {
   @Input() object: any;
@@ -30,19 +30,17 @@ class ThumbsDownMock {
 
 @Component({
   selector: 'minds-button-comment',
-  template: ''
+  template: '',
 })
 class CommentsMock {
   @Input() object: any;
 }
 
 describe('BlogCard', () => {
-
   let comp: BlogCard;
   let fixture: ComponentFixture<BlogCard>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         ExcerptPipe,
@@ -55,17 +53,16 @@ describe('BlogCard', () => {
         RouterTestingModule,
         ReactiveFormsModule,
         CommonModule,
-        FormsModule
+        FormsModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: AttachmentService, useValue: attachmentServiceMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -85,7 +82,7 @@ describe('BlogCard', () => {
         guid: '2',
         username: 'testowner',
         icontime: 1525865293,
-      }
+      },
     };
 
     sessionMock.user.admin = false;
@@ -95,11 +92,10 @@ describe('BlogCard', () => {
     if (fixture.isStable()) {
       done();
     } else {
-      fixture.whenStable()
-        .then(() => {
-          fixture.detectChanges();
-          done()
-        });
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
     }
   });
 
@@ -110,7 +106,9 @@ describe('BlogCard', () => {
   it('should link to the blog', () => {
     const a = fixture.debugElement.query(By.css('a'));
     expect(a).not.toBeNull();
-    expect(a.nativeElement.getAttributeNode('ng-reflect-router-link').textContent).toBe('/blog/view,1');
+    expect(
+      a.nativeElement.getAttributeNode('ng-reflect-router-link').textContent
+    ).toBe('/blog/view,1');
   });
 
   it('should have a mature overlay', () => {
@@ -121,7 +119,9 @@ describe('BlogCard', () => {
     const a = fixture.debugElement.query(By.css('a'));
     expect(a.nativeElement.classList).toContain('m-mature-thumbnail');
 
-    const matureOverlay = fixture.debugElement.query(By.css('span.m-mature-thumbnail-overlay'));
+    const matureOverlay = fixture.debugElement.query(
+      By.css('span.m-mature-thumbnail-overlay')
+    );
     expect(matureOverlay).not.toBeNull();
   });
 
@@ -131,30 +131,45 @@ describe('BlogCard', () => {
 
     const a = fixture.debugElement.query(By.css('div.m-title-block a'));
     expect(a).not.toBeNull();
-    expect(a.nativeElement.getAttributeNode('ng-reflect-router-link').textContent).toBe('/blog/view,1');
+    expect(
+      a.nativeElement.getAttributeNode('ng-reflect-router-link').textContent
+    ).toBe('/blog/view,1');
 
-    const title = fixture.debugElement.query(By.css('div.m-title-block a strong'));
+    const title = fixture.debugElement.query(
+      By.css('div.m-title-block a strong')
+    );
     expect(title).not.toBeNull();
     expect(title.nativeElement.textContent).toContain('title');
 
-    const ownerBlock = fixture.debugElement.query(By.css('.m-inline-owner-block'));
+    const ownerBlock = fixture.debugElement.query(
+      By.css('.m-inline-owner-block')
+    );
     expect(ownerBlock).not.toBeNull();
 
-    const username = fixture.debugElement.query(By.css('.m-inline-owner-block a'));
+    const username = fixture.debugElement.query(
+      By.css('.m-inline-owner-block a')
+    );
     expect(username).not.toBeNull();
     expect(username.nativeElement.textContent).toContain('testowner');
-    expect(username.nativeElement.getAttributeNode('ng-reflect-router-link').textContent).toBe('/,testowner');
+    expect(
+      username.nativeElement.getAttributeNode('ng-reflect-router-link')
+        .textContent
+    ).toBe('/,testowner');
 
-    const avatar = fixture.debugElement.query(By.css('.m-inline-owner-block > a > img'));
+    const avatar = fixture.debugElement.query(
+      By.css('.m-inline-owner-block > a > img')
+    );
     expect(avatar).not.toBeNull();
     expect(avatar.nativeElement.src).toContain('/icon/2/small/1525865293');
 
-    const time = fixture.debugElement.query(By.css('.m-inline-owner-block > span'));
+    const time = fixture.debugElement.query(
+      By.css('.m-inline-owner-block > span')
+    );
     expect(time).not.toBeNull();
     expect(time.nativeElement.textContent).toBe('May 9, 2018');
   });
 
-  it("should have a draft indicator if the blog was not published and the logged in user is the blog owner", () => {
+  it('should have a draft indicator if the blog was not published and the logged in user is the blog owner', () => {
     comp._blog = {};
 
     fixture.detectChanges();
@@ -171,12 +186,14 @@ describe('BlogCard', () => {
         guid: '1000',
         username: 'test',
         icontime: 1525865293,
-      }
+      },
     };
 
     fixture.detectChanges();
 
-    const draft = fixture.debugElement.query(By.css('.m-inline-owner-block > span:last-child'));
+    const draft = fixture.debugElement.query(
+      By.css('.m-inline-owner-block > span:last-child')
+    );
     expect(draft).not.toBeNull();
     expect(draft.nativeElement.textContent).toBe('Draft');
   });
@@ -184,10 +201,18 @@ describe('BlogCard', () => {
   it('should have an action bar with buttons', () => {
     expect(fixture.debugElement.query(By.css('.m-action-tabs'))).not.toBeNull();
 
-    expect(fixture.debugElement.query(By.css('.m-action-tabs minds-button-thumbs-up'))).not.toBeNull();
-    expect(fixture.debugElement.query(By.css('.m-action-tabs minds-button-thumbs-down'))).not.toBeNull();
-    expect(fixture.debugElement.query(By.css('.m-action-tabs minds-button-comment'))).not.toBeNull();
-
+    expect(
+      fixture.debugElement.query(
+        By.css('.m-action-tabs minds-button-thumbs-up')
+      )
+    ).not.toBeNull();
+    expect(
+      fixture.debugElement.query(
+        By.css('.m-action-tabs minds-button-thumbs-down')
+      )
+    ).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-action-tabs minds-button-comment'))
+    ).not.toBeNull();
   });
-
 });

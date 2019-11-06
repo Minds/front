@@ -4,11 +4,9 @@ import { VideoAdsService } from './ads.service';
 
 @Component({
   selector: 'video-ads',
-  template: `
-  `
+  template: ``,
 })
 export class VideoAds {
-
   service: VideoAdsService = new VideoAdsService();
 
   @Input() player;
@@ -19,9 +17,7 @@ export class VideoAds {
 
   google = window.google;
 
-  constructor(private element: ElementRef) {
-
-  }
+  constructor(private element: ElementRef) {}
 
   ngOnInit() {
     //this.setupIMA();
@@ -30,7 +26,9 @@ export class VideoAds {
 
   setupIMA() {
     this.adContainer = new this.google.ima.AdDisplayContainer(
-      this.element.nativeElement, this.player.element);
+      this.element.nativeElement,
+      this.player.element
+    );
 
     this.adLoader = new this.google.ima.AdsLoader(this.adContainer);
 
@@ -38,19 +36,22 @@ export class VideoAds {
     this.adLoader.addEventListener(
       this.google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,
       this.onLoaded.bind(this),
-      false);
+      false
+    );
     this.adLoader.addEventListener(
       this.google.ima.AdErrorEvent.Type.AD_ERROR,
       this.onError.bind(this),
-      false);
+      false
+    );
 
     // Request video ads.
     var adsRequest = new this.google.ima.AdsRequest();
 
-    adsRequest.adTagUrl = 'https://pubads.g.doubleclick.net/gampad/ads? '
-      + 'sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&'
-      + 'impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&'
-      + 'cust_params=deployment%3Ddevsite%26sample_ct%3Dskippablelinear&correlator=';
+    adsRequest.adTagUrl =
+      'https://pubads.g.doubleclick.net/gampad/ads? ' +
+      'sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&' +
+      'impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&' +
+      'cust_params=deployment%3Ddevsite%26sample_ct%3Dskippablelinear&correlator=';
 
     adsRequest.linearAdSlotWidth = this.player.element.clientWidth;
     adsRequest.linearAdSlotHeight = this.player.element.clientHeight;
@@ -65,60 +66,63 @@ export class VideoAds {
     let settings = new this.google.ima.AdsRenderingSettings();
     settings.restoreCustomPlaybackStateOnAdBreakComplete = true;
     // videoContent should be set to the content video element.
-    this.adManager = e.getAdsManager(
-      this.player.element, settings);
+    this.adManager = e.getAdsManager(this.player.element, settings);
 
     // Add listeners to the required events.
     this.adManager.addEventListener(
       this.google.ima.AdErrorEvent.Type.AD_ERROR,
-      this.onError.bind(this));
+      this.onError.bind(this)
+    );
     this.adManager.addEventListener(
       this.google.ima.AdEvent.Type.CONTENT_PAUSE_REQUESTED,
-      this.onPause.bind(this));
+      this.onPause.bind(this)
+    );
     this.adManager.addEventListener(
       this.google.ima.AdEvent.Type.CONTENT_RESUME_REQUESTED,
-      this.onResume.bind(this));
+      this.onResume.bind(this)
+    );
     this.adManager.addEventListener(
       this.google.ima.AdEvent.Type.ALL_ADS_COMPLETED,
-      this.onEvent.bind(this));
+      this.onEvent.bind(this)
+    );
 
     // Listen to any additional events, if necessary.
     this.adManager.addEventListener(
       this.google.ima.AdEvent.Type.LOADED,
-      this.onEvent.bind(this));
+      this.onEvent.bind(this)
+    );
     this.adManager.addEventListener(
       this.google.ima.AdEvent.Type.STARTED,
-      this.onEvent.bind(this));
+      this.onEvent.bind(this)
+    );
     this.adManager.addEventListener(
       this.google.ima.AdEvent.Type.COMPLETE,
-      this.onEvent.bind(this));
+      this.onEvent.bind(this)
+    );
 
     var initWidth = this.player.element.clientWidth;
     var initHeight = this.player.element.clientHeight;
     //this.adManagerDimensions.width = initWidth;
     //this.adsManagerDimensions.height = initHeight;
-    this.adManager.init(
-      initWidth,
-      initHeight,
-      this.google.ima.ViewMode.NORMAL);
+    this.adManager.init(initWidth, initHeight, this.google.ima.ViewMode.NORMAL);
     this.adManager.resize(
       initWidth,
       initHeight,
-      this.google.ima.ViewMode.NORMAL);
+      this.google.ima.ViewMode.NORMAL
+    );
 
     if (!this.player.muted) {
       this.playAds();
     } else {
       this.player.element.addEventListener(
         'volumechange',
-        this.playAds.bind(this));
+        this.playAds.bind(this)
+      );
     }
   }
 
   playAds() {
-
-    if (this.initialized)
-      return;
+    if (this.initialized) return;
 
     this.initialized = true;
     this.element.nativeElement.style.display = 'block';
@@ -185,8 +189,6 @@ export class VideoAds {
   }
 
   ngOnDestroy() {
-    if (this.adManager)
-      this.adManager.destroy();
+    if (this.adManager) this.adManager.destroy();
   }
-
 }

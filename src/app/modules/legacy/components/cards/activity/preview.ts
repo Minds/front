@@ -1,9 +1,15 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  EventEmitter,
+} from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 
 import { AttachmentService } from '../../../../../services/attachment';
+import { ActivityService } from '../../../../../common/services/activity.service';
 
 @Component({
   moduleId: module.id,
@@ -11,13 +17,12 @@ import { AttachmentService } from '../../../../../services/attachment';
   inputs: ['object'],
   templateUrl: 'activity.html',
   host: {
-    class: 'mdl-shadow--8dp'
+    class: 'mdl-shadow--8dp',
   },
+  providers: [ActivityService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class ActivityPreview {
-
   minds = window.Minds;
   activity: any;
   hideTabs: boolean;
@@ -32,7 +37,12 @@ export class ActivityPreview {
   menuOptions: any = [];
   canDelete: boolean = false;
 
-  constructor(public session: Session, public client: Client, public attachment: AttachmentService, private _changeDetectorRef: ChangeDetectorRef) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    public attachment: AttachmentService,
+    private _changeDetectorRef: ChangeDetectorRef
+  ) {
     this.hideTabs = true;
   }
 
@@ -42,11 +52,10 @@ export class ActivityPreview {
       this.activity.mature_visibility = true;
     }
   }
-  
 
   getOwnerIconTime() {
     let session = this.session.getLoggedInUser();
-    if(session && session.guid === this.activity.ownerObj.guid) {
+    if (session && session.guid === this.activity.ownerObj.guid) {
       return session.icontime;
     } else {
       return this.activity.ownerObj.icontime;
@@ -69,16 +78,31 @@ export class ActivityPreview {
     return false;
   }
 
-  save() { /* NOOP */ }
+  isScheduled(time_created) {
+    return false;
+  }
 
-  openComments() { /* NOOP */ }
+  save() {
+    /* NOOP */
+  }
 
-  showBoost() { /* NOOP */ }
+  openComments() {
+    /* NOOP */
+  }
 
-  showWire() { /* NOOP */ }
+  showBoost() {
+    /* NOOP */
+  }
 
-  togglePin() { /* NOOP */ }
+  showWire() {
+    /* NOOP */
+  }
 
-  menuOptionSelected(e?) { /* NOOP */ }
+  togglePin() {
+    /* NOOP */
+  }
 
+  menuOptionSelected(e?) {
+    /* NOOP */
+  }
 }

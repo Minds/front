@@ -33,8 +33,11 @@ import { WalletBalanceTokensComponent } from './balances/tokens/balance.componen
 import { WalletBalanceRewardsComponent } from './balances/rewards/balance.component';
 import { WalletUSDComponent } from './usd/usd.component';
 import { WalletUSDEarningsComponent } from './usd/earnings.component';
+import { WalletUSDTransactionsComponent } from './usd/transactions.component';
 import { WalletUSDPayoutsComponent } from './usd/payouts.component';
 import { WalletUSDSettingsComponent } from './usd/settings.component';
+import { WalletUSDOnboardingComponent } from './usd/onboarding/onboarding.component';
+import { WalletUSDTermsComponent } from './usd/terms.component';
 import { WalletTokenWithdrawLedgerComponent } from './tokens/withdraw/ledger/ledger.component';
 import { WalletTokenAddressesComponent } from './tokens/addresses/addresses.component';
 import { TokenOnboardingModule } from './tokens/onboarding/onboarding.module';
@@ -45,10 +48,12 @@ import { ModalsModule } from '../modals/modals.module';
 import { WalletTokenTestnetComponent } from './tokens/testnet/testnet.component';
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
-
+import { WalletUSDBalanceComponent } from './usd/balance.component';
 
 const walletRoutes: Routes = [
-  { path: 'wallet', component: WalletComponent,
+  {
+    path: 'wallet',
+    component: WalletComponent,
     children: [
       { path: '', redirectTo: 'tokens', pathMatch: 'full' },
       { path: 'overview', redirectTo: 'tokens', pathMatch: 'full' },
@@ -56,32 +61,44 @@ const walletRoutes: Routes = [
       // { path: 'overview', component: WalletOverviewComponent },
       // { path: 'points', component: WalletPointsComponent },
       // { path: 'points/purchase', component: WalletPurchaseComponent },
-      { path: 'tokens', component: WalletTokensComponent,
+      {
+        path: 'tokens',
+        component: WalletTokensComponent,
         children: [
           { path: '', redirectTo: 'contributions', pathMatch: 'full' },
-          { path: 'transactions/:contract', component: WalletTokenTransactionsComponent },
+          {
+            path: 'transactions/:contract',
+            component: WalletTokenTransactionsComponent,
+          },
           { path: 'transactions', component: WalletTokenTransactionsComponent },
           { path: 'withdraw', component: WalletTokenWithdrawComponent },
           { path: 'contributions/join', component: WalletTokenJoinComponent },
-          { path: 'contributions', component: WalletTokenContributionsComponent },
+          {
+            path: 'contributions',
+            component: WalletTokenContributionsComponent,
+          },
           { path: 'addresses', component: WalletTokenAddressesComponent },
           { path: '101', component: WalletToken101Component },
           { path: 'testnet', component: WalletTokenTestnetComponent },
           { path: 'referrals', component: ReferralsComponent },
-        ]
+        ],
       },
-      { path: 'usd', component: WalletUSDComponent,
+      {
+        path: 'usd',
+        component: WalletUSDComponent,
         children: [
-          { path: '', redirectTo: 'earnings', pathMatch: 'full' },
+          { path: '', redirectTo: 'transactions', pathMatch: 'full' },
+          { path: 'transactions', component: WalletUSDTransactionsComponent },
           { path: 'earnings', component: WalletUSDEarningsComponent },
           { path: 'payouts', component: WalletUSDPayoutsComponent },
           { path: 'settings', component: WalletUSDSettingsComponent },
-        ]
+          { path: 'onboarding', component: WalletUSDOnboardingComponent },
+        ],
       },
       { path: 'wire', component: WalletWireComponent },
       { path: '**', component: WalletOverviewComponent },
-    ]
-  }
+    ],
+  },
 ];
 
 @NgModule({
@@ -100,7 +117,7 @@ const walletRoutes: Routes = [
     TokenOnboardingModule,
     PlusModule,
     ModalsModule,
-    ReferralsModule
+    ReferralsModule,
   ],
   declarations: [
     WalletComponent,
@@ -125,13 +142,17 @@ const walletRoutes: Routes = [
     WalletBalanceRewardsComponent,
     WalletUSDComponent,
     WalletUSDEarningsComponent,
+    WalletUSDTransactionsComponent,
     WalletUSDPayoutsComponent,
     WalletUSDSettingsComponent,
+    WalletUSDOnboardingComponent,
+    WalletUSDTermsComponent,
     WalletTokenAddressesComponent,
     WalletTokenContributionsOverviewComponent,
     WalletTokenContributionsChartComponent,
     WalletToken101Component,
     WalletTokenTestnetComponent,
+    WalletUSDBalanceComponent,
   ],
   exports: [
     WalletComponent,
@@ -143,8 +164,9 @@ const walletRoutes: Routes = [
     WalletToggleComponent,
     WalletFlyoutComponent,
     WalletBalanceUSDComponent,
+    WalletBalanceTokensComponent,
+    WalletUSDBalanceComponent,
   ],
-  entryComponents: [ WalletComponent ]
+  entryComponents: [WalletComponent, WalletUSDTermsComponent],
 })
-
 export class WalletModule {}

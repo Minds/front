@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Injectable()
 export class FeaturesService {
   protected _features: any;
-  protected _warnedCache: {[key: string]: number} = {};
+  protected _warnedCache: { [key: string]: number } = {};
 
   constructor(private session: Session, private router: Router) {
     this._features = window.Minds.features || {};
@@ -13,7 +13,7 @@ export class FeaturesService {
 
   has(feature: string) {
     if (!feature) {
-      throw new Error('Invalid feature ID')
+      throw new Error('Invalid feature ID');
     }
     if (feature.indexOf('!') === 0) {
       // Inverted check. Useful for *mIfFeature
@@ -22,18 +22,20 @@ export class FeaturesService {
 
     if (typeof this._features[feature] === 'undefined') {
       if (isDevMode() && !this._hasWarned(feature)) {
-        console.warn(`[FeaturedService] Feature '${feature}' is not declared. Assuming true.`);
         this._warnedCache[feature] = Date.now();
       }
 
-      return true;
+      return false;
     }
 
     if (this._features[feature] === 'admin' && this.session.isAdmin()) {
       return true;
     }
 
-    if (this._features[feature] === 'canary' && this.session.getLoggedInUser().canary) {
+    if (
+      this._features[feature] === 'canary' &&
+      this.session.getLoggedInUser().canary
+    ) {
       return true;
     }
 
@@ -60,7 +62,7 @@ export class FeaturesService {
     }
 
     // Once every 5s
-    return (this._warnedCache[feature] + 5000) < Date.now()
+    return this._warnedCache[feature] + 5000 < Date.now();
   }
 
   static _(session: Session, router: Router) {

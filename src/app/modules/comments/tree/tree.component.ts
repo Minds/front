@@ -7,8 +7,10 @@ import {
   Input,
   Output,
   Renderer,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
-import { 
+import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
   Router,
@@ -30,15 +32,15 @@ import { CommentsService } from '../comments.service';
     AttachmentService,
     {
       provide: CommentsService,
-      useFactory: (_route, _client) => { return new CommentsService(_route, _client); },
-      deps: [ ActivatedRoute, Client ],
+      useFactory: (_route, _client) => {
+        return new CommentsService(_route, _client);
+      },
+      deps: [ActivatedRoute, Client],
     },
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
-export class CommentsTreeComponent {
-
+export class CommentsTreeComponent implements OnInit, OnDestroy {
   minds;
   entity;
   guid: string = '';
@@ -46,7 +48,9 @@ export class CommentsTreeComponent {
 
   @Input() limit: number = 12;
   @Output() scrollToBottom: EventEmitter<boolean> = new EventEmitter(true);
-  @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(true);
+  @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(
+    true
+  );
 
   @Input() conversation: boolean = false;
   @Input() scrollable: boolean = false;
@@ -63,14 +67,14 @@ export class CommentsTreeComponent {
     public sockets: SocketsService,
     private renderer: Renderer,
     private cd: ChangeDetectorRef,
-    private router: Router,
+    private router: Router
   ) {
     this.minds = window.Minds;
   }
 
   ngOnInit() {
     this.shouldReuseRouteFn = this.router.routeReuseStrategy.shouldReuseRoute;
-    this.router.routeReuseStrategy.shouldReuseRoute = (future) => {
+    this.router.routeReuseStrategy.shouldReuseRoute = future => {
       return false;
     };
   }
@@ -83,11 +87,11 @@ export class CommentsTreeComponent {
   set _entity(value: any) {
     this.entity = value;
     this.guid = this.entity.guid;
-    if (this.entity.entity_guid)
-      this.guid = this.entity.entity_guid;
+    if (this.entity.entity_guid) this.guid = this.entity.entity_guid;
     this.parent = this.entity;
     if (!this.canDelete) {
-      this.canDelete = this.entity.owner_guid == this.session.getLoggedInUser().guid;
+      this.canDelete =
+        this.entity.owner_guid == this.session.getLoggedInUser().guid;
     }
   }
 
@@ -105,7 +109,6 @@ export class CommentsTreeComponent {
   }
 
   ngOnChanges(changes) {
-  //  console.log('[comment:list]: on changes', changes);
+    //  console.log('[comment:list]: on changes', changes);
   }
-
 }

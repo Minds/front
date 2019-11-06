@@ -16,10 +16,7 @@
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
-            "assets": [
-              "src/assets",
-              "src/favicon.ico"
-            ],
+            "assets": ["src/assets", "src/favicon.ico"],
             "styles": [
               "node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
               "node_modules/material-design-icons/iconfont/material-icons.css",
@@ -28,7 +25,6 @@
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
-              "src/shims/fontawesome.js",
               "src/shims/jitsi-api.min.js"
             ]
           },
@@ -36,7 +32,11 @@
             "production": {
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": false,
+              "sourceMap": {
+                "hidden": true,
+                "scripts": true,
+                "styles": true
+              },
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
@@ -47,6 +47,14 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "hmr": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.hmr.ts"
                 }
               ]
             }
@@ -60,6 +68,10 @@
           "configurations": {
             "production": {
               "browserTarget": "v5.x:build:production"
+            },
+            "hmr": {
+              "hmr": true,
+              "browserTarget": "v5.x:build:hmr"
             }
           }
         },
@@ -78,25 +90,16 @@
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
-              "src/shims/fontawesome.js",
               "src/shims/jitsi-api.min.js"
             ],
-            "assets": [
-              "src/assets",
-              "src/favicon.ico"
-            ]
+            "assets": ["src/assets", "src/favicon.ico"]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -116,12 +119,8 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "e2e/tsconfig.e2e.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "tsConfig": ["e2e/tsconfig.e2e.json"],
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -130,11 +129,11 @@
   "defaultProject": "v5.x",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "app",
+      "prefix": "m",
       "styleext": "scss"
     },
     "@schematics/angular:directive": {
-      "prefix": "app"
+      "prefix": "m"
     }
   }
 }

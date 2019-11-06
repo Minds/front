@@ -1,0 +1,18 @@
+<ng-container *ngIf="error || channel; else loader">
+  <ng-container
+    *ngIf="
+      error || !proEnabled || !channel.pro_published || isOwner || isAdmin;
+      else isProChannel
+    "
+  >
+    <m-channel #channelComponent></m-channel>
+  </ng-container>
+  <ng-template #isProChannel>
+    <m-pro--channel #proChannelComponent></m-pro--channel>
+  </ng-template>
+</ng-container>
+<ng-template #loader>
+  <div class="m-channel-container--loader" *ngIf="inProgress">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+</ng-template>

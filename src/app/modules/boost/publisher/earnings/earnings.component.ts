@@ -6,9 +6,8 @@ import { BoostConsoleFilter } from '../../console/console.component';
 
 @Component({
   selector: 'm-boost-publisher--earnings',
-  templateUrl: 'earnings.component.html'
+  templateUrl: 'earnings.component.html',
 })
-
 export class BoostPublisherEarningsComponent {
   _filter: BoostConsoleFilter;
 
@@ -47,17 +46,15 @@ export class BoostPublisherEarningsComponent {
   }
 
   getStatistics() {
-    this.client.get('api/v2/boost/sums')
-      .then((res: any) => {
-        this.stats.points_count = res.sums.points_count;
-        this.stats.points_earnings = res.sums.points_earnings;
-        this.stats.usd_count = res.sums.usd_count;
-        this.stats.usd_earnings = res.sums.usd_earnings;
-        this.stats.token_count = res.sums.token_count;
-        this.stats.token_earnings = res.sums.token_earnings;
-        this.stats.total_count = res.sums.total_count;
-        this.stats.total_earnings = res.sums.total_earnings;
-      });
+    this.client.get('api/v2/boost/sums').then((res: any) => {
+      this.stats.points_count = res.sums.points_count;
+      this.stats.points_earnings = res.sums.points_earnings;
+      this.stats.usd_count = res.sums.usd_count;
+      this.stats.usd_earnings = res.sums.usd_earnings;
+      this.stats.token_count = res.sums.token_count;
+      this.stats.token_earnings = res.sums.token_earnings;
+      this.stats.total_count = res.sums.total_count;
+      this.stats.total_earnings = res.sums.total_earnings;
+    });
   }
-
 }

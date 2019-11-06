@@ -1,47 +1,47 @@
 m-get-metamask {
-    padding: 16px;
-    max-width: 100%;
-    box-sizing: border-box;
-    display: block; 
+  padding: 16px;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: block;
 
-    .m-get-metamask--title {
-      font-size: 42px;
-      margin: 0;
-      margin-bottom: 16px;
-      font-weight: bold;
-      line-height: 42px;
-      @include m-theme(){
-        color: themed($m-grey-800);
-      }
+  .m-get-metamask--title {
+    font-size: 42px;
+    margin: 0;
+    margin-bottom: 16px;
+    font-weight: bold;
+    line-height: 42px;
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      font-size: 24px;
+      line-height: 1.2;
+    }
+  }
+
+  h4 {
+    font-weight: 600;
+  }
+
+  .m-get-metamask--logo-container {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: row;
+
+    .m-get-metamask--logo {
+      width: 227px;
+      height: 227px;
 
       @media screen and (max-width: $max-mobile) {
-        font-size: 24px;
-        line-height: 1.2;
+        width: 100px;
+        height: 100px;
       }
     }
+  }
 
-    h4 {
-        font-weight: 600;
-    }
-
-    .m-get-metamask--logo-container {
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        flex-direction: row;
-        
-        .m-get-metamask--logo {
-            width: 227px;
-            height: 227px;
-
-            @media screen and (max-width: $max-mobile) {
-                width: 100px;
-                height: 100px; 
-            }
-        }
-    }
-
-    .m-get-metamask--button {
-      text-align: left;
-    }
+  .m-get-metamask--button {
+    text-align: left;
+  }
 }

@@ -6,18 +6,16 @@ minds-newsfeed-poster {
 }
 
 .post {
-
   margin-bottom: $minds-padding * 2;
   width: 100%;
   min-height: 0;
 
   .mdl-card__supporting-text {
     overflow: visible;
-    
+
     textarea {
       background-color: transparent;
     }
-    
   }
 
   > div {
@@ -53,7 +51,6 @@ minds-newsfeed-poster {
       .mdl-textfield__input:focus {
         outline: none;
       }
-
     }
 
     .mdl-card__actions {
@@ -108,7 +105,7 @@ minds-newsfeed-poster {
         position: absolute;
         top: 7px;
         left: 6px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-400);
         }
       }
@@ -133,7 +130,7 @@ minds-newsfeed-poster {
           left: 0;
           cursor: pointer;
           opacity: 0;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-grey-400);
           }
         }
@@ -141,12 +138,9 @@ minds-newsfeed-poster {
         input::-webkit-file-upload-button {
           cursor: pointer;
         }
-
       }
-
     }
   }
-
 }
 
 m-hashtags-selector {
@@ -168,7 +162,7 @@ m-hashtags-selector {
     }
 
     .meta {
-      padding: $minds-padding*2;
+      padding: $minds-padding * 2;
       display: block;
       text-decoration: none;
       width: calc(100% - 32px);
@@ -208,7 +202,7 @@ m-hashtags-selector {
         top: calc(50% - 20px);
         left: calc(50% - 20px);
         position: absolute;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white-always);
         }
       }
@@ -221,7 +215,6 @@ m-hashtags-selector {
   }
 
   &:hover {
-
     .attachment-preview-delete {
       display: flex;
       align-items: center;
@@ -232,25 +225,24 @@ m-hashtags-selector {
       width: 100%;
       z-index: 200;
       height: 100%;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.6);
       }
 
       i {
         font-size: 40px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }
     }
-
   }
 
   .post-preview-error {
     margin-bottom: 1em;
     font-size: 12px;
     text-align: center;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red);
     }
   }
@@ -262,18 +254,18 @@ m-hashtags-selector {
     flex-direction: row;
     align-content: center;
     padding: 8px 0;
-    @include m-theme(){
-       border-top: 1px solid themed($m-grey-50);
+    @include m-theme() {
+      border-top: 1px solid themed($m-grey-50);
     }
 
     > * {
-      padding: 4px 8px;
+      padding: 4px 4px;
       position: relative;
       white-space: nowrap;
       text-decoration: none;
-      @include m-theme(){
-         border-right: 1px solid themed($m-grey-50);
-         color: themed($m-grey-700);
+      @include m-theme() {
+        border-right: 1px solid themed($m-grey-50);
+        color: themed($m-grey-700);
       }
 
       &:first-child {
@@ -295,14 +287,18 @@ m-hashtags-selector {
         white-space: normal;
       }
     }
+
+    m-poster-date-selector {
+      padding-right: $minds-padding;
+    }
+
     .m-posterActionBar__CreateBlog {
       cursor: pointer;
     }
 
     .m-posterActionBar__IconAndLabel {
-      
-      cursor:pointer;
-      
+      cursor: pointer;
+
       > * {
         vertical-align: middle;
       }
@@ -314,13 +310,15 @@ m-hashtags-selector {
     }
 
     .material-icons.m-posterActionBar__Icon,
-    .m-posterActionBar__IconAndLabel i.material-icons {
+    .m-posterActionBar__IconAndLabel i.material-icons,
+    .m-tooltip > i {
       font-size: 20px;
       transform: rotate(0.03deg) translateY(-1px); // Jagged lines hack
     }
 
     .m-posterActionBar__Label,
-    .m-posterActionBar__IconAndLabel > span {
+    .m-posterActionBar__IconAndLabel > span,
+    .m-poster-date-selector--input > span {
       font-size: 12px;
       font-family: 'Roboto', sans-serif;
       text-transform: uppercase;
@@ -385,8 +383,8 @@ m-hashtags-selector {
   }
 
   .post-preview {
-    @include m-theme(){
-       border-top: 1px solid themed($m-grey-50);
+    @include m-theme() {
+      border-top: 1px solid themed($m-grey-50);
     }
   }
 

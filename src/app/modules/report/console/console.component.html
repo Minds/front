@@ -1,18 +1,43 @@
 <div class="mdl-tabs__tab-bar m-report-console--tabs">
-  <a (click)="setFilter('review')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'review' }" i18n="@@M__COMMON__REVIEW_PENDING">Review Pending</a>
-  <a (click)="setFilter('pending')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'pending' }" i18n="@@REPORT__CONSOLE__APPEALED_TAB">Appealed</a>
-  <a (click)="setFilter('approved')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'approved' }" i18n="@@M__COMMON__APPROVED">Approved</a>
-  <a (click)="setFilter('rejected')" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'rejected' }" i18n="@@M__COMMON__REJECTED">Rejected</a>
-  <a routerLink="strikes" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter == 'strikes' }" i18n="@@M__COMMON__REJECTED">Strikes</a>
+  <a
+    (click)="setFilter('review')"
+    class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': filter == 'review' }"
+    i18n="@@M__COMMON__REVIEW_PENDING"
+    >Review Pending</a
+  >
+  <a
+    (click)="setFilter('pending')"
+    class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': filter == 'pending' }"
+    i18n="@@REPORT__CONSOLE__APPEALED_TAB"
+    >Appealed</a
+  >
+  <a
+    (click)="setFilter('approved')"
+    class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': filter == 'approved' }"
+    i18n="@@M__COMMON__APPROVED"
+    >Approved</a
+  >
+  <a
+    (click)="setFilter('rejected')"
+    class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': filter == 'rejected' }"
+    i18n="@@M__COMMON__REJECTED"
+    >Rejected</a
+  >
+  <a
+    routerLink="strikes"
+    class="mdl-tabs__tab"
+    [ngClass]="{ 'is-active': filter == 'strikes' }"
+    i18n="@@M__COMMON__REJECTED"
+    >Strikes</a
+  >
 </div>
 
 <div *ngFor="let appeal of appeals; let i = index">
-
-  <m-moderation__appeal
-    [appeal]="appeal"
-  >
-  </m-moderation__appeal>
-
+  <m-moderation__appeal [appeal]="appeal"> </m-moderation__appeal>
 </div>
 
 <!--<infinite-scroll

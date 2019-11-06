@@ -6,11 +6,10 @@ import { Directive, ElementRef, EventEmitter } from '@angular/core';
   outputs: ['overscroll'],
   host: {
     '(mouseenter)': 'lock()',
-    '(mouseleave)': 'unlock()'
-  }
+    '(mouseleave)': 'unlock()',
+  },
 })
 export class ScrollLock {
-
   strictScrollLock: boolean = false;
   overscroll: EventEmitter<any> = new EventEmitter();
 
@@ -36,9 +35,10 @@ export class ScrollLock {
   }
 
   private _domWheelLock(_this) {
-    return function (event: WheelEvent) {
-      let el: HTMLElement = <HTMLElement>(event.currentTarget);
-      if (event.ctrlKey) { // Zooming
+    return function(event: WheelEvent) {
+      let el: HTMLElement = <HTMLElement>event.currentTarget;
+      if (event.ctrlKey) {
+        // Zooming
         return;
       }
 
@@ -49,18 +49,20 @@ export class ScrollLock {
       }
 
       let ratio = el.clientHeight / window.innerHeight,
-        delta = (<any>event).wheelDelta || (-1 * event.detail) || (-1 * event.deltaY),
+        delta =
+          (<any>event).wheelDelta || -1 * event.detail || -1 * event.deltaY,
         normalizedWheel = _this._normalizeWheel(event),
         deltaY = normalizedWheel.pixelY;
 
       if (
         (delta > 0 && el.scrollTop + deltaY <= 0) ||
-        (delta < 0 && el.scrollTop + deltaY >= el.scrollHeight - el.clientHeight)
+        (delta < 0 &&
+          el.scrollTop + deltaY >= el.scrollHeight - el.clientHeight)
       ) {
         event.preventDefault();
 
         _this.overscroll.emit({
-          deltaY
+          deltaY,
         });
 
         if (deltaY) {
@@ -76,14 +78,24 @@ export class ScrollLock {
     const LINE_HEIGHT = 40;
     const PAGE_HEIGHT = 800;
 
-    var sX = 0, sY = 0,       // spinX, spinY
-      pX = 0, pY = 0;       // pixelX, pixelY
+    var sX = 0,
+      sY = 0, // spinX, spinY
+      pX = 0,
+      pY = 0; // pixelX, pixelY
 
     // Legacy
-    if ('detail' in event) { sY = event.detail; }
-    if ('wheelDelta' in event) { sY = -event.wheelDelta / 120; }
-    if ('wheelDeltaY' in event) { sY = -event.wheelDeltaY / 120; }
-    if ('wheelDeltaX' in event) { sX = -event.wheelDeltaX / 120; }
+    if ('detail' in event) {
+      sY = event.detail;
+    }
+    if ('wheelDelta' in event) {
+      sY = -event.wheelDelta / 120;
+    }
+    if ('wheelDeltaY' in event) {
+      sY = -event.wheelDeltaY / 120;
+    }
+    if ('wheelDeltaX' in event) {
+      sX = -event.wheelDeltaX / 120;
+    }
 
     // side scrolling on FF with DOMMouseScroll
     if ('axis' in event && event.axis === event.HORIZONTAL_AXIS) {
@@ -94,8 +106,12 @@ export class ScrollLock {
     pX = sX * PIXEL_STEP;
     pY = sY * PIXEL_STEP;
 
-    if ('deltaY' in event) { pY = event.deltaY; }
-    if ('deltaX' in event) { pX = event.deltaX; }
+    if ('deltaY' in event) {
+      pY = event.deltaY;
+    }
+    if ('deltaX' in event) {
+      pX = event.deltaX;
+    }
 
     if ((pX || pY) && event.deltaMode) {
       if (event.deltaMode === 1) {
@@ -108,14 +124,18 @@ export class ScrollLock {
     }
 
     // Fall-back if spin cannot be determined
-    if (pX && !sX) { sX = (pX < 1) ? -1 : 1; }
-    if (pY && !sY) { sY = (pY < 1) ? -1 : 1; }
+    if (pX && !sX) {
+      sX = pX < 1 ? -1 : 1;
+    }
+    if (pY && !sY) {
+      sY = pY < 1 ? -1 : 1;
+    }
 
     return {
       spinX: sX,
       spinY: sY,
       pixelX: pX,
-      pixelY: pY
+      pixelY: pY,
     };
   }
 }

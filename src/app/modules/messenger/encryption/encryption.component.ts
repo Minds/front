@@ -1,4 +1,11 @@
-import { Component, ElementRef, EventEmitter, Injector, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Injector,
+  Input,
+  OnInit,
+} from '@angular/core';
 
 import { SocketsService } from '../../../services/sockets';
 import { Client } from '../../../services/api';
@@ -11,14 +18,12 @@ import { MessengerEncryptionService } from './encryption.service';
   moduleId: module.id,
   selector: 'm-messenger--encryption',
   host: {
-    'class': 'm-messenger--encryption'
+    class: 'm-messenger--encryption',
   },
   outputs: ['on'],
-  templateUrl: 'encryption.component.html'
+  templateUrl: 'encryption.component.html',
 })
-
 export class MessengerEncryption implements OnInit {
-
   minds: Minds;
   on: EventEmitter<any> = new EventEmitter(true);
 
@@ -30,9 +35,8 @@ export class MessengerEncryption implements OnInit {
   constructor(
     public session: Session,
     public client: Client,
-    public encryption: MessengerEncryptionService,
-  ) {
-  }
+    public encryption: MessengerEncryptionService
+  ) {}
 
   ngOnInit() {
     this.username = `@${this.session.getLoggedInUser().username}` || 'user';
@@ -41,9 +45,10 @@ export class MessengerEncryption implements OnInit {
   unlock(password) {
     this.inProgress = true;
     this.error = '';
-    this.encryption.unlock(password.value)
+    this.encryption
+      .unlock(password.value)
       .then(() => {
-        password.value = '';        
+        password.value = '';
         this.on.next(true);
         this.inProgress = false;
       })
@@ -60,7 +65,8 @@ export class MessengerEncryption implements OnInit {
     }
     this.inProgress = true;
     this.error = '';
-    this.encryption.doSetup(password.value)
+    this.encryption
+      .doSetup(password.value)
       .then(() => {
         password.value = '';
         password2.value = '';
@@ -80,7 +86,8 @@ export class MessengerEncryption implements OnInit {
     }
     this.error = '';
     this.inProgress = true;
-    this.encryption.rekey(password.value)
+    this.encryption
+      .rekey(password.value)
       .then(() => {
         password.value = '';
         password2.value = '';
@@ -92,5 +99,4 @@ export class MessengerEncryption implements OnInit {
         this.inProgress = false;
       });
   }
-
 }

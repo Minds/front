@@ -1,7 +1,7 @@
-.m-onboarding--modal-wrapper{
+.m-onboarding--modal-wrapper {
   padding: 0;
   overflow: visible;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 

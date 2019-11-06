@@ -1,6 +1,14 @@
 import {
-  ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output,
-  ViewChild
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
 import { MindsPlayerInterface } from './player.interface';
 
@@ -10,12 +18,14 @@ import { MindsPlayerInterface } from './player.interface';
   templateUrl: 'direct-http.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlayerInterface {
+export class MindsVideoDirectHttpPlayer
+  implements OnInit, OnDestroy, MindsPlayerInterface {
   @ViewChild('player', { static: true }) player: ElementRef;
 
   @Input() muted: boolean = false;
   @Input() poster: string = '';
   @Input() autoplay: boolean = false;
+  @Input() guid: string | number;
 
   src: string;
   @Input('src') set _src(src: string) {
@@ -34,30 +44,38 @@ export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlaye
   @Output() onPlay: EventEmitter<HTMLVideoElement> = new EventEmitter();
   @Output() onPause: EventEmitter<HTMLVideoElement> = new EventEmitter();
   @Output() onEnd: EventEmitter<HTMLVideoElement> = new EventEmitter();
-  @Output() onError: EventEmitter<{ player: HTMLVideoElement, e }> = new EventEmitter();
+  @Output() onError: EventEmitter<{
+    player: HTMLVideoElement;
+    e;
+  }> = new EventEmitter();
+  @Output() onCanPlayThrough: EventEmitter<any> = new EventEmitter();
+  @Output() onLoadedMetadata: EventEmitter<any> = new EventEmitter();
 
   loading: boolean = false;
 
-  constructor(
-    protected cd: ChangeDetectorRef
-  ) { }
+  constructor(protected cd: ChangeDetectorRef) {}
 
   protected _emitPlay = () => this.onPlay.emit(this.getPlayer());
   protected _emitPause = () => this.onPause.emit(this.getPlayer());
   protected _emitEnd = () => this.onEnd.emit(this.getPlayer());
-  protected _emitError = e => this.onError.emit({ player: this.getPlayer(), e });
+  protected _emitError = e =>
+    this.onError.emit({ player: this.getPlayer(), e });
+  protected _emitCanPlayThrough = () =>
+    this.onCanPlayThrough.emit(this.getPlayer());
+  protected _emitLoadedMetadata = () =>
+    this.onLoadedMetadata.emit(this.getPlayer());
 
   protected _canPlayThrough = () => {
     this.loading = false;
     this.detectChanges();
-  };
-
-  protected _dblClick = () => {
-    this.requestFullScreen();
+    this._emitCanPlayThrough();
   };
 
   protected _onPlayerError = e => {
-    if (!e.target.error && (e.target.networkState !== HTMLMediaElement.NETWORK_NO_SOURCE)) {
+    if (
+      !e.target.error &&
+      e.target.networkState !== HTMLMediaElement.NETWORK_NO_SOURCE
+    ) {
       // Poster error
       return;
     }
@@ -70,12 +88,12 @@ export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlaye
 
   ngOnInit() {
     const player = this.getPlayer();
-    player.addEventListener('dblclick', this._dblClick);
     player.addEventListener('playing', this._emitPlay);
     player.addEventListener('pause', this._emitPause);
     player.addEventListener('ended', this._emitEnd);
     player.addEventListener('error', this._onPlayerError);
     player.addEventListener('canplaythrough', this._canPlayThrough);
+    player.addEventListener('loadedmetadata', this._emitLoadedMetadata);
 
     this.loading = true;
   }
@@ -84,12 +102,12 @@ export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlaye
     const player = this.getPlayer();
 
     if (player) {
-      player.removeEventListener('dblclick', this._dblClick);
       player.removeEventListener('playing', this._emitPlay);
       player.removeEventListener('pause', this._emitPause);
       player.removeEventListener('ended', this._emitEnd);
       player.removeEventListener('error', this._onPlayerError);
       player.removeEventListener('canplaythrough', this._canPlayThrough);
+      player.removeEventListener('loadedmetadata', this._emitLoadedMetadata);
     }
   }
 
@@ -97,13 +115,13 @@ export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlaye
     return this.player.nativeElement;
   }
 
-  play() {
+  async play() {
     const player = this.getPlayer();
 
     try {
-      player.play();
+      await player.play();
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
@@ -113,28 +131,29 @@ export class MindsVideoDirectHttpPlayer implements OnInit, OnDestroy, MindsPlaye
     try {
       player.pause();
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 
-  toggle() {
+  async toggle() {
     const player = this.getPlayer();
 
     if (player.paused) {
-      this.play()
+      await this.play();
     } else {
       this.pause();
     }
   }
 
   resumeFromTime(time: number = 0) {
+    // TODO detect if it's still transcoding
     const player = this.getPlayer();
 
     try {
       player.currentTime = time;
       this.play();
     } catch (e) {
-      console.error(e);
+      console.log(e);
     }
   }
 

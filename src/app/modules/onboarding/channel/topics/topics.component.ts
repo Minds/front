@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TopbarHashtagsService } from "../../../hashtags/service/topbar.service";
+import { TopbarHashtagsService } from '../../../hashtags/service/topbar.service';
 
 type Hashtag = {
-  value: string, selected: boolean
+  value: string;
+  selected: boolean;
 };
 
 @Component({
@@ -11,19 +12,29 @@ type Hashtag = {
     <div class="m-channelOnboarding__slide">
       <h2>Welcome to Minds!</h2>
 
-      <h2  class="m-channelOnboardingSlide__subtext">
+      <h2 class="m-channelOnboardingSlide__subtext">
         What topics are you most interested in?
       </h2>
 
       <ul class="m-channelOnboardingSlideSection__list">
-        <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
+        <div
+          class="mdl-spinner mdl-js-spinner is-active"
+          [mdl]
+          [hidden]="!inProgress"
+        ></div>
 
-        <li class="m-channelOnboardingSlideSection__item"
-            [ngClass]="{ 'm-channelOnboardingSlideSection__item--selected': hashtag.selected }"
-            *ngFor="let hashtag of hashtags"
+        <li
+          class="m-channelOnboardingSlideSection__item"
+          [ngClass]="{
+            'm-channelOnboardingSlideSection__item--selected': hashtag.selected
+          }"
+          *ngFor="let hashtag of hashtags"
+        >
+          <span
+            [ngClass]="{ selected: hashtag.selected }"
+            (click)="toggleSelection(hashtag)"
+            >#{{ hashtag.value }}</span
           >
-          <span [ngClass]="{ 'selected': hashtag.selected }"
-                (click)="toggleSelection(hashtag)">#{{hashtag.value}}</span>
         </li>
         <li class="m-hashtag--creator" *ngIf="!inProgress">
           <input
@@ -31,23 +42,22 @@ type Hashtag = {
             name="hashtag"
             [(ngModel)]="input"
             (keyup)="keyUp($event)"
-            #hashtagInput/>
-          <i class="material-icons m-hashtag--creator--done"
-             (click)="addNew()"
-          >
+            #hashtagInput
+          />
+          <i class="material-icons m-hashtag--creator--done" (click)="addNew()">
             done
           </i>
-          <i class="material-icons m-hashtag--creator--close"
-             (click)="input = ''; addingHashtag = false; hashtagInput.focus()"
+          <i
+            class="material-icons m-hashtag--creator--close"
+            (click)="input = ''; addingHashtag = false; hashtagInput.focus()"
           >
             close
           </i>
         </li>
       </ul>
     </div>
-  `
+  `,
 })
-
 export class TopicsOnboardingComponent implements OnInit {
   static items = ['suggested_hashtags'];
   static canSkip: boolean = true;
@@ -59,10 +69,7 @@ export class TopicsOnboardingComponent implements OnInit {
   error: string;
   inProgress: boolean;
 
-  constructor(
-      private service: TopbarHashtagsService,
-  ) {
-  }
+  constructor(private service: TopbarHashtagsService) {}
 
   ngOnInit() {
     this.load();
@@ -89,7 +96,6 @@ export class TopicsOnboardingComponent implements OnInit {
     }
   }
 
-
   async addNew() {
     this.addingHashtag = true;
     let hashtag: Hashtag = {
@@ -102,7 +108,6 @@ export class TopicsOnboardingComponent implements OnInit {
     this.addingHashtag = false;
   }
 
-
   keyUp(e) {
     switch (e.keyCode) {
       case 32: //space
@@ -113,5 +118,4 @@ export class TopicsOnboardingComponent implements OnInit {
         break;
     }
   }
-
 }

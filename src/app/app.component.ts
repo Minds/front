@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 import { NotificationService } from './modules/notifications/notification.service';
 import { AnalyticsService } from './services/analytics';
@@ -10,12 +10,17 @@ import { ContextService } from './services/context.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
 import { WebtorrentService } from './modules/webtorrent/webtorrent.service';
-import { ActivatedRoute, Router } from "@angular/router";
-import { ChannelOnboardingService } from "./modules/onboarding/channel/onboarding.service";
-import { BlockListService } from "./common/services/block-list.service";
-import { FeaturesService } from "./services/features.service";
-import { ThemeService } from "./common/services/theme.service";
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ChannelOnboardingService } from './modules/onboarding/channel/onboarding.service';
+import { BlockListService } from './common/services/block-list.service';
+import { FeaturesService } from './services/features.service';
+import { ThemeService } from './common/services/theme.service';
 import { BannedService } from './modules/report/banned/banned.service';
+import { DiagnosticsService } from './services/diagnostics.service';
+import { SiteService } from './common/services/site.service';
+import { Subscription } from 'rxjs';
+import { RouterHistoryService } from './common/services/router-history.service';
+import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
 
 @Component({
   moduleId: module.id,
@@ -30,7 +35,7 @@ export class Minds {
 
   showTOSModal: boolean = false;
 
-  paramsSubscription;
+  protected router$: Subscription;
 
   constructor(
     public session: Session,
@@ -50,18 +55,37 @@ export class Minds {
     public featuresService: FeaturesService,
     public themeService: ThemeService,
     private bannedService: BannedService,
+    private diagnostics: DiagnosticsService,
+    private routerHistoryService: RouterHistoryService,
+    private site: SiteService
   ) {
     this.name = 'Minds';
+
+    if (this.site.isProDomain) {
+      this.router.resetConfig(PRO_DOMAIN_ROUTES);
+    }
   }
 
   async ngOnInit() {
-    this.notificationService.getNotifications();
+    this.diagnostics.setUser(this.minds.user);
+    this.diagnostics.listen(); // Listen for user changes
 
-    this.session.isLoggedIn(async (is) => {
-      if (is) {
-        this.showOnboarding = await this.onboardingService.showModal();
+    if (!this.site.isProDomain) {
+      this.notificationService.getNotifications();
+    }
+
+    this.session.isLoggedIn(async is => {
+      if (is && !this.site.isProDomain) {
+        if (!this.site.isProDomain) {
+          this.showOnboarding = await this.onboardingService.showModal();
+        }
+
         if (this.minds.user.language !== this.minds.language) {
-          console.log('[app]:: language change', this.minds.user.language, this.minds.language);
+          console.log(
+            '[app]:: language change',
+            this.minds.user.language,
+            this.minds.language
+          );
           window.location.reload(true);
         }
       }
@@ -92,13 +116,24 @@ export class Minds {
     this.web3Wallet.setUp();
 
     this.webtorrent.setUp();
-    
+
     this.themeService.setUp();
   }
 
   ngOnDestroy() {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();
-    this.paramsSubscription.unsubscribe();
+  }
+
+  @HostBinding('class') get cssColorSchemeOverride() {
+    if (!this.site.isProDomain || !this.site.pro.scheme) {
+      return '';
+    }
+
+    return `m-theme--wrapper m-theme--wrapper__${this.site.pro.scheme}`;
+  }
+
+  get isProDomain() {
+    return this.site.isProDomain;
   }
 }

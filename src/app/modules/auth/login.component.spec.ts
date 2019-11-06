@@ -1,5 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -24,7 +30,7 @@ import { By } from '@angular/platform-browser';
 
 @Component({
   selector: 'minds-form-login',
-  template: ''
+  template: '',
 })
 class MindsFormLoginMock {
   @Output() done: EventEmitter<any> = new EventEmitter<any>();
@@ -33,7 +39,7 @@ class MindsFormLoginMock {
 
 @Component({
   selector: 'minds-form-register',
-  template: ''
+  template: '',
 })
 class MindsFormRegisterMock {
   @Input() referrer: string;
@@ -41,15 +47,23 @@ class MindsFormRegisterMock {
 }
 
 describe('LoginComponent', () => {
-
   let comp: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
-      declarations: [MaterialMock, MindsFormLoginMock, MindsFormRegisterMock, LoginComponent],
-      imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
+      declarations: [
+        MaterialMock,
+        MindsFormLoginMock,
+        MindsFormRegisterMock,
+        LoginComponent,
+      ],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        CommonModule,
+        FormsModule,
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
@@ -57,12 +71,11 @@ describe('LoginComponent', () => {
         { provide: OnboardingService, useValue: onboardingServiceMock },
         { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: SignupModalService, useValue: signupModalServiceMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -76,8 +89,7 @@ describe('LoginComponent', () => {
     if (fixture.isStable()) {
       done();
     } else {
-      fixture.whenStable()
-        .then(() => done());
+      fixture.whenStable().then(() => done());
     }
   });
 
@@ -86,18 +98,28 @@ describe('LoginComponent', () => {
   });
 
   it('should have a login form', () => {
-    const h3: DebugElement = fixture.debugElement.query(By.css('.m-login div:first-child h3'));
+    const h3: DebugElement = fixture.debugElement.query(
+      By.css('.m-login div:first-child h3')
+    );
     expect(h3).not.toBeNull();
     expect(h3.nativeElement.textContent).toContain('Login to Minds');
 
-    expect(fixture.debugElement.query(By.css('minds-form-login'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('minds-form-login'))
+    ).not.toBeNull();
   });
 
   it('should have a register form', () => {
-    const h3: DebugElement = fixture.debugElement.query(By.css('.m-login div:last-child h3'));
+    const h3: DebugElement = fixture.debugElement.query(
+      By.css('.m-login div:last-child h3')
+    );
     expect(h3).not.toBeNull();
-    expect(h3.nativeElement.textContent).toContain('Not on Minds? Start a channel');
-    expect(fixture.debugElement.query(By.css('minds-form-register'))).not.toBeNull();
+    expect(h3.nativeElement.textContent).toContain(
+      'Not on Minds? Start a Minds channel'
+    );
+    expect(
+      fixture.debugElement.query(By.css('minds-form-register'))
+    ).not.toBeNull();
   });
 
   it('should redirect after logging in', () => {
@@ -106,11 +128,14 @@ describe('LoginComponent', () => {
 
   it('should redirect after registering', () => {
     comp.registered();
-    expect(signupModalServiceMock.setDisplay).toHaveBeenCalled();
-    expect(signupModalServiceMock.setDisplay.calls.mostRecent().args[0]).toBe('categories');
-    expect(signupModalServiceMock.open).toHaveBeenCalled();
+    // expect(signupModalServiceMock.setDisplay).toHaveBeenCalled();
+    // expect(signupModalServiceMock.setDisplay.calls.mostRecent().args[0]).toBe(
+    //   'categories'
+    // );
+    // expect(signupModalServiceMock.open).toHaveBeenCalled();
     expect(loginReferrerServiceMock.navigate).toHaveBeenCalled();
-    expect(loginReferrerServiceMock.navigate.calls.mostRecent().args[0]).toEqual({ defaultUrl: '/test' });
+    expect(
+      loginReferrerServiceMock.navigate.calls.mostRecent().args[0]
+    ).toEqual({ defaultUrl: '/test' });
   });
-
 });

@@ -30,29 +30,35 @@ import { BoostPublisherSettingsComponent } from './publisher/settings/settings.c
 import { BoostPublisherLedgerComponent } from './publisher/ledger/ledger.component';
 
 const boostRoutes: Routes = [
-  { path: 'boost/console', component: BoostConsoleComponent,
+  {
+    path: 'boost/console',
+    component: BoostConsoleComponent,
     children: [
       { path: '', redirectTo: 'newsfeed/history', pathMatch: 'full' },
-      { path: 'publisher', component: BoostPublisherComponent,
+      {
+        path: 'publisher',
+        component: BoostPublisherComponent,
         children: [
           { path: '', redirectTo: 'earnings', pathMatch: 'full' },
           { path: 'earnings', component: BoostPublisherEarningsComponent },
           { path: 'payouts', component: BoostPublisherPayoutsComponent },
           { path: 'settings', component: BoostPublisherSettingsComponent },
-        ]
+        ],
       },
       { path: 'publisher/:filter', component: BoostPublisherComponent },
-      { path: ':type', component: BoostConsoleTypesComponent,
+      {
+        path: ':type',
+        component: BoostConsoleTypesComponent,
         children: [
           { path: '', redirectTo: 'history', pathMatch: 'full' },
           { path: 'create', component: BoostConsoleBooster },
           { path: 'history', component: BoostConsoleHistoryComponent },
           { path: 'history/:filter', component: BoostConsoleHistoryComponent },
-        ]
+        ],
       },
-    ]
+    ],
   },
-  { path: 'boost', component: BoostMarketingComponent }
+  { path: 'boost', component: BoostMarketingComponent },
 ];
 
 @NgModule({
@@ -65,7 +71,7 @@ const boostRoutes: Routes = [
     CheckoutModule,
     ThirdPartyNetworksModule,
     AdsModule,
-    FaqModule
+    FaqModule,
   ],
   declarations: [
     BoostCreatorComponent,
@@ -91,13 +97,8 @@ const boostRoutes: Routes = [
     BoostConsoleNetworkListComponent,
     BoostConsoleP2PListComponent,
     BoostConsoleCard,
-    BoostConsoleBooster
+    BoostConsoleBooster,
   ],
-  entryComponents: [
-    BoostCreatorComponent,
-    BoostConsoleComponent,
-    BoostMarketingComponent,
-  ]
+  entryComponents: [BoostCreatorComponent, BoostConsoleComponent],
 })
-export class BoostModule {
-}
+export class BoostModule {}

@@ -5,22 +5,25 @@ import { Subscription } from 'rxjs';
 import { Client, Upload } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
+import { ActivityService } from '../../common/services/activity.service';
 
 @Component({
   selector: 'minds-admin',
-  templateUrl: 'admin.html'
+  templateUrl: 'admin.html',
+  providers: [ActivityService],
 })
-
 export class Admin {
-
   filter: string = '';
   paramsSubscription: Subscription;
 
-  constructor(public session: Session, private route: ActivatedRoute, public title: MindsTitle, public router: Router) {
-  }
+  constructor(
+    public session: Session,
+    private route: ActivatedRoute,
+    public title: MindsTitle,
+    public router: Router
+  ) {}
 
   ngOnInit() {
-
     if (!this.session.isAdmin()) {
       this.router.navigate(['/']);
     }

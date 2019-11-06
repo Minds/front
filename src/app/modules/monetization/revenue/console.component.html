@@ -1,25 +1,44 @@
 <div class="m-page">
   <div class="m-page--sidebar">
-    <m-wallet--balance-usd></m-wallet--balance-usd>
+    <m-wallet--balance-tokens></m-wallet--balance-tokens>
 
     <div class="m-page--sidebar--navigation">
-      <a class="m-page--sidebar--navigation--item"
-        routerLink="/wallet/usd/earnings"
-        routerLinkActive="m-page--sidebar--navigation--item-active">
-        <i class="material-icons">history</i>
-        <span i18n="@@MONETIZATION__REVENUE__CONSOLE__EARNINGS">Earnings</span>
+      <a
+        class="m-page__goBack"
+        routerLink="/wallet/tokens"
+        style="margin-top: 8px"
+      >
+        <i class="material-icons">
+          keyboard_arrow_left
+        </i>
+        <span>Back to the Token Wallet</span>
       </a>
 
-      <a class="m-page--sidebar--navigation--item"
+      <a
+        class="m-page--sidebar--navigation--item"
+        routerLink="/wallet/usd/transactions"
+        routerLinkActive="m-page--sidebar--navigation--item-active"
+      >
+        <i class="material-icons">history</i>
+        <span i18n="@@MONETIZATION__REVENUE__CONSOLE__EARNINGS"
+          >Transactions</span
+        >
+      </a>
+
+      <a
+        class="m-page--sidebar--navigation--item"
         routerLink="/wallet/usd/payouts"
-        routerLinkActive="m-page--sidebar--navigation--item-active">
+        routerLinkActive="m-page--sidebar--navigation--item-active"
+      >
         <i class="material-icons">history</i>
         <span i18n="@@MONETIZATION__REVENUE__CONSOLE__PAYOUTS">Payouts</span>
       </a>
 
-      <a class="m-page--sidebar--navigation--item"
+      <a
+        class="m-page--sidebar--navigation--item"
         routerLink="/wallet/usd/settings"
-        routerLinkActive="m-page--sidebar--navigation--item-active">
+        routerLinkActive="m-page--sidebar--navigation--item-active"
+      >
         <i class="material-icons">settings</i>
         <span i18n="@@MONETIZATION__REVENUE__CONSOLE__SETTINGS">Settings</span>
       </a>
@@ -27,6 +46,13 @@
   </div>
 
   <div class="m-page--main">
+    <a class="m-page__goBack" routerLink="/wallet/tokens">
+      <i class="material-icons">
+        keyboard_arrow_left
+      </i>
+      <span>Back to the Token Wallet</span>
+    </a>
+    <m-walletUsd__balance></m-walletUsd__balance>
     <router-outlet></router-outlet>
   </div>
 </div>

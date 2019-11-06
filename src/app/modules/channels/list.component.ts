@@ -13,11 +13,9 @@ import { OverlayModalService } from '../../services/ux/overlay-modal';
 @Component({
   moduleId: module.id,
   selector: 'm-channels--list',
-  templateUrl: 'list.component.html'
+  templateUrl: 'list.component.html',
 })
-
 export class ChannelsListComponent {
-
   filter: string = 'top';
   uri: string = 'entities/trending/channels';
   entities: Array<Object> = [];
@@ -37,13 +35,13 @@ export class ChannelsListComponent {
     public title: MindsTitle,
     private context: ContextService,
     public session: Session,
-    private overlayModal: OverlayModalService,
-  ) { }
+    private overlayModal: OverlayModalService
+  ) {}
 
   ngOnInit() {
     this.title.setTitle('Channels');
 
-    this.paramsSubscription = this.route.params.subscribe((params) => {
+    this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
         this.filter = params['filter'];
         this.version = 'v1';
@@ -53,7 +51,10 @@ export class ChannelsListComponent {
             this.uri = 'entities/all/channels';
             break;
           case 'top':
-            this.router.navigate(['/newsfeed/global/top', { 'type': 'channels' }]);
+            this.router.navigate([
+              '/newsfeed/global/top',
+              { type: 'channels' },
+            ]);
 
             // if (!this.session.isLoggedIn()) {
             //   this.router.navigate(['/login']);
@@ -70,10 +71,12 @@ export class ChannelsListComponent {
             this.uri = 'entities/trending/channels';
             break;
           case 'subscribers':
-            this.uri = 'subscribe/subscribers/' + this.session.getLoggedInUser().guid;
+            this.uri =
+              'subscribe/subscribers/' + this.session.getLoggedInUser().guid;
             break;
           case 'subscriptions':
-            this.uri = 'subscribe/subscriptions/' + this.session.getLoggedInUser().guid;
+            this.uri =
+              'subscribe/subscriptions/' + this.session.getLoggedInUser().guid;
             break;
           case 'founders':
             this.uri = 'channels/founders/';
@@ -100,9 +103,7 @@ export class ChannelsListComponent {
   }
 
   load(refresh: boolean = false) {
-
-    if (this.inProgress || !this.moreData && !refresh)
-      return false;
+    if (this.inProgress || (!this.moreData && !refresh)) return false;
 
     if (refresh) {
       this.offset = '';
@@ -117,36 +118,32 @@ export class ChannelsListComponent {
       this.router.navigate(['channels/top']);
     }
 
-    this.client.get('api/' + this.version + '/' + uri, {
+    this.client
+      .get('api/' + this.version + '/' + uri, {
         limit: 24,
-        offset: this.offset
+        offset: this.offset,
       })
       .then((data: any) => {
-        if (data.users)
-          data.entities = data.users;
+        if (data.users) data.entities = data.users;
         if (!data.entities || !data.entities.length) {
           this.moreData = false;
           this.inProgress = false;
-          if (this.filter == 'trending')
-            this.openHashtagsSelector();
+          if (this.filter == 'trending') this.openHashtagsSelector();
           return false;
         }
 
         if (refresh) {
           this.entities = data.entities;
         } else {
-          if (this.offset)
-            data.entities.shift();
+          if (this.offset) data.entities.shift();
           this.entities = this.entities.concat(data.entities);
         }
 
         this.offset = data['load-next'];
-        if (!this.offset)
-          this.moreData = false;
+        if (!this.offset) this.moreData = false;
         this.inProgress = false;
-
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
       });
   }
@@ -167,12 +164,18 @@ export class ChannelsListComponent {
   }
 
   openHashtagsSelector() {
-    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
-      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
-      onSelected: () => {
-        this.load(true); //refresh list
-      },
-    }).present();
+    this.overlayModal
+      .create(
+        HashtagsSelectorModalComponent,
+        {},
+        {
+          class:
+            'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+          onSelected: () => {
+            this.load(true); //refresh list
+          },
+        }
+      )
+      .present();
   }
-
 }

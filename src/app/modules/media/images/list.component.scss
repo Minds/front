@@ -1,4 +1,4 @@
-.m-media--images--list{
+.m-media--images--list {
   display: flex;
   flex-direction: row;
   flex-wrap: row;
@@ -17,22 +17,21 @@
     max-height: 316px;
     overflow: hidden;
 
-    @media screen and (max-width: 990px){
+    @media screen and (max-width: 990px) {
       flex-basis: calc(33% - 4px);
       max-width: calc(33% - 4px);
       max-height: 280px;
     }
 
-    @media screen and (max-width: 720px){
+    @media screen and (max-width: 720px) {
       flex-basis: calc(50% - 4px);
       max-width: calc(50% - 4px);
       max-heigh: 225px;
     }
 
-    @media screen and (max-width: 500px){
+    @media screen and (max-width: 500px) {
       flex-basis: calc(100% - 4px);
       max-width: calc(100% - 4px);
     }
-
   }
 }

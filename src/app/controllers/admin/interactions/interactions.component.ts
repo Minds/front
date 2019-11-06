@@ -3,34 +3,33 @@ import { Client } from '../../../services/api';
 
 @Component({
   selector: 'm-admin--interactions',
-  templateUrl: 'interactions.component.html'
+  templateUrl: 'interactions.component.html',
 })
-
 export class AdminInteractions {
   metrics = [
     {
       title: 'Votes Up',
-      metric: 'vote:up'
+      metric: 'vote:up',
     },
     {
       title: 'Votes Down',
-      metric: 'vote:down'
+      metric: 'vote:down',
     },
     {
       title: 'Comments',
-      metric: 'comment'
+      metric: 'comment',
     },
     {
       title: 'Subscribers',
-      metric: 'subscribe'
+      metric: 'subscribe',
     },
     {
       title: 'Reminds',
-      metric: 'remind'
+      metric: 'remind',
     },
     {
       title: 'Referrals',
-      metric: 'referral'
+      metric: 'referral',
     },
   ];
 
@@ -45,7 +44,7 @@ export class AdminInteractions {
     d.setHours(23, 59, 59);
     this.endDate = d.toISOString();
 
-    d.setDate(d.getDate() -1)
+    d.setDate(d.getDate() - 1);
     d.setHours(0, 0, 0);
     this.startDate = d.toISOString();
   }
