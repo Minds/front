@@ -213,6 +213,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
             this.contentType = 'video';
             this.title = this.entity.title;
             this.entity.entity_guid = this.entity.guid;
+            this.entity.custom_data = {
+              full_hd: this.entity.flags.full_hd,
+            };
             break;
           case 'image':
             this.contentType = 'image';
