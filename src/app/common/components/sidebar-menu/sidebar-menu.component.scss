@@ -7,7 +7,7 @@ m-sidebarMenu {
   .m-sidebarMenu__userWrapper {
     display: none;
   }
-  .m-sidebarMenu__catContainer {
+  .m-sidebarMenu__menuContainer {
     .m-sidebarMenu__linksContainer {
       display: block;
       cursor: pointer;
@@ -35,7 +35,6 @@ m-sidebarMenu {
 
   .m-sidebarMenu__linksContainer {
     cursor: pointer;
-    display: none;
     .m-sidebarMenu__link {
       a {
         display: block;
@@ -44,6 +43,16 @@ m-sidebarMenu {
         font-weight: 400;
         @include m-theme() {
           color: themed($m-grey-300);
+        }
+        &.newWindow {
+          margin-top: 50px;
+          display: flex;
+          align-items: center;
+          i {
+            margin-right: 10px;
+            font-size: 13px;
+            font-weight: bold;
+          }
         }
       }
       a.selected,
@@ -127,7 +136,7 @@ m-sidebarMenu {
       &.mobileMenuExpanded {
         left: 0;
       }
-      .m-sidebarMenu__catContainer {
+      .m-sidebarMenu__menuContainer {
         .m-sidebarMenu__linksContainer {
           display: none;
         }

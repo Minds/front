@@ -16,7 +16,7 @@ import {
 })
 export class ShadowboxHeaderComponent implements AfterViewInit {
   @Input() isScrollable: boolean = true;
-  @Input() metricActivated;
+  @Input() itemActivated;
   @ViewChild('shadowboxHeaderContainer', { static: false })
   shadowboxHeaderContainerEl: ElementRef;
   shadowboxHeaderContainer;
@@ -44,7 +44,8 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
   // ----------------------------------------------------
   @HostListener('click', ['$event.target'])
   onClick(target) {
-    console.log('***Clicked on: ', target);
+    // console.log('***Clicked on: ', target);
+    // find index of target
     // this.slideToActiveMetric(metricIndex);
   }
 

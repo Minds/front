@@ -2,6 +2,7 @@ m-pageLayout {
   display: block;
   position: relative;
   width: 100%;
+  min-height: 100%;
   padding-top: 56px;
   margin-bottom: 48px;
   @include m-theme() {

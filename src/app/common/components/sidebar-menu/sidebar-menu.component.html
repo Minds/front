@@ -1,7 +1,7 @@
 <div class="m-sidebarMenu__topbar">
   <i class="material-icons" (click)="mobileMenuExpanded = true">menu</i>
   <div class="m-sidebarMenu__topbarHeader">
-    {{ cat.header.label }}
+    {{ menu.header.label }}
   </div>
 </div>
 <div
@@ -29,35 +29,38 @@
         </div> -->
     </div>
   </a>
-  <!-- <ng-container *ngFor="let cat of cats"> -->
+  <!-- <ng-container *ngFor="let menu of menus"> -->
   <div
-    class="m-sidebarMenu__catContainer expanded"
-    *ngIf="cat.header.permissionGranted"
+    class="m-sidebarMenu__menuContainer expanded"
+    *ngIf="menu.header.permissionGranted"
   >
-    <!-- [ngClass]="{ expanded: cat.header.expanded }"  -->
+    <!-- [ngClass]="{ expanded: menu.header.expanded }"  -->
 
     <div class="m-sidebarMenu__header">
-      <h3>{{ cat.header.label }}</h3>
+      <h3>{{ menu.header.label }}</h3>
       <!-- <i
         class="material-icons"
-        *ngIf="cat.header.expanded && cat.links"
-        (click)="cat.header.expanded = false"
+        *ngIf="menu.header.expanded && menu.links"
+        (click)="menu.header.expanded = false"
         >keyboard_arrow_up</i
       > -->
-      <!-- <i class="material-icons" *ngIf="!cat.header.expanded && cat.links"
+      <!-- <i class="material-icons" *ngIf="!menu.header.expanded && menu.links"
         >keyboard_arrow_down</i
       > -->
-      <!-- (click)="cat.header.expanded = true" -->
+      <!-- (click)="menu.header.expanded = true" -->
     </div>
 
-    <nav class="m-sidebarMenu__linksContainer" *ngIf="cat.links">
-      <div class="m-sidebarMenu__link" *ngFor="let link of cat.links">
+    <nav class="m-sidebarMenu__linksContainer" *ngIf="menu.links">
+      <div class="m-sidebarMenu__link" *ngFor="let link of menu.links">
         <a
           *ngIf="link.permissionGranted"
           (click)="mobileMenuExpanded = false"
           [routerLink]="link.path ? '/' + link.path : '../' + link.id"
           routerLinkActive="selected"
-          >{{ link.label }}</a
+          target="link.newWindow ? '_blank' : '_self'"
+          [ngClass]="{ newWindow: link.newWindow }"
+          ><i class="material-icons" *ngIf="link.newWindow">launch</i>
+          <span>{{ link.label }}</span></a
         >
       </div>
     </nav>

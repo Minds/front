@@ -10,7 +10,7 @@ import {
 import { Subject, Subscription } from 'rxjs';
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { MindsTitle } from '../../../services/ux/title';
 import { SiteService } from '../../../common/services/site.service';
 import { debounceTime } from 'rxjs/operators';
@@ -22,6 +22,43 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   templateUrl: 'settings.component.html',
 })
 export class ProSettingsComponent implements OnInit, OnDestroy {
+  activeTab: string;
+  activeTabTitles: any;
+  // tabTitle: string;
+  // tabSubtitle: string;
+  tabTitles = [
+    {
+      id: 'general',
+      title: 'General',
+      subtitle: 'Customize your title and headline',
+    },
+    {
+      id: 'theme',
+      title: 'Theme',
+      subtitle: "Set up your page's color theme",
+    },
+    {
+      id: 'hashtags',
+      title: 'Hashtags',
+      subtitle: 'Set up your category filter hashtags here',
+    },
+    {
+      id: 'footer',
+      title: 'Footer',
+      subtitle: "Set up your page's footer links",
+    },
+    {
+      id: 'domain',
+      title: 'Domain',
+      subtitle: 'Customize your site domain',
+    },
+    {
+      id: 'subscription',
+      title: 'Subscription',
+      subtitle: 'Manage your PRO subscription',
+    },
+  ];
+
   settings: any;
 
   inProgress: boolean;
@@ -45,6 +82,8 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   domainValidationSubject: Subject<any> = new Subject<any>();
 
+  protected paramMap$: Subscription;
+
   protected param$: Subscription;
 
   protected domainValidation$: Subscription;
@@ -67,6 +106,13 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.paramMap$ = this.route.paramMap.subscribe((params: ParamMap) => {
+      this.activeTab = params.get('tab');
+      this.activeTabTitles = this.tabTitles.find(
+        tabTitleObj => tabTitleObj.id === this.activeTab
+      );
+    });
+
     this.param$ = this.route.params.subscribe(params => {
       if (this.session.isAdmin()) {
         this.user = params['user'] || null;
@@ -81,6 +127,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.paramMap$.unsubscribe();
     this.param$.unsubscribe();
     this.domainValidation$.unsubscribe();
   }

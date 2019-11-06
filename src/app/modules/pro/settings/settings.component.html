@@ -1,3 +1,28 @@
+<m-pageLayout menuId="pro_settings">
+  <ng-container m-pageLayout__main>
+    <m-shadowboxLayout
+      [scrollableHeader]="false"
+      [headerTitle]="activeTabTitles.title"
+      [headerSubtitle]="activeTabTitles.subtitle"
+      [isForm]="true"
+    >
+      <div class="m-shadowboxLayout__body">form body here</div>
+      <div class="m-shadowboxLayout__footer">
+        <button
+          class="m-shadowboxLayout__button"
+          type="submit"
+          [disabled]="inProgress"
+          i18n
+        >
+          Save
+          {{
+            activeTab === 'general' ? 'Personal Details' : activeTabTitles.Title
+          }}
+        </button>
+      </div>
+    </m-shadowboxLayout>
+  </ng-container>
+</m-pageLayout>
 <div class="m-pro__settings">
   <div class="m-toolbar" *ngIf="settings">
     <div class="m-topbar--row">
@@ -12,7 +37,6 @@
             Customize your title and headline.
           </m-tooltip>
         </a>
-
         <a
           class="m-topbar--navigation--item"
           [class.m-topbar--navigation--item-active]="currentTab === 'theme'"

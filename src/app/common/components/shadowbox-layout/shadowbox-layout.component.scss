@@ -18,20 +18,37 @@ m-shadowboxHeader.isScrollable {
   }
 }
 .m-shadowboxLayout__footer {
-  min-height: 104px;
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
-  width: 100%;
 
   @include m-theme() {
     background-color: rgba(themed($m-grey-50), 0.25);
     border-top: 1px solid rgba(themed($m-grey-50), 0.6);
   }
-  > * {
-    margin: 30px 68px 30px 0;
+}
+.m-shadowboxLayout__button {
+  cursor: pointer;
+  padding: 10px 20px;
+  font-size: 17px;
+  background-color: #4fc3a9; // TBD
+  height: 43px;
+  border: 0;
+  @include m-theme() {
+    color: themed($m-white);
   }
 }
+// ---------------------------------------
+.isForm {
+  margin-top: 69px;
+  .m-shadowboxLayout__body {
+    padding: 50px 70px;
+  }
+  .m-shadowboxLayout__footer {
+    padding: 30px 70px;
+  }
+}
+// ---------------------------------------
 
 @media screen and (max-width: $min-tablet) {
   m-shadowboxLayout {

@@ -5,7 +5,7 @@ import { Component, OnInit, Input } from '@angular/core';
   templateUrl: './page-layout.component.html',
 })
 export class PageLayoutComponent implements OnInit {
-  @Input() navId: string;
+  @Input() menuId: string;
   constructor() {}
 
   ngOnInit() {}

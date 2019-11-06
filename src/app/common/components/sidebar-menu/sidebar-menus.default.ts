@@ -1,17 +1,17 @@
-const sidebarMenuCategories = [
+const sidebarMenus = [
   {
-    category: {
+    header: {
       id: 'analytics',
       label: 'Analytics',
       path: '/analytics/dashboard/',
       permissions: ['admin', 'user'],
     },
-    subcategories: [
-      // {
-      //   id: 'summary',
-      //   label: 'Summary',
-      //   permissions: ['admin', 'user'],
-      // },
+    links: [
+      {
+        id: 'summary',
+        label: 'Summary',
+        permissions: ['admin'],
+      },
       {
         id: 'traffic',
         label: 'Traffic',
@@ -26,6 +26,7 @@ const sidebarMenuCategories = [
         id: 'engagement',
         label: 'Engagement',
         permissions: ['admin', 'user'],
+        // path: '/some/path/outside/header/path',
       },
       {
         id: 'trending',
@@ -58,33 +59,46 @@ const sidebarMenuCategories = [
       // },
     ],
   },
-  // {
-  //   category: {
-  //     id: 'test1',
-  //     label: 'Test1',
-  //     permissions: ['admin', 'user'],
-  //     path: '/somepath/bork',
-  //   },
-  //   subcategories: [
-  //     {
-  //       id: 'nodes',
-  //       label: 'Nodes',
-  //       permissions: ['admin'],
-  //     },
-  //     {
-  //       id: 'nodes2',
-  //       label: 'Nodes2',
-  //       permissions: ['admin'],
-  //     },
-  //   ],
-  // },
-  // {
-  //   category: {
-  //     id: 'test2',
-  //     label: 'Test2 no subcats',
-  //     path: '/anotherpath/test2',
-  //   },
-  // },
+  {
+    header: {
+      id: 'pro_settings',
+      label: 'PRO Settings',
+      path: '/pro/settings/',
+      permissions: ['pro'],
+    },
+    links: [
+      {
+        id: 'general',
+        label: 'General',
+      },
+      {
+        id: 'theme',
+        label: 'Theme',
+      },
+      {
+        id: 'hashtags',
+        label: 'Hashtags',
+      },
+      {
+        id: 'footer',
+        label: 'Footer',
+      },
+      {
+        id: 'domain',
+        label: 'Domain',
+      },
+      {
+        id: 'subscription',
+        label: 'Pro Subscription',
+      },
+      {
+        id: ':user',
+        label: 'View Pro Channel',
+        path: ':user',
+        newWindow: true,
+      },
+    ],
+  },
 ];
 
-export default sidebarMenuCategories;
+export default sidebarMenus;

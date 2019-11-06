@@ -46,8 +46,15 @@ const routes: Routes = [
       },
       {
         path: 'settings',
-        component: ProSettingsComponent,
+        redirectTo: 'settings/general',
+        pathMatch: 'full',
       },
+      {
+        path: 'settings/cancel',
+        redirectTo: 'settings/general',
+        pathMatch: 'full',
+      },
+      { path: 'settings/:tab', component: ProSettingsComponent },
       {
         path: ':username',
         component: ProChannelComponent,
