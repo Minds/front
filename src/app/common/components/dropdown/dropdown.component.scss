@@ -46,8 +46,11 @@
     text-overflow: ellipsis;
     text-align: left;
 
-    > * {
+    * {
       padding: 0 8px 0 0;
+    }
+
+    a {
       text-decoration: none;
       width: 100%;
       font-weight: 400;
