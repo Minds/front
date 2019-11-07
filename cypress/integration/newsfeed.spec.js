@@ -1,3 +1,5 @@
+import generateRandomId from '../support/utilities';
+
 context('Newsfeed', () => {
   before(() => {
     cy.getCookie('minds_sess').then(sessionCookie => {
@@ -14,7 +16,6 @@ context('Newsfeed', () => {
     cy.route('POST', '**/api/v1/media').as('mediaPOST');
     cy.route('POST', '**/api/v1/newsfeed/**').as('newsfeedEDIT');
     cy.route('POST', '**/api/v1/media/**').as('mediaEDIT');
-
     cy.visit('/newsfeed/subscriptions')
       .location('pathname')
       .should('eq', '/newsfeed/subscriptions');
@@ -36,6 +37,19 @@ context('Newsfeed', () => {
     cy.get('minds-newsfeed-poster').should('be.visible');
     cy.get('minds-newsfeed-poster textarea').type(content);
   };
+
+  const attachRichEmbed = (embedUrl) => {
+    cy.get('minds-newsfeed-poster').should('be.visible');
+    cy.get('minds-newsfeed-poster textarea')
+      .type(embedUrl);
+      
+    cy.route('GET',  `**/api/v1/newsfeed/preview?url=${embedUrl}**`)
+      .as('previewGET')
+      .wait('@previewGET')
+      .then(xhr => {
+        expect(xhr.status).to.equal(200);
+      });
+  }
 
   const attachImageToActivity = () => {
     cy.uploadFile(
@@ -509,6 +523,142 @@ context('Newsfeed', () => {
 
     navigateToNewsfeed();
     deleteActivityFromNewsfeed();
+  });
+
+  it('should show a rich embed post from youtube in a modal', () => {
+    const content = generateRandomId() + " ",
+      url = 'https://www.youtube.com/watch?v=jNQXAC9IVRw';
+
+    // set up post.
+    newActivityContent(content);
+    attachRichEmbed(url);
+
+    // post and await.
+    cy.get('.m-posterActionBar__PostButton')
+      .click()
+      .wait('@newsfeedPOST').then(xhr => {
+        expect(xhr.status).to.equal(200);
+
+        //get activity, click it.
+        cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
+          .click();
+
+        //check modal is open.
+        cy.get('[data-cy=data-minds-media-modal]')
+          .contains(content);
+        
+        // close modal and tidy.
+        cy.get('.m-overlay-modal--backdrop')
+          .click({force: true});
+
+        deleteActivityFromNewsfeed();
+      });
+  });
+
+  it('should not open vimeo in a modal', () => {
+    const content = generateRandomId() + " ",
+      url = 'https://vimeo.com/8733915';
+
+    // set up post.
+    newActivityContent(content);
+    attachRichEmbed(url);
+
+    // post and await.
+    cy.get('.m-posterActionBar__PostButton')
+      .click()
+      .wait('@newsfeedPOST').then(xhr => {
+        expect(xhr.status).to.equal(200);
+
+        //get activity, make assertions tht would not be true for modals.
+        cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
+          .should('be.visible')
+          .get('iframe')          
+          .should('be.visible')
+          .get('.minds-more')
+          .should('be.visible');
+        
+          // tidy.
+        deleteActivityFromNewsfeed();
+      });
+  });
+
+
+  it('should not open soundcloud in a modal', () => {
+    const content = generateRandomId() + " ",
+      url = 'https://soundcloud.com/richarddjames/piano-un10-it-happened';
+
+    // set up post.
+    newActivityContent(content);
+    attachRichEmbed(url);
+
+    // post and await.
+    cy.get('.m-posterActionBar__PostButton')
+      .click()
+      .wait('@newsfeedPOST').then(xhr => {
+        expect(xhr.status).to.equal(200);
+
+        //get activity, make assertions tht would not be true for modals.
+        cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
+          .should('be.visible')
+          .get('.m-rich-embed-action-overlay')          
+          .should('be.visible')
+          .get('.minds-more')
+          .should('be.visible');
+
+        deleteActivityFromNewsfeed();
+      });
+  });
+
+  it('should not open spotify in a modal', () => {
+    const content = generateRandomId() + " ",
+      url = 'https://open.spotify.com/track/2MZSXhq4XDJWu6coGoXX1V?si=nvja0EfwR3q6GMQmYg6gPQ';
+
+    // set up post.
+    newActivityContent(content);
+    attachRichEmbed(url);
+
+    // post and await.
+    cy.get('.m-posterActionBar__PostButton')
+      .click()
+      .wait('@newsfeedPOST').then(xhr => {
+        expect(xhr.status).to.equal(200);
+
+        //get activity, make assertions tht would not be true for modals.
+        cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
+          .should('be.visible')
+          .get('.m-rich-embed-action-overlay')          
+          .should('be.visible')
+          .get('.minds-more')
+          .should('be.visible');
+
+        deleteActivityFromNewsfeed();
+      });
+  });
+
+  it('should not open spotify in a modal', () => {
+    const content = generateRandomId() + " ",
+      url = 'http://giphygifs.s3.amazonaws.com/media/IzVquL965ib4s/giphy.gif';
+
+    // set up post.
+    newActivityContent(content);
+    attachRichEmbed(url);
+
+    // post and await.
+    cy.get('.m-posterActionBar__PostButton')
+      .click()
+      .wait('@newsfeedPOST').then(xhr => {
+        expect(xhr.status).to.equal(200);
+
+        //get activity, make assertions tht would not be true for modals.
+        cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
+          .should('be.visible')
+          .get('.m-rich-embed-action-overlay')          
+          .should('be.visible')
+          .get('.minds-more')
+          .should('be.visible');
+
+        deleteActivityFromNewsfeed();
+      });
   });
 
 });

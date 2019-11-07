@@ -1,4 +1,4 @@
-<div class="m-mediaModal__wrapper">
+<div class="m-mediaModal__wrapper" data-cy="data-minds-media-modal">
   <div class="m-mediaModal__theater" (click)="clickedModal($event)">
     <div
       class="m-mediaModal m-mediaModal__clearFix"
@@ -15,7 +15,10 @@
         (touchend)="showOverlaysOnTablet()"
       >
         <!-- LOADING PANEL -->
-        <div class="m-mediaModal__loadingPanel" *ngIf="isLoading">
+        <div
+          class="m-mediaModal__loadingPanel"
+          *ngIf="isLoading && contentType !== 'rich-embed'"
+        >
           <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
         </div>
 
@@ -65,6 +68,15 @@
             </m-video>
           </div>
 
+          <!-- RICH-EMBED -->
+          <div
+            class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--richEmbed"
+            *ngIf="contentType === 'rich-embed'"
+          >
+            <minds-rich-embed [src]="entity" [maxheight]="480">
+            </minds-rich-embed>
+          </div>
+
           <!-- MEDIA: BLOG -->
           <div
             class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--blog"
@@ -83,12 +95,12 @@
           <!-- OVERLAY -->
           <div
             class="m-mediaModal__overlayContainer"
-            *ngIf="overlayVisible"
+            *ngIf="overlayVisible && contentType !== 'rich-embed'"
             @fastFadeAnimation
           >
             <div
               class="m-mediaModal__overlayTitleWrapper"
-              *ngIf="this.contentType !== 'blog'"
+              *ngIf="contentType !== 'blog'"
             >
               <!-- TITLE -->
               <span

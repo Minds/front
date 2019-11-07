@@ -26,6 +26,7 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FeaturesService } from '../../../services/features.service';
 
 export type MediaModalParams = {
   redirectUrl?: string;
@@ -131,6 +132,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private location: Location,
     private site: SiteService,
     private clientMetaService: ClientMetaService,
+    private featureService: FeaturesService,
     @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
@@ -190,7 +192,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
-
     switch (this.entity.type) {
       case 'activity':
         this.title =
@@ -220,7 +221,35 @@ export class MediaModalComponent implements OnInit, OnDestroy {
             this.contentType = 'image';
             this.entity.width = this.entity.custom_data[0].width;
             this.entity.height = this.entity.custom_data[0].height;
+            break;
+          default:
+            if (
+              this.featureService.has('media-modal') &&
+              this.entity.perma_url &&
+              this.entity.title &&
+              !this.entity.entity_guid
+            ) {
+              this.contentType = 'rich-embed';
+              this.entity.width = this.entity.custom_data.dimensions
+                ? this.entity.custom_data.dimensions.width
+                : 1280;
+              this.entity.height = this.entity.custom_data.dimensions
+                ? this.entity.custom_data.dimensions.height
+                : 720;
+              this.entity.thumbnail_src = this.entity.custom_data.thumbnail_src;
+              break;
+            } else {
+              // Modal not implemented, redirect.
+              this.router.navigate([
+                this.entity.route
+                  ? `/${this.entity.route}`
+                  : `/blog/view/${this.entity.guid}`,
+              ]);
+              // Close modal.
+              this.clickedBackdrop(null);
+            }
         }
+
         break;
       case 'object':
         switch (this.entity.subtype) {
@@ -261,12 +290,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     if (this.redirectUrl) {
       this.pageUrl = this.redirectUrl;
-    } else if (this.contentType !== 'blog') {
-      this.pageUrl = `/media/${this.entity.entity_guid}`;
+    } else if (this.contentType === 'rich-embed') {
+      this.pageUrl = `/newsfeed/${this.entity.guid}`;
     } else {
-      this.pageUrl = this.entity.route
-        ? `/${this.entity.route}`
-        : `/blog/view${this.entity.guid}`;
+      this.pageUrl = `/media/${this.entity.entity_guid}`;
     }
 
     this.boosted = this.entity.boosted || this.entity.p2p_boosted || false;
@@ -577,7 +604,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   // Show overlay and video controls
   onMouseEnterStage() {
     this.overlayVisible = true;
-
     if (this.contentType === 'video') {
       // Make sure progress bar seeker is updating when video controls are visible
       this.videoComponent.stageHover = true;
