@@ -1,12 +1,12 @@
 import {
   Component,
   HostListener,
+  Injector,
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
   SkipSelf,
-  Injector,
+  ViewChild,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
@@ -119,45 +119,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   @ViewChild(MindsVideoComponent, { static: false })
   videoComponent: MindsVideoComponent;
 
-  get videoDirectSrc() {
-    const sources = [
-      {
-        res: '720',
-        uri:
-          'api/v1/media/' + this.entity.entity_guid + '/play?s=modal&res=720',
-        type: 'video/mp4',
-      },
-      {
-        res: '360',
-        uri: 'api/v1/media/' + this.entity.entity_guid + '/play?s=modal',
-        type: 'video/mp4',
-      },
-    ];
+  videoDirectSrc = [];
 
-    if (this.entity.custom_data.full_hd) {
-      sources.push({
-        res: '1080',
-        uri:
-          'api/v1/media/' + this.entity.entity_guid + '/play?s=modal&res=1080',
-        type: 'video/mp4',
-      });
-    }
-
-    return sources;
-  }
-
-  get videoTorrentSrc() {
-    const sources = [
-      { res: '720', key: this.entity.entity_guid + '/720.mp4' },
-      { res: '360', key: this.entity.entity_guid + '/360.mp4' },
-    ];
-
-    if (this.entity.custom_data.full_hd) {
-      sources.push({ res: '1080', key: this.entity.entity_guid + '/1080.mp4' });
-    }
-
-    return sources;
-  }
+  videoTorrentSrc = [];
 
   constructor(
     public session: Session,
@@ -175,6 +139,54 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       .setMedium('modal');
   }
 
+  updateSources() {
+    this.videoDirectSrc = [
+      {
+        res: '720',
+        uri:
+          'api/v1/media/' +
+          this.entity.entity_guid +
+          '/play/' +
+          Date.now() +
+          '?s=modal&res=720',
+        type: 'video/mp4',
+      },
+      {
+        res: '360',
+        uri:
+          'api/v1/media/' +
+          this.entity.entity_guid +
+          '/play/' +
+          Date.now() +
+          '?s=modal',
+        type: 'video/mp4',
+      },
+    ];
+
+    this.videoTorrentSrc = [
+      { res: '720', key: this.entity.entity_guid + '/720.mp4' },
+      { res: '360', key: this.entity.entity_guid + '/360.mp4' },
+    ];
+
+    if (this.entity.custom_data.full_hd) {
+      this.videoDirectSrc.unshift({
+        res: '1080',
+        uri:
+          'api/v1/media/' +
+          this.entity.entity_guid +
+          '/play/' +
+          Date.now() +
+          '?s=modal&res=1080',
+        type: 'video/mp4',
+      });
+
+      this.videoTorrentSrc.unshift({
+        res: '1080',
+        key: this.entity.entity_guid + '/1080.mp4',
+      });
+    }
+  }
+
   ngOnInit() {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
@@ -190,6 +202,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           ? this.entity.thumbnails.xlarge
           : null;
 
+        this.updateSources();
+
         switch (this.entity.custom_type) {
           case 'video':
             this.contentType = 'video';
@@ -200,6 +214,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
               ? this.entity.custom_data.dimensions.height
               : 720;
             this.entity.thumbnail_src = this.entity.custom_data.thumbnail_src;
+            this.updateSources();
             break;
           case 'batch':
             this.contentType = 'image';
