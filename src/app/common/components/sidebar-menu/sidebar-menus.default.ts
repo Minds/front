@@ -76,6 +76,10 @@ const sidebarMenus = [
         label: 'Theme',
       },
       {
+        id: 'assets',
+        label: 'Assets',
+      },
+      {
         id: 'hashtags',
         label: 'Hashtags',
       },
@@ -90,6 +94,7 @@ const sidebarMenus = [
       {
         id: 'subscription',
         label: 'Pro Subscription',
+        path: 'pro',
       },
       {
         id: ':user',

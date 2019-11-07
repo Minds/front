@@ -61,7 +61,7 @@ export class AnalyticsLayoutSummaryComponent implements OnInit {
     },
   ];
 
-  constructor(private client: Client, private session: Session) {}
+  constructor(private client: Client, public session: Session) {}
 
   ngOnInit() {
     // TODO: confirm how permissions/security will work

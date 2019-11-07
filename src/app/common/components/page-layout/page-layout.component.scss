@@ -3,11 +3,13 @@ m-pageLayout {
   position: relative;
   width: 100%;
   min-height: 100%;
-  padding-top: 56px;
-  margin-bottom: 48px;
+  padding: 56px 0 48px 0;
   @include m-theme() {
     background-color: themed($m-white);
     color: themed($m-grey-800);
+  }
+  &.isForm {
+    min-height: none;
   }
 
   .m-tooltip {

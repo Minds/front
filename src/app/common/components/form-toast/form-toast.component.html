@@ -1,0 +1,18 @@
+<div class="m-formToast__wrapper" [hidden]="hidden">
+  <i
+    class="material-icons m-formToast__icon--statusSuccess"
+    *ngIf="status === 'success'"
+    >check</i
+  >
+  <i
+    class="material-icons m-formToast__icon--statusError"
+    *ngIf="status === 'error'"
+    >warning</i
+  >
+  <p i18n><ng-content></ng-content></p>
+  <div class="m-formToast__iconWrapper">
+    <i class="material-icons m-formToast__icon--close" (click)="hidden = true"
+      >close</i
+    >
+  </div>
+</div>

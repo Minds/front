@@ -12,6 +12,7 @@ m-shadowboxHeader.isScrollable {
 }
 .m-shadowboxLayout__bottom {
   position: relative;
+  transition: all 0.3s ease;
   @include m-theme() {
     border-top: 1px solid rgba(themed($m-grey-50), 0.5);
     background-color: themed($m-white);
@@ -31,21 +32,43 @@ m-shadowboxHeader.isScrollable {
   cursor: pointer;
   padding: 10px 20px;
   font-size: 17px;
-  background-color: #4fc3a9; // TBD
+  background-color: #4fc3a9;
   height: 43px;
   border: 0;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+  outline: 0;
   @include m-theme() {
     color: themed($m-white);
   }
+  &:hover {
+    transform: scale(1.02);
+    background-color: #4cb9a0;
+  }
+  &:active {
+    background-color: #63dac0;
+  }
+  &:disabled,
+  &[disabled] {
+    cursor: default;
+    @include m-theme() {
+      background-color: themed($m-grey-200);
+    }
+  }
 }
 // ---------------------------------------
-.isForm {
+m-shadowboxLayout.isForm {
   margin-top: 69px;
   .m-shadowboxLayout__body {
     padding: 50px 70px;
   }
   .m-shadowboxLayout__footer {
     padding: 30px 70px;
+    align-items: center;
+  }
+
+  .m-shadowboxHeader__wrapper {
+    height: auto;
   }
 }
 // ---------------------------------------
@@ -59,6 +82,44 @@ m-shadowboxHeader.isScrollable {
   .m-shadowboxLayout__bottom {
     @include m-theme() {
       border-top: 1px solid themed($m-grey-100);
+    }
+  }
+  m-shadowboxLayout.isForm {
+    margin-top: 0px;
+    m-shadowboxHeader {
+      min-height: 80px;
+    }
+    .m-shadowboxLayout__bottom {
+      @include m-theme() {
+        border-top: none;
+      }
+    }
+    .m-shadowboxLayout__body {
+      padding: 24px 24px 36px 24px;
+    }
+    .m-shadowboxLayout__footer {
+      justify-content: center;
+      padding: 24px;
+    }
+  }
+}
+
+@media screen and (max-width: $max-mobile) {
+  m-shadowboxLayout.isForm {
+    .m-shadowboxLayout__bottom {
+      @include m-theme() {
+        border-top-color: rgba(0, 0, 0, 0);
+      }
+    }
+    .m-shadowboxLayout__footer {
+      .m-shadowboxLayout__button {
+        min-width: 50%;
+      }
+    }
+  }
+  m-shadowboxLayout {
+    @include m-theme() {
+      box-shadow: none;
     }
   }
 }

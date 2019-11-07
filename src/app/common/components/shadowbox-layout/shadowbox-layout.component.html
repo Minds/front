@@ -4,8 +4,8 @@
   [ngClass]="{ isScrollable: scrollableHeader }"
 >
   <div class="m-shadowboxLayout__header hasTitle" *ngIf="headerTitle">
-    <h3 class="m-shadowboxHeader__title">{{ headerTitle }}</h3>
-    <h4 *ngIf="headerSubtitle" class="m-shadowboxHeader__subtitle">
+    <h3 class="m-shadowboxHeader__title" i18n>{{ headerTitle }}</h3>
+    <h4 *ngIf="headerSubtitle" class="m-shadowboxHeader__subtitle" i18n>
       {{ headerSubtitle }}
     </h4>
   </div>

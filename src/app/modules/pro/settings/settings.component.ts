@@ -22,11 +22,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   templateUrl: 'settings.component.html',
 })
 export class ProSettingsComponent implements OnInit, OnDestroy {
-  activeTab: string;
-  activeTabTitles: any;
-  // tabTitle: string;
-  // tabSubtitle: string;
-  tabTitles = [
+  activeTab: any;
+  tabs = [
     {
       id: 'general',
       title: 'General',
@@ -35,7 +32,12 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     {
       id: 'theme',
       title: 'Theme',
-      subtitle: "Set up your page's color theme",
+      subtitle: "Set up your site's color theme",
+    },
+    {
+      id: 'assets',
+      title: 'Assets',
+      subtitle: 'Upload custom logo and background images',
     },
     {
       id: 'hashtags',
@@ -45,17 +47,12 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     {
       id: 'footer',
       title: 'Footer',
-      subtitle: "Set up your page's footer links",
+      subtitle: "Set up your site's footer links",
     },
     {
       id: 'domain',
       title: 'Domain',
       subtitle: 'Customize your site domain',
-    },
-    {
-      id: 'subscription',
-      title: 'Subscription',
-      subtitle: 'Manage your PRO subscription',
     },
   ];
 
@@ -65,14 +62,14 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   saved: boolean = false;
 
-  currentTab:
-    | 'general'
-    | 'theme'
-    | 'assets'
-    | 'hashtags'
-    | 'footer'
-    | 'domain'
-    | 'cancel' = 'general';
+  // currentTab:
+  //   | 'general'
+  //   | 'theme'
+  //   | 'assets'
+  //   | 'hashtags'
+  //   | 'footer'
+  //   | 'domain'
+  //   | 'cancel' = 'general';
 
   user: string | null = null;
 
@@ -107,14 +104,13 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.paramMap$ = this.route.paramMap.subscribe((params: ParamMap) => {
-      this.activeTab = params.get('tab');
-      this.activeTabTitles = this.tabTitles.find(
-        tabTitleObj => tabTitleObj.id === this.activeTab
-      );
+      const activeTabParam = params.get('tab');
+      this.activeTab = this.tabs.find(tab => tab.id === activeTabParam);
     });
 
     this.param$ = this.route.params.subscribe(params => {
       if (this.session.isAdmin()) {
+        console.log('***', this.route.params);
         this.user = params['user'] || null;
       }
 

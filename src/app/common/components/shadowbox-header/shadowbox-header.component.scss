@@ -96,8 +96,6 @@ m-shadowboxHeader {
   }
 }
 .m-shadowboxLayout__header.hasTitle {
-  padding-top: 34px;
-  padding-bottom: 28px;
   padding: 34px 28px 34px 70px;
 }
 .m-shadowboxHeader__title {
@@ -110,7 +108,7 @@ m-shadowboxHeader {
   }
 }
 .m-shadowboxHeader__subtitle {
-  line-height: 20px;
+  line-height: 22px;
   margin: 0;
   @include m-theme() {
     color: themed($m-grey-300);
@@ -119,6 +117,9 @@ m-shadowboxHeader {
 }
 
 @media screen and (max-width: $min-tablet) {
+  .m-shadowboxLayout__header.hasTitle {
+    padding: 0 24px;
+  }
   .m-shadowboxHeader__section {
     [class*='m-shadowboxHeader__overflowScrollButton--'] {
       display: none;

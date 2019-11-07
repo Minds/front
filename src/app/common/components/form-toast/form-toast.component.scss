@@ -1,0 +1,66 @@
+m-formToast {
+  margin: 37px 70px 0 70px;
+  display: block;
+}
+.m-formToast__wrapper {
+  font-size: 15px;
+  line-height: 20px;
+  padding: 13px;
+  display: flex;
+  @include m-theme() {
+    color: themed($m-grey-600);
+    background-color: themed($m-white);
+    box-shadow: 0 0 15px 0 rgba(themed($m-black), 0.2);
+  }
+  p {
+    flex-grow: 1;
+    margin: 0;
+  }
+}
+
+[class*='m-formToast__icon--status'] {
+  margin-right: 10px;
+}
+.m-formToast__icon--statusSuccess {
+  @include m-theme() {
+    color: themed($m-green-dark);
+  }
+}
+.m-formToast__icon--statusError {
+  @include m-theme() {
+    color: themed($m-red);
+  }
+}
+.m-formToast__icon--close {
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  @include m-theme() {
+    color: themed($m-grey-600);
+  }
+  &:hover {
+    transform: scale(1.2);
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
+  }
+  &:active {
+    @include m-theme() {
+      color: themed($m-grey-600);
+    }
+  }
+}
+
+@media screen and (max-width: $min-tablet) {
+  m-formToast {
+    // margin: 37px 24px 0 24px;
+    margin: auto;
+  }
+}
+
+// TODOOJM
+// @media screen and (max-width: $max-mobile) {
+//   m-formToast {
+//     position: fixed;
+
+//   }
+// }
