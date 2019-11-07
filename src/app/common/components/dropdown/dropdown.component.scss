@@ -41,13 +41,13 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 0 8px 0 0;
     list-style: none;
     opacity: 1;
     text-overflow: ellipsis;
     text-align: left;
 
-    a {
+    > * {
+      padding: 0 8px 0 0;
       text-decoration: none;
       width: 100%;
       font-weight: 400;
@@ -94,11 +94,13 @@
 
     .m-dropdown--list--item,
     .m-dropdownList__item {
-      padding: 8px;
       @include m-theme() {
         border-bottom: 1px solid themed($m-grey-50);
       }
 
+      > * {
+        padding: 8px;
+      }
       &.m-dropdown--list--item--selected,
       .m-dropdownList__item--selected {
         @include m-theme() {
