@@ -159,12 +159,10 @@
         *ngIf="getCurrentUser()"
         (click)="toggleTheme()"
       >
-        <div>
-          <i class="material-icons" *ngIf="isDark">brightness_7</i>
-          <i class="material-icons" *ngIf="!isDark">brightness_2</i>
-          <span i18n *ngIf="isDark">Light Mode</span>
-          <span i18n *ngIf="!isDark">Dark Mode</span>
-        </div>
+        <i class="material-icons" *ngIf="isDark">brightness_7</i>
+        <i class="material-icons" *ngIf="!isDark">brightness_2</i>
+        <span i18n *ngIf="isDark">Light Mode</span>
+        <span i18n *ngIf="!isDark">Dark Mode</span>
       </li>
     </ng-container>
 
