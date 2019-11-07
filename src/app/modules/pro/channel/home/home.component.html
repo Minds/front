@@ -6,7 +6,10 @@
   ></m-pro--channel--categories>
 
   <div class="m-proChannelHome__section" *ngIf="featuredContent?.length">
-    <div class="m-proChannelHome__featuredContent">
+    <div
+      class="m-proChannelHome__featuredContent"
+      [class.m-proChannelHome__featuredContent--prominent]="false"
+    >
       <m-pro--channel-tile
         *ngFor="let entity of featuredContent"
         [entity]="entity"
