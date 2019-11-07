@@ -55,7 +55,7 @@
     [href]="src.perma_url"
     target="_blank"
     rel="noopener noreferrer"
-    class="meta mdl-color-text--blue-grey-900"
+    class="meta"
     [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src, 'm-rich-embed--title--no-padding': hasInlineContentLoaded() }"
   >
     <h2
@@ -74,10 +74,7 @@
   <a class="thumbnail" *ngIf="preview.thumbnail">
     <img src="{{preview.thumbnail}}" />
   </a>
-  <a
-    class="meta mdl-color-text--blue-grey-900"
-    [ngClass]="{ 'm-has-thumbnail': preview.thumbnail }"
-  >
+  <a class="meta" [ngClass]="{ 'm-has-thumbnail': preview.thumbnail }">
     <h2 class="m-rich-embed--title mdl-card__title-text">
       {{preview.title | excerpt}}
     </h2>

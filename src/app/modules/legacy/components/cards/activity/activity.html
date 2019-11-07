@@ -219,7 +219,12 @@
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
-    <minds-rich-embed [src]="activity" [maxheight]="480"></minds-rich-embed>
+    <minds-rich-embed
+      (mediaModalRequested)="openModal()"
+      [src]="activity"
+      [maxheight]="480"
+    >
+    </minds-rich-embed>
   </div>
 
   <div
