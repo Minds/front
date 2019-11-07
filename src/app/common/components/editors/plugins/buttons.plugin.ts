@@ -157,7 +157,12 @@ export class ButtonsPlugin {
     this.addButtons();
 
     $buttons = this.$element.querySelector('.medium-insert-buttons');
-    $lastEl = $buttons.previousElementSibling;
+
+    if ($buttons && $buttons.previousElementSibling) {
+      $lastEl = $buttons.previousElementSibling;
+    }
+
+    // TypeError: this.$element.querySelector(...).previousElementSibling is null
     if (
       $lastEl.getAttribute('class') &&
       $lastEl.getAttribute('class').match(/medium\-insert(?!\-active)/)
