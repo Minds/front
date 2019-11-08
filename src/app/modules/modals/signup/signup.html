@@ -2,6 +2,7 @@
   [open]="open"
   (closed)="onClose($event)"
   *ngIf="!session.isLoggedIn() || display != 'initial'"
+  (click)="$event.stopPropagation()"
 >
   <div
     class="mdl-card__title"
