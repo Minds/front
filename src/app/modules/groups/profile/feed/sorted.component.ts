@@ -58,7 +58,11 @@ export class GroupProfileFeedSortedComponent {
 
   kicking: any;
 
+  viewScheduled: boolean = false;
+
   @ViewChild('poster', { static: false }) protected poster: PosterComponent;
+
+  scheduledCount: number = 0;
 
   constructor(
     protected service: GroupsService,
@@ -86,11 +90,18 @@ export class GroupProfileFeedSortedComponent {
 
     this.detectChanges();
 
+    let endpoint = 'api/v2/feeds/container';
+    if (this.viewScheduled) {
+      endpoint = 'api/v2/feeds/scheduled';
+    }
+
     try {
       this.feedsService
-        .setEndpoint(`api/v2/feeds/container/${this.group.guid}/${this.type}`)
+        .setEndpoint(`${endpoint}/${this.group.guid}/${this.type}`)
         .setLimit(12)
         .fetch();
+
+      this.getScheduledCount();
     } catch (e) {
       console.error('GroupProfileFeedSortedComponent.loadFeed', e);
     }
@@ -192,5 +203,17 @@ export class GroupProfileFeedSortedComponent {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  toggleScheduled() {
+    this.viewScheduled = !this.viewScheduled;
+    this.load(true);
+  }
+
+  async getScheduledCount() {
+    const url = `api/v2/feeds/scheduled/${this.group.guid}/count`;
+    const response: any = await this.client.get(url);
+    this.scheduledCount = response.count;
+    this.detectChanges();
   }
 }
