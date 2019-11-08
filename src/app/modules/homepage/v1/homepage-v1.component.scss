@@ -1,0 +1,90 @@
+@import 'defaults';
+
+m-homepage__v1 {
+  .m-marketing__main {
+    &.m-marketing__section--style-2 {
+      .m-marketing__body {
+        &::before {
+          transform: translate(311px, -80px);
+          clip-path: polygon(57% 0, 100% 0, 100% 15%, 18% 87%);
+          bottom: -80px;
+
+          @include m-theme() {
+            background: themed($m-amber-medium);
+          }
+        }
+
+        &::after {
+          content: '';
+          clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 100%);
+          background: #f5f6ff;
+
+          position: absolute;
+          bottom: -10px;
+          left: -100px;
+          height: 202px;
+          right: -500px;
+
+          z-index: -2;
+        }
+      }
+    }
+
+    .m-marketing__image {
+      span {
+        &::before {
+          content: initial !important;
+        }
+
+        .m-homepage__cellphone {
+          //box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+          height: auto !important;
+          object-fit: initial !important;
+          width: 333px !important;
+          transform: translateY(-25px);
+        }
+      }
+    }
+  }
+
+  .m-homepage__appButtons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+
+    margin-top: 150px;
+
+    & > a {
+      width: 120px;
+      height: 37px;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .m-homepage__yellowLine {
+    display: inline-block;
+    width: 55px;
+    height: 5px;
+    margin-bottom: 3px;
+    @include m-theme() {
+      background-color: themed($m-amber-medium);
+    }
+  }
+
+  .m-homepage__joinMindsNow {
+    max-width: 90%;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      max-width: 100%;
+    }
+  }
+}
+
+.m-homepage {
+  margin-top: -52px;
+}

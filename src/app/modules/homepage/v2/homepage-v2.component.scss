@@ -1,6 +1,6 @@
 @import 'defaults';
 
-m-homepage {
+m-homepage__v2 {
   .m-marketing__main {
     &.m-marketing__section--style-2 {
       .m-marketing__body {
@@ -37,7 +37,7 @@ m-homepage {
         }
 
         .m-homepage__cellphone {
-          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+          //box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
           height: auto !important;
           object-fit: initial !important;
           width: 333px !important;
@@ -54,7 +54,7 @@ m-homepage {
     justify-content: space-between;
     width: 50%;
 
-    margin-top: 150px;
+    margin-top: 50px;
 
     & > a {
       width: 120px;

@@ -11,11 +11,14 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { ModalsModule } from '../modals/modals.module';
 import { MindsFormsModule } from '../forms/forms.module';
 
-import { HomepageComponent } from './homepage.component';
+import { HomepageV1Component } from './v1/homepage-v1.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
+import { HomepageV2Component } from './v2/homepage-v2.component';
+import { HomepageRegisterComponent } from './v2/register/register.component';
+import { CaptchaModule } from '../captcha/captcha.module';
 
-const routes: Routes = [{ path: '', component: HomepageComponent }];
+const routes: Routes = [{ path: '', component: HomepageV2Component }];
 
 @NgModule({
   imports: [
@@ -29,8 +32,13 @@ const routes: Routes = [{ path: '', component: HomepageComponent }];
     MindsFormsModule,
     MarketingModule,
     ExperimentsModule,
+    CaptchaModule,
   ],
-  declarations: [HomepageComponent],
-  entryComponents: [HomepageComponent],
+  declarations: [
+    HomepageV1Component,
+    HomepageV2Component,
+    HomepageRegisterComponent,
+  ],
+  entryComponents: [HomepageV1Component, HomepageV2Component],
 })
 export class HomepageModule {}

@@ -41,9 +41,26 @@
     }
 
     p.m-marketing__description {
-      margin-bottom: 42px;
       padding-right: 200px;
 
+      margin-bottom: 42px;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        margin-bottom: 30px;
+      }
+    }
+
+    ol.m-marketing__description {
+      padding-right: 100px;
+      padding-left: 16px;
+
+      & > li {
+        margin-bottom: 16px;
+      }
+    }
+
+    ol.m-marketing__description > li,
+    p.m-marketing__description {
       @include m-theme() {
         color: themed($m-grey-300);
       }
@@ -54,7 +71,6 @@
 
       @media screen and (max-width: $m-grid-min-vp) {
         padding-right: 0;
-        margin-bottom: 30px;
         font-size: 16px;
         line-height: 23px;
         text-align: center;
