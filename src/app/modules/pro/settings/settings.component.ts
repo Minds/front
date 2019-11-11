@@ -153,9 +153,9 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
   getPreviewAssetSrc(type: string): string | SafeUrl {
     if (this.settings[type]) {
       if (!this.settings[type]._mindsBlobUrl) {
-        this.settings[type]._mindsBlobUrl = URL.createObjectURL(this.settings[
-          type
-        ] as File);
+        this.settings[type]._mindsBlobUrl = URL.createObjectURL(
+          this.settings[type] as File
+        );
       }
 
       return this.sanitizer.bypassSecurityTrustUrl(

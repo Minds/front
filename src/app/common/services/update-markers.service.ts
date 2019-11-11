@@ -81,9 +81,10 @@ export class UpdateMarkersService {
     if (!opts.marker) throw 'marker must be set';
 
     if (!opts.noReply) {
-      this.http
-        .post('api/v2/notifications/markers/read', opts)
-        .subscribe(res => null, err => console.warn(err));
+      this.http.post('api/v2/notifications/markers/read', opts).subscribe(
+        res => null,
+        err => console.warn(err)
+      );
     }
 
     for (let i = 0; i < this.data.length; i++) {
