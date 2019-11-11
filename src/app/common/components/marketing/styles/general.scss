@@ -125,12 +125,26 @@
       box-shadow: 0 0 39px -4px rgba(0, 0, 0, 0.5);
 
       z-index: 3;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        width: 10vw;
+        height: 10vw;
+
+        font-size: 5vw;
+      }
     }
 
     .m-marketing__imageTick--left {
       position: absolute;
-      bottom: 21px;
+      bottom: 8px;
       left: -45px;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        //bottom: -116px;
+        //left: 2px;
+        bottom: -27%;
+        left: 2.5%;
+      }
     }
 
     img {
@@ -143,7 +157,9 @@
     flex-direction: column;
     align-items: flex-end;
 
-    width: 500px;
+    @media screen and(min-width: $m-grid-min-vp) {
+      width: 500px;
+    }
     margin: 0 auto;
 
     h4 {
