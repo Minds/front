@@ -27,6 +27,38 @@ m-homepage__v2 {
 
           z-index: -2;
         }
+
+        @media screen and (max-width: $max-mobile) {
+          &::before {
+            transform: translate(161px, 205px);
+          }
+
+          &::after {
+            left: 0;
+            right: 0;
+            bottom: -750px;
+          }
+        }
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        m-homepage__registerForm {
+          margin: 30px 10px 50px;
+
+          &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 393px;
+            height: 193px;
+            top: -66px;
+            left: -144px;
+            transform: translate(45px, 32px);
+            background: url('<%= APP_CDN %>/assets/marketing/deco_2-straight.svg')
+              no-repeat;
+            z-index: -1;
+          }
+        }
       }
     }
 
