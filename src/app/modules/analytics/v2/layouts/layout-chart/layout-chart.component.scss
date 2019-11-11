@@ -1,22 +1,6 @@
-.m-analytics__filterableChartWrapper {
-  position: relative;
-  margin-bottom: 48px;
-  @include m-theme() {
-    border-top: 1px solid rgba(themed($m-grey-50), 0.5);
-    background-color: themed($m-white);
-  }
+.m-shadowboxLayout__body {
   &.isTable {
     width: 100%;
     min-width: 420px;
-  }
-}
-.m-analytics__spinnerContainer {
-  height: 30%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  @include m-theme() {
-    background-color: themed($m-white);
   }
 }

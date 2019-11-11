@@ -1,202 +1,79 @@
-m-analytics__metrics {
-  display: block;
-  .m-analytics__metricsSection {
-    position: relative;
-
-    [class*='m-analytics__metricsOverflowFade--'] {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 24px;
-      z-index: 2;
-      &.m-analytics__metricsOverflowFade--right {
-        @include m-theme() {
-          right: 0;
-          background: linear-gradient(
-            to right,
-            rgba(themed($m-white), 0) 0,
-            themed($m-white) 50%
-          );
-        }
-      }
-      &.m-analytics__metricsOverflowFade--left {
-        @include m-theme() {
-          left: 0;
-          background: linear-gradient(
-            to left,
-            rgba(themed($m-white), 0) 0,
-            themed($m-white) 50%
-          );
-        }
-      }
-    }
-
-    [class*='m-analytics__metricsOverflowScrollButton--'] {
-      position: absolute;
-      top: 50%;
-      border-radius: 50%;
-      box-sizing: border-box;
-      z-index: 2;
-      transform: translateY(-50%);
-      opacity: 0;
-      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      &.showButton {
-        opacity: 1;
-      }
-      cursor: pointer;
-      @include m-theme() {
-        background-color: themed($m-white);
-        box-shadow: 0px 0px 10px -3px rgba(themed($m-black-always), 0.3);
-        border: 1px solid themed($m-white);
-      }
-      &:hover {
-        @include m-theme() {
-          border: 1px solid themed($m-blue);
-        }
-      }
-      &.m-analytics__metricsOverflowScrollButton--right {
-        right: -12;
-      }
-      &.m-analytics__metricsOverflowScrollButton--left {
-        left: -12;
-      }
-      i {
-        @include m-theme() {
-          color: themed($m-grey-200);
-        }
-      }
-    }
-  }
-}
-.m-analytics__metricsWrapper {
-  position: relative;
-  z-index: 1;
+.m-analytics__metric {
+  cursor: pointer;
+  flex: 0 0 auto;
+  width: 160px;
+  padding: 24px 20px 20px 20px;
+  font-size: 14px;
+  box-sizing: border-box;
+  overflow: visible;
   @include m-theme() {
-    box-shadow: 0 7px 15px -7px rgba(themed($m-black-always), 0.1);
+    border-bottom: 8px solid themed($m-white);
   }
-}
-
-.m-analytics__metricsContainer {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  display: flex;
-  flex-wrap: nowrap;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-
-  &.disable-scrollbars {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-    &::-webkit-scrollbar {
-      width: 0px;
-      background: transparent; /* Chrome/Safari/Webkit */
-    }
+  @include m-theme() {
+    color: themed($m-grey-300);
   }
-
-  .m-analytics__metric {
-    cursor: pointer;
-    flex: 0 0 auto;
-    width: 160px;
-    padding: 24px 20px 20px 20px;
-    font-size: 14px;
-    box-sizing: border-box;
-    overflow: visible;
+  &.active {
     @include m-theme() {
-      border-bottom: 8px solid themed($m-white);
-    }
-    @include m-theme() {
-      color: themed($m-grey-300);
-    }
-    &.active {
-      @include m-theme() {
-        background-color: rgba(themed($m-grey-100), 0.2);
-        border-bottom: 8px solid themed($m-blue);
-      }
-    }
-    &:first-child {
-      margin-left: 40px;
-    }
-    &:last-child {
-      margin-right: 40px;
-    }
-
-    &:hover:not(.active) {
-      transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      @include m-theme() {
-        background-color: rgba(themed($m-grey-100), 0.2);
-        border-bottom: 8px solid rgba(0, 0, 0, 0);
-      }
-    }
-    .m-analytics__metricLabel {
-      white-space: nowrap;
-    }
-    m-tooltip {
-      vertical-align: middle;
-      margin-left: 4px;
-    }
-    .m-analytics__metricSummary {
-      font-size: 17px;
-      margin-top: 8px;
-      @include m-theme() {
-        color: themed($m-grey-800);
-      }
-    }
-    .m-analytics__metricDelta {
-      display: flex;
-      align-items: baseline;
-      padding-top: 4px;
-      font-size: 11px;
-      .material-icons {
-        transform: scaleX(0.7);
-        font-size: 11px;
-        font-weight: bold;
-      }
-      @include m-theme() {
-        &.goodChange {
-          color: themed($m-green);
-        }
-        &.badChange {
-          color: themed($m-red);
-        }
-      }
+      background-color: rgba(themed($m-grey-100), 0.2);
+      border-bottom: 8px solid themed($m-blue);
     }
   }
-  .m-tooltip {
-    i {
-      font-size: 12px;
-      @include m-theme() {
-        color: rgba(themed($m-grey-300), 0.7);
-      }
+  &:first-child {
+    margin-left: 40px;
+  }
+  &:last-child {
+    margin-right: 40px;
+  }
+
+  &:hover:not(.active) {
+    transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      background-color: rgba(themed($m-grey-100), 0.2);
+      border-bottom: 8px solid rgba(0, 0, 0, 0);
     }
-    .m-tooltip--bubble {
-      z-index: 9999;
+  }
+  .m-analytics__metricLabel {
+    white-space: nowrap;
+  }
+  m-tooltip {
+    vertical-align: middle;
+  }
+  .m-analytics__metricSummary {
+    font-size: 17px;
+    margin-top: 8px;
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
+  .m-analytics__metricDelta {
+    display: flex;
+    align-items: baseline;
+    padding-top: 4px;
+    font-size: 11px;
+    .material-icons {
+      transform: scaleX(0.7);
       font-size: 11px;
-      width: 160px;
-      @include m-theme() {
-        color: themed($m-white);
-        background-color: themed($m-blue);
+      font-weight: bold;
+    }
+    @include m-theme() {
+      &.goodChange {
+        color: themed($m-green);
+      }
+      &.badChange {
+        color: themed($m-red);
       }
     }
   }
 }
 
 @media screen and (max-width: $min-tablet) {
-  .m-analytics__metricsSection {
-    [class*='m-analytics__metricsOverflowScrollButton--'] {
-      display: none;
+  .m-analytics__metric {
+    scroll-snap-align: start;
+    &:first-child {
+      margin-left: 16px;
     }
-    .m-analytics__metricsContainer {
-      overflow-x: scroll;
-      position: relative;
-      scroll-snap-type: x mandatory;
-      .m-analytics__metric {
-        scroll-snap-align: start;
-        &:first-child {
-          margin-left: 16px;
-        }
-        &:last-child {
-          margin-right: 16px;
-        }
-      }
+    &:last-child {
+      margin-right: 16px;
     }
   }
 }

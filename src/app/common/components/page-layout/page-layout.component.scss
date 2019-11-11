@@ -1,0 +1,57 @@
+m-pageLayout {
+  display: block;
+  position: relative;
+  width: 100%;
+  padding-top: 56px;
+  margin-bottom: 48px;
+  @include m-theme() {
+    background-color: themed($m-white);
+    color: themed($m-grey-800);
+  }
+
+  .m-tooltip {
+    margin-left: 4px;
+    i {
+      font-size: 12px;
+      @include m-theme() {
+        color: rgba(themed($m-grey-300), 0.7);
+      }
+    }
+    .m-tooltip--bubble {
+      z-index: 9999;
+      font-size: 11px;
+      @include m-theme() {
+        color: themed($m-white);
+        background-color: themed($m-blue);
+      }
+    }
+  }
+}
+m-sidebarMenu {
+  display: block;
+  box-sizing: border-box;
+  padding-left: 105px;
+  width: 245px;
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+}
+.m-pageLayout__main {
+  margin-left: 350px;
+  margin-right: 24px;
+
+  @include m-theme() {
+    background-color: themed($m-white);
+    color: themed($m-grey-800);
+  }
+}
+
+@media screen and (max-width: $min-tablet) {
+  .m-pageLayout__main {
+    display: block;
+    margin: 0;
+  }
+  m-sidebarMenu {
+    margin-left: 0;
+  }
+}

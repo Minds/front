@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Session } from '../../../services/session';
-import menuCategories from './categories.default';
+import sidebarMenuCategories from './sidebar-menu-categories.default';
 
 interface MenuCategory {
-  category: MenuLink;
-  subcategories?: MenuLink[];
+  header: MenuLink;
+  links?: MenuLink[];
   expanded?: boolean;
 }
 export { MenuCategory };
@@ -24,9 +24,11 @@ export { MenuLink };
   templateUrl: './sidebar-menu.component.html',
 })
 export class SidebarMenuComponent implements OnInit {
-  cats: MenuCategory[] = menuCategories;
+  @Input() catId: string;
+
+  cat: MenuCategory;
   mobileMenuExpanded = false;
-  activeCat;
+  // activeCat;
   minds: Minds;
   user;
   userRoles: string[] = ['user'];
@@ -36,6 +38,7 @@ export class SidebarMenuComponent implements OnInit {
   ngOnInit() {
     this.minds = window.Minds;
     this.user = this.session.getLoggedInUser();
+    this.cat = sidebarMenuCategories.find(cat => cat.header.id === this.catId);
     this.getUserRoles();
     this.grantPermissionsAndFindActiveCat();
   }
@@ -48,25 +51,25 @@ export class SidebarMenuComponent implements OnInit {
   }
 
   grantPermissionsAndFindActiveCat() {
-    this.cats.forEach(catObj => {
-      catObj.category['permissionGranted'] = catObj.category.permissions
-        ? this.checkForRoleMatch(catObj.category.permissions)
-        : true;
+    // this.cat.forEach(this.cat => {
+    this.cat.header['permissionGranted'] = this.cat.header.permissions
+      ? this.checkForRoleMatch(this.cat.header.permissions)
+      : true;
 
-      if (catObj.subcategories) {
-        catObj.subcategories.forEach(subCat => {
-          subCat['permissionGranted'] = subCat.permissions
-            ? this.checkForRoleMatch(subCat.permissions)
-            : true;
-        });
-      }
-      if (location.pathname.indexOf(catObj.category.path) !== -1) {
-        catObj.category['expanded'] = true;
-        this.activeCat = catObj;
-      } else {
-        catObj.category['expanded'] = false;
-      }
-    });
+    if (this.cat.links) {
+      this.cat.links.forEach(link => {
+        link['permissionGranted'] = link.permissions
+          ? this.checkForRoleMatch(link.permissions)
+          : true;
+      });
+    }
+    // if (location.pathname.indexOf(this.cats.header.path) !== -1) {
+    //   this.cats.header['expanded'] = true;
+    //   this.activeCat = this.cat;
+    // } else {
+    //   this.cat.header['expanded'] = false;
+    // }
+    // });
   }
 
   checkForRoleMatch(permissionsArray) {

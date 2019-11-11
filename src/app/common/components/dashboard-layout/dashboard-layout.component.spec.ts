@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MiniChartComponent } from './mini-chart.component';
+import { DashboardLayoutComponent } from './dashboard-layout.component';
 
-describe('MiniChartComponent', () => {
-  let component: MiniChartComponent;
-  let fixture: ComponentFixture<MiniChartComponent>;
+describe('DashboardLayoutComponent', () => {
+  let component: DashboardLayoutComponent;
+  let fixture: ComponentFixture<DashboardLayoutComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MiniChartComponent],
+      declarations: [DashboardLayoutComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MiniChartComponent);
+    fixture = TestBed.createComponent(DashboardLayoutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
