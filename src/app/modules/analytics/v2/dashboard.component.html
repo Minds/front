@@ -1,58 +1,64 @@
-<div class="m-analytics__dashboard">
-  <m-sidebarMenu></m-sidebarMenu>
-  <section class="m-analytics__main" *ngIf="ready$ | async">
-    <div class="m-analytics__mainHeader">
-      <div class="m-analytics__dashboardTitle">
-        <h3 class="m-analytics__selectedCatLabel">
-          {{ category$ | async | titlecase }}
-        </h3>
-      </div>
-      <div class="m-analytics__globalFilters">
-        <!-- <div *ngIf="session.isAdmin()" class="m-analytics__channelSearch"> -->
-        <!-- <div class="m-analytics__channelSearch">
-          <m-analytics__search></m-analytics__search>
-        </div> -->
-        <!-- <div class="m-analytics__channelFilter" *ngIf="session.isAdmin()">
-          <m-analytics__filter [filter]="channelFilter"></m-analytics__filter>
-        </div> -->
-        <div class="m-analytics__timespanFilter">
-          <m-analytics__filter
-            [filter]="timespanFilter"
-            [showLabel]="false"
-          ></m-analytics__filter>
+<m-pageLayout navId="analytics">
+  <div class="m-analyticsDashboard" *ngIf="ready$ | async" m-pageLayout__main>
+    <m-dashboardLayout>
+      <ng-container m-dashboardLayout__header>
+        <div>
+          <h3>
+            {{ category$ | async | titlecase }}
+          </h3>
         </div>
-      </div>
-    </div>
-    <p
-      class="m-analytics__selectedCatDescription"
-      *ngIf="description$ | async as description"
-    >
-      {{ description }}
-      <ng-container *ngIf="(category$ | async) === 'earnings'">
-        <a *ngIf="!session.getLoggedInUser().pro" routerLink="/pro"
-          >Upgrade to PRO</a
+        <div
+          class="m-analyticsDashboard__headerFilters"
+          *ngIf="layout === 'chart'"
         >
-        <a
-          *ngIf="
-            session.getLoggedInUser().pro &&
-            !(
-              session.getLoggedInUser().merchant &&
-              session.getLoggedInUser().merchant['id']
-            )
-          "
-          routerLink="/wallet/usd"
-          >Enable payouts</a
-        >.
+          <!-- <div *ngIf="session.isAdmin()" class="m-analytics__channelSearch"> -->
+          <!-- <div class="m-analyticsDashboard__channelSearch">
+                <m-analytics__search></m-analytics__search>
+              </div> -->
+          <!-- <div class="m-analyticsDashboard__channelFilter" *ngIf="session.isAdmin()">
+                <m-analytics__filter [filter]="channelFilter"></m-analytics__filter>
+              </div> -->
+          <div class="m-analyticsDashboard__timespanFilter">
+            <m-analytics__filter
+              [filter]="timespanFilter"
+              [showLabel]="false"
+            ></m-analytics__filter>
+          </div>
+        </div>
       </ng-container>
-    </p>
-    <div class="m-analytics__layoutWrapper">
+      <p
+        m-dashboardLayout__body
+        class="m-analyticsDashboard__description"
+        *ngIf="description$ | async as description"
+      >
+        {{ description }}
+        <ng-container *ngIf="(category$ | async) === 'earnings'">
+          <a *ngIf="!session.getLoggedInUser().pro" routerLink="/pro"
+            >Upgrade to PRO</a
+          >
+          <a
+            *ngIf="
+              session.getLoggedInUser().pro &&
+              !(
+                session.getLoggedInUser().merchant &&
+                session.getLoggedInUser().merchant['id']
+              )
+            "
+            routerLink="/wallet/usd"
+            >Enable payouts</a
+          >
+        </ng-container>
+      </p>
       <m-analytics__layout--chart
+        m-dashboardLayout__body
+        *ngIf="layout === 'chart'"
         class="m-analytics__layout"
       ></m-analytics__layout--chart>
-      <!-- <m-analytics__layout--summary
-      class="m-analytics__layout"
-      *ngIf="(category$ | async).type === 'summary'"
-    ></m-analytics__layout--summary> -->
-    </div>
-  </section>
-</div>
+      <m-analytics__layout--summary
+        m-dashboardLayout__body
+        *ngIf="layout === 'summary'"
+        class="m-analytics__layout"
+      ></m-analytics__layout--summary>
+    </m-dashboardLayout>
+  </div>
+</m-pageLayout>
