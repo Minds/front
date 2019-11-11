@@ -61,8 +61,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
           return (
             entity.type === 'group' ||
             !!entity.thumbnail_src ||
-              !!entity.custom_data ||
-              (entity.thumbnails && entity.thumbnails.length > 0)
+            !!entity.custom_data ||
+            (entity.thumbnails && entity.thumbnails.length > 0)
           );
         });
       })

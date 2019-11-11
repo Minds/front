@@ -267,7 +267,7 @@
                   !notification.entityObj.title
                 "
                 i18n="
-                  object belonging to
+                   object belonging to
                   user@@NOTIFICATIONS__NOTIFICATION__OTHER_OBJECT
                 "
                 >{{ notification.entityObj.ownerObj.name }}'s
@@ -281,7 +281,7 @@
                   !notification.entityObj.title
                 "
                 i18n="
-                  object belonging to current
+                   object belonging to current
                   user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
                 "
                 >your {{ notification.entityObj.subtype }}</span
@@ -302,7 +302,7 @@
             <p>
               <ng-container
                 i18n="
-                  @@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION
+                   @@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION
                 "
                 *ngIf="notification.params?.is_reply"
               >
@@ -356,7 +356,7 @@
             class="pseudo-link mdl-color-text--blue-grey-400"
             *ngIf="!notification.entityObj.title"
             i18n="
-              object belonging to current
+               object belonging to current
               user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
             "
             >your {{ notification.entityObj.subtype }}</span
@@ -470,7 +470,7 @@
             class="pseudo-link mdl-color-text--blue-grey-400"
             *ngIf="!notification.entityObj.title"
             i18n="
-              object belonging to current
+               object belonging to current
               user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
             "
             >your {{ notification.entityObj.subtype }}</span
@@ -493,7 +493,7 @@
         <p *ngIf="!notification.entityObj.title">
           <ng-container
             i18n="
-              @@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_OWN_ACTIVITY
+               @@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_OWN_ACTIVITY
             "
             >{{ notification.fromObj.name }} down voted
             <span class="pseudo-link mdl-color-text--blue-grey-400"
@@ -539,7 +539,7 @@
         >
           <p
             i18n="
-              @@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_CONVERSATION
+               @@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_CONVERSATION
             "
           >
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{
@@ -587,7 +587,7 @@
             class="pseudo-link mdl-color-text--blue-grey-400"
             *ngIf="!notification.entityObj.title"
             i18n="
-              object belonging to current
+               object belonging to current
               user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
             "
             >your {{ notification.entityObj.subtype }}</span
@@ -807,7 +807,9 @@
         >
         <ng-container
           i18n="
+
             boost@@NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED__AWAITING_APPROVAL
+
           "
         >
           is awaiting approval.</ng-container
@@ -868,7 +870,9 @@
         >
         <ng-container
           i18n="
+
             boost@@NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED_P2P__AWAITING_APPROVAL_BY
+
           "
         >
           is awaiting approval by
@@ -1305,7 +1309,7 @@
       <p>
         <ng-container
           i18n="
-            @@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_ACCEPTED__ACCEPTED_BID
+             @@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_ACCEPTED__ACCEPTED_BID
           "
           ><b>@{{ notification.from.username }}</b> accepted your bid
           of</ng-container
@@ -1366,7 +1370,7 @@
       <p>
         <ng-container
           i18n="
-            @@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__DECLINED_BID
+             @@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__DECLINED_BID
           "
           ><b>@{{ notification.from.username }}</b> declined your bid
           of</ng-container
@@ -1705,7 +1709,9 @@
           <span
             class="pseudo-link mdl-color-text--blue-grey-400"
             i18n="
+
               @@NOTIFICATIONS__NOTIFICATION__REPORT_ACTIONED__ACTIVITY_TITLE_BEEN
+
             "
             >Your post {{ notification.entityObj.title }}</span
           >
@@ -1754,7 +1760,9 @@
     <a target="_blank" routerLink="/wallet/tokens/contributions">
       <p
         i18n="
+
           @@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_RECEIVED_X_TOKENS_TODAY
+
         "
       >
         You earned {{ notification.params.amount }} tokens today.
