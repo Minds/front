@@ -109,6 +109,13 @@
     }
   }
 
+  a.m-marketing__link {
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+  }
+
   span.m-marketing__imageUX {
     span.m-marketing__imageTick {
       border-radius: 50%;
