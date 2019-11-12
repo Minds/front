@@ -9,14 +9,8 @@ export class ShadowboxLayoutComponent implements OnInit {
   @Input() hasHeader: boolean = true;
   @Input() headerTitle: string;
   @Input() headerSubtitle: string;
-  @Input() isForm: boolean = false;
+  @HostBinding('class.isForm') @Input() isForm: boolean = false;
 
-  @HostBinding('class') get checkIsForm() {
-    if (!this.isForm) {
-      return '';
-    }
-    return 'isForm';
-  }
   constructor() {}
 
   ngOnInit() {}

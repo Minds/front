@@ -62,7 +62,7 @@ const sidebarMenus = [
   {
     header: {
       id: 'pro_settings',
-      label: 'PRO Settings',
+      label: 'Pro Settings',
       path: '/pro/settings/',
       permissions: ['pro'],
     },

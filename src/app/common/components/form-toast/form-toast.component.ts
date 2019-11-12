@@ -1,15 +1,46 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormToast, FormToastService } from '../../services/form-toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-formToast',
   templateUrl: './form-toast.component.html',
 })
-export class FormToastComponent implements OnInit {
-  @Input() status: string = 'success';
-  @Input() hidden: boolean = false; //OJMTODO
-  constructor() {}
+export class FormToastComponent implements OnInit, OnDestroy {
+  toasts: FormToast[] = [];
+  timeoutIds: number[] = [];
+  subscription: Subscription;
 
-  ngOnInit() {}
+  constructor(private service: FormToastService) {}
+
+  ngOnInit() {
+    this.subscription = this.service.onToast().subscribe(toast => {
+      if (!toast.message) {
+        // clear toasts when an empty toast is received
+        this.toasts = [];
+        return;
+      }
+
+      toast['visible'] = true;
+      const toastIndex = this.toasts.push(toast) - 1;
+      console.log('***tolll', toast);
+
+      const toastTimeout = setTimeout(() => {
+        this.toasts[toastIndex].visible = false;
+        console.log('***to', this.toasts[toastIndex]);
+      }, 10000);
+
+      this.timeoutIds.push(setTimeout(() => toastTimeout));
+    });
+  }
+
+  dismiss(index) {
+    console.log(this.toasts[index]);
+    this.toasts[index].visible = false;
+  }
+
+  ngOnDestroy() {
+    this.timeoutIds.forEach(id => clearTimeout(id));
+    this.subscription.unsubscribe();
+  }
 }
-
-// TODOOJM : add timer, add max-width, slide into fixed position

@@ -52,7 +52,7 @@ export class AnalyticsLayoutSummaryComponent implements OnInit {
     },
     {
       id: 'earnings',
-      label: 'Total PRO Earnings',
+      label: 'Total Pro Earnings',
       unit: 'usd',
       interval: 'day',
       endpoint:

@@ -21,7 +21,7 @@ m-pageLayout {
       }
     }
     .m-tooltip--bubble {
-      z-index: 9999;
+      z-index: 99;
       font-size: 11px;
       @include m-theme() {
         color: themed($m-white);

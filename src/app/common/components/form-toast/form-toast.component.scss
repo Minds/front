@@ -1,11 +1,21 @@
 m-formToast {
   margin: 37px 70px 0 70px;
-  display: block;
+  display: flex;
+  flex-flow: column nowrap;
+  max-width: 522px;
+  position: fixed;
+  bottom: 24px;
+}
+.m-formToasts__toastsContainer {
+  min-width: 300px;
+  transition: all 0.3s ease;
 }
 .m-formToast__wrapper {
+  width: 100%;
   font-size: 15px;
   line-height: 20px;
   padding: 13px;
+  margin-bottom: 16px;
   display: flex;
   @include m-theme() {
     color: themed($m-grey-600);
@@ -18,29 +28,34 @@ m-formToast {
   }
 }
 
-[class*='m-formToast__icon--status'] {
+[class*='m-formToast__icon--'] {
   margin-right: 10px;
 }
-.m-formToast__icon--statusSuccess {
+.m-formToast__icon--success {
   @include m-theme() {
     color: themed($m-green-dark);
   }
 }
-.m-formToast__icon--statusError {
+.m-formToast__icon--error {
   @include m-theme() {
     color: themed($m-red);
+  }
+}
+.m-formToast__icon--warning {
+  @include m-theme() {
+    color: themed($m-amber-dark);
   }
 }
 .m-formToast__icon--close {
   cursor: pointer;
   transition: all 0.2s ease-out;
   @include m-theme() {
-    color: themed($m-grey-600);
+    color: themed($m-grey-400);
   }
   &:hover {
     transform: scale(1.2);
     @include m-theme() {
-      color: themed($m-grey-300);
+      color: themed($m-grey-200);
     }
   }
   &:active {
@@ -53,7 +68,8 @@ m-formToast {
 @media screen and (max-width: $min-tablet) {
   m-formToast {
     // margin: 37px 24px 0 24px;
-    margin: auto;
+    margin: 0px 24px;
+    max-width: 85%;
   }
 }
 

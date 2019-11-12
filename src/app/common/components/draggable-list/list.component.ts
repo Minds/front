@@ -1,48 +1,38 @@
-import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
-import { DndDropEvent, EffectAllowed } from 'ngx-drag-drop';
+import {
+  Component,
+  ContentChild,
+  Input,
+  TemplateRef,
+  Output,
+  EventEmitter,
+} from '@angular/core';
+import {
+  DndDropEvent,
+  EffectAllowed,
+  DndDragImageOffsetFunction,
+} from 'ngx-drag-drop';
 
 @Component({
-  selector: 'm-draggable-list',
-  template: `
-    <ul
-      dndDropzone
-      [dndHorizontal]="false"
-      [dndEffectAllowed]="dndEffectAllowed"
-      (dndDrop)="onDrop($event)"
-      class="m-draggableList__list"
-    >
-      <div
-        class="dndPlaceholder"
-        dndPlaceholderRef
-        style="min-height:100px;border:1px dashed green;background-color:rgba(0, 0, 0, 0.1)"
-      ></div>
-
-      <li
-        *ngFor="let item of data; let i = index; trackBy: trackByFunction"
-        [dndDraggable]="item"
-        [dndEffectAllowed]="'move'"
-        class="m-draggableList__listItem"
-      >
-        <i class="handle material-icons" dndHandle>reorder</i>
-        <ng-container
-          [ngTemplateOutlet]="template"
-          [ngTemplateOutletContext]="{ item: item, i: i }"
-        ></ng-container>
-      </li>
-    </ul>
-  `,
+  selector: 'm-draggableList',
+  templateUrl: 'list.component.html',
 })
 export class DraggableListComponent {
   @Input() data: Array<any>;
   @Input() dndEffectAllowed: EffectAllowed = 'copyMove';
   @Input() id: string;
+  @Input() headers: string[];
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
+  @Output() emptyListHeaderRowClicked: EventEmitter<any> = new EventEmitter();
+
+  dragging: boolean = false;
 
   trackByFunction(index, item) {
     return this.id ? item[this.id] + index : index;
   }
 
   onDrop(event: DndDropEvent) {
+    this.dragging = false;
+
     if (
       this.data &&
       (event.dropEffect === 'copy' || event.dropEffect === 'move')
@@ -62,4 +52,27 @@ export class DraggableListComponent {
       this.data.splice(dropIndex, 0, event.data);
     }
   }
+  onDragStart(event: DragEvent) {
+    this.dragging = true;
+  }
+
+  removeItem(index) {
+    this.data.splice(index, 1);
+  }
+
+  clickedHeaderRow($event) {
+    if (this.data.length === 0) {
+      this.emptyListHeaderRowClicked.emit($event);
+    }
+  }
+
+  dragImageOffsetRight: DndDragImageOffsetFunction = (
+    event: DragEvent,
+    dragImage: HTMLElement
+  ) => {
+    return {
+      x: dragImage.offsetWidth - 57,
+      y: event.offsetY + 10,
+    };
+  };
 }

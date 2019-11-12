@@ -1,13 +1,12 @@
-<m-pageLayout menuId="pro_settings" class="isForm">
+<m-pageLayout menuId="pro_settings" [isForm]="true">
   <ng-container m-pageLayout__main *ngIf="settings">
     <m-shadowboxLayout
       [scrollableHeader]="false"
+      [isForm]="true"
       [headerTitle]="activeTab.title"
       [headerSubtitle]="activeTab.subtitle"
-      [isForm]="true"
     >
       <div class="m-shadowboxLayout__body">
-        <!-- <div> -->
         <div *ngIf="inProgress && !settings">
           <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
         </div>
@@ -18,50 +17,67 @@
               <!-- General -->
 
               <ng-template ngSwitchCase="general">
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--text">
-                    <label for="title" i18n>Page Title (HTML)</label>
+                <button (click)="tempToast()">toastme</button>
+                <div class="m-proSettings__tab--general">
+                  <div class="m-proSettings__field--text stretchedField">
+                    <div class="m-proSettings__row--label">
+                      <label for="title" i18n>Page Title (HTML)</label>
+                      <m-tooltip icon="help">
+                        <ng-container i18n>tbd</ng-container>
+                      </m-tooltip>
+                    </div>
+                    <div class="m-proSettings__row--input">
+                      <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        [(ngModel)]="settings.title"
+                      /><m-formDescriptor>A short descriptor</m-formDescriptor>
+                    </div>
                   </div>
-                  <div class="m-proSettings__inputRow--text">
-                    <input
-                      type="text"
-                      id="title"
-                      name="title"
-                      [(ngModel)]="settings.title"
-                    />
-                  </div>
-                </div>
 
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--textarea">
-                    <label for="headline" i18n>Headline</label>
+                  <div class="m-proSettings__field--text stretchedField">
+                    <div class="m-proSettings__row--label">
+                      <label for="headline" i18n>Headline</label>
+                      <m-tooltip icon="help">
+                        <ng-container i18n>tbd</ng-container>
+                      </m-tooltip>
+                    </div>
+                    <div class="m-proSettings__row--input">
+                      <textarea
+                        id="headline"
+                        name="headline"
+                        [(ngModel)]="settings.headline"
+                      ></textarea>
+                      <m-formDescriptor
+                        >This will also be used in your SEO
+                        tags</m-formDescriptor
+                      >
+                    </div>
                   </div>
-                  <div class="m-proSettings__inputRow--textarea">
-                    <textarea
-                      id="headline"
-                      name="headline"
-                      [(ngModel)]="settings.headline"
-                    ></textarea>
-                    <m-formDescriptor
-                      >This will be used as your SEO tags as
-                      well</m-formDescriptor
-                    >
-                  </div>
-                </div>
 
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__inputRow--checkbox">
-                    <input
-                      type="checkbox"
-                      id="publish"
-                      name="publish"
-                      [(ngModel)]="settings.published"
-                    />
-                    <label for="publish" i18n
-                      >Enable PRO theme for channel</label
-                    ><m-tooltip icon="help">
-                      <ng-container i18n>tbd</ng-container>
-                    </m-tooltip>
+                  <div class="m-proSettings__field--checkbox compactField">
+                    <div class="m-proSettings__row--input">
+                      <label
+                        for="publish"
+                        class="m-proSettings__customInputContainer--checkbox"
+                        i18n
+                        >Enable Pro theme
+                        <input
+                          type="checkbox"
+                          checked="checked"
+                          id="publish"
+                          name="publish"
+                          [(ngModel)]="settings.published"
+                        />
+                        <span
+                          class="m-proSettings__customInput--checkbox"
+                        ></span>
+                      </label>
+                      <m-tooltip icon="help">
+                        <ng-container i18n>tbd</ng-container>
+                      </m-tooltip>
+                    </div>
                   </div>
                 </div>
               </ng-template>
@@ -69,119 +85,172 @@
               <!-- Theme -->
 
               <ng-template ngSwitchCase="theme">
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--color">
-                    <label for="text_color" i18n>Text Color</label>
-                    <m-tooltip icon="help">
-                      <ng-container i18n>tbd</ng-container>
-                    </m-tooltip>
-                  </div>
-                  <input
-                    type="color"
-                    id="text_color"
-                    name="text_color"
-                    [(ngModel)]="settings.text_color"
-                  />
-                </div>
-
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--color">
-                    <label for="primary_color" i18n>Primary Color</label
-                    ><m-tooltip icon="help">
-                      <ng-container i18n>tbd</ng-container>
-                    </m-tooltip>
-                  </div>
-                  <input
-                    type="color"
-                    id="primary_color"
-                    name="primary_color"
-                    [(ngModel)]="settings.primary_color"
-                  />
-                </div>
-
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--color">
-                    <label for="plain_background_color" i18n>
-                      Plain Background Color </label
-                    ><m-tooltip icon="help">
-                      <ng-container i18n>tbd</ng-container>
-                    </m-tooltip>
-                  </div>
-                  <input
-                    type="color"
-                    id="plain_background_color"
-                    name="plain_background_color"
-                    [(ngModel)]="settings.plain_background_color"
-                  />
-                </div>
-
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--radio">
-                    <label i18n> Color Schema </label
-                    ><m-tooltip icon="help">
-                      <ng-container i18n>tbd</ng-container>
-                    </m-tooltip>
-                  </div>
-                  <div class="m-proSettings__inputRow--radio">
-                    <div>
+                <div class="m-proSettings__tab--theme">
+                  <div class="m-proSettings__field--color compactField">
+                    <div class="m-proSettings__row--label">
+                      <label for="text_color" i18n>Text Color</label>
+                      <m-tooltip icon="help">
+                        <ng-container i18n>tbd</ng-container>
+                      </m-tooltip>
+                    </div>
+                    <div class="m-proSettings__row--input">
                       <input
-                        type="radio"
-                        id="scheme_light"
-                        name="scheme"
-                        value="light"
-                        [(ngModel)]="settings.scheme"
+                        type="text"
+                        id="text_color"
+                        name="text_color"
+                        [(ngModel)]="settings.text_color"
                       />
+
+                      <div
+                        class="m-proSettings__colorPreview"
+                        [ngStyle]="{
+                          backgroundColor: settings.text_color
+                        }"
+                      ></div>
+                      <div
+                        *ngIf="
+                          settings.text_color.invalid &&
+                          (settings.text_color.dirty ||
+                            settings.text_color.touched)
+                        "
+                      >
+                        some warning
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="m-proSettings__field--color compactField">
+                    <div class="m-proSettings__row--label">
+                      <label for="primary_color" i18n>Primary Color</label
+                      ><m-tooltip icon="help">
+                        <ng-container i18n>tbd</ng-container>
+                      </m-tooltip>
+                    </div>
+                    <div class="m-proSettings__row--input">
+                      <input
+                        type="text"
+                        id="primary_color"
+                        name="primary_color"
+                        [(ngModel)]="settings.primary_color"
+                      />
+
+                      <div
+                        class="m-proSettings__colorPreview"
+                        [ngStyle]="{
+                          backgroundColor: settings.primary_color
+                        }"
+                      ></div>
+                      <div
+                        *ngIf="
+                          settings.primary_color.invalid &&
+                          (settings.primary_color.dirty ||
+                            settings.primary_color.touched)
+                        "
+                      >
+                        some warning
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="m-proSettings__field--color compactField">
+                    <div class="m-proSettings__row--label">
+                      <label for="plain_background_color" i18n>
+                        Plain Background Color </label
+                      ><m-tooltip icon="help">
+                        <ng-container i18n>tbd</ng-container>
+                      </m-tooltip>
+                    </div>
+                    <div class="m-proSettings__row--input">
+                      <input
+                        type="text"
+                        id="plain_background_color"
+                        name="plain_background_color"
+                        [(ngModel)]="settings.plain_background_color"
+                      />
+
+                      <div
+                        class="m-proSettings__colorPreview"
+                        [ngStyle]="{
+                          backgroundColor: settings.plain_background_color
+                        }"
+                      ></div>
+                      <div
+                        *ngIf="
+                          settings.plain_background_color.invalid &&
+                          (settings.plain_background_color.dirty ||
+                            settings.plain_background_color.touched)
+                        "
+                      >
+                        some warning
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="m-proSettings__field--radio compactField">
+                    <div class="m-proSettings__row--label">
+                      <label i18n> Color Schema </label
+                      ><m-tooltip icon="help">
+                        <ng-container i18n>tbd</ng-container>
+                      </m-tooltip>
+                    </div>
+                    <div class="m-proSettings__row--input">
                       <label
                         for="scheme_light"
-                        class="m-proSettings__inlineLabel"
-                      >
-                        Light
-                      </label>
-                    </div>
-
-                    <div>
-                      <input
-                        type="radio"
-                        id="scheme_dark"
-                        name="scheme"
-                        value="dark"
-                        [(ngModel)]="settings.scheme"
-                      />
-                      <label
-                        for="scheme_dark"
-                        class="m-proSettings__inlineLabel"
-                      >
-                        Dark
-                      </label>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--radio">
-                    <label i18n>Tiles Aspect Ratio</label
-                    ><m-tooltip icon="help"
-                      ><ng-container i18n>tbd</ng-container></m-tooltip
-                    >
-                  </div>
-                  <div class="m-proSettings__inputRow--radio">
-                    <ng-container *ngFor="let ratio of ratios">
-                      <div>
+                        class="m-proSettings__customInputContainer--radio"
+                        i18n
+                        >Light
                         <input
                           type="radio"
-                          [id]="'tile_ratio_' + ratio"
-                          name="tile_ratio"
-                          [value]="ratio"
-                          [(ngModel)]="settings.tile_ratio"
+                          id="scheme_light"
+                          name="scheme"
+                          value="light"
+                          [(ngModel)]="settings.scheme"
                         />
+                        <span class="m-proSettings__customInput--radio"></span>
+                      </label>
+                      <label
+                        for="scheme_dark"
+                        class="m-proSettings__customInputContainer--radio"
+                        i18n
+                        >Dark
+                        <input
+                          type="radio"
+                          id="scheme_dark"
+                          name="scheme"
+                          value="dark"
+                          [(ngModel)]="settings.scheme"
+                        />
+                        <span class="m-proSettings__customInput--radio"></span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="m-proSettings__field--radio compactField">
+                    <div class="m-proSettings__row--label">
+                      <label i18n>Tiles Aspect Ratio</label
+                      ><m-tooltip icon="help"
+                        ><ng-container i18n>tbd</ng-container></m-tooltip
+                      >
+                    </div>
+                    <div class="m-proSettings__row--input">
+                      <ng-container *ngFor="let ratio of ratios">
                         <label
                           [for]="'tile_ratio_' + ratio"
-                          class="m-proSettings__inlineLabel"
-                        >
-                          {{ ratio }}
+                          class="m-proSettings__customInputContainer--radio"
+                          >{{ ratio }}
+                          <input
+                            type="radio"
+                            [id]="'tile_ratio_' + ratio"
+                            name="scheme"
+                            [value]="ratio"
+                            [(ngModel)]="settings.tile_ratio"
+                          />
+                          <span
+                            class="m-proSettings__customInput--radio"
+                          ></span>
                         </label>
-                      </div>
-                    </ng-container>
+                      </ng-container>
+                    </div>
                   </div>
                 </div>
               </ng-template>
@@ -189,74 +258,79 @@
               <!-- Assets -->
 
               <ng-template ngSwitchCase="assets">
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--filePreview">
-                    <label for="logo" i18n>Logo</label>
-                    <m-tooltip icon="help"
-                      ><ng-container i18n>tbd</ng-container></m-tooltip
-                    >
+                <div class="m-proSettings__tab--assets">
+                  <div class="m-proSettings__field--asset compactField">
+                    <div class="m-proSettings__row--label">
+                      <label for="logo" i18n>Logo</label>
+                      <m-tooltip icon="help"
+                        ><ng-container i18n>tbd</ng-container></m-tooltip
+                      >
+                    </div>
+
+                    <div class="m-proSettings__row--input">
+                      <label
+                        for="logo"
+                        class="m-proSettings__filePreview--logo"
+                        [ngStyle]="{
+                          backgroundColor: settings.plain_background_color
+                        }"
+                      >
+                        <input
+                          type="file"
+                          id="logo"
+                          name="logo"
+                          accept="image/*"
+                          (change)="onAssetFileSelect('logo', logoField.files)"
+                          #logoField
+                        />
+
+                        <img
+                          *ngIf="getPreviewAssetSrc('logo')"
+                          [src]="getPreviewAssetSrc('logo')"
+                        />
+
+                        <span class="m-proSettings__filePreviewOverlay">
+                          <i class="material-icons">cloud_upload</i>
+                        </span>
+                      </label>
+                    </div>
                   </div>
 
-                  <div class="m-proSettings__inputRow--filePreview">
-                    <label
-                      for="logo"
-                      class="m-proSettingsField__filePreview m-proSettingsField__logoFilePreview"
-                      [ngStyle]="{
-                        backgroundColor: settings.plain_background_color
-                      }"
-                    >
-                      <input
-                        type="file"
-                        id="logo"
-                        name="logo"
-                        accept="image/*"
-                        (change)="onAssetFileSelect('logo', logoField.files)"
-                        #logoField
-                      />
+                  <div class="m-proSettings__field--asset compactField">
+                    <div class="m-proSettings__row--label">
+                      <label for="background" i18n>Background</label
+                      ><m-tooltip icon="help"
+                        ><ng-container i18n>tbd</ng-container></m-tooltip
+                      >
+                    </div>
 
-                      <img
-                        *ngIf="getPreviewAssetSrc('logo')"
-                        [src]="getPreviewAssetSrc('logo')"
-                      />
-
-                      <span class="m-proSettingsFieldFilePreview__overlay">
-                        <i class="material-icons">cloud_upload</i>
-                      </span>
-                    </label>
-                  </div>
-                </div>
-
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--filePreview">
-                    <label for="background" i18n>Background</label
-                    ><m-tooltip icon="help"
-                      ><ng-container i18n>tbd</ng-container></m-tooltip
-                    >
-                  </div>
-
-                  <div class="m-proSettings__inputRow--filePreview">
-                    <label
-                      for="background"
-                      class="m-proSettingsField__filePreview m-proSettingsField__backgroundFilePreview"
-                    >
-                      <input
-                        type="file"
-                        id="background"
-                        name="background"
-                        accept="image/*"
-                        (change)="
-                          onAssetFileSelect('background', backgroundField.files)
-                        "
-                        #backgroundField
-                      />
-                      <img
-                        *ngIf="getPreviewAssetSrc('background')"
-                        [src]="getPreviewAssetSrc('background')"
-                      />
-                      <span class="m-proSettingsFieldFilePreview__overlay">
-                        <i class="material-icons">cloud_upload</i>
-                      </span>
-                    </label>
+                    <div class="m-proSettings__row--input">
+                      <label
+                        for="background"
+                        class="m-proSettings__filePreview--background"
+                      >
+                        <input
+                          type="file"
+                          id="background"
+                          name="background"
+                          accept="image/*"
+                          (change)="
+                            onAssetFileSelect(
+                              'background',
+                              backgroundField.files
+                            )
+                          "
+                          #backgroundField
+                        />
+                        <img
+                          *ngIf="getPreviewAssetSrc('background')"
+                          [src]="getPreviewAssetSrc('background')"
+                        />
+                        <span class="m-proSettingsFilePreview__overlay">
+                          <i class="material-icons">cloud_upload</i>
+                        </span>
+                      </label>
+                    </div>
                   </div>
                 </div>
               </ng-template>
@@ -264,177 +338,176 @@
               <!-- Tags -->
 
               <ng-template ngSwitchCase="hashtags">
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--dragDrop">
-                    <label i18n>Hashtags</label>
-                    <m-tooltip icon="help">
-                      <ng-container i18n>tbd</ng-container> </m-tooltip
-                    ><button
-                      type="button"
-                      [disabled]="inProgress"
-                      (click)="addBlankTag()"
-                      i18n
-                    >
-                      Add
-                    </button>
+                <div class="m-proSettings__tab--tags containsDragDrop">
+                  <div class="m-proSettings__field--grid fullWidthField">
+                    <div class="m-proSettings__row--label">
+                      <label i18n>Hashtags</label>
+                      <m-tooltip icon="help">
+                        <ng-container i18n>tbd</ng-container></m-tooltip
+                      ><button type="button" (click)="addBlankTag()" i18n>
+                        Add
+                      </button>
+                    </div>
+                    <div class="m-proSettings__row--input">
+                      <m-draggableList
+                        [headers]="['Label', '#Hashtag']"
+                        [data]="settings.tag_list"
+                        [id]="'tag'"
+                        (emptyListHeaderRowClicked)="addBlankTag()"
+                      >
+                        <ng-template let-tag="item" let-i="i">
+                          <input
+                            class="m-draggableList__cell"
+                            type="text"
+                            [id]="'tag-label-' + i"
+                            [name]="'tag[' + i + '][label]'"
+                            [(ngModel)]="tag.label"
+                          />
+                          <input
+                            class="m-draggableList__cell"
+                            type="text"
+                            [id]="'tag-tag-' + i"
+                            [name]="'tag[' + i + '][tag]'"
+                            [(ngModel)]="tag.tag"
+                          />
+                        </ng-template>
+                      </m-draggableList>
+                    </div>
                   </div>
-                  <m-draggable-list [data]="settings.tag_list" [id]="'tag'">
-                    <ng-template let-tag="item" let-i="i">
-                      <div class="m-proSettings__flexInputs">
-                        <input
-                          type="text"
-                          placeholder="Label"
-                          [id]="'tag-label-' + i"
-                          [name]="'tag[' + i + '][label]'"
-                          [(ngModel)]="tag.label"
-                        />
-                        <input
-                          type="text"
-                          placeholder="#hashtag"
-                          [id]="'tag-tag-' + i"
-                          [name]="'tag[' + i + '][tag]'"
-                          [(ngModel)]="tag.tag"
-                        />
-                        <i class="material-icons" (click)="removeTag(i)">
-                          clear
-                        </i>
-                      </div>
-                    </ng-template>
-                  </m-draggable-list>
                 </div>
               </ng-template>
 
               <!-- Footer -->
 
               <ng-template ngSwitchCase="footer">
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--text">
-                    <label for="footer_text" i18n>Text</label
-                    ><m-tooltip icon="help"
-                      ><ng-container i18n>tbd</ng-container></m-tooltip
-                    >
-                  </div>
-                  <div class="m-proSettings__inputRow--text">
-                    <input
-                      type="text"
-                      id="footer_text"
-                      name="footer_text"
-                      [(ngModel)]="settings.footer_text"
-                    />
-                  </div>
-                </div>
-
-                <m-draggable-list [data]="settings.footer_links" [id]="'title'">
-                  <ng-template let-link="item" let-i="i">
-                    <div class="m-proSettings__field">
-                      <div class="m-proSettings__labelRow--dragDrop">
-                        <label i18n> Link #{{ i + 1 }} </label>
-                      </div>
-
-                      <div class="m-proSettings__flexInputs">
-                        <input
-                          type="text"
-                          placeholder="Title"
-                          [id]="'footer_link-title-' + i"
-                          [name]="'footer_link[' + i + '][title]'"
-                          [(ngModel)]="link.title"
-                        />
-
-                        <input
-                          type="text"
-                          placeholder="https://example.com/"
-                          [id]="'footer_link-href-' + i"
-                          [name]="'footer_link[' + i + '][href]'"
-                          [(ngModel)]="link.href"
-                        />
-
-                        <i class="material-icons" (click)="removeFooterLink(i)">
-                          clear
-                        </i>
-                      </div>
+                <div class="m-proSettings__tab--footer containsDragDrop">
+                  <div class="m-proSettings__field--text compactField">
+                    <div class="m-proSettings__row--label">
+                      <label for="footer_text" i18n>Title</label
+                      ><m-tooltip icon="help"
+                        ><ng-container i18n>tbd</ng-container></m-tooltip
+                      >
                     </div>
-                  </ng-template>
-                </m-draggable-list>
+                    <div class="m-proSettings__row--input">
+                      <input
+                        type="text"
+                        id="footer_text"
+                        name="footer_text"
+                        [(ngModel)]="settings.footer_text"
+                      />
+                    </div>
+                  </div>
+                  <div class="m-proSettings__field--grid fullWidthField">
+                    <div class="m-proSettings__row--label">
+                      <label i18n>Links</label>
+                      <m-tooltip icon="help">
+                        <ng-container i18n>tbd</ng-container> </m-tooltip
+                      ><button
+                        type="button"
+                        (click)="addBlankFooterLink()"
+                        i18n
+                      >
+                        Add
+                      </button>
+                    </div>
+                    <div class="m-proSettings__row--input">
+                      <m-draggableList
+                        [headers]="['Label', 'Url']"
+                        [data]="settings.footer_links"
+                        [id]="'title'"
+                        (emptyListHeaderRowClicked)="addBlankFooterLink()"
+                      >
+                        <ng-template let-link="item" let-i="i">
+                          <input
+                            class="m-draggableList__cell"
+                            type="text"
+                            [id]="'footer_link-title-' + i"
+                            [name]="'footer_link[' + i + '][title]'"
+                            [(ngModel)]="link.title"
+                          />
 
-                <div class="m-proSettings__field">
-                  <button
-                    class="m-btn m-btn--slim"
-                    type="button"
-                    [disabled]="inProgress"
-                    (click)="addBlankFooterLink()"
-                    i18n
-                  >
-                    + Add Link
-                  </button>
+                          <input
+                            class="m-draggableList__cell"
+                            type="text"
+                            [id]="'footer_link-href-' + i"
+                            [name]="'footer_link[' + i + '][href]'"
+                            [(ngModel)]="link.href"
+                          />
+                        </ng-template>
+                      </m-draggableList>
+                    </div>
+                  </div>
                 </div>
               </ng-template>
 
               <!-- Domain -->
 
               <ng-template ngSwitchCase="domain">
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--text">
-                    <label for="domain" i18n>Domain</label>
-                    <m-tooltip icon="help"
-                      ><ng-container i18n>tbd</ng-container></m-tooltip
-                    >
-                  </div>
-                  <div class="m-proSettings__inputRow--text">
-                    <input
-                      class="m-proSettingsField__input--hasIcon"
-                      type="text"
-                      id="domain"
-                      name="domain"
-                      [(ngModel)]="settings.domain"
-                      (keydown)="domainValidationSubject.next($event)"
-                    />
-
-                    <m-tooltip
-                      *ngIf="isDomainValid !== null"
-                      [icon]="isDomainValid ? 'check' : 'close'"
-                      class="m-proSettingsDomain__validIcon"
-                      [class.m-proSettingsDomain__validIcon--true]="
-                        isDomainValid
-                      "
-                      [class.m-proSettingsDomain__validIcon--false]="
-                        !isDomainValid
-                      "
-                    >
-                      <ng-container
-                        *ngIf="isDomainValid; else notValidDomain"
-                        i18n
+                <div class="m-proSettings__tab--domain">
+                  <div class="m-proSettings__field--text stretchedField">
+                    <div class="m-proSettings__row--label">
+                      <label for="domain" i18n>Domain</label>
+                      <m-tooltip icon="help"
+                        ><ng-container i18n>tbd</ng-container></m-tooltip
                       >
-                        This domain is available
-                      </ng-container>
-                      <ng-template #notValidDomain>
-                        <ng-container i18n>
-                          This domain is taken
-                        </ng-container>
-                      </ng-template>
-                    </m-tooltip>
-                  </div>
-                </div>
+                    </div>
+                    <div class="m-proSettings__row--input">
+                      <input
+                        class="m-proSettings__input--hasIcon"
+                        type="text"
+                        id="domain"
+                        name="domain"
+                        [(ngModel)]="settings.domain"
+                        (keydown)="domainValidationSubject.next($event)"
+                      />
 
-                <div class="m-proSettings__field">
-                  <div class="m-proSettings__labelRow--textarea">
-                    <label for="custom_head" i18n
-                      >Custom &lt;head&gt; Code</label
-                    ><m-tooltip icon="help"
-                      ><ng-container i18n>tbd</ng-container></m-tooltip
-                    >
+                      <m-tooltip
+                        *ngIf="isDomainValid !== null"
+                        [icon]="isDomainValid ? 'check' : 'close'"
+                        class="m-proSettingsDomain__validIcon"
+                        [class.m-proSettingsDomain__validIcon--true]="
+                          isDomainValid
+                        "
+                        [class.m-proSettingsDomain__validIcon--false]="
+                          !isDomainValid
+                        "
+                      >
+                        <ng-container
+                          *ngIf="isDomainValid; else notValidDomain"
+                          i18n
+                        >
+                          This domain is available
+                        </ng-container>
+                        <ng-template #notValidDomain>
+                          <ng-container i18n>
+                            This domain is taken
+                          </ng-container>
+                        </ng-template>
+                      </m-tooltip>
+                    </div>
                   </div>
-                  <div class="m-proSettings__inputRow--textarea">
-                    <textarea
-                      class="m-proSettings__codeTextarea"
-                      id="custom_head"
-                      name="custom_head"
-                      [(ngModel)]="settings.custom_head"
-                      [readOnly]="!isAdmin"
-                    ></textarea>
-                    <m-formDescriptor *ngIf="!isAdmin"
-                      >Please contact a Minds admin or email info@minds.com to
-                      customize this field</m-formDescriptor
-                    >
+
+                  <div class="m-proSettings__field--text stretchedField">
+                    <div class="m-proSettings__row--label">
+                      <label for="custom_head" i18n
+                        >Custom &lt;head&gt; Code</label
+                      ><m-tooltip icon="help"
+                        ><ng-container i18n>tbd</ng-container></m-tooltip
+                      >
+                    </div>
+                    <div class="m-proSettings__row--input">
+                      <textarea
+                        class="m-proSettings__codeTextarea"
+                        id="custom_head"
+                        name="custom_head"
+                        [(ngModel)]="settings.custom_head"
+                        [readOnly]="!isAdmin"
+                      ></textarea>
+                      <m-formDescriptor *ngIf="!isAdmin"
+                        >Please contact a Minds admin or email info@minds.com to
+                        customize this field</m-formDescriptor
+                      >
+                    </div>
                   </div>
                 </div>
               </ng-template>
@@ -443,9 +516,9 @@
         </ng-container>
       </div>
       <div class="m-shadowboxLayout__footer">
-        <div class="m-proSettings__fieldSpinner" *ngIf="inProgress">
+        <!-- <div class="m-proSettings__fieldSpinner" *ngIf="inProgress">
           <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-        </div>
+        </div> -->
         <button
           class="m-shadowboxLayout__button"
           type="submit"
@@ -459,8 +532,6 @@
         </button>
       </div>
     </m-shadowboxLayout>
-    <!-- TODOOJM -->
-    <!-- <div class="m-proSettings__error" *ngIf="error">Error: {{ error }}</div> -->
-    <m-formToast>PRO settings have been successfully updated</m-formToast>
+    <m-formToast></m-formToast>
   </ng-container>
 </m-pageLayout>

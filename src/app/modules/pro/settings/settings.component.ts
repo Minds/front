@@ -15,13 +15,18 @@ import { MindsTitle } from '../../../services/ux/title';
 import { SiteService } from '../../../common/services/site.service';
 import { debounceTime } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
-  selector: 'm-pro--settings',
+  selector: 'm-proSettings',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'settings.component.html',
 })
 export class ProSettingsComponent implements OnInit, OnDestroy {
+  //OJMTODO remove this
+  toastIndex: number = 0;
+  toastMessages = ['rye', 'wheat', '7-grain', 'bagel', 'pumpernickel'];
+
   activeTab: any;
   tabs = [
     {
@@ -62,20 +67,13 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   saved: boolean = false;
 
-  // currentTab:
-  //   | 'general'
-  //   | 'theme'
-  //   | 'assets'
-  //   | 'hashtags'
-  //   | 'footer'
-  //   | 'domain'
-  //   | 'cancel' = 'general';
-
   user: string | null = null;
 
   isDomainValid: boolean | null = null;
 
   error: string;
+
+  saveSuccessful: boolean;
 
   domainValidationSubject: Subject<any> = new Subject<any>();
 
@@ -99,7 +97,8 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected title: MindsTitle,
     protected site: SiteService,
-    protected sanitizer: DomSanitizer
+    protected sanitizer: DomSanitizer,
+    private formToastService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -110,7 +109,6 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
     this.param$ = this.route.params.subscribe(params => {
       if (this.session.isAdmin()) {
-        console.log('***', this.route.params);
         this.user = params['user'] || null;
       }
 
@@ -126,6 +124,16 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     this.paramMap$.unsubscribe();
     this.param$.unsubscribe();
     this.domainValidation$.unsubscribe();
+  }
+
+  // OJMTODO remove this after testing
+  tempToast() {
+    this.formToastService.warn(this.toastMessages[this.toastIndex]);
+    if (this.toastIndex < 6) {
+      this.toastIndex++;
+    } else {
+      this.toastIndex = 0;
+    }
   }
 
   async load() {
@@ -235,8 +243,10 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
       this.settings = settings;
       await this.service.set(this.settings, this.user);
+      this.saveSuccessful = true;
     } catch (e) {
       this.error = e.message;
+      this.saveSuccessful = false;
     }
 
     this.saved = true;
@@ -252,9 +262,9 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     this.settings.tag_list.push({ label: '', tag: '' });
   }
 
-  removeTag(index: number) {
-    this.settings.tag_list.splice(index, 1);
-  }
+  // removeTag(index: number) {
+  //   this.settings.tag_list.splice(index, 1);
+  // }
 
   addBlankFooterLink() {
     if (!this.settings) {
@@ -264,9 +274,9 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     this.settings.footer_links.push({ title: '', href: '' });
   }
 
-  removeFooterLink(index: number) {
-    this.settings.footer_links.splice(index, 1);
-  }
+  // removeFooterLink(index: number) {
+  //   this.settings.footer_links.splice(index, 1);
+  // }
 
   detectChanges() {
     this.cd.markForCheck();

@@ -1,18 +1,27 @@
-<div class="m-formToast__wrapper" [hidden]="hidden">
-  <i
-    class="material-icons m-formToast__icon--statusSuccess"
-    *ngIf="status === 'success'"
-    >check</i
-  >
-  <i
-    class="material-icons m-formToast__icon--statusError"
-    *ngIf="status === 'error'"
-    >warning</i
-  >
-  <p i18n><ng-content></ng-content></p>
-  <div class="m-formToast__iconWrapper">
-    <i class="material-icons m-formToast__icon--close" (click)="hidden = true"
-      >close</i
-    >
-  </div>
+<div class="m-formToast__toastsContainer">
+  <ng-container *ngFor="let toast of toasts; let i = index">
+    <div class="m-formToast__wrapper" *ngIf="toast.visible">
+      <i
+        class="material-icons m-formToast__icon--success"
+        *ngIf="toast.type === 'success'"
+        >check</i
+      >
+      <i
+        class="material-icons m-formToast__icon--error"
+        *ngIf="toast.type === 'error'"
+        >warning</i
+      >
+      <i
+        class="material-icons m-formToast__icon--warning"
+        *ngIf="toast.type === 'warning'"
+        >warning</i
+      >
+      <p i18n>{{ toast.message }}</p>
+      <div class="m-formToast__iconWrapper">
+        <i class="material-icons m-formToast__icon--close" (click)="dismiss(i)"
+          >clear</i
+        >
+      </div>
+    </div>
+  </ng-container>
 </div>

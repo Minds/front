@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'm-pageLayout',
@@ -6,6 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class PageLayoutComponent implements OnInit {
   @Input() menuId: string;
+  @HostBinding('class.isForm') @Input() isForm: boolean = false;
   constructor() {}
 
   ngOnInit() {}
