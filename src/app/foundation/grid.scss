@@ -10,12 +10,18 @@
     .m-grid__column-#{$i} {
       grid-column: auto / span $i;
     }
+    .m-grid__column__skip-#{$i} {
+      grid-column-start: $i !important;
+    }
   }
 
   @media screen and (max-width: $m-grid-min-vp) {
     @for $i from 1 through $m-grid-cols {
       .m-grid__column-#{$i}--mobile {
         grid-column: auto / span $i;
+      }
+      .m-grid__column__skip-#{$i}--mobile {
+        grid-column-start: $i !important;
       }
     }
   }
