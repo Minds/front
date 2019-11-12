@@ -56,6 +56,7 @@
 
         @media screen and (max-width: $m-grid-min-vp) {
           margin: 15px 0 15px;
+          text-align: center;
         }
       }
 
@@ -68,6 +69,7 @@
           font-size: 28px;
           line-height: 32px;
           margin: 0 0 17px;
+          text-align: center;
         }
       }
     }
@@ -89,6 +91,7 @@
         margin-bottom: 30px;
         font-size: 16px;
         line-height: 23px;
+        text-align: center;
       }
     }
 

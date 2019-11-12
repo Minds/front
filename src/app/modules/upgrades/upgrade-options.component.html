@@ -91,6 +91,7 @@
         routerLink="/plus"
         [queryParams]="intervalCurrencyQueryParams"
         *ngIf="!session.getLoggedInUser()?.plus"
+        data-cy="m-upgradeOptions__upgrade-to-plus-button"
         i18n
       >
         Upgrade to Plus
@@ -109,7 +110,7 @@
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <p class="m-upgradesUpgradeOptionsPlan__description" i18n>
-        The ultimate platform for independent content creators on the Internet.
+        The ultimate platform for independent creators and brands.
       </p>
     </div>
 
@@ -160,6 +161,7 @@
           routerLink="/pro"
           [queryParams]="intervalCurrencyQueryParams"
           *ngIf="!session.getLoggedInUser()?.pro"
+          data-cy="m-upgradeOptions__upgrade-to-pro-button"
           i18n
         >
           Upgrade to Pro
@@ -169,6 +171,7 @@
         <a
           class="mf-button m-upgradesUpgradeOptionsPlan__action"
           routerLink="/pro"
+          data-cy="m-upgradeOptions__upgrade-to-pro-button"
           i18n
         >
           Coming soon
@@ -228,6 +231,7 @@
       <a
         class="mf-button m-upgradesUpgradeOptionsPlan__action"
         routerLink="/nodes"
+        data-cy="m-upgradeOptions__contact-us-nodes-button"
         i18n
       >
         Contact us

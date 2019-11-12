@@ -32,10 +32,6 @@ export class BlockchainMarketingTokenComponent {
 
   onPurchaseComplete(purchase: any) {}
 
-  setupWalletAction() {
-    this.router.navigate(['/wallet']);
-  }
-
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

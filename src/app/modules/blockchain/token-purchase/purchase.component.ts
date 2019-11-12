@@ -61,6 +61,8 @@ export class BlockchainPurchaseComponent implements OnInit {
 
   paramsSubscription: Subscription;
 
+  @Input() hasTitle: boolean = false;
+
   constructor(
     protected client: Client,
     protected changeDetectorRef: ChangeDetectorRef,
@@ -77,6 +79,7 @@ export class BlockchainPurchaseComponent implements OnInit {
     this.loadWalletAddress();
     this.load().then(() => {
       this.amount = 0.25;
+      this.detectChanges();
     });
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params.purchaseEth) {

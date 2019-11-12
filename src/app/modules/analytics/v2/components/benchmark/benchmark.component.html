@@ -1,0 +1,67 @@
+<div class="m-analytics__benchmarkContainer" [ngClass]="{ noChart: noChart }">
+  <div class="m-analytics__benchmarkLabelWrapper">
+    <div class="m-analytics__benchmarkLabel">{{ label }}</div>
+    <m-tooltip icon="help" *ngIf="description">
+      {{ description }}
+    </m-tooltip>
+  </div>
+  <div class="m-analytics__benchmarkValueWrapper">
+    <ng-container
+      [ngSwitch]="unit"
+      *ngIf="isNumber(value); else placeholderValue"
+    >
+      <ng-template ngSwitchCase="usd">
+        <div class="m-analytics__benchmarkValue">
+          {{ value / 100 | currency }}
+        </div>
+        <div class="m-analytics__benchmarkUnit">USD</div>
+      </ng-template>
+      <ng-template ngSwitchCase="eth">
+        <div class="m-analytics__benchmarkValue">
+          {{ value | number: '1.3-3' }}
+        </div>
+        <div class="m-analytics__benchmarkUnit">ETH</div>
+      </ng-template>
+      <ng-template ngSwitchCase="tokens">
+        <div class="m-analytics__benchmarkValue">
+          {{ value | number: '1.3-3' }}
+        </div>
+        <div class="m-analytics__benchmarkUnit">
+          {{ value !== 1 ? 'Tokens' : 'Token' }}
+        </div>
+      </ng-template>
+      <ng-template ngSwitchCase="hours">
+        <div class="m-analytics__benchmarkValue">
+          {{ value | number: '1.0-0' }}
+        </div>
+        <div class="m-analytics__benchmarkUnit">
+          {{ value !== 1 ? 'hrs' : 'hr' }}
+        </div>
+      </ng-template>
+      <ng-template ngSwitchDefault>
+        <div class="m-analytics__benchmarkValue">
+          {{ value | number: '1.0-0' }}
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>
+
+<!-- TODO: delete this when active users placeholder is removed -->
+<ng-template #placeholderValue>
+  <div class="m-analytics__benchmarkValue">{{ value }}</div>
+</ng-template>
+
+<!-- <div [ngSwitch]="unit" class="m-chartV2__hoverInfo__row--primary">
+  <ng-template ngSwitchCase="number">
+  {{ hoverInfo.value | number: '1.0-0' | abbr }}
+  {{ rawData.label | lowercase }}
+</ng-template>
+<ng-template ngSwitchCase="usd">
+  {{ hoverInfo.value | currency }} USD
+</ng-template>
+<ng-template ngSwitchDefault>
+  {{ hoverInfo.value | number: '1.1-3' }} {{ rawData?.unit }}
+</ng-template>
+</div>
+</div> -->

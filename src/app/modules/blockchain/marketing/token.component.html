@@ -19,6 +19,7 @@
 
         <div class="m-tokenMarketing__purchase">
           <m-blockchain--purchase
+            [hasTitle]="true"
             (onComplete)="onPurchaseComplete($event)"
           ></m-blockchain--purchase>
         </div>
@@ -49,28 +50,35 @@
           <h2 i18n>Expand your reach</h2>
 
           <p class="m-marketing__description" i18n>
-            1 token = 1,000 boosted views from the network. Expand your reach
-            and grow your channel to new levels with Minds Tokens.
+            1 token = 1,000 views from the network. Launch advertising
+            campaigns, send offers to other channels for more exposure and grow
+            your audience to new levels.
           </p>
 
-          <div class="m-marketing__actionButtons">
-            <a
-              class="mf-button mf-button--smaller mf-button--hollow-mono"
-              [href]="cdnAssetsUrl + 'assets/documents/Whitepaper-v0.5.pdf'"
-              target="_blank"
-              i18n
-            >
-              <span>Download Whitepaper</span>
-              <i class="material-icons">cloud_download</i>
-            </a>
+          <div class="m-marketing__links">
+            <h3>Useful links</h3>
 
-            <a
-              class="mf-button mf-button--smaller mf-button--hollow-mono"
-              (click)="setupWalletAction(); $event.preventDefault()"
-              i18n
-            >
-              <span>Setup Wallet</span>
-            </a>
+            <ul>
+              <li>
+                <a
+                  [href]="cdnAssetsUrl + 'assets/documents/Whitepaper-v0.5.pdf'"
+                  target="_blank"
+                >
+                  <span i18n>Download Whitepaper</span>
+                  <i class="material-icons">cloud_download</i>
+                </a>
+              </li>
+              <li>
+                <a routerLink="/wallet" target="_blank" i18n>
+                  Setup Wallet
+                </a>
+              </li>
+              <li>
+                <a routerLink="/boost" target="_blank" i18n>
+                  Learn About Boost
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
         <div
@@ -101,9 +109,27 @@
           <h2 i18n>Buy premium subscriptions</h2>
 
           <p class="m-marketing__description" i18n>
-            Spend your Minds Tokens to upgrade your channel to Pro or Plus. Buy
-            premium subscriptions from your favorite content creators.
+            Spend tokens to upgrade your channel to Pro or Plus. Access
+            exclusive content and other custom offerings from your favorite
+            creators.
           </p>
+
+          <div class="m-marketing__links">
+            <h3>Useful links</h3>
+
+            <ul>
+              <li>
+                <a routerLink="/pro" target="_blank" i18n>
+                  Learn About Pro
+                </a>
+              </li>
+              <li>
+                <a routerLink="/plus" target="_blank" i18n>
+                  Learn About Plus
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div
           class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
@@ -133,8 +159,9 @@
           <h2 i18n>Send tips and support other channels</h2>
 
           <p class="m-marketing__description" i18n>
-            Enjoy a post from another channel? Send them Minds Tokens to show
-            your support and help them Boost it and reach new audiences.
+            Enjoy a post from another channel? Send them tokens to show your
+            support. Tokens help other creators promote their content and build
+            their network.
           </p>
         </div>
         <div
@@ -173,8 +200,12 @@
           <h3 i18n>Decentralized</h3>
 
           <p class="m-marketing__description" i18n>
-            An ERC-20 token harnessing the Ethereum blockchain to give you full
-            control over your crypto.
+            An
+            <a href="https://eips.ethereum.org/EIPS/eip-20" target="_blank"
+              >ERC-20</a
+            >
+            token harnessing the Ethereum blockchain to give you full control
+            over your crypto.
           </p>
         </div>
 
@@ -185,7 +216,8 @@
 
           <p class="m-marketing__description" i18n>
             Don’t have the funds to buy tokens? You can also earn them as
-            rewards for your contribution to the network each day.
+            <a routerLink="/rewards" target="_blank">rewards</a> for your
+            contribution to the network each day.
           </p>
         </div>
 

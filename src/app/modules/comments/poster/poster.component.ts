@@ -18,6 +18,7 @@ import { Textarea } from '../../../common/components/editors/textarea.component'
 import { SocketsService } from '../../../services/sockets';
 import autobind from '../../../helpers/autobind';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
+import { SignupModalService } from '../../modals/signup/service';
 
 @Component({
   selector: 'm-comment__poster',
@@ -33,6 +34,7 @@ export class CommentPosterComponent {
   @Input() readonly: boolean = false;
   @Input() currentIndex: number = -1;
   @Input() conversation: boolean = false;
+  @Input() level: number = 0;
   @Output('optimisticPost') optimisticPost$: EventEmitter<
     any
   > = new EventEmitter();
@@ -47,6 +49,7 @@ export class CommentPosterComponent {
   constructor(
     public session: Session,
     public client: Client,
+    private signupModal: SignupModalService,
     public attachment: AttachmentService,
     public sockets: SocketsService,
     public suggestions: AutocompleteSuggestionsService,
@@ -194,6 +197,14 @@ export class CommentPosterComponent {
       return false;
     }
     return true; // TODO: fix
+  }
+
+  get isLoggedIn() {
+    return this.session.isLoggedIn();
+  }
+
+  showLoginModal() {
+    this.signupModal.open();
   }
 
   detectChanges() {

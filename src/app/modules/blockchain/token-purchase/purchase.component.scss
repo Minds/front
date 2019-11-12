@@ -1,5 +1,18 @@
 @import '../../../foundation/grid-values';
 
+m-blockchain--purchase {
+  h4 {
+    font-size: 16px;
+    line-height: 44px;
+    font-weight: bold;
+    opacity: 0.7;
+
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
+}
+
 .m-blockchainTokenPurchase {
   display: flex;
   flex-direction: row;

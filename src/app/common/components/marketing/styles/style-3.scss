@@ -21,10 +21,13 @@
 
     .m-marketing__body {
       position: relative;
-      padding: 95px 0 0;
+      margin: auto 0;
+      padding: 0;
+      min-height: 330px;
 
       @media screen and (max-width: $m-grid-min-vp) {
         padding: 0 30px 0;
+        min-height: 0;
       }
 
       &::before {
@@ -62,6 +65,7 @@
           font-size: 28px;
           line-height: 32px;
           margin: 20px 0 17px;
+          text-align: center;
         }
       }
     }
@@ -83,6 +87,7 @@
         margin-bottom: 30px;
         font-size: 16px;
         line-height: 23px;
+        text-align: center;
       }
     }
 

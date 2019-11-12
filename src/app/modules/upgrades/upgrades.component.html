@@ -5,7 +5,7 @@
 >
   <div class="m-marketing__main m-marketing__section--style-1">
     <div class="m-grid m-marketing__wrapper">
-      <div class="m-grid__column-5 m-grid__column-12--mobile m-marketing__body">
+      <div class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body">
         <h2 class="m-marketing__subtitle--asTitle" i18n>
           Upgrade your Minds experience
         </h2>
@@ -32,6 +32,7 @@
         <a
           class="mf-button mf-button--hollow m-marketing--hideMobile"
           (click)="upgradeNow(); $event.preventDefault()"
+          data-cy="m-upgrades__upgrade-now-button"
           i18n
         >
           Upgrade now
@@ -39,7 +40,7 @@
       </div>
 
       <div
-        class="m-grid__column-7 m-grid__column-12--mobile m-marketing__image"
+        class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
       >
         <span>
           <img

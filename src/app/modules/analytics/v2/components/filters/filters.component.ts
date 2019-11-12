@@ -27,8 +27,9 @@ export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // TODO: remove all of this once channel search is ready
     // Temporarily remove channel search from channel filter options
-    this.analyticsService.filters$.subscribe(filters => {
+    this.subscription = this.analyticsService.filters$.subscribe(filters => {
       this.filters = filters;
+
       const channelFilter = filters.find(filter => filter.id === 'channel');
 
       channelFilter.options = channelFilter.options.filter(option => {
@@ -48,5 +49,7 @@ export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
     this.cd.detectChanges();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 }

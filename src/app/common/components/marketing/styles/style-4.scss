@@ -20,10 +20,13 @@
 
     .m-marketing__body {
       position: relative;
-      padding: 95px 0 0;
+      margin: auto 0;
+      padding: 0;
+      min-height: 360px;
 
       @media screen and (max-width: $m-grid-min-vp) {
         padding: 0 30px 0;
+        min-height: 0;
       }
 
       h2 {
@@ -35,11 +38,13 @@
           font-size: 28px;
           line-height: 32px;
           margin: 20px 0 17px;
+          text-align: center;
         }
       }
     }
 
     p.m-marketing__description {
+      margin-bottom: 42px;
       padding-right: 200px;
 
       margin-bottom: 42px;
@@ -70,8 +75,10 @@
 
       @media screen and (max-width: $m-grid-min-vp) {
         padding-right: 0;
+        margin-bottom: 30px;
         font-size: 16px;
         line-height: 23px;
+        text-align: center;
       }
     }
 
