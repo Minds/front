@@ -378,7 +378,7 @@ describe('BlogEdit', () => {
     expect(publish.nativeElement.innerText).toContain('Publish');
   });
 
-  it('clicking on publish button should set blog.published to 1 and then call publish()', () => {
+  it('clicking on publish button should set publishing to 1 and then call save()', () => {
     spyOn(comp, 'save').and.stub();
     const publish = fixture.debugElement.query(
       By.css('.m-button.m-button--submit')
@@ -386,7 +386,7 @@ describe('BlogEdit', () => {
     publish.nativeElement.click();
     fixture.detectChanges();
 
-    expect(comp.blog.published).toBe(1);
+    expect(comp.publishing).toBe(true);
     expect(comp.save).toHaveBeenCalled();
   });
 

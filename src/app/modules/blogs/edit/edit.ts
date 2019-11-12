@@ -56,7 +56,7 @@ export class BlogEdit {
   error: string = '';
   pendingUploads: string[] = [];
   categories: { id; label; selected }[];
-
+  publishing: boolean = false;
   licenses = LICENSES;
   access = ACCESS;
   existingBanner: boolean;
@@ -253,6 +253,14 @@ export class BlogEdit {
     this.inlineEditor.prepareForSave().then(() => {
       const blog = Object.assign({}, this.blog);
 
+      // store old value so that we can revert if needed.
+      const _published = blog.published;
+
+      // if publishing button pressed.
+      if (this.publishing) {
+        blog.published = 1;
+      }
+
       // only allowed props
       blog.mature = blog.mature ? 1 : 0;
       blog.monetization = blog.monetization ? 1 : 0;
@@ -270,6 +278,7 @@ export class BlogEdit {
               this.inProgress = false;
               this.canSave = true;
               this.blog.time_created = null;
+              this.publishing = false;
 
               if (response.status !== 'success') {
                 this.error = response.message;
@@ -285,12 +294,16 @@ export class BlogEdit {
               this.error = e;
               this.canSave = true;
               this.inProgress = false;
+              this.publishing = false;
+              this.blog.published = _published;
             });
         })
         .catch(() => {
           this.error = 'error:no-banner';
           this.inProgress = false;
           this.canSave = true;
+          this.publishing = false;
+          this.blog.published = _published;
         });
     });
   }
@@ -358,4 +371,11 @@ export class BlogEdit {
       this.blog.time_published > Math.floor(Date.now() / 1000)
     );
   }
+
+  /**
+   * Should button be disabled (used for save and draft).
+   * @returns { boolean } - true if button should be disabled.
+   */
+  disableButton = (): boolean =>
+    !this.canSave || this.pendingUploads.length !== 0 || !this.validThreshold;
 }

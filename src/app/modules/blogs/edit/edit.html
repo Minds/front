@@ -61,7 +61,7 @@
       type="submit"
       class="m-button m-button--text m-button--draft"
       *ngIf="!blog.published"
-      [disabled]="!canSave || pendingUploads.length !== 0 || !validThreshold"
+      [disabled]="disableButton()"
       i18n="@@BLOGS__EDIT__SAVE_DRAFT_ACTION"
     >
       Save draft
@@ -69,8 +69,8 @@
     <button
       type="submit"
       class="m-button m-button--text m-button--submit"
-      (click)="blog.published = 1"
-      [disabled]="!canSave || pendingUploads.length !== 0 || !validThreshold"
+      (click)="publishing = true"
+      [disabled]="disableButton()"
       i18n="@@BLOGS__EDIT__PUBLISH_ACTION"
     >
       Publish
