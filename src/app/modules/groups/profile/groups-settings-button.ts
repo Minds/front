@@ -134,7 +134,7 @@ import { Session } from '../../../services/session';
         <m-nsfw-selector
           service="editing"
           [selected]="group.nsfw"
-          (selected)="onNSFWSelected($event)"
+          (selectedChange)="onNSFWSelected($event)"
         >
         </m-nsfw-selector>
       </li>
