@@ -115,7 +115,7 @@ import { BlockListService } from '../../../../common/services/block-list.service
         <m-nsfw-selector
           service="editing"
           [selected]="user.nsfw_lock"
-          (selected)="setNSFWLock($event)"
+          (selectedChange)="setNSFWLock($event)"
         >
         </m-nsfw-selector>
       </li>
