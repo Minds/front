@@ -8,11 +8,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ReCaptchaComponent } from '../../../captcha/recaptcha/recaptcha.component';
-import { Session } from '../../../../services/session';
-import { Client } from '../../../../services/api/client';
-import { ExperimentsService } from '../../../experiments/experiments.service';
-import { RouterHistoryService } from '../../../../common/services/router-history.service';
+import { ReCaptchaComponent } from '../../captcha/recaptcha/recaptcha.component';
+import { Session } from '../../../services/session';
+import { Client } from '../../../services/api';
+import { ExperimentsService } from '../../experiments/experiments.service';
+import { RouterHistoryService } from '../../../common/services/router-history.service';
 
 @Component({
   selector: 'm-homepage__registerForm',

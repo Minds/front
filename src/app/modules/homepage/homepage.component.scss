@@ -1,6 +1,6 @@
 @import 'defaults';
 
-m-homepage__v1 {
+m-homepage {
   .m-marketing__main {
     &.m-marketing__section--style-2 {
       .m-marketing__body {
@@ -21,11 +21,43 @@ m-homepage__v1 {
 
           position: absolute;
           bottom: -10px;
-          left: -100px;
+          left: -140px;
           height: 202px;
-          right: -500px;
+          right: -600px;
 
           z-index: -2;
+        }
+
+        @media screen and (max-width: $max-mobile) {
+          &::before {
+            transform: translate(161px, 205px);
+          }
+
+          &::after {
+            left: 0;
+            right: 0;
+            bottom: -750px;
+          }
+        }
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        m-homepage__registerForm {
+          margin: 30px 10px 50px;
+
+          &::before {
+            content: '';
+            display: block;
+            position: absolute;
+            width: 393px;
+            height: 193px;
+            top: -66px;
+            left: -144px;
+            transform: translate(45px, 32px);
+            background: url('<%= APP_CDN %>/assets/marketing/deco_2-straight.svg')
+              no-repeat;
+            z-index: -1;
+          }
         }
       }
     }
@@ -54,7 +86,15 @@ m-homepage__v1 {
     justify-content: space-between;
     width: 50%;
 
-    margin-top: 150px;
+    margin-top: 50px;
+
+    @media screen and(max-width: $m-grid-min-vp) {
+      width: 100%;
+      & > a:not(:first-child) {
+        margin-left: 18px;
+        justify-content: initial;
+      }
+    }
 
     & > a {
       width: 120px;
@@ -87,6 +127,16 @@ m-homepage__v1 {
   .m-homepage__quotation {
     margin-top: 116px;
     margin-bottom: 161px;
+  }
+
+  .m-marketing__asFeaturedIn {
+    margin-top: 45px;
+  }
+
+  h2,
+  h3,
+  .m-marketing__description {
+    text-align: left !important;
   }
 }
 

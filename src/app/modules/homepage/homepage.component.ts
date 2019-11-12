@@ -1,17 +1,16 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Client } from '../../services/api/client';
+import { MindsTitle } from '../../services/ux/title';
 import { Router } from '@angular/router';
-
-import { Navigation as NavigationService } from '../../../services/navigation';
-import { Session } from '../../../services/session';
-import { MindsTitle } from '../../../services/ux/title';
-import { Client } from '../../../services/api';
-import { LoginReferrerService } from '../../../services/login-referrer.service';
+import { Navigation as NavigationService } from '../../services/navigation';
+import { LoginReferrerService } from '../../services/login-referrer.service';
+import { Session } from '../../services/session';
 
 @Component({
-  selector: 'm-homepage__v1',
-  templateUrl: 'homepage-v1.component.html',
+  selector: 'm-homepage',
+  templateUrl: 'homepage.component.html',
 })
-export class HomepageV1Component implements OnDestroy {
+export class HomepageComponent implements OnDestroy {
   readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 
   topbar: HTMLElement;

@@ -35,7 +35,22 @@
         </div>
       </div>
 
-      <div class="m-grid__column-5 m-grid__column-12--mobile">
+      <div
+        class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
+        *mExperiment="'Homepage121119'; bucket: 'base'"
+      >
+        <span>
+          <img
+            class="m-homepage__cellphone"
+            [src]="cdnAssetsUrl + 'assets/homepage/homepage-1.png'"
+          />
+        </span>
+      </div>
+
+      <div
+        class="m-grid__column-5 m-grid__column-12--mobile"
+        *mExperiment="'Homepage121119'; bucket: 'form'"
+      >
         <m-homepage__registerForm></m-homepage__registerForm>
       </div>
     </div>
