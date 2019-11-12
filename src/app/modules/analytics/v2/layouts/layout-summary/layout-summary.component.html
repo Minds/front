@@ -23,7 +23,7 @@
       ></m-analytics__benchmark>
     </div>
     <!-- CHART TILES -->
-    <ng-container *ngFor="let tile of fakeTiles">
+    <ng-container *ngFor="let tile of tiles">
       <div class="m-analyticsSummary__tile">
         <m-analytics__benchmark
           [label]="tile.label"
@@ -44,7 +44,7 @@
 
   <!-- BOOST BACKLOG -->
   <div class="m-analyticsSummary__boostBacklogWrapper" *ngIf="boosts">
-    <div class="m-analyticsSummary__boostBacklogTitle" i18n>Boost Backlog</div>
+    <div class="m-analyticsSummary__boostBacklogTitle">Boost Backlog</div>
     <div class="m-analyticsSummary__boostRowsContainer">
       <ng-container *ngFor="let boostRow of boostRows">
         <div class="m-analyticsSummary__boostRow">

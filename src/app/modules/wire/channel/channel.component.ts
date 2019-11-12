@@ -133,10 +133,10 @@ export class WireChannelComponent {
     if (!type) {
       return (
         isOwner ||
-        (this.rewards.description ||
-          (this.rewards.rewards.points && this.rewards.rewards.points.length) ||
-          (this.rewards.rewards.money && this.rewards.rewards.money.length) ||
-          (this.rewards.rewards.tokens && this.rewards.rewards.tokens.length))
+        this.rewards.description ||
+        (this.rewards.rewards.points && this.rewards.rewards.points.length) ||
+        (this.rewards.rewards.money && this.rewards.rewards.money.length) ||
+        (this.rewards.rewards.tokens && this.rewards.rewards.tokens.length)
       );
     }
 

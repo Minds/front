@@ -1,12 +1,12 @@
 import {
   Component,
   HostListener,
+  Injector,
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
   SkipSelf,
-  Injector,
+  ViewChild,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
@@ -26,6 +26,7 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FeaturesService } from '../../../services/features.service';
 
 export type MediaModalParams = {
   redirectUrl?: string;
@@ -119,45 +120,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   @ViewChild(MindsVideoComponent, { static: false })
   videoComponent: MindsVideoComponent;
 
-  get videoDirectSrc() {
-    const sources = [
-      {
-        res: '720',
-        uri:
-          'api/v1/media/' + this.entity.entity_guid + '/play?s=modal&res=720',
-        type: 'video/mp4',
-      },
-      {
-        res: '360',
-        uri: 'api/v1/media/' + this.entity.entity_guid + '/play?s=modal',
-        type: 'video/mp4',
-      },
-    ];
+  videoDirectSrc = [];
 
-    if (this.entity.custom_data.full_hd) {
-      sources.push({
-        res: '1080',
-        uri:
-          'api/v1/media/' + this.entity.entity_guid + '/play?s=modal&res=1080',
-        type: 'video/mp4',
-      });
-    }
-
-    return sources;
-  }
-
-  get videoTorrentSrc() {
-    const sources = [
-      { res: '720', key: this.entity.entity_guid + '/720.mp4' },
-      { res: '360', key: this.entity.entity_guid + '/360.mp4' },
-    ];
-
-    if (this.entity.custom_data.full_hd) {
-      sources.push({ res: '1080', key: this.entity.entity_guid + '/1080.mp4' });
-    }
-
-    return sources;
-  }
+  videoTorrentSrc = [];
 
   constructor(
     public session: Session,
@@ -167,6 +132,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private location: Location,
     private site: SiteService,
     private clientMetaService: ClientMetaService,
+    private featureService: FeaturesService,
     @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
@@ -175,10 +141,48 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       .setMedium('modal');
   }
 
+  updateSources() {
+    this.videoDirectSrc = [
+      {
+        res: '720',
+        uri:
+          'api/v1/media/' + this.entity.entity_guid + '/play?s=modal&res=720',
+        type: 'video/mp4',
+      },
+      {
+        res: '360',
+        uri: 'api/v1/media/' + this.entity.entity_guid + '/play/?s=modal',
+        type: 'video/mp4',
+      },
+    ];
+
+    this.videoTorrentSrc = [
+      { res: '720', key: this.entity.entity_guid + '/720.mp4' },
+      { res: '360', key: this.entity.entity_guid + '/360.mp4' },
+    ];
+
+    if (this.entity.custom_data.full_hd) {
+      this.videoDirectSrc.unshift({
+        res: '1080',
+        uri:
+          'api/v1/media/' +
+          this.entity.entity_guid +
+          '/play/' +
+          Date.now() +
+          '?s=modal&res=1080',
+        type: 'video/mp4',
+      });
+
+      this.videoTorrentSrc.unshift({
+        res: '1080',
+        key: this.entity.entity_guid + '/1080.mp4',
+      });
+    }
+  }
+
   ngOnInit() {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
-
     switch (this.entity.type) {
       case 'activity':
         this.title =
@@ -200,12 +204,41 @@ export class MediaModalComponent implements OnInit, OnDestroy {
               ? this.entity.custom_data.dimensions.height
               : 720;
             this.entity.thumbnail_src = this.entity.custom_data.thumbnail_src;
+            this.updateSources();
             break;
           case 'batch':
             this.contentType = 'image';
             this.entity.width = this.entity.custom_data[0].width;
             this.entity.height = this.entity.custom_data[0].height;
+            break;
+          default:
+            if (
+              this.featureService.has('media-modal') &&
+              this.entity.perma_url &&
+              this.entity.title &&
+              !this.entity.entity_guid
+            ) {
+              this.contentType = 'rich-embed';
+              this.entity.width = this.entity.custom_data.dimensions
+                ? this.entity.custom_data.dimensions.width
+                : 1280;
+              this.entity.height = this.entity.custom_data.dimensions
+                ? this.entity.custom_data.dimensions.height
+                : 720;
+              this.entity.thumbnail_src = this.entity.custom_data.thumbnail_src;
+              break;
+            } else {
+              // Modal not implemented, redirect.
+              this.router.navigate([
+                this.entity.route
+                  ? `/${this.entity.route}`
+                  : `/blog/view/${this.entity.guid}`,
+              ]);
+              // Close modal.
+              this.clickedBackdrop(null);
+            }
         }
+
         break;
       case 'object':
         switch (this.entity.subtype) {
@@ -213,6 +246,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
             this.contentType = 'video';
             this.title = this.entity.title;
             this.entity.entity_guid = this.entity.guid;
+            this.entity.custom_data = {
+              full_hd: this.entity.flags ? !!this.entity.flags.full_hd : false,
+            };
+            this.updateSources();
             break;
           case 'image':
             this.contentType = 'image';
@@ -243,12 +280,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     if (this.redirectUrl) {
       this.pageUrl = this.redirectUrl;
-    } else if (this.contentType !== 'blog') {
-      this.pageUrl = `/media/${this.entity.entity_guid}`;
+    } else if (this.contentType === 'rich-embed') {
+      this.pageUrl = `/newsfeed/${this.entity.guid}`;
     } else {
-      this.pageUrl = this.entity.route
-        ? `/${this.entity.route}`
-        : `/blog/view${this.entity.guid}`;
+      this.pageUrl = `/media/${this.entity.entity_guid}`;
     }
 
     this.boosted = this.entity.boosted || this.entity.p2p_boosted || false;
@@ -559,7 +594,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   // Show overlay and video controls
   onMouseEnterStage() {
     this.overlayVisible = true;
-
     if (this.contentType === 'video') {
       // Make sure progress bar seeker is updating when video controls are visible
       this.videoComponent.stageHover = true;

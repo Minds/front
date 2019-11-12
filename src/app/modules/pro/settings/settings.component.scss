@@ -221,6 +221,12 @@ m-proSettings {
     }
 
     &[class$='--background'] {
+      width: 480px;
+      height: 270px;
+
+      @include m-theme() {
+        background: rgba(themed($m-black-always), 0.3);
+      }
       > img {
         width: 480px;
         height: 270px;

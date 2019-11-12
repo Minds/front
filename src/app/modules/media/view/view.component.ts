@@ -239,4 +239,8 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
+
+  isScheduled(time_created) {
+    return time_created && time_created * 1000 > Date.now();
+  }
 }

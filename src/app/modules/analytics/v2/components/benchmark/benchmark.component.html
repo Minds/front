@@ -11,7 +11,9 @@
       *ngIf="isNumber(value); else placeholderValue"
     >
       <ng-template ngSwitchCase="usd">
-        <div class="m-analytics__benchmarkValue">{{ value | currency }}</div>
+        <div class="m-analytics__benchmarkValue">
+          {{ value / 100 | currency }}
+        </div>
         <div class="m-analytics__benchmarkUnit">USD</div>
       </ng-template>
       <ng-template ngSwitchCase="eth">

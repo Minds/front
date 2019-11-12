@@ -1,8 +1,5 @@
 image: markharding/minds-front-base
 
-services:
-  - docker:dind
-
 stages:
   - test
   - build
@@ -154,6 +151,8 @@ build:production:i18n:
 prepare:review:
   stage: prepare
   image: minds/ci:latest
+  services:
+    - docker:dind
   script:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
     - docker build -t $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID -f containers/front-init/Dockerfile dist/.
@@ -179,6 +178,8 @@ prepare:review:sentry:
 prepare:production:
   stage: prepare
   image: minds/ci:latest
+  services:
+    - docker:dind
   script:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
     - docker build -t $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID -f containers/front-init/Dockerfile dist/.
@@ -261,6 +262,8 @@ review:stop:
 
 .deploy: &deploy
   image: minds/ci:latest
+  services:
+    - docker:dind
   script:
     ## Sync assets with CDN
     - aws s3 sync dist $S3_REPOSITORY_URL
