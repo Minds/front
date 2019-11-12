@@ -88,6 +88,14 @@ m-homepage__v2 {
 
     margin-top: 50px;
 
+    @media screen and(max-width: $m-grid-min-vp) {
+      width: 100%;
+      & > a:not(:first-child) {
+        margin-left: 18px;
+        justify-content: initial;
+      }
+    }
+
     & > a {
       width: 120px;
       height: 37px;
