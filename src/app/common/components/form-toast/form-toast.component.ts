@@ -1,17 +1,27 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { FormToast, FormToastService } from '../../services/form-toast.service';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-formToast',
   templateUrl: './form-toast.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormToastComponent implements OnInit, OnDestroy {
   toasts: FormToast[] = [];
   timeoutIds: number[] = [];
   subscription: Subscription;
 
-  constructor(private service: FormToastService) {}
+  constructor(
+    private service: FormToastService,
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.subscription = this.service.onToast().subscribe(toast => {
@@ -23,11 +33,13 @@ export class FormToastComponent implements OnInit, OnDestroy {
 
       toast['visible'] = true;
       const toastIndex = this.toasts.push(toast) - 1;
-      console.log('***tolll', toast);
+      this.detectChanges();
+      console.log('***new toast', toast);
 
       const toastTimeout = setTimeout(() => {
         this.toasts[toastIndex].visible = false;
-        console.log('***to', this.toasts[toastIndex]);
+        console.log('***end toast', this.toasts[toastIndex]);
+        this.detectChanges();
       }, 10000);
 
       this.timeoutIds.push(setTimeout(() => toastTimeout));
@@ -37,6 +49,12 @@ export class FormToastComponent implements OnInit, OnDestroy {
   dismiss(index) {
     console.log(this.toasts[index]);
     this.toasts[index].visible = false;
+    this.detectChanges();
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 
   ngOnDestroy() {

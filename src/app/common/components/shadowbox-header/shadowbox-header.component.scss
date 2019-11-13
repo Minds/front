@@ -16,8 +16,6 @@ m-shadowboxHeader {
 .m-shadowboxHeader__container {
   overflow-x: hidden;
   overflow-y: hidden;
-  // display: flex;
-  // flex-wrap: nowrap;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 
   &.disable-scrollbars {

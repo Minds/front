@@ -1,6 +1,10 @@
 <div class="m-formToast__toastsContainer">
   <ng-container *ngFor="let toast of toasts; let i = index">
-    <div class="m-formToast__wrapper" *ngIf="toast.visible">
+    <div
+      class="m-formToast__wrapper"
+      *ngIf="toast.visible"
+      [ngClass]="{ inactive: !toast.visible }"
+    >
       <i
         class="material-icons m-formToast__icon--success"
         *ngIf="toast.type === 'success'"

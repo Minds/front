@@ -23,7 +23,7 @@ import { FormToastService } from '../../../common/services/form-toast.service';
   templateUrl: 'settings.component.html',
 })
 export class ProSettingsComponent implements OnInit, OnDestroy {
-  //OJMTODO remove this
+  //TODOOJM remove this
   toastIndex: number = 0;
   toastMessages = ['rye', 'wheat', '7-grain', 'bagel', 'pumpernickel'];
 
@@ -73,8 +73,6 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   error: string;
 
-  saveSuccessful: boolean;
-
   domainValidationSubject: Subject<any> = new Subject<any>();
 
   protected paramMap$: Subscription;
@@ -105,6 +103,8 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     this.paramMap$ = this.route.paramMap.subscribe((params: ParamMap) => {
       const activeTabParam = params.get('tab');
       this.activeTab = this.tabs.find(tab => tab.id === activeTabParam);
+      this.activeTab['saveStatus'] = 'unsaved';
+      this.detectChanges();
     });
 
     this.param$ = this.route.params.subscribe(params => {
@@ -126,7 +126,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     this.domainValidation$.unsubscribe();
   }
 
-  // OJMTODO remove this after testing
+  // TODOOJM remove this after testing
   tempToast() {
     this.formToastService.warn(this.toastMessages[this.toastIndex]);
     if (this.toastIndex < 6) {
@@ -204,9 +204,9 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
   getPreviewAssetSrc(type: string): string | SafeUrl {
     if (this.settings[type]) {
       if (!this.settings[type]._mindsBlobUrl) {
-        this.settings[type]._mindsBlobUrl = URL.createObjectURL(this.settings[
-          type
-        ] as File);
+        this.settings[type]._mindsBlobUrl = URL.createObjectURL(
+          this.settings[type] as File
+        );
       }
 
       return this.sanitizer.bypassSecurityTrustUrl(
@@ -215,6 +215,13 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     }
 
     return this.settings[`${type}_image`];
+  }
+
+  onSubmit(form) {
+    console.log(form);
+    this.error = null;
+    this.activeTab.saveStatus = 'saving';
+    this.detectChanges();
   }
 
   async save() {
@@ -243,10 +250,14 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
       this.settings = settings;
       await this.service.set(this.settings, this.user);
-      this.saveSuccessful = true;
+      this.formToastService.success(
+        'Pro settings have been successfully updated'
+      );
+      this.activeTab.saveStatus = 'saved';
     } catch (e) {
       this.error = e.message;
-      this.saveSuccessful = false;
+      this.formToastService.error('Error: ' + this.error);
+      this.activeTab.saveStatus = 'unsaved';
     }
 
     this.saved = true;

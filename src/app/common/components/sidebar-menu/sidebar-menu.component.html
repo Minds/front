@@ -29,43 +29,42 @@
         </div> -->
     </div>
   </a>
-  <!-- <ng-container *ngFor="let menu of menus"> -->
   <div
     class="m-sidebarMenu__menuContainer expanded"
     *ngIf="menu.header.permissionGranted"
   >
-    <!-- [ngClass]="{ expanded: menu.header.expanded }"  -->
-
     <div class="m-sidebarMenu__header">
       <h3>{{ menu.header.label }}</h3>
-      <!-- <i
-        class="material-icons"
-        *ngIf="menu.header.expanded && menu.links"
-        (click)="menu.header.expanded = false"
-        >keyboard_arrow_up</i
-      > -->
-      <!-- <i class="material-icons" *ngIf="!menu.header.expanded && menu.links"
-        >keyboard_arrow_down</i
-      > -->
-      <!-- (click)="menu.header.expanded = true" -->
     </div>
 
     <nav class="m-sidebarMenu__linksContainer" *ngIf="menu.links">
       <div class="m-sidebarMenu__link" *ngFor="let link of menu.links">
-        <!-- OJMTODO: fix target _blank -->
-        <a
-          *ngIf="link.permissionGranted"
-          (click)="mobileMenuExpanded = false"
-          [routerLink]="link.path ? '/' + link.path : '../' + link.id"
-          routerLinkActive="selected"
-          [routerLinkActiveOptions]="{ exact: true }"
-          [target]="link.newWindow ? '_blank' : '_self'"
-          [ngClass]="{ newWindow: link.newWindow }"
-          ><i class="material-icons" *ngIf="link.newWindow">launch</i>
-          <span>{{ link.label }}</span></a
+        <!-- TODOOJM: fix target _blank -->
+        <ng-container *ngIf="link.permissionGranted">
+          <ng-container *ngIf="!link.newWindow">
+            <a
+              (click)="mobileMenuExpanded = false"
+              [routerLink]="link.path ? '/' + link.path : '../' + link.id"
+              routerLinkActive="selected"
+              [routerLinkActiveOptions]="{ exact: true }"
+              [target]="link.newWindow ? '_blank' : '_self'"
+              [ngClass]="{ newWindow: link.newWindow }"
+              ><i class="material-icons" *ngIf="link.newWindow">launch</i>
+              <span>{{ link.label }}</span></a
+            >
+          </ng-container>
+          <ng-container *ngIf="link.newWindow"
+            ><a
+              (click)="mobileMenuExpanded = false"
+              [routerLink]="link.path ? ['/' + link.path] : ['../' + link.id]"
+              target="_blank"
+              [ngClass]="{ newWindow: link.newWindow }"
+              ><i class="material-icons" *ngIf="link.newWindow">launch</i>
+              <span>{{ link.label }}</span></a
+            ></ng-container
+          ></ng-container
         >
       </div>
     </nav>
   </div>
-  <!-- </ng-container> -->
 </div>

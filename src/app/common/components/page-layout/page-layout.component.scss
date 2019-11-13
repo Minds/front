@@ -9,7 +9,7 @@ m-pageLayout {
     color: themed($m-grey-800);
   }
   &.isForm {
-    min-height: none;
+    min-height: 0px;
   }
 
   .m-tooltip {
@@ -50,6 +50,12 @@ m-sidebarMenu {
 }
 
 @media screen and (max-width: $min-tablet) {
+  m-pageLayout {
+    &.isForm {
+      padding-bottom: 0px;
+    }
+  }
+
   .m-pageLayout__main {
     display: block;
     margin: 0;

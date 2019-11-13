@@ -123,6 +123,7 @@ import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbo
 import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
+import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-button/shadowbox-submit-button.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -236,6 +237,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ShadowboxHeaderComponent,
     FormDescriptorComponent,
     FormToastComponent,
+    ShadowboxSubmitButtonComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -333,6 +335,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ShadowboxLayoutComponent,
     FormDescriptorComponent,
     FormToastComponent,
+    ShadowboxSubmitButtonComponent,
   ],
   providers: [
     SiteService,

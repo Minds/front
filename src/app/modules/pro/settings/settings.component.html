@@ -12,12 +12,14 @@
         </div>
 
         <ng-container *ngIf="settings && activeTab">
-          <form (ngSubmit)="save()">
-            <ng-container [ngSwitch]="activeTab.id">
-              <!-- General -->
-
-              <ng-template ngSwitchCase="general">
-                <button (click)="tempToast()">toastme</button>
+          <ng-container [ngSwitch]="activeTab.id">
+            <!-- General -->
+            <ng-template ngSwitchCase="general">
+              <form
+                #generalForm="ngForm"
+                (ngSubmit)="onSubmit(generalForm.value)"
+              >
+                <div (click)="tempToast()">toastme</div>
                 <div class="m-proSettings__tab--general">
                   <div class="m-proSettings__field--text stretchedField">
                     <div class="m-proSettings__row--label">
@@ -50,13 +52,13 @@
                         [(ngModel)]="settings.headline"
                       ></textarea>
                       <m-formDescriptor
-                        >This will also be used in your SEO
-                        tags</m-formDescriptor
+                        >This will be used in your SEO tags as
+                        well</m-formDescriptor
                       >
                     </div>
                   </div>
 
-                  <div class="m-proSettings__field--checkbox compactField">
+                  <div class="m-proSettings__field--checkbox">
                     <div class="m-proSettings__row--input">
                       <label
                         for="publish"
@@ -80,13 +82,36 @@
                     </div>
                   </div>
                 </div>
-              </ng-template>
 
-              <!-- Theme -->
+                <div class="m-shadowboxLayout__footer">
+                  <button class="m-shadowboxLayout__button" type="submit" i18n>
+                    <!-- [disabled]="!activeForm.valid" -->
+                    <p *ngIf="activeTab.saveStatus === 'unsaved'">
+                      Save
+                      {{
+                        activeTab.id === 'general'
+                          ? 'Personal Details'
+                          : activeTab.title
+                      }}
+                    </p>
+                    <p
+                      *ngIf="activeTab.saveStatus === 'saving'"
+                      class="m-shadowboxLayout__buttonStatus--saving"
+                    >
+                      <span>.</span><span>.</span><span>.</span>
+                    </p>
+                    <p *ngIf="activeTab.saveStatus === 'saved'">Saved</p>
+                  </button>
+                </div>
+              </form>
+            </ng-template>
 
-              <ng-template ngSwitchCase="theme">
+            <!-- Theme -->
+
+            <ng-template ngSwitchCase="theme">
+              <form #themeForm="ngForm" (ngSubmit)="onSubmit(themeForm.value)">
                 <div class="m-proSettings__tab--theme">
-                  <div class="m-proSettings__field--color compactField">
+                  <div class="m-proSettings__field--color">
                     <div class="m-proSettings__row--label">
                       <label for="text_color" i18n>Text Color</label>
                       <m-tooltip icon="help">
@@ -98,6 +123,7 @@
                         type="text"
                         id="text_color"
                         name="text_color"
+                        #text_color="ngModel"
                         [(ngModel)]="settings.text_color"
                       />
 
@@ -107,19 +133,20 @@
                           backgroundColor: settings.text_color
                         }"
                       ></div>
-                      <div
-                        *ngIf="
-                          settings.text_color.invalid &&
-                          (settings.text_color.dirty ||
-                            settings.text_color.touched)
-                        "
-                      >
-                        some warning
-                      </div>
+                    </div>
+                    <div
+                      class="m-proSettings__row--validation"
+                      *ngIf="
+                        settings.text_color.invalid &&
+                        (settings.text_color.dirty ||
+                          settings.text_color.touched)
+                      "
+                    >
+                      <p>Validation error message here</p>
                     </div>
                   </div>
 
-                  <div class="m-proSettings__field--color compactField">
+                  <div class="m-proSettings__field--color">
                     <div class="m-proSettings__row--label">
                       <label for="primary_color" i18n>Primary Color</label
                       ><m-tooltip icon="help">
@@ -131,6 +158,7 @@
                         type="text"
                         id="primary_color"
                         name="primary_color"
+                        #primary_color="ngModel"
                         [(ngModel)]="settings.primary_color"
                       />
 
@@ -140,19 +168,20 @@
                           backgroundColor: settings.primary_color
                         }"
                       ></div>
-                      <div
-                        *ngIf="
-                          settings.primary_color.invalid &&
-                          (settings.primary_color.dirty ||
-                            settings.primary_color.touched)
-                        "
-                      >
-                        some warning
-                      </div>
+                    </div>
+                    <div
+                      class="m-proSettings__row--validation"
+                      *ngIf="
+                        settings.primary_color.invalid &&
+                        (settings.primary_color.dirty ||
+                          settings.primary_color.touched)
+                      "
+                    >
+                      <p>Validation error message here</p>
                     </div>
                   </div>
 
-                  <div class="m-proSettings__field--color compactField">
+                  <div class="m-proSettings__field--color">
                     <div class="m-proSettings__row--label">
                       <label for="plain_background_color" i18n>
                         Plain Background Color </label
@@ -165,6 +194,7 @@
                         type="text"
                         id="plain_background_color"
                         name="plain_background_color"
+                        #plain_background_color="ngModel"
                         [(ngModel)]="settings.plain_background_color"
                       />
 
@@ -174,19 +204,20 @@
                           backgroundColor: settings.plain_background_color
                         }"
                       ></div>
-                      <div
-                        *ngIf="
-                          settings.plain_background_color.invalid &&
-                          (settings.plain_background_color.dirty ||
-                            settings.plain_background_color.touched)
-                        "
-                      >
-                        some warning
-                      </div>
+                    </div>
+                    <div
+                      class="m-proSettings__row--validation"
+                      *ngIf="
+                        settings.plain_background_color.invalid &&
+                        (settings.plain_background_color.dirty ||
+                          settings.plain_background_color.touched)
+                      "
+                    >
+                      <p>Validation error message here</p>
                     </div>
                   </div>
 
-                  <div class="m-proSettings__field--radio compactField">
+                  <div class="m-proSettings__field--radio">
                     <div class="m-proSettings__row--label">
                       <label i18n> Color Schema </label
                       ><m-tooltip icon="help">
@@ -225,7 +256,7 @@
                     </div>
                   </div>
 
-                  <div class="m-proSettings__field--radio compactField">
+                  <div class="m-proSettings__field--radio">
                     <div class="m-proSettings__row--label">
                       <label i18n>Tiles Aspect Ratio</label
                       ><m-tooltip icon="help"
@@ -241,7 +272,7 @@
                           <input
                             type="radio"
                             [id]="'tile_ratio_' + ratio"
-                            name="scheme"
+                            name="tile_ratio"
                             [value]="ratio"
                             [(ngModel)]="settings.tile_ratio"
                           />
@@ -253,13 +284,15 @@
                     </div>
                   </div>
                 </div>
-              </ng-template>
+                <ng-container *ngTemplateOutlet="submitButton"></ng-container>
+              </form>
+            </ng-template>
 
-              <!-- Assets -->
-
-              <ng-template ngSwitchCase="assets">
+            <!-- Assets -->
+            <ng-template ngSwitchCase="assets">
+              <form #assetsForm (ngSubmit)="onSubmit(assetsForm)">
                 <div class="m-proSettings__tab--assets">
-                  <div class="m-proSettings__field--asset compactField">
+                  <div class="m-proSettings__field--asset">
                     <div class="m-proSettings__row--label">
                       <label for="logo" i18n>Logo</label>
                       <m-tooltip icon="help"
@@ -296,7 +329,7 @@
                     </div>
                   </div>
 
-                  <div class="m-proSettings__field--asset compactField">
+                  <div class="m-proSettings__field--asset">
                     <div class="m-proSettings__row--label">
                       <label for="background" i18n>Background</label
                       ><m-tooltip icon="help"
@@ -326,18 +359,21 @@
                           *ngIf="getPreviewAssetSrc('background')"
                           [src]="getPreviewAssetSrc('background')"
                         />
-                        <span class="m-proSettingsFilePreview__overlay">
+                        <span class="m-proSettings__filePreviewOverlay">
                           <i class="material-icons">cloud_upload</i>
                         </span>
                       </label>
                     </div>
                   </div>
                 </div>
-              </ng-template>
+                <ng-container *ngTemplateOutlet="submitButton"></ng-container>
+              </form>
+            </ng-template>
 
-              <!-- Tags -->
+            <!-- Tags -->
 
-              <ng-template ngSwitchCase="hashtags">
+            <ng-template ngSwitchCase="hashtags">
+              <form #tagsForm (ngSubmit)="onSubmit(tagsForm)">
                 <div class="m-proSettings__tab--tags containsDragDrop">
                   <div class="m-proSettings__field--grid fullWidthField">
                     <div class="m-proSettings__row--label">
@@ -375,13 +411,16 @@
                     </div>
                   </div>
                 </div>
-              </ng-template>
+                <ng-container *ngTemplateOutlet="submitButton"></ng-container>
+              </form>
+            </ng-template>
 
-              <!-- Footer -->
+            <!-- Footer -->
 
-              <ng-template ngSwitchCase="footer">
+            <ng-template ngSwitchCase="footer">
+              <form #footerForm (ngSubmit)="onSubmit(footerForm)">
                 <div class="m-proSettings__tab--footer containsDragDrop">
-                  <div class="m-proSettings__field--text compactField">
+                  <div class="m-proSettings__field--text">
                     <div class="m-proSettings__row--label">
                       <label for="footer_text" i18n>Title</label
                       ><m-tooltip icon="help"
@@ -438,13 +477,19 @@
                     </div>
                   </div>
                 </div>
-              </ng-template>
+                <ng-container *ngTemplateOutlet="submitButton"></ng-container>
+              </form>
+            </ng-template>
 
-              <!-- Domain -->
+            <!-- Domain -->
 
-              <ng-template ngSwitchCase="domain">
+            <ng-template ngSwitchCase="domain">
+              <form #domainForm (ngSubmit)="onSubmit(domainForm)">
                 <div class="m-proSettings__tab--domain">
-                  <div class="m-proSettings__field--text stretchedField">
+                  <div
+                    class="m-proSettings__field--text stretchedField"
+                    [ngClass]="{ invalid: !isDomainValid }"
+                  >
                     <div class="m-proSettings__row--label">
                       <label for="domain" i18n>Domain</label>
                       <m-tooltip icon="help"
@@ -453,37 +498,20 @@
                     </div>
                     <div class="m-proSettings__row--input">
                       <input
-                        class="m-proSettings__input--hasIcon"
+                        class="m-proSettings__input"
                         type="text"
                         id="domain"
                         name="domain"
                         [(ngModel)]="settings.domain"
+                        #domain="ngModel"
                         (keydown)="domainValidationSubject.next($event)"
                       />
-
-                      <m-tooltip
-                        *ngIf="isDomainValid !== null"
-                        [icon]="isDomainValid ? 'check' : 'close'"
-                        class="m-proSettingsDomain__validIcon"
-                        [class.m-proSettingsDomain__validIcon--true]="
-                          isDomainValid
-                        "
-                        [class.m-proSettingsDomain__validIcon--false]="
-                          !isDomainValid
-                        "
-                      >
-                        <ng-container
-                          *ngIf="isDomainValid; else notValidDomain"
-                          i18n
-                        >
-                          This domain is available
-                        </ng-container>
-                        <ng-template #notValidDomain>
-                          <ng-container i18n>
-                            This domain is taken
-                          </ng-container>
-                        </ng-template>
-                      </m-tooltip>
+                    </div>
+                    <div
+                      *ngIf="!isDomainValid"
+                      class="m-proSettings__row--validation"
+                    >
+                      <p>Domain not available</p>
                     </div>
                   </div>
 
@@ -510,28 +538,43 @@
                     </div>
                   </div>
                 </div>
-              </ng-template>
-            </ng-container>
-          </form>
+                <ng-container *ngTemplateOutlet="submitButton"></ng-container>
+              </form>
+            </ng-template>
+          </ng-container>
         </ng-container>
       </div>
-      <div class="m-shadowboxLayout__footer">
-        <!-- <div class="m-proSettings__fieldSpinner" *ngIf="inProgress">
-          <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-        </div> -->
-        <button
-          class="m-shadowboxLayout__button"
-          type="submit"
-          [disabled]="inProgress"
-          i18n
-        >
-          Save
-          {{
-            activeTab.id === 'general' ? 'Personal Details' : activeTab.title
-          }}
+      <!-- <div class="m-shadowboxLayout__footer">
+        <button class="m-shadowboxLayout__button" type="submit" i18n>
+          <p *ngIf="activeTab.saveStatus === 'unsaved'">
+            Save
+            {{
+              activeTab.id === 'general' ? 'Personal Details' : activeTab.title
+            }}
+          </p>
+          <p
+            *ngIf="activeTab.saveStatus === 'saving'"
+            class="m-shadowboxLayout__buttonStatus--saving"
+          >
+            <span>.</span><span>.</span><span>.</span>
+          </p>
+          <p *ngIf="activeTab.saveStatus === 'saved'">Saved</p>
         </button>
-      </div>
+      </div> -->
     </m-shadowboxLayout>
     <m-formToast></m-formToast>
   </ng-container>
 </m-pageLayout>
+
+<ng-template #submitButton>
+  <m-shadowboxSubmitButton [saveStatus]="activeTab.saveStatus">
+    <!-- [disabled]="!activeForm.valid" -->
+    <p class="m-shadowboxSubmitButton__status--unsaved">
+      Save
+      {{ activeTab.id === 'general' ? 'Personal Details' : activeTab.title }}
+    </p>
+    <p class="m-shadowboxSubmitButton__status--saved">
+      Saved
+    </p>
+  </m-shadowboxSubmitButton>
+</ng-template>

@@ -1,0 +1,23 @@
+<div class="m-shadowboxLayout__footer">
+  <button
+    class="m-shadowboxSubmitButton"
+    type="submit"
+    i18n
+    [disabled]="disabled"
+  >
+    <ng-container *ngIf="saveStatus === 'unsaved'">
+      <ng-content
+        select=".m-shadowboxSubmitButton__status--unsaved"
+      ></ng-content>
+    </ng-container>
+    <p
+      *ngIf="saveStatus === 'saving'"
+      class="m-shadowboxSubmitButton__status--saving"
+    >
+      <span>.</span><span>.</span><span>.</span>
+    </p>
+    <ng-container *ngIf="saveStatus === 'saved'">
+      <ng-content select=".m-shadowboxSubmitButton__status--saved"></ng-content>
+    </ng-container>
+  </button>
+</div>
