@@ -77,7 +77,9 @@ Cypress.Commands.add('login', (canary = false, username, password) => {
   username =  username ? username : Cypress.env().username;
   password =  password ? password : Cypress.env().password;
 
-  cy.visit('/login');
+  cy.visit('/login')
+    .location('pathname')
+    .should('eq', '/newsfeed/subscriptions');
 
   cy.server();
   cy.route("POST", "/api/v1/authenticate").as("postLogin");
