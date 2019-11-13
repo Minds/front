@@ -194,7 +194,7 @@
 
       z-index: 3;
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and (max-width: $max-mobile) {
         width: 10vw;
         height: 10vw;
 
@@ -207,7 +207,31 @@
       bottom: 8px;
       left: -45px;
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and(min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
+        bottom: -23%;
+        left: 8.5%;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        //bottom: -116px;
+        //left: 2px;
+        bottom: -27%;
+        left: 2.5%;
+      }
+    }
+
+    .m-marketing__imageTick--right {
+      position: absolute;
+      bottom: 8px;
+      left: -45px;
+
+      @media screen and(min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
+        bottom: 0;
+        right: 0;
+        left: auto;
+      }
+
+      @media screen and (max-width: $max-mobile) {
         //bottom: -116px;
         //left: 2px;
         bottom: -27%;

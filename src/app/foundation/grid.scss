@@ -1,4 +1,5 @@
 @import './grid-values';
+@import '../../stylesheets/defaults';
 
 .m-grid {
   display: grid;
@@ -15,7 +16,18 @@
     }
   }
 
-  @media screen and (max-width: $m-grid-min-vp) {
+  @media screen and (max-width: $min-desktop) {
+    @for $i from 1 through $m-grid-cols {
+      .m-grid__column-#{$i}--tablet {
+        grid-column: auto / span $i;
+      }
+      .m-grid__column__skip-#{$i}--tablet {
+        grid-column-start: $i !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: $max-mobile) {
     @for $i from 1 through $m-grid-cols {
       .m-grid__column-#{$i}--mobile {
         grid-column: auto / span $i;

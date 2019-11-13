@@ -3,6 +3,7 @@
 m-marketing {
   display: block;
   font-family: Roboto, sans-serif;
+  overflow: hidden;
 
   @include m-theme() {
     background: themed($m-white);

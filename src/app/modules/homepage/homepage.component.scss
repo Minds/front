@@ -63,6 +63,7 @@ m-homepage {
     }
 
     .m-marketing__image {
+      margin: 0 auto;
       span {
         &::before {
           content: initial !important;
@@ -73,7 +74,13 @@ m-homepage {
           height: auto !important;
           object-fit: initial !important;
           width: 333px !important;
-          transform: translateY(-25px);
+
+          @media screen and (min-width: $min-tablet) {
+            transform: translateY(-25px);
+          }
+          @media screen and (min-width: $max-mobile) {
+            width: 100% !important;
+          }
         }
       }
     }
@@ -135,14 +142,16 @@ m-homepage {
 
   h1,
   h2,
-  h3,
+  h3:not(.m-marketingTitle__centered),
   .m-marketing__description {
     text-align: left !important;
   }
 
   @media screen and(max-width: $max-mobile) {
+    display: block;
+    margin-top: 55px;
     h1.m-homepage__minds {
-      margin-top: 55px;
+      margin-top: 100px;
     }
   }
 }

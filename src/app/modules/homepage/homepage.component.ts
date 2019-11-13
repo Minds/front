@@ -10,7 +10,7 @@ import { Session } from '../../services/session';
   selector: 'm-homepage',
   templateUrl: 'homepage.component.html',
 })
-export class HomepageComponent implements OnDestroy {
+export class HomepageComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
 
   topbar: HTMLElement;
@@ -41,7 +41,9 @@ export class HomepageComponent implements OnDestroy {
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
+  }
 
+  ngOnInit() {
     this.onResize();
   }
 
@@ -63,6 +65,17 @@ export class HomepageComponent implements OnDestroy {
   @HostListener('window:resize')
   onResize() {
     this.toggleTopbarBackground(window.innerWidth > 640);
+
+    const tick: HTMLSpanElement = document.querySelector(
+      '.m-marketing__imageUX > .m-marketing__imageTick'
+    );
+    if (window.innerWidth > 480 && window.innerWidth < 1168) {
+      tick.classList.remove('m-marketing__imageTick--left');
+      tick.classList.add('m-marketing__imageTick--right');
+    } else {
+      tick.classList.add('m-marketing__imageTick--left');
+      tick.classList.remove('m-marketing__imageTick--right');
+    }
   }
 
   toggleTopbarBackground(value: boolean) {
