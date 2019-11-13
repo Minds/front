@@ -2,5 +2,8 @@
   "projectId": "qrjqcv",
   "requestTimeout": 3600000,
   "responseTimeout": 3600000,
-  "pageLoadTimeout": 3600000
+  "pageLoadTimeout": 3600000,
+  "defaultCommandTimeout": 3600000,
+  "execTimeout": 3600000,
+  "taskTimeout": 3600000
 }
