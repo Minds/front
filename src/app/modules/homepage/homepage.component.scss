@@ -88,7 +88,7 @@ m-homepage {
 
     margin-top: 50px;
 
-    @media screen and(max-width: $m-grid-min-vp) {
+    @media screen and(max-width: $max-mobile) {
       width: 100%;
       & > a:not(:first-child) {
         margin-left: 18px;
@@ -119,7 +119,7 @@ m-homepage {
   .m-homepage__joinMindsNow {
     max-width: 90%;
 
-    @media screen and (max-width: $m-grid-min-vp) {
+    @media screen and (max-width: $max-mobile) {
       max-width: 100%;
     }
   }
@@ -133,13 +133,16 @@ m-homepage {
     margin-top: 45px;
   }
 
+  h1,
   h2,
   h3,
   .m-marketing__description {
     text-align: left !important;
   }
-}
 
-.m-homepage {
-  margin-top: -52px;
+  @media screen and(max-width: $max-mobile) {
+    h1.m-homepage__minds {
+      margin-top: 55px;
+    }
+  }
 }

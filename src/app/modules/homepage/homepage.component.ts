@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Client } from '../../services/api/client';
 import { MindsTitle } from '../../services/ux/title';
 import { Router } from '@angular/router';
@@ -42,11 +42,11 @@ export class HomepageComponent implements OnDestroy {
       this.flags.canPlayInlineVideos = false;
     }
 
-    this.topbar.classList.add('m-v2-topbar__noBackground');
+    this.onResize();
   }
 
   ngOnDestroy() {
-    this.topbar.classList.remove('m-v2-topbar__noBackground');
+    this.toggleTopbarBackground(false);
   }
 
   goToLoginPage() {
@@ -58,5 +58,18 @@ export class HomepageComponent implements OnDestroy {
       defaultUrl:
         '/' + this.session.getLoggedInUser().username + ';onboarding=1',
     });
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.toggleTopbarBackground(window.innerWidth > 640);
+  }
+
+  toggleTopbarBackground(value: boolean) {
+    if (value) {
+      this.topbar.classList.add('m-v2-topbar__noBackground');
+    } else {
+      this.topbar.classList.remove('m-v2-topbar__noBackground');
+    }
   }
 }
