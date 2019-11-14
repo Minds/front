@@ -132,10 +132,9 @@ describe('GroupsMembersModuleComponent', () => {
     tick();
 
     expect(membersComponent.load).toHaveBeenCalled();
-    expect(clientMock.get).toHaveBeenCalledWith(
-      'api/v1/groups/membership/11111',
-      { limit: 21 }
-    );
+    expect(
+      clientMock.get
+    ).toHaveBeenCalledWith('api/v1/groups/membership/11111', { limit: 21 });
 
     expect(membersComponent.members).toEqual(successfulGroupResponse.members);
   }));
