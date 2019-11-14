@@ -74,15 +74,16 @@ const poster = {
 Cypress.Commands.add('login', (canary = false, username, password) => {
   cy.clearCookies();
   cy.setCookie('staging', "1"); // Run in staging mode. Note: does not impact review sites
+  
+  cy.server();
+  cy.route("POST", "/api/v1/authenticate").as("postLogin");
+  
   username =  username ? username : Cypress.env().username;
   password =  password ? password : Cypress.env().password;
 
   cy.visit('/login')
     .location('pathname')
-    .should('eq', '/newsfeed/subscriptions');
-
-  cy.server();
-  cy.route("POST", "/api/v1/authenticate").as("postLogin");
+    .should('eq', '/login');
 
   cy.get(loginForm.username).focus().type(username);
   cy.get(loginForm.password).focus().type(password);
