@@ -23,6 +23,7 @@ export class DraggableListComponent {
   @Input() headers: string[];
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
   @Output() emptyListHeaderRowClicked: EventEmitter<any> = new EventEmitter();
+  @Output() itemRemoved: EventEmitter<number> = new EventEmitter();
 
   dragging: boolean = false;
 
@@ -57,7 +58,7 @@ export class DraggableListComponent {
   }
 
   removeItem(index) {
-    this.data.splice(index, 1);
+    this.itemRemoved.next(index);
   }
 
   clickedHeaderRow($event) {
