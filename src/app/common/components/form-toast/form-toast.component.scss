@@ -2,12 +2,13 @@ m-formToast {
   margin: 37px 70px 0 70px;
   display: flex;
   flex-flow: column nowrap;
+  min-width: 300px;
   max-width: 522px;
   position: fixed;
-  bottom: 24px;
+  bottom: 24;
 }
-.m-formToasts__toastsContainer {
-  min-width: 300px;
+.m-formToast__toastsContainer {
+  height: auto;
   transition: all 0.3s ease;
 }
 .m-formToast__wrapper {
@@ -17,10 +18,15 @@ m-formToast {
   padding: 13px;
   margin-bottom: 16px;
   display: flex;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   @include m-theme() {
     color: themed($m-grey-600);
     background-color: themed($m-white);
     box-shadow: 0 0 15px 0 rgba(themed($m-black), 0.2);
+  }
+  &.active {
+    opacity: 1;
   }
   p {
     flex-grow: 1;
@@ -46,37 +52,33 @@ m-formToast {
     color: themed($m-amber-dark);
   }
 }
+.m-formToast__icon--info {
+  margin-right: 14px;
+}
 .m-formToast__icon--close {
   cursor: pointer;
   transition: all 0.2s ease-out;
   @include m-theme() {
-    color: themed($m-grey-400);
+    color: themed($m-grey-300);
   }
   &:hover {
     transform: scale(1.2);
     @include m-theme() {
-      color: themed($m-grey-200);
+      color: themed($m-grey-100);
     }
   }
   &:active {
     @include m-theme() {
-      color: themed($m-grey-600);
+      color: themed($m-grey-400);
     }
   }
 }
 
 @media screen and (max-width: $min-tablet) {
   m-formToast {
-    // margin: 37px 24px 0 24px;
-    margin: 0px 24px;
+    margin: 0 auto;
     max-width: 85%;
+    position: absolute;
+    bottom: 48px;
   }
 }
-
-// TODOOJM
-// @media screen and (max-width: $max-mobile) {
-//   m-formToast {
-//     position: fixed;
-
-//   }
-// }

@@ -25,29 +25,26 @@ export class FormToastComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.service.onToast().subscribe(toast => {
+      // clear toasts when an empty toast is received
       if (!toast.message) {
-        // clear toasts when an empty toast is received
         this.toasts = [];
         return;
       }
-
-      toast['visible'] = true;
       const toastIndex = this.toasts.push(toast) - 1;
+      console.log(toastIndex);
       this.detectChanges();
-      console.log('***new toast', toast);
 
+      // TODOOJM something is wrong here
       const toastTimeout = setTimeout(() => {
         this.toasts[toastIndex].visible = false;
-        console.log('***end toast', this.toasts[toastIndex]);
         this.detectChanges();
-      }, 10000);
+      }, 3000);
 
       this.timeoutIds.push(setTimeout(() => toastTimeout));
     });
   }
 
   dismiss(index) {
-    console.log(this.toasts[index]);
     this.toasts[index].visible = false;
     this.detectChanges();
   }

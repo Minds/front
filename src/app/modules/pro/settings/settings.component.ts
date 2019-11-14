@@ -5,6 +5,7 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
+  AfterViewInit,
   ViewChild,
 } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
@@ -16,17 +17,15 @@ import { SiteService } from '../../../common/services/site.service';
 import { debounceTime } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'm-proSettings',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'settings.component.html',
 })
-export class ProSettingsComponent implements OnInit, OnDestroy {
-  //TODOOJM remove this
-  toastIndex: number = 0;
-  toastMessages = ['rye', 'wheat', '7-grain', 'bagel', 'pumpernickel'];
-
+export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
+  activeForm: NgForm;
   activeTab: any;
   tabs = [
     {
@@ -63,6 +62,8 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   settings: any;
 
+  init: boolean = false;
+
   inProgress: boolean;
 
   saved: boolean = false;
@@ -72,6 +73,8 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
   isDomainValid: boolean | null = null;
 
   error: string;
+
+  hexPattern = '^#?([0-9A-Fa-f]{3}){1,2}$'; // accepts both 3- and 6-digit codes, hash is optional
 
   domainValidationSubject: Subject<any> = new Subject<any>();
 
@@ -86,6 +89,9 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   @ViewChild('backgroundField', { static: false })
   protected backgroundField: ElementRef<HTMLInputElement>;
+
+  // TODO: make one of these for each form
+  @ViewChild('themeForm', { static: false }) themeForm: NgForm;
 
   constructor(
     protected service: ProService,
@@ -104,7 +110,10 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       const activeTabParam = params.get('tab');
       this.activeTab = this.tabs.find(tab => tab.id === activeTabParam);
       this.activeTab['saveStatus'] = 'unsaved';
-      this.detectChanges();
+      if (this.init) {
+        this.getActiveForm();
+        this.detectChanges();
+      }
     });
 
     this.param$ = this.route.params.subscribe(params => {
@@ -120,20 +129,21 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       .subscribe(() => this.validateDomain());
   }
 
+  ngAfterViewInit() {
+    this.init = true;
+    this.getActiveForm();
+    this.detectChanges();
+  }
+
+  getActiveForm() {
+    const tempFormStr = this.activeTab.id + 'Form';
+    this.activeForm = this[tempFormStr];
+    console.log(this.activeForm);
+  }
   ngOnDestroy() {
     this.paramMap$.unsubscribe();
     this.param$.unsubscribe();
     this.domainValidation$.unsubscribe();
-  }
-
-  // TODOOJM remove this after testing
-  tempToast() {
-    this.formToastService.warn(this.toastMessages[this.toastIndex]);
-    if (this.toastIndex < 6) {
-      this.toastIndex++;
-    } else {
-      this.toastIndex = 0;
-    }
   }
 
   async load() {
@@ -169,6 +179,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     } catch (e) {
       this.isDomainValid = null;
       this.error = (e && e.message) || 'Error checking domain';
+      this.formToastService.error(this.error);
     }
 
     this.detectChanges();
@@ -219,9 +230,12 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   onSubmit(form) {
     console.log(form);
+    console.log(form.value);
     this.error = null;
     this.activeTab.saveStatus = 'saving';
     this.detectChanges();
+
+    // TODO: add '#' to colors without them
   }
 
   async save() {

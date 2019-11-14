@@ -1,4 +1,8 @@
 m-proSettings {
+  display: block;
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
   form {
     margin: 0;
     padding: 0;
@@ -17,18 +21,20 @@ m-proSettings {
 
   [class*='m-proSettings__field'] {
     position: relative;
-    margin-top: 28px;
+    margin-bottom: 28px;
     font-size: 15px;
     line-height: 20px;
     font-weight: 300;
     @include m-theme() {
       color: themed($m-grey-800);
     }
-    &:first-child {
-      margin-top: 0;
-    }
     &:last-child {
       margin-bottom: 42px;
+    }
+    &.hasValidationRow {
+      &:not(:last-child) {
+        margin-bottom: 6px;
+      }
     }
 
     &.m-proSettings__field--checkbox,
@@ -39,20 +45,6 @@ m-proSettings {
     &.m-proSettings__field--radio {
       .m-proSettings__row--label {
         margin-bottom: 21px;
-      }
-    }
-    &.invalid {
-      .m-proSettings__row--input {
-        > * {
-          @include m-theme() {
-            border: 1px solid themed($m-red);
-          }
-        }
-      }
-      .m-proSettings__row--validation {
-        @include m-theme() {
-          color: themed($m-red-dark);
-        }
       }
     }
   }
@@ -68,12 +60,16 @@ m-proSettings {
       position: relative;
     }
     &[class$='--validation'] {
-      justify-content: flex-end;
       margin-top: 3px;
+      min-height: 22px;
       p {
         font-size: 14px;
         line-height: 19px;
-        margin: 0;
+        margin: 0 8px 0 0;
+        font-weight: 300;
+        @include m-theme() {
+          color: themed($m-red-dark);
+        }
       }
     }
   }
@@ -84,6 +80,9 @@ m-proSettings {
     .m-proSettings__row--input {
       flex-flow: row nowrap;
     }
+    .m-proSettings__row--validation {
+      justify-content: flex-end;
+    }
     label,
     input,
     textarea {
@@ -93,9 +92,11 @@ m-proSettings {
   }
 
   .m-proSettings__field--color {
-    .m-proSettings__row--input input {
-      width: 120px;
-      box-sizing: border-box;
+    .m-proSettings__row--input {
+      input {
+        width: 120px;
+        box-sizing: border-box;
+      }
     }
   }
 
@@ -145,8 +146,24 @@ m-proSettings {
         border: 1px solid themed($m-grey-50);
       }
       &:focus {
+        &:not(:read-only) {
+          @include m-theme() {
+            border-color: themed($m-blue);
+          }
+        }
+      }
+    }
+  }
+
+  input,
+  textarea {
+    &:not(:read-only):not(:-moz-read-only) {
+      cursor: default;
+    }
+    &:not(.m-draggableList__cell) {
+      &.ng-invalid.form-control {
         @include m-theme() {
-          border-color: themed($m-blue);
+          border-color: themed($m-red-dark);
         }
       }
     }
@@ -185,17 +202,22 @@ m-proSettings {
           background-color: themed($m-white);
         }
         &:hover {
+          transform: scale(1.04);
           @include m-theme() {
-            border-color: rgba(themed($m-grey-200), 0.7);
+            box-shadow: 0 3px 2px -5px rgba(themed($m-black), 0.1),
+              0 2px 2px 0 rgba(themed($m-black), 0.04),
+              0 1px 4px 0 rgba(themed($m-black), 0.05);
           }
         }
         &:active {
+          transform: scale(0.98);
           @include m-theme() {
-            box-shadow: 0 1px 1px -4px rgba(themed($m-black), 0.2),
-              0 2px 2px 0 rgba(themed($m-black), 0.14),
-              0 1px 2px 0 rgba(themed($m-black), 0.12);
+            box-shadow: 0 3px 1px -6px rgba(themed($m-black), 0.12),
+              0 0px 1px 0 rgba(themed($m-black), 0.07),
+              0 1px 2px 0 rgba(themed($m-black), 0.08);
           }
         }
+
         &:disabled,
         &[disabled] {
           cursor: default;
@@ -313,22 +335,8 @@ m-proSettings {
 
     &.m-proSettingsDomain__validIcon--false i.material-icons {
       @include m-theme() {
-        color: themed($m-red);
+        color: themed($m-red-dark);
       }
-    }
-  }
-
-  .m-proSettings__error {
-    margin: 0 0 16px 0;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid;
-    font-size: 14px;
-    line-height: 1;
-
-    @include m-theme() {
-      color: themed($m-red);
-      border-color: themed($m-red);
     }
   }
 

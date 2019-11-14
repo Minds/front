@@ -1,10 +1,6 @@
 <div class="m-formToast__toastsContainer">
   <ng-container *ngFor="let toast of toasts; let i = index">
-    <div
-      class="m-formToast__wrapper"
-      *ngIf="toast.visible"
-      [ngClass]="{ inactive: !toast.visible }"
-    >
+    <div class="m-formToast__wrapper" [ngClass]="{ active: toast.visible }">
       <i
         class="material-icons m-formToast__icon--success"
         *ngIf="toast.type === 'success'"
@@ -20,9 +16,15 @@
         *ngIf="toast.type === 'warning'"
         >warning</i
       >
+      <i
+        class="material-icons m-formToast__icon--info"
+        *ngIf="toast.type === 'info'"
+      ></i>
       <p i18n>{{ toast.message }}</p>
       <div class="m-formToast__iconWrapper">
-        <i class="material-icons m-formToast__icon--close" (click)="dismiss(i)"
+        <i
+          class="material-icons m-formToast__icon--close"
+          (click)="toast.visible = false"
           >clear</i
         >
       </div>
