@@ -163,7 +163,7 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy() {
     this.paramMap$.unsubscribe();
     this.param$.unsubscribe();
-    this.domainValidation$.unsubscribe();
+    // this.domainValidation$.unsubscribe();
   }
 
   async load() {
