@@ -5,6 +5,7 @@ import {
   TemplateRef,
   Output,
   EventEmitter,
+  ChangeDetectorRef,
 } from '@angular/core';
 import {
   DndDropEvent,
@@ -31,9 +32,10 @@ export class DraggableListComponent {
     return this.id ? item[this.id] + index : index;
   }
 
+  constructor(private cd: ChangeDetectorRef) {}
+
   onDrop(event: DndDropEvent) {
     this.dragging = false;
-    console.log(event);
     if (
       this.data &&
       (event.dropEffect === 'copy' || event.dropEffect === 'move')
@@ -56,10 +58,8 @@ export class DraggableListComponent {
   }
 
   removeItem(index) {
-    console.log('***databefore removal', this.data, index);
     this.data.splice(index, 1);
     this.arrayChanged.emit(this.data);
-    console.log('***dataafter removal', this.data);
   }
 
   clickedHeaderRow($event) {

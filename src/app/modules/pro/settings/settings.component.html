@@ -449,13 +449,16 @@
                           Add
                         </button>
                       </div>
-                      <div class="m-proSettings__row--input">
+                      <div
+                        class="m-proSettings__row--input"
+                        *ngIf="form.value.hashtags.length > 0"
+                      >
                         <m-draggableList
                           [headers]="['Label', '#Hashtag']"
                           [data]="form.value.hashtags"
                           [id]="'tag'"
                           (emptyListHeaderRowClicked)="addBlankTag()"
-                          (arrayChanged)="resetArray('hashtags', $event)"
+                          (arrayChanged)="setTags($event)"
                         >
                           <ng-template let-tag="item" let-i="i">
                             <ng-container [formGroupName]="i">
@@ -528,13 +531,16 @@
                           Add
                         </button>
                       </div>
-                      <div class="m-proSettings__row--input">
+                      <div
+                        class="m-proSettings__row--input"
+                        *ngIf="form.value.footer.links.length > -1"
+                      >
                         <m-draggableList
                           [headers]="['Label', 'Url']"
                           [data]="form.value.footer.links"
                           [id]="'title'"
                           (emptyListHeaderRowClicked)="addBlankFooterLink()"
-                          (arrayChanged)="resetArray('footer.links', $event)"
+                          (arrayChanged)="setFooterLinks($event)"
                         >
                           <ng-template let-link="item" let-i="i">
                             <ng-container [formGroupName]="i">
@@ -658,29 +664,27 @@
 
 <ng-template #submitButton>
   <m-shadowboxSubmitButton [disabled]="!form.valid">
-    <ng-container *ngIf="saveStatus !== 'saving'">
-      <div
-        *ngIf="form.dirty || form.touched"
-        class="m-shadowboxSubmitButton__status--unsaved"
-      >
-        Save
-        {{ activeTab.id === 'general' ? 'Personal Details' : activeTab.title }}
-      </div>
-
-      <div
-        *ngIf="!form.dirty && !form.touched && saveStatus !== 'unsaved'"
-        class="m-shadowboxSubmitButton__status--saved"
-      >
-        Saved
-      </div>
+    <ng-container [ngSwitch]="saveStatus">
+      <ng-template ngSwitchCase="saved">
+        <div class="m-shadowboxSubmitButton__status--saved">
+          Saved
+        </div>
+      </ng-template>
+      <ng-template ngSwitchCase="saving">
+        <div class="m-shadowboxSubmitButton__status--saving">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </ng-template>
+      <ng-template ngSwitchDefault>
+        <div class="m-shadowboxSubmitButton__status--unsaved">
+          Save
+          {{
+            activeTab.id === 'general' ? 'Personal Details' : activeTab.title
+          }}
+        </div>
+      </ng-template>
     </ng-container>
-    <div
-      *ngIf="saveStatus === 'saving'"
-      class="m-shadowboxSubmitButton__status--saving"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
   </m-shadowboxSubmitButton>
 </ng-template>
