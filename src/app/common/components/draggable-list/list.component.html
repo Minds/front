@@ -13,7 +13,7 @@
   dndDropzone
   [dndHorizontal]="false"
   [dndEffectAllowed]="dndEffectAllowed"
-  (dndStart)="onDragStart($event)"
+  (dndStart)="dragging = true"
   (dndDrop)="onDrop($event)"
   class="m-draggableList__list"
   [ngClass]="{ dragging: dragging }"

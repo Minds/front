@@ -43,7 +43,7 @@ export class SidebarMenuComponent implements OnInit {
       ? this.menuObj
       : sidebarMenus.find(menu => menu.header.id === this.menuId);
     this.getUserRoles();
-    this.grantPermissionsAndFindActiveMenu();
+    this.grantPermissions();
   }
 
   getUserRoles() {
@@ -55,7 +55,7 @@ export class SidebarMenuComponent implements OnInit {
     }
   }
 
-  grantPermissionsAndFindActiveMenu() {
+  grantPermissions() {
     this.menu.header['permissionGranted'] = this.menu.header.permissions
       ? this.checkForRoleMatch(this.menu.header.permissions)
       : true;

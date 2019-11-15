@@ -1,4 +1,4 @@
-<m-pageLayout menuId="pro_settings" [isForm]="true">
+<m-pageLayout [menuObj]="menuObj" [isForm]="true">
   <ng-container m-pageLayout__main *ngIf="settings">
     <m-shadowboxLayout
       [scrollableHeader]="false"
@@ -11,7 +11,7 @@
           <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
         </div>
         <ng-container *ngIf="settings && activeTab">
-          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <form [formGroup]="form" (ngSubmit)="onSubmit()" #f="ngForm">
             <ng-container [ngSwitch]="activeTab.id">
               <!-- General -->
               <ng-template ngSwitchCase="general">
@@ -206,7 +206,7 @@
                           Plain Background Color </label
                         ><m-tooltip icon="help">
                           <ng-container i18n
-                            >The colour of your background</ng-container
+                            >The color of your background</ng-container
                           >
                         </m-tooltip>
                       </div>
@@ -455,7 +455,7 @@
                           [data]="form.value.hashtags"
                           [id]="'tag'"
                           (emptyListHeaderRowClicked)="addBlankTag()"
-                          (itemRemoved)="removeTag($event)"
+                          (arrayChanged)="resetArray('hashtags', $event)"
                         >
                           <ng-template let-tag="item" let-i="i">
                             <ng-container [formGroupName]="i">
@@ -463,8 +463,9 @@
                                 class="m-draggableList__cell form-control"
                                 type="text"
                                 [id]="'tag-label-' + i"
-                                [name]="'tag[' + i + '    ][label]'"
+                                [name]="'tag[' + i + '][label]'"
                                 formControlName="label"
+                                autofocus
                               />
                               <input
                                 class="m-draggableList__cell form-control"
@@ -533,7 +534,7 @@
                           [data]="form.value.footer.links"
                           [id]="'title'"
                           (emptyListHeaderRowClicked)="addBlankFooterLink()"
-                          (removeItem)="removeFooterLink($event)"
+                          (arrayChanged)="resetArray('footer.links', $event)"
                         >
                           <ng-template let-link="item" let-i="i">
                             <ng-container [formGroupName]="i">
@@ -543,6 +544,7 @@
                                 [id]="'footer_link-title-' + i"
                                 [name]="'footer_link[' + i + '][title]'"
                                 formControlName="title"
+                                autofocus
                               />
 
                               <input
@@ -655,17 +657,30 @@
 </m-pageLayout>
 
 <ng-template #submitButton>
-  <m-shadowboxSubmitButton
-    [saveStatus]="activeTab.saveStatus"
-    [disabled]="!form.valid"
-  >
-    <!-- [disabled]="!activeForm.valid" -->
-    <ng-container m-shadowboxSubmitButton__status--unsaved>
-      Save
-      {{ activeTab.id === 'general' ? 'Personal Details' : activeTab.title }}
+  <m-shadowboxSubmitButton [disabled]="!form.valid">
+    <ng-container *ngIf="saveStatus !== 'saving'">
+      <div
+        *ngIf="form.dirty || form.touched"
+        class="m-shadowboxSubmitButton__status--unsaved"
+      >
+        Save
+        {{ activeTab.id === 'general' ? 'Personal Details' : activeTab.title }}
+      </div>
+
+      <div
+        *ngIf="!form.dirty && !form.touched && saveStatus !== 'unsaved'"
+        class="m-shadowboxSubmitButton__status--saved"
+      >
+        Saved
+      </div>
     </ng-container>
-    <ng-container m-shadowboxSubmitButton__status--saved>
-      Saved
-    </ng-container>
+    <div
+      *ngIf="saveStatus === 'saving'"
+      class="m-shadowboxSubmitButton__status--saving"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </m-shadowboxSubmitButton>
 </ng-template>

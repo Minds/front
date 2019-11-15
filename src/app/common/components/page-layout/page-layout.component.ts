@@ -5,7 +5,8 @@ import { Component, OnInit, Input, HostBinding } from '@angular/core';
   templateUrl: './page-layout.component.html',
 })
 export class PageLayoutComponent implements OnInit {
-  @Input() menuId: string;
+  @Input() menuId: string; // TODO remove this and use menuObj in analytics
+  @Input() menuObj: any;
   @HostBinding('class.isForm') @Input() isForm: boolean = false;
   constructor() {}
 

@@ -5,7 +5,6 @@ import {
   ElementRef,
   OnDestroy,
   OnInit,
-  AfterViewInit,
   ViewChild,
 } from '@angular/core';
 import { Subject, Subscription, from } from 'rxjs';
@@ -17,6 +16,8 @@ import { SiteService } from '../../../common/services/site.service';
 import { debounceTime } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import sidebarMenu from './sidebar-menu.default';
+import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 import {
   NgForm,
   FormBuilder,
@@ -31,7 +32,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'settings.component.html',
 })
-export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProSettingsComponent implements OnInit, OnDestroy {
+  menuObj: Menu = sidebarMenu;
   activeForm: NgForm;
   activeTab: any;
   tabs = [
@@ -69,11 +71,11 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   settings: any;
 
-  init: boolean = false;
-
   inProgress: boolean;
 
   saved: boolean = false;
+
+  saveStatus: string = 'unsaved';
 
   user: string | null = null;
 
@@ -91,11 +93,15 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   protected domainValidation$: Subscription;
 
+  protected formEl$: Subscription;
+
   @ViewChild('logoField', { static: false })
   protected logoField: ElementRef<HTMLInputElement>;
 
   @ViewChild('backgroundField', { static: false })
   protected backgroundField: ElementRef<HTMLInputElement>;
+
+  // @ViewChild('f', { static: false }) formEl: any;
 
   form = this.fb.group({
     title: ['', Validators.required],
@@ -140,23 +146,37 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.paramMap$ = this.route.paramMap.subscribe((params: ParamMap) => {
       const activeTabParam = params.get('tab');
       this.activeTab = this.tabs.find(tab => tab.id === activeTabParam);
-      this.activeTab['saveStatus'] = 'unsaved';
-      if (this.init) {
-        this.detectChanges();
-      }
+      this.saveStatus = 'unsaved';
+      this.detectChanges();
     });
 
     this.param$ = this.route.params.subscribe(params => {
       if (this.session.isAdmin()) {
         this.user = params['user'] || null;
       }
-
       this.load();
     });
+
+    this.form.valueChanges.subscribe((value: any) => {
+      console.log(value);
+      console.log(this.form);
+      if (this.form.dirty) {
+        console.log('template form dirty - yes: ', value);
+      } else {
+        console.log('template form dirty - no: ');
+      }
+    });
+
+    if (this.isRemote) {
+      this.updatePreviewRoute();
+    }
   }
 
-  ngAfterViewInit() {
-    this.init = true;
+  updatePreviewRoute() {
+    const previewRouteLink = this.menuObj.links.find(
+      link => link.id === ':user'
+    );
+    previewRouteLink.path = `pro/${this.user}`;
     this.detectChanges();
   }
 
@@ -287,7 +307,7 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(this.form);
     console.log(this.form.value);
     this.error = null;
-    this.activeTab.saveStatus = 'saving';
+    this.saveStatus = 'saving';
     this.detectChanges();
 
     await this.save();
@@ -338,11 +358,11 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.formToastService.success(
         'Pro settings have been successfully updated'
       );
-      this.activeTab.saveStatus = 'saved';
+      this.saveStatus = 'saved';
     } catch (e) {
       this.error = e.message;
       this.formToastService.error('Error: ' + this.error);
-      this.activeTab.saveStatus = 'unsaved';
+      this.saveStatus = 'unsaved';
     }
 
     this.saved = true;
@@ -364,11 +384,34 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  removeTag(index: number) {
-    console.log('removing tag', index);
-    const hashtags = <FormArray>this.form.controls.hashtags;
-    hashtags.removeAt(index);
+  // removeTag(index: number) {
+  //   const hashtags = <FormArray>this.form.controls.hashtags;
+  // }
+
+  resetArray(formArrayName: string, arrayAfterChange: any) {
+    console.log('***changedArray', arrayAfterChange, arrayAfterChange[0]);
+
+    const arrayBeforeChange = <FormArray>this.form.controls[formArrayName];
+
+    console.log(
+      '***FormArraybeforereset',
+      arrayBeforeChange.value,
+      arrayBeforeChange.value[0]
+    );
+    arrayBeforeChange.reset(arrayAfterChange);
+
+    console.log(
+      '***FormArrayafterereset',
+      arrayBeforeChange.value,
+      arrayBeforeChange.value[0]
+    );
+    this.detectChanges();
   }
+
+  // removeFooterLink(index: number) {
+  //   const links = <FormArray>this.form.controls.footer_links;
+  //   links.removeAt(index);
+  // }
 
   addBlankFooterLink() {
     this.addFooterLink('', '');
@@ -385,17 +428,9 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  // removeFooterLink(index: number) {
-  //   this.settings.footer_links.splice(index, 1);
-  // }
-
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-  }
-
-  get previewRoute() {
-    return ['/pro', this.user || this.session.getLoggedInUser().username];
   }
 
   get ratios() {

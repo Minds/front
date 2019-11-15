@@ -163,7 +163,7 @@ m-proSettings {
     &:not(.m-draggableList__cell) {
       &.ng-invalid.form-control {
         @include m-theme() {
-          border-color: themed($m-red-dark);
+          border-color: themed($m-red-dark) !important;
         }
       }
     }

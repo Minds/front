@@ -23,7 +23,7 @@ export class DraggableListComponent {
   @Input() headers: string[];
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
   @Output() emptyListHeaderRowClicked: EventEmitter<any> = new EventEmitter();
-  @Output() itemRemoved: EventEmitter<number> = new EventEmitter();
+  @Output() arrayChanged: EventEmitter<any> = new EventEmitter();
 
   dragging: boolean = false;
 
@@ -33,7 +33,7 @@ export class DraggableListComponent {
 
   onDrop(event: DndDropEvent) {
     this.dragging = false;
-
+    console.log(event);
     if (
       this.data &&
       (event.dropEffect === 'copy' || event.dropEffect === 'move')
@@ -41,7 +41,7 @@ export class DraggableListComponent {
       let dragIndex = this.data.findIndex(
         item => event.data[this.id] === item[this.id]
       );
-      let dropIndex = event.index || this.data.length;
+      let dropIndex = event.index;
       // remove element
       this.data.splice(dragIndex, 1);
 
@@ -51,14 +51,15 @@ export class DraggableListComponent {
       }
 
       this.data.splice(dropIndex, 0, event.data);
+      this.arrayChanged.emit(this.data);
     }
-  }
-  onDragStart(event: DragEvent) {
-    this.dragging = true;
   }
 
   removeItem(index) {
-    this.itemRemoved.next(index);
+    console.log('***databefore removal', this.data, index);
+    this.data.splice(index, 1);
+    this.arrayChanged.emit(this.data);
+    console.log('***dataafter removal', this.data);
   }
 
   clickedHeaderRow($event) {

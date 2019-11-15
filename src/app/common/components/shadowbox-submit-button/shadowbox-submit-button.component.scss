@@ -1,5 +1,4 @@
 .m-shadowboxSubmitButton {
-  // display: grid;
   min-width: 220px;
   position: relative;
   cursor: pointer;
@@ -47,12 +46,8 @@ button {
   outline: 0;
 }
 [class*='m-shadowboxSubmitButton__status'] {
-  // visibility: visible;
   font-size: 17px;
   font-weight: 300;
-  // &.transparent {
-  //   visibility: hidden;
-  // }
 }
 
 @keyframes blink {
