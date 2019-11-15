@@ -8,7 +8,7 @@ import {
   AfterViewInit,
   ViewChild,
 } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Subject, Subscription, from } from 'rxjs';
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -17,7 +17,14 @@ import { SiteService } from '../../../common/services/site.service';
 import { debounceTime } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { FormToastService } from '../../../common/services/form-toast.service';
-import { NgForm } from '@angular/forms';
+import {
+  NgForm,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  FormGroup,
+  FormArray,
+} from '@angular/forms';
 
 @Component({
   selector: 'm-proSettings',
@@ -90,8 +97,31 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('backgroundField', { static: false })
   protected backgroundField: ElementRef<HTMLInputElement>;
 
-  // TODO: make one of these for each form
-  @ViewChild('themeForm', { static: false }) themeForm: NgForm;
+  form = this.fb.group({
+    title: ['', Validators.required],
+    headline: [''],
+    published: [''],
+    theme: this.fb.group({
+      text_color: [''],
+      primary_color: [''],
+      plain_background_color: [''],
+      scheme: [''],
+      tile_ratio: [''],
+    }),
+    hashtags: this.fb.array([]),
+    assets: this.fb.group({
+      logo: [''],
+      background: [''],
+    }),
+    footer: this.fb.group({
+      title: [''],
+      links: this.fb.array([]),
+    }),
+    domain: this.fb.group({
+      domain: ['', Validators.required, this.validateDomain.bind(this)],
+      custom_head: [''],
+    }),
+  });
 
   constructor(
     protected service: ProService,
@@ -102,7 +132,8 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     protected title: MindsTitle,
     protected site: SiteService,
     protected sanitizer: DomSanitizer,
-    private formToastService: FormToastService
+    private formToastService: FormToastService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -111,7 +142,6 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.activeTab = this.tabs.find(tab => tab.id === activeTabParam);
       this.activeTab['saveStatus'] = 'unsaved';
       if (this.init) {
-        this.getActiveForm();
         this.detectChanges();
       }
     });
@@ -123,27 +153,17 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.load();
     });
-
-    this.domainValidation$ = this.domainValidationSubject
-      .pipe(debounceTime(300))
-      .subscribe(() => this.validateDomain());
   }
 
   ngAfterViewInit() {
     this.init = true;
-    this.getActiveForm();
     this.detectChanges();
   }
 
-  getActiveForm() {
-    const tempFormStr = this.activeTab.id + 'Form';
-    this.activeForm = this[tempFormStr];
-    console.log(this.activeForm);
-  }
   ngOnDestroy() {
     this.paramMap$.unsubscribe();
     this.param$.unsubscribe();
-    this.domainValidation$.unsubscribe();
+    // this.domainValidation$.unsubscribe();
   }
 
   async load() {
@@ -157,6 +177,37 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
+    this.form.patchValue({
+      title: settings.title,
+      headline: settings.headline,
+      published: settings.published,
+      theme: {
+        text_color: settings.text_color,
+        primary_color: settings.primary_color,
+        plain_background_color: settings.plain_background_color,
+        scheme: settings.scheme,
+        tile_ratio: settings.tile_ratio,
+      },
+      footer: {
+        title: settings.footer_text,
+      },
+      domain: {
+        domain: settings.domain,
+        custom_head: settings.custom_head,
+      },
+    });
+
+    (<FormArray>this.form.controls.hashtags).clear();
+    (<FormArray>(<FormGroup>this.form.controls.footer).controls.links).clear();
+
+    for (let tag of settings.tag_list) {
+      this.addTag(tag.label, tag.tag);
+    }
+
+    for (let link of settings.footer_links) {
+      this.addFooterLink(link.title, link.href);
+    }
+
     this.settings = settings;
 
     this.title.setTitle('Pro Settings');
@@ -165,13 +216,13 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.detectChanges();
   }
 
-  async validateDomain() {
+  async validateDomain(control: AbstractControl) {
     this.isDomainValid = null;
     this.detectChanges();
 
     try {
       const { isValid } = await this.service.domainCheck(
-        this.settings.domain,
+        control.value,
         this.user
       );
 
@@ -182,7 +233,11 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.formToastService.error(this.error);
     }
 
-    this.detectChanges();
+    if (!this.isDomainValid) {
+      return {
+        invalidDomain: true,
+      };
+    }
   }
 
   onAssetFileSelect(type: string, files: FileList | null) {
@@ -228,14 +283,14 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.settings[`${type}_image`];
   }
 
-  onSubmit(form) {
-    console.log(form);
-    console.log(form.value);
+  async onSubmit() {
+    console.log(this.form);
+    console.log(this.form.value);
     this.error = null;
     this.activeTab.saveStatus = 'saving';
     this.detectChanges();
 
-    // TODO: add '#' to colors without them
+    await this.save();
   }
 
   async save() {
@@ -262,7 +317,23 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
       await Promise.all(uploads);
 
-      this.settings = settings;
+      this.settings = {
+        ...settings,
+        title: this.form.value.title,
+        headline: this.form.value.headline,
+        published: this.form.value.published,
+        text_color: this.form.value.theme.text_color,
+        primary_color: this.form.value.theme.primary_color,
+        primary_background_color: this.form.value.theme
+          .primary_background_color,
+        scheme: this.form.value.theme.scheme,
+        tile_ratio: this.form.value.theme.tile_ratio,
+        domain: this.form.value.domain.domain,
+        custom_head: this.form.value.domain.custom_head,
+        footer_text: this.form.value.footer.title,
+        tag_list: this.form.value.hashtags,
+        footer_links: this.form.value.footer.links,
+      };
       await this.service.set(this.settings, this.user);
       this.formToastService.success(
         'Pro settings have been successfully updated'
@@ -280,23 +351,38 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   addBlankTag() {
-    if (!this.settings) {
-      return;
-    }
-
-    this.settings.tag_list.push({ label: '', tag: '' });
+    this.addTag('', '');
   }
 
-  // removeTag(index: number) {
-  //   this.settings.tag_list.splice(index, 1);
-  // }
+  addTag(label, tag) {
+    const hashtags = <FormArray>this.form.controls.hashtags;
+    hashtags.push(
+      this.fb.group({
+        label: [label],
+        tag: [tag],
+      })
+    );
+  }
+
+  removeTag(index: number) {
+    console.log('removing tag', index);
+    const hashtags = <FormArray>this.form.controls.hashtags;
+    hashtags.removeAt(index);
+  }
 
   addBlankFooterLink() {
-    if (!this.settings) {
-      return;
-    }
+    this.addFooterLink('', '');
+  }
 
-    this.settings.footer_links.push({ title: '', href: '' });
+  addFooterLink(title, href) {
+    const footer = <FormGroup>this.form.controls.footer;
+    const links = <FormArray>footer.controls.links;
+    links.push(
+      this.fb.group({
+        title: [title],
+        href: [href],
+      })
+    );
   }
 
   // removeFooterLink(index: number) {
