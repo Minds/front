@@ -74,7 +74,7 @@ export class ProSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   error: string;
 
-  hexPattern = '^#?([0-9A-Fa-f]{3}){1,2}$'; // accepts both 3- and 6-digit codes, hash is optional
+  hexPattern = '^#([0-9A-Fa-f]{3}){1,2}$'; // accepts both 3- and 6-digit codes, hash required
 
   domainValidationSubject: Subject<any> = new Subject<any>();
 
