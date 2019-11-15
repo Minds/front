@@ -652,6 +652,104 @@
                   </div>
                 </div>
               </ng-template>
+
+              <!-- Payouts -->
+
+              <ng-template ngSwitchCase="payouts">
+                <div class="m-shadowboxLayout__body">
+                  <div
+                    class="m-proSettings__tab--payouts"
+                    formGroupName="payouts"
+                  >
+                    <div class="m-proSettings__field--radio hasValidationRow">
+                      <div class="m-proSettings__row--label">
+                        <label for="domain" i18n>Payout Method</label>
+                        <m-tooltip icon="help"
+                          ><ng-container i18n
+                            >Select a payout method below</ng-container
+                          ></m-tooltip
+                        >
+                      </div>
+                      <div class="m-proSettings__row--input">
+                        <label
+                          for="method_usd"
+                          class="m-proSettings__customInputContainer--radio"
+                          i18n
+                          >USD
+                          <input
+                            type="radio"
+                            value="usd"
+                            id="method_usd"
+                            name="method"
+                            formControlName="method"
+                            class="form-control"
+                          />
+                          <span
+                            class="m-proSettings__customInput--radio"
+                          ></span>
+                        </label>
+                      </div>
+                      <div class="m-proSettings__row--input">
+                        <label
+                          for="method_tokens"
+                          class="m-proSettings__customInputContainer--radio"
+                          i18n
+                          >Minds Tokens
+                          <input
+                            type="radio"
+                            value="tokens"
+                            name="method"
+                            id="method_tokens"
+                            formControlName="method"
+                            class="form-control"
+                          />
+                          <span
+                            class="m-proSettings__customInput--radio"
+                          ></span>
+                        </label>
+                      </div>
+                      <div class="m-proSettings__row--input">
+                        <label
+                          for="method_eth"
+                          class="m-proSettings__customInputContainer--radio"
+                          i18n
+                          >Ether
+                          <input
+                            type="radio"
+                            value="eth"
+                            name="method"
+                            id="method_eth"
+                            formControlName="method"
+                            class="form-control"
+                          />
+                          <span
+                            class="m-proSettings__customInput--radio"
+                          ></span>
+                        </label>
+                      </div>
+                      <div class="m-proSettings__row--input">
+                        <label
+                          for="method_btc"
+                          class="m-proSettings__customInputContainer--radio"
+                          i18n
+                          >Bitcoin
+                          <input
+                            type="radio"
+                            value="btc"
+                            name="method"
+                            id="method_btc"
+                            formControlName="method"
+                            class="form-control"
+                          />
+                          <span
+                            class="m-proSettings__customInput--radio"
+                          ></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
             </ng-container>
             <ng-container *ngTemplateOutlet="submitButton"></ng-container>
           </form>

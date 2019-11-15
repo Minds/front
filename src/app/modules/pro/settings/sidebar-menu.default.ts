@@ -36,6 +36,10 @@ const sidebarMenu = {
       path: 'pro',
     },
     {
+      id: 'payouts',
+      label: 'Payouts',
+    },
+    {
       id: ':user',
       label: 'View Pro Channel',
       path: 'pro/:user',

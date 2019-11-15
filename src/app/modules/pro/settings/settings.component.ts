@@ -66,6 +66,12 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       title: 'Domain',
       subtitle: 'Customize your site domain',
     },
+    {
+      id: 'payouts',
+      title: 'Payouts',
+      subtitle:
+        'Select the currency type you wish you be paid out in. Please note payouts only occur once you have received the equivalent of $100 or greater.',
+    },
   ];
 
   settings: any;
@@ -119,6 +125,9 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     domain: this.fb.group({
       domain: ['', Validators.required, this.validateDomain.bind(this)],
       custom_head: [''],
+    }),
+    payouts: this.fb.group({
+      method: ['usd'],
     }),
   });
 
@@ -201,6 +210,9 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       domain: {
         domain: settings.domain,
         custom_head: settings.custom_head,
+      },
+      payouts: {
+        method: settings.payout_method,
       },
     });
 
@@ -330,6 +342,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
         footer_text: this.form.value.footer.title,
         tag_list: this.form.value.hashtags,
         footer_links: this.form.value.footer.links,
+        payout_method: this.form.value.payouts.method,
       };
       await this.service.set(this.settings, this.user);
       this.formToastService.success(
