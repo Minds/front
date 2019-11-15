@@ -291,7 +291,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       );
     }
 
-    return this.settings[`${type}_image`];
+    return this.settings[`${type}_image`] + '?cb=' + Date.now();
   }
 
   async onSubmit() {
