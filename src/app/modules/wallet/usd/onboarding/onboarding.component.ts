@@ -13,7 +13,7 @@ import { Client } from '../../../../services/api';
 import { requiredFor, optionalFor } from './onboarding.validators';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { WalletUSDTermsComponent } from '../terms.component';
-import { Session } from 'inspector';
+import { Session } from '../../../../services/session';
 import { BTCSettingsComponent } from '../../../payments/btc/settings.component';
 
 @Component({
