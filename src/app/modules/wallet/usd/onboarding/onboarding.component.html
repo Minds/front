@@ -1,4 +1,18 @@
+<div *ngIf="eligible === false">
+  <p>
+    Due to Stripe's
+    <a href="https://stripe.com/restricted-businesses" target="_blank">
+      Terms of Use</a
+    >, this feature is currently unavailable for any channel determined to be
+    not safe for work (NSFW). If you are impacted by Stripe's terms and still
+    wish to monetize your channel, please consider onboarding to receive
+    payments in <a (click)="openBtc()">Bitcoin</a>,
+    <a routerLink="/wallet/tokens/addresses">Ether</a> or
+    <a routerLink="/wallet/tokens/addresses">Minds Tokens</a>.
+  </p>
+</div>
 <form
+  *ngIf="eligible === true"
   (submit)="submit()"
   [formGroup]="form"
   #f="ngForm"
