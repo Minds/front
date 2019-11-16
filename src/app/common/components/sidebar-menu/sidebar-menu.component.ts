@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Session } from '../../../services/session';
-import sidebarMenus from './sidebar-menus.default';
 
 interface Menu {
   header: MenuLink;
@@ -25,10 +24,8 @@ export { MenuLink };
   templateUrl: './sidebar-menu.component.html',
 })
 export class SidebarMenuComponent implements OnInit {
-  @Input() menuId: string;
-  @Input() menuObj: Menu;
+  @Input() menu: Menu;
 
-  menu: Menu;
   mobileMenuExpanded = false;
   minds: Minds;
   user;
@@ -39,9 +36,6 @@ export class SidebarMenuComponent implements OnInit {
   ngOnInit() {
     this.minds = window.Minds;
     this.user = this.session.getLoggedInUser();
-    this.menu = this.menuObj
-      ? this.menuObj
-      : sidebarMenus.find(menu => menu.header.id === this.menuId);
     this.getUserRoles();
     this.grantPermissions();
   }
@@ -66,11 +60,11 @@ export class SidebarMenuComponent implements OnInit {
           ? this.checkForRoleMatch(link.permissions)
           : true;
 
-        if (link.id === ':user') {
+        if (link.id === ':username') {
           link.id = this.user.username;
         }
         if (link.path) {
-          link.path = link.path.replace(':user', this.user.username);
+          link.path = link.path.replace(':username', this.user.username);
         }
       });
     }

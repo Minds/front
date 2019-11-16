@@ -33,7 +33,7 @@ import {
   templateUrl: 'settings.component.html',
 })
 export class ProSettingsComponent implements OnInit, OnDestroy {
-  menuObj: Menu = sidebarMenu;
+  menu: Menu = sidebarMenu;
   activeTab: any;
   tabs = [
     {
@@ -152,7 +152,6 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
       if (this.session.isAdmin()) {
         this.user = params.get('username') || null;
-        this.updatePreviewRoute();
       }
 
       this.detectChanges();
@@ -165,16 +164,6 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
         this.detectChanges();
       }
     });
-  }
-
-  updatePreviewRoute() {
-    const previewRouteLink = this.menuObj.links.find(
-      link => link.id === ':user'
-    );
-    if (previewRouteLink) {
-      previewRouteLink.path = `pro/${this.user}`;
-      this.detectChanges();
-    }
   }
 
   ngOnDestroy() {

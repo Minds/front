@@ -8,8 +8,7 @@ import { PageLayoutComponent } from './page-layout.component';
 })
 class SidebarMenuComponentMock {
   @Input() catId;
-  @Input() menuId;
-  @Input() menuObj;
+  @Input() menu;
 }
 
 describe('PageLayoutComponent', () => {

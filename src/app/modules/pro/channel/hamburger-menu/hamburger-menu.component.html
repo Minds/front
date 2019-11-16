@@ -23,7 +23,7 @@
       <m-pro__subscribeButton (onAction)="closeMenu()"></m-pro__subscribeButton>
     </li>
 
-    <li>
+    <li class="m-proHamburgerMenu__linkWrapper">
       <a
         [routerLink]="feedRouterLink"
         routerLinkActive="m-proHamburgerMenu__item--active"
@@ -91,7 +91,7 @@
     <li class="m-proHamburgerMenu__spacer"></li>
 
     <ng-container *ngIf="items && items.length">
-      <li *ngFor="let item of items">
+      <li *ngFor="let item of items" class="m-proHamburgerMenu__linkWrapper">
         <a
           [class.m-proHamburgerMenu__item--active]="item.isActive()"
           (click)="item.onClick(); closeMenu()"
