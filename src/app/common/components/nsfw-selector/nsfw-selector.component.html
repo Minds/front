@@ -17,14 +17,16 @@
       *ngFor="let reason of service.reasons"
       (click)="toggle(reason)"
     >
-      <span>{{ reason.label }}</span>
-      <div class="m-layout__spacer"></div>
-      <m-tooltip icon="locked" [hidden]="!reason.locked">
-        NSFW tags are locked for this channel
-      </m-tooltip>
-      <i class="material-icons selected" [hidden]="!reason.selected"
-        >checkmark</i
-      >
+      <div>
+        <span>{{ reason.label }}</span>
+        <div class="m-layout__spacer"></div>
+        <m-tooltip icon="locked" [hidden]="!reason.locked">
+          NSFW tags are locked for this channel
+        </m-tooltip>
+        <i class="material-icons selected" [hidden]="!reason.selected"
+          >checkmark</i
+        >
+      </div>
     </li>
   </ul>
 </m-dropdown>

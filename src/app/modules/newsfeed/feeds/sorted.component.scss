@@ -53,8 +53,13 @@ m-newsfeed--sorted {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 12px;
   margin-bottom: 16px;
+  padding: 0 12px;
+
+  @media screen and (max-width: $min-tablet) {
+    padding: 12px;
+  }
+
   @include m-theme() {
     background-color: themed($m-white);
   }

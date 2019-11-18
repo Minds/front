@@ -3,7 +3,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 12px;
+  padding: 0 12px;
   margin-bottom: 16px;
   @include m-theme() {
     background-color: themed($m-white);

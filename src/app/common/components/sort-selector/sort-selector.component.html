@@ -24,13 +24,15 @@
       [class.m-dropdown--list--item--disabled]="isDisabled(item.id)"
       (click)="setAlgorithm(item.id); closeDropdowns()"
     >
-      <i
-        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
-        *ngIf="item.icon"
-        >{{ item.icon }}</i
-      >
+      <div>
+        <i
+          class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+          *ngIf="item.icon"
+          >{{ item.icon }}</i
+        >
 
-      <span [className]="labelClass">{{ item.label }}</span>
+        <span [className]="labelClass">{{ item.label }}</span>
+      </div>
     </li>
   </ul>
 </m-dropdown>
@@ -83,18 +85,20 @@
       [class.m-dropdown--list--item--selected]="item.id === customType"
       (click)="setCustomType(item.id); closeDropdowns()"
     >
-      <i
-        class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
-        [title]="item.label"
-        *ngIf="item.icon"
-        >{{ item.icon }}</i
-      >
+      <div>
+        <i
+          class="material-icons m-dropdown--label-icon m-sort-selector--item-label-icon"
+          [title]="item.label"
+          *ngIf="item.icon"
+          >{{ item.icon }}</i
+        >
 
-      <span
-        [className]="labelClass"
-        *ngIf="!expandedCustomTypeDropdown || item.id === customType"
-        >{{ item.label }}</span
-      >
+        <span
+          [className]="labelClass"
+          *ngIf="!expandedCustomTypeDropdown || item.id === customType"
+          >{{ item.label }}</span
+        >
+      </div>
     </li>
   </ul>
 </m-dropdown>
