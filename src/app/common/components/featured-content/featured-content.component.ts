@@ -79,9 +79,7 @@ export class FeaturedContentComponent implements OnInit {
         component
       );
 
-      const componentRef: ComponentRef<
-        any
-      > = this.dynamicHost.viewContainerRef.createComponent(
+      const componentRef: ComponentRef<any> = this.dynamicHost.viewContainerRef.createComponent(
         componentFactory,
         void 0,
         this.injector

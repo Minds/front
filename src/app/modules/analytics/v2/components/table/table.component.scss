@@ -167,6 +167,7 @@
   .m-analyticsTable__wrapper {
     .m-analyticsTable__col--entity {
       flex: 3 1 0;
+      padding-left: 24px;
       .m-analyticsTable__entityType,
       .m-analyticsTable__entityPublishDate {
         display: none;

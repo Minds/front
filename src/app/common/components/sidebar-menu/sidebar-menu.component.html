@@ -1,73 +1,66 @@
-<section class="m-sidebarMenu">
-  <div class="m-sidebarMenu__topbar">
-    <i class="material-icons" (click)="mobileMenuExpanded = true">menu</i>
-    <div class="m-sidebarMenu__topbarCatLabel" *ngIf="activeCat">
-      {{ activeCat.category.label }}
-    </div>
+<div class="m-sidebarMenu__topbar">
+  <i class="material-icons" (click)="mobileMenuExpanded = true">menu</i>
+  <div class="m-sidebarMenu__topbarHeader">
+    {{ cat.header.label }}
   </div>
-  <div
-    class="m-sidebarMenu__overlay"
-    [ngClass]="{ mobileMenuExpanded: mobileMenuExpanded }"
-    (click)="mobileMenuExpanded = false"
-  ></div>
-  <div
-    class="m-sidebarMenu__sidebar"
-    [ngClass]="{ mobileMenuExpanded: mobileMenuExpanded }"
-  >
-    <a class="m-sidebarMenu__userWrapper" [routerLink]="['/', user.username]">
-      <img
-        class="m-sidebarMenu__userAvatar"
-        [src]="minds.cdn_url + 'icon/' + user.guid + '/small/' + user.icontime"
-      />
-      <div class="m-sidebarMenu__userDetails">
-        <div class="m-sidebarMenu__userDetails__name">{{ user.name }}</div>
-        <div class="m-sidebarMenu__userDetails__username">
-          @{{ user.username }}
-        </div>
-        <!-- TODO: get subscriberCount and remove username -->
-        <!-- <div class="m-sidebarMenu__userDetails__subscribers">
+</div>
+<div
+  class="m-sidebarMenu__overlay"
+  [ngClass]="{ mobileMenuExpanded: mobileMenuExpanded }"
+  (click)="mobileMenuExpanded = false"
+></div>
+<div
+  class="m-sidebarMenu__sidebar"
+  [ngClass]="{ mobileMenuExpanded: mobileMenuExpanded }"
+>
+  <a class="m-sidebarMenu__userWrapper" [routerLink]="['/', user.username]">
+    <img
+      class="m-sidebarMenu__userAvatar"
+      [src]="minds.cdn_url + 'icon/' + user.guid + '/medium/' + user.icontime"
+    />
+    <div class="m-sidebarMenu__userDetails">
+      <div class="m-sidebarMenu__userDetails__name">{{ user.name }}</div>
+      <div class="m-sidebarMenu__userDetails__username">
+        @{{ user.username }}
+      </div>
+      <!-- TODO: get subscriberCount and remove username -->
+      <!-- <div class="m-sidebarMenu__userDetails__subscribers">
           {{ user.subscribers_count | abbr }} subscribers
         </div> -->
-      </div>
-    </a>
-    <ng-container *ngFor="let cat of cats">
-      <div
-        class="m-sidebarMenu__catContainer"
-        *ngIf="cat.category.permissionGranted"
-        [ngClass]="{ expanded: cat.category.expanded }"
-      >
-        <div class="m-sidebarMenu__catLabel">
-          <h3>{{ cat.category.label }}</h3>
-          <i
-            class="material-icons"
-            *ngIf="cat.category.expanded && cat.subcategories"
-            (click)="cat.category.expanded = false"
-            >keyboard_arrow_up</i
-          >
-          <i
-            class="material-icons"
-            *ngIf="!cat.category.expanded && cat.subcategories"
-            (click)="cat.category.expanded = true"
-            >keyboard_arrow_down</i
-          >
-        </div>
+    </div>
+  </a>
+  <!-- <ng-container *ngFor="let cat of cats"> -->
+  <div
+    class="m-sidebarMenu__catContainer expanded"
+    *ngIf="cat.header.permissionGranted"
+  >
+    <!-- [ngClass]="{ expanded: cat.header.expanded }"  -->
 
-        <div class="m-sidebarMenu__subcatContainer" *ngIf="cat.subcategories">
-          <div
-            class="m-sidebarMenu__subcat"
-            *ngFor="let subcat of cat.subcategories"
-          >
-            <a
-              *ngIf="subcat.permissionGranted"
-              class="m-sidebarMenu__subcatLabel"
-              (click)="mobileMenuExpanded = false"
-              [routerLink]="'../' + subcat.id"
-              routerLinkActive="selected"
-              >{{ subcat.label }}</a
-            >
-          </div>
-        </div>
+    <div class="m-sidebarMenu__header">
+      <h3>{{ cat.header.label }}</h3>
+      <!-- <i
+        class="material-icons"
+        *ngIf="cat.header.expanded && cat.links"
+        (click)="cat.header.expanded = false"
+        >keyboard_arrow_up</i
+      > -->
+      <!-- <i class="material-icons" *ngIf="!cat.header.expanded && cat.links"
+        >keyboard_arrow_down</i
+      > -->
+      <!-- (click)="cat.header.expanded = true" -->
+    </div>
+
+    <nav class="m-sidebarMenu__linksContainer" *ngIf="cat.links">
+      <div class="m-sidebarMenu__link" *ngFor="let link of cat.links">
+        <a
+          *ngIf="link.permissionGranted"
+          (click)="mobileMenuExpanded = false"
+          [routerLink]="link.path ? '/' + link.path : '../' + link.id"
+          routerLinkActive="selected"
+          >{{ link.label }}</a
+        >
       </div>
-    </ng-container>
+    </nav>
   </div>
-</section>
+  <!-- </ng-container> -->
+</div>

@@ -115,7 +115,14 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
 import { ChartV2Component } from './components/chart-v2/chart-v2.component';
-import { MiniChartComponent } from './components/mini-chart/mini-chart.component';
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+import { PageLayoutComponent } from './components/page-layout/page-layout.component';
+import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
+import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
+import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
+
+PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   imports: [
@@ -124,6 +131,7 @@ import { MiniChartComponent } from './components/mini-chart/mini-chart.component
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    PlotlyModule,
   ],
   declarations: [
     MINDS_PIPES,
@@ -220,7 +228,10 @@ import { MiniChartComponent } from './components/mini-chart/mini-chart.component
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
     ChartV2Component,
-    MiniChartComponent,
+    PageLayoutComponent,
+    DashboardLayoutComponent,
+    ShadowboxLayoutComponent,
+    ShadowboxHeaderComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -312,6 +323,10 @@ import { MiniChartComponent } from './components/mini-chart/mini-chart.component
     MarketingComponent,
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
+    ChartV2Component,
+    PageLayoutComponent,
+    DashboardLayoutComponent,
+    ShadowboxLayoutComponent,
   ],
   providers: [
     SiteService,

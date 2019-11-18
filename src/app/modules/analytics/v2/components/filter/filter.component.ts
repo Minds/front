@@ -2,11 +2,8 @@ import {
   Component,
   OnInit,
   Input,
-  Output,
-  EventEmitter,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import { Observable } from 'rxjs';
 import {
   AnalyticsDashboardService,
   Filter,

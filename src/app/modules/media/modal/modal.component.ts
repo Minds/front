@@ -146,21 +146,12 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       {
         res: '720',
         uri:
-          'api/v1/media/' +
-          this.entity.entity_guid +
-          '/play/' +
-          Date.now() +
-          '?s=modal&res=720',
+          'api/v1/media/' + this.entity.entity_guid + '/play?s=modal&res=720',
         type: 'video/mp4',
       },
       {
         res: '360',
-        uri:
-          'api/v1/media/' +
-          this.entity.entity_guid +
-          '/play/' +
-          Date.now() +
-          '?s=modal',
+        uri: 'api/v1/media/' + this.entity.entity_guid + '/play/?s=modal',
         type: 'video/mp4',
       },
     ];
@@ -202,8 +193,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
         this.thumbnail = this.entity.thumbnails
           ? this.entity.thumbnails.xlarge
           : null;
-
-        this.updateSources();
 
         switch (this.entity.custom_type) {
           case 'video':
@@ -258,8 +247,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
             this.title = this.entity.title;
             this.entity.entity_guid = this.entity.guid;
             this.entity.custom_data = {
-              full_hd: this.entity.flags.full_hd,
+              full_hd: this.entity.flags ? !!this.entity.flags.full_hd : false,
             };
+            this.updateSources();
             break;
           case 'image':
             this.contentType = 'image';

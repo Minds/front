@@ -222,6 +222,10 @@ export class BlogView implements OnInit, OnDestroy {
       .present();
   }
 
+  isScheduled(time_created) {
+    return time_created && time_created * 1000 > Date.now();
+  }
+
   /**
    * called when the window resizes
    * @param {Event} event
