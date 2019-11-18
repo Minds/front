@@ -2,7 +2,7 @@
   <ng-container *mIfFeature="'top-feeds'">
     <m-nsfw-selector
       [consumer]="true"
-      (selected)="onNSFWSelected($event)"
+      (selectedChange)="onNSFWSelected($event)"
     ></m-nsfw-selector>
   </ng-container>
   <ng-container *ngIf="showBoostOptions">

@@ -22,7 +22,7 @@ export class NSFWSelectorComponent {
   @Input('service') serviceRef: string = 'consumer';
   @Input('consumer') consumer: false;
   @Input('expanded') expanded: false;
-  @Output('selected') onSelected: EventEmitter<any> = new EventEmitter();
+  @Output('selectedChange') onSelected: EventEmitter<any> = new EventEmitter();
 
   constructor(
     public creatorService: NSFWSelectorCreatorService,
@@ -33,7 +33,9 @@ export class NSFWSelectorComponent {
 
   ngOnInit() {
     if (this.service.reasons) {
-      this.service.reasons.map(r => this.toggle(r.value));
+      for (const reason of this.service.reasons) {
+        this.toggle(reason.value, false);
+      }
     }
   }
 
@@ -64,14 +66,17 @@ export class NSFWSelectorComponent {
     }
   }
 
-  toggle(reason) {
+  toggle(reason, triggerChange = true) {
     if (reason.locked) {
       return;
     }
+
     this.service.toggle(reason);
 
-    const reasons = this.service.reasons.filter(r => r.selected);
-    this.onSelected.next(reasons);
+    if (triggerChange) {
+      const reasons = this.service.reasons.filter(r => r.selected);
+      this.onSelected.next(reasons);
+    }
   }
 
   hasSelections(): boolean {

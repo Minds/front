@@ -171,7 +171,7 @@
         service="editing"
         [selected]="activity.nsfw"
         [locked]="activity.ownerObj.nsfw_lock"
-        (selected)="onNSWFSelections($event)"
+        (selectedChange)="onNSWFSelections($event)"
       >
       </m-nsfw-selector>
     </ng-container>
