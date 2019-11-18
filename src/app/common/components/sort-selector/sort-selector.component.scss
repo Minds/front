@@ -10,20 +10,10 @@ m-sort-selector {
 
   .m-dropdown--list--item {
     cursor: pointer;
-    // nested list items are vertical.
-    // m-dropdown--list li {
-    //   padding: 8px;
-    // }
-
-    // .m-sort-selector--algorithm-dropdown {
-
-    // }
 
     > * {
-      // padding: 0 !important;
       padding-right: 4px !important;
       padding-left: 4px !important;
-      // padding-right: 8px !important;
     }
   }
 
