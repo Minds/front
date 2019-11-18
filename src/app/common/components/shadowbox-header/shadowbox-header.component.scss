@@ -1,6 +1,13 @@
 m-shadowboxHeader {
   min-height: 116px;
   display: block;
+  a {
+    font-weight: 400;
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+  }
 }
 .m-shadowboxHeader__section {
   position: relative;

@@ -384,12 +384,13 @@ m-proSettings {
         }
       }
     }
-    [class*='m-proSettings__customInput'] {
+    [class*='m-proSettings__customInput--'] {
       position: absolute;
       top: 0;
       left: 0;
       height: 20px;
       width: 20px;
+      transition: all 0.3s ease;
       @include m-theme() {
         background-color: themed($m-white);
         border: 1px solid themed($m-grey-100);
@@ -444,11 +445,11 @@ m-proSettings {
 @media screen and (max-width: 1000px) {
   m-proSettings {
     .stretchedField {
-      // .m-proSettings__row--label m-tooltip {
-      //   .m-tooltip--bubble {
-      //     right: 12px;
-      //   }
-      // }
+      .m-proSettings__row--label m-tooltip {
+        .m-tooltip--bubble {
+          right: 12px;
+        }
+      }
 
       [class*='m-proSettings__row'] {
         flex-flow: row wrap;
@@ -471,14 +472,14 @@ m-proSettings {
     }
   }
 }
-@media screen and (max-width: $min-tablet) {
-  m-proSettings {
-    .stretchedField {
-      .m-proSettings__row--label m-tooltip {
-        .m-tooltip--bubble {
-          right: 12px;
-        }
-      }
-    }
-  }
-}
+// @media screen and (max-width: $min-tablet) {
+//   m-proSettings {
+//     .stretchedField {
+//       .m-proSettings__row--label m-tooltip {
+//         .m-tooltip--bubble {
+//           right: 12px;
+//         }
+//       }
+//     }
+//   }
+// }

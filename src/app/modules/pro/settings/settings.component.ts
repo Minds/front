@@ -36,42 +36,13 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
   menu: Menu = sidebarMenu;
   activeTab: any;
   tabs = [
-    {
-      id: 'general',
-      title: 'General',
-      subtitle: 'Customize your title and headline',
-    },
-    {
-      id: 'theme',
-      title: 'Theme',
-      subtitle: "Set up your site's color theme",
-    },
-    {
-      id: 'assets',
-      title: 'Assets',
-      subtitle: 'Upload custom logo and background images',
-    },
-    {
-      id: 'hashtags',
-      title: 'Hashtags',
-      subtitle: 'Set up your category filter hashtags here',
-    },
-    {
-      id: 'footer',
-      title: 'Footer',
-      subtitle: "Set up your site's footer links",
-    },
-    {
-      id: 'domain',
-      title: 'Domain',
-      subtitle: 'Customize your site domain',
-    },
-    {
-      id: 'payouts',
-      title: 'Payouts',
-      subtitle:
-        'Select the currency type you wish you be paid out in. Please note payouts only occur once you have received the equivalent of $100 or greater.',
-    },
+    'general',
+    'theme',
+    'assets',
+    'hashtags',
+    'footer',
+    'domain',
+    'payouts',
   ];
 
   settings: any;
@@ -147,7 +118,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.paramMap$ = this.route.paramMap.subscribe((params: ParamMap) => {
       const activeTabParam = params.get('tab');
-      this.activeTab = this.tabs.find(tab => tab.id === activeTabParam);
+      this.activeTab = this.tabs.find(tab => tab === activeTabParam);
       this.saveStatus = 'unsaved';
 
       if (this.session.isAdmin()) {

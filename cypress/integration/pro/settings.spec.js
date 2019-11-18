@@ -7,7 +7,6 @@ context('Pro Settings', () => {
     // required to run tests against pro user only.
     const title = '#title';
     const headline = '#headline';
-    // const previewButton = '.m-proSettings__previewBtn';
     const activityContainer = 'minds-activity';
     const footerText = '#footer_text';
 
@@ -55,9 +54,13 @@ context('Pro Settings', () => {
     });
 
     after(() => {
-      cy.visit('/pro/settings')
+      // cy.visit(`/${Cypress.env().username}`);
+      cy.visit('/pro/' + Cypress.env().pro_username + '/settings/hashtags')
         .location('pathname')
-        .should('eq', '/pro/settings');
+        .should(
+          'eq',
+          '/pro/' + Cypress.env().pro_username + '/settings/hashtags'
+        );
       clearHashtags();
     });
 
@@ -66,9 +69,12 @@ context('Pro Settings', () => {
       cy.server();
       cy.route('POST', '**/api/v2/pro/settings').as('settings');
 
-      cy.visit('/pro/settings')
+      cy.visit('/pro/' + Cypress.env().pro_username + '/settings/general')
         .location('pathname')
-        .should('eq', '/pro/settings');
+        .should(
+          'eq',
+          '/pro/' + Cypress.env().pro_username + '/settings/general'
+        );
     });
 
     it('should update the title and headline', () => {
@@ -124,7 +130,7 @@ context('Pro Settings', () => {
     it('should allow the user to set category hashtags', () => {
       cy.contains('Hashtags').click();
 
-      cy.contains('+ Add Tag').click();
+      cy.contains('Add').click();
 
       cy.get(hashtags.labelInput0)
         .clear()
@@ -134,7 +140,7 @@ context('Pro Settings', () => {
         .clear()
         .type(hashtags.hashtag1);
 
-      cy.contains('+ Add Tag').click();
+      cy.contains('Add').click();
 
       cy.get(hashtags.labelInput1)
         .first()
@@ -189,13 +195,13 @@ context('Pro Settings', () => {
         });
 
       //go to pro page
-      // cy.get(previewButton).click();
+      cy.contains('View Pro Channel').click();
     }
 
     function clearHashtags() {
       cy.contains('Hashtags').click();
 
-      cy.contains('+ Add Tag').click();
+      cy.contains('Add').click();
 
       cy.contains('clear').click({ multiple: true });
       saveAndPreview();
@@ -218,9 +224,7 @@ context('Pro Settings', () => {
     //     });
 
     //   //go to pro page
-    //   cy.get(previewButton)
-    //     .click();
-    //     });
+    // cy.contains('View Pro Channel').click();
 
     // })
   }

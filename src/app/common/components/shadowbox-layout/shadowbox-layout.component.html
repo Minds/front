@@ -3,18 +3,10 @@
   [isScrollable]="scrollableHeader"
   [ngClass]="{ isScrollable: scrollableHeader }"
 >
-  <div class="m-shadowboxLayout__header hasTitle" *ngIf="headerTitle">
-    <h3 class="m-shadowboxHeader__title" i18n>{{ headerTitle }}</h3>
-    <h4 *ngIf="headerSubtitle" class="m-shadowboxHeader__subtitle" i18n>
-      {{ headerSubtitle }}
-    </h4>
-  </div>
-  <ng-container>
-    <ng-content
-      select=".m-shadowboxLayout__header"
-      ngProjectAs=".m-shadowboxLayout__header"
-    ></ng-content>
-  </ng-container>
+  <ng-content
+    select=".m-shadowboxLayout__header"
+    ngProjectAs=".m-shadowboxLayout__header"
+  ></ng-content>
   ></m-shadowboxHeader
 >
 
@@ -28,7 +20,5 @@
     class="m-shadowboxLayout__bottom"
     select=".m-shadowboxLayout__bottom"
   >
-    <!-- <ng-content select=".m-shadowboxLayout__body"></ng-content>
-    <ng-content select=".m-shadowboxLayout__footer"></ng-content> -->
   </ng-content>
 </ng-container>

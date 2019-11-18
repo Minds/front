@@ -1,18 +1,57 @@
 <m-pageLayout [menu]="menu" [isForm]="true">
   <ng-container m-pageLayout__main *ngIf="settings">
-    <m-shadowboxLayout
-      [scrollableHeader]="false"
-      [isForm]="true"
-      [headerTitle]="activeTab.title"
-      [headerSubtitle]="activeTab.subtitle"
-    >
+    <m-shadowboxLayout [scrollableHeader]="false" [isForm]="true">
+      <div class="m-shadowboxLayout__header hasTitle">
+        <h3 class="m-shadowboxHeader__title">{{ activeTab | titlecase }}</h3>
+        <ng-container [ngSwitch]="activeTab">
+          <ng-template ngSwitchCase="general">
+            <h4 class="m-shadowboxHeader__subtitle">
+              Customize your title and headline
+            </h4>
+          </ng-template>
+          <ng-template ngSwitchCase="theme">
+            <h4 class="m-shadowboxHeader__subtitle">
+              Set up your site's color theme
+            </h4>
+          </ng-template>
+          <ng-template ngSwitchCase="assets">
+            <h4 class="m-shadowboxHeader__subtitle">
+              Upload custom logo and background images
+            </h4>
+          </ng-template>
+          <ng-template ngSwitchCase="hashtags">
+            <h4 class="m-shadowboxHeader__subtitle">
+              Set up your category filter hashtags
+            </h4>
+          </ng-template>
+          <ng-template ngSwitchCase="footer">
+            <h4 class="m-shadowboxHeader__subtitle">
+              Set up your site's footer links
+            </h4>
+          </ng-template>
+          <ng-template ngSwitchCase="domain">
+            <h4 class="m-shadowboxHeader__subtitle">
+              Customize your site domain
+            </h4>
+          </ng-template>
+          <ng-template ngSwitchCase="payouts">
+            <h4 class="m-shadowboxHeader__subtitle">
+              Select the currency type you wish you be paid out in. Please note
+              payouts only occur after your
+              <a routerLink="/analytics/dashboard/earnings">earnings</a> are
+              equivalent to $100 or greater.
+            </h4>
+          </ng-template>
+        </ng-container>
+      </div>
+
       <div class="m-shadowboxLayout__bottom">
         <div *ngIf="inProgress && !settings">
           <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
         </div>
         <ng-container *ngIf="settings && activeTab">
           <form [formGroup]="form" (ngSubmit)="onSubmit()" #f="ngForm">
-            <ng-container [ngSwitch]="activeTab.id">
+            <ng-container [ngSwitch]="activeTab">
               <!-- General -->
               <ng-template ngSwitchCase="general">
                 <div class="m-shadowboxLayout__body">
@@ -34,7 +73,8 @@
                           formControlName="title"
                           class="form-control"
                         /><m-formDescriptor
-                          >A short descriptor</m-formDescriptor
+                          >TBD a short descriptor might go
+                          here</m-formDescriptor
                         >
                       </div>
                     </div>
@@ -276,6 +316,7 @@
                             value="light"
                             formControlName="scheme"
                             class="form-control"
+                            #scheme_light
                           />
                           <span
                             class="m-proSettings__customInput--radio"
@@ -293,6 +334,7 @@
                             value="dark"
                             formControlName="scheme"
                             class="form-control"
+                            #scheme_dark
                           />
                           <span
                             class="m-proSettings__customInput--radio"
@@ -510,6 +552,7 @@
                           name="footer_text"
                           formControlName="title"
                           class="form-control"
+                          #footer_text
                         />
                       </div>
                     </div>
@@ -751,7 +794,34 @@
                 </div>
               </ng-template>
             </ng-container>
-            <ng-container *ngTemplateOutlet="submitButton"></ng-container>
+            <div class="m-shadowboxLayout__footer">
+              <m-shadowboxSubmitButton [disabled]="!form.valid">
+                <ng-container [ngSwitch]="saveStatus">
+                  <ng-template ngSwitchCase="saved">
+                    <div class="m-shadowboxSubmitButton__status--saved">
+                      Saved
+                    </div>
+                  </ng-template>
+                  <ng-template ngSwitchCase="saving">
+                    <div class="m-shadowboxSubmitButton__status--saving">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </div>
+                  </ng-template>
+                  <ng-template ngSwitchDefault>
+                    <div class="m-shadowboxSubmitButton__status--unsaved">
+                      Save
+                      {{
+                        activeTab === 'general'
+                          ? 'Personal Details'
+                          : (activeTab | titlecase)
+                      }}
+                    </div>
+                  </ng-template>
+                </ng-container>
+              </m-shadowboxSubmitButton>
+            </div>
           </form>
         </ng-container>
       </div>
@@ -759,30 +829,3 @@
     <m-formToast></m-formToast>
   </ng-container>
 </m-pageLayout>
-
-<ng-template #submitButton>
-  <m-shadowboxSubmitButton [disabled]="!form.valid">
-    <ng-container [ngSwitch]="saveStatus">
-      <ng-template ngSwitchCase="saved">
-        <div class="m-shadowboxSubmitButton__status--saved">
-          Saved
-        </div>
-      </ng-template>
-      <ng-template ngSwitchCase="saving">
-        <div class="m-shadowboxSubmitButton__status--saving">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </ng-template>
-      <ng-template ngSwitchDefault>
-        <div class="m-shadowboxSubmitButton__status--unsaved">
-          Save
-          {{
-            activeTab.id === 'general' ? 'Personal Details' : activeTab.title
-          }}
-        </div>
-      </ng-template>
-    </ng-container>
-  </m-shadowboxSubmitButton>
-</ng-template>
