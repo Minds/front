@@ -60,10 +60,6 @@ export class AdminBoosts {
       this.inProgress = false;
       this.moreData = true;
       this.offset = '';
-
-      this.load().then(() => {
-        this.loadStatistics();
-      });
     });
   }
 
@@ -97,19 +93,6 @@ export class AdminBoosts {
       })
       .catch(e => {
         this.inProgress = false;
-      });
-  }
-
-  loadStatistics() {
-    this.statistics = null;
-
-    return this.client
-      .get(`api/v1/admin/boosts/analytics/${this.type}`)
-      .then(response => {
-        this.statistics = response;
-      })
-      .catch(e => {
-        console.error('[Minds Admin] Cannot load boost statistics', e);
       });
   }
 
