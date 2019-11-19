@@ -107,6 +107,12 @@
 
       &.m-proSettingsField__logoFilePreview {
         padding: 16px;
+        min-width: 32px;
+        min-height: 32px;
+
+        @include m-theme() {
+          background: rgba(themed($m-black), 0.3);
+        }
 
         > img {
           max-width: 100%;
@@ -116,6 +122,13 @@
       }
 
       &.m-proSettingsField__backgroundFilePreview {
+        width: 480px;
+        height: 270px;
+
+        @include m-theme() {
+          background: rgba(themed($m-black), 0.3);
+        }
+
         > img {
           width: 480px;
           height: 270px;

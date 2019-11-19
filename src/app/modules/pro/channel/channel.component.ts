@@ -130,7 +130,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @HostBinding('style.backgroundImage') get backgroundImageCssValue() {
-    if (!this.channel) {
+    if (!this.channel || !this.channel.pro_settings.background_image) {
       return 'none';
     }
 
@@ -142,8 +142,16 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       return '';
     }
 
-    return `m-theme--wrapper m-theme--wrapper__${this.channel.pro_settings
-      .scheme || 'light'}`;
+    const classes = [
+      'm-theme--wrapper',
+      `m-theme--wrapper__${this.channel.pro_settings.scheme || 'light'}`,
+    ];
+
+    if (!this.channel || !this.channel.pro_settings.background_image) {
+      classes.push('m-pro-channel--plainBackground');
+    }
+
+    return classes.join(' ');
   }
 
   constructor(

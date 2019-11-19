@@ -1,9 +1,32 @@
-.m-group--sorted__SortSelector {
+.m-mindsList__tools {
   @include m-theme() {
     background-color: themed($m-white);
   }
-
+  display: flex;
   position: relative;
   padding: 8px;
   margin-bottom: 16px;
+  flex-direction: row;
+  align-items: center;
+
+  .m-mindsListTools__scheduled {
+    cursor: pointer;
+
+    i {
+      vertical-align: middle;
+      font-size: 18px;
+      margin-right: 4px;
+    }
+
+    span {
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 1.25px;
+      text-rendering: optimizeLegibility;
+    }
+  }
+
+  .m-group--sorted__SortSelector {
+    margin-left: auto;
+  }
 }

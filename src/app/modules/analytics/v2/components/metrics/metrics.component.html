@@ -1,146 +1,39 @@
-<section class="m-analytics__metricsSection">
-  <div class="m-analytics__metricsWrapper" #metricsWrapper>
+<ng-container *ngIf="metrics$ | async as metrics">
+  <ng-container *ngFor="let metric of metrics">
     <div
-      *ngIf="isOverflown && !isAtScrollStart"
-      class="m-analytics__metricsOverflowFade--left"
-    ></div>
-    <div
-      [ngClass]="{ showButton: showButton.left }"
-      class="m-analytics__metricsOverflowScrollButton--left"
-      (click)="slide('left')"
+      class="m-analytics__metric m-shadowboxLayout__headerItem"
+      (click)="updateMetric(metric)"
+      [ngClass]="{ active: metric.visualisation }"
+      *ngIf="metric.permissionGranted"
     >
-      <i class="material-icons">chevron_left</i>
-    </div>
-    <div
-      #metricsContainer
-      *ngIf="metrics$ | async as metrics"
-      class="m-analytics__metricsContainer disable-scrollbars"
-      (scroll)="onScroll($event)"
-    >
-      <ng-container *ngFor="let metric of metrics">
-        <div
-          class="m-analytics__metric"
-          (click)="updateMetric(metric)"
-          [ngClass]="{ active: metric.visualisation }"
-          *ngIf="metric.permissionGranted"
-        >
-          <div class="m-analytics__metricLabel">
-            <span>{{ metric.label }}</span>
-            <m-tooltip [anchor]="top" icon="help">
-              {{ metric.description }}
-            </m-tooltip>
-          </div>
-          <div class="m-analytics__metricSummary" *ngIf="metric.summary">
-            <ng-container *ngIf="metric.unit === 'number'">
-              {{ metric.summary.current_value | number }}
-            </ng-container>
-            <ng-container *ngIf="metric.unit === 'usd'">
-              <span>$</span
-              >{{ metric.summary.current_value / 100 | number: '1.2-2' }}
-            </ng-container>
-          </div>
+      <div class="m-analytics__metricLabel">
+        <span>{{ metric.label }}</span>
+        <m-tooltip [anchor]="top" icon="help">
+          {{ metric.description }}
+        </m-tooltip>
+      </div>
+      <div class="m-analytics__metricSummary" *ngIf="metric.summary">
+        <ng-container *ngIf="metric.unit === 'number'">
+          {{ metric.summary.current_value | number }}
+        </ng-container>
+        <ng-container *ngIf="metric.unit === 'usd'">
+          <span>$</span
+          >{{ metric.summary.current_value / 100 | number: '1.2-2' }}
+        </ng-container>
+      </div>
 
-          <div
-            *ngIf="metric.summary"
-            class="m-analytics__metricDelta"
-            [ngClass]="{
-              goodChange: metric.hasChanged && metric.positiveTrend,
-              badChange: metric.hasChanged && !metric.positiveTrend
-            }"
-          >
-            <i class="material-icons" *ngIf="metric.delta > 0">arrow_upward</i>
-            <i class="material-icons" *ngIf="metric.delta < 0"
-              >arrow_downward</i
-            >
-            <span>{{ metric.delta | percent: '1.0-1' }}</span>
-          </div>
-        </div>
-      </ng-container>
+      <div
+        *ngIf="metric.summary"
+        class="m-analytics__metricDelta"
+        [ngClass]="{
+          goodChange: metric.hasChanged && metric.positiveTrend,
+          badChange: metric.hasChanged && !metric.positiveTrend
+        }"
+      >
+        <i class="material-icons" *ngIf="metric.delta > 0">arrow_upward</i>
+        <i class="material-icons" *ngIf="metric.delta < 0">arrow_downward</i>
+        <span>{{ metric.delta | percent: '1.0-1' }}</span>
+      </div>
     </div>
-    <div
-      *ngIf="isOverflown && !isAtScrollEnd"
-      class="m-analytics__metricsOverflowFade--right"
-    ></div>
-    <div
-      [ngClass]="{ showButton: showButton.right }"
-      class="m-analytics__metricsOverflowScrollButton--right"
-      (click)="slide('right')"
-    >
-      <i class="material-icons">chevron_right</i>
-    </div>
-  </div>
-</section>
-
-<!--
-<section class="m-analytics__metricsSection">
-  <div
-    *ngIf="isOverflown && !isAtScrollStart"
-    class="m-analytics__metricsOverflowFade--left"
-  ></div>
-  <div
-    [ngClass]="{ showButton: showButton.left }"
-    class="m-analytics__metricsOverflowScrollButton--left"
-    (click)="slide('left')"
-  >
-    <i class="material-icons">chevron_left</i>
-  </div>
-  <div class="m-analytics__metricsWrapper" #metricsWrapper>
-    <div
-      #metricsContainer
-      *ngIf="metrics$ | async as metrics"
-      class="m-analytics__metricsContainer disable-scrollbars"
-      (scroll)="onScroll($event)"
-    >
-      <ng-container *ngFor="let metric of metrics">
-        <div
-          class="m-analytics__metric"
-          (click)="updateMetric(metric)"
-          [ngClass]="{ active: metric.visualisation }"
-          *ngIf="metric.permissionGranted"
-        >
-          <div class="m-analytics__metricLabel">
-            <span>{{ metric.label }}</span>
-            <m-tooltip [anchor]="top" icon="help">
-              {{ metric.description }}
-            </m-tooltip>
-          </div>
-          <div class="m-analytics__metricSummary" *ngIf="metric.summary">
-            <ng-container *ngIf="metric.unit === 'number'">
-              {{ metric.summary.current_value | number }}
-            </ng-container>
-            <ng-container *ngIf="metric.unit === 'usd'">
-              <span>$</span
-              >{{ metric.summary.current_value / 100 | number: '1.2-2' }}
-            </ng-container>
-          </div>
-
-          <div
-            *ngIf="metric.summary"
-            class="m-analytics__metricDelta"
-            [ngClass]="{
-              goodChange: metric.hasChanged && metric.positiveTrend,
-              badChange: metric.hasChanged && !metric.positiveTrend
-            }"
-          >
-            <i class="material-icons" *ngIf="metric.delta > 0">arrow_upward</i>
-            <i class="material-icons" *ngIf="metric.delta < 0"
-              >arrow_downward</i
-            >
-            <span>{{ metric.delta | percent: '1.0-1' }}</span>
-          </div>
-        </div>
-      </ng-container>
-    </div>
-  </div>
-  <div
-    *ngIf="isOverflown && !isAtScrollEnd"
-    class="m-analytics__metricsOverflowFade--right"
-  ></div>
-  <div
-    [ngClass]="{ showButton: showButton.right }"
-    class="m-analytics__metricsOverflowScrollButton--right"
-    (click)="slide('right')"
-  >
-    <i class="material-icons">chevron_right</i>
-  </div>
-</section> -->
+  </ng-container>
+</ng-container>

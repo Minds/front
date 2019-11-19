@@ -99,6 +99,14 @@ m-overlay-modal {
   }
 }
 
+.m-mediaModal__mediaWrapper--richEmbed {
+  width: 100%;
+
+  .meta {
+    display: none;
+  }
+}
+
 .m-mediaModal__mediaWrapper--blog {
   line-height: initial;
   overflow-y: auto;

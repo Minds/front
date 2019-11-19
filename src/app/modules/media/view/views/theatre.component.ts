@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { timer, Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
@@ -71,8 +71,18 @@ export class MediaTheatreComponent {
   @ViewChild(MindsVideoComponent, { static: false })
   videoComponent: MindsVideoComponent;
 
-  get videoDirectSrc() {
-    const sources = [
+  videoDirectSrc = [];
+  videoTorrentSrc = [];
+
+  constructor(
+    public session: Session,
+    public client: Client,
+    public router: Router,
+    private recommended: RecommendedService
+  ) {}
+
+  updateSources() {
+    this.videoDirectSrc = [
       {
         res: '720',
         uri: 'api/v1/media/' + this.object.guid + '/play?s=modal&res=720',
@@ -85,40 +95,29 @@ export class MediaTheatreComponent {
       },
     ];
 
-    if (this.object.flags.full_hd) {
-      sources.push({
-        res: '1080',
-        uri: 'api/v1/media/' + this.object.guid + '/play?s=modal&res=1080',
-        type: 'video/mp4',
-      });
-    }
-
-    return sources;
-  }
-
-  get videoTorrentSrc() {
-    const sources = [
+    this.videoTorrentSrc = [
       { res: '720', key: this.object.guid + '/720.mp4' },
       { res: '360', key: this.object.guid + '/360.mp4' },
     ];
 
     if (this.object.flags.full_hd) {
-      sources.push({ res: '1080', key: this.object.guid + '/1080.mp4' });
+      this.videoDirectSrc.unshift({
+        res: '1080',
+        uri: 'api/v1/media/' + this.object.guid + '/play?s=modal&res=1080',
+        type: 'video/mp4',
+      });
+
+      this.videoTorrentSrc.unshift({
+        res: '1080',
+        key: this.object.guid + '/1080.mp4',
+      });
     }
-
-    return sources;
   }
-
-  constructor(
-    public session: Session,
-    public client: Client,
-    public router: Router,
-    private recommended: RecommendedService
-  ) {}
 
   set _object(value: any) {
     if (!value.guid) return;
     this.object = value;
+    this.updateSources();
   }
 
   getThumbnail() {

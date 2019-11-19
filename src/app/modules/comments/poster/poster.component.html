@@ -1,4 +1,7 @@
-<div class="m-comment m-comment--poster minds-block" *ngIf="!readonly">
+<div
+  class="m-comment m-comment--poster minds-block"
+  *ngIf="!readonly && isLoggedIn"
+>
   <div class="minds-avatar">
     <a [routerLink]="['/', session.getLoggedInUser().username]">
       <img [src]="getAvatar()" class="mdl-shadow--2dp" />
@@ -145,4 +148,19 @@
       </div>
     </div>
   </div>
+</div>
+
+<div
+  class="m-comments--start-conversation-label"
+  *ngIf="!isLoggedIn && level < 1"
+>
+  <a (click)="showLoginModal(); $event.preventDefault()">
+    <ng-container *ngIf="!conversation; else loggedOutConversationMessage" i18n>
+      <b>Log in</b> to comment
+    </ng-container>
+
+    <ng-template #loggedOutConversationMessage>
+      <ng-container i18n> <b>Log in</b> to send a message </ng-container>
+    </ng-template>
+  </a>
 </div>

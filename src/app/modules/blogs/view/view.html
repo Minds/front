@@ -133,7 +133,7 @@
     </div>
     <minds-button-boost
       [object]="blog"
-      *ngIf="session.isLoggedIn()"
+      *ngIf="session.isLoggedIn() && !isScheduled(blog.time_created)"
     ></minds-button-boost>
   </div>
 </div>

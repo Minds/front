@@ -16,9 +16,6 @@ minds-rich-embed {
     left: 0;
     width: 100%;
     height: 100%;
-    @include m-theme() {
-      background-color: rgba(themed($m-black-always), 0.2);
-    }
 
     &:hover {
       background: transparent;
