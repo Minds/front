@@ -2,10 +2,10 @@
 
 m-marketing__footer {
   display: block;
-  margin-top: 105px;
+  margin: 105px 0 95px;
 
   @media screen and (max-width: $m-grid-min-vp) {
-    margin-top: 80px;
+    margin: 80px 0 0;
   }
 
   @include m-theme() {
@@ -19,12 +19,14 @@ m-marketing__footer {
 
 .m-marketing__footer {
   padding: 60px 0 48px;
+  border-top: 1px dashed;
 
   @media screen and (max-width: $m-grid-min-vp) {
     padding: 32px 0;
   }
 
   @include m-theme() {
+    border-color: themed($m-grey-50);
     color: themed($m-grey-800);
   }
 
@@ -47,6 +49,17 @@ m-marketing__footer {
       }
     }
 
+    &.m-marketingFooter__brandColumn {
+      width: 60%;
+      margin: 0 auto;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        width: 60%;
+        grid-row: 999;
+        margin: 32px 0 0;
+      }
+    }
+
     h4 {
       font-weight: 500;
       font-size: 16px;
@@ -60,11 +73,34 @@ m-marketing__footer {
       @include m-theme() {
         color: themed($m-grey-800);
       }
+
+      &.m-marketingFooter__sloganText {
+        margin: 0 0 21px;
+      }
+    }
+
+    .m-marketingFooter__mindsLogo {
+      width: 116px;
+      height: 43px;
+      margin: 0 0 35px;
+      background: url('<%= APP_CDN %>/assets/logos/logo.svg') no-repeat center
+        left;
+      background-size: contain;
+
+      @include m-on-theme(dark) {
+        background: url('<%= APP_CDN %>/assets/logos/logo-white.svg') no-repeat
+          center left;
+        background-size: contain;
+      }
     }
 
     .m-marketingFooter__text {
       font-size: 14px;
       line-height: 26px;
+
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
     }
 
     ul {
@@ -90,7 +126,7 @@ m-marketing__footer {
 
         a {
           color: inherit;
-          font-weight: 300;
+          font-weight: normal;
           text-decoration: none;
         }
       }
@@ -106,6 +142,16 @@ m-marketing__footer {
 
           &:last-child {
             margin-right: 0;
+          }
+        }
+
+        &.m-marketingFooter__legalLinks {
+          text-align: right;
+          padding-right: 92px;
+
+          @media screen and (max-width: $m-grid-min-vp) {
+            text-align: inherit;
+            padding-right: initial;
           }
         }
       }

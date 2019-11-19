@@ -1,4 +1,4 @@
-<div class="m-mediaModal__wrapper">
+<div class="m-mediaModal__wrapper" data-cy="data-minds-media-modal">
   <div class="m-mediaModal__theater" (click)="clickedModal($event)">
     <div
       class="m-mediaModal m-mediaModal__clearFix"
@@ -15,7 +15,10 @@
         (touchend)="showOverlaysOnTablet()"
       >
         <!-- LOADING PANEL -->
-        <div class="m-mediaModal__loadingPanel" *ngIf="isLoading">
+        <div
+          class="m-mediaModal__loadingPanel"
+          *ngIf="isLoading && contentType !== 'rich-embed'"
+        >
           <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
         </div>
 
@@ -53,22 +56,25 @@
               [autoplay]="true"
               [muted]="false"
               [poster]="entity.thumbnail_src"
-              [src]="[
-                {
-                  res: '360',
-                  uri: 'api/v1/media/' + entity.entity_guid + '/play?s=modal',
-                  type: 'video/mp4'
-                }
-              ]"
+              [src]="videoDirectSrc"
               [guid]="entity.entity_guid"
               [playCount]="entity['play:count']"
-              [torrent]="[{ res: '360', key: entity.entity_guid + '/360.mp4' }]"
+              [torrent]="videoTorrentSrc"
               (videoCanPlayThrough)="isLoaded()"
               [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
               #player
             >
               <video-ads [player]="player" *ngIf="entity.monetized"></video-ads>
             </m-video>
+          </div>
+
+          <!-- RICH-EMBED -->
+          <div
+            class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--richEmbed"
+            *ngIf="contentType === 'rich-embed'"
+          >
+            <minds-rich-embed [src]="entity" [maxheight]="480">
+            </minds-rich-embed>
           </div>
 
           <!-- MEDIA: BLOG -->
@@ -89,12 +95,12 @@
           <!-- OVERLAY -->
           <div
             class="m-mediaModal__overlayContainer"
-            *ngIf="overlayVisible"
+            *ngIf="overlayVisible && contentType !== 'rich-embed'"
             @fastFadeAnimation
           >
             <div
               class="m-mediaModal__overlayTitleWrapper"
-              *ngIf="this.contentType !== 'blog'"
+              *ngIf="contentType !== 'blog'"
             >
               <!-- TITLE -->
               <span

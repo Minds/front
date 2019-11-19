@@ -171,7 +171,7 @@
         service="editing"
         [selected]="activity.nsfw"
         [locked]="activity.ownerObj.nsfw_lock"
-        (selected)="onNSWFSelections($event)"
+        (selectedChange)="onNSWFSelections($event)"
       >
       </m-nsfw-selector>
     </ng-container>
@@ -219,7 +219,12 @@
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
-    <minds-rich-embed [src]="activity" [maxheight]="480"></minds-rich-embed>
+    <minds-rich-embed
+      (mediaModalRequested)="openModal()"
+      [src]="activity"
+      [maxheight]="480"
+    >
+    </minds-rich-embed>
   </div>
 
   <div
@@ -404,7 +409,8 @@
   ></m-wire-button>
   <button
     class="m-btn m-btn--action m-btn--slim minds-boost-button"
-    *ngIf="session.getLoggedInUser().guid == activity.owner_guid"
+    *ngIf="session.getLoggedInUser().guid == activity.owner_guid 
+      && !isScheduled(activity.time_created)"
     id="boost-actions"
     (click)="showBoost()"
   >

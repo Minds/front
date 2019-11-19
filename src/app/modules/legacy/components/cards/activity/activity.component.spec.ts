@@ -6,8 +6,8 @@ import {
   Directive,
   EventEmitter,
   Input,
-  NO_ERRORS_SCHEMA,
   Output,
+  NO_ERRORS_SCHEMA,
 } from '@angular/core';
 
 import { Activity } from './activity';
@@ -49,6 +49,7 @@ import { BlockListService } from '../../../../../common/services/block-list.serv
 import { ClientMetaService } from '../../../../../common/services/client-meta.service';
 import { clientMetaServiceMock } from '../../../../../../tests/client-meta-service-mock.spec';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
+import { SiteService } from '../../../../../common/services/site.service';
 import { PermissionsService } from '../../../../../common/services/permissions/permissions.service';
 import { featuresServiceMock } from '../../../../../../tests/features-service-mock.spec';
 
@@ -498,6 +499,14 @@ describe('Activity', () => {
         {
           provide: PermissionsService,
           useValue: MockService(PermissionsService),
+        },
+        {
+          provide: SiteService,
+          useValue: MockService(SiteService, {
+            props: {
+              isProDomain: { get: () => false },
+            },
+          }),
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

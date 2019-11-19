@@ -337,6 +337,10 @@ export class CommentsThreadComponent implements OnInit {
     return true;
   }
 
+  get isLoggedIn() {
+    return this.session.isLoggedIn();
+  }
+
   ngOnChanges(changes) {
     //  console.log('[comment:list]: on changes', changes);
   }

@@ -6,7 +6,7 @@ Minds Front
 Front-end web application for Minds. Please run inside of [the Minds repo](https://github.com/minds/minds).
 
 ## Documentation
-Documentation for Minds can be found at [minds.org/docs](https://www.minds.org/docs)
+Please see the documentation on [developers.minds.com](https://developers.minds.com) for instructions on how to [build the Minds Front-end](https://developers.minds.com/docs/guides/frontend).
 
 ### Building
 Please see the documentation on Minds.org for instructions on how to [build the Minds Front-end](https://www.minds.org/docs/install/preparation.html#front-end).

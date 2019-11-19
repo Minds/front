@@ -42,6 +42,7 @@
   <p
     class="m-comments--start-conversation-label"
     *ngIf="
+      isLoggedIn &&
       !inProgress &&
       !error &&
       comments?.length === 0 &&
@@ -119,6 +120,7 @@
   [entity]="entity"
   [currentIndex]="comments.length - 1"
   [conversation]="conversation"
+  [level]="level"
   (posted)="onPosted($event)"
   (optimisticPost)="onOptimisticPost($event)"
 >

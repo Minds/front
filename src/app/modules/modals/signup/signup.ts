@@ -184,4 +184,12 @@ export class SignupModal {
       this.router.navigateByUrl(this.route);
     }
   }
+
+  get description() {
+    if (!this.site.isProDomain) {
+      return '';
+    }
+
+    return this.site.pro.one_line_headline || '';
+  }
 }

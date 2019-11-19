@@ -13,7 +13,8 @@ export let uploadMock = new (function() {
       }
       if (
         !res ||
-        ((res.status && res.status === 'error') || res.status === 'failed')
+        (res.status && res.status === 'error') ||
+        res.status === 'failed'
       )
         reject(res);
 

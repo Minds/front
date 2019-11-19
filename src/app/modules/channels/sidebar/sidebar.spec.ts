@@ -38,6 +38,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ChannelMode } from '../../../interfaces/entities';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { ChannelModulesComponent } from '../modules/modules';
+import { SiteService } from '../../../common/services/site.service';
 
 describe('ChannelSidebar', () => {
   let comp: ChannelSidebar;
@@ -133,6 +134,14 @@ describe('ChannelSidebar', () => {
         {
           provide: OverlayModalService,
           useValue: overlayModalServiceMock,
+        },
+        {
+          provide: SiteService,
+          useValue: MockService(SiteService, {
+            props: {
+              isProDomain: { get: () => false },
+            },
+          }),
         },
       ],
     }).compileComponents(); // compile template and css

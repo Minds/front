@@ -36,11 +36,14 @@ export class CanaryPageComponent {
     if (!this.user) return this.router.navigate(['/login']);
 
     this.user.canary = true;
-    this.client.put('api/v2/canary');
+    await this.client.put('api/v2/canary');
+    window.location.reload();
   }
 
-  turnOff() {
+  async turnOff() {
     this.user.canary = false;
-    this.client.delete('api/v2/canary');
+    await this.client.delete('api/v2/canary');
+
+    window.location.reload();
   }
 }

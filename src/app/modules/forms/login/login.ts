@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
+import { UserAvatarService } from '../../../common/services/user-avatar.service';
 
 @Component({
   moduleId: module.id,
@@ -31,7 +32,8 @@ export class LoginForm {
     public session: Session,
     public client: Client,
     fb: FormBuilder,
-    private zone: NgZone
+    private zone: NgZone,
+    private userAvatarService: UserAvatarService
   ) {
     this.form = fb.group({
       username: ['', Validators.required],
@@ -65,6 +67,7 @@ export class LoginForm {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
         this.inProgress = false;
         this.session.login(data.user);
+        this.userAvatarService.init();
         this.done.next(data.user);
       })
       .catch(e => {
@@ -102,6 +105,7 @@ export class LoginForm {
       })
       .then((data: any) => {
         this.session.login(data.user);
+        this.userAvatarService.init();
         this.done.next(data.user);
       })
       .catch(e => {

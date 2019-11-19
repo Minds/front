@@ -3,11 +3,14 @@ import {
   ElementRef,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { RichEmbedService } from '../../../services/rich-embed';
 import mediaProxyUrl from '../../../helpers/media-proxy-url';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   moduleId: module.id,
@@ -17,18 +20,22 @@ import mediaProxyUrl from '../../../helpers/media-proxy-url';
 })
 export class MindsRichEmbed {
   type: string = '';
+  mediaSource: string = '';
   src: any = {};
   preview: any = {};
   maxheight: number = 320;
   inlineEmbed: any = null;
   embeddedInline: boolean = false;
   cropImage: boolean = false;
+  modalRequestSubscribed: boolean = false;
+  @Output() mediaModalRequested: EventEmitter<any> = new EventEmitter();
   private lastInlineEmbedParsed: string;
 
   constructor(
     private sanitizer: DomSanitizer,
     private service: RichEmbedService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    protected featureService: FeaturesService
   ) {}
 
   set _src(value: any) {
@@ -66,6 +73,14 @@ export class MindsRichEmbed {
     let inlineEmbed = this.parseInlineEmbed(this.inlineEmbed);
 
     if (
+      this.featureService.has('media-modal') &&
+      this.mediaSource === 'youtube'
+    ) {
+      this.modalRequestSubscribed =
+        this.mediaModalRequested.observers.length > 0;
+    }
+
+    if (
       inlineEmbed &&
       inlineEmbed.id &&
       this.inlineEmbed &&
@@ -80,9 +95,35 @@ export class MindsRichEmbed {
     }
 
     this.inlineEmbed = inlineEmbed;
+
+    if (
+      this.modalRequestSubscribed &&
+      this.featureService.has('media-modal') &&
+      this.mediaSource === 'youtube'
+    ) {
+      if (this.inlineEmbed && this.inlineEmbed.htmlProvisioner) {
+        this.inlineEmbed.htmlProvisioner().then(html => {
+          this.inlineEmbed.html = html;
+          this.detectChanges();
+        });
+
+        // @todo: catch any error here and forcefully window.open to destination
+      }
+    }
   }
 
   action($event) {
+    if (
+      this.modalRequestSubscribed &&
+      this.featureService.has('media-modal') &&
+      this.mediaSource === 'youtube'
+    ) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      this.mediaModalRequested.emit();
+      return;
+    }
+
     if (this.inlineEmbed && !this.embeddedInline) {
       $event.preventDefault();
       $event.stopPropagation();
@@ -120,6 +161,7 @@ export class MindsRichEmbed {
 
     if ((matches = youtube.exec(url)) !== null) {
       if (matches[1]) {
+        this.mediaSource = 'youtube';
         return {
           id: `video-youtube-${matches[1]}`,
           className:
@@ -138,12 +180,13 @@ export class MindsRichEmbed {
 
     if ((matches = vimeo.exec(url)) !== null) {
       if (matches[1]) {
+        this.mediaSource = 'vimeo';
         return {
           id: `video-vimeo-${matches[1]}`,
           className:
             'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-vimeo',
           html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
-          src="https://player.vimeo.com/video/${matches[1]}?autoplay=1&title=0&byline=0&portrait=0"
+          src="https://player.vimeo.com/video/${matches[1]}?title=0&byline=0&portrait=0"
           frameborder="0"
           webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>`),
           playable: true,
@@ -156,6 +199,7 @@ export class MindsRichEmbed {
 
     if ((matches = soundcloud.exec(url)) !== null) {
       if (matches[1]) {
+        this.mediaSource = 'soundcloud';
         return {
           id: `audio-soundcloud-${matches[1]}`,
           className:
@@ -183,6 +227,7 @@ export class MindsRichEmbed {
 
     if ((matches = spotify.exec(url)) !== null) {
       if (matches[1]) {
+        this.mediaSource = 'spotify';
         return {
           id: `audio-spotify-${matches[1]}`,
           className:
@@ -207,7 +252,7 @@ export class MindsRichEmbed {
         if (!id) {
           return null;
         }
-
+        this.mediaSource = 'giphy';
         return {
           id: `image-giphy-${matches[1]}`,
           className:
@@ -225,7 +270,11 @@ export class MindsRichEmbed {
   }
 
   hasInlineContentLoaded() {
-    return this.embeddedInline && this.inlineEmbed && this.inlineEmbed.html;
+    return this.featureService.has('media-modal')
+      ? !this.modalRequestSubscribed &&
+          this.inlineEmbed &&
+          this.inlineEmbed.html
+      : this.embeddedInline && this.inlineEmbed && this.inlineEmbed.html;
   }
 
   detectChanges() {

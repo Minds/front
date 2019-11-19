@@ -301,7 +301,10 @@
                     session.getLoggedInUser().guid &&
                   !notification.entityObj.title
                 "
-                i18n="object belonging to user@@NOTIFICATIONS__NOTIFICATION__OTHER_OBJECT"
+                i18n="
+                   object belonging to
+                  user@@NOTIFICATIONS__NOTIFICATION__OTHER_OBJECT
+                "
                 >{{ notification.entityObj.ownerObj.name }}'s
                 {{ notification.entityObj.subtype }}</span
               >
@@ -312,7 +315,10 @@
                     session.getLoggedInUser().guid &&
                   !notification.entityObj.title
                 "
-                i18n="object belonging to current user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT"
+                i18n="
+                   object belonging to current
+                  user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
+                "
                 >your {{ notification.entityObj.subtype }}</span
               >
             </p>
@@ -330,7 +336,9 @@
           >
             <p>
               <ng-container
-                i18n="@@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION"
+                i18n="
+                   @@NOTIFICATIONS__NOTIFICATION__REPLIED_TO_GROUP_CONVERSATION
+                "
                 *ngIf="notification.params?.is_reply"
               >
                 {{ notification.fromObj.name }} replied to your message in
@@ -382,7 +390,10 @@
           <span
             class="pseudo-link mdl-color-text--blue-grey-400"
             *ngIf="!notification.entityObj.title"
-            i18n="object belonging to current user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT"
+            i18n="
+               object belonging to current
+              user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
+            "
             >your {{ notification.entityObj.subtype }}</span
           >
         </p>
@@ -493,7 +504,10 @@
           <span
             class="pseudo-link mdl-color-text--blue-grey-400"
             *ngIf="!notification.entityObj.title"
-            i18n="object belonging to current user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT"
+            i18n="
+               object belonging to current
+              user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
+            "
             >your {{ notification.entityObj.subtype }}</span
           >
         </p>
@@ -513,7 +527,9 @@
         </p>
         <p *ngIf="!notification.entityObj.title">
           <ng-container
-            i18n="@@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_OWN_ACTIVITY"
+            i18n="
+               @@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_OWN_ACTIVITY
+            "
             >{{ notification.fromObj.name }} down voted
             <span class="pseudo-link mdl-color-text--blue-grey-400"
               >your activity</span
@@ -557,7 +573,9 @@
           *ngIf="notification.params?.parent?.type == 'group'"
         >
           <p
-            i18n="@@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_CONVERSATION"
+            i18n="
+               @@NOTIFICATIONS__NOTIFICATION__DOWNVOTE__VOTED_DOWN_CONVERSATION
+            "
           >
             <span class="pseudo-link mdl-color-text--blue-grey-400">{{
               notification.fromObj.name
@@ -603,7 +621,10 @@
           <span
             class="pseudo-link mdl-color-text--blue-grey-400"
             *ngIf="!notification.entityObj.title"
-            i18n="object belonging to current user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT"
+            i18n="
+               object belonging to current
+              user@@NOTIFICATIONS__NOTIFICATION__OWN_OBJECT
+            "
             >your {{ notification.entityObj.subtype }}</span
           >
         </p>
@@ -820,7 +841,11 @@
           >your channel</span
         >
         <ng-container
-          i18n="boost@@NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED__AWAITING_APPROVAL"
+          i18n="
+
+            boost@@NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED__AWAITING_APPROVAL
+
+          "
         >
           is awaiting approval.</ng-container
         >
@@ -879,7 +904,11 @@
           >your channel</span
         >
         <ng-container
-          i18n="boost@@NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED_P2P__AWAITING_APPROVAL_BY"
+          i18n="
+
+            boost@@NOTIFICATIONS__NOTIFICATION__BOOST_SUBMITTED_P2P__AWAITING_APPROVAL_BY
+
+          "
         >
           is awaiting approval by
           <span class="pseudo-link mdl-color-text--blue-grey-400"
@@ -1314,7 +1343,9 @@
     <a [routerLink]="['/boost/console/peer/outbox']">
       <p>
         <ng-container
-          i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_ACCEPTED__ACCEPTED_BID"
+          i18n="
+             @@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_ACCEPTED__ACCEPTED_BID
+          "
           ><b>@{{ notification.from.username }}</b> accepted your bid
           of</ng-container
         >
@@ -1373,7 +1404,9 @@
     <a [routerLink]="['/boost/console/peer/outbox']">
       <p>
         <ng-container
-          i18n="@@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__DECLINED_BID"
+          i18n="
+             @@NOTIFICATIONS__NOTIFICATION__BOOST_PEER_REJECTED__DECLINED_BID
+          "
           ><b>@{{ notification.from.username }}</b> declined your bid
           of</ng-container
         >
@@ -1710,7 +1743,11 @@
         >
           <span
             class="pseudo-link mdl-color-text--blue-grey-400"
-            i18n="@@NOTIFICATIONS__NOTIFICATION__REPORT_ACTIONED__ACTIVITY_TITLE_BEEN"
+            i18n="
+
+              @@NOTIFICATIONS__NOTIFICATION__REPORT_ACTIONED__ACTIVITY_TITLE_BEEN
+
+            "
             >Your post {{ notification.entityObj.title }}</span
           >
           has been {{ notification.params.action }}
@@ -1757,7 +1794,11 @@
   <ng-template ngSwitchCase="rewards_summary">
     <a target="_blank" routerLink="/wallet/tokens/contributions">
       <p
-        i18n="@@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_RECEIVED_X_TOKENS_TODAY"
+        i18n="
+
+          @@NOTIFICATIONS__NOTIFICATION__REWARDS__YOU_HAVE_RECEIVED_X_TOKENS_TODAY
+
+        "
       >
         You earned {{ notification.params.amount }} tokens today.
       </p>

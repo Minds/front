@@ -1,29 +1,23 @@
 <div class="m-marketing__footer">
   <div class="m-grid m-marketingFooter__columns">
     <div
-      class="m-grid__column-3 m-grid__column-12--mobile m-marketingFooter__column"
+      class="m-grid__column-4 m-grid__column-12--mobile m-marketingFooter__column m-marketingFooter__brandColumn"
+    >
+      <div class="m-marketingFooter__mindsLogo"></div>
+
+      <h4 class="m-marketingFooter__sloganText" i18n>
+        Take back control of your social media
+      </h4>
+
+      <div class="m-marketingFooter__text">&copy; {{ year }} Minds, Inc.</div>
+    </div>
+
+    <div
+      class="m-grid__column-2 m-grid__column-12--mobile m-marketingFooter__column"
     >
       <h4 i18n>About</h4>
 
       <ul>
-        <li hidden>
-          <a href="#" i18n>
-            Company
-          </a>
-        </li>
-
-        <li hidden>
-          <a href="#" i18n>
-            Mission
-          </a>
-        </li>
-
-        <li hidden>
-          <a href="#" i18n>
-            Features
-          </a>
-        </li>
-
         <li>
           <a routerLink="/mobile" i18n>
             Mobile
@@ -32,7 +26,7 @@
 
         <li>
           <a routerLink="/jobs" i18n>
-            Jobs
+            Careers
           </a>
         </li>
 
@@ -67,7 +61,7 @@
     </div>
 
     <div
-      class="m-grid__column-3 m-grid__column-12--mobile m-marketingFooter__column"
+      class="m-grid__column-2 m-grid__column-12--mobile m-marketingFooter__column"
     >
       <h4 i18n>Business</h4>
 
@@ -97,6 +91,12 @@
         </li>
 
         <li>
+          <a routerLink="/pay" i18n>
+            Pay
+          </a>
+        </li>
+
+        <li>
           <a routerLink="/nodes" i18n>
             Nodes
           </a>
@@ -109,8 +109,8 @@
         </li>
 
         <li>
-          <a routerLink="/wire" i18n>
-            Pay
+          <a routerLink="/rewards" i18n>
+            Rewards
           </a>
         </li>
 
@@ -123,7 +123,7 @@
     </div>
 
     <div
-      class="m-grid__column-3 m-grid__column-12--mobile m-marketingFooter__column"
+      class="m-grid__column-2 m-grid__column-12--mobile m-marketingFooter__column"
     >
       <h4>Developers</h4>
 
@@ -161,7 +161,7 @@
     </div>
 
     <div
-      class="m-grid__column-3 m-grid__column-12--mobile m-marketingFooter__column"
+      class="m-grid__column-2 m-grid__column-12--mobile m-marketingFooter__column"
     >
       <h4>Support</h4>
 
@@ -189,30 +189,19 @@
             Status
           </a>
         </li>
-
-        <li hidden>
-          <a routerLink="/p/contact" i18n>
-            Contact
-          </a>
-        </li>
       </ul>
     </div>
   </div>
 
-  <div class="m-marketing__sep m-marketing__sep--big"></div>
+  <div
+    class="m-marketing__sep m-marketing__sep--dashed m-marketing__sep--big"
+  ></div>
 
   <div class="m-grid m-marketingFooter__columns">
     <div
-      class="m-grid__column-2 m-grid__column-12--mobile m-marketingFooter__column m-marketingFooter__column--noMobileSpacing"
-      i18n
+      class="m-grid__column-12 m-grid__column-12--mobile m-marketingFooter__column"
     >
-      <div class="m-marketingFooter__text">&copy; {{ year }} Minds, Inc.</div>
-    </div>
-
-    <div
-      class="m-grid__column-10 m-grid__column-12--mobile m-marketingFooter__column"
-    >
-      <ul class="m-marketingFooter__inlineList">
+      <ul class="m-marketingFooter__inlineList m-marketingFooter__legalLinks">
         <li>
           <a routerLink="/p/terms" i18n>
             Terms of Service

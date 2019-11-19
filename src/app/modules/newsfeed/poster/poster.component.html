@@ -60,7 +60,7 @@
         </label>
 
         <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
-          <m-nsfw-selector (selected)="onNSWFSelections($event)">
+          <m-nsfw-selector (selectedChange)="onNSWFSelections($event)">
           </m-nsfw-selector>
         </ng-container>
 
