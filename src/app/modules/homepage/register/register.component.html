@@ -49,23 +49,19 @@
         <label for="password" i18n>
           Password
         </label>
-        <input
-          type="password"
-          id="password"
-          formControlName="password"
-          i18n-placeholder="@@M__COMMON__PASSWORD"
-          readonly
-          onfocus="this.removeAttribute('readonly');"
-        />
-      </div>
-      <div
-        class="mdl-cell mdl-cell--12-col password-help"
-        [hidden]="errorMessage || !form.value.password"
-      >
-        <span i18n="@@MINDS__PASSWORD_TOOLTIP"
-          >Password must have more than 8 characters. Including uppercase,
-          numbers, special characters (ie. !,#,@), and cannot have spaces</span
-        >
+        <m-popover--validation #popover>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            i18n-placeholder="@@M__COMMON__PASSWORD"
+            readonly
+            onfocus="this.removeAttribute('readonly');"
+            (focus)="popover.show()"
+            (focusout)="popover.hide()"
+            (ngModelChange)="popover.checkRules($event)"
+          />
+        </m-popover--validation>
       </div>
       <div class="mdl-cell mdl-cell--12-col">
         <label for="password2" i18n>

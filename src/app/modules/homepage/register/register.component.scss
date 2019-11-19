@@ -17,6 +17,10 @@ m-homepage__registerForm {
 
     form.mdl-card {
       background: transparent !important;
+
+      .mdl-card__supporting-text {
+        overflow: visible;
+      }
     }
 
     span,
