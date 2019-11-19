@@ -11,8 +11,9 @@ context('Pro Settings', () => {
     const footerText = '#footer_text';
 
     const theme = {
-      primaryColor: '#primary_color',
-      plainBackgroundColor: '#plain_background_color',
+      textColor: '#textColor',
+      primaryColor: '#primaryColor',
+      plainBackgroundColor: '#plainBgColor',
       schemeLight: '#scheme_light',
       schemeDark: '#scheme_dark',
       aspectRatio: {

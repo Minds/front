@@ -157,14 +157,29 @@
                           [pattern]="hexPattern"
                           class="form-control"
                           required
+                          (ngModelChange)="
+                            updateColorPicker('text_color', textColor.value)
+                          "
                         />
-
-                        <div
+                        <label
+                          for="text_color_picker"
                           class="m-proSettings__colorPreview"
                           [ngStyle]="{
-                            backgroundColor: textColor.value
+                            backgroundColor: textColorPicker.value
                           }"
-                        ></div>
+                          ><input
+                            class="form-control"
+                            type="color"
+                            id="text_color_picker"
+                            formControlName="text_color_picker"
+                            #textColorPicker
+                            (ngModelChange)="
+                              updateColorText(
+                                'text_color',
+                                textColorPicker.value
+                              )
+                            "
+                        /></label>
                       </div>
                       <div class="m-proSettings__row--validation">
                         <p
@@ -207,14 +222,33 @@
                           [pattern]="hexPattern"
                           class="form-control"
                           required
+                          (ngModelChange)="
+                            updateColorPicker(
+                              'primary_color',
+                              primaryColor.value
+                            )
+                          "
                         />
-
-                        <div
+                        <label
+                          for="primary_color_picker"
                           class="m-proSettings__colorPreview"
                           [ngStyle]="{
-                            backgroundColor: primaryColor.value
+                            backgroundColor: primaryColorPicker.value
                           }"
-                        ></div>
+                          ><input
+                            class="form-control"
+                            type="color"
+                            id="primary_color_picker"
+                            name="primary_color_picker"
+                            formControlName="primary_color_picker"
+                            #primaryColorPicker
+                            (ngModelChange)="
+                              updateColorText(
+                                'primary_color',
+                                primaryColorPicker.value
+                              )
+                            "
+                        /></label>
                       </div>
                       <div class="m-proSettings__row--validation">
                         <p
@@ -255,19 +289,39 @@
                           type="text"
                           id="plain_background_color"
                           name="plain_background_color"
-                          #plainBg
+                          #plainBgColor
                           formControlName="plain_background_color"
                           [pattern]="hexPattern"
                           class="form-control"
                           required
+                          (ngModelChange)="
+                            updateColorPicker(
+                              'plain_background_color',
+                              plainBgColor.value
+                            )
+                          "
                         />
 
-                        <div
+                        <label
+                          for="plain_background_color_picker"
                           class="m-proSettings__colorPreview"
                           [ngStyle]="{
-                            backgroundColor: plainBg.value
+                            backgroundColor: plainBgColorPicker.value
                           }"
-                        ></div>
+                          ><input
+                            class="form-control"
+                            type="color"
+                            id="plain_background_color_picker"
+                            name="plain_background_color_picker"
+                            formControlName="plain_background_color_picker"
+                            #plainBgColorPicker
+                            (ngModelChange)="
+                              updateColorText(
+                                'plain_background_color',
+                                plainBgColorPicker.value
+                              )
+                            "
+                        /></label>
                       </div>
                       <div class="m-proSettings__row--validation">
                         <p
@@ -795,13 +849,13 @@
               </ng-template>
             </ng-container>
             <div class="m-shadowboxLayout__footer">
-              <m-shadowboxSubmitButton [disabled]="!form.valid">
+              <m-shadowboxSubmitButton
+                [disabled]="
+                  !form.valid || form.pristine || saveStatus === 'saving'
+                "
+                [saveStatus]="saveStatus"
+              >
                 <ng-container [ngSwitch]="saveStatus">
-                  <ng-template ngSwitchCase="saved">
-                    <div class="m-shadowboxSubmitButton__status--saved">
-                      Saved
-                    </div>
-                  </ng-template>
                   <ng-template ngSwitchCase="saving">
                     <div class="m-shadowboxSubmitButton__status--saving">
                       <span></span>

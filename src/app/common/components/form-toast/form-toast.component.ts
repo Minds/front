@@ -34,19 +34,14 @@ export class FormToastComponent implements OnInit, OnDestroy {
       console.log(toastIndex);
       this.detectChanges();
 
-      // TODOOJM something is wrong here
       const toastTimeout = setTimeout(() => {
-        this.toasts[toastIndex].visible = false;
+        this.toasts[toastIndex]['dismissed'] = true;
+
         this.detectChanges();
-      }, 3000);
+      }, 3400);
 
       this.timeoutIds.push(setTimeout(() => toastTimeout));
     });
-  }
-
-  dismiss(index) {
-    this.toasts[index].visible = false;
-    this.detectChanges();
   }
 
   detectChanges() {

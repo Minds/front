@@ -1,36 +1,48 @@
 m-formToast {
-  margin: 37px 70px 0 70px;
-  display: flex;
-  flex-flow: column nowrap;
-  min-width: 300px;
-  max-width: 522px;
   position: fixed;
-  bottom: 24;
-}
-.m-formToast__toastsContainer {
-  height: auto;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  max-width: 522px;
+  width: 60%;
   transition: all 0.3s ease;
 }
+.m-formToast__toastsContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+}
 .m-formToast__wrapper {
+  box-sizing: border-box;
   width: 100%;
   font-size: 15px;
   line-height: 20px;
   padding: 13px;
   margin-bottom: 16px;
   display: flex;
-  opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  opacity: 1;
+  animation: 0.4s cubic-bezier(0.23, 1, 0.32, 1) 1 forward fadeIn;
   @include m-theme() {
     color: themed($m-grey-600);
     background-color: themed($m-white);
     box-shadow: 0 0 15px 0 rgba(themed($m-black), 0.2);
   }
-  &.active {
-    opacity: 1;
+  &.dismissed {
+    display: none;
   }
   p {
     flex-grow: 1;
     margin: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 
@@ -74,11 +86,9 @@ m-formToast {
   }
 }
 
-@media screen and (max-width: $min-tablet) {
+@media screen and (max-width: $max-mobile) {
   m-formToast {
-    margin: 0 auto;
-    max-width: 85%;
-    position: absolute;
     bottom: 48px;
+    width: 75%;
   }
 }

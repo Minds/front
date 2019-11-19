@@ -37,8 +37,10 @@
   &:disabled,
   &[disabled] {
     cursor: default;
-    @include m-theme() {
-      background-color: themed($m-grey-100);
+    &:not(.saving) {
+      @include m-theme() {
+        background-color: themed($m-grey-100);
+      }
     }
   }
 }

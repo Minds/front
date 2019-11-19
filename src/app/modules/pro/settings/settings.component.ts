@@ -49,8 +49,6 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   inProgress: boolean;
 
-  saved: boolean = false;
-
   saveStatus: string = 'unsaved';
 
   user: string | null = null;
@@ -59,13 +57,15 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   error: string;
 
-  hexPattern = '^#([0-9A-Fa-f]{3}){1,2}$'; // accepts both 3- and 6-digit codes, hash required
+  textColorPickerVal: string;
+  primaryColorPickerVal: string;
+  plainBgColorPickerVal: string;
+
+  hexPattern = '^#([0-9A-Fa-f]{6})$'; // accepts 6-digit codes only, hash required
 
   domainValidationSubject: Subject<any> = new Subject<any>();
 
   protected paramMap$: Subscription;
-
-  protected formChanges$: Subscription;
 
   @ViewChild('logoField', { static: false })
   protected logoField: ElementRef<HTMLInputElement>;
@@ -79,8 +79,11 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     published: [''],
     theme: this.fb.group({
       text_color: [''],
+      text_color_picker: [''],
       primary_color: [''],
+      primary_color_picker: [''],
       plain_background_color: [''],
+      plain_background_color_picker: [''],
       scheme: [''],
       tile_ratio: [''],
     }),
@@ -128,18 +131,10 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       this.detectChanges();
       this.load();
     });
-
-    this.formChanges$ = this.form.valueChanges.subscribe((value: any) => {
-      if (this.form.dirty && this.saveStatus === 'saved') {
-        this.saveStatus = 'unsaved';
-        this.detectChanges();
-      }
-    });
   }
 
   ngOnDestroy() {
     this.paramMap$.unsubscribe();
-    this.formChanges$.unsubscribe();
   }
 
   async load() {
@@ -159,8 +154,11 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       published: settings.published,
       theme: {
         text_color: settings.text_color,
+        text_color_picker: settings.text_color,
         primary_color: settings.primary_color,
+        primary_color_picker: settings.primary_color,
         plain_background_color: settings.plain_background_color,
+        plain_background_color_picker: settings.plain_background_color,
         scheme: settings.scheme,
         tile_ratio: settings.tile_ratio,
       },
@@ -293,8 +291,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
         published: this.form.value.published,
         text_color: this.form.value.theme.text_color,
         primary_color: this.form.value.theme.primary_color,
-        primary_background_color: this.form.value.theme
-          .primary_background_color,
+        plain_background_color: this.form.value.theme.plain_background_color,
         scheme: this.form.value.theme.scheme,
         tile_ratio: this.form.value.theme.tile_ratio,
         domain: this.form.value.domain.domain,
@@ -308,15 +305,12 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       this.formToastService.success(
         'Pro settings have been successfully updated'
       );
-      this.saveStatus = 'saved';
       this.form.markAsPristine();
     } catch (e) {
       this.error = e.message;
       this.formToastService.error('Error: ' + this.error);
-      this.saveStatus = 'unsaved';
     }
-
-    this.saved = true;
+    this.saveStatus = 'unsaved';
     this.inProgress = false;
     this.detectChanges();
   }
@@ -366,6 +360,30 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       this.addFooterLink(link.title, link.href);
     }
     this.detectChanges();
+  }
+
+  updateColorText(colorTextControl, updatedColor) {
+    if (updatedColor !== this.form.value.theme[colorTextControl]) {
+      this.form
+        .get('theme')
+        .get(colorTextControl)
+        .setValue(updatedColor);
+    }
+  }
+
+  updateColorPicker(colorTextControlName, updatedColor) {
+    console.log(updatedColor);
+    const colorTextControl = this.form.get('theme').get(colorTextControlName);
+    console.log(colorTextControl);
+    const colorPickerControl = this.form
+      .get('theme')
+      .get(`${colorTextControlName}_picker`);
+    if (
+      colorTextControl.valid &&
+      colorTextControl.value !== colorPickerControl.value
+    ) {
+      colorPickerControl.setValue(updatedColor);
+    }
   }
 
   detectChanges() {

@@ -4,7 +4,6 @@ import { Observable, Subject } from 'rxjs';
 export interface FormToast {
   type?: 'success' | 'error' | 'warning' | 'info' | null;
   message?: string;
-  visible?: boolean;
 }
 
 @Injectable()
@@ -49,7 +48,6 @@ export class FormToastService {
   }
 
   trigger(toast: FormToast) {
-    toast['visible'] = true;
     if (!toast.type) {
       toast.type = 'info';
     }
