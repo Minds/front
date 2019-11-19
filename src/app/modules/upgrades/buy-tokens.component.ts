@@ -11,7 +11,5 @@ export class BuyTokensComponent {
 
   constructor(protected router: Router) {}
 
-  navigateToTokensPage() {
-    this.router.navigate(['/token']);
-  }
+  onPurchaseComplete(purchase: any) {}
 }

@@ -105,6 +105,16 @@ import { MarketingComponent } from './components/marketing/marketing.component';
 import { MarketingFooterComponent } from './components/marketing/footer.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
+import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
+import { ChartV2Component } from './components/chart-v2/chart-v2.component';
+import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import { PlotlyModule } from 'angular-plotly.js';
+import { PageLayoutComponent } from './components/page-layout/page-layout.component';
+import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
+import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
+import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
+
+PlotlyModule.plotlyjs = PlotlyJS;
 
 @NgModule({
   imports: [
@@ -113,6 +123,7 @@ import { MarketingAsFeaturedInComponent } from './components/marketing/as-featur
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    PlotlyModule,
   ],
   declarations: [
     MINDS_PIPES,
@@ -207,6 +218,12 @@ import { MarketingAsFeaturedInComponent } from './components/marketing/as-featur
     MarketingComponent,
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
+    SidebarMenuComponent,
+    ChartV2Component,
+    PageLayoutComponent,
+    DashboardLayoutComponent,
+    ShadowboxLayoutComponent,
+    ShadowboxHeaderComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -297,6 +314,11 @@ import { MarketingAsFeaturedInComponent } from './components/marketing/as-featur
     ToggleComponent,
     MarketingComponent,
     MarketingAsFeaturedInComponent,
+    SidebarMenuComponent,
+    ChartV2Component,
+    PageLayoutComponent,
+    DashboardLayoutComponent,
+    ShadowboxLayoutComponent,
   ],
   providers: [
     SiteService,

@@ -204,7 +204,9 @@
             </div>
 
             <minds-button-boost
-              *ngIf="entity.subtype != 'album'"
+              *ngIf="
+                entity.subtype != 'album' && !isScheduled(entity.time_created)
+              "
               class="m-media-content--button-boost"
               [object]="entity"
             ></minds-button-boost>

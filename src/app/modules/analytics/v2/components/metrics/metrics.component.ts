@@ -1,29 +1,12 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  OnDestroy,
-} from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import {
   AnalyticsDashboardService,
-  Category,
-  Response,
-  Dashboard,
-  Filter,
-  Option,
   Metric as MetricBase,
-  Summary,
-  Visualisation,
-  Bucket,
-  Timespan,
-  UserState,
 } from '../../dashboard.service';
 import { Session } from '../../../../../services/session';
-import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
 interface MetricExtended extends MetricBase {
   delta: number;
@@ -36,22 +19,16 @@ export { MetricExtended as Metric };
 @Component({
   selector: 'm-analytics__metrics',
   templateUrl: './metrics.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
-  data;
+export class AnalyticsMetricsComponent implements OnInit {
   subscription: Subscription;
-  isMobile: boolean;
   user;
   userRoles: string[] = ['user'];
-
   metrics$;
-  isOverflown = { left: false, right: false };
 
   constructor(
     private analyticsService: AnalyticsDashboardService,
-    public session: Session,
-    private cd: ChangeDetectorRef
+    public session: Session
   ) {}
 
   ngOnInit() {
@@ -66,7 +43,6 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
     this.metrics$ = this.analyticsService.metrics$.pipe(
       map(_metrics => {
         const metrics = _metrics.map(metric => ({ ...metric })); // Clone to avoid updating
-
         for (const metric of metrics) {
           metric['permissionGranted'] = metric.permissions.some(role =>
             this.userRoles.includes(role)
@@ -95,27 +71,13 @@ export class AnalyticsMetricsComponent implements OnInit, OnDestroy {
             }
           }
         }
-
         return metrics;
       })
     );
-    this.isMobile = isMobileOrTablet();
   }
 
   updateMetric(metric) {
+    // TODO: if clicked metric is not fully visible, slide() until it is
     this.analyticsService.updateMetric(metric.id);
-  }
-
-  detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
-  }
-
-  ngOnDestroy() {
-    // this.subscription.unsubscribe();
-  }
-
-  checkOverflow() {
-    // element.scrollWidth - element.clientWidth
   }
 }

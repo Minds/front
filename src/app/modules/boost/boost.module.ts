@@ -183,7 +183,6 @@ const boostRoutes: Routes = [
     BoostRootComponent,
     BoostCreatorComponent,
     BoostConsoleComponent,
-    BoostMarketingComponent,
   ],
 })
 export class BoostModule {}

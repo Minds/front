@@ -2,6 +2,7 @@
   [open]="open"
   (closed)="onClose($event)"
   *ngIf="!session.isLoggedIn() || display != 'initial'"
+  (click)="$event.stopPropagation()"
 >
   <div
     class="mdl-card__title"
@@ -13,8 +14,15 @@
   <!-- Initial Display -->
   <div *ngIf="display == 'initial'">
     <div class="m-signup-modal-feature-text mdl-card__supporting-text">
-      We are an open source platform for Internet freedom. Get paid in crypto
-      for your contributions to the community.
+      <ng-container *ngIf="description; else defaultDescription">
+        {{description}}
+      </ng-container>
+      <ng-template #defaultDescription>
+        <ng-container i18n>
+          We are an open source platform for Internet freedom. Get paid in
+          crypto for your contributions to the community.
+        </ng-container>
+      </ng-template>
     </div>
 
     <div class="mdl-card__supporting-text m-signup-buttons">

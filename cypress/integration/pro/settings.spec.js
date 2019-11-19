@@ -21,7 +21,6 @@ context('Pro Settings', () => {
         43: '#tile_ratio_4\:3', // 4:3
         11: '#tile_ratio_1\:1' , // 1:1
       },
-      logoGuid: '#logo_guid', 
     }
 
     const hashtags = {

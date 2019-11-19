@@ -404,8 +404,23 @@ m-comments__tree,
   font-size: 12px;
   text-align: center;
   margin: ($minds-padding * 2) 0;
+
   @include m-theme() {
     color: themed($m-grey-300);
+  }
+
+  a {
+    font-weight: inherit;
+    color: inherit;
+    cursor: pointer;
+
+    b {
+      font-weight: bold;
+
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
   }
 }
 

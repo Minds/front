@@ -14,6 +14,11 @@ m-pro--channel {
   background-blend-mode: overlay;
   background-color: var(--m-pro--more-transparent-background-color) !important;
 
+  &.m-pro-channel--plainBackground {
+    background-blend-mode: initial;
+    background-color: var(--m-pro--plain-background-color) !important;
+  }
+
   @media screen and (min-width: ($min-tablet + 1px)) {
     m-pro__hamburger-menu {
       display: none;

@@ -17,9 +17,6 @@ import { Session } from '../../../services/session';
 import { AnalyticsDashboardService } from './dashboard.service';
 import { Filter } from './../../../interfaces/dashboard';
 
-// import categories from './categories.default';
-import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
-
 @Component({
   selector: 'm-analytics__dashboard',
   templateUrl: './dashboard.component.html',
@@ -27,9 +24,6 @@ import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
   providers: [AnalyticsDashboardService],
 })
 export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
-  isMobile: boolean;
-
-  // subscription: Subscription;
   paramsSubscription: Subscription;
 
   ready$ = this.analyticsService.ready$;
@@ -44,6 +38,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     options: [],
   };
   channelFilter: Filter;
+  layout = 'chart';
 
   constructor(
     public client: Client,
@@ -56,17 +51,21 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // TODO: why wasn't this working? didn't reroute
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;
     }
-    this.isMobile = isMobileOrTablet();
 
     this.title.setTitle('Analytics');
 
     this.route.paramMap.subscribe((params: ParamMap) => {
-      this.updateCategory(params.get('category'));
+      const cat = params.get('category');
+      this.updateCategory(cat);
+      if (cat === 'summary') {
+        this.layout = 'summary';
+      } else {
+        this.layout = 'chart';
+      }
     });
 
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
@@ -105,8 +104,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   }
 
   updateTimespan(timespanId) {
-    // TODO
-    // update url
+    // TODO: update url
     // this.analyticsService.updateTimespan(timespanId);
   }
 
@@ -120,6 +118,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 }

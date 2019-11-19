@@ -6,40 +6,8 @@ import { Session } from '../../services/session';
 import { EntitiesService } from './entities.service';
 import { BlockListService } from './block-list.service';
 
-import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHttpAdapter.js';
-import browserStorageAdapterFactory from '../../helpers/browser-storage-adapter-factory';
-import FeedsSync from '../../lib/minds-sync/services/FeedsSync.js';
-
-import hashCode from '../../helpers/hash-code';
-import AsyncStatus from '../../helpers/async-status';
-import { BehaviorSubject, Observable, of, forkJoin, combineLatest } from 'rxjs';
-import {
-  take,
-  switchMap,
-  map,
-  tap,
-  skipWhile,
-  first,
-  filter,
-} from 'rxjs/operators';
-
-export type FeedsServiceGetParameters = {
-  endpoint: string;
-  timebased: boolean;
-
-  //
-  limit: number;
-  offset?: number;
-
-  //
-  syncPageSize?: number;
-  forceSync?: boolean;
-};
-
-export type FeedsServiceGetResponse = {
-  entities: any[];
-  next?: number;
-};
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { switchMap, map, tap, first } from 'rxjs/operators';
 
 /**
  * Enables the grabbing of data through observable feeds.
@@ -69,6 +37,7 @@ export class FeedsService {
     this.pageSize = this.offset.pipe(
       map(offset => this.limit.getValue() + offset)
     );
+
     this.feed = this.rawFeed.pipe(
       tap(feed => {
         if (feed.length) this.inProgress.next(true);
@@ -87,6 +56,7 @@ export class FeedsService {
           this.inProgress.next(false);
       })
     );
+
     this.hasMore = combineLatest(
       this.rawFeed,
       this.inProgress,

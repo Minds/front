@@ -56,15 +56,17 @@ m-proChannel__home {
   .m-proChannelHome__featuredContent {
     grid-template-columns: repeat(2, 1fr);
 
-    *:nth-child(1) {
-      grid-column: span 2;
-    }
-
     @media screen and (max-width: $max-mobile) {
       grid-template-columns: 100%;
+    }
 
+    &.m-proChannelHome__featuredContent--prominent {
       *:nth-child(1) {
-        grid-column: initial;
+        grid-column: span 2;
+
+        @media screen and (max-width: $max-mobile) {
+          grid-column: initial;
+        }
       }
     }
   }

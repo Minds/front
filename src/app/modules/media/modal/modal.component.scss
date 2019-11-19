@@ -99,13 +99,21 @@ m-overlay-modal {
   }
 }
 
+.m-mediaModal__mediaWrapper--richEmbed {
+  width: 100%;
+
+  .meta {
+    display: none;
+  }
+}
+
 .m-mediaModal__mediaWrapper--blog {
   line-height: initial;
   overflow-y: auto;
   text-align: left;
 
   @include m-theme() {
-    color: themed($m-white-always);
+    color: themed($m-black);
   }
 
   h1.m-blog--title {
@@ -124,7 +132,7 @@ m-overlay-modal {
 
   p {
     @include m-theme() {
-      color: themed($m-white-always);
+      color: themed($m-black);
     }
   }
 
@@ -140,7 +148,7 @@ m-overlay-modal {
 
   .m-blog--image--caption {
     @include m-theme() {
-      color: themed($m-white-always);
+      color: themed($m-black);
     }
   }
 }
