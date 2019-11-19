@@ -19,6 +19,7 @@
     "baseUrl": "./",
     "paths": {
       "fs": [ "./shims/noop" ],
+      "ngx-drag-drop" : ["../node_modules/ngx-drag-drop/dist"]
     }
   }
 }
