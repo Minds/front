@@ -53,13 +53,13 @@ m-proSettings {
     display: flex;
     flex-flow: row wrap;
 
-    &[class$='--label'] {
+    &[class*='--label'] {
       margin: 0 0 12px 0;
       align-items: center;
       flex-flow: row nowrap;
       position: relative;
     }
-    &[class$='--validation'] {
+    &[class*='--validation'] {
       margin-top: 3px;
       min-height: 22px;
       p {
@@ -261,7 +261,7 @@ m-proSettings {
       box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
     }
 
-    &[class$='--logo'] {
+    &[class*='--logo'] {
       padding: 16px;
       > img {
         max-width: 100%;
@@ -270,7 +270,7 @@ m-proSettings {
       }
     }
 
-    &[class$='--background'] {
+    &[class*='--background'] {
       width: 480px;
       height: 270px;
 
@@ -283,7 +283,7 @@ m-proSettings {
         object-fit: cover;
       }
     }
-    &[class$='Overlay'] {
+    &[class*='Overlay'] {
       opacity: 0;
       position: absolute;
       top: 0;
@@ -367,7 +367,7 @@ m-proSettings {
     -ms-user-select: none;
     user-select: none;
 
-    &[class$='--radio'] {
+    &[class*='--radio'] {
       margin: 0 24px 12px 0;
       padding-left: 30px;
     }
@@ -379,7 +379,7 @@ m-proSettings {
       height: 0;
       width: 0;
       &:checked ~ [class*='m-proSettings__customInput'] {
-        &[class$='--checkbox'] {
+        &[class*='--checkbox'] {
           @include m-theme() {
             background-color: themed($m-blue);
           }
@@ -400,7 +400,7 @@ m-proSettings {
         background-color: themed($m-white);
         border: 1px solid themed($m-grey-100);
       }
-      &[class$='--checkbox'] {
+      &[class*='--checkbox'] {
         border-radius: 2px;
         @include m-theme() {
           background-color: themed($m-white);
@@ -417,7 +417,7 @@ m-proSettings {
           }
         }
       }
-      &[class$='--radio'] {
+      &[class*='--radio'] {
         border-radius: 50%;
         @include m-theme() {
           background-color: themed($m-grey-50);
@@ -477,14 +477,3 @@ m-proSettings {
     }
   }
 }
-// @media screen and (max-width: $min-tablet) {
-//   m-proSettings {
-//     .stretchedField {
-//       .m-proSettings__row--label m-tooltip {
-//         .m-tooltip--bubble {
-//           right: 12px;
-//         }
-//       }
-//     }
-//   }
-// }
