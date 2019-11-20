@@ -221,16 +221,6 @@ describe('AdminBoosts', () => {
       newsfeed_count: 4,
       content_count: 2,
     };
-    clientMock.response[`api/v1/admin/boosts/analytics/newsfeed`] = {
-      status: 'success',
-      reviewQueue: 4,
-      backlog: 2,
-      priorityBacklog: 2,
-      impressions: 5000,
-      avgApprovalTime: 1889603500,
-      avgImpressions: 2500,
-      timestamp: 1505745685,
-    };
 
     comp.type = 'newsfeed';
 
@@ -258,14 +248,6 @@ describe('AdminBoosts', () => {
 
     expect(content).not.toBeNull();
     expect(content.nativeElement.textContent).toContain('Content');
-  });
-
-  it('should have a statistics section', () => {
-    fixture.detectChanges();
-
-    expect(
-      fixture.debugElement.query(By.css('.m-admin-boosts-statistics'))
-    ).not.toBeNull();
   });
 
   it('should have a boosts container', () => {

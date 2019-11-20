@@ -60,6 +60,8 @@ export class AdminBoosts {
       this.inProgress = false;
       this.moreData = true;
       this.offset = '';
+
+      this.load();
     });
   }
 
@@ -71,7 +73,7 @@ export class AdminBoosts {
     if (this.inProgress) return;
     this.inProgress = true;
 
-    return this.client
+    this.client
       .get('api/v1/admin/boosts/' + this.type, {
         limit: 24,
         offset: this.offset,
