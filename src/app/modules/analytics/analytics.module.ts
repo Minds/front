@@ -83,7 +83,7 @@ const routes: Routes = [
         ],
       },
       {
-        path: 'dashboard/',
+        path: 'dashboard',
         redirectTo: 'dashboard/traffic',
         pathMatch: 'full',
       },

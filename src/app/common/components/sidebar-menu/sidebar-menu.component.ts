@@ -1,14 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Session } from '../../../services/session';
-import sidebarMenuCategories from './sidebar-menu-categories.default';
 
-interface MenuCategory {
+interface Menu {
   header: MenuLink;
   links?: MenuLink[];
   expanded?: boolean;
 }
-export { MenuCategory };
+export { Menu };
 
 interface MenuLink {
   id: string;
@@ -16,6 +15,7 @@ interface MenuLink {
   permissions?: string[];
   permissionGranted?: boolean;
   path?: string;
+  newWindow?: boolean;
 }
 export { MenuLink };
 
@@ -24,11 +24,9 @@ export { MenuLink };
   templateUrl: './sidebar-menu.component.html',
 })
 export class SidebarMenuComponent implements OnInit {
-  @Input() catId: string;
+  @Input() menu: Menu;
 
-  cat: MenuCategory;
   mobileMenuExpanded = false;
-  // activeCat;
   minds: Minds;
   user;
   userRoles: string[] = ['user'];
@@ -38,38 +36,38 @@ export class SidebarMenuComponent implements OnInit {
   ngOnInit() {
     this.minds = window.Minds;
     this.user = this.session.getLoggedInUser();
-    this.cat = sidebarMenuCategories.find(cat => cat.header.id === this.catId);
     this.getUserRoles();
-    this.grantPermissionsAndFindActiveCat();
+    this.grantPermissions();
   }
 
   getUserRoles() {
     if (this.session.isAdmin()) {
       this.userRoles.push('admin');
     }
-    // TODO: define & handle other userRole options, e.g. pro, loggedIn
+    if (this.minds.user.pro) {
+      this.userRoles.push('pro');
+    }
   }
 
-  grantPermissionsAndFindActiveCat() {
-    // this.cat.forEach(this.cat => {
-    this.cat.header['permissionGranted'] = this.cat.header.permissions
-      ? this.checkForRoleMatch(this.cat.header.permissions)
+  grantPermissions() {
+    this.menu.header['permissionGranted'] = this.menu.header.permissions
+      ? this.checkForRoleMatch(this.menu.header.permissions)
       : true;
 
-    if (this.cat.links) {
-      this.cat.links.forEach(link => {
+    if (this.menu.links) {
+      this.menu.links.forEach(link => {
         link['permissionGranted'] = link.permissions
           ? this.checkForRoleMatch(link.permissions)
           : true;
+
+        if (link.id === ':username') {
+          link.id = this.user.username;
+        }
+        if (link.path) {
+          link.path = link.path.replace(':username', this.user.username);
+        }
       });
     }
-    // if (location.pathname.indexOf(this.cats.header.path) !== -1) {
-    //   this.cats.header['expanded'] = true;
-    //   this.activeCat = this.cat;
-    // } else {
-    //   this.cat.header['expanded'] = false;
-    // }
-    // });
   }
 
   checkForRoleMatch(permissionsArray) {
