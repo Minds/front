@@ -63,7 +63,7 @@ export class MindsAvatar {
 
     if (this.object.type !== 'user') {
       this.src = `${this.minds.cdn_url}fs/v1/avatars/${this.object.guid}/large/${this.object.icontime}`;
-    } else if (this.object.guid !== this.minds.user.guid) {
+    } else if (!this.minds.user || this.object.guid !== this.minds.user.guid) {
       this.src = `${this.minds.cdn_url}icon/${this.object.guid}/large/${this.object.icontime}`;
     }
   }
@@ -130,6 +130,6 @@ export class MindsAvatar {
    * @returns true if the object guid matches the currently logged in user guid
    */
   isOwnerAvatar(): boolean {
-    return this.object.guid === this.minds.user.guid;
+    return this.minds.user && this.object.guid === this.minds.user.guid;
   }
 }
