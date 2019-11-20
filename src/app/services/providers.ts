@@ -47,6 +47,7 @@ import { SiteService } from '../common/services/site.service';
 import { SessionsStorageService } from './session-storage.service';
 import { DiagnosticsService } from './diagnostics.service';
 import { PermissionsService } from '../common/services/permissions/permissions.service';
+import { FormToastService } from '../common/services/form-toast.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -236,4 +237,5 @@ export const MINDS_PROVIDERS: any[] = [
   },
   DiagnosticsService,
   AuthService,
+  FormToastService,
 ];

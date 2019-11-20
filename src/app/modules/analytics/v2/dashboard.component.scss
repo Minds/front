@@ -53,13 +53,6 @@ m-analytics__dashboard {
   @include m-theme() {
     color: themed($m-grey-300);
   }
-  a {
-    font-weight: 400;
-    text-decoration: none;
-    @include m-theme() {
-      color: themed($m-blue);
-    }
-  }
 }
 
 @media screen and (max-width: $min-tablet) {

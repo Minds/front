@@ -1,0 +1,8 @@
+<button
+  class="m-shadowboxSubmitButton"
+  type="submit"
+  [disabled]="disabled"
+  [ngClass]="{ saving: saveStatus === 'saving' }"
+>
+  <ng-content></ng-content>
+</button>

@@ -196,14 +196,7 @@ export class ChannelSidebar {
   }
 
   get proSettingsRouterLink() {
-    const isAdmin = window.Minds.Admin;
-
-    const route: any[] = ['/pro/settings'];
-
-    if (isAdmin) {
-      route.push({ user: this.user.username });
-    }
-
+    const route: any[] = ['/pro/' + this.user.username + '/settings'];
     return route;
   }
 }
