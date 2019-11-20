@@ -71,7 +71,7 @@ const routes: Routes = [
     path: 'analytics',
     component: AnalyticsComponent,
     children: [
-      { path: '', redirectTo: 'dashboard/', pathMatch: 'full' },
+      { path: '', redirectTo: 'dashboard/traffic', pathMatch: 'full' },
       {
         path: 'admin',
         component: AdminAnalyticsComponent,
