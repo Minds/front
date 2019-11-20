@@ -2,11 +2,16 @@ m-pageLayout {
   display: block;
   position: relative;
   width: 100%;
-  padding-top: 56px;
-  margin-bottom: 48px;
+  max-width: 1200px;
+  margin: auto;
+  min-height: 100%;
+  padding: 56px 0 48px 0;
   @include m-theme() {
     background-color: themed($m-white);
     color: themed($m-grey-800);
+  }
+  &.isForm {
+    min-height: 0px;
   }
 
   .m-tooltip {
@@ -18,7 +23,7 @@ m-pageLayout {
       }
     }
     .m-tooltip--bubble {
-      z-index: 9999;
+      z-index: 99;
       font-size: 11px;
       @include m-theme() {
         color: themed($m-white);
@@ -30,14 +35,14 @@ m-pageLayout {
 m-sidebarMenu {
   display: block;
   box-sizing: border-box;
-  padding-left: 105px;
   width: 245px;
+  padding-left: 20px;
   @include m-theme() {
     background-color: themed($m-white);
   }
 }
 .m-pageLayout__main {
-  margin-left: 350px;
+  margin-left: 25%;
   margin-right: 24px;
 
   @include m-theme() {
@@ -47,6 +52,12 @@ m-sidebarMenu {
 }
 
 @media screen and (max-width: $min-tablet) {
+  m-pageLayout {
+    &.isForm {
+      padding-bottom: 0px;
+    }
+  }
+
   .m-pageLayout__main {
     display: block;
     margin: 0;

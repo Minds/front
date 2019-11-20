@@ -1,4 +1,4 @@
-<m-pageLayout navId="analytics">
+<m-pageLayout [menu]="menu">
   <div class="m-analyticsDashboard" *ngIf="ready$ | async" m-pageLayout__main>
     <m-dashboardLayout>
       <ng-container m-dashboardLayout__header>
@@ -34,7 +34,7 @@
         {{ description }}
         <ng-container *ngIf="(category$ | async) === 'earnings'">
           <a *ngIf="!session.getLoggedInUser().pro" routerLink="/pro"
-            >Upgrade to PRO</a
+            >Upgrade to Pro</a
           >
           <a
             *ngIf="

@@ -7,7 +7,7 @@ m-sidebarMenu {
   .m-sidebarMenu__userWrapper {
     display: none;
   }
-  .m-sidebarMenu__catContainer {
+  .m-sidebarMenu__menuContainer {
     .m-sidebarMenu__linksContainer {
       display: block;
       cursor: pointer;
@@ -17,6 +17,15 @@ m-sidebarMenu {
   .m-sidebarMenu__sidebar {
     position: fixed;
     top: 157px;
+    bottom: 0;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
   }
 
   .m-sidebarMenu__header {
@@ -35,7 +44,6 @@ m-sidebarMenu {
 
   .m-sidebarMenu__linksContainer {
     cursor: pointer;
-    display: none;
     .m-sidebarMenu__link {
       a {
         display: block;
@@ -45,12 +53,25 @@ m-sidebarMenu {
         @include m-theme() {
           color: themed($m-grey-300);
         }
+        &.newWindow {
+          margin-top: 50px;
+          display: flex;
+          align-items: center;
+          i {
+            margin-right: 10px;
+            font-size: 13px;
+            font-weight: bold;
+          }
+        }
       }
       a.selected,
       &:hover a {
         @include m-theme() {
           color: themed($m-blue);
         }
+      }
+      &:last-child {
+        padding-bottom: 36px;
       }
     }
   }
@@ -127,7 +148,7 @@ m-sidebarMenu {
       &.mobileMenuExpanded {
         left: 0;
       }
-      .m-sidebarMenu__catContainer {
+      .m-sidebarMenu__menuContainer {
         .m-sidebarMenu__linksContainer {
           display: none;
         }

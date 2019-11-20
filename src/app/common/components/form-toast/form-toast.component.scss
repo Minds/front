@@ -1,0 +1,98 @@
+m-formToast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  max-width: 522px;
+  width: 60%;
+  transition: all 0.3s ease;
+}
+.m-formToast__toastsContainer {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+}
+.m-formToast__wrapper {
+  box-sizing: border-box;
+  width: 100%;
+  font-size: 15px;
+  line-height: 20px;
+  padding: 13px;
+  margin-bottom: 16px;
+  display: flex;
+  opacity: 1;
+  animation-name: fadeIn;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  animation-duration: 0.4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  @include m-theme() {
+    color: themed($m-grey-600);
+    background-color: themed($m-white);
+    box-shadow: 0 0 15px 0 rgba(themed($m-black), 0.2);
+  }
+  &.dismissed {
+    display: none;
+  }
+  p {
+    flex-grow: 1;
+    margin: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+[class*='m-formToast__icon--'] {
+  margin-right: 10px;
+}
+.m-formToast__icon--success {
+  @include m-theme() {
+    color: themed($m-green-dark);
+  }
+}
+.m-formToast__icon--error {
+  @include m-theme() {
+    color: themed($m-red);
+  }
+}
+.m-formToast__icon--warning {
+  @include m-theme() {
+    color: themed($m-amber-dark);
+  }
+}
+.m-formToast__icon--info {
+  margin-right: 14px;
+}
+.m-formToast__icon--close {
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  @include m-theme() {
+    color: themed($m-grey-300);
+  }
+  &:hover {
+    transform: scale(1.2);
+    @include m-theme() {
+      color: themed($m-grey-100);
+    }
+  }
+  &:active {
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+  }
+}
+
+@media screen and (max-width: $max-mobile) {
+  m-formToast {
+    bottom: 48px;
+    width: 75%;
+  }
+}
