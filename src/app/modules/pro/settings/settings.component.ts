@@ -217,6 +217,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     }
 
     this.settings[type] = files.item(0);
+    this.form.markAsDirty();
     this.detectChanges();
   }
 
