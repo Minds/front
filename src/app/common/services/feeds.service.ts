@@ -130,7 +130,7 @@ export class FeedsService {
       .get(this.endpoint, {
         ...this.params,
         ...{
-          limit: 150, // Over 12 scrolls
+          limit: this.limit.getValue(),
           as_activities: this.castToActivities ? 1 : 0,
           from_timestamp: this.pagingToken,
         },
