@@ -56,16 +56,30 @@ export class Session {
     return false;
   }
 
+  inject(user: any = null) {
+    // Clear stale localStorage
+
+    window.localStorage.clear();
+
+    // Emit new user info
+
+    this.userEmitter.next(user);
+
+    // Set globals
+
+    window.Minds.LoggedIn = true;
+    window.Minds.user = user;
+
+    if (user.admin === true) {
+      window.Minds.Admin = true;
+    }
+  }
+
   /**
-   * Emit login event
+   * Inject user and emit login event
    */
   login(user: any = null) {
-    //clear stale local storage
-    window.localStorage.clear();
-    this.userEmitter.next(user);
-    window.Minds.user = user;
-    if (user.admin === true) window.Minds.Admin = true;
-    window.Minds.LoggedIn = true;
+    this.inject(user);
     this.loggedinEmitter.next(true);
   }
 

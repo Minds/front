@@ -1,25 +1,18 @@
 import { Cookie } from '../cookie';
 import { HttpClient } from '@angular/common/http';
-import { SiteService } from '../../common/services/site.service';
 
 /**
  * API Class
  */
 export class Upload {
   base: string = '/';
-  origin: string = '';
   cookie: Cookie = new Cookie();
 
-  static _(http: HttpClient, site: SiteService) {
-    return new Upload(http, site);
+  static _(http: HttpClient) {
+    return new Upload(http);
   }
 
-  constructor(public http: HttpClient, protected site: SiteService) {
-    if (this.site.isProDomain) {
-      this.base = window.Minds.site_url;
-      this.origin = document.location.host;
-    }
-  }
+  constructor(public http: HttpClient) {}
 
   /**
    * Return a POST request
@@ -81,16 +74,6 @@ export class Upload {
       };
       const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN');
       xhr.setRequestHeader('X-XSRF-TOKEN', XSRF_TOKEN);
-
-      if (this.origin) {
-        const PRO_XSRF_JWT = this.cookie.get('PRO-XSRF-JWT') || '';
-
-        xhr.withCredentials = true;
-
-        xhr.setRequestHeader('X-MINDS-ORIGIN', this.origin);
-        xhr.setRequestHeader('X-PRO-XSRF-JWT', PRO_XSRF_JWT);
-      }
-
       xhr.send(formData);
     });
   }
