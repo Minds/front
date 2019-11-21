@@ -113,6 +113,8 @@ import { PageLayoutComponent } from './components/page-layout/page-layout.compon
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
 import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
 import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
+import { FeaturedContentService } from './components/featured-content/featured-content.service';
+import { FeedsService } from './services/feeds.service';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -353,6 +355,12 @@ PlotlyModule.plotlyjs = PlotlyJS;
       provide: RouterHistoryService,
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
+    },
+    {
+      provide: FeaturedContentService,
+      useFactory: boostedContentService =>
+        new FeaturedContentService(boostedContentService),
+      deps: [FeedsService],
     },
   ],
   entryComponents: [
