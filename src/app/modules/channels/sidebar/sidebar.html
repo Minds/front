@@ -228,7 +228,8 @@
   >
     <m-channel-mode-selector
       [user]="user"
-      [enabled]="session.isLoggedIn() && session.getLoggedInUser().guid === user.guid"
+      [enabled]="editing"
+      (channelModeSelected)="channelModeSelected($event)"
     ></m-channel-mode-selector>
   </div>
 
@@ -397,3 +398,100 @@
 
   <div class="minds-spacer-2x"></div>
 </ng-template>
+
+<m-modal-confirm
+  *ngIf="pendingChannelMode == channelModes.PUBLIC"
+  [open]="true"
+  [closeAfterAction]="true"
+  (closed)="pendingChannelMode = null"
+  (actioned)="updateChannelMode(pendingChannelMode)"
+  yesButton="Mark your channel as Public"
+  i18n-yesButton="@@M__CHANNELS__GO_PUBLIC_CONFIRM"
+>
+  <p confirm-message>
+    <ng-container i18n="@@M__CHANNELS__GO_PUBLIC">
+      Are you sure you want to mark your channel public?
+      <ul>
+        <li>All of your posts will be marked public.</li>
+        <li>Users will be able to subscribe and interact with your content.</li>
+        <li>
+          You can only change channel modes every two hours as we update your
+          content.
+        </li>
+      </ul>
+    </ng-container>
+  </p>
+  <p confirm-success-message>
+    <ng-container i18n="@@M__CHANNELS__GO_PUBLIC_SUCCESS"
+      >Your channel is now public</ng-container
+    >
+  </p>
+</m-modal-confirm>
+
+<m-modal-confirm
+  *ngIf="pendingChannelMode == channelModes.MODERATED"
+  [open]="true"
+  [closeAfterAction]="true"
+  (closed)="pendingChannelMode = null"
+  (actioned)="updateChannelMode(pendingChannelMode)"
+  yesButton="Mark your channel as Moderated"
+  i18n-yesButton="@@M__CHANNELS__GO_MODERATED_CONFIRM"
+>
+  <p confirm-message>
+    <ng-container i18n="@@M__CHANNELS__GO_PUBLIC">
+      Are you sure you want to mark your channel moderated?
+      <ul>
+        <li>All of your posts will be marked public.</li>
+        <li>Users will be able request subscriptions to your channel.</li>
+        <li>All users can view your content.</li>
+        <li>
+          You will be able to approve and reject subscribers before they can
+          interact with your content.
+        </li>
+        <li>
+          You can only change channel modes every two hours as we update your
+          content.
+        </li>
+      </ul>
+    </ng-container>
+  </p>
+  <p confirm-success-message>
+    <ng-container i18n="@@M__CHANNELS__GO_PUBLIC_SUCCESS"
+      >Your channel is now moderated</ng-container
+    >
+  </p>
+</m-modal-confirm>
+
+<m-modal-confirm
+  *ngIf="pendingChannelMode == channelModes.CLOSED"
+  [open]="true"
+  [closeAfterAction]="true"
+  (closed)="pendingChannelMode = null"
+  (actioned)="updateChannelMode(pendingChannelMode)"
+  yesButton="Mark your channel as Closed"
+  i18n-yesButton="@@M__CHANNELS__GO_MODERATED_CONFIRM"
+>
+  <p confirm-message>
+    <ng-container i18n="@@M__CHANNELS__GO_PUBLIC">
+      Are you sure you want to mark your channel closed?
+      <ul>
+        <li>All of your posts will be marked closed.</li>
+        <li>Users will be able request subscriptions to your channel.</li>
+        <li>Only subscribers can view your content.</li>
+        <li>
+          You will be able to approve and reject subscribers before they can
+          interact with your content.
+        </li>
+        <li>
+          You can only change channel modes every two hours as we update your
+          content.
+        </li>
+      </ul>
+    </ng-container>
+  </p>
+  <p confirm-success-message>
+    <ng-container i18n="@@M__CHANNELS__GO_PUBLIC_SUCCESS"
+      >Your channel is now moderated</ng-container
+    >
+  </p>
+</m-modal-confirm>

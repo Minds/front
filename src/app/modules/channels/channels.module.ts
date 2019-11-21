@@ -11,7 +11,6 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { MessengerModule } from '../messenger/messenger.module';
 import { WireModule } from '../wire/wire.module';
 import { OnboardingModule } from '../onboarding/onboarding.module';
-
 import { ChannelModulesComponent } from './modules/modules';
 import { ChannelSupporters } from './supporters/supporters';
 import { ChannelSubscribers } from './subscribers/subscribers';
@@ -31,6 +30,7 @@ import { ChannelSortedModuleComponent } from './sorted/module.component';
 import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
 import { SubscriptionsRequestsListComponent } from './requests/list.component';
 import { SubscriptionsRequestsRequestComponent } from './requests/request.component';
+import { ModalsModule } from '../modals/modals.module';
 
 const routes: Routes = [
   { path: 'channels/:filter', component: ChannelsListComponent },
@@ -52,6 +52,7 @@ const routes: Routes = [
     NewsfeedModule,
     HashtagsModule,
     ReferralsModule,
+    ModalsModule,
   ],
   declarations: [
     ChannelModulesComponent,

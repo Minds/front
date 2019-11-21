@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { DropdownComponent } from '../dropdown/dropdown.component';
 import { ChannelMode, MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api';
@@ -7,22 +13,16 @@ import { Client } from '../../../services/api';
   selector: 'm-channel-mode-selector',
   templateUrl: './channel-mode-selector.component.html',
 })
-export class ChannelModeSelectorComponent implements AfterViewInit {
+export class ChannelModeSelectorComponent {
   @ViewChild('channelModeDropdown', { static: false })
   channelModeDropdown: DropdownComponent;
   @Input() public enabled = true;
   @Input() public user: MindsUser;
+  @Output() public channelModeSelected = new EventEmitter<ChannelMode>();
+
   public channelModes = ChannelMode;
 
   constructor(public client: Client) {}
-
-  /**
-   * Pass the enabled flag down to the ViewChild to control the dropdown functions
-   * Only owners can change their channel mode
-   */
-  public ngAfterViewInit() {
-    this.channelModeDropdown.enabled = this.enabled;
-  }
 
   /**
    * @param mode ChannelMode
@@ -32,19 +32,8 @@ export class ChannelModeSelectorComponent implements AfterViewInit {
     if (!this.enabled) {
       return;
     }
-    this.user.mode = mode;
-    this.channelModeDropdown.close();
-    this.update();
-  }
 
-  /**
-   * Sends the current user to the update endpoint
-   */
-  async update() {
-    try {
-      await this.client.post('api/v1/channel/info', this.user);
-    } catch (ex) {
-      console.error(ex);
-    }
+    this.channelModeDropdown.close();
+    this.channelModeSelected.emit(mode);
   }
 }

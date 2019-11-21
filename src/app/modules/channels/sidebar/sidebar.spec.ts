@@ -39,6 +39,8 @@ import { ChannelMode } from '../../../interfaces/entities';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { ChannelModulesComponent } from '../modules/modules';
 import { SiteService } from '../../../common/services/site.service';
+import { ConfirmModalMock } from '../../../mocks/modules/modals/confirm/confirm-modal.mock';
+import { ConfirmModal } from '../../modals/confirm/confirm';
 
 describe('ChannelSidebar', () => {
   let comp: ChannelSidebar;
@@ -142,6 +144,10 @@ describe('ChannelSidebar', () => {
               isProDomain: { get: () => false },
             },
           }),
+        },
+        {
+          provide: ConfirmModal,
+          useValue: ConfirmModalMock,
         },
       ],
     }).compileComponents(); // compile template and css

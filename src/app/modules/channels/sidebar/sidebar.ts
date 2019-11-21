@@ -8,6 +8,7 @@ import { Storage } from '../../../services/storage';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReferralsLinksComponent } from '../../wallet/tokens/referrals/links/links.component';
 import { FeaturesService } from '../../../services/features.service';
+import { ChannelMode } from '../../../interfaces/entities';
 
 @Component({
   moduleId: module.id,
@@ -26,6 +27,8 @@ export class ChannelSidebar {
   amountOfTags: number = 0;
   tooManyTags: boolean = false;
   onboardingProgress: number = -1;
+  pendingChannelMode: ChannelMode;
+  public channelModes = ChannelMode;
 
   @Output() changeEditing = new EventEmitter<boolean>();
 
@@ -85,7 +88,7 @@ export class ChannelSidebar {
     if (this.tooManyTags) {
       return;
     }
-
+    this.errorMessage = null;
     this.changeEditing.next(!this.editing);
     this.minds.user.name = this.user.name; //no need to refresh for other pages to update.
   }
@@ -198,5 +201,21 @@ export class ChannelSidebar {
   get proSettingsRouterLink() {
     const route: any[] = ['/pro/' + this.user.username + '/settings'];
     return route;
+  }
+
+  channelModeSelected(mode: ChannelMode) {
+    console.log('Channel mode changed', mode);
+    this.pendingChannelMode = mode;
+  }
+
+  async updateChannelMode(mode: ChannelMode) {
+    this.pendingChannelMode = null;
+    try {
+      await this.client.put(`api/v2/channels/mode/${this.user.guid}/${mode}`);
+      this.user.mode = mode;
+    } catch (ex) {
+      console.error(ex);
+      this.errorMessage = ex.message;
+    }
   }
 }

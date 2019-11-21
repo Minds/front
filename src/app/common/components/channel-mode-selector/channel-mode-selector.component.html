@@ -1,4 +1,8 @@
-<m-dropdown #channelModeDropdown class="m-channel-mode-selector--dropdown">
+<m-dropdown
+  #channelModeDropdown
+  class="m-channel-mode-selector--dropdown"
+  [enabled]="enabled"
+>
   <label *ngIf="user.mode === channelModes.PUBLIC">
     <i class="material-icons m-dropdown--label-icon">public</i>
     <span>Public</span>
