@@ -1,80 +1,124 @@
-<div class="mdl-grid m-admin-withdrawals" style="max-width: 900px">
-  <div
-    class="m-admin-withdrawals--user"
-    *ngIf="user"
-    i18n="@@M__ADMIN__WITHDRAWALS__USERNAME_TITLE"
-  >
-    <b>@{{ user }}</b
-    >'s withdrawals
+<div class="m-admin-withdrawals">
+  <div class="m-admin-withdrawals__legend">
+    <ng-container *ngIf="user" i18n>
+      <b>@{{ user }}</b
+      >'s withdrawals
+    </ng-container>
+
+    <ng-container *ngIf="!user" i18n>
+      Pending Withdrawals
+    </ng-container>
   </div>
 
-  <table class="mdl-data-table mdl-js-data-table m-border" [mdl]>
-    <thead>
-      <tr class="m-admin--withdrawals--ledger-header">
-        <th
-          class="mdl-data-table__cell--non-numeric m-data-title"
-          i18n="@@M__ADMIN__WITHDRAWALS__DATE_COL"
-        >
-          Date
-        </th>
-        <th
-          class="mdl-data-table__cell--non-numeric m-data-title"
-          i18n="Transaction@@M__ADMIN__WITHDRAWALS__TX_COL"
-        >
-          Tx
-        </th>
-        <th
-          class="mdl-data-table__cell--non-numeric m-data-title"
-          i18n="@@M__ADMIN__WITHDRAWALS__AMOUNT_COL"
-        >
-          Amount
-        </th>
-        <th
-          class="mdl-data-table__cell--non-numeric m-data-title"
-          i18n="@@M__ADMIN__WITHDRAWALS__COMPLETED_COL"
-        >
-          Completed?
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let withdrawal of withdrawals; let i = index">
-        <tr class="m-admin--withdrawals--ledger-row">
-          <td class="mdl-data-table__cell--non-numeric">
-            {{ withdrawal.timestamp * 1000 | date: 'short' }}
-          </td>
-          <td
-            class="mdl-data-table__cell--non-numeric m-admin--withdrawals--ledger-tx"
+  <div
+    class="m-admin-withdrawals__card"
+    *ngFor="let request of withdrawals; let i = index"
+  >
+    <ng-container *ngIf="request">
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>Requested</div>
+
+        <div class="m-admin-withdrawalsCardCell__body">
+          {{ request.timestamp * 1000 | date: 'short' }}
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>User</div>
+
+        <div class="m-admin-withdrawalsCardCell__body">
+          <a [routerLink]="['/', request.user?.username]"
+            >@{{ request.user?.username }}</a
           >
-            {{ withdrawal.tx }}
-          </td>
-          <td>{{ withdrawal.amount | token: 18 | number: '1.0-4' }}</td>
-          <td class="mdl-data-table__cell--non-numeric">
-            {{ withdrawal.completed ? 'Yes' : 'No' }}
-          </td>
-        </tr>
-      </ng-container>
-      <tr
-        class="m-admin--withdrawals--ledger-row m-wire-console--ledger-row-placeholder"
-        *ngIf="!inProgress && (!withdrawals || !withdrawals.length)"
-      >
-        <td
-          colspan="4"
-          style="text-align:center"
-          i18n="@@M__ADMIN__WITHDRAWALS__NO_WITHDRAWALS_NOTE"
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>Signed up</div>
+
+        <div class="m-admin-withdrawalsCardCell__body">
+          {{ request.user?.time_created * 1000 | date: 'shortDate' }}
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>Referrer</div>
+
+        <div class="m-admin-withdrawalsCardCell__body">
+          <ng-container *ngIf="request.referrer; else organicText">
+            <a [routerLink]="['/', request.referrer.username]"
+              >@{{ request.referrer.username }}</a
+            >
+          </ng-container>
+          <ng-template #organicText>
+            <ng-container>(organic)</ng-container>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>Amount</div>
+
+        <div
+          class="m-admin-withdrawalsCardCell__body m-admin-withdrawalsCardCell__body--bolder"
         >
-          No withdrawals to show. You can access a user's withdrawal ledger by
-          using the admin drop-down on their channel.
-        </td>
-      </tr>
-    </tbody>
-  </table>
+          {{ request.amount | token: 18 | number: '1.0-4' }}
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>Status</div>
+
+        <div class="m-admin-withdrawalsCardCell__body">
+          {{ request.status?.replace('_', ' ') | uppercase }}
+        </div>
+      </div>
+
+      <div
+        class="m-admin-withdrawalsCard__cell m-admin-withdrawalsCard__cell--actions"
+        *ngIf="request.status === 'pending_approval'"
+      >
+        <div class="m-admin-withdrawalsCardCell__body">
+          <a
+            [routerLink]="[
+              '/admin/withdrawals',
+              { user: request.user?.username }
+            ]"
+            >History</a
+          >
+
+          <button
+            class="mf-button mf-button--smaller"
+            [disabled]="inProgress"
+            (click)="approve(request)"
+          >
+            Approve
+          </button>
+
+          <button
+            class="mf-button mf-button--destructive mf-button--smaller"
+            [disabled]="inProgress"
+            (click)="reject(request)"
+          >
+            Reject
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div
+    class="m-admin-withdrawals__notice"
+    *ngIf="!inProgress && !withdrawals?.length"
+  >
+    No withdrawals to show. You can access a user's ledger by using the admin
+    drop-down on their channel.
+  </div>
 
   <infinite-scroll
     distance="25%"
     (load)="load()"
     [moreData]="moreData"
     [inProgress]="inProgress"
-  >
-  </infinite-scroll>
+  ></infinite-scroll>
 </div>
