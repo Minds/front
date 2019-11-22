@@ -14,7 +14,7 @@ import { ExperimentsService } from './experiments.service';
 })
 export class ExperimentDirective {
   @Input('mExperiment') mExperimentId;
-  @Input() mExperimentBucket;
+  @Input() mExperimentBuckets: Array<string>;
 
   constructor(
     private _service: ExperimentsService,
@@ -23,14 +23,14 @@ export class ExperimentDirective {
   ) {}
 
   async ngOnInit() {
-    if (this.mExperimentBucket === 'base')
+    if (this.mExperimentBuckets.indexOf('base') !== -1)
       //load the base first
       this._viewContainer.createEmbeddedView(this._templateRef);
 
     if (
       await this._service.shouldRender({
         experimentId: this.mExperimentId,
-        bucketId: this.mExperimentBucket,
+        bucketIds: this.mExperimentBuckets,
       })
     ) {
       console.log('clearing');
