@@ -38,7 +38,8 @@ type Option =
   | 'unsubscribe'
   | 'rating'
   | 'block'
-  | 'allow-comments';
+  | 'allow-comments'
+  | 'transcode';
 
 @Component({
   moduleId: module.id,
@@ -376,7 +377,8 @@ export class PostMenuComponent implements OnInit {
   /**
    * Calls transcode from admin service on button click.
    */
-  protected retranscode(): void {
+  protected transcode(): void {
     this.adminService.transcode(this.entity.guid);
+    this.selectOption('transcode');
   }
 }
