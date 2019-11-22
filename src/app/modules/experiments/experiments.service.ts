@@ -5,7 +5,7 @@ import { Storage } from '../../services/storage';
 
 type ExperimentBucket = {
   experimentId: string;
-  bucketIds: string;
+  bucketIds: Array<string>;
 };
 
 @Injectable()

@@ -24,8 +24,7 @@ export class ExperimentDirective {
 
   async ngOnInit() {
     if (this.mExperimentBuckets.indexOf('base') !== -1)
-      //load the base first
-      this._viewContainer.createEmbeddedView(this._templateRef);
+      this._viewContainer.createEmbeddedView(this._templateRef); // load the base first
 
     if (
       await this._service.shouldRender({
