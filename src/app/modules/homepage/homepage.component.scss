@@ -1,6 +1,10 @@
 @import 'defaults';
 
 m-homepage {
+  m-marketing {
+    margin-top: -52px;
+    padding-top: 52px;
+  }
   .mf-button--alt {
     background: #5dbac0 !important;
     border-color: #5dbac0 !important;
@@ -9,8 +13,8 @@ m-homepage {
     &.m-marketing__section--style-2 {
       .m-marketing__body {
         &::before {
-          transform: translate(311px, -80px);
-          clip-path: polygon(57% 0, 100% 0, 100% 15%, 18% 87%);
+          transform: translate(311px, -123px);
+          clip-path: polygon(57% 0, 100% 0, 100% 15%, 15% 90%);
           bottom: -80px;
 
           @include m-theme() {
