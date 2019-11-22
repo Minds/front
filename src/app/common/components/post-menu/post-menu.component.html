@@ -254,6 +254,17 @@
       Mark as Open
     </li>
   </ng-container>
+  <!-- ADMIN TRANSCODE -->
+  <ng-container *ngIf="session.isAdmin()">
+    <li
+      class="mdl-menu__item m-postMenu__item--admin"
+      *ngIf="entity.custom_type === 'video'"
+      (click)="retranscode()"
+      i18n="@@COMMON__POST_MENU__RETRANSCODE_VIDEO"
+    >
+      Retranscode
+    </li>
+  </ng-container>
   <!-- INJECTED POST ACTIONS -->
   <div (click)="opened = false">
     <ng-content select="[post-menu]"></ng-content>

@@ -17,6 +17,7 @@ import { BlockListService } from '../../services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
+import { AdminService } from '../../services/admin.service';
 
 type Option =
   | 'edit'
@@ -76,7 +77,8 @@ export class PostMenuComponent implements OnInit {
     public signupModal: SignupModalService,
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
-    public featuresService: FeaturesService
+    public featuresService: FeaturesService,
+    private adminService: AdminService
   ) {
     this.initCategories();
   }
@@ -369,5 +371,12 @@ export class PostMenuComponent implements OnInit {
       .present();
 
     this.selectOption('share');
+  }
+
+  /**
+   * Calls transcode from admin service on button click.
+   */
+  protected retranscode(): void {
+    this.adminService.transcode(this.entity.guid);
   }
 }

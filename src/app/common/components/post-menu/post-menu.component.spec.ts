@@ -26,6 +26,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
 import { storageMock } from '../../../../tests/storage-mock.spec';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { AdminService } from '../../services/admin.service';
 /* tslint:disable */
 
 /* Mock section */
@@ -78,6 +79,10 @@ let scrollServiceMock = new (function() {
   this.close = jasmine.createSpy('close').and.stub();
 })();
 
+let adminServiceMock = new (() => {
+  this.transcode = jasmine.createSpy('transcode').and.stub();
+})();
+
 /* ENd of mock section */
 describe('PostMenuComponent', () => {
   let comp: PostMenuComponent;
@@ -100,6 +105,7 @@ describe('PostMenuComponent', () => {
         { provide: ActivityService, useValue: activityServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: Storage, useValue: storageMock },
+        { provide: AdminService, useValue: adminServiceMock },
         {
           provide: BlockListService,
           useFactory: () => {
@@ -179,5 +185,11 @@ describe('PostMenuComponent', () => {
       false
     );
     expect(comp.entity.allow_comments).toEqual(false);
+  });
+
+  it('should not show transcode option to non-admins', () => {
+    expect(
+      fixture.debugElement.query(By.css('.m-postMenu__item--admin'))
+    ).toBeNull();
   });
 });
