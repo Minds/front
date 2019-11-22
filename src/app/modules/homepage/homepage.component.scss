@@ -1,6 +1,10 @@
 @import 'defaults';
 
 m-homepage {
+  .mf-button--alt {
+    background: #5dbac0 !important;
+    border-color: #5dbac0 !important;
+  }
   .m-marketing__main {
     &.m-marketing__section--style-2 {
       .m-marketing__body {
@@ -12,6 +16,10 @@ m-homepage {
           @include m-theme() {
             background: themed($m-amber-medium);
           }
+        }
+
+        .m-homepage__joinButton {
+          margin-bottom: 120px;
         }
 
         &::after {
