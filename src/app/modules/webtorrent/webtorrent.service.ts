@@ -2,6 +2,7 @@ import WebTorrent from 'webtorrent';
 import { Storage } from '../../services/storage';
 import isMobile from '../../helpers/is-mobile';
 import isSafari from '../../helpers/is-safari';
+import { FeaturesService } from '../../services/features.service';
 
 export const MAX_CONNS = 55;
 
@@ -30,7 +31,10 @@ export class WebtorrentService {
   protected torrentRefs: { [index: string]: number } = {};
   protected torrentPurgeTimers: { [index: string]: any } = {};
 
-  constructor(protected storage: Storage) {
+  constructor(
+    protected storage: Storage,
+    protected featuresService: FeaturesService
+  ) {
     if (
       !this.isBrowserSupported() &&
       !this.storage.get('webtorrent:disabled')
@@ -89,14 +93,15 @@ export class WebtorrentService {
     });
   }
 
-  // Enable/Disable; Support
-
-  isEnabled() {
-    if (!window.Minds.user) return false;
-    const enabled = window.Minds.user.p2p_media_enabled;
-
-    return enabled && this.isBrowserSupported();
-  }
+  /**
+   * Determines whether webtorrent is to be enabled for user
+   * @returns { boolean } - true if webtorrent enabled, supported and user is opted in.
+   */
+  isEnabled = (): boolean =>
+    window.Minds.user &&
+    this.featuresService.has('webtorrent') &&
+    window.Minds.user.p2p_media_enabled &&
+    this.isBrowserSupported();
 
   setEnabled(enabled: boolean) {
     const current = this.isEnabled();
@@ -196,9 +201,9 @@ export class WebtorrentService {
 
   // DI
 
-  static _(storage: Storage) {
-    return new WebtorrentService(storage);
+  static _(storage: Storage, featuresService: FeaturesService) {
+    return new WebtorrentService(storage, featuresService);
   }
 
-  static _deps: any[] = [Storage];
+  static _deps: any[] = [Storage, FeaturesService];
 }
