@@ -14,7 +14,6 @@ export class BlockListService {
     protected storage: Storage
   ) {
     this.blocked = new BehaviorSubject(JSON.parse(this.storage.get('blocked')));
-    this.fetch();
   }
 
   fetch() {

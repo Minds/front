@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DashboardLayoutComponent } from './dashboard-layout.component';
+import { FormDescriptorComponent } from './form-descriptor.component';
 
-describe('DashboardLayoutComponent', () => {
-  let component: DashboardLayoutComponent;
-  let fixture: ComponentFixture<DashboardLayoutComponent>;
+describe('FormDescriptorComponent', () => {
+  let component: FormDescriptorComponent;
+  let fixture: ComponentFixture<FormDescriptorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DashboardLayoutComponent],
+      declarations: [FormDescriptorComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardLayoutComponent);
+    fixture = TestBed.createComponent(FormDescriptorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

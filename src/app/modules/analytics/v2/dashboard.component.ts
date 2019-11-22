@@ -16,6 +16,8 @@ import { Session } from '../../../services/session';
 
 import { AnalyticsDashboardService } from './dashboard.service';
 import { Filter } from './../../../interfaces/dashboard';
+import sidebarMenu from './sidebar-menu.default';
+import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 
 @Component({
   selector: 'm-analytics__dashboard',
@@ -24,6 +26,7 @@ import { Filter } from './../../../interfaces/dashboard';
   providers: [AnalyticsDashboardService],
 })
 export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
+  menu: Menu = sidebarMenu;
   paramsSubscription: Subscription;
 
   ready$ = this.analyticsService.ready$;
@@ -63,8 +66,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       this.updateCategory(cat);
       if (cat === 'summary') {
         this.layout = 'summary';
-      } else {
-        this.layout = 'chart';
       }
     });
 

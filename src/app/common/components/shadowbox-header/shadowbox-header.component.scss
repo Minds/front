@@ -1,6 +1,13 @@
 m-shadowboxHeader {
   min-height: 116px;
   display: block;
+  a {
+    font-weight: 400;
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+  }
 }
 .m-shadowboxHeader__section {
   position: relative;
@@ -16,8 +23,6 @@ m-shadowboxHeader {
 .m-shadowboxHeader__container {
   overflow-x: hidden;
   overflow-y: hidden;
-  // display: flex;
-  // flex-wrap: nowrap;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
 
   &.disable-scrollbars {
@@ -95,8 +100,31 @@ m-shadowboxHeader {
     }
   }
 }
+.m-shadowboxLayout__header.hasTitle {
+  padding: 34px 28px 34px 70px;
+}
+.m-shadowboxHeader__title {
+  margin: 0 0 2px 0;
+  line-height: 32px;
+  font-weight: 500;
+  @include m-theme() {
+    color: themed($m-grey-800);
+    font-size: 24px;
+  }
+}
+.m-shadowboxHeader__subtitle {
+  line-height: 22px;
+  margin: 0;
+  @include m-theme() {
+    color: themed($m-grey-300);
+    font-size: 15px;
+  }
+}
 
 @media screen and (max-width: $min-tablet) {
+  .m-shadowboxLayout__header.hasTitle {
+    padding: 0 24px;
+  }
   .m-shadowboxHeader__section {
     [class*='m-shadowboxHeader__overflowScrollButton--'] {
       display: none;

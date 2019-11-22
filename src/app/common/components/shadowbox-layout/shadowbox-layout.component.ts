@@ -1,13 +1,13 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'm-shadowboxLayout',
   templateUrl: './shadowbox-layout.component.html',
 })
-export class ShadowboxLayoutComponent implements OnInit {
+export class ShadowboxLayoutComponent {
   @Input() scrollableHeader: boolean = true;
   @Input() hasHeader: boolean = true;
-  constructor() {}
+  @HostBinding('class.isForm') @Input() isForm: boolean = false;
 
-  ngOnInit() {}
+  constructor() {}
 }

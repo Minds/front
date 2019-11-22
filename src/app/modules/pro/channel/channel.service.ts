@@ -74,20 +74,15 @@ export class ProChannelService implements OnDestroy {
     this.isLoggedIn$.unsubscribe();
   }
 
-  async loadAndAuth(id: string): Promise<MindsUser> {
+  async load(id: string): Promise<MindsUser> {
     try {
       this.currentChannel = void 0;
 
       const response = (await this.client.get(`api/v2/pro/channel/${id}`)) as {
         channel;
-        me?;
       };
 
       this.currentChannel = response.channel;
-
-      if (this.site.isProDomain && response.me) {
-        this.session.login(response.me);
-      }
 
       if (!this.currentChannel.pro_settings.tag_list) {
         this.currentChannel.pro_settings.tag_list = [];
@@ -111,7 +106,6 @@ export class ProChannelService implements OnDestroy {
     try {
       const response = (await this.client.get(`api/v2/pro/channel/${id}`)) as {
         channel;
-        me?;
       };
 
       this.currentChannel = response.channel;

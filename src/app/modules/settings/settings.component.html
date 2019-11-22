@@ -111,6 +111,17 @@
 
         <a
           class="m-page--sidebar--navigation--item"
+          *ngIf="session.getLoggedInUser().pro"
+          [routerLink]="[
+            '/pro/' + session.getLoggedInUser().username + '/settings'
+          ]"
+        >
+          <i class="material-icons">business_center</i>
+          <span i18n>Pro Settings</span>
+        </a>
+
+        <a
+          class="m-page--sidebar--navigation--item"
           (click)="openReferralsModal()"
         >
           <i class="material-icons">people</i>

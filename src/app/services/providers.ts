@@ -46,6 +46,7 @@ import { AuthService } from './auth.service';
 import { SiteService } from '../common/services/site.service';
 import { SessionsStorageService } from './session-storage.service';
 import { DiagnosticsService } from './diagnostics.service';
+import { FormToastService } from '../common/services/form-toast.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -67,12 +68,12 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: Client,
     useFactory: Client._,
-    deps: [HttpClient, Location, SiteService],
+    deps: [HttpClient, Location],
   },
   {
     provide: Upload,
     useFactory: Upload._,
-    deps: [HttpClient, SiteService],
+    deps: [HttpClient],
   },
   {
     provide: Storage,
@@ -112,6 +113,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: Session,
     useFactory: Session._,
+    deps: [SiteService],
   },
   {
     provide: ThirdPartyNetworksService,
@@ -234,4 +236,5 @@ export const MINDS_PROVIDERS: any[] = [
   },
   DiagnosticsService,
   AuthService,
+  FormToastService,
 ];
