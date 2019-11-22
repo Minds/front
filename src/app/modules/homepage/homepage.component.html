@@ -183,7 +183,10 @@
 
     <!-- Final section -->
 
-    <div class="m-marketing__section m-marketing__section--tail">
+    <div
+      class="m-marketing__section m-marketing__section--tail"
+      *mExperiment="'Homepage121119'; bucket: 'base'"
+    >
       <div class="m-grid m-marketing__wrapper">
         <div class="m-grid__column-12 m-marketing__body">
           <h3 class="m-marketingTitle__centered" i18n>
