@@ -61,9 +61,9 @@ export class NewsfeedEntityComponent {
         this.getComponent(this.entity.type)
       );
 
-      let componentRef: ComponentRef<
-        any
-      > = this.host.viewContainerRef.createComponent(componentFactory);
+      let componentRef: ComponentRef<any> = this.host.viewContainerRef.createComponent(
+        componentFactory
+      );
       componentRef.instance.entity = this.entity;
       componentRef.changeDetectorRef.detectChanges();
     }
