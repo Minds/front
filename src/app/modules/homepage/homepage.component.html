@@ -8,8 +8,23 @@
       >
         <h1 i18n>Minds <span class="m-homepage__yellowLine"></span></h1>
 
-        <h2 ngPreserveWhitespaces i18n>
+        <h2
+          ngPreserveWhitespaces
+          *mExperiment="'Homepage121119'; buckets: ['base', 'form']"
+          i18n
+        >
           Earn for your ideas
+        </h2>
+
+        <h2
+          ngPreserveWhitespaces
+          *mExperiment="
+            'Homepage121119';
+            buckets: ['base-take-back-control', 'form-take-back-control']
+          "
+          i18n
+        >
+          Take back control of your social media
         </h2>
 
         <p class="m-marketing__description" i18n>
@@ -17,8 +32,22 @@
           referring friends. A place to have open conversations and bring people
           together.
         </p>
-        <p class="m-marketing__description" i18n>
-          Take back control of your social media
+        <p
+          class="m-marketing__description"
+          *mExperiment="'Homepage121119'; buckets: ['base', 'form']"
+          i18n
+        >
+          Take back control of your social media.
+        </p>
+        <p
+          class="m-marketing__description"
+          *mExperiment="
+            'Homepage121119';
+            buckets: ['base-take-back-control', 'form-take-back-control']
+          "
+          i18n
+        >
+          Earn for your ideas.
         </p>
 
         <button
@@ -48,7 +77,10 @@
 
       <div
         class="m-grid__column-5 m-grid__column-5--tablet m-grid__column-12--mobile m-marketing__image"
-        *mExperiment="'Homepage121119'; bucket: 'base'"
+        *mExperiment="
+          'Homepage121119';
+          buckets: ['base', 'base-take-back-control']
+        "
       >
         <span>
           <img
@@ -60,7 +92,10 @@
 
       <div
         class="m-grid__column-5 m-grid__column-12--mobile"
-        *mExperiment="'Homepage121119'; bucket: 'form'"
+        *mExperiment="
+          'Homepage121119';
+          buckets: ['form', 'form-take-back-control']
+        "
       >
         <m-homepage__registerForm></m-homepage__registerForm>
       </div>
@@ -185,7 +220,10 @@
 
     <div
       class="m-marketing__section m-marketing__section--tail"
-      *mExperiment="'Homepage121119'; bucket: 'base'"
+      *mExperiment="
+        'Homepage121119';
+        buckets: ['base', 'base-take-back-control']
+      "
     >
       <div class="m-grid m-marketing__wrapper">
         <div class="m-grid__column-12 m-marketing__body">
