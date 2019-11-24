@@ -5,10 +5,7 @@ m-homepage {
     margin-top: -52px;
     padding-top: 52px;
   }
-  .mf-button--alt {
-    background: #5dbac0 !important;
-    border-color: #5dbac0 !important;
-  }
+
   .m-marketing__main {
     &.m-marketing__section--style-2 {
       .m-marketing__body {
@@ -24,6 +21,8 @@ m-homepage {
 
         .m-homepage__joinButton {
           margin-bottom: 120px;
+          background: #5dbac0 !important;
+          border-color: #5dbac0 !important;
         }
 
         &::after {
@@ -53,17 +52,71 @@ m-homepage {
         }
       }
 
-      @media screen and (max-width: $max-mobile) {
-        m-homepage__registerForm {
-          margin: 30px 10px 50px;
+      .m-homepage__registerForm {
+        display: block;
+        filter: drop-shadow(-1px 0px 8px rgba(50, 50, 0, 0.5));
 
+        minds-form-register {
+          display: block;
+          background-color: #fcfcfc;
+          padding: 50px 37px;
+
+          clip-path: polygon(0 0, 100% 10px, 100% 95%, 0% 100%);
+
+          h3 {
+            font-size: 24px;
+            line-height: 32px;
+            font-weight: bold;
+          }
+
+          form {
+            background: transparent !important;
+
+            .mdl-card__supporting-text {
+              overflow: visible;
+            }
+          }
+
+          span,
+          label {
+            font-size: 14px;
+            line-height: 19px;
+          }
+
+          label.mdl-checkbox {
+            //display: flex;
+            //align-items: center;
+            margin-bottom: 16px;
+          }
+
+          .mdl-card__actions {
+            flex-direction: column;
+            padding: 8px;
+
+            & > * {
+              color: #4a4a4a !important;
+            }
+
+            a {
+              color: #4a90e2;
+            }
+
+            button {
+              align-self: flex-end;
+            }
+          }
+        }
+
+        @media screen and (max-width: $max-mobile) {
+          margin: 30px 10px 50px;
           &::before {
             content: '';
             display: block;
             position: absolute;
             width: 393px;
             height: 193px;
-            top: -66px;
+            //top: -66px;
+            bottom: 190px;
             left: -144px;
             transform: translate(45px, 32px);
             background: url('<%= APP_CDN %>/assets/marketing/deco_2-straight.svg')
@@ -76,6 +129,7 @@ m-homepage {
 
     .m-marketing__image {
       margin: 0 auto;
+
       span {
         &::before {
           content: initial !important;

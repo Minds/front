@@ -14,9 +14,7 @@ import { MindsFormsModule } from '../forms/forms.module';
 import { MarketingModule } from '../marketing/marketing.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
 import { HomepageComponent } from './homepage.component';
-import { HomepageRegisterComponent } from './register/register.component';
 import { CaptchaModule } from '../captcha/captcha.module';
-import { PopoverComponent } from './register/popover-validation/popover.component';
 
 const routes: Routes = [{ path: '', component: HomepageComponent }];
 
@@ -34,11 +32,7 @@ const routes: Routes = [{ path: '', component: HomepageComponent }];
     ExperimentsModule,
     CaptchaModule,
   ],
-  declarations: [
-    HomepageComponent,
-    HomepageRegisterComponent,
-    PopoverComponent,
-  ],
+  declarations: [HomepageComponent],
   entryComponents: [HomepageComponent],
 })
 export class HomepageModule {}

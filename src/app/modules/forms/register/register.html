@@ -7,6 +7,7 @@
     {{errorMessage}}
   </div>
 </div>
+<h3 *ngIf="showTitle">Join the Minds revolution!</h3>
 
 <!-- START: Register -->
 <form
@@ -40,15 +41,19 @@
       />
     </div>
     <div class="mdl-cell mdl-cell--12-col" style="position: relative">
-      <input
-        type="password"
-        id="password"
-        formControlName="password"
-        placeholder="Password"
-        i18n-placeholder="@@M__COMMON__PASSWORD"
-        readonly
-        onfocus="this.removeAttribute('readonly');"
-      />
+      <m-popover--validation #popover>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          i18n-placeholder="@@M__COMMON__PASSWORD"
+          readonly
+          onfocus="this.removeAttribute('readonly');"
+          (focus)="popover.show()"
+          (focusout)="popover.hide()"
+          (ngModelChange)="popover.checkRules($event)"
+        />
+      </m-popover--validation>
       <m-tooltip
         class="tooltip-wrapper"
         icon="help"
@@ -58,15 +63,6 @@
         Password must have more than 8 characters. Including uppercase, numbers,
         special characters (ie. !,#,@), and cannot have spaces.
       </m-tooltip>
-    </div>
-    <div
-      class="mdl-cell mdl-cell--12-col password-help"
-      [hidden]="errorMessage || !form.value.password"
-    >
-      <span i18n="@@MINDS__PASSWORD_TOOLTIP"
-        >Password must have more than 8 characters. Including uppercase,
-        numbers, special characters (ie. !,#,@), and cannot have spaces</span
-      >
     </div>
     <div class="mdl-cell mdl-cell--12-col" [hidden]="!form.value.password">
       <input
@@ -139,13 +135,16 @@
     </div>
 
     <button
+      [ngClass]="{
+      'm-btn m-btn--action': !gradientButton,
+      'mf-button mf-button--alt mf-button--gradient': gradientButton}"
       class="m-btn m-btn--action"
       (click)="register($event)"
       [disabled]="!this.form.valid || inProgress"
     >
-      <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION"
-        >Signup</ng-container
-      >
+      <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION">
+        Join Minds Now
+      </ng-container>
     </button>
   </div>
 </form>

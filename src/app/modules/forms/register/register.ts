@@ -22,6 +22,8 @@ import { RouterHistoryService } from '../../../common/services/router-history.se
 export class RegisterForm {
   @Input() referrer: string;
   @Input() parentId: string = '';
+  @Input() showTitle: boolean = false;
+  @Input() gradientButton: boolean = false;
 
   @Output() done: EventEmitter<any> = new EventEmitter();
 

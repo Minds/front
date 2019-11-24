@@ -59,10 +59,11 @@
       </div>
 
       <div
-        class="m-grid__column-5 m-grid__column-12--mobile"
+        class="m-grid__column-5 m-grid__column-12--mobile m-homepage__registerForm"
         *mExperiment="'Homepage121119'; bucket: 'form'"
       >
-        <m-homepage__registerForm></m-homepage__registerForm>
+        <minds-form-register [showTitle]="true" [gradientButton]="true">
+        </minds-form-register>
       </div>
     </div>
   </div>
@@ -195,7 +196,7 @@
 
           <div class="m-marketing__actionButtons">
             <button
-              class="mf-button mf-button--alt"
+              class="mf-button mf-button--alt m-homepage__joinButton"
               (click)="goToLoginPage()"
               i18n
             >
