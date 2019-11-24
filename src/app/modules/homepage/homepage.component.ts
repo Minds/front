@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { Session } from '../../services/session';
+import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
 
 @Component({
   selector: 'm-homepage',
@@ -12,8 +13,6 @@ import { Session } from '../../services/session';
 })
 export class HomepageComponent implements OnInit, OnDestroy {
   readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
-
-  topbar: HTMLElement;
 
   minds = window.Minds;
 
@@ -26,11 +25,10 @@ export class HomepageComponent implements OnInit, OnDestroy {
     public title: MindsTitle,
     public router: Router,
     public navigation: NavigationService,
+    public session: Session,
     private loginReferrer: LoginReferrerService,
-    public session: Session
+    private topbarService: V2TopbarService
   ) {
-    this.topbar = document.querySelector('.m-v2-topbar__Top');
-
     this.title.setTitle('Minds Social Network', false);
 
     if (this.session.isLoggedIn()) {
@@ -48,7 +46,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.toggleTopbarBackground(false);
+    this.topbarService.toggleBackground(true);
   }
 
   goToLoginPage() {
@@ -64,7 +62,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize')
   onResize() {
-    this.toggleTopbarBackground(window.innerWidth > 640);
+    this.topbarService.toggleBackground(window.innerWidth <= 640);
 
     const tick: HTMLSpanElement = document.querySelector(
       '.m-marketing__imageUX > .m-marketing__imageTick'
@@ -75,14 +73,6 @@ export class HomepageComponent implements OnInit, OnDestroy {
     } else {
       tick.classList.add('m-marketing__imageTick--left');
       tick.classList.remove('m-marketing__imageTick--right');
-    }
-  }
-
-  toggleTopbarBackground(value: boolean) {
-    if (value) {
-      this.topbar.classList.add('m-v2-topbar__noBackground');
-    } else {
-      this.topbar.classList.remove('m-v2-topbar__noBackground');
     }
   }
 }

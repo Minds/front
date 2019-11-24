@@ -125,6 +125,7 @@ import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-bu
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
+import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -402,6 +403,10 @@ PlotlyModule.plotlyjs = PlotlyJS;
       provide: RouterHistoryService,
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
+    },
+    {
+      provide: V2TopbarService,
+      useFactory: V2TopbarService._,
     },
   ],
   entryComponents: [
