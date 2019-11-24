@@ -5,7 +5,7 @@ import { Storage } from '../../services/storage';
 
 type ExperimentBucket = {
   experimentId: string;
-  bucketIds: Array<string>;
+  bucketId: string;
 };
 
 @Injectable()
@@ -30,7 +30,7 @@ export class ExperimentsService {
     let bucket = this.experiments[opts.experimentId];
 
     if (bucket) {
-      return opts.bucketIds.indexOf(bucket) !== -1;
+      return bucket === opts.bucketId;
     }
 
     if (this.fetching) {
@@ -40,7 +40,7 @@ export class ExperimentsService {
 
     try {
       this.fetching = true;
-      const response: any = await this.client.get(
+      let response: any = await this.client.get(
         `api/v2/experiments/${opts.experimentId}`
       );
       bucket = response.bucketId;
@@ -52,6 +52,6 @@ export class ExperimentsService {
     this.storage.set(`experiments:${opts.experimentId}`, bucket);
     this.fetching = false;
 
-    return opts.bucketIds.indexOf(bucket) !== -1;
+    return bucket === opts.bucketId;
   }
 }

@@ -17,11 +17,11 @@ import { Storage } from '../../services/storage';
 @Component({
   template: `
     <div
-      *mExperiment="'homepage'; buckets: ['base']"
+      *mExperiment="'homepage'; bucket: 'base'"
       class="homepage-bucket-base"
     ></div>
     <div
-      *mExperiment="'homepage'; buckets: ['variant1']"
+      *mExperiment="'homepage'; bucket: 'variant1'"
       class="homepage-bucket-variant1"
     ></div>
   `,
