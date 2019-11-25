@@ -13,9 +13,9 @@ export class V2TopbarService {
     return this;
   }
 
-  toggleBackground(value: boolean) {
+  toggleMarketingPages(value: boolean) {
     if (this.container) {
-      this.container.toggleBackground(value);
+      this.container.toggleMarketingPages(value);
     }
   }
 }

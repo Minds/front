@@ -21,14 +21,16 @@
           Take back control of your social media.
         </p>
 
-        <button
-          class="mf-button mf-button--alt m-homepage__joinButton"
-          (click)="goToLoginPage()"
-          *mExperiment="'Homepage121119'; bucket: 'base'"
-          i18n
-        >
-          Join Minds Now
-        </button>
+        <ng-container *ngIf="!isMobile()">
+          <button
+            class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
+            (click)="goToLoginPage()"
+            *mExperiment="'Homepage121119'; bucket: 'base'"
+            i18n
+          >
+            Join Minds Now
+          </button>
+        </ng-container>
 
         <div class="m-homepage__appButtons">
           <a
@@ -44,17 +46,25 @@
             <img [src]="cdnAssetsUrl + 'assets/homepage/app-store.png'" />
           </a>
         </div>
+
+        <ng-container *ngIf="isMobile()">
+          <button
+            class="mf-button mf-button--alt m-homepage__joinButton"
+            (click)="goToLoginPage()"
+            *mExperiment="'Homepage121119'; bucket: 'base'"
+            i18n
+          >
+            Join Minds Now
+          </button>
+        </ng-container>
       </div>
 
       <div
         class="m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__image"
         *mExperiment="'Homepage121119'; bucket: 'base'"
       >
-        <span>
-          <img
-            class="m-homepage__cellphone"
-            [src]="cdnAssetsUrl + 'assets/homepage/homepage-1.png'"
-          />
+        <span class="m-homepage__cellphone">
+          <img [src]="cdnAssetsUrl + 'assets/homepage/homepage-1.png'" />
         </span>
       </div>
 

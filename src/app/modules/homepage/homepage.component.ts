@@ -40,7 +40,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
       this.flags.canPlayInlineVideos = false;
     }
 
-    this.topbarService.toggleBackground(false);
+    this.topbarService.toggleMarketingPages(true);
   }
 
   ngOnInit() {
@@ -48,7 +48,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.topbarService.toggleBackground(true);
+    this.topbarService.toggleMarketingPages(false);
   }
 
   goToLoginPage() {
@@ -74,5 +74,9 @@ export class HomepageComponent implements OnInit, OnDestroy {
       tick.classList.add('m-marketing__imageTick--left');
       tick.classList.remove('m-marketing__imageTick--right');
     }
+  }
+
+  isMobile() {
+    return window.innerWidth < 480;
   }
 }

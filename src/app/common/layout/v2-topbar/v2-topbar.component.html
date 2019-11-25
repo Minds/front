@@ -35,7 +35,7 @@
 
 <div
   class="m-v2-topbar__Top"
-  [class.m-v2-topbar__noBackground]="!showBackground"
+  [class.m-v2-topbar__marketingPages]="!showBackground"
 >
   <div class="m-v2-topbar">
     <div class="m-v2-topbar__Container--left">
@@ -78,11 +78,35 @@
         </div>
       </ng-container>
       <ng-template #loggedOutRightContainer>
-        <div class="m-v2-topbar__Container__LoginWrapper">
-          <a routerLink="/login" title="Login" i18n-title>
-            Login / Signup
-          </a>
-        </div>
+        <ng-container *ngIf="showSeparateLoginBtns; else singleButton">
+          <div class="m-v2-topbar__Container__LoginWrapper">
+            <a
+              class="m-v2-topbarLoginWrapper__login"
+              routerLink="/login"
+              title="Login"
+              i18n-title
+            >
+              Login
+            </a>
+
+            <a
+              class="m-v2-topbarLoginWrapper__joinMindsNow"
+              routerLink="/login"
+              title="Join Minds Now"
+              i18n-title
+            >
+              Join Minds Now
+            </a>
+          </div>
+        </ng-container>
+
+        <ng-template #singleButton>
+          <div class="m-v2-topbar__Container__LoginWrapper">
+            <a routerLink="/login" title="Login" i18n-title>
+              Login / Signup
+            </a>
+          </div>
+        </ng-template>
       </ng-template>
 
       <div class="m-v2-topbar__UserMenu" *ngIf="getCurrentUser()">

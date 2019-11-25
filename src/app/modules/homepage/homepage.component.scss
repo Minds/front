@@ -8,47 +8,63 @@ m-homepage {
 
   .m-marketing__main {
     &.m-marketing__section--style-2 {
-      .m-marketing__body {
-        &::before {
-          transform: translate(311px, -123px);
-          clip-path: polygon(57% 0, 100% 0, 100% 15%, 15% 90%);
-          bottom: -80px;
-
-          @include m-theme() {
-            background: themed($m-amber-medium);
-          }
+      .m-marketing__wrapper {
+        @media screen and (min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
+          padding: 72px 0 0;
         }
-
-        .m-homepage__joinButton {
-          margin-bottom: 120px;
-          background: #5dbac0 !important;
-          border-color: #5dbac0 !important;
-        }
-
-        &::after {
-          content: '';
-          clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 100%);
-          background: #f5f6ff;
-
-          position: absolute;
-          bottom: -10px;
-          left: -140px;
-          height: 202px;
-          right: -600px;
-
-          z-index: -2;
-        }
-
         @media screen and (max-width: $max-mobile) {
+          padding: 0;
+        }
+
+        .m-marketing__body {
           &::before {
-            transform: translate(153px, 212px);
-            clip-path: polygon(69% 0, 100% 0, 100% 28%, 0 90%);
+            transform: translate(311px, -123px);
+            clip-path: polygon(57% 0, 100% 0, 100% 15%, 15% 90%);
+            bottom: -80px;
+
+            @include m-theme() {
+              background: themed($m-amber-medium);
+            }
+          }
+
+          .m-homepage__joinButton {
+            margin: 60px 0;
+            @include m-theme() {
+              background: themed($m-aqua);
+              border-color: themed($m-aqua) !important;
+            }
+
+            &.m-homepage__joinButton--first {
+              margin: 0 0 175px;
+            }
           }
 
           &::after {
-            left: 0;
-            right: 0;
-            bottom: -626px;
+            content: '';
+            clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 100%);
+            background: #f5f6ff;
+
+            position: absolute;
+            bottom: -10px;
+            left: -140px;
+            height: 202px;
+            right: -600px;
+
+            z-index: -2;
+          }
+
+          @media screen and (max-width: $max-mobile) {
+            &::before {
+              transform: translate(153px, 212px);
+              clip-path: polygon(69% 0, 100% 0, 100% 28%, 0 90%);
+            }
+
+            &::after {
+              left: 0;
+              right: 0;
+              bottom: -626px;
+              bottom: -698px;
+            }
           }
         }
       }
@@ -119,7 +135,9 @@ m-homepage {
 
             button {
               align-self: flex-end;
-              background-color: #5dbac0;
+              @include m-theme() {
+                background-color: themed($m-aqua);
+              }
             }
           }
         }
@@ -154,6 +172,10 @@ m-homepage {
       }
     }
 
+    .m-homepage__spacer {
+      margin-bottom: 60px;
+    }
+
     .m-marketing__image {
       margin: 0 auto;
 
@@ -162,17 +184,43 @@ m-homepage {
           content: initial !important;
         }
 
-        .m-homepage__cellphone {
-          //box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
-          height: auto !important;
-          object-fit: initial !important;
-          width: 333px !important;
+        &.m-homepage__cellphone {
+          filter: drop-shadow(-1px 0px 8px rgba(50, 50, 0, 0.5));
+          clip-path: none;
 
-          @media screen and (min-width: $min-tablet) {
-            transform: translateY(-25px);
+          @media screen and (max-width: $max-mobile) {
+            &::before {
+              content: '' !important;
+              display: block;
+              position: absolute;
+              width: 393px;
+              height: 193px;
+              top: -70px;
+              //bottom: 190px;
+              left: -144px;
+              transform: translate(45px, 32px);
+              background: url('<%= APP_CDN %>/assets/marketing/deco_2-straight.svg')
+                no-repeat;
+              z-index: -1;
+            }
           }
-          @media screen and (min-width: $max-mobile) {
-            width: 100% !important;
+
+          & > img {
+            //box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+            height: auto !important;
+            object-fit: initial !important;
+
+            max-width: 333px;
+            min-width: 250px;
+            width: 100%;
+            clip-path: none;
+
+            @media screen and (min-width: $min-tablet) {
+              transform: translateY(-25px);
+            }
+            @media screen and (max-width: $max-mobile) {
+              min-width: 333px;
+            }
           }
         }
       }

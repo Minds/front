@@ -23,6 +23,7 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
   timeout;
   isTouchScreen = false;
   showBackground: boolean = true;
+  showSeparateLoginBtns: boolean = false;
 
   @ViewChild(DynamicHostDirective, { static: true })
   notificationsToasterHost: DynamicHostDirective;
@@ -60,8 +61,13 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
     this.componentInstance = this.componentRef.instance;
   }
 
-  toggleBackground(value: boolean) {
-    this.showBackground = value;
+  /**
+   * Marketing pages set this to true in order to change how the topbar looks
+   * @param value
+   */
+  toggleMarketingPages(value: boolean) {
+    this.showBackground = !value;
+    this.showSeparateLoginBtns = value;
     this.detectChanges();
   }
 
