@@ -90,4 +90,8 @@ minds-form-register {
   .mdl-checkbox {
     padding-top: 5px;
   }
+
+  input.m-input--hide-placeholder::placeholder {
+    color: transparent;
+  }
 }

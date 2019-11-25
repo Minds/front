@@ -39,6 +39,8 @@ export class HomepageComponent implements OnInit, OnDestroy {
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
     }
+
+    this.topbarService.toggleBackground(false);
   }
 
   ngOnInit() {
@@ -62,8 +64,6 @@ export class HomepageComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize')
   onResize() {
-    this.topbarService.toggleBackground(window.innerWidth <= 640);
-
     const tick: HTMLSpanElement = document.querySelector(
       '.m-marketing__imageUX > .m-marketing__imageTick'
     );

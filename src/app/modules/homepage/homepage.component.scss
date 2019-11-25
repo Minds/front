@@ -41,13 +41,14 @@ m-homepage {
 
         @media screen and (max-width: $max-mobile) {
           &::before {
-            transform: translate(161px, 205px);
+            transform: translate(153px, 212px);
+            clip-path: polygon(69% 0, 100% 0, 100% 28%, 0 90%);
           }
 
           &::after {
             left: 0;
             right: 0;
-            bottom: -750px;
+            bottom: -626px;
           }
         }
       }
@@ -59,9 +60,10 @@ m-homepage {
         minds-form-register {
           display: block;
           background-color: #fcfcfc;
+
           padding: 50px 37px;
 
-          clip-path: polygon(0 0, 100% 10px, 100% 95%, 0% 100%);
+          clip-path: polygon(0 0, 100% 8px, 99.99% 99%, 0% 100%);
 
           h3 {
             font-size: 24px;
@@ -69,11 +71,22 @@ m-homepage {
             font-weight: bold;
           }
 
+          .mdl-cell {
+            margin: 0;
+            padding-bottom: 14px;
+          }
+
           form {
             background: transparent !important;
 
             .mdl-card__supporting-text {
               overflow: visible;
+            }
+
+            input:not([type='checkbox']) {
+              padding: 10px 15px;
+              height: 37px;
+              font-weight: normal;
             }
           }
 
@@ -84,16 +97,19 @@ m-homepage {
           }
 
           label.mdl-checkbox {
-            //display: flex;
-            //align-items: center;
-            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            padding-top: 0;
+            margin-bottom: 33px;
           }
 
           .mdl-card__actions {
             flex-direction: column;
-            padding: 8px;
+            align-items: flex-start;
+            margin-top: 14px;
+            padding: 0;
 
-            & > * {
+            & > *:not(button) {
               color: #4a4a4a !important;
             }
 
@@ -103,25 +119,36 @@ m-homepage {
 
             button {
               align-self: flex-end;
+              background-color: #5dbac0;
             }
           }
         }
 
         @media screen and (max-width: $max-mobile) {
-          margin: 30px 10px 50px;
+          margin: 30px 26px 50px;
           &::before {
             content: '';
             display: block;
             position: absolute;
             width: 393px;
             height: 193px;
-            //top: -66px;
-            bottom: 190px;
+            top: -66px;
+            //bottom: 190px;
             left: -144px;
             transform: translate(45px, 32px);
             background: url('<%= APP_CDN %>/assets/marketing/deco_2-straight.svg')
               no-repeat;
             z-index: -1;
+          }
+
+          minds-form-register {
+            padding: 48px 25px;
+          }
+        }
+
+        @media screen and (min-width: $max-mobile) and (max-width: 760px) {
+          minds-form-register {
+            padding: 40px 20px;
           }
         }
       }
@@ -156,10 +183,13 @@ m-homepage {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-    width: 50%;
+    //width: 50%;
 
     margin-top: 50px;
+
+    & > a:first-child {
+      margin-right: 5%;
+    }
 
     @media screen and(max-width: $max-mobile) {
       width: 100%;
@@ -175,6 +205,7 @@ m-homepage {
 
       img {
         width: 100%;
+        min-width: 100px;
       }
     }
   }

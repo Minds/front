@@ -13,6 +13,7 @@ import { Session } from '../../../services/session';
 import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
+import { PopoverComponent } from '../popover-validation/popover.component';
 
 @Component({
   moduleId: module.id,
@@ -23,7 +24,9 @@ export class RegisterForm {
   @Input() referrer: string;
   @Input() parentId: string = '';
   @Input() showTitle: boolean = false;
-  @Input() gradientButton: boolean = false;
+  @Input() showBigButton: boolean = false;
+  @Input() showPromotions: boolean = true;
+  @Input() showLabels: boolean = false;
 
   @Output() done: EventEmitter<any> = new EventEmitter();
 
@@ -42,6 +45,7 @@ export class RegisterForm {
   minds = window.Minds;
 
   @ViewChild('reCaptcha', { static: false }) reCaptcha: ReCaptchaComponent;
+  @ViewChild('popover', { static: false }) popover: PopoverComponent;
 
   constructor(
     public session: Session,
@@ -161,5 +165,15 @@ export class RegisterForm {
       this.validateUsername.bind(this),
       500
     );
+  }
+
+  passwordOnFocus() {
+    if (this.form.value.password.length > 0) {
+      this.popover.show();
+    }
+  }
+
+  passwordOnFocusOut() {
+    this.popover.hide();
   }
 }

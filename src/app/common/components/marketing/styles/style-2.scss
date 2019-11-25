@@ -81,7 +81,11 @@
         padding-right: 200px;
       }
 
-      @media screen and(min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
+      @media screen and(min-width: 900px) and (max-width: $m-grid-min-vp) {
+        padding-right: 100px;
+      }
+
+      @media screen and(max-width: 900px) {
         padding-right: 0;
       }
 

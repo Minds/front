@@ -7,7 +7,7 @@
     {{errorMessage}}
   </div>
 </div>
-<h3 *ngIf="showTitle">Join the Minds revolution!</h3>
+<h3 *ngIf="showTitle">Join the Minds revolution</h3>
 
 <!-- START: Register -->
 <form
@@ -19,6 +19,9 @@
 >
   <div class="mdl-card__supporting-text mdl-grid">
     <div class="mdl-cell mdl-cell--12-col">
+      <label for="username" *ngIf="showLabels" i18n>
+        Username
+      </label>
       <input
         type="text"
         id="username"
@@ -28,43 +31,47 @@
         (keyup)="validationTimeoutHandler()"
         readonly
         onfocus="this.removeAttribute('readonly');"
+        [class.m-input--hide-placeholder]="showLabels"
       />
     </div>
 
     <div class="mdl-cell mdl-cell--12-col">
+      <label for="email" *ngIf="showLabels" i18n>
+        Email
+      </label>
       <input
         type="email"
         id="email"
         formControlName="email"
         placeholder="Email"
         i18n-placeholder="email placeholder|@@FORMS__REGISTER__EMAIL_PLACEHOLDER"
+        [class.m-input--hide-placeholder]="showLabels"
       />
     </div>
     <div class="mdl-cell mdl-cell--12-col" style="position: relative">
+      <label for="password" *ngIf="showLabels" i18n>
+        Password
+      </label>
       <m-popover--validation #popover>
         <input
           type="password"
           id="password"
           formControlName="password"
+          placeholder="Password"
           i18n-placeholder="@@M__COMMON__PASSWORD"
           readonly
           onfocus="this.removeAttribute('readonly');"
-          (focus)="popover.show()"
-          (focusout)="popover.hide()"
-          (ngModelChange)="popover.checkRules($event)"
+          (focus)="passwordOnFocus()"
+          (focusout)="passwordOnFocusOut()"
+          (ngModelChange)="popover.show(); popover.checkRules($event)"
+          [class.m-input--hide-placeholder]="showLabels"
         />
       </m-popover--validation>
-      <m-tooltip
-        class="tooltip-wrapper"
-        icon="help"
-        i18n="@@MINDS__PASSWORD_TOOLTIP"
-        anchor="right"
-      >
-        Password must have more than 8 characters. Including uppercase, numbers,
-        special characters (ie. !,#,@), and cannot have spaces.
-      </m-tooltip>
     </div>
     <div class="mdl-cell mdl-cell--12-col" [hidden]="!form.value.password">
+      <label for="password2" *ngIf="showLabels" i18n>
+        Confirm your password
+      </label>
       <input
         type="password"
         id="password2"
@@ -74,6 +81,7 @@
         (keydown.enter)="register($event)"
         readonly
         onfocus="this.removeAttribute('readonly');"
+        [class.m-input--hide-placeholder]="showLabels"
       />
     </div>
 
@@ -97,6 +105,7 @@
         class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
         [mdlSwitch]
         [toggled]="form.value.exclusive_promotions"
+        *ngIf="showPromotions"
       >
         <input
           type="checkbox"
@@ -128,21 +137,30 @@
           class="m-register-tac"
           i18n="@@FORMS__REGISTER__TOS_ACCEPTANCE_LABEL"
         >
-          I accept the
-          <a routerLink="/p/terms" target="_blank"> Terms & Conditions </a>
+          I have read and accept the
+          <a routerLink="/p/terms" target="_blank"> terms of use </a>
         </span>
       </label>
     </div>
 
     <button
-      [ngClass]="{
-      'm-btn m-btn--action': !gradientButton,
-      'mf-button mf-button--alt mf-button--gradient': gradientButton}"
       class="m-btn m-btn--action"
       (click)="register($event)"
       [disabled]="!this.form.valid || inProgress"
+      *ngIf="!showBigButton"
     >
       <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION">
+        Signup
+      </ng-container>
+    </button>
+
+    <button
+      class="mf-button mf-button--alt"
+      (click)="register($event)"
+      [disabled]="!this.form.valid || inProgress"
+      *ngIf="showBigButton"
+    >
+      <ng-container i18n="@@FORMS__REGISTER__JOIN_MINDS_NOW_ACTION">
         Join Minds Now
       </ng-container>
     </button>
