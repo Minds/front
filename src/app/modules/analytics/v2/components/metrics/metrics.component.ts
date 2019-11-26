@@ -76,8 +76,8 @@ export class AnalyticsMetricsComponent implements OnInit {
     );
   }
 
-  updateMetric(metric) {
+  updateMetric($event) {
     // TODO: if clicked metric is not fully visible, slide() until it is
-    this.analyticsService.updateMetric(metric.id);
+    this.analyticsService.updateMetric($event.tabId);
   }
 }

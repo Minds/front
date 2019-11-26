@@ -1,12 +1,8 @@
 <ng-container *ngIf="metrics$ | async as metrics">
-  <m-shadowboxHeader_tabs
-    [tabs]="metrics"
-    (tabChanged)="updateMetric($event)"
-  ></m-shadowboxHeader_tabs>
   <ng-container *ngFor="let metric of metrics">
     <div
       class="m-analytics__metric m-shadowboxLayout__headerTab"
-      (click)="updateMetric(metric)"
+      (click)="changeTabs(tab)"
       [ngClass]="{ active: metric.visualisation }"
       *ngIf="metric.permissionGranted"
     >

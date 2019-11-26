@@ -49,6 +49,12 @@ import { WalletTokenTestnetComponent } from './tokens/testnet/testnet.component'
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
 import { WalletUSDBalanceComponent } from './usd/balance.component';
+import { WalletDashboardComponent } from './v2/dashboard.component';
+import { WalletBalanceComponent } from './v2/balance/balance.component';
+import { WalletChartComponent } from './v2/chart/chart.component';
+import { WalletActionButtonComponent } from './v2/action-button/action-button.component';
+import { WalletRewardsPopupComponent } from './v2/rewards-popup/rewards-popup.component';
+import { WalletDashboardService } from './v2/dashboard.service';
 
 const walletRoutes: Routes = [
   {
@@ -99,6 +105,12 @@ const walletRoutes: Routes = [
       { path: '**', component: WalletOverviewComponent },
     ],
   },
+  {
+    path: 'v2wallet', // TODOOJM: choose actual path. maybe replace /wallet
+    redirectTo: 'v2wallet/tokens',
+    pathMatch: 'full',
+  },
+  { path: 'v2wallet/:currency', component: WalletDashboardComponent },
 ];
 
 @NgModule({
@@ -153,6 +165,11 @@ const walletRoutes: Routes = [
     WalletToken101Component,
     WalletTokenTestnetComponent,
     WalletUSDBalanceComponent,
+    WalletDashboardComponent,
+    WalletBalanceComponent,
+    WalletChartComponent,
+    WalletActionButtonComponent,
+    WalletRewardsPopupComponent,
   ],
   exports: [
     WalletComponent,
@@ -168,5 +185,6 @@ const walletRoutes: Routes = [
     WalletUSDBalanceComponent,
   ],
   entryComponents: [WalletComponent, WalletUSDTermsComponent],
+  providers: [WalletDashboardService],
 })
 export class WalletModule {}

@@ -1,0 +1,41 @@
+<m-pageLayout [menu]="menu">
+  <div class="m-walletDashboard" m-pageLayout__main *ngIf="settings">
+    <!-- *ngIf="ready$ | async" -->
+
+    <m-dashboardLayout>
+      <ng-container m-dashboardLayout__header>
+        <div>
+          <h3>
+            Your Wallet
+          </h3>
+        </div>
+      </ng-container>
+
+      <ng-container m-dashboardLayout__body>
+        <!-- <div class="m-analytics__spinnerContainer" *ngIf="loading$ | async">
+          <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+        </div> -->
+        <m-shadowboxLayout>
+          <m-analytics__metrics
+            class="m-shadowboxLayout__header"
+          ></m-analytics__metrics>
+          <m-walletBalance class="m-shadowboxLayout__body">
+            <!-- *ngIf="description$ | async as description" -->
+          </m-walletBalance>
+          <div
+            class="m-shadowboxLayout__body"
+            [ngClass]="{ isTable: isTable, isMobile: isMobile }"
+          >
+            <m-walletChart>
+              <!-- <m-dropdownSelector
+                [filter]="timespanFilter"
+                [showLabel]="false"
+              ></m-dropdownSelector> -->
+            </m-walletChart>
+            <m-walletTransactions></m-walletTransactions>
+          </div>
+        </m-shadowboxLayout>
+      </ng-container>
+    </m-dashboardLayout>
+  </div>
+</m-pageLayout>

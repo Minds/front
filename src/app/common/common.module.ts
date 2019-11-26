@@ -125,6 +125,8 @@ import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-bu
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
+import { TopTabsComponent } from './layout/top-tabs/top-tabs.component';
+import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -239,6 +241,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    TopTabsComponent,
+    ShadowboxHeaderTabsComponent,
   ],
   exports: [
     MINDS_PIPES,
