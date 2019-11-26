@@ -377,7 +377,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
     return rows.map(row => {
       if (key === 'date') {
         return row[key].slice(0, 10);
-      } else if (this.segments[0].unit === 'usd') {
+      } else if (this.rawData.unit && this.rawData.unit === 'usd') {
         return row[key] / 100;
       } else {
         return row[key];
