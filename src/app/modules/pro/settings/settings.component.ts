@@ -336,6 +336,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     for (const tag of tags) {
       this.addTag(tag.label, tag.tag);
     }
+    this.form.markAsDirty();
     this.detectChanges();
   }
 
@@ -360,6 +361,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     for (let link of links) {
       this.addFooterLink(link.title, link.href);
     }
+    this.form.markAsDirty();
     this.detectChanges();
   }
 
