@@ -1,4 +1,4 @@
-<div class="m-analyticsFilter__labelWrapper" *ngIf="showLabel">
+<div class="m-dropdownSelector__labelWrapper" *ngIf="showLabel">
   <span>{{ filter.label }}</span>
   <m-tooltip icon="help">
     <div>{{ filter?.description }}</div>
@@ -13,7 +13,7 @@
   </m-tooltip>
 </div>
 <div
-  class="m-analyticsFilter__wrapper"
+  class="m-dropdownSelector__wrapper"
   [ngClass]="{
     expanded: expanded,
     dropUp: dropUp
@@ -21,27 +21,23 @@
   (blur)="expanded = false"
   tabindex="0"
 >
-  <div
-    class="m-analyticsFilter__header m-analyticsFilter__row"
-    (click)="expanded = !expanded"
-  >
-    <span class="m-analyticsFilter__option m-analyticsFilter__option--selected">
+  <div class="m-dropdownSelector__header" (click)="expanded = !expanded">
+    <span class="m-dropdownSelector__option">
       {{ selectedOption.label }}
     </span>
     <i class="material-icons" *ngIf="!expanded">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
   </div>
-  <div class="m-analyticsFilter__optionsContainer">
+  <div class="m-dropdownSelector__optionsContainer">
     <ng-container *ngFor="let option of filter.options">
       <div
-        class="m-analyticsFilter__option m-analyticsFilter__row"
+        class="m-dropdownSelector__option"
         (click)="updateFilter(option)"
         [ngClass]="{
           unavailable: option.available === false
         }"
       >
         {{ option.label }}
-        <!-- <span>{{ option.label }}</span> -->
       </div>
     </ng-container>
   </div>

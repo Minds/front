@@ -121,6 +121,7 @@ import { PageLayoutComponent } from './components/page-layout/page-layout.compon
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
 import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
 import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
+import { DropdownSelectorComponent } from './components/dropdown-selector/dropdown-selector.component';
 import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-button/shadowbox-submit-button.component';
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
@@ -236,6 +237,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
     ShadowboxHeaderComponent,
+    DropdownSelectorComponent,
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
@@ -334,6 +336,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     PageLayoutComponent,
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
+    DropdownSelectorComponent,
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,

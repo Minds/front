@@ -43,7 +43,12 @@ export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
     });
   }
 
-  // TODO: remove all of this once channel search is ready
+  selectionMade($event) {
+    this.analyticsService.updateFilter(
+      `${$event.filterId}::${$event.option.id}`
+    );
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

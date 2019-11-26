@@ -241,7 +241,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       margin: {
         t: this.isMini ? 0 : 16,
         b: this.isMini ? 0 : 80,
-        l: this.isMini ? 0 : 0,
+        l: 0,
         r: this.isMini ? 0 : 80,
         pad: 16,
       },
