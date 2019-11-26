@@ -104,6 +104,12 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  filterSelectionMade($event) {
+    if ($event.filterId === 'timespan') {
+      this.analyticsService.updateTimespan($event.option.id);
+    }
+  }
+
   updateTimespan(timespanId) {
     // TODO: update url
     // this.analyticsService.updateTimespan(timespanId);
