@@ -157,7 +157,7 @@ export class ProChannelService implements OnDestroy {
       throw new Error('No channel');
     }
 
-    const endpoint = `api/v2/pro/content/${this.currentChannel.guid}/all/top`;
+    const endpoint = `api/v2/pro/content/${this.currentChannel.guid}/all`;
     const qs = {
       limit: params.limit || 24,
       from_timestamp: params.offset || '',
