@@ -1,19 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import {
-  AnalyticsDashboardService,
-  Category,
-  Response,
-  Dashboard,
-  Filter,
-  Option,
-  Metric,
-  Summary,
-  Visualisation,
-  Bucket,
-  Timespan,
-  UserState,
-} from './dashboard.service';
+import { AnalyticsDashboardService } from './dashboard.service';
 
 describe('AnalyticsDashboardService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

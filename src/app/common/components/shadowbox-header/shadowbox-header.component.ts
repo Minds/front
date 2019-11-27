@@ -69,7 +69,7 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
     }
 
     const firstMetric = <HTMLElement>(
-      document.querySelector('.m-shadowboxLayout__headerTab')
+      document.querySelector('.m-shadowboxHeaderTab')
     );
     // TODO: figure out how to avoid test failure "Cannot read property 'clientWidth' of null"
     this.childClientWidth = firstMetric ? firstMetric.clientWidth : 160;

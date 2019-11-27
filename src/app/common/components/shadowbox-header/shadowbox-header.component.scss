@@ -132,7 +132,7 @@ m-shadowboxHeader {
     .m-shadowboxHeader__container {
       overflow-x: scroll;
       scroll-snap-type: x mandatory;
-      .m-analytics__metric {
+      .m-shadowboxHeaderTab {
         scroll-snap-align: start;
         &:first-child {
           margin-left: 16px;

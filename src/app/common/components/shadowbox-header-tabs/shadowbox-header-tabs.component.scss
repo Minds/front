@@ -1,4 +1,4 @@
-.m-analytics__metric {
+.m-shadowboxHeaderTab {
   cursor: pointer;
   flex: 0 0 auto;
   width: 160px;
@@ -32,20 +32,20 @@
       border-bottom: 8px solid rgba(0, 0, 0, 0);
     }
   }
-  .m-analytics__metricLabel {
+  .m-shadowboxHeaderTab__label {
     white-space: nowrap;
   }
   m-tooltip {
     vertical-align: middle;
   }
-  .m-analytics__metricSummary {
+  .m-shadowboxHeaderTab__value {
     font-size: 17px;
     margin-top: 8px;
     @include m-theme() {
       color: themed($m-grey-800);
     }
   }
-  .m-analytics__metricDelta {
+  .m-shadowboxHeaderTab__delta {
     display: flex;
     align-items: baseline;
     padding-top: 4px;
@@ -67,7 +67,7 @@
 }
 
 @media screen and (max-width: $min-tablet) {
-  .m-analytics__metric {
+  .m-shadowboxHeaderTab {
     scroll-snap-align: start;
     &:first-child {
       margin-left: 16px;

@@ -4,12 +4,9 @@ import {
   Input,
   ChangeDetectionStrategy,
 } from '@angular/core';
-import {
-  AnalyticsDashboardService,
-  Filter,
-  Option,
-} from '../../dashboard.service';
+import { AnalyticsDashboardService } from '../../dashboard.service';
 import { Session } from '../../../../../services/session';
+import { Filter, Option } from '../../../../../interfaces/dashboard';
 
 @Component({
   selector: 'm-analytics__filter',

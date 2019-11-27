@@ -341,6 +341,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    ShadowboxHeaderTabsComponent,
   ],
   providers: [
     SiteService,

@@ -52,7 +52,6 @@ import { PageviewsChartComponent } from './components/charts/pageviews/pageviews
 import { AnalyticsDashboardComponent } from './v2/dashboard.component';
 import { AnalyticsLayoutChartComponent } from './v2/layouts/layout-chart/layout-chart.component';
 import { AnalyticsLayoutSummaryComponent } from './v2/layouts/layout-summary/layout-summary.component';
-import { AnalyticsMetricsComponent } from './v2/components/metrics/metrics.component';
 import { AnalyticsFiltersComponent } from './v2/components/filters/filters.component';
 import { AnalyticsFilterComponent } from './v2/components/filter/filter.component';
 import { AnalyticsChartComponent } from './v2/components/chart/chart.component';
@@ -154,7 +153,6 @@ const routes: Routes = [
     AnalyticsDashboardComponent,
     AnalyticsLayoutChartComponent,
     AnalyticsLayoutSummaryComponent,
-    AnalyticsMetricsComponent,
     AnalyticsFiltersComponent,
     AnalyticsFilterComponent,
     AnalyticsChartComponent,

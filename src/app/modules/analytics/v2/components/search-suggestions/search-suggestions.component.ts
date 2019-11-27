@@ -1,12 +1,9 @@
 import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
-import {
-  AnalyticsDashboardService,
-  Filter,
-  Option,
-} from '../../dashboard.service';
+import { AnalyticsDashboardService } from '../../dashboard.service';
 import { RecentService } from '../../../../../services/ux/recent';
 import { Session } from '../../../../../services/session';
 import { Client } from '../../../../../services/api';
+import { Filter, Option } from '../../../../../interfaces/dashboard';
 
 @Component({
   selector: 'm-analytics__searchSuggestions',

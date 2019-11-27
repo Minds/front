@@ -12,104 +12,19 @@ import {
 
 import { MindsHttpClient } from '../../../common/api/client.service';
 import fakeData from './fake-data';
-
-export interface Category {
-  id: string;
-  label: string;
-  metrics?: string[]; // TODO: remove this
-  permissions?: string[];
-}
-
-export interface Response {
-  status: string;
-  dashboard: Dashboard;
-}
-
-export interface Dashboard {
-  category: string;
-  description?: string;
-  timespan: string;
-  timespans: Timespan[];
-  metric: string;
-  metrics: Metric[];
-  filter: string[];
-  filters: Filter[];
-}
-
-export interface Filter {
-  id: string;
-  label: string;
-  options: Option[];
-  description: string;
-  expanded?: boolean;
-}
-
-export interface Option {
-  id: string;
-  label: string;
-  available?: boolean;
-  selected?: boolean;
-  description?: string;
-  interval?: string;
-  comparison_interval?: number;
-  from_ts_ms?: number;
-  from_ts_iso?: string;
-}
-
-export interface Metric {
-  id: string;
-  label: string;
-  permissions?: string[];
-  summary?: Summary;
-  unit?: string;
-  description?: string;
-  visualisation: Visualisation | null;
-}
-
-export interface Summary {
-  current_value: number;
-  comparison_value: number;
-  comparison_interval: number;
-  comparison_positive_inclination: boolean;
-}
-
-export interface Visualisation {
-  type: string;
-  segments?: Buckets[];
-  buckets?: Bucket[];
-  columns?: Array<any>;
-}
-
-export interface Buckets {
-  buckets: Bucket[];
-}
-export interface Bucket {
-  key: number | string;
-  date?: string;
-  value?: number;
-  values?: {};
-}
-
-export interface Timespan {
-  id: string;
-  label: string;
-  interval: string;
-  comparison_interval: number;
-  from_ts_ms: number;
-  from_ts_iso: string;
-  selected: boolean;
-}
-
-export interface UserState {
-  category: string;
-  description?: string;
-  timespan: string;
-  timespans: Timespan[];
-  metric: string;
-  metrics: Metric[];
-  filter?: string[];
-  filters?: Filter[];
-}
+import {
+  Response,
+  Dashboard,
+  Filter,
+  Option,
+  Metric,
+  Summary,
+  Visualisation,
+  Buckets,
+  Bucket,
+  Timespan,
+  UserState,
+} from '../../../interfaces/dashboard';
 
 let _state: UserState = fakeData[0];
 
@@ -198,16 +113,17 @@ export class AnalyticsDashboardService {
         const dashboard = response.dashboard;
         this.ready$.next(true);
 
+        // TODOOJM uncomment me
         this.updateState({
           ..._state,
-          category: dashboard.category,
-          description: dashboard.description,
-          timespan: dashboard.timespan,
-          timespans: dashboard.timespans,
-          filter: dashboard.filter,
-          filters: dashboard.filters,
-          metric: dashboard.metric,
-          metrics: dashboard.metrics,
+          // category: dashboard.category,
+          // description: dashboard.description,
+          // timespan: dashboard.timespan,
+          // timespans: dashboard.timespans,
+          // filter: dashboard.filter,
+          // filters: dashboard.filters,
+          // metric: dashboard.metric,
+          // metrics: dashboard.metrics,
         });
         this.loading$.next(false);
       });
@@ -238,13 +154,14 @@ export class AnalyticsDashboardService {
   //   return channelSearch;
   // }
 
+  // TODOOJM uncomment me
   updateCategory(category: string) {
-    this.updateState({
-      ..._state,
-      category,
-      description: null,
-      metrics: [],
-    });
+    // this.updateState({
+    //   ..._state,
+    //   category,
+    //   description: null,
+    //   metrics: [],
+    // });
   }
   updateTimespan(timespan: string) {
     this.updateState({
@@ -273,8 +190,6 @@ export class AnalyticsDashboardService {
     } else {
       filter.push(selectedFilterStr);
     }
-    // console.log('update filter called: ' + selectedFilterStr);
-    // console.log(filter);
 
     this.updateState({ ..._state, filter });
   }
@@ -283,7 +198,6 @@ export class AnalyticsDashboardService {
 
   /** Update internal state cache and emit from store... */
   private updateState(state: UserState) {
-    // console.log('update state called');
     this.store.next((_state = state));
   }
 
