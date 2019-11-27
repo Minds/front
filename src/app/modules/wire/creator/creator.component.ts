@@ -36,7 +36,7 @@ export interface WireStruc {
   payloadType: PayloadType | null;
   guid: any;
   recurring: boolean;
-  recurringInterval: 'once' | 'monthly' | 'yearly' | null;
+  recurringInterval?: 'once' | 'monthly' | 'yearly' | null;
   payload: any;
 }
 
