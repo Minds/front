@@ -42,8 +42,15 @@ export interface Metric {
   unit?: string;
   description?: string;
   visualisation: Visualisation | null;
+  tabs?: TopTab[];
+  value?: number;
 }
 
+export interface TopTab {
+  id: string;
+  label: string;
+  selected: boolean;
+}
 export interface Summary {
   current_value: number;
   comparison_value: number;

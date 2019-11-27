@@ -9,7 +9,6 @@ const sidebarMenu = {
       id: 'summary',
       label: 'Summary',
       permissions: ['admin'],
-      // path: '/some/path/outside/analytics/dashboard',
     },
     {
       id: 'traffic',
