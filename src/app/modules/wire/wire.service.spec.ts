@@ -39,6 +39,7 @@ describe('WireService', () => {
       payload: { receiver: '0x1234', address: '' },
       payloadType: 'onchain',
       recurring: false,
+      recurringInterval: 'once',
     });
 
     tick();
@@ -59,6 +60,7 @@ describe('WireService', () => {
       },
       method: 'onchain',
       recurring: false,
+      recurring_interval: 'once',
     });
   }));
 
@@ -69,6 +71,7 @@ describe('WireService', () => {
       payload: null,
       payloadType: 'offchain',
       recurring: false,
+      recurringInterval: 'once',
     });
 
     tick();
@@ -80,6 +83,7 @@ describe('WireService', () => {
       payload: { address: 'offchain', method: 'offchain' },
       method: 'offchain',
       recurring: false,
+      recurring_interval: 'once',
     });
   }));
 
@@ -90,6 +94,7 @@ describe('WireService', () => {
       payload: { address: 'offchain', token: 'tok_KPte7942xySKBKyrBu11yEpf' },
       payloadType: 'usd',
       recurring: false,
+      recurringInterval: 'once',
     });
 
     tick();
@@ -105,6 +110,7 @@ describe('WireService', () => {
       },
       method: 'usd',
       recurring: false,
+      recurring_interval: 'once',
     });
   }));
 });

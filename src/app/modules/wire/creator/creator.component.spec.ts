@@ -636,6 +636,7 @@ describe('WireCreatorComponent', () => {
       payload: { receiver: '0x1234', address: '' },
       payloadType: 'onchain',
       recurring: false,
+      recurringInterval: 'monthly',
     });
   }));
 
