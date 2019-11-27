@@ -241,7 +241,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       margin: {
         t: this.isMini ? 0 : 16,
         b: this.isMini ? 0 : 80,
-        l: this.isMini ? 0 : 0,
+        l: 0,
         r: this.isMini ? 0 : 80,
         pad: 16,
       },
@@ -377,7 +377,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
     return rows.map(row => {
       if (key === 'date') {
         return row[key].slice(0, 10);
-      } else if (this.segments[0].unit === 'usd') {
+      } else if (this.rawData.unit && this.rawData.unit === 'usd') {
         return row[key] / 100;
       } else {
         return row[key];
