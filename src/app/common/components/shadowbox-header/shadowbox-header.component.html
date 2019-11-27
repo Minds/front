@@ -2,8 +2,8 @@
   <div class="m-shadowboxHeader__wrapper">
     <ng-container *ngIf="isScrollable">
       <div
-        *ngIf="isOverflown && !isAtScrollStart"
         class="m-shadowboxHeader__overflowFade--left"
+        [ngClass]="{ visible: isOverflown && !isAtScrollStart }"
       ></div>
       <div
         [ngClass]="{ showButton: showButton.left }"
@@ -22,8 +22,8 @@
     </div>
     <ng-container *ngIf="isScrollable">
       <div
-        *ngIf="isOverflown && !isAtScrollEnd"
         class="m-shadowboxHeader__overflowFade--right"
+        [ngClass]="{ visible: isOverflown && !isAtScrollEnd }"
       ></div>
       <div
         [ngClass]="{ showButton: showButton.right }"

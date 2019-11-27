@@ -12,19 +12,7 @@ import {
 
 import { MindsHttpClient } from '../../../common/api/client.service';
 import fakeData from './fake-data';
-import {
-  Response,
-  Dashboard,
-  Filter,
-  Option,
-  Metric,
-  Summary,
-  Visualisation,
-  Buckets,
-  Bucket,
-  Timespan,
-  UserState,
-} from '../../../interfaces/dashboard';
+import { Response, UserState } from '../../../interfaces/dashboard';
 
 let _state: UserState = fakeData[0];
 
