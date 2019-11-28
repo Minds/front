@@ -73,10 +73,10 @@ export class WalletDashboardService {
   }
 
   getTimespans() {
-    return fakeData.timespans;
+    return fakeData;
   }
 
-  getData(currency) {
+  getData() {
     return fakeData;
   }
 

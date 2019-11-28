@@ -9,12 +9,18 @@ import { Timespan } from '../../../../interfaces/dashboard';
 export class WalletChartComponent implements OnInit {
   @Input() activeCurrencyId;
   timespans: Timespan[];
+  selectedTimespan;
   data;
 
   constructor(protected walletService: WalletDashboardService) {}
 
   ngOnInit() {
-    this.walletService.getTimespans();
+    this.data = this.walletService.getData();
+    this.timespans = this.data.timespans;
+
+    this.selectedTimespan = this.timespans.find(
+      ts => ts.id === this.data.timespan
+    ).id;
     this.data = this.walletService
       .getCurrencies()
       .find(currency => currency.id === this.activeCurrencyId);

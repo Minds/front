@@ -85,7 +85,6 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
         this.activeTabId = params.get('topTab');
       } else {
         this.activeTabId = this.topTabOptions[0];
-        console.log('bork');
         this.rerouteTopTab(this.activeTabId);
       }
 
@@ -116,9 +115,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   }
 
   rerouteTopTab(topTabId) {
-    console.log('bork1', this.activeCurrencyId);
     this.router.navigate(['/v2wallet', this.activeCurrencyId, topTabId]);
-    console.log('bork2');
 
     this.detectChanges();
   }
