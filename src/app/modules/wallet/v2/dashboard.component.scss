@@ -1,0 +1,18 @@
+m-walletDashboard {
+  .m-shadowboxHeaderTab {
+    line-height: 21px;
+    .m-shadowboxHeaderTab__label {
+      font-size: 18px;
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+    .m-shadowboxHeaderTab__value {
+      font-weight: 300;
+      font-size: 16px;
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+    }
+  }
+}

@@ -1,3 +1,9 @@
-<p>
-  wallet-chart works!
-</p>
+<m-timespanFilter
+  [timespans]="timespans"
+  (timespanChanged)="updateTimespan($event)"
+></m-timespanFilter>
+<m-chartV2
+  *ngIf="selectedCurrency && selectedTimespan"
+  [rawData]="selectedCurrency"
+  [interval]="selectedTimespan.interval"
+></m-chartV2>

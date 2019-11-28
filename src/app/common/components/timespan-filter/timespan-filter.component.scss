@@ -1,0 +1,17 @@
+m-timespanFilter {
+  .m-timespanFilter__container {
+    display: flex;
+    flex-flow: row nowrap;
+    border-radius: 5px;
+    @include m-theme() {
+      border: 1px solid themed($m-grey-50);
+    }
+  }
+  .m-timespanFilter__option {
+    &:not(:last-child) {
+      @include m-theme() {
+        border-right: 1px solid themed($m-grey-50);
+      }
+    }
+  }
+}

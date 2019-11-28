@@ -128,6 +128,7 @@ import { FormToastComponent } from './components/form-toast/form-toast.component
 import { SsoService } from './services/sso.service';
 import { TopTabsComponent } from './layout/top-tabs/top-tabs.component';
 import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
+import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -245,6 +246,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ShadowboxSubmitButtonComponent,
     TopTabsComponent,
     ShadowboxHeaderTabsComponent,
+    TimespanFilterComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -345,6 +347,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
     ShadowboxHeaderTabsComponent,
+    TopTabsComponent,
+    TimespanFilterComponent,
   ],
   providers: [
     SiteService,

@@ -13,15 +13,18 @@
     <div
       class="m-shadowboxHeaderTab__value"
       *ngIf="tab.value || tab.value === 0"
+      [ngSwitch]="tab?.unit"
     >
-      <ng-container *ngIf="tab.unit === 'number'">
+      <ng-template ngSwitchCase="number">
         {{ tab.value | number }}
-      </ng-container>
-      <ng-container *ngIf="tab.unit === 'usd'">
+      </ng-template>
+      <ng-template ngSwitchCase="usd">
         <span>$</span>{{ tab.value / 100 | number: '1.2-2' }}
-      </ng-container>
+      </ng-template>
+      <ng-template ngSwitchDefault>
+        {{ tab.value | number: '1.0-3' }}
+      </ng-template>
     </div>
-
     <div
       *ngIf="tab.delta || tab.delta === 0"
       class="m-shadowboxHeaderTab__delta"

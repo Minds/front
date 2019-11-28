@@ -1,0 +1,34 @@
+m-topTabs {
+  .m-topTabs__tabsContainer {
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: row nowrap;
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-grey-100);
+    }
+  }
+  .m-topTabs__tab {
+    cursor: pointer;
+    padding: 13px 20px;
+    margin: 0 13px;
+    box-sizing: border-box;
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 20px;
+    @include m-theme() {
+      color: themed($m-grey-300);
+      border-bottom: 3px solid themed($m-white);
+    }
+    &.active {
+      @include m-theme() {
+        color: themed($m-grey-800);
+        border-bottom: 3px solid themed($m-blue);
+      }
+    }
+    &:hover {
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+  }
+}

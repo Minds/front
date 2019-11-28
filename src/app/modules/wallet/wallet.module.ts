@@ -52,9 +52,14 @@ import { WalletUSDBalanceComponent } from './usd/balance.component';
 import { WalletDashboardComponent } from './v2/dashboard.component';
 import { WalletBalanceComponent } from './v2/balance/balance.component';
 import { WalletChartComponent } from './v2/chart/chart.component';
+import { WalletTransactionsTableComponent } from './v2/transactions-table/transactions-table.component';
 import { WalletActionButtonComponent } from './v2/action-button/action-button.component';
 import { WalletRewardsPopupComponent } from './v2/rewards-popup/rewards-popup.component';
 import { WalletDashboardService } from './v2/dashboard.service';
+import { WalletSettingsTokensComponent } from './v2/settings-tokens/settings-tokens.component';
+import { WalletSettingsUSDComponent } from './v2/settings-usd/settings-usd.component';
+import { WalletSettingsETHComponent } from './v2/settings-eth/settings-eth.component';
+import { WalletSettingsBTCComponent } from './v2/settings-btc/settings-btc.component';
 
 const walletRoutes: Routes = [
   {
@@ -106,10 +111,11 @@ const walletRoutes: Routes = [
     ],
   },
   {
-    path: 'v2wallet', // TODOOJM: choose actual path. maybe replace /wallet
-    redirectTo: 'v2wallet/tokens',
+    path: 'v2wallet', // TODOOJM: choose actual path. also allow **
+    redirectTo: 'v2wallet/tokens/overview',
     pathMatch: 'full',
   },
+  { path: 'v2wallet/:currency/:topTab', component: WalletDashboardComponent },
   { path: 'v2wallet/:currency', component: WalletDashboardComponent },
 ];
 
@@ -170,6 +176,11 @@ const walletRoutes: Routes = [
     WalletChartComponent,
     WalletActionButtonComponent,
     WalletRewardsPopupComponent,
+    WalletTransactionsTableComponent,
+    WalletSettingsTokensComponent,
+    WalletSettingsUSDComponent,
+    WalletSettingsETHComponent,
+    WalletSettingsBTCComponent,
   ],
   exports: [
     WalletComponent,

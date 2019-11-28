@@ -79,7 +79,7 @@ export interface Timespan {
   id: string;
   label: string;
   interval: string;
-  comparison_interval: number;
+  comparison_interval?: number;
   from_ts_ms: number;
   from_ts_iso: string;
   selected: boolean;

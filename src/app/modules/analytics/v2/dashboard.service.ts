@@ -79,7 +79,6 @@ export class AnalyticsDashboardService {
         }),
         tap(() => this.loading$.next(true)),
         switchMap(([category, timespan, metric, filter]) => {
-          // console.log(category, timespan, metric, filter);
           try {
             const response = this.getDashboardResponse(
               category,
@@ -101,17 +100,16 @@ export class AnalyticsDashboardService {
         const dashboard = response.dashboard;
         this.ready$.next(true);
 
-        // TODOOJM uncomment me
         this.updateState({
           ..._state,
-          // category: dashboard.category,
-          // description: dashboard.description,
-          // timespan: dashboard.timespan,
-          // timespans: dashboard.timespans,
-          // filter: dashboard.filter,
-          // filters: dashboard.filters,
-          // metric: dashboard.metric,
-          // metrics: dashboard.metrics,
+          category: dashboard.category,
+          description: dashboard.description,
+          timespan: dashboard.timespan,
+          timespans: dashboard.timespans,
+          filter: dashboard.filter,
+          filters: dashboard.filters,
+          metric: dashboard.metric,
+          metrics: dashboard.metrics,
         });
         this.loading$.next(false);
       });
@@ -142,14 +140,13 @@ export class AnalyticsDashboardService {
   //   return channelSearch;
   // }
 
-  // TODOOJM uncomment me
   updateCategory(category: string) {
-    // this.updateState({
-    //   ..._state,
-    //   category,
-    //   description: null,
-    //   metrics: [],
-    // });
+    this.updateState({
+      ..._state,
+      category,
+      description: null,
+      metrics: [],
+    });
   }
   updateTimespan(timespan: string) {
     this.updateState({
@@ -182,7 +179,7 @@ export class AnalyticsDashboardService {
     this.updateState({ ..._state, filter });
   }
 
-  //   // ------- Private Methods ------------------------
+  // ------- Private Methods ------------------------
 
   /** Update internal state cache and emit from store... */
   private updateState(state: UserState) {

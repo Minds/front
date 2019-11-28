@@ -1,3 +1,5 @@
+// TODOOJM rename all the toptab stuff to 'view'
+
 import {
   Component,
   OnInit,
@@ -12,6 +14,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { MindsTitle } from '../../../services/ux/title';
 import sidebarMenu from './sidebar-menu.default';
 import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
+import { ShadowboxHeaderTab, TopTab } from '../../../interfaces/dashboard';
 
 @Component({
   selector: 'm-walletDashboard',
@@ -22,7 +25,37 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   menu: Menu = sidebarMenu;
   paramsSubscription: Subscription;
 
-  // dashboard
+  currencies: ShadowboxHeaderTab[];
+  activeCurrencyId;
+  activeTabId;
+  topTabOptions;
+  chartData;
+
+  topTabs = [
+    {
+      id: 'tokens',
+      tabs: [
+        { id: 'overview', label: 'Overview' },
+        { id: 'transactions', label: 'Transactions' },
+        { id: 'settings', label: 'Settings' },
+      ],
+    },
+    {
+      id: 'usd',
+      tabs: [
+        { id: 'transactions', label: 'Transactions' },
+        { id: 'settings', label: 'Settings' },
+      ],
+    },
+    {
+      id: 'eth',
+      tabs: [{ id: 'settings', label: 'Settings' }],
+    },
+    {
+      id: 'btc',
+      tabs: [{ id: 'settings', label: 'Settings' }],
+    },
+  ];
 
   constructor(
     protected walletService: WalletDashboardService,
@@ -40,28 +73,54 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     }
 
     this.title.setTitle('Wallet');
+    this.currencies = this.walletService.getCurrencies();
 
     this.route.paramMap.subscribe((params: ParamMap) => {
-      const currency = params.get('currency');
-      // this.updateCurrency(currency);
-    });
+      this.activeCurrencyId = params.get('currency');
+      this.topTabOptions = this.topTabs.find(
+        currencyTabsObj => currencyTabsObj.id === this.activeCurrencyId
+      ).tabs;
 
-    this.paramsSubscription = this.route.queryParams.subscribe(params => {
-      // TODO: handleUrl
-      if (params['timespan']) {
-        // this.updateTimespan(params['timespan']);
+      if (params.get('topTab')) {
+        this.activeTabId = params.get('topTab');
+      } else {
+        this.activeTabId = this.topTabOptions[0];
+        console.log('bork');
+        this.rerouteTopTab(this.activeTabId);
       }
+
+      if (this.activeTabId === 'overview') {
+        this.chartData = this.currencies.find(
+          currency => currency.id === this.activeCurrencyId
+        );
+      }
+
+      this.detectChanges();
     });
   }
 
   ngOnDestroy() {
-    if (this.paramsSubscription) {
-      this.paramsSubscription.unsubscribe();
-    }
+    // No need for this with route params
+    // if (this.paramsSubscription) {
+    //   this.paramsSubscription.unsubscribe();
+    // }
   }
 
-  updateCurrency(currencyId) {
-    // this.walletService.updateCurrency(currencyId);
+  updateCurrency($event) {
+    // this.walletService.updazteCurrency($event.tabId);
+  }
+
+  updateActiveTabId($event) {
+    this.activeTabId = $event.tabId;
+    this.rerouteTopTab(this.activeCurrencyId);
+  }
+
+  rerouteTopTab(topTabId) {
+    console.log('bork1', this.activeCurrencyId);
+    this.router.navigate(['/v2wallet', this.activeCurrencyId, topTabId]);
+    console.log('bork2');
+
+    this.detectChanges();
   }
 
   detectChanges() {
