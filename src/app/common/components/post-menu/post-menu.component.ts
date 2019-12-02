@@ -378,7 +378,7 @@ export class PostMenuComponent implements OnInit {
    * Calls transcode from admin service on button click.
    */
   protected transcode(): void {
-    this.adminService.transcode(this.entity.guid);
+    this.adminService.transcode(this.entity.entity_guid);
     this.selectOption('transcode');
   }
 }
