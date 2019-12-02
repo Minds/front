@@ -37,7 +37,7 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
   }
 
   // updateMetric(metric) {
-  //   // TODO: if clicked metric is not fully visible, slide() until it is
+  //   // TODOOJM: if clicked metric is not fully visible, slide() until it is
   //   this.analyticsService.updateMetric(metric.id);
   // }
 

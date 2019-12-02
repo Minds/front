@@ -9,7 +9,11 @@ import {
 } from 'rxjs/operators';
 import { MindsHttpClient } from '../../../common/api/client.service';
 import fakeData from './fake-data';
-import { Response, UserState } from '../../../interfaces/dashboard';
+import {
+  Response,
+  UserState,
+  ShadowboxHeaderTab,
+} from '../../../interfaces/dashboard';
 
 // export interface UserState {}
 
@@ -19,6 +23,16 @@ import { Response, UserState } from '../../../interfaces/dashboard';
 
 @Injectable()
 export class WalletDashboardService {
+  // private currencies = new BehaviorSubject<ShadowboxHeaderTab[]>([
+  //   {
+  //     id: 'tokens',
+  //     label: 'Tokens',
+  //     unit: 'tokens',
+  //     value: 0,
+  //   },
+  // ]);
+  // private currencies$ = this.currencies.asObservable();
+
   // private store = new BehaviorSubject<UserState>(_state);
   // private state$ = this.store.asObservable();
 
@@ -73,11 +87,25 @@ export class WalletDashboardService {
   }
 
   getTimespans() {
-    return fakeData;
+    return fakeData.timespans;
   }
 
   getData() {
     return fakeData;
+  }
+
+  updateCurrency(currencyId) {}
+
+  private getCurrencySubtotals() {
+    // return this.http
+    //   .get(`api/v2/analytics/dashboards/${category}`, {
+    //     metric,
+    //   })
+    //   .pipe(
+    //     catchError(_ => of(null)),
+    //     map(response => response)
+    //   );
+    // }
   }
 
   // loadFromRemote() {

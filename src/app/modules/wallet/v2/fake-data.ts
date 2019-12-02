@@ -8,7 +8,6 @@ const fakeData = {
       interval: 'day',
       from_ts_ms: 1572566400000,
       from_ts_iso: '2019-11-01T00:00:00+00:00',
-      selected: true,
     },
     {
       id: '30d',
@@ -16,7 +15,6 @@ const fakeData = {
       interval: 'day',
       from_ts_ms: 1571270400000,
       from_ts_iso: '2019-10-17T00:00:00+00:00',
-      selected: false,
     },
     {
       id: '12m',
@@ -24,7 +22,6 @@ const fakeData = {
       interval: 'month',
       from_ts_ms: 1542412800000,
       from_ts_iso: '2018-11-17T00:00:00+00:00',
-      selected: false,
     },
   ],
   currency: 'tokens',

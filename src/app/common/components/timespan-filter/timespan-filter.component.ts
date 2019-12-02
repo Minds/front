@@ -7,6 +7,7 @@ import { Timespan } from '../../../interfaces/dashboard';
 })
 export class TimespanFilterComponent {
   @Input() timespans: Timespan[];
+  @Input() activeTimespanId: string;
   @Output() timespanChanged: EventEmitter<any> = new EventEmitter();
 
   constructor() {}

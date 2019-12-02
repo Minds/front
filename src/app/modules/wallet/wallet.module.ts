@@ -115,7 +115,7 @@ const walletRoutes: Routes = [
     redirectTo: 'v2wallet/tokens/overview',
     pathMatch: 'full',
   },
-  { path: 'v2wallet/:currency/:topTab', component: WalletDashboardComponent },
+  { path: 'v2wallet/:currency/:view', component: WalletDashboardComponent },
   { path: 'v2wallet/:currency', component: WalletDashboardComponent },
 ];
 

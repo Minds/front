@@ -42,14 +42,7 @@ export interface Metric {
   unit?: string;
   description?: string;
   visualisation: Visualisation | null;
-  tabs?: TopTab[];
   value?: number;
-}
-
-export interface TopTab {
-  id: string;
-  label: string;
-  selected: boolean;
 }
 export interface Summary {
   current_value: number;
@@ -82,7 +75,7 @@ export interface Timespan {
   comparison_interval?: number;
   from_ts_ms: number;
   from_ts_iso: string;
-  selected: boolean;
+  selected?: boolean;
 }
 
 export interface UserState {

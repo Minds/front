@@ -1,7 +1,7 @@
 <div class="m-timespanFilter__container" *ngIf="timespans">
   <div
     class="m-timespanFilter__option"
-    [ngClass]="{ selected: timespan.selected }"
+    [ngClass]="{ active: timespan.id === activeTimespanId }"
     *ngFor="let timespan of timespans"
     (click)="changeTimespan(timespan.id)"
   >

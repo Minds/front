@@ -9,24 +9,26 @@ import { Timespan } from '../../../../interfaces/dashboard';
 export class WalletChartComponent implements OnInit {
   @Input() activeCurrencyId;
   timespans: Timespan[];
-  selectedTimespan;
+  activeTimespanId;
   data;
+  selectedCurrency;
 
   constructor(protected walletService: WalletDashboardService) {}
 
   ngOnInit() {
     this.data = this.walletService.getData();
-    this.timespans = this.data.timespans;
+    this.timespans = this.walletService.getTimespans();
 
-    this.selectedTimespan = this.timespans.find(
+    this.activeTimespanId = this.timespans.find(
       ts => ts.id === this.data.timespan
     ).id;
-    this.data = this.walletService
+    this.selectedCurrency = this.walletService
       .getCurrencies()
       .find(currency => currency.id === this.activeCurrencyId);
   }
 
   updateTimespan($event) {
-    // $event.timespanId
+    this.activeTimespanId = $event.timespanId;
+    // this.walletService.updateTimespan($event.timespanId);
   }
 }

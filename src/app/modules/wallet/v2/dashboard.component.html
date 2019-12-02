@@ -20,42 +20,50 @@
 
           <div class="m-shadowboxLayout__body">
             <m-walletBalance class="m-shadowboxLayout__body"></m-walletBalance>
-            <m-topTabs
-              [tabs]="topTabOptions"
-              [activeTabId]="activeTabId"
-              (tabChanged)="updateActiveTabId($event)"
-            >
-              <!-- <div class="m-walletDashboard__spinnerContainer" *ngIf="loading">
+            <div class="m-walletDashboardViews__wrapper">
+              <div class="m-walletDashboardViews__tabsContainer">
+                <div
+                  class="m-walletDashboardViews__tab"
+                  [ngClass]="{ active: view.id === activeViewId }"
+                  *ngFor="let view of views[activeCurrencyId]"
+                  (click)="updateView(view.id)"
+                >
+                  {{ view.label }}
+                </div>
+              </div>
+              <div class="m-walletDashboardViews__viewsContainer">
+                <!-- <div class="m-walletDashboard__spinnerContainer" *ngIf="loading">
                 <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
               </div> -->
-              <m-walletChart
-                topTab
-                [activeCurrencyId]="activeCurrencyId"
-                *ngIf="activeTabId === 'overview'"
-              ></m-walletChart>
-              <m-walletTransactionsTable
-                topTab
-                *ngIf="activeTabId === 'transactions'"
-              ></m-walletTransactionsTable>
-              <ng-container *ngIf="activeTabId === 'settings'">
-                <m-walletSettings--tokens
-                  topTab
-                  *ngIf="activeCurrencyId === 'tokens'"
-                ></m-walletSettings--tokens>
-                <m-walletSettings--usd
-                  topTab
-                  *ngIf="activeCurrencyId === 'usd'"
-                ></m-walletSettings--usd>
-                <m-walletSettings--eth
-                  topTab
-                  *ngIf="activeCurrencyId === 'eth'"
-                ></m-walletSettings--eth>
-                <m-walletSettings--btc
-                  topTab
-                  *ngIf="activeCurrencyId === 'btc'"
-                ></m-walletSettings--btc>
-              </ng-container>
-            </m-topTabs>
+                <m-walletChart
+                  class="m-walletDashboardViews__view"
+                  [activeCurrencyId]="activeCurrencyId"
+                  *ngIf="activeViewId === 'overview'"
+                ></m-walletChart>
+                <m-walletTransactionsTable
+                  class="m-walletDashboardViews__view"
+                  *ngIf="activeViewId === 'transactions'"
+                ></m-walletTransactionsTable>
+                <ng-container *ngIf="activeViewId === 'settings'">
+                  <m-walletSettings--tokens
+                    class="m-walletDashboardViews__view"
+                    *ngIf="activeCurrencyId === 'tokens'"
+                  ></m-walletSettings--tokens>
+                  <m-walletSettings--usd
+                    class="m-walletDashboardViews__view"
+                    *ngIf="activeCurrencyId === 'usd'"
+                  ></m-walletSettings--usd>
+                  <m-walletSettings--eth
+                    class="m-walletDashboardViews__view"
+                    *ngIf="activeCurrencyId === 'eth'"
+                  ></m-walletSettings--eth>
+                  <m-walletSettings--btc
+                    class="m-walletDashboardViews__view"
+                    *ngIf="activeCurrencyId === 'btc'"
+                  ></m-walletSettings--btc>
+                </ng-container>
+              </div>
+            </div>
           </div>
         </m-shadowboxLayout>
       </ng-container>

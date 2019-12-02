@@ -1,5 +1,3 @@
-// TODOOJM rename all the toptab stuff to 'view'
-
 import {
   Component,
   OnInit,
@@ -14,7 +12,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { MindsTitle } from '../../../services/ux/title';
 import sidebarMenu from './sidebar-menu.default';
 import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
-import { ShadowboxHeaderTab, TopTab } from '../../../interfaces/dashboard';
+import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
 
 @Component({
   selector: 'm-walletDashboard',
@@ -26,36 +24,23 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
 
   currencies: ShadowboxHeaderTab[];
-  activeCurrencyId;
-  activeTabId;
-  topTabOptions;
+  activeCurrencyId: string;
+  activeViewId: string;
   chartData;
 
-  topTabs = [
-    {
-      id: 'tokens',
-      tabs: [
-        { id: 'overview', label: 'Overview' },
-        { id: 'transactions', label: 'Transactions' },
-        { id: 'settings', label: 'Settings' },
-      ],
-    },
-    {
-      id: 'usd',
-      tabs: [
-        { id: 'transactions', label: 'Transactions' },
-        { id: 'settings', label: 'Settings' },
-      ],
-    },
-    {
-      id: 'eth',
-      tabs: [{ id: 'settings', label: 'Settings' }],
-    },
-    {
-      id: 'btc',
-      tabs: [{ id: 'settings', label: 'Settings' }],
-    },
-  ];
+  views: any = {
+    tokens: [
+      { id: 'overview', label: 'Overview' },
+      { id: 'transactions', label: 'Transactions' },
+      { id: 'settings', label: 'Settings' },
+    ],
+    usd: [
+      { id: 'transactions', label: 'Transactions' },
+      { id: 'settings', label: 'Settings' },
+    ],
+    eth: [{ id: 'settings', label: 'Settings' }],
+    btc: [{ id: 'settings', label: 'Settings' }],
+  };
 
   constructor(
     protected walletService: WalletDashboardService,
@@ -77,18 +62,15 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.activeCurrencyId = params.get('currency');
-      this.topTabOptions = this.topTabs.find(
-        currencyTabsObj => currencyTabsObj.id === this.activeCurrencyId
-      ).tabs;
 
-      if (params.get('topTab')) {
-        this.activeTabId = params.get('topTab');
+      if (params.get('view')) {
+        this.activeViewId = params.get('view');
       } else {
-        this.activeTabId = this.topTabOptions[0];
-        this.rerouteTopTab(this.activeTabId);
+        this.activeViewId = this.views[this.activeCurrencyId][0];
+        this.updateView(this.activeViewId);
       }
 
-      if (this.activeTabId === 'overview') {
+      if (this.activeViewId === 'overview') {
         this.chartData = this.currencies.find(
           currency => currency.id === this.activeCurrencyId
         );
@@ -106,16 +88,12 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   }
 
   updateCurrency($event) {
-    // this.walletService.updazteCurrency($event.tabId);
+    // this.walletService.updateCurrency($event.tabId);
   }
 
-  updateActiveTabId($event) {
-    this.activeTabId = $event.tabId;
-    this.rerouteTopTab(this.activeCurrencyId);
-  }
-
-  rerouteTopTab(topTabId) {
-    this.router.navigate(['/v2wallet', this.activeCurrencyId, topTabId]);
+  updateView(viewId) {
+    this.activeViewId = viewId;
+    this.router.navigate(['/v2wallet', this.activeCurrencyId, viewId]);
 
     this.detectChanges();
   }

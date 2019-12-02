@@ -1,16 +1,27 @@
 m-timespanFilter {
+  display: flex;
+  justify-content: flex-end;
+  flex-flow: row nowrap;
   .m-timespanFilter__container {
     display: flex;
     flex-flow: row nowrap;
     border-radius: 5px;
+    cursor: pointer;
     @include m-theme() {
       border: 1px solid themed($m-grey-50);
+      color: themed($m-grey-300);
     }
   }
   .m-timespanFilter__option {
+    padding: 5px 16px;
     &:not(:last-child) {
       @include m-theme() {
         border-right: 1px solid themed($m-grey-50);
+      }
+    }
+    &.active {
+      @include m-theme() {
+        color: themed($m-grey-800);
       }
     }
   }
