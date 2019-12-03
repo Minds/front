@@ -69,5 +69,108 @@ const fakeData = {
       },
     ],
   },
+  token_transactions: {
+    pending: {
+      total_points: 7,
+      contributions: [
+        { id: 'checkins', label: 'Check-ins', occurences: 1, points: 2 },
+        { id: 'comments', label: 'Comments', occurences: 2, points: 4 },
+        { id: 'votes', label: 'Votes', occurences: 1, points: 1 },
+      ],
+    },
+    days: [
+      {
+        ts_ms: 1567296000000, // today's date
+        transactions: [
+          {
+            ts_ms: 1567296000090, // time of tx
+            type_id: 'boosts',
+            type_label: 'Boosts',
+            diff: -5.0,
+            running_total: 25.0,
+          },
+          {
+            ts_ms: 1567296000080,
+            type_id: 'rewards',
+            type_label: 'Rewards',
+            diff: 0.4,
+            running_total: 30.0,
+            details: {
+              total_points: 10,
+              contributions: [
+                {
+                  id: 'checkins',
+                  label: 'Check-ins',
+                  occurences: 4,
+                  points: 8,
+                },
+                { id: 'comments', label: 'Comments', occurences: 1, points: 2 },
+              ],
+            },
+          },
+          {
+            ts_ms: 1567296000070,
+            type_id: 'wires',
+            type_label: 'Wires', // make sure we have the label field bc this eventually needs to change to 'Pay'
+            diff: -1.5,
+            running_total: 29.6,
+            subtype_id: 'offchain_wires_outbound',
+            entity: {
+              user_guid: 123,
+              username: 'my_wire_recipient',
+              //...etc...
+            },
+          },
+          {
+            ts_ms: 1567296000060,
+            type_id: 'wires',
+            type_label: 'Wires',
+            diff: 2.0,
+            running_total: 30.1,
+            subtype_id: 'offchain_wires_inbound',
+            entity: {
+              user_guid: 456,
+              username: 'whoever_wired_me',
+              //...etc...
+            },
+          },
+        ],
+      },
+      {
+        ts_ms: 1567295000000, // yesterday's date
+        transactions: [
+          {
+            ts_ms: 1567295000090,
+            type_id: 'purchases',
+            type_label: 'Purchases',
+            diff: -10.0,
+            running_total: 28.1,
+            subtype_id: 'minds_pro_membership',
+          },
+          {
+            ts_ms: 1567295000080,
+            type_id: 'rewards',
+            type_label: 'Rewards',
+            diff: 0.9,
+            running_total: 38.1,
+            details: {
+              total_points: 50,
+              contributions: [
+                {
+                  id: 'jury_duty',
+                  label: 'Jury Duty',
+                  occurences: 2,
+                  points: 50,
+                },
+              ],
+            },
+          },
+        ],
+      },
+      // days go on...
+    ],
+    load_next: '',
+    status: 'success',
+  },
 };
 export default fakeData;
