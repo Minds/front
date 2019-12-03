@@ -1,10 +1,10 @@
 <m-timespanFilter
   [timespans]="timespans"
-  [activeTimespanId]="activeTimespanId"
+  [activeTimespanId]="activeTimespan.id"
   (timespanChanged)="updateTimespan($event)"
 ></m-timespanFilter>
 <m-chartV2
-  *ngIf="selectedCurrency && selectedTimespan"
-  [rawData]="selectedCurrency"
-  [interval]="selectedTimespan.interval"
+  *ngIf="activeTimespan && data.visualisation"
+  [rawData]="data"
+  [interval]="activeTimespan.interval"
 ></m-chartV2>

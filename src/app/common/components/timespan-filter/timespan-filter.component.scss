@@ -19,7 +19,8 @@ m-timespanFilter {
         border-right: 1px solid themed($m-grey-50);
       }
     }
-    &.active {
+    &.active,
+    &:hover {
       @include m-theme() {
         color: themed($m-grey-800);
       }

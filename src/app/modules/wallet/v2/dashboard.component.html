@@ -37,8 +37,9 @@
               </div> -->
                 <m-walletChart
                   class="m-walletDashboardViews__view"
-                  [activeCurrencyId]="activeCurrencyId"
-                  *ngIf="activeViewId === 'overview'"
+                  *ngIf="
+                    activeCurrencyId === 'tokens' && activeViewId === 'overview'
+                  "
                 ></m-walletChart>
                 <m-walletTransactionsTable
                   class="m-walletDashboardViews__view"

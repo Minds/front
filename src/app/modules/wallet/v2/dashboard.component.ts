@@ -26,7 +26,6 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   currencies: ShadowboxHeaderTab[];
   activeCurrencyId: string;
   activeViewId: string;
-  chartData;
 
   views: any = {
     tokens: [
@@ -58,22 +57,19 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     }
 
     this.title.setTitle('Wallet');
-    this.currencies = this.walletService.getCurrencies();
+    this.currencies = this.walletService.getCurrencySubtotals();
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.activeCurrencyId = params.get('currency');
 
-      if (params.get('view')) {
+      if (
+        params.get('view') &&
+        this.views[this.activeCurrencyId].find(v => v.id === params.get('view'))
+      ) {
         this.activeViewId = params.get('view');
       } else {
-        this.activeViewId = this.views[this.activeCurrencyId][0];
+        this.activeViewId = this.views[this.activeCurrencyId][0].id;
         this.updateView(this.activeViewId);
-      }
-
-      if (this.activeViewId === 'overview') {
-        this.chartData = this.currencies.find(
-          currency => currency.id === this.activeCurrencyId
-        );
       }
 
       this.detectChanges();
@@ -88,7 +84,15 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   }
 
   updateCurrency($event) {
-    // this.walletService.updateCurrency($event.tabId);
+    this.activeCurrencyId = $event.tabId;
+    this.activeViewId = this.views[this.activeCurrencyId][0].id;
+    this.router.navigate([
+      '/v2wallet',
+      this.activeCurrencyId,
+      this.activeViewId,
+    ]);
+
+    this.detectChanges();
   }
 
   updateView(viewId) {

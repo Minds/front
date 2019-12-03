@@ -7,28 +7,50 @@ import { Timespan } from '../../../../interfaces/dashboard';
   templateUrl: './chart.component.html',
 })
 export class WalletChartComponent implements OnInit {
-  @Input() activeCurrencyId;
-  timespans: Timespan[];
-  activeTimespanId;
-  data;
-  selectedCurrency;
+  timespans: Timespan[] = [
+    {
+      // Assuming today is Nov 17th
+      id: '7d',
+      label: '7D',
+      interval: 'day',
+      from_ts_ms: 1572566400000,
+      from_ts_iso: '2019-11-01T00:00:00+00:00',
+    },
+    {
+      id: '30d',
+      label: '30D',
+      interval: 'day',
+      from_ts_ms: 1571270400000,
+      from_ts_iso: '2019-10-17T00:00:00+00:00',
+    },
+    {
+      id: '12m',
+      label: '12M',
+      interval: 'month',
+      from_ts_ms: 1542412800000,
+      from_ts_iso: '2018-11-17T00:00:00+00:00',
+    },
+  ];
+  activeTimespan;
+  data: any = {
+    id: 'tokens',
+    label: 'Tokens',
+    unit: 'tokens',
+  };
 
   constructor(protected walletService: WalletDashboardService) {}
 
   ngOnInit() {
-    this.data = this.walletService.getData();
-    this.timespans = this.walletService.getTimespans();
-
-    this.activeTimespanId = this.timespans.find(
-      ts => ts.id === this.data.timespan
-    ).id;
-    this.selectedCurrency = this.walletService
-      .getCurrencies()
-      .find(currency => currency.id === this.activeCurrencyId);
+    this.activeTimespan = this.timespans[0];
+    this.data['visualisation'] = this.walletService.getTokenChartData(
+      this.activeTimespan
+    );
   }
 
   updateTimespan($event) {
-    this.activeTimespanId = $event.timespanId;
-    // this.walletService.updateTimespan($event.timespanId);
+    this.activeTimespan = this.timespans.find(
+      ts => ts.id === $event.timespanId
+    );
+    this.data = this.walletService.getTokenChartData(this.activeTimespan);
   }
 }
