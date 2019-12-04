@@ -13,7 +13,7 @@ const fakeData: Array<any> = [
         comparison_interval: 30,
         from_ts_ms: 1567296000000,
         from_ts_iso: '2019-09-01T00:00:00+00:00',
-        selected: false,
+        selected: true,
       },
       {
         id: '12m',
