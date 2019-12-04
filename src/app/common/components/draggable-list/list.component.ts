@@ -22,6 +22,7 @@ export class DraggableListComponent {
   @Input() dndEffectAllowed: EffectAllowed = 'copyMove';
   @Input() id: string;
   @Input() headers: string[];
+  @Input() disabled: boolean;
   @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
   @Output() emptyListHeaderRowClicked: EventEmitter<any> = new EventEmitter();
   @Output() arrayChanged: EventEmitter<any> = new EventEmitter();
@@ -77,4 +78,19 @@ export class DraggableListComponent {
       y: event.offsetY + 10,
     };
   };
+
+  /**
+   * If input is focused then disable dragging
+   */
+  onFocusIn(e: FocusEvent | MouseEvent) {
+    this.disabled = true;
+  }
+
+  /**
+   * Re-enable when input not focused
+   * TODO: Make this smarter.. what if something else disabled the dragging?
+   */
+  onFocusOut(e: FocusEvent | MouseEvent) {
+    this.disabled = false;
+  }
 }

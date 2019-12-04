@@ -148,6 +148,10 @@ export class ChannelSortedComponent implements OnInit {
       return;
     }
 
+    if (activity.time_created > Date.now() / 1000) {
+      this.scheduledCount += 1;
+    }
+
     this.entities.unshift(activity);
 
     let feedItem = {
