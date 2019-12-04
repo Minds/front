@@ -70,12 +70,56 @@ const fakeData = {
     ],
   },
   token_transactions: {
+    current_total: 25.0,
+    filters: [
+      {
+        id: 'transaction_types',
+        label: 'Transaction Types',
+        options: [
+          {
+            id: 'all',
+            label: 'All',
+            selected: true,
+          },
+          {
+            id: 'offchain_wire',
+            label: 'Off-Chain Wire',
+            selected: false,
+          },
+          {
+            id: 'onchain_wire',
+            label: 'On-Chain Wire',
+            selected: false,
+          },
+          {
+            id: 'rewards',
+            label: 'Rewards',
+            selected: false,
+          },
+          {
+            id: 'purchases',
+            label: 'Purchases',
+            selected: false,
+          },
+          {
+            id: 'boost',
+            label: 'Boost',
+            selected: false,
+          },
+          {
+            id: 'onchain_transfer',
+            label: 'On-Chain Transfer',
+            selected: false,
+          },
+        ],
+      },
+    ],
     pending: {
       total_points: 7,
       contributions: [
-        { id: 'checkins', label: 'Check-ins', occurences: 1, points: 2 },
-        { id: 'comments', label: 'Comments', occurences: 2, points: 4 },
-        { id: 'votes', label: 'Votes', occurences: 1, points: 1 },
+        { id: 'checkins', label: 'Check-ins', occurrences: 1, points: 2 },
+        { id: 'comments', label: 'Comments', occurrences: 2, points: 4 },
+        { id: 'votes', label: 'Votes', occurrences: 1, points: 1 },
       ],
     },
     days: [
@@ -101,10 +145,15 @@ const fakeData = {
                 {
                   id: 'checkins',
                   label: 'Check-ins',
-                  occurences: 4,
+                  occurrences: 4,
                   points: 8,
                 },
-                { id: 'comments', label: 'Comments', occurences: 1, points: 2 },
+                {
+                  id: 'comments',
+                  label: 'Comments',
+                  occurrences: 1,
+                  points: 2,
+                },
               ],
             },
           },
@@ -159,7 +208,7 @@ const fakeData = {
                 {
                   id: 'jury_duty',
                   label: 'Jury Duty',
-                  occurences: 2,
+                  occurrences: 2,
                   points: 50,
                 },
               ],
