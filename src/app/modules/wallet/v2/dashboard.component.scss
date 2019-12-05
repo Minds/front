@@ -53,4 +53,15 @@ m-walletDashboard {
     margin: 50px 57px 0 57px;
     padding-bottom: 50px;
   }
+  m-shadowboxSubmitButton {
+    .m-shadowboxSubmitButton {
+      max-height: 35px;
+      min-width: 0;
+      min-height: 0;
+      font-weight: 300;
+      padding: 7px 15px;
+      font-size: 15px;
+      line-height: 20px;
+    }
+  }
 }
