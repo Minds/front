@@ -53,7 +53,6 @@ describe('NewsfeedTopComponent', () => {
           selector: 'minds-activity',
           inputs: [
             'object',
-            'boostToggle',
             'showRatingToggle',
             'boost',
             'showBoostMenuOptions',

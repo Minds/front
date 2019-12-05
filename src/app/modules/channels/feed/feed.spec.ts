@@ -56,7 +56,7 @@ describe('ChannelFeed', () => {
         }),
         MockComponent({
           selector: 'minds-activity',
-          inputs: ['object', 'boostToggle'],
+          inputs: ['object'],
         }),
         MockComponent({
           selector: 'infinite-scroll',

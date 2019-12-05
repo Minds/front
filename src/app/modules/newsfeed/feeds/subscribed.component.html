@@ -17,7 +17,6 @@
   <minds-activity
     *ngFor="let preActivity of prepended"
     [object]="preActivity"
-    [boostToggle]="preActivity.boostToggle"
     (delete)="delete(preActivity)"
     [showRatingToggle]="true"
     class="mdl-card m-border item"
@@ -43,7 +42,6 @@
       *ngIf="activity$ | async as activity"
       class="mdl-card m-border item"
       [object]="activity"
-      [boostToggle]="activity.boostToggle"
       (delete)="delete(activity)"
       [showRatingToggle]="true"
       [slot]="i + 1"

@@ -9,6 +9,8 @@ import {
   OnInit,
   SkipSelf,
   Injector,
+  Output,
+  HostBinding,
 } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
@@ -34,18 +36,6 @@ import isMobile from '../../../../../helpers/is-mobile';
 @Component({
   moduleId: module.id,
   selector: 'minds-activity',
-  host: {
-    class: 'mdl-card m-border',
-  },
-  inputs: [
-    'object',
-    'commentsToggle',
-    'focusedCommentGuid',
-    'visible',
-    'canDelete',
-    'showRatingToggle',
-  ],
-  outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
   providers: [
     ClientMetaService,
     ActivityAnalyticsOnViewService,
@@ -55,24 +45,20 @@ import isMobile from '../../../../../helpers/is-mobile';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Activity implements OnInit {
+  @HostBinding('class') class = 'mdl-card m-border';
   minds = window.Minds;
 
   activity: any;
-  boosted: boolean = false;
-  commentsToggle: boolean = false;
-  shareToggle: boolean = false;
-  deleteToggle: boolean = false;
-  translateToggle: boolean = false;
+  boosted = false;
+  @Input() commentsToggle = false;
+  translateToggle = false;
   translateEvent: EventEmitter<any> = new EventEmitter();
-  showBoostOptions: boolean = false;
+  showBoostOptions = false;
   allowComments = true;
-  @Input() boost: boolean = false;
-  @Input('boost-toggle')
-  @Input()
-  showBoostMenuOptions: boolean = false;
-  @Input() slot: number = -1;
-
-  visibilityEvents: boolean = true;
+  @Input() boost = false;
+  @Input() showBoostMenuOptions = false;
+  @Input() slot = -1;
+  visibilityEvents = true;
   @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
     this.visibilityEvents = visibilityEvents;
 
@@ -80,30 +66,23 @@ export class Activity implements OnInit {
       this.activityAnalyticsOnViewService.setEnabled(this.visibilityEvents);
     }
   }
-
   type: string;
   element: any;
-  visible: boolean = false;
-
-  editing: boolean = false;
+  @Input() visible = false;
+  editing = false;
   @Input() hideTabs: boolean;
-
-  _delete: EventEmitter<any> = new EventEmitter();
-  commentsOpened: EventEmitter<any> = new EventEmitter();
+  @Output('delete') _delete: EventEmitter<any> = new EventEmitter();
+  @Output() commentsOpened: EventEmitter<any> = new EventEmitter();
   @Input() focusedCommentGuid: string;
-
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
-  onViewed: EventEmitter<{ activity; visible }> = new EventEmitter<{
+  @Output() onViewed: EventEmitter<{ activity; visible }> = new EventEmitter<{
     activity;
     visible;
   }>();
-
   isTranslatable: boolean;
-  canDelete: boolean = false;
-  showRatingToggle: boolean = false;
-
+  @Input() canDelete = false;
+  @Input() showRatingToggle = false;
   blockedUsers: string[] = [];
-
   videoDimensions: Array<any> = null;
 
   get menuOptions(): Array<string> {
@@ -202,8 +181,11 @@ export class Activity implements OnInit {
     this.loadBlockedUsers();
   }
 
+  @Input()
   set object(value: any) {
-    if (!value) return;
+    if (!value) {
+      return;
+    }
     this.activity = value;
     this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
 
@@ -244,18 +226,12 @@ export class Activity implements OnInit {
   }
 
   getOwnerIconTime() {
-    let session = this.session.getLoggedInUser();
+    const session = this.session.getLoggedInUser();
     if (session && session.guid === this.activity.ownerObj.guid) {
       return session.icontime;
     } else {
       return this.activity.ownerObj.icontime;
     }
-  }
-
-  @Input() set boostToggle(toggle: boolean) {
-    //if(toggle)
-    //  this.showBoost();
-    return;
   }
 
   save() {
@@ -293,34 +269,6 @@ export class Activity implements OnInit {
       });
   }
 
-  /*async setSpam(value: boolean) {
-    this.activity['spam'] = value;
-
-    try {
-      if (value) {
-        await this.client.put(`api/v1/admin/spam/${this.activity.guid}`);
-      } else {
-        await this.client.delete(`api/v1/admin/spam/${this.activity.guid}`);
-      }
-    } catch (e) {
-      this.activity['spam'] = !value;
-    }
-  }
-
-  async setDeleted(value: boolean) {
-    this.activity['deleted'] = value;
-
-    try {
-      if (value) {
-        await this.client.put(`api/v1/admin/delete/${this.activity.guid}`);
-      } else {
-        await this.client.delete(`api/v1/admin/delete/${this.activity.guid}`);
-      }
-    } catch (e) {
-      this.activity['delete'] = !value;
-    }
-  }*/
-
   openComments() {
     if (!this.shouldShowComments()) {
       return;
@@ -335,7 +283,7 @@ export class Activity implements OnInit {
     }
 
     this.activity.pinned = !this.activity.pinned;
-    const url: string = `api/v2/newsfeed/pin/${this.activity.guid}`;
+    const url = `api/v2/newsfeed/pin/${this.activity.guid}`;
     try {
       if (this.activity.pinned) {
         await this.client.post(url);

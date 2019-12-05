@@ -2,7 +2,6 @@
   <minds-activity
     *ngFor="let activity of newsfeed; let i = index"
     [object]="activity"
-    [boostToggle]="activity.boostToggle"
     (delete)="delete(activity)"
     [showRatingToggle]="true"
     class="mdl-card m-border item"
