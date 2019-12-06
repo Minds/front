@@ -86,6 +86,7 @@ describe('MindsProAvatarComponent', () => {
   it('should show logo if one is', fakeAsync(() => {
     comp.channel = <any>{
       pro_settings: {
+        logo_image: 'image.png',
         has_custom_logo: true,
       },
     };

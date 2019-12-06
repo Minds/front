@@ -190,8 +190,4 @@ export class SignupModal {
 
     return this.site.pro.one_line_headline || '';
   }
-
-  protected showProLogo(): boolean {
-    return this.site.isProDomain;
-  }
 }

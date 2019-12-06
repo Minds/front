@@ -4,7 +4,7 @@
   *ngIf="!session.isLoggedIn() || display != 'initial'"
   (click)="$event.stopPropagation()"
 >
-  <ng-container *ngIf="showProLogo(); else mindsLogo">
+  <ng-container *ngIf="site.isProDomain; else mindsLogo">
     <m-pro--avatar [channel]="channel"></m-pro--avatar>
   </ng-container>
   <ng-template #mindsLogo>
