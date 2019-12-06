@@ -80,6 +80,7 @@ export class MindsVideoComponent implements OnDestroy {
   @ViewChild('player', { static: false }) playerRef: MindsPlayerInterface;
 
   src: any[];
+
   @Input('src') set _src(src) {
     this.src = src;
 
@@ -89,6 +90,7 @@ export class MindsVideoComponent implements OnDestroy {
   }
 
   torrent: any[];
+
   @Input('torrent') set _torrent(torrent) {
     this.torrent = torrent;
 
@@ -160,6 +162,7 @@ export class MindsVideoComponent implements OnDestroy {
   }
 
   autoplay: boolean = false;
+
   @Input('autoplay') set _autoplay(value: boolean) {
     if (
       navigator.userAgent.match(/iPhone/i) ||
@@ -236,7 +239,9 @@ export class MindsVideoComponent implements OnDestroy {
 
     clearTimeout(this.stopSeekerTimeout);
     this.stopSeekerTimeout = setTimeout(() => {
-      this.progressBar.stopSeeker();
+      if (this.playerRef) {
+        this.progressBar.stopSeeker();
+      }
     }, 300);
 
     this.progressBar.disableKeyControls();
