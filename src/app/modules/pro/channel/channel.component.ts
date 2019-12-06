@@ -69,10 +69,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.session.getLoggedInUser();
   }
 
-  get homeRouterLink() {
-    return this.channelService.getRouterLink('home');
-  }
-
   get feedRouterLink() {
     let params;
 

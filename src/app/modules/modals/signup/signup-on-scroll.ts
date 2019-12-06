@@ -6,11 +6,16 @@ import { Session } from '../../../services/session';
 import { ScrollService } from '../../../services/ux/scroll';
 import { SignupModal } from './signup';
 import { Storage } from '../../../services/storage';
+import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
   selector: 'm-modal-signup-on-scroll',
   template: `
-    <m-modal-signup (onClose)="onModalClosed()" #modal></m-modal-signup>
+    <m-modal-signup
+      (onClose)="onModalClosed()"
+      [channel]="channel"
+      #modal
+    ></m-modal-signup>
   `,
 })
 export class SignupOnScrollModal implements OnInit, OnDestroy {
@@ -24,6 +29,7 @@ export class SignupOnScrollModal implements OnInit, OnDestroy {
   routerSubscription: Subscription;
 
   @Input() disableScrollListener: true;
+  @Input() channel?: MindsUser;
 
   @ViewChild('modal', { static: true }) modal: SignupModal;
 

@@ -5,6 +5,7 @@ import {
   ApplicationRef,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
@@ -14,6 +15,7 @@ import { Session } from '../../../services/session';
 import { AnalyticsService } from '../../../services/analytics';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { SiteService } from '../../../common/services/site.service';
+import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
   selector: 'm-modal-signup',
@@ -31,11 +33,7 @@ export class SignupModal {
   display: string = 'initial';
   overrideOnboarding: boolean = false;
 
-  get logo() {
-    return this.site.isProDomain
-      ? `${this.minds.cdn_url}fs/v1/thumbnail/${this.site.pro.logo_guid}/master`
-      : `${this.minds.cdn_assets_url}assets/logos/logo.svg`;
-  }
+  @Input() channel?: MindsUser;
 
   constructor(
     public session: Session,
@@ -47,7 +45,7 @@ export class SignupModal {
     private applicationRef: ApplicationRef,
     private loginReferrer: LoginReferrerService,
     private analyticsService: AnalyticsService,
-    private site: SiteService
+    protected site: SiteService
   ) {
     this.listen();
     this.service.isOpen.subscribe({
@@ -191,5 +189,9 @@ export class SignupModal {
     }
 
     return this.site.pro.one_line_headline || '';
+  }
+
+  protected showProLogo(): boolean {
+    return this.site.isProDomain;
   }
 }
