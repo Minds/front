@@ -44,6 +44,10 @@ export class NSFWSelectorCreatorService extends NSFWSelectorService {
 export class NSFWSelectorConsumerService extends NSFWSelectorService {
   cacheKey: string = 'consumer';
 }
+
+/**
+ * Editing service, overrides build to allow pre-setting of values.
+ */
 export class NSFWSelectorEditingService extends NSFWSelectorService {
   cacheKey: string = 'editing';
 
