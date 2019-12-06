@@ -5,20 +5,16 @@
         <div class="m-walletBalance--tokens__balanceTitle">Token Balance</div>
         <div class="m-walletBalance--tokens__balanceValWrapper">
           <span class="m-walletBalance--tokens__balanceVal--int">{{
-            totalBalance.int
+            tokenBalance.int | number
           }}</span
-          >.<span class="m-walletBalance--tokens__balanceVal--frac">{{
-            totalBalance.frac
-          }}</span>
+          ><span
+            class="m-walletBalance--tokens__balanceVal--frac"
+            *ngIf="tokenBalance.frac"
+            >.{{ tokenBalance.frac | token: 15 | number: '3.0-0' }}</span
+          >
         </div>
       </div>
-
-      <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
-        ><m-shadowboxSubmitButton
-          [disabled]="!session.getLoggedInUser().rewards"
-          >Buy tokens</m-shadowboxSubmitButton
-        ></a
-      >
+      <ng-container *ngTemplateOutlet="buyTokens"></ng-container>
     </div>
     <div class="m-walletBalance--tokens__equationSymbol">=</div>
     <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
@@ -29,12 +25,12 @@
       </div>
       <div class="m-walletBalance--tokens__balanceValWrapper">
         <span class="m-walletBalance--tokens__balanceVal--int">{{
-          offchainBalance.int | token: 18 | number: '1.0-0'
+          offchainBalance.int | number
         }}</span
         ><span
           class="m-walletBalance--tokens__balanceVal--frac"
           *ngIf="offchainBalance.frac"
-          >.{{ offchainBalance.frac }}</span
+          >.{{ offchainBalance.frac | token: 15 | number: '3.0-0' }}</span
         >
         tokens
       </div>
@@ -43,20 +39,17 @@
     <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
       <div class="m-walletBalance--tokens__balanceTitle">
         On-Chain<m-tooltip icon="help"
-          >A short description of On-chain</m-tooltip
+          >A "short description of On-chain" lol</m-tooltip
         >
       </div>
       <div class="m-walletBalance--tokens__balanceValWrapper">
         <span class="m-walletBalance--tokens__balanceVal--int">{{
-          onchainBalance.int | token: 18 | number: '1.0-0'
+          onchainBalance.int | number
         }}</span
         ><span
           class="m-walletBalance--tokens__balanceVal--frac"
           *ngIf="onchainBalance.frac"
-          >.{{
-            (onchainBalance.total - onchainBalance.total.toFixed(0)) * 1000
-              | number: '1.0-0'
-          }}</span
+          >.{{ onchainBalance.frac | token: 15 | number: '3.0-0' }}</span
         >
         tokens
       </div>
@@ -69,10 +62,18 @@
   <div class="m-walletBalance--tokens__payout">
     Daily estimated payout
     <span>{{ estimatedTokenPayout | token: 18 | number: '1.0-3' }}</span>
-    tokens. Next payout in <span>{{ nextPayout | timediff: true }}</span> (Daily
-    at 2:00am UTC)
+    tokens. Next payout in
+    <span>{{ nextPayout | timediff }}</span> (Daily at 2:00am UTC)
   </div>
 </ng-container>
+
+<ng-template #buyTokens>
+  <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
+    ><m-shadowboxSubmitButton [disabled]="!session.getLoggedInUser().rewards"
+      >Buy tokens</m-shadowboxSubmitButton
+    ></a
+  >
+</ng-template>
 
 <ng-template #loading>
   <h2>...</h2>

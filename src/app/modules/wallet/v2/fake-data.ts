@@ -1,4 +1,61 @@
 const fakeData = {
+  wallet: {
+    tokens: {
+      label: 'Tokens',
+      unit: 'tokens',
+      balance: '777123456789987654321',
+      address: null,
+    },
+    offchain: {
+      label: 'Off-chain',
+      unit: 'tokens',
+      balance: '222000000000000000000',
+      address: 'offchain',
+    },
+    onchain: {
+      label: 'On-chain',
+      unit: 'tokens',
+      balance: '333123956789987654321',
+      address: '0x7aA1A2a94c799f0124B6Bf8481D529BDa844498D',
+    },
+    receiver: {
+      label: 'Receiver',
+      unit: 'tokens',
+      balance: '000123456789987654321',
+      address: '0x8aA1A2a94c799f0124B6Bf8481D529BDa844498D',
+    },
+    usd: {
+      label: 'USD',
+      unit: 'usd',
+      balance: 2550,
+      address: null,
+    },
+    eth: {
+      label: 'Ether',
+      unit: 'eth',
+      balance: '1111595995595595595595',
+      address: '0x7aA1A2a94c799f0124B6Bf8481D529BDa844498D',
+    },
+    btc: {
+      label: 'Bitcoin',
+      unit: 'btc',
+      balance: 0,
+      address: null,
+    },
+  },
+  // balances: {
+  //   tokens: '777123456789987654321',
+  //   offchain: '222123456789987654321',
+  //   onchain: '333123456789987654321',
+  //   receiver: '000123456789987654321',
+  //   eth: '111123456789987654321',
+  //   usd: 250,
+  // },
+  // addresses: {
+  //   receiver: '0x8aA1A2a94c799f0124B6Bf8481D529BDa844498D',
+  //   onchain: '0x7aA1A2a94c799f0124B6Bf8481D529BDa844498D',
+  //   eth: '0x7aA1A2a94c799f0124B6Bf8481D529BDa844498D',
+  // },
   visualisation: {
     type: 'chart',
     unit: 'tokens',
@@ -70,7 +127,6 @@ const fakeData = {
     ],
   },
   token_transactions: {
-    current_total: 25.0,
     filters: [
       {
         id: 'transaction_types',

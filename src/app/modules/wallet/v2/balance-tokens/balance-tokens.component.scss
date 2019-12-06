@@ -49,6 +49,9 @@ m-walletBalance--tokens {
   }
 
   .m-walletBalance--tokens__balanceWrapper--subtotal {
+    .m-walletBalance--tokens__balanceTitle {
+      min-width: 78px;
+    }
     .m-walletBalance--tokens__balanceValWrapper {
       font-size: 13px;
       line-height: 18px;
@@ -102,7 +105,6 @@ m-walletBalance--tokens {
     margin-top: 10px;
   }
 
-  // TODO make equationLeft flex-direction:column at a certain width
   @media screen and (max-width: 800px) {
     .m-walletBalance--tokens__equationLeft {
       flex-direction: column;

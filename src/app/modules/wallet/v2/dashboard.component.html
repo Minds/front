@@ -20,6 +20,7 @@
 
           <div class="m-shadowboxLayout__body">
             <m-walletBalance--tokens
+              [wallet]="wallet"
               class="m-shadowboxLayout__body"
               *ngIf="activeCurrencyId === 'tokens'"
             ></m-walletBalance--tokens>
