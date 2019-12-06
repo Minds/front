@@ -98,8 +98,19 @@ context('Blogs', () => {
     );
 
     if (nsfw) {
-      cy.get('.m-mature-info a').click();
-      cy.get('.m-mature-info a span').contains('Mature content');
+        // click on nsfw dropdown
+        cy.get(
+          'm-nsfw-selector .m-dropdown--label-container'
+        ).click();
+
+        // select Nudity
+        cy.get('m-nsfw-selector .m-dropdownList__item')
+          .contains('Nudity')
+          .click();
+
+        // click away
+        cy.get('m-nsfw-selector .minds-bg-overlay').click({force: true});
+
     }
 
     if (schedule) {
