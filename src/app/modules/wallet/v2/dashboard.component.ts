@@ -22,8 +22,8 @@ import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
 export class WalletDashboardComponent implements OnInit, OnDestroy {
   menu: Menu = sidebarMenu;
   paramsSubscription: Subscription;
+  wallet;
 
-  currencies: ShadowboxHeaderTab[];
   activeCurrencyId: string;
   activeViewId: string;
 
@@ -41,6 +41,8 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     btc: [{ id: 'settings', label: 'Settings' }],
   };
 
+  currencies: ShadowboxHeaderTab[] = [];
+
   constructor(
     protected walletService: WalletDashboardService,
     protected session: Session,
@@ -57,7 +59,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     }
 
     this.title.setTitle('Wallet');
-    this.currencies = this.walletService.getCurrencySubtotals();
+    this.wallet = this.walletService.getWallet();
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.activeCurrencyId = params.get('currency');
@@ -73,6 +75,23 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       }
 
       this.detectChanges();
+    });
+    this.setCurrencies();
+    this.detectChanges();
+  }
+
+  setCurrencies() {
+    const headerCurrencies = ['tokens', 'usd', 'eth', 'btc'];
+    headerCurrencies.forEach(currency => {
+      const headerTab: ShadowboxHeaderTab = {
+        id: currency,
+        label: this.wallet[currency].label,
+        unit: this.wallet[currency].unit,
+      };
+      if (currency !== 'btc') {
+        headerTab.value = this.wallet[currency].balance;
+      }
+      this.currencies.push(headerTab);
     });
   }
 
