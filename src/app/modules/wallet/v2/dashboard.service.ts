@@ -70,7 +70,7 @@ export class WalletDashboardService {
     this.getEthAccount();
     this.getStripeAccount();
 
-    // TODOOJM comment me
+    // TODOOJM toggle me
     // this.wallet = fakeData.wallet;
 
     this.walletLoaded = true;
