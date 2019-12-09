@@ -551,7 +551,7 @@
                       </div>
                       <div
                         class="m-proSettings__row--input"
-                        *ngIf="form.value.hashtags.length > 0"
+                        *ngIf="form.value.hashtags.length > -1"
                       >
                         <m-draggableList
                           [headers]="['Label', '#Hashtag']"
