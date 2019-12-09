@@ -2,29 +2,61 @@
 
 m-homepage {
   m-marketing {
+    position: relative;
     margin-top: -52px;
     padding-top: 52px;
+    z-index: 0;
+    transform: rotate(0deg);
+
+    .m-marketing__wrapper,
+    .m-marketing__extras > * > * {
+      max-width: 1100px !important;
+    }
   }
 
   .m-marketing__main {
     &.m-marketing__section--style-2 {
       .m-marketing__wrapper {
+        position: initial;
+        padding: 64px 0 0;
         @media screen and (min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
-          padding: 72px 0 0;
+          padding: 64px 0 0;
         }
         @media screen and (max-width: $max-mobile) {
           padding: 0;
         }
 
         .m-marketing__body {
+          position: initial;
+          z-index: 0;
+
           &::before {
-            transform: translate(311px, -123px);
-            clip-path: polygon(57% 0, 100% 0, 100% 15%, 15% 90%);
-            bottom: -80px;
+            transform: none;
+            clip-path: polygon(72% 0, 100% 0, 100% 21%, 42% 91%);
+            top: 0;
+            right: 0;
+            height: 695px;
+            z-index: 1;
 
             @include m-theme() {
               background: themed($m-amber-medium);
             }
+          }
+
+          h1 {
+            margin-top: 0;
+            margin-bottom: 40px;
+          }
+
+          h2 {
+            font-size: 62px;
+            line-height: 65px;
+            margin-bottom: 36px;
+          }
+
+          .m-marketing__description {
+            margin-bottom: 21px;
+            padding-right: 129px;
           }
 
           .m-homepage__joinButton {
@@ -45,12 +77,13 @@ m-homepage {
             background: #f5f6ff;
 
             position: absolute;
-            bottom: -10px;
-            left: -140px;
-            height: 202px;
-            right: -600px;
+            top: 524px;
+            //bottom: -10px;
+            left: 0;
+            height: 211px;
+            right: 0;
 
-            z-index: -2;
+            z-index: 0;
           }
 
           @media screen and (max-width: $max-mobile) {
@@ -70,21 +103,38 @@ m-homepage {
       }
 
       .m-homepage__registerForm {
+        transform: translate(-54px, -19px);
+
+        &::before {
+          transform: none;
+          clip-path: polygon(73% 0, 100% 0, 100% 28%, 39% 93%);
+          bottom: -115px;
+          right: -688px;
+          top: -123px;
+
+          @include m-theme() {
+            background: themed($m-amber-medium);
+          }
+        }
+
         display: block;
         filter: drop-shadow(-1px 0px 8px rgba(50, 50, 0, 0.5));
 
         minds-form-register {
+          width: 409px;
+          height: 423px;
           display: block;
           background-color: #fcfcfc;
 
-          padding: 50px 37px;
+          padding: 58px 37px;
 
-          clip-path: polygon(0 0, 100% 8px, 99.99% 99%, 0% 100%);
+          clip-path: polygon(0 0, 100% 8px, 99% 95%, 0% 98%);
 
           h3 {
             font-size: 24px;
             line-height: 32px;
             font-weight: bold;
+            margin: 0;
           }
 
           .mdl-cell {
@@ -93,6 +143,7 @@ m-homepage {
           }
 
           form {
+            margin-top: 21px;
             background: transparent !important;
 
             .mdl-card__supporting-text {
@@ -112,17 +163,22 @@ m-homepage {
             line-height: 19px;
           }
 
+          label:not(.mdl-checkbox) {
+            display: inline-block;
+            margin-bottom: 14px;
+          }
+
           label.mdl-checkbox {
             display: flex;
             align-items: center;
             padding-top: 0;
+            margin-top: 5px;
             margin-bottom: 33px;
           }
 
           .mdl-card__actions {
             flex-direction: column;
             align-items: flex-start;
-            margin-top: 14px;
             padding: 0;
 
             & > *:not(button) {
@@ -135,6 +191,10 @@ m-homepage {
 
             button {
               align-self: flex-end;
+              height: 56px;
+              width: 208px;
+              font-size: 20px;
+              line-height: 26px;
               @include m-theme() {
                 background-color: themed($m-aqua);
               }
