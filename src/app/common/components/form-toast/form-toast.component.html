@@ -1,0 +1,36 @@
+<div class="m-formToast__toastsContainer">
+  <ng-container *ngFor="let toast of toasts; let i = index">
+    <div
+      class="m-formToast__wrapper"
+      [ngClass]="{ dismissed: toast.dismissed }"
+    >
+      <i
+        class="material-icons m-formToast__icon--success"
+        *ngIf="toast.type === 'success'"
+        >check</i
+      >
+      <i
+        class="material-icons m-formToast__icon--error"
+        *ngIf="toast.type === 'error'"
+        >warning</i
+      >
+      <i
+        class="material-icons m-formToast__icon--warning"
+        *ngIf="toast.type === 'warning'"
+        >warning</i
+      >
+      <i
+        class="material-icons m-formToast__icon--info"
+        *ngIf="toast.type === 'info'"
+      ></i>
+      <p i18n>{{ toast.message }}</p>
+      <div class="m-formToast__iconWrapper">
+        <i
+          class="material-icons m-formToast__icon--close"
+          (click)="toast.dismissed = true"
+          >clear</i
+        >
+      </div>
+    </div>
+  </ng-container>
+</div>

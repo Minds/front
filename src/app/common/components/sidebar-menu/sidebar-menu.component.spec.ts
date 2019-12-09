@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { SidebarMenuComponent } from './sidebar-menu.component';
-import sidebarMenuCategories from './sidebar-menu-categories.default';
+import sidebarMenu from '../../../modules/pro/settings/sidebar-menu.default';
 
 describe('SidebarMenuComponent', () => {
   let component: SidebarMenuComponent;
@@ -21,7 +21,7 @@ describe('SidebarMenuComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(SidebarMenuComponent);
     component = fixture.componentInstance;
-    component.catId = 'analytics';
+    component.menu = sidebarMenu;
     // component.user = sessionMock.user;
     fixture.detectChanges();
   });

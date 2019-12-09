@@ -229,7 +229,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.detectChanges();
 
     try {
-      this.channel = await this.channelService.loadAndAuth(this.username);
+      this.channel = await this.channelService.load(this.username);
 
       this.bindCssVariables();
       this.shouldOpenWireModal();

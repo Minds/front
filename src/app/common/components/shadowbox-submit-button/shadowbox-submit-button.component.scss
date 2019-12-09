@@ -1,0 +1,96 @@
+.m-shadowboxSubmitButton {
+  min-width: 220px;
+  position: relative;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #4fc3a9;
+  min-height: 43px;
+  border: 0;
+  transition: all 0.2s ease;
+  border-radius: 2px;
+  outline: 0;
+  @include m-theme() {
+    color: themed($m-white);
+  }
+  &:hover {
+    &:not(:disabled) {
+      transform: scale(1.02);
+      background-color: #55ccb2;
+      @include m-theme() {
+        box-shadow: 0 3px 3px -2px rgba(themed($m-black), 0.2),
+          0 2px 5px 0 rgba(themed($m-black), 0.14),
+          0 1px 7px 0 rgba(themed($m-black), 0.12);
+      }
+    }
+  }
+  &:active {
+    &:not(:disabled) {
+      transform: scale(0.999);
+      background-color: #4fc3a9;
+      @include m-theme() {
+        box-shadow: 0 3px 2px -2px rgba(themed($m-black), 0.2),
+          0 2px 3px 0 rgba(themed($m-black), 0.14),
+          0 1px 5px 0 rgba(themed($m-black), 0.12);
+      }
+    }
+  }
+  &:disabled,
+  &[disabled] {
+    cursor: default;
+    &:not(.saving) {
+      @include m-theme() {
+        background-color: themed($m-grey-100);
+      }
+    }
+  }
+}
+button {
+  outline: 0;
+}
+[class*='m-shadowboxSubmitButton__status'] {
+  font-size: 17px;
+  font-weight: 300;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0.2;
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.2;
+    transform: scale(0.9);
+  }
+}
+
+.m-shadowboxSubmitButton__status--saving {
+  span {
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    margin: 0 6px;
+    border-radius: 50%;
+    animation-name: blink;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+    @include m-theme() {
+      background-color: themed($m-white);
+    }
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@media screen and (max-width: $max-mobile) {
+  m-shadowboxSubmitButton {
+    min-width: 50%;
+  }
+}

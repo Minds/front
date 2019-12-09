@@ -2,9 +2,18 @@
   margin-bottom: $minds-padding;
   padding: $minds-padding * 2;
 
+  > p {
+    margin-bottom: 8px;
+
+    &.m-token-withdraw__note {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  }
+
   .m-token-withdraw--form {
     display: flex;
-    margin-bottom: $minds-padding;
+    margin: 16px 0 8px;
 
     .m-token-withdraw--input,
     .m-token-withdraw--submit-button {

@@ -45,9 +45,11 @@ const routes: Routes = [
         component: ProMarketingComponent,
       },
       {
-        path: 'settings',
-        component: ProSettingsComponent,
+        path: ':username/settings',
+        redirectTo: ':username/settings/general',
+        pathMatch: 'full',
       },
+      { path: ':username/settings/:tab', component: ProSettingsComponent },
       {
         path: ':username',
         component: ProChannelComponent,

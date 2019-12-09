@@ -83,6 +83,7 @@ import { GraphSVG } from './components/graphs/svg';
 import { GraphPoints } from './components/graphs/points';
 import { DynamicFormComponent } from './components/forms/dynamic-form/dynamic-form.component';
 import { SortSelectorComponent } from './components/sort-selector/sort-selector.component';
+
 import { UpdateMarkersService } from './services/update-markers.service';
 import { SocketsService } from '../services/sockets';
 import { Storage } from '../services/storage';
@@ -92,6 +93,13 @@ import { SwitchComponent } from './components/switch/switch.component';
 import { V2TopbarComponent } from './layout/v2-topbar/v2-topbar.component';
 import { UserMenuComponent } from './layout/v2-topbar/user-menu.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
+import { FeaturedContentService } from './components/featured-content/featured-content.service';
+import { BoostedContentService } from './services/boosted-content.service';
+import { FeedsService } from './services/feeds.service';
+import { EntitiesService } from './services/entities.service';
+import { BlockListService } from './services/block-list.service';
+import { SettingsService } from '../modules/settings/settings.service';
+import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
@@ -113,8 +121,11 @@ import { PageLayoutComponent } from './components/page-layout/page-layout.compon
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
 import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
 import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
-import { FeaturedContentService } from './components/featured-content/featured-content.service';
-import { FeedsService } from './services/feeds.service';
+import { DropdownSelectorComponent } from './components/dropdown-selector/dropdown-selector.component';
+import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-button/shadowbox-submit-button.component';
+import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
+import { FormToastComponent } from './components/form-toast/form-toast.component';
+import { SsoService } from './services/sso.service';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -226,6 +237,10 @@ PlotlyModule.plotlyjs = PlotlyJS;
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
     ShadowboxHeaderComponent,
+    DropdownSelectorComponent,
+    FormDescriptorComponent,
+    FormToastComponent,
+    ShadowboxSubmitButtonComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -321,9 +336,14 @@ PlotlyModule.plotlyjs = PlotlyJS;
     PageLayoutComponent,
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
+    DropdownSelectorComponent,
+    FormDescriptorComponent,
+    FormToastComponent,
+    ShadowboxSubmitButtonComponent,
   ],
   providers: [
     SiteService,
+    SsoService,
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
@@ -339,7 +359,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
-      deps: [HttpClient, SiteService],
+      deps: [HttpClient],
     },
     {
       provide: NSFWSelectorCreatorService,
@@ -352,15 +372,39 @@ PlotlyModule.plotlyjs = PlotlyJS;
       deps: [Storage],
     },
     {
-      provide: RouterHistoryService,
-      useFactory: router => new RouterHistoryService(router),
-      deps: [Router],
+      provide: BoostedContentService,
+      useFactory: (
+        client,
+        session,
+        entitiesService,
+        blockListService,
+        settingsService
+      ) =>
+        new BoostedContentService(
+          client,
+          session,
+          entitiesService,
+          blockListService,
+          settingsService
+        ),
+      deps: [
+        Client,
+        Session,
+        EntitiesService,
+        BlockListService,
+        SettingsService,
+      ],
     },
     {
       provide: FeaturedContentService,
       useFactory: boostedContentService =>
         new FeaturedContentService(boostedContentService),
       deps: [FeedsService],
+    },
+    {
+      provide: RouterHistoryService,
+      useFactory: router => new RouterHistoryService(router),
+      deps: [Router],
     },
   ],
   entryComponents: [

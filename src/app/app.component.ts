@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { ChangeDetectorRef, Component, HostBinding } from '@angular/core';
 
 import { NotificationService } from './modules/notifications/notification.service';
 import { AnalyticsService } from './services/analytics';
@@ -18,6 +18,7 @@ import { ThemeService } from './common/services/theme.service';
 import { BannedService } from './modules/report/banned/banned.service';
 import { DiagnosticsService } from './services/diagnostics.service';
 import { SiteService } from './common/services/site.service';
+import { SsoService } from './common/services/sso.service';
 import { Subscription } from 'rxjs';
 import { RouterHistoryService } from './common/services/router-history.service';
 import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
@@ -29,7 +30,10 @@ import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
 })
 export class Minds {
   name: string;
+
   minds = window.Minds;
+
+  ready: boolean = false;
 
   showOnboarding: boolean = false;
 
@@ -57,7 +61,9 @@ export class Minds {
     private bannedService: BannedService,
     private diagnostics: DiagnosticsService,
     private routerHistoryService: RouterHistoryService,
-    private site: SiteService
+    private site: SiteService,
+    private sso: SsoService,
+    private cd: ChangeDetectorRef
   ) {
     this.name = 'Minds';
 
@@ -67,8 +73,29 @@ export class Minds {
   }
 
   async ngOnInit() {
-    this.diagnostics.setUser(this.minds.user);
-    this.diagnostics.listen(); // Listen for user changes
+    try {
+      this.diagnostics.setUser(this.minds.user);
+      this.diagnostics.listen(); // Listen for user changes
+
+      if (this.sso.isRequired()) {
+        await this.sso.connect();
+      }
+    } catch (e) {
+      console.error('ngOnInit()', e);
+    }
+
+    this.ready = true;
+    this.detectChanges();
+
+    try {
+      await this.initialize();
+    } catch (e) {
+      console.error('initialize()', e);
+    }
+  }
+
+  async initialize() {
+    this.blockListService.fetch();
 
     if (!this.site.isProDomain) {
       this.notificationService.getNotifications();
@@ -135,5 +162,10 @@ export class Minds {
 
   get isProDomain() {
     return this.site.isProDomain;
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

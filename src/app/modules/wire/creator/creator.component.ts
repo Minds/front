@@ -36,6 +36,7 @@ export interface WireStruc {
   payloadType: PayloadType | null;
   guid: any;
   recurring: boolean;
+  recurringInterval?: 'once' | 'monthly' | 'yearly' | null;
   payload: any;
 }
 
@@ -53,7 +54,7 @@ export class WireCreatorComponent {
     payloadType: 'onchain',
     guid: null,
     recurring: true,
-
+    recurringInterval: 'monthly',
     // Payment
     payload: null,
   };
