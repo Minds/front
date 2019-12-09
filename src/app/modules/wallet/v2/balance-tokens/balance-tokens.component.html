@@ -14,13 +14,24 @@
           >
         </div>
       </div>
-      <ng-container *ngTemplateOutlet="buyTokens"></ng-container>
+      <!-- <ng-container *ngTemplateOutlet="buyTokens"></ng-container> -->
+      <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
+        ><m-shadowboxSubmitButton>Buy tokens</m-shadowboxSubmitButton></a
+      >
+      <!-- TODOOJM uncomment -->
+      <!-- <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
+        ><m-shadowboxSubmitButton
+          [disabled]="!session.getLoggedInUser().rewards"
+          >Buy tokens</m-shadowboxSubmitButton
+        ></a
+      > -->
     </div>
     <div class="m-walletBalance--tokens__equationSymbol">=</div>
     <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
       <div class="m-walletBalance--tokens__balanceTitle">
         Off-Chain<m-tooltip icon="help"
-          >A short description of Off-chain</m-tooltip
+          >Store tokens on our servers for quicker transaction times and no
+          fees</m-tooltip
         >
       </div>
       <div class="m-walletBalance--tokens__balanceValWrapper">
@@ -39,7 +50,8 @@
     <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
       <div class="m-walletBalance--tokens__balanceTitle">
         On-Chain<m-tooltip icon="help"
-          >A "short description of On-chain" lol</m-tooltip
+          >Store tokens on your device instead of our servers for more control
+          and portability</m-tooltip
         >
       </div>
       <div class="m-walletBalance--tokens__balanceValWrapper">
@@ -53,27 +65,31 @@
         >
         tokens
       </div>
-      <a *ngIf="session.getLoggedInUser().rewards">Transfer to On-Chain</a>
+      <!-- TODOOJM uncomment -->
+      <a>Transfer to On-Chain</a>
+      <!-- <a *ngIf="session.getLoggedInUser().rewards">Transfer to On-Chain</a> -->
     </div>
   </div>
   <div class="m-walletBalance--tokens__learnMore">
     <a>Learn more</a> about tokens.
   </div>
   <div class="m-walletBalance--tokens__payout">
-    Daily estimated payout
-    <span>{{ estimatedTokenPayout | token: 18 | number: '1.0-3' }}</span>
+    Today's estimated payout
+    <span class="m-walletBalance--tokens__payoutEstimate">{{
+      estimatedTokenPayout | token: 18 | number: '1.0-3'
+    }}</span>
     tokens. Next payout in
     <span>{{ nextPayout | timediff }}</span> (Daily at 2:00am UTC)
   </div>
 </ng-container>
 
-<ng-template #buyTokens>
+<!-- <ng-template #buyTokens>
   <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
     ><m-shadowboxSubmitButton [disabled]="!session.getLoggedInUser().rewards"
       >Buy tokens</m-shadowboxSubmitButton
     ></a
   >
-</ng-template>
+</ng-template> -->
 
 <ng-template #loading>
   <h2>...</h2>

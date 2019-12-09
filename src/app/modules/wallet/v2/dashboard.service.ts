@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-// import { BehaviorSubject, Observable, combineLatest, of } from 'rxjs';
-import { MindsHttpClient } from '../../../common/api/client.service';
-
-// import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
-import fakeData from './fake-data';
+import { Client } from '../../../common/api/client.service';
+import { Session } from '../../../services/session';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
+import { BehaviorSubject, Observable } from 'rxjs';
 import * as BN from 'bn.js';
+
+import fakeData from './fake-data';
 
 @Injectable()
 export class WalletDashboardService {
-  walletLoaded: boolean = false;
+  walletLoaded = false;
   totalTokens = 0;
 
   wallet: any = {
@@ -59,17 +59,19 @@ export class WalletDashboardService {
   };
 
   constructor(
-    private client: MindsHttpClient,
+    private client: Client,
     protected web3Wallet: Web3WalletService,
-    protected tokenContract: TokenContractService
+    protected tokenContract: TokenContractService,
+    protected session: Session
   ) {}
 
   getWallet() {
     this.getTokenAccounts();
-    this.getStripeAccount();
     this.getEthAccount();
+    this.getStripeAccount();
 
-    // this.wallet = fakeData.wallet;
+    // TODOOJM comment me
+    this.wallet = fakeData.wallet;
 
     this.walletLoaded = true;
     return this.wallet;
@@ -114,7 +116,7 @@ export class WalletDashboardService {
 
       this.wallet.onchain.address = address;
       if (this.wallet.receiver.address === address) {
-        return; // don't re-add onchain to totalTokens
+        return; // don't re-add onchain balance to totalTokens
       }
 
       const onchainBalance = await this.tokenContract.balanceOf(address);
@@ -138,29 +140,32 @@ export class WalletDashboardService {
   }
 
   async getStripeAccount() {
-    const stripeAccount = <any>(
-      await this.client.get('api/v2/payments/stripe/connect')
-    );
-    if (stripeAccount && stripeAccount.totalBalance) {
-      this.wallet.usd.value =
-        stripeAccount.totalBalance.amount + stripeAccount.pendingBalance.amount;
+    const merchant = this.session.getLoggedInUser().merchant;
+    if (merchant && merchant.service === 'stripe') {
+      try {
+        const stripeAccount = <any>(
+          await this.client.get('api/v2/payments/stripe/connect')
+        );
+        if (stripeAccount && stripeAccount.totalBalance) {
+          this.wallet.usd.value =
+            stripeAccount.totalBalance.amount +
+            stripeAccount.pendingBalance.amount;
+        }
+        return stripeAccount;
+      } catch (e) {
+        console.error(e);
+      }
+    } else {
+      return;
     }
-    return stripeAccount;
   }
 
   async getStripeTransactions() {
-    const { transactions } = <any>(
-      await this.client.get('api/v2/payments/stripe/transactions')
-    );
-    return transactions;
-  }
-
-  async getTokenPayoutOverview(): Promise<any> {
     try {
-      const result: any = await this.client.get(
-        `api/v2/blockchain/contributions/overview`
+      const { transactions } = <any>(
+        await this.client.get('api/v2/payments/stripe/transactions')
       );
-      return result;
+      return transactions;
     } catch (e) {
       console.error(e);
     }

@@ -60,7 +60,6 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
 
     this.title.setTitle('Wallet');
     this.wallet = this.walletService.getWallet();
-    console.log('888wallet', this.wallet);
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.activeCurrencyId = params.get('currency');

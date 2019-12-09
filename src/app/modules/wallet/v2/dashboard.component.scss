@@ -2,6 +2,7 @@ m-walletDashboard {
   .m-shadowboxHeaderTab {
     line-height: 21px;
     .m-shadowboxHeaderTab__label {
+      margin-top: 10px;
       font-size: 18px;
       @include m-theme() {
         color: themed($m-grey-800);
@@ -19,7 +20,6 @@ m-walletDashboard {
     box-sizing: border-box;
     display: flex;
     flex-flow: row nowrap;
-    margin: 0 40px;
     @include m-theme() {
       border-bottom: 1px solid themed($m-grey-100);
     }
@@ -50,7 +50,6 @@ m-walletDashboard {
   }
   .m-walletDashboardViews__view {
     display: block;
-    margin: 50px 57px 0 57px;
     padding-bottom: 50px;
   }
   m-shadowboxSubmitButton {
@@ -62,6 +61,27 @@ m-walletDashboard {
       padding: 7px 15px;
       font-size: 15px;
       line-height: 20px;
+    }
+  }
+
+  .m-walletDashboardBalances__wrapper {
+    margin: 50px 40px 34px 40px;
+  }
+  .m-walletDashboardViews__tabsContainer {
+    margin: 0 40px;
+  }
+  .m-walletDashboardViews__view {
+    margin: 50px 57px 0 57px;
+  }
+
+  @media screen and (max-width: $min-tablet) {
+    .m-walletDashboardBalances__wrapper {
+      margin: 50px 24px 34px 24px;
+    }
+    .m-walletDashboardViews__tabsContainer,
+    .m-walletDashboardViews__view {
+      margin-left: 16px;
+      margin-right: 16px;
     }
   }
 }

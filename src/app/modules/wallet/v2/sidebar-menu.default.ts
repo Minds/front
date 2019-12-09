@@ -6,11 +6,6 @@ const sidebarMenu = {
   },
   links: [
     {
-      id: 'wallet',
-      label: 'Wallet',
-      permissions: ['admin', 'user'],
-    },
-    {
       id: 'earnings',
       label: 'Earnings',
       permissions: ['pro'],

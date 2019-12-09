@@ -7,6 +7,7 @@ import {
   Input,
 } from '@angular/core';
 import { Client } from '../../../../services/api/client';
+import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { WalletDashboardService } from './../dashboard.service';
 import * as BN from 'bn.js';
@@ -29,25 +30,40 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   onchainBalance;
   inProgress = true;
   protected updateTimer$;
+
   nextPayout;
   estimatedTokenPayout;
+  payoutSubscription: Subscription;
 
   ngOnInit() {
     this.tokenBalance = this.formatBalance(this.wallet.tokens.balance);
     this.offchainBalance = this.formatBalance(this.wallet.offchain.balance);
     this.onchainBalance = this.formatBalance(this.wallet.onchain.balance);
 
-    const payouts: any = this.walletService.getTokenPayoutOverview();
-    console.log('888', payouts);
-    this.nextPayout = payouts.nextPayout;
-    this.estimatedTokenPayout = payouts.currentReward;
+    this.getPayout();
 
     this.inProgress = false;
-    this.updateTimer$ = setInterval(this.updateNextPayout.bind(this), 1000);
+    this.updateTimer$ = setInterval(this.updateNextPayout.bind(this), 60000);
     this.detectChanges();
   }
   ngOnDestroy() {
     clearInterval(this.updateTimer$);
+    if (this.payoutSubscription) {
+      this.payoutSubscription.unsubscribe();
+    }
+  }
+
+  async getPayout() {
+    try {
+      const result: any = await this.client.get(
+        `api/v2/blockchain/contributions/overview`
+      );
+      this.nextPayout = result.nextPayout;
+      this.estimatedTokenPayout = result.currentReward;
+      this.detectChanges();
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   updateNextPayout() {
@@ -70,13 +86,11 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     if (balance.length > 18) {
       formattedBalance.int = balance.slice(0, -18);
     }
-    const decimals = balance.slice(-18);
+    const frac = balance.slice(-18);
 
-    console.log('888iszero?', !new BN(decimals).isZero());
-    if (!new BN(decimals).isZero() || decimals.slice(0, 3) !== '000') {
-      formattedBalance.frac = decimals;
+    if (!new BN(frac).isZero() || frac.slice(0, 3) !== '000') {
+      formattedBalance.frac = frac;
     }
-    console.log('888', formattedBalance);
     return formattedBalance;
   }
 
