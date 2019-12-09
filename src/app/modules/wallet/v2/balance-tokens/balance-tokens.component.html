@@ -16,15 +16,11 @@
       </div>
       <!-- <ng-container *ngTemplateOutlet="buyTokens"></ng-container> -->
       <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
-        ><m-shadowboxSubmitButton>Buy tokens</m-shadowboxSubmitButton></a
-      >
-      <!-- TODOOJM uncomment -->
-      <!-- <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
         ><m-shadowboxSubmitButton
           [disabled]="!session.getLoggedInUser().rewards"
           >Buy tokens</m-shadowboxSubmitButton
         ></a
-      > -->
+      >
     </div>
     <div class="m-walletBalance--tokens__equationSymbol">=</div>
     <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
@@ -65,9 +61,7 @@
         >
         tokens
       </div>
-      <!-- TODOOJM uncomment -->
-      <a>Transfer to On-Chain</a>
-      <!-- <a *ngIf="session.getLoggedInUser().rewards">Transfer to On-Chain</a> -->
+      <a *ngIf="session.getLoggedInUser().rewards">Transfer to On-Chain</a>
     </div>
   </div>
   <div class="m-walletBalance--tokens__learnMore">
