@@ -96,7 +96,9 @@ export class NewsfeedComponent {
       this.legacySorting = path === 'suggested';
       this.isSorted = this.legacySorting || path === 'global/:algorithm';
       this.hashtag = params.hashtag || null;
-      this.all = Boolean(params.all);
+      this.all =
+        this.storage.get('preferred_hashtag_state') !== '1' ||
+        Boolean(params.all);
     });
 
     const showPlusButton = localStorage.getItem('newsfeed:hide-plus-button');

@@ -30,6 +30,7 @@ import { AutocompleteSuggestionsService } from '../../../../suggestions/services
 import { ActivityService } from '../../../../../common/services/activity.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   moduleId: module.id,
@@ -71,7 +72,8 @@ export class Activity implements OnInit {
   @Input()
   showBoostMenuOptions: boolean = false;
   @Input() slot: number = -1;
-
+  @Input() reloadComments$: BehaviorSubject<boolean>;
+  @Input() showComments: boolean;
   visibilityEvents: boolean = true;
   @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
     this.visibilityEvents = visibilityEvents;
@@ -90,6 +92,7 @@ export class Activity implements OnInit {
 
   _delete: EventEmitter<any> = new EventEmitter();
   commentsOpened: EventEmitter<any> = new EventEmitter();
+
   @Input() focusedCommentGuid: string;
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
@@ -198,6 +201,13 @@ export class Activity implements OnInit {
 
   ngOnInit() {
     this.activityAnalyticsOnViewService.setEnabled(this.visibilityEvents);
+
+    if (this.reloadComments$) {
+      this.reloadComments$.subscribe(value => {
+        this.openComments();
+        this.openComments();
+      });
+    }
 
     this.loadBlockedUsers();
   }
@@ -321,12 +331,13 @@ export class Activity implements OnInit {
     }
   }*/
 
-  openComments() {
+  public openComments() {
+    console.log(`open comments triggered`);
     if (!this.shouldShowComments()) {
       return;
     }
     this.commentsToggle = !this.commentsToggle;
-    this.commentsOpened.emit(this.commentsToggle);
+    // this.commentsOpened.emit(this.commentsToggle);
   }
 
   async togglePin() {

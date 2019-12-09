@@ -1,12 +1,19 @@
-import { Component, HostListener, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject } from 'rxjs';
 import { NewsfeedHashtagSelectorService } from '../../../modules/newsfeed/services/newsfeed-hashtag-selector.service';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
 import { ActivityService } from '../../../common/services/activity.service';
+import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
 @Component({
   moduleId: module.id,
   selector: 'minds-admin-firehose',
@@ -23,6 +30,7 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
   all = false;
   paramsSubscription: Subscription;
   timeout: any = null;
+  activitySwitch$ = new BehaviorSubject<boolean>(true);
 
   constructor(
     private session: Session,
@@ -102,6 +110,9 @@ export class AdminFirehoseComponent implements OnInit, OnDestroy {
     } else {
       this.load();
     }
+
+    // this.activitySwitch$.next(false);
+    this.activitySwitch$.next(true);
   }
 
   public save(guid: number, reason: number = null, subreason: number = null) {
