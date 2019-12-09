@@ -113,7 +113,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       if (typeof params['hashtag'] !== 'undefined') {
         this.hashtag = params['hashtag'] || null;
         this.all = false;
-      } else if (typeof params['all'] !== 'undefined') {
+      } else if (
+        typeof params['all'] !== 'undefined' ||
+        this.storage.get('preferred_hashtag_state') !== '1'
+      ) {
         this.hashtag = null;
         this.all = true;
       } else if (params['query']) {
