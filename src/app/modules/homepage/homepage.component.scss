@@ -12,6 +12,22 @@ m-homepage {
     .m-marketing__extras > * > * {
       max-width: 1100px !important;
     }
+
+    &.m-homepage__formExperiment {
+      .m-homepage__appButtons {
+        margin-left: 0 !important;
+      }
+
+      .m-marketing__asFeaturedIn {
+        margin-top: 139px !important;
+        max-width: 1102px !important;
+      }
+
+      .m-homepage__quotation {
+        margin-top: 84px !important;
+        margin-bottom: 85px !important;
+      }
+    }
   }
 
   .m-marketing__main {
@@ -60,6 +76,10 @@ m-homepage {
           }
 
           .m-homepage__joinButton {
+            font-size: 20px;
+            line-height: 26px;
+            width: 230px;
+            height: 60px;
             margin: 60px 0;
             @include m-theme() {
               background: themed($m-aqua);
@@ -67,7 +87,7 @@ m-homepage {
             }
 
             &.m-homepage__joinButton--first {
-              margin: 0 0 175px;
+              margin: 22px 0 74px 10px;
             }
           }
 
@@ -83,7 +103,7 @@ m-homepage {
             height: 211px;
             right: 0;
 
-            z-index: 0;
+            z-index: -1;
           }
 
           @media screen and (max-width: $max-mobile) {
@@ -270,13 +290,13 @@ m-homepage {
             height: auto !important;
             object-fit: initial !important;
 
-            max-width: 333px;
+            max-width: 273px;
             min-width: 250px;
             width: 100%;
             clip-path: none;
 
             @media screen and (min-width: $min-tablet) {
-              transform: translateY(-25px);
+              transform: translate(-4px, -17px);
             }
             @media screen and (max-width: $max-mobile) {
               min-width: 333px;
@@ -294,6 +314,7 @@ m-homepage {
     //width: 50%;
 
     margin-top: 50px;
+    margin-left: 10px;
 
     & > a:first-child {
       margin-right: 5%;
@@ -337,12 +358,13 @@ m-homepage {
   }
 
   .m-homepage__quotation {
-    margin-top: 116px;
-    margin-bottom: 161px;
+    margin-top: 111px;
+    margin-bottom: 9px;
   }
 
   .m-marketing__asFeaturedIn {
-    margin-top: 45px;
+    margin-top: 100px;
+    max-width: 1081px;
   }
 
   h1,

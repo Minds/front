@@ -1,6 +1,11 @@
 <div class="mf-jumpAnchor" #topAnchor></div>
 
-<m-marketing class="m-homepage" pageTitle="Minds Social Network" i18n-pageTitle>
+<m-marketing
+  class="m-homepage"
+  [class.m-homepage__formExperiment]="!!registerForm"
+  pageTitle="Minds Social Network"
+  i18n-pageTitle
+>
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
       <div
@@ -77,6 +82,7 @@
           [showBigButton]="true"
           [showPromotions]="false"
           [showLabels]="true"
+          #registerForm
         >
         </minds-form-register>
       </div>

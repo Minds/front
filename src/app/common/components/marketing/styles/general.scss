@@ -248,14 +248,22 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    margin: 0 auto;
 
     @media screen and(min-width: $m-grid-min-vp) {
-      width: 500px;
+      width: 730px;
     }
-    margin: 0 auto;
+
+    h3 {
+      font-size: 28px;
+      font-weight: bold;
+      line-height: 37px;
+      margin-bottom: 0;
+    }
 
     h4 {
       font-size: 14px;
+      line-height: 19px;
       margin: 0;
 
       @include m-theme() {
