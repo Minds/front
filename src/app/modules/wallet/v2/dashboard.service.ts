@@ -71,7 +71,7 @@ export class WalletDashboardService {
     this.getStripeAccount();
 
     // TODOOJM comment me
-    this.wallet = fakeData.wallet;
+    // this.wallet = fakeData.wallet;
 
     this.walletLoaded = true;
     return this.wallet;
