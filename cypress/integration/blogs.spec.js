@@ -1,6 +1,9 @@
 // import 'cypress-file-upload';
 
 context('Blogs', () => {
+
+  const closeButton = '[data-cy=data-minds-conversation-close]';
+
   before(() => {
     cy.getCookie('minds_sess')
       .then((sessionCookie) => {
@@ -8,6 +11,14 @@ context('Blogs', () => {
           return cy.login(true);
         }
       });
+
+    // ensure no messenger windows are open.
+    cy.get('body').then(($body) => {
+      if ($body.find(closeButton).length) {
+        cy.get(closeButton)
+          .click({multiple: true});
+      }
+    });
   });
 
   beforeEach(() => {
@@ -208,7 +219,7 @@ context('Blogs', () => {
     cy.get('.m-blog--title').contains(title);
     cy.get('.minds-blog-body p').contains(body);
   };
-
+  
   it('should not be able to create a new blog if no title or banner are specified', () => {
     cy.visit('/blog/edit/new');
     cy.get('.m-button--submit').click();
