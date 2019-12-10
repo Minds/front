@@ -257,6 +257,7 @@ m-homepage {
     }
 
     .m-marketing__image {
+      position: initial;
       margin: 0 auto;
 
       span {
@@ -301,6 +302,11 @@ m-homepage {
             @media screen and (max-width: $max-mobile) {
               min-width: 333px;
             }
+          }
+
+          &::after {
+            top: 94px;
+            right: -78px;
           }
         }
       }
