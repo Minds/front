@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'm-walletActionButton',
   templateUrl: './action-button.component.html',
 })
-export class WalletActionButtonComponent implements OnInit {
+export class WalletActionButtonComponent {
+  @Input() disabled: boolean = false;
   constructor() {}
-
-  ngOnInit() {}
 }

@@ -50,7 +50,7 @@ import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
 import { WalletUSDBalanceComponent } from './usd/balance.component';
 import { WalletDashboardComponent } from './v2/dashboard.component';
-import { WalletBalanceComponent } from './v2/balance/balance.component';
+import { WalletBalanceTokensV2Component } from './v2/balance-tokens/balance-tokens.component';
 import { WalletChartComponent } from './v2/chart/chart.component';
 import { WalletTransactionsTableComponent } from './v2/transactions-table/transactions-table.component';
 import { WalletActionButtonComponent } from './v2/action-button/action-button.component';
@@ -172,7 +172,7 @@ const walletRoutes: Routes = [
     WalletTokenTestnetComponent,
     WalletUSDBalanceComponent,
     WalletDashboardComponent,
-    WalletBalanceComponent,
+    WalletBalanceTokensV2Component,
     WalletChartComponent,
     WalletActionButtonComponent,
     WalletRewardsPopupComponent,
