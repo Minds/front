@@ -56,10 +56,10 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
       id: '30d',
       label: '30d',
     },
-    /*{
+    {
       id: '1y',
-      label: '1y'
-    },*/
+      label: '1y',
+    },
   ];
 
   customTypes: Array<{ id; label; icon? }> = [
