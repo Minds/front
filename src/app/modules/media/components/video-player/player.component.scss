@@ -14,11 +14,18 @@
 
   @include m-theme() {
     color: themed($m-white);
-    background: linear-gradient(180deg, $m-grey-600, transparent);
+    @include m-theme() {
+      background: linear-gradient(
+        rgba(themed($m-black-always), 0.5),
+        rgba(themed($m-black-always), 0)
+      );
+      color: themed($m-white-always);
+    }
   }
 }
 
 m-videoPlayer {
+  display: block;
   position: relative;
   width: 100%;
 }
