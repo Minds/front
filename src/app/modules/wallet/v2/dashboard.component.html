@@ -19,7 +19,13 @@
           ></m-shadowboxHeader__tabs>
 
           <div class="m-shadowboxLayout__body">
-            <m-walletBalance class="m-shadowboxLayout__body"></m-walletBalance>
+            <div class="m-walletDashboardBalances__wrapper">
+              <m-walletBalance--tokens
+                [wallet]="wallet"
+                class="m-shadowboxLayout__body"
+                *ngIf="activeCurrencyId === 'tokens'"
+              ></m-walletBalance--tokens>
+            </div>
             <div class="m-walletDashboardViews__wrapper">
               <div class="m-walletDashboardViews__tabsContainer">
                 <div
