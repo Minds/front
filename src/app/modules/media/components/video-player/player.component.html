@@ -9,6 +9,9 @@
     This video is still transcoding. You will receive a notification when it is
     completed.
   </span>
+  <span class="m-videoPlayer__notice--created" *ngIf="status === 'created'">
+    This video is waiting to be transcoded.
+  </span>
   <div class="m-videoPlayer__screen">
     <plyr
       style="display: block; width: 100%; height: 100%;"

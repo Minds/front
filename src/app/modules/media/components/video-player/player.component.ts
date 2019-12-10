@@ -97,7 +97,7 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
   }
 
   onPlayed(event: Plyr.PlyrEvent): void {
-    console.log('played', event);
+    // console.log('played', event);
   }
 
   /**
