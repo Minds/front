@@ -94,7 +94,6 @@ import { V2TopbarComponent } from './layout/v2-topbar/v2-topbar.component';
 import { UserMenuComponent } from './layout/v2-topbar/user-menu.component';
 import { FeaturedContentComponent } from './components/featured-content/featured-content.component';
 import { FeaturedContentService } from './components/featured-content/featured-content.service';
-import { BoostedContentService } from './services/boosted-content.service';
 import { FeedsService } from './services/feeds.service';
 import { EntitiesService } from './services/entities.service';
 import { BlockListService } from './services/block-list.service';
@@ -370,30 +369,6 @@ PlotlyModule.plotlyjs = PlotlyJS;
       provide: NSFWSelectorConsumerService,
       useFactory: _storage => new NSFWSelectorConsumerService(_storage),
       deps: [Storage],
-    },
-    {
-      provide: BoostedContentService,
-      useFactory: (
-        client,
-        session,
-        entitiesService,
-        blockListService,
-        settingsService
-      ) =>
-        new BoostedContentService(
-          client,
-          session,
-          entitiesService,
-          blockListService,
-          settingsService
-        ),
-      deps: [
-        Client,
-        Session,
-        EntitiesService,
-        BlockListService,
-        SettingsService,
-      ],
     },
     {
       provide: FeaturedContentService,
