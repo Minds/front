@@ -230,6 +230,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
           all,
           query,
           nsfw,
+          period_fallback: 1,
         })
         .setLimit(12)
         .setCastToActivities(true)
