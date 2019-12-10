@@ -63,10 +63,10 @@
         margin-bottom: 16px;
       }
 
-      @media screen and(min-width: $m-grid-min-vp),
-        screen and (max-width: $max-mobile) {
-        padding-right: 100px;
-      }
+      //@media screen and(min-width: $m-grid-min-vp),
+      //  screen and (max-width: $max-mobile) {
+      //  padding-right: 100px;
+      //}
     }
 
     ol.m-marketing__description > li,
@@ -83,7 +83,7 @@
         padding-right: 0;
         margin-bottom: 30px;
         font-size: 16px;
-        line-height: 23px;
+        line-height: 27px;
       }
     }
 
