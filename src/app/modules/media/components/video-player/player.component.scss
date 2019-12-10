@@ -14,11 +14,7 @@
 
   @include m-theme() {
     color: themed($m-white);
-  }
-  &[class*='--error'] {
-    @include m-theme() {
-      background-color: themed($m-red);
-    }
+    background: linear-gradient(180deg, $m-grey-600, transparent);
   }
 }
 
