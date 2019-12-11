@@ -140,7 +140,7 @@ m-homepage {
           @media screen and (max-width: $max-mobile) {
             &::before {
               transform: translate(153px, 212px);
-              clip-path: polygon(69% 0, 100% 0, 100% 28%, 0 90%);
+              clip-path: polygon(100% 0, 100% 0, 172% 28%, 0 90%);
             }
 
             &::after {
