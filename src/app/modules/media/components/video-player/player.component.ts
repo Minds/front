@@ -28,6 +28,11 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
   @Output() mediaModalRequested: EventEmitter<void> = new EventEmitter();
 
   /**
+   * Modal needs to know if we have left full screen
+   */
+  @Output() fullScreenChange: EventEmitter<Event> = new EventEmitter();
+
+  /**
    * This is the video player component
    */
   @ViewChild(PlyrComponent, { static: false }) player: PlyrComponent;
