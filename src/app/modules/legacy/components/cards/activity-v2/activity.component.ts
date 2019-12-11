@@ -1,14 +1,14 @@
 import {
-  Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  EventEmitter,
+  Component,
   ElementRef,
+  EventEmitter,
+  Injector,
   Input,
-  ViewChild,
   OnInit,
   SkipSelf,
-  Injector,
+  ViewChild,
 } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
@@ -30,6 +30,7 @@ import { AutocompleteSuggestionsService } from '../../../../suggestions/services
 import { ActivityService } from '../../../../../common/services/activity.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
+import { SignupModalService } from '../../../../modals/signup/service';
 
 @Component({
   moduleId: module.id,
@@ -176,7 +177,8 @@ export class MindsActivityV2 implements OnInit {
     public suggestions: AutocompleteSuggestionsService,
     protected activityService: ActivityService,
     @SkipSelf() injector: Injector,
-    protected elementRef: ElementRef
+    protected elementRef: ElementRef,
+    protected signupModal: SignupModalService
   ) {
     this.clientMetaService.inherit(injector);
 
@@ -611,5 +613,29 @@ export class MindsActivityV2 implements OnInit {
     this.elementRef.nativeElement.classList.add(
       'minds-activity-v2__allowOverflow'
     );
+  }
+
+  openWireModal() {
+    if (!this.session.isLoggedIn()) {
+      this.signupModal.open();
+
+      return;
+    }
+
+    const creator = this.overlayModal.create(
+      WireCreatorComponent,
+      this.activity,
+      {
+        default: this.activity && this.activity.wire_threshold,
+        onComplete: wire => {
+          if (this.activity.wire_totals) {
+            this.activity.wire_totals[wire.currency] = wire.amount;
+          }
+
+          this.wireSubmitted(wire);
+        },
+      }
+    );
+    creator.present();
   }
 }

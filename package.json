@@ -43,6 +43,7 @@
     "material-design-icons": "~3.0.1",
     "material-design-lite": "~1.3.0",
     "medium-editor": "^5.23.2",
+    "ng2-fittext": "^1.2.8",
     "ngx-drag-drop": "^2.0.0",
     "plotly.js": "^1.47.4",
     "qrcodejs2": "0.0.2",

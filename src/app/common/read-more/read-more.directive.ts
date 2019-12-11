@@ -1,8 +1,9 @@
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  ContentChild,
   Directive,
   ElementRef,
-  ContentChild,
-  ChangeDetectorRef,
   Input,
 } from '@angular/core';
 import { ReadMoreButtonComponent } from './button.component';
@@ -10,7 +11,7 @@ import { ReadMoreButtonComponent } from './button.component';
 @Directive({
   selector: '[m-read-more]',
 })
-export class ReadMoreDirective {
+export class ReadMoreDirective implements AfterViewInit {
   _element: any;
   realHeight: any;
   expandable: boolean = false;
@@ -27,7 +28,7 @@ export class ReadMoreDirective {
     }
 
     setTimeout(() => {
-      this.realHeight = this._element.clientHeight;
+      this.realHeight = this._element.scrollHeight;
       if (this.button && !this.button.content) {
         this.button.content = this;
       }

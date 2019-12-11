@@ -51,28 +51,6 @@
         i18n="@@M__COMMON__EDITED"
         >edited</span
       >
-      <div
-        class="mdl-card__supporting-text is-boosted"
-        *ngIf="boosted"
-        [class.is-onchain]="activity.boosted_onchain"
-      >
-        <i class="material-icons">trending_up</i>
-        <a
-          i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL"
-          [hidden]="activity.boosted_onchain"
-          >Boosted</a
-        >
-        <a
-          i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN"
-          [hidden]="!activity.boosted_onchain"
-          [routerLink]="['/token']"
-          >Boosted Onchain</a
-        >
-      </div>
-      <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
-        <i class="material-icons unlisted">visibility_off</i>
-        <a i18n>Unlisted</a>
-      </div>
     </a>
     <a
       [routerLink]="['/newsfeed/', activity.entity_guid]"
@@ -320,7 +298,11 @@
     </a>
     <!--       [innerHtml]="activity.message | tags"
      -->
+    <!--      [modelToWatch]="activity.message"-->
     <span
+      [fittext]="true"
+      [minFontSize]="16"
+      [maxFontSize]="20"
       class="m-mature-message-content"
       [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
       (click)="
@@ -497,31 +479,49 @@
 <ng-content select="[bottom-content]"></ng-content>
 
 <!-- Action buttons -->
-<div class="tabs" *ngIf="!hideTabs && !isPending(activity)">
+<!--<div class="tabs" *ngIf="!hideTabs && !isPending(activity)">-->
+<!--  <minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>-->
+<!--  <minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>-->
+<!--  <m-wire-button-->
+<!--    *ngIf="session.getLoggedInUser().guid != activity.owner_guid"-->
+<!--    [object]="activity"-->
+<!--    (done)="wireSubmitted($event)"-->
+<!--  ></m-wire-button>-->
+<!--  <button-->
+<!--    class="m-btn m-btn&#45;&#45;action m-btn&#45;&#45;slim minds-boost-button"-->
+<!--    *ngIf="-->
+<!--      session.getLoggedInUser().guid == activity.owner_guid &&-->
+<!--      !isScheduled(activity.time_created)-->
+<!--    "-->
+<!--    id="boost-actions"-->
+<!--    (click)="showBoost()"-->
+<!--  >-->
+<!--    <span i18n="verb|@@M__ACTION__BOOST">Boost</span>-->
+<!--  </button>-->
+<!--  <minds-button-comment-->
+<!--    [object]="activity"-->
+<!--    (click)="openComments()"-->
+<!--  ></minds-button-comment>-->
+<!--  <minds-button-remind [object]="activity"></minds-button-remind>-->
+<!--</div>-->
+<!-- action bar and comments -->
+<div class="m-activity__actionButtons">
   <minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
   <minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
-  <m-wire-button
-    *ngIf="session.getLoggedInUser().guid != activity.owner_guid"
-    [object]="activity"
-    (done)="wireSubmitted($event)"
-  ></m-wire-button>
-  <button
-    class="m-btn m-btn--action m-btn--slim minds-boost-button"
-    *ngIf="
-      session.getLoggedInUser().guid == activity.owner_guid &&
-      !isScheduled(activity.time_created)
-    "
-    id="boost-actions"
-    (click)="showBoost()"
-  >
-    <span i18n="verb|@@M__ACTION__BOOST">Boost</span>
-  </button>
-  <minds-button-comment
-    [object]="activity"
-    (click)="openComments()"
-  ></minds-button-comment>
   <minds-button-remind [object]="activity"></minds-button-remind>
+
+  <div
+    class="m-activity__pay"
+    *ngIf="session.getLoggedInUser().guid != activity.owner_guid"
+  >
+    <img
+      [src]="minds.cdn_assets_url + 'assets/icons/pay.png'"
+      (click)="openWireModal()"
+    />
+  </div>
 </div>
+
+<div class="m-activity__commentPoster"></div>
 
 <!-- Activity metrics -->
 <div
@@ -562,33 +562,6 @@
   #toggle
   *ngIf="!hideTabs"
 >
-  <button
-    class="mdl-button m-pin-button mdl-button--icon mdl-color-text--blue-grey-300"
-    (click)="togglePin()"
-    [disabled]="
-      session.getLoggedInUser().guid != activity.owner_guid || activity.dontPin
-    "
-    *ngIf="!activity?.ephemeral"
-  >
-    <m-tooltip
-      icon="turned_in"
-      *ngIf="activity.pinned"
-      i18n="@@MINDS__CARDS__ACTIVITY__PINNED_POST"
-    >
-      This post is pinned
-    </m-tooltip>
-    <m-tooltip
-      icon="turned_in_not"
-      *ngIf="
-        session.getLoggedInUser().guid == activity.owner_guid &&
-        !activity.pinned &&
-        !activity.dontPin
-      "
-      i18n="@@MINDS__CARDS__ACTIVITY__CLICK_TO_PIN"
-    >
-      Click to pin this post to the top of your channel feed
-    </m-tooltip>
-  </button>
   <m-safe-toggle
     *ngIf="showRatingToggle && session.isAdmin()"
     [(entity)]="activity"

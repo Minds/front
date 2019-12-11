@@ -40,6 +40,7 @@ import { CommentsModule } from '../comments/comments.module';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { CommentComponentV2 } from '../comments/comment/comment.component';
 import { MindsActivityV2 } from './components/cards/activity-v2/activity.component';
+import { Ng2FittextModule } from 'ng2-fittext';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { MindsActivityV2 } from './components/cards/activity-v2/activity.compone
     PostMenuModule,
     CommentsModule,
     TextInputAutocompleteModule,
+    Ng2FittextModule,
   ],
   declarations: [
     Activity,

@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   Injector,
+  OnInit,
   QueryList,
   SkipSelf,
   ViewChildren,
@@ -37,7 +38,7 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
   providers: [ClientMetaService, FeedsService],
   templateUrl: 'boost-rotator.component.html',
 })
-export class NewsfeedBoostRotatorComponent {
+export class NewsfeedBoostRotatorComponent implements OnInit {
   boosts: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
@@ -176,7 +177,7 @@ export class NewsfeedBoostRotatorComponent {
         return;
       }
 
-      this.next();
+      // this.next();
       //this.recordImpression(this.currentPosition);
     }, this.interval * 1000);
   }
