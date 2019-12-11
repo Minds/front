@@ -36,6 +36,18 @@ m-homepage {
         margin-bottom: 85px !important;
       }
     }
+
+    .m-marketing__section--style-5 {
+      .m-marketing__wrapper {
+        .m-marketing__image {
+          span {
+            @media screen and (max-width: $max-mobile) {
+              margin-bottom: 40px;
+            }
+          }
+        }
+      }
+    }
   }
 
   .m-marketing__main {
