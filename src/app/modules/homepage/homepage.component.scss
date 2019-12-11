@@ -102,26 +102,6 @@ m-homepage {
             padding-right: 129px;
           }
 
-          .m-homepage__joinButton {
-            font-size: 20px;
-            line-height: 26px;
-            width: 230px;
-            height: 60px;
-            margin: 60px 0;
-            @include m-theme() {
-              background: themed($m-aqua);
-              border-color: themed($m-aqua) !important;
-            }
-
-            @media screen and (max-width: $max-mobile) {
-              width: 100%;
-            }
-
-            &.m-homepage__joinButton--first {
-              margin: 22px 0 74px 10px;
-            }
-          }
-
           &::after {
             content: '';
             clip-path: polygon(0 46%, 100% 0, 100% 100%, 0 100%);
@@ -346,6 +326,26 @@ m-homepage {
     }
   }
 
+  .m-homepage__joinButton {
+    font-size: 20px;
+    line-height: 26px;
+    width: 230px;
+    height: 60px;
+    margin: 60px 0;
+    @include m-theme() {
+      background: themed($m-aqua);
+      border-color: themed($m-aqua) !important;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+    }
+
+    &.m-homepage__joinButton--first {
+      margin: 22px 0 74px 10px;
+    }
+  }
+
   .m-homepage__appButtons {
     display: flex;
     flex-direction: row;
@@ -418,6 +418,28 @@ m-homepage {
     margin-top: 55px;
     h1.m-homepage__minds {
       margin-top: 100px;
+    }
+  }
+
+  .m-marketing__section--tail {
+    .m-marketing__wrapper {
+      .m-marketingTitle__centered {
+        font-size: 28px;
+        line-height: 37px;
+        color: #4a4a4a;
+        white-space: nowrap;
+
+        @media screen and (max-width: $max-mobile) {
+          font-size: 19px;
+          line-height: 25px;
+        }
+      }
+
+      .m-homepage__joinButton {
+        width: 230px;
+        height: 60px;
+        margin: 0 auto;
+      }
     }
   }
 }
