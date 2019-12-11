@@ -41,7 +41,9 @@
 
       <ng-container *mIfFeature="'top-feeds-by-age'">
         <div
-          *ngIf="i === (feedsService.fallbackAtIndex | async)"
+          *ngIf="
+            i === (feedsService.fallbackAtIndex | async) && isActivityFeed()
+          "
           class="m-feeds-sorted__fallbackLegend"
         >
           <span i18n>Posts older than {{ period | uppercase }}</span>
