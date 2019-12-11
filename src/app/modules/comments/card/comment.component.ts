@@ -25,7 +25,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { FeaturesService } from '../../../services/features.service';
-import { MindsVideoComponent } from '../../media/components/video/video.component';
 import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
 
@@ -82,7 +81,6 @@ export class CommentComponent implements OnChanges {
   commentAge$: Observable<number>;
 
   videoDimensions: Array<any> = null;
-  @ViewChild('player', { static: false }) player: MindsVideoComponent;
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   @Input() canEdit: boolean = false;
