@@ -38,13 +38,19 @@
     margin-right: 4px;
   }
 
-  input[type='text'] {
+  input[type='text'],
+  input[type='tel'] {
     padding: 12px;
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 1px;
     border-radius: 6px;
-    width: 100%;
+    &input[type='text'] {
+      width: 100%;
+    }
+  }
+  .m-phone-input--selected-flag {
+    height: 100%;
   }
 }
 .m-merchant-legal {
