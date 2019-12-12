@@ -1,11 +1,12 @@
 minds-activity-v2.mdl-card,
 minds-activity-v2 {
   width: auto;
-  min-height: 0;
-  max-height: 720px;
+  min-height: 720px !important;
+  max-height: 720px !important;
   margin-bottom: 16px;
   border-radius: 6px;
   overflow: visible;
+  justify-content: space-around;
 
   &.minds-activity-v2__allowOverflow {
     max-height: none;
@@ -16,6 +17,11 @@ minds-activity-v2 {
       //  max-height: none;
       //}
     }
+  }
+
+  .m-activity__spacer {
+    flex-grow: 1;
+    flex-shrink: 1;
   }
 
   .mdl-card__supporting-text {
@@ -95,6 +101,9 @@ minds-activity-v2 {
 
     .m-read-more--button {
       text-align: center;
+      span {
+        color: #4a90e2;
+      }
     }
   }
 
@@ -286,7 +295,7 @@ minds-activity-v2 {
       padding: 16px 22px 0;
       display: block;
       text-decoration: none;
-      width: calc(100% - 32px);
+      width: auto;
       background-color: #fbfbfb;
 
       h2 {

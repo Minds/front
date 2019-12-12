@@ -1,39 +1,52 @@
-<div class="m-boost-rotator-tools">
-  <span
-    i1n="@@BOOST_ROTATOR__SHOWING_BOOSTS"
-    *ngIf="router.url == '/newsfeed/boost'"
-  >
-    Showing boosts
-  </span>
-  <div class="m-layout--spacer"></div>
-  <ul class="m-boost-rotator-tabs">
-    <li
-      routerLink="/newsfeed/boost"
-      *ngIf="router.url !== '/newsfeed/boost'"
-      class="m-boostRotator__tab--boost-feed"
-    >
-      <a i18n="@@M__COMMON__BOOSTFEED">Boostfeed</a>
-    </li>
-    <ng-container *ngIf="boosts.length > 0; else noBoosts">
-      <li (click)="prev()">
-        <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
-      </li>
-      <li (click)="next()">
-        <i class="material-icons mdl-color-text--blue-grey-400"
-          >chevron_right</i
-        >
-      </li>
-    </ng-container>
-    <ng-template #noBoosts>
-      <li>
-        <i style="height: 32px;display: block;"></i>
-      </li>
-    </ng-template>
-    <li class="m-boost-rotator-tabs--settings">
-      <m-newsfeed--dropdown [showBoost]="true"></m-newsfeed--dropdown>
-    </li>
-  </ul>
-</div>
+<!--<div class="m-boost-rotator-tools">-->
+<!--  <span-->
+<!--    i1n="@@BOOST_ROTATOR__SHOWING_BOOSTS"-->
+<!--    *ngIf="router.url == '/newsfeed/boost'"-->
+<!--  >-->
+<!--    Showing boosts-->
+<!--  </span>-->
+<!--  <div class="m-layout&#45;&#45;spacer"></div>-->
+<!--  <ul class="m-boost-rotator-tabs">-->
+<!--    <li-->
+<!--      routerLink="/newsfeed/boost"-->
+<!--      *ngIf="router.url !== '/newsfeed/boost'"-->
+<!--      class="m-boostRotator__tab&#45;&#45;boost-feed"-->
+<!--    >-->
+<!--      <a i18n="@@M__COMMON__BOOSTFEED">Boostfeed</a>-->
+<!--    </li>-->
+<!--    <ng-container *ngIf="boosts.length > 0; else noBoosts">-->
+<!--      <li (click)="prev()">-->
+<!--        <i class="material-icons mdl-color-text&#45;&#45;blue-grey-400">chevron_left</i>-->
+<!--      </li>-->
+<!--      <li (click)="next()">-->
+<!--        <i class="material-icons mdl-color-text&#45;&#45;blue-grey-400"-->
+<!--          >chevron_right</i-->
+<!--        >-->
+<!--      </li>-->
+<!--    </ng-container>-->
+<!--    <ng-template #noBoosts>-->
+<!--      <li>-->
+<!--        <i style="height: 32px;display: block;"></i>-->
+<!--      </li>-->
+<!--    </ng-template>-->
+<!--    <li class="m-boost-rotator-tabs&#45;&#45;settings">-->
+<!--      <m-newsfeed&#45;&#45;dropdown [showBoost]="true"></m-newsfeed&#45;&#45;dropdown>-->
+<!--    </li>-->
+<!--  </ul>-->
+<!--</div>-->
+<ng-container *ngIf="!inProgress">
+  <div class="m-newsfeedBoostRotator__leftArrow">
+    <i class="material-icons">
+      chevron_left
+    </i>
+  </div>
+
+  <div class="m-newsfeedBoostRotator__rightArrow">
+    <i class="material-icons">
+      chevron_right
+    </i>
+  </div>
+</ng-container>
 
 <ng-container *ngIf="!disabled">
   <minds-activity-v2
