@@ -28,17 +28,13 @@ export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
     // TODO: remove all of this once channel search is ready
     // Temporarily remove channel search from channel filter options
     this.subscription = this.analyticsService.filters$.subscribe(filters => {
-      this.filters = filters;
-
       const channelFilter = filters.find(filter => filter.id === 'channel');
-
-      channelFilter.options = channelFilter.options.filter(option => {
-        return option.id === 'all' || option.id === 'self';
-      });
-
-      this.filters.find(filter => filter.id === 'channel').options =
-        channelFilter.options;
-
+      if (channelFilter) {
+        channelFilter.options = channelFilter.options.filter(option => {
+          return option.id === 'all' || option.id === 'self';
+        });
+      }
+      this.filters = filters;
       this.detectChanges();
     });
   }

@@ -128,6 +128,10 @@ m-proSettings {
     left: -1px;
   }
 
+  input[type='text'] {
+    max-height: 42px;
+  }
+
   input[type='text'],
   textarea {
     font-size: 15px;
