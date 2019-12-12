@@ -160,10 +160,7 @@ export class CampaignsService {
       .campaign;
   }
 
-  async update(
-    campaign: Campaign,
-    payment?: CampaignPayment
-  ): Promise<Campaign> {
+  async update(campaign: Campaign): Promise<Campaign> {
     if (!campaign.urn) {
       throw new Error('Missing campaign URN');
     }
@@ -173,10 +170,6 @@ export class CampaignsService {
     }
 
     const data = { ...campaign };
-
-    if (payment) {
-      data['payment'] = payment;
-    }
 
     return ((await this.client.post(
       `api/v2/boost/campaigns/${campaign.urn}`,

@@ -239,27 +239,9 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
         this.campaign.checksum = checksum;
       }
 
-      let payment: CampaignPayment = null;
-      let amountDue = this.payments.calculateAmountDue(
-        this.campaign,
-        this.isEditing
-      );
-
-      if (amountDue > 0) {
-        payment = await this.payments.pay(this.campaign, amountDue);
-
-        if (!payment) {
-          this.currentError = '';
-          this.inProgress = false;
-
-          this.detectChanges();
-          return;
-        }
-      }
-
       const campaign = !this.isEditing
-        ? await this.service.create(this.campaign, payment)
-        : await this.service.update(this.campaign, payment);
+        ? await this.service.create(this.campaign)
+        : await this.service.update(this.campaign);
 
       // NOTE: Keeping inProgress true until redirection happens
       setTimeout(() => {
