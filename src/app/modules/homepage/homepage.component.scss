@@ -344,6 +344,9 @@ m-homepage {
 
     &.m-homepage__joinButton--first {
       margin: 22px 0 74px 10px;
+      @media screen and (max-width: 900px) {
+        display: none;
+      }
     }
   }
 
