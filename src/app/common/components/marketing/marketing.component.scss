@@ -4,6 +4,7 @@ m-marketing {
   display: block;
   font-family: Roboto, sans-serif;
   overflow-x: hidden;
+  min-width: 320px;
 
   @include m-theme() {
     background: themed($m-white);
