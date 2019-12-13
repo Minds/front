@@ -49,7 +49,7 @@ export class HomepageComponent implements OnInit, OnDestroy {
       this.flags.canPlayInlineVideos = false;
     }
 
-    this.topbarService.toggleMarketingPages(true);
+    this.topbarService.toggleMarketingPages(true, false);
   }
 
   ngOnInit() {

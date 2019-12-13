@@ -26,6 +26,7 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
   showBackground: boolean = true;
   showSeparateLoginBtns: boolean = false;
   marketingPages: boolean = false;
+  showBottombar: boolean = true;
 
   @ViewChild(DynamicHostDirective, { static: true })
   notificationsToasterHost: DynamicHostDirective;
@@ -66,10 +67,12 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
   /**
    * Marketing pages set this to true in order to change how the topbar looks
    * @param value
+   * @param showBottombar
    */
-  toggleMarketingPages(value: boolean) {
+  toggleMarketingPages(value: boolean, showBottombar = true) {
     this.marketingPages = value;
     this.showSeparateLoginBtns = value;
+    this.showBottombar = value && showBottombar;
     this.onScroll();
     this.detectChanges();
   }

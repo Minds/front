@@ -13,9 +13,9 @@ export class V2TopbarService {
     return this;
   }
 
-  toggleMarketingPages(value: boolean) {
+  toggleMarketingPages(value: boolean, showBottombar: boolean = true) {
     if (this.container) {
-      this.container.toggleMarketingPages(value);
+      this.container.toggleMarketingPages(value, showBottombar);
     }
   }
 }
