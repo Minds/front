@@ -126,6 +126,7 @@ import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-bu
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
+import { ProgressRingComponent } from './components/progress-ring/progress.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -241,6 +242,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    ProgressRingComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -340,6 +342,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    ProgressRingComponent,
   ],
   providers: [
     SiteService,

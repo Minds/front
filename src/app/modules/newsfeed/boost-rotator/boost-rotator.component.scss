@@ -82,22 +82,61 @@ m-newsfeed--boost-rotator {
   }
 }
 
-.m-boost-rotator-tools {
+.m-newsfeedBoostRotator__header {
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 15px;
 
-  .m-boost-rotator-tools-tool {
-    position: relative;
-    padding: 8px;
-    margin-top: -14px;
+  .m-newsfeedBoostRotatorHeader__boostedContent {
+    a {
+      font-size: 11px;
+      line-height: 15px;
+      letter-spacing: 0.92px;
+      text-transform: uppercase;
 
-    .minds-dropdown-menu {
-      width: 170px;
+      @include m-theme() {
+        color: themed($m-blue);
+      }
     }
 
-    & button:not(.minds-more) i {
-      font-size: 16px;
+    i {
+      font-size: 15px;
+      font-weight: bold;
+      line-height: 13px;
+      vertical-align: middle;
+
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+  }
+
+  .m-newsfeedBoostRotatorHeader__spacer {
+    flex-grow: 1;
+  }
+
+  .m-progress__ring {
+    margin-right: 8px;
+
+    circle {
+      @include m-theme() {
+        stroke: themed($m-grey-300);
+      }
+    }
+  }
+
+  .m-newsfeedBoostRotator__progress {
+    font-size: 13px;
+    line-height: 23px;
+    white-space: nowrap;
+
+    @include m-theme() {
+      color: themed($m-grey-200);
     }
   }
 }
@@ -143,7 +182,7 @@ m-newsfeed--boost-rotator {
   display: flex;
   z-index: 1;
 
-  .m-boostRotator__tab--boost-feed a {
+  .m-newsfeedBoostRotator__tab--boost-feed a {
     text-transform: uppercase;
     letter-spacing: 1.25px;
     font-size: 11px;

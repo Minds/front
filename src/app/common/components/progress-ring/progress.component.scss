@@ -1,0 +1,14 @@
+m-progress__ring {
+  .m-progress__ring {
+    .m-progressRing__circle {
+      transition: 0.35s stroke-dashoffset;
+      // axis compensation
+      transform: rotate(-90deg);
+      transform-origin: 50% 50%;
+
+      stroke: #ddd;
+      stroke-width: 3;
+      fill: transparent;
+    }
+  }
+}

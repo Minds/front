@@ -10,7 +10,7 @@
 <!--    <li-->
 <!--      routerLink="/newsfeed/boost"-->
 <!--      *ngIf="router.url !== '/newsfeed/boost'"-->
-<!--      class="m-boostRotator__tab&#45;&#45;boost-feed"-->
+<!--      class="m-newsfeedBoostRotator__tab&#45;&#45;boost-feed"-->
 <!--    >-->
 <!--      <a i18n="@@M__COMMON__BOOSTFEED">Boostfeed</a>-->
 <!--    </li>-->
@@ -34,14 +34,43 @@
 <!--    </li>-->
 <!--  </ul>-->
 <!--</div>-->
-<ng-container *ngIf="!inProgress">
-  <div class="m-newsfeedBoostRotator__leftArrow">
+<div class="m-newsfeedBoostRotator__header">
+  <div class="m-newsfeedBoostRotatorHeader__boostedContent">
+    <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">
+      Boosted Content
+    </a>
+    <i class="material-icons">trending_up</i>
+  </div>
+
+  <div class="m-newsfeedBoostRotatorHeader__spacer"></div>
+
+  <m-progress__ring
+    [progress]="75"
+    [size]="{ w: 20, h: 20, r: 8.5 }"
+    [cx]="10"
+    [cy]="10"
+  ></m-progress__ring>
+  <span class="m-newsfeedBoostRotator__progress" i18n>
+    {{ this.currentPosition + 1 }} of {{ this.boosts.length }}
+  </span>
+</div>
+
+<ng-container *ngIf="!inProgress && this.boosts.length > 0">
+  <div
+    class="m-newsfeedBoostRotator__leftArrow"
+    (click)="prev()"
+    *ngIf="this.currentPosition > 0"
+  >
     <i class="material-icons">
       chevron_left
     </i>
   </div>
 
-  <div class="m-newsfeedBoostRotator__rightArrow">
+  <div
+    class="m-newsfeedBoostRotator__rightArrow"
+    (click)="next()"
+    *ngIf="this.currentPosition < this.boosts.length - 1"
+  >
     <i class="material-icons">
       chevron_right
     </i>

@@ -2,7 +2,10 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  HostListener,
   Injector,
+  Input,
+  OnDestroy,
   OnInit,
   QueryList,
   SkipSelf,
@@ -16,29 +19,24 @@ import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { MindsUser } from '../../../interfaces/entities';
-import { Activity } from '../../../modules/legacy/components/cards/activity/activity';
+import { Activity } from '../../legacy/components/cards/activity/activity';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { NewsfeedBoostService } from '../newsfeed-boost.service';
 import { SettingsService } from '../../settings/settings.service';
 import { FeaturesService } from '../../../services/features.service';
-import { BoostedContentService } from '../../../common/services/boosted-content.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-newsfeed--boost-rotator',
-  host: {
-    '(window:blur)': 'inActive()',
-    '(window:focus)': 'active()',
-    '(mouseover)': 'mouseOver()',
-    '(mouseout)': 'mouseOut()',
-  },
-  inputs: ['interval', 'channel'],
   providers: [ClientMetaService, FeedsService],
   templateUrl: 'boost-rotator.component.html',
 })
-export class NewsfeedBoostRotatorComponent implements OnInit {
+export class NewsfeedBoostRotatorComponent implements OnInit, OnDestroy {
+  @Input() interval: number = 6;
+  @Input() channel: MindsUser;
+
   boosts: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
@@ -47,14 +45,13 @@ export class NewsfeedBoostRotatorComponent implements OnInit {
   running: boolean = false;
   paused: boolean = false;
   windowFocused: boolean = true;
-  interval: number = 6;
-  channel: MindsUser;
+
   currentPosition: number = 0;
   lastTs: number = Date.now();
   minds;
   scroll_listener;
 
-  rating: number = 2; //default to Safe Mode Off
+  rating: number = 2; // default to Safe Mode Off
   ratingMenuToggle: boolean = false;
   plus: boolean = false;
   disabled: boolean = false;
@@ -107,10 +104,14 @@ export class NewsfeedBoostRotatorComponent implements OnInit {
     this.paused = this.service.isBoostPaused();
 
     this.feedsService.feed.subscribe(async boosts => {
-      if (!boosts.length) return;
+      if (!boosts.length) {
+        return;
+      }
       this.boosts = [];
       for (const boost of boosts) {
-        if (boost) this.boosts.push(await boost.pipe(first()).toPromise());
+        if (boost) {
+          this.boosts.push(await boost.pipe(first()).toPromise());
+        }
       }
       if (this.currentPosition >= this.boosts.length) {
         this.currentPosition = 0;
@@ -166,7 +167,9 @@ export class NewsfeedBoostRotatorComponent implements OnInit {
   }
 
   start() {
-    if (this.rotator) window.clearInterval(this.rotator);
+    if (this.rotator) {
+      window.clearInterval(this.rotator);
+    }
 
     this.running = true;
     this.rotator = setInterval(e => {
@@ -177,16 +180,18 @@ export class NewsfeedBoostRotatorComponent implements OnInit {
         return;
       }
 
-      // this.next();
-      //this.recordImpression(this.currentPosition);
+      this.next();
+      // this.recordImpression(this.currentPosition);
     }, this.interval * 1000);
   }
 
   isVisible() {
     const bounds = this.element.nativeElement.getBoundingClientRect();
     if (bounds.top > 0) {
-      //console.log('[rotator]: in view', this.rotator);
-      if (!this.running) this.start();
+      // console.log('[rotator]: in view', this.rotator);
+      if (!this.running) {
+        this.start();
+      }
     } else {
       console.log('[rotator]: out of view', this.rotator);
       if (this.running) {
@@ -197,7 +202,7 @@ export class NewsfeedBoostRotatorComponent implements OnInit {
   }
 
   recordImpression(position: number, force: boolean) {
-    //ensure was seen for at least 1 second
+    // ensure was seen for at least 1 second
     if (
       (Date.now() > this.lastTs + 1000 || force) &&
       this.boosts[position] &&
@@ -221,48 +226,54 @@ export class NewsfeedBoostRotatorComponent implements OnInit {
         this.windowFocused
       );
     }
+
     this.lastTs = Date.now();
-    if (this.boosts[position] && this.boosts[position].boosted_guid)
+
+    if (this.boosts[position] && this.boosts[position].boosted_guid) {
       window.localStorage.setItem(
         'boost-rotator-offset',
         this.boosts[position].boosted_guid
       );
+    }
   }
 
+  @HostListener('window:focus')
   active() {
     this.windowFocused = true;
     this.isVisible();
     this.next(); // Show a new boost when we open our window again
   }
 
+  @HostListener('window:blur')
   inActive() {
     this.running = false;
     this.windowFocused = false;
     window.clearInterval(this.rotator);
   }
 
+  @HostListener('mouseover')
   mouseOver() {
     this.running = false;
     window.clearInterval(this.rotator);
   }
 
+  @HostListener('mouseout')
   mouseOut() {
     this.isVisible();
   }
 
   prev() {
-    if (this.currentPosition <= 0) {
-      this.currentPosition = this.boosts.length - 1;
-    } else {
-      this.currentPosition--;
-    }
+    this.currentPosition =
+      this.currentPosition <= 0
+        ? this.boosts.length - 1
+        : this.currentPosition - 1;
     this.recordImpression(this.currentPosition, false);
   }
 
   async next() {
-    //this.activities.toArray()[this.currentPosition].hide();
+    // this.activities.toArray()[this.currentPosition].hide();
     if (this.currentPosition + 1 > this.boosts.length - 1) {
-      //this.currentPosition = 0;
+      // this.currentPosition = 0;
       try {
         this.load();
         this.currentPosition++;
@@ -286,10 +297,12 @@ export class NewsfeedBoostRotatorComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.rotator) window.clearInterval(this.rotator);
+    if (this.rotator) {
+      window.clearInterval(this.rotator);
+    }
     this.scroll.unListen(this.scroll_listener);
 
-    for (let subscription of this.subscriptions) {
+    for (const subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
   }
