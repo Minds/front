@@ -5,7 +5,7 @@
   &.m-marketing__section--style-5 {
     margin-bottom: 100px;
 
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $m-grid-max-mobile) {
       margin-bottom: 80px;
     }
 
@@ -14,7 +14,7 @@
       z-index: 0;
       padding: 80px 0 80px;
 
-      @media screen and (max-width: $max-mobile) {
+      @media screen and (max-width: $m-grid-max-mobile) {
         padding: 0;
       }
     }
@@ -23,7 +23,7 @@
       position: relative;
       padding: 95px 0 0;
 
-      @media screen and (max-width: $max-mobile) {
+      @media screen and (max-width: $m-grid-max-mobile) {
         padding: 0 30px 0;
       }
 
@@ -32,7 +32,7 @@
           color: #ffffff;
         }
 
-        @media screen and (max-width: $max-mobile) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           font-size: 28px;
           line-height: 32px;
           margin: 0 0 17px;
@@ -56,7 +56,7 @@
         color: #ffffff;
       }
 
-      @media screen and (max-width: $max-mobile) {
+      @media screen and (max-width: $m-grid-max-mobile) {
         padding-right: 0;
         margin-bottom: 30px;
         font-size: 16px;
@@ -100,11 +100,11 @@
         height: 518px;
         clip-path: polygon(0% 1%, 0% 100%, 100% 96%, 100% 0%);
 
-        @media screen and (min-width: $max-mobile) and (max-width: $min-desktop) {
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
           width: 100%;
         }
 
-        @media screen and (max-width: $max-mobile) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           width: 100vw;
           height: 100vw;
           clip-path: polygon(0% 1%, 0% 100%, 100% 97%, 100% 0%);
@@ -120,11 +120,11 @@
         bottom: 35px;
         transform: translate(15px, 0);
 
-        @media screen and (min-width: $max-mobile) and (max-width: $min-desktop) {
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
           width: 100%;
         }
 
-        @media screen and (max-width: $max-mobile) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           right: auto;
           left: 50%;
           bottom: 0;
@@ -139,7 +139,7 @@
         position: relative;
         width: 100%;
 
-        @media screen and (max-width: $max-mobile) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           margin-bottom: calc(
             20vw + 40px
           ); // A little bit less than half UX image + normal margin
@@ -164,7 +164,7 @@
             no-repeat;
           z-index: -1;
 
-          @media screen and (max-width: $max-mobile) {
+          @media screen and (max-width: $m-grid-max-mobile) {
             content: initial;
             display: none;
           }

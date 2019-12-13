@@ -14,14 +14,6 @@ m-homepage {
     }
 
     &.m-homepage__formExperiment {
-      .m-marketing__body {
-        @media screen and (max-width: $max-mobile) {
-          &::after {
-            top: 990px !important;
-          }
-        }
-      }
-
       .m-homepage__appButtons {
         margin-left: 0 !important;
       }
@@ -41,7 +33,7 @@ m-homepage {
       .m-marketing__wrapper {
         .m-marketing__image {
           span {
-            @media screen and (max-width: $max-mobile) {
+            @media screen and (max-width: $m-grid-max-mobile) {
               margin-bottom: 40px;
             }
           }
@@ -55,10 +47,10 @@ m-homepage {
       .m-marketing__wrapper {
         position: initial;
         padding: 64px 0 0;
-        @media screen and (min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
-          padding: 64px 0 0;
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+          padding: 32px 0 0;
         }
-        @media screen and (max-width: $max-mobile) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           padding: 0;
         }
 
@@ -66,7 +58,7 @@ m-homepage {
           position: initial;
           z-index: 0;
 
-          @media screen and (max-width: $max-mobile) {
+          @media screen and (max-width: $m-grid-max-mobile) {
             padding: 0 30px 0;
           }
 
@@ -81,7 +73,7 @@ m-homepage {
             @include m-theme() {
               background: themed($m-amber-medium);
             }
-            @media screen and (max-width: $max-mobile) {
+            @media screen and (max-width: $m-grid-max-mobile) {
               z-index: -1;
             }
           }
@@ -95,11 +87,20 @@ m-homepage {
             font-size: 62px;
             line-height: 65px;
             margin-bottom: 36px;
+
+            @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+              font-size: 48px;
+              line-height: 65px;
+            }
           }
 
           .m-marketing__description {
             margin-bottom: 21px;
             padding-right: 129px;
+
+            @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+              padding-right: 0;
+            }
           }
 
           &::after {
@@ -117,7 +118,7 @@ m-homepage {
             z-index: -1;
           }
 
-          @media screen and (max-width: $max-mobile) {
+          @media screen and (max-width: $m-grid-max-mobile) {
             &::before {
               transform: translate(153px, 212px);
               clip-path: polygon(100% 0, 100% 0, 172% 28%, 0 90%);
@@ -126,14 +127,14 @@ m-homepage {
             &::after {
               left: 0;
               right: 0;
-              top: 1200px;
+              top: 990px;
             }
           }
         }
       }
 
       .m-homepage__registerForm {
-        @media screen and(min-width: $min-tablet) {
+        @media screen and(min-width: $m-grid-max-tablet) {
           transform: translate(-54px, -19px);
         }
 
@@ -162,8 +163,8 @@ m-homepage {
 
           clip-path: polygon(0 0, 100% 8px, 99% 95%, 0% 98%);
 
-          @media screen and (max-width: $max-mobile) {
-            width: 300px;
+          @media screen and (max-width: $m-grid-max-mobile) {
+            min-width: 320px;
           }
 
           h3 {
@@ -238,7 +239,7 @@ m-homepage {
           }
         }
 
-        @media screen and (max-width: $max-mobile) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           margin: 30px 26px 50px;
           &::before {
             content: '';
@@ -260,7 +261,7 @@ m-homepage {
           }
         }
 
-        @media screen and (min-width: $max-mobile) and (max-width: 760px) {
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: 760px) {
           minds-form-register {
             padding: 40px 20px;
           }
@@ -285,7 +286,7 @@ m-homepage {
           filter: drop-shadow(-1px 0px 8px rgba(50, 50, 0, 0.5));
           clip-path: none;
 
-          @media screen and (max-width: $max-mobile) {
+          @media screen and (max-width: $m-grid-max-mobile) {
             &::before {
               content: '' !important;
               display: block;
@@ -312,7 +313,7 @@ m-homepage {
             width: 100%;
             clip-path: none;
 
-            @media screen and (min-width: $min-tablet) {
+            @media screen and (min-width: $m-grid-max-tablet) {
               transform: translate(-4px, -17px);
             }
           }
@@ -337,7 +338,7 @@ m-homepage {
       border-color: themed($m-aqua) !important;
     }
 
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $m-grid-max-mobile) {
       width: 100%;
     }
 
@@ -359,7 +360,11 @@ m-homepage {
       margin-right: 5%;
     }
 
-    @media screen and(max-width: $max-mobile) {
+    @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+      margin-top: 30px;
+    }
+
+    @media screen and(max-width: $m-grid-max-mobile) {
       width: 100%;
       & > a:not(:first-child) {
         margin-left: 18px;
@@ -391,7 +396,7 @@ m-homepage {
   .m-homepage__joinMindsNow {
     max-width: 90%;
 
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $m-grid-max-mobile) {
       max-width: 100%;
     }
   }
@@ -413,7 +418,7 @@ m-homepage {
     text-align: left !important;
   }
 
-  @media screen and(max-width: $max-mobile) {
+  @media screen and(max-width: $m-grid-max-mobile) {
     display: block;
     margin-top: 55px;
     h1.m-homepage__minds {
@@ -429,7 +434,7 @@ m-homepage {
         color: #4a4a4a;
         white-space: nowrap;
 
-        @media screen and (max-width: $max-mobile) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           font-size: 19px;
           line-height: 25px;
         }

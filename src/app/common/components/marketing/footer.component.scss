@@ -40,7 +40,7 @@ m-marketing__footer {
   }
 
   .m-marketingFooter__column {
-    @media screen and(max-width: $max-mobile) {
+    @media screen and(max-width: $m-grid-max-mobile) {
       @for $i from 1 through 5 {
         &:nth-child(#{$i}) {
           grid-row: $i;
@@ -61,9 +61,7 @@ m-marketing__footer {
       width: 60%;
       margin: 0 auto;
 
-      @media screen and (max-width: $max-mobile) {
-        width: 60%;
-        //grid-row: 999;
+      @media screen and (max-width: $m-grid-max-mobile) {
         margin: 32px 0 0;
       }
     }

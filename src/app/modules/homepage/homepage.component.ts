@@ -86,6 +86,6 @@ export class HomepageComponent implements OnInit, OnDestroy {
   }
 
   isMobile() {
-    return window.innerWidth < 480;
+    return window.innerWidth <= 540;
   }
 }
