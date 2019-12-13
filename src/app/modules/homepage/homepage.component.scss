@@ -14,6 +14,14 @@ m-homepage {
     }
 
     &.m-homepage__formExperiment {
+      .m-marketing__body {
+        @media screen and(max-width: $m-grid-max-mobile) {
+          &::after {
+            top: 900px !important;
+          }
+        }
+      }
+
       .m-homepage__appButtons {
         margin-left: 0 !important;
       }
@@ -127,7 +135,7 @@ m-homepage {
             &::after {
               left: 0;
               right: 0;
-              top: 990px;
+              top: 1100px;
             }
           }
         }
