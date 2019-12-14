@@ -1,0 +1,93 @@
+<div class="m-walletModal__title">
+  Phone Verification
+</div>
+<div class="m-walletModal__desc">
+  <p>
+    You can earn tokens for your contributions to the Minds network. The more
+    interactions on your content, the greater your share of the daily token
+    reward pool to your off-chain address.
+  </p>
+  <p>
+    To start earning rewards, you will need to enter a unique phone number.
+  </p>
+</div>
+<!-- TODOOJM: ensure the three options to trigger onSubmit() don't double-trigger the fx -->
+<form [formGroup]="form" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
+  <div class="m-walletForm__wrapper">
+    <div class="m-walletForm__fieldsContainer">
+      <div class="m-walletForm__field--text stretchedField" *ngIf="!confirming">
+        <div class="m-walletForm__row--label">
+          <label for="number" i18n>Mobile Phone Number</label>
+          <m-tooltip icon="help">
+            <ng-container i18n
+              >Placeholder...probs something about no voip numbers
+              allowed?</ng-container
+            >
+          </m-tooltip>
+        </div>
+        <m-phone-input
+          formControlName="number"
+          class="m-walletForm__row--input"
+          [ngClass]="{ invalid: invalidNumber }"
+          name="number"
+          id="number"
+          ngDefaultControl
+        ></m-phone-input>
+        <div class="m-walletForm__row--validation">
+          <p *ngIf="invalidNumber">
+            Invalid phone number
+          </p>
+        </div>
+      </div>
+      <div class="m-walletForm__field--text stretchedField" *ngIf="confirming">
+        <div class="m-walletForm__row--label">
+          <label for="code" i18n>Verification Code</label>
+          <m-tooltip icon="help">
+            <ng-container i18n>Placeholder</ng-container>
+          </m-tooltip>
+        </div>
+        <div
+          class="m-walletForm__row--input"
+          [ngClass]="{ invalid: invalidCode }"
+        >
+          <input
+            type="text"
+            id="code"
+            name="code"
+            formControlName="code"
+            class="form-control"
+            autofocus
+          />
+        </div>
+        <div class="m-walletForm__row--validation">
+          <p *ngIf="invalidCode">
+            Invalid verification code
+          </p>
+        </div>
+      </div>
+    </div>
+    <m-shadowboxSubmitButton
+      [disabled]="inProgress || invalidNumber || invalidCode"
+      [saving]="inProgress"
+      (click)="onSubmit()"
+    >
+      {{ !confirming ? 'Send Verification' : 'Verify Code' }}
+    </m-shadowboxSubmitButton>
+  </div>
+</form>
+
+<div class="m-walletModal__footnote--privacy" *ngIf="!confirming">
+  Note: Minds does not store the phone numbers you provide. The numbers are
+  hashed using SHA-256 and combined with a salt key for privacy and security
+  purposes.
+</div>
+<div class="m-walletModal__footnote--formStatus" *ngIf="confirming">
+  <div class="m-walletPhoneVerification__formStatusCodeSent">
+    Verification code sent to +{{ form.value.number }}
+  </div>
+  <div class="m-walletPhoneVerification__formStatusActions">
+    Didn't receive it? <a (click)="validateNumber()">Send it again</a> or
+    <a (click)="changePhone()">change phone number</a>
+  </div>
+</div>
+<!-- <m-formToast></m-formToast> -->

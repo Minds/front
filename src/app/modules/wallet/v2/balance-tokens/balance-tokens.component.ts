@@ -29,6 +29,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   offchainBalance;
   onchainBalance;
   inProgress = true;
+  showModal = false;
   protected updateTimer$;
 
   nextPayout;

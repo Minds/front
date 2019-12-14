@@ -14,7 +14,6 @@
           >
         </div>
       </div>
-      <!-- <ng-container *ngTemplateOutlet="buyTokens"></ng-container> -->
       <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
         ><m-shadowboxSubmitButton
           [disabled]="!session.getLoggedInUser().rewards"
@@ -61,7 +60,9 @@
         >
         tokens
       </div>
-      <a *ngIf="session.getLoggedInUser().rewards">Transfer to On-Chain</a>
+      <a *ngIf="session.getLoggedInUser().rewards" (click)="showModal = true"
+        >Transfer to On-Chain</a
+      >
     </div>
   </div>
   <div class="m-walletBalance--tokens__learnMore">
@@ -75,16 +76,13 @@
     tokens. Next payout in
     <span>{{ nextPayout | timediff }}</span> (Daily at 2:00am UTC)
   </div>
+  <m-walletModal *ngIf="showModal" (closeModal)="showModal = false">
+    <m-walletOnchainTransfer
+      [offchainBalance]="offchainBalance.total"
+      [onchainAddress]="wallet.onchain.address"
+    ></m-walletOnchainTransfer>
+  </m-walletModal>
 </ng-container>
-
-<!-- <ng-template #buyTokens>
-  <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
-    ><m-shadowboxSubmitButton [disabled]="!session.getLoggedInUser().rewards"
-      >Buy tokens</m-shadowboxSubmitButton
-    ></a
-  >
-</ng-template> -->
-
 <ng-template #loading>
   <h2>...</h2>
 </ng-template>

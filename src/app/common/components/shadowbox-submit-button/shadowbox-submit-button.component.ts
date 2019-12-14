@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './shadowbox-submit-button.component.html',
 })
 export class ShadowboxSubmitButtonComponent {
-  @Input() saveStatus: string = 'unsaved';
+  @Input() saving: boolean = false;
   @Input() disabled: boolean = false;
 
   constructor() {}
