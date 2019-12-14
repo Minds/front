@@ -44,7 +44,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     this.getPayout();
 
     this.inProgress = false;
-    this.updateTimer$ = setInterval(this.updateNextPayout.bind(this), 60000);
+    this.updateTimer$ = setInterval(this.updateNextPayout.bind(this), 1000);
     this.detectChanges();
   }
   ngOnDestroy() {

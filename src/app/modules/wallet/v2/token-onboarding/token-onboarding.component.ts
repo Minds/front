@@ -49,6 +49,7 @@ export class WalletTokenOnboardingComponent implements OnInit {
     }
     this.detectChanges();
   }
+
   clickedAddressStep() {
     if (!this.addressAdded) {
       this.activeStep = 'address';
