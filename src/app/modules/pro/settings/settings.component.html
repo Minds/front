@@ -72,6 +72,7 @@
                           name="title"
                           formControlName="title"
                           class="form-control"
+                          data-minds="title"
                         /><m-formDescriptor
                           >This will be used in browser tab titles and your SEO
                           tags</m-formDescriptor
@@ -94,6 +95,7 @@
                           name="headline"
                           formControlName="headline"
                           class="form-control"
+                          data-minds="headline"
                         ></textarea>
                         <m-formDescriptor
                           >This will be used in your SEO tags as
@@ -115,6 +117,7 @@
                             name="publish"
                             formControlName="published"
                             class="form-control"
+                            data-minds="publish"
                           />
                           <span
                             class="m-proSettings__customInput--checkbox"
@@ -153,6 +156,7 @@
                           name="text_color"
                           formControlName="text_color"
                           #textColor
+                          data-minds="textColor"
                           [pattern]="hexPattern"
                           class="form-control"
                           required
@@ -170,6 +174,7 @@
                             class="form-control"
                             type="color"
                             id="text_color_picker"
+                            data-minds="textColorPicker"
                             formControlName="text_color_picker"
                             #textColorPicker
                             (ngModelChange)="
@@ -220,6 +225,7 @@
                           id="primary_color"
                           name="primary_color"
                           #primaryColor
+                          data-minds="primaryColor"
                           formControlName="primary_color"
                           [pattern]="hexPattern"
                           class="form-control"
@@ -244,6 +250,7 @@
                             name="primary_color_picker"
                             formControlName="primary_color_picker"
                             #primaryColorPicker
+                            data-minds="primaryColorPicker"
                             (ngModelChange)="
                               updateColorText(
                                 'primary_color',
@@ -293,6 +300,7 @@
                           id="plain_background_color"
                           name="plain_background_color"
                           #plainBgColor
+                          data-minds="plainBgColor"
                           formControlName="plain_background_color"
                           [pattern]="hexPattern"
                           class="form-control"
@@ -318,6 +326,7 @@
                             name="plain_background_color_picker"
                             formControlName="plain_background_color_picker"
                             #plainBgColorPicker
+                            data-minds="plainBgColorPicker"
                             (ngModelChange)="
                               updateColorText(
                                 'plain_background_color',
@@ -365,6 +374,7 @@
                           for="scheme_light"
                           class="m-proSettings__customInputContainer--radio"
                           i18n
+                          data-minds="schemeLight"
                           >Light
                           <input
                             type="radio"
@@ -373,7 +383,6 @@
                             value="light"
                             formControlName="scheme"
                             class="form-control"
-                            #scheme_light
                           />
                           <span
                             class="m-proSettings__customInput--radio"
@@ -383,6 +392,7 @@
                           for="scheme_dark"
                           class="m-proSettings__customInputContainer--radio"
                           i18n
+                          data-minds="schemeDark"
                           >Dark
                           <input
                             type="radio"
@@ -391,7 +401,6 @@
                             value="dark"
                             formControlName="scheme"
                             class="form-control"
-                            #scheme_dark
                           />
                           <span
                             class="m-proSettings__customInput--radio"
@@ -423,6 +432,7 @@
                               [value]="ratio"
                               formControlName="tile_ratio"
                               class="form-control"
+                              data-minds="'tileRatio_' + ratio"
                             />
                             <span
                               class="m-proSettings__customInput--radio"
@@ -471,6 +481,7 @@
                               onAssetFileSelect('logo', logoField.files)
                             "
                             #logoField
+                            data-minds="logo"
                           />
 
                           <img
@@ -514,6 +525,7 @@
                               )
                             "
                             #backgroundField
+                            data-minds="background"
                           />
                           <img
                             *ngIf="getPreviewAssetSrc('background')"
@@ -545,7 +557,12 @@
                             >Create a topbar of links to provide easy access to
                             site contents that share a hashtag</ng-container
                           ></m-tooltip
-                        ><button type="button" (click)="addBlankTag()" i18n>
+                        ><button
+                          type="button"
+                          (click)="addBlankTag()"
+                          data-minds="addHashtag"
+                          i18n
+                        >
                           Add
                         </button>
                       </div>
@@ -570,6 +587,7 @@
                                 [name]="'tag[' + i + '][label]'"
                                 formControlName="label"
                                 autofocus
+                                [attr.data-minds]="'tag__label--' + i"
                                 (focusin)="hashtagDraggable.onFocusIn($event)"
                                 (focusout)="hashtagDraggable.onFocusOut($event)"
                                 (mouseover)="hashtagDraggable.onFocusIn($event)"
@@ -581,6 +599,7 @@
                                 [id]="'tag-tag-' + i"
                                 [name]="'tag[' + i + '][tag]'"
                                 formControlName="tag"
+                                [attr.data-minds]="'tag__tag--' + i"
                                 (focusin)="hashtagDraggable.onFocusIn($event)"
                                 (focusout)="hashtagDraggable.onFocusOut($event)"
                                 (mouseover)="hashtagDraggable.onFocusIn($event)"
@@ -616,6 +635,7 @@
                         ><button
                           type="button"
                           (click)="addBlankFooterLink()"
+                          data-minds="addFooterLink"
                           i18n
                         >
                           Add
@@ -642,6 +662,7 @@
                                 [name]="'footer_link[' + i + '][title]'"
                                 formControlName="title"
                                 autofocus
+                                [attr.data-minds]="'footerLink__title--' + i"
                                 (focusin)="footerDraggable.onFocusIn($event)"
                                 (focusout)="footerDraggable.onFocusOut($event)"
                                 (mouseover)="footerDraggable.onFocusIn($event)"
@@ -654,6 +675,7 @@
                                 [id]="'footer_link-href-' + i"
                                 [name]="'footer_link[' + i + '][href]'"
                                 formControlName="href"
+                                [attr.data-minds]="'footerLink__href--' + i"
                                 (focusin)="footerDraggable.onFocusIn($event)"
                                 (focusout)="footerDraggable.onFocusOut($event)"
                                 (mouseover)="footerDraggable.onFocusIn($event)"
