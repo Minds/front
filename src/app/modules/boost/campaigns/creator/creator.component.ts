@@ -246,7 +246,7 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       // NOTE: Keeping inProgress true until redirection happens
       setTimeout(() => {
         // TODO: Use RxJS as timer, little delay so we wait for ES to be updated
-        this.router.navigate(['/boost/campaigns', campaign.urn]);
+        this.router.navigate(['/boost/campaigns/list']);
       }, 1000);
     } catch (e) {
       console.error('BoostCampaignsCreatorComponent', e);
