@@ -48,27 +48,39 @@ export class AnalyticsMetricsComponent implements OnInit {
             this.userRoles.includes(role)
           );
           if (metric.summary) {
-            let delta;
-            if (metric.summary.comparison_value !== 0) {
-              delta =
-                (metric.summary.current_value -
-                  metric.summary.comparison_value) /
-                (metric.summary.comparison_value || 0);
+            const cur: number = metric.summary.current_value || 0;
+            const cmp: number = metric.summary.comparison_value || 0;
+
+            let delta: number, hasChanged: boolean, positiveTrend: boolean;
+
+            if (cur === cmp) {
+              // Same values, no changes
+              hasChanged = false;
+              delta = 0;
+            } else if (cmp === 0) {
+              // Comparison value is 0, cannot calculate %
+              hasChanged = true;
+              delta = Infinity; // Will display infinity symbol
+              positiveTrend = cur > 0;
             } else {
-              delta = 1;
+              // Normal cases
+              hasChanged = true;
+              delta = (cur - cmp) / cmp;
+              positiveTrend = delta > 0;
+            }
+
+            if (!metric.summary.comparison_positive_inclination) {
+              // If "comparison positive inclination" is not true, it
+              // represents a "not-so-good" metric. So we'll flip the colors.
+              // Upwards will be "bad"
+              // Downwards will be "good"
+
+              positiveTrend = !positiveTrend;
             }
 
             metric['delta'] = delta;
-            metric['hasChanged'] = delta === 0 ? false : true;
-
-            if (
-              (delta > 0 && metric.summary.comparison_positive_inclination) ||
-              (delta < 0 && !metric.summary.comparison_positive_inclination)
-            ) {
-              metric['positiveTrend'] = true;
-            } else {
-              metric['positiveTrend'] = false;
-            }
+            metric['hasChanged'] = hasChanged;
+            metric['positiveTrend'] = positiveTrend;
           }
         }
         return metrics;

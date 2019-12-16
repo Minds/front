@@ -42,6 +42,36 @@ m-newsfeed--sorted {
   }
 }
 
+.m-feeds-sorted__fallbackLegend {
+  text-align: center;
+  margin: 32px auto 28px;
+  height: 0;
+  position: relative;
+  border-top: 1px solid;
+
+  @include m-theme() {
+    border-top-color: themed($m-grey-200);
+  }
+
+  > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: inline-block;
+    padding: 0 12px;
+    font-size: 11px;
+    line-height: 1;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+
+    @include m-theme() {
+      color: themed($m-grey-400);
+      background: themed($m-body-bg);
+    }
+  }
+}
+
 .m-feeds-sorted__query {
   font-size: 16px;
   letter-spacing: 1px;

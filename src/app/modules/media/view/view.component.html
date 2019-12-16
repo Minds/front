@@ -115,14 +115,16 @@
             <div
               class="m-media-content--info mdl-cell mdl-cell--4-col mdl-cell--6-col-phone"
             >
-              <div
+              <!-- <div
                 class="m-media-content--play-count"
-                *ngIf="entity['play:count'] || entity['play:count'] === 0"
+                *ngIf="
+                  (false && entity['play:count']) || entity['play:count'] === 0
+                "
               >
                 <span i18n="@@MINDS__MEDIA__PLAYS_COUNTER"
                   >{{ entity['play:count'] | number }} plays</span
                 >
-              </div>
+              </div> -->
 
               <div
                 class="m-media-content--play-count"

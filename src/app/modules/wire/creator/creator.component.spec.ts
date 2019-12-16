@@ -43,12 +43,14 @@ import { TooltipComponent } from '../../../common/components/tooltip/tooltip.com
 import { AddressExcerptPipe } from '../../../common/pipes/address-excerpt';
 import { TokenPipe } from '../../../common/pipes/token.pipe';
 import { Session } from '../../../services/session';
+import { Storage } from '../../../services/storage';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-mock.spec';
 import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { MockComponent } from '../../../utils/mock';
+import { storageMock } from '../../../../tests/storage-mock.spec';
 
 /* tslint:disable */
 @Component({
@@ -216,6 +218,7 @@ describe('WireCreatorComponent', () => {
       imports: [FormsModule, RouterTestingModule],
       providers: [
         { provide: Session, useValue: sessionMock },
+        { provide: Storage, useValue: storageMock },
         { provide: Client, useValue: clientMock },
         { provide: WireContractService, useValue: wireContractServiceMock },
         { provide: WireService, useValue: wireServiceMock },
@@ -512,7 +515,7 @@ describe('WireCreatorComponent', () => {
     comp.setPayloadType('offchain');
     fixture.detectChanges();
 
-    expect(comp.wire.recurring).toBe(true);
+    expect(comp.wire.recurring).toBe(false);
     const checkbox: DebugElement = getRecurringCheckbox();
 
     checkbox.nativeElement.click();
@@ -521,7 +524,7 @@ describe('WireCreatorComponent', () => {
     fixture.detectChanges();
 
     expect(checkbox).not.toBeNull();
-    expect(comp.wire.recurring).toBe(false);
+    expect(comp.wire.recurring).toBe(true);
   });
 
   it('should show creator tiers', () => {
@@ -636,6 +639,7 @@ describe('WireCreatorComponent', () => {
       payload: { receiver: '0x1234', address: '' },
       payloadType: 'onchain',
       recurring: false,
+      recurringInterval: 'monthly',
     });
   }));
 

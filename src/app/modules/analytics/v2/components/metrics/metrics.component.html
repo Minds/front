@@ -30,9 +30,11 @@
           badChange: metric.hasChanged && !metric.positiveTrend
         }"
       >
-        <i class="material-icons" *ngIf="metric.delta > 0">arrow_upward</i>
-        <i class="material-icons" *ngIf="metric.delta < 0">arrow_downward</i>
-        <span>{{ metric.delta | percent: '1.0-1' }}</span>
+        <ng-container *ngIf="metric.hasChanged">
+          <i class="material-icons" *ngIf="metric.delta > 0">arrow_upward</i>
+          <i class="material-icons" *ngIf="metric.delta < 0">arrow_downward</i>
+        </ng-container>
+        <span *ngIf="metric.delta">{{ metric.delta | percent: '1.0-1' }}</span>
       </div>
     </div>
   </ng-container>

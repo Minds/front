@@ -30,7 +30,7 @@
     [class.m-feeds-sortedList__flex]="!isActivityFeed()"
   >
     <ng-container
-      *ngFor="let entity of feedsService.feed | async; let i = index"
+      *ngFor="let entity$ of feedsService.feed | async; let i = index"
     >
       <ng-container *ngIf="isActivityFeed()">
         <m-featured-content
@@ -39,10 +39,23 @@
         ></m-featured-content>
       </ng-container>
 
-      <m-newsfeed__entity
-        [entity]="entity | async"
-        [slot]="i + 1"
-      ></m-newsfeed__entity>
+      <ng-container *mIfFeature="'top-feeds-by-age'">
+        <div
+          *ngIf="
+            i === (feedsService.fallbackAtIndex | async) && isActivityFeed()
+          "
+          class="m-feeds-sorted__fallbackLegend"
+        >
+          <span i18n>Posts older than {{ period | uppercase }}</span>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="entity$ | async as entity">
+        <m-newsfeed__entity
+          [entity]="entity"
+          [slot]="i + 1"
+        ></m-newsfeed__entity>
+      </ng-container>
     </ng-container>
 
     <infinite-scroll

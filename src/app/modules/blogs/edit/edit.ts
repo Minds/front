@@ -33,6 +33,7 @@ export class BlogEdit {
     time_created: Math.floor(Date.now() / 1000),
     access_id: 2,
     tags: [],
+    nsfw: [],
     license: 'attribution-sharealike-cc',
     fileKey: 'header',
     mature: 0,
@@ -123,6 +124,7 @@ export class BlogEdit {
           license: '',
           fileKey: 'header',
           mature: 0,
+          nsfw: [],
           monetized: 0,
           published: 0,
           wire_threshold: null,
@@ -143,8 +145,10 @@ export class BlogEdit {
         this.existingBanner = false;
 
         if (this.guid !== 'new') {
+          this.editing = true;
           this.load();
         } else {
+          this.editing = false;
           const description: string = this.inMemoryStorageService.once(
             'newBlogContent'
           );
@@ -254,6 +258,7 @@ export class BlogEdit {
       const blog = Object.assign({}, this.blog);
 
       // only allowed props
+      blog.nsfw = this.blog.nsfw;
       blog.mature = blog.mature ? 1 : 0;
       blog.monetization = blog.monetization ? 1 : 0;
       blog.monetized = blog.monetized ? 1 : 0;
@@ -357,5 +362,13 @@ export class BlogEdit {
       !this.blog.time_published ||
       this.blog.time_published > Math.floor(Date.now() / 1000)
     );
+  }
+
+  /**
+   * Sets this blog NSFW
+   * @param { array } nsfw - Numerical indexes for reasons in an array e.g. [1, 2].
+   */
+  onNSFWSelections(nsfw) {
+    this.blog.nsfw = nsfw.map(reason => reason.value);
   }
 }
