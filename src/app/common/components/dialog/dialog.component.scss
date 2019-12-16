@@ -2,6 +2,10 @@ minds-dialog {
   .mdl-dialog {
     width: 50%;
     height: auto;
+    @include m-theme() {
+      color: themed($m-black);
+      background-color: themed($m-white);
+    }
   }
 
   .mdl-dialog__title {
@@ -13,6 +17,9 @@ minds-dialog {
   .mdl-dialog__content {
     font-size: 16px;
     text-align: left;
+    @include m-theme() {
+      color: themed($m-grey-100);
+    }
   }
 
   .mdl-dialog__actions {
