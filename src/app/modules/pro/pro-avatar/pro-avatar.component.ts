@@ -46,10 +46,7 @@ export class MindsProAvatarComponent {
    */
   hasLogo(): boolean {
     try {
-      return (
-        this.channel.pro_settings.has_custom_logo &&
-        Boolean(this.channel.pro_settings.logo_image)
-      );
+      return Boolean(this.channel.pro_settings.logo_image);
     } catch (e) {
       return false;
     }
