@@ -64,7 +64,7 @@ export class BoostAds implements OnInit, OnDestroy {
     this.ratingSubscription.unsubscribe();
   }
 
-  loadLegacy() {
+  fetch() {
     if (this.storage.get('boost:offset:sidebar'))
       this.offset = this.storage.get('boost:offset:sidebar');
     this.client
@@ -82,25 +82,6 @@ export class BoostAds implements OnInit, OnDestroy {
         if (response['load-next'])
           this.storage.set('boost:offset:sidebar', response['load-next']);
       });
-  }
-
-  load() {
-    this.feedsService
-      .setEndpoint('api/v2/boost/fetch/campaigns/content')
-      .setParams({
-        rating: this.rating,
-      })
-      .setLimit(this.limit)
-      .setOffset(0)
-      .fetch();
-  }
-
-  fetch() {
-    if (this.featureService.has('boost-campaigns')) {
-      this.load();
-    } else {
-      this.loadLegacy();
-    }
   }
 
   onRatingChanged(rating: number) {

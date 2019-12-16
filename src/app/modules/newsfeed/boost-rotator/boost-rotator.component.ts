@@ -119,9 +119,7 @@ export class NewsfeedBoostRotatorComponent {
 
   load() {
     try {
-      const url = this.featureService.has('boost-campaigns')
-        ? 'api/v2/boost/fetch/campaigns'
-        : 'api/v2/boost/feed';
+      const url = 'api/v2/boost/feed';
       this.feedsService.clear(); // Fresh each time
       this.feedsService
         .setEndpoint(url)
