@@ -2,7 +2,7 @@ const sidebarMenu = {
   header: {
     id: 'pro_settings',
     label: 'Pro Settings',
-    permissions: ['pro'],
+    permissions: ['user'],
   },
   links: [
     {
@@ -34,9 +34,9 @@ const sidebarMenu = {
       label: 'Payouts',
     },
     {
-      id: 'subscription',
-      label: 'Pro Subscription',
-      path: 'pro',
+      id: 'earnings',
+      label: 'Earnings',
+      path: 'analytics/dashboard/earnings',
     },
     {
       id: ':username',

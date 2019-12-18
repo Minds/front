@@ -738,11 +738,18 @@
                           id="domain"
                           name="domain"
                           formControlName="domain"
-                          required
                         />
                         <m-formDescriptor>
-                          If you wish to use a custom domain then please email
-                          info@minds.com.
+                          <ng-container
+                            *ngIf="isActive; else previewModeDomainNote"
+                          >
+                            If you wish to use a custom domain then please email
+                            info@minds.com.
+                          </ng-container>
+                          <ng-template #previewModeDomainNote
+                            >You can control your domain once you purchase
+                            Pro.</ng-template
+                          >
                         </m-formDescriptor>
                       </div>
                       <div class="m-proSettings__row--validation">
