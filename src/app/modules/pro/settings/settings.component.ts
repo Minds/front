@@ -132,6 +132,10 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       this.detectChanges();
       this.load();
     });
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/login'], { replaceUrl: true });
+      return;
+    }
   }
 
   ngOnDestroy() {
