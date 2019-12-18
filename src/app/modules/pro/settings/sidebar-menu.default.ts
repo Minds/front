@@ -34,13 +34,13 @@ const sidebarMenu = {
       label: 'Payouts',
     },
     {
-      id: 'earnings',
-      label: 'Earnings',
-      path: 'analytics/dashboard/earnings',
+      id: 'subscription',
+      label: 'Pro Subscription',
+      path: 'pro',
     },
     {
       id: ':username',
-      label: 'View Pro Channel',
+      label: 'Preview Pro Channel',
       path: 'pro/:username',
       newWindow: true,
     },
