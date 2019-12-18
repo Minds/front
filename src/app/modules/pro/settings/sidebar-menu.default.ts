@@ -2,7 +2,7 @@ const sidebarMenu = {
   header: {
     id: 'pro_settings',
     label: 'Pro Settings',
-    permissions: ['pro'],
+    permissions: ['user'],
   },
   links: [
     {
@@ -40,7 +40,7 @@ const sidebarMenu = {
     },
     {
       id: ':username',
-      label: 'View Pro Channel',
+      label: 'Preview Pro Channel',
       path: 'pro/:username',
       newWindow: true,
     },

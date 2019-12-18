@@ -32,10 +32,10 @@
         class="m-analyticsDashboard__description"
         *ngIf="description$ | async as description"
       >
-        {{ description }}
         <ng-container *ngIf="(category$ | async) === 'earnings'">
-          <a *ngIf="!session.getLoggedInUser().pro" routerLink="/pro"
-            >Upgrade to Pro</a
+          <span *ngIf="!session.getLoggedInUser().pro">
+            In order to start earning,
+            <a routerLink="/pro">upgrade to Pro</a>.</span
           >
           <a
             *ngIf="
@@ -49,6 +49,7 @@
             >Enable payouts</a
           >
         </ng-container>
+        {{ description }}
       </p>
       <m-analytics__layout--chart
         m-dashboardLayout__body
