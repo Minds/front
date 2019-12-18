@@ -661,4 +661,56 @@ context('Newsfeed', () => {
       });
   });
 
+  // enable once failing tests are fixed
+  it.skip('should post an nsfw activity when value is held by the selector (is blue) but it has not been clicked yet', () => {
+
+    // click on nsfw dropdown
+    cy.get(
+      'minds-newsfeed-poster m-nsfw-selector .m-dropdown--label-container'
+    ).click();
+
+    // select Nudity
+    cy.get('minds-newsfeed-poster m-nsfw-selector .m-dropdownList__item')
+      .contains('Nudity')
+      .click();
+
+    // click away
+    cy.get('minds-newsfeed-poster m-nsfw-selector .minds-bg-overlay').click();
+
+    // navigate away from newsfeed and back.
+    cy.get('[data-cy=data-minds-nav-wallet-button]').first().click(); // bottom bar exists, so take first child 
+    cy.get('[data-cy=data-minds-nav-newsfeed-button]').first().click(); 
+
+    newActivityContent('This is a nsfw post');
+
+    postActivityAndAwaitResponse(200);
+
+    // should have the mature text toggle
+    cy.get(
+      '.minds-list > minds-activity:first-child .message .m-mature-text-toggle'
+    ).should('not.have.class', 'mdl-color-text--red-500');
+    cy.get(
+      '.minds-list > minds-activity:first-child .message .m-mature-message-content'
+    ).should('have.class', 'm-mature-text');
+
+    // click the toggle
+    cy.get(
+      '.minds-list > minds-activity:first-child .message .m-mature-text-toggle'
+    ).click();
+
+    // text should be visible now
+    cy.get(
+      '.minds-list > minds-activity:first-child .message .m-mature-text-toggle'
+    ).should('have.class', 'mdl-color-text--red-500');
+    cy.get(
+      '.minds-list > minds-activity:first-child .message .m-mature-message-content'
+    ).should('not.have.class', 'm-mature-text');
+
+    cy.get(
+      '.minds-list > minds-activity:first-child .message .m-mature-message-content'
+    ).contains('This is a nsfw post');
+
+    deleteActivityFromNewsfeed();
+  });
+
 });
