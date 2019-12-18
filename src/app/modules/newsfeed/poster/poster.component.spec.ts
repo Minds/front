@@ -277,4 +277,36 @@ describe('PosterComponent', () => {
       'api/v1/newsfeed'
     );
   }));
+
+  it('should allow the user to make an NSFW post', fakeAsync(() => {
+    comp.attachment.setNSFW([
+      { value: 'naughty', selected: true },
+      { value: 'rude', selected: true },
+      { value: 'not very nice', selected: true },
+    ]);
+
+    comp.meta.message = 'test #tags ';
+    comp.hashtagsSelector.parseTags(comp.meta.message);
+
+    fixture.detectChanges();
+
+    clientMock.response['api/v1/newsfeed'] = { status: 'success' };
+
+    spyOn(window, 'alert').and.callFake(function() {
+      return true;
+    });
+    spyOn(comp, 'post').and.callThrough();
+
+    getPostButton().nativeElement.click();
+    tick();
+
+    expect(comp.post).toHaveBeenCalled();
+    expect(clientMock.post).toHaveBeenCalled();
+
+    expect(clientMock.post.calls.mostRecent().args[1]['nsfw']).toEqual([
+      'naughty',
+      'rude',
+      'not very nice',
+    ]);
+  }));
 });
