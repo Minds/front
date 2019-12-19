@@ -102,7 +102,7 @@ export class SuggestionsService {
             all: 0,
             hashtag: '',
             hashtags: '',
-            sync: false,
+            sync: 1,
             nsfw: '',
           }
         );
