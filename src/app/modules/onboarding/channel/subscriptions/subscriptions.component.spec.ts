@@ -20,7 +20,7 @@ describe('SubscriptionsOnboardingComponent', () => {
       declarations: [
         MockComponent({
           selector: 'm-suggestions__sidebar',
-          inputs: [],
+          inputs: ['mechanism'],
           outputs: [],
         }),
         SubscriptionsOnboardingComponent,
