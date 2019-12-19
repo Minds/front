@@ -409,6 +409,12 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     }
   }
 
+  onEnableProThemeClick(e: MouseEvent): void {
+    if (!this.isActive) {
+      this.router.navigate(['/pro']);
+    }
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
