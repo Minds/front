@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
     <div class="m-channelOnboarding__slide">
       <h2>Subscribe to some popular channels</h2>
       <div class="m-channelOnboardingSlide__list">
-        <m-suggestions__sidebar></m-suggestions__sidebar>
+        <m-suggestions__sidebar [mechanism]="'top'"></m-suggestions__sidebar>
       </div>
     </div>
   `,

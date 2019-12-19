@@ -1,47 +1,50 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
+import {
+  Mechanism,
+  SuggestionsService,
+} from '../../../common/services/suggestions.service';
 
 @Component({
+  providers: [SuggestionsService],
   selector: 'm-suggestions__sidebar',
   templateUrl: 'sidebar.component.html',
 })
 export class SuggestionsSidebar {
   minds = window.Minds;
   suggestions: Array<any> = [];
-  lastOffset = 0;
+  offset: number = 0;
   inProgress: boolean = false;
   error: string;
 
-  constructor(private client: Client, private storage: Storage) {}
+  @Input() mechanism: Mechanism = 'graph';
+
+  constructor(
+    protected client: Client,
+    protected storage: Storage,
+    protected service: SuggestionsService
+  ) {}
 
   async ngOnInit() {
+    this.service.setMechanism(this.mechanism);
+
     this.load();
   }
 
   async load() {
     this.error = null;
     this.inProgress = true;
-    let limit: number = 5;
-
-    if (this.suggestions.length) limit = 1;
-
-    // Subscribe can not rely on next batch, so load further batch
-    this.lastOffset = this.suggestions.length ? this.lastOffset + 11 : 0;
+    let limit: number = 5 - this.suggestions.length; // Always show 5
 
     try {
-      const response: any = await this.client.get('api/v2/suggestions/user', {
+      const suggestions = await this.service.get({
         limit,
-        offset: this.lastOffset,
+        offset: this.offset,
       });
-      for (let suggestion of response.suggestions) {
-        const removed = this.storage.get(
-          `user:suggestion:${suggestion.entity_guid}:removed`
-        );
-        if (!removed) {
-          this.suggestions.push(suggestion);
-        }
-      }
+
+      this.offset += suggestions.length;
+      this.suggestions.push(...suggestions);
     } catch (err) {
       this.error = err.message;
     } finally {

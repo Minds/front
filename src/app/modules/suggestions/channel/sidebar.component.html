@@ -14,17 +14,20 @@
       *ngFor="let suggestion of suggestions"
       class="m-suggestionsSidebarList__item"
     >
-      <a [routerLink]="['/', suggestion.entity.username]">
+      <a
+        *ngIf="suggestion.entity | async as entity"
+        [routerLink]="['/', entity.username]"
+      >
         <div
           class="m-suggestionsSidebarListItem__avatar"
           [style.background-image]="
-            'url(' + minds.cdn_url + '/icon/' + suggestion.entity.guid + ')'
+            'url(' + minds.cdn_url + '/icon/' + entity.guid + ')'
           "
         ></div>
         <div class="m-suggestionsSidebarListItem__body">
-          <div [title]="suggestion.entity.briefdescription">
-            <h4>{{ suggestion.entity.username }}</h4>
-            <span>{{ suggestion.entity.briefdescription }}</span>
+          <div [title]="entity.briefdescription">
+            <h4>{{ entity.username }}</h4>
+            <span>{{ entity.briefdescription }}</span>
           </div>
           <div class="m-layout__spacer"></div>
           <i
@@ -33,7 +36,7 @@
             >close</i
           >
           <minds-button-subscribe
-            [user]="suggestion.entity"
+            [user]="entity"
             (subscribed)="remove(suggestion)"
           ></minds-button-subscribe>
         </div>
