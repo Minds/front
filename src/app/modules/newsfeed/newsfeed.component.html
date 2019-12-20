@@ -226,7 +226,7 @@
     *ngIf="showRightSidebar"
   >
     <ng-container *mIfFeature="'suggested-users'">
-      <m-suggestions__sidebar></m-suggestions__sidebar>
+      <m-suggestions__sidebar [mechanism]="'top'"></m-suggestions__sidebar>
     </ng-container>
     <m-notices__sidebar></m-notices__sidebar>
     <m-ads-boost
