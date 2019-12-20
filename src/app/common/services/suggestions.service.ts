@@ -19,7 +19,7 @@ interface GetOptions {
 }
 
 /**
- * Service
+ * API implementation service to fetch suggested users.
  */
 @Injectable()
 export class SuggestionsService {
