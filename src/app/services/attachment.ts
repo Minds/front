@@ -510,9 +510,6 @@ export class AttachmentService {
 
         this.checkVideoDuration(file)
           .then(duration => {
-            if (window.Minds.user.plus) {
-              window.Minds.max_video_length = window.Minds.max_video_length * 3; // Hacky
-            }
             if (duration > window.Minds.max_video_length) {
               return reject({
                 message:
