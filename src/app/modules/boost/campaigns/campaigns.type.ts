@@ -20,6 +20,7 @@ export type Campaign = {
   end: number;
   budget: number;
   budget_type: CampaignBudgetType;
+  daily_cap: number;
 
   // Engine
   urn?: string;
@@ -31,6 +32,7 @@ export type Campaign = {
   original_campaign?: Campaign;
 
   // Read Only
+  today_impressions?: number;
   impressions?: number;
   impressions_met?: number;
   created_timestamp?: number;

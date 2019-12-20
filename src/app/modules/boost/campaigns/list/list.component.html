@@ -32,7 +32,11 @@
             <m-tooltip icon="help" i18n>TBD</m-tooltip>
           </th>
           <th class="m-table--numeric-cell">
-            <span i18n>Impressions</span>
+            <span i18n>Total Impressions</span>
+            <m-tooltip icon="help" i18n>TBD</m-tooltip>
+          </th>
+          <th class="m-table--numeric-cell">
+            <span i18n>Daily Impressions</span>
             <m-tooltip icon="help" i18n>TBD</m-tooltip>
           </th>
           <th>
@@ -57,7 +61,14 @@
             {{ campaign.budget | number }} TK
           </td>
           <td class="m-table--numeric-cell">
-            {{ campaign.impressions | number }}
+            {{ campaign.impressions_met | number }}/{{
+              campaign.impressions | number
+            }}
+          </td>
+          <td class="m-table--numeric-cell">
+            {{ campaign.today_impressions | number }}/{{
+              campaign.daily_cap | number
+            }}
           </td>
           <td>
             <ng-container *ngIf="campaign.end > 0; else noEndTime"

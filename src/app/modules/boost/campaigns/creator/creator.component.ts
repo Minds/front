@@ -142,6 +142,7 @@ export class BoostCampaignsCreatorComponent implements OnInit, OnDestroy {
       start: start.getTime(),
       end: start.getTime() + 5 * 24 * 60 * 60 * 1000,
       impressions: 0,
+      daily_cap: 0,
     };
 
     this.currentError = '';
