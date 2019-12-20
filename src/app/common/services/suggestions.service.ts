@@ -18,6 +18,9 @@ interface GetOptions {
   offset?: number;
 }
 
+/**
+ * Service
+ */
 @Injectable()
 export class SuggestionsService {
   protected mechanism: Mechanism = 'graph';
@@ -30,12 +33,24 @@ export class SuggestionsService {
     protected entities: EntitiesService
   ) {}
 
+  /**
+   * Changes the mechanism and resets suggestion cache
+   * @param mechanism
+   */
   setMechanism(mechanism: Mechanism): SuggestionsService {
     this.mechanism = mechanism;
     this.suggestions = null;
     return this;
   }
 
+  /**
+   * Gets a list of suggestions, based on the limit and offset values. It will first fetch a
+   * large collection from the server based on the set mechanism and normalize the results.
+   * Suggestion entities are asynchronous objects meant to be rendered using the `| async` pipe.
+   *
+   * @param limit
+   * @param offset
+   */
   async get({ limit, offset }: GetOptions): Promise<Array<Suggestion>> {
     if (this.suggestions === null || !offset) {
       await this.fetch(this.mechanism);
@@ -62,10 +77,22 @@ export class SuggestionsService {
     }));
   }
 
+  /**
+   * Checks if a guid should be hidden from the results, based on user
+   * manual passing and current subscriptions.
+   *
+   * @param guid
+   */
   isHidden(guid): boolean {
     return Boolean(this.storage.get(`user:suggestion:${guid}:removed`));
   }
 
+  /**
+   * Fetches a collection of suggestions from the server and normalizes its
+   * results using a common interface.
+   *
+   * @param mechanism
+   */
   protected async fetch(mechanism: Mechanism) {
     switch (mechanism) {
       case 'graph': {
@@ -98,7 +125,7 @@ export class SuggestionsService {
           'api/v2/feeds/global/top/channels',
           {
             period: '30d',
-            limit: 500,
+            limit: 600, // Server's hard limit
             all: 0,
             hashtag: '',
             hashtags: '',
