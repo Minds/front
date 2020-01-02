@@ -50,6 +50,16 @@
         >
           Upgrade to Pro
         </button>
+        <button
+          class="mf-button mf-button--alt"
+          *ngIf="session.getLoggedInUser()"
+          [routerLink]="[
+            '/pro/' + session.getLoggedInUser().username + '/settings'
+          ]"
+          i18n
+        >
+          Try Pro
+        </button>
       </ng-container>
       <ng-template #comingSoon>
         <button class="mf-button mf-button--alt" i18n>
@@ -76,6 +86,16 @@
         i18n
       >
         Cancel Pro
+      </button>
+      <button
+        class="mf-button mf-button--alt"
+        *ngIf="session.getLoggedInUser()"
+        [routerLink]="[
+          '/pro/' + session.getLoggedInUser().username + '/settings'
+        ]"
+        i18n
+      >
+        Settings
       </button>
     </div>
   </ng-template>

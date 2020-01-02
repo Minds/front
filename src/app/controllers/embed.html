@@ -1,10 +1,8 @@
 <div class="m-embed-video" *ngIf="object.subtype == 'video'">
-  <m-video
-    [autoplay]="false"
-    [muted]="false"
-    [src]="[{ 'uri': object.src['720.mp4'] }]"
+  <m-videoPlayer
     [guid]="object.guid"
-    [playCount]="object['play:count']"
-    [poster]="object['thumbnail_src']"
-  ></m-video>
+    [autoplay]="false"
+    [shouldPlayInModal]="false"
+  >
+  </m-videoPlayer>
 </div>

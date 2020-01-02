@@ -50,7 +50,7 @@ export class ProSubscriptionComponent implements OnInit {
 
   constructor(
     protected service: ProService,
-    protected session: Session,
+    public session: Session,
     protected overlayModal: OverlayModalService,
     protected wirePaymentHandlers: WirePaymentHandlersService,
     protected cd: ChangeDetectorRef,

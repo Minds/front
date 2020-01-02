@@ -18,6 +18,7 @@ import { debounceTime } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
+import { NSFWSelectorComponent } from '../../../common/components/nsfw-selector/nsfw-selector.component';
 
 @Component({
   moduleId: module.id,
@@ -47,6 +48,9 @@ export class PosterComponent {
 
   @ViewChild('hashtagsSelector', { static: false })
   hashtagsSelector: HashtagsSelectorComponent;
+
+  @ViewChild('nsfwSelector', { static: false })
+  nsfwSelector: NSFWSelectorComponent;
 
   showActionBarLabels: boolean = false;
 
@@ -79,6 +83,13 @@ export class PosterComponent {
 
   ngAfterViewInit() {
     this.resizeSubject.next(Date.now());
+
+    try {
+      const nsfw = this.nsfwSelector.service.reasons.filter(r => r.selected);
+      this.setNSFWSelector(nsfw);
+    } catch (e) {
+      return;
+    }
   }
 
   ngOnDestroy() {
@@ -296,5 +307,18 @@ export class PosterComponent {
 
   posterDateSelectorError(msg) {
     this.errorMessage = msg;
+  }
+
+  /**
+   * Set the current NSFW state.
+   *
+   * @param { string } nsfw - array of NSFW reasons.
+   */
+  setNSFWSelector(
+    nsfw: Array<{ value: string; label: string; selected: string }> = null
+  ): void {
+    if (nsfw.length > 0) {
+      this.onNSWFSelections(nsfw);
+    }
   }
 }

@@ -122,16 +122,12 @@ export class SidebarSelectorComponent implements OnInit {
   }
 
   hashtagVisibilityChange(hashtag) {
-    if (this.currentHashtag !== hashtag.value) {
-      this.currentHashtag = hashtag.value;
-
-      this.filterChange.emit({
-        type: 'single',
-        value: this.currentHashtag,
-      });
-    } else {
-      this.currentHashtag = null;
-    }
+    this.currentHashtag =
+      this.currentHashtag !== hashtag.value ? hashtag.value : null;
+    this.filterChange.emit({
+      type: 'single',
+      value: this.currentHashtag,
+    });
   }
 
   preferredChange() {
