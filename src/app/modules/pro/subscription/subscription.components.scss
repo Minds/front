@@ -83,4 +83,9 @@ m-pro--subscription {
       color: themed($m-red);
     }
   }
+
+  .mf-button {
+    margin-bottom: $minds-margin;
+    margin-right: $minds-margin;
+  }
 }

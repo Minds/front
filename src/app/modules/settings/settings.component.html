@@ -111,7 +111,6 @@
 
         <a
           class="m-page--sidebar--navigation--item"
-          *ngIf="session.getLoggedInUser().pro"
           [routerLink]="[
             '/pro/' + session.getLoggedInUser().username + '/settings'
           ]"

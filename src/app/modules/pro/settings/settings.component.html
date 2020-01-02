@@ -3,46 +3,40 @@
     <m-shadowboxLayout [scrollableHeader]="false" [isForm]="true">
       <div class="m-shadowboxLayout__header hasTitle">
         <h3 class="m-shadowboxHeader__title">{{ activeTab | titlecase }}</h3>
-        <ng-container [ngSwitch]="activeTab">
-          <ng-template ngSwitchCase="general">
-            <h4 class="m-shadowboxHeader__subtitle">
+        <h4 class="m-shadowboxHeader__subtitle">
+          <ng-container [ngSwitch]="activeTab">
+            <ng-template ngSwitchCase="general">
               Customize your title and headline
-            </h4>
-          </ng-template>
-          <ng-template ngSwitchCase="theme">
-            <h4 class="m-shadowboxHeader__subtitle">
+            </ng-template>
+            <ng-template ngSwitchCase="theme">
               Set up your site's color theme
-            </h4>
-          </ng-template>
-          <ng-template ngSwitchCase="assets">
-            <h4 class="m-shadowboxHeader__subtitle">
+            </ng-template>
+            <ng-template ngSwitchCase="assets">
               Upload custom logo and background images
-            </h4>
-          </ng-template>
-          <ng-template ngSwitchCase="hashtags">
-            <h4 class="m-shadowboxHeader__subtitle">
+            </ng-template>
+            <ng-template ngSwitchCase="hashtags">
               Set up your category filter hashtags
-            </h4>
-          </ng-template>
-          <ng-template ngSwitchCase="footer">
-            <h4 class="m-shadowboxHeader__subtitle">
+            </ng-template>
+            <ng-template ngSwitchCase="footer">
               Set up your site's footer links
-            </h4>
-          </ng-template>
-          <ng-template ngSwitchCase="domain">
-            <h4 class="m-shadowboxHeader__subtitle">
+            </ng-template>
+            <ng-template ngSwitchCase="domain">
               Customize your site domain
-            </h4>
-          </ng-template>
-          <ng-template ngSwitchCase="payouts">
-            <h4 class="m-shadowboxHeader__subtitle">
+            </ng-template>
+            <ng-template ngSwitchCase="payouts">
               Select the currency type you wish you be paid out in. Please note
               payouts only occur after your
               <a routerLink="/analytics/dashboard/earnings">earnings</a> are
               equivalent to $100 or greater.
-            </h4>
-          </ng-template>
-        </ng-container>
+            </ng-template>
+          </ng-container>
+          <a
+            class="m-proSettings__upgradeLink"
+            routerLink="/pro"
+            *ngIf="!isActive"
+            >(Upgrade to Pro)</a
+          >
+        </h4>
       </div>
 
       <div class="m-shadowboxLayout__bottom">
@@ -110,6 +104,7 @@
                           for="publish"
                           class="m-proSettings__customInputContainer--checkbox"
                           i18n
+                          (click)="onEnableProThemeClick($event)"
                           >Enable Pro theme
                           <input
                             type="checkbox"
@@ -738,11 +733,18 @@
                           id="domain"
                           name="domain"
                           formControlName="domain"
-                          required
                         />
                         <m-formDescriptor>
-                          If you wish to use a custom domain then please email
-                          info@minds.com.
+                          <ng-container
+                            *ngIf="isActive; else previewModeDomainNote"
+                          >
+                            If you wish to use a custom domain then please email
+                            info@minds.com.
+                          </ng-container>
+                          <ng-template #previewModeDomainNote
+                            >You can control your domain once you purchase
+                            Pro.</ng-template
+                          >
                         </m-formDescriptor>
                       </div>
                       <div class="m-proSettings__row--validation">
