@@ -1,0 +1,41 @@
+<ng-container *ngIf="metrics$ | async as metrics">
+  <ng-container *ngFor="let metric of metrics">
+    <div
+      class="m-analytics__metric m-shadowboxLayout__headerItem"
+      (click)="updateMetric(metric)"
+      [ngClass]="{ active: metric.visualisation }"
+      *ngIf="metric.permissionGranted"
+    >
+      <div class="m-analytics__metricLabel">
+        <span>{{ metric.label }}</span>
+        <m-tooltip [anchor]="top" icon="help">
+          {{ metric.description }}
+        </m-tooltip>
+      </div>
+      <div class="m-analytics__metricSummary" *ngIf="metric.summary">
+        <ng-container *ngIf="metric.unit === 'number'">
+          {{ metric.summary.current_value | number }}
+        </ng-container>
+        <ng-container *ngIf="metric.unit === 'usd'">
+          <span>$</span
+          >{{ metric.summary.current_value / 100 | number: '1.2-2' }}
+        </ng-container>
+      </div>
+
+      <div
+        *ngIf="metric.summary"
+        class="m-analytics__metricDelta"
+        [ngClass]="{
+          goodChange: metric.hasChanged && metric.positiveTrend,
+          badChange: metric.hasChanged && !metric.positiveTrend
+        }"
+      >
+        <ng-container *ngIf="metric.hasChanged">
+          <i class="material-icons" *ngIf="metric.delta > 0">arrow_upward</i>
+          <i class="material-icons" *ngIf="metric.delta < 0">arrow_downward</i>
+        </ng-container>
+        <span *ngIf="metric.delta">{{ metric.delta | percent: '1.0-1' }}</span>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
