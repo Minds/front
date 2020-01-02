@@ -62,7 +62,7 @@ describe('OverlayComponent', () => {
 
   it('should overlay when channel is mature', () => {
     comp._channel = {
-      mature: true,
+      is_mature: true,
     };
     comp.showOverlay();
     fixture.detectChanges();
@@ -90,7 +90,7 @@ describe('OverlayComponent', () => {
   it('should overlay not show overlay if channel is not nsfw, mature and no mature_visibility', () => {
     comp._channel = {
       mature_visibility: false,
-      mature: false,
+      is_mature: false,
       nsfw: [],
     };
     comp.showOverlay();
@@ -101,7 +101,7 @@ describe('OverlayComponent', () => {
   it('should not register undefined values as a false positive, and show the overlay', () => {
     comp._channel = {
       mature_visibility: undefined,
-      mature: undefined,
+      is_mature: undefined,
       nsfw: undefined,
     };
     comp.showOverlay();

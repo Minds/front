@@ -49,7 +49,7 @@ export class ExplicitOverlayComponent {
 
     if (this._channel.mature_visibility) {
       this.hidden = true;
-    } else if (this._channel.mature) {
+    } else if (this._channel.is_mature) {
       this.hidden = false;
     } else if (this._channel.nsfw && this._channel.nsfw.length > 0) {
       this.hidden = false;
