@@ -42,7 +42,7 @@ export class WalletChartComponent implements OnInit {
 
   ngOnInit() {
     this.activeTimespan = this.timespans[0];
-    this.data['visualisation'] = this.walletService.getTokenChartData(
+    this.data['visualisation'] = this.walletService.getTokenChart(
       this.activeTimespan
     );
   }
@@ -51,6 +51,6 @@ export class WalletChartComponent implements OnInit {
     this.activeTimespan = this.timespans.find(
       ts => ts.id === $event.timespanId
     );
-    this.data = this.walletService.getTokenChartData(this.activeTimespan);
+    this.data = this.walletService.getTokenChart(this.activeTimespan);
   }
 }

@@ -15,6 +15,15 @@
       *ngIf="tab.value || tab.value === 0"
       [ngSwitch]="tab?.unit"
     >
+      <ng-template ngSwitchCase="tokens">
+        {{ tab.value | token: 18 | number: '1.0-3' }}
+      </ng-template>
+      <ng-template ngSwitchCase="eth">
+        {{ tab.value | token: 18 | number: '1.0-3' }}
+      </ng-template>
+      <ng-template ngSwitchCase="btc">
+        {{ tab.value | token: 18 | number: '1.0-3' }}
+      </ng-template>
       <ng-template ngSwitchCase="number">
         {{ tab.value | number }}
       </ng-template>
