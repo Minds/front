@@ -1,14 +1,16 @@
 m-walletModal {
-  display: block;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  width: 100%;
-  overflow: scroll;
-  z-index: 9999999;
+  .m-walletModal__container {
+    display: block;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
+    z-index: 9999999;
+  }
 
   .m-walletModal__backdrop {
     position: fixed;
@@ -82,8 +84,8 @@ m-walletModal {
     position: fixed;
     height: 53px;
     width: 53px;
-    right: 8px;
-    top: 8px;
+    right: 25px;
+    top: 25px;
     padding: 4px;
     display: inline-block;
     border-radius: 50%;

@@ -76,7 +76,7 @@
     tokens. Next payout in
     <span>{{ nextPayout | timediff }}</span> (Daily at 2:00am UTC)
   </div>
-  <m-walletModal *ngIf="showModal" (closeModal)="showModal = false">
+  <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
     <m-walletOnchainTransfer
       [offchainBalance]="offchainBalance.total"
       [onchainAddress]="wallet.onchain.address"
