@@ -3,7 +3,6 @@ import {
   Output,
   Input,
   EventEmitter,
-  AfterViewInit,
   OnDestroy,
   HostListener,
 } from '@angular/core';
@@ -12,43 +11,29 @@ import {
   selector: 'm-walletModal',
   templateUrl: './modal.component.html',
 })
-export class WalletModalComponent implements AfterViewInit, OnDestroy {
-  public _showModal;
-  @Output() closeModal: EventEmitter<any> = new EventEmitter();
-  // showModal: boolean = false;
-  // @Input() showModal = false;
+export class WalletModalComponent implements OnDestroy {
+  showModalTimeout: any = null;
+  justOpened = true;
+  public _showModal = false;
   @Input()
   public set showModal(val: boolean) {
     this._showModal = val;
-    console.log('showmodal input', val);
     if (val) {
       this.show();
     }
   }
+  @Output() closeModal: EventEmitter<any> = new EventEmitter();
 
-  // root;
   constructor() {}
 
-  ngAfterViewInit() {
-    // if (document && document.body) {
-    //   document.body.classList.add('m-overlay-modal--shown--no-scroll');
-    // }
-    // if (!this.root && document && document.body) {
-    //   this.root = document.body;
-    // }
-    // if (this.root) {
-    //   this.root.classList.add('m-overlay-modal--shown');
-    //   // document.body.classList.add('m-overlay-modal--shown--no-scroll');
-    // }
-  }
-  ngOnDestroy() {
-    document.body.classList.remove('m-overlay-modal--shown--no-scroll');
-  }
-
   show() {
-    console.log('show');
     if (document && document.body) {
+      this.justOpened = true;
       document.body.classList.add('m-overlay-modal--shown--no-scroll');
+      // Prevent dismissal of modal when it's just been opened
+      this.showModalTimeout = setTimeout(() => {
+        this.justOpened = false;
+      }, 20);
     }
   }
 
@@ -56,11 +41,10 @@ export class WalletModalComponent implements AfterViewInit, OnDestroy {
   // Dismiss modal when backdrop is clicked and modal is open
   @HostListener('document:click', ['$event'])
   clickedBackdrop($event) {
-    console.log('clickedbackdrop');
-    if (this.showModal) {
+    if (this._showModal && !this.justOpened) {
       $event.preventDefault();
       $event.stopPropagation();
-      this.clickedClose();
+      this.close();
     }
   }
 
@@ -69,13 +53,14 @@ export class WalletModalComponent implements AfterViewInit, OnDestroy {
     $event.stopPropagation();
   }
 
-  clickedClose() {
+  close() {
     document.body.classList.remove('m-overlay-modal--shown--no-scroll');
-
-    // if (this.root) {
-    //   this.root.classList.remove('m-overlay-modal--shown');
-    //   document.body.classList.remove('m-overlay-modal--shown--no-scroll');
-    // }
     this.closeModal.emit();
+  }
+  ngOnDestroy() {
+    if (this.showModalTimeout) {
+      clearTimeout(this.showModalTimeout);
+    }
+    this.close();
   }
 }

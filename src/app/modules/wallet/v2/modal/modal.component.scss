@@ -94,7 +94,7 @@ m-walletModal {
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
     @include m-theme() {
       background-color: themed($m-white);
-      box-shadow: 0 0 15px 0 rgba(themed($m-black), 0.2);
+      box-shadow: 0 0 15px 0 rgba(themed($m-black), 0.25);
     }
     i {
       position: absolute;
