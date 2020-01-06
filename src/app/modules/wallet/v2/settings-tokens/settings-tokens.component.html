@@ -1,3 +1,242 @@
-<p>
-  TODO: m-walletSettings--tokens
-</p>
+<div class="m-walletSettings" id="tokenSettings">
+  <div class="m-walletSettingsView--setup" *ngIf="!display">
+    <h4>
+      On-Chain address
+    </h4>
+    <div class="m-walletSettings__setupOptions__recommendation">
+      <i class="material-icons">thumb_up</i><span>RECOMMENDED</span>
+    </div>
+    <ul class="m-walletSettingsView__setupOptions__container">
+      <li class="m-walletSettingsView__setupOption--metamask">
+        <div>
+          <img
+            class="metamask"
+            [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'"
+          />
+          <h2>
+            MetaMask
+          </h2>
+        </div>
+        <p>
+          <a href="https://metamask.io/" target="_blank">Install MetaMask</a>
+          for the most seamless user experience.
+        </p>
+        <m-shadowboxSubmitButton
+          [disabled]="inProgress"
+          [saving]="inProgress"
+          (click)="display = Views.UseExternal; useExternal()"
+        >
+          Link MetaMask
+        </m-shadowboxSubmitButton>
+      </li>
+
+      <li class="m-walletSettingsView__setupOption--custom">
+        <h2>
+          Custom
+        </h2>
+        <p>
+          You don’t need to use MetaMask. You can alternatively manage your own
+          address.
+        </p>
+        <div>
+          <a (click)="display = Views.CreateAddress; createAddress()"
+            >Create a new address</a
+          >
+          <span>or</span>
+          <a (click)="display = Views.ProvideAddress">Use your private key</a>
+        </div>
+      </li>
+      <p *ngIf="">
+        <a (click)="display = Views.currentAddress"
+          >🚧 Current On-Chain Address 🚧</a
+        >
+      </p>
+    </ul>
+  </div>
+
+  <ul *ngIf="display">
+    <!---CUSTOM - CREATE ADDRESS----------------------------------------->
+    <li
+      class="m-walletSettingsView--addressCreate"
+      *ngIf="display === Views.CreateAddress"
+    >
+      <h2>
+        Create Address
+      </h2>
+      <p *ngIf="!generatedAccount">
+        Generating address ...<span
+          *ngIf="inProgress && !generatedAccount"
+          class="mdl-spinner mdl-js-spinner is-active"
+          [mdl]
+        ></span>
+      </p>
+
+      <p *ngIf="generatedAccount">
+        The address
+        <span class="m-walletSettings__address--emphasis">{{
+          generatedAccount.address
+        }}</span>
+        was successully saved as your on-chain address. Clicking the button
+        below will download its private key. Ensure you safely store the private
+        key file.
+      </p>
+
+      <m-shadowboxSubmitButton
+        [disabled]="!generatedAccount"
+        [saving]="inProgress && generatedAccount"
+        (click)="downloadPrivateKey()"
+      >
+        Download Private Key
+      </m-shadowboxSubmitButton>
+      <a class="m-walletSettings__backButton" (click)="display = null"
+        ><i class="material-icons">arrow_back</i><span>Back</span></a
+      >
+    </li>
+
+    <!---CUSTOM - PROVIDE ADDRESS---------------------------->
+    <li
+      class="m-walletSettingsView--addressProvide"
+      *ngIf="display === Views.ProvideAddress"
+    >
+      <h2>
+        Provide Address
+      </h2>
+      <p>
+        Enter the address that will be stored as your wallet for Minds on-chain
+        tokens and Ether payments. Remember that you will need your wallet's
+        private key to conduct transactions.
+      </p>
+
+      <div class="m-walletForm__field--text stretchedField">
+        <div class="m-walletForm__row--label">
+          <label for="providedAddress" i18n>On-chain Address</label>
+          <m-tooltip icon="help">
+            <ng-container i18n
+              >This address is where you will receive on-chain Minds tokens and
+              Ether payments</ng-container
+            >
+          </m-tooltip>
+        </div>
+        <div class="m-walletForm__row--input">
+          <input
+            type="text"
+            id="providedAddress"
+            name="providedAddress"
+            class="form-control"
+            [readonly]="inProgress"
+            [(ngModel)]="providedAddress"
+          />
+        </div>
+      </div>
+      <m-shadowboxSubmitButton
+        [disabled]="inProgress || !providedAddress"
+        [saving]="inProgress"
+        (click)="provideAddress()"
+      >
+        Save Address
+      </m-shadowboxSubmitButton>
+      <a class="m-walletSettings__backButton" (click)="display = null"
+        ><i class="material-icons">arrow_back</i><span>Back</span></a
+      >
+    </li>
+
+    <!---USE EXTERNAL ADDRESS----------------------------------------------->
+    <li
+      class="m-walletSettingsView--addressExternal"
+      *ngIf="display === Views.UseExternal"
+    >
+      <p>
+        🚧 lol 🦊 see
+        <a
+          href="https://gitlab.com/minds/ux-design/ux/issues/27"
+          target="_blank"
+          >UX issue #27</a
+        >
+        🚧
+      </p>
+      <img
+        class="metamask"
+        [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'"
+      />
+      <h2>
+        MetaMask
+      </h2>
+      <p>
+        <ng-container>
+          Please ensure you select the <b>Main Ethereum Network</b>.
+        </ng-container>
+
+        <ng-container *ngIf="downloadingMetamask">
+          <b>
+            Note: After installing and setting up MetaMask you might need to
+            reload Minds.
+          </b>
+        </ng-container>
+      </p>
+
+      <div class="m-walletSettings--tokens--buttons" *ngIf="!hasExternal">
+        <button (click)="downloadMetamask()">
+          Download MetaMask
+        </button>
+      </div>
+
+      <div class="m-walletSettings--tokens--buttons" *ngIf="hasExternal">
+        <span class="m-walletSettings--tokens--buttons-input">
+          <ng-container *ngIf="providedAddress; else noProvidedAddress">
+            {{ providedAddress }}
+          </ng-container>
+
+          <ng-template #noProvidedAddress>
+            MetaMask is either locked or connected to another network.
+          </ng-template>
+        </span>
+      </div>
+      <a class="m-walletSettings__backButton" (click)="display = null"
+        ><i class="material-icons">arrow_back</i><span>Back</span></a
+      >
+    </li>
+
+    <!---CURRENT ADDRESS ----------------------------------------------->
+    <li
+      class="m-walletSettingsView--addressCurrent"
+      *ngIf="display === Views.currentAddress"
+    >
+      <h2>
+        On-Chain Address
+      </h2>
+      <p style="margin-bottom: 24px">
+        🚧 WIP! See
+        <a
+          href="https://gitlab.com/minds/ux-design/ux/issues/18"
+          target="_blank"
+          >UX issue #18</a
+        >
+        🚧
+      </p>
+      <div class="m-walletForm__field--text stretchedField">
+        <div class="m-walletForm__row--label">
+          <label for="currentAddress" i18n>Address</label>
+          <m-tooltip icon="help">
+            <ng-container i18n
+              >placeholder: 🚧 This will eventually not be an input field
+              🚧</ng-container
+            >
+          </m-tooltip>
+        </div>
+        <div class="m-walletForm__row--input">
+          <input
+            type="text"
+            id="currentAddress"
+            name="currentAddress"
+            class="form-control"
+            readonly
+            [(ngModel)]="currentAddress"
+          />
+        </div>
+      </div>
+      <p><a (click)="display = null">Change Address</a></p>
+    </li>
+  </ul>
+</div>
+
+<m-formToast></m-formToast>

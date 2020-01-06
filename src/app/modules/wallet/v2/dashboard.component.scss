@@ -32,6 +32,8 @@ m-walletDashboard {
     font-size: 15px;
     font-weight: 300;
     line-height: 20px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
     @include m-theme() {
       color: themed($m-grey-300);
       border-bottom: 3px solid themed($m-white);
@@ -52,36 +54,417 @@ m-walletDashboard {
     display: block;
     padding-bottom: 50px;
   }
-  m-shadowboxSubmitButton {
-    .m-shadowboxSubmitButton {
-      max-height: 35px;
-      min-width: 0;
-      min-height: 0;
-      font-weight: 300;
-      padding: 7px 15px;
-      font-size: 15px;
-      line-height: 20px;
-    }
-  }
 
   .m-walletDashboardBalances__wrapper {
-    margin: 50px 40px 34px 40px;
+    margin: 50px 53px 34px 53px;
   }
   .m-walletDashboardViews__tabsContainer {
     margin: 0 40px;
   }
   .m-walletDashboardViews__view {
     margin: 50px 57px 0 57px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  m-shadowboxSubmitButton {
+    display: block;
+    flex: 0 1 auto;
+    margin: 0 0 0 21px;
+    min-width: 105px;
+    box-sizing: border-box;
+
+    .m-shadowboxSubmitButton {
+      box-sizing: border-box;
+      max-height: none;
+      min-height: 42px;
+      height: 42px;
+      min-width: 0;
+      font-weight: 300;
+      padding: 7px 15px;
+      font-size: 15px;
+      line-height: 20px;
+    }
+    .m-shadowboxSubmitButton__status--unsaved {
+      font-size: 15px;
+      line-height: 20px;
+    }
   }
 
+  // *******************************************************
+  // ** DASHBOARD - MEDIA QUERIES **************************
+  // *******************************************************
   @media screen and (max-width: $min-tablet) {
     .m-walletDashboardBalances__wrapper {
       margin: 50px 24px 34px 24px;
     }
-    .m-walletDashboardViews__tabsContainer,
-    .m-walletDashboardViews__view {
+    .m-walletDashboardViews__tabsContainer {
       margin-left: 16px;
       margin-right: 16px;
+    }
+    .m-walletDashboardViews__view {
+      margin: 30px 24px 0 24px;
+    }
+  }
+  @media screen and (max-width: $max-mobile) {
+    .m-walletDashboardViews__tab {
+      padding: 10px 9px;
+      margin: 0px 3px;
+    }
+  }
+
+  // *******************************************************
+  // ** FORMS - COMMON STYLES ******************************
+  // *******************************************************
+  form {
+    margin: 0;
+    padding: 0;
+  }
+
+  .m-walletForm__wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  [class*='m-walletForm__field'] {
+    font-size: 15px;
+    line-height: 20px;
+    display: flex;
+    flex-flow: column nowrap;
+    m-tooltip {
+      margin-left: 10px;
+      .m-tooltip {
+        margin: 0;
+      }
+      .m-tooltip--bubble {
+        bottom: 18px;
+        margin-left: 12px;
+        font-weight: 400;
+      }
+    }
+  }
+  [class*='m-walletForm__row'] {
+    display: flex;
+    flex-flow: row wrap;
+    box-sizing: border-box;
+
+    &[class*='--label'] {
+      font-size: 15px;
+      line-height: 20px;
+      margin: 0 0 12px 0;
+      align-items: center;
+      flex-flow: row nowrap;
+      position: relative;
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+    }
+    &[class*='--validation'] {
+      margin-top: 3px;
+      min-height: 22px;
+      p {
+        font-size: 14px;
+        line-height: 19px;
+        margin: 0;
+        font-weight: 300;
+        @include m-theme() {
+          color: themed($m-red-dark);
+        }
+      }
+    }
+  }
+  .stretchedField {
+    .m-walletForm__row--label m-tooltip {
+      margin-left: -12px;
+    }
+    .m-walletForm__row--input {
+      flex-flow: row nowrap;
+      &.invalid {
+        input,
+        .m-phone-input--wrapper {
+          @include m-theme() {
+            border-color: themed($m-red-dark) !important;
+          }
+        }
+      }
+    }
+    .m-walletForm__row--validation {
+      align-self: flex-end;
+    }
+    label,
+    input,
+    .m-walletForm__row--validation {
+      flex: 1 1 auto;
+      max-width: auto;
+    }
+  }
+  input {
+    outline: 0;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 300;
+    width: 0;
+    min-width: 0;
+    padding: 10px 20px;
+    border-radius: 2px;
+    cursor: text;
+
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
+  input:not(.m-phoneInput__input),
+  .m-phone-input--wrapper {
+    border-radius: 2px;
+    @include m-theme() {
+      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+      border: 1px solid themed($m-grey-50);
+    }
+    &:focus {
+      &:not(:read-only) {
+        @include m-theme() {
+          border-color: themed($m-blue);
+        }
+      }
+    }
+  }
+
+  .m-walletForm__fieldsContainer {
+    flex: 1 1 auto;
+  }
+
+  m-phone-input {
+    margin-bottom: 0;
+    .m-phone-input--wrapper {
+      width: 100%;
+      min-width: 240px;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    m-phone-input--country {
+      flex: 0 1 auto;
+    }
+    input {
+      flex: 1 1 auto;
+      padding: 10px;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      @include m-theme() {
+        border-left: 1px solid themed($m-grey-50);
+      }
+    }
+  }
+  @media screen and (max-width: 500px) {
+    m-shadowboxSubmitButton {
+      margin: 21px 0 0 0;
+    }
+    .stretchedField {
+      .m-walletForm__row--label m-tooltip {
+        .m-tooltip--bubble {
+          right: 12px;
+        }
+      }
+      [class*='m-walletForm__row'] {
+        flex-flow: row wrap;
+        label,
+        input {
+          flex: 1 1 100%;
+          min-width: 100%;
+          max-width: 100%;
+        }
+        m-phone-input input {
+          min-width: none;
+        }
+      }
+    }
+  }
+}
+
+// *******************************************************
+// ** SETTINGS - COMMON STYLES ***************************
+// *******************************************************
+
+.m-walletSettings {
+  // font-weight: 300;
+  @include m-theme() {
+    color: themed($m-grey-800);
+  }
+  m-shadowboxSubmitButton {
+    margin: 27px 0 0 0;
+  }
+  h2 {
+    margin: 0;
+    font-size: 26px;
+    line-height: 34px;
+  }
+  h4 {
+    margin: 0;
+    font-size: 21px;
+    line-height: 28px;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    // font-weight: 300;
+  }
+  a {
+    // font-weight: 300;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 19px;
+  }
+  p {
+    font-size: 14px;
+    line-height: 19px;
+    margin: 23px 0 0 0;
+    // font-weight: 300;
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
+  }
+
+  input {
+    outline: 0;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 300;
+    width: 0;
+    min-width: 0;
+    padding: 10px 20px;
+    border-radius: 2px;
+    cursor: text;
+
+    @include m-theme() {
+      color: themed($m-grey-800);
+      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+      border: 1px solid themed($m-grey-50);
+    }
+
+    &:focus {
+      &:not(:read-only) {
+        @include m-theme() {
+          border-color: themed($m-blue);
+        }
+      }
+    }
+  }
+  .m-walletSettingsView--addressCurrent {
+    h2 {
+      margin-bottom: 23px;
+    }
+  }
+
+  .m-walletSettings__setupOptions__recommendation {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+    font-size: 12px;
+    line-height: 16px;
+    margin: 31px 0 0 0;
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
+    i {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+  }
+  .m-walletSettingsView__setupOptions__container {
+    display: flex;
+    flex-flow: row wrap;
+    li {
+      box-sizing: border-box;
+      flex: 1 1 50%;
+      padding: 16px 0 16px 54px;
+    }
+    p {
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+    .m-walletSettingsView__setupOption--custom {
+      div {
+        margin-top: 16px;
+        display: inline-block;
+        a,
+        span {
+          display: inline-block;
+          margin-right: 5px;
+        }
+        span {
+          @include m-theme() {
+            color: themed($m-grey-300);
+          }
+        }
+      }
+    }
+    .m-walletSettingsView__setupOption--metamask {
+      padding-right: 32px;
+      padding-left: 0;
+      border-width: 0;
+      border-right-width: 1px;
+      border-style: solid;
+      @include m-theme() {
+        border-image: linear-gradient(
+            transparent,
+            rgba(themed($m-grey-200), 0.6),
+            transparent
+          )
+          10 100%;
+      }
+    }
+    div {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+      img {
+        height: 34px;
+        margin-right: 12px;
+      }
+    }
+  }
+  span.m-walletSettings__address--emphasis {
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
+  a.m-walletSettings__backButton {
+    margin-top: 33px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+    text-decoration: none;
+    i {
+      font-size: 18px;
+      margin-right: 5px;
+    }
+    &:hover {
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
+  @media screen and (max-width: $min-tablet) {
+    .m-walletSettingsView__setupOptions__container {
+      li.m-walletSettingsView__setupOption--custom {
+        padding-left: 32px;
+      }
+    }
+  }
+
+  @media screen and (max-width: 520px) {
+    .m-walletSettingsView__setupOptions__container {
+      li {
+        flex-basis: 100%;
+        &.m-walletSettingsView__setupOption--metamask {
+          padding: 16px 0 32px 0;
+          border-right-width: 0;
+        }
+        &.m-walletSettingsView__setupOption--custom {
+          padding: 32px 0 0 0;
+        }
+      }
     }
   }
 }

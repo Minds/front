@@ -65,6 +65,8 @@ export class WalletDashboardService {
     protected session: Session
   ) {}
 
+  // TODOOJM: make wallet an observable and have the dashboard component subscribe to it
+  // TODOOJM: make functions to
   getWallet() {
     this.getTokenAccounts();
     this.getEthAccount();
@@ -80,6 +82,8 @@ export class WalletDashboardService {
   async getTokenAccounts() {
     await this.loadOffchainAndReceiver();
     await this.loadOnchain();
+    const tokenTypes = ['tokens', 'onchain', 'offchain']; // receiver?
+    // TODOOJM iterate through this.wallet and return walletObj where key matches one of the tokenTypes
   }
 
   async loadOffchainAndReceiver() {
@@ -137,6 +141,7 @@ export class WalletDashboardService {
     if (ethBalance) {
       this.wallet.eth.balance = ethBalance;
     }
+    return this.wallet.eth;
   }
 
   async getStripeAccount() {
@@ -181,8 +186,8 @@ export class WalletDashboardService {
     return fakeData.visualisation;
   }
 
-  // TODOOJM tx/contribution endpoint needed
   getTokenTransactionTable() {
+    // TODOOJM get this from contributions component
     return fakeData.token_transactions;
   }
 }

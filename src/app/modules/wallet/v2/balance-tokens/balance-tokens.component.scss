@@ -1,5 +1,6 @@
 m-walletBalance--tokens {
   display: block;
+  max-width: 700px;
   > * {
     font-weight: 300;
     font-size: 15px;
@@ -17,9 +18,11 @@ m-walletBalance--tokens {
     flex-flow: row wrap;
   }
   .m-walletBalance--tokens__buyButtonWrapper {
-    margin-left: 36px;
     cursor: default;
     min-width: 105px;
+    m-shadowboxSubmitButton {
+      margin-left: 36px;
+    }
   }
   .m-walletBalance--tokens__balanceTitle {
     position: relative;
@@ -122,13 +125,28 @@ m-walletBalance--tokens {
     }
   }
 
+  m-shadowboxSubmitButton {
+    min-width: 105px;
+    button.m-shadowboxSubmitButton {
+      height: 35px;
+      max-height: 35px;
+      min-width: 0;
+      min-height: 0;
+    }
+    .m-shadowboxSubmitButton__status--unsaved {
+      line-height: 15px;
+    }
+  }
+
   @media screen and (max-width: 800px) {
     .m-walletBalance--tokens__equationLeft {
       flex-direction: column;
     }
     .m-walletBalance--tokens__buyButtonWrapper {
-      margin-left: 0;
-      margin-top: 22px;
+      m-shadowboxSubmitButton {
+        margin-left: 0;
+        margin-top: 22px;
+      }
     }
   }
   @media screen and (max-width: $min-tablet) {
