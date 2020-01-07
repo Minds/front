@@ -1,0 +1,24 @@
+m-settings__tiers .m-settings--section {
+  display: block;
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+
+  textarea {
+    padding: 16px;
+    width: 100%;
+  }
+
+  m-wire-channel-table {
+    display: block;
+    margin-top: $minds-margin * 2;
+
+    table {
+      width: 100%;
+      .m-wire-channel--reward-amount {
+        display: inline-flex;
+        width: 100%;
+      }
+    }
+  }
+}

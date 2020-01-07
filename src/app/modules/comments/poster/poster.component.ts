@@ -16,22 +16,17 @@ import { Upload } from '../../../services/api/upload';
 import { AttachmentService } from '../../../services/attachment';
 import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
+import autobind from '../../../helpers/autobind';
+import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
+import { SignupModalService } from '../../modals/signup/service';
 
 @Component({
   selector: 'm-comment__poster',
   templateUrl: 'poster.component.html',
-  providers: [
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload]
-    }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  providers: [AttachmentService],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class CommentPosterComponent {
-
   minds;
   @Input() guid;
   @Input() entity;
@@ -39,25 +34,31 @@ export class CommentPosterComponent {
   @Input() readonly: boolean = false;
   @Input() currentIndex: number = -1;
   @Input() conversation: boolean = false;
-  @Output('optimisticPost') optimisticPost$: EventEmitter<any> = new EventEmitter();
+  @Input() level: number = 0;
+  @Output('optimisticPost') optimisticPost$: EventEmitter<
+    any
+  > = new EventEmitter();
   @Output('posted') posted$: EventEmitter<any> = new EventEmitter();
   content: string = '';
   triedToPost: boolean = false;
   comments: Array<any> = []; // TODO: remove this
   canPost: boolean = true;
   inProgress: boolean = false;
+  maxLength: number = 1500;
 
   constructor(
     public session: Session,
     public client: Client,
+    private signupModal: SignupModalService,
     public attachment: AttachmentService,
     public sockets: SocketsService,
+    public suggestions: AutocompleteSuggestionsService,
     private renderer: Renderer,
     private cd: ChangeDetectorRef
   ) {
     this.minds = window.Minds;
   }
- 
+
   keypress(e: KeyboardEvent) {
     if (!e.shiftKey && e.charCode === 13) {
       this.post(e);
@@ -67,12 +68,16 @@ export class CommentPosterComponent {
   async post(e) {
     e.preventDefault();
 
-    if (this.inProgress)
+    if (this.content.length > this.maxLength) {
       return;
+    }
+
+    if (this.inProgress) return;
 
     this.inProgress = true;
 
     if (!this.content && !this.attachment.has()) {
+      this.inProgress = false;
       return;
     }
 
@@ -82,7 +87,8 @@ export class CommentPosterComponent {
     data['comment'] = this.content;
     data['parent_path'] = this.parent.child_path || '0:0:0';
 
-    let comment = { // Optimistic
+    let comment = {
+      // Optimistic
       description: this.content,
       guid: 0,
       ownerObj: this.session.getLoggedInUser(),
@@ -100,14 +106,19 @@ export class CommentPosterComponent {
     this.detectChanges();
 
     try {
-      let response: any = await this.client.post('api/v1/comments/' + this.guid, data);
-      this.posted$.next({ comment: response.comment, index: this.currentIndex });
+      let response: any = await this.client.post(
+        'api/v1/comments/' + this.guid,
+        data
+      );
+      this.posted$.next({
+        comment: response.comment,
+        index: this.currentIndex,
+      });
     } catch (e) {
       comment.error = (e && e.message) || 'There was an error';
       this.posted$.next({ comment, index: this.currentIndex });
       console.error('Error posting', e);
     }
-
     this.inProgress = false;
     this.detectChanges();
   }
@@ -124,7 +135,8 @@ export class CommentPosterComponent {
 
     this.attachment.setHidden(true);
     this.attachment.setContainer(this.entity);
-    this.attachment.upload(file, this.detectChanges.bind(this))
+    this.attachment
+      .upload(file, this.detectChanges.bind(this))
       .then(guid => {
         this.canPost = true;
         this.triedToPost = false;
@@ -146,15 +158,18 @@ export class CommentPosterComponent {
     this.canPost = false;
     this.triedToPost = false;
 
-    this.attachment.remove(file).then(() => {
-      this.canPost = true;
-      this.triedToPost = false;
-      file.value = '';
-    }).catch(e => {
-      console.error(e);
-      this.canPost = true;
-      this.triedToPost = false;
-    });
+    this.attachment
+      .remove(file)
+      .then(() => {
+        this.canPost = true;
+        this.triedToPost = false;
+        file.value = '';
+      })
+      .catch(e => {
+        console.error(e);
+        this.canPost = true;
+        this.triedToPost = false;
+      });
 
     this.detectChanges();
   }
@@ -168,15 +183,28 @@ export class CommentPosterComponent {
   }
 
   getAvatar() {
-    if(this.session.isLoggedIn()) {
-      return `${this.minds.cdn_url}icon/${this.session.getLoggedInUser().guid}/small/${this.session.getLoggedInUser().icontime}`;
+    if (this.session.isLoggedIn()) {
+      return `${this.minds.cdn_url}icon/${
+        this.session.getLoggedInUser().guid
+      }/small/${this.session.getLoggedInUser().icontime}`;
     } else {
-      return `${this.minds.cdn_assets_url}assets/avatars/default-small.png`
+      return `${this.minds.cdn_assets_url}assets/avatars/default-small.png`;
     }
   }
 
   postEnabled() {
+    if (this.content.length > this.maxLength) {
+      return false;
+    }
     return true; // TODO: fix
+  }
+
+  get isLoggedIn() {
+    return this.session.isLoggedIn();
+  }
+
+  showLoginModal() {
+    this.signupModal.open();
   }
 
   detectChanges() {
@@ -185,7 +213,6 @@ export class CommentPosterComponent {
   }
 
   ngOnChanges(changes) {
-  //  console.log('[comment:list]: on changes', changes);
+    //  console.log('[comment:list]: on changes', changes);
   }
-
 }

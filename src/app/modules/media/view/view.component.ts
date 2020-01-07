@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  OnDestroy,
+  SkipSelf,
+  Injector,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -10,20 +17,25 @@ import { RecommendedService } from '../components/video/recommended.service';
 import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { MindsTitle } from '../../../services/ux/title';
+import { ActivityService } from '../../../common/services/activity.service';
+import { AnalyticsService } from '../../../services/analytics';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-media--view',
   templateUrl: 'view.component.html',
-  providers: [{
-    provide: RecommendedService,
-    useFactory: RecommendedService._,
-    deps: [Client]
-  }],
+  providers: [
+    {
+      provide: RecommendedService,
+      useFactory: RecommendedService._,
+      deps: [Client],
+    },
+    ActivityService,
+    ClientMetaService,
+  ],
 })
-
-export class MediaViewComponent {
-
+export class MediaViewComponent implements OnInit, OnDestroy {
   minds = window.Minds;
   guid: string;
   entity: any = {};
@@ -32,8 +44,21 @@ export class MediaViewComponent {
   deleteToggle: boolean = false;
 
   theaterMode: boolean = false;
+  allowComments = true;
 
-  menuOptions: Array<string> = ['edit', 'follow', 'feature', 'delete', 'report', 'set-explicit', 'subscribe', 'remove-explicit', 'rating'];
+  menuOptions: Array<string> = [
+    'edit',
+    'follow',
+    'feature',
+    'delete',
+    'report',
+    'set-explicit',
+    'subscribe',
+    'remove-explicit',
+    'rating',
+    'allow-comments',
+    'disable-comments',
+  ];
 
   paramsSubscription: Subscription;
   queryParamsSubscription$: Subscription;
@@ -47,8 +72,16 @@ export class MediaViewComponent {
     public route: ActivatedRoute,
     public attachment: AttachmentService,
     public context: ContextService,
-    private cd: ChangeDetectorRef
-  ) { }
+    private cd: ChangeDetectorRef,
+    protected activityService: ActivityService,
+    private clientMetaService: ClientMetaService,
+    @SkipSelf() injector: Injector
+  ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('single');
+  }
 
   ngOnInit() {
     this.title.setTitle('');
@@ -60,12 +93,14 @@ export class MediaViewComponent {
       }
     });
 
-    this.queryParamsSubscription$ = this.route.queryParamMap.subscribe(params => {
-      this.focusedCommentGuid = params.get('comment_guid');
-      if (this.focusedCommentGuid) {
-        window.scrollTo(0, 500);
+    this.queryParamsSubscription$ = this.route.queryParamMap.subscribe(
+      params => {
+        this.focusedCommentGuid = params.get('comment_guid');
+        if (this.focusedCommentGuid) {
+          window.scrollTo(0, 500);
+        }
       }
-    });
+    );
   }
 
   ngOnDestroy() {
@@ -79,7 +114,8 @@ export class MediaViewComponent {
       this.detectChanges();
     }
     this.inProgress = true;
-    this.client.get('api/v1/media/' + this.guid, { children: false })
+    this.client
+      .get('api/v1/media/' + this.guid, { children: false })
       .then((response: any) => {
         this.inProgress = false;
         if (response.entity.type !== 'object') {
@@ -87,7 +123,7 @@ export class MediaViewComponent {
         }
         if (response.entity) {
           this.entity = response.entity;
-
+          this.allowComments = this.entity['allow_comments'];
           switch (this.entity.subtype) {
             case 'video':
               this.context.set('object:video');
@@ -106,18 +142,22 @@ export class MediaViewComponent {
           }
         }
 
+        this.clientMetaService.recordView(this.entity);
+
         this.detectChanges();
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
         this.error = 'Sorry, there was problem.';
       });
   }
 
   delete() {
-    this.client.delete('api/v1/media/' + this.guid)
+    this.client
+      .delete('api/v1/media/' + this.guid)
       .then((response: any) => {
-        const type: string = this.entity.subtype === 'video' ? 'videos': 'images';
+        const type: string =
+          this.entity.subtype === 'video' ? 'videos' : 'images';
         this.router.navigate([`/media/${type}/my`]);
       })
       .catch(e => {
@@ -126,22 +166,21 @@ export class MediaViewComponent {
   }
 
   getNext() {
-    if (this.entity.container_guid === this.entity.owner_guid
-      || !this.entity.album_children_guids
-      || this.entity.album_children_guids.length <= 1) {
+    if (
+      this.entity.container_guid === this.entity.owner_guid ||
+      !this.entity.album_children_guids ||
+      this.entity.album_children_guids.length <= 1
+    ) {
       return;
     }
 
     let pos = this.entity['album_children_guids'].indexOf(this.entity.guid);
     //bump up if less than 0
-    if (pos <= 0)
-      pos = 1;
+    if (pos <= 0) pos = 1;
     //bump one up if we are in the same position as ourself
-    if (this.entity['album_children_guids'][pos] === this.entity.guid)
-      pos++;
+    if (this.entity['album_children_guids'][pos] === this.entity.guid) pos++;
     //reset back to 0 if we are are the end
-    if (pos >= this.entity['album_children_guids'].length)
-      pos = 0;
+    if (pos >= this.entity['album_children_guids'].length) pos = 0;
 
     return this.entity['album_children_guids'][pos];
   }
@@ -160,24 +199,48 @@ export class MediaViewComponent {
       case 'remove-explicit':
         this.setExplicit(false);
         break;
-
+      case 'allow-comments':
+        this.entity.allow_comments = true;
+        this.activityService.toggleAllowComments(this.entity, true);
+        break;
+      case 'disable-comments':
+        this.entity.allow_comments = false;
+        this.activityService.toggleAllowComments(this.entity, false);
+        break;
     }
   }
 
   setExplicit(value: boolean) {
-
     this.entity.mature = value;
     this.detectChanges();
 
-    this.client.post(`api/v1/entities/explicit/${this.entity.guid}`, { value: value ? '1': '0' })
+    this.client
+      .post(`api/v1/entities/explicit/${this.entity.guid}`, {
+        value: value ? '1' : '0',
+      })
       .catch(e => {
         this.entity.mature = !!this.entity.mature;
         this.detectChanges();
       });
   }
 
+  canShowComments() {
+    if (!this.entity.guid) {
+      return false;
+    }
+    //Don't show comments on albums
+    if (this.entity.subtype === 'album') {
+      return false;
+    }
+    return this.entity['comments:count'] >= 1;
+  }
+
   private detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  isScheduled(time_created) {
+    return time_created && time_created * 1000 > Date.now();
   }
 }

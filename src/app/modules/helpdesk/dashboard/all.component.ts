@@ -13,9 +13,8 @@ import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-helpdesk--dashboard--all',
-  templateUrl: 'all.component.html'
+  templateUrl: 'all.component.html',
 })
-
 export class AllHelpdeskDashboardComponent implements OnInit {
   minds = window.Minds;
 
@@ -26,9 +25,8 @@ export class AllHelpdeskDashboardComponent implements OnInit {
     public router: Router,
     public client: Client,
     public session: Session,
-    @Inject(PLATFORM_ID) private platformId,
-  ) {
-  }
+    @Inject(PLATFORM_ID) private platformId
+  ) {}
 
   async ngOnInit() {
     await this.load();
@@ -36,15 +34,19 @@ export class AllHelpdeskDashboardComponent implements OnInit {
 
   async load() {
     const limit = isPlatformServer(this.platformId) ? 12 : 5000; // Load less for SSR
-    let response: any = await this.client.get(`api/v2/helpdesk/categories`, { limit });
-    this.categories = response.categories.sort((a, b) => a.position - b.position);
+    let response: any = await this.client.get(`api/v2/helpdesk/categories`, {
+      limit,
+    });
+    this.categories = response.categories.sort(
+      (a, b) => a.position - b.position
+    );
 
     response = await this.client.get(`api/v2/helpdesk/questions`, { limit });
     this.questions = response.questions;
 
     for (let category of this.categories) {
       category.questions = this.questions
-        .filter((question) => {
+        .filter(question => {
           return category.uuid === question.category_uuid;
         })
         .sort((a, b) => {
@@ -52,5 +54,4 @@ export class AllHelpdeskDashboardComponent implements OnInit {
         });
     }
   }
-
 }

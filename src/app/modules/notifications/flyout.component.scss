@@ -1,63 +1,61 @@
-@import "defaults";
+@import 'defaults';
 
-m-notifications--flyout{
-  
+m-notifications--flyout {
   z-index: 999;
   width: 320px;
   position: absolute;
   top: 24px;
   right: -160px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-100);
   }
-  
-  @media screen and (max-width: $max-mobile){
+
+  @media screen and (max-width: $max-mobile) {
     right: -80px;
   }
 
-  minds-notifications{
-    
-    .mdl-tabs__tab-bar{
+  minds-notifications {
+    .mdl-tabs__tab-bar {
       height: 40px;
 
-      .mdl-tabs__tab{
+      .mdl-tabs__tab {
         padding: 0 10px;
         height: 40px;
         line-height: 40px;
-    
-        i{
+
+        i {
           line-height: 2em;
           margin-left: 0;
           font-size: 18px;
         }
 
-        span{
+        span {
           display: none;
         }
       }
     }
   }
-  
-  .m-notifications--flyout--wrapper{
+
+  .m-notifications--flyout--wrapper {
     max-height: calc(95vh - 60px);
     overflow: visible;
   }
 
   .notifications-grid {
     max-height: calc(95vh - 200px);
-    overflow-y:scroll;
+    overflow-y: scroll;
     padding: 0;
 
     .mdl-cell--12-col {
       padding: 0;
       margin: 0;
       width: 100%;
-    
+
       minds-notification {
         margin-bottom: 0;
-        padding: 16px 8px; 
-        @include m-theme(){
-           border-bottom: 1px solid themed($m-grey-50);
+        padding: 16px 8px;
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-grey-50);
         }
 
         .body {
@@ -71,7 +69,7 @@ m-notifications--flyout{
           }
           .ts {
             font-size: 10px;
-            font-family: 'Roboto';
+            font-family: 'Roboto', Helvetica, sans-serif;
             text-transform: uppercase;
             letter-spacing: 0.75px;
             text-rendering: optimizeLegibility;
@@ -82,9 +80,9 @@ m-notifications--flyout{
     }
   }
 
-  .m-notifications--flyout--bottom-container{
+  .m-notifications--flyout--bottom-container {
     text-transform: uppercase;
-    font-family: 'Roboto';
+    font-family: 'Roboto', Helvetica, sans-serif;
     letter-spacing: 2.5px;
     text-rendering: optimizeLegibility;
     font-size: 12px;
@@ -92,8 +90,8 @@ m-notifications--flyout{
     font-weight: 600;
     padding: 8px;
     text-align: center;
-    
-    a{
+
+    a {
       display: block;
     }
   }

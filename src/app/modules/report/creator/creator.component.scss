@@ -1,15 +1,15 @@
-.m-reportCreator__header h2{
+.m-reportCreator__header h2 {
   font-weight: 600;
   margin: 0;
   font-size: 36px;
 }
 
-.m-reportCreator__subjects{
+.m-reportCreator__subjects {
   padding: 16px 0;
   list-style: none;
   margin: 0;
 
-  .m-reportCreatorSubjects__subject{
+  .m-reportCreatorSubjects__subject {
     padding: 8px 16px;
     margin: 3px;
     display: inline-flex;
@@ -19,16 +19,20 @@
     }
     border-radius: 24px;
     font-weight: 600;
-    /* background: #fafafa; */
 
     &.m-reportCreatorSubjects__subject--active {
-      border-color: #4690D6;
+      @include m-theme() {
+        border-color: themed($m-blue);
+      }
       span {
-        color: #4690D6;
+        @include m-theme() {
+          color: themed($m-blue);
+        }
       }
     }
 
-    span, i {
+    span,
+    i {
       vertical-align: middle;
     }
 
@@ -38,13 +42,17 @@
       text-rendering: optimizeLegibility;
       font-size: 16px;
       font-weight: 500;
-      color: #555;
       cursor: pointer;
+      @include m-theme() {
+        color: themed($m-grey-700);
+      }
     }
 
     i {
-      color: #888;
       display: none;
+      @include m-theme() {
+        color: themed($m-grey-400);
+      }
     }
 
     //&:last-child{
@@ -60,7 +68,9 @@
   position: relative;
 }
 
-.m-report-creator--success, .m-report-creator--copyright, .m-report-creator--appeals {
+.m-report-creator--success,
+.m-report-creator--copyright,
+.m-report-creator--appeals {
   padding: 32px 0;
 
   p {
@@ -75,14 +85,15 @@
     padding: 16px;
     font-size: 16px;
     letter-spacing: 1px;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-50);
-       background-color: rgba(themed($m-white), 0.5);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-50);
+      background-color: rgba(themed($m-white), 0.5);
     }
   }
 }
 
-.m-reportCreator__submit, .m-report-creator--close {
+.m-reportCreator__submit,
+.m-report-creator--close {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -98,9 +109,9 @@
     font-weight: inherit;
     text-transform: uppercase;
     cursor: pointer;
-    @include m-theme(){
-    //  border: 1px solid themed($m-grey-700);
-    //  color: themed($m-grey-700);
+    @include m-theme() {
+      //  border: 1px solid themed($m-grey-700);
+      //  color: themed($m-grey-700);
     }
 
     &[disabled] {
@@ -110,11 +121,12 @@
   }
 
   .m-report-creator--submit-label,
-    .m-report-creator--submit-error {
-      margin-left: $minds-padding;
-      font-size: 16px;
+  .m-report-creator--submit-error {
+    margin-left: $minds-padding;
+    font-size: 16px;
 
-      > span, > i {
+    > span,
+    > i {
       vertical-align: middle;
     }
   }
@@ -122,7 +134,7 @@
   .m-report-creator--submit-error {
     font-size: 12px;
     font-weight: 500;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red);
     }
   }

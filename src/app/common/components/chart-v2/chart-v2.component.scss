@@ -1,0 +1,144 @@
+m-chartV2 {
+  display: block;
+  position: relative;
+  margin-left: 40px;
+}
+.js-plotly-plot,
+.plot-container {
+  height: 44vh;
+  min-height: 44vh;
+  display: block;
+}
+#graphDiv {
+  display: block;
+  position: relative;
+  g,
+  g > * {
+    cursor: default;
+  }
+
+  > * {
+    transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+      color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+
+  .main-svg {
+    max-width: 100%;
+  }
+}
+
+.m-chartV2__hoverInfoDiv {
+  width: 160px;
+  padding: 12px;
+  position: absolute;
+  pointer-events: none;
+  border-radius: 3px;
+  font-size: 12px;
+  z-index: 9999999999;
+  opacity: 0;
+  transition: opacity 0.2s ease-in;
+  @include m-theme() {
+    background-color: themed($m-white);
+    box-shadow: 0 0 4px rgba(themed($m-black), 0.3);
+    color: themed($m-grey-300);
+  }
+
+  [class*='m-chartV2__hoverInfo__row'] {
+    padding-bottom: 4px;
+    font-weight: 300;
+    &:last-of-type {
+      padding-top: 2px;
+    }
+  }
+  .m-chartV2__hoverInfo__row--primary {
+    font-weight: 400;
+    font-size: 15px;
+    @include m-theme() {
+      color: themed($m-grey-600);
+    }
+  }
+
+  .m-chartV2__hoverInfoRow__hex {
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    margin-right: 2px;
+    border-radius: 50%;
+  }
+
+  .m-chartV2__hoverInfo__closeBtn {
+    display: none;
+    font-size: 15px;
+    position: absolute;
+    cursor: pointer;
+    top: 10px;
+    right: 10px;
+    transition: color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
+    &:active {
+      @include m-theme() {
+        color: themed($m-grey-500);
+      }
+    }
+  }
+}
+
+// ----------------------------------------------------
+
+.isTouchDevice .m-chartV2__hoverInfoDiv .m-chartV2__hoverInfo__closeBtn {
+  display: block;
+}
+
+@media screen and (max-width: $min-tablet) {
+  m-chartV2 {
+    margin-left: 16px;
+  }
+}
+
+// ----------------------------------------------------
+m-chartV2.isMini {
+  margin-left: 0;
+  margin-top: 24px;
+  .js-plotly-plot,
+  .plot-container {
+    height: 40px;
+    min-height: 40px;
+  }
+  .m-chartV2__chartContainer {
+    // margin-right: 24px;
+  }
+  .m-chartV2__hoverInfoDiv {
+    width: 150px;
+    padding: 0px;
+
+    .m-chartV2__hoverInfo__wrapper {
+      display: flex;
+    }
+    .m-chartV2__hoverInfo__rowsContainer {
+      display: flex;
+      flex-direction: column;
+      padding: 14px 14px 14px 0;
+    }
+    .m-chartV2__hoverInfo__arrowContainer {
+      width: 20px;
+      i {
+        margin-left: -4px;
+        transform: rotate(-45deg) scaleX(0.5);
+        @include m-theme() {
+          color: themed($m-grey-600);
+        }
+      }
+    }
+    [class*='m-chartV2__hoverInfo__row'] {
+      line-height: 1.1;
+    }
+    .m-chartV2__hoverInfo__row--primary {
+      font-size: 12px;
+    }
+  }
+  @media screen and (max-width: $min-tablet) {
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,22 @@
+@import './grid-values';
+
+.m-grid {
+  display: grid;
+  grid-template-columns: repeat($m-grid-cols, 1fr);
+  grid-column-gap: $m-grid-gap;
+  grid-row-gap: 0;
+
+  @for $i from 1 through $m-grid-cols {
+    .m-grid__column-#{$i} {
+      grid-column: auto / span $i;
+    }
+  }
+
+  @media screen and (max-width: $m-grid-min-vp) {
+    @for $i from 1 through $m-grid-cols {
+      .m-grid__column-#{$i}--mobile {
+        grid-column: auto / span $i;
+      }
+    }
+  }
+}

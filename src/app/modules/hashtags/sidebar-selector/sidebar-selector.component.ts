@@ -5,14 +5,14 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output
-} from "@angular/core";
-import { TopbarHashtagsService } from "../service/topbar.service";
-import { Tag } from "../types/tag";
-import { findLastIndex } from "../../../utils/array-utils";
+  Output,
+} from '@angular/core';
+import { TopbarHashtagsService } from '../service/topbar.service';
+import { Tag } from '../types/tag';
+import { findLastIndex } from '../../../utils/array-utils';
 import { Storage } from '../../../services/storage';
 
-export type SideBarSelectorChange = { type: string, value?: any };
+export type SideBarSelectorChange = { type: string; value?: any };
 
 @Component({
   selector: 'm-hashtags--sidebar-selector',
@@ -20,13 +20,14 @@ export type SideBarSelectorChange = { type: string, value?: any };
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidebarSelectorComponent implements OnInit {
-
   @Input() compact: boolean = false;
   @Input() disabled: boolean;
   @Input() preferred: boolean = true;
   @Input() showAtLeast: number = 5;
   @Input() currentHashtag: string;
-  @Output() filterChange: EventEmitter<SideBarSelectorChange> = new EventEmitter<SideBarSelectorChange>();
+  @Output() filterChange: EventEmitter<
+    SideBarSelectorChange
+  > = new EventEmitter<SideBarSelectorChange>();
   @Output() switchAttempt: EventEmitter<any> = new EventEmitter<any>();
 
   initialized: boolean = false;
@@ -36,17 +37,16 @@ export class SidebarSelectorComponent implements OnInit {
   showExtendedList: boolean = false;
   showTrending: boolean = false;
 
-  protected lastPreferredEmission: boolean;
-
   constructor(
     protected topbarHashtagsService: TopbarHashtagsService,
     protected changeDetectorRef: ChangeDetectorRef,
-    protected storage: Storage,
-  ) {
-  }
+    protected storage: Storage
+  ) {}
 
   ngOnInit() {
-    this.lastPreferredEmission = this.preferred;
+    this.preferred = this.storage.get('preferred_hashtag_state')
+      ? this.storage.get('preferred_hashtag_state') === '1'
+      : false;
     this.init();
   }
 
@@ -77,18 +77,29 @@ export class SidebarSelectorComponent implements OnInit {
 
   calcFoldLength() {
     // Ensure user hashtags are always shown; checks the first non-user and uses index as size
-    const userLength = findLastIndex(this.hashtags, hashtag => hashtag.type === 'user');
+    const userLength = findLastIndex(
+      this.hashtags,
+      hashtag => hashtag.type === 'user'
+    );
 
     // Ensure selected hashtags are always shown; checks the first non-selected and uses index + 10
-    const selectedLength = findLastIndex(this.hashtags, hashtag => hashtag.selected) + 10;
+    const selectedLength =
+      findLastIndex(this.hashtags, hashtag => hashtag.selected) + 10;
 
     // Ensure current hashtag position is always shown; uses index + 1 as size; only when not disabled
-    const currentSelectedLength = !this.disabled ?
-      this.hashtags.findIndex(hashtag => hashtag.value === this.currentHashtag) + 1 :
-      -1;
+    const currentSelectedLength = !this.disabled
+      ? this.hashtags.findIndex(
+          hashtag => hashtag.value === this.currentHashtag
+        ) + 1
+      : -1;
 
     // Return the largest
-    return Math.max(this.showAtLeast, userLength, selectedLength, currentSelectedLength);
+    return Math.max(
+      this.showAtLeast,
+      userLength,
+      selectedLength,
+      currentSelectedLength
+    );
   }
 
   get visibleHashtags() {
@@ -96,13 +107,11 @@ export class SidebarSelectorComponent implements OnInit {
       return this.hashtags.slice(0, this.calcFoldLength());
     }
 
-    return this.hashtags
-      .filter(hashtag => hashtag.type === 'user');
+    return this.hashtags.filter(hashtag => hashtag.type === 'user');
   }
 
   get moreHashtags() {
-    if (!this.showSuggested)
-      return [];
+    if (!this.showSuggested) return [];
     return this.hashtags
       .filter(hashtag => hashtag.type !== 'user')
       .slice(0, 12);
@@ -113,26 +122,18 @@ export class SidebarSelectorComponent implements OnInit {
   }
 
   hashtagVisibilityChange(hashtag) {
-    if (this.currentHashtag !== hashtag.value) {
-      this.currentHashtag = hashtag.value;
-
-      this.filterChange.emit({
-        type: 'single',
-        value: this.currentHashtag,
-      });
-    } else {
-      this.currentHashtag = null;
-      this.preferred = this.lastPreferredEmission;
-
-      this.preferredChange();
-    }
+    this.currentHashtag =
+      this.currentHashtag !== hashtag.value ? hashtag.value : null;
+    this.filterChange.emit({
+      type: 'single',
+      value: this.currentHashtag,
+    });
   }
 
   preferredChange() {
-    this.lastPreferredEmission = this.preferred;
-
+    this.storage.set('preferred_hashtag_state', this.preferred ? '1' : '0');
     this.filterChange.emit({
-      type: this.preferred ? 'preferred' : 'all'
+      type: this.preferred ? 'preferred' : 'all',
     });
   }
 
@@ -148,7 +149,9 @@ export class SidebarSelectorComponent implements OnInit {
 
     if (hashtagValue) {
       let hashtag: Tag = {
-        value: this.topbarHashtagsService.cleanupHashtag(hashtagValue.toLowerCase()),
+        value: this.topbarHashtagsService.cleanupHashtag(
+          hashtagValue.toLowerCase()
+        ),
         selected: false,
         type: 'user',
       };

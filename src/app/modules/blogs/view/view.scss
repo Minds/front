@@ -8,4 +8,16 @@
     max-width: 100%;
     margin: 0;
   }
+  .m-blog--footer {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.m-share-buttons {
+  cursor: pointer;
+  padding-right: 8px;
+  @include m-theme() {
+    color: themed($m-green-light);
+  }
 }

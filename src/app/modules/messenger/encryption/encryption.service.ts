@@ -2,7 +2,6 @@ import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
 
 export class MessengerEncryptionService {
-
   public reKeying: boolean = false;
 
   private on: boolean = false;
@@ -12,8 +11,7 @@ export class MessengerEncryptionService {
     return new MessengerEncryptionService(client, new Storage());
   }
 
-  constructor(public client: Client, public storage: Storage) {
-  }
+  constructor(public client: Client, public storage: Storage) {}
 
   isOn(): boolean {
     //if(!this.on){
@@ -24,7 +22,8 @@ export class MessengerEncryptionService {
 
   unlock(password: string) {
     return new Promise((resolve, reject) => {
-      this.client.post('api/v2/messenger/keys/unlock', { password: password })
+      this.client
+        .post('api/v2/messenger/keys/unlock', { password: password })
         .then((response: any) => {
           this.storage.set('encryption-unlocked', true);
           this.on = true;
@@ -46,7 +45,11 @@ export class MessengerEncryptionService {
 
   doSetup(password: string): Promise<any> {
     return new Promise((resolve, reject) => {
-      this.client.post('api/v2/messenger/keys/setup', { password: password, download: false })
+      this.client
+        .post('api/v2/messenger/keys/setup', {
+          password: password,
+          download: false,
+        })
         .then((response: any) => {
           this.storage.set('encryption-unlocked', true);
           this.setup = true;
@@ -61,7 +64,11 @@ export class MessengerEncryptionService {
 
   rekey(password: string) {
     return new Promise((resolve, reject) => {
-      this.client.post('api/v2/messenger/keys/setup', { password: password, download: false })
+      this.client
+        .post('api/v2/messenger/keys/setup', {
+          password: password,
+          download: false,
+        })
         .then((response: any) => {
           this.storage.set('encryption-unlocked', true);
           this.setup = true;
@@ -79,5 +86,4 @@ export class MessengerEncryptionService {
     this.storage.destroy('encryption-unlocked');
     this.on = false;
   }
-
 }

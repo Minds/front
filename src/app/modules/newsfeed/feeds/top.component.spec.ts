@@ -1,4 +1,9 @@
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+} from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -33,23 +38,27 @@ import { NewsfeedService } from '../services/newsfeed.service';
 import { newsfeedServiceMock } from '../../../mocks/modules/newsfeed/services/newsfeed-service.mock';
 
 describe('NewsfeedTopComponent', () => {
-
   let comp: NewsfeedTopComponent;
   let fixture: ComponentFixture<NewsfeedTopComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MaterialMock,
         MockComponent({
           selector: 'm-newsfeed--boost-rotator',
-          inputs: ['interval', 'channel']
+          inputs: ['interval', 'channel'],
         }),
         MockComponent({
           selector: 'minds-activity',
-          inputs: ['object', 'boostToggle', 'showRatingToggle', 'boost', 'showBoostMenuOptions'],
-          outputs: ['delete']
+          inputs: [
+            'object',
+            'boostToggle',
+            'showRatingToggle',
+            'boost',
+            'showBoostMenuOptions',
+          ],
+          outputs: ['delete'],
         }),
         MockComponent({
           selector: 'infinite-scroll',
@@ -62,11 +71,16 @@ describe('NewsfeedTopComponent', () => {
         }),
         MockComponent({
           selector: 'minds-newsfeed-poster',
-          inputs: [ 'containerGuid', 'accessId', 'message' ],
+          inputs: ['containerGuid', 'accessId', 'message'],
         }),
-        NewsfeedTopComponent
+        NewsfeedTopComponent,
       ],
-      imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        CommonModule,
+        FormsModule,
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
@@ -78,12 +92,11 @@ describe('NewsfeedTopComponent', () => {
         { provide: SettingsService, useValue: settingsServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: NewsfeedService, useValue: newsfeedServiceMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().install();
 
@@ -93,8 +106,8 @@ describe('NewsfeedTopComponent', () => {
       user: {
         guid: 1,
         name: 'test',
-        opted_in_hashtags: 1
-      }
+        opted_in_hashtags: 1,
+      },
     };
 
     comp = fixture.componentInstance;
@@ -104,24 +117,24 @@ describe('NewsfeedTopComponent', () => {
       status: 'success',
       entities: [
         {
-          'guid': '1',
-          'type': 'activity',
-          'time_created': '1525457795',
-          'time_updated': '1525457795',
-          'title': '',
-          'message': 'test',
-          'boosted': true,
-          'boosted_guid': '1'
+          guid: '1',
+          type: 'activity',
+          time_created: '1525457795',
+          time_updated: '1525457795',
+          title: '',
+          message: 'test',
+          boosted: true,
+          boosted_guid: '1',
         },
         {
-          'guid': '2',
-          'type': 'activity',
-          'message': 'test2',
-          'boosted': true,
-          'boosted_guid': 2
-        }
+          guid: '2',
+          type: 'activity',
+          message: 'test2',
+          boosted: true,
+          boosted_guid: 2,
+        },
       ],
-      'load-next': ''
+      'load-next': '',
     };
 
     sessionMock.user.boost_rating = 1;
@@ -131,11 +144,10 @@ describe('NewsfeedTopComponent', () => {
     if (fixture.isStable()) {
       done();
     } else {
-      fixture.whenStable()
-        .then(() => {
-          fixture.detectChanges();
-          done()
-        });
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
     }
   });
 
@@ -170,5 +182,4 @@ describe('NewsfeedTopComponent', () => {
     expect(call.args[1]).toEqual({ limit: 12, offset: '', rating: 2 });
     expect(call.args[2]).toEqual({ cache: true });
   }));
-
 });

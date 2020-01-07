@@ -8,8 +8,8 @@ minds-button {
   text-transform: uppercase;
   letter-spacing: 1.5px;
   font-size: 14px;
-  font-family: 'Roboto';
-  @include m-theme(){
+  font-family: 'Roboto', Helvetica, sans-serif;
+  @include m-theme() {
     color: themed($m-grey-500);
     border: 1px solid themed($m-grey-50);
   }
@@ -28,19 +28,28 @@ minds-button {
   box-shadow: none;
   text-transform: uppercase;
   padding: 8px 16px;
-  font-family: 'Roboto';
+  font-family: 'Roboto', Helvetica, sans-serif;
   cursor: pointer;
 
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-800);
     border: 1px solid themed($m-grey-50);
   }
 
   &:hover {
-    @include m-theme(){
-      border: 1px solid themed($m-grey-100);
+    @include m-theme() {
+      border: 1px solid rgba(themed($m-grey-200), 0.6);
     }
   }
+}
+
+a.m-link-btn {
+  display: inline-block;
+  padding: 8px !important;
+  line-height: 1.2;
+  height: auto;
+  text-decoration: none;
+  font-weight: inherit;
 }
 
 .m-btn--slim {
@@ -48,20 +57,20 @@ minds-button {
 }
 
 .m-btn--action {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
     color: themed($m-blue) !important;
     border: 1px solid themed($m-blue);
   }
 
   &:hover {
-    @include m-theme(){
+    @include m-theme() {
       border: 1px solid themed($m-blue);
     }
   }
 
   &[disabled] {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-200) !important;
       border-color: themed($m-grey-200) !important;
     }
@@ -69,20 +78,20 @@ minds-button {
 }
 
 .m-btn--destructive {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
     color: themed($m-red) !important;
     border: 1px solid themed($m-red);
   }
 
   &:hover {
-    @include m-theme(){
+    @include m-theme() {
       border: 1px solid themed($m-red);
     }
   }
 
   &[disabled] {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-200) !important;
       border-color: themed($m-grey-200) !important;
     }
@@ -104,7 +113,8 @@ minds-button {
     margin-right: 4px;
     opacity: 0.9;
   }
-  i, span {
+  i,
+  span {
     vertical-align: middle;
   }
 

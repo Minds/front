@@ -1,5 +1,11 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { DebugElement, EventEmitter } from '@angular/core';
 
 import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
@@ -21,15 +27,20 @@ import { ChannelSidebar } from './sidebar';
 import { AutoGrow } from '../../../common/directives/autogrow';
 import { Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { ChannelOnboardingService } from "../../onboarding/channel/onboarding.service";
+import { ChannelOnboardingService } from '../../onboarding/channel/onboarding.service';
 import { Storage } from '../../../services/storage';
-import { storageMock } from "../../../../tests/storage-mock.spec";
+import { storageMock } from '../../../../tests/storage-mock.spec';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
-import { IfFeatureDirective } from "../../../common/directives/if-feature.directive";
+import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
+import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ChannelMode } from '../../../interfaces/entities';
+import { ifStmt } from '@angular/compiler/src/output/output_ast';
+import { ChannelModulesComponent } from '../modules/modules';
+import { SiteService } from '../../../common/services/site.service';
 
 describe('ChannelSidebar', () => {
-
   let comp: ChannelSidebar;
   let fixture: ComponentFixture<ChannelSidebar>;
 
@@ -38,7 +49,10 @@ describe('ChannelSidebar', () => {
       declarations: [
         MaterialMock,
         MaterialSwitchMock,
-        MockDirective({ selector: '[mdlUpload]', inputs: ['mdlUpload', 'progress'] }),
+        MockDirective({
+          selector: '[mdlUpload]',
+          inputs: ['mdlUpload', 'progress'],
+        }),
         AbbrPipe,
         ChannelSidebar,
         MockComponent({
@@ -89,40 +103,59 @@ describe('ChannelSidebar', () => {
           inputs: ['title', 'type', 'channel', 'linksTo', 'size'],
           outputs: [],
         }),
+        MockComponent({
+          selector: 'm-channel-mode-selector',
+          inputs: ['user', 'enabled'],
+        }),
+        MockComponent({
+          selector: 'm-tooltip',
+          template: '<ng-content></ng-content>',
+          inputs: ['icon', 'iconClass'],
+        }),
         IfFeatureDirective,
       ],
-      imports: [
-        FormsModule,
-        RouterTestingModule,
-        NgCommonModule
-      ],
+      imports: [FormsModule, RouterTestingModule, NgCommonModule],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Session, useValue: sessionMock },
         { provide: Storage, useValue: storageMock },
         {
-          provide: ChannelOnboardingService, useValue: MockService(ChannelOnboardingService, {
+          provide: ChannelOnboardingService,
+          useValue: MockService(ChannelOnboardingService, {
             checkProgress: Promise.resolve(),
             onClose: new EventEmitter(),
-          })
+          }),
         },
         {
           provide: FeaturesService,
           useValue: featuresServiceMock,
-        }
-      ]
-    })
-        .compileComponents();  // compile template and css
+        },
+        {
+          provide: OverlayModalService,
+          useValue: overlayModalServiceMock,
+        },
+        {
+          provide: SiteService,
+          useValue: MockService(SiteService, {
+            props: {
+              isProDomain: { get: () => false },
+            },
+          }),
+        },
+      ],
+    }).compileComponents(); // compile template and css
   }));
 
-  beforeEach((done) => {
-
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(ChannelSidebar);
     featuresServiceMock.mock('es-feeds', false);
+    featuresServiceMock.mock('permissions', true);
+    featuresServiceMock.mock('pro', true);
+    featuresServiceMock.mock('purchase-pro', true);
     clientMock.response = {};
     uploadMock.response = {};
     comp = fixture.componentInstance;
@@ -133,62 +166,65 @@ describe('ChannelSidebar', () => {
       city: 'awasa',
       icontime: 11111,
       subscribers_count: 182,
-      impressions: 18200
+      impressions: 18200,
+      mode: ChannelMode.PUBLIC,
     };
     comp.editing = false;
     uploadMock.response[`api/v1/channel/avatar`] = {
-      'status': 'success',
+      status: 'success',
     };
     clientMock.response[`api/v1/geolocation/list`] = {
-      "status": "success",
-      "results": [{
-        "address": { "city": "Wichita", "state": "Kansas, United States" },
-        "lat": 37.6650225,
-        "lon": -97.33538500000002
-      }]
+      status: 'success',
+      results: [
+        {
+          address: { city: 'Wichita', state: 'Kansas, United States' },
+          lat: 37.6650225,
+          lon: -97.33538500000002,
+        },
+      ],
     };
     window.Minds.user = {
-      "guid": "732337264197111809",
-      "type": "user",
-      "subtype": false,
-      "time_created": "1499978809",
-      "time_updated": false,
-      "container_guid": "0",
-      "owner_guid": "0",
-      "site_guid": false,
-      "access_id": "2",
-      "name": "minds",
-      "username": "minds",
-      "language": "en",
-      "icontime": "1506690756",
-      "legacy_guid": false,
-      "featured_id": false,
-      "banned": "no",
-      "website": "",
-      "dob": "",
-      "gender": "",
-      "city": "",
-      "merchant": {},
-      "boostProPlus": false,
-      "fb": false,
-      "mature": 0,
-      "monetized": "",
-      "signup_method": false,
-      "social_profiles": [],
-      "feature_flags": false,
-      "programs": ["affiliate"],
-      "plus": false,
-      "verified": false,
-      "disabled_boost": false,
-      "show_boosts": false,
-      "chat": true,
-      "subscribed": false,
-      "subscriber": false,
-      "subscriptions_count": 1,
-      "impressions": 10248,
-      "boost_rating": "2",
-      "spam": 0,
-      "deleted": 0
+      guid: '732337264197111809',
+      type: 'user',
+      subtype: false,
+      time_created: '1499978809',
+      time_updated: false,
+      container_guid: '0',
+      owner_guid: '0',
+      site_guid: false,
+      access_id: '2',
+      name: 'minds',
+      username: 'minds',
+      language: 'en',
+      icontime: '1506690756',
+      legacy_guid: false,
+      featured_id: false,
+      banned: 'no',
+      website: '',
+      dob: '',
+      gender: '',
+      city: '',
+      merchant: {},
+      boostProPlus: false,
+      fb: false,
+      mature: 0,
+      monetized: '',
+      signup_method: false,
+      social_profiles: [],
+      feature_flags: false,
+      programs: ['affiliate'],
+      plus: false,
+      verified: false,
+      disabled_boost: false,
+      show_boosts: false,
+      chat: true,
+      subscribed: false,
+      subscriber: false,
+      subscriptions_count: 1,
+      impressions: 10248,
+      boost_rating: '2',
+      spam: 0,
+      deleted: 0,
     };
 
     fixture.detectChanges();
@@ -209,8 +245,12 @@ describe('ChannelSidebar', () => {
   it('bio container should be present, username and name should be correct', () => {
     const bio = fixture.debugElement.query(By.css('.m-channel--bio'));
     const name = fixture.debugElement.query(By.css('.m-channel--name h2'));
-    const username = fixture.debugElement.query(By.css('.m-channel--username h2'));
-    const counters = fixture.debugElement.queryAll(By.css('.m-channel--stats a'));
+    const username = fixture.debugElement.query(
+      By.css('.m-channel--username h2')
+    );
+    const counters = fixture.debugElement.queryAll(
+      By.css('.m-channel--stats a')
+    );
     expect(username.nativeElement.innerText).toBe('@username');
     expect(name.nativeElement.innerText).toBe('name');
     expect(bio).not.toBeNull();
@@ -218,7 +258,6 @@ describe('ChannelSidebar', () => {
   });
 
   xit('bio container should not be editable if not the owner', () => {
-
     fixture.detectChanges();
     const edit_tick = fixture.debugElement.query(By.css('.minds-button-edit'));
     expect(edit_tick).toBeNull();
@@ -261,7 +300,9 @@ describe('ChannelSidebar', () => {
   it('should try to upload the avatar', fakeAsync(() => {
     comp.upload_avatar({});
     fixture.detectChanges();
-    expect(uploadMock.post.calls.mostRecent().args[0]).toEqual('api/v1/channel/avatar');
+    expect(uploadMock.post.calls.mostRecent().args[0]).toEqual(
+      'api/v1/channel/avatar'
+    );
     tick();
     fixture.detectChanges();
     expect(comp.user.icontime).toBeGreaterThan(11111);
@@ -272,7 +313,9 @@ describe('ChannelSidebar', () => {
     tick(210);
     jasmine.clock().tick(210);
     fixture.detectChanges();
-    expect(clientMock.get.calls.mostRecent().args[0]).toEqual('api/v1/geolocation/list');
+    expect(clientMock.get.calls.mostRecent().args[0]).toEqual(
+      'api/v1/geolocation/list'
+    );
     tick(210);
     jasmine.clock().tick(210);
     fixture.detectChanges();
@@ -280,27 +323,35 @@ describe('ChannelSidebar', () => {
   }));
 
   it('should set the city', () => {
-    comp.cities = [{
-      "address": { "city": "Wichita", "state": "Kansas, United States" },
-      "lat": 37.6650225,
-      "lon": -97.33538500000002
-    }];
-    comp.setCity({ "address": { city: "Wichita", "state": "Kansas, United States" } });
+    comp.cities = [
+      {
+        address: { city: 'Wichita', state: 'Kansas, United States' },
+        lat: 37.6650225,
+        lon: -97.33538500000002,
+      },
+    ];
+    comp.setCity({
+      address: { city: 'Wichita', state: 'Kansas, United States' },
+    });
     fixture.detectChanges();
-    expect(comp.user.city).toBe("Wichita");
+    expect(comp.user.city).toBe('Wichita');
   });
 
   it('should set the city by town', () => {
-    comp.cities = [{
-      "address": { "town": "Wichita", "state": "Kansas, United States" },
-      "lat": 37.6650225,
-      "lon": -97.33538500000002
-    }];
-    comp.setCity({ "address": { town: "Wichita", "state": "Kansas, United States" } });
+    comp.cities = [
+      {
+        address: { town: 'Wichita', state: 'Kansas, United States' },
+        lat: 37.6650225,
+        lon: -97.33538500000002,
+      },
+    ];
+    comp.setCity({
+      address: { town: 'Wichita', state: 'Kansas, United States' },
+    });
     fixture.detectChanges();
     comp.setSocialProfile([]);
     comp.isOwner();
-    expect(comp.user.city).toBe("Wichita");
+    expect(comp.user.city).toBe('Wichita');
   });
 
   it('should emit event', () => {
@@ -310,4 +361,8 @@ describe('ChannelSidebar', () => {
     expect(comp.changeEditing.next).toHaveBeenCalled();
   });
 
+  it('should set a channel to public', () => {
+    fixture.detectChanges();
+    expect(comp.user.mode).toEqual(ChannelMode.PUBLIC);
+  });
 });

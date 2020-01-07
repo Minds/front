@@ -17,16 +17,7 @@ import { BlockchainCheckoutComponent } from './blockchain-checkout.component';
     FormsModule,
     BlockchainModule,
   ],
-  declarations: [
-    CardInput,
-    StripeCheckout,
-    BlockchainCheckoutComponent
-  ],
-  exports: [
-    CardInput,
-    StripeCheckout,
-    BlockchainCheckoutComponent
-  ]
+  declarations: [CardInput, StripeCheckout, BlockchainCheckoutComponent],
+  exports: [CardInput, StripeCheckout, BlockchainCheckoutComponent],
 })
-export class CheckoutModule {
-}
+export class CheckoutModule {}

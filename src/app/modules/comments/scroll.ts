@@ -13,10 +13,9 @@ import { debounceTime } from 'rxjs/operators';
   selector: '[commentsScroll]',
   inputs: ['_emitter: emitter', 'enabled'],
   outputs: ['previous', 'next'],
-  exportAs: 'commentsScroll'
+  exportAs: 'commentsScroll',
 })
 export class CommentsScrollDirective {
-
   emitter: EventEmitter<any>;
   enabled: boolean = true;
   previous: EventEmitter<any> = new EventEmitter();
@@ -35,7 +34,7 @@ export class CommentsScrollDirective {
 
   constructor(
     private elementRef: ElementRef,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId
   ) {
     this.scroll = fromEvent(elementRef.nativeElement, 'scroll');
   }
@@ -46,8 +45,7 @@ export class CommentsScrollDirective {
       return;
     }
 
-    if (isPlatformServer(this.platformId))
-      return;
+    if (isPlatformServer(this.platformId)) return;
 
     if (this.emitterSubscription) {
       this.emitterSubscription.unsubscribe();
@@ -128,9 +126,12 @@ export class CommentsScrollDirective {
     // Refresh timer
     if (this.stickInterval) {
       clearInterval(this.stickInterval);
-      }
+    }
     if (isPlatformBrowser(this.platformId))
-      this.stickInterval = setInterval(() => this.stick(), this.STICK_INTERVAL_MS);
+      this.stickInterval = setInterval(
+        () => this.stick(),
+        this.STICK_INTERVAL_MS
+      );
   }
 
   top(run?: boolean, stick?: boolean) {

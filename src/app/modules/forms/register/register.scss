@@ -1,7 +1,6 @@
-@import "defaults";
+@import 'defaults';
 
-minds-form-register{
-
+minds-form-register {
   form {
     overflow: visible !important;
   }
@@ -10,39 +9,41 @@ minds-form-register{
     padding-left: 4px;
   }
 
-  .mdl-card__actions{
-    display:flex;
-    padding-left:$minds-padding*2;
-    align-items:center;
+  .mdl-card__actions {
+    display: flex;
+    padding-left: $minds-padding * 2;
+    align-items: center;
   }
 
-  .m-register-tac{
-    font-size:11px;
+  .m-register-tac {
+    font-size: 11px;
   }
 
   //this is exactly the same as modal.scss
-  .m-fb-register-button{
-    color: #3b5998;
+  .m-fb-register-button {
     width: 170px;
     border: 0;
-    cursor:pointer;
+    cursor: pointer;
     text-transform: uppercase;
     text-align: left;
     padding: 0;
     margin: 0;
     margin-left: 8px;
-    border: 1px solid #3b5998;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
+      color: themed($m-facebook);
+      border: 1px solid themed($m-facebook);
     }
 
-    .m-social-icons-icon-inline{
-      fill: #3b5998;
+    .m-social-icons-icon-inline {
       vertical-align: middle;
       display: inline-block;
+      @include m-theme() {
+        fill: themed($m-facebook);
+      }
     }
 
-    .m-signup-button-text{
+    .m-signup-button-text {
       display: inline-block;
       vertical-align: middle;
       font-size: 9px;
@@ -50,9 +51,8 @@ minds-form-register{
       max-width: calc(100% - 60px);
       letter-spacing: 0.1em;
       padding-left: 4px;
-      font-weight:600;
+      font-weight: 600;
     }
-
   }
 
   .m-login-box > div {
@@ -73,7 +73,7 @@ minds-form-register{
     position: absolute;
     right: 15px;
     top: 20px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red);
     }
   }
@@ -82,7 +82,7 @@ minds-form-register{
     position: absolute;
     right: 15px;
     top: 20px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-green);
     }
   }

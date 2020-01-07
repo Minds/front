@@ -7,11 +7,9 @@ import { Session } from '../../../services/session';
   moduleId: module.id,
   selector: 'm-channel--subscribers',
   inputs: ['channel'],
-  templateUrl: 'subscribers.html'
+  templateUrl: 'subscribers.html',
 })
-
 export class ChannelSubscribers {
-
   guid: string;
   users: Array<any> = [];
 
@@ -19,8 +17,7 @@ export class ChannelSubscribers {
   moreData: boolean = true;
   inProgress: boolean = false;
 
-  constructor(public session: Session, public client: Client) {
-  }
+  constructor(public session: Session, public client: Client) {}
 
   set channel(value: any) {
     this.guid = value.guid;
@@ -28,16 +25,21 @@ export class ChannelSubscribers {
   }
 
   load() {
-    if (this.inProgress)
-      return;
+    if (this.inProgress) return;
     this.inProgress = true;
-    this.client.get('api/v1/subscribe/subscribers/' + this.guid, { offset: this.offset })
+    this.client
+      .get('api/v1/subscribe/subscribers/' + this.guid, { offset: this.offset })
       .then((response: any) => {
-
         if (!response.users || response.users.length === 0) {
           this.moreData = false;
           this.inProgress = false;
           return;
+        }
+
+        if (response['load-next']) {
+          this.offset = response['load-next'];
+        } else {
+          this.moreData = false;
         }
 
         this.users = this.users.concat(response.users);
@@ -45,9 +47,8 @@ export class ChannelSubscribers {
         this.offset = response['load-next'];
         this.inProgress = false;
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
       });
   }
-
 }

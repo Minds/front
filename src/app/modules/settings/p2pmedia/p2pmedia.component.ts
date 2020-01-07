@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 import { Storage } from '../../../services/storage';
 import { WebtorrentService } from '../../webtorrent/webtorrent.service';
 import { Client } from '../../../services/api/client';
@@ -21,7 +25,7 @@ export class SettingsP2PMediaComponent {
     protected cd: ChangeDetectorRef,
     protected storage: Storage,
     protected webtorrent: WebtorrentService,
-    protected client: Client,
+    protected client: Client
   ) {}
 
   ngOnInit() {
@@ -42,7 +46,6 @@ export class SettingsP2PMediaComponent {
     try {
       if (this.settings.enableP2p) {
         await this.client.post(url);
-
       } else {
         await this.client.delete(url);
       }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 
 import { OverlayModalComponent } from '../../common/components/overlay-modal/overlay-modal.component';
 
@@ -18,14 +18,20 @@ export class OverlayModalService {
     return this;
   }
 
-  create(component, data?, opts?) {
+  setRoot(root: HTMLElement) {
+    this.container.setRoot(root);
+
+    return this;
+  }
+
+  create(component, data?, opts?, injector?: Injector) {
     if (!this.container) {
       throw new Error('Missing overlay container');
     }
 
     this._onDidDismissFn = void 0;
 
-    this.container.create(component, opts);
+    this.container.create(component, opts, injector);
     this.container.setData(data);
 
     if (opts) {
@@ -78,5 +84,4 @@ export class OverlayModalService {
 
     return this;
   }
-
 }

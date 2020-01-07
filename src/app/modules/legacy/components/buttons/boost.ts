@@ -11,26 +11,27 @@ import { BoostCreatorComponent } from '../../../boost/creator/creator.component'
   selector: 'minds-button-boost',
   inputs: ['object'],
   template: `
-    <button class="m-btn m-btn--action m-btn--slim"
-      (click)="boost()">
-    <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
+    <button class="m-btn m-btn--action m-btn--slim" (click)="boost()">
+      <ng-container i18n="verb|@@M__ACTION__BOOST">Boost</ng-container>
     </button>
-  `
+  `,
 })
-
 export class BoostButton {
-
   object = {
-    'guid': null
+    guid: null,
   };
   showModal: boolean = false;
 
-  constructor(public session: Session, private overlayModal: OverlayModalService) {
-  }
+  constructor(
+    public session: Session,
+    private overlayModal: OverlayModalService
+  ) {}
 
   boost() {
-    const creator = this.overlayModal.create(BoostCreatorComponent, this.object);
+    const creator = this.overlayModal.create(
+      BoostCreatorComponent,
+      this.object
+    );
     creator.present();
   }
-
 }

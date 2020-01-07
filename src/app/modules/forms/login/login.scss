@@ -1,29 +1,33 @@
-@import "defaults";
+@import 'defaults';
 
-.m-login-box{
-  margin-top:$minds-margin*2;
-  width:100% !important;
+.m-login-box {
+  margin-top: $minds-margin * 2;
+  width: 100% !important;
 
-  h3{
-    margin:0;
-    font-size:24px;
-    line-height:26px;
+  &:last-child {
+    margin-bottom: 0;
   }
 
-  .mdl-grid{
-    padding:0;
-    width:100%;
+  h3 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 26px;
   }
 
-  input{
-    padding:$minds-padding*2;
-    font-size:16px;
-    width:100%;
-    -webkit-appearance:none;
+  .mdl-grid {
+    padding: 0;
+    width: 100%;
+  }
+
+  input {
+    padding: $minds-padding * 2;
+    font-size: 16px;
+    width: 100%;
+    -webkit-appearance: none;
     border-radius: 3px;
-    font-family: Roboto;
+    font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 800;
-    @include m-theme(){
+    @include m-theme() {
       border: 1px solid themed($m-grey-50);
     }
 
@@ -32,8 +36,8 @@
     }
   }
 
-  .m-reset-password-link{
-    padding-left:$minds-padding*2;
-    text-decoration:none;
+  .m-reset-password-link {
+    padding-left: $minds-padding * 2;
+    text-decoration: none;
   }
 }

@@ -1,5 +1,17 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
+import {
+  Component,
+  DebugElement,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 
 import { AdminBoosts } from './boosts';
 import { FormsModule } from '@angular/forms';
@@ -11,10 +23,14 @@ import { MaterialSliderMock } from '../../../../tests/material-slider.mock.spec'
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TokenPipe } from '../../../common/pipes/token.pipe';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ActivityService } from '../../../common/services/activity.service';
+import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
+import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 
 @Component({
   selector: 'minds-card-video',
-  template: ''
+  template: '',
 })
 class MindsCardVideoMock {
   @Input() object: any;
@@ -22,7 +38,7 @@ class MindsCardVideoMock {
 
 @Component({
   selector: 'minds-card-image',
-  template: ''
+  template: '',
 })
 class MindsCardImageMock {
   @Input() object: any;
@@ -30,7 +46,7 @@ class MindsCardImageMock {
 
 @Component({
   selector: 'minds-card-blog',
-  template: ''
+  template: '',
 })
 class MindsCardBlogMock {
   @Input() object: any;
@@ -38,7 +54,7 @@ class MindsCardBlogMock {
 
 @Component({
   selector: 'minds-card-user',
-  template: ''
+  template: '',
 })
 class MindsCardUserMock {
   @Input() object: any;
@@ -46,7 +62,7 @@ class MindsCardUserMock {
 
 @Component({
   selector: 'minds-activity',
-  template: ''
+  template: '',
 })
 class MindsActivityMock {
   @Input() object: any;
@@ -54,7 +70,7 @@ class MindsActivityMock {
 
 @Component({
   selector: 'minds-card-group',
-  template: ''
+  template: '',
 })
 class MindsCardGroupMock {
   @Input() group: any;
@@ -62,7 +78,7 @@ class MindsCardGroupMock {
 
 @Component({
   selector: 'm--rejection-reason-modal',
-  template: ''
+  template: '',
 })
 class RejectionReasonModalMock {
   @Input() boost: any;
@@ -74,12 +90,13 @@ class RejectionReasonModalMock {
 }
 
 describe('AdminBoosts', () => {
-
   let comp: AdminBoosts;
   let fixture: ComponentFixture<AdminBoosts>;
 
   function getTabItems(i: number): DebugElement {
-    return fixture.debugElement.query(By.css(`.mdl-tabs__tab-bar .mdl-tabs__tab:nth-child(${i})`));
+    return fixture.debugElement.query(
+      By.css(`.mdl-tabs__tab-bar .mdl-tabs__tab:nth-child(${i})`)
+    );
   }
 
   function getBoost(i: number): DebugElement {
@@ -87,23 +104,30 @@ describe('AdminBoosts', () => {
   }
 
   function getAcceptButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.boost .m-admin-boosts--accept-button'));
+    return fixture.debugElement.query(
+      By.css('.boost .m-admin-boosts--accept-button')
+    );
   }
 
   function getOpenButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.boost .m-admin-boosts--open-button'));
+    return fixture.debugElement.query(
+      By.css('.boost .m-admin-boosts--open-button')
+    );
   }
 
   function getRejectButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.boost .m-admin-boosts--reject-button'));
+    return fixture.debugElement.query(
+      By.css('.boost .m-admin-boosts--reject-button')
+    );
   }
 
   function getETagButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.boost .m-admin-boosts--e-tag-button'));
+    return fixture.debugElement.query(
+      By.css('.boost .m-admin-boosts--e-tag-button')
+    );
   }
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         TokenPipe,
@@ -116,22 +140,19 @@ describe('AdminBoosts', () => {
         RejectionReasonModalMock,
         MaterialMock,
         MaterialSliderMock,
-        AdminBoosts
+        AdminBoosts,
       ], // declare the test component
-      imports: [
-        RouterTestingModule,
-        NgCommonModule,
-        FormsModule
-      ],
+      imports: [RouterTestingModule, NgCommonModule, FormsModule],
       providers: [
-        { provide: Client, useValue: clientMock }
-      ]
-    })
-      .compileComponents();  // compile template and css
+        { provide: Client, useValue: clientMock },
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        { provide: ActivityService, useValue: activityServiceMock },
+      ],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -143,70 +164,72 @@ describe('AdminBoosts', () => {
     clientMock.response = [];
 
     clientMock.response[`api/v1/admin/boosts/newsfeed`] = {
-      'status': 'success',
-      'boosts': [{
-        'guid': '123',
-        '_id': '59ba98d3b13628293d705ff2',
-        'entity': {
-          'guid': '752893213072691218',
-          'type': 'activity',
-          'time_created': '1504879730',
-          'time_updated': '1504879730',
-          'container_guid': '732337264197111809',
-          'owner_guid': '732337264197111809',
-          'access_id': '2',
-          'message': '',
-          'ownerObj': {
-            'guid': '732337264197111809',
-            'type': 'user',
-            'access_id': '2',
-            'name': 'minds',
-            'username': 'minds',
-            'mature': '0',
-            'boost_rating': '1'
+      status: 'success',
+      boosts: [
+        {
+          guid: '123',
+          _id: '59ba98d3b13628293d705ff2',
+          entity: {
+            guid: '752893213072691218',
+            type: 'activity',
+            time_created: '1504879730',
+            time_updated: '1504879730',
+            container_guid: '732337264197111809',
+            owner_guid: '732337264197111809',
+            access_id: '2',
+            message: '',
+            ownerObj: {
+              guid: '732337264197111809',
+              type: 'user',
+              access_id: '2',
+              name: 'minds',
+              username: 'minds',
+              mature: '0',
+              boost_rating: '1',
+            },
           },
+          bid: '100',
+          bidType: 'points',
+          owner: {
+            guid: '732337264197111809',
+            type: 'user',
+            subtype: false,
+            time_created: '1499978809',
+            time_updated: false,
+            container_guid: '0',
+            name: 'minds',
+            username: 'minds',
+            boost_rating: '1',
+          },
+          state: 'created',
+          transactionId: null,
+          time_created: '1505401043',
+          last_updated: '1505401043',
+          type: 'boost',
+          subtype: 'network',
+          handler: 'newsfeed',
+          rating: null,
+          quality: '75',
+          impressions: '100',
+          rejection_reason: '-1',
+          boost_impressions: null,
+          boost_id: null,
         },
-        'bid': '100',
-        'bidType': 'points',
-        'owner': {
-          'guid': '732337264197111809',
-          'type': 'user',
-          'subtype': false,
-          'time_created': '1499978809',
-          'time_updated': false,
-          'container_guid': '0',
-          'name': 'minds',
-          'username': 'minds',
-          'boost_rating': '1'
-        },
-        'state': 'created',
-        'transactionId': null,
-        'time_created': '1505401043',
-        'last_updated': '1505401043',
-        'type': 'boost',
-        'subtype': 'network',
-        'handler': 'newsfeed',
-        'rating': null,
-        'quality': '75',
-        'impressions': '100',
-        'rejection_reason': '-1',
-        'boost_impressions': null,
-        'boost_id': null
-      }],
-      'count': 4,
+      ],
+      count: 4,
       'load-next': null,
-      'newsfeed_count': 4,
-      'content_count': 2
+      newsfeed_count: 4,
+      content_count: 2,
     };
     clientMock.response[`api/v1/admin/boosts/analytics/newsfeed`] = {
-      'status': 'success',
-      'reviewQueue': 4,
-      'backlog': 2,
-      'priorityBacklog': 2,
-      'impressions': 5000,
-      'avgApprovalTime': 1889603500,
-      'avgImpressions': 2500,
-      'timestamp': 1505745685
+      status: 'success',
+      reviewQueue: 4,
+      backlog: 2,
+      priorityBacklog: 2,
+      impressions: 5000,
+      avgApprovalTime: 1889603500,
+      avgImpressions: 2500,
+      timestamp: 1505745685,
     };
 
     comp.type = 'newsfeed';
@@ -240,13 +263,17 @@ describe('AdminBoosts', () => {
   it('should have a statistics section', () => {
     fixture.detectChanges();
 
-    expect(fixture.debugElement.query(By.css('.m-admin-boosts-statistics'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-admin-boosts-statistics'))
+    ).not.toBeNull();
   });
 
   it('should have a boosts container', () => {
     fixture.detectChanges();
 
-    expect(fixture.debugElement.query(By.css('.m-admin-boosts-container'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-admin-boosts-container'))
+    ).not.toBeNull();
   });
 
   it('should show 1 boost', fakeAsync(() => {
@@ -261,9 +288,13 @@ describe('AdminBoosts', () => {
     fixture.detectChanges();
     tick();
 
-    expect(fixture.debugElement.query(By.css('.boost > .quality-slider'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.boost > .quality-slider'))
+    ).not.toBeNull();
 
-    const slider: DebugElement = fixture.debugElement.query(By.css('.quality-slider input[type=range]'));
+    const slider: DebugElement = fixture.debugElement.query(
+      By.css('.quality-slider input[type=range]')
+    );
     expect(slider).not.toBeNull();
     expect(slider.nativeElement.value).toBe('75');
   }));
@@ -272,7 +303,9 @@ describe('AdminBoosts', () => {
     fixture.detectChanges();
     tick();
 
-    const input: DebugElement = fixture.debugElement.query(By.css('.quality-slider input[type=number]'));
+    const input: DebugElement = fixture.debugElement.query(
+      By.css('.quality-slider input[type=number]')
+    );
     expect(input).not.toBeNull();
 
     expect(input.nativeElement.value).toBe('75');
@@ -297,7 +330,6 @@ describe('AdminBoosts', () => {
     expect(comp.accept).toHaveBeenCalled();
     //expect(comp.accept.calls.mostRecent().args[1]).toBe(false);
   });
-
 
   it('boost should have an Open button', () => {
     fixture.detectChanges();
@@ -359,7 +391,9 @@ describe('AdminBoosts', () => {
 
     expect(comp.eTag).toHaveBeenCalled();
     expect(comp.reject).toHaveBeenCalled();
-    expect(comp.findReason(comp.boosts[0].rejection_reason).label).toContain('Explicit');
+    expect(comp.findReason(comp.boosts[0].rejection_reason).label).toContain(
+      'Explicit'
+    );
   });
 
   it('calling reject(boost) should call api/v1/admin/boosts/:type/:guid/reject together with the rejection reason', fakeAsync(() => {
@@ -372,35 +406,47 @@ describe('AdminBoosts', () => {
     comp.reject(comp.boosts[0]);
 
     expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v1/admin/boosts/newsfeed/123/reject');
+    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
+      'api/v1/admin/boosts/newsfeed/123/reject'
+    );
     expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ reason: 2 });
   }));
 
-  it('calling accept(boost, false) should call api/v1/admin/boosts/:type/:guid/accept with a rating of 1 and a default quality of 75',
-    fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
+  it('calling accept(boost, false) should call api/v1/admin/boosts/:type/:guid/accept with a rating of 1 and a default quality of 75', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
 
-      clientMock.post.calls.reset();
+    clientMock.post.calls.reset();
 
-      comp.accept(comp.boosts[0], false);
+    comp.accept(comp.boosts[0], false);
 
-      expect(clientMock.post).toHaveBeenCalled();
-      expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v1/admin/boosts/newsfeed/123/accept');
-      expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ quality: '75', rating: 1, mature: 0 });
-    }));
+    expect(clientMock.post).toHaveBeenCalled();
+    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
+      'api/v1/admin/boosts/newsfeed/123/accept'
+    );
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+      quality: '75',
+      rating: 1,
+      mature: 0,
+    });
+  }));
 
-  it('calling accept(boost, true) should call api/v1/admin/boosts/:type/:guid/accept with a rating of 2 and a default quality of 75',
-    fakeAsync(() => {
-      fixture.detectChanges();
-      tick();
+  it('calling accept(boost, true) should call api/v1/admin/boosts/:type/:guid/accept with a rating of 2 and a default quality of 75', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
 
-      clientMock.post.calls.reset();
+    clientMock.post.calls.reset();
 
-      comp.accept(comp.boosts[0], true);
+    comp.accept(comp.boosts[0], true);
 
-      expect(clientMock.post).toHaveBeenCalled();
-      expect(clientMock.post.calls.mostRecent().args[0]).toContain('api/v1/admin/boosts/newsfeed/123/accept');
-      expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ quality: '75', rating: 2, mature: 0 });
-    }));
+    expect(clientMock.post).toHaveBeenCalled();
+    expect(clientMock.post.calls.mostRecent().args[0]).toContain(
+      'api/v1/admin/boosts/newsfeed/123/accept'
+    );
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+      quality: '75',
+      rating: 2,
+      mature: 0,
+    });
+  }));
 });

@@ -1,22 +1,23 @@
 import { Storage } from '../../../services/storage';
 
 export class MessengerSounds {
-
   private storage = new Storage();
 
   private sounds = {
-    new: new Audio(window.Minds.cdn_url + 'src/plugins/Messenger/sounds/newmsg.mp3'),
-    send: new Audio(window.Minds.cdn_url + 'src/plugins/Messenger/sounds/sndmsg.mp3'),
+    new: new Audio(
+      window.Minds.cdn_url + 'src/plugins/Messenger/sounds/newmsg.mp3'
+    ),
+    send: new Audio(
+      window.Minds.cdn_url + 'src/plugins/Messenger/sounds/sndmsg.mp3'
+    ),
   };
 
   play(sound: string) {
-    if (this.canPlay())
-      this.sounds[sound].play();
+    // if (this.canPlay()) this.sounds[sound].play();
   }
 
   canPlay() {
-    if (this.storage.get('muted'))
-      return false;
+    if (this.storage.get('muted')) return false;
     return true;
   }
 
@@ -27,5 +28,4 @@ export class MessengerSounds {
   unmute() {
     this.storage.destroy('muted');
   }
-
 }

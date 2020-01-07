@@ -1,0 +1,76 @@
+m-analytics__dashboard {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.m-analytics__spinnerContainer {
+  height: 30%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+}
+
+.m-dashboardLayout__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  .m-analyticsDashboard__headerFilters {
+    display: flex;
+    align-items: baseline;
+    .m-analytics__channelSearch {
+      margin-right: 8px;
+      @include m-theme() {
+        border: themed($m-grey-50);
+        color: themed($m-grey-100);
+      }
+    }
+  }
+  m-dropdownSelector {
+    margin: 0;
+  }
+  .m-dropdownSelector__wrapper {
+    > * {
+      width: 180px;
+    }
+  }
+}
+.m-analyticsDashboard__description {
+  margin: 8px 16px 32px 0;
+  font-weight: 400;
+  @include m-theme() {
+    color: themed($m-grey-300);
+  }
+}
+
+@media screen and (max-width: $min-tablet) {
+  .m-dashboardLayout__header {
+    m-dropdownSelector {
+      margin: 0 16px 8px 0;
+      .m-dropdownSelector__wrapper {
+        > * {
+          width: 180px;
+        }
+      }
+    }
+  }
+  .m-analyticsDashboard__description {
+    margin: 0 24px 24px 24px;
+  }
+}
+
+@media screen and (max-width: $max-mobile) {
+  .m-dashboardLayout__header {
+    m-dropdownSelector {
+      .m-dropdownSelector__wrapper {
+        > * {
+          width: 160px;
+        }
+      }
+    }
+  }
+}

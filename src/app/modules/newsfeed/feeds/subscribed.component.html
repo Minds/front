@@ -1,35 +1,61 @@
-<div class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo" *ngIf="newUserPromo">
-    <i class="material-icons">trending_up</i> <ng-container i18n="@@MINDS__NEWSFEED__200_FREE_VIEWS">Have 200 free views on us. Hit post to be boosted.</ng-container>
+<div
+  class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo"
+  *ngIf="newUserPromo"
+>
+  <i class="material-icons">trending_up</i>
+  <ng-container i18n="@@MINDS__NEWSFEED__200_FREE_VIEWS"
+    >Have 200 free views on us. Hit post to be boosted.</ng-container
+  >
 </div>
-<minds-newsfeed-poster (load)="prepend($event)" [message]="message" #poster></minds-newsfeed-poster>
+<minds-newsfeed-poster
+  (load)="prepend($event)"
+  [message]="message"
+  #poster
+></minds-newsfeed-poster>
 
 <div class="minds-list">
-  <minds-activity *ngFor="let preActivity of prepended" [object]="preActivity" [boostToggle]="preActivity.boostToggle" (delete)="delete(preActivity)" [showRatingToggle]="true" class="mdl-card m-border item"></minds-activity>
+  <minds-activity
+    *ngFor="let preActivity of prepended"
+    [object]="preActivity"
+    [boostToggle]="preActivity.boostToggle"
+    (delete)="delete(preActivity)"
+    [showRatingToggle]="true"
+    class="mdl-card m-border item"
+    [attr.minds-data-activity-guid]="preActivity.guid"
+  ></minds-activity>
 
-  <m-newsfeed--boost-rotator interval="4" *ngIf="showBoostRotator"></m-newsfeed--boost-rotator>
+  <m-newsfeed--boost-rotator
+    interval="3"
+    *ngIf="showBoostRotator"
+  ></m-newsfeed--boost-rotator>
 
-  <ng-container *ngFor="let activity of newsfeed; let i = index">
+  <ng-container
+    *ngFor="let activity$ of feedsService.feed | async; let i = index"
+  >
     <ng-container *mIfFeature="'es-feeds'">
       <m-featured-content
-        *ngIf="(i > 0 && (i % 8) === 0 && i <= 40) || i === 2"
+        *ngIf="(i > 0 && i % 5 === 0) || i === 2"
         [slot]="i + 1"
       ></m-featured-content>
     </ng-container>
 
     <minds-activity
+      *ngIf="activity$ | async as activity"
       class="mdl-card m-border item"
       [object]="activity"
       [boostToggle]="activity.boostToggle"
       (delete)="delete(activity)"
       [showRatingToggle]="true"
       [slot]="i + 1"
+      [attr.data-minds-activity-guid]="activity.guid"
     ></minds-activity>
   </ng-container>
 
   <infinite-scroll
     distance="25%"
-    (load)="load()"
-    [moreData]="moreData"
-    [inProgress]="inProgress">
+    (load)="loadNext()"
+    [moreData]="feedsService.hasMore | async"
+    [inProgress]="feedsService.inProgress | async"
+  >
   </infinite-scroll>
 </div>

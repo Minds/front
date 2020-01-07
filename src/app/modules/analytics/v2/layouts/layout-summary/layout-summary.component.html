@@ -1,0 +1,64 @@
+<ng-container m-pageLayout__main>
+  <div
+    class="m-analytics__spinnerContainer"
+    *ngIf="loading && this.session.isAdmin()"
+  >
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+
+  <!-- TILES CONTAINER -->
+  <div
+    class="m-analyticsSummary__tilesContainer"
+    *ngIf="!loading && this.session.isAdmin()"
+  >
+    <!-- ACTIVE USERS TILE (TEMP PLACEHOLDER) -->
+    <div class="m-analyticsSummary__tile">
+      <m-analytics__benchmark
+        [label]="'Active Users On Site'"
+        [description]="
+          'Coming soon! Realtime count of all users on web and mobile'
+        "
+        [value]="'🚧'"
+        [noChart]="true"
+      ></m-analytics__benchmark>
+    </div>
+    <!-- CHART TILES -->
+    <ng-container *ngFor="let tile of tiles">
+      <div class="m-analyticsSummary__tile">
+        <m-analytics__benchmark
+          [label]="tile.label"
+          [description]="tile.description"
+          [value]="tile.value"
+          [unit]="tile?.unit"
+          [noChart]="!tile.visualisation"
+        ></m-analytics__benchmark>
+        <m-chartV2
+          *ngIf="tile.visualisation"
+          [rawData]="tile"
+          [interval]="day"
+          [isMini]="true"
+        ></m-chartV2>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- BOOST BACKLOG -->
+  <div class="m-analyticsSummary__boostBacklogWrapper" *ngIf="boosts">
+    <div class="m-analyticsSummary__boostBacklogTitle">Boost Backlog</div>
+    <div class="m-analyticsSummary__boostRowsContainer">
+      <ng-container *ngFor="let boostRow of boostRows">
+        <div class="m-analyticsSummary__boostRow">
+          <ng-container *ngFor="let boostType of boostRow">
+            <div class="m-analyticsSummary__boostType">
+              <m-analytics__benchmark
+                [label]="boostType.label"
+                [value]="boostType.value"
+                [unit]="'hours'"
+              ></m-analytics__benchmark>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,123 @@
+@import 'themes';
+
+m-draggableList {
+  width: 100%;
+  @include m-theme() {
+    box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+  }
+
+  ul.m-draggableList__list {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+    padding-inline-start: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    transition: all ease 300ms;
+
+    &.dndDragover {
+      // padding-top: 16px;
+      // padding-bottom: 16px;
+      @include m-theme() {
+        background-color: rgba(themed($m-black), 0.05);
+        box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+      }
+    }
+    &.dragging {
+      li.m-draggableList__listItem {
+        &:first-child {
+          @include m-theme() {
+            border-top: 1px solid themed($m-grey-50);
+          }
+        }
+      }
+    }
+  }
+
+  .m-draggableList__listItem {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    @include m-theme() {
+      border: 1px solid themed($m-grey-50);
+      color: themed($m-grey-800);
+    }
+    // &:first-child {
+    &:not(.m-draggableList__listHeader) {
+      @include m-theme() {
+        border-top: none;
+      }
+    }
+    // }
+    &.m-draggableList__listHeader {
+      @include m-theme() {
+        // border-bottom: none;
+        color: themed($m-grey-300);
+      }
+    }
+  }
+  input.m-draggableList__cell {
+    width: 0;
+    min-width: 0;
+  }
+  .m-draggableList__cell {
+    padding: 10px 20px;
+    flex: 1 1 0px;
+    box-sizing: border-box;
+
+    @include m-theme() {
+      border: none;
+      border-right: 1px solid themed($m-grey-50);
+      background-color: themed($m-white);
+    }
+    &input {
+      width: 0;
+      min-width: 0;
+    }
+    &:last-child {
+      //icon cell
+      padding: 10px 15px;
+      flex: 0 0 80px;
+      max-width: 80px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      @include m-theme() {
+        border-right: none;
+      }
+    }
+  }
+  i {
+    cursor: pointer;
+    width: auto;
+    height: auto;
+    transition: all 0.3s ease;
+
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
+    &.handle {
+      font-size: 20px;
+      padding-right: 8px;
+      @include m-theme() {
+      }
+    }
+    &:hover {
+      transform: scale(1.15);
+      @include m-theme() {
+        color: themed($m-grey-200);
+      }
+    }
+  }
+  .dndPlaceholder {
+    min-height: 100px;
+    @include m-theme() {
+      border: 1px dashed rgba(themed($m-grey-100), 0.8);
+    }
+  }
+}

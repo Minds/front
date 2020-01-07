@@ -1,4 +1,13 @@
-import { ChangeDetectorRef, Component, ElementRef, Injector, QueryList, SkipSelf, ViewChildren } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  Injector,
+  QueryList,
+  SkipSelf,
+  ViewChildren,
+} from '@angular/core';
+import { first } from 'rxjs/operators';
 
 import { ScrollService } from '../../../services/ux/scroll';
 import { Client } from '../../../services/api';
@@ -10,9 +19,10 @@ import { Activity } from '../../../modules/legacy/components/cards/activity/acti
 import { NewsfeedService } from '../services/newsfeed.service';
 import { NewsfeedBoostService } from '../newsfeed-boost.service';
 import { SettingsService } from '../../settings/settings.service';
-import { FeaturesService } from "../../../services/features.service";
-import { BoostedContentService } from "../../../common/services/boosted-content.service";
-import { ClientMetaService } from "../../../common/services/client-meta.service";
+import { FeaturesService } from '../../../services/features.service';
+import { BoostedContentService } from '../../../common/services/boosted-content.service';
+import { FeedsService } from '../../../common/services/feeds.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   moduleId: module.id,
@@ -21,15 +31,13 @@ import { ClientMetaService } from "../../../common/services/client-meta.service"
     '(window:blur)': 'inActive()',
     '(window:focus)': 'active()',
     '(mouseover)': 'mouseOver()',
-    '(mouseout)': 'mouseOut()'
+    '(mouseout)': 'mouseOut()',
   },
   inputs: ['interval', 'channel'],
-  providers: [ ClientMetaService ],
+  providers: [ClientMetaService, FeedsService],
   templateUrl: 'boost-rotator.component.html',
 })
-
 export class NewsfeedBoostRotatorComponent {
-
   boosts: Array<any> = [];
   offset: string = '';
   inProgress: boolean = false;
@@ -66,21 +74,24 @@ export class NewsfeedBoostRotatorComponent {
     public service: NewsfeedBoostService,
     private cd: ChangeDetectorRef,
     protected featuresService: FeaturesService,
-    protected boostedContentService: BoostedContentService,
+    public feedsService: FeedsService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
+    @SkipSelf() injector: Injector
   ) {
-
     this.subscriptions = [
-      this.settingsService.ratingChanged.subscribe((event) => this.onRatingChanged(event)),
-      this.service.enableChanged.subscribe((event) => this.onEnableChanged(event)),
-      this.service.pauseChanged.subscribe((event) => this.onPauseChanged(event)),
-      this.service.explicitChanged.subscribe((event) => this.onExplicitChanged(event))
+      this.settingsService.ratingChanged.subscribe(event =>
+        this.onRatingChanged(event)
+      ),
+      this.service.enableChanged.subscribe(event =>
+        this.onEnableChanged(event)
+      ),
+      this.service.pauseChanged.subscribe(event => this.onPauseChanged(event)),
+      this.service.explicitChanged.subscribe(event =>
+        this.onExplicitChanged(event)
+      ),
     ];
 
-    this.clientMetaService
-      .inherit(injector)
-      .setMedium('boost-rotator');
+    this.clientMetaService.inherit(injector).setMedium('boost-rotator');
   }
 
   ngOnInit() {
@@ -88,46 +99,39 @@ export class NewsfeedBoostRotatorComponent {
     this.plus = this.session.getLoggedInUser().plus;
     this.disabled = !this.service.isBoostEnabled();
     this.load();
-    this.scroll_listener = this.scroll.listenForView().subscribe(() => this.isVisible());
+    this.scroll_listener = this.scroll
+      .listenForView()
+      .subscribe(() => this.isVisible());
 
     this.paused = this.service.isBoostPaused();
-  }
 
-  async load() {
-    if (this.featuresService.has('es-feeds')) {
-      return await this.loadFromService();
-    } else {
-      return await this.loadLegacy();
-    }
-  }
-
-  async loadFromService() {
-    try {
-      const boosts = await this.boostedContentService.get({
-        limit: 10,
-        offset: 8,
-        exclude: this.boosts.map(boost => boost.urn),
-        passive: true,
-      });
-
-      if (!boosts || !boosts.length) {
-        throw new Error(''); // Legacy behavior
+    this.feedsService.feed.subscribe(async boosts => {
+      if (!boosts.length) return;
+      this.boosts = [];
+      for (const boost of boosts) {
+        if (boost) this.boosts.push(await boost.pipe(first()).toPromise());
       }
-
-      this.boosts.push(...boosts);
-
-      if (this.boosts.length >= 40) {
-        this.boosts.splice(0, 20);
+      if (this.currentPosition >= this.boosts.length) {
         this.currentPosition = 0;
       }
+      // if (this.currentPosition === 0) {
+      //   this.recordImpression(this.currentPosition, true);
+      // }
+    });
+  }
 
-      if (!this.running) {
-        if (this.currentPosition === 0) {
-          this.recordImpression(this.currentPosition, true);
-        }
-        this.start();
-        this.isVisible();
-      }
+  load() {
+    try {
+      this.feedsService.clear(); // Fresh each time
+      this.feedsService
+        .setEndpoint('api/v2/boost/feed')
+        .setParams({
+          rating: this.rating,
+          rotator: 1,
+        })
+        .setLimit(12)
+        .setOffset(0)
+        .fetch();
     } catch (e) {
       if (e && e.message) {
         console.warn(e);
@@ -138,60 +142,6 @@ export class NewsfeedBoostRotatorComponent {
 
     this.inProgress = false;
     return true;
-  }
-
-  /**
-   * Load newsfeed
-   */
-  loadLegacy() {
-    return new Promise((resolve, reject) => {
-      if (this.inProgress) {
-        return reject(false);
-      }
-      this.inProgress = true;
-
-      if (this.storage.get('boost:offset:rotator')) {
-        this.offset = this.storage.get('boost:offset:rotator');
-      }
-
-      let show = 'all';
-      if (!this.channel || !this.channel.merchant) {
-        show = 'points';
-      }
-
-      this.client.get('api/v1/boost/fetch/newsfeed', {
-        limit: 10,
-        rating: this.rating,
-        offset: this.offset,
-        show: show
-      })
-        .then((response: any) => {
-          if (!response.boosts) {
-            this.inProgress = false;
-            return reject(false);
-          }
-          this.boosts = this.boosts.concat(response.boosts);
-          if (this.boosts.length >= 40) {
-            this.boosts.splice(0, 20);
-            this.currentPosition = 0;
-          }
-          if (!this.running) {
-            if (this.currentPosition === 0) {
-              this.recordImpression(this.currentPosition, true);
-            }
-            this.start();
-            this.isVisible();
-          }
-          this.offset = response['load-next'];
-          this.storage.set('boost:offset:rotator', this.offset);
-          this.inProgress = false;
-          return resolve(true);
-        })
-        .catch((e) => {
-          this.inProgress = false;
-          return reject();
-        });
-    });
   }
 
   onExplicitChanged(value: boolean) {
@@ -215,11 +165,10 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   start() {
-    if (this.rotator)
-      window.clearInterval(this.rotator);
+    if (this.rotator) window.clearInterval(this.rotator);
 
     this.running = true;
-    this.rotator = setInterval((e) => {
+    this.rotator = setInterval(e => {
       if (!this.windowFocused) {
         return;
       }
@@ -236,8 +185,7 @@ export class NewsfeedBoostRotatorComponent {
     const bounds = this.element.nativeElement.getBoundingClientRect();
     if (bounds.top > 0) {
       //console.log('[rotator]: in view', this.rotator);
-      if (!this.running)
-        this.start();
+      if (!this.running) this.start();
     } else {
       console.log('[rotator]: out of view', this.rotator);
       if (this.running) {
@@ -249,16 +197,35 @@ export class NewsfeedBoostRotatorComponent {
 
   recordImpression(position: number, force: boolean) {
     //ensure was seen for at least 1 second
-    if ((Date.now() > this.lastTs + 1000 || force) && this.boosts[position].boosted_guid) {
-      this.newsfeedService.recordView(this.boosts[position], true, this.channel, this.clientMetaService.build({
-        position: position + 1,
-        campaign: this.boosts[position].urn,
-      }));
+    if (
+      (Date.now() > this.lastTs + 1000 || force) &&
+      this.boosts[position] &&
+      this.boosts[position].boosted_guid
+    ) {
+      this.newsfeedService.recordView(
+        this.boosts[position],
+        true,
+        this.channel,
+        this.clientMetaService.build({
+          position: position + 1,
+          campaign: this.boosts[position].urn,
+        })
+      );
 
-      console.log('Boost rotator recording impressions for ' + position + ' ' + this.boosts[position].boosted_guid, this.windowFocused);
+      console.log(
+        'Boost rotator recording impressions for ' +
+          position +
+          ' ' +
+          this.boosts[position].boosted_guid,
+        this.windowFocused
+      );
     }
     this.lastTs = Date.now();
-    window.localStorage.setItem('boost-rotator-offset', this.boosts[position].boosted_guid);
+    if (this.boosts[position] && this.boosts[position].boosted_guid)
+      window.localStorage.setItem(
+        'boost-rotator-offset',
+        this.boosts[position].boosted_guid
+      );
   }
 
   active() {
@@ -292,13 +259,13 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   async next() {
-    this.activities.toArray()[this.currentPosition].hide();
+    //this.activities.toArray()[this.currentPosition].hide();
     if (this.currentPosition + 1 > this.boosts.length - 1) {
       //this.currentPosition = 0;
       try {
-        await this.load();
+        this.load();
         this.currentPosition++;
-      } catch(e) {
+      } catch (e) {
         this.currentPosition = 0;
       }
     } else {
@@ -318,13 +285,11 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   ngOnDestroy() {
-    if (this.rotator)
-      window.clearInterval(this.rotator);
+    if (this.rotator) window.clearInterval(this.rotator);
     this.scroll.unListen(this.scroll_listener);
 
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
   }
-
 }

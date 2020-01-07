@@ -1,0 +1,66 @@
+<m-pageLayout [menu]="menu">
+  <div class="m-analyticsDashboard" *ngIf="ready$ | async" m-pageLayout__main>
+    <m-dashboardLayout>
+      <ng-container m-dashboardLayout__header>
+        <div>
+          <h3>
+            {{ category$ | async | titlecase }}
+          </h3>
+        </div>
+        <div
+          class="m-analyticsDashboard__headerFilters"
+          *ngIf="layout === 'chart'"
+        >
+          <!-- <div *ngIf="session.isAdmin()" class="m-analytics__channelSearch"> -->
+          <!-- <div class="m-analyticsDashboard__channelSearch">
+                <m-analytics__search></m-analytics__search>
+              </div> -->
+          <!-- <div class="m-analyticsDashboard__channelFilter" *ngIf="session.isAdmin()">
+                <m-dropdownSelector [filter]="channelFilter"></m-dropdownSelector>
+              </div> -->
+          <div class="m-analyticsDashboard__timespanFilter">
+            <m-dropdownSelector
+              [filter]="timespanFilter"
+              [showLabel]="false"
+              (selectionMade)="filterSelectionMade($event)"
+            ></m-dropdownSelector>
+          </div>
+        </div>
+      </ng-container>
+      <p
+        m-dashboardLayout__body
+        class="m-analyticsDashboard__description"
+        *ngIf="description$ | async as description"
+      >
+        <ng-container *ngIf="(category$ | async) === 'earnings'">
+          <span *ngIf="!session.getLoggedInUser().pro">
+            In order to start earning,
+            <a routerLink="/pro">upgrade to Pro</a>.</span
+          >
+          <a
+            *ngIf="
+              session.getLoggedInUser().pro &&
+              !(
+                session.getLoggedInUser().merchant &&
+                session.getLoggedInUser().merchant['id']
+              )
+            "
+            routerLink="/wallet/usd"
+            >Enable payouts</a
+          >
+        </ng-container>
+        {{ description }}
+      </p>
+      <m-analytics__layout--chart
+        m-dashboardLayout__body
+        *ngIf="layout === 'chart'"
+        class="m-analytics__layout"
+      ></m-analytics__layout--chart>
+      <m-analytics__layout--summary
+        m-dashboardLayout__body
+        *ngIf="layout === 'summary'"
+        class="m-analytics__layout"
+      ></m-analytics__layout--summary>
+    </m-dashboardLayout>
+  </div>
+</m-pageLayout>

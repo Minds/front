@@ -1,0 +1,107 @@
+<a class="m-proHamburgerMenu__trigger" (click)="toggleMenu()">
+  <i class="material-icons">menu</i>
+</a>
+
+<div class="m-proHamburgerMenu__menu">
+  <a class="m-proHamburgerMenu__close" (click)="closeMenu()">
+    <i class="material-icons">close</i>
+  </a>
+
+  <ul>
+    <li class="m-proHamburgerMenu__logo" *ngIf="channel">
+      <img
+        [routerLink]="homeRouterLink"
+        [src]="channel.pro_settings.logo_image"
+        (click)="closeMenu()"
+      />
+    </li>
+
+    <li
+      class="m-proHamburgerMenu__subscribe"
+      *ngIf="currentUser?.guid != channel?.guid"
+    >
+      <m-pro__subscribeButton (onAction)="closeMenu()"></m-pro__subscribeButton>
+    </li>
+
+    <li class="m-proHamburgerMenu__linkWrapper">
+      <a
+        [routerLink]="feedRouterLink"
+        routerLinkActive="m-proHamburgerMenu__item--active"
+        (click)="closeMenu()"
+        i18n
+        >Feed</a
+      >
+    </li>
+
+    <li>
+      <a
+        [routerLink]="videosRouterLink"
+        routerLinkActive="m-proHamburgerMenu__item--active"
+        (click)="closeMenu()"
+        i18n
+        >Videos</a
+      >
+    </li>
+
+    <li>
+      <a
+        [routerLink]="imagesRouterLink"
+        routerLinkActive="m-proHamburgerMenu__item--active"
+        (click)="closeMenu()"
+        i18n
+        >Images</a
+      >
+    </li>
+
+    <li>
+      <a
+        [routerLink]="articlesRouterLink"
+        routerLinkActive="m-proHamburgerMenu__item--active"
+        (click)="closeMenu()"
+        i18n
+        >Articles</a
+      >
+    </li>
+
+    <li>
+      <a
+        [routerLink]="groupsRouterLink"
+        routerLinkActive="m-proHamburgerMenu__item--active"
+        (click)="closeMenu()"
+        i18n
+        >Groups</a
+      >
+    </li>
+
+    <li *ngIf="currentUser?.guid != channel?.guid">
+      <a (click)="wire(); closeMenu()">
+        Wire
+      </a>
+    </li>
+
+    <li class="m-proHamburgerMenu__searchBox">
+      <m-pro__searchBox
+        [query]="query"
+        (queryChange)="queryChange.emit($event)"
+        (onSearch)="onSearch.emit($event); closeMenu()"
+        (onClearSearch)="onClearSearch.emit($event); closeMenu()"
+      ></m-pro__searchBox>
+    </li>
+
+    <li class="m-proHamburgerMenu__spacer"></li>
+
+    <ng-container *ngIf="items && items.length">
+      <li *ngFor="let item of items" class="m-proHamburgerMenu__linkWrapper">
+        <a
+          [class.m-proHamburgerMenu__item--active]="item.isActive()"
+          (click)="item.onClick(); closeMenu()"
+          >{{ item.label }}</a
+        >
+      </li>
+
+      <li class="m-proHamburgerMenu__spacer"></li>
+    </ng-container>
+  </ul>
+
+  <m-pro--channel-footer (click)="closeMenu()"></m-pro--channel-footer>
+</div>

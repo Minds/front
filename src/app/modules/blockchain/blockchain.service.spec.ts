@@ -3,7 +3,6 @@ import { fakeAsync } from '@angular/core/testing';
 import { clientMock } from '../../../tests/client-mock.spec';
 
 describe('BlockchainService', () => {
-
   let service: BlockchainService;
 
   beforeEach(() => {
@@ -27,7 +26,7 @@ describe('BlockchainService', () => {
 
     clientMock.response[url] = {
       status: 'success',
-      wallet: '0x1234'
+      wallet: '0x1234',
     };
 
     service.getWallet();
@@ -42,14 +41,16 @@ describe('BlockchainService', () => {
     const url = 'api/v2/blockchain/wallet';
 
     clientMock.response[url] = {
-      status: 'success'
+      status: 'success',
     };
 
     service.setWallet({ address: '0x1234' });
     jasmine.clock().tick(10);
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toBe(url);
-    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ address: '0x1234' });
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+      address: '0x1234',
+    });
   }));
 
   it('should get the balance', fakeAsync(async () => {
@@ -61,5 +62,4 @@ describe('BlockchainService', () => {
     expect(clientMock.post).toHaveBeenCalled();
     expect(balance).toBe(10 ** 18);
   }));
-
 });

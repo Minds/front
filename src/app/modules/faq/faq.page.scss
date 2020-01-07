@@ -14,7 +14,7 @@ m-faq--page {
     text-rendering: optimizeLegibility;
     padding-bottom: 16px;
     font-weight: 600;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
   }

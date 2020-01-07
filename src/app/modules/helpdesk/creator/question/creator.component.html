@@ -1,7 +1,10 @@
 <div class="m-helpdeskDashboard">
-  <form (submit)="save()" class="m-border mdl-color--white" style="max-width:740px; width: 600px; margin: auto; padding: 16px;">
+  <form
+    (submit)="save()"
+    class="m-border mdl-color--white"
+    style="max-width:740px; width: 600px; margin: auto; padding: 16px;"
+  >
     <div class="m-layout__column" style="width: 100%">
-
       <div class="m-layout__cell">
         <minds-textarea
           name="question"
@@ -33,18 +36,26 @@
             <m-dropdown #dropdown>
               <label i18n="@@HELPDESK__EDIT__CATEGORIES__TITLE">
                 Select a Category
-                <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive">keyboard_arrow_down</i>
-                <i class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active">keyboard_arrow_up</i>
+                <i
+                  class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive"
+                  >keyboard_arrow_down</i
+                >
+                <i
+                  class="material-icons m-dropdown--label-icon m-dropdown--label-icon-active"
+                  >keyboard_arrow_up</i
+                >
               </label>
 
               <ul class="m-dropdown--list">
                 <li
                   class="m-dropdown--list--item"
-                  [class.m-dropdown--list--item--selected]="this.question.category_uuid === category.uuid"
-                  *ngFor="let category of categories; trackBy:trackCategories"
+                  [class.m-dropdown--list--item--selected]="
+                    this.question.category_uuid === category.uuid
+                  "
+                  *ngFor="let category of categories; trackBy: trackCategories"
                   (click)="selectCategory(category); dropdown.toggle()"
                 >
-                  {{renderBranch(category)}}
+                  {{ renderBranch(category) }}
                 </li>
               </ul>
             </m-dropdown>
@@ -59,17 +70,25 @@
           <strong>Position</strong>
         </div>
         <div class="m-layout__cell">
-          <input class="m-input" placeholder="10" [(ngModel)]="question.position" name="position"/>
+          <input
+            class="m-input"
+            placeholder="10"
+            [(ngModel)]="question.position"
+            name="position"
+          />
         </div>
       </div>
     </div>
 
     <div class="m-layout__cell">
-      <button type="submit" class="m-button m-button--text m-button--draft" i18n="@@HELPDESK__EDIT__SAVE_ACTION">
+      <button
+        type="submit"
+        class="m-button m-button--text m-button--draft"
+        i18n="@@HELPDESK__EDIT__SAVE_ACTION"
+      >
         Save
       </button>
-      <div class="m-helpdesk--question-creator--error">{{error}}</div>
+      <div class="m-helpdesk--question-creator--error">{{ error }}</div>
     </div>
-
   </form>
 </div>

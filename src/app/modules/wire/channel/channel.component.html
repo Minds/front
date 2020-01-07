@@ -1,9 +1,8 @@
-<div class="m-wire-channel--call-to-action"
+<div
+  class="m-wire-channel--call-to-action"
   *ngIf="session.getLoggedInUser().guid != channel.guid"
 >
-  <button class="mdl-shadow--8dp"
-    (click)="sendWire()"
-  >
+  <button class="mdl-shadow--8dp" (click)="sendWire()">
     <i class="ion-icon ion-flash"></i>
 
     <span class="m-wire-channel--cta-label">
@@ -14,17 +13,19 @@
 
 <m-wire-channel--overview [channel]="channel"></m-wire-channel--overview>
 
-<div *ngIf="shouldShow()"
-  class="mdl-card mdl-shadow--2dp"
->
+<div *ngIf="shouldShow()" class="mdl-card mdl-shadow--2dp">
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@WIRE__CHANNEL__REWARDS_TITLE">Rewards</h2>
+    <h2 class="mdl-card__title-text" i18n="@@WIRE__CHANNEL__REWARDS_TITLE">
+      Rewards
+    </h2>
 
     <m-tooltip icon="help" i18n="@@WIRE__CHANNEL__REWARDS_TOOLTIP">
-      You can configure rewards to give to your supporters in exchange for tokens
+      You can configure rewards to give to your supporters in exchange for
+      tokens
     </m-tooltip>
 
-    <span *ngIf="session.getLoggedInUser().guid == channel.guid"
+    <span
+      *ngIf="session.getLoggedInUser().guid == channel.guid"
       class="m-wire-channel--edit-button"
       (click)="toggleEditing()"
     >
@@ -33,28 +34,8 @@
     </span>
   </div>
 
-  <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-wire-channel--rewards">
-    <p *ngIf="!editing && rewards.description"
-      class="m-wire-channel--description"
-      [innerText]="rewards.description"
-    ></p>
-
-    <textarea *ngIf="editing"
-      class="m-wire-channel--description-editor"
-      [(ngModel)]="rewards.description"
-      [autoGrow]
-      placeholder="About your offerings. eg. Describe what your supporters will receive…"
-      i18n-placeholder="@@WIRE__CHANNEL__REWARD_DESCRIPTION_PLACEHOLDER"
-    ></textarea>
-
-    <m-wire-channel-table type="tokens"
-      [(rewards)]="rewards.rewards.tokens"
-      [(editing)]="editing"
-      [channel]="channel"
-    ></m-wire-channel-table>
-
-    <p class="m-wire-channel--disclaimer" *ngIf="false" i18n="@@WIRE__CHANNEL__REWARD_CHANGE_NOTICE">
-      <span>@</span>{{channel.username}} reserves the right to change rewards at anytime without notice
-    </p>
-  </div>
+  <m-wire__subscriptionTiers
+    [user]="channel"
+    [editing]="editing"
+  ></m-wire__subscriptionTiers>
 </div>

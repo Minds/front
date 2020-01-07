@@ -8,63 +8,88 @@
 
 <div class="minds-list">
   <div>
-    <m-sort-selector
-      class="m-group--sorted__SortSelector m-border"
-      [allowedAlgorithms]="false"
-      [allowedPeriods]="false"
-      [allowedCustomTypes]="['activities', 'images', 'videos']"
-      [customType]="type"
-      (onChange)="setFilter($event.customType)"
-    ></m-sort-selector>
-
+    <div class="m-mindsList__tools m-border">
+      <div
+        *ngIf="isMember()"
+        class="m-mindsListTools__scheduled"
+        (click)="toggleScheduled()"
+        [class.selected]="viewScheduled"
+      >
+        <m-tooltip icon="date_range"> See Scheduled Activities </m-tooltip>
+        <span>scheduled: {{ scheduledCount }}</span>
+      </div>
+      <m-sort-selector
+        class="m-group--sorted__SortSelector"
+        [allowedAlgorithms]="false"
+        [allowedPeriods]="false"
+        [allowedCustomTypes]="['activities', 'images', 'videos']"
+        [customType]="type"
+        (onChange)="setFilter($event.customType)"
+      ></m-sort-selector>
+    </div>
     <ng-container
-      *ngIf="isActivityFeed() && (group['is:owner'] || group['is:moderator']) && group['adminqueue:count']"
+      *ngIf="
+        isActivityFeed() &&
+        (group['is:owner'] || group['is:moderator']) &&
+        group['adminqueue:count']
+      "
     >
       <a
         class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
         routerLink="review"
       >
         <i class="material-icons">rate_review</i>
-        {{ group['adminqueue:count'] }} new {{ group['adminqueue:count'] === 1 ? 'post' : 'posts' }} in review queue
+        {{ group['adminqueue:count'] }} new
+        {{ group['adminqueue:count'] === 1 ? 'post' : 'posts' }} in review queue
       </a>
     </ng-container>
 
-    <ng-container *ngIf="['images', 'videos'].indexOf(type) > -1; else entityListView">
+    <ng-container
+      *ngIf="['images', 'videos'].indexOf(type) > -1; else entityListView"
+    >
       <m-newsfeed__tiles
-        [entities]="getAllEntities()"
+        [entities]="feedsService.feed | async"
       ></m-newsfeed__tiles>
     </ng-container>
     <ng-template #entityListView>
-      <minds-activity
-        *ngFor="let entity of getAllEntities(); let i = index"
-        class="mdl-card item"
-        [object]="entity"
-        [canDelete]="group['is:owner'] || group['is:moderator']"
-        (delete)="delete(entity)"
-        [slot]="i + 1"
+      <ng-container
+        *ngFor="let entity of feedsService.feed | async; let i = index"
       >
-        <!-- Menu Actions -->
+        <minds-activity
+          *ngIf="entity | async"
+          class="mdl-card item"
+          [object]="entity | async"
+          [canDelete]="group['is:owner'] || group['is:moderator']"
+          (delete)="delete(entity)"
+          [slot]="i + 1"
+          [attr.data-minds-activity-guid]="entity.guid"
+        >
+          <!-- Menu Actions -->
 
-        <li
-          post-menu
-          class="mdl-menu__item"
-          *ngIf="group['is:owner']"
-          (click)="kick(entity?.ownerObj)"
-          i18n="@@GROUPS__PROFILE__FEED__REMOVE_USER"
-        >Remove user</li>
-      </minds-activity>
+          <li
+            post-menu
+            class="mdl-menu__item"
+            *ngIf="group['is:owner'] && (entity | async)"
+            (click)="kick(entity?.ownerObj)"
+            i18n="@@GROUPS__PROFILE__FEED__REMOVE_USER"
+          >
+            Remove user
+          </li>
+        </minds-activity>
+      </ng-container>
     </ng-template>
 
     <infinite-scroll
       distance="25%"
-      (load)="load()"
-      [moreData]="moreData"
-      [inProgress]="inProgress"
+      (load)="loadMore()"
+      [moreData]="feedsService.hasMore | async"
+      [inProgress]="feedsService.inProgress | async"
     ></infinite-scroll>
   </div>
 </div>
 
-<m-groups__kick-modal *ngIf="kicking"
+<m-groups__kick-modal
+  *ngIf="kicking"
   [user]="kicking"
   [group]="group"
   (closed)="kick(null)"

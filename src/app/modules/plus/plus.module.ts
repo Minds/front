@@ -7,12 +7,12 @@ import { CommonModule } from '../../common/common.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { FaqModule } from '../faq/faq.module';
 import { PlusMarketingComponent } from './marketing.component';
-import { PlusSubscriptionComponent } from './subscription.component';
+import { PlusSubscriptionComponent } from './subscription/subscription.component';
 import { PlusVerifyComponent } from './verify/verify.component';
+import { PlusService } from './plus.service';
 
-
-const plusRoutes : Routes = [
-  { path: 'plus',  component: PlusMarketingComponent }
+const plusRoutes: Routes = [
+  { path: 'plus', component: PlusMarketingComponent },
 ];
 
 @NgModule({
@@ -23,20 +23,15 @@ const plusRoutes : Routes = [
     CommonModule,
     CheckoutModule,
     FaqModule,
-    RouterModule.forChild(plusRoutes)
+    RouterModule.forChild(plusRoutes),
   ],
   declarations: [
     PlusMarketingComponent,
     PlusSubscriptionComponent,
-    PlusVerifyComponent
+    PlusVerifyComponent,
   ],
-  exports: [
-    PlusSubscriptionComponent,
-    PlusVerifyComponent
-  ],
-  entryComponents: [
-    PlusMarketingComponent,
-  ]
+  exports: [PlusSubscriptionComponent, PlusVerifyComponent],
+  providers: [PlusService],
+  entryComponents: [PlusMarketingComponent],
 })
-
 export class PlusModule {}

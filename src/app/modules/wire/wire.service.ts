@@ -4,6 +4,7 @@ import { WireContractService } from '../blockchain/contracts/wire-contract.servi
 import { TokenContractService } from '../blockchain/contracts/token-contract.service';
 import { Web3WalletService } from '../blockchain/web3-wallet.service';
 import { WireStruc } from './creator/creator.component';
+import { BTCService } from '../payments/btc/btc.service';
 
 @Injectable()
 export class WireService {
@@ -13,8 +14,9 @@ export class WireService {
     private client: Client,
     private wireContract: WireContractService,
     private tokenContract: TokenContractService,
-    private web3Wallet: Web3WalletService
-  ) { }
+    private web3Wallet: Web3WalletService,
+    private btcService: BTCService
+  ) {}
 
   async submitWire(wire: WireStruc) {
     let payload = wire.payload;
@@ -30,10 +32,14 @@ export class WireService {
         if (this.web3Wallet.isUnavailable()) {
           throw new Error('No Ethereum wallets available on your browser.');
         } else if (!(await this.web3Wallet.unlock())) {
-          throw new Error('Your Ethereum wallet is locked or connected to another network.');
+          throw new Error(
+            'Your Ethereum wallet is locked or connected to another network.'
+          );
         }
 
-        if (payload.receiver == await this.web3Wallet.getCurrentWallet(true)) {
+        if (
+          payload.receiver == (await this.web3Wallet.getCurrentWallet(true))
+        ) {
           throw new Error('You cannot wire yourself.');
         }
 
@@ -47,36 +53,73 @@ export class WireService {
           }
 
           payload.address = await this.web3Wallet.getCurrentWallet(true);
-          payload.txHash = await this.wireContract.create(payload.receiver, wire.amount);
+          payload.txHash = await this.wireContract.create(
+            payload.receiver,
+            wire.amount
+          );
           payload.method = 'onchain';
         } catch (e) {
           console.error('[Wire/Token]', e);
-          throw new Error('Either you cancelled the approval, or there was an error processing it.');
+          throw new Error(
+            'Either you cancelled the approval, or there was an error processing it.'
+          );
         }
         break;
 
-      case 'creditcard':
-        payload.method = 'creditcard';
+      case 'eth':
+        await this.web3Wallet.ready();
+
+        if (this.web3Wallet.isUnavailable()) {
+          throw new Error('No Ethereum wallets available on your browser.');
+        } else if (!(await this.web3Wallet.unlock())) {
+          throw new Error(
+            'Your Ethereum wallet is locked or connected to another network.'
+          );
+        }
+
+        await this.web3Wallet.sendTransaction({
+          from: await this.web3Wallet.getCurrentWallet(),
+          to: payload.receiver,
+          gasPrice: this.web3Wallet.EthJS.toWei(2, 'Gwei'),
+          gas: 21000,
+          value: this.web3Wallet.EthJS.toWei(wire.amount, 'ether').toString(),
+          data: '0x',
+        });
+        break;
+
+      case 'usd':
+        payload.method = 'usd';
         break;
 
       case 'offchain':
         payload = { method: 'offchain', address: 'offchain' };
         break;
+
+      case 'btc':
+        this.btcService.showModal({
+          amount: wire.amount,
+          address: wire.payload.receiver,
+        });
+        return;
+        break;
     }
 
     try {
-      let response: any = await this.client.post(`api/v1/wire/${wire.guid}`, {
+      let response: any = await this.client.post(`api/v2/wire/${wire.guid}`, {
         payload,
-        method: 'tokens',
+        method: payload.method,
         amount: wire.amount,
-        recurring: wire.recurring
+        recurring: wire.recurring,
+        recurring_interval: wire.recurringInterval,
       });
 
       this.wireSent.next(wire);
       return { done: true };
     } catch (e) {
       if (e && e.stage === 'transaction') {
-        throw new Error('Sorry, your payment failed. Please, try again or use another card');
+        throw new Error(
+          'Sorry, your payment failed. Please, try again or use another card'
+        );
       }
 
       throw e;

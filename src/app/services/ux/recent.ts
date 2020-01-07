@@ -4,7 +4,7 @@ import { Storage } from '../storage';
 
 @Injectable()
 export class RecentService {
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage) {}
 
   store(key: string, entry: any, cleanupFn?: Function) {
     let data = this.read(key);

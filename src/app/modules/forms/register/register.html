@@ -1,15 +1,22 @@
-
-<div class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box" style="min-height:0;" [hidden]="!errorMessage">
+<div
+  class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp minds-login-box m-error-box"
+  style="min-height:0;"
+  [hidden]="!errorMessage"
+>
   <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
     {{errorMessage}}
   </div>
 </div>
 
 <!-- START: Register -->
-<form (submit)="$event.preventDefault()" [formGroup]="form" class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box" [hidden]="hideLogin" *ngIf="!showFbForm">
-
+<form
+  (submit)="$event.preventDefault()"
+  [formGroup]="form"
+  class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box"
+  [hidden]="hideLogin"
+  *ngIf="!showFbForm"
+>
   <div class="mdl-card__supporting-text mdl-grid">
-
     <div class="mdl-cell mdl-cell--12-col">
       <input
         type="text"
@@ -18,8 +25,9 @@
         placeholder="Username"
         i18n-placeholder="@@M__COMMON__USERNAME"
         (keyup)="validationTimeoutHandler()"
-        readonly onfocus="this.removeAttribute('readonly');"
-        />
+        readonly
+        onfocus="this.removeAttribute('readonly');"
+      />
     </div>
 
     <div class="mdl-cell mdl-cell--12-col">
@@ -40,13 +48,25 @@
         i18n-placeholder="@@M__COMMON__PASSWORD"
         readonly
         onfocus="this.removeAttribute('readonly');"
-        />
-      <m-tooltip class="tooltip-wrapper" icon="help" i18n="@@MINDS__PASSWORD_TOOLTIP" anchor="right">
-        Password must have more than 8 characters. Including uppercase, numbers, special characters (ie. !,#,@), and cannot have spaces.
+      />
+      <m-tooltip
+        class="tooltip-wrapper"
+        icon="help"
+        i18n="@@MINDS__PASSWORD_TOOLTIP"
+        anchor="right"
+      >
+        Password must have more than 8 characters. Including uppercase, numbers,
+        special characters (ie. !,#,@), and cannot have spaces.
       </m-tooltip>
     </div>
-    <div class="mdl-cell mdl-cell--12-col password-help" [hidden]="errorMessage || !form.value.password">
-      <span i18n="@@MINDS__PASSWORD_TOOLTIP">Password must have more than 8 characters. Including uppercase, numbers, special characters (ie. !,#,@), and cannot have spaces</span>
+    <div
+      class="mdl-cell mdl-cell--12-col password-help"
+      [hidden]="errorMessage || !form.value.password"
+    >
+      <span i18n="@@MINDS__PASSWORD_TOOLTIP"
+        >Password must have more than 8 characters. Including uppercase,
+        numbers, special characters (ie. !,#,@), and cannot have spaces</span
+      >
     </div>
     <div class="mdl-cell mdl-cell--12-col" [hidden]="!form.value.password">
       <input
@@ -58,43 +78,75 @@
         (keydown.enter)="register($event)"
         readonly
         onfocus="this.removeAttribute('readonly');"
-        />
+      />
     </div>
 
-    <div class="mdl-cell mdl-cell--12-col" [hidden]="!form.value.password2" *ngIf="form.value.password">
-      <re-captcha *ngIf="minds.recaptchaKey" (captchaResponse)="setCaptcha($event)" [site_key]="minds.recaptchaKey" #reCaptcha></re-captcha>
+    <div
+      class="mdl-cell mdl-cell--12-col"
+      [hidden]="!form.value.password2"
+      *ngIf="form.value.password"
+    >
+      <re-captcha
+        *ngIf="minds.recaptchaKey"
+        (captchaResponse)="setCaptcha($event)"
+        [site_key]="minds.recaptchaKey"
+        #reCaptcha
+      ></re-captcha>
     </div>
   </div>
 
   <div class="mdl-card__actions">
     <div>
-      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [mdlSwitch] [toggled]="form.value.exclusive_promotions">
+      <label
+        class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+        [mdlSwitch]
+        [toggled]="form.value.exclusive_promotions"
+      >
         <input
-          type="checkbox" class="mdl-checkbox__input"
+          type="checkbox"
+          class="mdl-checkbox__input"
           formControlName="exclusive_promotions"
         />
 
-        <span class="m-register-tac" i18n="@@FORMS__REGISTER__EXCLUSIVE_PROMOTIONS_ACCEPTANCE_LABEL"> Receive exclusive promotions from Minds (recommended)
+        <span
+          class="m-register-tac"
+          i18n="@@FORMS__REGISTER__EXCLUSIVE_PROMOTIONS_ACCEPTANCE_LABEL"
+        >
+          Receive exclusive promotions from Minds (recommended)
         </span>
       </label>
 
-      <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" [mdlSwitch] [toggled]="form.value.tos">
+      <label
+        class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+        [mdlSwitch]
+        [toggled]="form.value.tos"
+      >
         <input
-          type="checkbox" class="mdl-checkbox__input"
+          type="checkbox"
+          class="mdl-checkbox__input"
           formControlName="tos"
+          data-cy="data-minds-accept-tos-input"
         />
 
-        <span class="m-register-tac" i18n="@@FORMS__REGISTER__TOS_ACCEPTANCE_LABEL"> I accept the
+        <span
+          class="m-register-tac"
+          i18n="@@FORMS__REGISTER__TOS_ACCEPTANCE_LABEL"
+        >
+          I accept the
           <a routerLink="/p/terms" target="_blank"> Terms & Conditions </a>
         </span>
       </label>
     </div>
 
-
-    <button class="m-btn m-btn--action" (click)="register($event)" [disabled]="!this.form.valid || inProgress">
-      <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION">Signup</ng-container>
+    <button
+      class="m-btn m-btn--action"
+      (click)="register($event)"
+      [disabled]="!this.form.valid || inProgress"
+    >
+      <ng-container i18n="@@FORMS__REGISTER__SIGNUP_ACTION"
+        >Signup</ng-container
+      >
     </button>
   </div>
-
 </form>
 <!-- END: Register -->

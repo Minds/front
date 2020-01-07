@@ -1,0 +1,79 @@
+.m-analytics__metric {
+  cursor: pointer;
+  flex: 0 0 auto;
+  width: 160px;
+  padding: 24px 20px 20px 20px;
+  font-size: 14px;
+  box-sizing: border-box;
+  overflow: visible;
+  @include m-theme() {
+    border-bottom: 8px solid themed($m-white);
+  }
+  @include m-theme() {
+    color: themed($m-grey-300);
+  }
+  &.active {
+    @include m-theme() {
+      background-color: rgba(themed($m-grey-100), 0.2);
+      border-bottom: 8px solid themed($m-blue);
+    }
+  }
+  &:first-child {
+    margin-left: 40px;
+  }
+  &:last-child {
+    margin-right: 40px;
+  }
+
+  &:hover:not(.active) {
+    transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      background-color: rgba(themed($m-grey-100), 0.2);
+      border-bottom: 8px solid rgba(0, 0, 0, 0);
+    }
+  }
+  .m-analytics__metricLabel {
+    white-space: nowrap;
+  }
+  m-tooltip {
+    vertical-align: middle;
+  }
+  .m-analytics__metricSummary {
+    font-size: 17px;
+    margin-top: 8px;
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
+  .m-analytics__metricDelta {
+    display: flex;
+    align-items: baseline;
+    padding-top: 4px;
+    font-size: 11px;
+    .material-icons {
+      transform: scaleX(0.7);
+      font-size: 11px;
+      font-weight: bold;
+    }
+    @include m-theme() {
+      &.goodChange {
+        color: themed($m-green);
+      }
+      &.badChange {
+        color: themed($m-red);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $min-tablet) {
+  .m-analytics__metric {
+    scroll-snap-align: start;
+    &:first-child {
+      margin-left: 16px;
+    }
+    &:last-child {
+      margin-right: 16px;
+    }
+  }
+}

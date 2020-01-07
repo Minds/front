@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule as NgFormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule as NgFormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
@@ -11,6 +14,7 @@ import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { AdsModule } from '../ads/ads.module';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { NoticesModule } from '../notices/notices.module';
+import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
 
 import { NewsfeedComponent } from './newsfeed.component';
 import { NewsfeedSingleComponent } from './single/single.component';
@@ -27,13 +31,14 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
 import { NewsfeedTagsComponent } from './feeds/tags/tags.component';
 import { NewsfeedSortedComponent } from './feeds/sorted.component';
 import { NewsfeedEntityComponent } from './feeds/entity.component';
-import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
-import { SearchModule } from "../search/search.module";
+import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
+import { SearchModule } from '../search/search.module';
 import { NewsfeedTilesComponent } from './feeds/tiles.component';
 
 const routes: Routes = [
   {
-    path: 'newsfeed', component: NewsfeedComponent,
+    path: 'newsfeed',
+    component: NewsfeedComponent,
     children: [
       { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
       { path: 'suggested', component: NewsfeedTopComponent },
@@ -41,8 +46,16 @@ const routes: Routes = [
       { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
       { path: 'global/:algorithm', component: NewsfeedSortedComponent },
       { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
-      { path: 'subscriptions', component: NewsfeedSubscribedComponent, canDeactivate: [CanDeactivateGuardService] },
-      { path: 'boost', component: NewsfeedBoostComponent, canDeactivate: [CanDeactivateGuardService] },
+      {
+        path: 'subscriptions',
+        component: NewsfeedSubscribedComponent,
+        canDeactivate: [CanDeactivateGuardService],
+      },
+      {
+        path: 'boost',
+        component: NewsfeedBoostComponent,
+        canDeactivate: [CanDeactivateGuardService],
+      },
       { path: 'tag/:tag', component: NewsfeedTagsComponent },
     ],
   },
@@ -66,6 +79,7 @@ const routes: Routes = [
     SuggestionsModule,
     NoticesModule,
     SearchModule,
+    ReferralsModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,
@@ -90,12 +104,8 @@ const routes: Routes = [
     NewsfeedBoostRotatorComponent,
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
-  ],
-  entryComponents: [
     NewsfeedComponent,
-    NewsfeedSingleComponent,
-  ]
+  ],
+  entryComponents: [NewsfeedComponent, NewsfeedSingleComponent],
 })
-
-export class NewsfeedModule {
-}
+export class NewsfeedModule {}

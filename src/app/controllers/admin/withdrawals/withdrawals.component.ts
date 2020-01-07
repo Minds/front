@@ -4,11 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   moduleId: module.id,
-  selector: 'minds-admin-withdrawals',
+  selector: 'm-admin-withdrawals',
   templateUrl: 'withdrawals.component.html',
 })
 export class AdminWithdrawals {
-
   withdrawals: any[] = [];
 
   inProgress: boolean = false;
@@ -17,10 +16,7 @@ export class AdminWithdrawals {
 
   user: string = '';
 
-  constructor(
-    protected client: Client,
-    protected route: ActivatedRoute
-  ) { }
+  constructor(protected client: Client, protected route: ActivatedRoute) {}
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -49,11 +45,19 @@ export class AdminWithdrawals {
 
     this.inProgress = true;
 
-    this.client.get(`api/v2/admin/rewards/withdrawals`, {
+    const params = {
       limit: 50,
       offset: this.offset,
-      user: this.user
-    })
+    };
+
+    if (this.user) {
+      params['user'] = this.user;
+    } else {
+      params['status'] = 'pending_approval';
+    }
+
+    this.client
+      .get(`api/v2/admin/rewards/withdrawals`, params)
       .then((response: any) => {
         if (!response.withdrawals) {
           this.inProgress = false;
@@ -73,5 +77,59 @@ export class AdminWithdrawals {
       .catch(e => {
         this.inProgress = false;
       });
+  }
+
+  async approve(withdrawal) {
+    if (!confirm("Do you want to approve this withdrawal? There's no UNDO.")) {
+      return;
+    }
+
+    this.inProgress = true;
+
+    try {
+      const endpoint = `api/v2/admin/rewards/withdrawals/${[
+        withdrawal.user_guid,
+        withdrawal.timestamp,
+        withdrawal.tx,
+      ].join('/')}`;
+
+      await this.client.put(endpoint);
+
+      withdrawal.status = 'approved';
+    } catch (e) {
+      alert(
+        `There was an issue while approving withdrawal: ${(e && e.message) ||
+          'Unknown server error'}`
+      );
+    }
+
+    this.inProgress = false;
+  }
+
+  async reject(withdrawal) {
+    if (!confirm("Do you want to reject this withdrawal? There's no UNDO.")) {
+      return;
+    }
+
+    this.inProgress = true;
+
+    try {
+      const endpoint = `api/v2/admin/rewards/withdrawals/${[
+        withdrawal.user_guid,
+        withdrawal.timestamp,
+        withdrawal.tx,
+      ].join('/')}`;
+
+      await this.client.delete(endpoint);
+
+      withdrawal.status = 'rejected';
+    } catch (e) {
+      alert(
+        `There was an issue while rejecting withdrawal: ${(e && e.message) ||
+          'Unknown server error'}`
+      );
+    }
+
+    this.inProgress = false;
   }
 }

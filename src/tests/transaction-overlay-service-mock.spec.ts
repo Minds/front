@@ -1,3 +1,1 @@
-export let transactionOverlayServiceMock = new function() {
-
-};
+export let transactionOverlayServiceMock = new (function() {})();

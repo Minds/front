@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'm-get-metamask',
-  templateUrl: 'getmetamask.component.html'
+  templateUrl: 'getmetamask.component.html',
 })
 export class GetMetamaskComponent {
   public static ACTION_CREATE = 'create';

@@ -15,6 +15,7 @@ import { CommentPosterComponent } from './poster/poster.component';
 import { CommentsTreeComponent } from './tree/tree.component';
 import { CommentsThreadComponent } from './thread/thread.component';
 import { CommentsService } from './comments.service';
+import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { CommentsService } from './comments.service';
     VideoModule,
     TranslateModule,
     ModalsModule,
+    TextInputAutocompleteModule,
   ],
   declarations: [
     CommentsScrollDirective,
@@ -44,9 +46,6 @@ import { CommentsService } from './comments.service';
     CommentsTreeComponent,
     CommentsThreadComponent,
   ],
-  providers: [
-    CommentsService,
-  ],
+  providers: [CommentsService],
 })
-export class CommentsModule {
-}
+export class CommentsModule {}

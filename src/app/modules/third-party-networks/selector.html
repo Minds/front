@@ -5,7 +5,10 @@
     [ngClass]="{ 'mdl-color-text--blue-grey-600': state[network] }"
     (click)="toggleState(network)"
   >
-    <i class="fa fa-fw" [ngClass]="[ 'fa-' + getNetworkIconClass(network) ]"></i>
+    <i
+      class="fa fa-fw"
+      [ngClass]="[ 'fa-' + getNetworkIconClass(network) ]"
+    ></i>
   </a>
 </span>
 
@@ -15,8 +18,17 @@
   [ngClass]="{ 'm-bar-button-expanded': opened }"
 >
   <m-tooltip>
-    <i m-tooltip--anchor [hidden]="inProgress" class="material-icons m-overgrown-material-icon">share</i>
+    <i
+      m-tooltip--anchor
+      [hidden]="inProgress"
+      class="material-icons m-overgrown-material-icon"
+      >share</i
+    >
     <ng-container i18n="@@M__ACTION__SHARE">Share</ng-container>
   </m-tooltip>
-  <div *ngIf="inProgress" class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  <div
+    *ngIf="inProgress"
+    class="mdl-spinner mdl-js-spinner is-active"
+    [mdl]
+  ></div>
 </a>

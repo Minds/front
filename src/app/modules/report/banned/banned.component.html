@@ -1,15 +1,12 @@
 <div class="m-page m-page--wrapped">
-    <div class="m-page__main">
-        <h2>Account Banned</h2>
-        <p>Your account has been banned for {{ reason }}.</p>
+  <div class="m-page__main">
+    <h2>Account Banned</h2>
+    <p>Your account has been banned for {{ reason }}.</p>
 
-        <ng-container *ngIf="appeals">
-          <div *ngFor="let appeal of appeals" class="m-banned__appeals">
-              <m-moderation__appeal
-                [appeal]="appeal"
-              >
-              </m-moderation__appeal>
-          </div>
-        </ng-container>
-    </div>
+    <ng-container *ngIf="appeals">
+      <div *ngFor="let appeal of appeals" class="m-banned__appeals">
+        <m-moderation__appeal [appeal]="appeal"> </m-moderation__appeal>
+      </div>
+    </ng-container>
+  </div>
 </div>

@@ -1,0 +1,61 @@
+.plyr video {
+  height: 100%;
+}
+
+[class*='m-videoPlayer__notice'] {
+  display: block;
+  height: auto;
+  line-height: normal;
+  padding: 16px;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  box-sizing: border-box;
+
+  @include m-theme() {
+    color: themed($m-white);
+    @include m-theme() {
+      background: linear-gradient(
+        rgba(themed($m-black-always), 0.5),
+        rgba(themed($m-black-always), 0)
+      );
+      color: themed($m-white-always);
+    }
+  }
+}
+
+m-videoPlayer {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.m-videoPlayer__placeholder {
+  height: 330px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #222;
+  position: relative;
+  i {
+    opacity: 0.8;
+    display: block;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 100px;
+    position: absolute;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      color: themed($m-white-always);
+      text-shadow: 0 0 3px rgba(themed($m-black-always), 0.6);
+    }
+  }
+  &:hover {
+    i {
+      opacity: 1;
+    }
+  }
+}

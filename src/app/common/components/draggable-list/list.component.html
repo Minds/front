@@ -1,0 +1,42 @@
+<div
+  class="m-draggableList__listItem m-draggableList__listHeader"
+  *ngIf="headers"
+  (click)="clickedHeaderRow($event)"
+>
+  <ng-container *ngFor="let header of headers">
+    <div class="m-draggableList__cell">{{ header | titlecase }}</div>
+  </ng-container>
+  <div class="m-draggableList__cell"></div>
+</div>
+
+<ul
+  dndDropzone
+  [dndHorizontal]="false"
+  [dndEffectAllowed]="dndEffectAllowed"
+  (dndStart)="dragging = true"
+  (dndDrop)="onDrop($event)"
+  class="m-draggableList__list"
+  [ngClass]="{ dragging: dragging }"
+>
+  <div class="dndPlaceholder" dndPlaceholderRef></div>
+
+  <li
+    *ngFor="let item of data; let i = index; trackBy: trackByFunction"
+    [dndDraggable]="item"
+    [dndEffectAllowed]="'move'"
+    [dndDragImageOffsetFunction]="dragImageOffsetRight"
+    [dndDisableIf]="disabled"
+    class="m-draggableList__listItem"
+  >
+    <ng-container
+      [ngTemplateOutlet]="template"
+      [ngTemplateOutletContext]="{ item: item, i: i }"
+    ></ng-container>
+    <div class="m-draggableList__cell">
+      <i class="handle material-icons" dndHandle>open_with</i>
+      <i class="material-icons" (click)="removeItem(i)">
+        clear
+      </i>
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,68 @@
+m-pageLayout {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  min-height: 100%;
+  padding: 56px 0 48px 0;
+  @include m-theme() {
+    background-color: themed($m-white);
+    color: themed($m-grey-800);
+  }
+  &.isForm {
+    min-height: 0px;
+  }
+
+  .m-tooltip {
+    margin-left: 4px;
+    i {
+      font-size: 12px;
+      @include m-theme() {
+        color: rgba(themed($m-grey-300), 0.7);
+      }
+    }
+    .m-tooltip--bubble {
+      z-index: 99;
+      font-size: 11px;
+      @include m-theme() {
+        color: themed($m-white);
+        background-color: themed($m-blue);
+      }
+    }
+  }
+}
+m-sidebarMenu {
+  display: block;
+  box-sizing: border-box;
+  width: 245px;
+  padding-left: 20px;
+  @include m-theme() {
+    background-color: themed($m-white);
+  }
+}
+.m-pageLayout__main {
+  margin-left: 25%;
+  margin-right: 24px;
+
+  @include m-theme() {
+    background-color: themed($m-white);
+    color: themed($m-grey-800);
+  }
+}
+
+@media screen and (max-width: $min-tablet) {
+  m-pageLayout {
+    &.isForm {
+      padding-bottom: 0px;
+    }
+  }
+
+  .m-pageLayout__main {
+    display: block;
+    margin: 0;
+  }
+  m-sidebarMenu {
+    margin-left: 0;
+  }
+}

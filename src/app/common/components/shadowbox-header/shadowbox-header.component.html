@@ -1,0 +1,37 @@
+<section class="m-shadowboxHeader__section">
+  <div class="m-shadowboxHeader__wrapper">
+    <ng-container *ngIf="isScrollable">
+      <div
+        *ngIf="isOverflown && !isAtScrollStart"
+        class="m-shadowboxHeader__overflowFade--left"
+      ></div>
+      <div
+        [ngClass]="{ showButton: showButton.left }"
+        class="m-shadowboxHeader__overflowScrollButton--left"
+        (click)="slide('left')"
+      >
+        <i class="material-icons">chevron_left</i>
+      </div>
+    </ng-container>
+    <div
+      #shadowboxHeaderContainer
+      class="m-shadowboxHeader__container disable-scrollbars"
+      (scroll)="onScroll($event)"
+    >
+      <ng-content select=".m-shadowboxLayout__header"></ng-content>
+    </div>
+    <ng-container *ngIf="isScrollable">
+      <div
+        *ngIf="isOverflown && !isAtScrollEnd"
+        class="m-shadowboxHeader__overflowFade--right"
+      ></div>
+      <div
+        [ngClass]="{ showButton: showButton.right }"
+        class="m-shadowboxHeader__overflowScrollButton--right"
+        (click)="slide('right')"
+      >
+        <i class="material-icons">chevron_right</i>
+      </div>
+    </ng-container>
+  </div>
+</section>

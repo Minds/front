@@ -1,11 +1,12 @@
 <m-dropdown *ngIf="showMenu" #dropdown>
   <label>
-      <span
-        class="m-topbar--navigation--item m-topbar--hashtags--hashtag"
-        i18n="@@MINDS__HASHTAGS__TOPBAR__ALL">
-          #hashtags
-        <i class="material-icons">arrow_drop_down</i>
-      </span>
+    <span
+      class="m-topbar--navigation--item m-topbar--hashtags--hashtag"
+      i18n="@@MINDS__HASHTAGS__TOPBAR__ALL"
+    >
+      #hashtags
+      <i class="material-icons">arrow_drop_down</i>
+    </span>
   </label>
 
   <ul class="m-dropdown--list">
@@ -14,20 +15,19 @@
         class="m-topbar--navigation--item m-topbar--hashtags--hashtag m-topbar--hashtags--hashtag--all"
         [class.m-topbar--hashtags--hashtag--selected]="all && enabled"
         i18n="@@MINDS__HASHTAGS__TOPBAR__ALL"
-        (click)="toggleAll()">
+        (click)="toggleAll()"
+      >
         #all
       </span>
     </li>
-    <li class="m-dropdown--list--item"
-      *ngFor="let hashtag of hashtags"
-    >
+    <li class="m-dropdown--list--item" *ngFor="let hashtag of hashtags">
       <span
         class="m-topbar--navigation--item m-topbar--hashtags--hashtag"
         [class.m-topbar--hashtags--hashtag--disabled]="all || !enabled"
         [class.m-topbar--hashtags--hashtag--selected]="hashtag.selected && !all"
         (click)="toggleHashtag(hashtag)"
       >
-        #{{hashtag.value}}
+        #{{ hashtag.value }}
       </span>
     </li>
     <li class="m-dropdown--list--item">
@@ -37,7 +37,10 @@
         (click)="openModal()"
       >
         MORE
-        <m-tooltip icon="help" i18n="@@MINDS__HASHTAGS__TOPBAR__SUGGESTED_MORE_TOOLTIP">
+        <m-tooltip
+          icon="help"
+          i18n="@@MINDS__HASHTAGS__TOPBAR__SUGGESTED_MORE_TOOLTIP"
+        >
           Select the hashtags you wish to see more often
         </m-tooltip>
       </span>
@@ -50,24 +53,31 @@
     class="m-topbar--navigation--item m-topbar--hashtags--hashtag m-topbar--hashtags--hashtag--all"
     [class.m-topbar--hashtags--hashtag--selected]="all && enabled"
     i18n="@@MINDS__HASHTAGS__TOPBAR__ALL"
-    (click)="toggleAll()">
+    (click)="toggleAll()"
+  >
     #all
   </span>
 
-  <span *ngFor="let hashtag of hashtags"
+  <span
+    *ngFor="let hashtag of hashtags"
     class="m-topbar--navigation--item m-topbar--hashtags--hashtag"
     [class.m-topbar--hashtags--hashtag--disabled]="all || !enabled"
     [class.m-topbar--hashtags--hashtag--selected]="hashtag.selected && !all"
-    (click)="toggleHashtag(hashtag)">
-    #{{hashtag.value}}
+    (click)="toggleHashtag(hashtag)"
+  >
+    #{{ hashtag.value }}
   </span>
 
   <span
     class="m-topbar--navigation--item m-topbar--hashtags--select-more"
     i18n="@@MINDS__NEWSFEED__TOPBAR__SUGGESTED_MORE"
-    (click)="openModal()">
+    (click)="openModal()"
+  >
     MORE
-    <m-tooltip icon="help" i18n="@@MINDS__HASHTAGS__TOPBAR__SUGGESTED_MORE_TOOLTIP">
+    <m-tooltip
+      icon="help"
+      i18n="@@MINDS__HASHTAGS__TOPBAR__SUGGESTED_MORE_TOOLTIP"
+    >
       Select the hashtags you wish to see more often
     </m-tooltip>
   </span>

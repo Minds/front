@@ -4,23 +4,26 @@ import {
   Component,
   ComponentFactoryResolver,
   OnInit,
-  ViewChild
-} from "@angular/core";
-import { Session } from "../../../services/session";
-import { DynamicHostDirective } from "../../directives/dynamic-host.directive";
-import { NotificationsToasterComponent } from "../../../modules/notifications/toaster.component";
-import { ThemeService } from "../../../common/services/theme.service";
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
+import { Session } from '../../../services/session';
+import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
+import { NotificationsToasterComponent } from '../../../modules/notifications/toaster.component';
+import { ThemeService } from '../../../common/services/theme.service';
 
 @Component({
   selector: 'm-v2-topbar',
   templateUrl: 'v2-topbar.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class V2TopbarComponent implements OnInit {
+export class V2TopbarComponent implements OnInit, OnDestroy {
   minds = window.Minds;
   timeout;
+  isTouchScreen = false;
 
-  @ViewChild(DynamicHostDirective) notificationsToasterHost: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true })
+  notificationsToasterHost: DynamicHostDirective;
 
   componentRef;
   componentInstance: NotificationsToasterComponent;
@@ -30,8 +33,7 @@ export class V2TopbarComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     protected componentFactoryResolver: ComponentFactoryResolver
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.loadComponent();
@@ -43,7 +45,9 @@ export class V2TopbarComponent implements OnInit {
   }
 
   loadComponent() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(NotificationsToasterComponent),
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(
+        NotificationsToasterComponent
+      ),
       viewContainerRef = this.notificationsToasterHost.viewContainerRef;
 
     viewContainerRef.clear();
@@ -57,10 +61,16 @@ export class V2TopbarComponent implements OnInit {
     this.cd.detectChanges();
   }
 
+  touchStart() {
+    this.isTouchScreen = true;
+  }
+
   mouseEnter() {
     if (this.session.isLoggedIn()) {
       this.timeout = setTimeout(() => {
-        this.themeService.toggleUserThemePreference();
+        if (!this.isTouchScreen) {
+          this.themeService.toggleUserThemePreference();
+        }
       }, 5000);
     }
   }
@@ -70,8 +80,8 @@ export class V2TopbarComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.timeout)
+    if (this.timeout) {
       clearTimeout(this.timeout);
+    }
   }
-
 }

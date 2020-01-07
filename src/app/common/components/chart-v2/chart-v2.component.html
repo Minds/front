@@ -1,0 +1,87 @@
+<div
+  #chartContainer
+  class="m-chartV2__chartContainer"
+  [ngClass]="{ isTouchDevice: isTouchDevice, isMini: isMini }"
+>
+  <plotly-plot
+    *ngIf="init"
+    [data]="data"
+    [layout]="layout"
+    [config]="config"
+    [useResizeHandler]="true"
+    [style]="{ position: 'relative' }"
+    (hover)="onHover($event)"
+    (unhover)="onUnhover($event)"
+    id="graphDiv"
+  >
+  </plotly-plot>
+</div>
+<div #hoverInfoDiv class="m-chartV2__hoverInfoDiv">
+  <i
+    *ngIf="isTouchDevice"
+    class="material-icons m-chartV2__hoverInfo__closeBtn"
+    (click)="onUnhover($event)"
+    >close</i
+  >
+  <div class="m-chartV2__hoverInfo__wrapper">
+    <div class="m-chartV2__hoverInfo__arrowContainer" *ngIf="isMini">
+      <i class="material-icons">arrow_upward</i>
+    </div>
+    <div class="m-chartV2__hoverInfo__rowsContainer">
+      <div class="m-chartV2__hoverInfo__row">
+        {{ hoverInfo.date | utcDate | date: datePipe }}
+      </div>
+      <div
+        *ngFor="let value of hoverInfo.values"
+        class="m-chartV2__hoverInfo__row--primary"
+      >
+        <span
+          class="m-chartV2__hoverInfoRow__hex"
+          [style.background-color]="value.color"
+        ></span>
+        <ng-container [ngSwitch]="rawData?.unit">
+          <ng-template ngSwitchCase="number">
+            {{ value.value | number: '1.0-0' | abbr }}
+            {{ value.label | lowercase }}
+          </ng-template>
+          <ng-template ngSwitchCase="usd">
+            {{ value.value | currency }} USD
+          </ng-template>
+          <ng-template ngSwitchCase="eth">
+            {{ value.value | number: '1.3-3' }} ETH
+          </ng-template>
+          <ng-template ngSwitchCase="tokens">
+            {{ value.value | number: '1.1-3' }} Tokens
+          </ng-template>
+          <ng-template ngSwitchDefault>
+            {{ value.value | number: '1.0-3' }} {{ rawData?.unit }}
+          </ng-template>
+        </ng-container>
+      </div>
+      <div class="m-chartV2__hoverInfo__row" *ngIf="isComparison">
+        vs
+        <ng-container
+          [ngSwitch]="rawData?.unit"
+          class="m-chartV2__hoverInfo__row"
+        >
+          <ng-template ngSwitchCase="number">
+            {{ hoverInfo.comparisonValue | number: '1.0-0' | abbr }}
+          </ng-template>
+          <ng-template ngSwitchCase="usd">
+            {{ hoverInfo.comparisonValue | currency }}
+          </ng-template>
+          <ng-template ngSwitchCase="eth">
+            {{ hoverInfo.value | number: '1.3-3' }} ETH
+          </ng-template>
+          <ng-template ngSwitchCase="tokens">
+            {{ hoverInfo.value | number: '1.1-3' }} Tokens
+          </ng-template>
+          <ng-template ngSwitchDefault>
+            {{ hoverInfo.comparisonValue | number: '1.1-3' }}
+          </ng-template>
+        </ng-container>
+        on {{ hoverInfo.comparisonDate | utcDate | date: datePipe }}
+      </div>
+    </div>
+  </div>
+</div>

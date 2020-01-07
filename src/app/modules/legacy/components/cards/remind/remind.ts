@@ -1,19 +1,34 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
+
+import { Router } from '@angular/router';
 
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
+import { ActivityService } from '../../../../../common/services/activity.service';
+import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
+import { MediaModalComponent } from '../../../../media/modal/modal.component';
+import { FeaturesService } from '../../../../../services/features.service';
+import isMobile from '../../../../../helpers/is-mobile';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-remind',
   inputs: ['object', '_events: events'],
+  providers: [ActivityService],
   templateUrl: '../activity/activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class Remind {
-
   minds = window.Minds;
 
   activity: any;
@@ -32,12 +47,22 @@ export class Remind {
   isTranslatable: boolean = false;
   menuOptions: any = [];
   canDelete: boolean = false;
+  videoDimensions: Array<any> = null;
+
+  @Output('matureVisibilityChange') onMatureVisibilityChange: EventEmitter<
+    any
+  > = new EventEmitter<any>();
+
+  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   constructor(
     public session: Session,
     public client: Client,
     public attachment: AttachmentService,
-    private changeDetectorRef: ChangeDetectorRef
+    private changeDetectorRef: ChangeDetectorRef,
+    private overlayModal: OverlayModalService,
+    private router: Router,
+    protected featuresService: FeaturesService
   ) {
     this.hideTabs = true;
   }
@@ -65,17 +90,20 @@ export class Remind {
     this.activity.boosted = this.boosted;
 
     if (
-      this.activity.custom_type == 'batch' 
-      && this.activity.custom_data 
-      && this.activity.custom_data[0].src
+      this.activity.custom_type == 'batch' &&
+      this.activity.custom_data &&
+      this.activity.custom_data[0].src
     ) {
-      this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(this.minds.site_url, this.minds.cdn_url);
+      this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(
+        this.minds.site_url,
+        this.minds.cdn_url
+      );
     }
   }
 
   getOwnerIconTime() {
     let session = this.session.getLoggedInUser();
-    if(session && session.guid === this.activity.ownerObj.guid) {
+    if (session && session.guid === this.activity.ownerObj.guid) {
       return session.icontime;
     } else {
       return this.activity.ownerObj.icontime;
@@ -104,15 +132,88 @@ export class Remind {
     return;
   }
 
-  save() { /* NOOP */ }
+  save() {
+    /* NOOP */
+  }
 
-  openComments() { /* NOOP */ }
+  isPending(activity) {
+    return activity && activity.pending && activity.pending !== '0';
+  }
 
-  showBoost() { /* NOOP */ }
+  isScheduled(time_created) {
+    return false;
+  }
 
-  showWire() { /* NOOP */ }
+  openComments() {
+    /* NOOP */
+  }
 
-  togglePin() { /* NOOP */ }
+  showBoost() {
+    /* NOOP */
+  }
 
-  menuOptionSelected(e) { /* NOOP */ }
+  showWire() {
+    /* NOOP */
+  }
+
+  togglePin() {
+    /* NOOP */
+  }
+
+  menuOptionSelected(e) {
+    /* NOOP */
+  }
+
+  toggleMatureVisibility() {
+    this.activity.mature_visibility = !this.activity.mature_visibility;
+
+    this.onMatureVisibilityChange.emit();
+  }
+
+  setVideoDimensions($event) {
+    this.videoDimensions = $event.dimensions;
+    this.activity.custom_data.dimensions = this.videoDimensions;
+  }
+
+  setImageDimensions() {
+    const img: HTMLImageElement = this.batchImage.nativeElement;
+    this.activity.custom_data[0].width = img.naturalWidth;
+    this.activity.custom_data[0].height = img.naturalHeight;
+  }
+
+  clickedImage() {
+    const isNotTablet = Math.min(screen.width, screen.height) < 768;
+    const pageUrl = `/media/${this.activity.entity_guid}`;
+
+    if (isMobile() && isNotTablet) {
+      this.router.navigate([pageUrl]);
+    }
+
+    if (!this.featuresService.has('media-modal')) {
+      this.router.navigate([pageUrl]);
+    } else {
+      // Canary
+      if (
+        this.activity.custom_data[0].width === '0' ||
+        this.activity.custom_data[0].height === '0'
+      ) {
+        this.setImageDimensions();
+      }
+      this.openModal();
+    }
+  }
+
+  openModal() {
+    this.activity.modal_source_url = this.router.url;
+
+    this.overlayModal
+      .create(
+        MediaModalComponent,
+        { entity: this.activity },
+        {
+          class: 'm-overlayModal--media',
+        }
+      )
+      .present();
+  }
 }

@@ -1,4 +1,4 @@
-export const webtorrentServiceMock = new function () {
+export const webtorrentServiceMock = new (function() {
   this.isEnabled = () => false;
   this.setUp = () => {};
   this.destroy = () => {};
@@ -12,4 +12,4 @@ export const webtorrentServiceMock = new function () {
   this.remove = () => {};
   this.get = () => {};
   this.purge = () => {};
-};
+})();

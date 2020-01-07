@@ -34,7 +34,7 @@ m-jurydutysession__summons .m-modal-container {
   }
 
   .m-juryDutySession__content {
-      margin-top: 24px;
+    margin-top: 24px;
   }
 }
 
@@ -45,7 +45,7 @@ m-jurydutysession__summons .m-modal-container {
     font-weight: 600;
     font-size: 24px;
     @include m-theme() {
-        color: themed($m-grey-300);
+      color: themed($m-grey-300);
     }
   }
 }

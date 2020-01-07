@@ -1,18 +1,59 @@
-<section class="m-video-banner">
-  <div class="video">
-    <video autoplay muted loop poster="{{minds.cdn_assets_url}}assets/videos/earth-1/earth-1.png" *ngIf="flags.canPlayInlineVideos">
-      <!--<source src="assets/videos/traffic-1/traffic-1.webm" type="video/webm">
-      <source src="assets/videos/traffic-1/traffic-1.mp4" type="video/mp4">-->
-      <source src="{{minds.cdn_assets_url}}assets/videos/earth-1/earth-1.webm" type="video/webm">
-      <source src="{{minds.cdn_assets_url}}assets/videos/earth-1/earth-1.mp4" type="video/mp4">
+<section class="m-register--hero">
+  <div class="m-register--hero--video">
+    <video autoplay muted loop *ngIf="!videoError; else fallback">
+      <source
+        [src]="minds.cdn_assets_url + 'assets/videos/what-1/what-1.mp4'"
+        type="video/mp4"
+        (error)="onSourceError()"
+      />
     </video>
+    <ng-template #fallback>
+      <img [src]="minds.cdn_assets_url + 'assets/photos/cover.png'" />
+    </ng-template>
   </div>
-  <div class="overlay overlay--0.6">
-    <div class="" style="max-width:400px">
-      <div class="mdl-color-text--white">
-        <h3 i18n="@@M__COMMON__START_A_CHANNEL">Not on Minds? Start a channel</h3>
-      </div>
-      <minds-form-register (done)="registered()" [referrer]="referrer"></minds-form-register>
+  <div class="m-register--hero--inner">
+    <div class="m-register--hero--overlay"></div>
+    <div class="m-register--hero--slogans">
+      <h1 i18n="@@M__SOCIAL_NETWORK_SLOGAN">Where minds gather</h1>
+      <h3 i18n="@@MINDS__HOME__register__LAUNCH_CTA">
+        The leading open source social network for Internet freedom. Earn crypto
+        and free promotion for your contributions.
+      </h3>
+    </div>
+
+    <div class="m-register--signup" [hidden]="session.isLoggedIn()">
+      <minds-form-register
+        (done)="registered()"
+        [referrer]="referrer"
+        parentId="/register"
+      ></minds-form-register>
     </div>
   </div>
 </section>
+
+<div class="mdl-grid mdl-grid--no-spacing m-register--footer">
+  <section class="mdl-cell mdl-cell--12-col m-footer">
+    <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" />
+    <ul class="m-footer-nav m-footer-nav-inline">
+      <li
+        *ngFor="let page of navigation.getItems('footer')"
+        class="m-footer-nav-item "
+      >
+        <a
+          *ngIf="page.path && page.path.indexOf('p/') > -1"
+          [routerLink]="[page.path]"
+          >{{ page.title }}</a
+        >
+        <a
+          *ngIf="page.path.indexOf('p/') < 0"
+          [href]="page.path"
+          target="_blank"
+          >{{ page.title }}</a
+        >
+      </li>
+    </ul>
+    <span class="copyright" i18n="@@M__COMMON__COPYRIGHT_YEAR"
+      >&#169; Minds {{ '2019' }}</span
+    >
+  </section>
+</div>

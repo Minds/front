@@ -1,0 +1,40 @@
+m-poster-date-selector {
+  .m-poster-date-selector__label {
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    align-self: center;
+    font-size: 12px;
+  }
+
+  .m-poster-date-selector__input {
+    align-items: center;
+    margin-right: -4px;
+
+    input {
+      font-size: 12px;
+      text-transform: uppercase;
+      background-color: transparent;
+      padding: 8px 0;
+      border: none;
+      text-align: center;
+      width: auto;
+      height: auto;
+      align-self: center;
+    }
+
+    i {
+      vertical-align: middle;
+      cursor: pointer;
+    }
+  }
+
+  m-tooltip .m-tooltip--bubble {
+    width: 125px;
+  }
+}
+
+@media screen and (max-height: 570px) {
+  div.c-datepicker {
+    min-height: 560px;
+  }
+}

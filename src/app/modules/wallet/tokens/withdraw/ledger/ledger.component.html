@@ -1,41 +1,83 @@
 <div class="m-token--ledger">
-  <div class="m-token-rewards--ledger-filters m-border" *ngIf="!preview; else previewHeader">
-    <m-date-selector label="From:" i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__FROM" [date]="startDate" (dateChange)="onStartDateChange($event)"
-      dateFormat="shortDate"></m-date-selector>
-    <m-date-selector label="To:" i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__TO" [date]="endDate" (dateChange)="onEndDateChange($event)"
-      dateFormat="shortDate"></m-date-selector>
+  <div
+    class="m-token-rewards--ledger-filters m-border"
+    *ngIf="!preview; else previewHeader"
+  >
+    <m-date-selector
+      label="From:"
+      i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__FROM"
+      [date]="startDate"
+      (dateChange)="onStartDateChange($event)"
+      dateFormat="shortDate"
+    ></m-date-selector>
+    <m-date-selector
+      label="To:"
+      i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__TO"
+      [date]="endDate"
+      (dateChange)="onEndDateChange($event)"
+      dateFormat="shortDate"
+    ></m-date-selector>
   </div>
   <ng-template #previewHeader>
-    <div class="m-token--ledger-filters m-token--ledger-filters--preview m-border">
+    <div
+      class="m-token--ledger-filters m-token--ledger-filters--preview m-border"
+    >
       <div class="m-token--ledger--date-selectors">
-        <m-date-selector label="From:" i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__FROM" [date]="startDate" (dateChange)="onStartDateChange($event)" dateFormat="shortDate"></m-date-selector>
-        <m-date-selector label="To:" i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__TO" [date]="endDate" (dateChange)="onEndDateChange($event)" dateFormat="shortDate"></m-date-selector>
+        <m-date-selector
+          label="From:"
+          i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__FROM"
+          [date]="startDate"
+          (dateChange)="onStartDateChange($event)"
+          dateFormat="shortDate"
+        ></m-date-selector>
+        <m-date-selector
+          label="To:"
+          i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__TO"
+          [date]="endDate"
+          (dateChange)="onEndDateChange($event)"
+          dateFormat="shortDate"
+        ></m-date-selector>
       </div>
     </div>
   </ng-template>
 
-  <div class="m-token--ledger--reward m-border" *ngFor="let withdrawal of withdrawals">
+  <div
+    class="m-token--ledger--reward m-border"
+    *ngFor="let withdrawal of withdrawals"
+  >
     <div class="m-token--ledger--reward-amount">
-        <span class="m-token--ledger--reward-amount--positive">
-          {{ withdrawal.amount | token:18 | number }}
-        </span>
+      <span class="m-token--ledger--reward-amount--positive">
+        {{ withdrawal.amount | token: 18 | number }}
+      </span>
     </div>
 
     <div class="m-token--ledger--reward-details">
-      <p *ngIf="withdrawal.completed; else withdrawPending" i18n="@@WALLET__TOKENS__WITHDRAW__LEDGER__COMPLETED_LABEL">
-        COMPLETED | 
-        <a class="m-token--ledger--completed-hash" target="_blank" [href]="'https://etherscan.io/tx/' + withdrawal.completed_tx">
-          {{withdrawal.completed_tx}}
+      <p
+        *ngIf="withdrawal.completed; else withdrawPending"
+        i18n="@@WALLET__TOKENS__WITHDRAW__LEDGER__COMPLETED_LABEL"
+      >
+        COMPLETED |
+        <a
+          class="m-token--ledger--completed-hash"
+          target="_blank"
+          [href]="'https://etherscan.io/tx/' + withdrawal.completed_tx"
+        >
+          {{ withdrawal.completed_tx }}
         </a>
       </p>
-      <ng-template #withdrawPending i18n="@@WALLET__TOKENS__WITHDRAW__LEDGER__PENDING_LABEL">
-        PENDING
+      <ng-template
+        #withdrawPending
+        i18n="@@WALLET__TOKENS__WITHDRAW__LEDGER__PENDING_LABEL"
+      >
+        {{ withdrawal.status.replace('_', ' ') | uppercase }}
       </ng-template>
 
       <div class="mdl-layout-spacer"></div>
 
       <i class="material-icons">access_time</i>
-      <p class="ts">{{ withdrawal.timestamp * 1000 | utcDate | date: 'mediumDate' }}</p>
+      <p class="ts">
+        {{ withdrawal.timestamp * 1000 | utcDate | date: 'mediumDate' }}
+      </p>
     </div>
   </div>
 </div>
@@ -44,5 +86,6 @@
   distance="25%"
   (load)="load(false)"
   [moreData]="moreData"
-  [inProgress]="inProgress">
+  [inProgress]="inProgress"
+>
 </infinite-scroll>

@@ -1,0 +1,24 @@
+<m-shadowboxHeader
+  *ngIf="hasHeader"
+  [isScrollable]="scrollableHeader"
+  [ngClass]="{ isScrollable: scrollableHeader }"
+>
+  <ng-content
+    select=".m-shadowboxLayout__header"
+    ngProjectAs=".m-shadowboxLayout__header"
+  ></ng-content>
+  ></m-shadowboxHeader
+>
+
+<div *ngIf="!isForm" class="m-shadowboxLayout__bottom">
+  <ng-content select=".m-shadowboxLayout__body"></ng-content>
+  <ng-content select=".m-shadowboxLayout__footer"></ng-content>
+</div>
+
+<ng-container *ngIf="isForm">
+  <ng-content
+    class="m-shadowboxLayout__bottom"
+    select=".m-shadowboxLayout__bottom"
+  >
+  </ng-content>
+</ng-container>

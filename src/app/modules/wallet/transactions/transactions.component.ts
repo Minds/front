@@ -7,16 +7,18 @@ import { Session } from '../../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'm-wallet-transactions',
-  templateUrl: 'transactions.component.html'
+  templateUrl: 'transactions.component.html',
 })
-
 export class WalletTransactionsComponent {
-
   type: string = '';
   togglePurchase: boolean = false;
   paramsSubscription: Subscription;
 
-  constructor(public session: Session, private route: ActivatedRoute, private router: Router, ) { }
+  constructor(
+    public session: Session,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.type = 'points';
@@ -31,13 +33,11 @@ export class WalletTransactionsComponent {
     });
 
     this.route.url.subscribe(url => {
-      if (url[0].path === 'purchase')
-        this.togglePurchase = true;
+      if (url[0].path === 'purchase') this.togglePurchase = true;
     });
   }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
   }
-
 }
