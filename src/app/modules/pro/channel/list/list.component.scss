@@ -88,6 +88,11 @@ m-pro--channel-list {
       grid-template-columns: 100%;
     }
 
+    > * {
+      min-width: 0;
+      min-height: 0;
+    }
+
     &.m-proChannelListContent__normalList {
       grid-template-columns: 100%;
 
