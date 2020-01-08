@@ -51,6 +51,11 @@ m-proChannel__home {
     @media screen and (max-width: $max-mobile) {
       width: 100%;
     }
+
+    > * {
+      min-width: 0;
+      min-height: 0;
+    }
   }
 
   .m-proChannelHome__featuredContent {
