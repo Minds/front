@@ -168,45 +168,11 @@ m-overlay-modal {
   vertical-align: middle;
 
   .m-mediaModal__media--image,
-  m-video {
+  m-videoPlayer {
     display: inline-block;
     max-height: 100%;
     max-width: 100%;
     vertical-align: top;
-  }
-
-  m-video {
-    position: static;
-
-    video {
-      width: 100%;
-      height: 100%;
-    }
-
-    .minds-video-bar-full {
-      .m-video--progress-bar {
-        padding-right: 0;
-      }
-
-      .m-video--volume-control-wrapper {
-        margin-right: 16px;
-      }
-    }
-    .minds-video-play-icon {
-      transform: none;
-      width: auto;
-      top: unquote('-webkit-calc(50% - 50px)');
-      left: unquote('-webkit-calc(50% - 50px)');
-      top: unquote('-moz-calc(50% - 50px)');
-      left: unquote('-moz-calc(50% - 50px)');
-      top: unquote('calc(50% - 50px)');
-      left: unquote('calc(50% - 50px)');
-    }
-    m-video--progress-bar {
-      .progress-bar {
-        margin-right: 8px;
-      }
-    }
   }
 
   &.m-mediaModal__mediaWrapper--blog {

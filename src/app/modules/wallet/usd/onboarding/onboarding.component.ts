@@ -58,8 +58,8 @@ export class WalletUSDOnboardingComponent implements OnInit {
       street: ['', optionalFor(['JP'])],
       city: ['', optionalFor(['JP', 'SG'])],
       state: ['', requiredFor(['AU', 'CA', 'IE', 'US'])],
-      postCode: ['', optionalFor(['HK', 'IE', 'JP'])],
-      phoneNumber: ['', requiredFor(['JP'])],
+      postCode: ['', optionalFor(['HK', 'JP'])],
+      phoneNumber: ['', Validators.required],
       stripeAgree: ['', Validators.required],
     });
 

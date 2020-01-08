@@ -8,6 +8,14 @@ m-proSettings {
     padding: 0;
   }
 
+  .m-proSettings__upgradeLink {
+    display: inline;
+    font-weight: bold;
+    color: #4690df;
+    text-decoration: none;
+    margin-bottom: 8px;
+  }
+
   m-tooltip {
     margin-left: 10px;
     .m-tooltip {
@@ -126,6 +134,10 @@ m-proSettings {
     opacity: 0.01;
     top: -1px;
     left: -1px;
+  }
+
+  input[type='text'] {
+    max-height: 42px;
   }
 
   input[type='text'],

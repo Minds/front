@@ -29,7 +29,6 @@ import { map } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
 import { Router } from '@angular/router';
 import { FeaturesService } from '../../../services/features.service';
-import { MindsVideoComponent } from '../../media/components/video/video.component';
 import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
 
@@ -85,7 +84,6 @@ export class CommentComponentV2
 
   canReply = true;
   videoDimensions: Array<any> = null;
-  @ViewChild('player', { static: false }) player: MindsVideoComponent;
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   @Input() canEdit: boolean = false;
