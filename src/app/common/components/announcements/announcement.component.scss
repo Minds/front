@@ -67,4 +67,9 @@ m-announcement {
       }
     }
   }
+
+  .m-announcement__clickable {
+    cursor: pointer;
+    font-weight: bold;
+  }
 }
