@@ -29,6 +29,7 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ChannelSortedModuleComponent } from './sorted/module.component';
 import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
+import { ChannelSidebarV2Component } from './sidebar-v2/sidebar-v2.component';
 
 const routes: Routes = [
   { path: 'channels/:filter', component: ChannelsListComponent },
@@ -62,6 +63,7 @@ const routes: Routes = [
     ChannelsTileComponent,
     ChannelFeedComponent,
     ChannelSidebar,
+    ChannelSidebarV2Component,
     ExplicitOverlayComponent,
     ChannelSortedComponent,
     ChannelSortedModuleComponent,

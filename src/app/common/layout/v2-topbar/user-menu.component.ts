@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Input,
   OnInit,
 } from '@angular/core';
 import { Session } from '../../../services/session';
@@ -16,6 +17,8 @@ import { ReferralsLinksComponent } from '../../../modules/wallet/tokens/referral
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserMenuComponent implements OnInit {
+  @Input() avatarIcon: boolean = false;
+
   isOpen: boolean = false;
 
   minds = window.Minds;

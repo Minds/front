@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
@@ -9,10 +9,8 @@ import { Session } from '../../../services/session';
 })
 export class SidebarNavigationComponent {
   user;
-  items;
 
   constructor(public navigation: NavigationService, public session: Session) {
-    this.items = navigation.getItems('sidebar');
     this.getUser();
   }
 

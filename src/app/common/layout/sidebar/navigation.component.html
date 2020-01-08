@@ -1,33 +1,81 @@
 <nav class="m-sidebar--navigation">
-  <div *ngFor="let item of navigation.getItems()">
-    <a
-      class="m-sidebar--navigation--item"
-      [ngClass]="{ 'm-sidebar--navigation--item-active': item.active }"
-      [routerLink]="[item.path, item.params]"
-      [title]="item.text"
-      *ngIf="
-        item.visibility == 2 ||
-        (item.visibility === 0 && session.isLoggedIn()) ||
-        (item.visibility === -1 && session.isAdmin())
-      "
-    >
-      <i class="material-icons">{{ item.icon }}</i>
-
-      <span class="m-sidebar--navigation--text">{{ item.text }}</span>
-    </a>
-
-    <div *ngFor="let subitem of item.submenus" [hidden]="!item.active">
+  <ul>
+    <li>
       <a
-        class="m-sidebar--navigation--item subitem"
-        [ngClass]="{ 'm-sidebar--navigation--item-active': subitem.active }"
-        [routerLink]="[subitem.path, subitem.params]"
-        [title]="subitem.text"
-        *ngIf="!(!session.isLoggedIn() && subitem.visibility < 2)"
+        class="m-sidebar--navigation--item"
+        [routerLink]="['/newsfeed']"
+        [routerLinkActive]="'m-sidebar--navigation--item-active'"
+        [title]="'Newsfeed'"
       >
-        <i class="material-icons">{{ subitem.icon }}</i>
+        <i class="material-icons">check</i>
 
-        <span class="m-sidebar--navigation--text">{{ subitem.text }}</span>
+        <span class="m-sidebar--navigation--text" i18n>Newsfeed</span>
       </a>
-    </div>
-  </div>
+    </li>
+
+    <li>
+      <a
+        class="m-sidebar--navigation--item"
+        [routerLink]="['/newsfeed/global/top']"
+        [routerLinkActive]="'m-sidebar--navigation--item-active'"
+        [title]="'Discover'"
+      >
+        <i class="material-icons">check</i>
+
+        <span class="m-sidebar--navigation--text" i18n>Discover</span>
+      </a>
+    </li>
+
+    <li>
+      <a
+        class="m-sidebar--navigation--item"
+        [routerLink]="['/wallet']"
+        [routerLinkActive]="'m-sidebar--navigation--item-active'"
+        [title]="'Wallet'"
+      >
+        <i class="material-icons">check</i>
+
+        <span class="m-sidebar--navigation--text" i18n>Wallet</span>
+      </a>
+    </li>
+
+    <li>
+      <a
+        class="m-sidebar--navigation--item"
+        [routerLink]="['/' + user.username]"
+        [routerLinkActive]="'m-sidebar--navigation--item-active'"
+        [title]="'Profile'"
+      >
+        <i class="material-icons">check</i>
+
+        <span class="m-sidebar--navigation--text" i18n>Profile</span>
+      </a>
+    </li>
+
+    <li>
+      <a
+        class="m-sidebar--navigation--item"
+        [routerLink]="['/analytics']"
+        [routerLinkActive]="'m-sidebar--navigation--item-active'"
+        [title]="'Analytics'"
+      >
+        <i class="material-icons">check</i>
+
+        <span class="m-sidebar--navigation--text" i18n>Analytics</span>
+      </a>
+    </li>
+
+    <li>
+      <a
+        class="m-sidebar--navigation--item"
+        [routerLink]="['/settings']"
+        [routerLinkActive]="'m-sidebar--navigation--item-active'"
+        [title]="'Settings'"
+      >
+        <i class="material-icons">check</i>
+
+        <span class="m-sidebar--navigation--text" i18n>Settings</span>
+      </a>
+    </li>
+  </ul>
 </nav>

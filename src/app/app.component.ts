@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, HostBinding } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostBinding,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 
 import { NotificationService } from './modules/notifications/notification.service';
 import { AnalyticsService } from './services/analytics';
@@ -28,7 +34,7 @@ import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
   selector: 'm-app',
   templateUrl: 'app.component.html',
 })
-export class Minds {
+export class Minds implements OnInit, OnDestroy {
   name: string;
 
   minds = window.Minds;
@@ -38,6 +44,8 @@ export class Minds {
   showOnboarding: boolean = false;
 
   showTOSModal: boolean = false;
+
+  useNewNavigation: boolean = false;
 
   protected router$: Subscription;
 
@@ -73,6 +81,7 @@ export class Minds {
   }
 
   async ngOnInit() {
+    this.useNewNavigation = this.featuresService.has('navigation-2020');
     try {
       this.diagnostics.setUser(this.minds.user);
       this.diagnostics.listen(); // Listen for user changes

@@ -1,0 +1,79 @@
+m-channel__sidebarv2 {
+  .m-channelSidebar__buttons {
+    display: flex;
+
+    button:first-child {
+      margin-right: 47px;
+    }
+
+    button {
+      font-size: 14px;
+      line-height: 30px;
+      background-color: transparent;
+      border-color: transparent;
+
+      @include m-theme() {
+        color: themed($m-black);
+      }
+    }
+  }
+
+  .m-channelSidebar__stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    a {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      height: 60px;
+
+      @include m-theme() {
+        color: themed($m-black);
+      }
+
+      span {
+        line-height: 30px;
+
+        &.m-channelSidebarStats__title {
+          font-size: 13px;
+        }
+
+        &.m-channelSidebarStats__count {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+
+  .m-channelSidebar__bioFields {
+    //&.m-channelSidebar__bioFields--flex {
+    //  display: flex;
+    //  flex-flow: row wrap;
+    //  align-items: center;
+    //  margin: auto;
+    //  justify-content: center;
+    //}
+
+    .m-channelSidebar__bioField {
+      @include m-theme() {
+        color: themed($m-black);
+      }
+    }
+
+    .m-channelSidebar__city {
+      i.material-icons {
+        font-size: 22px;
+        line-height: 30px;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+
+      span {
+        font-size: 14px;
+        line-height: 30px;
+      }
+    }
+  }
+}
