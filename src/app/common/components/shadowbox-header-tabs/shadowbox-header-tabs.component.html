@@ -16,19 +16,36 @@
       [ngSwitch]="tab?.unit"
     >
       <ng-template ngSwitchCase="tokens">
-        {{ tab.value | token: 18 | number: '1.0-3' }}
+        {{
+          friendlyVals
+            ? (tab.value | number: '1.0-3')
+            : (tab.value | token: 18 | number: '1.0-3')
+        }}
       </ng-template>
       <ng-template ngSwitchCase="eth">
-        {{ tab.value | token: 18 | number: '1.0-3' }}
+        {{
+          friendlyVals
+            ? (tab.value | number: '1.0-3')
+            : (tab.value | token: 18 | number: '1.0-3')
+        }}
       </ng-template>
       <ng-template ngSwitchCase="btc">
-        {{ tab.value | token: 18 | number: '1.0-3' }}
+        {{
+          friendlyVals
+            ? (tab.value | number: '1.0-3')
+            : (tab.value | token: 18 | number: '1.0-3')
+        }}
       </ng-template>
       <ng-template ngSwitchCase="number">
         {{ tab.value | number }}
       </ng-template>
       <ng-template ngSwitchCase="usd">
-        <span>$</span>{{ tab.value / 100 | number: '1.2-2' }}
+        <span>$</span>
+        {{
+          friendlyVals
+            ? (tab.value | number: '1.2-2')
+            : (tab.value / 100 | number: '1.2-2')
+        }}
       </ng-template>
       <ng-template ngSwitchDefault>
         {{ tab.value | number: '1.0-3' }}

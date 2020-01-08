@@ -5,12 +5,12 @@
         <div class="m-walletBalance--tokens__balanceTitle">Token Balance</div>
         <div class="m-walletBalance--tokens__balanceValWrapper">
           <span class="m-walletBalance--tokens__balanceVal--int">{{
-            tokenBalance.int | number
+            tokenBalance.int | number: '1.0-0'
           }}</span
           ><span
             class="m-walletBalance--tokens__balanceVal--frac"
             *ngIf="tokenBalance.frac"
-            >.{{ tokenBalance.frac | token: 15 | number: '3.0-0' }}</span
+            >.{{ tokenBalance.frac }}</span
           >
         </div>
       </div>
@@ -31,12 +31,12 @@
       </div>
       <div class="m-walletBalance--tokens__balanceValWrapper">
         <span class="m-walletBalance--tokens__balanceVal--int">{{
-          offchainBalance.int | number
+          offchainBalance.int | number: '1.0-0'
         }}</span
         ><span
           class="m-walletBalance--tokens__balanceVal--frac"
           *ngIf="offchainBalance.frac"
-          >.{{ offchainBalance.frac | token: 15 | number: '3.0-0' }}</span
+          >.{{ offchainBalance.frac }}</span
         >
         tokens
       </div>
@@ -56,11 +56,17 @@
         ><span
           class="m-walletBalance--tokens__balanceVal--frac"
           *ngIf="onchainBalance.frac"
-          >.{{ onchainBalance.frac | token: 15 | number: '3.0-0' }}</span
+          >.{{ onchainBalance.frac }}</span
         >
         tokens
       </div>
-      <a *ngIf="session.getLoggedInUser().rewards" (click)="showModal = true"
+      <a
+        *ngIf="
+          session.getLoggedInUser().rewards &&
+          wallet.offchain.balance > 0 &&
+          wallet.onchain.address
+        "
+        (click)="showModal = true"
         >Transfer to On-Chain</a
       >
     </div>
@@ -78,8 +84,8 @@
   </div>
   <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
     <m-walletOnchainTransfer
-      [offchainBalance]="offchainBalance.total"
-      [onchainAddress]="wallet.onchain.address"
+      *ngIf="wallet"
+      [wallet]="wallet"
     ></m-walletOnchainTransfer>
   </m-walletModal>
 </ng-container>

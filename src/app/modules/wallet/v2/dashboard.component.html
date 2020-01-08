@@ -15,6 +15,7 @@
             class="m-shadowboxLayout__header"
             [tabs]="currencies"
             [activeTabId]="activeCurrencyId"
+            [friendlyVals]="true"
             (tabChanged)="updateCurrency($event)"
           ></m-shadowboxHeader__tabs>
 
@@ -31,6 +32,11 @@
                 class="m-shadowboxLayout__body"
                 *ngIf="activeCurrencyId === 'tokens'"
               ></m-walletBalance--tokens>
+              <m-walletBalance--usd
+                [wallet]="wallet"
+                class="m-shadowboxLayout__body"
+                *ngIf="activeCurrencyId === 'usd'"
+              ></m-walletBalance--usd>
             </div>
             <div class="m-walletDashboardViews__wrapper">
               <div

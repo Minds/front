@@ -21,8 +21,7 @@ import { FormToastService } from '../../../../common/services/form-toast.service
 enum Views {
   CreateAddress = 1,
   ProvideAddress,
-  UseExternal,
-  currentAddress,
+  CurrentAddress,
 }
 
 @Component({
@@ -35,6 +34,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   @Input() skippable: boolean = true;
   @Output() addressSetupComplete: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
+  linkingMetamask: boolean = false;
   error: string;
   display: Views;
   generatedAccount: any;
@@ -59,15 +59,16 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     private formToastService: FormToastService
   ) {}
 
+  // TODOOJM add fx to reload whenever the current setting is updated
+
   ngOnInit() {
-    //already has an address
-    const currentAddress = this.session.getLoggedInUser().eth_wallet;
-    this.currentAddress = currentAddress || this.wallet.receiver.address;
+    // Check if already has an address
+    this.currentAddress =
+      this.session.getLoggedInUser().eth_wallet || this.wallet.receiver.address;
     if (this.currentAddress) {
-      this.display = Views.currentAddress;
+      this.display = Views.CurrentAddress;
       this.addressSetupComplete.emit();
     }
-
     this.checkExternal();
   }
 
@@ -91,6 +92,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       await this.blockchain.setWallet({
         address: this.generatedAccount.address,
       });
+      this.currentAddress = this.generatedAccount.address;
     } catch (e) {
       console.error(e);
       this.formToastService.error(e);
@@ -111,8 +113,9 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
 
       if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, filename);
-        this.inProgress = false; // TODOOJM
+        this.inProgress = false;
         this.addressSetupComplete.emit();
+        this.detectChanges();
       } else {
         const link = window.document.createElement('a'),
           objectUrl = window.URL.createObjectURL(blob);
@@ -127,10 +130,12 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
         setTimeout(() => {
           URL.revokeObjectURL(objectUrl);
           this.generatedAccount = null;
-          // this.addressSetupComplete.emit(); //TODOOJM
-          this.inProgress = false; // TODOOJM
+          this.addressSetupComplete.emit();
+          this.inProgress = false;
+          this.detectChanges();
         }, 1000);
       }
+      this.display = Views.CurrentAddress;
     } catch (e) {
       console.error(e);
       this.formToastService.error(e);
@@ -138,14 +143,17 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     }
   }
 
-  canProvideAddress() {
-    return (
-      this.providedAddress && /^0x[a-fA-F0-9]{40}$/.test(this.providedAddress)
-    );
+  isAddressFormatValid() {
+    const isAddressValid =
+      this.providedAddress && /^0x[a-fA-F0-9]{40}$/.test(this.providedAddress);
+    if (!isAddressValid) {
+      this.formToastService.error('Invalid address format.');
+    }
+    return isAddressValid;
   }
 
   async provideAddress() {
-    if (!this.canProvideAddress() || this.inProgress) {
+    if (!this.isAddressFormatValid() || this.inProgress) {
       return;
     }
 
@@ -160,6 +168,9 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       console.error(e);
     } finally {
       this.inProgress = false;
+      this.linkingMetamask = false;
+      this.currentAddress = this.providedAddress;
+      this.display = Views.CurrentAddress;
       this.detectChanges();
     }
   }
@@ -183,8 +194,8 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   }
 
   async useExternal() {
+    this.linkingMetamask = true;
     await this.web3Wallet.ready();
-
     this.detectExternal();
 
     this._externalTimer = setInterval(() => {
@@ -193,9 +204,13 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   }
 
   async detectExternal() {
+    console.log('snurgle');
+    console.log(this.web3Wallet.getCurrentWallet(true));
     const address: string =
       (await this.web3Wallet.getCurrentWallet(true)) || '';
 
+    console.log('address', address);
+    console.log('providedaddress', this.providedAddress);
     if (this.providedAddress !== address) {
       this.providedAddress = address;
       this.detectChanges();

@@ -19,12 +19,6 @@ import * as BN from 'bn.js';
 })
 export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   @Input() wallet;
-  constructor(
-    protected client: Client,
-    protected cd: ChangeDetectorRef,
-    protected session: Session,
-    protected walletService: WalletDashboardService
-  ) {}
   tokenBalance;
   offchainBalance;
   onchainBalance;
@@ -35,12 +29,17 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   nextPayout;
   estimatedTokenPayout;
   payoutSubscription: Subscription;
+  constructor(
+    protected client: Client,
+    protected cd: ChangeDetectorRef,
+    protected session: Session,
+    protected walletService: WalletDashboardService
+  ) {}
 
   ngOnInit() {
     this.tokenBalance = this.formatBalance(this.wallet.tokens.balance);
     this.offchainBalance = this.formatBalance(this.wallet.offchain.balance);
     this.onchainBalance = this.formatBalance(this.wallet.onchain.balance);
-
     this.getPayout();
 
     this.inProgress = false;
@@ -83,15 +82,11 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     if (balance <= 0) {
       return formattedBalance;
     }
+    const splitBalance = balance.toString().split('.');
 
-    if (balance.length > 18) {
-      formattedBalance.int = balance.slice(0, -18);
-    }
-    const frac = balance.slice(-18);
+    formattedBalance.int = splitBalance[0];
+    formattedBalance.frac = splitBalance[1];
 
-    if (!new BN(frac).isZero() || frac.slice(0, 3) !== '000') {
-      formattedBalance.frac = frac;
-    }
     return formattedBalance;
   }
 

@@ -52,7 +52,7 @@ m-walletTokenOnboarding {
       font-size: 14px;
       line-height: 19px;
       margin: 0 8px 0 4px;
-      &.phoneVerified {
+      &.stepComplete {
         cursor: default;
         text-decoration: line-through;
         @include m-theme() {

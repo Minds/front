@@ -4,7 +4,7 @@ import { Session } from '../../../services/session';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { BehaviorSubject, Observable } from 'rxjs';
-import * as BN from 'bn.js';
+import toFriendlyCryptoVal from '../../../helpers/friendly-crypto';
 
 import fakeData from './fake-data';
 
@@ -66,24 +66,38 @@ export class WalletDashboardService {
   ) {}
 
   // TODOOJM: make wallet an observable and have the dashboard component subscribe to it
-  // TODOOJM: make functions to
   getWallet() {
     this.getTokenAccounts();
     this.getEthAccount();
     this.getStripeAccount();
 
-    // TODOOJM toggle me
-    // this.wallet = fakeData.wallet;
+    const test1 = toFriendlyCryptoVal('123456789012345678');
+    const test2 = toFriendlyCryptoVal('1234567890123456789999');
+    const test3 = toFriendlyCryptoVal('12345678901234567');
+
+    // TODOOJM toggle me before pushing
+    this.wallet = fakeData.wallet;
+
+    // TODOOJM remove
+    console.log('********');
+    console.log(this.wallet);
+    console.log('********');
 
     this.walletLoaded = true;
+
     return this.wallet;
   }
 
   async getTokenAccounts() {
     await this.loadOffchainAndReceiver();
     await this.loadOnchain();
-    const tokenTypes = ['tokens', 'onchain', 'offchain']; // receiver?
-    // TODOOJM iterate through this.wallet and return walletObj where key matches one of the tokenTypes
+    const tokenTypes = ['tokens', 'onchain', 'offchain', 'receiver'];
+
+    const tokenWallet = {};
+    tokenTypes.forEach(type => {
+      tokenWallet[type] = this.wallet[type];
+    });
+    return tokenWallet;
   }
 
   async loadOffchainAndReceiver() {
@@ -93,16 +107,17 @@ export class WalletDashboardService {
       );
 
       if (response && response.addresses) {
-        this.totalTokens = response.balance;
+        this.totalTokens = toFriendlyCryptoVal(response.balance);
         response.addresses.forEach(address => {
           if (address.label === 'Offchain') {
-            this.wallet.offchain.balance = address.balance;
+            this.wallet.offchain.balance = toFriendlyCryptoVal(address.balance);
           } else if (address.label === 'Receiver') {
-            this.wallet.onchain.balance = address.balance;
-            this.wallet.receiver.balance = address.balance;
+            this.wallet.onchain.balance = toFriendlyCryptoVal(address.balance);
+            this.wallet.receiver.balance = toFriendlyCryptoVal(address.balance);
             this.wallet.receiver.address = address.address;
           }
         });
+        return this.wallet;
       } else {
         console.error('No data');
       }
@@ -124,8 +139,12 @@ export class WalletDashboardService {
       }
 
       const onchainBalance = await this.tokenContract.balanceOf(address);
-      this.wallet.onchain.balance = onchainBalance[0].toString();
-      this.totalTokens = new BN(this.totalTokens).add(onchainBalance[0]);
+      this.wallet.onchain.balance = toFriendlyCryptoVal(
+        onchainBalance[0].toString()
+      );
+      this.wallet.tokens.balance += toFriendlyCryptoVal(
+        this.wallet.onchain.balance
+      );
     } catch (e) {
       console.log(e);
     }
@@ -139,7 +158,7 @@ export class WalletDashboardService {
     this.wallet.eth.address = address;
     const ethBalance = await this.web3Wallet.getBalance(address);
     if (ethBalance) {
-      this.wallet.eth.balance = ethBalance;
+      this.wallet.eth.balance = toFriendlyCryptoVal(ethBalance);
     }
     return this.wallet.eth;
   }
@@ -153,8 +172,9 @@ export class WalletDashboardService {
         );
         if (stripeAccount && stripeAccount.totalBalance) {
           this.wallet.usd.value =
-            stripeAccount.totalBalance.amount +
-            stripeAccount.pendingBalance.amount;
+            (stripeAccount.totalBalance.amount +
+              stripeAccount.pendingBalance.amount) *
+            100;
         }
         return stripeAccount;
       } catch (e) {
@@ -187,7 +207,7 @@ export class WalletDashboardService {
   }
 
   getTokenTransactionTable() {
-    // TODOOJM get this from contributions component
+    // TODOOJM get this from token transactions component
     return fakeData.token_transactions;
   }
 }

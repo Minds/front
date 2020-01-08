@@ -1,0 +1,38 @@
+<div class="m-walletBalance--usd">
+  <div *ngIf="!inProgress" class="m-walletBalance--usd__colContainer">
+    <div class="m-walletBalance--usd__col">
+      <div class="m-walletBalance--usd__colTitle">
+        Pending Balance<m-tooltip icon="help">placeholder</m-tooltip>
+        <div class="m-walletBalance--tokens__colValWrapper">
+          <span class="m-walletBalance--tokens__colVal--int"
+            >${{ pendingBalance.int | number: '1.0-0' }}</span
+          ><span
+            class="m-walletBalance--tokens__colVal--frac"
+            *ngIf="pendingBalance.frac"
+            >.{{ pendingBalance.frac }}</span
+          >
+        </div>
+      </div>
+      <div class="m-walletBalance--usd__colTitle">
+        Total Paid Out<m-tooltip icon="help">placeholder</m-tooltip>
+        <div class="m-walletBalance--tokens__colValWrapper">
+          <span class="m-walletBalance--tokens__colVal--int"
+            >${{ totalPaidOut.int | number: '1.0-0' }}</span
+          ><span
+            class="m-walletBalance--tokens__colVal--frac"
+            *ngIf="totalPaidOut.frac"
+            >.{{ totalPaidOut.frac }}</span
+          >
+        </div>
+      </div>
+      <div class="m-walletBalance--usd__colTitle">
+        Next Payout<m-tooltip icon="help">placeholder</m-tooltip>
+        <div class="m-walletBalance--tokens__colValWrapper">
+          <span class="m-walletBalance--tokens__colVal--int">{{
+            nextPayoutDate
+          }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -63,6 +63,7 @@ import { WalletTokenOnboardingComponent } from './v2/token-onboarding/token-onbo
 import { WalletModalComponent } from './v2/modal/modal.component';
 import { WalletPhoneVerificationComponent } from './v2/phone-verification/phone-verification.component';
 import { WalletOnchainTransferComponent } from './v2/onchain-transfer/onchain-transfer.component';
+import { WalletBalanceUsdV2Component } from './v2/balance-usd/balance-usd.component';
 
 const walletRoutes: Routes = [
   {
@@ -175,7 +176,6 @@ const walletRoutes: Routes = [
     WalletTokenTestnetComponent,
     WalletUSDBalanceComponent,
     WalletDashboardComponent,
-    WalletBalanceTokensV2Component,
     WalletChartComponent,
     WalletRewardsPopupComponent,
     WalletTransactionsTableComponent,
@@ -187,6 +187,8 @@ const walletRoutes: Routes = [
     WalletModalComponent,
     WalletPhoneVerificationComponent,
     WalletOnchainTransferComponent,
+    WalletBalanceTokensV2Component,
+    WalletBalanceUsdV2Component,
   ],
   exports: [
     WalletComponent,

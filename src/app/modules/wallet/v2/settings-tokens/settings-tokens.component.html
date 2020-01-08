@@ -1,8 +1,9 @@
 <div class="m-walletSettings" id="tokenSettings">
   <div class="m-walletSettingsView--setup" *ngIf="!display">
     <h4>
-      On-Chain address
+      On-chain address
     </h4>
+    <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
     <div class="m-walletSettings__setupOptions__recommendation">
       <i class="material-icons">thumb_up</i><span>RECOMMENDED</span>
     </div>
@@ -17,17 +18,44 @@
             MetaMask
           </h2>
         </div>
-        <p>
-          <a href="https://metamask.io/" target="_blank">Install MetaMask</a>
+
+        <p *ngIf="!hasExternal">
+          <a (click)="downloadMetamask()">Install MetaMask</a>
           for the most seamless user experience.
         </p>
-        <m-shadowboxSubmitButton
-          [disabled]="inProgress"
-          [saving]="inProgress"
-          (click)="display = Views.UseExternal; useExternal()"
-        >
-          Link MetaMask
-        </m-shadowboxSubmitButton>
+        <ng-container *ngIf="hasExternal && !linkingMetamask">
+          <p *ngIf="hasExternal">
+            Minds recommends using MetaMask for the most seamless user
+            experience.
+          </p>
+          <m-shadowboxSubmitButton
+            [disabled]="inProgress"
+            [saving]="inProgress"
+            (click)="useExternal()"
+          >
+            Link MetaMask
+          </m-shadowboxSubmitButton>
+        </ng-container>
+        <ng-container *ngIf="linkingMetamask">
+          <p>Please ensure you select the "Main Ethereum Network".</p>
+
+          <p *ngIf="downloadingMetamask">
+            Note: You might need to reload Minds after installing and setting up
+            MetaMask.
+          </p>
+
+          <ng-container *ngIf="hasExternal">
+            <p class="m-walletSettings--tokens--buttons-input">
+              <ng-container *ngIf="providedAddress; else noProvidedAddress">
+                {{ providedAddress }} </ng-container
+              >]
+
+              <ng-template #noProvidedAddress>
+                MetaMask is either locked or connected to another network.
+              </ng-template>
+            </p>
+          </ng-container>
+        </ng-container>
       </li>
 
       <li class="m-walletSettingsView__setupOption--custom">
@@ -46,9 +74,12 @@
           <a (click)="display = Views.ProvideAddress">Use your private key</a>
         </div>
       </li>
-      <p *ngIf="">
-        <a (click)="display = Views.currentAddress"
-          >🚧 Current On-Chain Address 🚧</a
+      <p *ngIf="currentAddress">
+        <a
+          class="m-walletSettings__backButton"
+          (click)="display = Views.CurrentAddress"
+          ><i class="material-icons">❮</i
+          ><span>Back to current address</span></a
         >
       </p>
     </ul>
@@ -89,7 +120,7 @@
         Download Private Key
       </m-shadowboxSubmitButton>
       <a class="m-walletSettings__backButton" (click)="display = null"
-        ><i class="material-icons">arrow_back</i><span>Back</span></a
+        ><i class="material-icons">❮</i><span>Back to settings</span></a
       >
     </li>
 
@@ -133,53 +164,18 @@
         [saving]="inProgress"
         (click)="provideAddress()"
       >
-        Save Address
+        Update on-chain address
       </m-shadowboxSubmitButton>
       <a class="m-walletSettings__backButton" (click)="display = null"
-        ><i class="material-icons">arrow_back</i><span>Back</span></a
+        ><i class="material-icons">❮</i><span>Back to settings</span></a
       >
     </li>
 
     <!---USE EXTERNAL ADDRESS----------------------------------------------->
-    <li
+    <!-- <li
       class="m-walletSettingsView--addressExternal"
       *ngIf="display === Views.UseExternal"
     >
-      <p>
-        🚧 lol 🦊 see
-        <a
-          href="https://gitlab.com/minds/ux-design/ux/issues/27"
-          target="_blank"
-          >UX issue #27</a
-        >
-        🚧
-      </p>
-      <img
-        class="metamask"
-        [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'"
-      />
-      <h2>
-        MetaMask
-      </h2>
-      <p>
-        <ng-container>
-          Please ensure you select the <b>Main Ethereum Network</b>.
-        </ng-container>
-
-        <ng-container *ngIf="downloadingMetamask">
-          <b>
-            Note: After installing and setting up MetaMask you might need to
-            reload Minds.
-          </b>
-        </ng-container>
-      </p>
-
-      <div class="m-walletSettings--tokens--buttons" *ngIf="!hasExternal">
-        <button (click)="downloadMetamask()">
-          Download MetaMask
-        </button>
-      </div>
-
       <div class="m-walletSettings--tokens--buttons" *ngIf="hasExternal">
         <span class="m-walletSettings--tokens--buttons-input">
           <ng-container *ngIf="providedAddress; else noProvidedAddress">
@@ -192,51 +188,36 @@
         </span>
       </div>
       <a class="m-walletSettings__backButton" (click)="display = null"
-        ><i class="material-icons">arrow_back</i><span>Back</span></a
+        ><i class="material-icons">❮</i><span>Back to ...?</span></a
       >
-    </li>
+    </li> -->
 
     <!---CURRENT ADDRESS ----------------------------------------------->
     <li
       class="m-walletSettingsView--addressCurrent"
-      *ngIf="display === Views.currentAddress"
+      *ngIf="display === Views.CurrentAddress"
     >
       <h2>
-        On-Chain Address
+        On-chain Address
       </h2>
-      <p style="margin-bottom: 24px">
-        🚧 WIP! See
-        <a
-          href="https://gitlab.com/minds/ux-design/ux/issues/18"
-          target="_blank"
-          >UX issue #18</a
-        >
-        🚧
+      <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
+
+      <p>
+        Current address
       </p>
-      <div class="m-walletForm__field--text stretchedField">
-        <div class="m-walletForm__row--label">
-          <label for="currentAddress" i18n>Address</label>
-          <m-tooltip icon="help">
-            <ng-container i18n
-              >placeholder: 🚧 This will eventually not be an input field
-              🚧</ng-container
-            >
-          </m-tooltip>
-        </div>
-        <div class="m-walletForm__row--input">
-          <input
-            type="text"
-            id="currentAddress"
-            name="currentAddress"
-            class="form-control"
-            readonly
-            [(ngModel)]="currentAddress"
-          />
-        </div>
+      <div class="m-walletSettingsView--addressCurrent__addressContainer">
+        <div>{{ currentAddress }}</div>
+        <div><a (click)="display = null">Change Address</a></div>
       </div>
-      <p><a (click)="display = null">Change Address</a></p>
     </li>
   </ul>
 </div>
 
 <m-formToast></m-formToast>
+<ng-template #onchainDesc>
+  <p>
+    To receive on-chain payments from other channels (e.g. from a Wire or a
+    Boost), you will need an on-chain address. You can change it here at any
+    time.
+  </p>
+</ng-template>

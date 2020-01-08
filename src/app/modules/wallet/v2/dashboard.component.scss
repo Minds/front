@@ -354,6 +354,17 @@ m-walletDashboard {
       margin-bottom: 23px;
     }
   }
+  .m-walletSettingsView--addressCurrent__addressContainer {
+    display: flex;
+    flex-flow: row wrap;
+    font-size: 15px;
+    line-height: 19px;
+    p {
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+  }
 
   .m-walletSettings__setupOptions__recommendation {
     display: flex;
@@ -391,6 +402,7 @@ m-walletDashboard {
         span {
           display: inline-block;
           margin-right: 5px;
+          font-weight: 300;
         }
         span {
           @include m-theme() {
@@ -433,16 +445,16 @@ m-walletDashboard {
     margin-top: 33px;
     display: flex;
     flex-flow: row nowrap;
-    align-items: flex-end;
+    align-items: baseline;
     text-decoration: none;
-    i {
-      font-size: 18px;
-      margin-right: 5px;
+
+    @include m-theme() {
+      color: themed($m-grey-300);
     }
-    &:hover {
-      span {
-        text-decoration: underline;
-      }
+    i {
+      font-size: 14px;
+      font-weight: 300;
+      margin-right: 10px;
     }
   }
   @media screen and (max-width: $min-tablet) {
