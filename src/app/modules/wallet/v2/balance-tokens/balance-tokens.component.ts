@@ -26,7 +26,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   showModal = false;
   protected updateTimer$;
 
-  nextPayout;
+  nextPayoutDate = 0;
   estimatedTokenPayout;
   payoutSubscription: Subscription;
   constructor(
@@ -43,7 +43,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     this.getPayout();
 
     this.inProgress = false;
-    this.updateTimer$ = setInterval(this.updateNextPayout.bind(this), 1000);
+    this.updateTimer$ = setInterval(this.updateNextPayoutDate.bind(this), 1000);
     this.detectChanges();
   }
   ngOnDestroy() {
@@ -58,7 +58,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
       const result: any = await this.client.get(
         `api/v2/blockchain/contributions/overview`
       );
-      this.nextPayout = result.nextPayout;
+      this.nextPayoutDate = result.nextPayout;
       this.estimatedTokenPayout = result.currentReward;
       this.detectChanges();
     } catch (e) {
@@ -66,9 +66,9 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     }
   }
 
-  updateNextPayout() {
-    if (this.nextPayout) {
-      this.nextPayout--;
+  updateNextPayoutDate() {
+    if (this.nextPayoutDate) {
+      this.nextPayoutDate--;
       this.detectChanges();
     }
   }

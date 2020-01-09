@@ -80,7 +80,7 @@
       estimatedTokenPayout | token: 18 | number: '1.0-3'
     }}</span>
     tokens. Next payout in
-    <span>{{ nextPayout | timediff }}</span> (Daily at 2:00am UTC)
+    <span>{{ nextPayoutDate | timediff }}</span> (Daily at 2:00am UTC)
   </div>
   <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
     <m-walletOnchainTransfer
