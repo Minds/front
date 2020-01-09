@@ -179,7 +179,7 @@ export class CommentPosterComponent {
    *
    * @param { string } - message to be parsed.
    */
-  getPostPreview(message: string) {
+  async getPostPreview(message: string) {
     if (
       !message ||
       this.attachment.getMeta().is_rich ||
