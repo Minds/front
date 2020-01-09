@@ -27,6 +27,11 @@ import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock
 import { signupModalServiceMock } from '../../mocks/modules/modals/signup/signup-modal-service.mock';
 import { SignupModalService } from '../modals/signup/service';
 import { By } from '@angular/platform-browser';
+import { FeaturesService } from '../../services/features.service';
+import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
+import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
+import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
+import { MockService } from '../../utils/mock';
 
 @Component({
   selector: 'minds-form-login',
@@ -35,6 +40,10 @@ import { By } from '@angular/platform-browser';
 class MindsFormLoginMock {
   @Output() done: EventEmitter<any> = new EventEmitter<any>();
   @Output() doneRegistered: EventEmitter<any> = new EventEmitter<any>();
+  @Input() showBigButton: boolean = false;
+  @Input() showInlineErrors: boolean = false;
+  @Input() showTitle: boolean = false;
+  @Input() showLabels: boolean = false;
 }
 
 @Component({
@@ -57,6 +66,7 @@ describe('LoginComponent', () => {
         MindsFormLoginMock,
         MindsFormRegisterMock,
         LoginComponent,
+        IfFeatureDirective,
       ],
       imports: [
         RouterTestingModule,
@@ -71,6 +81,8 @@ describe('LoginComponent', () => {
         { provide: OnboardingService, useValue: onboardingServiceMock },
         { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: SignupModalService, useValue: signupModalServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: V2TopbarService, useValue: MockService(V2TopbarService) },
       ],
     }).compileComponents();
   }));
@@ -79,6 +91,8 @@ describe('LoginComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
+
+    featuresServiceMock.mock('register_pages-december-2019', false);
 
     fixture = TestBed.createComponent(LoginComponent);
 
