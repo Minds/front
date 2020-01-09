@@ -18,9 +18,7 @@ export class WalletModalComponent implements OnDestroy {
   @Input()
   public set showModal(val: boolean) {
     this._showModal = val;
-    if (val) {
-      this.show();
-    }
+    val ? this.show() : this.close();
   }
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
 
