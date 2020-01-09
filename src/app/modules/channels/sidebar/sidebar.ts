@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
@@ -15,7 +21,7 @@ import { FeaturesService } from '../../../services/features.service';
   inputs: ['user', 'editing'],
   templateUrl: 'sidebar.html',
 })
-export class ChannelSidebar {
+export class ChannelSidebar implements OnInit {
   minds = window.Minds;
   filter: any = 'feed';
   isLocked: boolean = false;
@@ -65,6 +71,7 @@ export class ChannelSidebar {
 
   shouldShowOnboardingProgress() {
     return (
+      !this.featuresService.has('onboarding-december-2019') &&
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().guid === this.user.guid &&
       !this.storage.get('onboarding_hide') &&

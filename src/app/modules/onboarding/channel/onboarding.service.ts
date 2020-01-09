@@ -5,6 +5,7 @@ import { TokenRewardsOnboardingComponent } from './rewards/rewards.component';
 import { EventEmitter } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
+import { FeaturesService } from '../../../services/features.service';
 
 export class ChannelOnboardingService {
   slides = [
@@ -31,11 +32,15 @@ export class ChannelOnboardingService {
   // these are updated per each slide when calculating the next one, except for the first time onboarding
   pendingItems: Array<string> = [];
 
-  static _(client: Client, session: Session) {
-    return new ChannelOnboardingService(client, session);
+  static _(client: Client, session: Session, featuresService: FeaturesService) {
+    return new ChannelOnboardingService(client, session, featuresService);
   }
 
-  constructor(private client: Client, private session: Session) {
+  constructor(
+    private client: Client,
+    private session: Session,
+    private featuresService: FeaturesService
+  ) {
     this.session.userEmitter.subscribe(v => {
       if (!v) {
         this.reset();
@@ -44,7 +49,12 @@ export class ChannelOnboardingService {
   }
 
   async checkProgress() {
-    if (!this.session.isLoggedIn()) return;
+    if (
+      !this.session.isLoggedIn() ||
+      this.featuresService.has('onboarding-december-2019')
+    ) {
+      return;
+    }
     try {
       const response: any = await this.client.get('api/v2/onboarding/progress');
 
@@ -58,6 +68,12 @@ export class ChannelOnboardingService {
   }
 
   async showModal(force: boolean = false) {
+    if (
+      !this.session.isLoggedIn() ||
+      this.featuresService.has('onboarding-december-2019')
+    ) {
+      return false;
+    }
     if (!force) {
       const status = localStorage.getItem('already_onboarded');
 
@@ -108,7 +124,7 @@ export class ChannelOnboardingService {
       // empty is 1 because username is always there from the beginning
       this.currentSlide++;
     } else {
-      //here we just go to the next slide with incomplete stuff
+      // here we just go to the next slide with incomplete stuff
       const i = this.currentSlide + 1;
 
       this.pendingItems = [];

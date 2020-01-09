@@ -1,0 +1,118 @@
+m-onboarding__channelList {
+  display: block;
+  width: 100%;
+
+  .m-onboarding__channelList {
+    h3 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 0 8px;
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+  }
+
+  .m-channelList__empty {
+    padding: 8px;
+    font-size: 14px;
+    line-height: 19px;
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+  }
+
+  .m-channelList__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .m-channelList__item {
+    &:last-of-type {
+      border-bottom: 0;
+    }
+
+    a {
+      display: flex;
+      text-decoration: none;
+      padding: 8px 8px;
+    }
+
+    .m-channelListItem__avatar {
+      width: 49px;
+      height: 49px;
+      border-radius: 50%;
+      background-size: cover;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .m-channelListItem__body {
+      display: inline-flex;
+      vertical-align: middle;
+      align-items: center;
+      flex-direction: row;
+      width: calc(100% - 36px);
+
+      h4 {
+        height: 21px;
+        width: 141px;
+        color: #636363;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 21px;
+        margin: 0;
+      }
+
+      > div {
+        width: 100%;
+        max-width: calc(100% - 68px);
+      }
+
+      > div > span {
+        overflow: hidden;
+        position: relative;
+        display: block;
+
+        height: 19px;
+        width: 92px;
+        color: #9b9b9b;
+        font-family: Roboto;
+        font-size: 14px;
+        line-height: 19px;
+      }
+
+      > i {
+        font-size: 13px;
+        margin-right: 8px;
+      }
+
+      .m-btn {
+        height: 30px;
+        font-size: 10px;
+        letter-spacing: 1px;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+
+        i {
+          display: block;
+          font-size: 16px;
+          padding: 0;
+          margin: 0;
+        }
+
+        span {
+          display: none;
+        }
+      }
+
+      m-join {
+        margin-right: 10px;
+      }
+    }
+  }
+}

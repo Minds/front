@@ -113,7 +113,10 @@ export class Minds {
             this.minds.user.language,
             this.minds.language
           );
-          window.location.reload(true);
+
+          setTimeout(() => {
+            window.location.reload(true);
+          });
         }
       }
     });
