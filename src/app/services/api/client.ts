@@ -5,29 +5,34 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
 /**
  * API Class
  */
 export class Client {
-  base: string = 'https://eggman.minds.com/';
+  base: string = '/';
   cookie: Cookie = new Cookie();
 
   static _(
     http: HttpClient,
-    platformId,
     location: Location,
-    transferState: TransferState
+    platformId,
+    transferState: TransferState,
+    @Inject('ORIGIN_URL') baseUrl: string
   ) {
-    return new Client(http, platformId, location, transferState);
+    return new Client(http, location, platformId, transferState, baseUrl);
   }
 
   constructor(
     public http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId,
     public location: Location,
-    private transferState: TransferState
-  ) {}
+    @Inject(PLATFORM_ID) private platformId,
+    private transferState: TransferState,
+    @Inject('ORIGIN_URL') public baseUrl: string
+  ) {
+    this.base = `${baseUrl}/`;
+  }
 
   /**
    * Return a GET request
@@ -35,16 +40,6 @@ export class Client {
   get(endpoint: string, data: Object = {}, options: Object = {}) {
     if (data) {
       endpoint += '?' + this.buildParams(data);
-    }
-
-    const STATE_KEY = makeStateKey(
-      `http-${endpoint}` + JSON.stringify(options)
-    );
-
-    if (this.transferState.hasKey(STATE_KEY)) {
-      const result = this.transferState.get(STATE_KEY, null);
-      this.transferState.remove(STATE_KEY);
-      return Promise.resolve(JSON.parse(result));
     }
 
     return new Promise((resolve, reject) => {
@@ -262,7 +257,9 @@ export class Client {
    */
   private buildOptions(options: Object, withCredentials: boolean = false) {
     if (isPlatformServer(this.platformId)) {
-      return options; // TODO: support XSRF on universal
+      return {
+        withCredentials: true,
+      };
     }
     const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN') || '';
 

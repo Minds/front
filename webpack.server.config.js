@@ -10,22 +10,22 @@ module.exports = {
   mode: 'none',
   entry: {
     // This is our Express server for Dynamic universal
-    server: './socket-server.ts',
+    server: './server.ts',
     // This is an example of Static prerendering (generative)
   },
   target: 'node',
   resolve: { extensions: ['.ts', '.js'] },
   // Make sure we include all node_modules etc
-  externals: [/node_modules/, nodeExternals({
-    whitelist: [
-        /^@agm\/core/,
-        /^hammerjs/
-      ]
-  })],
+  externals: [
+    /node_modules/,
+    nodeExternals({
+      whitelist: [/^@agm\/core/, /^hammerjs/],
+    }),
+  ],
   output: {
     // Puts the output at the root of the dist folder
     path: path.join(__dirname, 'dist'),
-    filename: '[name].js'
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -36,7 +36,7 @@ module.exports = {
         test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
         parser: { system: true },
       },
-    ]
+    ],
   },
   plugins: [
     new webpack.ContextReplacementPlugin(
@@ -53,11 +53,7 @@ module.exports = {
     ),
     new NormalModuleReplacementPlugin(
       /custom-event.js/,
-      path.resolve(__dirname, 'src/server-mocks/empty.js'),
+      path.resolve(__dirname, 'src/server-mocks/empty.js')
     ),
-//    new NormalModuleReplacementPlugin(
-//      /dexie.js/,
-//      path.resolve(__dirname, 'src/server-mocks/empty.js'),
-//    ),
-  ]
-}
+  ],
+};

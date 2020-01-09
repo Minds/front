@@ -29,6 +29,7 @@ import { SsoService } from './common/services/sso.service';
 import { Subscription } from 'rxjs';
 import { RouterHistoryService } from './common/services/router-history.service';
 import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
+import { ConfigsService } from './common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -71,6 +72,7 @@ export class Minds {
     private routerHistoryService: RouterHistoryService,
     private site: SiteService,
     private sso: SsoService,
+    private configs: ConfigsService,
     private cd: ChangeDetectorRef
   ) {
     this.name = 'Minds';
@@ -82,7 +84,11 @@ export class Minds {
 
   async ngOnInit() {
     try {
-      this.diagnostics.setUser(this.minds.user);
+      // Load external configs
+      await this.configs.loadFromRemote();
+
+      // Setup sentry/diagnostic configs
+      this.diagnostics.setUser(this.configs.get('user'));
       this.diagnostics.listen(); // Listen for user changes
 
       if (this.sso.isRequired()) {
@@ -115,12 +121,11 @@ export class Minds {
           this.showOnboarding = await this.onboardingService.showModal();
         }
 
-        if (this.minds.user.language !== this.minds.language) {
-          console.log(
-            '[app]:: language change',
-            this.minds.user.language,
-            this.minds.language
-          );
+        const user = this.session.getLoggedInUser();
+        const language = this.configs.get('language');
+
+        if (user.language !== language) {
+          console.log('[app]:: language change', user.language, language);
           window.location.reload(true);
         }
       }

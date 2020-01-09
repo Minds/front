@@ -35,7 +35,7 @@ import { BlockchainService } from '../modules/blockchain/blockchain.service';
 import { WebtorrentService } from '../modules/webtorrent/webtorrent.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BlockListService } from '../common/services/block-list.service';
 import { EntitiesService } from '../common/services/entities.service';
 import { InMemoryStorageService } from './in-memory-storage.service';
@@ -47,6 +47,9 @@ import { SiteService } from '../common/services/site.service';
 import { SessionsStorageService } from './session-storage.service';
 import { DiagnosticsService } from './diagnostics.service';
 import { FormToastService } from '../common/services/form-toast.service';
+import { ConfigsService } from '../common/services/configs.service';
+import { TransferHttpInterceptorService } from './transfer-http-interceptor.service';
+import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -68,12 +71,22 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: Client,
     useFactory: Client._,
-    deps: [HttpClient, Location],
+    deps: [HttpClient, Location, PLATFORM_ID, TransferState, 'ORIGIN_URL'],
   },
   {
     provide: Upload,
     useFactory: Upload._,
     deps: [HttpClient],
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TransferHttpInterceptorService,
+    multi: true,
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: CookieHttpInterceptorService,
+    multi: true,
   },
   {
     provide: Storage,
@@ -110,11 +123,7 @@ export const MINDS_PROVIDERS: any[] = [
     useFactory: RichEmbedService._,
     deps: [Client],
   },
-  {
-    provide: Session,
-    useFactory: Session._,
-    deps: [SiteService],
-  },
+  Session,
   {
     provide: ThirdPartyNetworksService,
     useFactory: ThirdPartyNetworksService._,
@@ -192,9 +201,14 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [Router, Storage, Client],
   },
   {
+    provide: ConfigsService,
+    useFactory: client => new ConfigsService(client),
+    deps: [Client],
+  },
+  {
     provide: FeaturesService,
     useFactory: FeaturesService._,
-    deps: [Session, Router],
+    deps: [Session, Router, ConfigsService],
   },
   {
     provide: BlockchainService,

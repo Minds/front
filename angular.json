@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "v5.x": {
+    "minds": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -12,7 +12,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist",
-            "index": "src/index.php",
+            "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
@@ -65,22 +65,22 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "v5.x:build"
+            "browserTarget": "minds:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "v5.x:build:production"
+              "browserTarget": "minds:build:production"
             },
             "hmr": {
               "hmr": true,
-              "browserTarget": "v5.x:build:hmr"
+              "browserTarget": "minds:build:hmr"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "v5.x:build"
+            "browserTarget": "minds:build"
           }
         },
         "test": {
@@ -113,16 +113,18 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [{
-                "replace": "src/environments/environment.ts",
-                "with": "src/environments/environment.prod.ts"
-              }]
-            }  
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
+            }
           }
         }
       }
     },
-    "v5.x-e2e": {
+    "minds-e2e": {
       "root": "e2e",
       "sourceRoot": "e2e",
       "projectType": "application",
@@ -131,7 +133,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "v5.x:serve"
+            "devServerTarget": "minds:serve"
           }
         },
         "lint": {
@@ -144,7 +146,7 @@
       }
     }
   },
-  "defaultProject": "v5.x",
+  "defaultProject": "minds",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "m",

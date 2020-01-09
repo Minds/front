@@ -2,14 +2,13 @@
  * Sessions
  */
 import { EventEmitter } from '@angular/core';
+import { ConfigsService } from '../common/services/configs.service';
 
 export class Session {
   loggedinEmitter: EventEmitter<any> = new EventEmitter();
   userEmitter: EventEmitter<any> = new EventEmitter();
 
-  static _() {
-    return new Session();
-  }
+  constructor(private configs: ConfigsService) {}
 
   /**
    * Return if loggedin, with an optional listener
@@ -24,14 +23,14 @@ export class Session {
       });
     }
 
-    if (window.Minds.LoggedIn) return true;
+    if (this.configs.get('LoggedIn')) return true;
 
     return false;
   }
 
   isAdmin() {
     if (!this.isLoggedIn) return false;
-    if (window.Minds.Admin) return true;
+    if (this.configs.get('Admin')) return true;
 
     return false;
   }
@@ -48,9 +47,11 @@ export class Session {
       });
     }
 
-    if (window.Minds.user) {
+    const user = this.configs.get('user');
+
+    if (user) {
       // Attach user_guid to debug logs
-      return window.Minds.user;
+      return user;
     }
 
     return false;

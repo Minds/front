@@ -5,6 +5,7 @@ import { ServerTransferStateModule } from '@angular/platform-server';
 
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';
+import { PlotlyModule } from 'angular-plotly.js';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { Minds } from './app.component';
     ServerModule,
     ModuleMapLoaderModule,
     ServerTransferStateModule,
+    PlotlyModule,
   ],
   bootstrap: [Minds],
 })

@@ -72,10 +72,7 @@ export class MindsRichEmbed {
     // Inline Embedding
     let inlineEmbed = this.parseInlineEmbed(this.inlineEmbed);
 
-    if (
-      this.featureService.has('media-modal') &&
-      this.mediaSource === 'youtube'
-    ) {
+    if (this.mediaSource === 'youtube') {
       this.modalRequestSubscribed =
         this.mediaModalRequested.observers.length > 0;
     }
@@ -96,11 +93,7 @@ export class MindsRichEmbed {
 
     this.inlineEmbed = inlineEmbed;
 
-    if (
-      this.modalRequestSubscribed &&
-      this.featureService.has('media-modal') &&
-      this.mediaSource === 'youtube'
-    ) {
+    if (this.modalRequestSubscribed && this.mediaSource === 'youtube') {
       if (this.inlineEmbed && this.inlineEmbed.htmlProvisioner) {
         this.inlineEmbed.htmlProvisioner().then(html => {
           this.inlineEmbed.html = html;
@@ -270,11 +263,9 @@ export class MindsRichEmbed {
   }
 
   hasInlineContentLoaded() {
-    return this.featureService.has('media-modal')
-      ? !this.modalRequestSubscribed &&
-          this.inlineEmbed &&
-          this.inlineEmbed.html
-      : this.embeddedInline && this.inlineEmbed && this.inlineEmbed.html;
+    return (
+      !this.modalRequestSubscribed && this.inlineEmbed && this.inlineEmbed.html
+    );
   }
 
   detectChanges() {

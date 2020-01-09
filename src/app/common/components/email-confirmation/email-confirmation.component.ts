@@ -4,10 +4,13 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { EmailConfirmationService } from './email-confirmation.service';
 import { Session } from '../../../services/session';
 import { Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Component that displays an announcement-like banner
@@ -33,7 +36,8 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
   constructor(
     protected service: EmailConfirmationService,
     protected session: Session,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) protected platformId
   ) {}
 
   ngOnInit(): void {
@@ -46,10 +50,12 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
       this.detectChanges();
     });
 
-    this.canCloseTimer = window.setTimeout(() => {
-      this.canClose = true;
-      this.detectChanges();
-    }, 3000);
+    if (isPlatformBrowser(this.platformId)) {
+      this.canCloseTimer = window.setTimeout(() => {
+        this.canClose = true;
+        this.detectChanges();
+      }, 3000);
+    }
   }
 
   ngOnDestroy(): void {

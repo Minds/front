@@ -8,6 +8,7 @@ import {
   BrowserModule,
   BrowserTransferStateModule,
 } from '@angular/platform-browser';
+// import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -80,7 +81,8 @@ import * as Sentry from '@sentry/browser';
 Sentry.init({
   dsn: 'https://3f786f8407e042db9053434a3ab527a2@sentry.io/1538008', // TODO: do not hardcard
   release: environment.version,
-  environment: (<any>window.Minds).environment || 'development',
+  // environment: (<any>window.Minds).environment || 'development',
+  environment: 'srr-test', // TODO: fix
 });
 
 @Injectable()
@@ -104,6 +106,7 @@ export class SentryErrorHandler implements ErrorHandler {
   imports: [
     BrowserModule.withServerTransition({ appId: 'm-app' }),
     BrowserTransferStateModule,
+    // TransferHttpCacheModule,
     //BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
@@ -156,6 +159,7 @@ export class SentryErrorHandler implements ErrorHandler {
     CanaryModule,
     ChannelsModule,
     UpgradesModule,
+    //PlotlyModule,
 
     //last due to :username route
     ChannelContainerModule,
