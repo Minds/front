@@ -130,6 +130,10 @@ export class MindsAvatar {
    * @returns true if the object guid matches the currently logged in user guid
    */
   isOwnerAvatar(): boolean {
-    return this.minds.user && this.object.guid === this.minds.user.guid;
+    return (
+      this.minds.user &&
+      this.object &&
+      this.object.guid === this.minds.user.guid
+    );
   }
 }

@@ -39,12 +39,15 @@ export class VideoChatComponent implements OnInit {
           this.isActive = false;
         }
         this.cd.markForCheck();
-        this.cd.detectChanges();
+        if (!this.cd['destroyed']) {
+          this.cd.detectChanges();
+        }
       }
     );
   }
 
   ngOnDestroy() {
+    this.cd.detach();
     this.service.deactivate();
     this.isActive$.unsubscribe();
   }
