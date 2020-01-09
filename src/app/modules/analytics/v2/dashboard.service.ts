@@ -14,17 +14,20 @@ import { MindsHttpClient } from '../../../common/api/client.service';
 import fakeData from './fake-data';
 import { Response, UserState } from '../../../interfaces/dashboard';
 
+// Populate state with fakeData because BehaviorSubject requires a starting value
 let _state: UserState = fakeData[0];
 
+// Compare objs
 const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 
 @Injectable()
 export class AnalyticsDashboardService {
+  // Initialize the BehaviorSubject with fakeData
   private store = new BehaviorSubject<UserState>(_state);
   private state$ = this.store.asObservable();
 
   // Make all the different variables within the UserState observables
-  // that are emitted only when something inside changes
+  // Emit the observable when something inside changes
   category$ = this.state$.pipe(
     map(state => state.category),
     distinctUntilChanged(deepDiff)
@@ -70,6 +73,7 @@ export class AnalyticsDashboardService {
   }
 
   loadFromRemote() {
+    // whenever an observable emits a value, emit the last emitted value from each of the other observables
     combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
       .pipe(
         distinctUntilChanged(deepDiff),

@@ -8,6 +8,7 @@ import {
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { WalletDashboardService } from './../dashboard.service';
+import * as moment from 'moment';
 @Component({
   selector: 'm-walletBalance--usd',
   templateUrl: './balance-usd.component.html',
@@ -29,27 +30,31 @@ export class WalletBalanceUsdV2Component implements OnInit {
   ) {}
 
   ngOnInit() {
-    // Get next payout date
-    const firstDayNextMonth = new Date();
-    console.log(firstDayNextMonth);
-    // const firstDayNextMonth = new Date(2008, 11 + 1, 1);
-    // this.nextPayoutDate = new Date(firstDayNextMonth - 1);
+    this.nextPayoutDate = moment()
+      .endOf('month')
+      .format('ddd Do MMM');
 
     // Get stripe account
-    this.stripeAccount = this.walletService.getStripeAccount();
+    this.walletService.getStripeAccount().then(response => {
+      this.stripeAccount = response;
+    });
+    console.log(this.stripeAccount);
     if (!this.stripeAccount) {
       this.pendingBalance = this.formatBalance(0);
       this.totalPaidOut = this.formatBalance(0);
     } else {
-      // get pending balance + format it
       this.pendingBalance = this.formatBalance(
         this.stripeAccount.pendingBalance.amount
       );
 
-      // get paid out + format it
-      this.totalPaidOut = this.formatBalance(
-        this.stripeAccount.totalBalance - this.stripeAccount.pendingBalance
-      );
+      let totalPaidOutRaw =
+        this.stripeAccount.totalBalance - this.stripeAccount.pendingBalance;
+
+      if (totalPaidOutRaw < 0) {
+        totalPaidOutRaw = 0;
+      }
+
+      this.totalPaidOut = this.formatBalance(totalPaidOutRaw);
     }
     this.inProgress = false;
     this.detectChanges();

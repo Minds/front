@@ -8,6 +8,21 @@ import toFriendlyCryptoVal from '../../../helpers/friendly-crypto';
 
 import fakeData from './fake-data';
 
+export interface WalletCurrency {
+  label: string;
+  unit: string;
+  balance: number;
+  address?: string;
+}
+export interface Wallet {
+  tokens: WalletCurrency;
+  offchain: WalletCurrency;
+  onchain: WalletCurrency;
+  receiver: WalletCurrency;
+  usd: WalletCurrency;
+  eth: WalletCurrency;
+  btc: WalletCurrency;
+}
 @Injectable()
 export class WalletDashboardService {
   walletLoaded = false;
@@ -71,9 +86,7 @@ export class WalletDashboardService {
     this.getEthAccount();
     this.getStripeAccount();
 
-    const test1 = toFriendlyCryptoVal('123456789012345678');
-    const test2 = toFriendlyCryptoVal('1234567890123456789999');
-    const test3 = toFriendlyCryptoVal('12345678901234567');
+    const test1 = toFriendlyCryptoVal('1234567890123456789');
 
     // TODOOJM toggle me before pushing
     this.wallet = fakeData.wallet;

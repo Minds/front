@@ -5,15 +5,31 @@ export default function toFriendlyCryptoVal(
   longCryptoVal: number | string,
   decimalCount?: number
 ) {
-  console.log(longCryptoVal);
+  const tester = '1234567890123456789';
+  console.log('tester:');
+  console.log(tester);
+  let longVal = new BN(tester);
+  //1234567890123456789
+  //1234567890123456
+  //1000000000000000000
+  // 0
+  // console.log('1e18', longVal.div(1e18)); // num.isZero is not a function
+  console.log('BN 1e18', longVal.div(new BN(1e18)));
+  // console.log('');
+  // console.log('');
+  // console.log('');
+  // console.log('');
+
+  const friendlyCryptoVal = new BN(longCryptoVal).div(new BN(1));
+  //-----------------------------------------------------------------
   // if (typeof longCryptoVal === 'number') {
   //   longCryptoVal = longCryptoVal.toString();
   // }
-  if (typeof longCryptoVal === 'string') {
-    longCryptoVal = parseFloat(longCryptoVal);
-  }
+  // if (typeof longCryptoVal === 'string') {
+  //   longCryptoVal = parseFloat(longCryptoVal);
+  // }
 
-  const friendlyCryptoVal = longCryptoVal / Math.pow(10, 18);
+  // const friendlyCryptoVal = longCryptoVal / Math.pow(10, 18);
   // //temp
   // longCryptoVal = 10000000000000000000;
   // if (new BN(longCryptoVal).isZero()) {
@@ -34,9 +50,9 @@ export default function toFriendlyCryptoVal(
   // // console.log('', new BN(longCryptoVal).div());
   // // console.log('', new BN(longCryptoVal).div());
   // // console.log('', new BN(longCryptoVal).div());
-  // const friendlyCryptoVal = new BN(longCryptoVal).div(new BN(1e18));
+
   // // const friendlyCryptoVal = new BN(longCryptoVal).div(new BN(Math.pow(10, 18)));
-  console.log(friendlyCryptoVal);
+  // console.log(friendlyCryptoVal);
 
   return friendlyCryptoVal === 0 ? 0 : friendlyCryptoVal;
 }

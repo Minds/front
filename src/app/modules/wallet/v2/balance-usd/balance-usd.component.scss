@@ -52,36 +52,30 @@ m-walletBalance--usd {
     }
   }
 
-  .m-walletBalance--usd__colWrapper--subtotal {
-    .m-walletBalance--usd__colTitle {
-      min-width: 78px;
-    }
-    .m-walletBalance--usd__colValWrapper {
-      font-size: 13px;
-      line-height: 18px;
-    }
-    .m-walletBalance--usd__colVal--int {
-      font-size: 16px;
-      line-height: 21px;
-    }
-    .m-walletBalance--usd__colVal--frac {
-      font-size: 13px;
-      line-height: 18px;
-    }
-    a {
-      display: inline-block;
-      margin-top: 14px;
-      font-size: 14px;
-      line-height: 19px;
-    }
+  .m-walletBalance--usd__colTitle {
+    min-width: 78px;
   }
   .m-walletBalance--usd__colValWrapper {
+    font-size: 13px;
+    line-height: 18px;
     font-weight: 500;
     margin-top: 8px;
   }
   .m-walletBalance--usd__colVal--int {
+    font-size: 16px;
+    line-height: 21px;
     @include m-theme() {
       color: themed($m-grey-800);
     }
+  }
+  .m-walletBalance--usd__colVal--frac {
+    font-size: 13px;
+    line-height: 18px;
+  }
+  a {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 19px;
   }
 }
