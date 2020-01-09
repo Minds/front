@@ -169,4 +169,11 @@ describe('Service: Attachment Service', () => {
     tick(1000);
     expect(clientMock.get).toHaveBeenCalledTimes(1);
   }));
+
+  it('should set progress to 100 when preview is done', fakeAsync(() => {
+    expect(service.progress.getValue()).toBe(0);
+    service.preview('https://github.com/releases');
+    tick(1000);
+    expect(service.progress.getValue()).toBe(100);
+  }));
 });

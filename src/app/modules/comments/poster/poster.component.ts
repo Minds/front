@@ -68,7 +68,7 @@ export class CommentPosterComponent {
   async post(e) {
     e.preventDefault();
 
-    if (this.content.length > this.maxLength) {
+    if (this.content.length > this.maxLength || !this.canPost) {
       return;
     }
 
@@ -174,12 +174,32 @@ export class CommentPosterComponent {
     this.detectChanges();
   }
 
-  async getPostPreview(message) {
-    if (!message) {
+  /**
+   * Checks for rich-embed and fetches a preview.
+   *
+   * @param { string } - message to be parsed.
+   */
+  getPostPreview(message: string) {
+    if (
+      !message ||
+      this.attachment.getMeta().is_rich ||
+      !this.attachment.containsRichEmbed(message)
+    ) {
       return;
     }
 
-    this.attachment.preview(message, this.detectChanges.bind(this));
+    this.canPost = false;
+
+    try {
+      this.attachment.preview(message, this.detectChanges.bind(this)); // generate preview.
+      this.attachment.progress.subscribe(progress => {
+        if (progress === 100) {
+          this.canPost = true;
+        }
+      });
+    } catch (e) {
+      this.canPost = true;
+    }
   }
 
   getAvatar() {

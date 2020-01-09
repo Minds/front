@@ -353,8 +353,23 @@ export class AttachmentService {
     this.meta.description = '';
   }
 
+  /**
+   * Determines whether a string contains a rich-embed.
+   *
+   * @param { string } content - the content to be matched.
+   * @returns { RegExpMatchArray } - array of matches.
+   */
+  containsRichEmbed = (content: string): RegExpMatchArray =>
+    content.match(/(\b(https?|ftp|file):\/\/[^\s\]\)]+)/gi);
+
+  /**
+   * Gathers preview for URL.
+   *
+   * @param { string } content - URL to be matched.
+   * @param { Function } detectChangesFn - called at end of function.
+   */
   preview(content: string, detectChangesFn?: Function) {
-    let match = content.match(/(\b(https?|ftp|file):\/\/[^\s\]\)]+)/gi),
+    let match = this.containsRichEmbed(content),
       url;
 
     if (!match) {
@@ -400,6 +415,7 @@ export class AttachmentService {
         .then((data: any) => {
           if (!data) {
             this.resetRich();
+            this.progress.next(100);
             if (detectChangesFn) detectChangesFn();
             return;
           }
@@ -418,10 +434,12 @@ export class AttachmentService {
           }
 
           if (detectChangesFn) detectChangesFn();
+          this.progress.next(100);
         })
         .catch(e => {
           this.resetRich();
           if (detectChangesFn) detectChangesFn();
+          this.progress.next(100);
         });
     }, 600);
   }
