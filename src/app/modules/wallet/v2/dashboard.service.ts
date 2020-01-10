@@ -3,8 +3,17 @@ import { Client } from '../../../common/api/client.service';
 import { Session } from '../../../services/session';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
-import { BehaviorSubject, Observable } from 'rxjs';
 import toFriendlyCryptoVal from '../../../helpers/friendly-crypto';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import {
+  map,
+  distinctUntilChanged,
+  switchMap,
+  startWith,
+  tap,
+  delay,
+  debounceTime,
+} from 'rxjs/operators';
 
 import fakeData from './fake-data';
 
@@ -14,7 +23,7 @@ export interface WalletCurrency {
   balance: number;
   address?: string;
 }
-export interface Wallet {
+export interface WalletState {
   tokens: WalletCurrency;
   offchain: WalletCurrency;
   onchain: WalletCurrency;
@@ -22,71 +31,136 @@ export interface Wallet {
   usd: WalletCurrency;
   eth: WalletCurrency;
   btc: WalletCurrency;
+  loading: boolean;
 }
+
+let _state: WalletState = {
+  tokens: {
+    label: 'Tokens',
+    unit: 'tokens',
+    balance: 0,
+    address: null,
+  },
+  offchain: {
+    label: 'Off-chain',
+    unit: 'tokens',
+    balance: 0,
+    address: 'offchain',
+  },
+  onchain: {
+    label: 'On-chain',
+    unit: 'tokens',
+    balance: 0,
+    address: null,
+  },
+  receiver: {
+    label: 'Receiver',
+    unit: 'tokens',
+    balance: 0,
+    address: null,
+  },
+  usd: {
+    label: 'USD',
+    unit: 'usd',
+    balance: 0,
+    address: null,
+  },
+  eth: {
+    label: 'Ether',
+    unit: 'eth',
+    balance: 0,
+    address: null,
+  },
+  btc: {
+    label: 'Bitcoin',
+    unit: 'btc',
+    balance: 0,
+    address: null,
+  },
+  loading: false,
+};
 @Injectable()
 export class WalletDashboardService {
   walletLoaded = false;
   totalTokens = 0;
 
-  wallet: any = {
-    tokens: {
-      label: 'Tokens',
-      unit: 'tokens',
-      balance: 0,
-      address: null,
-    },
-    offchain: {
-      label: 'Off-chain',
-      unit: 'tokens',
-      balance: 0,
-      address: 'offchain',
-    },
-    onchain: {
-      label: 'On-chain',
-      unit: 'tokens',
-      balance: 0,
-      address: null,
-    },
-    receiver: {
-      label: 'Receiver',
-      unit: 'tokens',
-      balance: 0,
-      address: null,
-    },
-    usd: {
-      label: 'USD',
-      unit: 'usd',
-      balance: 0,
-      address: null,
-    },
-    eth: {
-      label: 'Ether',
-      unit: 'eth',
-      balance: 0,
-      address: null,
-    },
-    btc: {
-      label: 'Bitcoin',
-      unit: 'btc',
-      balance: 0,
-      address: null,
-    },
-  };
+  private store = new BehaviorSubject<WalletState>(_state);
+  private state$ = this.store.asObservable();
+
+  tokens$ = this.state$.pipe(
+    map(state => state.tokens),
+    distinctUntilChanged()
+  );
+  offchain$ = this.state$.pipe(
+    map(state => state.offchain),
+    distinctUntilChanged()
+  );
+  onchain$ = this.state$.pipe(
+    map(state => state.onchain),
+    distinctUntilChanged()
+  );
+  receiver$ = this.state$.pipe(
+    map(state => state.receiver),
+    distinctUntilChanged()
+  );
+  usd$ = this.state$.pipe(
+    map(state => state.usd),
+    distinctUntilChanged()
+  );
+  eth$ = this.state$.pipe(
+    map(state => state.eth),
+    distinctUntilChanged()
+  );
+  btc$ = this.state$.pipe(
+    map(state => state.btc),
+    distinctUntilChanged()
+  );
+
+  loading$ = this.state$.pipe(map(state => state.loading));
+
+  /**
+   * Viewmodel that resolves once all the data is ready (or updated)...
+   */
+  wallet$: Observable<WalletState> = combineLatest(
+    this.tokens$,
+    this.onchain$,
+    this.receiver$,
+    this.offchain$,
+    this.usd$,
+    this.eth$,
+    this.btc$,
+    this.loading$
+  ).pipe(
+    map(([tokens, onchain, receiver, offchain, usd, eth, btc, loading]) => {
+      return { tokens, onchain, receiver, offchain, usd, eth, btc, loading };
+    })
+  );
 
   constructor(
     private client: Client,
     protected web3Wallet: Web3WalletService,
     protected tokenContract: TokenContractService,
     protected session: Session
-  ) {}
+  ) {
+    /**
+     * Subscribe to multiple streams to trigger state updates
+     */
+    combineLatest(this.tokens$, this.pagination$)
+      .pipe(
+        switchMap(([criteria, pagination]) => {
+          return this.findAllUsers(criteria, pagination);
+        })
+      )
+      .subscribe(users => {
+        this.updateState({ ..._state, users, loading: false });
+      });
+  }
 
   // TODOOJM: make wallet an observable and have the dashboard component subscribe to it
   getWallet() {
     this.getTokenAccounts();
     this.getEthAccount();
     this.getStripeAccount();
-
-    const test1 = toFriendlyCryptoVal('1234567890123456789');
 
     // TODOOJM toggle me before pushing
     this.wallet = fakeData.wallet;
@@ -209,11 +283,6 @@ export class WalletDashboardService {
     }
   }
 
-  async hasMetamask(): Promise<boolean> {
-    const isLocal: any = await this.web3Wallet.isLocal();
-    return Boolean(isLocal);
-  }
-
   // TODOOJM bucket endpoint needed
   getTokenChart(activeTimespan) {
     return fakeData.visualisation;
@@ -223,4 +292,16 @@ export class WalletDashboardService {
     // TODOOJM get this from token transactions component
     return fakeData.token_transactions;
   }
+
+  async hasMetamask(): Promise<boolean> {
+    const isLocal: any = await this.web3Wallet.isLocal();
+    return Boolean(isLocal);
+  }
+
+  // TODOOJM -- make an observable to use for onboarding steps
+  // OR -- just check wallet$.onchain.address / eth.address
+  // async hasOnchainAddress(): Promise<boolean> {
+  // const hasAddress = thisUserHasAddress
+  // return Boolean(hasAddress);
+  // }
 }

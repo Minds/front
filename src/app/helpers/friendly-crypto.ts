@@ -1,11 +1,11 @@
 import * as BN from 'bn.js';
-// *
-// Convert really long crypto values into friendly numbers
-// *
+// **
+// Converts really long crypto values into friendly numbers
 // Notes:
 // Assumes input currency has 18 decimal places
 // Decimals are *not* rounded up
 // No decimals will be returned if decimal value is 0
+// **
 
 export default function toFriendlyCryptoVal(
   longCryptoVal: number | string,

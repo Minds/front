@@ -362,6 +362,8 @@ m-walletDashboard {
     flex-flow: row wrap;
     font-size: 15px;
     line-height: 20px;
+    // font-weight: 300;
+
     div:first-child {
       margin-right: 18px;
       @include m-theme() {

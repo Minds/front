@@ -10,7 +10,6 @@ import { Client } from '../../../../services/api/client';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { WalletDashboardService } from './../dashboard.service';
-import * as BN from 'bn.js';
 
 @Component({
   selector: 'm-walletBalance--tokens',
