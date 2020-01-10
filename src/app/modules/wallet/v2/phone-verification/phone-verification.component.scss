@@ -1,0 +1,43 @@
+m-walletPhoneVerification {
+  .m-walletModal__footnote--privacy {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .m-walletModal__footnote--formStatus {
+    .m-walletPhoneVerification__formStatusCodeSent {
+      margin-bottom: 6px;
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+  }
+
+  m-shadowboxSubmitButton {
+    width: 147px;
+    button {
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 771px) {
+    m-shadowboxSubmitButton {
+      margin: 0 0 21px 0;
+    }
+    .stretchedField {
+      .m-walletForm__row--label m-tooltip {
+        .m-tooltip--bubble {
+          right: 12px;
+        }
+      }
+      [class*='m-walletForm__row'] {
+        flex-flow: row wrap;
+        label,
+        input {
+          flex: 1 1 100%;
+          min-width: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}

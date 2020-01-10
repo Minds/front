@@ -37,8 +37,13 @@
         id="email"
         name="email"
         [(ngModel)]="email"
-        (keyup)="change()"
+        (keyup)="change(); changeEmail()"
       />
+    </li>
+
+    <li class="m-settings--emails-campaigns__note" *ngIf="emailChanged" i18n>
+      Note: If you change your email address, it will need to be confirmed
+      again.
     </li>
   </ul>
 </div>

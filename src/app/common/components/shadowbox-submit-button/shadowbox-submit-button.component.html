@@ -2,7 +2,14 @@
   class="m-shadowboxSubmitButton"
   type="submit"
   [disabled]="disabled"
-  [ngClass]="{ saving: saveStatus === 'saving' }"
+  [ngClass]="{ saving: saving }"
 >
-  <ng-content></ng-content>
+  <div *ngIf="!saving" class="m-shadowboxSubmitButton__status--unsaved">
+    <ng-content></ng-content>
+  </div>
+  <div *ngIf="saving" class="m-shadowboxSubmitButton__status--saving">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </button>

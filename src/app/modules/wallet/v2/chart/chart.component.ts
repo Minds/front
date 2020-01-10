@@ -40,6 +40,7 @@ export class WalletChartComponent implements OnInit {
 
   constructor(protected walletService: WalletDashboardService) {}
 
+  // TODOOJM: use analytics dashboard response to control timespans and populate chart
   ngOnInit() {
     this.activeTimespan = this.timespans[0];
     this.data['visualisation'] = this.walletService.getTokenChart(

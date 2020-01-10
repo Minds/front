@@ -4,8 +4,9 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  ComponentFactoryResolver,
 } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { WalletDashboardService } from './dashboard.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -13,6 +14,7 @@ import { MindsTitle } from '../../../services/ux/title';
 import sidebarMenu from './sidebar-menu.default';
 import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
+import { Storage } from '../../../services/storage';
 
 @Component({
   selector: 'm-walletDashboard',
@@ -22,10 +24,11 @@ import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
 export class WalletDashboardComponent implements OnInit, OnDestroy {
   menu: Menu = sidebarMenu;
   paramsSubscription: Subscription;
-  wallet;
+  wallet = {};
 
   activeCurrencyId: string;
   activeViewId: string;
+  onboardingComplete = false;
 
   views: any = {
     tokens: [
@@ -49,13 +52,22 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
-    protected title: MindsTitle
+    protected title: MindsTitle,
+    protected storage: Storage
   ) {}
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;
+    }
+
+    if (
+      this.storage.get('walletOnboardingComplete') ||
+      (this.session.getLoggedInUser().rewards &&
+        this.session.getLoggedInUser().eth_wallet)
+    ) {
+      this.onboardingComplete = true;
     }
 
     this.title.setTitle('Wallet');
@@ -118,6 +130,12 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     this.activeViewId = viewId;
     this.router.navigate(['/v2wallet', this.activeCurrencyId, viewId]);
 
+    this.detectChanges();
+  }
+
+  onboardingCompleted() {
+    this.storage.set('walletOnboardingComplete', true);
+    this.onboardingComplete = true;
     this.detectChanges();
   }
 

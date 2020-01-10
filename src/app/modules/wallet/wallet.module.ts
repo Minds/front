@@ -53,13 +53,16 @@ import { WalletDashboardComponent } from './v2/dashboard.component';
 import { WalletBalanceTokensV2Component } from './v2/balance-tokens/balance-tokens.component';
 import { WalletChartComponent } from './v2/chart/chart.component';
 import { WalletTransactionsTableComponent } from './v2/transactions-table/transactions-table.component';
-import { WalletActionButtonComponent } from './v2/action-button/action-button.component';
 import { WalletRewardsPopupComponent } from './v2/rewards-popup/rewards-popup.component';
 import { WalletDashboardService } from './v2/dashboard.service';
 import { WalletSettingsTokensComponent } from './v2/settings-tokens/settings-tokens.component';
 import { WalletSettingsUSDComponent } from './v2/settings-usd/settings-usd.component';
 import { WalletSettingsETHComponent } from './v2/settings-eth/settings-eth.component';
 import { WalletSettingsBTCComponent } from './v2/settings-btc/settings-btc.component';
+import { WalletTokenOnboardingComponent } from './v2/token-onboarding/token-onboarding.component';
+import { WalletModalComponent } from './v2/modal/modal.component';
+import { WalletPhoneVerificationComponent } from './v2/phone-verification/phone-verification.component';
+import { WalletOnchainTransferComponent } from './v2/onchain-transfer/onchain-transfer.component';
 
 const walletRoutes: Routes = [
   {
@@ -174,13 +177,16 @@ const walletRoutes: Routes = [
     WalletDashboardComponent,
     WalletBalanceTokensV2Component,
     WalletChartComponent,
-    WalletActionButtonComponent,
     WalletRewardsPopupComponent,
     WalletTransactionsTableComponent,
     WalletSettingsTokensComponent,
     WalletSettingsUSDComponent,
     WalletSettingsETHComponent,
     WalletSettingsBTCComponent,
+    WalletTokenOnboardingComponent,
+    WalletModalComponent,
+    WalletPhoneVerificationComponent,
+    WalletOnchainTransferComponent,
   ],
   exports: [
     WalletComponent,
