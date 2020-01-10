@@ -66,8 +66,10 @@
         </div>
       </div>
     </div>
+    <!-- TODOOJM button disabling -->
+    <!-- [disabled]="inProgress || invalidNumber || invalidCode" -->
     <m-shadowboxSubmitButton
-      [disabled]="inProgress || invalidNumber || invalidCode"
+      [disabled]="inProgress"
       [saving]="inProgress"
       (click)="onSubmit()"
     >
