@@ -4,24 +4,15 @@ const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplaceme
 
 const path = require('path');
 const webpack = require('webpack');
-const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
   mode: 'none',
   entry: {
     // This is our Express server for Dynamic universal
     server: './server.ts',
-    // This is an example of Static prerendering (generative)
   },
   target: 'node',
-  resolve: { extensions: ['.ts', '.js'] },
-  // Make sure we include all node_modules etc
-  externals: [
-    /node_modules/,
-    nodeExternals({
-      whitelist: [/^@agm\/core/, /^hammerjs/],
-    }),
-  ],
+  resolve: { extensions: ['.ts', '.js', '.json'] },
   output: {
     // Puts the output at the root of the dist folder
     path: path.join(__dirname, 'dist'),

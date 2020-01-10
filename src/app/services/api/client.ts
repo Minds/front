@@ -12,21 +12,29 @@ import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
  */
 export class Client {
   base: string = '/';
-  cookie: Cookie = new Cookie();
 
   static _(
     http: HttpClient,
     location: Location,
+    cookie: Cookie,
     platformId,
     transferState: TransferState,
     @Inject('ORIGIN_URL') baseUrl: string
   ) {
-    return new Client(http, location, platformId, transferState, baseUrl);
+    return new Client(
+      http,
+      location,
+      cookie,
+      platformId,
+      transferState,
+      baseUrl
+    );
   }
 
   constructor(
     public http: HttpClient,
     public location: Location,
+    private cookie: Cookie,
     @Inject(PLATFORM_ID) private platformId,
     private transferState: TransferState,
     @Inject('ORIGIN_URL') public baseUrl: string
@@ -251,11 +259,6 @@ export class Client {
    * Build the options
    */
   private buildOptions(options: Object, withCredentials: boolean = false) {
-    if (isPlatformServer(this.platformId)) {
-      return {
-        withCredentials: true,
-      };
-    }
     const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN') || '';
 
     const headers = {

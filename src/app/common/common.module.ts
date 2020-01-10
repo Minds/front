@@ -132,6 +132,7 @@ import { FormToastComponent } from './components/form-toast/form-toast.component
 import { SsoService } from './services/sso.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { ConfigsService } from './services/configs.service';
+import { Cookie } from '../services/cookie';
 
 const routes: Routes = [
   {
@@ -375,7 +376,7 @@ const routes: Routes = [
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
-      deps: [HttpClient],
+      deps: [HttpClient, Cookie],
     },
     {
       provide: NSFWSelectorCreatorService,

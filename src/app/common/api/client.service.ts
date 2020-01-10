@@ -7,13 +7,12 @@ import { environment } from '../../../environments/environment';
  */
 export class MindsHttpClient {
   base: string = '/';
-  cookie: Cookie = new Cookie();
 
-  static _(http: HttpClient) {
-    return new MindsHttpClient(http);
+  static _(http: HttpClient, cookie: Cookie) {
+    return new MindsHttpClient(http, cookie);
   }
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, private cookie: Cookie) {}
 
   /**
    * Return a GET request

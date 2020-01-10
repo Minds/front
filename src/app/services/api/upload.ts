@@ -6,13 +6,12 @@ import { HttpClient } from '@angular/common/http';
  */
 export class Upload {
   base: string = '/';
-  cookie: Cookie = new Cookie();
 
-  static _(http: HttpClient) {
-    return new Upload(http);
+  static _(http: HttpClient, cookie: Cookie) {
+    return new Upload(http, cookie);
   }
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, private cookie: Cookie) {}
 
   /**
    * Return a POST request
