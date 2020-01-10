@@ -64,6 +64,7 @@ export class CommentComponentV2
   error: string = '';
   @Input() showReplies: boolean = false;
   changesDetected: boolean = false;
+  showMature: boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
   _saved: EventEmitter<any> = new EventEmitter();
@@ -112,6 +113,10 @@ export class CommentComponentV2
         return (this.comment.time_created - secondsElapsed * 0.01) * 1000;
       })
     );
+
+    if (this.minds.user.guid === this.comment.ownerObj.guid) {
+      this.showMature = true;
+    }
   }
 
   ngAfterViewInit() {
@@ -383,5 +388,12 @@ export class CommentComponentV2
         }
       )
       .present();
+  }
+
+  /**
+   * Toggles mature visibility.
+   */
+  toggleMatureVisibility() {
+    this.showMature = !this.showMature;
   }
 }
