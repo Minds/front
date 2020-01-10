@@ -6,11 +6,14 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing';
-import { DebugElement, EventEmitter } from '@angular/core';
+import { DebugElement, EventEmitter, PLATFORM_ID } from '@angular/core';
 
 import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 
-import { CommonModule as NgCommonModule } from '@angular/common';
+import {
+  CommonModule as NgCommonModule,
+  ɵPLATFORM_BROWSER_ID,
+} from '@angular/common';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Client } from '../../../services/api/client';
@@ -39,6 +42,7 @@ import { ChannelMode } from '../../../interfaces/entities';
 import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { ChannelModulesComponent } from '../modules/modules';
 import { SiteService } from '../../../common/services/site.service';
+import { IfBrowserDirective } from '../../../common/directives/if-browser.directive';
 
 describe('ChannelSidebar', () => {
   let comp: ChannelSidebar;
@@ -113,6 +117,7 @@ describe('ChannelSidebar', () => {
           inputs: ['icon', 'iconClass'],
         }),
         IfFeatureDirective,
+        IfBrowserDirective,
       ],
       imports: [FormsModule, RouterTestingModule, NgCommonModule],
       providers: [
@@ -142,6 +147,10 @@ describe('ChannelSidebar', () => {
               isProDomain: { get: () => false },
             },
           }),
+        },
+        {
+          provide: PLATFORM_ID,
+          useValue: ɵPLATFORM_BROWSER_ID,
         },
       ],
     }).compileComponents(); // compile template and css

@@ -6,7 +6,7 @@ import { fakeAsync, tick } from '@angular/core/testing';
 import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock.spec';
 import { MockService } from '../../utils/mock';
 import { SiteService } from '../../common/services/site.service';
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, PLATFORM_ID } from '@angular/core';
 
 export let siteServiceMock = new (function() {
   var pro = () => null;
@@ -26,6 +26,7 @@ describe('NewsfeedService', () => {
       clientMock,
       socketMock,
       mindsTitleMock,
+      PLATFORM_ID,
       siteServiceMock
     );
     clientMock.response = {};

@@ -21,6 +21,7 @@ import { contextServiceMock } from '../../../tests/context-service-mock.spec';
 import { MockComponent } from '../../utils/mock';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
   selector: 'm-groups--tile',
@@ -83,7 +84,8 @@ describe('Groups List', () => {
         { provide: Client, useValue: clientMock },
         { provide: MindsTitle, useClass: Title, deps: [Title] },
         { provide: ContextService, useValue: contextServiceMock },
-        { provide: Session, useClass: Session },
+        ConfigsService,
+        Session,
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
       ],
     }).compileComponents();

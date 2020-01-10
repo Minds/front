@@ -1,9 +1,10 @@
 /**
  * Sessions
  */
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { ConfigsService } from '../common/services/configs.service';
 
+@Injectable()
 export class Session {
   loggedinEmitter: EventEmitter<any> = new EventEmitter();
   userEmitter: EventEmitter<any> = new EventEmitter();

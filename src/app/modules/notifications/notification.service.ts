@@ -91,10 +91,12 @@ export class NotificationService {
    */
   getNotifications() {
     const pollIntervalSeconds = 60;
-    // this.notificationPollTimer = timer(0, pollIntervalSeconds * 1000);
-    // this.updateNotificationCountSubscription = this.notificationPollTimer.subscribe(
-    //   () => this.updateNotificationCount()
-    // );
+    if (isPlatformBrowser(this.platformId)) {
+      this.notificationPollTimer = timer(0, pollIntervalSeconds * 1000);
+      this.updateNotificationCountSubscription = this.notificationPollTimer.subscribe(
+        () => this.updateNotificationCount()
+      );
+    }
   }
 
   updateNotificationCount() {
@@ -125,7 +127,8 @@ export class NotificationService {
     this.title.setCounter(window.Minds.notifications_count);
   }
 
-  // ngOnDestroy() {
-  //   this.updateNotificationCountSubscription.unsubscribe();
-  // }
+  ngOnDestroy() {
+    if (this.updateNotificationCountSubscription)
+      this.updateNotificationCountSubscription.unsubscribe();
+  }
 }
