@@ -1,0 +1,11 @@
+m-walletOnchainTransfer {
+  .m-walletOnchainTransfer__offchainBalance {
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
+  p.m-walletOnchainTransfer__gasNotice {
+    font-size: 15px;
+    line-height: 20px;
+  }
+}

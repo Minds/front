@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -128,8 +128,16 @@ import { FormToastComponent } from './components/form-toast/form-toast.component
 import { SsoService } from './services/sso.service';
 import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
+
+const routes: Routes = [
+  {
+    path: 'email-confirmation',
+    redirectTo: '/',
+  },
+];
 
 @NgModule({
   imports: [
@@ -139,6 +147,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormsModule,
     ReactiveFormsModule,
     PlotlyModule,
+    RouterModule.forChild(routes),
   ],
   declarations: [
     MINDS_PIPES,
@@ -245,6 +254,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ShadowboxSubmitButtonComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
+    EmailConfirmationComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -346,6 +356,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     ShadowboxSubmitButtonComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
+    EmailConfirmationComponent,
   ],
   providers: [
     SiteService,
