@@ -7,12 +7,15 @@ import {
   Output,
   EventEmitter,
   ChangeDetectorRef,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { PLAYER_ANIMATIONS } from './player.animations';
 import { VideoPlayerService, VideoSource } from './player.service';
 import isMobile from '../../../../helpers/is-mobile';
 import Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -57,14 +60,17 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: VideoPlayerService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId
   ) {}
 
   ngOnInit(): void {
-    this.service.load().then(() => {
-      this.cd.markForCheck();
-      this.cd.detectChanges();
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.service.load().then(() => {
+        this.cd.markForCheck();
+        this.cd.detectChanges();
+      });
+    }
   }
 
   ngOnDestroy(): void {}
@@ -110,7 +116,7 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
    * @return boolean
    */
   isPlayable(): boolean {
-    return this.service.isPlayable();
+    return isPlatformBrowser(this.platformId) && this.service.isPlayable();
   }
 
   /**

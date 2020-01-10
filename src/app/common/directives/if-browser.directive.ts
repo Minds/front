@@ -10,10 +10,9 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 
 @Directive({
-  selector: '[mIfBrowser]'
+  selector: '[mIfBrowser]',
 })
 export class IfBrowserDirective {
-
   private _elseTemplateRef: TemplateRef<any>;
   private _viewRef: EmbeddedViewRef<any>;
   private _elseViewRef: EmbeddedViewRef<any>;
@@ -21,21 +20,21 @@ export class IfBrowserDirective {
   constructor(
     private _templateRef: TemplateRef<any>,
     private _viewContainerRef: ViewContainerRef,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId
   ) {
-     console.log('constructing IfBrowserDirective');
     this._update();
   }
 
   _update() {
-    console.log(this.platformId, isPlatformBrowser);
     if (isPlatformBrowser(this.platformId)) {
       if (!this._viewRef) {
         this._viewContainerRef.clear();
         this._elseViewRef = void 0;
 
         if (this._templateRef) {
-          this._viewRef = this._viewContainerRef.createEmbeddedView(this._templateRef);
+          this._viewRef = this._viewContainerRef.createEmbeddedView(
+            this._templateRef
+          );
         }
       }
     } else {
@@ -44,7 +43,9 @@ export class IfBrowserDirective {
         this._viewRef = void 0;
 
         if (this._elseTemplateRef) {
-          this._elseViewRef = this._viewContainerRef.createEmbeddedView(this._elseTemplateRef);
+          this._elseViewRef = this._viewContainerRef.createEmbeddedView(
+            this._elseTemplateRef
+          );
         }
       }
     }

@@ -1,9 +1,10 @@
-import { Inject, Injector, EventEmitter } from '@angular/core';
+import { Inject, EventEmitter, PLATFORM_ID } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { Client } from './api';
 import { Session } from './session';
 import { SocketsService } from './sockets';
+import { isPlatformBrowser } from '@angular/common';
 
 export class WalletService {
   points: number | null = null;
@@ -15,25 +16,33 @@ export class WalletService {
   }>();
   private pointsTxSubscription: Subscription;
 
-  static _(session: Session, client: Client, sockets: SocketsService) {
-    return new WalletService(session, client, sockets);
+  static _(
+    session: Session,
+    client: Client,
+    sockets: SocketsService,
+    platformId
+  ) {
+    return new WalletService(session, client, sockets, platformId);
   }
 
   constructor(
     @Inject(Session) public session: Session,
     @Inject(Client) public client: Client,
-    @Inject(SocketsService) private sockets: SocketsService
+    @Inject(SocketsService) private sockets: SocketsService,
+    @Inject(PLATFORM_ID) platformId
   ) {
-    this.getBalance();
+    if (isPlatformBrowser(platformId)) {
+      this.getBalance();
 
-    this.session.isLoggedIn(is => {
-      if (is) {
-        this.getBalance(true);
-      } else {
-        this.points = null;
-        this.sync();
-      }
-    });
+      this.session.isLoggedIn(is => {
+        if (is) {
+          this.getBalance(true);
+        } else {
+          this.points = null;
+          this.sync();
+        }
+      });
+    }
 
     this.listen();
   }

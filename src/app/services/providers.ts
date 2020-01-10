@@ -116,7 +116,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: TranslationService,
     useFactory: TranslationService._,
-    deps: [Client, Storage],
+    deps: [Client, Storage, PLATFORM_ID],
   },
   {
     provide: RichEmbedService,
@@ -132,7 +132,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: AnalyticsService,
     useFactory: AnalyticsService._,
-    deps: [Router, Client, SiteService],
+    deps: [Router, Client, SiteService, PLATFORM_ID],
   },
   {
     provide: Navigation,
@@ -142,7 +142,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: WalletService,
     useFactory: WalletService._,
-    deps: [Session, Client, SocketsService],
+    deps: [Session, Client, SocketsService, PLATFORM_ID],
   },
   {
     provide: AttachmentService,

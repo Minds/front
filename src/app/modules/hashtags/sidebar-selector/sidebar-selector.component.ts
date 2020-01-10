@@ -6,11 +6,14 @@ import {
   Input,
   OnInit,
   Output,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { TopbarHashtagsService } from '../service/topbar.service';
 import { Tag } from '../types/tag';
 import { findLastIndex } from '../../../utils/array-utils';
 import { Storage } from '../../../services/storage';
+import { isPlatformServer } from '@angular/common';
 
 export type SideBarSelectorChange = { type: string; value?: any };
 
@@ -40,7 +43,8 @@ export class SidebarSelectorComponent implements OnInit {
   constructor(
     protected topbarHashtagsService: TopbarHashtagsService,
     protected changeDetectorRef: ChangeDetectorRef,
-    protected storage: Storage
+    protected storage: Storage,
+    @Inject(PLATFORM_ID) private platformId
   ) {}
 
   ngOnInit() {
@@ -60,6 +64,8 @@ export class SidebarSelectorComponent implements OnInit {
   async load() {
     this.loading = true;
     this.detectChanges();
+
+    if (isPlatformServer(this.platformId)) return; // Don't load server side, do async
 
     try {
       this.hashtags = await this.topbarHashtagsService.loadAll({

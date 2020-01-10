@@ -304,6 +304,7 @@
 <div class="minds-spacer-2x"></div>
 
 <m-wire-channel
+  *mIfBrowser
   #wire
   [(rewards)]="user.wire_rewards"
   [channel]="user"

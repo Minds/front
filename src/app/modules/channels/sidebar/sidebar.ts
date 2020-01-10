@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  ViewChild,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
@@ -8,6 +15,7 @@ import { Storage } from '../../../services/storage';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReferralsLinksComponent } from '../../wallet/tokens/referrals/links/links.component';
 import { FeaturesService } from '../../../services/features.service';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 @Component({
   moduleId: module.id,
@@ -39,7 +47,8 @@ export class ChannelSidebar {
     public onboardingService: ChannelOnboardingService,
     protected storage: Storage,
     private overlayModal: OverlayModalService,
-    public featuresService: FeaturesService
+    public featuresService: FeaturesService,
+    @Inject(PLATFORM_ID) private platformId
   ) {
     if (onboardingService && onboardingService.onClose) {
       onboardingService.onClose.subscribe(progress => {
@@ -54,6 +63,7 @@ export class ChannelSidebar {
   }
 
   checkProgress() {
+    if (isPlatformServer(this.platformId)) return;
     this.onboardingService.checkProgress().then(() => {
       this.onboardingProgress = this.onboardingService.completedPercentage;
     });
@@ -65,6 +75,7 @@ export class ChannelSidebar {
 
   shouldShowOnboardingProgress() {
     return (
+      isPlatformBrowser(this.platformId) &&
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().guid === this.user.guid &&
       !this.storage.get('onboarding_hide') &&

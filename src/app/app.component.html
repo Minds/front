@@ -1,6 +1,6 @@
 <ng-container *ngIf="ready">
   <ng-container *ngIf="!isProDomain">
-    <m-v2-topbar *mIfFeature="'top-feeds'; else legacyTopbar">
+    <m-v2-topbar>
       <ng-container search>
         <m-search--bar [defaultSizes]="false"></m-search--bar>
       </ng-container>
@@ -11,18 +11,6 @@
         ></m-notifications--topbar-toggle>
       </ng-container>
     </m-v2-topbar>
-    <ng-template #legacyTopbar>
-      <m-topbar class="m-noshadow">
-        <ng-container search>
-          <m-search--bar></m-search--bar>
-        </ng-container>
-
-        <ng-container icons>
-          <m-notifications--topbar-toggle></m-notifications--topbar-toggle>
-          <m-wallet--topbar-toggle></m-wallet--topbar-toggle>
-        </ng-container>
-      </m-topbar>
-    </ng-template>
 
     <m-sidebar--markers
       [class.has-v2-navbar]="featuresService.has('top-feeds')"
@@ -30,6 +18,7 @@
   </ng-container>
 
   <m-body
+    [class.has-markers-sidebar]="session.isLoggedIn()"
     [class.has-v2-navbar]="featuresService.has('top-feeds')"
     [class.is-pro-domain]="isProDomain"
   >

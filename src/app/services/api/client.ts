@@ -74,10 +74,6 @@ export class Client {
   getRaw(endpoint: string, data: Object = {}, options: Object = {}) {
     endpoint += '?' + this.buildParams(data);
 
-    const STATE_KEY = makeStateKey(
-      `http-${endpoint}` + JSON.stringify(options)
-    );
-
     return new Promise((resolve, reject) => {
       this.http
         .get(this.base + endpoint, this.buildOptions(options, true))
@@ -86,10 +82,6 @@ export class Client {
             var data: any = res;
             if (!data || data.status !== 'success') return reject(data);
 
-            if (isPlatformServer(this.platformId)) {
-              const dump = JSON.stringify(data);
-              if (dump.length < 10000) this.transferState.set(STATE_KEY, dump);
-            }
             return resolve(data);
           },
           err => {
@@ -110,6 +102,7 @@ export class Client {
    * Return a POST request
    */
   post(endpoint: string, data: Object = {}, options: Object = {}) {
+    console.log(`POST: ${endpoint}`);
     return new Promise((resolve, reject) => {
       this.http
         .post(
@@ -182,6 +175,7 @@ export class Client {
    * Return a PUT request
    */
   put(endpoint: string, data: Object = {}, options: Object = {}) {
+    console.log(`PUT: ${endpoint}`);
     return new Promise((resolve, reject) => {
       this.http
         .put(
@@ -217,6 +211,7 @@ export class Client {
    * Return a DELETE request
    */
   delete(endpoint: string, data: Object = {}, options: Object = {}) {
+    console.log(`DELETE: ${endpoint}`);
     return new Promise((resolve, reject) => {
       this.http
         .delete(this.base + endpoint, this.buildOptions(options))

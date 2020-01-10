@@ -1,4 +1,11 @@
-import { Component, Injector, SkipSelf, ViewChild } from '@angular/core';
+import {
+  Component,
+  Injector,
+  SkipSelf,
+  ViewChild,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -22,6 +29,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -70,7 +78,8 @@ export class NewsfeedSubscribedComponent {
     public feedsService: FeedsService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    @Inject(PLATFORM_ID) private platformId
   ) {
     this.title.setTitle('Newsfeed');
 
@@ -118,6 +127,7 @@ export class NewsfeedSubscribedComponent {
   }
 
   load(refresh: boolean = false, forceSync: boolean = false) {
+    if (isPlatformServer(this.platformId)) return;
     if (this.featuresService.has('es-feeds')) {
       this.loadFromService(refresh, forceSync);
     } else {

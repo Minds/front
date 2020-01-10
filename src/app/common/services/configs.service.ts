@@ -12,13 +12,12 @@ export class ConfigsService {
   async loadFromRemote() {
     try {
       this.configs = await this.client.get('api/v1/minds/config');
-      console.log(this.configs);
     } catch (err) {
       console.error(err);
     }
   }
 
   get(key) {
-    return this.configs[key] || {};
+    return this.configs[key] || null;
   }
 }

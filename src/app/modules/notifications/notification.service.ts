@@ -116,12 +116,12 @@ export class NotificationService {
    * Sync Notifications to the topbar Counter
    */
   sync() {
-    for (var i in window.Minds.navigation.topbar) {
-      if (window.Minds.navigation.topbar[i].name === 'Notifications') {
-        window.Minds.navigation.topbar[i].extras.counter =
-          window.Minds.notifications_count;
-      }
-    }
+    // for (var i in window.Minds.navigation.topbar) {
+    //   if (window.Minds.navigation.topbar[i].name === 'Notifications') {
+    //     window.Minds.navigation.topbar[i].extras.counter =
+    //       window.Minds.notifications_count;
+    //   }
+    // }
     this.title.setCounter(window.Minds.notifications_count);
   }
 

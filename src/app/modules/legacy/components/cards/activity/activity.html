@@ -126,6 +126,7 @@
   </div>
 
   <m-translate
+    *mIfBrowser
     [open]="translateToggle"
     [entity]="activity"
     [translateEvent]="translateEvent"
@@ -432,12 +433,14 @@
   </div>
 </div>
 
-<m-comments__tree
-  *ngIf="commentsToggle"
-  [entity]="activity"
-  [canDelete]="canDelete"
->
-</m-comments__tree>
+<ng-container *mIfBrowser>
+  <m-comments__tree
+    *ngIf="commentsToggle"
+    [entity]="activity"
+    [canDelete]="canDelete"
+  >
+  </m-comments__tree>
+</ng-container>
 
 <div
   class="m-activity--boost-notice mdl-card__supporting-text mdl-color--blue-grey-50"

@@ -26,9 +26,6 @@ export class CookieHttpInterceptorService implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     request = request.clone({ withCredentials: true });
     if (!isPlatformBrowser(this.platformId)) {
-      // Be careful! This should only be done on the server side!!
-      // hrow xhr2.prototype;
-      // xhr2.prototype._restrictedHeaders = {};
       let req: express.Request = this.injector.get(REQUEST);
       let rootDomain = req.hostname
         .split('.')
@@ -42,8 +39,6 @@ export class CookieHttpInterceptorService implements HttpInterceptor {
           },
           ''
         );
-        console.log(cookieString);
-        // throw xhr2.prototype;
         request = request.clone({
           headers: request.headers.set('Cookie', cookieString),
         });

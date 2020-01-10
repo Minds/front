@@ -86,7 +86,6 @@ export class CarouselComponent {
    * If the parent set edit mode
    */
   set _editMode(value: boolean) {
-    console.log('[carousel]: edit mode event received');
     //was in edit more, now settings not in edit more
     if (this.editing && !value) {
       console.log('[carousel]: edit mode ended');

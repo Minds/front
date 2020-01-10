@@ -7,24 +7,18 @@ import { readFileSync } from 'fs';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 import { enableProdMode } from '@angular/core';
+import { XhrFactory } from '@angular/common/http';
+import { NgxRequest, NgxResponce } from '@gorniv/ngx-universal';
 
 import * as express from 'express';
 import * as proxy from 'express-http-proxy';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
-import { NgxRequest, NgxResponce } from '@gorniv/ngx-universal';
-
-import * as xhr2 from 'xhr2';
 
 const domino = require('domino');
 
 // Faster server renders w/ Prod mode (dev mode never needed)
 enableProdMode();
-
-// activate cookie for server-side rendering
-xhr2.prototype._restrictedHeaders.cookie = false;
-xhr2.prototype._restrictedHeaders.cookie2 = false;
-// xhr2.prototype._privateHeaders = {};
 
 // Express server
 const app = express();
@@ -42,6 +36,7 @@ const win = domino.createWindow(template);
 global['window'] = win;
 global['Node'] = win.Node;
 global['navigator'] = win.navigator;
+global['screen'] = { width: 0, height: 0 };
 global['Event'] = win.Event;
 global['Event']['prototype'] = win.Event.prototype;
 global['document'] = win.document;
@@ -76,7 +71,6 @@ global['window']['Minds'] = {
     'top-feeds-by-age': true,
   },
 };
-global['XMLHttpRequest'] = xhr2; // Needed?
 global['window']['localStorage'] = {
   getItem: () => null,
   setItem: () => {},
@@ -124,8 +118,43 @@ app.set('views', DIST_FOLDER);
 // Server static files from dist folder
 app.get('*.*', express.static(DIST_FOLDER));
 
+// Socket.io hitting wrong endpoint (dev?)
+app.get('/socket.io', (req, res) => {
+  res.send('You are using the wrong domain.');
+});
+
+// /undefined is an issue with angular
+app.get('/undefined', (req, res) => {
+  res.send('There was problem');
+});
+
+// cache
+const NodeCache = require('node-cache');
+const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
+
+const cache = () => {
+  return (req, res, next) => {
+    const sessKey = req.cookies['minds_sess'] || 'loggedout';
+    const key = `__express__/${sessKey}/` + (req.originalUrl || req.url);
+    const exists = myCache.has(key);
+    if (exists) {
+      console.log(`from cache: ${key}`);
+      const cachedBody = myCache.get(key);
+      res.send(cachedBody);
+      return;
+    } else {
+      res.sendResponse = res.send;
+      res.send = body => {
+        myCache.set(key, body);
+        res.sendResponse(body);
+      };
+      next();
+    }
+  };
+};
+
 // All regular routes use the Universal engine
-app.get('*', (req, res) => {
+app.get('*', cache(), (req, res) => {
   const http =
     req.headers['x-forwarded-proto'] === undefined
       ? 'http'

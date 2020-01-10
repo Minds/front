@@ -47,13 +47,9 @@ export class SidebarMarkersComponent {
       return;
     }
 
-    const mBody: any = document.getElementsByTagName('m-body')[0];
-
     if (showMarkerSidebar) {
-      mBody.classList.add('has-markers-sidebar');
       this.createGroupsSideBar();
     } else {
-      mBody.classList.remove('has-markers-sidebar');
       this.host.viewContainerRef.clear();
     }
     this.showMarkerSidebar = showMarkerSidebar;

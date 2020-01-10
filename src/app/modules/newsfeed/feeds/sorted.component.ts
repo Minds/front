@@ -5,6 +5,8 @@ import {
   OnInit,
   SkipSelf,
   ViewChild,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { take, map, mergeMap } from 'rxjs/operators';
@@ -26,6 +28,7 @@ import { NewsfeedHashtagSelectorService } from '../services/newsfeed-hashtag-sel
 import { FeedsService } from '../../../common/services/feeds.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'm-newsfeed--sorted',
@@ -75,7 +78,8 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     public feedsService: FeedsService,
     protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    @Inject(PLATFORM_ID) private platformId
   ) {
     this.title.setTitle('Newsfeed');
 
@@ -209,6 +213,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     refresh: boolean = false,
     forceSync: boolean = false
   ) {
+    if (isPlatformServer(this.platformId)) return; // Logged in newsfeed for browser only
     if (refresh) {
       this.feedsService.clear();
     }

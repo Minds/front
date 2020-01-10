@@ -1,4 +1,4 @@
-import { Component, ViewChild, SkipSelf, Injector } from '@angular/core';
+import { Component, ViewChild, SkipSelf, Injector, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -31,7 +31,7 @@ export class ChannelComponent {
   isLocked: boolean = false;
 
   username: string;
-  user: MindsUser;
+  @Input() user: MindsUser;
   offset: string = '';
   moreData: boolean = true;
   inProgress: boolean = false;
@@ -77,7 +77,7 @@ export class ChannelComponent {
       this.editing = false;
 
       if (params['username']) {
-        this.changed = this.username !== params['username'];
+        this.changed = this.user.username !== params['username'];
         this.username = params['username'];
 
         feedChanged = true;
@@ -99,6 +99,7 @@ export class ChannelComponent {
 
       if (this.changed) {
         this.load();
+        console.log('reloading channel...');
       } else if (feedChanged) {
         console.log('reload feed with new settings');
       }
