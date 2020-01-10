@@ -37,7 +37,8 @@ export class GroupsCreator {
     public session: Session,
     public service: GroupsService,
     public router: Router,
-    public title: MindsTitle
+    public title: MindsTitle,
+    private groupsService: GroupsService
   ) {
     this.title.setTitle('Create Group');
   }
@@ -101,6 +102,7 @@ export class GroupsCreator {
             }
           )
           .then(() => {
+            this.groupsService.updateMembership(true, guid);
             this.router.navigate(['/groups/profile', guid]);
           });
       })

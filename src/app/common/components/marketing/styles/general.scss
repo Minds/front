@@ -119,6 +119,13 @@
     }
   }
 
+  a.m-marketing__link {
+    text-decoration: none;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+  }
+
   .m-marketing__links {
     @media screen and (max-width: $m-grid-min-vp) {
       text-align: center;
@@ -168,5 +175,111 @@
         }
       }
     }
+  }
+
+  span.m-marketing__imageUX {
+    span.m-marketing__imageTick {
+      border-radius: 50%;
+      background-color: #4fc3a9;
+      color: white;
+
+      width: 63px;
+      height: 63px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      box-shadow: 0 0 39px -4px rgba(0, 0, 0, 0.5);
+
+      z-index: 3;
+
+      @media screen and (max-width: $max-mobile) {
+        width: 10vw;
+        height: 10vw;
+
+        font-size: 5vw;
+      }
+    }
+
+    .m-marketing__imageTick--left {
+      position: absolute;
+      bottom: 62px;
+      left: -21px;
+
+      @media screen and(min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
+        bottom: -23%;
+        left: 8.5%;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        //bottom: -116px;
+        //left: 2px;
+        bottom: -27%;
+        left: 2.5%;
+      }
+    }
+
+    .m-marketing__imageTick--right {
+      position: absolute;
+      bottom: 8px;
+      left: -45px;
+
+      @media screen and(min-width: $max-mobile) and (max-width: $m-grid-min-vp) {
+        bottom: 0;
+        right: 0;
+        left: auto;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        //bottom: -116px;
+        //left: 2px;
+        bottom: -27%;
+        left: 2.5%;
+      }
+    }
+
+    img {
+      box-shadow: 0 0 39px -4px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  .m-marketing__quotation {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 0 auto;
+
+    @media screen and(min-width: $m-grid-min-vp) {
+      width: 730px;
+    }
+
+    h3 {
+      font-size: 28px;
+      font-weight: bold;
+      line-height: 37px;
+      margin-bottom: 0;
+    }
+
+    h4 {
+      font-size: 14px;
+      line-height: 19px;
+      margin: 0;
+
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+    }
+  }
+
+  .mf-button.mf-button--alt.mf-button--gradient {
+    background: #5dbac0; /* Old Browsers */
+    background: linear-gradient(
+      45deg,
+      #4eb69f 0%,
+      #4fc3aa 49%,
+      #4eb69f 49%,
+      #4fc3aa 100%
+    );
   }
 }

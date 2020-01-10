@@ -27,10 +27,21 @@
           ></m-channel--badges>
         </a>
       </div>
+      <a
+        class="m-mature-text-toggle"
+        (click)="toggleMatureVisibility()"
+        *ngIf="comment.mature"
+        [ngClass]="{ 'm-redButton': showMature }"
+      >
+        <i class="material-icons m-material-icons-inline">explicit</i>
+      </a>
+
       <p
         [hidden]="editing"
-        class="m-commentBubble__message"
+        class="m-commentBubble__message m-mature-message-content"
         [innerHtml]="comment.description || '' | tags"
+        [ngClass]="{ 'm-mature-text': comment.mature && !showMature }"
+        (click)="!showMature ? toggleMatureVisibility() : null"
       ></p>
 
       <p class="m-comment--error-label" *ngIf="error">

@@ -26,6 +26,7 @@ m-newsfeed__tiles {
     margin: 4px;
     overflow: hidden;
     transform-style: preserve-3d;
+
     @include m-theme() {
       background-color: rgba(themed($m-black), 0.65);
     }
