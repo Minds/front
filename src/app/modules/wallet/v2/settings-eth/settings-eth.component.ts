@@ -1,27 +1,21 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { WalletDashboardService } from '../dashboard.service';
 
 @Component({
   selector: 'm-walletSettings--eth',
   templateUrl: './settings-eth.component.html',
 })
 export class WalletSettingsETHComponent implements OnInit {
-  @Output() showTokenSettings: EventEmitter<any> = new EventEmitter();
-  constructor() {}
+  wallet;
+  showModal = false;
+  @Output() scrollToTokenSettings: EventEmitter<any> = new EventEmitter();
+  constructor(protected walletService: WalletDashboardService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.load();
+  }
 
-  scrollToSettings() {
-    const settingsEl = document.getElementById('tokenSettings');
-    if (!settingsEl) {
-      this.showTokenSettings.emit();
-    }
-
-    setTimeout(
-      () =>
-        document.getElementById('dashboardViewsTabs').scrollIntoView({
-          behavior: 'smooth',
-        }),
-      0
-    );
+  load() {
+    this.wallet = this.walletService.getWallet();
   }
 }

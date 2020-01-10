@@ -30,14 +30,19 @@ export class WalletBalanceUsdV2Component implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.load();
+  }
+
+  async load() {
     this.nextPayoutDate = moment()
       .endOf('month')
       .format('ddd Do MMM');
 
-    // Get stripe account
-    this.walletService.getStripeAccount().then(response => {
-      this.stripeAccount = response;
-    });
+    this.stripeAccount = await this.walletService.getStripeAccount();
+
+    // this.walletService.getStripeAccount().then(response => {
+    //   this.stripeAccount = response;
+    // });
     console.log(this.stripeAccount);
     if (!this.stripeAccount) {
       this.pendingBalance = this.formatBalance(0);

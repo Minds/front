@@ -15,13 +15,10 @@ export default function toFriendlyCryptoVal(
   decimalCount = decimalCount > 17 ? 17 : decimalCount;
   decimalCount = decimalCount < 0 ? 0 : decimalCount;
 
-  console.log(longCryptoVal);
   const longVal = new BN(longCryptoVal.toString());
   const friendlyCryptoVal =
     longVal.div(new BN(10).pow(new BN(18 - decimalCount))).toNumber() /
     Math.pow(10, decimalCount);
-
-  console.log('friendly', friendlyCryptoVal);
 
   return friendlyCryptoVal;
 }

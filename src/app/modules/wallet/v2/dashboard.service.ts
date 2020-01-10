@@ -17,124 +17,169 @@ import {
 
 import fakeData from './fake-data';
 
-export interface WalletCurrency {
-  label: string;
-  unit: string;
-  balance: number;
-  address?: string;
-}
-export interface WalletState {
-  tokens: WalletCurrency;
-  offchain: WalletCurrency;
-  onchain: WalletCurrency;
-  receiver: WalletCurrency;
-  usd: WalletCurrency;
-  eth: WalletCurrency;
-  btc: WalletCurrency;
-  loading: boolean;
-}
+// export interface WalletCurrency {
+//   label: string;
+//   unit: string;
+//   balance: number;
+//   address?: string;
+// }
+// export interface WalletState {
+//   tokens: WalletCurrency;
+//   offchain: WalletCurrency;
+//   onchain: WalletCurrency;
+//   receiver: WalletCurrency;
+//   usd: WalletCurrency;
+//   eth: WalletCurrency;
+//   btc: WalletCurrency;
+//   loading: boolean;
+// }
 
-let _state: WalletState = {
-  tokens: {
-    label: 'Tokens',
-    unit: 'tokens',
-    balance: 0,
-    address: null,
-  },
-  offchain: {
-    label: 'Off-chain',
-    unit: 'tokens',
-    balance: 0,
-    address: 'offchain',
-  },
-  onchain: {
-    label: 'On-chain',
-    unit: 'tokens',
-    balance: 0,
-    address: null,
-  },
-  receiver: {
-    label: 'Receiver',
-    unit: 'tokens',
-    balance: 0,
-    address: null,
-  },
-  usd: {
-    label: 'USD',
-    unit: 'usd',
-    balance: 0,
-    address: null,
-  },
-  eth: {
-    label: 'Ether',
-    unit: 'eth',
-    balance: 0,
-    address: null,
-  },
-  btc: {
-    label: 'Bitcoin',
-    unit: 'btc',
-    balance: 0,
-    address: null,
-  },
-  loading: false,
-};
+// let _state: WalletState = {
+//   tokens: {
+//     label: 'Tokens',
+//     unit: 'tokens',
+//     balance: 0,
+//     address: null,
+//   },
+//   offchain: {
+//     label: 'Off-chain',
+//     unit: 'tokens',
+//     balance: 0,
+//     address: 'offchain',
+//   },
+//   onchain: {
+//     label: 'On-chain',
+//     unit: 'tokens',
+//     balance: 0,
+//     address: null,
+//   },
+//   receiver: {
+//     label: 'Receiver',
+//     unit: 'tokens',
+//     balance: 0,
+//     address: null,
+//   },
+//   usd: {
+//     label: 'USD',
+//     unit: 'usd',
+//     balance: 0,
+//     address: null,
+//   },
+//   eth: {
+//     label: 'Ether',
+//     unit: 'eth',
+//     balance: 0,
+//     address: null,
+//   },
+//   btc: {
+//     label: 'Bitcoin',
+//     unit: 'btc',
+//     balance: 0,
+//     address: null,
+//   },
+//   loading: false,
+// };
 @Injectable()
 export class WalletDashboardService {
   walletLoaded = false;
   totalTokens = 0;
+  wallet: any = {
+    tokens: {
+      label: 'Tokens',
+      unit: 'tokens',
+      balance: '0',
+      address: null,
+    },
+    offchain: {
+      label: 'Off-chain',
+      unit: 'tokens',
+      balance: '0',
+      address: 'offchain',
+    },
+    onchain: {
+      label: 'On-chain',
+      unit: 'tokens',
+      balance: '0',
+      address: null,
+    },
+    receiver: {
+      label: 'Receiver',
+      unit: 'tokens',
+      balance: '0',
+      address: null,
+    },
+    usd: {
+      label: 'USD',
+      unit: 'usd',
+      balance: '0',
+      address: null,
+    },
+    eth: {
+      label: 'Ether',
+      unit: 'eth',
+      balance: '0',
+      address: null,
+    },
+    btc: {
+      label: 'Bitcoin',
+      unit: 'btc',
+      balance: '0',
+      address: null,
+    },
+    // loading: false,
+  };
 
-  private store = new BehaviorSubject<WalletState>(_state);
-  private state$ = this.store.asObservable();
+  // private store = new BehaviorSubject<WalletState>(_state);
+  // private state$ = this.store.asObservable();
 
-  tokens$ = this.state$.pipe(
-    map(state => state.tokens),
-    distinctUntilChanged()
-  );
-  offchain$ = this.state$.pipe(
-    map(state => state.offchain),
-    distinctUntilChanged()
-  );
-  onchain$ = this.state$.pipe(
-    map(state => state.onchain),
-    distinctUntilChanged()
-  );
-  receiver$ = this.state$.pipe(
-    map(state => state.receiver),
-    distinctUntilChanged()
-  );
-  usd$ = this.state$.pipe(
-    map(state => state.usd),
-    distinctUntilChanged()
-  );
-  eth$ = this.state$.pipe(
-    map(state => state.eth),
-    distinctUntilChanged()
-  );
-  btc$ = this.state$.pipe(
-    map(state => state.btc),
-    distinctUntilChanged()
-  );
+  // tokens$ = this.state$.pipe(
+  //   map(state => state.tokens),
+  //   distinctUntilChanged()
+  // );
+  // offchain$ = this.state$.pipe(
+  //   map(state => state.offchain),
+  //   distinctUntilChanged()
+  // );
+  // onchain$ = this.state$.pipe(
+  //   map(state => state.onchain),
+  //   distinctUntilChanged()
+  // );
+  // receiver$ = this.state$.pipe(
+  //   map(state => state.receiver),
+  //   distinctUntilChanged()
+  // );
+  // usd$ = this.state$.pipe(
+  //   map(state => state.usd),
+  //   distinctUntilChanged()
+  // );
+  // eth$ = this.state$.pipe(
+  //   map(state => state.eth),
+  //   distinctUntilChanged()
+  // );
+  // btc$ = this.state$.pipe(
+  //   map(state => state.btc),
+  //   distinctUntilChanged()
+  // );
 
-  loading$ = this.state$.pipe(map(state => state.loading));
+  // loading$ = this.state$.pipe(map(state => state.loading));
 
   /**
    * Viewmodel that resolves once all the data is ready (or updated)...
    */
-  wallet$: Observable<WalletState> = combineLatest(
-    this.tokens$,
-    this.onchain$,
-    this.receiver$,
-    this.offchain$,
-    this.usd$,
-    this.eth$,
-    this.btc$,
-    this.loading$
-  ).pipe(
-    map(([tokens, onchain, receiver, offchain, usd, eth, btc, loading]) => {
-      return { tokens, onchain, receiver, offchain, usd, eth, btc, loading };
-    })
-  );
+  // wallet$: Observable<WalletState> = combineLatest([
+  //   this.tokens$,
+  //   this.onchain$,
+  //   this.receiver$,
+  //   this.offchain$,
+  //   this.usd$,
+  //   this.eth$,
+  //   this.btc$,
+  //   this.loading$,
+  // ]).pipe(
+  //   map(([tokens, onchain, receiver, offchain, usd, eth, btc, loading]) => {
+  //     return { tokens, onchain, receiver, offchain, usd, eth, btc, loading };
+  //   })
+  // );
 
   constructor(
     private client: Client,
@@ -142,18 +187,20 @@ export class WalletDashboardService {
     protected tokenContract: TokenContractService,
     protected session: Session
   ) {
-    /**
-     * Subscribe to multiple streams to trigger state updates
-     */
-    combineLatest(this.tokens$, this.pagination$)
-      .pipe(
-        switchMap(([criteria, pagination]) => {
-          return this.findAllUsers(criteria, pagination);
-        })
-      )
-      .subscribe(users => {
-        this.updateState({ ..._state, users, loading: false });
-      });
+    // /**
+    //  * Subscribe to multiple streams to trigger state updates
+    //  */
+    // combineLatest([this.tokens$, this.pagination$])
+    //   .pipe(
+    //     switchMap(([criteria, pagination]) => {
+    //       return this.findAllUsers(criteria, pagination);
+    //     })
+    //   )
+    //   .subscribe(users => {
+    //     this.updateState({ ..._state, users, loading: false });
+    //   });
+    // // TODOOJM make sure I unsubscribe to this
+    // // WARNING if state is updating both of 'tokens' and pogination'
   }
 
   // TODOOJM: make wallet an observable and have the dashboard component subscribe to it
@@ -258,7 +305,7 @@ export class WalletDashboardService {
           await this.client.get('api/v2/payments/stripe/connect')
         );
         if (stripeAccount && stripeAccount.totalBalance) {
-          this.wallet.usd.value =
+          this.wallet.usd.balance =
             (stripeAccount.totalBalance.amount +
               stripeAccount.pendingBalance.amount) *
             100;

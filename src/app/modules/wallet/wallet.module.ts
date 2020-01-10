@@ -115,7 +115,9 @@ const walletRoutes: Routes = [
     ],
   },
   {
-    path: 'v2wallet', // TODOOJM: choose actual path. also allow **
+    path: 'v2wallet', // TODOOJM: choose actual path.
+    // TODOOJM:IMPORTANT - when switching, also change 'v2wallet'... in dashboard.html (scrollToTokenSettings()).
+    // TODOOJM: also allow **
     redirectTo: 'v2wallet/tokens/overview',
     pathMatch: 'full',
   },

@@ -14,6 +14,8 @@ import {
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { WalletDashboardService } from '../dashboard.service';
+
 import { WithdrawContractService } from '../../../blockchain/contracts/withdraw-contract.service';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 @Component({
@@ -24,7 +26,7 @@ import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 })
 export class WalletOnchainTransferComponent implements OnInit {
   // TODOOJM make sure this is accurate even if user has updated address in settings
-  @Input() wallet;
+  wallet;
   balance: number = 0;
 
   alreadyTransferredToday: boolean = false;
@@ -45,13 +47,25 @@ export class WalletOnchainTransferComponent implements OnInit {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected contract: WithdrawContractService,
-    protected web3Wallet: Web3WalletService
+    protected web3Wallet: Web3WalletService,
+    protected walletService: WalletDashboardService
   ) {}
 
   // TODOOJM reset after closing modal
   async ngOnInit() {
-    this.balance = this.wallet.offchain.balance;
     this.load();
+  }
+
+  get amount() {
+    return this.form.get('amount');
+  }
+  async load() {
+    this.inProgress = true;
+    this.error = '';
+    this.detectChanges();
+    this.wallet = await this.walletService.getWallet();
+
+    this.balance = this.wallet.offchain.balance;
 
     this.form = new FormGroup({
       amount: new FormControl(this.balance, [
@@ -71,18 +85,6 @@ export class WalletOnchainTransferComponent implements OnInit {
     } catch (e) {
       this.blockTransfersToday();
     }
-    this.detectChanges();
-  }
-
-  get amount() {
-    return this.form.get('amount');
-  }
-
-  async load() {
-    this.balance = this.wallet.offchain.balance;
-
-    this.inProgress = true;
-    this.error = '';
     this.detectChanges();
 
     // this.setAmount(this.amount);

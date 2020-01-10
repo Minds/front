@@ -25,7 +25,7 @@
               <m-walletTokenOnboarding
                 *ngIf="activeCurrencyId === 'tokens' && !onboardingComplete"
                 (onboardingCompleted)="onboardingCompleted()"
-                (showTokenSettings)="updateView('settings')"
+                (scrollToTokenSettings)="scrollToTokenSettings()"
               ></m-walletTokenOnboarding>
               <m-walletBalance--tokens
                 [wallet]="wallet"
@@ -77,7 +77,7 @@
                     <m-walletSettings--eth
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'eth'"
-                      (showTokenSettings)="updateView('settings')"
+                      (scrollToTokenSettings)="scrollToTokenSettings()"
                     ></m-walletSettings--eth>
                     <m-walletSettings--btc
                       class="m-walletDashboardViews__view"

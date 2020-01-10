@@ -83,10 +83,7 @@
     <span>{{ nextPayoutDate | timediff }}</span> (Daily at 2:00am UTC)
   </div>
   <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
-    <m-walletOnchainTransfer
-      *ngIf="wallet"
-      [wallet]="wallet"
-    ></m-walletOnchainTransfer>
+    <m-walletOnchainTransfer *ngIf="wallet"></m-walletOnchainTransfer>
   </m-walletModal>
 </ng-container>
 <ng-template #loading>
