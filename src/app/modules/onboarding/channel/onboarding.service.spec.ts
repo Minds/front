@@ -2,6 +2,7 @@ import { ChannelOnboardingService } from './onboarding.service';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { fakeAsync } from '@angular/core/testing';
 import { sessionMock } from '../../../../tests/session-mock.spec';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 
 describe('ChannelOnboardingService', () => {
   let service: ChannelOnboardingService;
@@ -9,7 +10,12 @@ describe('ChannelOnboardingService', () => {
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    service = new ChannelOnboardingService(clientMock, sessionMock);
+    featuresServiceMock.mock('onboarding-december-2019', false);
+    service = new ChannelOnboardingService(
+      clientMock,
+      sessionMock,
+      featuresServiceMock
+    );
     clientMock.response = {};
 
     const url = 'api/v2/onboarding/progress';

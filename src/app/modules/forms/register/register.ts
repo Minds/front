@@ -5,23 +5,37 @@ import {
   Input,
   Output,
   NgZone,
+  OnInit,
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
+import { PopoverComponent } from '../popover-validation/popover.component';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-form-register',
   templateUrl: 'register.html',
 })
-export class RegisterForm {
+export class RegisterForm implements OnInit {
   @Input() referrer: string;
   @Input() parentId: string = '';
+  @Input() showTitle: boolean = false;
+  @Input() showBigButton: boolean = false;
+  @Input() showPromotions: boolean = true;
+  @Input() showLabels: boolean = false;
+  @Input() showInlineErrors: boolean = false;
 
   @Output() done: EventEmitter<any> = new EventEmitter();
 
@@ -32,6 +46,7 @@ export class RegisterForm {
   captcha: string;
   takenUsername: boolean = false;
   usernameValidationTimeout: any;
+  passwordFieldValid: boolean = false;
 
   showFbForm: boolean = false;
 
@@ -40,6 +55,7 @@ export class RegisterForm {
   minds = window.Minds;
 
   @ViewChild('reCaptcha', { static: false }) reCaptcha: ReCaptchaComponent;
+  @ViewChild('popover', { static: false }) popover: PopoverComponent;
 
   constructor(
     public session: Session,
@@ -49,21 +65,46 @@ export class RegisterForm {
     private experiments: ExperimentsService,
     private routerHistoryService: RouterHistoryService
   ) {
-    this.form = fb.group({
-      username: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      password2: ['', Validators.required],
-      tos: [false],
-      exclusive_promotions: [false],
-      captcha: [''],
-      previousUrl: this.routerHistoryService.getPreviousUrl(),
-    });
+    this.form = fb.group(
+      {
+        username: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(4),
+            Validators.maxLength(128),
+          ],
+        ],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', Validators.required],
+        password2: ['', [Validators.required]],
+        tos: [false, Validators.requiredTrue],
+        exclusive_promotions: [false],
+        captcha: [''],
+        previousUrl: this.routerHistoryService.getPreviousUrl(),
+      },
+      { validators: [this.passwordConfirmingValidator] }
+    );
   }
 
   ngOnInit() {
     if (this.reCaptcha) {
       this.reCaptcha.reset();
+    }
+  }
+
+  showError(field: string) {
+    return (
+      this.showInlineErrors &&
+      this.form.get(field).invalid &&
+      this.form.get(field).touched &&
+      this.form.get(field).dirty
+    );
+  }
+
+  passwordConfirmingValidator(c: AbstractControl): ValidationErrors | null {
+    if (c.get('password').value !== c.get('password2').value) {
+      return { passwordConfirming: true };
     }
   }
 
@@ -76,7 +117,7 @@ export class RegisterForm {
       return;
     }
 
-    //re-enable cookies
+    // re-enable cookies
     document.cookie =
       'disabled_cookies=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
@@ -103,7 +144,6 @@ export class RegisterForm {
 
         this.inProgress = false;
         this.session.login(data.user);
-
         this.done.next(data.user);
       })
       .catch(e => {
@@ -114,11 +154,11 @@ export class RegisterForm {
         }
 
         if (e.status === 'failed') {
-          //incorrect login details
+          // incorrect login details
           this.errorMessage = 'RegisterException::AuthenticationFailed';
           this.session.logout();
         } else if (e.status === 'error') {
-          //two factor?
+          // two factor?
           this.errorMessage = e.message;
           this.session.logout();
         } else {
@@ -159,5 +199,19 @@ export class RegisterForm {
       this.validateUsername.bind(this),
       500
     );
+  }
+
+  onPasswordFocus() {
+    if (this.form.value.password.length > 0) {
+      this.popover.show();
+    }
+  }
+
+  onPasswordBlur() {
+    this.popover.hide();
+  }
+
+  onPopoverChange(valid: boolean) {
+    this.passwordFieldValid = !valid;
   }
 }

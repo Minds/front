@@ -22,6 +22,7 @@ import { TokenRewardsOnboardingComponent } from './channel/rewards/rewards.compo
 import { Client } from '../../services/api/client';
 import { SuggestionsModule } from '../suggestions/suggestions.module';
 import { Session } from '../../services/session';
+import { FeaturesService } from '../../services/features.service';
 
 @NgModule({
   imports: [
@@ -49,7 +50,7 @@ import { Session } from '../../services/session';
     OnboardingService,
     {
       provide: ChannelOnboardingService,
-      deps: [Client, Session],
+      deps: [Client, Session, FeaturesService],
       useFactory: ChannelOnboardingService._,
     },
   ],

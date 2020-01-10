@@ -67,9 +67,10 @@ $blue-light: #71aae7;
 $green-dark: #388e3c;
 $green: #4caf50;
 $green-light: #8bc34a;
-$aqua: #4fc3a9;
+$aqua: #5dbac0;
 $amber-dark: #ffa000;
 $amber: #ffc108;
+$amber-medium: #fed12f;
 $amber-light: #ffecb3;
 $red-dark: #c62828;
 $red: #f44336;
@@ -121,6 +122,7 @@ $themes: (
     m-green-light: $green-light,
     m-amber-dark: $amber-dark,
     m-amber: $amber,
+    m-amber-medium: $amber-medium,
     m-amber-light: $amber-light,
     m-red-dark: $red-dark,
     m-red: $red,
@@ -183,6 +185,7 @@ $themes: (
     m-green-light: lighten($green-light, $percent),
     m-amber-dark: lighten($amber-dark, $percent),
     m-amber: lighten($amber, $percent),
+    m-amber-medium: lighten($amber-medium, $percent),
     m-amber-light: lighten($amber-light, $percent),
     m-red-dark: lighten($red-dark, $percent),
     m-red: lighten($red, $percent),
@@ -243,6 +246,7 @@ $m-green: 'm-green';
 $m-green-light: 'm-green-light';
 $m-amber-dark: 'm-amber-dark';
 $m-amber: 'm-amber';
+$m-amber-medium: 'm-amber-medium';
 $m-amber-light: 'm-amber-light';
 $m-red-dark: 'm-red-dark';
 $m-red: 'm-red';

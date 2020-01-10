@@ -320,6 +320,15 @@ export class CommentsThreadComponent implements OnInit {
   }
 
   ngOnChanges(changes) {
-    //  console.log('[comment:list]: on changes', changes);
+    // console.log('[comment:thread]: on changes', changes);
+
+    // reload on entity change.
+    if (
+      changes.entity &&
+      changes.entity.previousValue &&
+      changes.entity.previousValue.guid !== changes.entity.currentValue.guid
+    ) {
+      this.load(true);
+    }
   }
 }
