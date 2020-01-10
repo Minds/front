@@ -29,7 +29,7 @@ app.use(compression());
 app.use(cookieparser());
 
 const PORT = process.env.PORT || 4200;
-const DIST_FOLDER = join(process.cwd(), 'dist');
+const DIST_FOLDER = join(process.cwd(), 'dist/en');
 const template = readFileSync(join(DIST_FOLDER, 'index.html')).toString();
 const win = domino.createWindow(template);
 

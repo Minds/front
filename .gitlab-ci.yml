@@ -1,4 +1,4 @@
-image: markharding/minds-front-base
+image: minds/ci-front:latest
 
 stages:
   - test
@@ -17,7 +17,7 @@ variables:
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
 
 test:
-  image: circleci/node:8-browsers
+  image: circleci/node:13-browsers
   stage: test
   script:
     - npm ci
@@ -88,6 +88,8 @@ build:review:
     - npm run postinstall
     - gulp build.sass && gulp build.sass ##weird build needs to be run twice for now
     - sh build/base-locale.sh dist
+    - ng run minds:server:production
+    - npm run compile:server
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
@@ -155,8 +157,8 @@ prepare:review:
     - docker:dind
   script:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-    - docker build -t $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID -f containers/front-init/Dockerfile dist/.
-    - docker push $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID
+    - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
+    - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
   dependencies:
     - build:review
   except:
@@ -229,12 +231,12 @@ review:start:
   image: minds/helm-eks:latest
   script:
     - aws eks update-kubeconfig --name=sandbox
-    - git clone --branch=master https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
+    - git clone --branch=epic/SSR https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
     - "helm upgrade \
       --install \
       --reuse-values \
-      --set frontInit.image.repository=$CI_REGISTRY_IMAGE/front-init \
-      --set-string frontInit.image.tag=$CI_PIPELINE_ID \
+      --set front.image.repository=$CI_REGISTRY_IMAGE/server \
+      --set-string front.image.tag=$CI_PIPELINE_ID \
       --set domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN \
       --set elasticsearch.clusterName=$CI_BUILD_REF_SLUG--elasticsearch \
       --wait \

@@ -77,7 +77,8 @@ export class ChannelComponent {
       this.editing = false;
 
       if (params['username']) {
-        this.changed = this.username !== params['username'];
+        const username = this.user ? this.user.username : this.username;
+        this.changed = username !== params['username'];
         this.username = params['username'];
 
         feedChanged = true;

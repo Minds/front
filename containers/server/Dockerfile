@@ -3,4 +3,6 @@
 ###
 FROM node:13-alpine
 
-CMD node server
+COPY . /dist
+
+CMD node /dist/server
