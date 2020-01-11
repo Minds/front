@@ -4,7 +4,7 @@ import * as BN from 'bn.js';
 // Notes:
 // Assumes input currency has 18 decimal places
 // Decimals are *not* rounded up
-// No decimals will be returned if decimal value is 0
+// Trailing zeros are cut off (e.g. no decimals will be returned if decimal value is 0)
 // **
 
 export default function toFriendlyCryptoVal(
