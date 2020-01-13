@@ -58,6 +58,14 @@ m-chartV2 {
     }
   }
 
+  .m-chartV2__hoverInfoRow__hex {
+    width: 6px;
+    height: 6px;
+    display: inline-block;
+    margin-right: 2px;
+    border-radius: 50%;
+  }
+
   .m-chartV2__hoverInfo__closeBtn {
     display: none;
     font-size: 15px;

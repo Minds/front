@@ -21,7 +21,6 @@ import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { AnalyticsService } from '../../../services/analytics';
-import { MindsVideoComponent } from '../components/video/video.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
@@ -115,10 +114,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.entity = params.entity && JSON.parse(JSON.stringify(params.entity)); // deep clone
     this.redirectUrl = params.redirectUrl || null;
   }
-
-  // Used to make sure video progress bar seeker / hover works
-  @ViewChild(MindsVideoComponent, { static: false })
-  videoComponent: MindsVideoComponent;
 
   videoDirectSrc = [];
 
@@ -594,21 +589,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   // Show overlay and video controls
   onMouseEnterStage() {
     this.overlayVisible = true;
-    if (this.contentType === 'video') {
-      // Make sure progress bar seeker is updating when video controls are visible
-      this.videoComponent.stageHover = true;
-      this.videoComponent.onMouseEnter();
-    }
   }
 
   onMouseLeaveStage() {
     this.overlayVisible = false;
-
-    if (this.contentType === 'video') {
-      // Stop updating progress bar seeker when controls aren't visible
-      this.videoComponent.stageHover = false;
-      this.videoComponent.onMouseLeave();
-    }
   }
 
   // * TABLETS ONLY: SHOW OVERLAY & VIDEO CONTROLS * -------------------------------------------

@@ -45,6 +45,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     'payouts',
   ];
 
+  isActive: boolean;
   settings: any;
 
   inProgress: boolean;
@@ -131,6 +132,10 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       this.detectChanges();
       this.load();
     });
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/login'], { replaceUrl: true });
+      return;
+    }
   }
 
   ngOnDestroy() {
@@ -143,7 +148,22 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
     const { isActive, settings } = await this.service.get(this.user);
 
-    if (!isActive && !this.user) {
+    this.isActive = isActive;
+
+    if (!isActive) {
+      // Non-actives have no domain control
+      this.form
+        .get('domain')
+        .get('domain')
+        .setValidators([]);
+      this.form
+        .get('domain')
+        .get('domain')
+        .disable();
+      this.form.get('published').disable();
+    }
+
+    if (!settings) {
       this.router.navigate(['/pro'], { replaceUrl: true });
       return;
     }
@@ -386,6 +406,12 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       colorTextControl.value !== colorPickerControl.value
     ) {
       colorPickerControl.setValue(updatedColor);
+    }
+  }
+
+  onEnableProThemeClick(e: MouseEvent): void {
+    if (!this.isActive) {
+      this.router.navigate(['/pro']);
     }
   }
 

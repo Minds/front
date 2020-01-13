@@ -1,0 +1,15 @@
+<ng-container *ngIf="shouldShow">
+  <m-announcement
+    id="email-confirmation"
+    [canClose]="canClose"
+    [remember]="false"
+  >
+    Please confirm your email address.
+    <ng-container *ngIf="!sent"
+      >Didn't get it?
+      <span class="m-announcement__clickable" (click)="send()"
+        >Click here to send again.</span
+      ></ng-container
+    >
+  </m-announcement>
+</ng-container>

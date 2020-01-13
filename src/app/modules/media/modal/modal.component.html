@@ -48,24 +48,13 @@
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
           >
-            <m-video
-              class="m-mediaModal__media--video"
-              [style.height]="entityHeight + 'px'"
-              [style.width]="entityWidth + 'px'"
-              [isModal]="true"
-              [autoplay]="true"
-              [muted]="false"
-              [poster]="entity.thumbnail_src"
-              [src]="videoDirectSrc"
-              [guid]="entity.entity_guid"
-              [playCount]="entity['play:count']"
-              [torrent]="videoTorrentSrc"
-              (videoCanPlayThrough)="isLoaded()"
-              [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
-              #player
-            >
-              <video-ads [player]="player" *ngIf="entity.monetized"></video-ads>
-            </m-video>
+            <m-videoPlayer
+              [guid]="entity.guid"
+              shouldPlayInModal="false"
+              isModal="true"
+              autoplay="true"
+              (fullScreenChange)="onFullscreenChange($event)"
+            ></m-videoPlayer>
           </div>
 
           <!-- RICH-EMBED -->

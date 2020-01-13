@@ -1,0 +1,22 @@
+m-onboarding__noticeStep {
+  .m-notice__wavingEmoji {
+    display: block;
+    width: 36px;
+
+    &.m-notice__wavingEmoji--mobile {
+      margin: 0 auto;
+      width: 52px;
+    }
+  }
+
+  @media screen and(max-width: $m-grid-max-mobile) {
+    .m-onboarding__actionButtons {
+      flex-direction: column-reverse;
+      justify-content: flex-start;
+
+      & > *:not(:first-child) {
+        margin: 0 0 50px !important;
+      }
+    }
+  }
+}

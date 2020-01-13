@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -127,8 +127,19 @@ import { FormDescriptorComponent } from './components/form-descriptor/form-descr
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
 import { MindsProAvatarComponent } from '../modules/pro/pro-avatar/pro-avatar.component';
+import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
+import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
+import { SidebarMarkersService } from './layout/sidebar/markers.service';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
+
+const routes: Routes = [
+  {
+    path: 'email-confirmation',
+    redirectTo: '/',
+  },
+];
 
 @NgModule({
   imports: [
@@ -138,6 +149,7 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormsModule,
     ReactiveFormsModule,
     PlotlyModule,
+    RouterModule.forChild(routes),
   ],
   declarations: [
     MINDS_PIPES,
@@ -243,6 +255,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
     MindsProAvatarComponent,
+    EmailConfirmationComponent,
+    DateDropdownsComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -343,6 +357,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
     MindsProAvatarComponent,
+    EmailConfirmationComponent,
+    DateDropdownsComponent,
   ],
   providers: [
     SiteService,
@@ -408,6 +424,14 @@ PlotlyModule.plotlyjs = PlotlyJS;
       provide: RouterHistoryService,
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
+    },
+    {
+      provide: V2TopbarService,
+      useFactory: V2TopbarService._,
+    },
+    {
+      provide: SidebarMarkersService,
+      useFactory: SidebarMarkersService._,
     },
   ],
   entryComponents: [

@@ -15,7 +15,11 @@ import { OnboardingService } from '../onboarding/onboarding.service';
 import { onboardingServiceMock } from '../../mocks/modules/onboarding/onboarding.service.mock.spec';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { MockComponent } from '../../utils/mock';
+import { MockComponent, MockService } from '../../utils/mock';
+import { FeaturesService } from '../../services/features.service';
+import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
+import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
+import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
 
 describe('RegisterComponent', () => {
   let comp: RegisterComponent;
@@ -31,6 +35,7 @@ describe('RegisterComponent', () => {
           outputs: ['done'],
         }),
         RegisterComponent,
+        IfFeatureDirective,
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
@@ -38,7 +43,8 @@ describe('RegisterComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: SignupModalService, useValue: signupModalServiceMock },
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
-        { provide: OnboardingService, useValue: onboardingServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: V2TopbarService, useValue: MockService(V2TopbarService) },
       ],
     }).compileComponents();
   }));
@@ -48,6 +54,7 @@ describe('RegisterComponent', () => {
     fixture = TestBed.createComponent(RegisterComponent);
 
     comp = fixture.componentInstance;
+    featuresServiceMock.mock('register_pages-december-2019', false);
 
     window.Minds.cdn_assets_url = 'http://dev.minds.io/';
     comp.flags.canPlayInlineVideos = true;

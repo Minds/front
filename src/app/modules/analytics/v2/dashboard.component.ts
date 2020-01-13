@@ -40,7 +40,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     label: 'Timespan',
     options: [],
   };
-  channelFilter: Filter;
+  // channelFilter: Filter;
   layout = 'chart';
 
   constructor(
@@ -66,6 +66,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       this.updateCategory(cat);
       if (cat === 'summary') {
         this.layout = 'summary';
+      } else {
+        this.layout = 'chart';
       }
     });
 
@@ -87,13 +89,18 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       this.detectChanges();
     });
     this.analyticsService.filters$.subscribe(filters => {
-      this.channelFilter = filters.find(filter => filter.id === 'channel');
-
       // TODO: remove this once channel search is ready
-      // Temporarily remove channel search from filter options
-      this.channelFilter.options = this.channelFilter.options.filter(option => {
-        return option.id === 'all' || option.id === 'self';
-      });
+      // const channelFilter = filters.find(filter => filter.id === 'channel');
+      // if (channelFilter) {
+      //   this.channelFilter = channelFilter;
+
+      //   // Temporarily remove channel search from filter options
+      //   this.channelFilter.options = this.channelFilter.options.filter(
+      //     option => {
+      //       return option.id === 'all' || option.id === 'self';
+      //     }
+      //   );
+      // }
       this.detectChanges();
     });
 

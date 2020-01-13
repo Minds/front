@@ -52,7 +52,6 @@ import { BanModule } from './modules/ban/ban.module';
 import { BlogModule } from './modules/blogs/blog.module';
 import { SearchModule } from './modules/search/search.module';
 import { MessengerModule } from './modules/messenger/messenger.module';
-import { HomepageModule } from './modules/homepage/homepage.module';
 import { NewsfeedModule } from './modules/newsfeed/newsfeed.module';
 import { MediaModule } from './modules/media/media.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -73,6 +72,8 @@ import { ChannelContainerModule } from './modules/channel-container/channel-cont
 import { UpgradesModule } from './modules/upgrades/upgrades.module';
 
 import * as Sentry from '@sentry/browser';
+import { HomepageModule } from './modules/homepage/homepage.module';
+import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 
 Sentry.init({
   dsn: 'https://3f786f8407e042db9053434a3ab527a2@sentry.io/1538008', // TODO: do not hardcard
@@ -127,6 +128,7 @@ export class SentryErrorHandler implements ErrorHandler {
     PaymentsModule,
     MindsFormsModule,
     OnboardingModule,
+    OnboardingV2Module,
     NotificationModule,
     GroupsModule,
     BlogModule,

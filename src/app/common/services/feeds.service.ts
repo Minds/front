@@ -16,6 +16,8 @@ import { switchMap, map, tap, first } from 'rxjs/operators';
 export class FeedsService {
   limit: BehaviorSubject<number> = new BehaviorSubject(12);
   offset: BehaviorSubject<number> = new BehaviorSubject(0);
+  fallbackAt: number | null = null;
+  fallbackAtIndex: BehaviorSubject<number | null> = new BehaviorSubject(null);
   pageSize: Observable<number>;
   pagingToken: string = '';
   canFetchMore: boolean = true;
@@ -50,6 +52,22 @@ export class FeedsService {
           .setCastToActivities(this.castToActivities)
           .getFromFeed(feed)
       ),
+      tap(feed => {
+        if (feed.length && this.fallbackAt) {
+          for (let i = 0; i < feed.length; i++) {
+            const entity: any = feed[i].getValue();
+
+            if (
+              entity &&
+              entity.time_created &&
+              entity.time_created < this.fallbackAt
+            ) {
+              this.fallbackAtIndex.next(i);
+              break;
+            }
+          }
+        }
+      }),
       tap(feed => {
         if (feed.length)
           // We should have skipped but..
@@ -143,6 +161,8 @@ export class FeedsService {
           response.entities = response.activity;
         }
         if (response.entities.length) {
+          this.fallbackAt = response['fallback_at'];
+          this.fallbackAtIndex.next(null);
           this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
           this.pagingToken = response['load-next'];
         } else {
@@ -168,6 +188,8 @@ export class FeedsService {
    * To clear data.
    */
   clear(): FeedsService {
+    this.fallbackAt = null;
+    this.fallbackAtIndex.next(null);
     this.offset.next(0);
     this.pagingToken = '';
     this.rawFeed.next([]);

@@ -263,16 +263,14 @@
       </button>
     </div>
 
-    <ng-container *mIfFeature="'purchase-pro'">
-      <a
-        *ngIf="showBecomeProButton"
-        class="m-btn m-link-btn m-btn--with-icon m-btn--slim m-btn--action"
-        routerLink="/pro"
-      >
-        <i class="material-icons">business_center</i>
-        <span i18n>Become Pro</span>
-      </a>
-    </ng-container>
+    <a
+      *ngIf="showBecomeProButton"
+      class="m-btn m-link-btn m-btn--with-icon m-btn--slim m-btn--action"
+      [routerLink]="proSettingsRouterLink"
+    >
+      <i class="material-icons">business_center</i>
+      <span i18n>Try Pro</span>
+    </a>
 
     <a
       *ngIf="showProSettings"

@@ -3,6 +3,7 @@ import {
   ComponentFactoryResolver,
   ViewChild,
   HostListener,
+  AfterViewInit,
 } from '@angular/core';
 
 import { Storage } from '../../../services/storage';
@@ -10,12 +11,13 @@ import { Sidebar } from '../../../services/ui/sidebar';
 import { Session } from '../../../services/session';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-markers/sidebar-markers.component';
+import { SidebarMarkersService } from './markers.service';
 
 @Component({
   selector: 'm-sidebar--markers',
   templateUrl: 'markers.component.html',
 })
-export class SidebarMarkersComponent {
+export class SidebarMarkersComponent implements AfterViewInit {
   @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
   minds = window.Minds;
@@ -24,12 +26,17 @@ export class SidebarMarkersComponent {
   componentRef;
   componentInstance: GroupsSidebarMarkersComponent;
 
+  visible: boolean = true;
+
   constructor(
     public session: Session,
     public storage: Storage,
     public sidebar: Sidebar,
+    private sidebarMarkersService: SidebarMarkersService,
     private _componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+  ) {
+    this.sidebarMarkersService.setContainer(this);
+  }
 
   ngAfterViewInit() {
     const isLoggedIn = this.session.isLoggedIn((is: boolean) => {

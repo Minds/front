@@ -33,6 +33,7 @@
     [class.has-v2-navbar]="featuresService.has('top-feeds')"
     [class.is-pro-domain]="isProDomain"
   >
+    <m-emailConfirmation></m-emailConfirmation>
     <m-announcement [id]="'blockchain:sale'" *ngIf="false">
       <span
         class="m-blockchain--wallet-address-notice--action"

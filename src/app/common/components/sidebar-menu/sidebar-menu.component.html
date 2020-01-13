@@ -37,7 +37,11 @@
       <h3>{{ menu.header.label }}</h3>
     </div>
 
-    <nav class="m-sidebarMenu__linksContainer" *ngIf="menu.links">
+    <nav
+      class="m-sidebarMenu__linksContainer"
+      *ngIf="menu.links"
+      data-minds="sidebarMenuLinks"
+    >
       <div class="m-sidebarMenu__link" *ngFor="let link of menu.links">
         <ng-container *ngIf="link.permissionGranted">
           <ng-container *ngIf="!link.newWindow">
