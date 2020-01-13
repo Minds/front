@@ -1,10 +1,17 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from '@angular/core';
 import {
   FormGroup,
   FormControl,
   Validators,
   AbstractControl,
 } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { FormToastService } from '../../../../common/services/form-toast.service';
@@ -12,20 +19,22 @@ import { WalletDashboardService } from '../dashboard.service';
 
 import { WithdrawContractService } from '../../../blockchain/contracts/withdraw-contract.service';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
-import * as BN from 'bn.js';
 
 @Component({
   moduleId: module.id,
   selector: 'm-walletOnchainTransfer',
   templateUrl: './onchain-transfer.component.html',
 })
-export class WalletOnchainTransferComponent implements OnInit {
+export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
   form;
   wallet;
   balance: number = 0;
+  amountSubscription: Subscription;
 
-  error = '';
-  inProgress: boolean = false;
+  canTransfer = true;
+  submitError = '';
+  transferring: boolean = false;
+  loading: boolean = true;
   @Output() transferComplete: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
@@ -42,8 +51,8 @@ export class WalletOnchainTransferComponent implements OnInit {
   }
 
   async load() {
-    this.inProgress = true;
-    this.error = '';
+    this.loading = true;
+    this.submitError = '';
     this.wallet = await this.walletService.getWallet();
 
     this.balance = this.wallet.offchain.balance;
@@ -53,42 +62,39 @@ export class WalletOnchainTransferComponent implements OnInit {
         validators: [
           Validators.required,
           Validators.max(this.balance),
+          Validators.min(0),
           this.validateMoreThanZero,
         ],
-        asyncValidators: [this.validateCanTransfer.bind(this)],
-      }),
-
-      web3WalletWorks: new FormControl(true, {
-        validators: null,
-        asyncValidators: [this.validateWeb3WalletUnlocked.bind(this)],
       }),
     });
 
-    this.inProgress = false;
+    this.amountSubscription = this.form
+      .get('amount')
+      .valueChanges.subscribe(val => {
+        this.submitError = '';
+      });
+
+    this.canTransfer = await this.walletService.canTransfer();
+
+    this.loading = false;
   }
 
   validateMoreThanZero(control: AbstractControl) {
-    if (control.value && control.value <= 0) {
-      return { moreThanZero: true };
+    if (control.value <= 0 || control.value === -0) {
+      return { moreThanZero: true }; // true if invalid
     }
     return null; // null if valid
   }
 
-  async validateCanTransfer() {
-    return (await this.walletService.canTransfer())
-      ? null
-      : { canTransfer: true };
-  }
-
-  async validateWeb3WalletUnlocked() {
-    return (await this.walletService.web3WalletUnlocked())
-      ? null
-      : { unlocked: true };
-  }
-
   async transfer() {
+    if (await !this.walletService.web3WalletUnlocked()) {
+      this.submitError =
+        'Your Ethereum wallet is locked or connected to another network';
+      return;
+    }
+
     try {
-      this.inProgress = true;
+      this.transferring = true;
 
       const result: {
         address;
@@ -109,32 +115,24 @@ export class WalletOnchainTransferComponent implements OnInit {
       if (response.done) {
         this.transferComplete.emit();
       } else {
-        this.error = 'Server error';
+        this.submitError = 'Server error';
       }
     } catch (e) {
       console.error(e);
-      this.error = (e && e.message) || 'Server error';
+      this.submitError = (e && e.message) || 'Server error';
     } finally {
-      this.inProgress = false;
+      this.transferring = false;
     }
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      if (this.error) {
-        this.load();
-      } else {
-        this.transfer();
-      }
+    if (this.form.valid && this.canTransfer) {
+      this.transfer();
     }
   }
 
-  isInvalid() {
-    let invalid = this.form.invalid;
-    if (this.error) {
-      invalid = true;
-    }
-    return invalid;
+  isFormValid() {
+    return this.form.valid && this.canTransfer;
   }
 
   get amount() {
@@ -143,5 +141,11 @@ export class WalletOnchainTransferComponent implements OnInit {
 
   get web3WalletWorks() {
     return this.form.get('web3WalletWorks');
+  }
+
+  ngOnDestroy() {
+    if (this.amountSubscription) {
+      this.amountSubscription.unsubscribe();
+    }
   }
 }

@@ -66,9 +66,7 @@
           address.
         </p>
         <div>
-          <a (click)="display = Views.CreateAddress; createAddress()"
-            >Create a new address</a
-          >
+          <a (click)="display = Views.CreateAddress">Create a new address</a>
           <span>or</span>
           <a (click)="display = Views.ProvideAddress">Use your private key</a>
         </div>
@@ -90,30 +88,36 @@
       class="m-walletSettingsView--addressCreate"
       *ngIf="display === Views.CreateAddress"
     >
+      <!-- Address not created yet -->
       <h2>
         Create Address
       </h2>
       <p *ngIf="!generatedAccount">
-        Generating address ...<span
-          *ngIf="inProgress && !generatedAccount"
-          class="mdl-spinner mdl-js-spinner is-active"
-          [mdl]
-        ></span>
+        Generate a custom address to use instead of MetaMask. Once the address
+        is generated, you will be provided with a link to download the address
+        and private key.
       </p>
-
+      <m-shadowboxSubmitButton
+        *ngIf="!generatedAccount"
+        [saving]="inProgress"
+        (click)="createAddress()"
+      >
+        Create Address
+      </m-shadowboxSubmitButton>
+      <!-- Address created -->
       <p *ngIf="generatedAccount">
         The address
         <span class="m-walletSettings__address--emphasis">{{
           generatedAccount.address
         }}</span>
-        was successully saved as your on-chain address. Clicking the button
-        below will download its private key. Ensure you safely store the private
-        key file.
+        was successully saved as your on-chain address. Click the button below
+        to download its private key - you will need it to conduct transactions,
+        so ensure you safely store the private key file.
       </p>
 
       <m-shadowboxSubmitButton
-        [disabled]="!generatedAccount"
-        [saving]="inProgress && generatedAccount"
+        *ngIf="generatedAccount"
+        [saving]="inProgress"
         (click)="downloadPrivateKey()"
       >
         Download Private Key
@@ -133,8 +137,8 @@
       </h2>
       <p>
         Enter the address that will be stored as your wallet for Minds on-chain
-        tokens and Ether payments. Remember that you will need your wallet's
-        private key to conduct transactions.
+        tokens and Ether payments. To conduct transactions you will need your
+        wallet's private key and MetaMask cannot be installed in your browser.
       </p>
 
       <div class="m-walletForm__field--text stretchedField">
@@ -169,27 +173,6 @@
         ><i class="material-icons">❮</i><span>Back to settings</span></a
       >
     </li>
-
-    <!---USE EXTERNAL ADDRESS----------------------------------------------->
-    <!-- <li
-      class="m-walletSettingsView--addressExternal"
-      *ngIf="display === Views.UseExternal"
-    >
-      <div class="m-walletSettings--tokens--buttons" *ngIf="hasExternal">
-        <span class="m-walletSettings--tokens--buttons-input">
-          <ng-container *ngIf="providedAddress; else noProvidedAddress">
-            {{ providedAddress }}
-          </ng-container>
-
-          <ng-template #noProvidedAddress>
-            MetaMask is either locked or connected to another network.
-          </ng-template>
-        </span>
-      </div>
-      <a class="m-walletSettings__backButton" (click)="display = null"
-        ><i class="material-icons">❮</i><span>Back to ...?</span></a
-      >
-    </li> -->
 
     <!---CURRENT ADDRESS ----------------------------------------------->
     <li
