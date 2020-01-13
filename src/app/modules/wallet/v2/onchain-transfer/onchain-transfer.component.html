@@ -17,9 +17,7 @@
     complete.
   </p>
 </div>
-<!-- TODOOJM does keyup duplicate the transfer() function trigger?-->
-<!-- <form [formGroup]="form" (ngSubmit)="transfer()" (keyup.enter)="transfer()"> -->
-<form *ngIf="form" [formGroup]="form" (keyup.enter)="transfer()">
+<form *ngIf="form" [formGroup]="form">
   <div class="m-walletForm__wrapper">
     <div class="m-walletForm__fieldsContainer">
       <div class="m-walletForm__field--text stretchedField">
@@ -31,7 +29,9 @@
         </div>
         <div
           class="m-walletForm__row--input"
-          [ngClass]="{ invalid: error || amount.invalid }"
+          [ngClass]="{
+            invalid: isInvalid()
+          }"
         >
           <input
             type="number"
@@ -43,32 +43,37 @@
           />
         </div>
         <div class="m-walletForm__row--validation">
-          <p *ngIf="error">{{ error }}</p>
-          <ng-container
-            *ngIf="amount.invalid && (amount.dirty || amount.touched)"
-          >
-            <p *ngIf="amount.errors.alreadyTransferredToday"></p>
-
-            <ng-container *ngIf="!amount.errors.alreadyTransferredToday">
-              <!-- <p *ngIf="amount.errors.required">Please select how many tokens you want to transfer.</p> -->
-              <p *ngIf="amount.errors.min">
-                Transfer amount must be greater than zero.
+          <ng-container *ngIf="!error">
+            <ng-container *ngIf="amount.errors && !web3WalletWorks.errors">
+              <p *ngIf="amount.errors.canTransfer">
+                You can only transfer once per day
               </p>
-              <p *ngIf="amount.errors.max">
-                You don't have enough tokens to make this transfer.
-              </p>
+              <ng-container *ngIf="!amount.errors.canTransfer">
+                <p *ngIf="amount.errors.required">
+                  Transfer amount required
+                </p>
+                <p *ngIf="amount.errors.moreThanZero">
+                  Transfer amount must be greater than zero
+                </p>
+                <p *ngIf="amount.errors.max">
+                  You don't have enough tokens to make this transfer
+                </p>
+              </ng-container>
             </ng-container>
+            <p *ngIf="web3WalletWorks.errors">
+              Your Ethereum wallet is locked or connected to another network
+            </p>
           </ng-container>
-          <p></p>
+          <p *ngIf="error">{{ error }}</p>
         </div>
       </div>
     </div>
     <m-shadowboxSubmitButton
-      [disabled]="!canTransfer()"
+      [disabled]="!form.valid"
       [saving]="inProgress"
-      (click)="transfer()"
+      (click)="onSubmit('submitbutton')"
     >
-      Transfer
+      {{ error ? 'Reset' : 'Transfer' }}
     </m-shadowboxSubmitButton>
   </div>
 </form>

@@ -10,6 +10,7 @@ import { Client } from '../../../../services/api/client';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { WalletDashboardService } from './../dashboard.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-walletBalance--tokens',
@@ -32,7 +33,8 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected session: Session,
-    protected walletService: WalletDashboardService
+    protected walletService: WalletDashboardService,
+    protected formToastService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -87,6 +89,11 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     formattedBalance.frac = splitBalance[1];
 
     return formattedBalance;
+  }
+
+  transferComplete() {
+    this.formToastService.success('On-chain transfer complete');
+    this.showModal = false;
   }
 
   detectChanges() {

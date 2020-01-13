@@ -1,15 +1,9 @@
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {
-  Component,
-  OnInit,
-  Input,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-} from '@angular/core';
-import {
-  FormBuilder,
   FormGroup,
   FormControl,
   Validators,
+  AbstractControl,
 } from '@angular/forms';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
@@ -18,139 +12,85 @@ import { WalletDashboardService } from '../dashboard.service';
 
 import { WithdrawContractService } from '../../../blockchain/contracts/withdraw-contract.service';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
+import * as BN from 'bn.js';
+
 @Component({
   moduleId: module.id,
   selector: 'm-walletOnchainTransfer',
   templateUrl: './onchain-transfer.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletOnchainTransferComponent implements OnInit {
-  // TODOOJM make sure this is accurate even if user has updated address in settings
+  form;
   wallet;
   balance: number = 0;
 
-  alreadyTransferredToday: boolean = false;
-  error: string = '';
-
+  error = '';
   inProgress: boolean = false;
-  transferComplete: boolean = false;
-
-  form;
-  // form = this.fb.group({
-  //   amount: [this.amount],
-  // });
+  @Output() transferComplete: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     protected session: Session,
     private formToastService: FormToastService,
-    private fb: FormBuilder,
     protected client: Client,
-    protected cd: ChangeDetectorRef,
     protected contract: WithdrawContractService,
     protected web3Wallet: Web3WalletService,
     protected walletService: WalletDashboardService
   ) {}
 
-  // TODOOJM reset after closing modal
   async ngOnInit() {
     this.load();
   }
 
-  get amount() {
-    return this.form.get('amount');
-  }
   async load() {
     this.inProgress = true;
     this.error = '';
-    this.detectChanges();
     this.wallet = await this.walletService.getWallet();
 
     this.balance = this.wallet.offchain.balance;
 
     this.form = new FormGroup({
-      amount: new FormControl(this.balance, [
-        Validators.required,
-        Validators.min(0),
-        Validators.max(this.balance),
-        //already Transferred today
-        // ------------------
-        // web3 #1 no wallets
-        // web3 #2 locked
-        // forbiddenNameValidator(/bob/i), // <-- Here's how you pass in the custom validator.
-      ]),
+      amount: new FormControl(this.balance, {
+        validators: [
+          Validators.required,
+          Validators.max(this.balance),
+          this.validateMoreThanZero,
+        ],
+        asyncValidators: [this.validateCanTransfer.bind(this)],
+      }),
+
+      web3WalletWorks: new FormControl(true, {
+        validators: null,
+        asyncValidators: [this.validateWeb3WalletUnlocked.bind(this)],
+      }),
     });
 
-    try {
-      await this.checkPreviousTransfers();
-    } catch (e) {
-      this.blockTransfersToday();
-    }
-    this.detectChanges();
-
-    // this.setAmount(this.amount);
-
     this.inProgress = false;
-    this.detectChanges();
   }
 
-  async checkPreviousTransfers() {
-    const response: any = await this.client.post(
-      'api/v2/blockchain/transactions/can-withdraw'
-    );
-    if (!response.canWithdraw) {
-      this.blockTransfersToday();
+  validateMoreThanZero(control: AbstractControl) {
+    if (control.value && control.value <= 0) {
+      return { moreThanZero: true };
     }
+    return null; // null if valid
   }
 
-  blockTransfersToday() {
-    this.error = 'You can only transfer once per day.';
-    this.alreadyTransferredToday = true;
+  async validateCanTransfer() {
+    return (await this.walletService.canTransfer())
+      ? null
+      : { canTransfer: true };
   }
 
-  // setAmount(amount: number | string) {
-  //   if (!amount) {
-  //     this.amount = 0;
-  //     return;
-  //   }
-
-  //   if (typeof amount === 'number') {
-  //     this.amount = amount;
-  //     this.detectChanges();
-  //     return;
-  //   }
-
-  //   amount = amount.replace(/,/g, '');
-  //   this.amount = parseFloat(amount);
-  //   this.detectChanges();
-  // }
-
-  canTransfer() {
-    return (
-      !this.inProgress &&
-      !this.error &&
-      this.amount.value > 0 &&
-      this.amount.value <= this.balance
-    );
+  async validateWeb3WalletUnlocked() {
+    return (await this.walletService.web3WalletUnlocked())
+      ? null
+      : { unlocked: true };
   }
 
   async transfer() {
-    if (!this.canTransfer()) {
-      return;
-    }
-
-    this.inProgress = true;
-    this.error = '';
-    this.detectChanges();
-
+    console.log('transferring');
+    console.log('amt', this.amount.value);
     try {
-      await this.web3Wallet.ready();
-
-      if (this.web3Wallet.isUnavailable()) {
-        this.error = 'No Ethereum wallets are available on your browser.';
-      } else if (!(await this.web3Wallet.unlock())) {
-        this.error =
-          'Your Ethereum wallet is locked or connected to another network.';
-      }
+      this.inProgress = true;
 
       const result: {
         address;
@@ -160,7 +100,7 @@ export class WalletOnchainTransferComponent implements OnInit {
         tx;
       } = await this.contract.request(
         this.session.getLoggedInUser().guid,
-        this.amount * Math.pow(10, 18)
+        this.amount.value * Math.pow(10, 18)
       );
 
       const response: any = await this.client.post(
@@ -169,25 +109,47 @@ export class WalletOnchainTransferComponent implements OnInit {
       );
 
       if (response.done) {
-        this.refresh();
+        this.transferComplete.emit();
       } else {
         this.error = 'Server error';
       }
     } catch (e) {
       console.error(e);
       this.error = (e && e.message) || 'Server error';
+      console.log(this.error);
     } finally {
       this.inProgress = false;
-      this.detectChanges();
+      console.log('submitted form', this.form);
     }
   }
 
-  refresh() {
-    this.load();
+  onSubmit(source) {
+    console.log(source, 'clickedsubmit', this.form);
+    if (this.form.valid) {
+      console.log(this.error);
+      if (this.error) {
+        console.log('load (reset)');
+        this.load();
+      } else {
+        console.log('submit > transfer');
+        this.transfer();
+      }
+    }
   }
 
-  detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+  isInvalid() {
+    let invalid = this.form.invalid;
+    if (this.error) {
+      invalid = true;
+    }
+    return invalid;
+  }
+
+  get amount() {
+    return this.form.get('amount');
+  }
+
+  get web3WalletWorks() {
+    return this.form.get('web3WalletWorks');
   }
 }

@@ -17,68 +17,6 @@ import {
 
 import fakeData from './fake-data';
 
-// export interface WalletCurrency {
-//   label: string;
-//   unit: string;
-//   balance: number;
-//   address?: string;
-// }
-// export interface WalletState {
-//   tokens: WalletCurrency;
-//   offchain: WalletCurrency;
-//   onchain: WalletCurrency;
-//   receiver: WalletCurrency;
-//   usd: WalletCurrency;
-//   eth: WalletCurrency;
-//   btc: WalletCurrency;
-//   loading: boolean;
-// }
-
-// let _state: WalletState = {
-//   tokens: {
-//     label: 'Tokens',
-//     unit: 'tokens',
-//     balance: 0,
-//     address: null,
-//   },
-//   offchain: {
-//     label: 'Off-chain',
-//     unit: 'tokens',
-//     balance: 0,
-//     address: 'offchain',
-//   },
-//   onchain: {
-//     label: 'On-chain',
-//     unit: 'tokens',
-//     balance: 0,
-//     address: null,
-//   },
-//   receiver: {
-//     label: 'Receiver',
-//     unit: 'tokens',
-//     balance: 0,
-//     address: null,
-//   },
-//   usd: {
-//     label: 'USD',
-//     unit: 'usd',
-//     balance: 0,
-//     address: null,
-//   },
-//   eth: {
-//     label: 'Ether',
-//     unit: 'eth',
-//     balance: 0,
-//     address: null,
-//   },
-//   btc: {
-//     label: 'Bitcoin',
-//     unit: 'btc',
-//     balance: 0,
-//     address: null,
-//   },
-//   loading: false,
-// };
 @Injectable()
 export class WalletDashboardService {
   walletLoaded = false;
@@ -345,10 +283,27 @@ export class WalletDashboardService {
     return Boolean(isLocal);
   }
 
-  // TODOOJM -- make an observable to use for onboarding steps
-  // OR -- just check wallet$.onchain.address / eth.address
-  // async hasOnchainAddress(): Promise<boolean> {
-  // const hasAddress = thisUserHasAddress
-  // return Boolean(hasAddress);
-  // }
+  async canTransfer() {
+    try {
+      const { response } = <any>(
+        await this.client.post('api/v2/blockchain/transactions/can-withdraw')
+      );
+      if (!response) {
+        return false;
+      }
+      return response.canWithdraw;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  async web3WalletUnlocked() {
+    await this.web3Wallet.ready();
+    if (await this.web3Wallet.unlock()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
