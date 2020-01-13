@@ -9,13 +9,27 @@ minds-activity-v2 {
   justify-content: space-around;
 
   &.minds-activity-v2__allowOverflow {
-    max-height: none;
+    max-height: none !important;
 
     .m-mature-message {
-      max-height: none;
+      max-height: none !important;
       //.m-mature-message-content {
       //  max-height: none;
       //}
+    }
+  }
+
+  m-post-menu {
+    button.minds-more > i {
+      @include m-theme() {
+        color: themed($m-grey-100);
+      }
+    }
+  }
+
+  button.m-translate-button > i {
+    @include m-theme() {
+      color: themed($m-grey-100);
     }
   }
 
@@ -65,19 +79,23 @@ minds-activity-v2 {
         width: 37px;
         height: 37px;
       }
+    }
 
-      .body {
-        margin-left: 14px;
+    .body {
+      margin-left: 14px;
 
-        a {
-          font-size: 16px;
-          line-height: 21px;
-          color: #5d5d5d;
+      a {
+        font-size: 16px;
+        line-height: 21px;
+        color: #5d5d5d;
 
-          &.permalink {
+        &.permalink {
+          span {
             font-size: 13px;
             line-height: 18px;
-            color: #b6b6b6;
+            @include m-theme() {
+              color: themed($grey-200);
+            }
           }
         }
       }
@@ -101,6 +119,7 @@ minds-activity-v2 {
 
     .m-read-more--button {
       text-align: center;
+
       span {
         color: #4a90e2;
       }
@@ -133,7 +152,9 @@ minds-activity-v2 {
 
       a {
         &:not(.selected) {
-          color: #b6b6b6 !important;
+          @include m-theme() {
+            color: themed($m-grey-500);
+          }
         }
 
         i,
@@ -165,10 +186,33 @@ minds-activity-v2 {
     }
   }
 
-  .m-activity__commentPoster {
+  m-comments__tree > m-comments__thread {
     height: 91px;
     flex-shrink: 0;
-    background-color: lightblue;
+    //background-color: lightblue;
+
+    .m-commentPoster__top {
+      min-height: 78px;
+
+      m-comment__poster {
+        minds-textarea {
+          border-radius: 2px;
+          margin-bottom: 0;
+        }
+
+        .mdl-card__actions {
+          .m-post-button {
+            display: none;
+          }
+
+          i.material-icons {
+            @include m-theme() {
+              color: themed($m-grey-500);
+            }
+          }
+        }
+      }
+    }
   }
 
   .m-owner-block--remind {
@@ -196,6 +240,37 @@ minds-activity-v2 {
   .m-activity--message-remind {
     padding-top: 0;
     padding-bottom: 8px;
+  }
+
+  .mdl-card__menu {
+    & > * {
+      margin-right: 20px;
+    }
+  }
+
+  minds-button-subscribe {
+    i {
+      display: none;
+    }
+
+    button.m-btn {
+      @include m-theme() {
+        border: 1px solid themed($m-grey-100);
+      }
+      border-radius: 2px;
+      padding: 7px 12px;
+      margin: 0;
+
+      span {
+        font-size: 14px;
+        line-height: 19px;
+        text-transform: none;
+
+        @include m-theme() {
+          color: themed($m-grey-500);
+        }
+      }
+    }
   }
 
   .m-translate-button i {

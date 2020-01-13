@@ -4,7 +4,9 @@ import {
   ContentChild,
   Directive,
   ElementRef,
+  EventEmitter,
   Input,
+  Output,
 } from '@angular/core';
 import { ReadMoreButtonComponent } from './button.component';
 
@@ -17,6 +19,7 @@ export class ReadMoreDirective implements AfterViewInit {
   expandable: boolean = false;
   @ContentChild(ReadMoreButtonComponent, { static: false }) button;
   @Input() maxHeightAllowed: number;
+  @Output() resized: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private element: ElementRef, private cd: ChangeDetectorRef) {
     this._element = element.nativeElement;
@@ -28,20 +31,25 @@ export class ReadMoreDirective implements AfterViewInit {
     }
 
     setTimeout(() => {
-      this.realHeight = this._element.scrollHeight;
-      if (this.button && !this.button.content) {
-        this.button.content = this;
-      }
-
-      if (this.realHeight > this.maxHeightAllowed) {
-        this._element.style.maxHeight = this.maxHeightAllowed + 'px';
-        this._element.style.position = 'relative';
-        setTimeout(() => {
-          this.expandable = true;
-          this.detectChanges();
-        }, 1);
-      }
+      this.checkVisibility();
     }, 1);
+  }
+
+  checkVisibility() {
+    this.realHeight = this._element.scrollHeight;
+    if (this.button && !this.button.content) {
+      this.button.content = this;
+    }
+
+    if (this.realHeight > this.maxHeightAllowed) {
+      this._element.style.maxHeight = this.maxHeightAllowed + 'px';
+      this._element.style.position = 'relative';
+      setTimeout(() => {
+        this.expandable = true;
+        this.resized.emit();
+        this.detectChanges();
+      }, 1);
+    }
   }
 
   expand() {

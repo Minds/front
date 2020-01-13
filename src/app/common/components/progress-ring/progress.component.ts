@@ -52,12 +52,7 @@ export class ProgressRingComponent implements OnInit {
     if (!this.circumference) {
       this.circumference = this.radius * 2 * Math.PI;
     }
-    // if (this.circle) {
-    console.warn('circ: ', this.circumference);
-    console.warn('percent: ', percent);
-    console.warn(this.circumference - (percent / 100) * this.circumference);
     this.circle.nativeElement.style.strokeDashoffset =
       this.circumference - (percent / 100) * this.circumference; // calculate offset
-    // }
   }
 }

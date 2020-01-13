@@ -49,8 +49,9 @@
         *ngIf="activity.edited"
         class="m-edited-text"
         i18n="@@M__COMMON__EDITED"
-        >edited</span
       >
+        edited
+      </span>
     </a>
     <a
       [routerLink]="['/newsfeed/', activity.entity_guid]"
@@ -62,8 +63,9 @@
         *ngIf="activity.edited"
         class="m-edited-text"
         i18n="@@M__COMMON__EDITED"
-        >edited</span
       >
+        edited
+      </span>
       <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
         <i class="material-icons">trending_up</i>
         <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
@@ -97,8 +99,9 @@
           class="material-icons"
           title="Mature content"
           i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
         >
+          explicit
+        </i>
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
@@ -181,8 +184,9 @@
           class="material-icons"
           title="Mature content"
           i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
         >
+          explicit
+        </i>
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
@@ -226,8 +230,9 @@
           class="material-icons"
           title="Mature content"
           i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
         >
+          explicit
+        </i>
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
@@ -255,8 +260,9 @@
           class="material-icons"
           title="Mature content"
           i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
         >
+          explicit
+        </i>
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
@@ -281,9 +287,11 @@
 
   <div
     m-read-more
+    (resized)="refitText()"
     class="mdl-card__supporting-text message m-mature-message"
     [class.m-activity--message-remind]="activity.remind_object"
     [hidden]="!activity.message || editing"
+    #container
   >
     <a
       class="m-mature-text-toggle"
@@ -305,6 +313,8 @@
       [fittext]="true"
       [minFontSize]="16"
       [maxFontSize]="20"
+      [container]="container"
+      [activateOnResize]="true"
       class="m-mature-message-content"
       [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
       (click)="
@@ -364,7 +374,7 @@
       asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd
       asdasd asd asd asd asd asd
     </span>
-    <m-read-more--button (click)="allowOverflow()"></m-read-more--button>
+    <m-read-more--button (click)="toggleOverflow()"></m-read-more--button>
   </div>
 
   <m-translate
@@ -525,7 +535,13 @@
   </div>
 </div>
 
-<div class="m-activity__commentPoster"></div>
+<m-comments__tree
+  [entity]="activity"
+  [canDelete]="canDelete"
+  [showList]="commentsToggle"
+  [showPosterOnTop]="true"
+>
+</m-comments__tree>
 
 <!-- Activity metrics -->
 <div
@@ -546,13 +562,6 @@
   </div>
 </div>
 
-<m-comments__tree
-  *ngIf="commentsToggle"
-  [entity]="activity"
-  [canDelete]="canDelete"
->
-</m-comments__tree>
-
 <div
   class="m-activity--boost-notice mdl-card__supporting-text mdl-color--blue-grey-50"
   *ngIf="showBoostOptions"
@@ -566,6 +575,7 @@
   #toggle
   *ngIf="!hideTabs"
 >
+  <minds-button-subscribe [user]="activity.ownerObj"></minds-button-subscribe>
   <m-safe-toggle
     *ngIf="showRatingToggle && session.isAdmin()"
     [(entity)]="activity"
@@ -578,6 +588,7 @@
     <i class="material-icons">public</i>
   </button>
   <m-post-menu
+    [icon]="'more_vert'"
     [entity]="activity"
     [canDelete]="canDelete"
     [isTranslatable]="isTranslatable"

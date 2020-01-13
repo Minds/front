@@ -41,6 +41,8 @@ export class CommentsThreadComponent implements OnInit {
   @Input() conversation: boolean = false;
   @Input() limit: number = 12;
   @Input() level = 0;
+  @Input() showPosterOnTop: boolean = false;
+  @Input() showList: boolean = true;
   @Output() scrollToBottom: EventEmitter<boolean> = new EventEmitter(true);
   @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(
     true
@@ -296,6 +298,7 @@ export class CommentsThreadComponent implements OnInit {
 
   onPosted({ comment, index }) {
     this.comments[index] = comment;
+    this.showList = true;
     this.detectChanges();
   }
 

@@ -53,6 +53,7 @@ export class PostMenuComponent implements OnInit {
   @Input() isTranslatable: boolean = false;
   @Input() askForCategoriesWhenFeaturing: boolean = false;
   @Input() user: any;
+  @Input() icon: string = 'keyboard_arrow_down';
 
   featuredCategory: string = 'not-selected';
 

@@ -20,3 +20,12 @@
 .m-comment--poster {
   padding: 8px 12px 12px 12px;
 }
+
+.m-commentPoster__top {
+  .m-comment--poster {
+    padding: 0 12px 8px 12px;
+    .minds-body {
+      min-height: unset;
+    }
+  }
+}

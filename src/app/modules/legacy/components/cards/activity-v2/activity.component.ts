@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostBinding,
   Injector,
   Input,
   OnInit,
@@ -31,6 +32,8 @@ import { ActivityService } from '../../../../../common/services/activity.service
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
 import { SignupModalService } from '../../../../modals/signup/service';
+import { ReadMoreDirective } from '../../../../../common/read-more/read-more.directive';
+import { Ng2FittextDirective } from 'ng2-fittext/directives/ng2-fittext.directive';
 
 @Component({
   moduleId: module.id,
@@ -74,6 +77,30 @@ export class MindsActivityV2 implements OnInit {
   @Input() slot: number = -1;
 
   visibilityEvents: boolean = true;
+
+  @HostBinding('hidden')
+  isHidden: boolean = false;
+
+  @HostBinding('class.minds-activity-v2__allowOverflow')
+  allowOverflow: boolean = false;
+
+  @ViewChild(ReadMoreDirective, { static: false }) readMore: ReadMoreDirective;
+  @ViewChild(Ng2FittextDirective, { static: false })
+  fitText: Ng2FittextDirective;
+  @ViewChild('text', { static: false }) text: ElementRef;
+
+  @Input() set hidden(value: boolean) {
+    this.isHidden = value;
+
+    if (value) {
+      this.allowOverflow = false;
+    } else {
+      setTimeout(() => {
+        this.readMore.checkVisibility();
+        this.refitText();
+      }, 1);
+    }
+  }
 
   @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
     this.visibilityEvents = visibilityEvents;
@@ -609,10 +636,16 @@ export class MindsActivityV2 implements OnInit {
       : false;
   }
 
-  allowOverflow() {
-    this.elementRef.nativeElement.classList.add(
-      'minds-activity-v2__allowOverflow'
-    );
+  toggleOverflow() {
+    this.allowOverflow = true;
+  }
+
+  refitText() {
+    setTimeout(() => {
+      // this.fitText.ngOnChanges({ modelToWatch: true });
+      this.fitText.setFontSize(this.fitText.minFontSize);
+      this.fitText.ngAfterViewInit();
+    }, 1);
   }
 
   openWireModal() {

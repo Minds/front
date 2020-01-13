@@ -45,7 +45,7 @@
   <div class="m-newsfeedBoostRotatorHeader__spacer"></div>
 
   <m-progress__ring
-    [progress]="75"
+    [progress]="((this.currentPosition + 1) * 100) / this.boosts.length"
     [size]="{ w: 20, h: 20, r: 8.5 }"
     [cx]="10"
     [cy]="10"

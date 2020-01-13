@@ -8,3 +8,17 @@
   opacity: 0.75;
   text-align: center;
 }
+
+a.m-commentsThread__seeComments {
+  padding-left: 64px;
+  text-decoration: underline;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 19px;
+
+  margin-bottom: 15px;
+
+  @include m-theme() {
+    color: themed($m-blue);
+  }
+}
