@@ -37,24 +37,23 @@
           </m-shadowboxSubmitButton>
         </ng-container>
         <ng-container *ngIf="linkingMetamask">
-          <p>Please ensure you select the "Main Ethereum Network".</p>
+          <ng-container *ngIf="hasExternal">
+            <p *ngIf="providedAddress">
+              {{ providedAddress }}
+            </p>
+
+            <p *ngIf="!providedAddress">
+              MetaMask is either locked or connected to another network.
+            </p>
+          </ng-container>
+          <p *ngIf="hasExternal && providedAddress">
+            Please ensure you select the "Main Ethereum Network".
+          </p>
 
           <p *ngIf="downloadingMetamask">
             Note: You might need to reload Minds after installing and setting up
             MetaMask.
           </p>
-
-          <ng-container *ngIf="hasExternal">
-            <p class="m-walletSettings--tokens--buttons-input">
-              <ng-container *ngIf="providedAddress; else noProvidedAddress">
-                {{ providedAddress }} </ng-container
-              >]
-
-              <ng-template #noProvidedAddress>
-                MetaMask is either locked or connected to another network.
-              </ng-template>
-            </p>
-          </ng-container>
         </ng-container>
       </li>
 

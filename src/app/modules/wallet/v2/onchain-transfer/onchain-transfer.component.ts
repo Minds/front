@@ -87,8 +87,6 @@ export class WalletOnchainTransferComponent implements OnInit {
   }
 
   async transfer() {
-    console.log('transferring');
-    console.log('amt', this.amount.value);
     try {
       this.inProgress = true;
 
@@ -116,22 +114,16 @@ export class WalletOnchainTransferComponent implements OnInit {
     } catch (e) {
       console.error(e);
       this.error = (e && e.message) || 'Server error';
-      console.log(this.error);
     } finally {
       this.inProgress = false;
-      console.log('submitted form', this.form);
     }
   }
 
-  onSubmit(source) {
-    console.log(source, 'clickedsubmit', this.form);
+  onSubmit() {
     if (this.form.valid) {
-      console.log(this.error);
       if (this.error) {
-        console.log('load (reset)');
         this.load();
       } else {
-        console.log('submit > transfer');
         this.transfer();
       }
     }
