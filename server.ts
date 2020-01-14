@@ -14,6 +14,7 @@ import * as express from 'express';
 import * as proxy from 'express-http-proxy';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
+import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 
 const domino = require('domino');
 
@@ -135,7 +136,10 @@ const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
 const cache = () => {
   return (req, res, next) => {
     const sessKey = req.cookies['minds_sess'] || 'loggedout';
-    const key = `__express__/${sessKey}/` + (req.originalUrl || req.url);
+    const key =
+      `__express__/${sessKey}/` +
+      (req.originalUrl || req.url) +
+      (isMobileOrTablet() ? '/mobile' : '/desktop');
     const exists = myCache.has(key);
     if (exists) {
       console.log(`from cache: ${key}`);
