@@ -13,6 +13,7 @@ import { OnboardingCategoriesSelector } from './categories-selector/categories-s
 import { Tutorial } from './tutorial/tutorial';
 import { CaptchaModule } from '../captcha/captcha.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
+import { PopoverComponent } from './popover-validation/popover.component';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     OnboardingForm,
     OnboardingCategoriesSelector,
     Tutorial,
+    PopoverComponent,
   ],
   exports: [
     LoginForm,

@@ -128,6 +128,10 @@ import { FormToastComponent } from './components/form-toast/form-toast.component
 import { SsoService } from './services/sso.service';
 import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
+import { PagesService } from './services/pages.service';
+import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
+import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
+import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
@@ -255,6 +259,8 @@ const routes: Routes = [
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
+    EmailConfirmationComponent,
+    DateDropdownsComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -357,10 +363,13 @@ const routes: Routes = [
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
+    EmailConfirmationComponent,
+    DateDropdownsComponent,
   ],
   providers: [
     SiteService,
     SsoService,
+    PagesService,
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
@@ -422,6 +431,14 @@ const routes: Routes = [
       provide: RouterHistoryService,
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
+    },
+    {
+      provide: V2TopbarService,
+      useFactory: V2TopbarService._,
+    },
+    {
+      provide: SidebarMarkersService,
+      useFactory: SidebarMarkersService._,
     },
   ],
   entryComponents: [

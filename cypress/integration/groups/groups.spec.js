@@ -41,14 +41,19 @@ context('Groups', () => {
     cy.get('.m-groups-save > button').contains('Create').click();
     cy.route("POST", "**/api/v1/groups/group/*/banner*").as("postBanner");
 
-    cy.wait('@postGroup').then((xhr) => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.equal('success');
-    }).wait('@postBanner').then((xhr) => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.equal('success');
-    });
+    // get current groups count of sidebar
+    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
+      cy.wait('@postGroup').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal('success');
+      }).wait('@postBanner').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal('success');
+      });
 
+      //check count changed.
+      cy.get('.m-groupSidebarMarkers__list').children().should('have.length', size + 1);
+    });
     cy.get('.m-groupInfo__name').contains('test');
     cy.get('.m-groupInfo__description').contains('This is a test');
 
@@ -73,11 +78,9 @@ context('Groups', () => {
   })
 
   it('should be able to toggle conversation and comment on it', () => {
-
-    cy.get("m-group--sidebar-markers li:contains('test group')")
-      .first()
-      .click();
-
+    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
+      cy.get(`m-group--sidebar-markers li:nth-child(${size - 1})`).click();
+    });
 
     // toggle the conversation
     cy.get('.m-groupGrid__right').should('be.visible');
@@ -98,9 +101,9 @@ context('Groups', () => {
   })
 
   it('should post an activity inside the group and record the view when scrolling', () => {
-    cy.get("m-group--sidebar-markers li:contains('test group')")
-      .first()
-      .click();
+    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
+      cy.get(`m-group--sidebar-markers li:nth-child(${size - 1})`).click();
+    });
 
     cy.server();
     cy.route("POST", "**/api/v2/analytics/views/activity/*").as("view");
@@ -128,14 +131,18 @@ context('Groups', () => {
   });
 
   it('should delete a group', () => {
-    cy.get('m-group--sidebar-markers li:nth-child(3)').contains('test group').click();
+    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
+      cy.get(`m-group--sidebar-markers li:nth-child(${size - 1})`).click();
 
-    // cleanup
-    cy.get('minds-groups-settings-button > button').click();
-    cy.get('minds-groups-settings-button ul.minds-dropdown-menu > li:nth-child(8)').contains('Delete Group').click();
-    cy.get('minds-groups-settings-button m-modal .mdl-button--raised').contains('Confirm').click();
+      // cleanup
+      cy.get('minds-groups-settings-button > button').click();
+      cy.contains('Delete Group').click();
+      cy.contains('Confirm').click();
 
-    cy.location('pathname').should('eq', '/groups/member');
+      cy.location('pathname').should('eq', '/groups/member');
+
+      cy.get('.m-groupSidebarMarkers__list').children().should('have.length', size - 1);
+    });
   })
 
 })

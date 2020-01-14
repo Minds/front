@@ -14,8 +14,10 @@ import { MindsFormsModule } from '../forms/forms.module';
 import { HomepageComponent } from './homepage.component';
 import { MarketingModule } from '../marketing/marketing.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
+import { HomepageV2Module } from '../homepage-v2/homepage.module';
+import { HomepageContainerComponent } from './container.component';
 
-const routes: Routes = [{ path: '', component: HomepageComponent }];
+const routes: Routes = [{ path: '', component: HomepageContainerComponent }];
 
 @NgModule({
   imports: [
@@ -29,8 +31,9 @@ const routes: Routes = [{ path: '', component: HomepageComponent }];
     MindsFormsModule,
     MarketingModule,
     ExperimentsModule,
+    HomepageV2Module,
   ],
-  declarations: [HomepageComponent],
+  declarations: [HomepageComponent, HomepageContainerComponent],
   entryComponents: [HomepageComponent],
 })
 export class HomepageModule {}
