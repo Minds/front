@@ -224,7 +224,7 @@
 
   <div
     class="m-channel__channel-mode-selector"
-    *ngIf="featuresService.has('permissions')"
+    *ngIf="session.isLoggedIn() && featuresService.has('permissions')"
   >
     <m-channel-mode-selector
       [user]="user"
