@@ -16,6 +16,7 @@ import { NewsfeedService } from './services/newsfeed.service';
 import { SideBarSelectorChange } from '../hashtags/sidebar-selector/sidebar-selector.component';
 import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
 import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.component';
+import { PagesService } from '../../common/services/pages.service';
 
 @Component({
   selector: 'm-newsfeed',
@@ -72,7 +73,8 @@ export class NewsfeedComponent {
     protected overlayModal: OverlayModalService,
     protected context: ContextService,
     protected newsfeedService: NewsfeedService,
-    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService
+    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
+    public pagesService: PagesService
   ) {
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
