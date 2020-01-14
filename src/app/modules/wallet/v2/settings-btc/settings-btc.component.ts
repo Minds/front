@@ -3,8 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
-  OnDestroy,
-  Output,
   EventEmitter,
 } from '@angular/core';
 import {
@@ -23,14 +21,12 @@ import { WalletDashboardService } from '../dashboard.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletSettingsBTCComponent implements OnInit {
-  @Output() addressSetupComplete: EventEmitter<any> = new EventEmitter();
   showForm: boolean = false;
+  loaded: boolean = false;
   inProgress: boolean = false;
-
   error: string;
   currentAddress: string = '';
   form;
-  minds = window.Minds;
 
   constructor(
     protected client: Client,
@@ -48,32 +44,25 @@ export class WalletSettingsBTCComponent implements OnInit {
     this.currentAddress = address;
 
     this.form = new FormGroup({
-      addressInput: new FormControl(this.currentAddress, {
+      addressInput: new FormControl('', {
         validators: [Validators.required, this.validateAddressFormat],
       }),
     });
-
+    this.loaded = true;
     this.detectChanges();
   }
 
   validateAddressFormat(control: AbstractControl) {
+    // This allows for some false positives bc bech32 format allows for longer length
+    // but will catch some negatives so is better than nothing
     if (
       control.value.length &&
-      !/^[13][a-km-zA-HJ-NP-Z1-9]{25,34}$/.test(control.value)
+      !/^(bc1|[13])[a-zA-HJ-NP-Z0-9]{25,39}$/.test(control.value)
     ) {
       return { format: true }; // true if invalid
     }
     return null; // null if valid
   }
-
-  // isAddressFormatValid() {
-  //   const isAddressValid =
-  //     this.providedAddress && /^0x[a-fA-F0-9]{40}$/.test(this.providedAddress);
-  //   if (!isAddressValid) {
-  //     // this.formToastService.error('Invalid address format.');
-  //   }
-  //   return isAddressValid;
-  // }
 
   async provideAddress() {
     if (this.form.invalid || this.inProgress) {
@@ -86,14 +75,15 @@ export class WalletSettingsBTCComponent implements OnInit {
       await this.client.post('api/v2/wallet/btc/address', {
         address: this.addressInput.value,
       });
-      this.addressSetupComplete.emit();
+      this.currentAddress = this.addressInput.value;
+      this.showForm = false;
     } catch (e) {
       // TODOOJM get rid of form toast
       this.formToastService.error(e);
       console.error(e);
     } finally {
       this.inProgress = false;
-      this.currentAddress = this.addressInput.value;
+
       this.detectChanges();
     }
   }

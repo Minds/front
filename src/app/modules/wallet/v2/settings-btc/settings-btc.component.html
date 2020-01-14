@@ -1,4 +1,4 @@
-<div class="m-walletSettings">
+<div class="m-walletSettings" *ngIf="loaded">
   <!---PROVIDE ADDRESS---------------------------->
   <div
     class="m-walletSettingsView--addressProvide"
@@ -49,6 +49,7 @@
                 formControlName="addressInput"
                 class="form-control"
                 [readonly]="inProgress"
+                autofocus
               />
             </div>
             <div class="m-walletForm__row--validation">
@@ -79,12 +80,15 @@
       class="m-walletSettings__backButton"
       *ngIf="currentAddress"
       (click)="showForm = false"
-      ><i class="material-icons">❮</i><span>Back to settings</span></a
+      ><i class="material-icons">❮</i><span>Back to current address</span></a
     >
   </div>
 
   <!---CURRENT ADDRESS ----------------------------------------------->
-  <div class="m-walletSettingsView--addressCurrent" *ngIf="currentAddress">
+  <div
+    class="m-walletSettingsView--addressCurrent"
+    *ngIf="currentAddress && !showForm"
+  >
     <h2>
       Bitcoin Address
     </h2>
@@ -95,7 +99,9 @@
     </p>
     <div class="m-walletSettingsView--addressCurrent__addressContainer">
       <div>{{ currentAddress }}</div>
-      <div><a (click)="display = null">Change Address</a></div>
+      <div>
+        <a (click)="addressInput.value = ''; showForm = true">Change Address</a>
+      </div>
     </div>
   </div>
 </div>
