@@ -156,7 +156,6 @@ export class WalletDashboardService {
     console.log('********');
 
     this.walletLoaded = true;
-
     return this.wallet;
   }
 

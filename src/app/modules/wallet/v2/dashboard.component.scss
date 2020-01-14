@@ -455,13 +455,18 @@ m-walletDashboard {
 
   a.m-walletSettings__backButton {
     margin-top: 33px;
-    display: flex;
+    display: inline-flex;
     flex-flow: row nowrap;
     align-items: baseline;
     text-decoration: none;
 
     @include m-theme() {
       color: themed($m-grey-300);
+    }
+    &:hover {
+      span {
+        text-decoration: underline;
+      }
     }
     i {
       font-size: 14px;

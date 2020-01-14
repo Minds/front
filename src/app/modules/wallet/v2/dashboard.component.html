@@ -33,7 +33,6 @@
                 *ngIf="activeCurrencyId === 'tokens'"
               ></m-walletBalance--tokens>
               <m-walletBalance--usd
-                [wallet]="wallet"
                 class="m-shadowboxLayout__body"
                 *ngIf="activeCurrencyId === 'usd'"
               ></m-walletBalance--usd>
@@ -67,7 +66,6 @@
                 <ng-container *ngIf="activeViewId === 'settings'">
                   <div class="m-walletDashboardSettings__wrapper">
                     <m-walletSettings--tokens
-                      [wallet]="wallet"
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'tokens'"
                     ></m-walletSettings--tokens>

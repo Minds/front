@@ -9,6 +9,12 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
@@ -17,6 +23,8 @@ import { BlockchainService } from '../../../blockchain/blockchain.service';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { getBrowser } from '../../../../utils/browser';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { WalletDashboardService } from '../dashboard.service';
+import { Subscription } from 'rxjs';
 
 enum Views {
   CreateAddress = 1,
@@ -30,9 +38,8 @@ enum Views {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
-  @Input() wallet;
-  @Input() skippable: boolean = true;
   @Output() addressSetupComplete: EventEmitter<any> = new EventEmitter();
+  wallet;
   inProgress: boolean = false;
   linkingMetamask: boolean = false;
   error: string;
@@ -42,6 +49,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   hasExternal: boolean = false;
   currentAddress: string = '';
   downloadingMetamask: boolean = false;
+  form;
   minds = window.Minds;
 
   readonly Views = Views;
@@ -56,12 +64,17 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     protected localWallet: LocalWalletService,
     protected blockchain: BlockchainService,
     protected web3Wallet: Web3WalletService,
-    private formToastService: FormToastService
+    private formToastService: FormToastService,
+    protected walletService: WalletDashboardService
   ) {}
 
   // TODOOJM add fx to reload whenever the current setting is updated
 
   ngOnInit() {
+    this.load();
+  }
+  async load() {
+    this.wallet = await this.walletService.getWallet();
     // Check if already has an address
     this.currentAddress =
       this.session.getLoggedInUser().eth_wallet || this.wallet.receiver.address;
@@ -69,7 +82,15 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       this.display = Views.CurrentAddress;
       this.addressSetupComplete.emit();
     }
+
+    this.form = new FormGroup({
+      addressInput: new FormControl('', {
+        validators: [Validators.required, this.validateAddressFormat],
+      }),
+    });
+
     this.checkExternal();
+    this.detectChanges();
   }
 
   ngOnDestroy() {
@@ -143,25 +164,31 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     }
   }
 
-  isAddressFormatValid() {
-    const isAddressValid =
-      this.providedAddress && /^0x[a-fA-F0-9]{40}$/.test(this.providedAddress);
-    if (!isAddressValid) {
-      this.formToastService.error('Invalid address format.');
+  validateAddressFormat(control: AbstractControl) {
+    if (control.value.length && !/^0x[a-fA-F0-9]{40}$/.test(control.value)) {
+      return { format: true }; // true if invalid
     }
-    return isAddressValid;
+    return null; // null if valid
   }
 
+  // isAddressFormatValid() {
+  //   const isAddressValid =
+  //     this.providedAddress && /^0x[a-fA-F0-9]{40}$/.test(this.providedAddress);
+  //   if (!isAddressValid) {
+  //     // this.formToastService.error('Invalid address format.');
+  //   }
+  //   return isAddressValid;
+  // }
+
   async provideAddress() {
-    if (!this.isAddressFormatValid() || this.inProgress) {
+    if (this.form.invalid || this.inProgress) {
       return;
     }
-
     try {
       this.inProgress = true;
       this.detectChanges();
 
-      await this.blockchain.setWallet({ address: this.providedAddress });
+      await this.blockchain.setWallet({ address: this.addressInput.value });
       this.addressSetupComplete.emit();
     } catch (e) {
       this.formToastService.error(e);
@@ -169,7 +196,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     } finally {
       this.inProgress = false;
       this.linkingMetamask = false;
-      this.currentAddress = this.providedAddress;
+      this.currentAddress = this.addressInput.value;
       this.display = Views.CurrentAddress;
       this.detectChanges();
     }
@@ -204,13 +231,10 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   }
 
   async detectExternal() {
-    console.log('snurgle');
     console.log(this.web3Wallet.getCurrentWallet(true));
     const address: string =
       (await this.web3Wallet.getCurrentWallet(true)) || '';
 
-    console.log('address', address);
-    console.log('providedaddress', this.providedAddress);
     if (this.providedAddress !== address) {
       this.providedAddress = address;
       this.detectChanges();
@@ -225,5 +249,8 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+  get addressInput() {
+    return this.form.get('addressInput');
   }
 }

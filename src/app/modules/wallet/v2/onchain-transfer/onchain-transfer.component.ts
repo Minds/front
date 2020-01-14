@@ -14,11 +14,8 @@ import {
 import { Subscription } from 'rxjs';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
-import { FormToastService } from '../../../../common/services/form-toast.service';
 import { WalletDashboardService } from '../dashboard.service';
-
 import { WithdrawContractService } from '../../../blockchain/contracts/withdraw-contract.service';
-import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 
 @Component({
   moduleId: module.id,
@@ -39,10 +36,8 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
 
   constructor(
     protected session: Session,
-    private formToastService: FormToastService,
     protected client: Client,
     protected contract: WithdrawContractService,
-    protected web3Wallet: Web3WalletService,
     protected walletService: WalletDashboardService
   ) {}
 
@@ -70,7 +65,7 @@ export class WalletOnchainTransferComponent implements OnInit, OnDestroy {
 
     this.amountSubscription = this.form
       .get('amount')
-      .valueChanges.subscribe(val => {
+      .valueChanges.subscribe(changes => {
         this.submitError = '';
       });
 

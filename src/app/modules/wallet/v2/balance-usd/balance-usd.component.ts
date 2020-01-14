@@ -15,7 +15,6 @@ import * as moment from 'moment';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletBalanceUsdV2Component implements OnInit {
-  @Input() wallet;
   inProgress = true;
   stripeAccount;
   pendingBalance;
