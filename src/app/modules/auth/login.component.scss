@@ -6,6 +6,10 @@ m-login {
   -webkit-font-smoothing: antialiased;
 
   &:not(.m-login__newDesign) {
+    @include m-theme() {
+      background-color: themed($m-white);
+    }
+
     .m-login {
       margin: 100px auto;
       display: flex;
