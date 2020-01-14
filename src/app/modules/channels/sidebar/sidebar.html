@@ -110,8 +110,8 @@
     <!-- END City / Location -->
 
     <div
-      class="m-channel-bio-field mdl-color-text--blue-grey-300"
-      *ngIf="user.tags && !editing"
+      class="m-channel-bio-field m-channel-bio-field--tags mdl-color-text--blue-grey-300"
+      *ngIf="user.tags && user.tags.length && !editing"
     >
       <div
         class="m-channel-bio-field__tags-container"

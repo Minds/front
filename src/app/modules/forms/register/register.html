@@ -80,19 +80,6 @@
         onfocus="this.removeAttribute('readonly');"
       />
     </div>
-
-    <div
-      class="mdl-cell mdl-cell--12-col"
-      [hidden]="!form.value.password2"
-      *ngIf="form.value.password"
-    >
-      <re-captcha
-        *ngIf="minds.recaptchaKey"
-        (captchaResponse)="setCaptcha($event)"
-        [site_key]="minds.recaptchaKey"
-        #reCaptcha
-      ></re-captcha>
-    </div>
   </div>
 
   <div class="mdl-card__actions">

@@ -93,7 +93,7 @@
   </div>
 </div>
 
-<div class="m-v2-topbar__Bottom">
+<div class="m-v2-topbar__Bottom" *ngIf="getCurrentUser()">
   <ng-container *ngTemplateOutlet="navLinks"></ng-container>
 </div>
 
