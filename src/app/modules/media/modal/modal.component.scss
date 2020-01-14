@@ -307,26 +307,31 @@ m-overlay-modal {
   }
 }
 
-// PAGER (DISABLED)
-// .m-mediaModal__pager {
-//   display: none; // DYNAMIC
-//   opacity: 0; // DYNAMIC
-//   height: 45px;
-//   margin-top: -22px;
-//   position: absolute;
-//   top: 50%;
-//   transform: translateZ(0);
-//   transition: opacity .2s;
-//   width: 48px;
-//   line-height: 1.28;
+.m-mediaModal__pager {
+  display: none; // DYNAMIC
+  opacity: 0; // DYNAMIC
+  height: 45px;
+  margin-top: -22px;
+  position: absolute;
+  top: 50%;
+  transform: translateZ(0);
+  transition: opacity 0.2s;
+  width: 48px;
+  line-height: 1.28;
+  cursor: pointer;
 
-//   &.m-mediaModal__pager--previous {
-//     left: 10px;
-//   }
-//   &.m-mediaModal__pager--next {
-//     right: 10px;
-//   }
-// }
+  &.m-mediaModal__pager--visible {
+    display: block;
+    opacity: 0.8;
+  }
+
+  &.m-mediaModal__pager--previous {
+    left: 10px;
+  }
+  &.m-mediaModal__pager--next {
+    right: 10px;
+  }
+}
 
 .m-mediaModal__contentContainer {
   height: 100%;
