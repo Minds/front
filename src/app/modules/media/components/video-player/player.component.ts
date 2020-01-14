@@ -33,6 +33,11 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
   @Output() fullScreenChange: EventEmitter<Event> = new EventEmitter();
 
   /**
+   * Dimension change event for parent components
+   */
+  @Output() dimensions: EventEmitter<any> = new EventEmitter<any>();
+
+  /**
    * This is the video player component
    */
   @ViewChild(PlyrComponent, { static: false }) player: PlyrComponent;
@@ -140,6 +145,28 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
     if (this.player) {
       this.player.player.pause();
       return;
+    }
+  }
+
+  /**
+   * Emits dimensions to parent component,
+   * called after HTML5 metadata is loaded
+   * @param e
+   */
+  emitDimensions(e) {
+    try {
+      const media = e.detail.plyr.media;
+
+      if (!media) {
+        return;
+      }
+
+      this.dimensions.next({
+        width: media.videoWidth,
+        height: media.videoHeight,
+      });
+    } catch (e) {
+      console.info('Error emitting dimensions', e);
     }
   }
 }
