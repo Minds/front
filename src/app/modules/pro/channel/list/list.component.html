@@ -63,7 +63,10 @@
         </ng-container>
 
         <ng-container *ngIf="type === 'activities'">
-          <minds-activity [object]="entity"></minds-activity>
+          <minds-activity
+            [object]="entity"
+            (_delete)="onActivityDelete($event)"
+          ></minds-activity>
         </ng-container>
       </ng-container>
     </li>
