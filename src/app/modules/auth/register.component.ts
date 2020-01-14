@@ -9,6 +9,7 @@ import { Session } from '../../services/session';
 import { SignupModalService } from '../modals/signup/service';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { OnboardingService } from '../onboarding/onboarding.service';
+import { PagesService } from '../../common/services/pages.service';
 import { MindsTitle } from '../../services/ux/title';
 import { FeaturesService } from '../../services/features.service';
 import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
@@ -45,6 +46,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public session: Session,
     private onboarding: OnboardingService,
     public navigation: NavigationService,
+    public pagesService: PagesService,
     private featuresService: FeaturesService,
     private topbarService: V2TopbarService,
     private onboardingService: OnboardingV2Service,
