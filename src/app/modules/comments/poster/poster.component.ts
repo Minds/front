@@ -19,6 +19,7 @@ import { SocketsService } from '../../../services/sockets';
 import autobind from '../../../helpers/autobind';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { SignupModalService } from '../../modals/signup/service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-comment__poster',
@@ -45,6 +46,7 @@ export class CommentPosterComponent {
   canPost: boolean = true;
   inProgress: boolean = false;
   maxLength: number = 1500;
+  progressSubscription: Subscription;
 
   constructor(
     public session: Session,
@@ -192,11 +194,14 @@ export class CommentPosterComponent {
 
     try {
       this.attachment.preview(message, this.detectChanges.bind(this)); // generate preview.
-      this.attachment.progress.subscribe(progress => {
-        if (progress === 100) {
-          this.canPost = true;
+      this.progressSubscription = this.attachment.progress.subscribe(
+        progress => {
+          if (progress === 100) {
+            this.canPost = true;
+            this.progressSubscription.unsubscribe();
+          }
         }
-      });
+      );
     } catch (e) {
       this.canPost = true;
     }

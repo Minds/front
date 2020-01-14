@@ -394,6 +394,7 @@ export class AttachmentService {
       return;
     }
 
+    this.progress.next(0);
     this.meta.is_rich = 1;
 
     if (this.previewTimeout) {
@@ -433,13 +434,13 @@ export class AttachmentService {
             this.meta.thumbnail = data.links.thumbnail[0].href;
           }
 
-          if (detectChangesFn) detectChangesFn();
           this.progress.next(100);
+          if (detectChangesFn) detectChangesFn();
         })
         .catch(e => {
           this.resetRich();
-          if (detectChangesFn) detectChangesFn();
           this.progress.next(100);
+          if (detectChangesFn) detectChangesFn();
         });
     }, 600);
   }
