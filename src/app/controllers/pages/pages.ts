@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Client } from '../../services/api';
 import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
+import { PagesService } from '../../common/services/pages.service';
 
 @Component({
   moduleId: module.id,
@@ -29,7 +30,8 @@ export class Pages {
     public titleService: MindsTitle,
     public client: Client,
     public navigation: NavigationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public pagesService: PagesService
   ) {}
 
   ngOnInit() {
