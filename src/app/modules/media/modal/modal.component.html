@@ -54,6 +54,7 @@
               isModal="true"
               autoplay="true"
               (fullScreenChange)="onFullscreenChange($event)"
+              (dimensions)="onDimensions($event)"
             ></m-videoPlayer>
           </div>
 
@@ -158,13 +159,22 @@
               </div>
             </div>
           </div>
-          <!-- PAGER (DISABLED) -->
-          <!-- <a class="m-mediaModal__pager m-mediaModal__pager--previous">
-            <i class="material-icons">chevron-left</i>
+
+          <a
+            class="m-mediaModal__pager m-mediaModal__pager--previous"
+            [class.m-mediaModal__pager--visible]="overlayVisible && hasPrev()"
+            (click)="goToPrev()"
+          >
+            <i class="material-icons">chevron_left</i>
           </a>
-          <a class="m-mediaModal__pager m-mediaModal__pager--next">
-            <i class="material-icons">chevron-right</i>
-          </a> -->
+
+          <a
+            class="m-mediaModal__pager m-mediaModal__pager--next"
+            [class.m-mediaModal__pager--visible]="overlayVisible && hasNext()"
+            (click)="goToNext()"
+          >
+            <i class="material-icons">chevron_right</i>
+          </a>
         </div>
       </div>
 

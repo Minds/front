@@ -133,6 +133,7 @@ import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
+import { HorizontalFeedService } from './services/horizontal-feed.service';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -440,6 +441,7 @@ const routes: Routes = [
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,
     },
+    HorizontalFeedService,
   ],
   entryComponents: [
     NotificationsToasterComponent,
