@@ -116,6 +116,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       this.currentAddress = this.generatedAccount.address;
     } catch (e) {
       console.error(e);
+      // TODOOJM get rid of form toast
       this.formToastService.error(e);
     } finally {
       this.inProgress = false;
@@ -159,6 +160,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       this.display = Views.CurrentAddress;
     } catch (e) {
       console.error(e);
+      // TODOOJM get rid of form toast
       this.formToastService.error(e);
       this.inProgress = false;
     }
@@ -191,6 +193,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       await this.blockchain.setWallet({ address: this.addressInput.value });
       this.addressSetupComplete.emit();
     } catch (e) {
+      // TODOOJM get rid of form toast
       this.formToastService.error(e);
       console.error(e);
     } finally {
