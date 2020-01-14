@@ -6,6 +6,7 @@ import { Session } from '../../services/session';
 import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { LoginReferrerService } from '../../services/login-referrer.service';
+import { PagesService } from '../../common/services/pages.service';
 
 @Component({
   selector: 'm-homepage',
@@ -36,7 +37,8 @@ export class HomepageComponent {
     public router: Router,
     public navigation: NavigationService,
     private loginReferrer: LoginReferrerService,
-    public session: Session
+    public session: Session,
+    public pagesService: PagesService
   ) {
     this.title.setTitle('Minds Social Network', false);
     this.loadStream();

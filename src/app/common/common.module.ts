@@ -128,6 +128,7 @@ import { FormToastComponent } from './components/form-toast/form-toast.component
 import { SsoService } from './services/sso.service';
 import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
+import { PagesService } from './services/pages.service';
 import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
@@ -258,6 +259,7 @@ const routes: Routes = [
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
+    EmailConfirmationComponent,
     DateDropdownsComponent,
   ],
   exports: [
@@ -361,11 +363,13 @@ const routes: Routes = [
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
+    EmailConfirmationComponent,
     DateDropdownsComponent,
   ],
   providers: [
     SiteService,
     SsoService,
+    PagesService,
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,

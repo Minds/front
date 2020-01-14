@@ -88,6 +88,12 @@ m-walletDashboard {
       line-height: 20px;
     }
   }
+  m-shadowboxSubmitButton {
+    display: block;
+    flex: 0 1 auto;
+    margin: 0 0 0 21px;
+    min-width: 105px;
+    box-sizing: border-box;
 
   // *******************************************************
   // ** DASHBOARD - MEDIA QUERIES **************************
