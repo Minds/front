@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MindsTitle } from '../../../services/ux/title';
 import { Session } from '../../../services/session';
 
 @Component({
@@ -10,9 +9,7 @@ export class JobsMarketingComponent {
   minds = window.Minds;
   user;
 
-  constructor(private title: MindsTitle, private session: Session) {
-    this.title.setTitle('Join the team');
-  }
+  constructor(private session: Session) {}
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();

@@ -166,11 +166,7 @@ export const MINDS_PROVIDERS: any[] = [
     provide: EmbedService,
     useFactory: EmbedService._,
   },
-  {
-    provide: MindsTitle,
-    useFactory: MindsTitle._,
-    deps: [Title, SiteService],
-  },
+  MindsTitle,
   {
     provide: GoogleChartsLoader,
     useFactory: GoogleChartsLoader._,

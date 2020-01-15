@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { proRoutes } from '../../modules/pro/pro.routes';
+import { ConfigsService } from './configs.service';
 
 @Injectable()
 export class SiteService {
   get pro() {
-    return window.Minds.pro;
+    return this.configs.get('pro');
   }
 
   get isProDomain(): boolean {
@@ -21,9 +22,13 @@ export class SiteService {
     return this.isProDomain ? this.pro.one_line_headline || '' : '';
   }
 
+  get baseUrl(): string {
+    return this.configs.get('site_url');
+  }
+
   private router$: Subscription;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private configs: ConfigsService) {
     if (this.isProDomain) {
       this.listen();
     }

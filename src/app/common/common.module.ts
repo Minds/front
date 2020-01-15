@@ -2,6 +2,7 @@ import { NgModule, inject } from '@angular/core';
 import {
   CommonModule as NgCommonModule,
   isPlatformServer,
+  Location,
 } from '@angular/common';
 import { RouterModule, Router, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -133,6 +134,8 @@ import { SsoService } from './services/sso.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { ConfigsService } from './services/configs.service';
 import { Cookie } from '../services/cookie';
+import { MetaService } from './services/meta.service';
+import { Title, Meta } from '@angular/platform-browser';
 
 const routes: Routes = [
   {
@@ -427,6 +430,12 @@ const routes: Routes = [
       provide: ConfigsService,
       useFactory: client => new ConfigsService(client),
       deps: [Client],
+    },
+    {
+      provide: MetaService,
+      useFactory: (titleService, metaService, siteService, location) =>
+        new MetaService(titleService, metaService, siteService, location),
+      deps: [Title, Meta, SiteService, Location],
     },
   ],
   entryComponents: [

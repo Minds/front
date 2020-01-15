@@ -7,7 +7,7 @@
     "start": "ng serve",
     "preinstall": "git config core.hooksPath .git/hooks/",
     "prebuild": "gulp build.sass",
-    "build": "ng build --prod",
+    "build": "sh build/base-locale.sh dist",
     "prebuild-dev": "gulp build.sass --deploy-url=http://localhost",
     "build-dev": "ng build --output-path dist --deploy-url=/ --watch=true --poll=800",
     "serve-dev": "ng serve --host=0.0.0.0 --deploy-url=/en/ --configuration=hmr --hmr --poll=800 --progress",
@@ -19,7 +19,7 @@
     "compile:server": "webpack --config webpack.server.config.js --progress --colors",
     "serve:ssr": "node dist/server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
-    "build:client-and-server-bundles": "ng build --prod && ng run minds:server:production"
+    "build:client-and-server-bundles": "npm run build && ng run minds:server:production"
   },
   "private": true,
   "dependencies": {

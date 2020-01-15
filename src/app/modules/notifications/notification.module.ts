@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
 import { Session } from '../../services/session';
-import { MindsTitle } from '../../services/ux/title';
 
 import { CommonModule } from '../../common/common.module';
 
@@ -18,6 +17,7 @@ import { NotificationsComponent } from './notifications.component';
 import { NotificationService } from './notification.service';
 import { NotificationsToasterComponent } from './toaster.component';
 import { SiteService } from '../../common/services/site.service';
+import { MetaService } from '../../common/services/meta.service';
 
 @NgModule({
   imports: [
@@ -43,7 +43,7 @@ import { SiteService } from '../../common/services/site.service';
         Session,
         Client,
         SocketsService,
-        MindsTitle,
+        MetaService,
         PLATFORM_ID,
         SiteService,
       ],

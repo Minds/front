@@ -30,9 +30,10 @@ import { Subscription } from 'rxjs';
 import { RouterHistoryService } from './common/services/router-history.service';
 import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
 import { ConfigsService } from './common/services/configs.service';
+import { MetaService } from './common/services/meta.service';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-app',
   templateUrl: 'app.component.html',
 })
@@ -72,6 +73,7 @@ export class Minds {
     private routerHistoryService: RouterHistoryService,
     private site: SiteService,
     private sso: SsoService,
+    private metaService: MetaService,
     private configs: ConfigsService,
     private cd: ChangeDetectorRef
   ) {
@@ -83,6 +85,22 @@ export class Minds {
   }
 
   async ngOnInit() {
+    // MH: does loading meta tags before the configs have been set cause issues?
+    this.router$ = this.router.events
+      .pipe(
+        filter(e => e instanceof NavigationEnd),
+        map(() => this.route),
+        map(route => {
+          while (route.firstChild) route = route.firstChild;
+          return route;
+        }),
+        // filter(route => route.outlet === 'primary')
+        mergeMap(route => route.data)
+      )
+      .subscribe(data => {
+        this.metaService.reset(data);
+      });
+
     try {
       // Load external configs
       await this.configs.loadFromRemote();
@@ -163,6 +181,7 @@ export class Minds {
   ngOnDestroy() {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();
+    this.router$.unsubscribe();
   }
 
   @HostBinding('class') get cssColorSchemeOverride() {

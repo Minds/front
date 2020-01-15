@@ -3,6 +3,7 @@ import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { MindsTitle } from '../../../services/ux/title';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MetaService } from '../../../common/services/meta.service';
 
 @Component({
   selector: 'm-helpdesk--questions',
@@ -18,7 +19,7 @@ export class QuestionsComponent implements OnInit {
     public session: Session,
     public router: Router,
     private route: ActivatedRoute,
-    private title: MindsTitle
+    private metaService: MetaService
   ) {}
 
   ngOnInit() {
@@ -35,7 +36,10 @@ export class QuestionsComponent implements OnInit {
         `api/v2/helpdesk/questions/question/${uuid}`
       );
       this.question = response.question;
-      this.title.setTitle(this.question.question);
+      this.metaService
+        .setTitle(this.question.question)
+        .setDescription(this.question.answer)
+        .setOgImage('/assets/photos/balloon.jpg');
     } catch (e) {
       console.error(e);
     }

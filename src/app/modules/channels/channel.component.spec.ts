@@ -39,6 +39,8 @@ import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelMode } from '../../interfaces/entities';
 import { ClientMetaService } from '../../common/services/client-meta.service';
 import { clientMetaServiceMock } from '../../../tests/client-meta-service-mock.spec';
+import { MetaService } from '../../common/services/meta.service';
+import { SiteService } from '../../common/services/site.service';
 
 describe('ChannelComponent', () => {
   let comp: ChannelComponent;
@@ -95,7 +97,7 @@ describe('ChannelComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Session, useValue: sessionMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
+        { provide: MetaService, useValue: MockService(MetaService) },
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: RecentService, useValue: recentServiceMock },
         { provide: ContextService, useValue: contextServiceMock },

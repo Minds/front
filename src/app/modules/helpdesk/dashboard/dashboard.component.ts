@@ -24,12 +24,10 @@ export class HelpdeskDashboardComponent implements OnInit {
   constructor(
     public router: Router,
     public client: Client,
-    public session: Session,
-    private title: MindsTitle
+    public session: Session
   ) {}
 
   async ngOnInit() {
-    this.title.setTitle('Help Desk');
     await this.loadPopular();
   }
 

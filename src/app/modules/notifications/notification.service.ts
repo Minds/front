@@ -3,7 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
 import { Session } from '../../services/session';
-import { MindsTitle } from '../../services/ux/title';
+import { MetaService } from '../../common/services/meta.service';
 import { Subscription, timer } from 'rxjs';
 import { SiteService } from '../../common/services/site.service';
 
@@ -20,7 +20,7 @@ export class NotificationService {
     session: Session,
     client: Client,
     sockets: SocketsService,
-    title: MindsTitle,
+    metaService: MetaService,
     platformId,
     site: SiteService
   ) {
@@ -28,7 +28,7 @@ export class NotificationService {
       session,
       client,
       sockets,
-      title,
+      metaService,
       platformId,
       site
     );
@@ -38,7 +38,7 @@ export class NotificationService {
     public session: Session,
     public client: Client,
     public sockets: SocketsService,
-    public title: MindsTitle,
+    public metaService: MetaService,
     @Inject(PLATFORM_ID) private platformId,
     protected site: SiteService
   ) {
@@ -124,7 +124,7 @@ export class NotificationService {
     //       window.Minds.notifications_count;
     //   }
     // }
-    this.title.setCounter(window.Minds.notifications_count);
+    this.metaService.setCounter(window.Minds.notifications_count);
   }
 
   ngOnDestroy() {
