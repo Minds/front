@@ -9,6 +9,9 @@
           New group
         </ng-container>
       </m-tooltip>
+      <ng-container i18n="@@M__COMMON__NEW_GROUP" *ngIf="showLabels">
+        New group
+      </ng-container>
     </a>
   </li>
 
@@ -26,6 +29,9 @@
           {{ group.name }}
         </ng-container>
       </m-tooltip>
+      <ng-container *ngIf="showLabels">
+        {{ group.name }}
+      </ng-container>
     </a>
   </li>
 

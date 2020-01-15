@@ -4,6 +4,10 @@ import {
   ViewChild,
   ChangeDetectorRef,
   HostListener,
+  Input,
+  OnInit,
+  OnDestroy,
+  DoCheck,
 } from '@angular/core';
 import { interval, timer } from 'rxjs';
 import { startWith, map, tap, throttle } from 'rxjs/operators';
@@ -16,7 +20,10 @@ import { Session } from '../../../services/session';
   selector: 'm-group--sidebar-markers',
   templateUrl: 'sidebar-markers.component.html',
 })
-export class GroupsSidebarMarkersComponent {
+export class GroupsSidebarMarkersComponent
+  implements OnInit, DoCheck, OnDestroy {
+  @Input() showLabels: boolean = false;
+
   inProgress: boolean = false;
   $updateMarker;
   markers = [];

@@ -84,6 +84,8 @@ $twitter: #03b3ee;
 $whatsapp: #25d366;
 $linkedin: #0071a1;
 
+$navigation-item: #aeb0b8;
+
 // Theme maps
 // e.g. m-grey-100 in light mode will become m-grey-900 in dark mode
 $themes: (
@@ -140,6 +142,7 @@ $themes: (
     m-twitter: $twitter,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
+    m-navigation-item: $navigation-item,
   ),
   dark: (
     m-grey-950: lighten($grey-50, $percent),
@@ -194,6 +197,7 @@ $themes: (
     m-twitter: $twitter,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
+    m-navigation-item: lighten($navigation-item, $percent),
   ),
 );
 
@@ -256,3 +260,4 @@ $m-messenger: 'm-messenger';
 $m-twitter: 'm-twitter';
 $m-whatsapp: 'm-whatsapp';
 $m-linkedin: 'm-linkedin';
+$m-navigation-item: 'm-navigation-item';
