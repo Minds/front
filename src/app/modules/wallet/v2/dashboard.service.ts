@@ -148,7 +148,7 @@ export class WalletDashboardService {
     this.getStripeAccount();
 
     // TODOOJM toggle me before pushing
-    // this.wallet = fakeData.wallet;
+    this.wallet = fakeData.wallet;
 
     // TODOOJM remove
     console.log('********');
@@ -236,34 +236,42 @@ export class WalletDashboardService {
 
   async getStripeAccount() {
     const merchant = this.session.getLoggedInUser().merchant;
-    if (merchant && merchant.service === 'stripe') {
-      try {
-        const stripeAccount = <any>(
-          await this.client.get('api/v2/payments/stripe/connect')
-        );
-        if (stripeAccount && stripeAccount.totalBalance) {
-          this.wallet.usd.balance =
-            (stripeAccount.totalBalance.amount +
-              stripeAccount.pendingBalance.amount) *
-            100;
-        }
-        return stripeAccount;
-      } catch (e) {
-        console.error(e);
-      }
-    } else {
-      return;
-    }
+
+    //TODOOJM toggle
+    return fakeData.stripe_account.account;
+    // if (merchant && merchant.service === 'stripe') {
+    // try {
+    //   const stripeAccount = <any>(
+    //     await this.client.get('api/v2/payments/stripe/connect')
+    //   ).account;
+    //   if (stripeAccount && stripeAccount.totalBalance) {
+    //     this.wallet.usd.balance =
+    //       (stripeAccount.totalBalance.amount +
+    //         stripeAccount.pendingBalance.amount) *
+    //       100;
+    //   }
+
+    // return stripeAccount;
+    // } catch (e) {
+    //   console.error(e);
+    //   return;
+    // }
+    // } else {
+    //   return;
+    // }
   }
 
   async getStripeTransactions() {
     try {
-      const { transactions } = <any>(
-        await this.client.get('api/v2/payments/stripe/transactions')
-      );
-      return transactions;
+      // const { response } = <any>(
+      //   await this.client.get('api/v2/payments/stripe/transactions')
+      // );
+      // TODOOJM toggle fake data
+      // return response.transactions;
+      return fakeData.tx_usd.transactions;
     } catch (e) {
       console.error(e);
+      return;
     }
   }
 

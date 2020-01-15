@@ -4,6 +4,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
@@ -15,12 +17,14 @@ import * as moment from 'moment';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletBalanceUsdV2Component implements OnInit {
-  inProgress = true;
+  inProgress: boolean = true;
   stripeAccount;
+  accountSetup: boolean = true;
   pendingBalance;
   totalPaidOut;
   nextPayoutDate = '';
 
+  @Output() scrollToUsdSettings: EventEmitter<any> = new EventEmitter();
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
@@ -43,16 +47,19 @@ export class WalletBalanceUsdV2Component implements OnInit {
     //   this.stripeAccount = response;
     // });
     console.log(this.stripeAccount);
-    if (!this.stripeAccount) {
+    if (!this.stripeAccount || !this.stripeAccount.accountNumber) {
+      this.accountSetup = false;
       this.pendingBalance = this.formatBalance(0);
       this.totalPaidOut = this.formatBalance(0);
     } else {
       this.pendingBalance = this.formatBalance(
-        this.stripeAccount.pendingBalance.amount
+        this.stripeAccount.pendingBalance.amount / 100
       );
 
       let totalPaidOutRaw =
-        this.stripeAccount.totalBalance - this.stripeAccount.pendingBalance;
+        (this.stripeAccount.totalBalance.amount -
+          this.stripeAccount.pendingBalance.amount) /
+        100;
 
       if (totalPaidOutRaw < 0) {
         totalPaidOutRaw = 0;
@@ -76,7 +83,9 @@ export class WalletBalanceUsdV2Component implements OnInit {
     const splitBalance = balance.toString().split('.');
 
     formattedBalance.int = splitBalance[0];
-    formattedBalance.frac = splitBalance[1];
+
+    const frac = splitBalance[1].toString();
+    formattedBalance.frac = frac.length < 2 ? frac.concat('0') : frac;
     return formattedBalance;
   }
 
