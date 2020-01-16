@@ -26,8 +26,6 @@ export class WalletSettingsUSDComponent implements OnInit {
   loaded: boolean = false;
   inProgress: boolean = true;
   editing: boolean = false;
-  //TODOOJM figure out how to see if they've left already
-  leftMonetization: boolean = false;
   showModal: boolean = false;
   form;
 

@@ -272,6 +272,18 @@ export class WalletDashboardService {
       return e;
     }
   }
+
+  async addStripeBank(form) {
+    try {
+      const response = <any>(
+        await this.client.post('api/v2/payments/stripe/connect/bank', form)
+      );
+      return response;
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
+  }
   // async uploadDocument(fileInput: HTMLInputElement, documentType: string) {
   //   const file = fileInput ? fileInput.files[0] : null;
   //   this.editing = true;
@@ -304,6 +316,18 @@ export class WalletDashboardService {
   //   this.account = null;
   //   this.getSettings();
   // }
+
+  async leaveMonetization() {
+    try {
+      const response = <any>(
+        await this.client.delete('api/v2/payments/stripe/connect')
+      );
+      return response;
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
+  }
 
   async cancelStripeAccount() {
     try {
