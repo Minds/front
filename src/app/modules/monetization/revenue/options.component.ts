@@ -57,7 +57,6 @@ export class RevenueOptionsComponent {
   addBankAccount() {
     this.inProgress = true;
     this.error = '';
-    // this.editing = false;
     this.detectChanges();
 
     this.client

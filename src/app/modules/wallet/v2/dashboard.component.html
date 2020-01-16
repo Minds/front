@@ -58,7 +58,7 @@
                     activeCurrencyId === 'tokens' && activeViewId === 'overview'
                   "
                 ></m-walletChart>
-                <ng-container *ngIf="activeViewId === 'transactions'">
+                <ng-container *ngIf="activeVfiewId === 'transactions'">
                   <m-walletTransactions--usd
                     class="m-walletDashboardViews__view"
                     *ngIf="activeCurrencyId === 'usd'"
@@ -81,7 +81,7 @@
                     <m-walletSettings--eth
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'eth'"
-                      (scrollToTokenSettings)="scrollToTokenSettings()"
+                      (scrollToTokenSettings)="scrollToSettings('tokens')"
                     ></m-walletSettings--eth>
                     <m-walletSettings--btc
                       class="m-walletDashboardViews__view"

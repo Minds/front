@@ -1,22 +1,38 @@
 <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="!loaded"></div>
 <div class="m-walletSettings" id="usdSettings" *ngIf="loaded">
   <ng-container *ngIf="!hasAccount">
+    <h2>Bank Information</h2>
+    <p>Add your bank account details where rewards are deposited.</p>
     <div class="m-walletSettingsView--addAccount">
-      <p>Add your bank account details where monthly rewards are deposited</p>
-      <m-shadowboxSubmitButton (click)="addBank()" [disabled]="inProgress"
+      <m-shadowboxSubmitButton
+        (click)="createStripeAccount()"
+        [disabled]="inProgress"
         >Add your bank details</m-shadowboxSubmitButton
       >
     </div>
   </ng-container>
   <ng-container *ngIf="hasAccount">
-    <div class="m-walletSettingsView--accountSplash" *ngIf="!editing"></div>
+    <div class="m-walletSettingsView--accountSplash" *ngIf="!editing">
+      <div>
+        <div>
+          {{ payoutMethod.account.bank_name }}
+        </div>
+        <div>****{{ payoutMethod.account.last4 }}</div>
+
+        <a (click)="edit()"> Update</a>
+        <a (click)="removeBank()"> remove</a>
+      </div>
+      <m-shadowboxSubmitButton [color]="red" (click)="leaveMonetization()"
+        >Leave Monetization Program</m-shadowboxSubmitButton
+      >
+    </div>
     <div class="m-walletSettingsView--editing" *ngIf="editing"></div>
   </ng-container>
 
   <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
     <p>
-      Are you sure you want to leave the monetization program? You can't undo
-      this.
+      Are you sure you want to leave the monetization program? You won't be able
+      to rejoin again.
     </p>
     <p></p>
     <div class="m-walletSettings--usd__leaveModalButtons">
@@ -24,7 +40,7 @@
         >Cancel</m-shadowboxSubmitButton
       >
       <m-shadowboxSubmitButton [color]="red" (click)="leaveMonetization()"
-        >I'm sure</m-shadowboxSubmitButton
+        >Leave Monetization Program</m-shadowboxSubmitButton
       >
     </div>
   </m-walletModal>

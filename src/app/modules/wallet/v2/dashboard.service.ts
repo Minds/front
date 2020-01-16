@@ -284,6 +284,19 @@ export class WalletDashboardService {
       return e;
     }
   }
+  async removeStripeBank() {
+    return true;
+    // TODOOJM this endpoint doesn't exist yet.
+    // try {
+    //   const response = <any>(
+    //     await this.client.delete('api/v2/payments/stripe/connect/bank')
+    //   );
+    //   return response;
+    // } catch (e) {
+    //   console.error(e);
+    //   return e;
+    // }
+  }
   // async uploadDocument(fileInput: HTMLInputElement, documentType: string) {
   //   const file = fileInput ? fileInput.files[0] : null;
   //   this.editing = true;

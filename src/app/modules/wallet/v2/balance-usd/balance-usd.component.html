@@ -1,7 +1,7 @@
 <div class="m-walletBalance--usd" *ngIf="!inProgress">
   <div
     class="m-walletTransactions__onboarding"
-    *ngIf="!accountSetup && !onSettingsTab"
+    *ngIf="!hasAccount && !onSettingsTab"
   >
     <p><a (click)="scrollToUsdSettings.emit()">Add your bank information</a></p>
     <p>Start receiving payouts by adding your bank details.</p>
@@ -21,7 +21,7 @@
         >
       </div>
     </div>
-    <div class="m-walletBalance--usd__col" *ngIf="accountSetup">
+    <div class="m-walletBalance--usd__col" *ngIf="hasAccount">
       <div class="m-walletBalance--usd__colTitle">
         Total Paid Out<m-tooltip icon="help">placeholder</m-tooltip>
       </div>
@@ -36,7 +36,7 @@
         >
       </div>
     </div>
-    <div class="m-walletBalance--usd__col" *ngIf="accountSetup">
+    <div class="m-walletBalance--usd__col" *ngIf="hasAccount">
       <div class="m-walletBalance--usd__colTitle">
         Next Payout<m-tooltip icon="help">placeholder</m-tooltip>
       </div>

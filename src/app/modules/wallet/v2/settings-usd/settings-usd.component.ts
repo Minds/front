@@ -70,10 +70,10 @@ export class WalletSettingsUSDComponent implements OnInit {
     this.detectChanges();
   }
 
+  async createStripeAccount() {}
+
   async addBank() {
     this.inProgress = true;
-    // this.error = '';
-    // this.editing = false;
     this.detectChanges();
 
     this.walletService
@@ -93,19 +93,42 @@ export class WalletSettingsUSDComponent implements OnInit {
     this.detectChanges();
   }
 
-  leaveMonetization() {
+  async leaveMonetization() {
     this.showModal = false;
     this.detectChanges();
     this.walletService
       .leaveMonetization()
       .then((response: any) => {
         (<any>window).Minds.user.merchant = [];
-        this.leftMonetization = true;
       })
       .catch(e => {
         this.formToastService.error(e.message);
         this.detectChanges();
       });
+  }
+
+  edit() {
+    this.editing = true;
+    this.detectChanges();
+  }
+  async removeBank() {
+    this.inProgress = true;
+    this.detectChanges();
+
+    this.walletService
+      .removeStripeBank()
+      .then((response: any) => {
+        this.inProgress = false;
+        this.formToastService.success(
+          'Your bank account was successfully removed.'
+        );
+        this.getStripeAccount();
+      })
+      .catch(e => {
+        this.inProgress = false;
+        this.formToastService.error(e.message);
+      });
+    this.detectChanges();
   }
 
   get accountNumber() {

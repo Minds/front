@@ -20,7 +20,7 @@ import * as moment from 'moment';
 export class WalletBalanceUsdV2Component implements OnInit {
   inProgress: boolean = true;
   stripeAccount;
-  accountSetup: boolean = true;
+  hasAccount: boolean = true;
   pendingBalance;
   totalPaidOut;
   nextPayoutDate = '';
@@ -39,6 +39,7 @@ export class WalletBalanceUsdV2Component implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       console.log('onsettings?', params.get('view') === 'settings');
       this.onSettingsTab = params.get('view') === 'settings';
+      this.detectChanges();
     });
 
     this.load();
@@ -54,7 +55,7 @@ export class WalletBalanceUsdV2Component implements OnInit {
 
     console.log(this.stripeAccount);
     if (!this.stripeAccount || !this.stripeAccount.accountNumber) {
-      this.accountSetup = false;
+      this.hasAccount = false;
       this.pendingBalance = this.formatBalance(0);
       this.totalPaidOut = this.formatBalance(0);
     } else {
@@ -74,7 +75,7 @@ export class WalletBalanceUsdV2Component implements OnInit {
       this.totalPaidOut = this.formatBalance(totalPaidOutRaw);
     }
     // TEMP
-    this.accountSetup = false;
+    this.hasAccount = false;
 
     this.inProgress = false;
     this.detectChanges();
