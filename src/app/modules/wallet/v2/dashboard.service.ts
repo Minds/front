@@ -148,7 +148,7 @@ export class WalletDashboardService {
     this.getStripeAccount();
 
     // TODOOJM toggle me before pushing
-    // this.wallet = fakeData.wallet;
+    this.wallet = fakeData.wallet;
 
     // TODOOJM remove
     console.log('********');

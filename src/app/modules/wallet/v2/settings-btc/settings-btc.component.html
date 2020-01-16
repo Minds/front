@@ -1,3 +1,107 @@
-<div class="m-walletSettings">
-  <p>🚧 m-walletSettings--btc 🚧</p>
+<div class="m-walletSettings" *ngIf="loaded">
+  <!---PROVIDE ADDRESS---------------------------->
+  <div
+    class="m-walletSettingsView--addressProvide"
+    *ngIf="!currentAddress && !showForm"
+  >
+    <h2>
+      Setup your Bitcoin Address
+    </h2>
+    <p>
+      You can receive Bitcoin payments by linking your Bitcoin receiver address
+      below.
+    </p>
+    <m-shadowboxSubmitButton (click)="showForm = true">
+      Add Bitcoin address
+    </m-shadowboxSubmitButton>
+  </div>
+  <div class="m-walletSettingsView--addressProvide" *ngIf="showForm">
+    <h2>
+      Update Bitcoin Address
+    </h2>
+    <p>
+      Note: You may want to rotate this address frequently to avoid third party
+      tracking.
+    </p>
+
+    <form *ngIf="form" [formGroup]="form">
+      <div class="m-walletForm__wrapper">
+        <div class="m-walletForm__fieldsContainer">
+          <div class="m-walletForm__field--text stretchedField">
+            <div class="m-walletForm__row--label">
+              <label for="addressInput" i18n>On-chain Address</label>
+              <m-tooltip icon="help">
+                <ng-container i18n>Placeholder</ng-container>
+              </m-tooltip>
+            </div>
+            <div
+              class="m-walletForm__row--input"
+              [ngClass]="{
+                invalid:
+                  (form.dirty || form.touched) &&
+                  addressInput.hasError('format')
+              }"
+            >
+              <input
+                type="text"
+                id="addressInput"
+                name="addressInput"
+                formControlName="addressInput"
+                class="form-control"
+                [readonly]="inProgress"
+                autofocus
+              />
+            </div>
+            <div class="m-walletForm__row--validation">
+              <p
+                *ngIf="
+                  (form.dirty || form.touched) &&
+                  addressInput.hasError('format')
+                "
+              >
+                Invalid address format
+              </p>
+            </div>
+          </div>
+        </div>
+        <m-shadowboxSubmitButton
+          [disabled]="
+            inProgress ||
+            ((this.form.dirty || this.form.touched) && this.form.invalid)
+          "
+          [saving]="inProgress"
+          (click)="provideAddress()"
+        >
+          Update Bitcoin Address
+        </m-shadowboxSubmitButton>
+      </div>
+    </form>
+    <a
+      class="m-walletSettings__backButton"
+      *ngIf="currentAddress"
+      (click)="showForm = false"
+      ><i class="material-icons">❮</i><span>Back to current address</span></a
+    >
+  </div>
+
+  <!---CURRENT ADDRESS ----------------------------------------------->
+  <div
+    class="m-walletSettingsView--addressCurrent"
+    *ngIf="currentAddress && !showForm"
+  >
+    <h2>
+      Bitcoin Address
+    </h2>
+    <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
+
+    <p class="m-walletSettingsView--addressCurrent__title">
+      Current receiver address
+    </p>
+    <div class="m-walletSettingsView--addressCurrent__addressContainer">
+      <div>{{ currentAddress }}</div>
+      <div>
+        <a (click)="addressInput.value = ''; showForm = true">Change Address</a>
+      </div>
+    </div>
+  </div>
 </div>
