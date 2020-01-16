@@ -1,0 +1,9 @@
+m-walletTransactionsTable {
+  .m-walletTransactionsTable__row {
+    display: flex;
+    justify-content: space-between;
+  }
+  .m-walletTransactionsTable__row--day {
+    font-weight: 500;
+  }
+}

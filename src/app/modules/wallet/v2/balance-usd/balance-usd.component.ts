@@ -4,10 +4,13 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { WalletDashboardService } from './../dashboard.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
 @Component({
   selector: 'm-walletBalance--usd',
@@ -15,44 +18,55 @@ import * as moment from 'moment';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletBalanceUsdV2Component implements OnInit {
-  inProgress = true;
+  inProgress: boolean = true;
   stripeAccount;
+  hasAccount: boolean = true;
   pendingBalance;
   totalPaidOut;
   nextPayoutDate = '';
+  onSettingsTab: boolean = false;
 
+  @Output() scrollToUsdSettings: EventEmitter<any> = new EventEmitter();
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected session: Session,
-    protected walletService: WalletDashboardService
+    protected walletService: WalletDashboardService,
+    protected route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      console.log('onsettings?', params.get('view') === 'settings');
+      this.onSettingsTab = params.get('view') === 'settings';
+      this.detectChanges();
+    });
+
     this.load();
   }
 
   async load() {
+    // TODOOJM $stripe - this is not accurate for all stripe accounts
     this.nextPayoutDate = moment()
       .endOf('month')
       .format('ddd Do MMM');
 
     this.stripeAccount = await this.walletService.getStripeAccount();
 
-    // this.walletService.getStripeAccount().then(response => {
-    //   this.stripeAccount = response;
-    // });
     console.log(this.stripeAccount);
-    if (!this.stripeAccount) {
+    if (!this.stripeAccount || !this.stripeAccount.accountNumber) {
+      this.hasAccount = false;
       this.pendingBalance = this.formatBalance(0);
       this.totalPaidOut = this.formatBalance(0);
     } else {
       this.pendingBalance = this.formatBalance(
-        this.stripeAccount.pendingBalance.amount
+        this.stripeAccount.pendingBalance.amount / 100
       );
 
       let totalPaidOutRaw =
-        this.stripeAccount.totalBalance - this.stripeAccount.pendingBalance;
+        (this.stripeAccount.totalBalance.amount -
+          this.stripeAccount.pendingBalance.amount) /
+        100;
 
       if (totalPaidOutRaw < 0) {
         totalPaidOutRaw = 0;
@@ -60,6 +74,9 @@ export class WalletBalanceUsdV2Component implements OnInit {
 
       this.totalPaidOut = this.formatBalance(totalPaidOutRaw);
     }
+    // TEMP
+    this.hasAccount = false;
+
     this.inProgress = false;
     this.detectChanges();
   }
@@ -76,7 +93,9 @@ export class WalletBalanceUsdV2Component implements OnInit {
     const splitBalance = balance.toString().split('.');
 
     formattedBalance.int = splitBalance[0];
-    formattedBalance.frac = splitBalance[1];
+
+    const frac = splitBalance[1].toString();
+    formattedBalance.frac = frac.length < 2 ? frac.concat('0') : frac;
     return formattedBalance;
   }
 

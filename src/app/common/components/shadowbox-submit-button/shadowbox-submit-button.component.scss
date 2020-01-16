@@ -3,34 +3,78 @@
   position: relative;
   cursor: pointer;
   padding: 10px 20px;
-  background-color: #4fc3a9;
+
   min-height: 43px;
   border: 0;
   transition: all 0.2s ease;
   border-radius: 2px;
   outline: 0;
-  @include m-theme() {
-    color: themed($m-white);
+  &.green {
+    @include m-theme() {
+      background-color: #4fc3a9;
+      color: themed($m-white);
+    }
+  }
+  &.red {
+    @include m-theme() {
+      background-color: themed($m-red-dark);
+      color: themed($m-white);
+    }
+  }
+  &.grey {
+    @include m-theme() {
+      background-color: themed($m-grey-100);
+      color: themed($m-grey-500);
+    }
   }
   &:hover {
     &:not(:disabled) {
       transform: scale(1.02);
-      background-color: #55ccb2;
+
       @include m-theme() {
         box-shadow: 0 3px 3px -2px rgba(themed($m-black), 0.2),
           0 2px 5px 0 rgba(themed($m-black), 0.14),
           0 1px 7px 0 rgba(themed($m-black), 0.12);
+      }
+      &.green {
+        @include m-theme() {
+          background-color: #55ccb2;
+        }
+      }
+      &.red {
+        @include m-theme() {
+          background-color: rgba(themed($m-red), 0.7);
+        }
+      }
+      &.grey {
+        @include m-theme() {
+          background-color: rgba(themed($m-grey-50), 0.7);
+        }
       }
     }
   }
   &:active {
     &:not(:disabled) {
       transform: scale(0.999);
-      background-color: #4fc3a9;
       @include m-theme() {
         box-shadow: 0 3px 2px -2px rgba(themed($m-black), 0.2),
           0 2px 3px 0 rgba(themed($m-black), 0.14),
           0 1px 5px 0 rgba(themed($m-black), 0.12);
+      }
+      &.green {
+        @include m-theme() {
+          background-color: #4fc3a9;
+        }
+      }
+      &.red {
+        @include m-theme() {
+          background-color: themed($m-red-dark);
+        }
+      }
+      &.grey {
+        @include m-theme() {
+          background-color: themed($m-grey-100);
+        }
       }
     }
   }
@@ -77,8 +121,16 @@ button {
     animation-duration: 1.4s;
     animation-iteration-count: infinite;
     animation-fill-mode: both;
-    @include m-theme() {
-      background-color: themed($m-white);
+    &.green,
+    &.red {
+      @include m-theme() {
+        background-color: themed($m-white);
+      }
+    }
+    &.grey {
+      @include m-theme() {
+        background-color: themed($m-grey-500);
+      }
     }
     &:nth-child(2) {
       animation-delay: 0.2s;

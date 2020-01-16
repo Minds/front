@@ -1,0 +1,24 @@
+<div class="m-walletTransactions" *ngIf="loading">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+<div class="m-walletTransactions--usd" *ngIf="!loading">
+  <div
+    class="m-walletTransactions__noTxNotice"
+    *ngIf="!transactions && !pendingTransactions"
+  >
+    You don't have any USD transactions yet.
+  </div>
+  <div class="m-walletTransactions__tableContainer" *ngIf="transactions">
+    <m-dropdownSelector
+      [filter]="filter"
+      (selectionMade)="filterSelected($event)"
+    ></m-dropdownSelector>
+    <m-walletPendingUsdPayout
+      [pendingTransactions]="pendingTransactions"
+    ></m-walletPendingUsdPayout>
+    <m-walletTransactionsTable
+      [transactions]="transactions"
+      currency="usd"
+    ></m-walletTransactionsTable>
+  </div>
+</div>

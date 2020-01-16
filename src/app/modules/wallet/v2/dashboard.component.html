@@ -8,7 +8,6 @@
           </h3>
         </div>
       </ng-container>
-
       <ng-container m-dashboardLayout__body>
         <m-shadowboxLayout>
           <m-shadowboxHeader__tabs
@@ -21,11 +20,10 @@
 
           <div class="m-shadowboxLayout__body">
             <div class="m-walletDashboardBalances__wrapper">
-              <!-- TODOOJM: make m-walletPhoneVerification have another output for success -- then trigger formToastService -->
               <m-walletTokenOnboarding
                 *ngIf="activeCurrencyId === 'tokens' && !onboardingComplete"
                 (onboardingCompleted)="onboardingCompleted()"
-                (scrollToTokenSettings)="scrollToTokenSettings()"
+                (scrollToTokenSettings)="scrollToSettings('tokens')"
               ></m-walletTokenOnboarding>
               <m-walletBalance--tokens
                 [wallet]="wallet"
@@ -35,6 +33,7 @@
               <m-walletBalance--usd
                 class="m-shadowboxLayout__body"
                 *ngIf="activeCurrencyId === 'usd'"
+                (scrollToUsdSettings)="scrollToSettings('usd')"
               ></m-walletBalance--usd>
             </div>
             <div class="m-walletDashboardViews__wrapper">
@@ -59,10 +58,16 @@
                     activeCurrencyId === 'tokens' && activeViewId === 'overview'
                   "
                 ></m-walletChart>
-                <m-walletTransactionsTable
-                  class="m-walletDashboardViews__view"
-                  *ngIf="activeViewId === 'transactions'"
-                ></m-walletTransactionsTable>
+                <ng-container *ngIf="activeVfiewId === 'transactions'">
+                  <m-walletTransactions--usd
+                    class="m-walletDashboardViews__view"
+                    *ngIf="activeCurrencyId === 'usd'"
+                  ></m-walletTransactions--usd>
+                  <m-walletTransactions--tokens
+                    class="m-walletDashboardViews__view"
+                    *ngIf="activeCurrencyId === 'tokens'"
+                  ></m-walletTransactions--tokens>
+                </ng-container>
                 <ng-container *ngIf="activeViewId === 'settings'">
                   <div class="m-walletDashboardSettings__wrapper">
                     <m-walletSettings--tokens
@@ -76,7 +81,7 @@
                     <m-walletSettings--eth
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'eth'"
-                      (scrollToTokenSettings)="scrollToTokenSettings()"
+                      (scrollToTokenSettings)="scrollToSettings('tokens')"
                     ></m-walletSettings--eth>
                     <m-walletSettings--btc
                       class="m-walletDashboardViews__view"

@@ -1,3 +1,11 @@
-<p>
-  🚧 m-walletTransactionsTable 🚧
-</p>
+<ng-container *ngFor="let tx of transactions">
+  <div class="m-walletTransactionsTable__row--day" *ngIf="tx.displayDate">
+    <p>{{ tx.displayDate }}</p>
+  </div>
+  <div class="m-walletTransactionsTable__row">
+    <p>{{ tx.displayTime }}</p>
+    <p>{{ tx.type }}</p>
+    <p>${{ tx.amount }}</p>
+    <p>${{ tx.runningTotal }}</p>
+  </div>
+</ng-container>
