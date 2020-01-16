@@ -63,6 +63,7 @@ import { WalletTokenOnboardingComponent } from './v2/token-onboarding/token-onbo
 import { WalletModalComponent } from './v2/modal/modal.component';
 import { WalletPhoneVerificationComponent } from './v2/phone-verification/phone-verification.component';
 import { WalletOnchainTransferComponent } from './v2/onchain-transfer/onchain-transfer.component';
+import { WalletBalanceUsdV2Component } from './v2/balance-usd/balance-usd.component';
 
 const walletRoutes: Routes = [
   {
@@ -114,7 +115,9 @@ const walletRoutes: Routes = [
     ],
   },
   {
-    path: 'v2wallet', // TODOOJM: choose actual path. also allow **
+    path: 'v2wallet', // TODOOJM: choose actual path.
+    // TODOOJM:IMPORTANT - when switching, also change 'v2wallet'... in dashboard.html (scrollToTokenSettings()).
+    // TODOOJM: also allow **
     redirectTo: 'v2wallet/tokens/overview',
     pathMatch: 'full',
   },
@@ -175,7 +178,6 @@ const walletRoutes: Routes = [
     WalletTokenTestnetComponent,
     WalletUSDBalanceComponent,
     WalletDashboardComponent,
-    WalletBalanceTokensV2Component,
     WalletChartComponent,
     WalletRewardsPopupComponent,
     WalletTransactionsTableComponent,
@@ -187,6 +189,8 @@ const walletRoutes: Routes = [
     WalletModalComponent,
     WalletPhoneVerificationComponent,
     WalletOnchainTransferComponent,
+    WalletBalanceTokensV2Component,
+    WalletBalanceUsdV2Component,
   ],
   exports: [
     WalletComponent,

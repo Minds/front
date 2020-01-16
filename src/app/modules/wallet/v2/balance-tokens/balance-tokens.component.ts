@@ -10,7 +10,7 @@ import { Client } from '../../../../services/api/client';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { WalletDashboardService } from './../dashboard.service';
-import * as BN from 'bn.js';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-walletBalance--tokens',
@@ -19,12 +19,6 @@ import * as BN from 'bn.js';
 })
 export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   @Input() wallet;
-  constructor(
-    protected client: Client,
-    protected cd: ChangeDetectorRef,
-    protected session: Session,
-    protected walletService: WalletDashboardService
-  ) {}
   tokenBalance;
   offchainBalance;
   onchainBalance;
@@ -32,19 +26,25 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   showModal = false;
   protected updateTimer$;
 
-  nextPayout;
+  nextPayoutDate = 0;
   estimatedTokenPayout;
   payoutSubscription: Subscription;
+  constructor(
+    protected client: Client,
+    protected cd: ChangeDetectorRef,
+    protected session: Session,
+    protected walletService: WalletDashboardService,
+    protected formToastService: FormToastService
+  ) {}
 
   ngOnInit() {
     this.tokenBalance = this.formatBalance(this.wallet.tokens.balance);
     this.offchainBalance = this.formatBalance(this.wallet.offchain.balance);
     this.onchainBalance = this.formatBalance(this.wallet.onchain.balance);
-
     this.getPayout();
 
     this.inProgress = false;
-    this.updateTimer$ = setInterval(this.updateNextPayout.bind(this), 1000);
+    this.updateTimer$ = setInterval(this.updateNextPayoutDate.bind(this), 1000);
     this.detectChanges();
   }
   ngOnDestroy() {
@@ -59,7 +59,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
       const result: any = await this.client.get(
         `api/v2/blockchain/contributions/overview`
       );
-      this.nextPayout = result.nextPayout;
+      this.nextPayoutDate = result.nextPayout;
       this.estimatedTokenPayout = result.currentReward;
       this.detectChanges();
     } catch (e) {
@@ -67,9 +67,9 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     }
   }
 
-  updateNextPayout() {
-    if (this.nextPayout) {
-      this.nextPayout--;
+  updateNextPayoutDate() {
+    if (this.nextPayoutDate) {
+      this.nextPayoutDate--;
       this.detectChanges();
     }
   }
@@ -83,16 +83,17 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     if (balance <= 0) {
       return formattedBalance;
     }
+    const splitBalance = balance.toString().split('.');
 
-    if (balance.length > 18) {
-      formattedBalance.int = balance.slice(0, -18);
-    }
-    const frac = balance.slice(-18);
+    formattedBalance.int = splitBalance[0];
+    formattedBalance.frac = splitBalance[1];
 
-    if (!new BN(frac).isZero() || frac.slice(0, 3) !== '000') {
-      formattedBalance.frac = frac;
-    }
     return formattedBalance;
+  }
+
+  transferComplete() {
+    this.formToastService.success('On-chain transfer complete');
+    this.showModal = false;
   }
 
   detectChanges() {

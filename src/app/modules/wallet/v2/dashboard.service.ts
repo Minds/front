@@ -3,8 +3,17 @@ import { Client } from '../../../common/api/client.service';
 import { Session } from '../../../services/session';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import * as BN from 'bn.js';
+import toFriendlyCryptoVal from '../../../helpers/friendly-crypto';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import {
+  map,
+  distinctUntilChanged,
+  switchMap,
+  startWith,
+  tap,
+  delay,
+  debounceTime,
+} from 'rxjs/operators';
 
 import fakeData from './fake-data';
 
@@ -12,68 +21,139 @@ import fakeData from './fake-data';
 export class WalletDashboardService {
   walletLoaded = false;
   totalTokens = 0;
-
   wallet: any = {
     tokens: {
       label: 'Tokens',
       unit: 'tokens',
-      balance: 0,
+      balance: '0',
       address: null,
     },
     offchain: {
       label: 'Off-chain',
       unit: 'tokens',
-      balance: 0,
+      balance: '0',
       address: 'offchain',
     },
     onchain: {
       label: 'On-chain',
       unit: 'tokens',
-      balance: 0,
+      balance: '0',
       address: null,
     },
     receiver: {
       label: 'Receiver',
       unit: 'tokens',
-      balance: 0,
+      balance: '0',
       address: null,
     },
     usd: {
       label: 'USD',
       unit: 'usd',
-      balance: 0,
+      balance: '0',
       address: null,
     },
     eth: {
       label: 'Ether',
       unit: 'eth',
-      balance: 0,
+      balance: '0',
       address: null,
     },
     btc: {
       label: 'Bitcoin',
       unit: 'btc',
-      balance: 0,
+      balance: '0',
       address: null,
     },
+    // loading: false,
   };
+
+  // private store = new BehaviorSubject<WalletState>(_state);
+  // private state$ = this.store.asObservable();
+
+  // tokens$ = this.state$.pipe(
+  //   map(state => state.tokens),
+  //   distinctUntilChanged()
+  // );
+  // offchain$ = this.state$.pipe(
+  //   map(state => state.offchain),
+  //   distinctUntilChanged()
+  // );
+  // onchain$ = this.state$.pipe(
+  //   map(state => state.onchain),
+  //   distinctUntilChanged()
+  // );
+  // receiver$ = this.state$.pipe(
+  //   map(state => state.receiver),
+  //   distinctUntilChanged()
+  // );
+  // usd$ = this.state$.pipe(
+  //   map(state => state.usd),
+  //   distinctUntilChanged()
+  // );
+  // eth$ = this.state$.pipe(
+  //   map(state => state.eth),
+  //   distinctUntilChanged()
+  // );
+  // btc$ = this.state$.pipe(
+  //   map(state => state.btc),
+  //   distinctUntilChanged()
+  // );
+
+  // loading$ = this.state$.pipe(map(state => state.loading));
+
+  /**
+   * Viewmodel that resolves once all the data is ready (or updated)...
+   */
+  // wallet$: Observable<WalletState> = combineLatest([
+  //   this.tokens$,
+  //   this.onchain$,
+  //   this.receiver$,
+  //   this.offchain$,
+  //   this.usd$,
+  //   this.eth$,
+  //   this.btc$,
+  //   this.loading$,
+  // ]).pipe(
+  //   map(([tokens, onchain, receiver, offchain, usd, eth, btc, loading]) => {
+  //     return { tokens, onchain, receiver, offchain, usd, eth, btc, loading };
+  //   })
+  // );
 
   constructor(
     private client: Client,
     protected web3Wallet: Web3WalletService,
     protected tokenContract: TokenContractService,
     protected session: Session
-  ) {}
+  ) {
+    // /**
+    //  * Subscribe to multiple streams to trigger state updates
+    //  */
+    // combineLatest([this.tokens$, this.pagination$])
+    //   .pipe(
+    //     switchMap(([criteria, pagination]) => {
+    //       return this.findAllUsers(criteria, pagination);
+    //     })
+    //   )
+    //   .subscribe(users => {
+    //     this.updateState({ ..._state, users, loading: false });
+    //   });
+    // // TODOOJM make sure I unsubscribe to this
+    // // WARNING if state is updating both of 'tokens' and pogination'
+  }
 
   // TODOOJM: make wallet an observable and have the dashboard component subscribe to it
-  // TODOOJM: make functions to
   getWallet() {
     this.getTokenAccounts();
     this.getEthAccount();
     this.getStripeAccount();
 
-    // TODOOJM toggle me
+    // TODOOJM toggle me before pushing
     // this.wallet = fakeData.wallet;
+
+    // TODOOJM remove
+    console.log('********');
+    console.log(this.wallet);
+    console.log('********');
 
     this.walletLoaded = true;
     return this.wallet;
@@ -82,8 +162,13 @@ export class WalletDashboardService {
   async getTokenAccounts() {
     await this.loadOffchainAndReceiver();
     await this.loadOnchain();
-    const tokenTypes = ['tokens', 'onchain', 'offchain']; // receiver?
-    // TODOOJM iterate through this.wallet and return walletObj where key matches one of the tokenTypes
+    const tokenTypes = ['tokens', 'onchain', 'offchain', 'receiver'];
+
+    const tokenWallet = {};
+    tokenTypes.forEach(type => {
+      tokenWallet[type] = this.wallet[type];
+    });
+    return tokenWallet;
   }
 
   async loadOffchainAndReceiver() {
@@ -93,16 +178,17 @@ export class WalletDashboardService {
       );
 
       if (response && response.addresses) {
-        this.totalTokens = response.balance;
+        this.totalTokens = toFriendlyCryptoVal(response.balance);
         response.addresses.forEach(address => {
           if (address.label === 'Offchain') {
-            this.wallet.offchain.balance = address.balance;
+            this.wallet.offchain.balance = toFriendlyCryptoVal(address.balance);
           } else if (address.label === 'Receiver') {
-            this.wallet.onchain.balance = address.balance;
-            this.wallet.receiver.balance = address.balance;
+            this.wallet.onchain.balance = toFriendlyCryptoVal(address.balance);
+            this.wallet.receiver.balance = toFriendlyCryptoVal(address.balance);
             this.wallet.receiver.address = address.address;
           }
         });
+        return this.wallet;
       } else {
         console.error('No data');
       }
@@ -124,8 +210,12 @@ export class WalletDashboardService {
       }
 
       const onchainBalance = await this.tokenContract.balanceOf(address);
-      this.wallet.onchain.balance = onchainBalance[0].toString();
-      this.totalTokens = new BN(this.totalTokens).add(onchainBalance[0]);
+      this.wallet.onchain.balance = toFriendlyCryptoVal(
+        onchainBalance[0].toString()
+      );
+      this.wallet.tokens.balance += toFriendlyCryptoVal(
+        this.wallet.onchain.balance
+      );
     } catch (e) {
       console.log(e);
     }
@@ -139,7 +229,7 @@ export class WalletDashboardService {
     this.wallet.eth.address = address;
     const ethBalance = await this.web3Wallet.getBalance(address);
     if (ethBalance) {
-      this.wallet.eth.balance = ethBalance;
+      this.wallet.eth.balance = toFriendlyCryptoVal(ethBalance);
     }
     return this.wallet.eth;
   }
@@ -152,9 +242,10 @@ export class WalletDashboardService {
           await this.client.get('api/v2/payments/stripe/connect')
         );
         if (stripeAccount && stripeAccount.totalBalance) {
-          this.wallet.usd.value =
-            stripeAccount.totalBalance.amount +
-            stripeAccount.pendingBalance.amount;
+          this.wallet.usd.balance =
+            (stripeAccount.totalBalance.amount +
+              stripeAccount.pendingBalance.amount) *
+            100;
         }
         return stripeAccount;
       } catch (e) {
@@ -176,18 +267,42 @@ export class WalletDashboardService {
     }
   }
 
-  async hasMetamask(): Promise<boolean> {
-    const isLocal: any = await this.web3Wallet.isLocal();
-    return Boolean(isLocal);
-  }
-
   // TODOOJM bucket endpoint needed
   getTokenChart(activeTimespan) {
     return fakeData.visualisation;
   }
 
   getTokenTransactionTable() {
-    // TODOOJM get this from contributions component
+    // TODOOJM get this from token transactions component
     return fakeData.token_transactions;
+  }
+
+  async hasMetamask(): Promise<boolean> {
+    const isLocal: any = await this.web3Wallet.isLocal();
+    return Boolean(isLocal);
+  }
+
+  async canTransfer() {
+    try {
+      const { response } = <any>(
+        await this.client.post('api/v2/blockchain/transactions/can-withdraw')
+      );
+      if (!response) {
+        return false;
+      }
+      return response.canWithdraw;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  async web3WalletUnlocked() {
+    await this.web3Wallet.ready();
+    if (await this.web3Wallet.unlock()) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

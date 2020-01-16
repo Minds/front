@@ -23,7 +23,7 @@ export class WalletTokenOnboardingComponent implements OnInit {
   activeStep = 'phone'; // || address
 
   @Output() onboardingComplete: EventEmitter<any> = new EventEmitter();
-  @Output() showTokenSettings: EventEmitter<any> = new EventEmitter();
+  @Output() scrollToTokenSettings: EventEmitter<any> = new EventEmitter();
 
   constructor(
     protected session: Session,
@@ -53,25 +53,11 @@ export class WalletTokenOnboardingComponent implements OnInit {
   clickedAddressStep() {
     if (!this.addressAdded) {
       this.activeStep = 'address';
-      this.scrollToSettings();
+      this.scrollToTokenSettings.emit();
     }
     this.detectChanges();
   }
 
-  scrollToSettings() {
-    const settingsEl = document.getElementById('tokenSettings');
-    if (!settingsEl) {
-      this.showTokenSettings.emit();
-    }
-
-    setTimeout(
-      () =>
-        document.getElementById('dashboardViewsTabs').scrollIntoView({
-          behavior: 'smooth',
-        }),
-      0
-    );
-  }
   phoneVerificationComplete() {
     this.phoneVerified = true;
     this.showModal = false;

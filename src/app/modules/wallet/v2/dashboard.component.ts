@@ -139,6 +139,26 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
+  scrollToTokenSettings() {
+    // make sure tokens/settings is on the page
+    if (this.activeCurrencyId !== 'tokens') {
+      this.router.navigate(['/v2wallet/tokens/settings']);
+      // this.router.navigateByUrl('/tokens/settings');
+    } else {
+      const tokenSettingsEl = document.getElementById('tokenSettings');
+      if (!tokenSettingsEl) {
+        this.updateView('settings');
+      }
+    }
+
+    setTimeout(
+      () =>
+        document.getElementById('dashboardViewsTabs').scrollIntoView({
+          behavior: 'smooth',
+        }),
+      0
+    );
+  }
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

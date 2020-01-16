@@ -15,6 +15,7 @@
             class="m-shadowboxLayout__header"
             [tabs]="currencies"
             [activeTabId]="activeCurrencyId"
+            [friendlyVals]="true"
             (tabChanged)="updateCurrency($event)"
           ></m-shadowboxHeader__tabs>
 
@@ -24,13 +25,17 @@
               <m-walletTokenOnboarding
                 *ngIf="activeCurrencyId === 'tokens' && !onboardingComplete"
                 (onboardingCompleted)="onboardingCompleted()"
-                (showTokenSettings)="updateView('settings')"
+                (scrollToTokenSettings)="scrollToTokenSettings()"
               ></m-walletTokenOnboarding>
               <m-walletBalance--tokens
                 [wallet]="wallet"
                 class="m-shadowboxLayout__body"
                 *ngIf="activeCurrencyId === 'tokens'"
               ></m-walletBalance--tokens>
+              <m-walletBalance--usd
+                class="m-shadowboxLayout__body"
+                *ngIf="activeCurrencyId === 'usd'"
+              ></m-walletBalance--usd>
             </div>
             <div class="m-walletDashboardViews__wrapper">
               <div
@@ -61,7 +66,6 @@
                 <ng-container *ngIf="activeViewId === 'settings'">
                   <div class="m-walletDashboardSettings__wrapper">
                     <m-walletSettings--tokens
-                      [wallet]="wallet"
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'tokens'"
                     ></m-walletSettings--tokens>
@@ -72,7 +76,7 @@
                     <m-walletSettings--eth
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'eth'"
-                      (showTokenSettings)="updateView('settings')"
+                      (scrollToTokenSettings)="scrollToTokenSettings()"
                     ></m-walletSettings--eth>
                     <m-walletSettings--btc
                       class="m-walletDashboardViews__view"

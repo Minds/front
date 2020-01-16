@@ -8,6 +8,7 @@ import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
 export class ShadowboxHeaderTabsComponent {
   @Input() tabs: ShadowboxHeaderTab[];
   @Input() activeTabId = '';
+  @Input() friendlyVals: boolean = false;
   @Output() tabChanged: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
