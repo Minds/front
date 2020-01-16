@@ -1,7 +1,10 @@
 <div class="m-walletBalance--usd" *ngIf="!inProgress">
-  <div class="m-walletTransactions__onboarding" *ngIf="!accountSetup">
+  <div
+    class="m-walletTransactions__onboarding"
+    *ngIf="!accountSetup && !onSettingsTab"
+  >
     <p><a (click)="scrollToUsdSettings.emit()">Add your bank information</a></p>
-    <p>Start receiving USD payouts by adding your bank details.</p>
+    <p>Start receiving payouts by adding your bank details.</p>
   </div>
   <div *ngIf="!inProgress" class="m-walletBalance--usd__colContainer">
     <div class="m-walletBalance--usd__col">

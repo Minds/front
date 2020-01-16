@@ -608,5 +608,47 @@ const fakeData = {
       },
     },
   },
+  stripe_payouts: {
+    status: 'success',
+    transactions: [
+      {
+        id: 'po_1FSD4tEQcGuFgRfSUgcwjVqm',
+        ts: 1570757879,
+        status: 'paid',
+        refunded: null,
+        dispute: null,
+        outcome: null,
+        currency: 'gbp',
+        category: '',
+        description: 'STRIPE PAYOUT',
+        amount: 1.58,
+        json:
+          '{"id":"po_1FSD4tEQcGuFgRfSUgcwjVqm","object":"payout","amount":158,"arrival_date":1571184000,"automatic":true,"balance_transaction":"txn_1FSD4tEQcGuFgRfSe0Xitjxp","created":1570757879,"currency":"gbp","description":"STRIPE PAYOUT","destination":"ba_19QgKZEQcGuFgRfSIt76kMsR","failure_balance_transaction":null,"failure_code":null,"failure_message":null,"livemode":true,"metadata":[],"method":"standard","source_type":"card","statement_descriptor":"MINDS","status":"paid","type":"bank_account"}',
+        account: {
+          bank: null,
+          last4: null,
+        },
+      },
+      {
+        id: 'po_1FFC3IEQcGuFgRfSgPCTlLU1',
+        ts: 1567655672,
+        status: 'paid',
+        refunded: null,
+        dispute: null,
+        outcome: null,
+        currency: 'gbp',
+        category: '',
+        description: 'STRIPE PAYOUT',
+        amount: 9.14,
+        json:
+          '{"id":"po_1FFC3IEQcGuFgRfSgPCTlLU1","object":"payout","amount":914,"arrival_date":1568073600,"automatic":true,"balance_transaction":"txn_1FFC3IEQcGuFgRfSHWhDxEke","created":1567655672,"currency":"gbp","description":"STRIPE PAYOUT","destination":"ba_19QgKZEQcGuFgRfSIt76kMsR","failure_balance_transaction":null,"failure_code":null,"failure_message":null,"livemode":true,"metadata":[],"method":"standard","source_type":"card","statement_descriptor":"MINDS","status":"paid","type":"bank_account"}',
+        account: {
+          bank: null,
+          last4: null,
+        },
+      },
+    ],
+    'load-next': 'po_1FFC3IEQcGuFgRfSgPCTlLU1',
+  },
 };
 export default fakeData;

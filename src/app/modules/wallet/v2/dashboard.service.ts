@@ -261,6 +261,62 @@ export class WalletDashboardService {
     // }
   }
 
+  async updateStripeAccount() {
+    try {
+      const response = <any>(
+        await this.client.post('api/v2/payments/stripe/connect')
+      );
+      return response;
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
+  }
+  // async uploadDocument(fileInput: HTMLInputElement, documentType: string) {
+  //   const file = fileInput ? fileInput.files[0] : null;
+  //   this.editing = true;
+  //   this.detectChanges();
+  //   await this.upload.post(
+  //     'api/v2/payments/stripe/connect/document/' + documentType,
+  //     [file]
+  //   );
+  //   this.editing = false;
+  //   this.account = null;
+  //   this.getSettings();
+  // }
+
+  // async updateField(fieldName: string, value: string) {
+  //   this.editing = true;
+  //   this.detectChanges();
+  //   let body = {};
+  //   body[fieldName] = value;
+  //   await this.client.post('api/v2/payments/stripe/connect/update', body);
+  //   this.editing = false;
+  //   this.account = null;
+  //   this.getSettings();
+  // }
+
+  // async acceptTos() {
+  //   this.editing = true;
+  //   this.detectChanges();
+  //   await this.client.put('api/v2/payments/stripe/connect/terms');
+  //   this.editing = false;
+  //   this.account = null;
+  //   this.getSettings();
+  // }
+
+  async cancelStripeAccount() {
+    try {
+      const response = <any>(
+        await this.client.delete('api/v2/payments/stripe/connect')
+      );
+      return response;
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
+  }
+
   async getStripeTransactions() {
     try {
       // const { response } = <any>(
@@ -269,6 +325,20 @@ export class WalletDashboardService {
       // TODOOJM toggle fake data
       // return response.transactions;
       return fakeData.tx_usd.transactions;
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+  }
+
+  async getStripePayouts() {
+    try {
+      // const { response } = <any>(
+      //   await this.client.get('api/v1/monetization/service/analytics/list?offset=&limit=12&type=payouts'
+      // );
+      // TODOOJM toggle fake data
+      // return response.transactions;
+      return fakeData.stripe_payouts;
     } catch (e) {
       console.error(e);
       return;
@@ -292,9 +362,12 @@ export class WalletDashboardService {
 
   async canTransfer() {
     try {
-      const { response } = <any>(
-        await this.client.post('api/v2/blockchain/transactions/can-withdraw')
+      const response: any = await this.client.post(
+        'api/v2/blockchain/transactions/can-withdraw'
       );
+      // const { response } = <any>(
+      //   await this.client.post('api/v2/blockchain/transactions/can-withdraw')
+      // );
       if (!response) {
         return false;
       }

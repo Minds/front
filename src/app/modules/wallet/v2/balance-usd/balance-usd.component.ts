@@ -10,6 +10,7 @@ import {
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { WalletDashboardService } from './../dashboard.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
 @Component({
   selector: 'm-walletBalance--usd',
@@ -23,29 +24,34 @@ export class WalletBalanceUsdV2Component implements OnInit {
   pendingBalance;
   totalPaidOut;
   nextPayoutDate = '';
+  onSettingsTab: boolean = false;
 
   @Output() scrollToUsdSettings: EventEmitter<any> = new EventEmitter();
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected session: Session,
-    protected walletService: WalletDashboardService
+    protected walletService: WalletDashboardService,
+    protected route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      console.log('onsettings?', params.get('view') === 'settings');
+      this.onSettingsTab = params.get('view') === 'settings';
+    });
+
     this.load();
   }
 
   async load() {
+    // TODOOJM $stripe - this is not accurate for all stripe accounts
     this.nextPayoutDate = moment()
       .endOf('month')
       .format('ddd Do MMM');
 
     this.stripeAccount = await this.walletService.getStripeAccount();
 
-    // this.walletService.getStripeAccount().then(response => {
-    //   this.stripeAccount = response;
-    // });
     console.log(this.stripeAccount);
     if (!this.stripeAccount || !this.stripeAccount.accountNumber) {
       this.accountSetup = false;
@@ -67,6 +73,9 @@ export class WalletBalanceUsdV2Component implements OnInit {
 
       this.totalPaidOut = this.formatBalance(totalPaidOutRaw);
     }
+    // TEMP
+    this.accountSetup = false;
+
     this.inProgress = false;
     this.detectChanges();
   }

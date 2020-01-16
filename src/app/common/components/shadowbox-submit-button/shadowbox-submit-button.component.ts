@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
 export class ShadowboxSubmitButtonComponent {
   @Input() saving: boolean = false;
   @Input() disabled: boolean = false;
+  @Input() color: 'green' | 'grey' | 'red' = 'green';
 
   constructor() {}
 }
