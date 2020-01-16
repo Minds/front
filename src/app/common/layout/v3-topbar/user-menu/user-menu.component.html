@@ -1,0 +1,155 @@
+<div class="m-user-menu m-dropdown">
+  <minds-avatar
+    [object]="getCurrentUser()"
+    [editMode]="false"
+    (click)="toggleMenu()"
+    *ngIf="useAvatar; else iconAnchor"
+  ></minds-avatar>
+  <ng-template #iconAnchor>
+    <a class="m-user-menu__Anchor" (click)="toggleMenu()">
+      <i class="material-icons">menu</i>
+    </a>
+  </ng-template>
+
+  <ul
+    class="m-dropdown__list m-userMenu__dropdown mdl-shadow--3dp"
+    [hidden]="!isOpen"
+  >
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdown__username"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a [routerLink]="['/', getCurrentUser().username]">
+        @{{ getCurrentUser().username }}
+      </a>
+    </li>
+
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a>
+        Upgrade
+      </a>
+    </li>
+
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdown__spacer"
+    ></li>
+
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item"
+      *ngIf="!getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/login">
+        <span i18n>Login</span>
+      </a>
+    </li>
+
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item"
+      *ngIf="isAdmin()"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/admin/interactions">
+        <span i18n>Admin</span>
+      </a>
+    </li>
+
+    <ng-container *mIfFeature="'dark-mode'">
+      <li
+        class="m-dropdownList__item m-userMenuDropdown__item"
+        *ngIf="getCurrentUser()"
+        (click)="toggleTheme()"
+      >
+        <span i18n *ngIf="isDark">Enter Light Mode</span>
+        <span i18n *ngIf="!isDark">Enter Dark Mode</span>
+      </li>
+    </ng-container>
+
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item"
+      (click)="closeMenu()"
+    >
+      <a target="_blank" href="https://www.teespring.com/stores/minds">
+        <span i18n>Store</span>
+      </a>
+    </li>
+
+    <ng-container *mIfFeature="'helpdesk'; else supportPages">
+      <li
+        class="m-dropdownList__item m-userMenuDropdown__item"
+        (click)="closeMenu()"
+      >
+        <a routerLink="/help">
+          <span i18n>Help</span>
+        </a>
+      </li>
+    </ng-container>
+    <ng-template #supportPages>
+      <li
+        class="m-dropdownList__item m-userMenuDropdown__item"
+        (click)="closeMenu()"
+      >
+        <a routerLink="/faq">
+          <span i18n>FAQ</span>
+        </a>
+      </li>
+
+      <li
+        class="m-dropdownList__item m-userMenuDropdown__item"
+        (click)="closeMenu()"
+      >
+        <a routerLink="/groups/profile/100000000000000681">
+          <span i18n>Help &amp; Support</span>
+        </a>
+      </li>
+    </ng-template>
+
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item"
+      *ngIf="getCurrentUser()"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/logout">
+        <span i18n>Logout</span>
+      </a>
+    </li>
+
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdown__spacer"
+    ></li>
+
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdown__footer"
+      *ngIf="showFooterLinks"
+    >
+      <ng-container
+        *ngFor="let page of navigation.getItems('footer'); let i = index"
+      >
+        <a
+          *ngIf="page.path && page.path.indexOf('p/') > -1"
+          [routerLink]="['/' + page.path]"
+        >
+          {{ page.title }}
+        </a>
+        <a
+          *ngIf="page.path.indexOf('p/') < 0"
+          [href]="page.path"
+          target="_blank"
+        >
+          {{ page.title }}
+        </a>
+        <span> · </span>
+      </ng-container>
+      <a [routerLink]="['/p']" i18n>
+        More
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="minds-bg-overlay" (click)="closeMenu()" [hidden]="!isOpen"></div>

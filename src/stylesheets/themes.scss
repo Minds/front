@@ -85,6 +85,8 @@ $whatsapp: #25d366;
 $linkedin: #0071a1;
 
 $navigation-item: #aeb0b8;
+//$navigation-item-hover: #323c3f;
+$navigation-item-hover: #a6a6a6;
 
 // Theme maps
 // e.g. m-grey-100 in light mode will become m-grey-900 in dark mode
@@ -143,6 +145,7 @@ $themes: (
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
     m-navigation-item: $navigation-item,
+    m-navigation-item-hover: $navigation-item-hover,
   ),
   dark: (
     m-grey-950: lighten($grey-50, $percent),
@@ -198,6 +201,7 @@ $themes: (
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
     m-navigation-item: lighten($navigation-item, $percent),
+    m-navigation-item-hover: lighten($navigation-item-hover, $percent),
   ),
 );
 
@@ -261,3 +265,4 @@ $m-twitter: 'm-twitter';
 $m-whatsapp: 'm-whatsapp';
 $m-linkedin: 'm-linkedin';
 $m-navigation-item: 'm-navigation-item';
+$m-navigation-item-hover: 'm-navigation-item-hover';

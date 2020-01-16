@@ -118,7 +118,7 @@ m-v3-topbar {
   }
 }
 
-.m-v2-topbar {
+.m-v3-topbar {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -136,33 +136,33 @@ m-v3-topbar {
   }
 
   @media screen and (max-width: 480px) {
-    .m-v2-topbarNav__RouterNav {
+    .m-v3-topbarNav__RouterNav {
       display: none;
     }
 
-    .m-v2-topbar__SearchBox {
+    .m-v3-topbar__SearchBox {
       display: none;
     }
   }
 }
 
-.m-v2-topbar__Container--left,
-.m-v2-topbar__Container--right {
+.m-v3-topbar__Container--left,
+.m-v3-topbar__Container--right {
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 100%;
 }
 
-.m-v2-topbar__Container--left {
+.m-v3-topbar__Container--left {
   justify-content: flex-start;
 }
 
-.m-v2-topbar__Container--right {
+.m-v3-topbar__Container--right {
   justify-content: flex-end;
 }
 
-.m-v2-topbar__Nav {
+.m-v3-topbar__Nav {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -173,7 +173,7 @@ m-v3-topbar {
   }
 }
 
-.m-v2-topbarNav__Item {
+.m-v3-topbarNav__Item {
   padding: 11px 12px 14px;
   display: flex;
   flex-direction: row;
@@ -184,14 +184,14 @@ m-v3-topbar {
     color: themed($m-grey-800);
   }
 
-  &.m-v2-topbarNav__Item--active {
+  &.m-v3-topbarNav__Item--active {
     @include m-theme() {
       color: themed($m-blue);
       border-color: themed($m-blue);
     }
   }
 
-  &.m-v2-topbarNav__Item--no-padding {
+  &.m-v3-topbarNav__Item--no-padding {
     padding: 0 12px;
 
     @media screen and (max-width: 480px) {
@@ -221,7 +221,7 @@ m-v3-topbar {
   }
 }
 
-.m-v2-topbarNavItem__Logo {
+.m-v3-topbarNavItem__Logo {
   margin: 0 8px 0 0;
   padding: 0 12px;
   //height: 62px;
@@ -235,16 +235,16 @@ m-v3-topbar {
   }
 }
 
-// .m-theme__dark .m-v2-topbarNavItem__Logo,
-// .m-theme__light .m-v2-topbarNavItem__Logo:hover {
+// .m-theme__dark .m-v3-topbarNavItem__Logo,
+// .m-theme__light .m-v3-topbarNavItem__Logo:hover {
 //   filter: grayscale(100%);
 // }
 //
-// .m-theme__dark .m-v2-topbarNavItem__Logo:hover {
+// .m-theme__dark .m-v3-topbarNavItem__Logo:hover {
 //   filter: grayscale(0%);
 // }
 
-.m-v2-topbar__Avatar {
+.m-v3-topbar__Avatar {
   cursor: pointer;
 
   @media screen and (max-width: 810px) {
@@ -263,14 +263,14 @@ m-v3-topbar {
     }
   }
 
-  &.m-v2-topbar__Avatar--active .minds-avatar {
+  &.m-v3-topbar__Avatar--active .minds-avatar {
     @include m-theme() {
       box-shadow: 0 0 0 2px themed($m-blue);
     }
   }
 }
 
-.m-v2-topbar__SearchBox {
+.m-v3-topbar__SearchBox {
   margin: 0 16px;
 
   @media screen and (max-width: 1081px) {
@@ -278,11 +278,11 @@ m-v3-topbar {
   }
 }
 
-.m-v2-topbar__UserMenu {
+.m-v3-topbar__UserMenu {
   min-width: 80px;
 }
 
-.m-v2-topbar__Container__LoginWrapper {
+.m-v3-topbar__Container__LoginWrapper {
   @media screen and (max-width: 480px) {
     // display: none;
   }
@@ -306,7 +306,7 @@ m-v3-topbar {
   }
 }
 
-.m-v2-topbar__Bottom {
+.m-v3-topbar__Bottom {
   display: none;
   position: fixed;
   bottom: 0;
@@ -333,13 +333,13 @@ m-v3-topbar {
     display: flex;
   }
 
-  .m-v2-topbarNav__RouterNav {
+  .m-v3-topbarNav__RouterNav {
     flex-grow: 1;
     justify-content: center;
   }
 }
 
-.m-v2-topbar__NotificationsToaster {
+.m-v3-topbar__NotificationsToaster {
   .m-notifications--toaster {
     z-index: 500;
     right: 65px;

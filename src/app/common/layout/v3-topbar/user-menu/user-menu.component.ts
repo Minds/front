@@ -2,21 +2,23 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  OnDestroy,
+  Input,
   OnInit,
 } from '@angular/core';
-import { Session } from '../../../services/session';
-import { ThemeService } from '../../../common/services/theme.service';
+import { Session } from '../../../../services/session';
+import { ThemeService } from '../../../../common/services/theme.service';
 import { Subscription } from 'rxjs';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { ReferralsLinksComponent } from '../../../modules/wallet/tokens/referrals/links/links.component';
+import { Navigation as NavigationService } from '../../../../services/navigation';
 
 @Component({
-  selector: 'm-user-menu',
+  selector: 'm-usermenu__v3',
   templateUrl: 'user-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserMenuComponent implements OnInit, OnDestroy {
+export class UserMenuV3Component implements OnInit {
+  @Input() useAvatar: boolean = false;
+  @Input() showFooterLinks: boolean = false;
+
   isOpen: boolean = false;
 
   minds = window.Minds;
@@ -24,10 +26,10 @@ export class UserMenuComponent implements OnInit, OnDestroy {
   themeSubscription: Subscription;
 
   constructor(
+    public navigation: NavigationService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
-    private themeService: ThemeService,
-    private overlayModal: OverlayModalService
+    private themeService: ThemeService
   ) {}
 
   ngOnInit() {
@@ -65,17 +67,5 @@ export class UserMenuComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.themeSubscription.unsubscribe();
-  }
-
-  openReferralsModal() {
-    this.overlayModal
-      .create(
-        ReferralsLinksComponent,
-        {},
-        {
-          class: 'm-overlay-modal--referrals-links m-overlay-modal--medium',
-        }
-      )
-      .present();
   }
 }

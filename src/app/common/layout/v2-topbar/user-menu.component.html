@@ -1,14 +1,7 @@
 <div class="m-user-menu m-dropdown">
-  <minds-avatar
-    [object]="getCurrentUser()"
-    [editMode]="false"
-    *ngIf="avatarIcon; else iconAnchor"
-  ></minds-avatar>
-  <ng-template #iconAnchor>
-    <a class="m-user-menu__Anchor" (click)="toggleMenu()">
-      <i class="material-icons">menu</i>
-    </a>
-  </ng-template>
+  <a class="m-user-menu__Anchor" (click)="toggleMenu()"
+    ><i class="material-icons">menu</i></a
+  >
 
   <ul
     class="m-dropdown__list m-user-menu__Dropdown mdl-shadow--3dp"
