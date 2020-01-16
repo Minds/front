@@ -256,6 +256,7 @@
 
             <m-post-menu
               [entity]="entity"
+              [user]="entity.ownerObj"
               [canDelete]="
                 entity.ownerObj.guid == session.getLoggedInUser().guid ||
                 entity.canEdit ||
