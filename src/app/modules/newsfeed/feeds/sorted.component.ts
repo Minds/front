@@ -14,7 +14,6 @@ import { take, map, mergeMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
-import { MindsTitle } from '../../../services/ux/title';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
@@ -66,7 +65,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     protected storage: Storage,
     protected context: ContextService,
     protected session: Session,
@@ -81,8 +79,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId
   ) {
-    this.title.setTitle('Newsfeed');
-
     this.clientMetaService
       .inherit(injector)
       .setSource('feed/discovery')

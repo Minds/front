@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { MindsTitle } from '../../../services/ux/title';
 import { ACCESS, LICENSES } from '../../../services/list-options';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
@@ -78,7 +77,6 @@ export class BlogEdit {
     public upload: Upload,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     protected inMemoryStorageService: InMemoryStorageService,
     private dialogService: DialogService
   ) {
@@ -108,8 +106,6 @@ export class BlogEdit {
       this.router.navigate(['/login']);
       return;
     }
-
-    this.title.setTitle('New Blog');
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
@@ -201,7 +197,6 @@ export class BlogEdit {
       if (response.blog) {
         this.blog = response.blog;
         this.guid = response.blog.guid;
-        this.title.setTitle(this.blog.title);
 
         if (this.blog.thumbnail_src) this.existingBanner = true;
         //this.hashtagsSelector.setTags(this.blog.tags);

@@ -22,11 +22,10 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
 import { onboardingServiceMock } from '../../mocks/modules/onboarding/onboarding.service.mock.spec';
 import { OnboardingService } from '../onboarding/onboarding.service';
-import { MindsTitle } from '../../services/ux/title';
-import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock.spec';
 import { signupModalServiceMock } from '../../mocks/modules/modals/signup/signup-modal-service.mock';
 import { SignupModalService } from '../modals/signup/service';
 import { By } from '@angular/platform-browser';
+import { Storage } from '../../services/storage';
 
 @Component({
   selector: 'minds-form-login',
@@ -69,8 +68,8 @@ describe('LoginComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
         { provide: OnboardingService, useValue: onboardingServiceMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: SignupModalService, useValue: signupModalServiceMock },
+        Storage,
       ],
     }).compileComponents();
   }));

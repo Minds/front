@@ -3,8 +3,6 @@ import { clientMock } from '../../../tests/client-mock.spec';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { socketMock } from '../../../tests/socket-mock.spec';
 import { fakeAsync, tick } from '@angular/core/testing';
-import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock.spec';
-import { MockService } from '../../utils/mock';
 import { SiteService } from '../../common/services/site.service';
 import { EventEmitter, PLATFORM_ID } from '@angular/core';
 
@@ -14,8 +12,11 @@ export let siteServiceMock = new (function() {
   var title = () => 'Minds';
   var isAdmin = () => true;
 })();
+export let metaServiceMock = new (function() {
+  this.setCounter = jasmine.createSpy('setCounter').and.callFake(() => {});
+})();
 
-describe('NewsfeedService', () => {
+describe('NotificationService', () => {
   let service: NotificationService;
 
   beforeEach(() => {
@@ -25,7 +26,7 @@ describe('NewsfeedService', () => {
       sessionMock,
       clientMock,
       socketMock,
-      mindsTitleMock,
+      metaServiceMock,
       PLATFORM_ID,
       siteServiceMock
     );

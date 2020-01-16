@@ -1,7 +1,7 @@
 import { NgZone, RendererFactory2, PLATFORM_ID } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Title, TransferState } from '@angular/platform-browser';
+import { TransferState } from '@angular/platform-browser';
 
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
@@ -20,7 +20,6 @@ import { WalletService } from './wallet';
 import { AttachmentService } from './attachment';
 import { Sidebar } from './ui/sidebar';
 import { EmbedService } from './embed';
-import { MindsTitle } from './ux/title';
 import { CanDeactivateGuardService } from './can-deactivate-guard';
 import { OverlayModalService } from './ux/overlay-modal';
 import { LoginReferrerService } from './login-referrer.service';
@@ -166,7 +165,6 @@ export const MINDS_PROVIDERS: any[] = [
     provide: EmbedService,
     useFactory: EmbedService._,
   },
-  MindsTitle,
   {
     provide: GoogleChartsLoader,
     useFactory: GoogleChartsLoader._,

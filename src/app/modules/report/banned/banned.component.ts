@@ -8,7 +8,6 @@ import {
 import { Router } from '@angular/router';
 
 import { Client } from '../../../common/api/client.service';
-import { MindsTitle } from '../../../services/ux/title';
 import { REASONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
 

@@ -29,8 +29,7 @@ export class RewardsComponent {
     private session: Session,
     private client: Client,
     private route: ActivatedRoute,
-    private router: Router,
-    private title: Title
+    private router: Router
   ) {
     if (localStorage.getItem('redirect')) localStorage.removeItem('redirect');
 
@@ -57,9 +56,7 @@ export class RewardsComponent {
       });
   }
 
-  ngOnInit() {
-    this.title.setTitle('Claim your Rewards');
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();

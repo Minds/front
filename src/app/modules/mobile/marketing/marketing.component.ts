@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
 } from '@angular/core';
-import { MindsTitle } from '../../../services/ux/title';
 import { Session } from '../../../services/session';
 import { MobileService } from '../mobile.service';
 import { first } from 'lodash';
@@ -25,14 +24,12 @@ export class MobileMarketingComponent {
   };
 
   constructor(
-    protected title: MindsTitle,
     protected session: Session,
     protected service: MobileService,
     protected cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    this.title.setTitle('Mobile');
     this.user = this.session.getLoggedInUser();
     this.load();
   }

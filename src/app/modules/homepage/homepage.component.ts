@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 
 import { Navigation as NavigationService } from '../../services/navigation';
 import { Session } from '../../services/session';
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import {
@@ -39,15 +38,12 @@ export class HomepageComponent {
 
   constructor(
     public client: Client,
-    public title: MindsTitle,
     public router: Router,
     public navigation: NavigationService,
     private loginReferrer: LoginReferrerService,
     public session: Session,
     private scroll: GlobalScrollService
   ) {
-    this.title.setTitle('Minds Social Network', false);
-
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;

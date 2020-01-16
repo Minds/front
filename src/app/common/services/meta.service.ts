@@ -2,6 +2,7 @@ import { Injectable, Optional } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { SiteService } from './site.service';
 import { Location } from '@angular/common';
+import { ConfigsService } from './configs.service';
 
 const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
@@ -16,7 +17,8 @@ export class MetaService {
     private titleService: Title,
     private metaService: Meta,
     private site: SiteService,
-    private location: Location
+    private location: Location,
+    private configs: ConfigsService
   ) {
     this.reset();
   }
@@ -53,7 +55,7 @@ export class MetaService {
   }
 
   setOgUrl(value: string): MetaService {
-    if (value.indexOf('/') === 0) {
+    if (value && value.indexOf('/') === 0) {
       // Relative path
       value = this.site.baseUrl + value.substr(1);
     }
@@ -69,6 +71,10 @@ export class MetaService {
     @Optional() dimensions: { width: number; height: number } = null
   ): MetaService {
     if (value) {
+      if (value.indexOf('/') === 0) {
+        // Relative path
+        value = this.configs.get('cdn_assets_url') + value.substr(1);
+      }
       this.metaService.updateTag({ name: 'og:image', content: value });
 
       if (dimensions) {

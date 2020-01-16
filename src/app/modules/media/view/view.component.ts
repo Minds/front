@@ -16,10 +16,10 @@ import { Session } from '../../../services/session';
 import { RecommendedService } from '../components/video/recommended.service';
 import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
-import { MindsTitle } from '../../../services/ux/title';
 import { ActivityService } from '../../../common/services/activity.service';
 import { AnalyticsService } from '../../../services/analytics';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { MetaService } from '../../../common/services/meta.service';
 
 @Component({
   moduleId: module.id,
@@ -68,13 +68,13 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     public session: Session,
     public client: Client,
     public router: Router,
-    public title: MindsTitle,
     public route: ActivatedRoute,
     public attachment: AttachmentService,
     public context: ContextService,
     private cd: ChangeDetectorRef,
     protected activityService: ActivityService,
     private clientMetaService: ClientMetaService,
+    private metaService: MetaService,
     @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
@@ -84,8 +84,6 @@ export class MediaViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.title.setTitle('');
-
     this.paramsSubscription = this.route.paramMap.subscribe(params => {
       if (params.get('guid')) {
         this.guid = params.get('guid');
@@ -137,9 +135,7 @@ export class MediaViewComponent implements OnInit, OnDestroy {
               this.context.reset();
           }
 
-          if (this.entity.title) {
-            this.title.setTitle(this.entity.title);
-          }
+          this.updateMeta();
         }
 
         this.clientMetaService.recordView(this.entity);
@@ -242,5 +238,15 @@ export class MediaViewComponent implements OnInit, OnDestroy {
 
   isScheduled(time_created) {
     return time_created && time_created * 1000 > Date.now();
+  }
+
+  private updateMeta(): void {
+    this.metaService
+      .setTitle(
+        this.entity.title ||
+          `@${this.entity.ownerObj.username}'s ${this.entity.subtype}`
+      )
+      .setDescription(this.entity.description)
+      .setOgImage(this.entity.thumbnail);
   }
 }

@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { ContextService } from '../../services/context.service';
@@ -35,13 +34,10 @@ export class Discovery {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private context: ContextService
   ) {}
 
   ngOnInit() {
-    this.title.setTitle('Discovery');
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
         this._filter = params['filter'];

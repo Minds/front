@@ -25,7 +25,6 @@ import {
   MockDirective,
   MockService,
 } from '../../../../utils/mock';
-import { MindsTitle } from '../../../../services/ux/title';
 import { Session } from '../../../../services/session';
 import { MindsBlogListResponse } from '../../../../interfaces/responses';
 import { ContextService } from '../../../../services/context.service';

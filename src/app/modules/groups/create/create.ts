@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { GroupsService } from '../groups-service';
 
-import { MindsTitle } from '../../../services/ux/title';
 import { Session } from '../../../services/session';
 
 @Component({
@@ -36,11 +35,8 @@ export class GroupsCreator {
   constructor(
     public session: Session,
     public service: GroupsService,
-    public router: Router,
-    public title: MindsTitle
-  ) {
-    this.title.setTitle('Create Group');
-  }
+    public router: Router
+  ) {}
 
   addBanner(banner: any) {
     this.banner = banner.file;

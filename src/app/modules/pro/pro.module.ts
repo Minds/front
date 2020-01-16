@@ -43,6 +43,11 @@ const routes: Routes = [
       {
         path: '',
         component: ProMarketingComponent,
+        data: {
+          title: 'Minds Pro',
+          description: 'The ultimate platform for creators and brands',
+          ogImage: '/assets/product-pages/pro/pro-1.jpg',
+        },
       },
       {
         path: ':username/settings',

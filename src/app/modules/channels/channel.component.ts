@@ -19,6 +19,7 @@ import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ClientMetaService } from '../../common/services/client-meta.service';
 import { MetaService } from '../../common/services/meta.service';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
   selector: 'm-channel',
@@ -57,6 +58,7 @@ export class ChannelComponent {
     private dialogService: DialogService,
     private blockListService: BlockListService,
     private clientMetaService: ClientMetaService,
+    private configs: ConfigsService,
     @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
@@ -117,17 +119,21 @@ export class ChannelComponent {
   }
 
   private updateMeta(): void {
-    this.metaService.setTitle('Channel');
     if (this.user) {
       this.metaService.setTitle(`${this.user.name} (@${this.user.username})`);
       this.metaService.setDescription(
-        `Subscribe to @${this.user.username} - ${this.user.briefdescription}`
+        this.user.briefdescription || `Subscribe to @${this.user.username}`
       );
       this.metaService.setOgUrl(`/${this.user.username.toLowerCase()}`);
-      this.metaService.setOgImage('', { width: 2000, height: 1000 });
+      this.metaService.setOgImage(this.user.avatar_url.master, {
+        width: 2000,
+        height: 1000,
+      });
       this.metaService.setRobots(this.user.is_mature ? 'noindex' : 'all');
     } else if (this.username) {
       this.metaService.setTitle(this.username);
+    } else {
+      this.metaService.setTitle('Channel');
     }
   }
 

@@ -72,21 +72,20 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard/traffic', pathMatch: 'full' },
       {
-        path: 'admin',
-        component: AdminAnalyticsComponent,
-        children: [
-          { path: '', redirectTo: 'network', pathMatch: 'full' },
-          { path: 'network', component: SiteNetworkActivityAnalyticsComponent },
-          { path: 'token', component: SiteTokenTransactionsAnalyticsComponent },
-          // { path: 'plus', component: OffChainBoostsCardComponent},
-        ],
-      },
-      {
         path: 'dashboard',
         redirectTo: 'dashboard/traffic',
         pathMatch: 'full',
       },
-      { path: 'dashboard/:category', component: AnalyticsDashboardComponent },
+      {
+        path: 'dashboard/:category',
+        component: AnalyticsDashboardComponent,
+        data: {
+          title: 'Analytics',
+          description:
+            'Track your traffic, earnings, engagement and trending analytics',
+          ogImage: '/assets/photos/network.jpg',
+        },
+      },
     ],
   },
 ];

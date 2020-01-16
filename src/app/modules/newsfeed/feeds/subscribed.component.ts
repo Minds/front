@@ -17,7 +17,6 @@ import {
 } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
-import { MindsTitle } from '../../../services/ux/title';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { MindsActivityObject } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
@@ -71,7 +70,6 @@ export class NewsfeedSubscribedComponent {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private storage: Storage,
     private context: ContextService,
     protected featuresService: FeaturesService,
@@ -81,8 +79,6 @@ export class NewsfeedSubscribedComponent {
     @SkipSelf() injector: Injector,
     @Inject(PLATFORM_ID) private platformId
   ) {
-    this.title.setTitle('Newsfeed');
-
     this.clientMetaService
       .inherit(injector)
       .setSource('feed/subscribed')

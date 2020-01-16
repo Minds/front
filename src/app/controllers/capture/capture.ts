@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { LICENSES, ACCESS } from '../../services/list-options';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 import { Upload } from '../../services/api/upload';
 import { Client } from '../../services/api/client';
@@ -37,8 +36,7 @@ export class Capture {
     public session: Session,
     public _upload: Upload,
     public client: Client,
-    public router: Router,
-    public title: MindsTitle
+    public router: Router
   ) {}
 
   ngOnInit() {
@@ -47,8 +45,6 @@ export class Capture {
     } else {
       this.getAlbums();
     }
-
-    this.title.setTitle('Capture');
   }
 
   getAlbums() {

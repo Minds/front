@@ -433,9 +433,21 @@ const routes: Routes = [
     },
     {
       provide: MetaService,
-      useFactory: (titleService, metaService, siteService, location) =>
-        new MetaService(titleService, metaService, siteService, location),
-      deps: [Title, Meta, SiteService, Location],
+      useFactory: (
+        titleService,
+        metaService,
+        siteService,
+        location,
+        configsService
+      ) =>
+        new MetaService(
+          titleService,
+          metaService,
+          siteService,
+          location,
+          configsService
+        ),
+      deps: [Title, Meta, SiteService, Location, ConfigsService],
     },
   ],
   entryComponents: [

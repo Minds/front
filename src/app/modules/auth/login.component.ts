@@ -4,11 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { SignupModalService } from '../modals/signup/service';
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { OnboardingService } from '../onboarding/onboarding.service';
+import { Storage } from '../../services/storage';
 
 @Component({
   selector: 'm-login',
@@ -33,10 +33,10 @@ export class LoginComponent {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
     public session: Session,
+    private storage: Storage,
     private onboarding: OnboardingService
   ) {}
 
@@ -46,8 +46,7 @@ export class LoginComponent {
       this.loginReferrer.navigate();
     }
 
-    this.title.setTitle('Login');
-    this.redirectTo = localStorage.getItem('redirect');
+    this.redirectTo = this.storage.get('redirect');
 
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
       if (params['referrer']) {

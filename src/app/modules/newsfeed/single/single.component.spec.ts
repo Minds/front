@@ -11,7 +11,7 @@ import { NewsfeedSingleComponent } from './single.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Client } from '../../../services/api/client';
-import { By } from '@angular/platform-browser';
+import { By, Meta } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
@@ -26,6 +26,7 @@ import { EntitiesService } from '../../../common/services/entities.service';
 import { MockService } from '../../../utils/mock';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { MetaService } from '../../../common/services/meta.service';
 
 @Component({
   selector: 'minds-activity',
@@ -64,6 +65,7 @@ describe('NewsfeedSingleComponent', () => {
             },
           },
         },
+        { provide: MetaService, useValue: MockService(MetaService) },
         { provide: Router, useValue: routerMock },
         { provide: EntitiesService, useValue: MockService(EntitiesService) },
         { provide: FeaturesService, useValue: featuresServiceMock },

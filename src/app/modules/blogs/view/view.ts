@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { MindsTitle } from '../../../services/ux/title';
 import { ScrollService } from '../../../services/ux/scroll';
 import { AnalyticsService } from '../../../services/analytics';
 import { MindsBlogEntity } from '../../../interfaces/entities';
@@ -25,6 +24,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { MetaService } from '../../../common/services/meta.service';
 
 @Component({
   moduleId: module.id,
@@ -94,7 +94,7 @@ export class BlogView implements OnInit, OnDestroy {
     public router: Router,
     _element: ElementRef,
     public scroll: ScrollService,
-    public title: MindsTitle,
+    public metaService: MetaService,
     public attachment: AttachmentService,
     private context: ContextService,
     public analytics: AnalyticsService,
@@ -138,7 +138,7 @@ export class BlogView implements OnInit, OnDestroy {
 
           if (!this.visible) {
             window.history.pushState(null, this.blog.title, url);
-            this.title.setTitle(this.blog.title);
+            this.updateMeta();
             this.analyticsService.send('pageview', {
               url: `/blog/view/${this.blog.guid}`,
             });
@@ -232,5 +232,18 @@ export class BlogView implements OnInit, OnDestroy {
    */
   onResize(event: Event) {
     this.calculateLockScreenHeight();
+  }
+
+  private updateMeta(): void {
+    const description =
+      this.blog.description.length > 140
+        ? this.blog.description.substr(0, 140) + '...'
+        : this.blog.description;
+    this.metaService
+      .setTitle(this.blog.custom_meta['title'] || this.blog.title)
+      .setDescription(description)
+      //.setAuthor(this.blog.custom_meta['author'] || `@${this.blog.ownerObj.username}`)
+      .setOgUrl(this.blog.perma_url)
+      .setOgImage(this.blog.thumbnail);
   }
 }

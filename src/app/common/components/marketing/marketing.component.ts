@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { MindsTitle } from '../../../services/ux/title';
+import { MetaService } from '../../services/meta.service';
 
 @Component({
   selector: 'm-marketing',
@@ -14,11 +14,11 @@ import { MindsTitle } from '../../../services/ux/title';
 export class MarketingComponent implements OnInit {
   @Input() pageTitle: string = '';
 
-  constructor(protected title: MindsTitle) {}
+  constructor(protected metaService: MetaService) {}
 
   ngOnInit() {
     if (this.pageTitle) {
-      this.title.setTitle(this.pageTitle);
+      this.metaService.setTitle(this.pageTitle);
     }
   }
 }

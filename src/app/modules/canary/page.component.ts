@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api';
 
@@ -13,13 +12,10 @@ export class CanaryPageComponent {
   user;
 
   constructor(
-    private title: MindsTitle,
     private session: Session,
     private client: Client,
     private router: Router
-  ) {
-    this.title.setTitle('Canary - Experiments');
-  }
+  ) {}
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();

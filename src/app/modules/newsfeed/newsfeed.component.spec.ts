@@ -16,10 +16,8 @@ import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '../../services/storage';
 import { storageMock } from '../../../tests/storage-mock.spec';
-import { MindsTitle } from '../../services/ux/title';
 import { Navigation } from '../../services/navigation';
 import { navigationMock } from '../../../tests/navigation-service-mock.spec';
-import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock.spec';
 import { MockComponent, MockDirective } from '../../utils/mock';
 
 import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
@@ -96,7 +94,6 @@ describe('NewsfeedComponent', () => {
           },
         },
         { provide: Storage, useValue: storageMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: Navigation, useValue: navigationMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: NewsfeedService, useValue: newsfeedServiceMock },

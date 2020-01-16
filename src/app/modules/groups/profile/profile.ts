@@ -11,7 +11,6 @@ import { interval, Subscription } from 'rxjs';
 import { GroupsService } from '../groups-service';
 
 import { RecentService } from '../../../services/ux/recent';
-import { MindsTitle } from '../../../services/ux/title';
 import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
 
@@ -23,6 +22,7 @@ import { VideoChatService } from '../../videochat/videochat.service';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { filter, map, startWith, throttle } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
+import { MetaService } from '../../../common/services/meta.service';
 
 @Component({
   selector: 'm-groups--profile',
@@ -70,7 +70,7 @@ export class GroupsProfile {
     public service: GroupsService,
     public route: ActivatedRoute,
     private router: Router,
-    public title: MindsTitle,
+    public metaService: MetaService,
     private sockets: SocketsService,
     private context: ContextService,
     private recent: RecentService,
@@ -219,7 +219,7 @@ export class GroupsProfile {
 
     // Check for comment updates
     this.joinCommentsSocketRoom();
-    this.title.setTitle(this.group.name);
+    this.updateMeta();
 
     this.context.set('activity', {
       label: this.group.name,
@@ -444,6 +444,13 @@ export class GroupsProfile {
       'groups:conversations:minimized',
       (!this.showRight).toString()
     );
+  }
+
+  private updateMeta(): void {
+    this.metaService
+      .setTitle(this.group.name)
+      .setDescription(this.group.briefdescription)
+      .setOgImage(this.group.banner_src);
   }
 
   detectChanges() {

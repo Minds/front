@@ -2,7 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { MindsTitle } from '../../../services/ux/title';
 
 @Component({
   selector: 'm-helpdesk--dashboard',

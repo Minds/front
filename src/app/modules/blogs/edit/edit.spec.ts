@@ -19,13 +19,11 @@ import {
 import { Hovercard } from '../../../common/directives/hovercard';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { Upload } from '../../../services/api/upload';
-import { MindsTitle } from '../../../services/ux/title';
 import { HovercardService } from '../../../services/hovercard';
 import { hovercardServiceMock } from '../../../mocks/services/hovercard-mock.spec';
 import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
 import { MockComponent, MockDirective } from '../../../utils/mock';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-service-mock.spec';
@@ -262,7 +260,6 @@ describe('BlogEdit', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: HovercardService, useValue: hovercardServiceMock },
         {
           provide: InMemoryStorageService,

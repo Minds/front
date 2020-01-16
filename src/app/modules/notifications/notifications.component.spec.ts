@@ -15,7 +15,6 @@ import { notificationServiceMock } from '../../../tests/notification-service-moc
 import { MaterialMock } from '../../../tests/material-mock.spec';
 import { NotificationsComponent } from './notifications.component';
 
-import { MindsTitle } from '../../services/ux/title';
 import { NotificationService } from './notification.service';
 import { Session } from '../../services/session';
 import { Mock, MockComponent } from '../../utils/mock';
@@ -45,12 +44,6 @@ describe('NotificationsComponent', () => {
       ],
       imports: [RouterTestingModule],
       providers: [
-        {
-          provide: MindsTitle,
-          useValue: {
-            setTitle: function() {},
-          },
-        },
         { provide: NotificationService, useValue: notificationServiceMock },
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },

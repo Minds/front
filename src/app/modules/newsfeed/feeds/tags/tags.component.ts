@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContextService } from '../../../../services/context.service';
-import { MindsTitle } from '../../../../services/ux/title';
 import { Upload } from '../../../../services/api/upload';
 import { Client } from '../../../../services/api';
 import { Navigation } from '../../../../services/navigation';
@@ -28,13 +27,11 @@ export class NewsfeedTagsComponent implements OnDestroy {
     public navigation: Navigation,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private storage: Storage,
     private context: ContextService
   ) {
     this.minds = window.Minds;
 
-    this.title.setTitle('Newsfeed');
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['tag']) {
         this.tag = params['tag'];

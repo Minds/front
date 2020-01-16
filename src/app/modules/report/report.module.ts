@@ -30,7 +30,16 @@ import { ModerationAppealComponent } from './console/appeal.component';
     CommentsModule,
     RouterModule.forChild([
       //{ path: 'moderation',  redirectTo: '/content-policy' },
-      { path: 'content-policy', component: ReportsMarketingComponent },
+      {
+        path: 'content-policy',
+        component: ReportsMarketingComponent,
+        data: {
+          title: 'The Jury System',
+          description:
+            'The goal of Minds is to have fair, transparent and ethical moderation practices',
+          ogImage: '/assets/photos/canyon.jpg',
+        },
+      },
       {
         path: 'moderation/juryduty/:jury',
         component: JuryDutySessionComponent,

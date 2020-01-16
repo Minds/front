@@ -14,8 +14,6 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { SafePipe } from '../../../common/pipes/safe';
-import { MindsTitle } from '../../../services/ux/title';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
 import { MetaService } from '../../../common/services/meta.service';
 
 describe('QuestionsComponent', () => {

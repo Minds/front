@@ -16,7 +16,6 @@ import { Session } from '../../../services/session';
 import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
-import { MindsTitle } from '../../../services/ux/title';
 import { ProChannelService } from './channel.service';
 import { SignupModalService } from '../../modals/signup/service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -159,7 +158,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected session: Session,
     protected channelService: ProChannelService,
     protected client: Client,
-    protected title: MindsTitle,
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,

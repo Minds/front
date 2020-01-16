@@ -9,7 +9,6 @@ import { RouterLinkWithHref } from '@angular/router';
 
 import { Client } from '../../services/api/client';
 import { clientMock } from '../../../tests/client-mock.spec';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 import { TooltipComponent } from '../../common/components/tooltip/tooltip.component';
 
@@ -82,7 +81,6 @@ describe('Groups List', () => {
       imports: [NgCommonModule, RouterTestingModule],
       providers: [
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useClass: Title, deps: [Title] },
         { provide: ContextService, useValue: contextServiceMock },
         ConfigsService,
         Session,

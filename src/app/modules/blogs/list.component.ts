@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { ContextService } from '../../services/context.service';
@@ -33,14 +32,12 @@ export class BlogListComponent {
     public client: Client,
     public route: ActivatedRoute,
     public router: Router,
-    public title: MindsTitle,
     private context: ContextService,
     public session: Session,
     private overlayModal: OverlayModalService
   ) {}
 
   ngOnInit() {
-    this.title.setTitle('Blogs');
     this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -51,7 +48,6 @@ export class BlogListComponent {
           this.filter = 'network';
           break;
         case 'trending':
-          this.title.setTitle('Trending Blogs');
           break;
         case 'top':
           this.router.navigate(['/newsfeed/global/top', { type: 'blogs' }]);
@@ -67,7 +63,6 @@ export class BlogListComponent {
           }
           this.filter = 'trending';
         case 'featured':
-          this.title.setTitle('Blogs');
           break;
         case 'all':
           break;

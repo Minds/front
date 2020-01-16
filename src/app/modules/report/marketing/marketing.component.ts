@@ -8,7 +8,6 @@ import {
 import { Router } from '@angular/router';
 
 import { Client } from '../../../common/api/client.service';
-import { MindsTitle } from '../../../services/ux/title';
 import { REASONS as REASONS_LIST } from '../../../services/list-options';
 import { Session } from '../../../services/session';
 
@@ -37,11 +36,8 @@ export class ReportsMarketingComponent {
     private client: Client,
     private cd: ChangeDetectorRef,
     private router: Router,
-    private title: MindsTitle,
     public session: Session
-  ) {
-    title.setTitle('Community Moderation');
-  }
+  ) {}
 
   ngOnInit() {
     this.loadStats();

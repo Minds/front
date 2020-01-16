@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { NotificationService } from './notification.service';
@@ -35,7 +34,6 @@ export class NotificationsComponent {
     public session: Session,
     public client: Client,
     public router: Router,
-    public title: MindsTitle,
     public notificationService: NotificationService,
     public route: ActivatedRoute,
     public el: ElementRef
@@ -62,7 +60,6 @@ export class NotificationsComponent {
 
     this.notificationService.clear();
     if (!this.loadOnDemand) {
-      this.title.setTitle('Notifications');
       this.load(true);
     }
   }

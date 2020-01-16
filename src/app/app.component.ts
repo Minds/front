@@ -31,7 +31,7 @@ import { RouterHistoryService } from './common/services/router-history.service';
 import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
 import { ConfigsService } from './common/services/configs.service';
 import { MetaService } from './common/services/meta.service';
-import { filter, map, mergeMap } from 'rxjs/operators';
+import { filter, map, mergeMap, first } from 'rxjs/operators';
 
 @Component({
   selector: 'm-app',
@@ -104,6 +104,7 @@ export class Minds {
     try {
       // Load external configs
       await this.configs.loadFromRemote();
+      this.updateMeta(); // Because the router is setup before our configs
 
       // Setup sentry/diagnostic configs
       this.diagnostics.setUser(this.configs.get('user'));
@@ -194,6 +195,12 @@ export class Minds {
 
   get isProDomain() {
     return this.site.isProDomain;
+  }
+
+  private updateMeta(): void {
+    let route = this.route;
+    while (route.firstChild) route = route.firstChild;
+    this.metaService.reset(route.snapshot.data);
   }
 
   detectChanges() {

@@ -13,6 +13,7 @@ const routes: Routes = [
     data: {
       title: 'Jobs',
       description: 'Want to join the team? View our open positions.',
+      ogImage: '/assets/photos/canyon.jpg',
     },
   },
 ];

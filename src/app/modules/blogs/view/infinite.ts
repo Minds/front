@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { MindsTitle } from '../../../services/ux/title';
 import { AnalyticsService } from '../../../services/analytics';
 
 import { MindsBlogResponse } from '../../../interfaces/responses';
@@ -34,7 +33,6 @@ export class BlogViewInfinite {
     public client: Client,
     public route: ActivatedRoute,
     public router: Router,
-    public title: MindsTitle,
     private applicationRef: ApplicationRef,
     private cd: ChangeDetectorRef,
     private analytics: AnalyticsService
@@ -86,7 +84,6 @@ export class BlogViewInfinite {
       .then((response: MindsBlogResponse) => {
         if (response.blog) {
           this.blogs = [response.blog];
-          this.title.setTitle(response.blog.title);
           this.analytics.send(
             'pageview',
             {
