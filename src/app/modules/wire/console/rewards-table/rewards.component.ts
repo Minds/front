@@ -5,6 +5,7 @@ import {
   WireRewardsType,
 } from '../../interfaces/wire.interfaces';
 import { Client } from '../../../../services/api/client';
+import { Session } from '../../../../services/session';
 
 @Component({
   moduleId: module.id,
@@ -12,13 +13,13 @@ import { Client } from '../../../../services/api/client';
   templateUrl: 'rewards.component.html',
 })
 export class WireConsoleRewardsComponent {
-  minds: Minds;
+  user;
   rewards: WireRewardsStruc;
   rewardsSaved: boolean = false;
 
-  constructor(private client: Client) {
-    this.minds = window.Minds;
-    this.rewards = this.minds.user.wire_rewards;
+  constructor(private client: Client, private session: Session) {
+    this.rewards = this.session.getLoggedInUser().wire_rewards;
+    this.user = this.session.getLoggedInUser();
   }
 
   onRewardsChange(rewards: WireRewardsTiers, type: WireRewardsType) {

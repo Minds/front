@@ -14,6 +14,7 @@ export class WireContractService {
   }
 
   async load() {
+    console.log('wirecontract load()');
     await this.web3Wallet.ready();
 
     this.instance = this.web3Wallet.eth

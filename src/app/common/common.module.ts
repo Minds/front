@@ -136,6 +136,7 @@ import { ConfigsService } from './services/configs.service';
 import { Cookie } from '../services/cookie';
 import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
+import { MediaProxyService } from './services/media-proxy.service';
 
 const routes: Routes = [
   {
@@ -364,11 +365,7 @@ const routes: Routes = [
   providers: [
     SiteService,
     SsoService,
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload, HttpClient],
-    },
+    AttachmentService,
     {
       provide: UpdateMarkersService,
       useFactory: (_http, _session, _sockets) => {
@@ -449,6 +446,7 @@ const routes: Routes = [
         ),
       deps: [Title, Meta, SiteService, Location, ConfigsService],
     },
+    MediaProxyService,
   ],
   entryComponents: [
     NotificationsToasterComponent,

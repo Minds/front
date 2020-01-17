@@ -11,6 +11,7 @@ import { EmailConfirmationService } from './email-confirmation.service';
 import { Session } from '../../../services/session';
 import { Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
+import { ConfigsService } from '../../services/configs.service';
 
 /**
  * Component that displays an announcement-like banner
@@ -25,20 +26,23 @@ import { isPlatformBrowser } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EmailConfirmationComponent implements OnInit, OnDestroy {
+  readonly fromEmailConfirmation: number;
   sent: boolean = false;
   shouldShow: boolean = false;
   canClose: boolean = false;
 
   protected userEmitter$: Subscription;
   protected canCloseTimer: number;
-  protected minds = window.Minds;
 
   constructor(
     protected service: EmailConfirmationService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) protected platformId
-  ) {}
+    @Inject(PLATFORM_ID) protected platformId,
+    configs: ConfigsService
+  ) {
+    this.fromEmailConfirmation = configs.get('from_email_confirmation');
+  }
 
   ngOnInit(): void {
     this.setShouldShow(this.session.getLoggedInUser());
@@ -72,9 +76,7 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
    */
   setShouldShow(user): void {
     this.shouldShow =
-      !this.minds.from_email_confirmation &&
-      user &&
-      user.email_confirmed === false;
+      !this.fromEmailConfirmation && user && user.email_confirmed === false;
   }
 
   /**

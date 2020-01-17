@@ -1,3 +1,7 @@
+////
+// Is this file used?
+// Remove if not
+////
 import {
   TRANSLATIONS,
   TRANSLATIONS_FORMAT,

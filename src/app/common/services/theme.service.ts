@@ -36,7 +36,7 @@ export class ThemeService {
 
   setUp() {
     window.addEventListener('storage', event => {
-      if (event.key === 'dark_theme' && window.Minds.LoggedIn) {
+      if (event.key === 'dark_theme' && this.session.isLoggedIn()) {
         if (
           (event.newValue === 'true' && this.isDark.value === false) ||
           (event.newValue === 'false' && this.isDark.value === true)

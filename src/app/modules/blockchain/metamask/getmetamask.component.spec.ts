@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { GetMetamaskComponent } from './getmetamask.component';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { MockService } from '../../../utils/mock';
 
 describe('GetMetamaskComponent', () => {
   let comp: GetMetamaskComponent;
@@ -9,6 +11,12 @@ describe('GetMetamaskComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [GetMetamaskComponent],
+      providers: [
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+      ],
     }).compileComponents();
   }));
 

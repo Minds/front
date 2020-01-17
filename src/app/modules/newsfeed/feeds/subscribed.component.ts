@@ -43,7 +43,6 @@ export class NewsfeedSubscribedComponent {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  minds;
 
   attachment_preview;
 
@@ -103,7 +102,6 @@ export class NewsfeedSubscribedComponent {
     );
 
     this.load(true, true);
-    this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['message']) {

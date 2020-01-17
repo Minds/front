@@ -25,7 +25,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   moreData: boolean = true;
   rating: number = 1;
-  minds;
   allHashtags: boolean;
 
   paramsSubscription: Subscription;
@@ -66,7 +65,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.load();
-    this.minds = window.Minds;
 
     this.context.set('activity');
   }

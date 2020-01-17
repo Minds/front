@@ -8,7 +8,6 @@ import { Client } from '../../services/api';
   templateUrl: 'page.component.html',
 })
 export class CanaryPageComponent {
-  minds = window.Minds;
   user;
 
   constructor(

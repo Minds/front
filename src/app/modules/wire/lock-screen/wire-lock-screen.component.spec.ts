@@ -19,6 +19,8 @@ import { SignupModalService } from '../../modals/signup/service';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { signupModalServiceMock } from '../../../mocks/modules/modals/signup/signup-modal-service.mock';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { MockService } from '../../../utils/mock';
 
 describe('WireLockScreenComponent', () => {
   let comp: WireLockScreenComponent;
@@ -47,6 +49,7 @@ describe('WireLockScreenComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: SignupModalService, useValue: signupModalServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents(); // compile template and css
   }));

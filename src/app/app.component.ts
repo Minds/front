@@ -40,8 +40,6 @@ import { filter, map, mergeMap, first } from 'rxjs/operators';
 export class Minds {
   name: string;
 
-  minds = window.Minds;
-
   ready: boolean = false;
 
   showOnboarding: boolean = false;
@@ -172,6 +170,7 @@ export class Minds {
 
     this.context.listen();
 
+    console.log('setting up wallet');
     this.web3Wallet.setUp();
 
     this.webtorrent.setUp();

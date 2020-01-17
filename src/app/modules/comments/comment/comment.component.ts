@@ -34,6 +34,7 @@ import { Router } from '@angular/router';
 import { FeaturesService } from '../../../services/features.service';
 import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-comment',
@@ -55,7 +56,8 @@ export class CommentComponentV2
   implements OnChanges, OnInit, OnDestroy, AfterViewInit {
   comment: any;
   editing: boolean = false;
-  minds = window.Minds;
+  readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
 
   @Input('entity') entity;
   @Input('parent') parent;
@@ -107,8 +109,12 @@ export class CommentComponentV2
     private router: Router,
     protected activityService: ActivityService,
     protected featuresService: FeaturesService,
-    @Inject(PLATFORM_ID) private platformId
-  ) {}
+    @Inject(PLATFORM_ID) private platformId,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {

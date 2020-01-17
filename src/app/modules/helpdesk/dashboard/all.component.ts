@@ -16,8 +16,6 @@ import { Session } from '../../../services/session';
   templateUrl: 'all.component.html',
 })
 export class AllHelpdeskDashboardComponent implements OnInit {
-  minds = window.Minds;
-
   questions = [];
   categories = [];
 

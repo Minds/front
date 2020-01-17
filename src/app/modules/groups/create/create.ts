@@ -14,8 +14,6 @@ import { Session } from '../../../services/session';
   templateUrl: 'create.html',
 })
 export class GroupsCreator {
-  minds = window.Minds;
-
   banner: any = false;
   avatar: any = false;
   group: any = {

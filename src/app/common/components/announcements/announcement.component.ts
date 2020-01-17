@@ -21,7 +21,6 @@ import { Client } from '../../../services/api';
   `,
 })
 export class AnnouncementComponent {
-  minds: Minds = window.Minds;
   hidden: boolean = false;
   @Input() id: string = 'default';
   @Input() canClose: boolean = true;

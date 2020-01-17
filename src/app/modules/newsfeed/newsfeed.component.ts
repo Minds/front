@@ -29,7 +29,6 @@ export class NewsfeedComponent {
   moreData: boolean = true;
   showRightSidebar: boolean = true;
   preventHashtagOverflow: boolean = false;
-  minds;
 
   message: string = '';
   newUserPromo: boolean = false;
@@ -104,8 +103,6 @@ export class NewsfeedComponent {
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']); //force login
-    } else {
-      this.minds = window.Minds;
     }
 
     this.paramsSubscription = this.route.params.subscribe(params => {

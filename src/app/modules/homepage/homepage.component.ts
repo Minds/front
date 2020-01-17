@@ -10,6 +10,7 @@ import {
   GlobalScrollService,
   ScrollSubscription,
 } from '../../services/ux/global-scroll.service';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
   selector: 'm-homepage',
@@ -30,7 +31,7 @@ export class HomepageComponent {
   inProgress: boolean = false;
   videoError: boolean = false;
 
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   flags = {
     canPlayInlineVideos: true,
@@ -42,8 +43,10 @@ export class HomepageComponent {
     public navigation: NavigationService,
     private loginReferrer: LoginReferrerService,
     public session: Session,
-    private scroll: GlobalScrollService
+    private scroll: GlobalScrollService,
+    configs: ConfigsService
   ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;

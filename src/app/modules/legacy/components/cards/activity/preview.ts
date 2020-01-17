@@ -23,7 +23,6 @@ import { ActivityService } from '../../../../../common/services/activity.service
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActivityPreview {
-  minds = window.Minds;
   activity: any;
   hideTabs: boolean;
 

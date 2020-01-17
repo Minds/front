@@ -30,7 +30,7 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.load();
+    if (isPlatformBrowser(this.platformId)) this.load();
   }
 
   async load() {

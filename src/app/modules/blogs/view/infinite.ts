@@ -9,6 +9,7 @@ import { AnalyticsService } from '../../../services/analytics';
 
 import { MindsBlogResponse } from '../../../interfaces/responses';
 import { MindsBlogEntity } from '../../../interfaces/entities';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -16,7 +17,7 @@ import { MindsBlogEntity } from '../../../interfaces/entities';
   templateUrl: 'infinite.html',
 })
 export class BlogViewInfinite {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   guid: string;
   blogs: Array<Object> = [];
   sharetoggle: boolean = false;
@@ -35,8 +36,11 @@ export class BlogViewInfinite {
     public router: Router,
     private applicationRef: ApplicationRef,
     private cd: ChangeDetectorRef,
-    private analytics: AnalyticsService
-  ) {}
+    private analytics: AnalyticsService,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe(params => {

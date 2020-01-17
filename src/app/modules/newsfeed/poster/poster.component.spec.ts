@@ -34,6 +34,7 @@ import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-
 import { TextInputAutocompleteModule } from '../../../common/components/autocomplete';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'minds-third-party-networks-selector',
@@ -121,6 +122,10 @@ describe('PosterComponent', () => {
         {
           provide: AutocompleteSuggestionsService,
           useValue: MockService(AutocompleteSuggestionsService),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

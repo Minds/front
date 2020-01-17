@@ -19,6 +19,8 @@ import {
   TestBed,
   tick,
 } from '@angular/core/testing';
+import { ConfigsService } from '../common/services/configs.service';
+import { MockService } from '../utils/mock';
 
 /* tslint:disable */
 
@@ -34,6 +36,7 @@ describe('Service: Attachment Service', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Client, useValue: clientMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     });
     clientMock.response = {};
@@ -45,7 +48,8 @@ describe('Service: Attachment Service', () => {
       sessionMock,
       clientMock,
       uploadMock,
-      httpMock
+      httpMock,
+      TestBed.get(ConfigsService)
     );
 
     clientMock.get.calls.reset();

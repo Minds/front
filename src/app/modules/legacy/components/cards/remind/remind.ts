@@ -19,6 +19,7 @@ import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -29,8 +30,6 @@ import isMobile from '../../../../../helpers/is-mobile';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Remind {
-  minds = window.Minds;
-
   activity: any;
   @Input() boosted: boolean = false;
   hideTabs: boolean;
@@ -62,7 +61,8 @@ export class Remind {
     private changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private router: Router,
-    protected featuresService: FeaturesService
+    protected featuresService: FeaturesService,
+    private configs: ConfigsService
   ) {
     this.hideTabs = true;
   }
@@ -95,8 +95,8 @@ export class Remind {
       this.activity.custom_data[0].src
     ) {
       this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(
-        this.minds.site_url,
-        this.minds.cdn_url
+        this.configs.get('site_url'),
+        this.configs.get('cdn_url')
       );
     }
   }

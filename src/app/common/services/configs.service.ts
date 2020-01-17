@@ -20,4 +20,8 @@ export class ConfigsService {
   get(key) {
     return this.configs[key] || null;
   }
+
+  set(key, value): void {
+    this.configs[key] = value;
+  }
 }

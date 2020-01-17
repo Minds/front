@@ -66,7 +66,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: SocketsService,
     useFactory: SocketsService._,
-    deps: [Session, NgZone],
+    deps: [Session, NgZone, ConfigsService],
   },
   {
     provide: Client,
@@ -132,39 +132,24 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [Client],
   },
   Session,
-  {
-    provide: ThirdPartyNetworksService,
-    useFactory: ThirdPartyNetworksService._,
-    deps: [Client, NgZone],
-  },
+  ThirdPartyNetworksService,
   {
     provide: AnalyticsService,
     useFactory: AnalyticsService._,
     deps: [Router, Client, SiteService, PLATFORM_ID],
   },
-  {
-    provide: Navigation,
-    useFactory: Navigation._,
-    deps: [Location],
-  },
+  Navigation,
   {
     provide: WalletService,
     useFactory: WalletService._,
-    deps: [Session, Client, SocketsService, PLATFORM_ID],
+    deps: [Session, Client, SocketsService, PLATFORM_ID, ConfigsService],
   },
-  {
-    provide: AttachmentService,
-    useFactory: AttachmentService._,
-    deps: [Session, Client, Upload, HttpClient],
-  },
+  AttachmentService,
   {
     provide: Sidebar,
     useFactory: Sidebar._,
   },
-  {
-    provide: EmbedService,
-    useFactory: EmbedService._,
-  },
+  EmbedService,
   {
     provide: GoogleChartsLoader,
     useFactory: GoogleChartsLoader._,

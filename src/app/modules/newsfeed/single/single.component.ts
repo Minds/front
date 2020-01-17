@@ -11,6 +11,7 @@ import { Client } from '../../../services/api/client';
 import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -18,7 +19,7 @@ import { MetaService } from '../../../common/services/meta.service';
   templateUrl: 'single.component.html',
 })
 export class NewsfeedSingleComponent {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   inProgress: boolean = false;
   activity: any;
   error: string = '';
@@ -36,12 +37,14 @@ export class NewsfeedSingleComponent {
     protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
     private metaService: MetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    configs: ConfigsService
   ) {
     this.clientMetaService
       .inherit(injector)
       .setSource('single')
       .setMedium('single');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {

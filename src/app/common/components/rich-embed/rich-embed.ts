@@ -9,7 +9,7 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { RichEmbedService } from '../../../services/rich-embed';
-import mediaProxyUrl from '../../../helpers/media-proxy-url';
+import { MediaProxyService } from '../../../common/services/media-proxy.service';
 import { FeaturesService } from '../../../services/features.service';
 
 @Component({
@@ -35,7 +35,8 @@ export class MindsRichEmbed {
     private sanitizer: DomSanitizer,
     private service: RichEmbedService,
     private cd: ChangeDetectorRef,
-    protected featureService: FeaturesService
+    protected featureService: FeaturesService,
+    private mediaProxy: MediaProxyService
   ) {}
 
   set _src(value: any) {
@@ -47,7 +48,7 @@ export class MindsRichEmbed {
     this.type = 'src';
 
     if (this.src.thumbnail_src) {
-      this.src.thumbnail_src = mediaProxyUrl(this.src.thumbnail_src);
+      this.src.thumbnail_src = this.mediaProxy.proxy(this.src.thumbnail_src);
     }
 
     this.init();
@@ -62,7 +63,7 @@ export class MindsRichEmbed {
     this.type = 'preview';
 
     if (this.preview.thumbnail) {
-      this.preview.thumbnail = mediaProxyUrl(this.preview.thumbnail);
+      this.preview.thumbnail = this.mediaProxy.proxy(this.preview.thumbnail);
     }
 
     this.init();

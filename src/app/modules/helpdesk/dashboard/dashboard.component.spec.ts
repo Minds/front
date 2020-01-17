@@ -19,7 +19,8 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { DebugElement } from '@angular/core';
-import { MockComponent } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 describe('HelpdeskDashboardComponent', () => {
   let comp: HelpdeskDashboardComponent;
@@ -51,6 +52,10 @@ describe('HelpdeskDashboardComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: { params: of({ uuid: 'uuid1' }) },
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
         },
       ],
     }).compileComponents();

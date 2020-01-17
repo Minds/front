@@ -11,7 +11,6 @@ import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/mod
   templateUrl: 'two-factor.component.html',
 })
 export class SettingsTwoFactorComponent {
-  minds: Minds;
   telno: number;
   secret;
   waitingForCheck: boolean = false;
@@ -25,7 +24,6 @@ export class SettingsTwoFactorComponent {
     public client: Client,
     private overlayModal: OverlayModalService
   ) {
-    this.minds = window.Minds;
     this.load();
   }
 

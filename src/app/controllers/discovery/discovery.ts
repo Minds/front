@@ -181,21 +181,7 @@ export class Discovery {
   }
 
   setCity(row: any) {
-    this.cities = [];
-    if (row.address.city) window.Minds.user.city = row.address.city;
-    if (row.address.town) window.Minds.user.city = row.address.town;
-    this.city = window.Minds.user.city;
-    this.entities = [];
-    this.inProgress = true;
-    this.client
-      .post('api/v1/channel/info', {
-        coordinates: row.lat + ',' + row.lon,
-        city: window.Minds.user.city,
-      })
-      .then((response: any) => {
-        this.inProgress = false;
-        this.setNearby(true);
-      });
+    // Deprecated
   }
 
   setNearby(nearby: boolean) {

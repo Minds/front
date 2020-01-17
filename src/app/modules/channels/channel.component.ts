@@ -27,7 +27,7 @@ import { ConfigsService } from '../../common/services/configs.service';
   providers: [ClientMetaService],
 })
 export class ChannelComponent {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   filter: any = 'feed';
   isLocked: boolean = false;
 
@@ -65,6 +65,7 @@ export class ChannelComponent {
       .inherit(injector)
       .setSource('single')
       .setMedium('single');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {

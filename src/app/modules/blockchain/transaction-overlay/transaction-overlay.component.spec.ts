@@ -11,6 +11,8 @@ import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec'
 import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-mock.spec';
 import { Web3WalletService } from '../web3-wallet.service';
 import { GetMetamaskComponent } from '../metamask/getmetamask.component';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { MockService } from '../../../utils/mock';
 
 describe('TransactionOverlayComponent', () => {
   let comp: TransactionOverlayComponent;
@@ -31,6 +33,7 @@ describe('TransactionOverlayComponent', () => {
         },
         { provide: TokenContractService, useValue: TokenContractService },
         { provide: Web3WalletService, useValue: web3WalletServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents();
   }));
@@ -39,8 +42,6 @@ describe('TransactionOverlayComponent', () => {
     fixture = TestBed.createComponent(TransactionOverlayComponent);
 
     comp = fixture.componentInstance;
-
-    window.Minds.site_url = 'https://www.minds.com/';
 
     fixture.detectChanges();
   });

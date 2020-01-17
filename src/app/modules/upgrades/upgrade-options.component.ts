@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Session } from '../../services/session';
 import currency, { Currency } from '../../helpers/currency';
+import { ConfigsService } from '../../common/services/configs.service';
 
 export type UpgradeOptionInterval = 'yearly' | 'monthly';
 
@@ -12,13 +13,14 @@ export type UpgradeOptionCurrency = Currency;
   templateUrl: 'upgrade-options.component.html',
 })
 export class UpgradeOptionsComponent {
-  minds = window.Minds;
-
+  readonly upgrades; // TODO: set typings
   interval: UpgradeOptionInterval = 'yearly';
 
   currency: UpgradeOptionCurrency = 'usd';
 
-  constructor(public session: Session) {}
+  constructor(public session: Session, configs: ConfigsService) {
+    this.upgrades = configs.get('upgrades');
+  }
 
   get intervalCurrencyQueryParams() {
     return { i: this.interval, c: this.currency };
@@ -28,18 +30,18 @@ export class UpgradeOptionsComponent {
     if (this.interval === 'yearly') {
       return {
         amount: currency(
-          this.minds.upgrades.plus.yearly[this.currency] / 12,
+          this.upgrades.plus.yearly[this.currency] / 12,
           this.currency
         ),
         offerFrom: currency(
-          this.minds.upgrades.plus.monthly[this.currency],
+          this.upgrades.plus.monthly[this.currency],
           this.currency
         ),
       };
     } else if (this.interval === 'monthly') {
       return {
         amount: currency(
-          this.minds.upgrades.plus.monthly[this.currency],
+          this.upgrades.plus.monthly[this.currency],
           this.currency
         ),
         offerFrom: null,
@@ -51,18 +53,18 @@ export class UpgradeOptionsComponent {
     if (this.interval === 'yearly') {
       return {
         amount: currency(
-          this.minds.upgrades.pro.yearly[this.currency] / 12,
+          this.upgrades.pro.yearly[this.currency] / 12,
           this.currency
         ),
         offerFrom: currency(
-          this.minds.upgrades.pro.monthly[this.currency],
+          this.upgrades.pro.monthly[this.currency],
           this.currency
         ),
       };
     } else if (this.interval === 'monthly') {
       return {
         amount: currency(
-          this.minds.upgrades.pro.monthly[this.currency],
+          this.upgrades.pro.monthly[this.currency],
           this.currency
         ),
         offerFrom: null,

@@ -25,9 +25,9 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-blog-view',
   host: {
     class: 'm-blog',
@@ -36,7 +36,9 @@ import { MetaService } from '../../../common/services/meta.service';
   providers: [ActivityService, ClientMetaService],
 })
 export class BlogView implements OnInit, OnDestroy {
-  minds;
+  readonly cdnUrl: string;
+  readonly siteUrl: string;
+
   guid: string;
   blog: MindsBlogEntity;
   // sharetoggle: boolean = false;
@@ -103,14 +105,16 @@ export class BlogView implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    configs: ConfigsService
   ) {
     this.clientMetaService
       .inherit(injector)
       .setSource('single')
       .setMedium('single');
 
-    this.minds = window.Minds;
+    this.cdnUrl = configs.get('cdn_url');
+    this.siteUrl = configs.get('site_url');
     this.element = _element.nativeElement;
     optimizedResize.add(this.onResize.bind(this));
   }
@@ -130,10 +134,10 @@ export class BlogView implements OnInit, OnDestroy {
           bounds.top < this.scroll.view.clientHeight &&
           bounds.top + bounds.height > this.scroll.view.clientHeight
         ) {
-          let url = `${this.minds.site_url}blog/view/${this.blog.guid}`;
+          let url = `${this.siteUrl}blog/view/${this.blog.guid}`;
 
           if (this.blog.route) {
-            url = `${this.minds.site_url}${this.blog.route}`;
+            url = `${this.siteUrl}${this.blog.route}`;
           }
 
           if (!this.visible) {
@@ -212,7 +216,7 @@ export class BlogView implements OnInit, OnDestroy {
 
   openShareModal() {
     const url: string =
-      this.minds.site_url +
+      this.siteUrl +
       (this.blog.route ? this.blog.route : 'blog/view/' + this.blog.guid);
 
     this.overlayModal

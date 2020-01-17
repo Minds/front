@@ -12,9 +12,9 @@ import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.comp
 import { Tag } from '../../hashtags/types/tag';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { DialogService } from '../../../common/services/confirm-leave-dialog.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-blog-edit',
   host: {
     class: 'm-blog',
@@ -22,7 +22,7 @@ import { DialogService } from '../../../common/services/confirm-leave-dialog.ser
   templateUrl: 'edit.html',
 })
 export class BlogEdit {
-  minds = window.Minds;
+  readonly cdnUrl: string;
 
   guid: string;
   blog: any = {
@@ -78,9 +78,10 @@ export class BlogEdit {
     public router: Router,
     public route: ActivatedRoute,
     protected inMemoryStorageService: InMemoryStorageService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    configs: ConfigsService
   ) {
-    this.getCategories();
+    this.cdnUrl = configs.get('cdn_url');
 
     window.addEventListener(
       'attachment-preview-loaded',
@@ -165,7 +166,7 @@ export class BlogEdit {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.editing || !window.Minds.user) {
+    if (!this.editing || !this.session.getLoggedInUser()) {
       return true;
     }
 
@@ -176,20 +177,6 @@ export class BlogEdit {
     if (this.paramsSubscription) {
       this.paramsSubscription.unsubscribe();
     }
-  }
-
-  getCategories() {
-    this.categories = [];
-
-    for (let category in window.Minds.categories) {
-      this.categories.push({
-        id: category,
-        label: window.Minds.categories[category],
-        selected: false,
-      });
-    }
-
-    this.categories.sort((a, b) => (a.label > b.label ? 1 : -1));
   }
 
   load() {

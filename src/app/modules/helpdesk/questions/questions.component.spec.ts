@@ -15,6 +15,7 @@ import { of } from 'rxjs';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { SafePipe } from '../../../common/pipes/safe';
 import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 describe('QuestionsComponent', () => {
   let comp: QuestionsComponent;
@@ -50,6 +51,10 @@ describe('QuestionsComponent', () => {
         {
           provide: ActivatedRoute,
           useValue: { params: of({ uuid: 'uuid1' }) },
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
         },
       ],
     }).compileComponents();

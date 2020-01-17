@@ -7,7 +7,6 @@ import { Client } from '../../../../common/api/client.service';
   templateUrl: 'subscriptions.component.html',
 })
 export class SettingsBillingSubscriptionsComponent {
-  minds = window.Minds;
   inProgress: boolean = false;
   subscriptions: Array<any> = [];
 

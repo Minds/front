@@ -1,9 +1,10 @@
 import { EventEmitter, Inject, NgZone } from '@angular/core';
 import { Session } from './session';
 import * as io from 'socket.io-client';
+import { ConfigsService } from '../common/services/configs.service';
 
 export class SocketsService {
-  SOCKET_IO_SERVER = window.Minds.socket_server;
+  readonly SOCKET_IO_SERVER: string;
   LIVE_ROOM_NAME = 'live';
 
   socket: any;
@@ -12,11 +13,16 @@ export class SocketsService {
   rooms: string[] = [];
   debug: boolean = false;
 
-  static _(session: Session, nz: NgZone) {
-    return new SocketsService(session, nz);
+  static _(session: Session, nz: NgZone, configs: ConfigsService) {
+    return new SocketsService(session, nz, configs);
   }
 
-  constructor(public session: Session, private nz: NgZone) {
+  constructor(
+    public session: Session,
+    private nz: NgZone,
+    configs: ConfigsService
+  ) {
+    this.SOCKET_IO_SERVER = configs.get('socket_server');
     nz.runOutsideAngular(() => {
       this.setUp();
     });
@@ -60,7 +66,9 @@ export class SocketsService {
       this.nz.run(() => {
         if (this.debug)
           console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
-        this.join(`${this.LIVE_ROOM_NAME}:${window.Minds.user.guid}`);
+        this.join(
+          `${this.LIVE_ROOM_NAME}:${this.session.getLoggedInUser().guid}`
+        );
       });
     });
 

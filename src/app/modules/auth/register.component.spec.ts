@@ -49,7 +49,6 @@ describe('RegisterComponent', () => {
 
     comp = fixture.componentInstance;
 
-    window.Minds.cdn_assets_url = 'http://dev.minds.io/';
     comp.flags.canPlayInlineVideos = true;
 
     fixture.detectChanges();

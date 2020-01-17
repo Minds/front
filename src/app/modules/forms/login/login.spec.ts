@@ -15,7 +15,8 @@ import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { MockDirective } from '../../../utils/mock';
+import { MockDirective, MockService } from '../../../utils/mock';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 describe('LoginForm', () => {
   let comp: LoginForm;
@@ -88,6 +89,7 @@ describe('LoginForm', () => {
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents(); // compile template and css
   }));

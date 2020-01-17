@@ -23,7 +23,6 @@ export class NewsfeedBoostComponent {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  minds;
 
   message: string = '';
 
@@ -47,7 +46,6 @@ export class NewsfeedBoostComponent {
 
   ngOnInit() {
     this.load(true);
-    this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['ts']) {

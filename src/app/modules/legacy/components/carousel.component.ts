@@ -48,7 +48,6 @@ import { Client } from '../../../services/api';
   `,
 })
 export class CarouselComponent {
-  minds: Minds = window.Minds;
   banners: Array<any> = [];
 
   editing: boolean = false;

@@ -17,6 +17,8 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
+import { ConfigsService } from '../../../../common/services/configs.service';
+import { MockService } from '../../../../utils/mock';
 
 describe('WalletBalanceTokensComponent', () => {
   let comp: WalletBalanceTokensComponent;
@@ -106,6 +108,7 @@ describe('WalletBalanceTokensComponent', () => {
         { provide: Web3WalletService, useValue: Web3WalletServiceMock },
         { provide: TokenContractService, useValue: TokenContractServiceMock },
         { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents(); // compile template and css
   }));

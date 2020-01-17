@@ -16,6 +16,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReferralsLinksComponent } from '../../wallet/tokens/referrals/links/links.component';
 import { FeaturesService } from '../../../services/features.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -24,7 +25,6 @@ import { isPlatformBrowser, isPlatformServer } from '@angular/common';
   templateUrl: 'sidebar.html',
 })
 export class ChannelSidebar {
-  minds = window.Minds;
   filter: any = 'feed';
   isLocked: boolean = false;
   editing: boolean = false;
@@ -48,7 +48,8 @@ export class ChannelSidebar {
     protected storage: Storage,
     private overlayModal: OverlayModalService,
     public featuresService: FeaturesService,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId,
+    private configs: ConfigsService
   ) {
     if (onboardingService && onboardingService.onClose) {
       onboardingService.onClose.subscribe(progress => {
@@ -98,7 +99,7 @@ export class ChannelSidebar {
     }
 
     this.changeEditing.next(!this.editing);
-    this.minds.user.name = this.user.name; //no need to refresh for other pages to update.
+    this.session.getLoggedInUser().name = this.user.name; //no need to refresh for other pages to update.
   }
 
   upload_avatar(file) {
@@ -106,8 +107,7 @@ export class ChannelSidebar {
     this.upload
       .post('api/v1/channel/avatar', [file], { filekey: 'file' })
       .then((response: any) => {
-        self.user.icontime = Date.now();
-        if (window.Minds.user) window.Minds.user.icontime = Date.now();
+        this.user.icontime = Date.now();
       });
   }
 
@@ -130,10 +130,9 @@ export class ChannelSidebar {
       this.user.city = row.address.city;
     }
     if (row.address.town) this.user.city = row.address.town;
-    if (window.Minds) window.Minds.user.city = this.user.city;
     this.client.post('api/v1/channel/info', {
       coordinates: row.lat + ',' + row.lon,
-      city: window.Minds.user.city,
+      city: this.user.city,
     });
   }
 
@@ -202,7 +201,7 @@ export class ChannelSidebar {
     const isOwner =
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().guid == this.user.guid;
-    const isAdmin = window.Minds.Admin;
+    const isAdmin = this.configs.get('Admin');
     return (isOwner || isAdmin) && this.user.pro;
   }
 

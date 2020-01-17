@@ -9,13 +9,14 @@ import { Session } from '../../services/session';
 import { SignupModalService } from '../modals/signup/service';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { OnboardingService } from '../onboarding/onboarding.service';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
   selector: 'm-register',
   templateUrl: 'register.component.html',
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
@@ -37,8 +38,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private loginReferrer: LoginReferrerService,
     public session: Session,
     private onboarding: OnboardingService,
-    public navigation: NavigationService
+    public navigation: NavigationService,
+    configs: ConfigsService
   ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;

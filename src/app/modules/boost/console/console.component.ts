@@ -14,13 +14,11 @@ export type BoostConsoleFilter =
   | 'outbox';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-boost-console',
   templateUrl: 'console.component.html',
 })
 export class BoostConsoleComponent {
   type: BoostConsoleType;
-  minds: Minds = window.Minds;
   splitToolbar: boolean = false;
 
   constructor(

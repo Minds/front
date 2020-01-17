@@ -2,6 +2,7 @@ import { Component, EventEmitter } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
 import { GroupsService } from '../../../groups-service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -11,7 +12,7 @@ import { GroupsService } from '../../../groups-service';
   templateUrl: 'invite.html',
 })
 export class GroupsProfileMembersInvite {
-  minds = window.Minds;
+  readonly cdnUrl: string;
 
   group: any;
   invited: EventEmitter<any> = new EventEmitter();
@@ -28,7 +29,13 @@ export class GroupsProfileMembersInvite {
 
   timeout;
 
-  constructor(public client: Client, public service: GroupsService) {}
+  constructor(
+    public client: Client,
+    public service: GroupsService,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   set _group(value: any) {
     this.group = value;

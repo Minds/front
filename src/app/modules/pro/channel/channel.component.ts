@@ -121,7 +121,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get proSettingsHref() {
-    return window.Minds.site_url + 'pro/settings';
+    return this.site.baseUrl + 'pro/settings';
   }
 
   get isProDomain() {

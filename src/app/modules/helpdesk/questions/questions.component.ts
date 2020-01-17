@@ -3,6 +3,7 @@ import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-helpdesk--questions',
@@ -11,15 +12,18 @@ import { MetaService } from '../../../common/services/meta.service';
 export class QuestionsComponent implements OnInit {
   question: any = {};
 
-  minds: Minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   constructor(
     public client: Client,
     public session: Session,
     public router: Router,
     private route: ActivatedRoute,
-    private metaService: MetaService
-  ) {}
+    private metaService: MetaService,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {

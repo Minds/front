@@ -27,7 +27,6 @@ export class NotificationsComponent {
   inProgress: boolean = false;
   _filter: string = 'all';
 
-  minds: any = window.Minds;
   paramsSubscription: Subscription;
 
   constructor(
@@ -70,7 +69,7 @@ export class NotificationsComponent {
     } else {
       setTimeout(() => {
         if (
-          this.minds.notifications_count > 0 &&
+          this.notificationService.count > 0 &&
           this.notificationList.nativeElement.scrollTop <= 100
         ) {
           this.load(true);
@@ -112,7 +111,6 @@ export class NotificationsComponent {
         if (!data['load-next']) this.moreData = false;
         this.offset = data['load-next'];
         this.inProgress = false;
-        this.minds.notifications_count = 0;
         this.notificationService.clear();
       });
   }

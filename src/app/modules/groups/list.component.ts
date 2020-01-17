@@ -38,7 +38,6 @@ export class GroupsListComponent {
 
   ngOnInit() {
     this.context.set('group');
-    this.minds = window.Minds;
     this.detectWidth();
 
     this.paramsSubscription = this.route.params.subscribe(params => {

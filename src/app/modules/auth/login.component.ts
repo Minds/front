@@ -20,7 +20,6 @@ export class LoginComponent {
   hideLogin: boolean = false;
   inProgress: boolean = false;
   referrer: string;
-  minds = window.Minds;
   private redirectTo: string;
 
   flags = {

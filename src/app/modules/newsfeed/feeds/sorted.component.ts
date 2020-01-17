@@ -48,7 +48,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   moreData: boolean = true;
   rating: number = 1;
-  minds;
 
   paramsSubscription: Subscription;
   ratingSubscription: Subscription;
@@ -140,7 +139,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.minds = window.Minds;
     this.context.set('activity');
 
     this.hashtagFilterChangeSubscription = this.newsfeedHashtagSelectorService.subscribe(

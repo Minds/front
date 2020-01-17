@@ -12,7 +12,6 @@ import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/mod
   templateUrl: 'disable.component.html',
 })
 export class SettingsDisableChannelComponent {
-  minds: Minds;
   user: any;
   settings: string;
   object: any;
@@ -21,9 +20,7 @@ export class SettingsDisableChannelComponent {
     public client: Client,
     public router: Router,
     private overlayModal: OverlayModalService
-  ) {
-    this.minds = window.Minds;
-  }
+  ) {}
 
   disable() {
     this.client

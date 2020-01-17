@@ -27,6 +27,7 @@ import { MockService } from '../../../utils/mock';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'minds-activity',
@@ -69,6 +70,7 @@ describe('NewsfeedSingleComponent', () => {
         { provide: Router, useValue: routerMock },
         { provide: EntitiesService, useValue: MockService(EntitiesService) },
         { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents();
   }));

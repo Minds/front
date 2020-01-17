@@ -17,7 +17,6 @@ export class NewsfeedTagsComponent implements OnDestroy {
   offset: number = 0;
   inProgress: boolean = false;
   moreData: boolean = true;
-  minds;
   paramsSubscription: Subscription;
   tag: string;
 
@@ -30,8 +29,6 @@ export class NewsfeedTagsComponent implements OnDestroy {
     private storage: Storage,
     private context: ContextService
   ) {
-    this.minds = window.Minds;
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['tag']) {
         this.tag = params['tag'];

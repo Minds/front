@@ -5,6 +5,7 @@ import { Client } from './api';
 import { Session } from './session';
 import { SocketsService } from './sockets';
 import { isPlatformBrowser } from '@angular/common';
+import { ConfigsService } from '../common/services/configs.service';
 
 export class WalletService {
   points: number | null = null;
@@ -20,16 +21,18 @@ export class WalletService {
     session: Session,
     client: Client,
     sockets: SocketsService,
-    platformId
+    platformId,
+    configs
   ) {
-    return new WalletService(session, client, sockets, platformId);
+    return new WalletService(session, client, sockets, platformId, configs);
   }
 
   constructor(
     @Inject(Session) public session: Session,
     @Inject(Client) public client: Client,
     @Inject(SocketsService) private sockets: SocketsService,
-    @Inject(PLATFORM_ID) platformId
+    @Inject(PLATFORM_ID) platformId,
+    private configs: ConfigsService
   ) {
     if (isPlatformBrowser(platformId)) {
       this.getBalance();
@@ -82,7 +85,7 @@ export class WalletService {
    * Return the balance
    */
   getBalance(refresh: boolean = false): Promise<number | null> {
-    if (!window.Minds.wallet || refresh) {
+    if (!this.configs.get('wallet') || refresh) {
       this.points = null;
       this.apiInProgress = true;
 
@@ -109,7 +112,7 @@ export class WalletService {
           return null;
         });
     } else if (this.points === null) {
-      this.points = window.Minds.wallet.balance;
+      this.points = this.configs.get('wallet').balance;
 
       this.sync();
       return Promise.resolve(this.points);

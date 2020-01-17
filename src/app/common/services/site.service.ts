@@ -50,7 +50,7 @@ export class SiteService {
               .split('?')[0];
 
             if (!this.searchRoutes(url, proRoutes)) {
-              window.open(window.Minds.site_url + url, '_blank');
+              window.open(this.baseUrl + url, '_blank');
             }
           }
         } catch (e) {

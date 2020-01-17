@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   selector: 'm-marketing__asFeaturedIn',
@@ -6,5 +7,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: 'as-featured-in.component.html',
 })
 export class MarketingAsFeaturedInComponent {
-  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+  readonly cdnAssetsUrl: string;
+
+  constructor(private configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 }

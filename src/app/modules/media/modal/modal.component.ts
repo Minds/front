@@ -26,6 +26,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeaturesService } from '../../../services/features.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 export type MediaModalParams = {
   redirectUrl?: string;
@@ -64,7 +65,7 @@ export type MediaModalParams = {
   providers: [ActivityService, ClientMetaService],
 })
 export class MediaModalComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnUrl: string;
 
   entity: any = {};
   originalEntity: any = null;
@@ -128,12 +129,15 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private site: SiteService,
     private clientMetaService: ClientMetaService,
     private featureService: FeaturesService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    configs: ConfigsService
   ) {
     this.clientMetaService
       .inherit(injector)
       .setSource('single')
       .setMedium('modal');
+
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   updateSources() {
@@ -248,7 +252,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
             break;
           case 'image':
             this.contentType = 'image';
-            // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
             this.thumbnail = this.entity.thumbnail;
             this.title = this.entity.title;
             this.entity.entity_guid = this.entity.guid;
@@ -268,7 +271,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.attachment_guid;
         this.entity.entity_guid = this.entity.attachment_guid;
-        // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.attachment_guid}/xlarge`;
         this.thumbnail = this.entity.thumbnails.xlarge;
         break;
     }

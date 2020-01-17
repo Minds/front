@@ -42,9 +42,6 @@ describe('NotificationService', () => {
   });
 
   it('should subscribe when listening', fakeAsync(() => {
-    window.Minds.navigation = {};
-    window.Minds.navigation.topbar = [];
-    window.Minds.notifications_count = 0;
     const entity: any = {
       guid: 123,
     };
@@ -54,6 +51,6 @@ describe('NotificationService', () => {
     expect(socketMock.subscribe).toHaveBeenCalled();
     service.increment(4);
 
-    expect(window.Minds.notifications_count).toBe(4);
+    expect(service.count).toBe(4);
   }));
 });

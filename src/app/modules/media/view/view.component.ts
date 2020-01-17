@@ -20,9 +20,9 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { AnalyticsService } from '../../../services/analytics';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-media--view',
   templateUrl: 'view.component.html',
   providers: [
@@ -36,7 +36,9 @@ import { MetaService } from '../../../common/services/meta.service';
   ],
 })
 export class MediaViewComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
+
   guid: string;
   entity: any = {};
   inProgress: boolean = true;
@@ -75,12 +77,15 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     protected activityService: ActivityService,
     private clientMetaService: ClientMetaService,
     private metaService: MetaService,
+    configs: ConfigsService,
     @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)
       .setSource('single')
       .setMedium('single');
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {

@@ -36,7 +36,6 @@ export class PosterComponent {
     time_created: null,
   };
   tags = [];
-  minds = window.Minds;
   load: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
 

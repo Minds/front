@@ -102,10 +102,10 @@
 
 <div
   class="m-notifications--load-new mdl-color--blue-grey-50"
-  *ngIf="minds.notifications_count > 0"
+  *ngIf="notificationService.count > 0"
 >
   <a *ngIf="!inProgress" (click)="load(true)">
-    <span> {{ minds.notifications_count }} </span>
+    <span> {{ notificationService.count }} </span>
     <span i18n="@@NOTIFICATIONS__NOTIFICATIONS__LOAD_NEW_BUTTON"
       >New Notifications</span
     >

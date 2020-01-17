@@ -3,13 +3,14 @@
  */
 import { EventEmitter, Injectable } from '@angular/core';
 import { ConfigsService } from '../common/services/configs.service';
+import { Storage } from './storage';
 
 @Injectable()
 export class Session {
   loggedinEmitter: EventEmitter<any> = new EventEmitter();
   userEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(private configs: ConfigsService) {}
+  constructor(private configs: ConfigsService, private storage: Storage) {}
 
   /**
    * Return if loggedin, with an optional listener
@@ -61,19 +62,18 @@ export class Session {
   inject(user: any = null) {
     // Clear stale localStorage
 
-    window.localStorage.clear();
+    this.storage.clear();
 
     // Emit new user info
 
     this.userEmitter.next(user);
 
     // Set globals
-
-    window.Minds.LoggedIn = true;
-    window.Minds.user = user;
+    this.configs.set('LoggedIn', true);
+    this.configs.set('user', user);
 
     if (user.admin === true) {
-      window.Minds.Admin = true;
+      this.configs.set('Admin', true);
     }
   }
 
@@ -90,10 +90,10 @@ export class Session {
    */
   logout() {
     this.userEmitter.next(null);
-    delete window.Minds.user;
-    window.Minds.LoggedIn = false;
-    window.Minds.Admin = false;
-    window.localStorage.clear();
+    this.configs.set('user', null);
+    this.configs.set('LoggedIn', false);
+    this.configs.set('Admin', false);
+    this.storage.clear();
     this.loggedinEmitter.next(false);
   }
 }

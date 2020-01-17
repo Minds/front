@@ -2,16 +2,19 @@ import { Injectable } from '@angular/core';
 import { SiteService } from './site.service';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
+import { ConfigsService } from './configs.service';
 
 @Injectable()
 export class SsoService {
-  protected readonly minds = window.Minds;
+  protected readonly siteUrl: string;
 
   constructor(
     protected site: SiteService,
     protected client: Client,
-    protected session: Session
+    protected session: Session,
+    configs: ConfigsService
   ) {
+    this.siteUrl = configs.get('site_url');
     this.listen();
   }
 
@@ -30,7 +33,7 @@ export class SsoService {
   async connect() {
     try {
       const connect: any = await this.client.postRaw(
-        `${this.minds.site_url}api/v2/sso/connect`
+        `${this.siteUrl}api/v2/sso/connect`
       );
 
       if (connect && connect.token && connect.status === 'success') {
@@ -55,12 +58,9 @@ export class SsoService {
       const connect: any = await this.client.post('api/v2/sso/connect');
 
       if (connect && connect.token && connect.status === 'success') {
-        await this.client.postRaw(
-          `${this.minds.site_url}api/v2/sso/authorize`,
-          {
-            token: connect.token,
-          }
-        );
+        await this.client.postRaw(`${this.siteUrl}api/v2/sso/authorize`, {
+          token: connect.token,
+        });
       }
     } catch (e) {
       console.error(e);

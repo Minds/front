@@ -2,13 +2,14 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-helpdesk--dashboard',
   templateUrl: 'dashboard.component.html',
 })
 export class HelpdeskDashboardComponent implements OnInit {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   query: string = '';
   results: any[] = [];
@@ -23,8 +24,11 @@ export class HelpdeskDashboardComponent implements OnInit {
   constructor(
     public router: Router,
     public client: Client,
-    public session: Session
-  ) {}
+    public session: Session,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   async ngOnInit() {
     await this.loadPopular();

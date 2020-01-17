@@ -15,8 +15,6 @@ import { OverlayModalService } from '../../services/ux/overlay-modal';
   templateUrl: 'list.component.html',
 })
 export class BlogListComponent {
-  minds;
-
   offset: string = '';
   moreData: boolean = true;
   inProgress: boolean = false;
@@ -38,8 +36,6 @@ export class BlogListComponent {
   ) {}
 
   ngOnInit() {
-    this.minds = window.Minds;
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       this.filter = params['filter'];
 

@@ -23,6 +23,7 @@ import { UpdateMarkersService } from '../../../common/services/update-markers.se
 import { filter, map, startWith, throttle } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
 import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-groups--profile',
@@ -39,7 +40,7 @@ export class GroupsProfile {
   };
   editing: boolean = false;
   editDone: boolean = false;
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   showRight: boolean = true;
   activity: Array<any> = [];
@@ -77,8 +78,11 @@ export class GroupsProfile {
     private client: Client,
     public videochat: VideoChatService,
     private cd: ChangeDetectorRef,
-    private updateMarkers: UpdateMarkersService
-  ) {}
+    private updateMarkers: UpdateMarkersService,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.context.set('activity');

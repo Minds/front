@@ -45,7 +45,6 @@ export class BlockchainPurchaseComponent implements OnInit {
 
   autodetectedWallet: boolean | null = null;
 
-  minds = window.Minds;
   showPledgeModal: boolean = false;
   showLoginModal: boolean = false;
   showEthModal: boolean = false;

@@ -26,7 +26,6 @@ export class WalletUSDOnboardingComponent implements OnInit {
   restrictAsVerified: boolean = false;
   eligible: boolean;
 
-  minds = window.Minds;
   merchant: any;
   error: string;
 
@@ -125,10 +124,11 @@ export class WalletUSDOnboardingComponent implements OnInit {
       );
       this.inProgress = false;
 
-      if (!this.minds.user.programs) this.minds.user.programs = [];
-      this.minds.user.programs.push('affiliate');
+      if (!this.session.getLoggedInUser().programs)
+        this.session.getLoggedInUser().programs = [];
+      this.session.getLoggedInUser().programs.push('affiliate');
 
-      this.minds.user.merchant = {
+      this.session.getLoggedInUser().merchant = {
         id: response.account.id,
         service: 'stripe',
       };

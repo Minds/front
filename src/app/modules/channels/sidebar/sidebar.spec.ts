@@ -43,6 +43,7 @@ import { ifStmt } from '@angular/compiler/src/output/output_ast';
 import { ChannelModulesComponent } from '../modules/modules';
 import { SiteService } from '../../../common/services/site.service';
 import { IfBrowserDirective } from '../../../common/directives/if-browser.directive';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 describe('ChannelSidebar', () => {
   let comp: ChannelSidebar;
@@ -152,6 +153,10 @@ describe('ChannelSidebar', () => {
           provide: PLATFORM_ID,
           useValue: ɵPLATFORM_BROWSER_ID,
         },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -192,7 +197,11 @@ describe('ChannelSidebar', () => {
         },
       ],
     };
-    window.Minds.user = {
+
+    spyOn(
+      fixture.debugElement.injector.get(Session),
+      'getLoggedInUser'
+    ).and.returnValue({
       guid: '732337264197111809',
       type: 'user',
       subtype: false,
@@ -234,7 +243,7 @@ describe('ChannelSidebar', () => {
       boost_rating: '2',
       spam: 0,
       deleted: 0,
-    };
+    });
 
     fixture.detectChanges();
 
@@ -280,7 +289,7 @@ describe('ChannelSidebar', () => {
 
   it('bio container should be editable if its the owner, should send event when saving, and returning to original state', () => {
     spyOn(comp, 'toggleEditing');
-    comp.user.guid = '1000';
+    comp.user.guid = '732337264197111809';
     fixture.detectChanges();
     const edit_tick = fixture.debugElement.query(By.css('.minds-button-edit'));
     edit_tick.nativeElement.click();

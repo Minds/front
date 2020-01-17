@@ -7,7 +7,6 @@ import { Storage } from '../../services/storage';
   templateUrl: 'sidebar.component.html',
 })
 export class NoticesSidebarComponent {
-  minds = window.Minds;
   hidden: boolean = false;
   notices: Array<any> = [];
   displayLimit: number = 3;

@@ -13,6 +13,7 @@ export class NotificationService {
   };
   onReceive: EventEmitter<any> = new EventEmitter();
   notificationPollTimer;
+  count: number = 0;
 
   private updateNotificationCountSubscription: Subscription;
 
@@ -42,8 +43,6 @@ export class NotificationService {
     @Inject(PLATFORM_ID) private platformId,
     protected site: SiteService
   ) {
-    if (!window.Minds.notifications_count) window.Minds.notifications_count = 0;
-
     if (!this.site.isProDomain) {
       this.listen();
     }
@@ -73,8 +72,7 @@ export class NotificationService {
    * Increment the notifications counter
    */
   increment(notifications: number = 1) {
-    window.Minds.notifications_count =
-      window.Minds.notifications_count + notifications;
+    this.count = this.count + notifications;
     this.sync();
   }
 
@@ -82,7 +80,7 @@ export class NotificationService {
    * Clear the notifications. For notification controller
    */
   clear() {
-    window.Minds.notifications_count = 0;
+    this.count = 0;
     this.sync();
   }
 
@@ -104,12 +102,8 @@ export class NotificationService {
       return;
     }
 
-    if (!window.Minds.notifications_count) {
-      window.Minds.notifications_count = 0;
-    }
-
     this.client.get('api/v1/notifications/count', {}).then((response: any) => {
-      window.Minds.notifications_count = response.count;
+      this.count = response.count;
       this.sync();
     });
   }
@@ -118,13 +112,7 @@ export class NotificationService {
    * Sync Notifications to the topbar Counter
    */
   sync() {
-    // for (var i in window.Minds.navigation.topbar) {
-    //   if (window.Minds.navigation.topbar[i].name === 'Notifications') {
-    //     window.Minds.navigation.topbar[i].extras.counter =
-    //       window.Minds.notifications_count;
-    //   }
-    // }
-    this.metaService.setCounter(window.Minds.notifications_count);
+    this.metaService.setCounter(this.count);
   }
 
   ngOnDestroy() {

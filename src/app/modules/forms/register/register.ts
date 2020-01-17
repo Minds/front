@@ -37,7 +37,6 @@ export class RegisterForm {
 
   form: FormGroup;
   fbForm: FormGroup;
-  minds = window.Minds;
 
   @ViewChild('reCaptcha', { static: false }) reCaptcha: ReCaptchaComponent;
 

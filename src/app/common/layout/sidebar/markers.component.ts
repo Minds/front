@@ -18,7 +18,6 @@ import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-m
 export class SidebarMarkersComponent {
   @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
-  minds = window.Minds;
   showMarkerSidebar = false;
 
   componentRef;

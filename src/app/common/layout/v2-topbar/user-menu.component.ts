@@ -18,7 +18,6 @@ import { ReferralsLinksComponent } from '../../../modules/wallet/tokens/referral
 export class UserMenuComponent implements OnInit {
   isOpen: boolean = false;
 
-  minds = window.Minds;
   isDark: boolean = false;
   themeSubscription: Subscription;
 
