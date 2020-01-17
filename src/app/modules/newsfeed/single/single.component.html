@@ -44,8 +44,8 @@
 </div>
 
 <m-social-icons
-  [url]="minds.site_url + 'newsfeed/' + activity.guid"
-  [title]="activity.title || ''"
+  [url]="minds.site_url + 'newsfeed/' + activity?.guid"
+  [title]="activity?.title || ''"
   [embed]="activity"
 >
 </m-social-icons>
