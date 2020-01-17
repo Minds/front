@@ -26,6 +26,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeaturesService } from '../../../services/features.service';
+import { ShareModalComponent } from '../../modals/share/share';
 
 export type MediaModalParams = {
   redirectUrl?: string;
@@ -618,6 +619,14 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     if (this.isTablet) {
       this.showOverlaysOnTablet();
     }
+  }
+
+  openShareModal(): void {
+    const url = this.overlayModal
+      .create(ShareModalComponent, this.site.baseUrl + this.pageUrl.substr(1), {
+        class: 'm-overlay-modal--medium m-overlayModal__share',
+      })
+      .present();
   }
 
   ngOnDestroy() {
