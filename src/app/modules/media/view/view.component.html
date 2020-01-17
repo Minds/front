@@ -323,6 +323,14 @@
   </div>
 </div>
 
+<m-social-icons
+  [url]="minds.site_url + 'media/' + entity.guid"
+  [title]="entity.title || ''"
+  [embed]="entity"
+  *ngIf="entity && !attachment.shouldBeBlurred(entity)"
+>
+</m-social-icons>
+
 <m-modal-confirm
   *ngIf="deleteToggle"
   [open]="true"

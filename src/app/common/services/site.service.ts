@@ -21,6 +21,10 @@ export class SiteService {
     return this.isProDomain ? this.pro.one_line_headline || '' : '';
   }
 
+  get baseUrl(): string {
+    return window.Minds.site_url; // TODO: use SSR once merged in
+  }
+
   private router$: Subscription;
 
   constructor(private router: Router) {
