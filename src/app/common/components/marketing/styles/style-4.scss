@@ -33,11 +33,19 @@
         @include m-on-theme(dark) {
           color: #ffffff;
         }
+        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+          font-size: 40px !important;
+          line-height: 39px !important;
+          text-align: left !important;
+        }
 
         @media screen and (max-width: $m-grid-min-vp) {
           font-size: 28px;
           line-height: 32px;
           margin: 20px 0 17px;
+        }
+
+        @media screen and(max-width: $m-grid-max-mobile) {
           text-align: center;
         }
       }
@@ -52,6 +60,9 @@
 
       @media screen and (max-width: $m-grid-min-vp) {
         margin-bottom: 30px;
+      }
+
+      @media screen and (max-width: $m-grid-max-mobile) {
         text-align: center;
       }
     }
@@ -116,10 +127,14 @@
       position: relative;
       z-index: 0;
 
+      @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+        margin-right: 60px;
+      }
+
       @media screen and (max-width: $m-grid-max-mobile) {
         grid-row: 1;
       }
-      //
+
       img.m-marketing__image--1 {
         object-fit: cover;
         width: 438px;

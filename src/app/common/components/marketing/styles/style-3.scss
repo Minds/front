@@ -22,7 +22,7 @@
     .m-marketing__body {
       position: relative;
       margin: auto 0;
-      padding: 0;
+      padding: 0 60px;
       min-height: 330px;
 
       @media screen and (max-width: $m-grid-max-mobile) {
@@ -72,10 +72,7 @@
 
     p.m-marketing__description {
       margin-bottom: 42px;
-
-      @media screen and(min-width: $min-tablet) {
-        padding-right: 200px;
-      }
+      padding: 0;
 
       @include m-theme() {
         color: themed($m-grey-300);
@@ -122,6 +119,10 @@
       z-index: 0;
       grid-column-start: 1;
       grid-row: 1;
+
+      @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+        margin-left: 60px;
+      }
 
       img.m-marketing__image--1 {
         object-fit: cover;

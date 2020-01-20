@@ -18,7 +18,12 @@
     .m-marketing__body {
       position: relative;
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+        padding: 0 60px 30px;
+        margin-left: 30px;
+      }
+
+      @media screen and (max-width: $m-grid-max-mobile) {
         padding: 0 30px 30px;
       }
 
@@ -32,6 +37,10 @@
         transform: translate(-86px, -56px);
         clip-path: polygon(0% 0%, 0% 100%, 100% 92%, 100% 0%);
         z-index: -1;
+
+        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+          transform: translate(0, -56px);
+        }
 
         @include m-theme() {
           background: linear-gradient(
@@ -70,6 +79,17 @@
           line-height: 32px;
           margin: 0 0 17px;
           text-align: center;
+        }
+      }
+    }
+
+    ul.m-marketing__points {
+      li {
+        @include m-theme() {
+          color: themed($m-grey-300);
+        }
+        @include m-on-theme(dark) {
+          color: #b7b7b7;
         }
       }
     }
@@ -120,6 +140,10 @@
         width: 438px;
         height: 547px;
         clip-path: polygon(0% 1%, 0% 97%, 100% 100%, 100% 0%);
+
+        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+          width: 338px;
+        }
 
         @media screen and (max-width: $m-grid-max-mobile) {
           width: 100vw;

@@ -36,7 +36,6 @@ const sidebarMenu = {
     {
       id: 'subscription',
       label: 'Pro Subscription',
-      path: 'pro',
     },
     {
       id: ':username',
