@@ -100,6 +100,11 @@ m-homepage__v2 {
           position: initial;
           z-index: 0;
 
+          @media screen and (min-width: $m-grid-max-mobile) {
+            padding: 0 30px 30px;
+            margin: 0;
+          }
+
           @media screen and (max-width: $m-grid-max-mobile) {
             padding: 0 16px 0;
           }
@@ -189,6 +194,10 @@ m-homepage__v2 {
       .m-homepage__registerForm {
         display: block;
         filter: drop-shadow(-1px 0px 8px rgba(50, 50, 0, 0.5));
+
+        @media screen and(min-width: 1000px) and (max-width: 1180px) {
+          transform: translateX(-50px);
+        }
 
         @media screen and(min-width: $m-grid-max-mobile) and(max-width: 1000px) {
           transform: translate(-35px, -19px);
@@ -468,6 +477,7 @@ m-homepage__v2 {
     }
 
     .m-marketing__image {
+      margin-right: 0 !important;
       .m-marketing__imageUX {
         img.m-marketing__image--2 {
           width: 317px;
@@ -606,7 +616,9 @@ m-homepage__v2 {
     align-items: center;
 
     .m-marketing__quotation {
-      width: auto !important;
+      @media screen and(max-width: $m-grid-max-tablet) {
+        width: auto !important;
+      }
     }
   }
 
@@ -658,27 +670,31 @@ m-homepage__v2 {
 
   .m-marketing__section--tail {
     .m-marketing__wrapper {
-      .m-marketingTitle__centered {
-        font-size: 28px;
-        line-height: 37px;
-        color: #4a4a4a;
-        white-space: nowrap;
-        margin-bottom: 48px;
+      .m-marketing__body {
+        padding: 0;
 
-        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
-          font-size: 24px;
+        .m-marketingTitle__centered {
+          font-size: 28px;
+          line-height: 37px;
+          color: #4a4a4a;
+          white-space: nowrap;
+          margin-bottom: 48px;
+
+          @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+            font-size: 24px;
+          }
+
+          @media screen and (max-width: $m-grid-max-mobile) {
+            font-size: 19px;
+            line-height: 25px;
+          }
         }
 
-        @media screen and (max-width: $m-grid-max-mobile) {
-          font-size: 19px;
-          line-height: 25px;
+        .m-homepage__joinButton {
+          width: 230px;
+          height: 60px;
+          margin: 0 auto;
         }
-      }
-
-      .m-homepage__joinButton {
-        width: 230px;
-        height: 60px;
-        margin: 0 auto;
       }
     }
   }

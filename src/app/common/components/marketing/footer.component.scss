@@ -2,7 +2,7 @@
 
 m-marketing__footer {
   display: block;
-  margin: 105px 0 95px;
+  margin: 105px 0 20px 0;
 
   @media screen and (max-width: $m-grid-min-vp) {
     margin: 80px 0 0;
@@ -62,6 +62,8 @@ m-marketing__footer {
       margin: 0 auto;
 
       @media screen and (max-width: $m-grid-max-mobile) {
+        width: 60%;
+        grid-row: 999;
         margin: 32px 0 0;
       }
     }
@@ -126,6 +128,15 @@ m-marketing__footer {
           color: themed($m-grey-300);
         }
 
+        @media screen and (max-width: $m-grid-min-vp) {
+          display: inline-block;
+          margin-right: 1em;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+
         a {
           color: inherit;
           font-weight: normal;
@@ -151,7 +162,7 @@ m-marketing__footer {
           text-align: right;
           padding-right: 92px;
 
-          @media screen and (max-width: $m-grid-max-mobile) {
+          @media screen and (max-width: $m-grid-min-vp) {
             text-align: inherit;
             padding-right: initial;
           }

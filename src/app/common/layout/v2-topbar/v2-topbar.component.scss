@@ -309,7 +309,6 @@
     cursor: pointer;
     @include m-theme() {
       background-color: themed($m-white);
-      background-color: themed($m-white);
       border: 1px solid themed($m-blue);
       color: themed($m-blue);
     }
