@@ -58,7 +58,5 @@
 
   <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
 
-  <ng-container *mIfBrowser>
-    <m-cookies-notice *ngIf="!session.isLoggedIn()"> </m-cookies-notice>
-  </ng-container>
+  <m-cookies-notice *ngIf="!session.isLoggedIn()"> </m-cookies-notice>
 </ng-container>
