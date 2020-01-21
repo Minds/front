@@ -19,7 +19,8 @@ import { SocketsService } from '../../../services/sockets';
 import autobind from '../../../helpers/autobind';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { SignupModalService } from '../../modals/signup/service';
-import { Subscription } from 'rxjs';
+import { throwError, Observable, Subscription } from 'rxjs';
+import { catchError, tap, takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'm-comment__poster',
@@ -40,13 +41,14 @@ export class CommentPosterComponent {
     any
   > = new EventEmitter();
   @Output('posted') posted$: EventEmitter<any> = new EventEmitter();
+
+  attachmentSubscription: Subscription;
   content: string = '';
   triedToPost: boolean = false;
   comments: Array<any> = []; // TODO: remove this
   canPost: boolean = true;
   inProgress: boolean = false;
   maxLength: number = 1500;
-  progressSubscription: Subscription;
 
   constructor(
     public session: Session,
@@ -59,6 +61,10 @@ export class CommentPosterComponent {
     private cd: ChangeDetectorRef
   ) {
     this.minds = window.Minds;
+  }
+
+  ngOnDestroy() {
+    this.attachmentSubscription.unsubscribe();
   }
 
   keypress(e: KeyboardEvent) {
@@ -193,18 +199,27 @@ export class CommentPosterComponent {
     this.canPost = false;
 
     try {
-      this.attachment.preview(message, this.detectChanges.bind(this)); // generate preview.
-      this.progressSubscription = this.attachment.progress.subscribe(
-        progress => {
-          if (progress === 100) {
-            this.canPost = true;
-            this.progressSubscription.unsubscribe();
-          }
-        }
-      );
+      this.attachmentSubscription = this.attachment.progress
+        .pipe(
+          tap(progress => {
+            if (progress === 100) {
+              // if progress is 100 allow user to post
+              this.canPost = true;
+            }
+          }),
+          takeWhile(progress => progress !== 100), // stop once progress is 100
+          catchError((error: any, caught: Observable<any>) => {
+            // reset progress.
+            this.attachment.progress.next(0);
+            return throwError(error);
+          })
+        )
+        .subscribe();
     } catch (e) {
       this.canPost = true;
+      console.error(e);
     }
+    this.attachment.preview(message, this.detectChanges.bind(this)); // generate preview.
   }
 
   getAvatar() {
