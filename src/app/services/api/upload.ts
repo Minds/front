@@ -1,4 +1,4 @@
-import { Cookie } from '../cookie';
+import { CookieService } from '../../common/services/cookie.service';
 import { HttpClient } from '@angular/common/http';
 
 /**
@@ -7,11 +7,11 @@ import { HttpClient } from '@angular/common/http';
 export class Upload {
   base: string = '/';
 
-  static _(http: HttpClient, cookie: Cookie) {
+  static _(http: HttpClient, cookie: CookieService) {
     return new Upload(http, cookie);
   }
 
-  constructor(public http: HttpClient, private cookie: Cookie) {}
+  constructor(public http: HttpClient, private cookie: CookieService) {}
 
   /**
    * Return a POST request

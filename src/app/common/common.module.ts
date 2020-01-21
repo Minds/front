@@ -133,7 +133,7 @@ import { FormToastComponent } from './components/form-toast/form-toast.component
 import { SsoService } from './services/sso.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { ConfigsService } from './services/configs.service';
-import { Cookie } from '../services/cookie';
+import { CookieService } from './services/cookie.service';
 import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
@@ -366,6 +366,7 @@ const routes: Routes = [
     SiteService,
     SsoService,
     AttachmentService,
+    CookieService,
     {
       provide: UpdateMarkersService,
       useFactory: (_http, _session, _sockets) => {
@@ -376,7 +377,7 @@ const routes: Routes = [
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
-      deps: [HttpClient, Cookie],
+      deps: [HttpClient, CookieService],
     },
     {
       provide: NSFWSelectorCreatorService,

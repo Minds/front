@@ -16,7 +16,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Client, Upload } from '../../../services/api';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
-import { Storage } from '../../../services/storage';
+import { CookieService } from '../../../common/services/cookie.service';
 import { ContextService } from '../../../services/context.service';
 import { SettingsService } from '../../settings/settings.service';
 import { PosterComponent } from '../poster/poster.component';
@@ -64,7 +64,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    protected storage: Storage,
+    protected cookieService: CookieService,
     protected context: ContextService,
     protected session: Session,
     protected settingsService: SettingsService,
@@ -114,7 +114,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
         this.all = false;
       } else if (
         typeof params['all'] !== 'undefined' ||
-        this.storage.get('preferred_hashtag_state') !== '1'
+        this.cookieService.get('preferred_hashtag_state') !== '1'
       ) {
         this.hashtag = null;
         this.all = true;

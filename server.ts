@@ -11,7 +11,6 @@ import { XhrFactory } from '@angular/common/http';
 import { NgxRequest, NgxResponce } from '@gorniv/ngx-universal';
 
 import * as express from 'express';
-import * as proxy from 'express-http-proxy';
 import * as compression from 'compression';
 import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
@@ -42,36 +41,7 @@ global['Event'] = win.Event;
 global['Event']['prototype'] = win.Event.prototype;
 global['document'] = win.document;
 global['window']['Promise'] = global.Promise;
-global['window']['Minds'] = {
-  cdn_url: '/',
-  cdn_assets_url: '/',
-  blockchain: {
-    network_address: 'https://www.minds.com/api/v2/blockchain/proxy/',
-    token: {
-      abi: [],
-    },
-  },
-  features: {
-    blockchain_creditcard: false,
-    'suggested-users': true,
-    helpdesk: true,
-    'top-feeds': true,
-    'top-feeds-filter': false,
-    'channel-filter-feeds': false,
-    'dark-mode': true,
-    'es-feeds': true,
-    'cassandra-notifications': true,
-    'media-modal': true,
-    'allow-comments-toggle': false,
-    permissions: false,
-    'wire-multi-currency': 'canary',
-    'cdn-jwt': false,
-    'post-scheduler': 'canary',
-    pro: false,
-    'purchase-pro': true,
-    'top-feeds-by-age': true,
-  },
-};
+
 global['window']['localStorage'] = {
   getItem: () => null,
   setItem: () => {},
@@ -135,7 +105,10 @@ const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
 
 const cache = () => {
   return (req, res, next) => {
-    const sessKey = req.cookies['minds_sess'] || 'loggedout';
+    const sessKey =
+      Object.entries(req.cookies)
+        .filter(kv => kv[0] !== 'mwa' && kv[0] !== 'XSRF-TOKEN')
+        .join(':') || 'loggedout';
     const key =
       `__express__/${sessKey}/` +
       (req.originalUrl || req.url) +

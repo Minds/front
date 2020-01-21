@@ -1,4 +1,4 @@
-import { Cookie } from '../cookie';
+import { CookieService } from '../../common/services/cookie.service';
 import { PLATFORM_ID, Inject } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -16,7 +16,7 @@ export class Client {
   static _(
     http: HttpClient,
     location: Location,
-    cookie: Cookie,
+    cookie: CookieService,
     platformId,
     transferState: TransferState,
     @Inject('ORIGIN_URL') baseUrl: string
@@ -34,7 +34,7 @@ export class Client {
   constructor(
     public http: HttpClient,
     public location: Location,
-    private cookie: Cookie,
+    private cookie: CookieService,
     @Inject(PLATFORM_ID) private platformId,
     private transferState: TransferState,
     @Inject('ORIGIN_URL') public baseUrl: string

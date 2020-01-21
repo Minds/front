@@ -24,6 +24,7 @@ import { filter, map, startWith, throttle } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { CookieService } from '../../../common/services/cookie.service';
 
 @Component({
   selector: 'm-groups--profile',
@@ -79,7 +80,8 @@ export class GroupsProfile {
     public videochat: VideoChatService,
     private cd: ChangeDetectorRef,
     private updateMarkers: UpdateMarkersService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private cookieService: CookieService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -438,13 +440,13 @@ export class GroupsProfile {
   }
 
   detectConversationsState() {
-    const state = localStorage.getItem('groups:conversations:minimized');
+    const state = this.cookieService.get('groups:conversations:minimized');
     this.showRight = !state || state === 'false'; // it's maximized by default
   }
 
   toggleConversations() {
     this.showRight = !this.showRight;
-    localStorage.setItem(
+    this.cookieService.put(
       'groups:conversations:minimized',
       (!this.showRight).toString()
     );

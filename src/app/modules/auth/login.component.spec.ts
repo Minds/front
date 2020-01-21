@@ -26,6 +26,12 @@ import { signupModalServiceMock } from '../../mocks/modules/modals/signup/signup
 import { SignupModalService } from '../modals/signup/service';
 import { By } from '@angular/platform-browser';
 import { Storage } from '../../services/storage';
+import {
+  CookieService,
+  CookieOptionsProvider,
+  COOKIE_OPTIONS,
+  CookieModule,
+} from '@gorniv/ngx-universal';
 
 @Component({
   selector: 'minds-form-login',
@@ -62,6 +68,7 @@ describe('LoginComponent', () => {
         ReactiveFormsModule,
         CommonModule,
         FormsModule,
+        CookieModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
@@ -70,6 +77,8 @@ describe('LoginComponent', () => {
         { provide: OnboardingService, useValue: onboardingServiceMock },
         { provide: SignupModalService, useValue: signupModalServiceMock },
         Storage,
+        CookieService,
+        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
       ],
     }).compileComponents();
   }));

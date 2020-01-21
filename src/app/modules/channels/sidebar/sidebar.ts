@@ -17,6 +17,7 @@ import { ReferralsLinksComponent } from '../../wallet/tokens/referrals/links/lin
 import { FeaturesService } from '../../../services/features.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { CookieService } from '../../../common/services/cookie.service';
 
 @Component({
   moduleId: module.id,
@@ -45,7 +46,7 @@ export class ChannelSidebar {
     public upload: Upload,
     public session: Session,
     public onboardingService: ChannelOnboardingService,
-    protected storage: Storage,
+    protected cookieService: CookieService,
     private overlayModal: OverlayModalService,
     public featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId,
@@ -79,14 +80,14 @@ export class ChannelSidebar {
       isPlatformBrowser(this.platformId) &&
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().guid === this.user.guid &&
-      !this.storage.get('onboarding_hide') &&
+      !this.cookieService.get('onboarding_hide') &&
       this.onboardingProgress !== -1 &&
       this.onboardingProgress !== 100
     );
   }
 
   hideOnboardingForcefully() {
-    this.storage.set('onboarding_hide', '1');
+    this.cookieService.put('onboarding_hide', '1');
   }
 
   isOwner() {

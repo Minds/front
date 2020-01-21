@@ -25,15 +25,7 @@ import { SiteService } from '../../../common/services/site.service';
 import { ScrollService } from '../../../services/ux/scroll';
 
 @Component({
-  providers: [
-    ProChannelService,
-    OverlayModalService,
-    {
-      provide: SignupModalService,
-      useFactory: SignupModalService._,
-      deps: [Router, ScrollService],
-    },
-  ],
+  providers: [ProChannelService, OverlayModalService, SignupModalService],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
   changeDetection: ChangeDetectionStrategy.Default,

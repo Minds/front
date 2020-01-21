@@ -9,6 +9,7 @@ import {
 import { Client } from '../../../services/api/client';
 import { Storage } from '../../../services/storage';
 import { SiteService } from '../../services/site.service';
+import { CookieService } from '../../services/cookie.service';
 
 @Component({
   selector: 'm-cookies-notice',
@@ -24,21 +25,21 @@ export class DismissableNoticeComponent {
 
   constructor(
     private client: Client,
-    private storage: Storage,
+    private cookieService: CookieService,
     private site: SiteService
   ) {
-    if (this.storage.get('cookies-notice-dismissed')) {
+    if (this.cookieService.get('cookies-notice-dismissed') === '1') {
       this.hidden = true;
     }
     this.checkCookies();
   }
 
   checkCookies() {
-    this.cookiesEnabled = document.cookie.indexOf('disable_cookies') === -1;
+    this.cookiesEnabled = !this.cookieService.get('disable_cookies');
   }
 
   dismiss() {
-    this.storage.set('cookies-notice-dismissed', 'true');
+    this.cookieService.put('cookies-notice-dismissed', '1');
     this.hidden = true;
   }
 

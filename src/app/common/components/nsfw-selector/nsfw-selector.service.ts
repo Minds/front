@@ -1,4 +1,4 @@
-import { Storage } from '../../../services/storage';
+import { CookieService } from '../../../common/services/cookie.service';
 
 export class NSFWSelectorService {
   cacheKey: string = '';
@@ -12,12 +12,14 @@ export class NSFWSelectorService {
     { value: 6, label: 'Other', selected: false, locked: false },
   ];
 
-  constructor(private storage: Storage) {}
+  constructor(private cookieService: CookieService) {}
 
   onInit() {}
 
   build(): NSFWSelectorService {
-    let reasons = this.storage.get(`nsfw:${this.cacheKey}`) || [];
+    let reasons = JSON.parse(
+      this.cookieService.get(`nsfw:${this.cacheKey}`) || `[]`
+    );
     for (let reason of this.reasons) {
       reason.selected = reasons.indexOf(reason.value) > -1;
     }
@@ -31,9 +33,9 @@ export class NSFWSelectorService {
     for (let r of this.reasons) {
       if (r.value === reason.value) r.selected = !r.selected;
     }
-    this.storage.set(
+    this.cookieService.put(
       `nsfw:${this.cacheKey}`,
-      this.reasons.filter(r => r.selected).map(r => r.value)
+      JSON.stringify(this.reasons.filter(r => r.selected).map(r => r.value))
     );
   }
 }

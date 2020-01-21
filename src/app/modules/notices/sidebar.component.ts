@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NoticesService } from './notices.service';
-import { Storage } from '../../services/storage';
+import { CookieService } from '../../common/services/cookie.service';
 
 @Component({
   selector: 'm-notices__sidebar',
@@ -12,10 +12,13 @@ export class NoticesSidebarComponent {
   displayLimit: number = 3;
   inProgress: boolean = false;
 
-  constructor(private service: NoticesService, private storage: Storage) {}
+  constructor(
+    private service: NoticesService,
+    private cookieService: CookieService
+  ) {}
 
   async ngOnInit() {
-    let hiddenNoticesTs = this.storage.get('hide-notices-ts');
+    let hiddenNoticesTs = this.cookieService.get('hide-notices-ts');
     if (hiddenNoticesTs) this.hidden = true;
 
     await this.load();
@@ -40,7 +43,7 @@ export class NoticesSidebarComponent {
 
   hide() {
     this.hidden = true;
-    this.storage.set('hide-notices-ts', this.notices[0].timestamp);
+    this.cookieService.put('hide-notices-ts', this.notices[0].timestamp);
   }
 
   showAll() {

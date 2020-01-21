@@ -44,6 +44,12 @@ import { ChannelModulesComponent } from '../modules/modules';
 import { SiteService } from '../../../common/services/site.service';
 import { IfBrowserDirective } from '../../../common/directives/if-browser.directive';
 import { ConfigsService } from '../../../common/services/configs.service';
+import {
+  CookieService,
+  CookieOptionsProvider,
+  COOKIE_OPTIONS,
+  CookieModule,
+} from '@gorniv/ngx-universal';
 
 describe('ChannelSidebar', () => {
   let comp: ChannelSidebar;
@@ -120,7 +126,7 @@ describe('ChannelSidebar', () => {
         IfFeatureDirective,
         IfBrowserDirective,
       ],
-      imports: [FormsModule, RouterTestingModule, NgCommonModule],
+      imports: [FormsModule, RouterTestingModule, NgCommonModule, CookieModule],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
@@ -157,6 +163,8 @@ describe('ChannelSidebar', () => {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
+        CookieService,
+        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
       ],
     }).compileComponents(); // compile template and css
   }));

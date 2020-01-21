@@ -8,7 +8,7 @@ import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { OnboardingService } from '../onboarding/onboarding.service';
-import { Storage } from '../../services/storage';
+import { CookieService } from '../../common/services/cookie.service';
 
 @Component({
   selector: 'm-login',
@@ -35,7 +35,7 @@ export class LoginComponent {
     private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
     public session: Session,
-    private storage: Storage,
+    private cookieService: CookieService,
     private onboarding: OnboardingService
   ) {}
 
@@ -45,7 +45,7 @@ export class LoginComponent {
       this.loginReferrer.navigate();
     }
 
-    this.redirectTo = this.storage.get('redirect');
+    this.redirectTo = this.cookieService.get('redirect');
 
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
       if (params['referrer']) {

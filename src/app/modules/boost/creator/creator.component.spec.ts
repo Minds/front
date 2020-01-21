@@ -43,6 +43,8 @@ import { localWalletServiceMock } from '../../../../tests/local-wallet-service-m
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CookieModule, CookieService } from '@gorniv/ngx-universal';
+import { Storage } from '../../../services/storage';
 
 /* tslint:disable */
 @Component({
@@ -399,7 +401,7 @@ describe('BoostCreatorComponent', () => {
         BoostP2PSearchMock,
         BoostCheckoutMock,
       ],
-      imports: [FormsModule, RouterTestingModule],
+      imports: [FormsModule, RouterTestingModule, CookieModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
@@ -417,6 +419,8 @@ describe('BoostCreatorComponent', () => {
           provide: TransactionOverlayService,
           useValue: transactionOverlayServiceMock,
         },
+        Storage,
+        CookieService,
       ],
     }).compileComponents();
   }));

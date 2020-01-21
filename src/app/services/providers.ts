@@ -49,7 +49,7 @@ import { FormToastService } from '../common/services/form-toast.service';
 import { ConfigsService } from '../common/services/configs.service';
 import { TransferHttpInterceptorService } from './transfer-http-interceptor.service';
 import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.service';
-import { Cookie } from './cookie';
+import { CookieService } from '../common/services/cookie.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -74,7 +74,7 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [
       HttpClient,
       Location,
-      Cookie,
+      CookieService,
       PLATFORM_ID,
       TransferState,
       'ORIGIN_URL',
@@ -83,7 +83,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: Upload,
     useFactory: Upload._,
-    deps: [HttpClient, Cookie],
+    deps: [HttpClient, CookieService],
   },
   {
     provide: HTTP_INTERCEPTORS,
@@ -95,7 +95,6 @@ export const MINDS_PROVIDERS: any[] = [
     useClass: CookieHttpInterceptorService,
     multi: true,
   },
-  Cookie,
   {
     provide: Storage,
     useFactory: Storage._,
@@ -106,11 +105,7 @@ export const MINDS_PROVIDERS: any[] = [
     useFactory: SessionsStorageService._,
     deps: [],
   },
-  {
-    provide: SignupModalService,
-    useFactory: SignupModalService._,
-    deps: [Router, ScrollService],
-  },
+  SignupModalService,
   {
     provide: CacheService,
     useFactory: CacheService._,
