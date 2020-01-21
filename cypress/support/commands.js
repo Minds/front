@@ -56,7 +56,7 @@ const defaults = {
 const loginForm = {
   password: 'minds-form-login .m-login-box .mdl-cell:last-child input',
   username: 'minds-form-login .m-login-box .mdl-cell:first-child input',
-  submit: 'minds-form-login .mf-button',
+  submit: '[data-cy=data-minds-login-button]',
 }
 
 const poster = {
