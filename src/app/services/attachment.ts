@@ -394,7 +394,7 @@ export class AttachmentService {
       return;
     }
 
-    this.progress.next(0);
+    this.progress.next(1);
     this.meta.is_rich = 1;
 
     if (this.previewTimeout) {
@@ -421,6 +421,11 @@ export class AttachmentService {
             return;
           }
 
+          if (data.status === '404') {
+            this.progress.next(-1);
+            return;
+          }
+
           if (data.meta) {
             this.meta.url = url;
             this.meta.title = data.meta.title || this.meta.url;
@@ -439,7 +444,7 @@ export class AttachmentService {
         })
         .catch(e => {
           this.resetRich();
-          this.progress.next(100);
+          this.progress.next(-1);
           if (detectChangesFn) detectChangesFn();
         });
     }, 600);
