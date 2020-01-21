@@ -184,8 +184,8 @@ prepare:production:
     - docker:dind
   script:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-    - docker build -t $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID -f containers/front-init/Dockerfile dist/.
-    - docker push $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID
+    - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
+    - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
   only:
     refs:
       - master
@@ -270,10 +270,10 @@ review:stop:
     ## Sync assets with CDN
     - aws s3 sync dist $S3_REPOSITORY_URL
     - $(aws ecr get-login --no-include-email --region us-east-1)
-    ## Update docker front-init container
+    ## Update docker server container
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-    - docker pull $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID
-    - docker tag $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID $ECR_REPOSITORY_URL:$IMAGE_LABEL
+    - docker pull $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
+    - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $ECR_REPOSITORY_URL:$IMAGE_LABEL
     - docker push $ECR_REPOSITORY_URL:$IMAGE_LABEL
     ## Deploy the new container in rolling restart
     - aws ecs update-service --service=$ECS_SERVICE --force-new-deployment --region us-east-1 --cluster=$ECS_CLUSTER
@@ -282,10 +282,6 @@ review:stop:
   dependencies:
     - build:production:en
     - build:production:i18n
-  only:
-    refs:
-      - master
-      - test/gitlab-ci
 
 staging:fpm:
   <<: *deploy
@@ -296,6 +292,27 @@ staging:fpm:
   environment:
     name: staging
     url: https://www.minds.com # requires staging cookie
+  only:
+    refs:
+      - master
+      - test/gitlab-ci
+
+review:preprod:
+  <<: *deploy
+  stage: review
+  when: manual
+  allow_failure: true
+  variables:
+    IMAGE_LABEL: 'preprod'
+    ECS_SERVICE: $ECS_APP_PREPROD_SERVICE
+  environment:
+    name: preprod
+    url: https://www.minds.com # requires preprod cookie
+  dependencies:
+    - build:review
+  except:
+    refs:
+      - master
 
 deploy:canary:
   <<: *deploy
@@ -308,6 +325,10 @@ deploy:canary:
     url: https://www.minds.com/?canary=1 # requires canary cookie
   when: manual
   allow_failure: false # prevents auto deploy to full production
+  only:
+    refs:
+      - master
+      - test/gitlab-ci
 
 deploy:production:
   <<: *deploy
@@ -320,6 +341,10 @@ deploy:production:
     url: https://www.minds.com
   when: delayed
   start_in: 12 hours # reduce? can always be deployed manually earlier too
+  only:
+    refs:
+      - master
+      - test/gitlab-ci
 
 #################
 # Cleanup stage #
