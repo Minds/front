@@ -17,9 +17,8 @@ export class NSFWSelectorService {
   onInit() {}
 
   build(): NSFWSelectorService {
-    let reasons = JSON.parse(
-      this.cookieService.get(`nsfw:${this.cacheKey}`) || `[]`
-    );
+    let reasons =
+      JSON.parse(this.cookieService.get(`nsfw:${this.cacheKey}`)) || [];
     for (let reason of this.reasons) {
       reason.selected = reasons.indexOf(reason.value) > -1;
     }
