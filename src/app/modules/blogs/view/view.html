@@ -144,15 +144,13 @@
   #lockScreen
 ></m-wire--lock-screen>
 
-<ng-container *mIfBrowser>
-  <div
-    class="mdl-grid blogs-grid"
-    style="max-width:660px"
-    *ngIf="showComments && blog.guid"
-  >
-    <m-comments__tree [entity]="blog"> </m-comments__tree>
-  </div>
-</ng-container>
+<div
+  class="mdl-grid blogs-grid"
+  style="max-width:660px"
+  *ngIf="showComments && blog.guid"
+>
+  <m-comments__tree [entity]="blog"> </m-comments__tree>
+</div>
 
 <m-social-icons [url]="blog.perma_url" [title]="blog.title"> </m-social-icons>
 
