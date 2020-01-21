@@ -121,6 +121,7 @@ import { PageLayoutComponent } from './components/page-layout/page-layout.compon
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
 import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
 import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { DropdownSelectorComponent } from './components/dropdown-selector/dropdown-selector.component';
 import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-button/shadowbox-submit-button.component';
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
@@ -150,6 +151,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     PlotlyModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     RouterModule.forChild(routes),
   ],
   declarations: [

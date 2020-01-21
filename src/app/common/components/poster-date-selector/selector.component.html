@@ -1,18 +1,11 @@
-<div
-  class="m-poster-date-selector__input"
+<m-date-selector
+  [date]="date"
+  [hideInput]="true"
+  [tooltipIcon]="'date_range'"
+  [tooltipText]="'Schedule Post'"
+  [i18n]="'@@SCHEDULE__POST__DATE__SELECTOR__TOOLTIP'"
+  [hideInput]="true"
+  [calendarType]="'both'"
   [class.selected]="hasDateSelected()"
-  mdl-datetime-picker
-  [date]="getDate()"
   (dateChange)="onDateChange($event)"
->
-  <input
-    type="text"
-    [ngModel]="date | date: dateFormat"
-    (ngModelChange)="onDateChange($event)"
-    [hidden]="true"
-  />
-  <m-tooltip icon="date_range">
-    {{ getDate() || 'Post Immediately' }}
-  </m-tooltip>
-  <span></span>
-</div>
+></m-date-selector>
