@@ -30,6 +30,10 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Remind {
+  readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
+
   activity: any;
   @Input() boosted: boolean = false;
   hideTabs: boolean;
@@ -65,6 +69,9 @@ export class Remind {
     private configs: ConfigsService
   ) {
     this.hideTabs = true;
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
   }
 
   set _events(value: any) {
