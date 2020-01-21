@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MindsModule } from './app.module';
 import { Minds } from './app.component';
 
-import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+import * as PlotlyJS from 'plotly.js/dist/plotly-basic.min.js';
 import { PlotlyModule } from 'angular-plotly.js';
 import { CookieModule } from '@gorniv/ngx-universal';
 

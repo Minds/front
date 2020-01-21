@@ -19,7 +19,8 @@
     "compile:server": "webpack --config webpack.server.config.js --progress --colors",
     "serve:ssr": "node dist/server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
-    "build:client-and-server-bundles": "npm run build && ng run minds:server:production"
+    "build:client-and-server-bundles": "npm run build && ng run minds:server:production",
+    "bundle-report": "webpack-bundle-analyzer dist/en/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -104,6 +105,7 @@
     "ts-node": "~7.0.0",
     "tslint": "~5.12.0",
     "typescript": "~3.4.5",
+    "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10"
   },
   "husky": {
