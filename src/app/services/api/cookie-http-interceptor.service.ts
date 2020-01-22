@@ -24,8 +24,8 @@ export class CookieHttpInterceptorService implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    request = request.clone({ withCredentials: true });
     if (!isPlatformBrowser(this.platformId)) {
+      request = request.clone({ withCredentials: true });
       let req: express.Request = this.injector.get(REQUEST);
       let rootDomain = req.hostname
         .split('.')

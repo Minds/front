@@ -1,5 +1,7 @@
 import { CookieService } from '../../../common/services/cookie.service';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class NSFWSelectorService {
   cacheKey: string = '';
 
@@ -17,8 +19,9 @@ export class NSFWSelectorService {
   onInit() {}
 
   build(): NSFWSelectorService {
-    let reasons =
-      JSON.parse(this.cookieService.get(`nsfw:${this.cacheKey}`)) || [];
+    let reasons = JSON.parse(
+      this.cookieService.get(`nsfw:${this.cacheKey}`) || `[]`
+    );
     for (let reason of this.reasons) {
       reason.selected = reasons.indexOf(reason.value) > -1;
     }
@@ -39,9 +42,11 @@ export class NSFWSelectorService {
   }
 }
 
+@Injectable()
 export class NSFWSelectorCreatorService extends NSFWSelectorService {
   cacheKey: string = 'creator';
 }
+@Injectable()
 export class NSFWSelectorConsumerService extends NSFWSelectorService {
   cacheKey: string = 'consumer';
 }
@@ -49,6 +54,7 @@ export class NSFWSelectorConsumerService extends NSFWSelectorService {
 /**
  * Editing service, overrides build to allow pre-setting of values.
  */
+@Injectable()
 export class NSFWSelectorEditingService extends NSFWSelectorService {
   cacheKey: string = 'editing';
 

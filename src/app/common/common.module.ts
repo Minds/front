@@ -379,16 +379,8 @@ const routes: Routes = [
       useFactory: MindsHttpClient._,
       deps: [HttpClient, CookieService],
     },
-    {
-      provide: NSFWSelectorCreatorService,
-      useFactory: _storage => new NSFWSelectorCreatorService(_storage),
-      deps: [Storage],
-    },
-    {
-      provide: NSFWSelectorConsumerService,
-      useFactory: _storage => new NSFWSelectorConsumerService(_storage),
-      deps: [Storage],
-    },
+    NSFWSelectorCreatorService,
+    NSFWSelectorConsumerService,
     {
       provide: BoostedContentService,
       useFactory: (

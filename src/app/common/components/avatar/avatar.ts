@@ -45,6 +45,7 @@ import { Session } from '../../../services/session';
   `,
 })
 export class MindsAvatar {
+  readonly cdnAssetsUrl: string;
   readonly cdnUrl: string;
   object;
   editing: boolean = false;
@@ -62,6 +63,7 @@ export class MindsAvatar {
     private session: Session
   ) {
     this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   set _object(value: any) {
