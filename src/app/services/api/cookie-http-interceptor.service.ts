@@ -31,7 +31,8 @@ export class CookieHttpInterceptorService implements HttpInterceptor {
         .split('.')
         .slice(-2)
         .join('.');
-      if (request.url.match(/^https?:\/\/([^/:]+)/)[1].endsWith(rootDomain)) {
+      const matches = request.url.match(/^https?:\/\/([^/:]+)/);
+      if (matches && matches[1].endsWith(rootDomain)) {
         let cookieString = Object.keys(req.cookies).reduce(
           (accumulator, cookieName) => {
             accumulator += cookieName + '=' + req.cookies[cookieName] + ';';

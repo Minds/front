@@ -3,6 +3,8 @@ import {
   Component,
   HostListener,
   ViewChild,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
@@ -25,6 +27,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { CookieService } from '../../../common/services/cookie.service';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'm-groups--profile',
@@ -81,7 +84,8 @@ export class GroupsProfile {
     private cd: ChangeDetectorRef,
     private updateMarkers: UpdateMarkersService,
     configs: ConfigsService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    @Inject(PLATFORM_ID) private platformId
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -136,9 +140,10 @@ export class GroupsProfile {
 
     this.setFilter(this.router.routerState.snapshot.url);
 
-    this.reviewCountInterval = setInterval(() => {
-      this.reviewCountLoad();
-    }, 120 * 1000);
+    if (isPlatformBrowser(this.platformId))
+      this.reviewCountInterval = setInterval(() => {
+        this.reviewCountLoad();
+      }, 120 * 1000);
 
     this.videoChatActiveSubscription = this.videochat.activate$.subscribe(
       next => window.scrollTo(0, 0)
@@ -178,6 +183,7 @@ export class GroupsProfile {
   }
 
   async load() {
+    if (isPlatformServer(this.platformId)) return;
     this.resetMarkers();
     this.error = '';
     this.group = null;
