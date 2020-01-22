@@ -3,6 +3,8 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import * as BN from 'bn.js';
 
@@ -11,6 +13,7 @@ import { Session } from '../../../../services/session';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'm-wallet--balance-tokens',
@@ -32,13 +35,14 @@ export class WalletBalanceTokensComponent implements OnInit {
     protected web3Wallet: Web3WalletService,
     protected tokenContract: TokenContractService,
     public session: Session,
-    configs: ConfigsService
+    configs: ConfigsService,
+    @Inject(PLATFORM_ID) private platformId
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {
-    this.load();
+    if (isPlatformBrowser(this.platformId)) this.load();
   }
 
   async load() {
