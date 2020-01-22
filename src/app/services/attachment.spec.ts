@@ -171,9 +171,9 @@ describe('Service: Attachment Service', () => {
   }));
 
   it('should set progress to 100 when preview is done', fakeAsync(() => {
-    expect(service.progress.getValue()).toBe(0);
+    expect(service.attachmentProgress$.getValue()).toBe(0);
     service.preview('https://github.com/releases');
     tick(1000);
-    expect(service.progress.getValue()).toBe(100);
+    expect(service.attachmentProgress$.getValue()).toBe(100);
   }));
 });

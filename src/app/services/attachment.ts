@@ -406,7 +406,6 @@ export class AttachmentService {
     this.attachment.richUrl = url;
 
     if (detectChangesFn) detectChangesFn();
-
     this.previewTimeout = window.setTimeout(() => {
       this.resetRich();
       this.meta.is_rich = 1;
@@ -418,6 +417,7 @@ export class AttachmentService {
         .then((data: any) => {
           if (!data) {
             this.resetRich();
+            this.attachmentProgress$.next(100);
             if (detectChangesFn) detectChangesFn();
             return;
           }
