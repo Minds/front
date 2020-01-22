@@ -14,6 +14,14 @@ import { Storage } from '../../../services/storage';
   `,
 })
 export class SignupOnScrollModal implements OnInit, OnDestroy {
+  // paths for scroll listener to ignore.
+  public static excludedPaths: Array<string> = [
+    '/login',
+    '/register',
+    '/forgot-password',
+    '/',
+  ];
+
   open: boolean = false;
   route: string = '';
   scroll_listener;
@@ -23,7 +31,7 @@ export class SignupOnScrollModal implements OnInit, OnDestroy {
 
   routerSubscription: Subscription;
 
-  @Input() disableScrollListener: true;
+  @Input() disableScrollListener = false;
 
   @ViewChild('modal', { static: true }) modal: SignupModal;
 
@@ -43,7 +51,11 @@ export class SignupOnScrollModal implements OnInit, OnDestroy {
   }
 
   listen() {
-    if (!this.disableScrollListener) {
+    if (
+      this.disableScrollListener ||
+      this.session.getLoggedInUser() ||
+      this.storage.get('hideSignupModal')
+    ) {
       return;
     }
 
@@ -51,42 +63,32 @@ export class SignupOnScrollModal implements OnInit, OnDestroy {
       (navigationEvent: NavigationEnd) => {
         try {
           if (navigationEvent instanceof NavigationEnd) {
-            this.unlistenScroll();
-
-            if (!navigationEvent.urlAfterRedirects) {
-              return;
-            }
+            this.unlistenScroll(); // unlisten to any previous listeners.
 
             let url = navigationEvent.urlAfterRedirects;
 
-            if (url.indexOf('/') === 0) {
-              url = url.substr(1);
+            if (!url) {
+              return;
             }
 
-            const fragments = url.replace(/\/|\?/g, ';').split(';');
+            this.route = url;
 
-            this.route = navigationEvent.urlAfterRedirects;
-
-            switch (fragments[0]) {
-              case 'register':
-              case 'login':
-              case 'forgot-password':
-              case '':
+            // return if we're on an excluded path.
+            for (let excludedPath of SignupOnScrollModal.excludedPaths) {
+              if (excludedPath.indexOf(this.route) > -1) {
                 this.open = false;
-                break;
-              default:
-                this.scroll_listener = this.scroll.listen(e => {
-                  if (this.scroll.view.scrollTop > 20) {
-                    if (window.localStorage.getItem('hideSignupModal')) {
-                      this.open = false;
-                      this.modal.open = false;
-                    } else {
-                      this.open = true;
-                      this.modal.open = true;
-                    }
-                  }
-                }, 100);
+                this.modal.open = false;
+                return;
+              }
             }
+
+            // set up scroll listener to trigger modal.
+            this.scroll_listener = this.scroll.listen(e => {
+              if (this.scroll.view.scrollTop > 20) {
+                this.open = true;
+                this.modal.open = true;
+              }
+            }, 100);
           }
         } catch (e) {
           console.error('Minds: router hook(SignupOnScrollModal)', e);
@@ -111,7 +113,7 @@ export class SignupOnScrollModal implements OnInit, OnDestroy {
 
   onModalClosed() {
     if (this.open) {
-      this.storage.set('hideSignupModal', '1');
+      // this.storage.set('hideSignupModal', '1');
       this.open = false;
     }
   }
