@@ -4,9 +4,23 @@ m-register {
   display: block;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  position: relative;
 
   &.m-register__newDesign {
     margin-top: -52px;
+
+    &.m-register__iosFallback {
+      .m-grid {
+        .m-register__wrapper {
+          filter: none;
+          box-shadow: -1px 0px 8px rgba(50, 50, 0, 0.5);
+
+          minds-form-register {
+            clip-path: none;
+          }
+        }
+      }
+    }
 
     &::before {
       content: '';
@@ -29,22 +43,27 @@ m-register {
     }
 
     @media screen and (max-width: $m-grid-max-mobile) {
-      margin: -52px 26px 50px;
+      margin-top: -52px 0 50px;
+      padding: 0 26px;
+
       &::before {
         position: absolute;
         top: 0;
         right: 0;
         clip-path: polygon(55% 0, 100% 0, 100% 30%, 18% 87%);
-        background: url(http://localhost/en/assets/marketing/deco_2-straight.svg)
-          no-repeat;
       }
     }
 
     .m-grid {
+      position: relative;
       padding: 15vh 0 0;
 
       @media screen and (max-width: $m-grid-max-mobile) {
         padding: 10vh 0 0;
+      }
+
+      & > * {
+        margin: 0 auto;
       }
     }
 
@@ -120,6 +139,10 @@ m-register {
 
         .mdl-cell {
           width: 100%;
+        }
+
+        .m-registerForm__confirmPassword {
+          margin-top: 19px;
         }
 
         input:not([type='checkbox']) {
@@ -205,6 +228,7 @@ m-register {
               background-color: themed($m-blue);
             }
           }
+
           .mdl-checkbox__box-outline {
             @include m-theme() {
               border: 1px solid themed($m-blue);

@@ -10,6 +10,7 @@ import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { FeaturesService } from '../../services/features.service';
 import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
+import { iOSVersion } from '../../helpers/is-safari';
 
 @Component({
   selector: 'm-login',
@@ -25,6 +26,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.m-login__newDesign')
   newDesign: boolean = false;
+  @HostBinding('class.m-login__iosFallback')
+  iosFallback: boolean = false;
 
   flags = {
     canPlayInlineVideos: true,
@@ -69,6 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     if (this.newDesign) {
       this.topbarService.toggleVisibility(false);
+      this.iosFallback = iOSVersion() !== null;
     }
   }
 

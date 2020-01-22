@@ -1,12 +1,35 @@
 m-onboarding {
   display: block;
   padding-top: 30px;
-  height: calc(100% + 104px); // 52 for the topbar and 52 for the bottom bar
+  margin-top: -51px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
+  position: relative;
+
+  @media screen and (max-width: $max-mobile) {
+    margin-bottom: 60px;
+  }
+
   @include m-theme() {
     background-color: themed($m-body-bg);
+  }
+
+  &.m-onboarding__iosFallback {
+    //&::before {
+    //  clip-path: unset !important;
+    //}
+
+    .m-onboarding__wrapper {
+      filter: none;
+      box-shadow: -1px 0px 8px rgba(50, 50, 0, 0.5);
+
+      .m-onboarding__form {
+        &::before {
+          clip-path: none;
+        }
+      }
+    }
   }
 
   &::before {
@@ -14,25 +37,31 @@ m-onboarding {
     position: absolute;
     top: 0;
     right: 0;
-    bottom: -80px;
+    bottom: 0;
     left: 0;
 
-    clip-path: polygon(55% 0, 100% 0, 100% -1%, 18% 87%);
+    //clip-path: polygon(55% 0, 100% 0, 100% -1%, 18% 87%);
+    clip-path: polygon(55% 0, 100% 0, 100% -1%, 27% 78%);
 
     @include m-theme() {
       background: themed($m-amber-medium);
     }
 
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $m-grid-max-mobile) {
       right: 0;
       bottom: -3vw;
       clip-path: polygon(83% 0%, 100% 0, 116% 22%, 30% 43%);
+
+      clip-path: polygon(77% 0%, 100% 0, 100% 11%, 30% 33%);
     }
   }
 
   .m-grid {
     margin: -52px 0;
     padding-top: 52px;
+    padding-bottom: 52px;
+
+    position: relative;
   }
 
   .m-onboarding__wrapper {
@@ -40,6 +69,10 @@ m-onboarding {
     filter: drop-shadow(-1px 0px 8px rgba(50, 50, 0, 0.5));
     max-width: 692px;
     margin: 0 auto;
+
+    @include m-theme() {
+      background-color: themed($m-white);
+    }
 
     .m-onboarding__form {
       display: block;
@@ -126,6 +159,7 @@ m-onboarding {
           margin-bottom: 30px;
           color: #4a4a4a;
           text-align: center;
+          word-break: break-word;
         }
 
         &:not(.m-onboarding__noticeTitle):not(.m-onboardingProgressbar__stepName) {
@@ -198,7 +232,7 @@ m-onboarding {
                 justify-content: center;
 
                 & > i {
-                  color: #ececec;
+                  color: #a3a3a3;
                 }
 
                 &.m-groupsJoin__subscribed {
@@ -245,6 +279,50 @@ m-onboarding {
 
           &:not(:first-child) {
             padding-top: 20px;
+          }
+
+          &.m-onboarding__avatar {
+            margin-bottom: 19px;
+
+            minds-avatar {
+              //width: 72px;
+              //height: 72px;
+              display: flex;
+              //align-items: center;
+              //justify-content: center;
+
+              min-width: 220px;
+
+              .minds-avatar {
+                flex-shrink: 0;
+                background-repeat: no-repeat;
+                background-size: cover;
+                width: 64px;
+                height: 64px;
+                border-radius: 50%;
+                @include m-theme() {
+                  border: 1px solid themed($m-grey-50);
+                }
+
+                .overlay {
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+
+                  position: initial;
+                  padding: 0;
+                  background-color: transparent;
+
+                  i.material-icons {
+                    padding: 0;
+                  }
+                }
+
+                input[type='file'] {
+                  cursor: pointer;
+                }
+              }
+            }
           }
 
           .m-onboardingControl__label {
@@ -360,6 +438,8 @@ m-onboarding {
             padding: 4px 20px;
             margin-left: 8px;
             cursor: pointer;
+            width: auto !important;
+            flex-shrink: 2;
 
             @include m-theme() {
               color: themed($m-aqua);

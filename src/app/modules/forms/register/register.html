@@ -84,7 +84,7 @@
         </ng-container>
       </div>
     </div>
-    <div class="mdl-cell mdl-cell--12-col" style="position: relative">
+    <div class="mdl-cell mdl-cell--12-col m-registerForm__password">
       <label for="password" *ngIf="showLabels" i18n>
         Password
       </label>
@@ -104,7 +104,10 @@
         />
       </m-popover>
     </div>
-    <div class="mdl-cell mdl-cell--12-col" [hidden]="!form.value.password">
+    <div
+      class="mdl-cell mdl-cell--12-col m-registerForm__confirmPassword"
+      [hidden]="!form.value.password"
+    >
       <label for="password2" *ngIf="showLabels" i18n>
         Confirm your password
       </label>
@@ -121,7 +124,7 @@
       />
       <div
         class="m-register__error"
-        *ngIf="this.form.get('password2').touched && this.form.get('password2').dirty"
+        [style.visibility]="this.form.get('password2').touched && this.form.get('password2').dirty ? 'visible' : 'hidden'"
       >
         <ng-container
           *ngIf="this.form.errors?.passwordConfirming"
@@ -148,7 +151,7 @@
 
   <div
     class="m-register__formError"
-    *ngIf="showInlineErrors && showBigButton && errorMessage"
+    [style.visibility]="showInlineErrors && showBigButton && errorMessage ? 'visible' : 'hidden'"
   >
     <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
   </div>

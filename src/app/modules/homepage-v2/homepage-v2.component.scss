@@ -207,7 +207,7 @@ m-homepage__v2 {
         }
 
         minds-form-register {
-          width: 409px;
+          width: 384px;
           display: block;
           background-color: #fcfcfc;
 
@@ -241,6 +241,10 @@ m-homepage__v2 {
 
             .mdl-card__supporting-text {
               overflow: visible;
+            }
+
+            .m-registerForm__confirmPassword {
+              margin-top: 19px;
             }
 
             input:not([type='checkbox']) {

@@ -30,12 +30,16 @@ m-onboarding__groupList {
   }
 
   .m-groupList__item {
+    display: flex;
+    width: 100%;
+
     &:last-of-type {
       border-bottom: 0;
     }
 
     a {
       display: flex;
+      flex-grow: 1;
       text-decoration: none;
       padding: 8px 8px;
     }
@@ -48,6 +52,7 @@ m-onboarding__groupList {
       display: inline-block;
       margin-right: 8px;
       vertical-align: middle;
+      flex-shrink: 0;
     }
 
     .m-groupListItem__body {
@@ -55,43 +60,32 @@ m-onboarding__groupList {
       vertical-align: middle;
       align-items: center;
       flex-direction: row;
-      width: calc(100% - 36px);
+      max-width: calc(100% - 36px);
+      width: 20px;
+      flex-grow: 1;
 
       h4 {
         height: 21px;
-        width: 141px;
+        width: 100%;
         color: #636363;
         font-family: Roboto;
         font-size: 16px;
         font-weight: 500;
         line-height: 21px;
         margin: 0;
-        //font-size: 13px;
-        //line-height: 18px;
-        //font-weight: 600;
-        //@include m-theme() {
-        //  color: themed($m-grey-800);
-        //}
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
       }
 
       > div {
         width: 100%;
-        max-width: calc(100% - 68px);
       }
 
       > div > span {
         overflow: hidden;
         position: relative;
         display: block;
-        //text-overflow: ellipsis;
-        //font-size: 11px;
-        //line-height: 11px;
-        //white-space: nowrap;
-        //padding-right: 8px;
-        //font-weight: 400;
-        //@include m-theme() {
-        //  color: themed($m-grey-400);
-        //}
 
         height: 19px;
         width: 92px;
@@ -123,10 +117,6 @@ m-onboarding__groupList {
         span {
           display: none;
         }
-      }
-
-      m-join {
-        margin-right: 10px;
       }
     }
   }

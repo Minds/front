@@ -24,6 +24,7 @@ export class FeedsService {
   endpoint: string = '';
   params: any = { sync: 1 };
   castToActivities: boolean = false;
+  exportUserCounts: boolean = false;
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
@@ -50,6 +51,7 @@ export class FeedsService {
       switchMap(feed =>
         this.entitiesService
           .setCastToActivities(this.castToActivities)
+          .setExportUserCounts(this.exportUserCounts)
           .getFromFeed(feed)
       ),
       tap(feed => {
@@ -134,6 +136,15 @@ export class FeedsService {
    */
   setCastToActivities(cast: boolean): FeedsService {
     this.castToActivities = cast;
+    return this;
+  }
+
+  /**
+   * Sets exportUserCounts
+   * @param { boolean } export - whether or not to export user's subscribers_count and subscriptions_count.
+   */
+  setExportUserCounts(value: boolean): FeedsService {
+    this.exportUserCounts = value;
     return this;
   }
 
