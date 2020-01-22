@@ -145,6 +145,7 @@ export class MindsAvatar {
   isOwnerAvatar(): boolean {
     return (
       this.session.getLoggedInUser() &&
+      this.object &&
       this.object.guid === this.session.getLoggedInUser().guid
     );
   }
