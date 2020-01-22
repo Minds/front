@@ -199,17 +199,16 @@ export class CommentPosterComponent {
     this.canPost = false;
 
     try {
-      this.attachmentSubscription = this.attachment.progress
+      this.attachment.preview(message, this.detectChanges.bind(this)); // generate preview.
+      this.attachmentSubscription = this.attachment.attachmentProgress$
         .pipe(
           tap(progress => {
-            if (progress === 100 || progress === -1) {
-              // if progress is 100 or -1 allow user to post
+            if (progress === 100) {
               this.canPost = true;
             }
           }),
           takeWhile(progress => progress !== 100), // stop once progress is 100
           catchError((error: any, caught: Observable<any>) => {
-            // reset progress.
             this.attachment.progress.next(0);
             return throwError(error);
           })
@@ -219,7 +218,6 @@ export class CommentPosterComponent {
       this.canPost = true;
       console.error(e);
     }
-    this.attachment.preview(message, this.detectChanges.bind(this)); // generate preview.
   }
 
   getAvatar() {

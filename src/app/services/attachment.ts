@@ -18,6 +18,8 @@ export class AttachmentService {
   private attachment: any = {};
 
   public progress: BehaviorSubject<number> = new BehaviorSubject(0);
+  public attachmentProgress$: BehaviorSubject<number> = new BehaviorSubject(0);
+
   public response: BehaviorSubject<HttpEvent<any>>;
   private uploadSubscription: Subscription;
 
@@ -394,7 +396,7 @@ export class AttachmentService {
       return;
     }
 
-    this.progress.next(1);
+    this.attachmentProgress$.next(0);
     this.meta.is_rich = 1;
 
     if (this.previewTimeout) {
@@ -416,13 +418,7 @@ export class AttachmentService {
         .then((data: any) => {
           if (!data) {
             this.resetRich();
-            this.progress.next(100);
             if (detectChangesFn) detectChangesFn();
-            return;
-          }
-
-          if (data.status === '404') {
-            this.progress.next(-1);
             return;
           }
 
@@ -439,12 +435,12 @@ export class AttachmentService {
             this.meta.thumbnail = data.links.thumbnail[0].href;
           }
 
-          this.progress.next(100);
+          this.attachmentProgress$.next(100);
           if (detectChangesFn) detectChangesFn();
         })
         .catch(e => {
           this.resetRich();
-          this.progress.next(-1);
+          this.attachmentProgress$.next(100);
           if (detectChangesFn) detectChangesFn();
         });
     }, 600);
