@@ -146,6 +146,8 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       params.sync = 1;
     }
 
+    params.force_public = 1;
+
     let url = `api/v2/pro/content/${this.channelService.currentChannel.guid}/${this.type}`;
 
     try {

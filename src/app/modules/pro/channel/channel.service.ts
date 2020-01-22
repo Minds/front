@@ -166,6 +166,7 @@ export class ProChannelService implements OnDestroy {
         (this.currentChannel.pro_settings.featured_content || []).join(',') ||
         '',
       cache: true,
+      force_public: 1,
     };
 
     const {
