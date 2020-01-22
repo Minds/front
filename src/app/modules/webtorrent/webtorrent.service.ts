@@ -1,7 +1,7 @@
 import WebTorrent from 'webtorrent';
 import { Storage } from '../../services/storage';
 import isMobile from '../../helpers/is-mobile';
-import isSafari from '../../helpers/is-safari';
+import { isSafari } from '../../helpers/is-safari';
 import { FeaturesService } from '../../services/features.service';
 
 export const MAX_CONNS = 55;

@@ -8,6 +8,9 @@ import {
 import { EmailConfirmationService } from './email-confirmation.service';
 import { Session } from '../../../services/session';
 import { Subscription } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 /**
  * Component that displays an announcement-like banner
@@ -27,12 +30,15 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
   canClose: boolean = false;
 
   protected userEmitter$: Subscription;
+  protected routerEvent$: Subscription;
   protected canCloseTimer: number;
   protected minds = window.Minds;
 
   constructor(
     protected service: EmailConfirmationService,
     protected session: Session,
+    protected router: Router,
+    protected location: Location,
     protected cd: ChangeDetectorRef
   ) {}
 
@@ -42,7 +48,6 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
     this.userEmitter$ = this.session.userEmitter.subscribe(user => {
       this.sent = false;
       this.setShouldShow(user);
-
       this.detectChanges();
     });
 
@@ -50,6 +55,13 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
       this.canClose = true;
       this.detectChanges();
     }, 3000);
+
+    this.routerEvent$ = this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.setShouldShow(this.session.getLoggedInUser());
+        this.detectChanges();
+      });
   }
 
   ngOnDestroy(): void {
@@ -57,6 +69,10 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
 
     if (this.userEmitter$) {
       this.userEmitter$.unsubscribe();
+    }
+
+    if (this.routerEvent$) {
+      this.routerEvent$.unsubscribe();
     }
   }
 
@@ -66,6 +82,7 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
    */
   setShouldShow(user): void {
     this.shouldShow =
+      !(this.location.path().indexOf('/onboarding') === 0) &&
       !this.minds.from_email_confirmation &&
       user &&
       user.email_confirmed === false;

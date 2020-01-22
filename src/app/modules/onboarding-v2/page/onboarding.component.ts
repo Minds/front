@@ -1,10 +1,11 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, HostBinding, OnDestroy } from '@angular/core';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '../../../services/storage';
 import { OnboardingV2Service } from '../service/onboarding.service';
 import { V2TopbarService } from '../../../common/layout/v2-topbar/v2-topbar.service';
 import { SidebarMarkersService } from '../../../common/layout/sidebar/markers.service';
+import { iOSVersion } from '../../../helpers/is-safari';
 
 @Component({
   selector: 'm-onboarding',
@@ -32,6 +33,9 @@ export class OnboardingComponent implements OnDestroy {
   showTitle: boolean = false;
   shown: boolean = false;
 
+  @HostBinding('class.m-onboarding__iosFallback')
+  iosFallback: boolean = false;
+
   constructor(
     private session: Session,
     private router: Router,
@@ -41,6 +45,8 @@ export class OnboardingComponent implements OnDestroy {
     private topbarService: V2TopbarService,
     private sidebarMarkersService: SidebarMarkersService
   ) {
+    this.iosFallback = iOSVersion() !== null;
+
     route.url.subscribe(() => {
       const section: string = route.snapshot.firstChild.routeConfig.path;
       if (section === 'notice') {
@@ -60,25 +66,16 @@ export class OnboardingComponent implements OnDestroy {
     });
 
     if (!this.session.isLoggedIn()) {
-      this.storage.set('redirect', 'onboarding');
       this.router.navigate(['/register']);
       return;
     }
 
-    this.checkIfAlreadyOnboarded();
+    this.topbarService.toggleVisibility(false);
+    this.sidebarMarkersService.toggleVisibility(false);
   }
 
   ngOnDestroy() {
     this.topbarService.toggleVisibility(true);
     this.sidebarMarkersService.toggleVisibility(true);
-  }
-
-  async checkIfAlreadyOnboarded() {
-    if (!(await this.onboardingService.shouldShow())) {
-      this.router.navigate(['/newsfeed/subscriptions']);
-    }
-
-    this.topbarService.toggleVisibility(false);
-    this.sidebarMarkersService.toggleVisibility(false);
   }
 }

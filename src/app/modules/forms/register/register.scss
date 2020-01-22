@@ -9,6 +9,10 @@ minds-form-register {
     padding-left: 4px;
   }
 
+  .m-registerForm__password {
+    position: relative;
+  }
+
   .mdl-card__actions {
     display: flex;
     padding-left: $minds-padding * 2;

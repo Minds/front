@@ -17,6 +17,7 @@ export class HomepageV2Component {
   @ViewChild('registerForm', { static: false }) registerForm: RegisterForm;
 
   readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+  readonly siteUrl: string = window.Minds.site_url;
 
   minds = window.Minds;
 
@@ -38,11 +39,7 @@ export class HomepageV2Component {
   }
 
   navigate() {
-    if (this.featuresService.has('onboarding-december-2019')) {
-      this.router.navigate(['/onboarding']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.router.navigate(['/register']);
   }
 
   isMobile() {
