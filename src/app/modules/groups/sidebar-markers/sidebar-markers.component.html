@@ -46,7 +46,7 @@
     </a>
   </li>
 
-  <li>
+  <li *ngIf="!inProgress && groups && groups.length > 0">
     <a
       [routerLink]="[
         '/newsfeed/global/top',
