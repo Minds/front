@@ -73,7 +73,8 @@ export class Minds {
     private sso: SsoService,
     private metaService: MetaService,
     private configs: ConfigsService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private socketsService: SocketsService
   ) {
     this.name = 'Minds';
 
@@ -175,6 +176,8 @@ export class Minds {
     this.webtorrent.setUp();
 
     this.themeService.setUp();
+
+    this.socketsService.setUp();
   }
 
   ngOnDestroy() {

@@ -65,8 +65,9 @@ export const MINDS_PROVIDERS: any[] = [
   },
   {
     provide: SocketsService,
-    useFactory: SocketsService._,
-    deps: [Session, NgZone, ConfigsService],
+    useFactory: (session, nz, configs, platformId) =>
+      new SocketsService(session, nz, configs, platformId),
+    deps: [Session, NgZone, ConfigsService, PLATFORM_ID],
   },
   {
     provide: Client,
