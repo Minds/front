@@ -25,12 +25,13 @@
             <h4>{{ entity.name }}</h4>
             <span i18n>{{ entity['members:count'] | abbr }} members</span>
           </div>
-          <div class="m-layout__spacer"></div>
-          <minds-groups-join-button
-            [group]="entity"
-            [iconsOnly]="true"
-          ></minds-groups-join-button>
         </div>
+        <div class="m-layout__spacer"></div>
+
+        <minds-groups-join-button
+          [group]="entity"
+          [iconsOnly]="true"
+        ></minds-groups-join-button>
       </a>
     </li>
   </ul>

@@ -17,6 +17,7 @@ export class HomepageV2Component {
   @ViewChild('registerForm', { static: false }) registerForm: RegisterForm;
 
   readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
 
   constructor(
     public client: Client,
@@ -28,6 +29,7 @@ export class HomepageV2Component {
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
@@ -35,11 +37,7 @@ export class HomepageV2Component {
   }
 
   navigate() {
-    if (this.featuresService.has('onboarding-december-2019')) {
-      this.router.navigate(['/onboarding']);
-    } else {
-      this.router.navigate(['/login']);
-    }
+    this.router.navigate(['/register']);
   }
 
   isMobile() {

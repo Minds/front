@@ -12,6 +12,9 @@ import { Session } from '../../../services/session';
 import { Subscription } from 'rxjs';
 import { isPlatformBrowser } from '@angular/common';
 import { ConfigsService } from '../../services/configs.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { filter } from 'rxjs/operators';
 
 /**
  * Component that displays an announcement-like banner
@@ -32,6 +35,7 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
   canClose: boolean = false;
 
   protected userEmitter$: Subscription;
+  protected routerEvent$: Subscription;
   protected canCloseTimer: number;
 
   constructor(
@@ -39,7 +43,9 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) protected platformId,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected router: Router,
+    protected location: Location
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
   }
@@ -50,7 +56,6 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
     this.userEmitter$ = this.session.userEmitter.subscribe(user => {
       this.sent = false;
       this.setShouldShow(user);
-
       this.detectChanges();
     });
 
@@ -60,6 +65,13 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
         this.detectChanges();
       }, 3000);
     }
+
+    this.routerEvent$ = this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.setShouldShow(this.session.getLoggedInUser());
+        this.detectChanges();
+      });
   }
 
   ngOnDestroy(): void {
@@ -67,6 +79,10 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
 
     if (this.userEmitter$) {
       this.userEmitter$.unsubscribe();
+    }
+
+    if (this.routerEvent$) {
+      this.routerEvent$.unsubscribe();
     }
   }
 
@@ -76,7 +92,10 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
    */
   setShouldShow(user): void {
     this.shouldShow =
-      !this.fromEmailConfirmation && user && user.email_confirmed === false;
+      !(this.location.path().indexOf('/onboarding') === 0) &&
+      !this.fromEmailConfirmation &&
+      user &&
+      user.email_confirmed === false;
   }
 
   /**
