@@ -113,7 +113,7 @@ export class SignupOnScrollModal implements OnInit, OnDestroy {
 
   onModalClosed() {
     if (this.open) {
-      // this.storage.set('hideSignupModal', '1');
+      this.storage.set('hideSignupModal', '1');
       this.open = false;
     }
   }
