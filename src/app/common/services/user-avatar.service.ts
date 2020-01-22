@@ -41,7 +41,7 @@ export class UserAvatarService {
    * Gets the Src string using the global minds object and the held user object.
    */
   public getSrc(): string {
-    return `${this.configs.get('cdn_assets_url')}icon/${this.user.guid}/large/${
+    return `${this.configs.get('cdn_url')}icon/${this.user.guid}/large/${
       this.user.icontime
     }`;
   }
