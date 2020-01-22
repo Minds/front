@@ -10,9 +10,9 @@ import { AnalyticsService } from '../../../services/analytics';
 import { MindsBlogResponse } from '../../../interfaces/responses';
 import { MindsBlogEntity } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { MetaService } from '../../../common/services/meta.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-blog-view-infinite',
   templateUrl: 'infinite.html',
 })
@@ -37,7 +37,8 @@ export class BlogViewInfinite {
     private applicationRef: ApplicationRef,
     private cd: ChangeDetectorRef,
     private analytics: AnalyticsService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private metaService: MetaService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -97,6 +98,7 @@ export class BlogViewInfinite {
             },
             response.blog.guid
           );
+          this.updateMeta(response.blog);
         } else if (this.blogs.length === 0) {
           this.error = "Sorry, we couldn't load the blog";
         }
@@ -111,5 +113,18 @@ export class BlogViewInfinite {
         }
         this.inProgress = false;
       });
+  }
+
+  private updateMeta(blog): void {
+    const description =
+      blog.description.length > 140
+        ? blog.description.substr(0, 140) + '...'
+        : blog.description;
+    this.metaService
+      .setTitle(blog.custom_meta['title'] || blog.title)
+      .setDescription(description)
+      //.setAuthor(this.blog.custom_meta['author'] || `@${this.blog.ownerObj.username}`)
+      .setOgUrl(blog.perma_url)
+      .setOgImage(blog.thumbnail);
   }
 }
