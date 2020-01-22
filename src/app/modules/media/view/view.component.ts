@@ -38,6 +38,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 export class MediaViewComponent implements OnInit, OnDestroy {
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
 
   guid: string;
   entity: any = {};
@@ -86,6 +87,7 @@ export class MediaViewComponent implements OnInit, OnDestroy {
       .setMedium('single');
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
   }
 
   ngOnInit() {

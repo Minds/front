@@ -79,14 +79,6 @@ describe('NewsfeedTagsComponent', () => {
 
     fixture = TestBed.createComponent(NewsfeedTagsComponent);
 
-    window.Minds = <any>{
-      user: {
-        guid: 1,
-        name: 'test',
-        opted_in_hashtags: 1,
-      },
-    };
-
     comp = fixture.componentInstance;
 
     clientMock.response = {};

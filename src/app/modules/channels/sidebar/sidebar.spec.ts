@@ -178,6 +178,7 @@ describe('ChannelSidebar', () => {
     featuresServiceMock.mock('permissions', true);
     featuresServiceMock.mock('pro', true);
     featuresServiceMock.mock('purchase-pro', true);
+    featuresServiceMock.mock('onboarding-december-2019', true);
     clientMock.response = {};
     uploadMock.response = {};
     comp = fixture.componentInstance;

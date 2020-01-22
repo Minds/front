@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
+  HostBinding,
   HostListener,
   Input,
   Output,
@@ -19,11 +20,16 @@ export class ToggleComponent {
 
   @Input('mModel') mModel: any;
 
+  @Input('disabled') @HostBinding('class.disabled') disabled: boolean = false;
+
   @Output('mModelChange') mModelChange: EventEmitter<any> = new EventEmitter<
     any
   >();
 
   @HostListener('click') toggle() {
+    if (this.disabled) {
+      return;
+    }
     if (this.mModel === this.leftValue) {
       this.mModelChange.emit(this.rightValue);
     } else {

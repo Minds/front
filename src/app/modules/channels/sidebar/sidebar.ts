@@ -2,9 +2,9 @@ import {
   Component,
   EventEmitter,
   Output,
-  ViewChild,
   Inject,
   PLATFORM_ID,
+  OnInit,
 } from '@angular/core';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
@@ -25,7 +25,7 @@ import { CookieService } from '../../../common/services/cookie.service';
   inputs: ['user', 'editing'],
   templateUrl: 'sidebar.html',
 })
-export class ChannelSidebar {
+export class ChannelSidebar implements OnInit {
   filter: any = 'feed';
   isLocked: boolean = false;
   editing: boolean = false;
@@ -78,6 +78,7 @@ export class ChannelSidebar {
   shouldShowOnboardingProgress() {
     return (
       isPlatformBrowser(this.platformId) &&
+      !this.featuresService.has('onboarding-december-2019') &&
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().guid === this.user.guid &&
       !this.cookieService.get('onboarding_hide') &&

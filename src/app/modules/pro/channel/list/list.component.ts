@@ -7,7 +7,8 @@ import {
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription, Observable } from 'rxjs';
+import { map, filter, catchError } from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import {
   NavItems,
@@ -15,8 +16,6 @@ import {
   RouterLinkToType,
 } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { filter } from 'rxjs/operators';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -39,7 +38,7 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
 
   selectedHashtag: string = 'all';
 
-  entities$;
+  entities$: Observable<BehaviorSubject<Object>[]>;
 
   constructor(
     public feedsService: FeedsService,
@@ -199,6 +198,24 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
   get shouldShowCategories() {
     return (
       this.paramsType !== 'groups' && this.paramsType !== 'feed' && !this.query
+    );
+  }
+
+  /**
+   * Called on activity deletion,
+   * removes entity from this.entities$.
+   *
+   * @param activity - the activity deleted.
+   */
+  onActivityDelete(activity: any): void {
+    this.entities$ = this.entities$.pipe(
+      map(val =>
+        val.filter(entity => entity.getValue()['guid'] !== activity.guid)
+      ),
+      catchError(error => {
+        console.error(error);
+        return this.entities$;
+      })
     );
   }
 

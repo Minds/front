@@ -1,0 +1,43 @@
+m-date__dropdowns {
+  display: flex;
+  justify-content: space-between;
+
+  select {
+    display: inline-block;
+    background-color: #fff;
+    box-sizing: border-box;
+    margin: 0 10px 0 0;
+    padding: 8px 10px;
+    height: 36px;
+    min-width: 80px;
+    max-width: 90px;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-size: 16px;
+    line-height: 21px;
+    border-radius: 2px;
+
+    @include m-theme() {
+      color: themed($m-grey-800);
+      background-color: themed($m-white);
+      border: 1px solid #e2e2e2;
+    }
+
+    // month
+    &:nth-child(1) {
+      min-width: 120px;
+    }
+
+    // day
+    &:nth-child(2) {
+      min-width: 59px;
+    }
+
+    // year
+    &:nth-child(3) {
+      min-width: 77px;
+    }
+  }
+}

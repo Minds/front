@@ -46,6 +46,25 @@
     </a>
   </li>
 
+  <li>
+    <a
+      [routerLink]="[
+        '/newsfeed/global/top',
+        { period: '12h', type: 'groups', all: 1 }
+      ]"
+    >
+      <!-- todo: TEST IT -->
+      <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
+        <i class="material-icons" m-tooltip--anchor>people</i>
+        <span>Find a Group</span>
+
+        <ng-container>
+          Find a Group
+        </ng-container>
+      </m-tooltip>
+    </a>
+  </li>
+
   <infinite-scroll
     distance="25%"
     [scrollSource]="list"

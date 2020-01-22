@@ -11,6 +11,7 @@ import {
   ScrollSubscription,
 } from '../../services/ux/global-scroll.service';
 import { ConfigsService } from '../../common/services/configs.service';
+import { PagesService } from '../../common/services/pages.service';
 
 @Component({
   selector: 'm-homepage',
@@ -44,7 +45,8 @@ export class HomepageComponent {
     private loginReferrer: LoginReferrerService,
     public session: Session,
     private scroll: GlobalScrollService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    public pagesService: PagesService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     if (this.session.isLoggedIn()) {

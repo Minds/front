@@ -42,3 +42,10 @@
     </div>
   </div>
 </div>
+
+<m-social-icons
+  [url]="siteUrl + 'newsfeed/' + activity?.guid"
+  [title]="activity?.title || ''"
+  [embed]="activity"
+>
+</m-social-icons>

@@ -1,24 +1,24 @@
 import 'cypress-file-upload';
 
 /**
- * @author Marcelo, Ben and Brian 
+ * @author Marcelo, Ben and Brian
  * @create date 2019-08-09 22:54:02
  * @modify date 2019-08-09 22:54:02
  * @desc Custom commands for access through cy.[cmd]();
- *  
+ *
  * For more comprehensive examples of custom
  * commands please read more here:
  * https://on.cypress.io/custom-commands
  *
  * -- This is a parent command --
  * Cypress.Commands.add('login', (email, password) => { ... })
- 
+
  * -- This is a child command --
  * Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
- 
+
  * -- This is a dual command --
  * Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
- 
+
  * -- This is will overwrite an existing command --
  * Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
  */
@@ -56,7 +56,7 @@ const defaults = {
 const loginForm = {
   password: 'minds-form-login .m-login-box .mdl-cell:last-child input',
   username: 'minds-form-login .m-login-box .mdl-cell:first-child input',
-  submit: 'minds-form-login .m-btn--login',
+  submit: '[data-cy=data-minds-login-button]',
 }
 
 const poster = {
@@ -84,7 +84,7 @@ Cypress.Commands.add('login', (canary = false, username, password) => {
 
   cy.get(loginForm.username).focus().type(username);
   cy.get(loginForm.password).focus().type(password);
-  
+
   cy.get(loginForm.submit)
     .focus()
     .click({force: true})
@@ -104,21 +104,21 @@ Cypress.Commands.add('logout', () => {
 
 /**
  * Register a user, be sure to delete the user following this.
- * 
+ *
  * ! LOG-OUT PRIOR TO CALLING !
- * 
+ *
  * @param { string } username - The username. Note that the requested username will NOT be freed up upon deletion
  * @param { string } password - The users password.
  * @returns void
  */
 Cypress.Commands.add('newUser', (username = '', password = '') => {
-  cy.visit('/login')
+  cy.visit('/register')
     .location('pathname')
-    .should('eq', `/login`);
+    .should('eq', `/register`);
 
   cy.server();
   cy.route("POST", '**/api/v1/register').as('registerPOST');
-  
+
   cy.get(registerForm.username).focus().type(username);
   cy.get(registerForm.email).focus().type(defaults.email);
   cy.get(registerForm.password).focus().type(password);
@@ -137,7 +137,7 @@ Cypress.Commands.add('newUser', (username = '', password = '') => {
   //onboarding modal shown.
   cy.get(onboarding.welcomeTextContainer)
     .contains(onboarding.welcomeText);
-  
+
   //skip onboarding.
   cy.get(onboarding.nextButton).click()
   cy.get(onboarding.nextButton).click()
@@ -151,14 +151,14 @@ Cypress.Commands.add('preserveCookies', () => {
 
 /**
  * Deletes a user. Use carefully on sandbox or you may lose your favorite test account.
- * 
+ *
  * ! LOG-IN PRIOR TO CALLING !
- * 
+ *
  * @param { string } username - The username. TODO: when both params provided log the user in too
  * @param { string } password - The password.
  * @returns void
  */
-Cypress.Commands.add('deleteUser', (username, password) => {  
+Cypress.Commands.add('deleteUser', (username, password) => {
   cy.server();
   cy.route("POST", '**/api/v2/settings/password/validate').as('validatePost');
   cy.route("POST", '**/api/v2/settings/delete').as('deletePOST');
@@ -170,7 +170,7 @@ Cypress.Commands.add('deleteUser', (username, password) => {
   cy.get(settings.deleteAccountButton).click({ force: true });
   cy.get('#password').focus().type(password);
 
-  cy.get(settings.deleteSubmitButton).click({ force: true })  
+  cy.get(settings.deleteSubmitButton).click({ force: true })
     .wait('@validatePost').then((xhr) => {
       expect(xhr.status).to.equal(200);
       expect(xhr.response.body.status).to.deep.equal("success");
@@ -193,9 +193,9 @@ Cypress.Commands.add('uploadFile', (selector, fileName, type = '') => {
   cy.fixture(fileName).then((content) => {
     cy.log("Content", fileName);
     cy.get(selector).upload({
-      fileContent: content, 
-      fileName: fileName, 
-      mimeType: type 
+      fileContent: content,
+      fileName: fileName,
+      mimeType: type
     });
   });
 });
@@ -218,7 +218,7 @@ Cypress.Commands.add('post', (message) => {
 
 /**
  * Sets the feature flag cookie.
- * @param { Object } flags - JSON object containing flags to turn on 
+ * @param { Object } flags - JSON object containing flags to turn on
  * e.g. { dark mode:false, es-feeds: true }
  * @returns void
  */

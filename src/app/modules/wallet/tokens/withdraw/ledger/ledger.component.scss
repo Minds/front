@@ -3,4 +3,13 @@ m-wallet-token--withdraw-ledger {
     display: inline;
     text-decoration: none;
   }
+  .m-token--ledger--date-selectors {
+    display: flex;
+    flex-wrap: wrap;
+
+    @media screen and (max-width: $min-tablet) {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
 }

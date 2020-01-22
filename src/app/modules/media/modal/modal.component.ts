@@ -27,9 +27,10 @@ import { SiteService } from '../../../common/services/site.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { HorizontalFeedService } from '../../../common/services/horizontal-feed.service';
+import { ShareModalComponent } from '../../modals/share/share';
 
 export type MediaModalParams = {
-  redirectUrl?: string;
   entity: any;
 };
 
@@ -69,7 +70,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   entity: any = {};
   originalEntity: any = null;
-  redirectUrl: string;
   isLoading: boolean = true;
   navigatedAway: boolean = false;
   fullscreenHovering: boolean = false; // Used for fullscreen button transformation
@@ -110,10 +110,11 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   routerSubscription: Subscription;
 
+  prevEntity: any;
+  nextEntity: any;
+
   @Input('entity') set data(params: MediaModalParams) {
-    this.originalEntity = params.entity;
-    this.entity = params.entity && JSON.parse(JSON.stringify(params.entity)); // deep clone
-    this.redirectUrl = params.redirectUrl || null;
+    this.setEntity(params.entity);
   }
 
   videoDirectSrc = [];
@@ -130,7 +131,9 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private clientMetaService: ClientMetaService,
     private featureService: FeaturesService,
     @SkipSelf() injector: Injector,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private horizontalFeed: HorizontalFeedService,
+    private features: FeaturesService
   ) {
     this.clientMetaService
       .inherit(injector)
@@ -182,6 +185,62 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
+
+    // -- Load entity
+
+    this.load();
+
+    // -- EVENTS
+
+    // When user clicks a link from inside the modal
+    this.routerSubscription = this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        if (!this.navigatedAway) {
+          this.navigatedAway = true;
+
+          // Fix browser history so back button doesn't go to media page
+          this.location.replaceState(this.entity.modal_source_url);
+
+          // Go to the intended destination
+          this.router.navigate([event.url]);
+
+          this.overlayModal.dismiss();
+        }
+      }
+    });
+  }
+
+  setEntity(entity: any) {
+    if (!entity) {
+      return;
+    }
+
+    this.originalEntity = entity;
+    this.entity = entity && JSON.parse(JSON.stringify(entity)); // deep clone
+
+    this.setNeighborEntities(); // async
+  }
+
+  async setNeighborEntities() {
+    if (!this.features.has('modal-pager')) {
+      return;
+    }
+
+    const { prev, next } = await this.horizontalFeed.get(
+      'container',
+      this.entity
+    );
+
+    if (!this.prevEntity) {
+      this.prevEntity = prev;
+    }
+
+    if (!this.nextEntity) {
+      this.nextEntity = next;
+    }
+  }
+
+  load() {
     switch (this.entity.type) {
       case 'activity':
         this.title =
@@ -275,10 +334,12 @@ export class MediaModalComponent implements OnInit, OnDestroy {
         break;
     }
 
-    if (this.redirectUrl) {
-      this.pageUrl = this.redirectUrl;
-    } else if (this.contentType === 'rich-embed') {
+    if (this.contentType === 'rich-embed') {
       this.pageUrl = `/newsfeed/${this.entity.guid}`;
+    } else if (this.contentType === 'blog') {
+      this.pageUrl = `${
+        !this.site.isProDomain ? `/${this.entity.ownerObj.username}` : ''
+      }/blog/${this.entity.slug}-${this.entity.guid}`;
     } else {
       this.pageUrl = `/media/${this.entity.entity_guid}`;
     }
@@ -312,25 +373,13 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     // (but don't actually redirect)
     this.location.replaceState(this.pageUrl);
 
-    // When user clicks a link from inside the modal
-    this.routerSubscription = this.router.events.subscribe((event: Event) => {
-      if (event instanceof NavigationStart) {
-        if (!this.navigatedAway) {
-          this.navigatedAway = true;
+    // Set Dimensions based on entity
+    this.setEntityDimensions();
+  }
 
-          // Fix browser history so back button doesn't go to media page
-          this.location.replaceState(this.entity.modal_source_url);
+  // * DIMENSION CALCULATIONS * ---------------------------------------------------------------------
 
-          // Go to the intended destination
-          this.router.navigate([event.url]);
-
-          this.overlayModal.dismiss();
-        }
-      }
-    });
-
-    // * DIMENSION CALCULATIONS * ---------------------------------------------------------------------
-
+  setEntityDimensions() {
     switch (this.contentType) {
       case 'video':
       case 'image':
@@ -510,6 +559,15 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     return Math.round(this.mediaHeight * this.aspectRatio);
   }
 
+  onDimensions($event) {
+    if ($event.width && $event.height) {
+      this.entity.width = $event.width;
+      this.entity.height = $event.height;
+
+      this.setEntityDimensions();
+    }
+  }
+
   // * FULLSCREEN * --------------------------------------------------------------------------------
   // Listen for fullscreen change event in case user enters/exits full screen without clicking button
   @HostListener('document:fullscreenchange', ['$event'])
@@ -569,6 +627,56 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isFullscreen = false;
   }
 
+  // * KEYBOARD SHORTCUTS * --------------------------------------------------------------------------
+
+  @HostListener('window:keydown', ['$event']) onWindowKeyDown(
+    $event: KeyboardEvent
+  ) {
+    if (!$event || !$event.target) {
+      return true;
+    }
+
+    const tagName = (
+      ($event.target as HTMLElement).tagName || ''
+    ).toLowerCase();
+    const isContentEditable =
+      ($event.target as HTMLElement).contentEditable === 'true';
+
+    if (
+      tagName === 'input' ||
+      tagName === 'textarea' ||
+      isContentEditable ||
+      ($event.key !== 'ArrowLeft' &&
+        $event.key !== 'ArrowRight' &&
+        $event.key !== 'Escape')
+    ) {
+      return true;
+    }
+
+    $event.stopPropagation();
+    $event.preventDefault();
+
+    switch ($event.key) {
+      case 'ArrowLeft':
+        if (this.hasPrev()) {
+          this.goToPrev();
+        }
+        break;
+      case 'ArrowRight':
+        if (this.hasNext()) {
+          this.goToNext();
+        }
+        break;
+      case 'Escape':
+        if (this.isOpen) {
+          this.overlayModal.dismiss();
+        }
+        break;
+    }
+
+    return true;
+  }
+
   // * MODAL DISMISSAL * --------------------------------------------------------------------------
 
   // Dismiss modal when backdrop is clicked and modal is open
@@ -612,6 +720,38 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     }, 3000);
   }
 
+  // * PAGER * --------------------------------------------------------------------------
+
+  hasPrev(): boolean {
+    return Boolean(this.prevEntity);
+  }
+
+  hasNext(): boolean {
+    return Boolean(this.nextEntity);
+  }
+
+  goToNext(): void {
+    const entity = this.nextEntity;
+    entity.modal_source_url = this.entity.modal_source_url || '';
+
+    this.prevEntity = this.originalEntity;
+    this.nextEntity = null;
+
+    this.setEntity(entity);
+    this.load();
+  }
+
+  goToPrev(): void {
+    const entity = this.prevEntity;
+    entity.modal_source_url = this.entity.modal_source_url || '';
+
+    this.prevEntity = null;
+    this.nextEntity = this.originalEntity;
+
+    this.setEntity(entity);
+    this.load();
+  }
+
   // * UTILITY * --------------------------------------------------------------------------
 
   isLoaded() {
@@ -620,6 +760,14 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     if (this.isTablet) {
       this.showOverlaysOnTablet();
     }
+  }
+
+  openShareModal(): void {
+    const url = this.overlayModal
+      .create(ShareModalComponent, this.site.baseUrl + this.pageUrl.substr(1), {
+        class: 'm-overlay-modal--medium m-overlayModal__share',
+      })
+      .present();
   }
 
   ngOnDestroy() {

@@ -42,6 +42,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     'footer',
     'domain',
     'payouts',
+    'subscription',
   ];
 
   isActive: boolean;
@@ -267,6 +268,17 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     }
 
     return this.settings[`${type}_image`] + '?cb=' + Date.now();
+  }
+
+  async cancelSubscription() {
+    this.error = null;
+    try {
+      await this.service.disable();
+      this.router.navigate(['/', this.session.getLoggedInUser().name]);
+    } catch (e) {
+      this.error = e.message;
+      this.formToastService.error('Error: ' + this.error);
+    }
   }
 
   async onSubmit() {

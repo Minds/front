@@ -33,7 +33,8 @@ export class GroupsCreator {
   constructor(
     public session: Session,
     public service: GroupsService,
-    public router: Router
+    public router: Router,
+    private groupsService: GroupsService
   ) {}
 
   addBanner(banner: any) {
@@ -95,6 +96,7 @@ export class GroupsCreator {
             }
           )
           .then(() => {
+            this.groupsService.updateMembership(true, guid);
             this.router.navigate(['/groups/profile', guid]);
           });
       })

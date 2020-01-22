@@ -12,6 +12,7 @@ import { OnboardingForm } from './onboarding/onboarding';
 import { Tutorial } from './tutorial/tutorial';
 import { CaptchaModule } from '../captcha/captcha.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
+import { PopoverComponent } from './popover-validation/popover.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     FbRegisterForm,
     OnboardingForm,
     Tutorial,
+    PopoverComponent,
   ],
   exports: [LoginForm, RegisterForm, FbRegisterForm, OnboardingForm, Tutorial],
 })

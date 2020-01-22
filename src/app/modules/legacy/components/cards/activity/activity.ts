@@ -5,6 +5,7 @@ import {
   EventEmitter,
   ElementRef,
   Input,
+  Output,
   ViewChild,
   OnInit,
   SkipSelf,
@@ -90,7 +91,7 @@ export class Activity implements OnInit {
   editing: boolean = false;
   @Input() hideTabs: boolean;
 
-  _delete: EventEmitter<any> = new EventEmitter();
+  @Output() _delete: EventEmitter<any> = new EventEmitter();
   commentsOpened: EventEmitter<any> = new EventEmitter();
   @Input() focusedCommentGuid: string;
 

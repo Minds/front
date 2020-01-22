@@ -256,6 +256,7 @@
 
             <m-post-menu
               [entity]="entity"
+              [user]="entity.ownerObj"
               [canDelete]="
                 entity.ownerObj.guid == session.getLoggedInUser().guid ||
                 entity.canEdit ||
@@ -321,6 +322,14 @@
     <!--<m-ads-boost limit="4"></m-ads-boost>-->
   </div>
 </div>
+
+<m-social-icons
+  [url]="siteUrl + 'media/' + entity.guid"
+  [title]="entity.title || ''"
+  [embed]="entity"
+  *ngIf="entity && !attachment.shouldBeBlurred(entity)"
+>
+</m-social-icons>
 
 <m-modal-confirm
   *ngIf="deleteToggle"

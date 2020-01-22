@@ -39,6 +39,7 @@ global['navigator'] = win.navigator;
 global['screen'] = { width: 0, height: 0 };
 global['Event'] = win.Event;
 global['Event']['prototype'] = win.Event.prototype;
+global['KeyboardEvent'] = global['Event'];
 global['document'] = win.document;
 global['window']['Promise'] = global.Promise;
 

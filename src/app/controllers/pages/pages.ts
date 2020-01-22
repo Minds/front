@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { Client } from '../../services/api';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { MetaService } from '../../common/services/meta.service';
+import { PagesService } from '../../common/services/pages.service';
 
 @Component({
   moduleId: module.id,
@@ -29,7 +30,8 @@ export class Pages {
     public metaService: MetaService,
     public client: Client,
     public navigation: NavigationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public pagesService: PagesService
   ) {}
 
   ngOnInit() {

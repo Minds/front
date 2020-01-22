@@ -5,6 +5,7 @@ import {
   ViewChild,
   Output,
   EventEmitter,
+  OnInit,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
@@ -16,7 +17,7 @@ import { CountryCode } from './countries';
   selector: 'm-phone-input--country',
   templateUrl: 'country.component.html',
 })
-export class PhoneInputCountryComponent {
+export class PhoneInputCountryComponent implements OnInit {
   @Output('country') selectedCountryEvt = new EventEmitter();
   countries: Array<Country> = [];
   selectedCountry: Country = new Country();

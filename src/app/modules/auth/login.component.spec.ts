@@ -32,6 +32,11 @@ import {
   COOKIE_OPTIONS,
   CookieModule,
 } from '@gorniv/ngx-universal';
+import { FeaturesService } from '../../services/features.service';
+import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
+import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
+import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
+import { MockService } from '../../utils/mock';
 
 @Component({
   selector: 'minds-form-login',
@@ -40,6 +45,10 @@ import {
 class MindsFormLoginMock {
   @Output() done: EventEmitter<any> = new EventEmitter<any>();
   @Output() doneRegistered: EventEmitter<any> = new EventEmitter<any>();
+  @Input() showBigButton: boolean = false;
+  @Input() showInlineErrors: boolean = false;
+  @Input() showTitle: boolean = false;
+  @Input() showLabels: boolean = false;
 }
 
 @Component({
@@ -62,6 +71,7 @@ describe('LoginComponent', () => {
         MindsFormLoginMock,
         MindsFormRegisterMock,
         LoginComponent,
+        IfFeatureDirective,
       ],
       imports: [
         RouterTestingModule,
@@ -79,6 +89,8 @@ describe('LoginComponent', () => {
         Storage,
         CookieService,
         { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
+        { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: V2TopbarService, useValue: MockService(V2TopbarService) },
       ],
     }).compileComponents();
   }));
@@ -87,6 +99,8 @@ describe('LoginComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
+
+    featuresServiceMock.mock('register_pages-december-2019', false);
 
     fixture = TestBed.createComponent(LoginComponent);
 

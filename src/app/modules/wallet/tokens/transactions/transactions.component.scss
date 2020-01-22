@@ -152,6 +152,11 @@
 
   .m-token--ledger--date-selectors {
     display: flex;
+    flex-wrap: wrap;
+    @media screen and (max-width: $min-tablet) {
+      flex-direction: column;
+      align-items: flex-end;
+    }
   }
 
   .m-token--ledger-filters--check {

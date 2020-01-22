@@ -14,6 +14,7 @@ import { UpdateMarkersService } from '../../../common/services/update-markers.se
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { isPlatformBrowser } from '@angular/common';
+import { GroupsService } from '../groups-service';
 
 @Component({
   selector: 'm-group--sidebar-markers',
@@ -34,8 +35,9 @@ export class GroupsSidebarMarkersComponent {
     private client: Client,
     public session: Session,
     private updateMarkers: UpdateMarkersService,
-    private cd: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId,
+    private groupsService: GroupsService,
+    private cd: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
@@ -43,7 +45,26 @@ export class GroupsSidebarMarkersComponent {
     if (isPlatformBrowser(this.platformId)) {
       await this.load(true);
       this.listenForMarkers();
+      this.listenForMembershipUpdates();
     }
+  }
+
+  /**
+   * Listens and responds to membership updates emited from groupsService.
+   */
+  listenForMembershipUpdates(): void {
+    this.groupsService.membershipUpdate$.subscribe(update => {
+      if (!update.guid) {
+        return;
+      }
+      if (update.show) {
+        this.groupsService.load(update.guid).then(group => {
+          this.groups.unshift(group);
+        });
+        return;
+      }
+      this.groups = this.groups.filter(group => group.guid !== update.guid);
+    });
   }
 
   listenForMarkers() {

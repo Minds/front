@@ -20,6 +20,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 })
 export class NewsfeedSingleComponent {
   readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
   inProgress: boolean = false;
   activity: any;
   error: string = '';
@@ -44,6 +45,7 @@ export class NewsfeedSingleComponent {
       .inherit(injector)
       .setSource('single')
       .setMedium('single');
+    this.siteUrl = configs.get('site_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 

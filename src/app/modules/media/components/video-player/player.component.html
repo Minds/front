@@ -21,6 +21,7 @@
       (plyrPlay)="onPlayed($event)"
       (plyrEnterFullScreen)="fullScreenChange.next($event)"
       (plyrExitFullScreen)="fullScreenChange.next($event)"
+      (plyrLoadedMetadata)="emitDimensions($event)"
     >
     </plyr>
   </div>

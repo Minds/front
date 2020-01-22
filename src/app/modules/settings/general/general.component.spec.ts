@@ -108,17 +108,6 @@ describe('SettingsGeneralComponent', () => {
       thirdpartynetworks: [],
     };
 
-    window.Minds.user = {
-      guid: '1000',
-      type: 'user',
-      signup_method: false,
-    };
-
-    window.Minds.categories = {
-      art: 'Art',
-      animals: 'Animals',
-    };
-
     fixture.detectChanges();
 
     if (fixture.isStable()) {
