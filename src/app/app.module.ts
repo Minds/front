@@ -4,6 +4,7 @@ import {
   Injectable,
   ErrorHandler,
   APP_INITIALIZER,
+  APP_BOOTSTRAP_LISTENER,
 } from '@angular/core';
 import {
   BrowserModule,
@@ -14,7 +15,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CaptchaModule } from './modules/captcha/captcha.module';
-import { environment } from '../environments/environment';
 
 import { Minds } from './app.component';
 
@@ -81,13 +81,6 @@ import { CookieModule } from '@gorniv/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
-
-Sentry.init({
-  dsn: 'https://3f786f8407e042db9053434a3ab527a2@sentry.io/1538008', // TODO: do not hardcard
-  release: environment.version,
-  // environment: (<any>window.Minds).environment || 'development',
-  environment: 'srr-test', // TODO: fix
-});
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
