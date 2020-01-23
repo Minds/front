@@ -13,11 +13,11 @@ import { WalletDashboardService } from './../dashboard.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
 @Component({
-  selector: 'm-walletBalance--usd',
-  templateUrl: './balance-usd.component.html',
+  selector: 'm-walletBalance--cash',
+  templateUrl: './balance-cash.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WalletBalanceUsdV2Component implements OnInit {
+export class WalletBalanceCashComponent implements OnInit {
   inProgress: boolean = true;
   stripeAccount;
   hasAccount: boolean = true;
@@ -25,8 +25,9 @@ export class WalletBalanceUsdV2Component implements OnInit {
   totalPaidOut;
   nextPayoutDate = '';
   onSettingsTab: boolean = false;
+  currency = 'usd';
 
-  @Output() scrollToUsdSettings: EventEmitter<any> = new EventEmitter();
+  @Output() scrollToCashSettings: EventEmitter<any> = new EventEmitter();
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
@@ -52,7 +53,6 @@ export class WalletBalanceUsdV2Component implements OnInit {
 
     this.stripeAccount = await this.walletService.getStripeAccount();
 
-    console.log(this.stripeAccount);
     if (!this.stripeAccount || !this.stripeAccount.accountNumber) {
       this.hasAccount = false;
       this.pendingBalance = this.formatBalance(0);
@@ -61,6 +61,9 @@ export class WalletBalanceUsdV2Component implements OnInit {
       this.pendingBalance = this.formatBalance(
         this.stripeAccount.pendingBalance.amount / 100
       );
+      if (this.stripeAccount.bankAccount) {
+        this.currency = this.stripeAccount.bankAccount.currency.toUpperCase();
+      }
 
       let totalPaidOutRaw =
         (this.stripeAccount.totalBalance.amount -

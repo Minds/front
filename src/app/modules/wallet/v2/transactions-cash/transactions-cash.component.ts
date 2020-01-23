@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Input,
   OnInit,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -9,76 +10,28 @@ import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { WalletDashboardService } from '../dashboard.service';
-import { Filter } from '../../../../interfaces/dashboard';
-import toFriendlyCryptoVal from '../../../../helpers/friendly-crypto';
 
 import * as moment from 'moment';
-import { Subscription } from 'rxjs';
 
 @Component({
-  // moduleId: module.id,
-  selector: 'm-walletTransactions--tokens',
-  templateUrl: './transactions-tokens.component.html',
+  selector: 'm-walletTransactions--cash',
+  templateUrl: './transactions-cash.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WalletTransactionsTokensComponent implements OnInit {
+export class WalletTransactionsCashComponent implements OnInit {
   init: boolean = false;
   inProgress: boolean = true;
   offset: string;
   moreData: boolean = true;
+  currency: string = 'USD';
 
   transactions: any[] = [];
   runningTotal: number = 0;
   currentDayInLoop = moment();
 
-  selectedTransactionType: string = 'all';
   filterApplied: boolean = false;
 
   showRewardsPopup: boolean = false;
-  startOfToday = moment().startOf('day');
-  // For admins viewing a remote user's transactions
-  remote: boolean = false;
-  remoteUsername: string = '';
-  paramsSubscription: Subscription;
-
-  filter: Filter = {
-    id: 'type',
-    label: 'Transaction Type',
-    options: [
-      {
-        id: 'all',
-        label: 'All',
-      },
-      {
-        id: 'offchain:wire',
-        label: 'Off-Chain Wires',
-      },
-      {
-        id: 'wire',
-        label: 'On-Chain Wires',
-      },
-      {
-        id: 'offchain:reward',
-        label: 'Rewards',
-      },
-      {
-        id: 'token',
-        label: 'Purchases',
-      },
-      {
-        id: 'offchain:boost',
-        label: 'Off-Chain Boosts',
-      },
-      {
-        id: 'boost',
-        label: 'On-Chain Boosts',
-      },
-      {
-        id: 'withdraw',
-        label: 'On-Chain Transfers',
-      },
-    ],
-  };
 
   constructor(
     protected client: Client,
@@ -91,16 +44,26 @@ export class WalletTransactionsTokensComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.paramsSubscription = this.route.params.subscribe(async params => {
-      this.remote = !!params['remote'];
-      this.remoteUsername = params['remote'] || '';
-    });
-    this.getBalance();
+    this.getStripeAccount();
   }
 
-  async getBalance() {
-    const tokenAccounts = await this.walletService.getTokenAccounts();
-    this.runningTotal = tokenAccounts.tokens.balance;
+  async getStripeAccount() {
+    const stripeAccount = await this.walletService.getStripeAccount();
+    if (!stripeAccount) {
+      return;
+    } else {
+      console.log('got stripeAccount', stripeAccount);
+      if (stripeAccount.bankAccount) {
+        this.currency = stripeAccount.bankAccount.currency.toUpperCase();
+      }
+      this.runningTotal =
+        (stripeAccount.totalBalance.amount -
+          stripeAccount.pendingBalance.amount) /
+        100;
+
+      console.log('running', this.runningTotal);
+    }
+
     this.load(true);
   }
 
@@ -120,23 +83,12 @@ export class WalletTransactionsTokensComponent implements OnInit {
 
     try {
       const opts: any = {
-        from: 0,
-        to: moment().unix(),
         offset: this.offset,
       };
 
-      if (this.selectedTransactionType) {
-        opts.contract =
-          this.selectedTransactionType === 'all'
-            ? null
-            : this.selectedTransactionType;
-      }
-
-      if (this.remote && this.remoteUsername) {
-        opts.remote = this.remoteUsername;
-      }
-
-      const response: any = await this.walletService.getTokenTransactions(opts);
+      const response: any = await this.walletService.getStripeTransactions(
+        opts
+      );
 
       if (refresh) {
         this.transactions = [];
@@ -172,25 +124,21 @@ export class WalletTransactionsTokensComponent implements OnInit {
     transactions.forEach(tx => {
       const formattedTx: any = {};
 
-      const txAmount = toFriendlyCryptoVal(tx.amount);
-      formattedTx.amount = txAmount;
+      formattedTx.amount = tx.amount / 100;
 
-      if (!tx.failed && tx.type !== 'withdraw') {
-        this.runningTotal -= txAmount;
-      }
-      formattedTx.runningTotal = this.formatAmount(this.runningTotal);
-
-      formattedTx.type = tx.contract;
-      formattedTx.failed = tx.failed;
-      formattedTx.timestamp = tx.timestamp;
-
-      if (tx.contract.indexOf('offchain:') !== -1) {
-        formattedTx.superType = tx.contract.substr(9);
+      if (tx.type !== 'payout') {
+        this.runningTotal -= formattedTx.amount;
       } else {
-        formattedTx.superType = tx.contract;
+        this.runningTotal = 0;
       }
+      formattedTx.runningTotal = this.runningTotal;
 
-      if (formattedTx.superType === 'reward') {
+      formattedTx.timestamp = tx.timestamp;
+      formattedTx.type = tx.type;
+      formattedTx.superType = tx.type;
+      console.log('tx.type', tx.type);
+
+      if (formattedTx.superType === 'payout') {
         formattedTx.showRewardsPopup = false;
       }
 
@@ -217,6 +165,7 @@ export class WalletTransactionsTokensComponent implements OnInit {
       }
       this.transactions.push(formattedTx);
     });
+    console.log(this.transactions);
     this.inProgress = false;
   }
 
@@ -224,22 +173,9 @@ export class WalletTransactionsTokensComponent implements OnInit {
     return !moment1.isSame(moment2, 'day');
   }
 
-  filterSelected($event) {
-    const typeFilter = $event.option.id;
-    if (typeFilter !== this.selectedTransactionType) {
-      this.filterApplied = typeFilter === 'all' ? false : true;
-      this.selectedTransactionType = typeFilter;
-      this.load(true);
-    }
-  }
-
   getOtherUser(tx) {
-    const selfUsername = this.remote
-        ? this.remoteUsername
-        : this.session.getLoggedInUser().username,
-      isSender =
-        tx.sender.username.toLowerCase() !== selfUsername.toLowerCase(),
-      user = isSender ? tx.sender : tx.receiver;
+    const isSender = false,
+      user = tx.customer_user;
 
     return {
       avatar: `/icon/${user.guid}/medium/${user.icontime}`,
@@ -248,29 +184,10 @@ export class WalletTransactionsTokensComponent implements OnInit {
     };
   }
 
-  formatAmount(amount) {
-    const formattedAmount = {
-      total: amount,
-      int: 0,
-      frac: null,
-    };
-
-    const splitBalance = amount.toString().split('.');
-
-    formattedAmount.int = splitBalance[0];
-    if (splitBalance[1]) {
-      formattedAmount.frac = splitBalance[1].slice(0, 3);
-    }
-    return formattedAmount;
-  }
-
   getDelta(tx) {
     let delta = 'neutral';
-    if (tx.type !== 'withdraw') {
+    if (tx.type !== 'payout') {
       delta = tx.amount < 0 ? 'negative' : 'positive';
-    }
-    if (tx.failed) {
-      delta = 'failed';
     }
     return delta;
   }

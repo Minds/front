@@ -10,21 +10,24 @@ export class WalletTransactionsTableComponent {
   @Input() filterApplied: boolean = false;
 
   typeLabels = {
-    tokens: {
-      'offchain:wire': 'Off-Chain Wire',
-      wire: 'On-Chain Wire',
-      reward: 'Reward',
-      token: 'Purchase',
-      withdraw: 'On-Chain Transfer',
-      'offchain:boost': 'Off-Chain Boost',
-      boost: 'On-Chain Boost',
-    },
-    usd: {
-      wire: 'Wire',
-      pro_earning: 'Pro Earnings',
-      payout: 'Payouts',
-    },
+    'offchain:wire': 'Off-Chain Wire',
+    wire: 'On-Chain Wire',
+    reward: 'Reward',
+    token: 'Purchase',
+    withdraw: 'On-Chain Transfer',
+    'offchain:boost': 'Off-Chain Boost',
+    boost: 'On-Chain Boost',
+    pro_earning: 'Pro Earnings',
+    payout: 'Payouts',
   };
 
   constructor() {}
+
+  getTypeLabel(superType) {
+    if (this.currency !== 'tokens' && superType === 'wire') {
+      return 'Wire';
+    } else {
+      return this.typeLabels[superType];
+    }
+  }
 }

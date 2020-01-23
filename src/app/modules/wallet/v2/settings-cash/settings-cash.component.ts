@@ -10,10 +10,10 @@ import {
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'm-walletSettings--usd',
-  templateUrl: './settings-usd.component.html',
+  selector: 'm-walletSettings--cash',
+  templateUrl: './settings-cash.component.html',
 })
-export class WalletSettingsUSDComponent implements OnInit {
+export class WalletSettingsCashComponent implements OnInit {
   // TODOOJM $account make this observable
   account: any;
   // TODOOJM $account make this calculated by observable

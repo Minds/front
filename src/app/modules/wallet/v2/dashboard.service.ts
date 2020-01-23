@@ -46,9 +46,9 @@ export class WalletDashboardService {
       balance: '0',
       address: null,
     },
-    usd: {
-      label: 'USD',
-      unit: 'usd',
+    cash: {
+      label: 'Cash',
+      unit: 'cash',
       balance: '0',
       address: null,
     },
@@ -242,27 +242,30 @@ export class WalletDashboardService {
   }
 
   async getStripeAccount() {
-    const merchant = this.session.getLoggedInUser().merchant;
-
     //TODOOJM toggle
     return fakeData.stripe_account.account;
-    // if (merchant && merchant.service === 'stripe') {
-    // try {
-    //   const stripeAccount = <any>(
-    //     await this.client.get('api/v2/payments/stripe/connect')
-    //   ).account;
-    //   if (stripeAccount && stripeAccount.totalBalance) {
-    //     this.wallet.usd.balance =
-    //       (stripeAccount.totalBalance.amount +
-    //         stripeAccount.pendingBalance.amount) *
-    //       100;
-    //   }
 
-    // return stripeAccount;
-    // } catch (e) {
-    //   console.error(e);
-    //   return;
-    // }
+    // const merchant = this.session.getLoggedInUser().merchant;
+    // if (merchant && merchant.service === 'stripe') {
+    //   try {
+    //     const { account } = <any>(
+    //       await this.client.get('api/v2/payments/stripe/connect')
+    //     );
+    //     if (account && account.totalBalance) {
+    //       this.wallet.cash.balance =
+    //         (account.totalBalance.amount - account.pendingBalance.amount) / 100;
+    //       if (account.bankAccount) {
+    //         const c = account.bankAccount.currency;
+    //         this.wallet.cash.label = c.toUpperCase;
+    //         this.wallet.cash.unit = c;
+    //       }
+    //     }
+
+    //     return account;
+    //   } catch (e) {
+    //     console.error(e);
+    //     return;
+    //   }
     // } else {
     //   return;
     // }

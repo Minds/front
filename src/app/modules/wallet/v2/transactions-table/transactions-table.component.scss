@@ -6,6 +6,11 @@
   @include m-walletColor--medium;
   @include m-walletText--14;
 }
+.m-walletTransactions--cash {
+  .m-walletTransactionsTable__row--top {
+    justify-content: flex-start;
+  }
+}
 .m-walletTransactions__spinner {
   display: flex;
   justify-content: center;

@@ -4,7 +4,6 @@ import {
   OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  ComponentFactoryResolver,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WalletDashboardService } from './dashboard.service';
@@ -14,6 +13,7 @@ import { MindsTitle } from '../../../services/ux/title';
 import sidebarMenu from './sidebar-menu.default';
 import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
+// TODOOJM DON"T USE THIS BC SSR??
 import { Storage } from '../../../services/storage';
 
 @Component({
@@ -36,7 +36,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       { id: 'transactions', label: 'Transactions' },
       { id: 'settings', label: 'Settings' },
     ],
-    usd: [
+    cash: [
       { id: 'transactions', label: 'Transactions' },
       { id: 'settings', label: 'Settings' },
     ],
@@ -93,7 +93,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   }
 
   setCurrencies() {
-    const headerCurrencies = ['tokens', 'usd', 'eth', 'btc'];
+    const headerCurrencies = ['tokens', 'cash', 'eth', 'btc'];
     headerCurrencies.forEach(currency => {
       const headerTab: ShadowboxHeaderTab = {
         id: currency,

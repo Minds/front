@@ -28,7 +28,7 @@
         <ng-template ngSwitchCase="boost">
           <div class="m-walletTransactionsTable__typeWrapper--boost">
             <i class="material-icons">trending_up</i
-            ><span>{{ typeLabels[currency][tx.superType] }}ed Content</span>
+            ><span>{{ getTypeLabel(tx.superType) }}ed Content</span>
           </div>
         </ng-template>
 
@@ -44,7 +44,7 @@
           ><div class="m-walletTransactionsTable__typeWrapper--withdraw">
             <i class="material-icons m-walletTransactionsTable__icon--arrow"
               >arrow_forward</i
-            ><span>{{ typeLabels[currency][tx.superType] }}</span>
+            ><span>{{ getTypeLabel(tx.superType) }}</span>
           </div></ng-template
         >
 
@@ -75,7 +75,7 @@
               [src]="tx.otherUser.avatar"
             />
             <span
-              >{{ typeLabels[currency][tx.superType] }}
+              >{{ getTypeLabel(tx.superType) }}
               {{ tx.otherUser.isSender ? 'from' : 'to' }}
               <a
                 class="m-walletTransactionsTable__otherUserLink"
@@ -103,15 +103,32 @@
           }"
           >play_arrow</i
         >
-        <span>{{ tx.amount }}</span>
+        <span *ngIf="currency === 'tokens'">{{ tx.amount }}</span>
+        <span *ngIf="currency !== 'tokens'">{{
+          tx.amount | currency: currency
+        }}</span>
       </div>
       <div
         class="m-walletTransactionsTable__totalWrapper"
-        *ngIf="(currency === 'tokens' && !filterApplied) || currency === 'usd'"
+        *ngIf="
+          (currency === 'tokens' && !filterApplied) || currency !== 'tokens'
+        "
       >
-        <span class="m-walletTransactionsTable__total--int">{{
-          tx.runningTotal.int | number: '1.0-3'
-        }}</span>
+        <span
+          class="m-walletTransactionsTable__total--int"
+          *ngIf="currency === 'tokens'"
+          >{{ tx.runningTotal.int | number: '1.0-0' }}</span
+        >
+        <span
+          class="m-walletTransactionsTable__total--int"
+          *ngIf="currency !== 'tokens'"
+          >{{
+            tx.runningTotal.int
+              | number: '1.0-0'
+              | currency: currency
+              | slice: 0:-3
+          }}</span
+        >
         <span
           class="m-walletTransactionsTable__total--frac"
           *ngIf="tx.runningTotal.frac"

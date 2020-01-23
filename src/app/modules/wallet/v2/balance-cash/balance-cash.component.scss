@@ -1,4 +1,4 @@
-m-walletBalance--usd {
+m-walletBalance--cash {
   display: block;
   max-width: 700px;
   > * {
@@ -9,12 +9,12 @@ m-walletBalance--usd {
       color: themed($m-grey-300);
     }
   }
-  .m-walletBalance--usd__colContainer {
+  .m-walletBalance--cash__colContainer {
     display: flex;
     justify-content: space-between;
   }
 
-  .m-walletBalance--usd__colTitle {
+  .m-walletBalance--cash__colTitle {
     position: relative;
     m-tooltip {
       position: relative;
@@ -29,46 +29,46 @@ m-walletBalance--usd {
       min-width: 100px;
     }
   }
-  .m-walletBalance--usd__col:last-child {
-    .m-walletBalance--usd__colTitle {
+  .m-walletBalance--cash__col:last-child {
+    .m-walletBalance--cash__colTitle {
       .m-tooltip--bubble {
         position: absolute;
         right: -24px;
       }
     }
   }
-  .m-walletBalance--usd__col {
-    .m-walletBalance--usd__colTitle {
+  .m-walletBalance--cash__col {
+    .m-walletBalance--cash__colTitle {
       font-size: 16px;
       line-height: 21px;
     }
-    .m-walletBalance--usd__colVal--int {
+    .m-walletBalance--cash__colVal--int {
       font-size: 24px;
       line-height: 32px;
     }
-    .m-walletBalance--usd__colVal--frac {
+    .m-walletBalance--cash__colVal--frac {
       font-size: 17px;
       line-height: 23px;
     }
   }
 
-  .m-walletBalance--usd__colTitle {
+  .m-walletBalance--cash__colTitle {
     min-width: 78px;
   }
-  .m-walletBalance--usd__colValWrapper {
+  .m-walletBalance--cash__colValWrapper {
     font-size: 13px;
     line-height: 18px;
     font-weight: 500;
     margin-top: 8px;
   }
-  .m-walletBalance--usd__colVal--int {
+  .m-walletBalance--cash__colVal--int {
     font-size: 16px;
     line-height: 21px;
     @include m-theme() {
       color: themed($m-grey-800);
     }
   }
-  .m-walletBalance--usd__colVal--frac {
+  .m-walletBalance--cash__colVal--frac {
     font-size: 13px;
     line-height: 18px;
   }

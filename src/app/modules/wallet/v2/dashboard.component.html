@@ -30,11 +30,11 @@
                 class="m-shadowboxLayout__body"
                 *ngIf="activeCurrencyId === 'tokens'"
               ></m-walletBalance--tokens>
-              <m-walletBalance--usd
+              <m-walletBalance--cash
                 class="m-shadowboxLayout__body"
-                *ngIf="activeCurrencyId === 'usd'"
-                (scrollToUsdSettings)="scrollToSettings('usd')"
-              ></m-walletBalance--usd>
+                *ngIf="activeCurrencyId === 'cash'"
+                (scrollToCashSettings)="scrollToSettings('cash')"
+              ></m-walletBalance--cash>
             </div>
             <div class="m-walletDashboardViews__wrapper">
               <div
@@ -62,9 +62,9 @@
                   <m-walletTransactions--tokens
                     *ngIf="activeCurrencyId === 'tokens'"
                   ></m-walletTransactions--tokens>
-                  <m-walletTransactions--usd
-                    *ngIf="activeCurrencyId === 'usd'"
-                  ></m-walletTransactions--usd>
+                  <m-walletTransactions--cash
+                    *ngIf="activeCurrencyId === 'cash'"
+                  ></m-walletTransactions--cash>
                 </ng-container>
                 <ng-container *ngIf="activeViewId === 'settings'">
                   <div class="m-walletDashboardSettings__wrapper">
@@ -72,10 +72,10 @@
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'tokens'"
                     ></m-walletSettings--tokens>
-                    <m-walletSettings--usd
+                    <m-walletSettings--cash
                       class="m-walletDashboardViews__view"
-                      *ngIf="activeCurrencyId === 'usd'"
-                    ></m-walletSettings--usd>
+                      *ngIf="activeCurrencyId === 'cash'"
+                    ></m-walletSettings--cash>
                     <m-walletSettings--eth
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'eth'"

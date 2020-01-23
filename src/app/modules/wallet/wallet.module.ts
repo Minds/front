@@ -56,17 +56,17 @@ import { WalletTransactionsTableComponent } from './v2/transactions-table/transa
 import { WalletRewardsPopupComponent } from './v2/rewards-popup/rewards-popup.component';
 import { WalletDashboardService } from './v2/dashboard.service';
 import { WalletSettingsTokensComponent } from './v2/settings-tokens/settings-tokens.component';
-import { WalletSettingsUSDComponent } from './v2/settings-usd/settings-usd.component';
+import { WalletSettingsCashComponent } from './v2/settings-cash/settings-cash.component';
 import { WalletSettingsETHComponent } from './v2/settings-eth/settings-eth.component';
 import { WalletSettingsBTCComponent } from './v2/settings-btc/settings-btc.component';
 import { WalletTokenOnboardingComponent } from './v2/token-onboarding/token-onboarding.component';
 import { WalletModalComponent } from './v2/modal/modal.component';
 import { WalletPhoneVerificationComponent } from './v2/phone-verification/phone-verification.component';
 import { WalletOnchainTransferComponent } from './v2/onchain-transfer/onchain-transfer.component';
-import { WalletBalanceUsdV2Component } from './v2/balance-usd/balance-usd.component';
-import { WalletPendingUsdPayoutComponent } from './v2/pending-usd-payout/pending-usd-payout.component';
+import { WalletBalanceCashComponent } from './v2/balance-cash/balance-cash.component';
+import { WalletPendingCashPayoutComponent } from './v2/pending-cash-payout/pending-cash-payout.component';
 import { WalletTransactionsTokensComponent } from './v2/transactions-tokens/transactions-tokens.component';
-import { WalletTransactionsUsdComponent } from './v2/transactions-usd/transactions-usd.component';
+import { WalletTransactionsCashComponent } from './v2/transactions-cash/transactions-cash.component';
 
 const walletRoutes: Routes = [
   {
@@ -186,7 +186,7 @@ const walletRoutes: Routes = [
     WalletRewardsPopupComponent,
     WalletTransactionsTableComponent,
     WalletSettingsTokensComponent,
-    WalletSettingsUSDComponent,
+    WalletSettingsCashComponent,
     WalletSettingsETHComponent,
     WalletSettingsBTCComponent,
     WalletTokenOnboardingComponent,
@@ -194,10 +194,10 @@ const walletRoutes: Routes = [
     WalletPhoneVerificationComponent,
     WalletOnchainTransferComponent,
     WalletBalanceTokensV2Component,
-    WalletBalanceUsdV2Component,
-    WalletPendingUsdPayoutComponent,
+    WalletBalanceCashComponent,
+    WalletPendingCashPayoutComponent,
     WalletTransactionsTokensComponent,
-    WalletTransactionsUsdComponent,
+    WalletTransactionsCashComponent,
   ],
   exports: [
     WalletComponent,

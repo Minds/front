@@ -1,0 +1,57 @@
+<div class="m-walletBalance--cash" *ngIf="!inProgress">
+  <div
+    class="m-walletTransactions__onboarding"
+    *ngIf="!hasAccount && !onSettingsTab"
+  >
+    <p>
+      <a (click)="scrollTocashSettings.emit()">Add your bank information</a>
+    </p>
+    <p>Start receiving payouts by adding your bank details.</p>
+  </div>
+  <div *ngIf="!inProgress" class="m-walletBalance--cash__colContainer">
+    <div class="m-walletBalance--cash__col">
+      <div class="m-walletBalance--cash__colTitle">
+        Pending Balance<m-tooltip icon="help">placeholder</m-tooltip>
+      </div>
+      <div class="m-walletBalance--cash__colValWrapper">
+        <span class="m-walletBalance--cash__colVal--int">{{
+          pendingBalance.int
+            | number: '1.0-0'
+            | currency: currency
+            | slice: 0:-3
+        }}</span
+        ><span
+          class="m-walletBalance--cash__colVal--frac"
+          *ngIf="pendingBalance.frac"
+          >.{{ pendingBalance.frac }}</span
+        >
+      </div>
+    </div>
+    <div class="m-walletBalance--cash__col" *ngIf="hasAccount">
+      <div class="m-walletBalance--cash__colTitle">
+        Total Paid Out<m-tooltip icon="help">placeholder</m-tooltip>
+      </div>
+
+      <div class="m-walletBalance--cash__colValWrapper">
+        <span class="m-walletBalance--cash__colVal--int">{{
+          totalPaidOut.int | number: '1.0-0' | currency: currency | slice: 0:-3
+        }}</span
+        ><span
+          class="m-walletBalance--cash__colVal--frac"
+          *ngIf="totalPaidOut.frac"
+          >.{{ totalPaidOut.frac }}</span
+        >
+      </div>
+    </div>
+    <div class="m-walletBalance--cash__col" *ngIf="hasAccount">
+      <div class="m-walletBalance--cash__colTitle">
+        Next Payout<m-tooltip icon="help">placeholder</m-tooltip>
+      </div>
+      <div class="m-walletBalance--cash__colValWrapper">
+        <span class="m-walletBalance--cash__colVal--int">{{
+          nextPayoutDate
+        }}</span>
+      </div>
+    </div>
+  </div>
+</div>
