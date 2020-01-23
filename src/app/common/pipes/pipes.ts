@@ -10,6 +10,7 @@ import { UtcDatePipe } from './utcdate';
 import { AddressExcerptPipe } from './address-excerpt';
 import { TimediffPipe } from './timediff.pipe';
 import { FriendlyDateDiffPipe } from './friendlydatediff';
+import { SyntaxHighlightingPipe } from '../../modules/syntax-highlighting/syntax-highlighting.pipe';
 
 export const MINDS_PIPES = [
   AbbrPipe,
@@ -24,4 +25,5 @@ export const MINDS_PIPES = [
   AddressExcerptPipe,
   TimediffPipe,
   FriendlyDateDiffPipe,
+  SyntaxHighlightingPipe,
 ];
