@@ -23,6 +23,7 @@ import { OverlayModalComponent } from '../../../common/components/overlay-modal/
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../common/services/site.service';
 import { ScrollService } from '../../../services/ux/scroll';
+import { captureEvent } from '@sentry/core';
 
 @Component({
   providers: [ProChannelService, OverlayModalService, SignupModalService],
@@ -225,6 +226,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.shouldOpenWireModal();
     } catch (e) {
       this.error = e.message;
+      console.error(e);
+      captureEvent(e);
 
       if (e.message === 'E_NOT_PRO') {
         if (this.site.isProDomain) {
@@ -249,6 +252,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.shouldOpenWireModal();
     } catch (e) {
+      console.error(e);
+      captureEvent(e);
       this.error = e.message;
     }
 
