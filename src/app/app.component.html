@@ -34,13 +34,13 @@
     [class.is-pro-domain]="isProDomain"
   >
     <m-emailConfirmation></m-emailConfirmation>
-    <m-announcement [id]="'blockchain:sale'" *ngIf="false">
+    <m-announcement [id]="'festival:sale'" *mIfFeature="'radiocity'">
       <span
         class="m-blockchain--wallet-address-notice--action"
-        routerLink="/tokens"
-        i18n="@@BLOCKCHAIN__SALE__NOTICE"
+        i18n="@@MINDS_FESTIVAL_TICKET_SALE"
       >
-        The MINDS token is now live. Learn more here.
+        BREAKING: Tickets on sale for "MINDS: FESTIVAL OF IDEAS" @ Radio City on
+        6/13/2020. HELP US SELL OUT FAST!
       </span>
     </m-announcement>
     <m-blockchain--wallet-address-notice></m-blockchain--wallet-address-notice>
