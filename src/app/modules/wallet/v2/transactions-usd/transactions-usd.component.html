@@ -7,17 +7,15 @@
       <div class="m-walletTransactionsTable__time">
         Upcoming
       </div>
-      <div
-        class="m-walletTransactionsTable__typeWrapper"
-        (mouseenter)="showPendingPayoutPopup = true"
-        (mouseleave)="showPendingPayoutPopup = false"
-      >
+      <div class="m-walletTransactionsTable__typeWrapper">
+        <!-- (mouseenter)="showPendingPayoutPopup = true"
+        (mouseleave)="showPendingPayoutPopup = false" -->
         <i class="material-icons">star_border</i
         ><span>Estimated Pro Earnings</span>
       </div>
-      <m-walletPendingUsdPayout
+      <!-- <m-walletPendingUsdPayout
         *ngIf="showPendingPayoutPopup"
-      ></m-walletPendingUsdPayout>
+      ></m-walletPendingUsdPayout> -->
     </div>
     <ng-container *ngIf="!inProgress || transactions">
       <m-walletTransactionsTable
