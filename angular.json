@@ -27,7 +27,6 @@
             "scripts": [
               "node_modules/material-design-lite/dist/material.min.js",
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
-              "node_modules/highlight.js/lib/highlight.js",
               "src/shims/jitsi-api.min.js"
             ]
           },
