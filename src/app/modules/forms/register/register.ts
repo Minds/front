@@ -78,7 +78,7 @@ export class RegisterForm implements OnInit {
         password: ['', Validators.required],
         password2: ['', [Validators.required]],
         tos: [false, Validators.requiredTrue],
-        exclusive_promotions: [false],
+        exclusive_promotions: [true],
         captcha: [''],
         previousUrl: this.routerHistoryService.getPreviousUrl(),
       },

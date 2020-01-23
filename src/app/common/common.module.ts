@@ -143,6 +143,7 @@ import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
+import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 
 const routes: Routes = [
   {
@@ -268,7 +269,7 @@ const routes: Routes = [
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
     EmailConfirmationComponent,
-    DateDropdownsComponent,
+    FormInputCheckboxComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -370,7 +371,7 @@ const routes: Routes = [
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
     EmailConfirmationComponent,
-    DateDropdownsComponent,
+    FormInputCheckboxComponent,
   ],
   providers: [
     SiteService,
