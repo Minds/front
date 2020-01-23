@@ -147,6 +147,7 @@ export class WalletDashboardService {
     this.getEthAccount();
     this.getStripeAccount();
 
+    // TODOOJM !!! remove any refs to window.Minds !!!
     // TODOOJM toggle me before pushing
     this.wallet = fakeData.wallet;
 
@@ -160,15 +161,21 @@ export class WalletDashboardService {
   }
 
   async getTokenAccounts() {
-    await this.loadOffchainAndReceiver();
-    await this.loadOnchain();
     const tokenTypes = ['tokens', 'onchain', 'offchain', 'receiver'];
 
-    const tokenWallet = {};
-    tokenTypes.forEach(type => {
-      tokenWallet[type] = this.wallet[type];
-    });
-    return tokenWallet;
+    try {
+      await this.loadOffchainAndReceiver();
+      await this.loadOnchain();
+
+      const tokenWallet = {};
+      tokenTypes.forEach(type => {
+        tokenWallet[type] = this.wallet[type];
+      });
+      return tokenWallet;
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
   }
 
   async loadOffchainAndReceiver() {
@@ -354,14 +361,14 @@ export class WalletDashboardService {
     }
   }
 
-  async getStripeTransactions() {
+  async getStripeTransactions(offset) {
     try {
-      // const { response } = <any>(
+      // const response  = <any>(
       //   await this.client.get('api/v2/payments/stripe/transactions')
       // );
+      // return response;
       // TODOOJM toggle fake data
-      // return response.transactions;
-      return fakeData.tx_usd.transactions;
+      return fakeData.tx_usd;
     } catch (e) {
       console.error(e);
       return;
@@ -370,7 +377,7 @@ export class WalletDashboardService {
 
   async getStripePayouts() {
     try {
-      // const { response } = <any>(
+      // const response = <any>(
       //   await this.client.get('api/v1/monetization/service/analytics/list?offset=&limit=12&type=payouts'
       // );
       // TODOOJM toggle fake data
@@ -383,13 +390,28 @@ export class WalletDashboardService {
   }
 
   // TODOOJM bucket endpoint needed
-  getTokenChart(activeTimespan) {
+  async getTokenChart(activeTimespan) {
     return fakeData.visualisation;
   }
 
-  getTokenTransactionTable() {
-    // TODOOJM get this from token transactions component
-    return fakeData.token_transactions;
+  async getTokenTransactions(opts) {
+    try {
+      // TODOOJM uncomment
+      // const response  = <any>(
+      //   await this.client.get(`api/v2/blockchain/transactions/ledger`, opts)
+      // );
+      // return response;
+
+      // TODOOJM remove
+      if (!opts.contract) {
+        return fakeData.tx_tokens;
+      } else {
+        return fakeData.tx_tokens_filtered;
+      }
+    } catch (e) {
+      console.error(e);
+      return;
+    }
   }
 
   async hasMetamask(): Promise<boolean> {
@@ -402,9 +424,6 @@ export class WalletDashboardService {
       const response: any = await this.client.post(
         'api/v2/blockchain/transactions/can-withdraw'
       );
-      // const { response } = <any>(
-      //   await this.client.post('api/v2/blockchain/transactions/can-withdraw')
-      // );
       if (!response) {
         return false;
       }
@@ -422,5 +441,23 @@ export class WalletDashboardService {
     } else {
       return false;
     }
+  }
+
+  async getDailyContributionScores(dateRangeOpts) {
+    // TODOOJM toggle
+    // try {
+    //   const response: any = await this.client.post(
+    //     'api/v2/blockchain/contributions',
+    //     dateRangeOpts
+    //   );
+    //   if (!response.contributions) {
+    //     return false;
+    //   }
+    //   return response;
+    // } catch (e) {
+    //   console.error(e);
+    //   return false;
+    // }
+    return fakeData.pendingTokenRewards;
   }
 }

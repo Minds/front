@@ -14,10 +14,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './settings-usd.component.html',
 })
 export class WalletSettingsUSDComponent implements OnInit {
-  // TODOOJM $stripeAccount make this observable
-  stripeAccount: any;
-  // TODOOJM $stripeAccount make this calculated by observable
-  hasAccount: boolean = false;
+  // TODOOJM $account make this observable
+  account: any;
+  // TODOOJM $account make this calculated by observable
   payoutMethod = {
     account: null,
     country: 'US',
@@ -36,26 +35,26 @@ export class WalletSettingsUSDComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getStripeAccount();
+    this.getAccount();
 
     this.loaded = true;
     this.detectChanges();
   }
 
-  async getStripeAccount() {
+  async getAccount() {
     this.walletService
       .getStripeAccount()
-      .then((stripeAccount: any) => {
-        this.stripeAccount = stripeAccount;
-        this.payoutMethod.country = stripeAccount.country;
-        this.form.controls.country.setValue(stripeAccount.country);
-        if (stripeAccount.bankAccount.last4) {
-          this.payoutMethod.account = stripeAccount.bankAccount;
+      .then((account: any) => {
+        this.account = account;
+        this.payoutMethod.country = account.country;
+        this.form.controls.country.setValue(account.country);
+        if (account.bankAccount.last4) {
+          this.payoutMethod.account = account.bankAccount;
         }
       })
       .catch(e => {
         this.formToastService.error(e.message);
-        this.detectChanges();
+        // this.detectChanges();
       });
 
     this.form = new FormGroup({
@@ -70,7 +69,7 @@ export class WalletSettingsUSDComponent implements OnInit {
     this.detectChanges();
   }
 
-  async createStripeAccount() {}
+  async createaccount() {}
 
   async addBank() {
     this.inProgress = true;
@@ -84,7 +83,7 @@ export class WalletSettingsUSDComponent implements OnInit {
         this.formToastService.success(
           'Your bank account was successfully added.'
         );
-        this.getStripeAccount();
+        this.getAccount();
       })
       .catch(e => {
         this.inProgress = false;
@@ -100,17 +99,19 @@ export class WalletSettingsUSDComponent implements OnInit {
       .leaveMonetization()
       .then((response: any) => {
         (<any>window).Minds.user.merchant = [];
+        this.getAccount();
       })
       .catch(e => {
         this.formToastService.error(e.message);
-        this.detectChanges();
       });
+    this.detectChanges();
   }
 
   edit() {
     this.editing = true;
     this.detectChanges();
   }
+
   async removeBank() {
     this.inProgress = true;
     this.detectChanges();
@@ -122,7 +123,7 @@ export class WalletSettingsUSDComponent implements OnInit {
         this.formToastService.success(
           'Your bank account was successfully removed.'
         );
-        this.getStripeAccount();
+        this.getAccount();
       })
       .catch(e => {
         this.inProgress = false;

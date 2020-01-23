@@ -1,7 +1,7 @@
 <div class="m-dropdownSelector__labelWrapper" *ngIf="showLabel">
   <span>{{ filter.label }}</span>
-  <m-tooltip icon="help">
-    <div>{{ filter?.description }}</div>
+  <m-tooltip icon="help" *ngIf="filter.description">
+    <div>{{ filter.description }}</div>
     <ul>
       <ng-container *ngFor="let option of filter.options">
         <li>
@@ -34,7 +34,7 @@
         class="m-dropdownSelector__option"
         (click)="updateFilter(option)"
         [ngClass]="{
-          unavailable: option.available === false
+          unavailable: option?.available === false
         }"
       >
         {{ option.label }}

@@ -1,0 +1,37 @@
+m-walletRewardsPopup {
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: 300;
+  @include m-walletColor--medium;
+  @include m-walletText--13;
+  @include m-theme() {
+    background-color: themed($m-white);
+    box-shadow: 0 0 10px 0 rgba(themed($m-black), 0.1);
+  }
+
+  .m-walletRewardsPopup__row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .m-walletRewardsPopup__metricsContainer {
+    margin: 14px 20px 18px 20px;
+    .m-walletRewardsPopup__row {
+      margin-bottom: 5px;
+    }
+  }
+
+  .m-walletRewardsPopup__totalScoreWrapper {
+    margin: 10px 20px 20px 20px;
+
+    span {
+      @include m-walletColor--dark;
+      @include m-walletText--14;
+    }
+  }
+  .m-walletRewardsPopup__notice {
+    margin: 20px;
+  }
+}

@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { WalletDashboardService } from './../dashboard.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-walletBalance--tokens',
@@ -26,6 +27,13 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   showModal = false;
   protected updateTimer$;
 
+  // display 2am UTC in local time
+  localPayoutTime = moment()
+    .utc()
+    .startOf('day')
+    .add(2, 'hours')
+    .local()
+    .format('h:mma');
   nextPayoutDate = 0;
   estimatedTokenPayout;
   payoutSubscription: Subscription;

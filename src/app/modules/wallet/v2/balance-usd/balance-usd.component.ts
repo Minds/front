@@ -37,7 +37,6 @@ export class WalletBalanceUsdV2Component implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
-      console.log('onsettings?', params.get('view') === 'settings');
       this.onSettingsTab = params.get('view') === 'settings';
       this.detectChanges();
     });
@@ -74,8 +73,6 @@ export class WalletBalanceUsdV2Component implements OnInit {
 
       this.totalPaidOut = this.formatBalance(totalPaidOutRaw);
     }
-    // TEMP
-    this.hasAccount = false;
 
     this.inProgress = false;
     this.detectChanges();

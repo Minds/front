@@ -58,15 +58,13 @@
                     activeCurrencyId === 'tokens' && activeViewId === 'overview'
                   "
                 ></m-walletChart>
-                <ng-container *ngIf="activeVfiewId === 'transactions'">
-                  <m-walletTransactions--usd
-                    class="m-walletDashboardViews__view"
-                    *ngIf="activeCurrencyId === 'usd'"
-                  ></m-walletTransactions--usd>
+                <ng-container *ngIf="activeViewId === 'transactions'">
                   <m-walletTransactions--tokens
-                    class="m-walletDashboardViews__view"
                     *ngIf="activeCurrencyId === 'tokens'"
                   ></m-walletTransactions--tokens>
+                  <m-walletTransactions--usd
+                    *ngIf="activeCurrencyId === 'usd'"
+                  ></m-walletTransactions--usd>
                 </ng-container>
                 <ng-container *ngIf="activeViewId === 'settings'">
                   <div class="m-walletDashboardSettings__wrapper">

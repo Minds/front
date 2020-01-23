@@ -1,9 +1,121 @@
-m-walletTransactionsTable {
-  .m-walletTransactionsTable__row {
-    display: flex;
-    justify-content: space-between;
-  }
-  .m-walletTransactionsTable__row--day {
+/////////////////////////////
+// Shared parent styles (tokens/cash)
+.m-walletTransactions {
+  margin: 40px 70px;
+  font-weight: 300;
+  @include m-walletColor--medium;
+  @include m-walletText--14;
+}
+.m-walletTransactions__spinner {
+  display: flex;
+  justify-content: center;
+}
+
+[class*='m-walletTransactionsTable__row'] {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  align-items: center;
+}
+.m-walletTransactionsTable__row--top {
+  margin-bottom: 10px;
+  .m-walletTransactionsTable__time {
     font-weight: 500;
+    @include m-walletColor--dark;
+  }
+}
+
+.m-walletTransactionsTable__filterWrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  m-dropdownselector {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: $min-tablet) {
+  .m-walletTransactions {
+    margin: 34px 62px;
+  }
+}
+@media screen and (max-width: $max-mobile) {
+  .m-walletTransactions {
+    margin: 26px 40px;
+  }
+}
+////////////////////////////////////////////////
+m-walletTransactionsTable {
+  .m-walletTransactionsTable__row--date {
+    margin: 52px 0 27px 0;
+    @include m-walletColor--dark;
+  }
+  .m-walletTransactionsTable__row--details {
+    margin-bottom: 21px;
+  }
+  .m-walletTransactionsTable__typeWrapper {
+    position: relative;
+    i {
+      opacity: 0.5;
+      @include m-theme() {
+        color: themed($m-black);
+      }
+    }
+  }
+  .m-walletTransactionsTable__transactionFailed {
+    .m-walletTransactionsTable__amountWrapper span {
+      text-decoration: line-through;
+    }
+  }
+  .m-walletTransactionsTable__avatar {
+    border-radius: 100%;
+    height: 27px;
+    width: 27px;
+  }
+  .m-walletTransactionsTable__otherUserLink {
+    font-weight: 300;
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+  }
+  .m-walletTransactionsTable__amountWrapper {
+    display: flex;
+    i {
+      transform-origin: center center;
+      &.positive {
+        transform: rotate(-90deg);
+        @include m-theme() {
+          color: themed($m-green-dark);
+        }
+      }
+      &.negative {
+        transform: rotate(90deg);
+        @include m-theme() {
+          color: themed($m-red-dark);
+        }
+      }
+      &.neutral {
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+      }
+      &.failed {
+        @include m-theme() {
+          color: themed($m-grey-100);
+        }
+      }
+    }
+    span {
+      @include m-walletColor--medium;
+      @include m-walletText--14;
+    }
+  }
+  .m-walletTransactionsTable__total--int {
+    @include m-walletColor--dark;
+    @include m-walletText--15;
+  }
+  .m-walletTransactionsTable__total--frac {
+    @include m-walletColor--medium;
+    @include m-walletText--12;
   }
 }

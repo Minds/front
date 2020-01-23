@@ -3,7 +3,7 @@ import {
   OnInit,
   Input,
   Output,
-  ChangeDetectionStrategy,
+  // ChangeDetectionStrategy,
   EventEmitter,
 } from '@angular/core';
 
@@ -13,7 +13,7 @@ import { Filter, Option } from '../../../interfaces/dashboard';
 @Component({
   selector: 'm-dropdownSelector',
   templateUrl: './dropdown-selector.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownSelectorComponent implements OnInit {
   @Input() filter: Filter;
@@ -31,9 +31,11 @@ export class DropdownSelectorComponent implements OnInit {
     this.selectedOption =
       this.filter.options.find(option => option.selected === true) ||
       this.filter.options[0];
+    console.log('dropdowninit:', this.selectedOption);
   }
 
   updateFilter(option: Option) {
+    console.log('filter', option.id, option.label);
     this.expanded = false;
     if ('available' in option && !option.available) {
       return;

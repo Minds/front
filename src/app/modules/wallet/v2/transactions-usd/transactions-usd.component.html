@@ -1,24 +1,89 @@
-<div class="m-walletTransactions" *ngIf="loading">
-  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+<div class="m-walletTransactions">
+  <div *ngIf="inProgress || !init" class="m-walletTransactions__spinner">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+  <div class="m-walletTransactionsTable__wrapper" *ngIf="init">
+    <div class="m-walletTransactionsTable__row--top">
+      <div class="m-walletTransactionsTable__time">
+        Upcoming
+      </div>
+      <div
+        class="m-walletTransactionsTable__typeWrapper"
+        (mouseenter)="showPendingRewardsPopup = true"
+        (mouseleave)="showPendingRewardsPopup = false"
+      >
+        <i class="material-icons">star_border</i
+        ><span>Estimated Pro Earnings</span>
+      </div>
+      <m-walletRewardsPopup
+        [timestamp]="startOfToday"
+        *ngIf="showPendingRewardsPopup"
+      ></m-walletRewardsPopup>
+      <div class="m-walletTransactionsTable__filterWrapper">
+        <span>Transaction Type</span>
+        <m-dropdownSelector
+          *ngIf="transactions"
+          [filter]="filter"
+          [showLabel]="false"
+          (selectionMade)="filterSelected($event)"
+        ></m-dropdownSelector>
+      </div>
+    </div>
+    <ng-container *ngIf="!inProgress || transactions">
+      <m-walletTransactionsTable
+        currency="tokens"
+        [transactions]="transactions"
+        [filterApplied]="filterApplied"
+      >
+      </m-walletTransactionsTable>
+      <infinite-scroll
+        distance="25%"
+        (load)="load(false)"
+        [moreData]="moreData"
+        [inProgress]="inProgress"
+      ></infinite-scroll>
+    </ng-container>
+  </div>
+  <div class="m-walletTransactions__noTxNotice" *ngIf="init && !transactions">
+    You don't have any cash transactions yet.
+  </div>
 </div>
-<div class="m-walletTransactions--usd" *ngIf="!loading">
+
+<!-- <div class="m-walletTransactions">
+  <div class="m-walletTransactions" *ngIf="!init">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
   <div
     class="m-walletTransactions__noTxNotice"
-    *ngIf="!transactions && !pendingTransactions"
+    *ngIf="init && !transactionsRaw"
   >
-    You don't have any USD transactions yet.
+    You don't have any transactions yet.
   </div>
-  <div class="m-walletTransactions__tableContainer" *ngIf="transactions">
-    <m-dropdownSelector
-      [filter]="filter"
-      (selectionMade)="filterSelected($event)"
-    ></m-dropdownSelector>
-    <m-walletPendingUsdPayout
-      [pendingTransactions]="pendingTransactions"
-    ></m-walletPendingUsdPayout>
+  <div
+    class="m-walletTransactionsTable__wrapper"
+    *ngIf="init && transactionsRaw"
+  >
+    <div class="m-walletTransactionsTable__row--top">
+      <m-walletPendingUsdPayout></m-walletPendingUsdPayout>
+      <div class="m-walletTransactionsTable__filterWrapper">
+        <span>Transaction Type</span>
+        <m-dropdownSelector
+          *ngIf="transactions"
+          [filter]="filter"
+          showLabel="false"
+          (selectionMade)="filterSelected($event)"
+        ></m-dropdownSelector>
+      </div>
+    </div>
     <m-walletTransactionsTable
-      [transactions]="transactions"
       currency="usd"
+      [transactions]="transactions"
     ></m-walletTransactionsTable>
+    <infinite-scroll
+      distance="25%"
+      (load)="load(false)"
+      [moreData]="moreData"
+      [inProgress]="inProgress"
+    ></infinite-scroll>
   </div>
-</div>
+</div> -->

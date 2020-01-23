@@ -1,3 +1,30 @@
+@mixin m-walletColor--medium {
+  @include m-theme() {
+    color: themed($m-grey-300);
+  }
+}
+@mixin m-walletColor--dark {
+  @include m-theme() {
+    color: themed($m-grey-800);
+  }
+}
+@mixin m-walletText--15 {
+  font-size: 15px;
+  line-height: 20px;
+}
+@mixin m-walletText--14 {
+  font-size: 14px;
+  line-height: 19px;
+}
+@mixin m-walletText--13 {
+  font-size: 13px;
+  line-height: 18px;
+}
+@mixin m-walletText--12 {
+  font-size: 12px;
+  line-height: 16px;
+}
+////////////////////////////////////////////
 m-walletDashboard {
   .m-shadowboxHeaderTab {
     line-height: 21px;
@@ -60,6 +87,9 @@ m-walletDashboard {
   }
   .m-walletDashboardViews__tabsContainer {
     margin: 0 40px;
+  }
+  .m-walletDashboardViews__viewsContainer {
+    min-height: 550px;
   }
   .m-walletDashboardViews__view {
     margin: 50px 57px 0 57px;
@@ -474,6 +504,7 @@ m-walletDashboard {
       margin-right: 10px;
     }
   }
+
   @media screen and (max-width: $min-tablet) {
     .m-walletSettingsView__setupOptions__container {
       li.m-walletSettingsView__setupOption--custom {
@@ -497,3 +528,5 @@ m-walletDashboard {
     }
   }
 }
+
+///////////////////////////////////
