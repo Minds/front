@@ -269,6 +269,7 @@ const routes: Routes = [
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
     EmailConfirmationComponent,
+    DateDropdownsComponent,
     FormInputCheckboxComponent,
   ],
   exports: [
@@ -371,6 +372,7 @@ const routes: Routes = [
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
     EmailConfirmationComponent,
+    DateDropdownsComponent,
     FormInputCheckboxComponent,
   ],
   providers: [
