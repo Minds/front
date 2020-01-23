@@ -18,11 +18,11 @@
   </ng-container>
 
   <m-body
-    [class.has-markers-sidebar]="session.isLoggedIn()"
+    [class.has-markers-sidebar]="session.isLoggedIn() && !isProDomain"
     [class.has-v2-navbar]="featuresService.has('top-feeds')"
     [class.is-pro-domain]="isProDomain"
   >
-    <m-emailConfirmation></m-emailConfirmation>
+    <m-emailConfirmation *ngIf="!isProDomain"></m-emailConfirmation>
     <m-announcement [id]="'blockchain:sale'" *ngIf="false">
       <span
         class="m-blockchain--wallet-address-notice--action"

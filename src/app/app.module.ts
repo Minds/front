@@ -3,6 +3,7 @@ import {
   NgModule,
   Injectable,
   ErrorHandler,
+  APP_INITIALIZER,
 } from '@angular/core';
 import {
   BrowserModule,
@@ -79,6 +80,7 @@ import * as Sentry from '@sentry/browser';
 import { CookieModule } from '@gorniv/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
+import { ConfigsService } from './common/services/configs.service';
 
 Sentry.init({
   dsn: 'https://3f786f8407e042db9053434a3ab527a2@sentry.io/1538008', // TODO: do not hardcard
@@ -115,7 +117,7 @@ export class SentryErrorHandler implements ErrorHandler {
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(MindsAppRoutes, {
-      initialNavigation: 'enabled',
+      // initialNavigation: 'enabled',
       onSameUrlNavigation: 'reload',
     }),
     CaptchaModule,
@@ -173,6 +175,12 @@ export class SentryErrorHandler implements ErrorHandler {
     MindsAppRoutingProviders,
     MINDS_PROVIDERS,
     MINDS_PLUGIN_PROVIDERS,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: configs => () => configs.loadFromRemote(),
+      deps: [ConfigsService],
+      multi: true,
+    },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

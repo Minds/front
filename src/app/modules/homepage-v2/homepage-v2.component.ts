@@ -30,6 +30,9 @@ export class HomepageV2Component {
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
+  }
+
+  ngOnInit() {
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;

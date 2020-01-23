@@ -54,10 +54,11 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
         return elements.filter((element: BehaviorSubject<any>) => {
           const entity = element.getValue();
           return (
-            entity.type === 'group' ||
-            !!entity.thumbnail_src ||
-            !!entity.custom_data ||
-            (entity.thumbnails && entity.thumbnails.length > 0)
+            entity &&
+            (entity.type === 'group' ||
+              !!entity.thumbnail_src ||
+              !!entity.custom_data ||
+              (entity.thumbnails && entity.thumbnails.length > 0))
           );
         });
       })
@@ -69,28 +70,29 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       this.entities = [];
       if (params['type']) {
         this.type = this.paramsType = params['type'];
-      }
-      switch (params['type']) {
-        case 'all':
-          this.type = 'all';
-          break;
-        case 'videos':
-          this.type = 'videos';
-          break;
-        case 'images':
-          this.type = 'images';
-          break;
-        case 'articles':
-          this.type = 'blogs';
-          break;
-        case 'groups':
-          this.type = 'groups';
-          break;
-        case 'feed':
-          this.type = 'activities';
-          break;
-        default:
-          throw new Error('Unknown type');
+
+        switch (params['type']) {
+          case 'all':
+            this.type = 'all';
+            break;
+          case 'videos':
+            this.type = 'videos';
+            break;
+          case 'images':
+            this.type = 'images';
+            break;
+          case 'articles':
+            this.type = 'blogs';
+            break;
+          case 'groups':
+            this.type = 'groups';
+            break;
+          case 'feed':
+            this.type = 'activities';
+            break;
+          default:
+            throw new Error('Unknown type');
+        }
       }
 
       this.query = params['query'] || '';

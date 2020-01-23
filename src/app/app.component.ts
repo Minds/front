@@ -17,7 +17,7 @@ import { ContextService } from './services/context.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
 import { WebtorrentService } from './modules/webtorrent/webtorrent.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, Route } from '@angular/router';
 import { ChannelOnboardingService } from './modules/onboarding/channel/onboarding.service';
 import { BlockListService } from './common/services/block-list.service';
 import { FeaturesService } from './services/features.service';
@@ -48,6 +48,8 @@ export class Minds {
 
   protected router$: Subscription;
 
+  protected routerConfig: Route[];
+
   constructor(
     public session: Session,
     public route: ActivatedRoute,
@@ -77,6 +79,9 @@ export class Minds {
     private socketsService: SocketsService
   ) {
     this.name = 'Minds';
+    if (this.site.isProDomain) {
+      this.router.resetConfig(PRO_DOMAIN_ROUTES);
+    }
   }
 
   async ngOnInit() {
@@ -97,14 +102,6 @@ export class Minds {
       });
 
     try {
-      // Load external configs
-      await this.configs.loadFromRemote();
-
-      // Reset router if PRO
-      if (this.site.isProDomain) {
-        this.router.resetConfig(PRO_DOMAIN_ROUTES);
-      }
-
       this.updateMeta(); // Because the router is setup before our configs
 
       // Setup sentry/diagnostic configs
@@ -131,7 +128,9 @@ export class Minds {
   async initialize() {
     this.blockListService.fetch();
 
-    if (!this.site.isProDomain) {
+    if (this.site.isProDomain) {
+      this.site.listen();
+    } else {
       this.notificationService.getNotifications();
     }
 

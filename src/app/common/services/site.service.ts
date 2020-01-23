@@ -28,13 +28,9 @@ export class SiteService {
 
   private router$: Subscription;
 
-  constructor(private router: Router, private configs: ConfigsService) {
-    if (this.isProDomain) {
-      this.listen();
-    }
-  }
+  constructor(private router: Router, private configs: ConfigsService) {}
 
-  private listen() {
+  listen(): void {
     this.router$ = this.router.events.subscribe(
       (navigationEvent: NavigationEnd) => {
         try {

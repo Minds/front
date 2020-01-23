@@ -49,10 +49,6 @@ export class HomepageComponent {
     public pagesService: PagesService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
-    if (this.session.isLoggedIn()) {
-      this.router.navigate(['/newsfeed']);
-      return;
-    }
 
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;
@@ -60,6 +56,11 @@ export class HomepageComponent {
   }
 
   ngOnInit() {
+    if (this.session.isLoggedIn()) {
+      this.router.navigate(['/newsfeed']);
+      return;
+    }
+
     this.scroll$ = this.scroll.listen(
       document,
       (subscription, e) => {
