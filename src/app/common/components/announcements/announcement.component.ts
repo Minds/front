@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 
 import { Storage } from '../../../services/storage';
 import { Client } from '../../../services/api';
@@ -20,7 +20,7 @@ import { Client } from '../../../services/api';
     </div>
   `,
 })
-export class AnnouncementComponent {
+export class AnnouncementComponent implements OnInit {
   minds: Minds = window.Minds;
   hidden: boolean = false;
   @Input() id: string = 'default';
