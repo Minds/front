@@ -29,6 +29,11 @@
               <a routerLink="/analytics/dashboard/earnings">earnings</a> are
               equivalent to $100 or greater.
             </ng-template>
+            <ng-template ngSwitchCase="subscription">
+              <h4 class="m-shadowboxHeader__subtitle">
+                Manage your subscription
+              </h4>
+            </ng-template>
           </ng-container>
           <a
             class="m-proSettings__upgradeLink"
@@ -893,8 +898,36 @@
                   </div>
                 </div>
               </ng-template>
+              <ng-template ngSwitchCase="subscription">
+                <div class="m-shadowboxLayout__body">
+                  <div
+                    class="m-proSettings__tab--subscription"
+                    formGroupName="subscription"
+                  >
+                    <div class="hasValidationRow">
+                      <button
+                        class="m-shadowboxSubmitButton"
+                        type="button"
+                        [disabled]="saveStatus === 'saving'"
+                        [ngClass]="{ saving: saveStatus === 'saving' }"
+                        (click)="cancelSubscription()"
+                      >
+                        <span
+                          class="m-shadowboxSubmitButton__status--unsaved"
+                          i18n
+                        >
+                          Cancel Subscription
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
             </ng-container>
-            <div class="m-shadowboxLayout__footer">
+            <div
+              class="m-shadowboxLayout__footer"
+              *ngIf="activeTab !== 'subscription'"
+            >
               <m-shadowboxSubmitButton
                 [disabled]="
                   !form.valid || form.pristine || saveStatus === 'saving'

@@ -101,6 +101,8 @@
       border-radius: 50%;
       @include m-theme() {
         border: 1px solid themed($m-grey-50);
+        // Account for misalignment caused by 1px border.
+        transform: translateX(-1px);
       }
     }
 

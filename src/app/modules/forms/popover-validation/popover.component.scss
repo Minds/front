@@ -12,7 +12,7 @@ m-popover {
       //left: -150px;
       transform: translate(0, 10px);
       padding: 20px;
-      filter: drop-shadow(0px 2px 5px rgba(0, 0, 0, 0.26));
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
 
       width: 90%;
 

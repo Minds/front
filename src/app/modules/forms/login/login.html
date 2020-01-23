@@ -122,6 +122,14 @@
       />
     </div>
   </div>
+  <a
+    class="m-login__joinTheConversation"
+    [routerLink]="['/register']"
+    *ngIf="showTitle"
+    i18n
+  >
+    Join the conversation
+  </a>
 
   <div class="mdl-card__actions">
     <div
@@ -136,6 +144,7 @@
       (click)="login()"
       [disabled]="inProgress"
       *ngIf="!showBigButton"
+      data-cy="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
     </button>
@@ -144,6 +153,7 @@
       (click)="login()"
       [disabled]="inProgress"
       *ngIf="showBigButton"
+      data-cy="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">
         Login

@@ -67,7 +67,7 @@ export class ChannelListComponent implements OnInit {
           nsfw,
         })
         .setLimit(3)
-        .setCastToActivities(true)
+        .setExportUserCounts(true)
         .fetch();
     } catch (e) {
       console.error('SortedComponent', e);

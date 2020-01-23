@@ -1,3 +1,7 @@
+import generateRandomId from '../../support/utilities';
+
+const groupId = generateRandomId();
+
 context('Groups', () => {
   before(() => {
     cy.getCookie('minds_sess')
@@ -25,7 +29,7 @@ context('Groups', () => {
     cy.uploadFile('minds-banner #file', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg');
 
     // add a name
-    cy.get('.m-group-info-name > input').type('test');
+    cy.get('.m-group-info-name > input').type(groupId);
     // add a description
     cy.get('.m-group-info-brief-description > textarea').type('This is a test');
 
@@ -54,7 +58,7 @@ context('Groups', () => {
       //check count changed.
       cy.get('.m-groupSidebarMarkers__list').children().should('have.length', size + 1);
     });
-    cy.get('.m-groupInfo__name').contains('test');
+    cy.get('.m-groupInfo__name').contains(groupId);
     cy.get('.m-groupInfo__description').contains('This is a test');
 
     // open settings button
@@ -63,7 +67,7 @@ context('Groups', () => {
     cy.get('minds-groups-settings-button ul.minds-dropdown-menu li:first-child').contains('Edit').click();
 
     // edit name
-    cy.get('.m-groupInfo__name input').type(' group');
+    cy.get('.m-groupInfo__name input').type(' edit');
 
     // edit description
     cy.get('.m-groupInfo__description textarea').type(' group');
@@ -73,14 +77,12 @@ context('Groups', () => {
 
     cy.get('minds-groups-settings-button ul.minds-dropdown-menu li:first-child').contains('Save').click();
 
-    cy.get('.m-groupInfo__name').contains('test group');
+    cy.get('.m-groupInfo__name').contains(groupId + ' edit');
     cy.get('.m-groupInfo__description').contains('This is a test group');
   })
 
   it('should be able to toggle conversation and comment on it', () => {
-    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
-      cy.get(`m-group--sidebar-markers li:nth-child(${size - 1})`).click();
-    });
+    cy.contains(groupId).click();
 
     // toggle the conversation
     cy.get('.m-groupGrid__right').should('be.visible');
@@ -101,9 +103,7 @@ context('Groups', () => {
   })
 
   it('should post an activity inside the group and record the view when scrolling', () => {
-    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
-      cy.get(`m-group--sidebar-markers li:nth-child(${size - 1})`).click();
-    });
+    cy.contains(groupId).click();
 
     cy.server();
     cy.route("POST", "**/api/v2/analytics/views/activity/*").as("view");
@@ -113,7 +113,7 @@ context('Groups', () => {
     cy.get('.m-posterActionBar__PostButton').click();
 
     // the activity should show that it was posted in this group
-    cy.get('.minds-list minds-activity .body a:nth-child(2)').contains('(test group)');
+    cy.get('.minds-list minds-activity .body a:nth-child(2)').contains(`(${groupId} edit)`);
 
     cy.get('.minds-list minds-activity .m-mature-message-content').contains('This is a post');
 
@@ -130,10 +130,16 @@ context('Groups', () => {
     });
   });
 
+  it('should navigate to discovery when Find a Group clicked', () => {
+    cy.contains('Find a Group').click()
+    cy.location('pathname')
+      .should('eq', '/newsfeed/global/top%3Bperiod%3D12h%3Btype%3Dgroups%3Ball%3D1');
+  });
+
   it('should delete a group', () => {
     cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
-      cy.get(`m-group--sidebar-markers li:nth-child(${size - 1})`).click();
-
+      // cy.get(`m-group--sidebar-markers li:nth-child(${size - 2})`).click();
+      cy.contains(groupId).click();
       // cleanup
       cy.get('minds-groups-settings-button > button').click();
       cy.contains('Delete Group').click();
@@ -143,6 +149,6 @@ context('Groups', () => {
 
       cy.get('.m-groupSidebarMarkers__list').children().should('have.length', size - 1);
     });
-  })
+  });
 
 })

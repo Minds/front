@@ -30,6 +30,9 @@ m-onboarding__channelList {
   }
 
   .m-channelList__item {
+    display: flex;
+    width: 100%;
+
     &:last-of-type {
       border-bottom: 0;
     }
@@ -38,6 +41,7 @@ m-onboarding__channelList {
       display: flex;
       text-decoration: none;
       padding: 8px 8px;
+      flex-grow: 1;
     }
 
     .m-channelListItem__avatar {
@@ -48,6 +52,7 @@ m-onboarding__channelList {
       display: inline-block;
       margin-right: 8px;
       vertical-align: middle;
+      flex-shrink: 0;
     }
 
     .m-channelListItem__body {
@@ -55,17 +60,22 @@ m-onboarding__channelList {
       vertical-align: middle;
       align-items: center;
       flex-direction: row;
-      width: calc(100% - 36px);
+      max-width: calc(100% - 36px);
+      width: 20px;
+      flex-grow: 1;
 
       h4 {
         height: 21px;
-        width: 141px;
+        width: 100%;
         color: #636363;
         font-family: Roboto;
         font-size: 16px;
         font-weight: 500;
         line-height: 21px;
         margin: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
       }
 
       > div {
@@ -108,10 +118,6 @@ m-onboarding__channelList {
         span {
           display: none;
         }
-      }
-
-      m-join {
-        margin-right: 10px;
       }
     }
   }

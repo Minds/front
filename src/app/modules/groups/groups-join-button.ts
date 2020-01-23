@@ -148,6 +148,7 @@ export class GroupsJoinButton {
    * Join a group
    */
   join() {
+    event.preventDefault();
     if (!this.session.isLoggedIn()) {
       //this.showModal = true;
       this.loginReferrer.register(
@@ -195,6 +196,7 @@ export class GroupsJoinButton {
    * Leave a group
    */
   leave() {
+    event.preventDefault();
     this.service
       .leave(this.group)
       .then(() => {

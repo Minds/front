@@ -29,6 +29,7 @@ export interface MindsBlogEntity {
   access_id?: number;
   license?: string;
   allow_comments: boolean;
+  perma_url?: string;
 }
 
 export interface Message {}

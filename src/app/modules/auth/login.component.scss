@@ -4,6 +4,7 @@ m-login {
   display: block;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+  position: relative;
 
   &:not(.m-login__newDesign) {
     @include m-theme() {
@@ -37,6 +38,19 @@ m-login {
   &.m-login__newDesign {
     margin-top: -52px;
 
+    &.m-login__iosFallback {
+      .m-grid {
+        .m-login__wrapper {
+          filter: none;
+          box-shadow: -1px 0px 8px rgba(50, 50, 0, 0.5);
+
+          minds-form-login {
+            clip-path: none;
+          }
+        }
+      }
+    }
+
     &::before {
       content: '';
       position: absolute;
@@ -58,7 +72,8 @@ m-login {
     }
 
     @media screen and (max-width: $m-grid-max-mobile) {
-      margin: -52px 26px 50px;
+      margin: -52px 0 50px;
+      padding: 0 26px;
       &::before {
         position: absolute;
         top: 0;
@@ -70,10 +85,15 @@ m-login {
     }
 
     .m-grid {
+      position: relative;
       padding: 15vh 0 0;
 
       @media screen and (max-width: $m-grid-max-mobile) {
         padding: 10vh 0 0;
+      }
+
+      & > * {
+        margin: 0 auto;
       }
     }
 
@@ -189,6 +209,18 @@ m-login {
         margin-bottom: 33px;
       }
 
+      a {
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+
+        &.m-login__joinTheConversation {
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 500;
+        }
+      }
+
       .mdl-card__actions {
         flex-direction: column;
         align-items: flex-start;
@@ -197,10 +229,6 @@ m-login {
 
         & > *:not(button) {
           color: #4a4a4a !important;
-        }
-
-        a {
-          color: #4a90e2;
         }
 
         button {
