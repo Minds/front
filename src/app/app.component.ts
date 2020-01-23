@@ -77,10 +77,6 @@ export class Minds {
     private socketsService: SocketsService
   ) {
     this.name = 'Minds';
-
-    if (this.site.isProDomain) {
-      this.router.resetConfig(PRO_DOMAIN_ROUTES);
-    }
   }
 
   async ngOnInit() {
@@ -103,6 +99,12 @@ export class Minds {
     try {
       // Load external configs
       await this.configs.loadFromRemote();
+
+      // Reset router if PRO
+      if (this.site.isProDomain) {
+        this.router.resetConfig(PRO_DOMAIN_ROUTES);
+      }
+
       this.updateMeta(); // Because the router is setup before our configs
 
       // Setup sentry/diagnostic configs
