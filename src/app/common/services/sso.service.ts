@@ -6,15 +6,12 @@ import { ConfigsService } from './configs.service';
 
 @Injectable()
 export class SsoService {
-  protected readonly siteUrl: string;
-
   constructor(
     protected site: SiteService,
     protected client: Client,
     protected session: Session,
-    configs: ConfigsService
+    private configs: ConfigsService
   ) {
-    this.siteUrl = configs.get('site_url');
     this.listen();
   }
 
@@ -33,7 +30,7 @@ export class SsoService {
   async connect() {
     try {
       const connect: any = await this.client.postRaw(
-        `${this.siteUrl}api/v2/sso/connect`
+        `${this.configs.get('site_url')}api/v2/sso/connect`
       );
 
       if (connect && connect.token && connect.status === 'success') {
@@ -58,9 +55,12 @@ export class SsoService {
       const connect: any = await this.client.post('api/v2/sso/connect');
 
       if (connect && connect.token && connect.status === 'success') {
-        await this.client.postRaw(`${this.siteUrl}api/v2/sso/authorize`, {
-          token: connect.token,
-        });
+        await this.client.postRaw(
+          `${this.configs.get('site_url')}api/v2/sso/authorize`,
+          {
+            token: connect.token,
+          }
+        );
       }
     } catch (e) {
       console.error(e);
