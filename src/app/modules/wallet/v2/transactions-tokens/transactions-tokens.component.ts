@@ -177,7 +177,7 @@ export class WalletTransactionsTokensComponent implements OnInit {
       formattedTx.amount = txAmount;
       // formattedTx.delta =
 
-      if (!tx.failed) {
+      if (!tx.failed && tx.type !== 'withdraw') {
         this.runningTotal -= txAmount;
       }
       formattedTx.runningTotal = this.formatAmount(this.runningTotal);
@@ -219,7 +219,6 @@ export class WalletTransactionsTokensComponent implements OnInit {
       }
       this.transactions.push(formattedTx);
     });
-    console.log('formattedTxs', this.transactions);
     this.inProgress = false;
   }
 
@@ -282,87 +281,4 @@ export class WalletTransactionsTokensComponent implements OnInit {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-  //////////////////
-
-  // isP2p(transaction) {
-  //   const contractName = this.getNormalizedContractName(transaction.contract);
-
-  //   if (
-  //     contractName === 'wire' ||
-  //     contractName === 'offchain wire' ||
-  //     contractName === 'boost'
-  //   ) {
-  //     return !!transaction.sender && !!transaction.receiver;
-  //   }
-  // }
-
-  // getNormalizedContractName(contractName) {
-  //   if (contractName.indexOf('offchain:') > -1) {
-  //     const name = contractName.substr(9);
-  //     return name === 'wire' ? 'offchain wire' : name;
-  //   }
-  //   return contractName;
-  // }
-
-  // async loadTokens() {
-  //   this.inProgress = true;
-
-  //   const response: any = await this.walletService.getTokenTransactions();
-  //   this.formatTokenResponse(response);
-  //   this.init = true;
-  // }
-
-  // async getAddresses() {
-  //   this.inProgress = true;
-
-  //   if (!this.remote) { // has metamask
-  //     let receiverAddress: string = this.session.getLoggedInUser().eth_wallet;
-
-  //     this.addresses = [
-  //       {
-  //         address: receiverAddress,
-  //         label: 'Receiver',
-  //         selected: false,
-  //       },
-  //       {
-  //         label: 'OffChain',
-  //         address: 'offchain',
-  //         selected: false,
-  //       },
-  //     ];
-
-  //     try {
-  //       const onchainAddress = await this.web3Wallet.getCurrentWallet();
-  //       if (!onchainAddress) {
-  //         this.inProgress = false;
-  //         this.detectChanges();
-  //         return;
-  //       }
-
-  //       if (
-  //         this.addresses[0].address.toLowerCase() ==
-  //         onchainAddress.toLowerCase()
-  //       ) {
-  //         this.addresses[0].label = 'OnChain & Receiver';
-  //         this.inProgress = false;
-  //         this.detectChanges();
-  //         return; //no need to count twice
-  //       }
-
-  //       this.addresses.unshift({
-  //         label: 'OnChain',
-  //         address: onchainAddress,
-  //         selected: false,
-  //       });
-  //       this.inProgress = false;
-  //       this.detectChanges();
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   } else { // no metamask
-  //     // this.selectedAddress = null;
-  //     this.addresses = [];
-  //     this.inProgress = false;
-  //   }
-  // }
 }

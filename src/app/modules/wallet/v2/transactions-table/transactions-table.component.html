@@ -28,7 +28,7 @@
         <ng-template ngSwitchCase="boost">
           <div class="m-walletTransactionsTable__typeWrapper--boost">
             <i class="material-icons">trending_up</i
-            ><span>{{ typeLabels[tx.superType] }}ed Content</span>
+            ><span>{{ typeLabels[currency][tx.superType] }}ed Content</span>
           </div>
         </ng-template>
 
@@ -44,7 +44,7 @@
           ><div class="m-walletTransactionsTable__typeWrapper--withdraw">
             <i class="material-icons m-walletTransactionsTable__icon--arrow"
               >arrow_forward</i
-            ><span>{{ typeLabels[tx.superType] }}</span>
+            ><span>{{ typeLabels[currency][tx.superType] }}</span>
           </div></ng-template
         >
 
@@ -75,7 +75,7 @@
               [src]="tx.otherUser.avatar"
             />
             <span
-              >{{ typeLabels[tx.superType] }}
+              >{{ typeLabels[currency][tx.superType] }}
               {{ tx.otherUser.isSender ? 'from' : 'to' }}
               <a
                 class="m-walletTransactionsTable__otherUserLink"
@@ -107,7 +107,7 @@
       </div>
       <div
         class="m-walletTransactionsTable__totalWrapper"
-        *ngIf="!filterApplied"
+        *ngIf="(currency === 'tokens' && !filterApplied) || currency === 'usd'"
       >
         <span class="m-walletTransactionsTable__total--int">{{
           tx.runningTotal.int | number: '1.0-3'

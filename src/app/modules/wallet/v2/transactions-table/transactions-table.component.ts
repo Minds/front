@@ -10,14 +10,20 @@ export class WalletTransactionsTableComponent {
   @Input() filterApplied: boolean = false;
 
   typeLabels = {
-    'offchain:wire': 'Off-Chain Wire',
-    wire: 'On-Chain Wire',
-    reward: 'Reward',
-    token: 'Purchase',
-    withdraw: 'On-Chain Transfer',
-    'offchain:boost': 'Off-Chain Boost',
-    boost: 'On-Chain Boost',
-    pro_earning: 'Pro Earnings',
+    tokens: {
+      'offchain:wire': 'Off-Chain Wire',
+      wire: 'On-Chain Wire',
+      reward: 'Reward',
+      token: 'Purchase',
+      withdraw: 'On-Chain Transfer',
+      'offchain:boost': 'Off-Chain Boost',
+      boost: 'On-Chain Boost',
+    },
+    usd: {
+      wire: 'Wire',
+      pro_earning: 'Pro Earnings',
+      payout: 'Payouts',
+    },
   };
 
   constructor() {}

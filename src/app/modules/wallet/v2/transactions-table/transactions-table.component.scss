@@ -20,7 +20,6 @@
 .m-walletTransactionsTable__row--top {
   margin-bottom: 10px;
   .m-walletTransactionsTable__time {
-    font-weight: 500;
     @include m-walletColor--dark;
   }
 }

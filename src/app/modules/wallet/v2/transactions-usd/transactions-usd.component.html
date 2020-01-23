@@ -9,25 +9,15 @@
       </div>
       <div
         class="m-walletTransactionsTable__typeWrapper"
-        (mouseenter)="showPendingRewardsPopup = true"
-        (mouseleave)="showPendingRewardsPopup = false"
+        (mouseenter)="showPendingPayoutPopup = true"
+        (mouseleave)="showPendingPayoutPopup = false"
       >
         <i class="material-icons">star_border</i
         ><span>Estimated Pro Earnings</span>
       </div>
-      <m-walletRewardsPopup
-        [timestamp]="startOfToday"
-        *ngIf="showPendingRewardsPopup"
-      ></m-walletRewardsPopup>
-      <div class="m-walletTransactionsTable__filterWrapper">
-        <span>Transaction Type</span>
-        <m-dropdownSelector
-          *ngIf="transactions"
-          [filter]="filter"
-          [showLabel]="false"
-          (selectionMade)="filterSelected($event)"
-        ></m-dropdownSelector>
-      </div>
+      <m-walletPendingUsdPayout
+        *ngIf="showPendingPayoutPopup"
+      ></m-walletPendingUsdPayout>
     </div>
     <ng-container *ngIf="!inProgress || transactions">
       <m-walletTransactionsTable
