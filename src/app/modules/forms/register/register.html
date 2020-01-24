@@ -137,8 +137,7 @@
 
     <div
       class="mdl-cell mdl-cell--12-col"
-      [hidden]="!form.value.password2"
-      *ngIf="form.value.password"
+      [style.visibility]="form.value.password2 ? 'visible' : 'hidden'"
     >
       <re-captcha
         *ngIf="minds.recaptchaKey"

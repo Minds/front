@@ -155,8 +155,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   constructor(
+    public session: Session,
     protected element: ElementRef,
-    protected session: Session,
     protected channelService: ProChannelService,
     protected client: Client,
     protected title: MindsTitle,
