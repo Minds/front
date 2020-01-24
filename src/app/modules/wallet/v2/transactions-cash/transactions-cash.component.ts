@@ -52,7 +52,6 @@ export class WalletTransactionsCashComponent implements OnInit {
     if (!stripeAccount) {
       return;
     } else {
-      console.log('got stripeAccount', stripeAccount);
       if (stripeAccount.bankAccount) {
         this.currency = stripeAccount.bankAccount.currency.toUpperCase();
       }
@@ -60,8 +59,6 @@ export class WalletTransactionsCashComponent implements OnInit {
         (stripeAccount.totalBalance.amount -
           stripeAccount.pendingBalance.amount) /
         100;
-
-      console.log('running', this.runningTotal);
     }
 
     this.load(true);
@@ -164,7 +161,6 @@ export class WalletTransactionsCashComponent implements OnInit {
       }
       this.transactions.push(formattedTx);
     });
-    console.log(this.transactions);
     this.inProgress = false;
   }
 
