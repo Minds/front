@@ -19,7 +19,7 @@ export class TokenContractService {
   constructor(
     protected web3Wallet: Web3WalletService,
     protected overlayService: TransactionOverlayService,
-    @Inject(PLATFORM_ID) platformId
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
       this.load();

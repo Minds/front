@@ -9,7 +9,7 @@ export class MessengerConversationDockpanesService {
   constructor(
     public storage: Storage,
     public session: Session,
-    @Inject(PLATFORM_ID) platformId
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.session.getLoggedInUser(user => this.onLogOut(user));
 

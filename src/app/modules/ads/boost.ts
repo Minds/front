@@ -42,7 +42,7 @@ export class BoostAds implements OnInit, OnDestroy {
     public session: Session,
     private storage: Storage,
     private settingsService: SettingsService,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {

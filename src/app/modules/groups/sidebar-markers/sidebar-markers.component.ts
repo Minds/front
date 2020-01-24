@@ -35,7 +35,7 @@ export class GroupsSidebarMarkersComponent {
     private client: Client,
     public session: Session,
     private updateMarkers: UpdateMarkersService,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private groupsService: GroupsService,
     private cd: ChangeDetectorRef
   ) {}

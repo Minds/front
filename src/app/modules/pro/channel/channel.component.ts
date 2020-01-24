@@ -162,7 +162,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected sessionStorage: SessionsStorageService,
     protected site: SiteService,
     protected injector: Injector,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {

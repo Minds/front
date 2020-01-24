@@ -110,7 +110,7 @@ export class CommentComponentV2
     private router: Router,
     protected activityService: ActivityService,
     protected featuresService: FeaturesService,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId: Object,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');

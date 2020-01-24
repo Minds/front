@@ -85,7 +85,7 @@ export class GroupsProfile {
     private updateMarkers: UpdateMarkersService,
     configs: ConfigsService,
     private cookieService: CookieService,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }

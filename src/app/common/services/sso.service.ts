@@ -12,7 +12,7 @@ export class SsoService {
     protected client: Client,
     protected session: Session,
     private configs: ConfigsService,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.listen();
   }

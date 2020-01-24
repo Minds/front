@@ -44,7 +44,7 @@ export class SidebarSelectorComponent implements OnInit {
     protected topbarHashtagsService: TopbarHashtagsService,
     protected changeDetectorRef: ChangeDetectorRef,
     protected cookieService: CookieService,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {

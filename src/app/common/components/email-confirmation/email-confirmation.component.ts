@@ -42,7 +42,7 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
     protected service: EmailConfirmationService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) protected platformId,
+    @Inject(PLATFORM_ID) protected platformId: Object,
     configs: ConfigsService,
     protected router: Router,
     protected location: Location

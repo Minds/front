@@ -25,7 +25,7 @@ export class WalletTokenContributionsOverviewComponent
     protected cd: ChangeDetectorRef,
     public session: Session,
     protected router: Router,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   overview = {

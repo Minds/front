@@ -22,7 +22,7 @@ export class NotificationService {
     client: Client,
     sockets: SocketsService,
     metaService: MetaService,
-    platformId,
+    platformId: Object,
     site: SiteService
   ) {
     return new NotificationService(
@@ -40,7 +40,7 @@ export class NotificationService {
     public client: Client,
     public sockets: SocketsService,
     public metaService: MetaService,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId: Object,
     protected site: SiteService
   ) {
     if (!this.site.isProDomain) {

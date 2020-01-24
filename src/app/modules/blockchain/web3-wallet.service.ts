@@ -24,7 +24,7 @@ export class Web3WalletService {
   constructor(
     protected localWallet: LocalWalletService,
     protected transactionOverlay: TransactionOverlayService,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private configs: ConfigsService
   ) {
     this.config = this.configs.get('blockchain');
@@ -306,7 +306,7 @@ export class Web3WalletService {
   static _(
     localWallet: LocalWalletService,
     transactionOverlay: TransactionOverlayService,
-    platformId,
+    platformId: Object,
     configs: ConfigsService
   ) {
     return new Web3WalletService(

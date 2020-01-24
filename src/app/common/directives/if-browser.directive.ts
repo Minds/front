@@ -20,7 +20,7 @@ export class IfBrowserDirective {
   constructor(
     private _templateRef: TemplateRef<any>,
     private _viewContainerRef: ViewContainerRef,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this._update();
   }

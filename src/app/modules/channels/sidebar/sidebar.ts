@@ -49,7 +49,7 @@ export class ChannelSidebar implements OnInit {
     protected cookieService: CookieService,
     private overlayModal: OverlayModalService,
     public featuresService: FeaturesService,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private configs: ConfigsService
   ) {
     if (onboardingService && onboardingService.onClose) {

@@ -16,7 +16,7 @@ import { REQUEST } from '@nguniversal/express-engine/tokens';
 @Injectable()
 export class CookieHttpInterceptorService implements HttpInterceptor {
   constructor(
-    @Inject(PLATFORM_ID) private platformId: string,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private injector: Injector
   ) {}
 

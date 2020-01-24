@@ -27,7 +27,7 @@ export class SocketsService {
     public session: Session,
     private nz: NgZone,
     private configs: ConfigsService,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.SOCKET_IO_SERVER = this.configs.get('socket_server');
   }

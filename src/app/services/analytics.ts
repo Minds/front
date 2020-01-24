@@ -8,7 +8,12 @@ import { isPlatformServer } from '@angular/common';
 export class AnalyticsService {
   private defaultPrevented: boolean = false;
 
-  static _(router: Router, client: Client, site: SiteService, platformId) {
+  static _(
+    router: Router,
+    client: Client,
+    site: SiteService,
+    platformId: Object
+  ) {
     return new AnalyticsService(router, client, site, platformId);
   }
 
@@ -16,7 +21,7 @@ export class AnalyticsService {
     @Inject(Router) public router: Router,
     @Inject(Client) public client: Client,
     @Inject(SiteService) public site: SiteService,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.onRouterInit();
 

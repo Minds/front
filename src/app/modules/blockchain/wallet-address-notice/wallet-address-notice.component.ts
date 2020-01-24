@@ -26,7 +26,7 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
     protected blockchain: BlockchainService,
     protected router: Router,
     protected cd: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) protected platformId
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
   ngOnInit() {

@@ -68,7 +68,7 @@ export class Minds {
     public featuresService: FeaturesService,
     public themeService: ThemeService,
     private bannedService: BannedService,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private diagnostics: DiagnosticsService,
     private routerHistoryService: RouterHistoryService,
     private site: SiteService,

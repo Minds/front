@@ -10,7 +10,7 @@ export class NoticesService {
 
   constructor(
     protected client: HttpClient,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   async getNotices() {

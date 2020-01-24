@@ -62,7 +62,7 @@ export class CarouselComponent {
   interval: number = 3000; //the interval for each banner to stay before rotating
   index: number = 0; //the current visible index of the carousel.
 
-  constructor(@Inject(PLATFORM_ID) private platformId) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit() {
     this.run();

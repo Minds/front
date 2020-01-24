@@ -76,7 +76,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.clientMetaService
       .inherit(injector)

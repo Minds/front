@@ -10,7 +10,7 @@ export class BoostContractService {
   constructor(
     protected web3Wallet: Web3WalletService,
     protected tokenContract: TokenContractService,
-    @Inject(PLATFORM_ID) platformId
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
     if (isPlatformBrowser(platformId)) {
       this.load();

@@ -76,7 +76,7 @@ export class NewsfeedSubscribedComponent {
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.clientMetaService
       .inherit(injector)

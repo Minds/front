@@ -21,7 +21,7 @@ import { isPlatformServer } from '@angular/common';
 export class TransferHttpInterceptorService implements HttpInterceptor {
   constructor(
     private transferState: TransferState,
-    @Inject(PLATFORM_ID) private platformId: any
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   public intercept(

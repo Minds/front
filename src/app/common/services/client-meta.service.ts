@@ -28,7 +28,7 @@ export class ClientMetaService {
     protected location: Location,
     protected session: Session,
     protected client: Client,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.id = ++uniqId;
 

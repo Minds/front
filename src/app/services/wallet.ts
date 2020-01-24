@@ -21,7 +21,7 @@ export class WalletService {
     session: Session,
     client: Client,
     sockets: SocketsService,
-    platformId,
+    platformId: Object,
     configs
   ) {
     return new WalletService(session, client, sockets, platformId, configs);
@@ -31,7 +31,7 @@ export class WalletService {
     @Inject(Session) public session: Session,
     @Inject(Client) public client: Client,
     @Inject(SocketsService) private sockets: SocketsService,
-    @Inject(PLATFORM_ID) platformId,
+    @Inject(PLATFORM_ID) platformId: Object,
     private configs: ConfigsService
   ) {
     if (isPlatformBrowser(platformId)) {

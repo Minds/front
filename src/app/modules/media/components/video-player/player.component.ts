@@ -66,7 +66,7 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
   constructor(
     private service: VideoPlayerService,
     private cd: ChangeDetectorRef,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {

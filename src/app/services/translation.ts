@@ -7,14 +7,14 @@ export class TranslationService {
   private defaultLanguage: string;
   private languagesReady: Promise<any>;
 
-  static _(client: Client, storage: Storage, platformId) {
+  static _(client: Client, storage: Storage, platformId: Object) {
     return new TranslationService(client, storage, platformId);
   }
 
   constructor(
     @Inject(Client) private clientService: Client,
     @Inject(Storage) private storage: Storage,
-    @Inject(PLATFORM_ID) platformId
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.defaultLanguage = 'en'; // TODO: Set to get translated names (when i18n is in place)
     if (isPlatformBrowser(platformId)) this.load();

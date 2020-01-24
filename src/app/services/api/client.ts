@@ -17,7 +17,7 @@ export class Client {
     http: HttpClient,
     location: Location,
     cookie: CookieService,
-    platformId,
+    platformId: Object,
     transferState: TransferState,
     @Inject('ORIGIN_URL') baseUrl: string
   ) {
@@ -35,7 +35,7 @@ export class Client {
     public http: HttpClient,
     public location: Location,
     private cookie: CookieService,
-    @Inject(PLATFORM_ID) private platformId,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private transferState: TransferState,
     @Inject('ORIGIN_URL') public baseUrl: string
   ) {

@@ -34,7 +34,7 @@ export class CommentsScrollDirective {
 
   constructor(
     private elementRef: ElementRef,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.scroll = fromEvent(elementRef.nativeElement, 'scroll');
   }

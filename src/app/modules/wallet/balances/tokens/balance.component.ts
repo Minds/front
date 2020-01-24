@@ -36,7 +36,7 @@ export class WalletBalanceTokensComponent implements OnInit {
     protected tokenContract: TokenContractService,
     public session: Session,
     configs: ConfigsService,
-    @Inject(PLATFORM_ID) private platformId
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
