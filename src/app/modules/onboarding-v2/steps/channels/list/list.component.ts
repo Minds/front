@@ -1,17 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FeedsService } from '../../../../../common/services/feeds.service';
 import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'm-onboarding__channelList',
   templateUrl: 'list.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChannelListComponent implements OnInit {
   minds = window.Minds;
@@ -36,7 +29,6 @@ export class ChannelListComponent implements OnInit {
           this.entities.push(await entity.pipe(first()).toPromise());
         }
       }
-      this.detectChanges();
     });
 
     this.load(true);
@@ -48,11 +40,10 @@ export class ChannelListComponent implements OnInit {
     }
 
     this.inProgress = true;
-    this.detectChanges();
 
     try {
       const hashtags = '';
-      const period = '30d';
+      const period = '1y';
       const all = '';
       const query = '';
       const nsfw = [];
@@ -74,11 +65,5 @@ export class ChannelListComponent implements OnInit {
     }
 
     this.inProgress = false;
-    this.detectChanges();
-  }
-
-  detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
   }
 }
