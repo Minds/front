@@ -58,7 +58,10 @@
     *ngIf="session.isLoggedIn() && !isProDomain"
   ></m-juryDutySession__summons>
 
-  <m-modal-signup-on-scroll *ngIf="!isProDomain"></m-modal-signup-on-scroll>
+  <m-modal-signup
+    *ngIf="!isProDomain && !session.getLoggedInUser()"
+    [open]="false"
+  ></m-modal-signup>
 
   <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
 
