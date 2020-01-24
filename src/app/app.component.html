@@ -1,7 +1,11 @@
 <ng-container *ngIf="ready">
   <ng-container *ngIf="!isProDomain">
     <ng-container *ngIf="useNewNavigation; else v2Topbar">
-      <m-v3-topbar></m-v3-topbar>
+      <m-v3-topbar>
+        <ng-container search>
+          <m-search--bar [defaultSizes]="false"></m-search--bar>
+        </ng-container>
+      </m-v3-topbar>
     </ng-container>
 
     <ng-template #v2Topbar>

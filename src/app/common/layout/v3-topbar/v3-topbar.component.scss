@@ -1,7 +1,8 @@
 m-v3-topbar {
   .m-grid {
-    grid-gap: 10px;
+    grid-gap: 0;
     grid-template-columns: 3fr 5fr 4fr;
+
     &,
     & > * {
       height: 75px;
@@ -11,6 +12,7 @@ m-v3-topbar {
       margin-left: 33.3%;
       grid-column: 1 / span 1;
     }
+
     .m-v3topbar__middleColumn {
       grid-column: 2 / span 1;
     }
@@ -55,39 +57,41 @@ m-v3-topbar {
     width: 100%;
   }
 
-  m-search--bar {
-    > .mdl-textfield {
-      padding: 8px 0;
-      width: 270px;
+  .m-v3-topbar__SearchBox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
 
-      @media screen and (min-width: 1296px) {
-        width: 180px;
-        transition: width ease-in-out 0.2s;
+    m-search--bar {
+      display: contents;
 
-        &.is-focused {
-          width: 360px;
+      > .mdl-textfield {
+        width: 100%;
+
+        input {
+          border: 0;
+          font-size: 16px;
+          line-height: 21px;
+          font-weight: normal;
         }
       }
 
-      @media screen and (max-width: 1080px) {
-        width: 100%;
+      .mdl-textfield__label {
+        display: none;
       }
-    }
 
-    .mdl-textfield__label {
-      display: none;
-    }
-
-    .m-search-bar-suggestions-list {
-      left: auto;
-      right: 0;
-      top: 75px;
-      width: 100%;
-      border-radius: 4px;
-      @include m-theme() {
-        box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14),
-          0 3px 3px -2px rgba(themed($m-black), 0.2),
-          0 1px 8px 0 rgba(themed($m-black), 0.12);
+      .m-search-bar-suggestions-list {
+        left: auto;
+        right: 0;
+        top: 75px;
+        width: 100%;
+        border-radius: 4px;
+        @include m-theme() {
+          box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14),
+            0 3px 3px -2px rgba(themed($m-black), 0.2),
+            0 1px 8px 0 rgba(themed($m-black), 0.12);
+        }
       }
     }
   }
@@ -267,14 +271,6 @@ m-v3-topbar {
     @include m-theme() {
       box-shadow: 0 0 0 2px themed($m-blue);
     }
-  }
-}
-
-.m-v3-topbar__SearchBox {
-  margin: 0 16px;
-
-  @media screen and (max-width: 1081px) {
-    flex-grow: 1;
   }
 }
 
