@@ -444,4 +444,5 @@ m-comments__tree,
 .m-comment--poster .minds-body {
   overflow: visible;
   min-height: 50px;
+  max-width: calc(100% - 60px);
 }
