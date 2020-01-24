@@ -34,6 +34,13 @@ import { NewsfeedEntityComponent } from './feeds/entity.component';
 import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
 import { SearchModule } from '../search/search.module';
 import { NewsfeedTilesComponent } from './feeds/tiles.component';
+import { Ng2FittextModule } from 'ng2-fittext';
+import { MindsActivityV2 } from './activity-v2/activity.component';
+import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
+import { WireModule } from '../wire/wire.module';
+import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
+import { TranslateModule } from '../translate/translate.module';
+import { VideoModule } from '../media/components/video/video.module';
 
 const routes: Routes = [
   {
@@ -80,6 +87,12 @@ const routes: Routes = [
     NoticesModule,
     SearchModule,
     ReferralsModule,
+    PostMenuModule,
+    WireModule,
+    TextInputAutocompleteModule,
+    TranslateModule,
+    VideoModule,
+    Ng2FittextModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,
@@ -93,6 +106,7 @@ const routes: Routes = [
     NewsfeedSortedComponent,
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
+    MindsActivityV2,
   ],
   providers: [
     NewsfeedService,
@@ -105,6 +119,7 @@ const routes: Routes = [
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
     NewsfeedComponent,
+    MindsActivityV2,
   ],
   entryComponents: [NewsfeedComponent, NewsfeedSingleComponent],
 })

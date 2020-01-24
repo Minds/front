@@ -1,0 +1,484 @@
+minds-activity-v2.mdl-card,
+minds-activity-v2 {
+  width: auto;
+  min-height: 720px !important;
+  max-height: 720px !important;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  overflow: visible;
+  justify-content: space-around;
+
+  &.minds-activity-v2__allowOverflow {
+    max-height: none !important;
+
+    .m-mature-message {
+      max-height: none !important;
+      //.m-mature-message-content {
+      //  max-height: none;
+      //}
+    }
+  }
+
+  m-post-menu {
+    button.minds-more > i {
+      @include m-theme() {
+        color: themed($m-grey-100);
+      }
+    }
+  }
+
+  button.m-translate-button > i {
+    @include m-theme() {
+      color: themed($m-grey-100);
+    }
+  }
+
+  .m-activity__spacer {
+    flex-grow: 1;
+    flex-shrink: 1;
+  }
+
+  .mdl-card__supporting-text {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    @include m-theme() {
+      color: rgba(themed($m-black), 0.8);
+    }
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .mdl-card__supporting-text.message {
+    //margin: 26px;
+    padding: 0 22px;
+    white-space: pre-line;
+    word-wrap: break-word;
+    padding-top: 0;
+    word-break: break-word;
+  }
+
+  textarea.mdl-card__supporting-text.message {
+    white-space: pre-wrap;
+  }
+
+  .m-owner-block {
+    position: relative;
+    //flex-shrink: 0;
+    //flex-grow: 0;
+    min-height: 72px;
+    height: 72px;
+    max-height: 72px;
+
+    .avatar {
+      img {
+        width: 37px;
+        height: 37px;
+      }
+    }
+
+    .body {
+      margin-left: 14px;
+
+      a {
+        font-size: 16px;
+        line-height: 21px;
+        color: #5d5d5d;
+
+        &.permalink {
+          span {
+            font-size: 13px;
+            line-height: 18px;
+            @include m-theme() {
+              color: themed($grey-200);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  m-video {
+    height: 300px;
+  }
+
+  a.m-activity--image-link {
+    img {
+      height: 300px;
+      background-color: #f5f5f5;
+    }
+  }
+
+  .m-mature-message {
+    max-height: 146px;
+    margin-top: 14px;
+
+    .m-read-more--button {
+      text-align: center;
+
+      span {
+        color: #4a90e2;
+      }
+    }
+  }
+
+  .m-activity__actionButtons {
+    height: 60px;
+    border-top: 1px solid #eee;
+    padding: 23px 0;
+
+    display: flex;
+
+    box-sizing: border-box;
+
+    > * {
+      display: flex;
+      flex-direction: column;
+      //flex:auto;
+      //flex: 1;
+
+      text-align: center;
+      cursor: pointer;
+    }
+
+    minds-button-thumbs-up,
+    minds-button-thumbs-down,
+    minds-button-remind {
+      padding: 0 22px;
+
+      a {
+        &:not(.selected) {
+          @include m-theme() {
+            color: themed($m-grey-500);
+          }
+        }
+
+        i,
+        span {
+          vertical-align: middle;
+          font-size: 19px;
+          line-height: 16px;
+        }
+
+        span {
+          font-size: 12px;
+          padding: 0 0 0 8px;
+        }
+      }
+    }
+  }
+
+  .m-activity__pay {
+    justify-self: flex-end;
+    align-self: center;
+
+    margin-left: auto;
+    margin-right: 22px;
+
+    img {
+      width: 21px;
+      height: 19px;
+      cursor: pointer;
+    }
+  }
+
+  m-comments__tree > m-comments__thread {
+    height: 91px;
+    flex-shrink: 0;
+    //background-color: lightblue;
+
+    .m-commentPoster__top {
+      min-height: 78px;
+
+      m-comment__poster {
+        minds-textarea {
+          border-radius: 2px;
+          margin-bottom: 0;
+        }
+
+        .mdl-card__actions {
+          .m-post-button {
+            display: none;
+          }
+
+          i.material-icons {
+            @include m-theme() {
+              color: themed($m-grey-500);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .m-owner-block--remind {
+    overflow: visible;
+
+    i {
+      font-size: 18px;
+      margin-right: 12px;
+    }
+
+    .avatar img {
+      object-fit: cover;
+    }
+
+    .body {
+      margin-left: 12px;
+
+      a {
+        font-size: 12px;
+        letter-spacing: 1px;
+      }
+    }
+  }
+
+  .m-activity--message-remind {
+    padding-top: 0;
+    padding-bottom: 8px;
+  }
+
+  .mdl-card__menu {
+    & > * {
+      margin-right: 20px;
+    }
+  }
+
+  minds-button-subscribe {
+    i {
+      display: none;
+    }
+
+    button.m-btn {
+      @include m-theme() {
+        border: 1px solid themed($m-grey-100);
+      }
+      border-radius: 2px;
+      padding: 7px 12px;
+      margin: 0;
+
+      span {
+        font-size: 14px;
+        line-height: 19px;
+        text-transform: none;
+
+        @include m-theme() {
+          color: themed($m-grey-500);
+        }
+      }
+    }
+  }
+
+  .m-translate-button i {
+    font-size: 18px;
+  }
+
+  .m-edited-text {
+    text-transform: uppercase;
+    padding-right: 8px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+  }
+
+  .m-translation-label {
+    padding-top: 0;
+    font-size: 0.75em;
+
+    i {
+      vertical-align: bottom;
+      vertical-align: text-bottom;
+    }
+
+    a {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+
+  minds-comments {
+    margin-top: 0;
+
+    .m-translation-label {
+      font-size: 1em;
+    }
+
+    .m-comment-carrot.m-comment-carrot-collapsed {
+      display: none;
+
+      @media screen and (max-width: $max-mobile) {
+        display: inline-block;
+      }
+    }
+
+    .mdl-card__menu {
+      @include m-theme() {
+        background-color: themed($m-white);
+      }
+    }
+
+    minds-card-comment:hover {
+      .m-comment-carrot {
+        display: inline-block;
+      }
+    }
+
+    .minds-block .minds-body a {
+      //span {
+      //  vertical-align: middle;
+      //  font-family: 'Roboto', Helvetica, sans-serif;
+      //  text-rendering: optimizeLegibility;
+      //  letter-spacing: 0.75px;
+      //  -webkit-font-smoothing: antialiased;
+      //  font-weight: 800;
+      //}
+      //.minds-comment-span {
+      //  top: 0;
+      //  font-weight: 400;
+      //  text-transform: uppercase;
+      //}
+    }
+  }
+
+  .minds-more {
+    i {
+      font-size: 30px;
+      transform: translate(-16px, -12px);
+      font-weight: 100;
+    }
+  }
+
+  /**
+   * Rich embeds
+   */
+  .m-rich-embed {
+    a {
+      width: 100%;
+    }
+
+    img {
+      width: 100%;
+      height: 300px;
+      object-fit: contain;
+      background-color: #f5f5f5;
+    }
+
+    .meta {
+      padding: 16px 22px 0;
+      display: block;
+      text-decoration: none;
+      width: auto;
+      background-color: #fbfbfb;
+
+      h2 {
+        font-size: 15px;
+        line-height: 20px;
+        color: #4a4a4a;
+      }
+
+      p {
+        color: #9b9b9b;
+        font-size: 13px;
+        line-height: 18px;
+        text-overflow: ellipsis;
+        text-rendering: auto;
+        white-space: pre-wrap;
+        overflow: hidden;
+        max-height: 48px;
+        margin: 2px 0;
+        padding: 0;
+      }
+
+      p.m-url {
+        white-space: nowrap;
+        max-width: 240px;
+      }
+    }
+  }
+
+  .item-image-video {
+    video {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .item-image {
+    img {
+      width: 100%;
+      max-height: 1500px;
+      object-fit: contain;
+    }
+  }
+
+  .is-boosted {
+    display: inline-block;
+    width: auto;
+    font-size: 11px;
+    padding: 0;
+    padding-right: 8px;
+    line-height: 1;
+    vertical-align: middle;
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+
+    i {
+      font-size: 18px;
+      position: relative;
+      vertical-align: middle;
+
+      &.unlisted {
+        font-size: 16px;
+        margin-right: 4px;
+      }
+    }
+
+    a {
+      font-weight: bold;
+      vertical-align: middle;
+      @include m-theme() {
+        color: themed($m-grey-400);
+      }
+    }
+  }
+
+  .is-boosted.is-onchain {
+    @include m-theme() {
+      color: themed($m-blue);
+    }
+
+    a {
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+  }
+
+  /**
+   * Remind
+   */
+  minds-remind {
+    margin: 0;
+    width: auto;
+    min-height: 0;
+    overflow: visible;
+
+    .m-owner-block {
+      padding-top: 0;
+    }
+  }
+
+  .m-activity--pending {
+    padding: $minds-padding ($minds-padding * 2);
+    font-size: 12px;
+    font-weight: 400;
+    @include m-theme() {
+      color: themed($m-warn-fg);
+      background-color: themed($m-warn-bg);
+    }
+  }
+}

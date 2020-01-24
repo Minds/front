@@ -49,7 +49,7 @@ export class CommentsThreadComponent implements OnInit {
   );
 
   @Input() scrollable: boolean = false;
-  @ViewChild('scrollArea', { static: true }) scrollView: ElementRef;
+  @ViewChild('scrollArea', { static: false }) scrollView: ElementRef;
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
   autoloadBlocked: boolean = false;
 
@@ -81,8 +81,10 @@ export class CommentsThreadComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.load(true);
-    this.listen();
+    if (this.showList) {
+      this.load(true);
+      this.listen();
+    }
   }
 
   get guid(): string {
@@ -318,6 +320,17 @@ export class CommentsThreadComponent implements OnInit {
     this.comments[index] = comment;
     this.showList = true;
     this.detectChanges();
+  }
+
+  toggleList(value: boolean) {
+    this.showList = value;
+
+    if (value) {
+      setTimeout(() => {
+        this.load(true);
+        this.listen();
+      });
+    }
   }
 
   detectChanges() {

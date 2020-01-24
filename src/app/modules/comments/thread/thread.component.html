@@ -2,7 +2,7 @@
   <ng-container *ngTemplateOutlet="poster"></ng-container>
 
   <ng-container *ngIf="!showList && level == 0">
-    <a class="m-commentsThread__seeComments" (click)="showList = true">
+    <a class="m-commentsThread__seeComments" (click)="toggleList(true)">
       See comments
     </a>
   </ng-container>
