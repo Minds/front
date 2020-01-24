@@ -1,10 +1,13 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  PLATFORM_ID,
+  Inject,
 } from '@angular/core';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+
 import { Subscription } from 'rxjs';
 import { WalletDashboardService } from './dashboard.service';
 import { Session } from '../../../services/session';
@@ -13,6 +16,7 @@ import { MindsTitle } from '../../../services/ux/title';
 import sidebarMenu from './sidebar-menu.default';
 import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
+
 // TODOOJM DON"T USE THIS BC SSR??
 import { Storage } from '../../../services/storage';
 
@@ -21,7 +25,7 @@ import { Storage } from '../../../services/storage';
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WalletDashboardComponent implements OnInit, OnDestroy {
+export class WalletDashboardComponent implements OnInit {
   menu: Menu = sidebarMenu;
   paramsSubscription: Subscription;
   wallet = {};
@@ -53,7 +57,8 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
     protected title: MindsTitle,
-    protected storage: Storage
+    protected storage: Storage,
+    @Inject(PLATFORM_ID) private platformId
   ) {}
 
   ngOnInit() {
@@ -85,7 +90,6 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
         this.activeViewId = this.views[this.activeCurrencyId][0].id;
         this.updateView(this.activeViewId);
       }
-
       this.detectChanges();
     });
     this.setCurrencies();
@@ -99,19 +103,14 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
         id: currency,
         label: this.wallet[currency].label,
         unit: this.wallet[currency].unit,
+        isLocalCurrency: currency === 'cash' ? true : false,
       };
       if (currency !== 'btc') {
         headerTab.value = this.wallet[currency].balance;
       }
       this.currencies.push(headerTab);
     });
-  }
-
-  ngOnDestroy() {
-    // No need for this with route params
-    // if (this.paramsSubscription) {
-    //   this.paramsSubscription.unsubscribe();
-    // }
+    console.log(this.currencies);
   }
 
   updateCurrency($event) {
@@ -122,14 +121,12 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       this.activeCurrencyId,
       this.activeViewId,
     ]);
-
     this.detectChanges();
   }
 
   updateView(viewId) {
     this.activeViewId = viewId;
     this.router.navigate(['/v2wallet', this.activeCurrencyId, viewId]);
-
     this.detectChanges();
   }
 
@@ -150,14 +147,17 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       }
     }
 
-    setTimeout(
-      () =>
-        document.getElementById('dashboardViewsTabs').scrollIntoView({
-          behavior: 'smooth',
-        }),
-      0
-    );
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(
+        () =>
+          document.getElementById('dashboardViewsTabs').scrollIntoView({
+            behavior: 'smooth',
+          }),
+        0
+      );
+    }
   }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

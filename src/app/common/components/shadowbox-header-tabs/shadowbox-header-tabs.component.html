@@ -12,7 +12,13 @@
     </div>
     <div
       class="m-shadowboxHeaderTab__value"
-      *ngIf="tab.value || tab.value === 0"
+      *ngIf="tab?.isLocalCurrency && (tab.value || tab.value === 0)"
+    >
+      {{ tab.value | number: '1.0-3' | currency: tab.label }}
+    </div>
+    <div
+      class="m-shadowboxHeaderTab__value"
+      *ngIf="!tab?.isLocalCurrency && (tab.value || tab.value === 0)"
       [ngSwitch]="tab?.unit"
     >
       <ng-template ngSwitchCase="tokens">

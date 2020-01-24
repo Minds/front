@@ -24,7 +24,7 @@ const fakeData = {
       balance: 0.223,
       address: '0x8aA1A2a94c799f0124B6Bf8481D529BDa844498D',
     },
-    usd: {
+    cash: {
       label: 'GBP',
       unit: 'gbp',
       balance: 25.5,

@@ -136,7 +136,6 @@ export class WalletTransactionsCashComponent implements OnInit {
       formattedTx.timestamp = tx.timestamp;
       formattedTx.type = tx.type;
       formattedTx.superType = tx.type;
-      console.log('tx.type', tx.type);
 
       if (formattedTx.superType === 'payout') {
         formattedTx.showRewardsPopup = false;

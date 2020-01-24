@@ -99,4 +99,5 @@ export interface ShadowboxHeaderTab {
   hasChanged?: boolean;
   positiveTrend?: boolean;
   description?: string;
+  isLocalCurrency?: boolean;
 }
