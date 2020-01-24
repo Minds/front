@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'm-progress__ring',
+  selector: 'm-progressring',
   templateUrl: 'progress.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
