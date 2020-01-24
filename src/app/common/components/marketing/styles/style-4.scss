@@ -33,11 +33,19 @@
         @include m-on-theme(dark) {
           color: #ffffff;
         }
+        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+          font-size: 40px !important;
+          line-height: 39px !important;
+          text-align: left !important;
+        }
 
         @media screen and (max-width: $m-grid-min-vp) {
           font-size: 28px;
           line-height: 32px;
           margin: 20px 0 17px;
+        }
+
+        @media screen and(max-width: $m-grid-max-mobile) {
           text-align: center;
         }
       }
@@ -45,8 +53,37 @@
 
     p.m-marketing__description {
       margin-bottom: 42px;
-      padding-right: 200px;
 
+      @media screen and(min-width: $min-tablet) {
+        padding-right: 200px;
+      }
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        margin-bottom: 30px;
+      }
+
+      @media screen and (max-width: $m-grid-max-mobile) {
+        text-align: center;
+      }
+    }
+
+    ol.m-marketing__description {
+      padding-left: 16px;
+
+      & > li {
+        margin-bottom: 16px;
+        font-size: 18px;
+        line-height: 27px;
+      }
+
+      //@media screen and(min-width: $m-grid-min-vp),
+      //  screen and (max-width: $m-grid-max-mobile) {
+      //  padding-right: 100px;
+      //}
+    }
+
+    ol.m-marketing__description > li,
+    p.m-marketing__description {
       @include m-theme() {
         color: themed($m-grey-300);
       }
@@ -59,8 +96,7 @@
         padding-right: 0;
         margin-bottom: 30px;
         font-size: 16px;
-        line-height: 23px;
-        text-align: center;
+        line-height: 27px;
       }
     }
 
@@ -91,7 +127,11 @@
       position: relative;
       z-index: 0;
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+        margin-right: 60px;
+      }
+
+      @media screen and (max-width: $m-grid-max-mobile) {
         grid-row: 1;
       }
 
@@ -101,7 +141,12 @@
         height: 547px;
         clip-path: polygon(0% 1%, 0% 96%, 100% 100%, 100% 0%);
 
-        @media screen and (max-width: $m-grid-min-vp) {
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+          width: 100%;
+          //height: auto;
+        }
+
+        @media screen and (max-width: $m-grid-max-mobile) {
           width: 100vw;
           height: 100vw;
           clip-path: polygon(0% 1%, 0% 97%, 100% 100%, 100% 0%);
@@ -116,8 +161,14 @@
         left: 0;
         bottom: 35px;
         transform: translate(-15px, 0);
+        z-index: 2;
 
-        @media screen and (max-width: $m-grid-min-vp) {
+        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+          width: 100%;
+          height: auto;
+        }
+
+        @media screen and (max-width: $m-grid-max-mobile) {
           right: auto;
           left: 50%;
           bottom: 0;
@@ -127,13 +178,13 @@
         }
       }
 
-      span {
+      span:not(.m-marketing__imageUX):not(.m-marketing__imageTick) {
         display: inline-block;
         position: relative;
         width: 100%;
         text-align: right;
 
-        @media screen and (max-width: $m-grid-min-vp) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           margin-bottom: calc(
             20vw + 40px
           ); // A little bit less than half UX image + normal margin

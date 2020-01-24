@@ -5,6 +5,7 @@ import {
   EventEmitter,
   ElementRef,
   Input,
+  Output,
   ViewChild,
   OnInit,
   SkipSelf,
@@ -19,7 +20,6 @@ import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
-import { MindsVideoComponent } from '../../../../media/components/video/video.component';
 import { EntitiesService } from '../../../../../common/services/entities.service';
 import { Router } from '@angular/router';
 import { BlockListService } from '../../../../../common/services/block-list.service';
@@ -30,6 +30,7 @@ import { AutocompleteSuggestionsService } from '../../../../suggestions/services
 import { ActivityService } from '../../../../../common/services/activity.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
+import { MindsVideoPlayerComponent } from '../../../../media/components/video-player/player.component';
 
 @Component({
   moduleId: module.id,
@@ -88,7 +89,7 @@ export class Activity implements OnInit {
   editing: boolean = false;
   @Input() hideTabs: boolean;
 
-  _delete: EventEmitter<any> = new EventEmitter();
+  @Output() _delete: EventEmitter<any> = new EventEmitter();
   commentsOpened: EventEmitter<any> = new EventEmitter();
   @Input() focusedCommentGuid: string;
 
@@ -153,7 +154,7 @@ export class Activity implements OnInit {
     }
   }
 
-  @ViewChild('player', { static: false }) player: MindsVideoComponent;
+  @ViewChild('player', { static: false }) player: MindsVideoPlayerComponent;
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   protected time_created: any;

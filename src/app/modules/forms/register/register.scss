@@ -9,6 +9,10 @@ minds-form-register {
     padding-left: 4px;
   }
 
+  .m-registerForm__password {
+    position: relative;
+  }
+
   .mdl-card__actions {
     display: flex;
     padding-left: $minds-padding * 2;
@@ -89,5 +93,9 @@ minds-form-register {
 
   .mdl-checkbox {
     padding-top: 5px;
+  }
+
+  input.m-input--hide-placeholder::placeholder {
+    color: transparent;
   }
 }

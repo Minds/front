@@ -168,45 +168,11 @@ m-overlay-modal {
   vertical-align: middle;
 
   .m-mediaModal__media--image,
-  m-video {
+  m-videoPlayer {
     display: inline-block;
     max-height: 100%;
     max-width: 100%;
     vertical-align: top;
-  }
-
-  m-video {
-    position: static;
-
-    video {
-      width: 100%;
-      height: 100%;
-    }
-
-    .minds-video-bar-full {
-      .m-video--progress-bar {
-        padding-right: 0;
-      }
-
-      .m-video--volume-control-wrapper {
-        margin-right: 16px;
-      }
-    }
-    .minds-video-play-icon {
-      transform: none;
-      width: auto;
-      top: unquote('-webkit-calc(50% - 50px)');
-      left: unquote('-webkit-calc(50% - 50px)');
-      top: unquote('-moz-calc(50% - 50px)');
-      left: unquote('-moz-calc(50% - 50px)');
-      top: unquote('calc(50% - 50px)');
-      left: unquote('calc(50% - 50px)');
-    }
-    m-video--progress-bar {
-      .progress-bar {
-        margin-right: 8px;
-      }
-    }
   }
 
   &.m-mediaModal__mediaWrapper--blog {
@@ -341,26 +307,42 @@ m-overlay-modal {
   }
 }
 
-// PAGER (DISABLED)
-// .m-mediaModal__pager {
-//   display: none; // DYNAMIC
-//   opacity: 0; // DYNAMIC
-//   height: 45px;
-//   margin-top: -22px;
-//   position: absolute;
-//   top: 50%;
-//   transform: translateZ(0);
-//   transition: opacity .2s;
-//   width: 48px;
-//   line-height: 1.28;
+.m-mediaModal__pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  margin-top: -22px;
+  opacity: 0; // DYNAMIC
+  top: 50%;
+  transition: opacity 0.2s, transform 0.15s;
+  line-height: 1;
+  border-radius: 50%;
+  cursor: pointer;
 
-//   &.m-mediaModal__pager--previous {
-//     left: 10px;
-//   }
-//   &.m-mediaModal__pager--next {
-//     right: 10px;
-//   }
-// }
+  @include m-theme() {
+    background: themed($m-black);
+    color: themed($m-white);
+  }
+
+  &.m-mediaModal__pager--previous {
+    left: 16px;
+    transform: translateZ(0) translateX(-10px);
+  }
+
+  &.m-mediaModal__pager--next {
+    right: 16px;
+    transform: translateZ(0) translateX(10px);
+  }
+
+  &.m-mediaModal__pager--visible {
+    opacity: 0.6;
+    pointer-events: initial;
+    transform: translateZ(0) translateX(0);
+  }
+}
 
 .m-mediaModal__contentContainer {
   height: 100%;

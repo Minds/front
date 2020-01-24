@@ -1,0 +1,41 @@
+<ng-container *ngIf="isPlayable(); else placeholder">
+  <span class="m-videoPlayer__notice--error" *ngIf="status === 'failed'">
+    There was an error transcoding this video.
+  </span>
+  <span
+    class="m-videoPlayer__notice--transcoding"
+    *ngIf="status === 'transcoding'"
+  >
+    This video is still transcoding.
+  </span>
+  <span class="m-videoPlayer__notice--created" *ngIf="status === 'created'">
+    This video is waiting to be transcoded.
+  </span>
+  <div class="m-videoPlayer__screen">
+    <plyr
+      style="display: block; width: 100%; height: 100%;"
+      [plyrPoster]="poster"
+      [plyrPlaysInline]="true"
+      [plyrSources]="sources"
+      [plyrOptions]="options"
+      (plyrPlay)="onPlayed($event)"
+      (plyrEnterFullScreen)="fullScreenChange.next($event)"
+      (plyrExitFullScreen)="fullScreenChange.next($event)"
+      (plyrLoadedMetadata)="emitDimensions($event)"
+    >
+    </plyr>
+  </div>
+</ng-container>
+
+<ng-template #placeholder>
+  <div
+    class="m-videoPlayer__placeholder"
+    [style.background-image]="'url(' + poster + ')'"
+  >
+    <i
+      class="material-icons minds-video-play-icon"
+      (click)="onPlaceholderClick($event)"
+      >play_circle_outline</i
+    >
+  </div>
+</ng-template>

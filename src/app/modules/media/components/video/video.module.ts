@@ -4,15 +4,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../../../common/common.module';
-
-import { MindsVideoProgressBar } from './progress-bar/progress-bar.component';
-import { MindsVideoQualitySelector } from './quality-selector/quality-selector.component';
-import { MindsVideoVolumeSlider } from './volume-slider/volume-slider.component';
-
-import { VideoAdsDirective } from './ads.directive';
-import { VideoAds, MindsVideoComponent } from './video.component';
-import { MindsVideoDirectHttpPlayer } from './players/direct-http.component';
-import { MindsVideoTorrentPlayer } from './players/torrent.component';
+import { MindsVideoPlayerComponent } from '../video-player/player.component';
+import { PlyrModule } from 'ngx-plyr';
 
 @NgModule({
   imports: [
@@ -20,17 +13,9 @@ import { MindsVideoTorrentPlayer } from './players/torrent.component';
     CommonModule,
     FormsModule,
     RouterModule.forChild([]),
+    PlyrModule,
   ],
-  declarations: [
-    VideoAdsDirective,
-    VideoAds,
-    MindsVideoComponent,
-    MindsVideoDirectHttpPlayer,
-    MindsVideoTorrentPlayer,
-    MindsVideoProgressBar,
-    MindsVideoQualitySelector,
-    MindsVideoVolumeSlider,
-  ],
-  exports: [VideoAdsDirective, VideoAds, MindsVideoComponent],
+  declarations: [MindsVideoPlayerComponent],
+  exports: [MindsVideoPlayerComponent],
 })
 export class VideoModule {}

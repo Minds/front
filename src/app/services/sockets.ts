@@ -1,6 +1,7 @@
 import { EventEmitter, Inject, NgZone } from '@angular/core';
 import { Session } from './session';
 import * as io from 'socket.io-client';
+import { BehaviorSubject } from 'rxjs';
 
 export class SocketsService {
   SOCKET_IO_SERVER = window.Minds.socket_server;
@@ -11,6 +12,7 @@ export class SocketsService {
   subscriptions: any = {};
   rooms: string[] = [];
   debug: boolean = false;
+  public error$: BehaviorSubject<boolean>;
 
   static _(session: Session, nz: NgZone) {
     return new SocketsService(session, nz);
@@ -57,6 +59,9 @@ export class SocketsService {
 
   setUpDefaultListeners() {
     this.socket.on('connect', () => {
+      this.error$
+        ? this.error$.next(false)
+        : (this.error$ = new BehaviorSubject<boolean>(false));
       this.nz.run(() => {
         if (this.debug)
           console.log(`[ws]::connected to ${this.SOCKET_IO_SERVER}`);
@@ -65,6 +70,7 @@ export class SocketsService {
     });
 
     this.socket.on('disconnect', () => {
+      this.error$.next(true);
       this.nz.run(() => {
         if (this.debug)
           console.log(`[ws]::disconnected from ${this.SOCKET_IO_SERVER}`);
@@ -81,6 +87,7 @@ export class SocketsService {
     });
 
     this.socket.on('error', (e: any) => {
+      this.error$.next(true); // TODO: Add reconnect that sets error to null.
       this.nz.run(() => {
         console.error('[ws]::error', e);
       });

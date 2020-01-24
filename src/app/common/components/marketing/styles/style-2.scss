@@ -18,7 +18,12 @@
     .m-marketing__body {
       position: relative;
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+        padding: 0 60px 30px;
+        margin-left: 30px;
+      }
+
+      @media screen and (max-width: $m-grid-max-mobile) {
         padding: 0 30px 30px;
       }
 
@@ -33,6 +38,10 @@
         clip-path: polygon(0% 0%, 0% 100%, 100% 92%, 100% 0%);
         z-index: -1;
 
+        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+          transform: translate(0, -56px);
+        }
+
         @include m-theme() {
           background: linear-gradient(
             180deg,
@@ -41,7 +50,7 @@
           );
         }
 
-        @media screen and (max-width: $m-grid-min-vp) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           right: 0;
           bottom: -3vw;
           transform: none;
@@ -54,7 +63,7 @@
           color: #ffffff;
         }
 
-        @media screen and (max-width: $m-grid-min-vp) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           margin: 15px 0 15px;
           text-align: center;
         }
@@ -65,7 +74,7 @@
           color: #ffffff;
         }
 
-        @media screen and (max-width: $m-grid-min-vp) {
+        @media screen and (max-width: $m-grid-max-mobile) {
           font-size: 28px;
           line-height: 32px;
           margin: 0 0 17px;
@@ -74,9 +83,31 @@
       }
     }
 
+    ul.m-marketing__points {
+      li {
+        @include m-theme() {
+          color: themed($m-grey-300);
+        }
+        @include m-on-theme(dark) {
+          color: #b7b7b7;
+        }
+      }
+    }
+
     p.m-marketing__description {
       margin-bottom: 42px;
-      padding-right: 200px;
+
+      @media screen and(min-width: $m-grid-max-tablet) {
+        padding-right: 200px;
+      }
+
+      @media screen and(min-width: 900px) and (max-width: $m-grid-min-vp) {
+        padding-right: 100px;
+      }
+
+      @media screen and(max-width: 900px) {
+        padding-right: 0;
+      }
 
       @include m-theme() {
         color: themed($m-grey-300);
@@ -86,7 +117,12 @@
         color: #ffffff;
       }
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
+        font-size: 17px;
+        line-height: 24px;
+      }
+
+      @media screen and (max-width: $m-grid-max-mobile) {
         padding-right: 0;
         margin-bottom: 30px;
         font-size: 16px;
@@ -105,7 +141,11 @@
         height: 547px;
         clip-path: polygon(0% 1%, 0% 97%, 100% 100%, 100% 0%);
 
-        @media screen and (max-width: $m-grid-min-vp) {
+        @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+          width: 338px;
+        }
+
+        @media screen and (max-width: $m-grid-max-mobile) {
           width: 100vw;
           height: 100vw;
           clip-path: polygon(0% 2%, 0% 97%, 100% 100%, 100% 0%);
@@ -131,7 +171,7 @@
             no-repeat;
           z-index: -1;
 
-          @media screen and (max-width: $m-grid-min-vp) {
+          @media screen and (max-width: $m-grid-max-mobile) {
             content: initial;
             display: none;
           }
@@ -150,7 +190,7 @@
             no-repeat;
           z-index: -1;
 
-          @media screen and (max-width: $m-grid-min-vp) {
+          @media screen and (max-width: $m-grid-max-mobile) {
             content: initial;
             display: none;
           }

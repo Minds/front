@@ -22,6 +22,13 @@
   @include m-theme() {
     background-color: rgba(themed($m-grey-50), 0.7);
   }
+
+  .m-mature-text-toggle {
+    i {
+      vertical-align: middle;
+      padding-right: 8px;
+    }
+  }
 }
 
 .m-commentBubble__username {
@@ -259,5 +266,11 @@
     width: calc(100% - 100px);
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+}
+
+.m-redButton {
+  @include m-theme() {
+    color: themed($m-red);
   }
 }

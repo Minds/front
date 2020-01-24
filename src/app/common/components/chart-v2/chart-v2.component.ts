@@ -76,11 +76,12 @@ export class ChartV2Component implements OnInit, OnDestroy {
       ? this.rawData.visualisation.segments.slice(0, 1)
       : this.rawData.visualisation.segments;
     if (this.segments.length === 2) {
-      this.isComparison = true;
+      // this.isComparison = true;
       // Reverse the segments so comparison line is layered behind current line
-      this.segments.reverse();
+      // this.segments.reverse();
       // Current line should be blue, not grey
-      this.swapSegmentColors();
+      // this.swapSegmentColors();
+      this.detectChanges();
     }
     this.themeSubscription = this.themeService.isDark$.subscribe(isDark => {
       this.isDark = isDark;
@@ -131,7 +132,9 @@ export class ChartV2Component implements OnInit, OnDestroy {
     this.segments.forEach((segment, index) => {
       const segmentMarkerFills = [];
       for (let i = 0; i < this.pointsPerSegment; i++) {
-        segmentMarkerFills[i] = this.getColor('m-white');
+        segmentMarkerFills[i] = this.getColor(
+          chartPalette.segmentColorIds[index]
+        );
       }
       this.markerFills.push(segmentMarkerFills);
     });
@@ -169,12 +172,12 @@ export class ChartV2Component implements OnInit, OnDestroy {
         y: this.unpack(this.segments[i].buckets, 'value'),
       };
 
+      if (this.segments[i].comparison) {
+        segment.line.dash = 'dot';
+      }
+
       this.data[i] = segment;
     });
-
-    if (this.isComparison) {
-      this.data[0].line.dash = 'dot';
-    }
   }
 
   setLayout() {
@@ -252,7 +255,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
 
   onHover($event) {
     this.hoverPoint = $event.points[0].pointIndex;
-    this.addMarkerFill();
+    this.emptyMarkerFill();
     if (!this.isMini) {
       this.showShape($event);
     }
@@ -265,7 +268,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
   }
 
   onUnhover($event) {
-    this.emptyMarkerFill();
+    this.addMarkerFill();
     this.hideShape();
     this.hoverInfoDiv.style.opacity = 0;
     this.detectChanges();
@@ -306,24 +309,37 @@ export class ChartV2Component implements OnInit, OnDestroy {
   }
 
   populateHoverInfo() {
-    const pt = this.isComparison ? 1 : 0;
     // TODO: format value strings here and remove ngSwitch from template?
-    this.hoverInfo['date'] = this.segments[pt].buckets[this.hoverPoint].date;
+    this.hoverInfo['date'] = this.segments[0].buckets[this.hoverPoint].date;
     this.hoverInfo['value'] =
       this.rawData.unit !== 'usd'
-        ? this.segments[pt].buckets[this.hoverPoint].value
-        : this.segments[pt].buckets[this.hoverPoint].value / 100;
+        ? this.segments[0].buckets[this.hoverPoint].value
+        : this.segments[0].buckets[this.hoverPoint].value / 100;
 
-    if (this.isComparison && this.segments[1]) {
-      this.hoverInfo['comparisonValue'] =
-        this.rawData.unit !== 'usd'
-          ? this.segments[0].buckets[this.hoverPoint].value
-          : this.segments[0].buckets[this.hoverPoint].value / 100;
+    this.hoverInfo['values'] = [];
 
-      this.hoverInfo['comparisonDate'] = this.segments[0].buckets[
-        this.hoverPoint
-      ].date;
+    for (const pt in this.segments) {
+      const segment = this.segments[pt];
+      this.hoverInfo['values'][pt] = {
+        value:
+          this.rawData.unit !== 'usd'
+            ? segment.buckets[this.hoverPoint].value
+            : segment.buckets[this.hoverPoint].value / 100,
+        label: segment.label || this.rawData.label,
+        color: this.getColor(chartPalette.segmentColorIds[pt]),
+      };
     }
+
+    // if (this.isComparison && this.segments[1]) {
+    //   this.hoverInfo['comparisonValue'] =
+    //     this.rawData.unit !== 'usd'
+    //       ? this.segments[0].buckets[this.hoverPoint].value
+    //       : this.segments[0].buckets[this.hoverPoint].value / 100;
+    //
+    //   this.hoverInfo['comparisonDate'] = this.segments[0].buckets[
+    //     this.hoverPoint
+    //   ].date;
+    // }
   }
 
   positionHoverInfo($event) {

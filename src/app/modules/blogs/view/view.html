@@ -152,6 +152,8 @@
   <m-comments__tree [entity]="blog"> </m-comments__tree>
 </div>
 
+<m-social-icons [url]="blog.perma_url" [title]="blog.title"> </m-social-icons>
+
 <m-modal-confirm
   *ngIf="deleteToggle"
   [open]="true"

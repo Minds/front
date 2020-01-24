@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -121,14 +121,28 @@ import { PageLayoutComponent } from './components/page-layout/page-layout.compon
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
 import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
 import { ShadowboxHeaderComponent } from './components/shadowbox-header/shadowbox-header.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { DropdownSelectorComponent } from './components/dropdown-selector/dropdown-selector.component';
 import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-button/shadowbox-submit-button.component';
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
 import { ProgressRingComponent } from './components/progress-ring/progress.component';
+import { PagesService } from './services/pages.service';
+import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
+import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
+import { SidebarMarkersService } from './layout/sidebar/markers.service';
+import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
+import { HorizontalFeedService } from './services/horizontal-feed.service';
 
 PlotlyModule.plotlyjs = PlotlyJS;
+
+const routes: Routes = [
+  {
+    path: 'email-confirmation',
+    redirectTo: '/',
+  },
+];
 
 @NgModule({
   imports: [
@@ -138,6 +152,9 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormsModule,
     ReactiveFormsModule,
     PlotlyModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    RouterModule.forChild(routes),
   ],
   declarations: [
     MINDS_PIPES,
@@ -242,6 +259,8 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    EmailConfirmationComponent,
+    DateDropdownsComponent,
     ProgressRingComponent,
   ],
   exports: [
@@ -342,11 +361,14 @@ PlotlyModule.plotlyjs = PlotlyJS;
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    EmailConfirmationComponent,
+    DateDropdownsComponent,
     ProgressRingComponent,
   ],
   providers: [
     SiteService,
     SsoService,
+    PagesService,
     {
       provide: AttachmentService,
       useFactory: AttachmentService._,
@@ -409,6 +431,15 @@ PlotlyModule.plotlyjs = PlotlyJS;
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
+    {
+      provide: V2TopbarService,
+      useFactory: V2TopbarService._,
+    },
+    {
+      provide: SidebarMarkersService,
+      useFactory: SidebarMarkersService._,
+    },
+    HorizontalFeedService,
   ],
   entryComponents: [
     NotificationsToasterComponent,

@@ -115,7 +115,7 @@
             <div
               class="m-media-content--info mdl-cell mdl-cell--4-col mdl-cell--6-col-phone"
             >
-              <div
+              <!-- <div
                 class="m-media-content--play-count"
                 *ngIf="
                   (false && entity['play:count']) || entity['play:count'] === 0
@@ -124,7 +124,7 @@
                 <span i18n="@@MINDS__MEDIA__PLAYS_COUNTER"
                   >{{ entity['play:count'] | number }} plays</span
                 >
-              </div>
+              </div> -->
 
               <div
                 class="m-media-content--play-count"
@@ -256,6 +256,7 @@
 
             <m-post-menu
               [entity]="entity"
+              [user]="entity.ownerObj"
               [canDelete]="
                 entity.ownerObj.guid == session.getLoggedInUser().guid ||
                 entity.canEdit ||
@@ -321,6 +322,14 @@
     <!--<m-ads-boost limit="4"></m-ads-boost>-->
   </div>
 </div>
+
+<m-social-icons
+  [url]="minds.site_url + 'media/' + entity.guid"
+  [title]="entity.title || ''"
+  [embed]="entity"
+  *ngIf="entity && !attachment.shouldBeBlurred(entity)"
+>
+</m-social-icons>
 
 <m-modal-confirm
   *ngIf="deleteToggle"

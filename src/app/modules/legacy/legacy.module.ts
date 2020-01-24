@@ -39,8 +39,6 @@ import { CarouselComponent } from './components/carousel.component';
 import { CommentsModule } from '../comments/comments.module';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { CommentComponentV2 } from '../comments/comment/comment.component';
-import { MindsActivityV2 } from './components/cards/activity-v2/activity.component';
-import { Ng2FittextModule } from 'ng2-fittext';
 
 @NgModule({
   imports: [
@@ -59,12 +57,10 @@ import { Ng2FittextModule } from 'ng2-fittext';
     PostMenuModule,
     CommentsModule,
     TextInputAutocompleteModule,
-    Ng2FittextModule,
   ],
   declarations: [
     Activity,
     ActivityPreview,
-    MindsActivityV2,
     AlbumCard,
     ImageCard,
     VideoCard,
@@ -89,7 +85,6 @@ import { Ng2FittextModule } from 'ng2-fittext';
   exports: [
     Activity,
     ActivityPreview,
-    MindsActivityV2,
     AlbumCard,
     ImageCard,
     VideoCard,
@@ -114,7 +109,6 @@ import { Ng2FittextModule } from 'ng2-fittext';
   entryComponents: [
     Activity,
     ActivityPreview,
-    MindsActivityV2,
     AlbumCard,
     ImageCard,
     VideoCard,

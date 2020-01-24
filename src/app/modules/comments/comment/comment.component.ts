@@ -29,7 +29,6 @@ import { map } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
 import { Router } from '@angular/router';
 import { FeaturesService } from '../../../services/features.service';
-import { MindsVideoComponent } from '../../media/components/video/video.component';
 import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
 
@@ -65,6 +64,7 @@ export class CommentComponentV2
   error: string = '';
   @Input() showReplies: boolean = false;
   changesDetected: boolean = false;
+  showMature: boolean = false;
 
   _delete: EventEmitter<any> = new EventEmitter();
   _saved: EventEmitter<any> = new EventEmitter();
@@ -85,7 +85,6 @@ export class CommentComponentV2
 
   canReply = true;
   videoDimensions: Array<any> = null;
-  @ViewChild('player', { static: false }) player: MindsVideoComponent;
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   @Input() canEdit: boolean = false;
@@ -114,6 +113,10 @@ export class CommentComponentV2
         return (this.comment.time_created - secondsElapsed * 0.01) * 1000;
       })
     );
+
+    if (this.minds.user.guid === this.comment.ownerObj.guid) {
+      this.showMature = true;
+    }
   }
 
   ngAfterViewInit() {
@@ -385,5 +388,12 @@ export class CommentComponentV2
         }
       )
       .present();
+  }
+
+  /**
+   * Toggles mature visibility.
+   */
+  toggleMatureVisibility() {
+    this.showMature = !this.showMature;
   }
 }

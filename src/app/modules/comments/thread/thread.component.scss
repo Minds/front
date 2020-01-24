@@ -9,6 +9,19 @@
   text-align: center;
 }
 
+.m-commentsThread__connectionLost {
+  display: block;
+  text-align: center;
+  padding: 4px 8px;
+  margin: 4px 0;
+  font-size: 9pt;
+  cursor: pointer;
+
+  @include m-theme() {
+    color: themed($m-blue-grey-500);
+  }
+}
+
 a.m-commentsThread__seeComments {
   padding-left: 64px;
   text-decoration: underline;

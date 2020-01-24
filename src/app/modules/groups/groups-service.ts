@@ -3,6 +3,14 @@ import { Client, Upload } from '../../services/api';
 import { UpdateMarkersService } from '../../common/services/update-markers.service';
 import { BehaviorSubject } from 'rxjs';
 
+export interface MembershipUpdate {
+  show: boolean;
+  guid: string;
+}
+
+/**
+ * Service for groups.
+ */
 export class GroupsService {
   private base: string = 'api/v1/groups/';
 
@@ -11,6 +19,14 @@ export class GroupsService {
 
   group = new BehaviorSubject(null);
   $group = this.group.asObservable();
+
+  // Observable handling membership state.
+  public membershipUpdate$: BehaviorSubject<
+    MembershipUpdate
+  > = new BehaviorSubject({
+    show: null,
+    guid: null,
+  });
 
   static _(
     client: Client,
@@ -89,11 +105,24 @@ export class GroupsService {
     return this.clientService
       .delete(`${this.base}group/${group.guid}`)
       .then((response: any) => {
+        this.updateMembership(false, group.guid);
         return !!response.done;
       })
       .catch(e => {
         return false;
       });
+  }
+
+  /**
+   * Emits membership changes to subscribed components.
+   * @param { boolean } - whether or not observable should be shown or hidden.
+   * @param { string } - the GUID of the observable.
+   */
+  updateMembership(show: boolean, guid: string): void {
+    this.membershipUpdate$.next({
+      show: show,
+      guid: guid,
+    });
   }
 
   // Membership
@@ -107,6 +136,7 @@ export class GroupsService {
 
     return this.clientService.put(endpoint).then((response: any) => {
       if (response.done) {
+        this.updateMembership(true, group.guid);
         return true;
       }
 
@@ -123,6 +153,7 @@ export class GroupsService {
 
     return this.clientService.delete(endpoint).then((response: any) => {
       if (response.done) {
+        this.updateMembership(false, group.guid);
         return true;
       }
 

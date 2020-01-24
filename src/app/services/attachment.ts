@@ -247,7 +247,9 @@ export class AttachmentService {
 
   abort() {
     if (this.xhr) {
-      this.uploadSubscription.unsubscribe();
+      if (this.uploadSubscription) {
+        this.uploadSubscription.unsubscribe();
+      }
       this.xhr.abort();
       this.xhr = null;
 
