@@ -31,7 +31,6 @@ export class DropdownSelectorComponent implements OnInit {
     this.selectedOption =
       this.filter.options.find(option => option.selected === true) ||
       this.filter.options[0];
-    console.log('dropdowninit:', this.selectedOption);
   }
 
   updateFilter(option: Option) {

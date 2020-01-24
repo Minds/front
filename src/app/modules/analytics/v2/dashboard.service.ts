@@ -140,7 +140,6 @@ export class AnalyticsDashboardService {
   //       distinctUntilChanged()
   //     )
   //     .subscribe(value => this.updateSearchCriteria(value));
-
   //   return channelSearch;
   // }
 

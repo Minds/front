@@ -67,6 +67,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
       const result: any = await this.client.get(
         `api/v2/blockchain/contributions/overview`
       );
+
       this.nextPayoutDate = result.nextPayout;
       this.estimatedTokenPayout = result.currentReward;
       this.detectChanges();

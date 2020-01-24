@@ -198,14 +198,14 @@ const fakeData = {
         timestamp: 1578977460, // currently 'ts'
         status: 'paid',
         currency: 'gbp',
-        amount: -158,
+        net: -158,
       },
       {
         id: 'tr_1FRespEtkBDgTlGKE8yZDxFl',
         type: 'wire',
         timestamp: 1578977458,
         currency: 'gbp',
-        amount: 80, // currently 'net'
+        net: 80, // currently 'net'
         customer_user: {
           guid: '441939549992521728',
           username: 'sillysealion',
@@ -217,7 +217,7 @@ const fakeData = {
         type: 'pro_earning',
         timestamp: 1567110480,
         currency: 'gbp',
-        amount: 80,
+        net: 80,
         customer_user: {
           guid: '930229554033729554',
           username: 'mindspro',
@@ -230,7 +230,7 @@ const fakeData = {
         timestamp: 1567110479,
         currency: 'gbp',
         fees: 0,
-        amount: 78,
+        net: 78,
         customer_user_guid: null,
         customer_user: {
           guid: '773311697292107790',
@@ -245,7 +245,7 @@ const fakeData = {
         gross: 540,
         currency: 'gbp',
         fees: 0,
-        amount: 80,
+        net: 80,
         customer_user_guid: null,
         customer_user: {
           guid: '773311697292107790',
@@ -260,7 +260,7 @@ const fakeData = {
         gross: 190,
         currency: 'gbp',
         fees: 0,
-        amount: 870,
+        net: 870,
         customer_user_guid: null,
         customer_user: {
           guid: '773311697292107790',
@@ -2234,6 +2234,201 @@ const fakeData = {
         timestamp: 1573776000000,
       },
     ],
+  },
+  token_chart: {
+    status: 'success',
+    dashboard: {
+      category: 'engagement',
+      label: 'Engagement',
+      description: '',
+      timespan: '30d',
+      timespans: [
+        // {
+        //   id: 'today',
+        //   label: 'Today',
+        //   interval: 'day',
+        //   selected: false,
+        //   comparison_interval: 1,
+        //   from_ts_ms: 1579824000000,
+        //   from_ts_iso: '2020-01-24T00:00:00+00:00',
+        // },
+        {
+          id: '1m',
+          label: '1M',
+          interval: 'day',
+          selected: true,
+          comparison_interval: 30,
+          from_ts_ms: 1577232000000,
+          from_ts_iso: '2019-12-25T00:00:00+00:00',
+        },
+        {
+          id: '3m',
+          label: '3M',
+          interval: 'day',
+          selected: false,
+          comparison_interval: 90,
+          from_ts_ms: 1577232000000,
+          from_ts_iso: '2019-12-25T00:00:00+00:00',
+        },
+        {
+          id: '1y',
+          label: '1Y',
+          interval: 'month',
+          selected: false,
+          comparison_interval: 365,
+          from_ts_ms: 1548288000000,
+          from_ts_iso: '2019-01-24T00:00:00+00:00',
+        },
+        {
+          id: 'max',
+          label: 'Max',
+          interval: 'day', // not sure... kinda depends on how long max is for the user
+          selected: false,
+          comparison_interval: 30,
+          from_ts_ms: 1577836800000,
+          from_ts_iso: '2020-01-01T00:00:00+00:00',
+        },
+      ],
+      metric: 'token_balance',
+      metrics: [
+        {
+          id: 'token_balance',
+          label: 'Token Balance',
+          description: 'Token Balance',
+          unit: 'number',
+          permissions: ['admin', 'user'],
+          summary: {
+            current_value: 0,
+            comparison_value: 0,
+            comparison_interval: 30,
+            comparison_positive_inclination: true,
+          },
+          visualisation: {
+            type: 'chart',
+            segments: [
+              {
+                label: null,
+                comparison: false,
+                buckets: [
+                  {
+                    key: 1577404800000,
+                    date: '2019-12-27T00:00:00+00:00',
+                    value: 3151.371452017148,
+                  },
+                  {
+                    key: 1577491200000,
+                    date: '2019-12-28T00:00:00+00:00',
+                    value: 3151.292912200808,
+                  },
+                  {
+                    key: 1577577600000,
+                    date: '2019-12-29T00:00:00+00:00',
+                    value: 3151.2614962742723,
+                  },
+                  {
+                    key: 1577664000000,
+                    date: '2019-12-30T00:00:00+00:00',
+                    value: 3151.1829564579325,
+                  },
+                  {
+                    key: 1577836800000,
+                    date: '2020-01-01T00:00:00+00:00',
+                    value: 3151.025876825253,
+                  },
+                  {
+                    key: 1577923200000,
+                    date: '2020-01-02T00:00:00+00:00',
+                    value: 3152.8687971925733,
+                  },
+                  {
+                    key: 1578009600000,
+                    date: '2020-01-03T00:00:00+00:00',
+                    value: 3152.7117175598937,
+                  },
+                  {
+                    key: 1578268800000,
+                    date: '2020-01-06T00:00:00+00:00',
+                    value: 3152.58605385375,
+                  },
+                  {
+                    key: 1578355200000,
+                    date: '2020-01-07T00:00:00+00:00',
+                    value: 3152.381850331267,
+                  },
+                  {
+                    key: 1578441600000,
+                    date: '2020-01-08T00:00:00+00:00',
+                    value: 3152.319018478195,
+                  },
+                  {
+                    key: 1578614400000,
+                    date: '2020-01-10T00:00:00+00:00',
+                    value: 3152.1933547720514,
+                  },
+                  {
+                    key: 1578787200000,
+                    date: '2020-01-12T00:00:00+00:00',
+                    value: 3162.1933547720514,
+                  },
+                  {
+                    key: 1578873600000,
+                    date: '2020-01-13T00:00:00+00:00',
+                    value: 3162.05198310264,
+                  },
+                  {
+                    key: 1578960000000,
+                    date: '2020-01-14T00:00:00+00:00',
+                    value: 3161.7378238372808,
+                  },
+                  {
+                    key: 1579046400000,
+                    date: '2020-01-15T00:00:00+00:00',
+                    value: 3161.612160131137,
+                  },
+                  {
+                    key: 1579132800000,
+                    date: '2020-01-16T00:00:00+00:00',
+                    value: 3161.486496424993,
+                  },
+                  {
+                    key: 1579219200000,
+                    date: '2020-01-17T00:00:00+00:00',
+                    value: 3161.3922486453857,
+                  },
+                  {
+                    key: 1579305600000,
+                    date: '2020-01-18T00:00:00+00:00',
+                    value: 3161.3765406821176,
+                  },
+                  {
+                    key: 1579392000000,
+                    date: '2020-01-19T00:00:00+00:00',
+                    value: 3161.1723371596345,
+                  },
+                  {
+                    key: 1579478400000,
+                    date: '2020-01-20T00:00:00+00:00',
+                    value: 3160.936717710615,
+                  },
+                  {
+                    key: 1579651200000,
+                    date: '2020-01-22T00:00:00+00:00',
+                    value: 3180.716806224864,
+                  },
+                  {
+                    key: 1579824000000,
+                    date: '2020-01-24T00:00:00+00:00',
+                    value: 3180.616806224864,
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
+      filter: ['platform::all', 'view_type::total', 'channel::all'],
+      filters: [],
+    },
   },
 };
 

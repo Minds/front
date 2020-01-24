@@ -119,20 +119,22 @@ export class WalletTransactionsCashComponent implements OnInit {
 
   formatResponse(transactions) {
     transactions.forEach(tx => {
-      const formattedTx: any = {};
+      const formattedTx: any = { ...tx };
+      // const formattedTx: any = {};
 
-      formattedTx.amount = tx.amount / 100;
+      // formattedTx.timestamp = tx.timestamp;
+      // formattedTx.type = tx.type;
+
+      formattedTx.superType = tx.type;
+
+      formattedTx.amount = tx.net / 100;
 
       if (tx.type !== 'payout') {
         this.runningTotal -= formattedTx.amount;
       } else {
         this.runningTotal = 0;
       }
-      formattedTx.runningTotal = this.runningTotal;
-
-      formattedTx.timestamp = tx.timestamp;
-      formattedTx.type = tx.type;
-      formattedTx.superType = tx.type;
+      formattedTx.runningTotal = this.formatAmount(this.runningTotal);
 
       if (formattedTx.superType === 'payout') {
         formattedTx.showRewardsPopup = false;
@@ -179,10 +181,26 @@ export class WalletTransactionsCashComponent implements OnInit {
     };
   }
 
+  formatAmount(amount) {
+    const formattedAmount = {
+      total: amount,
+      int: 0,
+      frac: null,
+    };
+
+    const splitBalance = amount.toString().split('.');
+
+    formattedAmount.int = splitBalance[0];
+    if (splitBalance[1]) {
+      formattedAmount.frac = splitBalance[1].slice(0, 2);
+    }
+    return formattedAmount;
+  }
+
   getDelta(tx) {
     let delta = 'neutral';
     if (tx.type !== 'payout') {
-      delta = tx.amount < 0 ? 'negative' : 'positive';
+      delta = tx.net < 0 ? 'negative' : 'positive';
     }
     return delta;
   }

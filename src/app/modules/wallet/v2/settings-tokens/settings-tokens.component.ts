@@ -50,6 +50,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   currentAddress: string = '';
   downloadingMetamask: boolean = false;
   form;
+  // TODOOJM remove this bc SSR -- used in html > [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'"
   minds = window.Minds;
 
   readonly Views = Views;
@@ -173,15 +174,6 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     return null; // null if valid
   }
 
-  // isAddressFormatValid() {
-  //   const isAddressValid =
-  //     this.providedAddress && /^0x[a-fA-F0-9]{40}$/.test(this.providedAddress);
-  //   if (!isAddressValid) {
-  //     // this.formToastService.error('Invalid address format.');
-  //   }
-  //   return isAddressValid;
-  // }
-
   async provideAddress() {
     if (this.form.invalid || this.inProgress) {
       return;
@@ -219,6 +211,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       default:
         url = 'https://metamask.io';
     }
+    // TODOOJM remove window?
     window.open(url);
     this.downloadingMetamask = true;
   }
@@ -228,13 +221,13 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     await this.web3Wallet.ready();
     this.detectExternal();
 
+    // TODOOJM remove timers
     this._externalTimer = setInterval(() => {
       this.detectExternal();
     }, 1000);
   }
 
   async detectExternal() {
-    console.log(this.web3Wallet.getCurrentWallet(true));
     const address: string =
       (await this.web3Wallet.getCurrentWallet(true)) || '';
 
@@ -242,6 +235,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       this.providedAddress = address;
       this.detectChanges();
 
+      // TODOOJM remove timers
       if (this.providedAddress) {
         clearInterval(this._externalTimer);
         this.provideAddress();

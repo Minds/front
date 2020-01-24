@@ -39,9 +39,9 @@ export class WalletRewardsPopupComponent implements OnInit {
       from: startOfDay,
       to: startOfDay + 86400, // 24 hours later
     };
-    const response = await this.walletService.getDailyContributionScores(opts);
-
-    console.log('r', response);
+    const response = await this.walletService.getDailyTokenContributionScores(
+      opts
+    );
 
     if (response) {
       const dailyContributions = response.contributions[0];
@@ -56,7 +56,6 @@ export class WalletRewardsPopupComponent implements OnInit {
       console.log('metrics', this.metrics);
     }
     this.inProgress = false;
-    console.log('inprogres?', this.inProgress);
     this.detectChanges();
   }
   detectChanges() {
