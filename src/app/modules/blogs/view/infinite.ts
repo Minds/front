@@ -118,13 +118,13 @@ export class BlogViewInfinite {
   private updateMeta(blog): void {
     const description =
       blog.description.length > 140
-        ? blog.description.substr(0, 140) + '...'
-        : blog.description;
+        ? blog.excerpt.substr(0, 140) + '...'
+        : blog.excerpt;
     this.metaService
       .setTitle(blog.custom_meta['title'] || blog.title)
       .setDescription(description)
       //.setAuthor(this.blog.custom_meta['author'] || `@${this.blog.ownerObj.username}`)
       .setOgUrl(blog.perma_url)
-      .setOgImage(blog.thumbnail);
+      .setOgImage(blog.thumbnail_src);
   }
 }

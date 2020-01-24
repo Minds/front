@@ -60,7 +60,7 @@ export class MetaService {
       value = this.site.baseUrl + value.substr(1);
     }
     this.metaService.updateTag({
-      name: 'og:url',
+      property: 'og:url',
       content: value,
     });
     return this;
@@ -75,15 +75,15 @@ export class MetaService {
         // Relative path
         value = this.configs.get('cdn_assets_url') + value.substr(1);
       }
-      this.metaService.updateTag({ name: 'og:image', content: value });
+      this.metaService.updateTag({ property: 'og:image', content: value });
 
       if (dimensions) {
         this.metaService.updateTag({
-          name: 'og:image:width',
+          property: 'og:image:width',
           content: dimensions.width.toString(),
         });
         this.metaService.updateTag({
-          name: 'og:image:height',
+          property: 'og:image:height',
           content: dimensions.height.toString(),
         });
       }
@@ -94,7 +94,7 @@ export class MetaService {
 
   setOgType(value: string): MetaService {
     this.metaService.updateTag({
-      name: 'og:type',
+      property: 'og:type',
       content: value,
     });
     return this;
