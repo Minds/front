@@ -10,6 +10,8 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  PLATFORM_ID,
+  Inject,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Session } from '../../../services/session';
@@ -24,6 +26,7 @@ import { SessionsStorageService } from '../../../services/session-storage.servic
 import { SiteService } from '../../../common/services/site.service';
 import { ScrollService } from '../../../services/ux/scroll';
 import { captureEvent } from '@sentry/core';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   providers: [ProChannelService, OverlayModalService, SignupModalService],
@@ -158,7 +161,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected modalService: OverlayModalService,
     protected sessionStorage: SessionsStorageService,
     protected site: SiteService,
-    protected injector: Injector
+    protected injector: Injector,
+    @Inject(PLATFORM_ID) private platformId
   ) {}
 
   ngOnInit() {
@@ -261,6 +265,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   bindCssVariables() {
+    if (isPlatformServer(this.platformId)) return;
     const styles = this.channel.pro_settings.styles;
 
     for (const style in styles) {
