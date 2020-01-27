@@ -51,6 +51,7 @@ import { ClientMetaService } from '../../../../../common/services/client-meta.se
 import { clientMetaServiceMock } from '../../../../../../tests/client-meta-service-mock.spec';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
 import { SiteService } from '../../../../../common/services/site.service';
+import { CodeHighlightModule } from '../../../../../modules/code-highlight/code-highlight.module';
 
 /* tslint:disable */
 // START MOCKS
@@ -466,7 +467,11 @@ describe('Activity', () => {
           inputs: ['mIfFeatureElse'],
         }),
       ], // declare the test component
-      imports: [RouterTestingModule, FormsModule /*, CommonModule*/],
+      imports: [
+        RouterTestingModule,
+        FormsModule,
+        CodeHighlightModule /*, CommonModule*/,
+      ],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },

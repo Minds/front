@@ -10,6 +10,10 @@ export class CodeHighlightPipe implements PipeTransform {
   constructor(private codeHighlightService: CodeHighlightService) {}
 
   transform(text: string): string {
+    if (!text) {
+      return text;
+    }
+
     let language: string;
 
     const transformed = text.replace(
