@@ -151,11 +151,11 @@ export class FeedsService {
   /**
    * Fetches the data.
    */
-  fetch(): FeedsService {
+  fetch(): Promise<any> {
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
-    this.client
+    return this.client
       .get(this.endpoint, {
         ...this.params,
         ...{
@@ -182,7 +182,6 @@ export class FeedsService {
         }
       })
       .catch(e => console.log(e));
-    return this;
   }
 
   /**
