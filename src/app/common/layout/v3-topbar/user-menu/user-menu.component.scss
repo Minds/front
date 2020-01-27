@@ -57,10 +57,13 @@ m-usermenu__v3 {
         }
 
         &.m-userMenuDropdown__spacer {
-          background-color: #404a4e;
           height: 1px;
           margin: 0;
           padding: 0;
+
+          @include m-theme() {
+            background-color: themed($m-navigation-separator);
+          }
         }
 
         &.m-userMenuDropdown__footer {
