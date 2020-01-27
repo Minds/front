@@ -39,7 +39,7 @@
       <p
         [hidden]="editing"
         class="m-commentBubble__message m-mature-message-content"
-        [innerHtml]="comment.description || '' | tags"
+        [innerHtml]="comment.description || '' | tags | codeHighlight"
         [ngClass]="{ 'm-mature-text': comment.mature && !showMature }"
         (click)="!showMature ? toggleMatureVisibility() : null"
       ></p>

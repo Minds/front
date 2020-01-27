@@ -11,6 +11,7 @@ import { PaymentsModule } from '../payments/payments.module';
 import { BoostModule } from '../boost/boost.module';
 import { ThirdPartyNetworksModule } from '../third-party-networks/third-party-networks.module';
 import { WireModule } from '../wire/wire.module';
+import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 
 import { Activity } from './components/cards/activity/activity';
 import { AlbumCard } from './components/cards/object/album/album';
@@ -57,6 +58,7 @@ import { CommentComponentV2 } from '../comments/comment/comment.component';
     PostMenuModule,
     CommentsModule,
     TextInputAutocompleteModule,
+    CodeHighlightModule,
   ],
   declarations: [
     Activity,
