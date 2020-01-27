@@ -45,7 +45,7 @@ export class GroupListComponent implements OnInit {
       const query = '';
       const nsfw = [];
 
-      this.feedsService
+      await this.feedsService
         .setEndpoint(`api/v2/feeds/global/top/groups`)
         .setParams({
           hashtags,
