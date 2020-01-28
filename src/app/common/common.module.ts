@@ -134,6 +134,7 @@ import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
+import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -169,6 +170,7 @@ const routes: Routes = [
     V2TopbarComponent,
     V3TopbarComponent,
     UserMenuComponent,
+    UserMenuV3Component,
 
     //
 
@@ -276,6 +278,7 @@ const routes: Routes = [
 
     // V3 Layout
     V3TopbarComponent,
+    UserMenuV3Component,
 
     //
 

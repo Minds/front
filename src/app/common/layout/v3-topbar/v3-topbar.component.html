@@ -84,6 +84,10 @@
 
       <div class="m-v3-topbar__UserMenu" *ngIf="getCurrentUser()">
         <ng-content select="[icons]"></ng-content>
+        <m-usermenu__v3
+          [useAvatar]="true"
+          [showFooterLinks]="true"
+        ></m-usermenu__v3>
       </div>
     </div>
   </div>
