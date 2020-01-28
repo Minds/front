@@ -179,11 +179,11 @@ const fakeData = {
       payoutAnchor: null,
       requirement: null,
       totalBalance: {
-        amount: 762,
+        amount: 1100,
         currency: 'gbp',
       },
       pendingBalance: {
-        amount: 142,
+        amount: 400,
         currency: 'gbp',
       },
     },
@@ -193,19 +193,11 @@ const fakeData = {
     status: 'success',
     transactions: [
       {
-        id: 'po_1FSD4tEQcGuFgRfSUgcwjVqm',
-        type: 'payout',
-        timestamp: 1578977460, // currently 'ts'
-        status: 'paid',
-        currency: 'gbp',
-        net: -158,
-      },
-      {
         id: 'tr_1FRespEtkBDgTlGKE8yZDxFl',
         type: 'wire',
         timestamp: 1578977458,
         currency: 'gbp',
-        net: 80, // currently 'net'
+        net: 100, // currently 'net'
         customer_user: {
           guid: '441939549992521728',
           username: 'sillysealion',
@@ -217,7 +209,7 @@ const fakeData = {
         type: 'pro_earning',
         timestamp: 1567110480,
         currency: 'gbp',
-        net: 80,
+        net: 100,
         customer_user: {
           guid: '930229554033729554',
           username: 'mindspro',
@@ -230,7 +222,7 @@ const fakeData = {
         timestamp: 1567110479,
         currency: 'gbp',
         fees: 0,
-        net: 78,
+        net: 100,
         customer_user_guid: null,
         customer_user: {
           guid: '773311697292107790',
@@ -245,7 +237,7 @@ const fakeData = {
         gross: 540,
         currency: 'gbp',
         fees: 0,
-        net: 80,
+        net: 100,
         customer_user_guid: null,
         customer_user: {
           guid: '773311697292107790',
@@ -254,13 +246,21 @@ const fakeData = {
         },
       },
       {
+        id: 'po_1FSD4tEQcGuFgRfSUgcwjVqm',
+        type: 'payout',
+        timestamp: 1567110179,
+        status: 'paid',
+        currency: 'gbp',
+        net: -500,
+      },
+      {
         id: 'tr_1FCWePEtkBDgTlGKY3EaUqH4',
         type: 'pro_earning',
         timestamp: 1567019869,
         gross: 190,
         currency: 'gbp',
         fees: 0,
-        net: 870,
+        net: 500,
         customer_user_guid: null,
         customer_user: {
           guid: '773311697292107790',
@@ -2241,20 +2241,22 @@ const fakeData = {
       category: 'engagement',
       label: 'Engagement',
       description: '',
-      timespan: '30d',
+      timespan: '1w',
       timespans: [
-        // {
-        //   id: 'today',
-        //   label: 'Today',
-        //   interval: 'day',
-        //   selected: false,
-        //   comparison_interval: 1,
-        //   from_ts_ms: 1579824000000,
-        //   from_ts_iso: '2020-01-24T00:00:00+00:00',
-        // },
+        {
+          id: '1w',
+          label: '1 week',
+          short_label: '1W',
+          interval: 'day',
+          selected: true,
+          comparison_interval: 7,
+          from_ts_ms: 1577232000000,
+          from_ts_iso: '2019-12-25T00:00:00+00:00',
+        },
         {
           id: '1m',
-          label: '1M',
+          label: '30 days',
+          short_label: '1M',
           interval: 'day',
           selected: true,
           comparison_interval: 30,
@@ -2263,7 +2265,8 @@ const fakeData = {
         },
         {
           id: '3m',
-          label: '3M',
+          label: '90 days',
+          short_label: '3M',
           interval: 'day',
           selected: false,
           comparison_interval: 90,
@@ -2272,7 +2275,8 @@ const fakeData = {
         },
         {
           id: '1y',
-          label: '1Y',
+          label: '1 year',
+          short_label: '1Y',
           interval: 'month',
           selected: false,
           comparison_interval: 365,
@@ -2282,6 +2286,7 @@ const fakeData = {
         {
           id: 'max',
           label: 'Max',
+          short_label: 'Max',
           interval: 'day', // not sure... kinda depends on how long max is for the user
           selected: false,
           comparison_interval: 30,
@@ -2295,7 +2300,7 @@ const fakeData = {
           id: 'token_balance',
           label: 'Token Balance',
           description: 'Token Balance',
-          unit: 'number',
+          unit: 'tokens',
           permissions: ['admin', 'user'],
           summary: {
             current_value: 0,

@@ -53,7 +53,6 @@ export class WalletRewardsPopupComponent implements OnInit {
         metric.id = key;
         this.metrics.push(metric);
       });
-      console.log('metrics', this.metrics);
     }
     this.inProgress = false;
     this.detectChanges();
