@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 
 import { Storage } from '../../../services/storage';
 import { Client } from '../../../services/api';
@@ -21,7 +21,7 @@ import { CookieService } from '../../../common/services/cookie.service';
     </div>
   `,
 })
-export class AnnouncementComponent {
+export class AnnouncementComponent implements OnInit {
   hidden: boolean = false;
   @Input() id: string = 'default';
   @Input() canClose: boolean = true;

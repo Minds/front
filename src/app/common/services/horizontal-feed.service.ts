@@ -1,63 +1,282 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Client } from '../../services/api/client';
 import { EntitiesService } from './entities.service';
 
+/**
+ * Specifies how to interpret base entity and which correlation to use
+ */
 export type HorizontalFeedContext = 'container';
+
+/**
+ * Specifies the object returned to consumers
+ */
+export interface HorizontalFeedObject {
+  index: number;
+  entity: BehaviorSubject<any>;
+}
+
+/**
+ * Response from navigational methods
+ */
+export type HorizontalFeedResponse = HorizontalFeedObject | null;
+
+/**
+ * Stores per-side pools and its attributes for the base entity
+ */
+interface HorizontalFeedPool {
+  entities: any[];
+  moreData: boolean;
+  offset?: any;
+}
+
+/**
+ * Horizontal feed pools
+ */
+interface HorizontalFeedPools {
+  prev: HorizontalFeedPool;
+  next: HorizontalFeedPool;
+}
+
+/**
+ * Change event payload
+ */
+interface HorizontalFeedChange {
+  context: HorizontalFeedContext;
+  cursor: number;
+  lastUpdate: number;
+}
 
 /**
  * This service allow retrieving entities to navigate through a horizontal feed whose entities will be loaded
  * one by one in specialized components.
  *
- * @todo: RxJS cursor-like get()
- * @todo: Support other kind of context
+ * @todo: Support other kind of contexts
  */
 @Injectable()
 export class HorizontalFeedService {
+  protected context: HorizontalFeedContext;
+
+  protected baseEntity: any;
+
+  protected limit: number = 600;
+
+  protected cursor: number = 0;
+
+  protected pools: HorizontalFeedPools = {
+    next: {
+      entities: [],
+      moreData: true,
+    },
+    prev: {
+      entities: [],
+      moreData: true,
+    },
+  };
+
+  protected onChangeEmitter: EventEmitter<
+    HorizontalFeedChange
+  > = new EventEmitter<HorizontalFeedChange>();
+
   constructor(protected client: Client, protected entities: EntitiesService) {}
 
   /**
-   * Get the previous and next entity based on an ID and a context.
-   *
-   * Contexts:
-   * - container: Fetch adjacent entities from a container (user/group) sorted chronologically.
-   *
+   * Sets the current context and resets
    * @param context
-   * @param entity
-   * @return {Promise}
    */
-  async get(
-    context: HorizontalFeedContext,
-    entity: any
-  ): Promise<{ prev; next }> {
-    if (!entity) {
+  setContext(context: HorizontalFeedContext): HorizontalFeedService {
+    this.context = context;
+    this.reset();
+    return this;
+  }
+
+  /**
+   * Sets the base entity and resets
+   * @param entity
+   */
+  setBaseEntity(entity: any): HorizontalFeedService {
+    this.baseEntity = entity;
+    this.reset();
+    return this;
+  }
+
+  /**
+   * Sets the total limit of entities per-side
+   * @param limit
+   */
+  setLimit(limit: number): HorizontalFeedService {
+    this.limit = limit;
+    return this;
+  }
+
+  /**
+   * Reset the cursor and caches
+   */
+  reset(): HorizontalFeedService {
+    this.cursor = 0;
+
+    this.pools = {
+      next: {
+        entities: [],
+        moreData: true,
+      },
+      prev: {
+        entities: [],
+        moreData: true,
+      },
+    };
+
+    if (this.context) {
+      this._emitChange();
+    }
+
+    return this;
+  }
+
+  /**
+   * Moves the cursor to a certain point and retrieves the entity, if exists
+   * @param index
+   */
+  async go(index: number): Promise<HorizontalFeedResponse> {
+    await this.fetch();
+
+    if (!(await this.has(index))) {
+      return null;
+    }
+
+    this.cursor = index;
+
+    this._emitChange();
+
+    if (index === 0) {
       return {
-        prev: void 0,
-        next: void 0,
+        index,
+        entity: new BehaviorSubject(this.baseEntity),
       };
     }
 
-    switch (context) {
-      case 'container':
-        const endpoint = `api/v2/feeds/container/${entity.container_guid ||
-          entity.owner_guid}/all`;
-        const params = {
-          sync: 1,
-          as_activities: 1,
-          force_public: 1,
-          limit: 1,
-        };
+    const entities =
+      index < 0 ? this.pools.prev.entities : this.pools.next.entities;
 
-        return {
-          prev: await this.fetch(endpoint, {
-            ...params,
-            reverse_sort: 1,
-            from_timestamp: entity.time_created * 1000 + 1,
-          }),
-          next: await this.fetch(endpoint, {
-            ...params,
-            from_timestamp: entity.time_created * 1000 - 1,
-          }),
-        };
+    const entity = entities[Math.abs(index) - 1] || null;
+
+    if (entity && entity.entity) {
+      // Already hydrated, but clients would expect a subject
+
+      return {
+        index,
+        entity: new BehaviorSubject(entity.entity),
+      };
+    }
+
+    // Returns entities service subject
+
+    return {
+      index: index,
+      entity: this.entities.setCastToActivities(true).single(entity.urn),
+    };
+  }
+
+  /**
+   * Checks if the index is within bounds and exists
+   * @param index
+   * @param lazy
+   */
+  async has(index: number, lazy: boolean = false): Promise<boolean> {
+    if (!lazy) {
+      await this.fetch();
+    }
+
+    if (!this.baseEntity) {
+      return false;
+    } else if (index === 0) {
+      return Boolean(this.baseEntity);
+    } else if (Math.abs(index) < this.limit) {
+      const entities =
+        index < 0 ? this.pools.prev.entities : this.pools.next.entities;
+
+      return typeof entities[Math.abs(index) - 1] !== 'undefined';
+    }
+
+    return false;
+  }
+
+  /**
+   * Shortcut for go(index - 1)
+   */
+  prev(): Promise<HorizontalFeedResponse> {
+    return this.go(this.cursor - 1);
+  }
+
+  /**
+   * Shortcut for has(index - 1, lazy)
+   * @param lazy
+   */
+  hasPrev(lazy: boolean = false): Promise<boolean> {
+    return this.has(this.cursor - 1, lazy);
+  }
+
+  /**
+   * Shortcut for go(index + 1)
+   */
+  next(): Promise<HorizontalFeedResponse> {
+    return this.go(this.cursor + 1);
+  }
+
+  /**
+   * Shortcut for has(index + 1, lazy)
+   * @param lazy
+   */
+  hasNext(lazy: boolean = false): Promise<boolean> {
+    return this.has(this.cursor + 1, lazy);
+  }
+
+  /**
+   * Returns an event emitter that will fire an event when something (cursor, pools) change
+   */
+  onChange(): EventEmitter<HorizontalFeedChange> {
+    return this.onChangeEmitter;
+  }
+
+  /**
+   * Internal method that fires a change event
+   * @private
+   */
+  protected _emitChange(): void {
+    this.onChangeEmitter.next({
+      context: this.context,
+      cursor: this.cursor,
+      lastUpdate: +Date.now(),
+    });
+  }
+
+  /**
+   * Fetches based on context and entity, if necessary
+   */
+  async fetch(): Promise<void> {
+    // If no base entity, just reset pools
+
+    if (!this.baseEntity) {
+      this.pools = {
+        next: {
+          entities: [],
+          moreData: false,
+        },
+        prev: {
+          entities: [],
+          moreData: false,
+        },
+      };
+
+      return;
+    }
+
+    // Context-based operations
+
+    switch (this.context) {
+      case 'container':
+        await this._fetchContainer();
+        break;
 
       default:
         throw new Error('Unknown Horizontal Feed context');
@@ -65,29 +284,81 @@ export class HorizontalFeedService {
   }
 
   /**
-   * Fetch an the first FeedSyncEntity from a /feed endpoint and hydrates it, if necessary.
+   * Fetches based on chronological neighbors for a container (user/group)
+   * @private
+   */
+  protected async _fetchContainer() {
+    const baseEntity = this.baseEntity;
+    const guid = baseEntity.container_guid || baseEntity.owner_guid;
+    const endpoint = `api/v2/feeds/container/${guid}/all`;
+
+    const params = {
+      sync: 1,
+      as_activities: 1,
+      force_public: 1,
+      limit: this.limit,
+    };
+
+    // TODO: Make this less convoluted
+    const [prev, next] = await Promise.all([
+      this.pools.prev.moreData
+        ? this._fetchFromServer(endpoint, {
+            ...params,
+            reverse_sort: 1,
+            from_timestamp: baseEntity.time_created * 1000 + 1,
+          })
+        : Promise.resolve(null),
+      this.pools.next.moreData
+        ? this._fetchFromServer(endpoint, {
+            ...params,
+            from_timestamp: baseEntity.time_created * 1000 - 1,
+          })
+        : Promise.resolve(null),
+    ]);
+
+    let changed = false;
+
+    if (prev !== null) {
+      this.pools.prev = {
+        entities: prev,
+        moreData: false,
+      };
+
+      changed = true;
+    }
+
+    if (next !== null) {
+      this.pools.next = {
+        entities: next,
+        moreData: false,
+      };
+
+      changed = true;
+    }
+
+    if (changed) {
+      this._emitChange();
+    }
+  }
+
+  /**
+   * Internal method to fetch /feeds endpoints
    * @param endpoint
    * @param params
-   * @return {Promise}
+   * @private
    */
-  async fetch(endpoint: string, params: any): Promise<any> {
+  protected async _fetchFromServer(
+    endpoint: string,
+    params: any
+  ): Promise<any[]> {
     const response = (await this.client.get(endpoint, params, {
       cache: true,
     })) as any;
 
     if (!response || !response.entities || !response.entities.length) {
-      return void 0;
+      return [];
     }
 
-    const feedSyncEntity = response.entities[0];
-
-    if (feedSyncEntity.entity) {
-      return feedSyncEntity.entity;
-    }
-
-    return this.entities
-      .setCastToActivities(true)
-      .single(feedSyncEntity.urn)
-      .toPromise();
+    return response.entities;
   }
 }

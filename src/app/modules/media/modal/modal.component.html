@@ -161,16 +161,18 @@
           </div>
 
           <a
+            *ngIf="hasModalPager() && modalPager.hasPrev"
             class="m-mediaModal__pager m-mediaModal__pager--previous"
-            [class.m-mediaModal__pager--visible]="overlayVisible && hasPrev()"
+            [class.m-mediaModal__pager--visible]="overlayVisible"
             (click)="goToPrev()"
           >
             <i class="material-icons">chevron_left</i>
           </a>
 
           <a
+            *ngIf="hasModalPager() && modalPager.hasNext"
             class="m-mediaModal__pager m-mediaModal__pager--next"
-            [class.m-mediaModal__pager--visible]="overlayVisible && hasNext()"
+            [class.m-mediaModal__pager--visible]="overlayVisible"
             (click)="goToNext()"
           >
             <i class="material-icons">chevron_right</i>

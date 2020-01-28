@@ -23,7 +23,7 @@ export class SignupModalService {
     private cookieService: CookieService
   ) {
     // console.log('modal service constructed');
-    this.initOnScroll();
+    // this.initOnScroll();
   }
 
   open(): SignupModalService {
