@@ -1,13 +1,13 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Client } from '../../services/api/client';
 import { MindsTitle } from '../../services/ux/title';
 import { Router } from '@angular/router';
 import { Navigation as NavigationService } from '../../services/navigation';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { Session } from '../../services/session';
-import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
 import { RegisterForm } from '../forms/register/register';
 import { FeaturesService } from '../../services/features.service';
+import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service';
 
 @Component({
   selector: 'm-homepage__v2',
@@ -28,7 +28,8 @@ export class HomepageV2Component {
     public navigation: NavigationService,
     public session: Session,
     private loginReferrer: LoginReferrerService,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    private onboardingService: OnboardingV2Service
   ) {
     this.title.setTitle('Minds Social Network', false);
 
@@ -36,6 +37,17 @@ export class HomepageV2Component {
       this.router.navigate(['/newsfeed']);
       return;
     }
+  }
+
+  registered() {
+    if (this.featuresService.has('onboarding-december-2019')) {
+      if (this.onboardingService.shouldShow()) {
+        this.router.navigate(['/onboarding']);
+        return;
+      }
+    }
+
+    this.router.navigate(['/' + this.session.getLoggedInUser().username]);
   }
 
   navigate() {

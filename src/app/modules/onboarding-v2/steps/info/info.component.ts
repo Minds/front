@@ -18,10 +18,14 @@ export class InfoStepComponent {
   tooltipAnchor: 'top' | 'left' = 'left';
   inProgress: boolean = false;
 
+  searching;
   location: string;
+  coordinates: string;
   locationError: string;
   date: string;
   dateOfBirthError: string;
+
+  cities: Array<any> = [];
 
   @ViewChild('phoneVerification', { static: false })
   phoneVerification: PhoneVerificationComponent;
@@ -36,12 +40,43 @@ export class InfoStepComponent {
     this.onResize();
   }
 
+  locationChange(location: string) {
+    this.location = location;
+    this.coordinates = null;
+  }
+
+  findCity(q: string) {
+    if (this.searching) {
+      clearTimeout(this.searching);
+    }
+    this.searching = setTimeout(() => {
+      this.client
+        .get('api/v1/geolocation/list', { q: q })
+        .then((response: any) => {
+          this.cities = response.results;
+        });
+    }, 100);
+  }
+
+  setCity(row: any) {
+    this.cities = [];
+
+    this.location = row.address.city ? row.address.city : row.address.state;
+    this.coordinates = row.lat + ',' + row.lon;
+  }
+
   async updateLocation() {
     this.locationError = null;
+
+    const opts: any = {
+      city: this.location,
+    };
+
+    if (this.coordinates) {
+      opts.coordinates = this.coordinates;
+    }
     try {
-      const response: any = await this.client.post('api/v1/channel/info', {
-        city: this.location,
-      });
+      const response: any = await this.client.post('api/v1/channel/info', opts);
     } catch (e) {
       console.error(e);
       this.locationError = e.message;
