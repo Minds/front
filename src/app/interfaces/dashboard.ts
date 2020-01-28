@@ -71,7 +71,6 @@ export interface Bucket {
 export interface Timespan {
   id: string;
   label: string;
-  short_label?: string;
   interval: string;
   comparison_interval?: number;
   from_ts_ms: number;

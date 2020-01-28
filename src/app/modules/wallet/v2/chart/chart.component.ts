@@ -8,18 +8,11 @@ import { Timespan } from '../../../../interfaces/dashboard';
 })
 export class WalletChartComponent implements OnInit {
   inProgress: boolean = true;
+  init: boolean = false;
   dashboard: any;
+
   activeMetric: any;
-  activeTimespan: Timespan = {
-    id: '1w',
-    label: '1 week',
-    short_label: '1W',
-    interval: 'day',
-    selected: true,
-    comparison_interval: 7,
-    from_ts_ms: 0,
-    from_ts_iso: '',
-  };
+  activeTimespan: Timespan;
   error: boolean = false;
 
   constructor(protected walletService: WalletDashboardService) {}
@@ -30,12 +23,20 @@ export class WalletChartComponent implements OnInit {
 
   async load() {
     this.inProgress = true;
+    let queryTsId = '1W';
+    if (this.init) {
+      queryTsId = this.activeTimespan.id;
+    }
 
-    const response: any = await this.walletService.getTokenChart(
-      this.activeTimespan.id
-    );
+    const response: any = await this.walletService.getTokenChart(queryTsId);
     if (response && response.dashboard) {
       this.dashboard = response.dashboard;
+      this.dashboard.timespans = this.mapTimespanLabels(
+        response.dashboard.timespans
+      );
+      this.activeTimespan = this.dashboard.timespans.find(
+        ts => ts.selected === true
+      );
 
       const activeMetricId = this.dashboard.metric;
 
@@ -44,6 +45,7 @@ export class WalletChartComponent implements OnInit {
       );
     }
     this.inProgress = false;
+    this.init = true;
   }
 
   async updateTimespan($event) {
@@ -51,5 +53,21 @@ export class WalletChartComponent implements OnInit {
       ts => ts.id === $event.timespanId
     );
     this.load();
+  }
+
+  mapTimespanLabels(timespans) {
+    const labelMap: any = {
+      '7d': '1W',
+      '30d': '1M',
+      '90d': '3M',
+      '1y': '1Y',
+      max: 'Max',
+    };
+
+    timespans.forEach(t => {
+      t.label = labelMap[t.id];
+    });
+
+    return timespans;
   }
 }
