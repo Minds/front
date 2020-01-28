@@ -110,7 +110,6 @@ export class WalletDashboardComponent implements OnInit {
       }
       this.currencies.push(headerTab);
     });
-    console.log(this.currencies);
   }
 
   updateCurrency($event) {

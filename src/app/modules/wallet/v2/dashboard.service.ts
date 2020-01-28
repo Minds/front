@@ -383,6 +383,7 @@ export class WalletDashboardService {
       // const response = <any>(
       //   await this.client.get('api/v1/monetization/service/analytics/list?offset=&limit=12&type=payouts'
       // );
+
       // TODOOJM toggle fake data
       // return response.transactions;
       return fakeData.stripe_payouts;
@@ -392,9 +393,18 @@ export class WalletDashboardService {
     }
   }
 
-  // TODOOJM bucket endpoint needed
-  async getTokenChart(activeTimespan) {
-    // api/v2/analytics/dashboards/engagement?metric=token_balance
+  async getTokenChart(activeTimespanId) {
+    const opts = { timespan: activeTimespanId };
+
+    // TODOOJM toggle
+    // try {
+    //   const response = <any>await this.client.post('api/v2/analytics/dashboards/engagement?metric=token_balance', opts);
+    //   return response;
+    // } catch (e) {
+    //   console.error(e);
+    //   return e;
+    // }
+
     return fakeData.token_chart;
   }
 
@@ -462,23 +472,6 @@ export class WalletDashboardService {
     //   console.error(e);
     //   return false;
     // }
-    return fakeData.pendingTokenRewards;
-  }
-  async getPendingTokenContributionScores() {
-    // TODOOJM toggle
-    // try {
-    //   const response: any = await this.client.get(
-    //     `api/v2/blockchain/contributions/overview`
-    //   );
-    //   if (!response.currentReward) {
-    //     return false;
-    //   }
-    //   return response;
-    // } catch (e) {
-    //   console.error(e);
-    //   return false;
-    // }
-    // TODOOJM btw the response obj will be diff structure from fakeData.pendingTokenRewards
     return fakeData.pendingTokenRewards;
   }
 }
