@@ -94,8 +94,10 @@ export class WalletBalanceCashComponent implements OnInit {
 
     formattedBalance.int = splitBalance[0];
 
-    const frac = splitBalance[1].toString();
-    formattedBalance.frac = frac.length < 2 ? frac.concat('0') : frac;
+    if (splitBalance[1]) {
+      const frac = splitBalance[1].toString();
+      formattedBalance.frac = frac.length < 2 ? frac.concat('0') : frac;
+    }
     return formattedBalance;
   }
 
