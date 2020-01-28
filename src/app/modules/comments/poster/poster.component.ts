@@ -129,41 +129,61 @@ export class CommentPosterComponent {
     this.attachment.resetRich();
   }
 
-  uploadAttachment(file: HTMLInputElement, e?: any) {
+  async uploadFile(fileInput: HTMLInputElement, event) {
+    if (fileInput.value) {
+      // this prevents IE from executing this code twice
+      try {
+        await this.uploadAttachment(fileInput);
+
+        fileInput.value = null;
+      } catch (e) {
+        fileInput.value = null;
+      }
+    }
+    this.detectChanges();
+  }
+
+  async uploadAttachment(file: HTMLInputElement | File) {
     this.canPost = false;
     this.triedToPost = false;
 
     this.attachment.setHidden(true);
     this.attachment.setContainer(this.entity);
+    this.detectChanges();
+
     this.attachment
       .upload(file, this.detectChanges.bind(this))
       .then(guid => {
         this.canPost = true;
         this.triedToPost = false;
-        file.value = null;
+        if (file instanceof HTMLInputElement) {
+          file.value = null;
+        }
         this.detectChanges();
       })
       .catch(e => {
         console.error(e);
         this.canPost = true;
         this.triedToPost = false;
-        file.value = null;
+        if (file instanceof HTMLInputElement) {
+          file.value = null;
+        }
         this.detectChanges();
       });
 
     this.detectChanges();
   }
 
-  removeAttachment(file: HTMLInputElement) {
+  removeAttachment(fileInput: HTMLInputElement) {
     this.canPost = false;
     this.triedToPost = false;
 
     this.attachment
-      .remove(file)
+      .remove()
       .then(() => {
         this.canPost = true;
         this.triedToPost = false;
-        file.value = '';
+        fileInput.value = null;
       })
       .catch(e => {
         console.error(e);

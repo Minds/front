@@ -137,14 +137,14 @@ export class AttachmentService {
     this.meta.nsfw = nsfw.map(reason => reason.value);
   }
 
-  async upload(fileInput: HTMLInputElement, detectChangesFn?: Function) {
+  async upload(file: HTMLInputElement | File, detectChangesFn?: Function) {
     this.reset();
 
     this.progress.next(0);
     this.attachment.progress = 0;
     this.attachment.mime = '';
 
-    let file = fileInput ? fileInput.files[0] : null;
+    file = file instanceof HTMLInputElement ? file.files[0] : file;
 
     if (!file) {
       return Promise.reject(null);
@@ -260,7 +260,7 @@ export class AttachmentService {
     }
   }
 
-  remove(fileInput: HTMLInputElement) {
+  remove() {
     this.progress.next(0);
     this.attachment.progress = 0;
     this.attachment.mime = '';

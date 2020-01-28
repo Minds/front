@@ -135,6 +135,7 @@ import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdow
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
+import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -244,6 +245,7 @@ const routes: Routes = [
     SwitchComponent,
 
     FeaturedContentComponent,
+    AttachmentPasteDirective,
     PosterDateSelectorComponent,
     DraggableListComponent,
     ToggleComponent,
@@ -349,6 +351,7 @@ const routes: Routes = [
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    AttachmentPasteDirective,
     PosterDateSelectorComponent,
     ChannelModeSelectorComponent,
     DraggableListComponent,

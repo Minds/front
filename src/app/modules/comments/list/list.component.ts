@@ -515,7 +515,7 @@ export class CommentsListComponent implements OnInit, OnDestroy {
     this.triedToPost = false;
 
     this.attachment
-      .remove(file)
+      .remove()
       .then(() => {
         this.canPost = true;
         this.triedToPost = false;
