@@ -14,6 +14,18 @@ m-timespanFilter {
   }
   .m-timespanFilter__option {
     padding: 5px 16px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      background-color: rgba(themed($m-grey-50), 0.5);
+    }
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    &:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
     &:not(:last-child) {
       @include m-theme() {
         border-right: 1px solid themed($m-grey-50);
@@ -22,7 +34,15 @@ m-timespanFilter {
     &.active,
     &:hover {
       @include m-theme() {
+        background-color: themed($m-white);
         color: themed($m-grey-800);
+      }
+    }
+    &:active {
+      transition: all 0.1s cubic-bezier(0.23, 1, 0.32, 1);
+
+      @include m-theme() {
+        background-color: rgba(themed($m-grey-50), 0.2);
       }
     }
   }
