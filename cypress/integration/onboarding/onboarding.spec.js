@@ -74,6 +74,7 @@ context('Onboarding', () => {
     // should have a Location input
     cy.get('.m-onboarding__controls > .m-onboarding__control label[data-minds=location]').contains('Location');
     cy.get('.m-onboarding__controls > .m-onboarding__control input[data-minds=locationInput]').type('London');
+    cy.get('ul.m-onboarding__cities > li:first-child').click();
 
 
     // should have Date of Birth inputs
