@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WalletDashboardService } from '../dashboard.service';
 import { Timespan } from '../../../../interfaces/dashboard';
 
@@ -7,51 +7,53 @@ import { Timespan } from '../../../../interfaces/dashboard';
   templateUrl: './chart.component.html',
 })
 export class WalletChartComponent implements OnInit {
-  timespans: Timespan[] = [
-    {
-      // Assuming today is Nov 17th
-      id: '7d',
-      label: '7D',
-      interval: 'day',
-      from_ts_ms: 1572566400000,
-      from_ts_iso: '2019-11-01T00:00:00+00:00',
-    },
-    {
-      id: '30d',
-      label: '30D',
-      interval: 'day',
-      from_ts_ms: 1571270400000,
-      from_ts_iso: '2019-10-17T00:00:00+00:00',
-    },
-    {
-      id: '12m',
-      label: '12M',
-      interval: 'month',
-      from_ts_ms: 1542412800000,
-      from_ts_iso: '2018-11-17T00:00:00+00:00',
-    },
-  ];
-  activeTimespan;
-  data: any = {
-    id: 'tokens',
-    label: 'Tokens',
-    unit: 'tokens',
+  inProgress: boolean = true;
+  dashboard: any;
+  activeMetric: any;
+  activeTimespan: Timespan = {
+    id: '1w',
+    label: '1 week',
+    short_label: '1W',
+    interval: 'day',
+    selected: true,
+    comparison_interval: 7,
+    from_ts_ms: 0,
+    from_ts_iso: '',
   };
+  error: boolean = false;
 
   constructor(protected walletService: WalletDashboardService) {}
 
-  // TODOOJM: use analytics dashboard response to control timespans and populate chart
   ngOnInit() {
-    this.activeTimespan = this.timespans[0];
-    this.data['visualisation'] = this.walletService.getTokenChart(
-      this.activeTimespan
-    );
+    this.load();
   }
 
-  updateTimespan($event) {
-    this.activeTimespan = this.timespans.find(
+  async load() {
+    this.inProgress = true;
+
+    const response: any = await this.walletService.getTokenChart(
+      this.activeTimespan.id
+    );
+    if (response && response.dashboard) {
+      this.dashboard = response.dashboard;
+      console.log('***chart dash', this.dashboard);
+
+      const activeMetricId = this.dashboard.metric;
+
+      this.activeMetric = this.dashboard.metrics.find(
+        m => m.id === activeMetricId
+      );
+
+      console.log('***chart!! dashboard', this.dashboard);
+      console.log('***chart!! activemetric', this.activeMetric);
+    }
+    this.inProgress = false;
+  }
+
+  async updateTimespan($event) {
+    this.activeTimespan = this.dashboard.timespans.find(
       ts => ts.id === $event.timespanId
     );
-    this.data = this.walletService.getTokenChart(this.activeTimespan);
+    this.load();
   }
 }

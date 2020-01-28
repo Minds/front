@@ -1,10 +1,12 @@
-<m-timespanFilter
-  [timespans]="timespans"
-  [activeTimespanId]="activeTimespan.id"
-  (timespanChanged)="updateTimespan($event)"
-></m-timespanFilter>
-<m-chartV2
-  *ngIf="activeTimespan && data.visualisation"
-  [rawData]="data"
-  [interval]="activeTimespan.interval"
-></m-chartV2>
+<ng-container *ngIf="!inProgress">
+  <m-timespanFilter
+    [timespans]="dashboard.timespans"
+    [activeTimespanId]="activeTimespan.id"
+    (timespanChanged)="updateTimespan($event)"
+  ></m-timespanFilter>
+  <m-chartV2
+    *ngIf="activeTimespan && activeMetric"
+    [rawData]="activeMetric"
+    [interval]="activeTimespan.interval"
+  ></m-chartV2>
+</ng-container>
