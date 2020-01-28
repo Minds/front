@@ -11,16 +11,19 @@ m-v3-topbar {
     .m-v3topbar__leftColumn {
       margin-left: 33.3%;
       grid-column: 1 / span 1;
+      min-width: 0;
     }
 
     .m-v3topbar__middleColumn {
       grid-column: 2 / span 1;
+      min-width: 0;
     }
 
     .m-v3topbar__rightColumn {
       grid-column: 3 / span 1;
       display: flex;
       align-items: center;
+      min-width: 0;
     }
 
     .m-v3topbar__leftColumn,
