@@ -27,17 +27,18 @@ m-app {
     @include m-theme() {
       background-color: themed($m-body-bg);
     }
-    //  display: inline-block;
-    //  overflow:visible;
-    //  flex-grow: 1;
-    //  z-index: 1;
-    //  margin-top: $layout-header-height;
-    //  margin-left: $layout-sidebar-width;
-    //  width: 100%;
-    //
-    // @media screen and (max-width: $min-tablet){
-    //   margin-left:0;
-    //  }
+
+    & > .m-grid {
+      display: grid;
+
+      grid-template-areas: 'nav content side' 'footer footer footer';
+
+      grid-template-columns: 3fr 5fr 4fr;
+      grid-template-rows: auto 1fr auto;
+      grid-gap: 0;
+
+      height: 100%;
+    }
   }
 
   p {
@@ -55,6 +56,7 @@ m-app {
       color: rgba(themed($m-black), 0.75);
     }
   }
+
   .mdl-card__supporting-text {
     font-family: 'Roboto', Helvetica, sans-serif;
   }
@@ -142,6 +144,7 @@ m-app {
     }
   }
 }
+
 .m-loader {
   width: 100%;
   padding: 16px;

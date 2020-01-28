@@ -1,12 +1,15 @@
 import {
-  Component,
-  ComponentFactoryResolver,
-  ViewChild,
   ChangeDetectorRef,
+  Component,
+  DoCheck,
   HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
 } from '@angular/core';
-import { interval, timer } from 'rxjs';
-import { startWith, map, tap, throttle } from 'rxjs/operators';
+import { interval } from 'rxjs';
+import { map, startWith, throttle } from 'rxjs/operators';
 
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { Client } from '../../../services/api';
@@ -17,7 +20,9 @@ import { GroupsService } from '../groups-service';
   selector: 'm-group--sidebar-markers',
   templateUrl: 'sidebar-markers.component.html',
 })
-export class GroupsSidebarMarkersComponent {
+export class GroupsSidebarMarkersComponent
+  implements OnInit, DoCheck, OnDestroy {
+  @Input() showLabels: boolean = false;
   inProgress: boolean = false;
   $updateMarker;
   markers = [];

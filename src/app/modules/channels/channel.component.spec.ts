@@ -75,6 +75,11 @@ describe('ChannelComponent', () => {
           inputs: ['user', 'editing'],
         }),
         MockComponent({
+          selector: 'm-channel__sidebarv2',
+          inputs: ['user', 'editing'],
+          template: '',
+        }),
+        MockComponent({
           selector: 'm-channel--explicit-overlay',
           inputs: ['channel'],
         }),
@@ -105,9 +110,9 @@ describe('ChannelComponent', () => {
             params: from([{ filter: 'feed', username: 'username' }]),
           },
         },
-        { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: BlockListService, useValue: MockService(BlockListService) },
         { provide: ClientMetaService, useValue: clientMetaServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -116,12 +121,15 @@ describe('ChannelComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
+
     fixture = TestBed.createComponent(ChannelComponent);
     clientMock.response = {};
     uploadMock.response = {};
     featuresServiceMock.mock('es-feeds', false);
     featuresServiceMock.mock('top-feeds', false);
     featuresServiceMock.mock('channel-filter-feeds', false);
+    featuresServiceMock.mock('navigation-2020', false);
+
     comp = fixture.componentInstance;
     comp.username = 'username';
     comp.user = {

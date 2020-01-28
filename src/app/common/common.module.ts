@@ -133,6 +133,7 @@ import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdow
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
+import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -166,6 +167,7 @@ const routes: Routes = [
 
     // V2 Layout
     V2TopbarComponent,
+    V3TopbarComponent,
     UserMenuComponent,
 
     //
@@ -271,6 +273,9 @@ const routes: Routes = [
     // V2 Layout
     V2TopbarComponent,
     UserMenuComponent,
+
+    // V3 Layout
+    V3TopbarComponent,
 
     //
 

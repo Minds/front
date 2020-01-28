@@ -1,31 +1,111 @@
 m-sidebar--navigation {
+  grid-area: nav;
+
   padding-top: 8px !important;
+  padding-left: 33.3%;
   @include m-theme() {
-    background-color: themed($m-grey-950);
+    background-color: themed($m-body-bg);
+    border-right: 1px solid themed($m-grey-400);
+  }
+
+  nav {
+    //min-height: 100vh;
+    //height: 100%;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  h5 {
+    font-size: 11px;
+    line-height: 30px;
+    letter-spacing: 1.83px;
+    text-transform: uppercase;
+    @include m-theme() {
+      color: rgba(themed($m-black), 0.3);
+    }
+  }
+
+  m-group--sidebar-markers {
+    .m-groupSidebarMarkers__list {
+      margin: 0;
+      padding: 0;
+      width: auto;
+      height: auto;
+      max-width: unset;
+      min-height: unset;
+      box-shadow: unset !important;
+
+      & > li {
+        width: auto;
+        height: auto;
+        border: unset !important;
+
+        a {
+          padding: 8px 0;
+          font-size: 14px;
+          font-weight: normal;
+          line-height: 30px;
+
+          @include m-theme() {
+            color: themed($m-black);
+          }
+
+          m-tooltip {
+            vertical-align: middle;
+            margin-right: 21px;
+
+            img {
+              width: 27px;
+              height: 27px;
+            }
+
+            i.material-icons {
+              font-size: 20px;
+              width: 27px;
+              height: 27px;
+            }
+          }
+        }
+      }
+    }
   }
 }
 
 .m-sidebar--navigation--item {
   display: flex;
-  flex-direction: column;
+  //flex-direction: column;
   align-items: center;
   text-decoration: none;
   font-family: 'Roboto', Helvetica, sans-serif;
-  padding: 8px 0;
+  margin: 15px 0;
+  font-weight: bold;
+
+  font-size: 17px;
+  line-height: 44px;
   @include m-theme() {
-    color: themed($m-grey-300);
+    color: themed($m-navigation-item);
   }
 
-  &.m-sidebar-navigation--item-active {
+  &.m-sidebar--navigation--item-active {
+    font-weight: bold;
     @include m-theme() {
-      color: themed($m-white);
+      color: themed($m-black);
     }
   }
 
+  i.material-icons {
+    //font-size:17px;
+    //line-height:44px;
+    margin-right: 30px;
+  }
+
   span {
-    text-transform: uppercase;
-    font-size: 8px;
-    letter-spacing: 1.25px;
-    padding-top: 4px;
+    //text-transform: uppercase;
+    //font-size: 8px;
+    //letter-spacing: 1.25px;
+    //padding-top: 4px;
   }
 }

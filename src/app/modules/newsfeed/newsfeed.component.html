@@ -17,9 +17,9 @@
         routerLinkActive="m-topbar--navigation--item-active"
         *ngIf="session.isLoggedIn()"
       >
-        <span i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIPTIONS"
-          >Subscriptions</span
-        >
+        <span i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIPTIONS">
+          Subscriptions
+        </span>
         <m-tooltip
           icon="help"
           i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIPTIONS_TOOLTIP"
@@ -175,7 +175,7 @@
       <div class="minds-spacer minds-spacer-2x"></div>
     </div>
 
-    <div class="m-newsfeed-footer">
+    <div class="m-newsfeed-footer" *ngIf="!newNavigation">
       <ul class="m-footer-nav m-footer-nav-inline">
         <li
           *ngFor="let page of navigation.getItems('footer')"
@@ -184,21 +184,24 @@
           <a
             *ngIf="pagesService.isInternalLink(page.path)"
             [routerLink]="['/' + page.path]"
-            >{{ page.title }}</a
           >
+            {{ page.title }}
+          </a>
           <a
             *ngIf="!pagesService.isInternalLink(page.path)"
             [href]="page.path"
             target="_blank"
-            >{{ page.title }}</a
           >
+            {{ page.title }}
+          </a>
         </li>
       </ul>
       <span
         class="copyright mdl-color-text--blue-grey-700"
         i18n="@@M__COMMON__COPYRIGHT_YEAR"
-        >&#169; Minds {{ '2019' }}</span
       >
+        &#169; Minds {{ '2019' }}
+      </span>
     </div>
   </div>
 

@@ -1,0 +1,343 @@
+m-v3-topbar {
+  .m-grid {
+    grid-gap: 0;
+    grid-template-columns: 3fr 5fr 4fr;
+
+    &,
+    & > * {
+      height: 75px;
+    }
+
+    .m-v3topbar__leftColumn {
+      margin-left: 33.3%;
+      grid-column: 1 / span 1;
+    }
+
+    .m-v3topbar__middleColumn {
+      grid-column: 2 / span 1;
+    }
+
+    .m-v3topbar__rightColumn {
+      grid-column: 3 / span 1;
+      display: flex;
+      align-items: center;
+    }
+
+    .m-v3topbar__leftColumn,
+    .m-v3topbar__middleColumn {
+      @include m-theme() {
+        border-right: 1px solid themed($m-grey-400);
+      }
+    }
+  }
+}
+
+.m-v3-topbar__Top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  //width: 100%;
+  //min-width: 330px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  height: 75px;
+  width: 100%;
+  z-index: 9999;
+  transform: translateZ(0);
+
+  @include m-theme() {
+    background-color: themed($m-white);
+    border-bottom: 1px solid themed($m-grey-400);
+  }
+
+  @media screen and (max-width: 900px) {
+    // Markers sidebar
+    width: 100%;
+  }
+
+  .m-v3-topbar__SearchBox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    m-search--bar {
+      display: contents;
+
+      > .mdl-textfield {
+        width: 100%;
+
+        input {
+          border: 0;
+          font-size: 16px;
+          line-height: 21px;
+          font-weight: normal;
+        }
+      }
+
+      .mdl-textfield__label {
+        display: none;
+      }
+
+      .m-search-bar-suggestions-list {
+        left: auto;
+        right: 0;
+        top: 75px;
+        width: 100%;
+        border-radius: 4px;
+        @include m-theme() {
+          box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14),
+            0 3px 3px -2px rgba(themed($m-black), 0.2),
+            0 1px 8px 0 rgba(themed($m-black), 0.12);
+        }
+      }
+    }
+  }
+
+  m-notifications--topbar-toggle {
+    position: relative;
+
+    @media screen and (max-width: 480px) {
+      .m-tooltip--bubble {
+        display: none;
+      }
+    }
+  }
+
+  m-notifications--flyout {
+    right: 0;
+
+    @media screen and (max-width: 480px) {
+      position: fixed;
+      top: 75px;
+      left: 5%;
+      width: 90%;
+    }
+  }
+
+  m-user-menu {
+    margin: 0 16px;
+  }
+}
+
+.m-v3-topbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 75px;
+  max-width: 1296px;
+  margin: 0 auto;
+  padding: 0 8px;
+  //padding-right: 46px;
+  box-sizing: border-box;
+
+  @media screen and (min-width: 1296px) {
+    padding: 0 46px 0 0;
+  }
+
+  @media screen and (max-width: 480px) {
+    .m-v3-topbarNav__RouterNav {
+      display: none;
+    }
+
+    .m-v3-topbar__SearchBox {
+      display: none;
+    }
+  }
+}
+
+.m-v3-topbar__Container--left,
+.m-v3-topbar__Container--right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.m-v3-topbar__Container--left {
+  justify-content: flex-start;
+}
+
+.m-v3-topbar__Container--right {
+  justify-content: flex-end;
+}
+
+.m-v3-topbar__Nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  @media screen and (max-width: 810px) {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+.m-v3-topbarNav__Item {
+  padding: 11px 12px 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-top: 3px solid transparent;
+  text-decoration: none;
+  @include m-theme() {
+    color: themed($m-grey-800);
+  }
+
+  &.m-v3-topbarNav__Item--active {
+    @include m-theme() {
+      color: themed($m-blue);
+      border-color: themed($m-blue);
+    }
+  }
+
+  &.m-v3-topbarNav__Item--no-padding {
+    padding: 0 12px;
+
+    @media screen and (max-width: 480px) {
+      padding: 0 4px;
+    }
+  }
+
+  > img {
+    height: 36px;
+  }
+
+  > i {
+    margin-right: 8px;
+    font-size: 22px;
+  }
+
+  > span {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    letter-spacing: 1.25px;
+    text-transform: uppercase;
+    font-size: 11px;
+
+    @media screen and (max-width: 810px) {
+      display: none;
+    }
+  }
+}
+
+.m-v3-topbarNavItem__Logo {
+  margin: 0 8px 0 0;
+  padding: 0 12px;
+  //height: 62px;
+  box-sizing: border-box;
+  border: 0;
+  cursor: pointer;
+  transition: opacity 0.5s ease;
+
+  img {
+    height: 36px;
+  }
+}
+
+// .m-theme__dark .m-v3-topbarNavItem__Logo,
+// .m-theme__light .m-v3-topbarNavItem__Logo:hover {
+//   filter: grayscale(100%);
+// }
+//
+// .m-theme__dark .m-v3-topbarNavItem__Logo:hover {
+//   filter: grayscale(0%);
+// }
+
+.m-v3-topbar__Avatar {
+  cursor: pointer;
+
+  @media screen and (max-width: 810px) {
+    margin: 0 16px;
+  }
+
+  .minds-avatar {
+    margin: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    @include m-theme() {
+      border: 1px solid themed($m-white);
+    }
+  }
+
+  &.m-v3-topbar__Avatar--active .minds-avatar {
+    @include m-theme() {
+      box-shadow: 0 0 0 2px themed($m-blue);
+    }
+  }
+}
+
+.m-v3-topbar__UserMenu {
+  min-width: 80px;
+}
+
+.m-v3-topbar__Container__LoginWrapper {
+  @media screen and (max-width: 480px) {
+    // display: none;
+  }
+
+  > a {
+    text-decoration: none;
+    height: 32px;
+    border-radius: 18px;
+    font-size: 12px;
+    letter-spacing: 1.25px;
+    box-shadow: none;
+    text-transform: uppercase;
+    padding: 8px 16px;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+    @include m-theme() {
+      background-color: themed($m-white);
+      border: 1px solid themed($m-blue);
+      color: themed($m-blue);
+    }
+  }
+}
+
+.m-v3-topbar__Bottom {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: 100%;
+  min-width: 330px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  min-height: 75px;
+  z-index: 9999;
+  transform: translateZ(0);
+  @include m-theme() {
+    background-color: themed($m-white);
+    border-top: 1px solid themed($m-grey-50);
+  }
+
+  @media screen and (max-width: 480px) {
+    display: flex;
+  }
+
+  .m-v3-topbarNav__RouterNav {
+    flex-grow: 1;
+    justify-content: center;
+  }
+}
+
+.m-v3-topbar__NotificationsToaster {
+  .m-notifications--toaster {
+    z-index: 500;
+    right: 65px;
+  }
+}

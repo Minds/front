@@ -17,6 +17,7 @@ import { SideBarSelectorChange } from '../hashtags/sidebar-selector/sidebar-sele
 import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
 import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.component';
 import { PagesService } from '../../common/services/pages.service';
+import { FeaturesService } from '../../services/features.service';
 
 @Component({
   selector: 'm-newsfeed',
@@ -59,6 +60,8 @@ export class NewsfeedComponent {
 
   all: boolean;
 
+  newNavigation: boolean = false;
+
   @ViewChild('poster', { static: false }) private poster: PosterComponent;
 
   constructor(
@@ -69,13 +72,15 @@ export class NewsfeedComponent {
     public router: Router,
     public route: ActivatedRoute,
     public title: MindsTitle,
+    public pagesService: PagesService,
+    public featuresService: FeaturesService,
     protected storage: Storage,
     protected overlayModal: OverlayModalService,
     protected context: ContextService,
     protected newsfeedService: NewsfeedService,
-    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
-    public pagesService: PagesService
+    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService
   ) {
+    this.newNavigation = this.featuresService.has('navigation-2020');
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
 
