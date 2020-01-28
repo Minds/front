@@ -36,16 +36,12 @@ export class WalletChartComponent implements OnInit {
     );
     if (response && response.dashboard) {
       this.dashboard = response.dashboard;
-      console.log('***chart dash', this.dashboard);
 
       const activeMetricId = this.dashboard.metric;
 
       this.activeMetric = this.dashboard.metrics.find(
         m => m.id === activeMetricId
       );
-
-      console.log('***chart!! dashboard', this.dashboard);
-      console.log('***chart!! activemetric', this.activeMetric);
     }
     this.inProgress = false;
   }
