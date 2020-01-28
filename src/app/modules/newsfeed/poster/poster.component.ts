@@ -211,8 +211,21 @@ export class PosterComponent {
       });
   }
 
-  uploadAttachment(file: HTMLInputElement, event) {
+  async uploadFile(file: HTMLInputElement, event) {
     if (file.value) {
+      // this prevents IE from executing this code twice
+      try {
+        await this.uploadAttachment(file);
+
+        file.value = null;
+      } catch (e) {
+        file.value = null;
+      }
+    }
+  }
+
+  async uploadAttachment(file: HTMLInputElement | File) {
+    if ((file instanceof HTMLInputElement && file.value) || file) {
       // this prevents IE from executing this code twice
       this.canPost = false;
       this.inProgress = true;
@@ -226,7 +239,9 @@ export class PosterComponent {
           if (this.attachment.isPendingDelete()) {
             this.removeAttachment(file);
           }
-          file.value = null;
+          if (file instanceof HTMLInputElement) {
+            file.value = '';
+          }
         })
         .catch(e => {
           if (e && e.message) {
@@ -234,7 +249,9 @@ export class PosterComponent {
           }
           this.inProgress = false;
           this.canPost = true;
-          file.value = null;
+          if (file instanceof HTMLInputElement) {
+            file.value = '';
+          }
           this.attachment.reset();
         });
     }
@@ -244,7 +261,7 @@ export class PosterComponent {
     this.attachment.reset();
   }
 
-  removeAttachment(file: HTMLInputElement) {
+  removeAttachment(file: HTMLInputElement | File) {
     this.attachment.abort();
     if (this.inProgress) {
       this.canPost = true;
@@ -260,11 +277,13 @@ export class PosterComponent {
     this.errorMessage = '';
 
     this.attachment
-      .remove(file)
+      .remove()
       .then(() => {
         this.inProgress = false;
         this.canPost = true;
-        file.value = '';
+        if (file instanceof HTMLInputElement) {
+          file.value = '';
+        }
       })
       .catch(e => {
         console.error(e);
