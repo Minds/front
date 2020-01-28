@@ -55,10 +55,12 @@ export class WalletTransactionsCashComponent implements OnInit {
       if (stripeAccount.bankAccount) {
         this.currency = stripeAccount.bankAccount.currency.toUpperCase();
       }
-      this.runningTotal =
-        (stripeAccount.totalBalance.amount -
-          stripeAccount.pendingBalance.amount) /
-        100;
+      console.log('stripe account', stripeAccount);
+
+      this.runningTotal = stripeAccount.pendingBalance.amount / 100;
+
+      console.log('running - start', this.runningTotal);
+      this.detectChanges();
     }
 
     this.load(true);
@@ -118,7 +120,7 @@ export class WalletTransactionsCashComponent implements OnInit {
   }
 
   formatResponse(transactions) {
-    transactions.forEach(tx => {
+    transactions.forEach((tx, i) => {
       const formattedTx: any = { ...tx };
       // const formattedTx: any = {};
 
@@ -129,12 +131,24 @@ export class WalletTransactionsCashComponent implements OnInit {
 
       formattedTx.amount = tx.net / 100;
 
+      // if (i !== 0) {
+      //   this.runningTotal -= formattedTx.amount;
+      // }
+
       if (tx.type !== 'payout') {
-        this.runningTotal -= formattedTx.amount;
+        if (i !== 0) {
+          this.runningTotal -= formattedTx.amount;
+          if (this.transactions[i - 1].type === 'payout') {
+            this.runningTotal = formattedTx.amount;
+          }
+        }
       } else {
         this.runningTotal = 0;
       }
+
       formattedTx.runningTotal = this.formatAmount(this.runningTotal);
+      console.log('running A', this.runningTotal);
+      console.log('running B', formattedTx.runningTotal.total);
 
       if (formattedTx.superType === 'payout') {
         formattedTx.showRewardsPopup = false;
@@ -194,6 +208,8 @@ export class WalletTransactionsCashComponent implements OnInit {
     if (splitBalance[1]) {
       formattedAmount.frac = splitBalance[1].slice(0, 2);
     }
+
+    console.log('formatting...', formattedAmount.total);
     return formattedAmount;
   }
 
