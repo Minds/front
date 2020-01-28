@@ -24,7 +24,11 @@ export class ChartV2Component implements OnInit, OnDestroy {
   @ViewChild('hoverInfoDiv', { static: true }) hoverInfoDivEl: ElementRef;
   @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
-  @Input() rawData;
+  @Input() segments: Array<any>;
+  @Input() unit: string = 'number';
+  @Input() label: '';
+  @Input() margin: number;
+
   @Input() interval;
   @Input() isMini: boolean = false;
   @Input() showHoverInfo: boolean = true;
@@ -48,7 +52,6 @@ export class ChartV2Component implements OnInit, OnDestroy {
     displayModeBar: false,
   };
 
-  segments;
   isComparison = false;
   pointsPerSegment: number;
   markerFills;
@@ -72,9 +75,9 @@ export class ChartV2Component implements OnInit, OnDestroy {
   ngOnInit() {
     this.isTouchDevice = isMobileOrTablet();
     this.hoverInfoDiv = this.hoverInfoDivEl.nativeElement;
-    this.segments = this.isMini
-      ? this.rawData.visualisation.segments.slice(0, 1)
-      : this.rawData.visualisation.segments;
+    if (this.isMini) {
+      this.segments = this.segments.slice(0, 1);
+    }
     if (this.segments.length === 2) {
       // this.isComparison = true;
       // Reverse the segments so comparison line is layered behind current line
@@ -195,7 +198,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       this.layout.xaxis.tickformat = this.xTickFormat;
     }
 
-    if (this.rawData.unit && this.rawData.unit === 'usd') {
+    if (this.unit === 'usd') {
       this.yTickFormat = '$.2f';
     }
 
@@ -312,7 +315,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
     // TODO: format value strings here and remove ngSwitch from template?
     this.hoverInfo['date'] = this.segments[0].buckets[this.hoverPoint].date;
     this.hoverInfo['value'] =
-      this.rawData.unit !== 'usd'
+      this.unit !== 'usd'
         ? this.segments[0].buckets[this.hoverPoint].value
         : this.segments[0].buckets[this.hoverPoint].value / 100;
 
@@ -322,17 +325,17 @@ export class ChartV2Component implements OnInit, OnDestroy {
       const segment = this.segments[pt];
       this.hoverInfo['values'][pt] = {
         value:
-          this.rawData.unit !== 'usd'
+          this.unit !== 'usd'
             ? segment.buckets[this.hoverPoint].value
             : segment.buckets[this.hoverPoint].value / 100,
-        label: segment.label || this.rawData.label,
+        label: segment.label || this.label,
         color: this.getColor(chartPalette.segmentColorIds[pt]),
       };
     }
 
     // if (this.isComparison && this.segments[1]) {
     //   this.hoverInfo['comparisonValue'] =
-    //     this.rawData.unit !== 'usd'
+    //     this.unit !== 'usd'
     //       ? this.segments[0].buckets[this.hoverPoint].value
     //       : this.segments[0].buckets[this.hoverPoint].value / 100;
     //
@@ -393,7 +396,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
     return rows.map(row => {
       if (key === 'date') {
         return row[key].slice(0, 10);
-      } else if (this.rawData.unit && this.rawData.unit === 'usd') {
+      } else if (this.unit === 'usd') {
         return row[key] / 100;
       } else {
         return row[key];

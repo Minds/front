@@ -34,9 +34,11 @@
         ></m-analytics__benchmark>
         <m-chartV2
           *ngIf="tile.visualisation"
-          [rawData]="tile"
           [interval]="day"
           [isMini]="true"
+          [unit]="tile?.unit"
+          [label]="tile?.label"
+          [segments]="tile.visualisation.segments"
         ></m-chartV2>
       </div>
     </ng-container>

@@ -6,7 +6,9 @@
   ></m-timespanFilter>
   <m-chartV2
     *ngIf="activeTimespan && activeMetric"
-    [rawData]="activeMetric"
     [interval]="activeTimespan.interval"
+    [unit]="activeMetric?.unit"
+    [label]="activeMetric?.label"
+    [segments]="activeMetric.visualisation.segments"
   ></m-chartV2>
 </ng-container>
