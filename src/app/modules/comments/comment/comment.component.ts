@@ -48,8 +48,7 @@ import isMobile from '../../../helpers/is-mobile';
     },
   ],
 })
-export class CommentComponentV2
-  implements OnChanges, OnInit, OnDestroy, AfterViewInit {
+export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   comment: any;
   editing: boolean = false;
   minds = window.Minds;
@@ -127,8 +126,6 @@ export class CommentComponentV2
       }, 10);
     }
   }
-
-  ngOnDestroy() {}
 
   @Input('comment')
   set _comment(value: any) {
@@ -241,7 +238,7 @@ export class CommentComponentV2
     this.triedToPost = false;
 
     this.attachment
-      .remove(file)
+      .remove()
       .then(() => {
         this.canPost = true;
         this.triedToPost = false;

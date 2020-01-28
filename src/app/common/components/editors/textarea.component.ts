@@ -6,7 +6,6 @@ import {
   EventEmitter,
   Input,
   Output,
-  SimpleChange,
 } from '@angular/core';
 
 declare var tinymce;
@@ -22,6 +21,9 @@ declare var tinymce;
       (keyup)="change()"
       (blur)="change()"
       (paste)="paste($event); change()"
+      (filePaste)="filePaste.emit($event)"
+      m-attachment-paste
+      tabindex="0"
     ></div>
     <span *ngIf="placeholder && model.length === 0" class="m-placeholder">{{
       placeholder
@@ -35,8 +37,11 @@ export class Textarea implements OnChanges {
   @Input('mModel') model: string = '';
   @Output('mModelChange') update: EventEmitter<any> = new EventEmitter();
 
-  @Input('disabled') disabled: boolean = false;
-  @Input('placeholder') placeholder: string = '';
+  @Input() disabled: boolean = false;
+  @Input() placeholder: string = '';
+
+  @Output()
+  filePaste: EventEmitter<File> = new EventEmitter<File>();
 
   getControlText(): string {
     return this.editorControl.nativeElement.innerText;
