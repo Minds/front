@@ -335,9 +335,9 @@ review:preprod:
     url: https://www.minds.com # requires preprod cookie
   dependencies:
     - build:review
-  except:
-    refs:
-      - master
+  # except:
+  #   refs:
+  #     - master
 
 deploy:canary:
   <<: *deploy
