@@ -72,6 +72,7 @@ qa:manual:
   only:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
   allow_failure: false
@@ -98,6 +99,7 @@ build:review:
   except:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
 
@@ -110,13 +112,18 @@ build:production:en:
     - npm run postinstall
     - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
     - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
+    - ng run minds:server:production
+    - npm run compile:server
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
       - dist/en
+      - dist/server.js
+      - dist/server
   only:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
 
@@ -136,6 +143,7 @@ build:production:i18n:
   only:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
 
@@ -168,6 +176,7 @@ prepare:review:
   except:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
 
@@ -178,6 +187,7 @@ prepare:review:sentry:
   except:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
   dependencies:
@@ -195,6 +205,7 @@ prepare:production:
   only:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
   dependencies:
@@ -208,6 +219,7 @@ prepare:production:sentry:
   only:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
   dependencies:
@@ -232,6 +244,7 @@ prepare:production:sentry:
   except:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
 
@@ -260,6 +273,7 @@ review:start:
   except:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
 
@@ -305,6 +319,7 @@ staging:fpm:
   only:
     refs:
       - master
+      - epic/SSR
       - test/gitlab-ci
 
 review:preprod:
@@ -338,6 +353,7 @@ deploy:canary:
   only:
     refs:
       - master
+      - epic/SSR
       - test/gitlab-ci
 
 deploy:production:
@@ -354,6 +370,7 @@ deploy:production:
   only:
     refs:
       - master
+      - epic/SSR
       - test/gitlab-ci
 
 #################
@@ -367,5 +384,6 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
+      - epic/SSR
       - production
       - test/gitlab-ci
