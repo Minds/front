@@ -105,7 +105,6 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
               tab.positiveTrend = false;
             }
           }
-          console.log(tab);
           if (permissionGranted) {
             this.tabs.push(tab);
           }
