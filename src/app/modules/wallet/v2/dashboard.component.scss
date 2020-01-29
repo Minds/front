@@ -94,6 +94,9 @@ m-walletDashboard {
   .m-walletDashboardViews__view {
     margin: 50px 57px 0 57px;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    &.m-walletDashboardViews__view--overview {
+      margin: 50px 0 0 0;
+    }
   }
   m-shadowboxSubmitButton {
     display: block;

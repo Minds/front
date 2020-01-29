@@ -27,7 +27,6 @@ export class ChartV2Component implements OnInit, OnDestroy {
   @Input() segments: Array<any>;
   @Input() unit: string = 'number';
   @Input() label: '';
-  @Input() margin: number;
 
   @Input() interval;
   @Input() isMini: boolean = false;
@@ -52,6 +51,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
     displayModeBar: false,
   };
 
+  allPointsAreZero = true;
   isComparison = false;
   pointsPerSegment: number;
   markerFills;
@@ -79,6 +79,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       this.segments = this.segments.slice(0, 1);
     }
     if (this.segments.length === 2) {
+      // TODO uncomment and test once there are comparison segments available
       // this.isComparison = true;
       // Reverse the segments so comparison line is layered behind current line
       // this.segments.reverse();
@@ -243,16 +244,21 @@ export class ChartV2Component implements OnInit, OnDestroy {
           color: this.getColor('m-grey-130'),
         },
         fixedrange: true,
+        automargin: true,
       },
       margin: {
         t: this.isMini ? 0 : 16,
+        l: this.isMini ? 0 : 16,
         b: this.isMini ? 0 : 80,
-        l: 0,
         r: this.isMini ? 0 : 80,
         pad: 16,
       },
       shapes: this.shapes,
     };
+
+    if (this.allPointsAreZero) {
+      this.layout.yaxis.range = [-1, 9];
+    }
   }
   // * EVENTS -----------------------------------
 
@@ -333,6 +339,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       };
     }
 
+    // TODO uncomment and test once there are comparison segments available
     // if (this.isComparison && this.segments[1]) {
     //   this.hoverInfo['comparisonValue'] =
     //     this.unit !== 'usd'
@@ -396,10 +403,15 @@ export class ChartV2Component implements OnInit, OnDestroy {
     return rows.map(row => {
       if (key === 'date') {
         return row[key].slice(0, 10);
-      } else if (this.unit === 'usd') {
-        return row[key] / 100;
       } else {
-        return row[key];
+        if (this.allPointsAreZero && row[key] !== 0) {
+          this.allPointsAreZero = false;
+        }
+        if (this.unit === 'usd') {
+          return row[key] / 100;
+        } else {
+          return row[key];
+        }
       }
     });
   }
