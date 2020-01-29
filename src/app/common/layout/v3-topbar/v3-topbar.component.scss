@@ -68,12 +68,19 @@ m-v3-topbar {
     height: 100%;
     display: flex;
     align-items: center;
+    position: relative;
 
     m-search--bar {
       display: contents;
 
       > .mdl-textfield {
         width: 100%;
+        margin: 0 43px;
+        position: initial;
+
+        i.material-icons {
+          font-size: 20px;
+        }
 
         input {
           border: 0;
@@ -92,12 +99,7 @@ m-v3-topbar {
         right: 0;
         top: 75px;
         width: 100%;
-        border-radius: 4px;
-        @include m-theme() {
-          box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14),
-            0 3px 3px -2px rgba(themed($m-black), 0.2),
-            0 1px 8px 0 rgba(themed($m-black), 0.12);
-        }
+        border: 0;
       }
     }
   }

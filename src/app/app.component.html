@@ -3,7 +3,10 @@
     <ng-container *ngIf="useNewNavigation; else v2Topbar">
       <m-v3-topbar>
         <ng-container search>
-          <m-search--bar [defaultSizes]="false"></m-search--bar>
+          <m-search--bar
+            [defaultSizes]="false"
+            [showCleanIcon]="true"
+          ></m-search--bar>
         </ng-container>
       </m-v3-topbar>
     </ng-container>
