@@ -12,6 +12,9 @@ m-v3-topbar {
       margin-left: 33.3%;
       grid-column: 1 / span 1;
       min-width: 0;
+
+      display: flex;
+      align-items: center;
     }
 
     .m-v3topbar__middleColumn {
