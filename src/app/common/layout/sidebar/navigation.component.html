@@ -3,8 +3,9 @@
     <li>
       <a
         class="m-sidebar--navigation--item"
-        [routerLink]="['/newsfeed']"
+        [routerLink]="['/newsfeed/subscriptions']"
         [routerLinkActive]="'m-sidebar--navigation--item-active'"
+        [routerLinkActiveOptions]="{ exact: true }"
         [title]="'Newsfeed'"
       >
         <i class="material-icons">check</i>
@@ -18,6 +19,7 @@
         class="m-sidebar--navigation--item"
         [routerLink]="['/newsfeed/global/top']"
         [routerLinkActive]="'m-sidebar--navigation--item-active'"
+        [routerLinkActiveOptions]="{ exact: true }"
         [title]="'Discover'"
       >
         <i class="material-icons">check</i>
