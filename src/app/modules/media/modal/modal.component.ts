@@ -713,8 +713,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   // Dismiss modal when backdrop is clicked and modal is open
   @HostListener('document:click', ['$event'])
   clickedBackdrop($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
+    if ($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
     if (this.isOpen) {
       this.overlayModal.dismiss();
     }
