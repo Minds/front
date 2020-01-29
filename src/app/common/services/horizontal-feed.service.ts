@@ -173,7 +173,7 @@ export class HorizontalFeedService {
 
     return {
       index: index,
-      entity: this.entities.setCastToActivities(true).single(entity.urn),
+      entity: this.entities.single(entity.urn),
     };
   }
 
@@ -289,14 +289,15 @@ export class HorizontalFeedService {
    */
   protected async _fetchContainer() {
     const baseEntity = this.baseEntity;
+    const baseEntityTimestamp = baseEntity.time_created * 1000;
     const guid = baseEntity.container_guid || baseEntity.owner_guid;
     const endpoint = `api/v2/feeds/container/${guid}/all`;
 
     const params = {
       sync: 1,
-      as_activities: 1,
       force_public: 1,
       limit: this.limit,
+      from_timestamp: baseEntityTimestamp,
     };
 
     // TODO: Make this less convoluted
@@ -305,22 +306,28 @@ export class HorizontalFeedService {
         ? this._fetchFromServer(endpoint, {
             ...params,
             reverse_sort: 1,
-            from_timestamp: baseEntity.time_created * 1000 + 1,
           })
         : Promise.resolve(null),
       this.pools.next.moreData
-        ? this._fetchFromServer(endpoint, {
-            ...params,
-            from_timestamp: baseEntity.time_created * 1000 - 1,
-          })
+        ? this._fetchFromServer(endpoint, params)
         : Promise.resolve(null),
     ]);
+
+    const baseGuids = [
+      this.baseEntity.guid,
+      this.baseEntity.entity_guid,
+      this.baseEntity.remind_object && this.baseEntity.remind_object.guid,
+      this.baseEntity.remind_object &&
+        this.baseEntity.remind_object.entity_guid,
+    ].filter(Boolean);
 
     let changed = false;
 
     if (prev !== null) {
       this.pools.prev = {
-        entities: prev,
+        entities: prev.filter(
+          entity => entity.guid && !baseGuids.includes(entity.guid)
+        ),
         moreData: false,
       };
 
@@ -329,7 +336,9 @@ export class HorizontalFeedService {
 
     if (next !== null) {
       this.pools.next = {
-        entities: next,
+        entities: next.filter(
+          entity => entity.guid && !baseGuids.includes(entity.guid)
+        ),
         moreData: false,
       };
 
