@@ -30,7 +30,7 @@ export class TagsPipe implements PipeTransform {
       },
     },
     hash: {
-      rule: /(^|\s||)#(\w+)/gim,
+      rule: /(?:^|\s)#(\w+)/gim,
       replace: m => {
         if (this.siteService.isProDomain) {
           return `${
