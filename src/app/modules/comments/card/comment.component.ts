@@ -218,7 +218,7 @@ export class CommentComponent implements OnChanges {
     this.triedToPost = false;
 
     this.attachment
-      .remove(file)
+      .remove()
       .then(() => {
         this.canPost = true;
         this.triedToPost = false;

@@ -52,8 +52,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
     },
   ],
 })
-export class CommentComponentV2
-  implements OnChanges, OnInit, OnDestroy, AfterViewInit {
+export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   comment: any;
   editing: boolean = false;
   readonly cdnUrl: string;
@@ -139,8 +138,6 @@ export class CommentComponentV2
       }, 10);
     }
   }
-
-  ngOnDestroy() {}
 
   @Input('comment')
   set _comment(value: any) {
@@ -253,7 +250,7 @@ export class CommentComponentV2
     this.triedToPost = false;
 
     this.attachment
-      .remove(file)
+      .remove()
       .then(() => {
         this.canPost = true;
         this.triedToPost = false;

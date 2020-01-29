@@ -144,6 +144,7 @@ import { Title, Meta } from '@angular/platform-browser';
 import { MediaProxyService } from './services/media-proxy.service';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
+import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 
 const routes: Routes = [
   {
@@ -252,6 +253,7 @@ const routes: Routes = [
     SwitchComponent,
 
     FeaturedContentComponent,
+    AttachmentPasteDirective,
     PosterDateSelectorComponent,
     DraggableListComponent,
     ToggleComponent,
@@ -356,6 +358,7 @@ const routes: Routes = [
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    AttachmentPasteDirective,
     PosterDateSelectorComponent,
     ChannelModeSelectorComponent,
     DraggableListComponent,

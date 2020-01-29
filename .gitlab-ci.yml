@@ -72,6 +72,7 @@ qa:manual:
   only:
     refs:
       - master
+      - production
       - test/gitlab-ci
   allow_failure: false
 
@@ -97,6 +98,7 @@ build:review:
   except:
     refs:
       - master
+      - production
       - test/gitlab-ci
 
 build:production:en:
@@ -115,6 +117,7 @@ build:production:en:
   only:
     refs:
       - master
+      - production
       - test/gitlab-ci
 
 build:production:i18n:
@@ -133,6 +136,7 @@ build:production:i18n:
   only:
     refs:
       - master
+      - production
       - test/gitlab-ci
 
 #################
@@ -164,6 +168,7 @@ prepare:review:
   except:
     refs:
       - master
+      - production
       - test/gitlab-ci
 
 prepare:review:sentry:
@@ -173,6 +178,7 @@ prepare:review:sentry:
   except:
     refs:
       - master
+      - production
       - test/gitlab-ci
   dependencies:
     - build:review
@@ -189,6 +195,7 @@ prepare:production:
   only:
     refs:
       - master
+      - production
       - test/gitlab-ci
   dependencies:
     - build:production:en
@@ -201,6 +208,7 @@ prepare:production:sentry:
   only:
     refs:
       - master
+      - production
       - test/gitlab-ci
   dependencies:
     - build:production:en
@@ -224,6 +232,7 @@ prepare:production:sentry:
   except:
     refs:
       - master
+      - production
       - test/gitlab-ci
 
 review:start:
@@ -251,6 +260,7 @@ review:start:
   except:
     refs:
       - master
+      - production
       - test/gitlab-ci
 
 review:stop:
@@ -357,4 +367,5 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
+      - production
       - test/gitlab-ci

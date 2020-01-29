@@ -22,11 +22,27 @@
       <span i18n>Optional</span>
     </div>
 
-    <div class="m-onboarding__input">
-      <input type="text" data-minds="locationInput" [(ngModel)]="location" />
+    <div class="m-onboarding__input m-onboarding__location">
+      <input
+        type="text"
+        data-minds="locationInput"
+        [ngModel]="location"
+        (ngModelChange)="locationChange($event)"
+        (keyup)="findCity(location)"
+      />
       <div class="m-onboarding__error" *ngIf="locationError">
         {{ locationError }}
       </div>
+
+      <ul class="m-onboarding__cities" *ngIf="cities.length > 0">
+        <li
+          (click)="setCity(c)"
+          *ngFor="let c of cities"
+          [hidden]="!(c.address.town || c.address.city)"
+        >
+          {{ c.address.town }}{{ c.address.city }}, {{ c.address.state }}
+        </li>
+      </ul>
     </div>
   </div>
 
