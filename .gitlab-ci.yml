@@ -333,8 +333,8 @@ review:preprod:
   environment:
     name: preprod
     url: https://www.minds.com # requires preprod cookie
-  dependencies:
-    - build:review
+  # dependencies:
+  #   - build:review
   # except:
   #   refs:
   #     - master
