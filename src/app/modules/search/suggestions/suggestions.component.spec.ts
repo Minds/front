@@ -87,7 +87,7 @@ describe('SearchBarSuggestionsComponent', () => {
 
     comp.loadRecent();
 
-    expect(recentServiceMock.fetch).toHaveBeenCalledWith('recent', 6);
+    expect(recentServiceMock.fetch).toHaveBeenCalledWith('recent:text', 6);
     expect(comp.recent).toEqual(recentResults);
   });
 

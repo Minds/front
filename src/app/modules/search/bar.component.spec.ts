@@ -20,6 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
+import { RecentService } from '../../services/ux/recent';
+import { recentServiceMock } from '../../../tests/minds-recent-service-mock.spec';
 
 // Mocks
 
@@ -62,6 +64,7 @@ describe('SearchBarComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: ContextService, useValue: contextServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: RecentService, useValue: recentServiceMock },
       ],
     }).compileComponents();
   }));
