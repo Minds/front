@@ -17,11 +17,12 @@ import { NotificationComponent } from './notification.component';
 
 import { TokenPipe } from '../../common/pipes/token.pipe';
 import { Session } from '../../services/session';
-import { Mock, MockComponent } from '../../utils/mock';
+import { Mock, MockComponent, MockService } from '../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { sessionMock } from '../../../tests/session-mock.spec';
 
 import { ExcerptPipe } from '../../common/pipes/excerpt';
+import { ConfigsService } from '../../common/services/configs.service';
 
 describe('NotificationComponent', () => {
   let comp: NotificationComponent;
@@ -36,7 +37,10 @@ describe('NotificationComponent', () => {
         ExcerptPipe,
       ],
       imports: [RouterTestingModule],
-      providers: [{ provide: Session, useValue: sessionMock }],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+      ],
     }).compileComponents(); // compile template and css
   }));
 

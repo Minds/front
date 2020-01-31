@@ -24,13 +24,13 @@
     <div class="m-register--hero--video">
       <video autoplay muted loop *ngIf="!videoError; else fallback">
         <source
-          [src]="minds.cdn_assets_url + 'assets/videos/what-1/what-1.mp4'"
+          [src]="cdnAssetsUrl + 'assets/videos/what-1/what-1.mp4'"
           type="video/mp4"
           (error)="onSourceError()"
         />
       </video>
       <ng-template #fallback>
-        <img [src]="minds.cdn_assets_url + 'assets/photos/cover.png'" />
+        <img [src]="cdnAssetsUrl + 'assets/photos/cover.png'" />
       </ng-template>
     </div>
     <div class="m-register--hero--inner">
@@ -55,7 +55,7 @@
 
   <div class="mdl-grid mdl-grid--no-spacing m-register--footer">
     <section class="mdl-cell mdl-cell--12-col m-footer">
-      <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" />
+      <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
       <ul class="m-footer-nav m-footer-nav-inline">
         <li
           *ngFor="let page of navigation.getItems('footer')"

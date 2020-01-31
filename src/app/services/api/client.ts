@@ -1,20 +1,46 @@
-import { Cookie } from '../cookie';
+import { CookieService } from '../../common/services/cookie.service';
+import { PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
+import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 
 /**
  * API Class
  */
 export class Client {
   base: string = '/';
-  cookie: Cookie = new Cookie();
 
-  static _(http: HttpClient, location: Location) {
-    return new Client(http, location);
+  static _(
+    http: HttpClient,
+    location: Location,
+    cookie: CookieService,
+    platformId: Object,
+    transferState: TransferState,
+    @Inject('ORIGIN_URL') baseUrl: string
+  ) {
+    return new Client(
+      http,
+      location,
+      cookie,
+      platformId,
+      transferState,
+      baseUrl
+    );
   }
 
-  constructor(public http: HttpClient, public location: Location) {}
+  constructor(
+    public http: HttpClient,
+    public location: Location,
+    private cookie: CookieService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private transferState: TransferState,
+    @Inject('ORIGIN_URL') public baseUrl: string
+  ) {
+    this.base = `${baseUrl}/`;
+  }
 
   /**
    * Return a GET request
@@ -23,6 +49,7 @@ export class Client {
     if (data) {
       endpoint += '?' + this.buildParams(data);
     }
+
     return new Promise((resolve, reject) => {
       this.http.get(this.base + endpoint, this.buildOptions(options)).subscribe(
         res => {
@@ -54,12 +81,16 @@ export class Client {
    */
   getRaw(endpoint: string, data: Object = {}, options: Object = {}) {
     endpoint += '?' + this.buildParams(data);
+
     return new Promise((resolve, reject) => {
       this.http
         .get(this.base + endpoint, this.buildOptions(options, true))
         .subscribe(
           res => {
-            return resolve(res);
+            var data: any = res;
+            if (!data || data.status !== 'success') return reject(data);
+
+            return resolve(data);
           },
           err => {
             if (err.data && !err.data()) {
@@ -79,6 +110,7 @@ export class Client {
    * Return a POST request
    */
   post(endpoint: string, data: Object = {}, options: Object = {}) {
+    console.log(`POST: ${endpoint}`);
     return new Promise((resolve, reject) => {
       this.http
         .post(
@@ -151,6 +183,7 @@ export class Client {
    * Return a PUT request
    */
   put(endpoint: string, data: Object = {}, options: Object = {}) {
+    console.log(`PUT: ${endpoint}`);
     return new Promise((resolve, reject) => {
       this.http
         .put(
@@ -186,6 +219,7 @@ export class Client {
    * Return a DELETE request
    */
   delete(endpoint: string, data: Object = {}, options: Object = {}) {
+    console.log(`DELETE: ${endpoint}`);
     return new Promise((resolve, reject) => {
       this.http
         .delete(this.base + endpoint, this.buildOptions(options))

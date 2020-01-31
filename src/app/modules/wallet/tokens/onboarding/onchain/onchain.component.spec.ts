@@ -33,6 +33,7 @@ import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { Router } from '@angular/router';
 import { storageMock } from '../../../../../../tests/storage-mock.spec';
 import { Storage } from '../../../../../services/storage';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 let blockchainService: any = MockService(BlockchainService, {
   getWallet: null,
@@ -92,6 +93,7 @@ describe('TokenOnChainOnboardingComponent', () => {
         { provide: BlockchainService, useValue: blockchainService },
         { provide: Web3WalletService, useValue: web3walletMock },
         { provide: Storage, useValue: storageMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents(); // compile template and css
   }));

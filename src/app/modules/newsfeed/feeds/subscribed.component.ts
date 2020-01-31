@@ -1,4 +1,11 @@
-import { Component, Injector, SkipSelf, ViewChild } from '@angular/core';
+import {
+  Component,
+  Injector,
+  SkipSelf,
+  ViewChild,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Subscription, BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
@@ -10,7 +17,6 @@ import {
 } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
-import { MindsTitle } from '../../../services/ux/title';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { MindsActivityObject } from '../../../interfaces/entities';
 import { Session } from '../../../services/session';
@@ -22,6 +28,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -36,7 +43,6 @@ export class NewsfeedSubscribedComponent {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  minds;
 
   attachment_preview;
 
@@ -63,17 +69,15 @@ export class NewsfeedSubscribedComponent {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private storage: Storage,
     private context: ContextService,
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.title.setTitle('Newsfeed');
-
     this.clientMetaService
       .inherit(injector)
       .setSource('feed/subscribed')
@@ -98,7 +102,6 @@ export class NewsfeedSubscribedComponent {
     );
 
     this.load(true, true);
-    this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['message']) {
@@ -118,6 +121,7 @@ export class NewsfeedSubscribedComponent {
   }
 
   load(refresh: boolean = false, forceSync: boolean = false) {
+    if (isPlatformServer(this.platformId)) return;
     if (this.featuresService.has('es-feeds')) {
       this.loadFromService(refresh, forceSync);
     } else {

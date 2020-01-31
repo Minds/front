@@ -1,7 +1,7 @@
 .m-canary__page {
   .m-marketing--hero {
     padding: 24px 0 !important;
-    background-image: url(/assets/photos/canary.jpg);
+    background-image: url('<%=APP_CDN%>/assets/photos/canary.jpg');
     background-position: center right;
     background-size: cover;
 

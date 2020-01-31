@@ -20,7 +20,6 @@ import { SidebarMarkersService } from './markers.service';
 export class SidebarMarkersComponent implements AfterViewInit {
   @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
-  minds = window.Minds;
   showMarkerSidebar = false;
 
   componentRef;
@@ -54,13 +53,9 @@ export class SidebarMarkersComponent implements AfterViewInit {
       return;
     }
 
-    const mBody: any = document.getElementsByTagName('m-body')[0];
-
     if (showMarkerSidebar) {
-      mBody.classList.add('has-markers-sidebar');
       this.createGroupsSideBar();
     } else {
-      mBody.classList.remove('has-markers-sidebar');
       this.host.viewContainerRef.clear();
     }
     this.showMarkerSidebar = showMarkerSidebar;

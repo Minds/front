@@ -97,11 +97,7 @@ export class WebtorrentService {
    * Determines whether webtorrent is to be enabled for user
    * @returns { boolean } - true if webtorrent enabled, supported and user is opted in.
    */
-  isEnabled = (): boolean =>
-    window.Minds.user &&
-    this.featuresService.has('webtorrent') &&
-    window.Minds.user.p2p_media_enabled &&
-    this.isBrowserSupported();
+  isEnabled = (): boolean => false; // Deprecated due to bade performance on minds
 
   setEnabled(enabled: boolean) {
     const current = this.isEnabled();

@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
-import { MindsTitle } from '../../../services/ux/title';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
@@ -24,7 +23,6 @@ export class NewsfeedBoostComponent {
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  minds;
 
   message: string = '';
 
@@ -40,18 +38,14 @@ export class NewsfeedBoostComponent {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private storage: Storage,
     private context: ContextService,
     protected featuresService: FeaturesService,
     public feedsService: FeedsService
-  ) {
-    this.title.setTitle('Boost Newsfeed');
-  }
+  ) {}
 
   ngOnInit() {
     this.load(true);
-    this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['ts']) {

@@ -11,8 +11,6 @@ import { BoostConsoleFilter } from '../../console/console.component';
 export class BoostPublisherEarningsComponent {
   _filter: BoostConsoleFilter;
 
-  minds: Minds = window.Minds;
-
   startDate: string;
   inProgress: boolean = false;
   payoutRequestInProgress: boolean = false;

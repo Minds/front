@@ -25,7 +25,6 @@ import {
   MockDirective,
   MockService,
 } from '../../../../utils/mock';
-import { MindsTitle } from '../../../../services/ux/title';
 import { Session } from '../../../../services/session';
 import { MindsBlogListResponse } from '../../../../interfaces/responses';
 import { ContextService } from '../../../../services/context.service';
@@ -33,6 +32,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BlockchainService } from '../../../blockchain/blockchain.service';
 import { By } from '@angular/platform-browser';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 let web3walletMock = new (function() {
   this.getWallets = jasmine
@@ -80,6 +80,7 @@ describe('WalletTokenAddressesComponent', () => {
         { provide: Web3WalletService, useValue: web3walletMock },
         { provide: Router, useValue: RouterTestingModule },
         { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -92,6 +93,14 @@ describe('WalletTokenAddressesComponent', () => {
     fixture = TestBed.createComponent(WalletTokenAddressesComponent);
 
     comp = fixture.componentInstance;
+
+    spyOn(
+      fixture.debugElement.injector.get(Session),
+      'getLoggedInUser'
+    ).and.returnValue({
+      eth_wallet: null,
+    });
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {

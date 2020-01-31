@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenContractService } from './token-contract.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class BoostContractService {
@@ -8,9 +9,12 @@ export class BoostContractService {
 
   constructor(
     protected web3Wallet: Web3WalletService,
-    protected tokenContract: TokenContractService
+    protected tokenContract: TokenContractService,
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
-    this.load();
+    if (isPlatformBrowser(platformId)) {
+      this.load();
+    }
   }
 
   async load() {
@@ -139,11 +143,5 @@ export class BoostContractService {
       [guid],
       `Revoke a Boost. ${message}`.trim()
     );
-  }
-
-  // Service provider
-
-  static _(web3Wallet: Web3WalletService, tokenContract: TokenContractService) {
-    return new BoostContractService(web3Wallet, tokenContract);
   }
 }

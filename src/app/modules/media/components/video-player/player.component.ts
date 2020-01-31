@@ -7,12 +7,17 @@ import {
   Output,
   EventEmitter,
   ChangeDetectorRef,
+  Inject,
+  PLATFORM_ID,
+  AfterViewInit,
 } from '@angular/core';
 import { PLAYER_ANIMATIONS } from './player.animations';
 import { VideoPlayerService, VideoSource } from './player.service';
 import isMobile from '../../../../helpers/is-mobile';
 import Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
+import { isPlatformBrowser } from '@angular/common';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-videoPlayer',
@@ -20,7 +25,8 @@ import { PlyrComponent } from 'ngx-plyr';
   animations: PLAYER_ANIMATIONS,
   providers: [VideoPlayerService],
 })
-export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
+export class MindsVideoPlayerComponent
+  implements OnInit, OnDestroy, AfterViewInit {
   /**
    * MH: dislike having to emit an event to open modal, but this is
    * the quickest work around for now
@@ -43,6 +49,18 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
   @ViewChild(PlyrComponent, { static: false }) player: PlyrComponent;
 
   /**
+   * BehaviorSubject holding autoplay value
+   */
+  autoplaySubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
+   * Subscription to autoplaySubject
+   */
+  autoplaySubscription: Subscription;
+
+  /**
    * Options for Plyr to use
    */
   options: Plyr.Options = {
@@ -62,17 +80,32 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
 
   constructor(
     private service: VideoPlayerService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit(): void {
-    this.service.load().then(() => {
-      this.cd.markForCheck();
-      this.cd.detectChanges();
-    });
+    if (isPlatformBrowser(this.platformId)) {
+      this.service.load().then(() => {
+        this.cd.markForCheck();
+        this.cd.detectChanges();
+      });
+    }
   }
 
-  ngOnDestroy(): void {}
+  ngAfterViewInit() {
+    this.autoplaySubscription = this.autoplaySubject.subscribe(
+      (val: boolean) => {
+        this.options.autoplay = val;
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    if (this.autoplaySubscription) {
+      this.autoplaySubscription.unsubscribe();
+    }
+  }
 
   @Input('guid')
   set guid(guid: string) {
@@ -81,7 +114,7 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
 
   @Input('autoplay')
   set autoplay(autoplay: boolean) {
-    this.options.autoplay = autoplay;
+    this.autoplaySubject.next(autoplay);
   }
 
   @Input('isModal')
@@ -115,7 +148,7 @@ export class MindsVideoPlayerComponent implements OnInit, OnDestroy {
    * @return boolean
    */
   isPlayable(): boolean {
-    return this.service.isPlayable();
+    return isPlatformBrowser(this.platformId) && this.service.isPlayable();
   }
 
   /**

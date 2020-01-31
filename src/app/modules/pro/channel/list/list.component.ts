@@ -16,7 +16,6 @@ import {
   RouterLinkToType,
 } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { MindsTitle } from '../../../../services/ux/title';
 
 @Component({
   selector: 'm-pro--channel-list',
@@ -45,7 +44,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     public feedsService: FeedsService,
     protected modalService: OverlayModalService,
     protected channelService: ProChannelService,
-    protected title: MindsTitle,
     protected route: ActivatedRoute,
     protected router: Router,
     protected cd: ChangeDetectorRef,
@@ -56,10 +54,11 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
         return elements.filter((element: BehaviorSubject<any>) => {
           const entity = element.getValue();
           return (
-            entity.type === 'group' ||
-            !!entity.thumbnail_src ||
-            !!entity.custom_data ||
-            (entity.thumbnails && entity.thumbnails.length > 0)
+            entity &&
+            (entity.type === 'group' ||
+              !!entity.thumbnail_src ||
+              !!entity.custom_data ||
+              (entity.thumbnails && entity.thumbnails.length > 0))
           );
         });
       })
@@ -71,35 +70,34 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
       this.entities = [];
       if (params['type']) {
         this.type = this.paramsType = params['type'];
-      }
-      switch (params['type']) {
-        case 'all':
-          this.type = 'all';
-          break;
-        case 'videos':
-          this.type = 'videos';
-          break;
-        case 'images':
-          this.type = 'images';
-          break;
-        case 'articles':
-          this.type = 'blogs';
-          break;
-        case 'groups':
-          this.type = 'groups';
-          break;
-        case 'feed':
-          this.type = 'activities';
-          break;
-        default:
-          throw new Error('Unknown type');
+
+        switch (params['type']) {
+          case 'all':
+            this.type = 'all';
+            break;
+          case 'videos':
+            this.type = 'videos';
+            break;
+          case 'images':
+            this.type = 'images';
+            break;
+          case 'articles':
+            this.type = 'blogs';
+            break;
+          case 'groups':
+            this.type = 'groups';
+            break;
+          case 'feed':
+            this.type = 'activities';
+            break;
+          default:
+            throw new Error('Unknown type');
+        }
       }
 
       this.query = params['query'] || '';
       this.period = params['period'] || '';
       this.selectedHashtag = params['hashtag'] || 'all';
-
-      this.setTitle();
 
       this.load(true);
       this.setMenuNavItems();
@@ -112,18 +110,6 @@ export class ProChannelListComponent implements OnInit, OnDestroy {
     }
 
     this.channelService.destroyMenuNavItems();
-  }
-
-  setTitle() {
-    if (!this.channelService.currentChannel) {
-      this.title.setTitle(
-        this.channelService.currentChannel.username || 'Minds Pro',
-        false
-      );
-      return;
-    }
-
-    this.title.setTitle(this.type.charAt(0).toUpperCase() + this.type.slice(1));
   }
 
   async load(refresh: boolean = false) {

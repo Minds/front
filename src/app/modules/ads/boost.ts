@@ -1,10 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Client } from '../../services/api';
 
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { Subscription } from 'rxjs';
 import { SettingsService } from '../settings/settings.service';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'm-ads-boost',
@@ -34,7 +41,8 @@ export class BoostAds implements OnInit, OnDestroy {
     public client: Client,
     public session: Session,
     private storage: Storage,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -52,6 +60,7 @@ export class BoostAds implements OnInit, OnDestroy {
   }
 
   fetch() {
+    if (isPlatformServer(this.platformId)) return;
     if (this.storage.get('boost:offset:sidebar'))
       this.offset = this.storage.get('boost:offset:sidebar');
     this.client

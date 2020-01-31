@@ -14,8 +14,6 @@ export class SuggestedQuestionsComponent implements OnInit {
   @Input() type = 'popular';
   @Input() question;
 
-  minds: Minds = window.Minds;
-
   constructor(
     public client: Client,
     public session: Session,

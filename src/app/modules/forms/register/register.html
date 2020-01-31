@@ -134,18 +134,6 @@
         </ng-container>
       </div>
     </div>
-
-    <div
-      class="mdl-cell mdl-cell--12-col"
-      [style.visibility]="form.value.password2 ? 'visible' : 'hidden'"
-    >
-      <re-captcha
-        *ngIf="minds.recaptchaKey"
-        (captchaResponse)="setCaptcha($event)"
-        [site_key]="minds.recaptchaKey"
-        #reCaptcha
-      ></re-captcha>
-    </div>
   </div>
 
   <div
@@ -156,47 +144,18 @@
   </div>
 
   <div class="mdl-card__actions">
-    <div>
-      <label
-        class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
-        [mdlSwitch]
-        [toggled]="form.value.exclusive_promotions"
-        *ngIf="showPromotions"
+    <div class="m-register__checkboxes">
+      <m-formInput__checkbox formControlName="exclusive_promotions">
+        Receive exclusive promotions from Minds
+      </m-formInput__checkbox>
+
+      <m-formInput__checkbox
+        formControlName="tos"
+        data-cy="data-minds-accept-tos-input"
       >
-        <input
-          type="checkbox"
-          class="mdl-checkbox__input"
-          formControlName="exclusive_promotions"
-        />
-
-        <span
-          class="m-register-tac"
-          i18n="@@FORMS__REGISTER__EXCLUSIVE_PROMOTIONS_ACCEPTANCE_LABEL"
-        >
-          Receive exclusive promotions from Minds (recommended)
-        </span>
-      </label>
-
-      <label
-        class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
-        [mdlSwitch]
-        [toggled]="form.value.tos"
-      >
-        <input
-          type="checkbox"
-          class="mdl-checkbox__input"
-          formControlName="tos"
-          data-cy="data-minds-accept-tos-input"
-        />
-
-        <span
-          class="m-register-tac"
-          i18n="@@FORMS__REGISTER__TOS_ACCEPTANCE_LABEL"
-        >
-          I have read and accept the
-          <a routerLink="/p/terms" target="_blank"> terms of use </a>
-        </span>
-      </label>
+        I accept the
+        <a routerLink="/p/terms" target="_blank"> Terms & Conditions </a>
+      </m-formInput__checkbox>
     </div>
 
     <button

@@ -9,7 +9,6 @@ import { PaymentsNewCard } from '../../../payments/new-card/new-card.component';
   templateUrl: 'saved-cards.component.html',
 })
 export class SettingsBillingSavedCardsComponent {
-  minds = window.Minds;
   inProgress: boolean = false;
   addingNewCard: boolean = false;
   cards: Array<any> = [];

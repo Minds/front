@@ -51,6 +51,7 @@ import { ClientMetaService } from '../../../../../common/services/client-meta.se
 import { clientMetaServiceMock } from '../../../../../../tests/client-meta-service-mock.spec';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
 import { SiteService } from '../../../../../common/services/site.service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 /* tslint:disable */
 // START MOCKS
@@ -500,6 +501,10 @@ describe('Activity', () => {
               isProDomain: { get: () => false },
             },
           }),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

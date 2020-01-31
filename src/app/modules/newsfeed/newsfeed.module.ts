@@ -50,11 +50,19 @@ const routes: Routes = [
         path: 'subscriptions',
         component: NewsfeedSubscribedComponent,
         canDeactivate: [CanDeactivateGuardService],
+        data: {
+          title: 'Newsfeed',
+          description: 'Posts from channels your subscribe to',
+        },
       },
       {
         path: 'boost',
         component: NewsfeedBoostComponent,
         canDeactivate: [CanDeactivateGuardService],
+        data: {
+          title: 'Boost Feed',
+          description: 'Posts that have been boosted on the network',
+        },
       },
       { path: 'tag/:tag', component: NewsfeedTagsComponent },
     ],

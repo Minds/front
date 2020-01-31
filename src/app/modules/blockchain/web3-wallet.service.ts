@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 import * as Eth from 'ethjs';
 import * as SignerProvider from 'ethjs-provider-signer';
 
@@ -6,13 +7,14 @@ import { LocalWalletService } from './local-wallet.service';
 import callbackToPromise from '../../helpers/callback-to-promise';
 import asyncSleep from '../../helpers/async-sleep';
 import { TransactionOverlayService } from './transaction-overlay/transaction-overlay.service';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Injectable()
 export class Web3WalletService {
   eth: any;
   EthJS: any;
 
-  config = window.Minds.blockchain;
+  public config; // TODO add types
 
   protected unavailable: boolean = false;
   protected local: boolean = false;
@@ -21,8 +23,12 @@ export class Web3WalletService {
 
   constructor(
     protected localWallet: LocalWalletService,
-    protected transactionOverlay: TransactionOverlayService
-  ) {}
+    protected transactionOverlay: TransactionOverlayService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private configs: ConfigsService
+  ) {
+    this.config = this.configs.get('blockchain');
+  }
 
   // Wallet
 
@@ -111,6 +117,7 @@ export class Web3WalletService {
   // Bootstrap
 
   setUp() {
+    this.config = this.configs.get('blockchain');
     this.ready() // boot web3 loading
       .catch(e => {
         console.error('[Web3WalletService]', e);
@@ -120,7 +127,10 @@ export class Web3WalletService {
   ready(): Promise<any> {
     if (!this._ready) {
       this._ready = new Promise((resolve, reject) => {
-        if (typeof window.web3 !== 'undefined') {
+        if (
+          isPlatformBrowser(this.platformId) &&
+          typeof window.web3 !== 'undefined'
+        ) {
           this.loadFromWeb3();
           return resolve(true);
         }
@@ -135,7 +145,7 @@ export class Web3WalletService {
   private waitForWeb3(resolve, reject) {
     this._web3LoadAttempt++;
 
-    if (this._web3LoadAttempt > 3) {
+    if (this._web3LoadAttempt > 3 || isPlatformServer(this.platformId)) {
       this.loadLocal();
       return resolve(true);
     }
@@ -160,7 +170,6 @@ export class Web3WalletService {
 
   private loadLocal() {
     this.EthJS = Eth;
-
     // Non-metamask
     this.eth = new Eth(
       new SignerProvider(this.config.network_address, {
@@ -296,8 +305,15 @@ export class Web3WalletService {
 
   static _(
     localWallet: LocalWalletService,
-    transactionOverlay: TransactionOverlayService
+    transactionOverlay: TransactionOverlayService,
+    platformId: Object,
+    configs: ConfigsService
   ) {
-    return new Web3WalletService(localWallet, transactionOverlay);
+    return new Web3WalletService(
+      localWallet,
+      transactionOverlay,
+      platformId,
+      configs
+    );
   }
 }

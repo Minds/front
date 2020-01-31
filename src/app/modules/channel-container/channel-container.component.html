@@ -5,7 +5,7 @@
       else isProChannel
     "
   >
-    <m-channel #channelComponent></m-channel>
+    <m-channel [user]="channel" #channelComponent></m-channel>
   </ng-container>
   <ng-template #isProChannel>
     <m-pro--channel #proChannelComponent></m-pro--channel>

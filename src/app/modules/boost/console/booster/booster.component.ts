@@ -19,7 +19,6 @@ import { PosterComponent } from '../../../newsfeed/poster/poster.component';
  * The component for the boost console.
  */
 @Component({
-  moduleId: module.id,
   selector: 'm-boost-console-booster',
   templateUrl: 'booster.component.html',
 })
@@ -31,7 +30,6 @@ export class BoostConsoleBooster {
   @ViewChild('poster', { read: ViewContainerRef, static: false })
   poster: ViewContainerRef;
 
-  minds: Minds = window.Minds;
   feed$: Observable<BehaviorSubject<Object>[]>;
   componentRef;
   componentInstance: PosterComponent;
@@ -78,8 +76,10 @@ export class BoostConsoleBooster {
     this.feedsService
       .setEndpoint(
         this.type === 'content'
-          ? `api/v2/feeds/container/${this.minds.user.guid}/all`
-          : `api/v2/feeds/container/${this.minds.user.guid}/activities`
+          ? `api/v2/feeds/container/${this.session.getLoggedInUser().guid}/all`
+          : `api/v2/feeds/container/${
+              this.session.getLoggedInUser().guid
+            }/activities`
       )
       .setParams({ sync: true })
       .setLimit(12)

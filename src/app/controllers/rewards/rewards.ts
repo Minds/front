@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Title } from '@angular/platform-browser';
 import { Session } from '../../services/session';
+import { CookieService } from '../../common/services/cookie.service';
 @Component({
   moduleId: module.id,
   selector: 'minds-rewards-component',
@@ -30,9 +31,9 @@ export class RewardsComponent {
     private client: Client,
     private route: ActivatedRoute,
     private router: Router,
-    private title: Title
+    cookieService: CookieService
   ) {
-    if (localStorage.getItem('redirect')) localStorage.removeItem('redirect');
+    if (cookieService.get('redirect')) cookieService.remove('redirect');
 
     this.loggedIn = this.session.isLoggedIn();
 
@@ -57,9 +58,7 @@ export class RewardsComponent {
       });
   }
 
-  ngOnInit() {
-    this.title.setTitle('Claim your Rewards');
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();

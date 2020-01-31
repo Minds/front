@@ -9,7 +9,7 @@ import {
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { RichEmbedService } from '../../../services/rich-embed';
-import mediaProxyUrl from '../../../helpers/media-proxy-url';
+import { MediaProxyService } from '../../../common/services/media-proxy.service';
 import { FeaturesService } from '../../../services/features.service';
 
 @Component({
@@ -35,7 +35,8 @@ export class MindsRichEmbed {
     private sanitizer: DomSanitizer,
     private service: RichEmbedService,
     private cd: ChangeDetectorRef,
-    protected featureService: FeaturesService
+    protected featureService: FeaturesService,
+    private mediaProxy: MediaProxyService
   ) {}
 
   set _src(value: any) {
@@ -47,7 +48,7 @@ export class MindsRichEmbed {
     this.type = 'src';
 
     if (this.src.thumbnail_src) {
-      this.src.thumbnail_src = mediaProxyUrl(this.src.thumbnail_src);
+      this.src.thumbnail_src = this.mediaProxy.proxy(this.src.thumbnail_src);
     }
 
     this.init();
@@ -62,7 +63,7 @@ export class MindsRichEmbed {
     this.type = 'preview';
 
     if (this.preview.thumbnail) {
-      this.preview.thumbnail = mediaProxyUrl(this.preview.thumbnail);
+      this.preview.thumbnail = this.mediaProxy.proxy(this.preview.thumbnail);
     }
 
     this.init();
@@ -72,10 +73,7 @@ export class MindsRichEmbed {
     // Inline Embedding
     let inlineEmbed = this.parseInlineEmbed(this.inlineEmbed);
 
-    if (
-      this.featureService.has('media-modal') &&
-      this.mediaSource === 'youtube'
-    ) {
+    if (this.mediaSource === 'youtube') {
       this.modalRequestSubscribed =
         this.mediaModalRequested.observers.length > 0;
     }
@@ -96,11 +94,7 @@ export class MindsRichEmbed {
 
     this.inlineEmbed = inlineEmbed;
 
-    if (
-      this.modalRequestSubscribed &&
-      this.featureService.has('media-modal') &&
-      this.mediaSource === 'youtube'
-    ) {
+    if (this.modalRequestSubscribed && this.mediaSource === 'youtube') {
       if (this.inlineEmbed && this.inlineEmbed.htmlProvisioner) {
         this.inlineEmbed.htmlProvisioner().then(html => {
           this.inlineEmbed.html = html;
@@ -270,11 +264,9 @@ export class MindsRichEmbed {
   }
 
   hasInlineContentLoaded() {
-    return this.featureService.has('media-modal')
-      ? !this.modalRequestSubscribed &&
-          this.inlineEmbed &&
-          this.inlineEmbed.html
-      : this.embeddedInline && this.inlineEmbed && this.inlineEmbed.html;
+    return (
+      !this.modalRequestSubscribed && this.inlineEmbed && this.inlineEmbed.html
+    );
   }
 
   detectChanges() {

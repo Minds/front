@@ -11,6 +11,7 @@ import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { WireCreatorComponent } from '../creator/creator.component';
 import { SignupModalService } from '../../modals/signup/service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -32,7 +33,8 @@ export class WireLockScreenComponent {
     private client: Client,
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
-    private modal: SignupModalService
+    private modal: SignupModalService,
+    private configs: ConfigsService
   ) {}
 
   unlock() {
@@ -113,7 +115,7 @@ export class WireLockScreenComponent {
     }
 
     let image =
-      window.Minds.cdn_url +
+      this.configs.get('cdn_assets_url') +
       'fs/v1/paywall/preview/' +
       this.entity.ownerObj.guid +
       '/' +

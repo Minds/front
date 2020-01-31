@@ -4,6 +4,8 @@ import {
   ViewChild,
   ChangeDetectorRef,
   HostListener,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { interval, timer } from 'rxjs';
 import { startWith, map, tap, throttle } from 'rxjs/operators';
@@ -11,6 +13,7 @@ import { startWith, map, tap, throttle } from 'rxjs/operators';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
+import { isPlatformBrowser } from '@angular/common';
 import { GroupsService } from '../groups-service';
 
 @Component({
@@ -32,15 +35,18 @@ export class GroupsSidebarMarkersComponent {
     private client: Client,
     public session: Session,
     private updateMarkers: UpdateMarkersService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private groupsService: GroupsService,
     private cd: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
     this.onResize();
-    await this.load(true);
-    this.listenForMarkers();
-    this.listenForMembershipUpdates();
+    if (isPlatformBrowser(this.platformId)) {
+      await this.load(true);
+      this.listenForMarkers();
+      this.listenForMembershipUpdates();
+    }
   }
 
   /**

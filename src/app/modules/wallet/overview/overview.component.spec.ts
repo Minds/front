@@ -22,7 +22,6 @@ import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { of } from 'rxjs/internal/observable/of';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
-import { MindsTitle } from '../../../services/ux/title';
 import { Session } from '../../../services/session';
 import { MindsBlogListResponse } from '../../../interfaces/responses';
 import { ContextService } from '../../../services/context.service';
@@ -68,7 +67,6 @@ describe('WalletOverviewComponent', () => {
         { provide: WalletService, useValue: WalletServiceMock },
         { provide: BlockchainService, useValue: blockchainService },
         { provide: Router, useValue: RouterTestingModule },
-        { provide: MindsTitle, useValue: MockService(MindsTitle) },
         { provide: Session, useValue: sessionMock },
         { provide: Storage, useValue: storageMock },
         {

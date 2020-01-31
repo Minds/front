@@ -1,6 +1,6 @@
 <ng-container *ngIf="ready">
   <ng-container *ngIf="!isProDomain">
-    <m-v2-topbar *mIfFeature="'top-feeds'; else legacyTopbar">
+    <m-v2-topbar>
       <ng-container search>
         <m-search--bar [defaultSizes]="false"></m-search--bar>
       </ng-container>
@@ -11,18 +11,6 @@
         ></m-notifications--topbar-toggle>
       </ng-container>
     </m-v2-topbar>
-    <ng-template #legacyTopbar>
-      <m-topbar class="m-noshadow">
-        <ng-container search>
-          <m-search--bar></m-search--bar>
-        </ng-container>
-
-        <ng-container icons>
-          <m-notifications--topbar-toggle></m-notifications--topbar-toggle>
-          <m-wallet--topbar-toggle></m-wallet--topbar-toggle>
-        </ng-container>
-      </m-topbar>
-    </ng-template>
 
     <m-sidebar--markers
       [class.has-v2-navbar]="featuresService.has('top-feeds')"
@@ -30,10 +18,11 @@
   </ng-container>
 
   <m-body
+    [class.has-markers-sidebar]="session.isLoggedIn() && !isProDomain"
     [class.has-v2-navbar]="featuresService.has('top-feeds')"
     [class.is-pro-domain]="isProDomain"
   >
-    <m-emailConfirmation></m-emailConfirmation>
+    <m-emailConfirmation *ngIf="!isProDomain"></m-emailConfirmation>
     <m-announcement [id]="'festival:sale'" *mIfFeature="'radiocity'">
       <span
         class="m-blockchain--wallet-address-notice--action"
@@ -47,16 +36,23 @@
     <router-outlet></router-outlet>
   </m-body>
 
-  <m-messenger *ngIf="minds.LoggedIn && !isProDomain"></m-messenger>
+  <ng-container *mIfBrowser>
+    <m-messenger *ngIf="session.isLoggedIn() && !isProDomain"></m-messenger>
+  </ng-container>
 
   <m-hovercard-popup></m-hovercard-popup>
 
   <m-overlay-modal></m-overlay-modal>
+
   <m--blockchain--transaction-overlay></m--blockchain--transaction-overlay>
+
   <m-modal--tos-updated *ngIf="session.isLoggedIn()"></m-modal--tos-updated>
-  <m-juryDutySession__summons
-    *ngIf="session.isLoggedIn() && !isProDomain"
-  ></m-juryDutySession__summons>
+
+  <ng-container *mIfBrowser>
+    <m-juryDutySession__summons
+      *ngIf="session.isLoggedIn() && !isProDomain"
+    ></m-juryDutySession__summons>
+  </ng-container>
 
   <m-modal-signup
     *ngIf="!isProDomain && !session.getLoggedInUser()"

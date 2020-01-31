@@ -1,10 +1,17 @@
+import { Injectable } from '@angular/core';
+import { Session } from './session';
+
+@Injectable()
 export class Experimental {
+  constructor(private session: Session) {}
+
   feature(feature: string): boolean {
+    const user = this.session.getLoggedInUser();
     return (
-      window.Minds.user &&
-      window.Minds.user.feature_flags &&
-      window.Minds.user.feature_flags.length &&
-      window.Minds.user.feature_flags.indexOf(feature) > -1
+      user &&
+      user.feature_flags &&
+      user.feature_flags.length &&
+      user.feature_flags.indexOf(feature) > -1
     );
   }
 }

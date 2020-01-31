@@ -16,7 +16,7 @@
   <a class="m-sidebarMenu__userWrapper" [routerLink]="['/', user.username]">
     <img
       class="m-sidebarMenu__userAvatar"
-      [src]="minds.cdn_url + 'icon/' + user.guid + '/medium/' + user.icontime"
+      [src]="cdnUrl + 'icon/' + user.guid + '/medium/' + user.icontime"
     />
     <div class="m-sidebarMenu__userDetails">
       <div class="m-sidebarMenu__userDetails__name">{{ user.name }}</div>

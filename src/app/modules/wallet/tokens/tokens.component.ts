@@ -10,7 +10,6 @@ import { BTCSettingsComponent } from '../../payments/btc/settings.component';
 })
 export class WalletTokensComponent {
   showOnboarding: boolean = false;
-  minds = window.Minds;
 
   constructor(
     route: ActivatedRoute,

@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { DynamicHostDirective } from '../../common/directives/dynamic-host.directive';
 import { NotificationService } from './notification.service';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'm-notifications--toaster',
@@ -31,7 +32,8 @@ export class NotificationsToasterComponent implements OnInit {
 
   constructor(
     public notification: NotificationService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    private session: Session
   ) {}
 
   ngOnInit() {
@@ -73,6 +75,9 @@ export class NotificationsToasterComponent implements OnInit {
   }
 
   isToasterDisabled() {
-    return window.Minds.user && !window.Minds.user.toaster_notifications;
+    return (
+      this.session.getLoggedInUser() &&
+      !this.session.getLoggedInUser().toaster_notifications
+    );
   }
 }
