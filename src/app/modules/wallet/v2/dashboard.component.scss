@@ -213,7 +213,7 @@ m-walletDashboard {
       flex-flow: row nowrap;
       &.invalid {
         input,
-        .m-phone-input--wrapper {
+        .m-phoneInput__wrapper {
           @include m-theme() {
             border-color: themed($m-red-dark) !important;
           }
@@ -246,7 +246,7 @@ m-walletDashboard {
     }
   }
   input:not(.m-phoneInput__input),
-  .m-phone-input--wrapper {
+  .m-phoneInput__wrapper {
     border-radius: 2px;
     @include m-theme() {
       box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
@@ -265,25 +265,11 @@ m-walletDashboard {
     flex: 1 1 auto;
   }
 
-  m-phone-input {
+  m-phoneInput {
     margin-bottom: 0;
-    .m-phone-input--wrapper {
+    .m-phoneInput__wrapper {
       width: 100%;
       min-width: 240px;
-      justify-content: flex-start;
-      align-items: center;
-    }
-    m-phone-input--country {
-      flex: 0 1 auto;
-    }
-    input {
-      flex: 1 1 auto;
-      padding: 10px;
-      border-bottom-left-radius: 0;
-      border-top-left-radius: 0;
-      @include m-theme() {
-        border-left: 1px solid themed($m-grey-50);
-      }
     }
   }
   @media screen and (max-width: 500px) {
@@ -304,7 +290,7 @@ m-walletDashboard {
           min-width: 100%;
           max-width: 100%;
         }
-        m-phone-input input {
+        m-phoneInput input {
           min-width: none;
         }
       }

@@ -13,12 +13,19 @@ m-walletPhoneVerification {
     }
   }
 
+  m-phoneInput {
+    .m-phoneInput__countryList {
+      max-height: 124px;
+    }
+  }
+
   m-shadowboxSubmitButton {
     width: 147px;
     button {
       width: 100%;
     }
   }
+  // TODOOJM tweak this so countryList max-height doesn't overflow
   @media screen and (max-width: 771px) {
     m-shadowboxSubmitButton {
       margin: 0 0 21px 0;
@@ -30,13 +37,22 @@ m-walletPhoneVerification {
         }
       }
       [class*='m-walletForm__row'] {
-        flex-flow: row wrap;
-        label,
-        input {
-          flex: 1 1 100%;
-          min-width: 100%;
-          max-width: 100%;
+        &:not(.m-phoneInput__wrapper) {
+          flex-flow: row wrap;
+          label,
+          input {
+            flex: 1 1 100%;
+            max-width: 100%;
+            &:not(.m-phoneInput__input) {
+              min-width: 100%;
+            }
+          }
         }
+      }
+    }
+    m-phoneInput {
+      .m-phoneInput__countryList {
+        max-height: 200px;
       }
     }
   }

@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  Input,
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
@@ -13,7 +12,6 @@ import {
   FormGroup,
   FormControl,
 } from '@angular/forms';
-import { FormToastService } from '../../../../common/services/form-toast.service';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 
@@ -38,7 +36,6 @@ export class WalletPhoneVerificationComponent implements OnInit {
 
   constructor(
     protected session: Session,
-    private formToastService: FormToastService,
     private fb: FormBuilder,
     protected client: Client,
     protected cd: ChangeDetectorRef
@@ -63,7 +60,6 @@ export class WalletPhoneVerificationComponent implements OnInit {
       this.confirming = true;
     } catch (e) {
       this.invalidNumber = true;
-      // this.formToastService.error(e.message);
       console.error(e.message);
     }
     this.inProgress = false;
@@ -88,7 +84,6 @@ export class WalletPhoneVerificationComponent implements OnInit {
       this.phoneVerificationComplete.emit();
     } catch (e) {
       this.invalidCode = true;
-      // this.formToastService.error(e.message);
     }
 
     this.inProgress = false;

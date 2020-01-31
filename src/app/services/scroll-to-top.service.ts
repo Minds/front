@@ -20,14 +20,14 @@ export class ScrollToTopService {
         pairwise()
       )
       .subscribe((events: RoutesRecognized[]) => {
-        // TODOOJM change to wallet
-        const disabledPaths: Array<string> = ['v2wallet'],
+        const disabledPaths: Array<string> = ['wallet'],
           previousPath = events[0].urlAfterRedirects.split('/')[1],
           currentPath = events[1].urlAfterRedirects.split('/')[1];
 
         const currentPathDisabled = disabledPaths.indexOf(currentPath) > -1;
         const pathChanged = previousPath !== currentPath;
 
+        // Disable scroll on disabledPaths only when navigating within them
         if (!currentPathDisabled || (currentPathDisabled && pathChanged)) {
           window.scrollTo(0, 0);
         }

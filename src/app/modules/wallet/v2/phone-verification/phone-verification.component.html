@@ -12,7 +12,8 @@
   </p>
 </div>
 <!-- TODOOJM: ensure the three options to trigger onSubmit() don't double-trigger the fx -->
-<form [formGroup]="form" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
+<!-- <form [formGroup]="form" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()"> -->
+<form [formGroup]="form">
   <div class="m-walletForm__wrapper">
     <div class="m-walletForm__fieldsContainer">
       <div class="m-walletForm__field--text stretchedField" *ngIf="!confirming">
@@ -25,14 +26,14 @@
             >
           </m-tooltip>
         </div>
-        <m-phone-input
+        <m-phoneInput
           formControlName="number"
           class="m-walletForm__row--input"
           [ngClass]="{ invalid: invalidNumber }"
           name="number"
           id="number"
           ngDefaultControl
-        ></m-phone-input>
+        ></m-phoneInput>
         <div class="m-walletForm__row--validation">
           <p *ngIf="invalidNumber">
             Invalid phone number
@@ -43,7 +44,11 @@
         <div class="m-walletForm__row--label">
           <label for="code" i18n>Verification Code</label>
           <m-tooltip icon="help">
-            <ng-container i18n>Placeholder</ng-container>
+            <ng-container i18n
+              >Please enter the code we just sent to +{{
+                form.value.number
+              }}.</ng-container
+            >
           </m-tooltip>
         </div>
         <div
@@ -67,6 +72,7 @@
       </div>
     </div>
     <!-- TODOOJM button disabling -->
+    <!-- !number || number.length < 13 -->
     <!-- [disabled]="inProgress || invalidNumber || invalidCode" -->
     <m-shadowboxSubmitButton
       [disabled]="inProgress"

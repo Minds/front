@@ -14,17 +14,38 @@
       background-color: #4fc3a9;
       color: themed($m-white);
     }
+    .m-shadowboxSubmitButton__status--saving {
+      span {
+        @include m-theme() {
+          background-color: themed($m-white);
+        }
+      }
+    }
   }
   &.red {
     @include m-theme() {
       background-color: themed($m-red-dark);
       color: themed($m-white);
     }
+    .m-shadowboxSubmitButton__status--saving {
+      span {
+        @include m-theme() {
+          background-color: themed($m-white);
+        }
+      }
+    }
   }
   &.grey {
     @include m-theme() {
       background-color: themed($m-grey-100);
       color: themed($m-grey-500);
+    }
+    .m-shadowboxSubmitButton__status--saving {
+      span {
+        @include m-theme() {
+          background-color: themed($m-grey-500);
+        }
+      }
     }
   }
   &:hover {
@@ -121,17 +142,6 @@ button {
     animation-duration: 1.4s;
     animation-iteration-count: infinite;
     animation-fill-mode: both;
-    &.green,
-    &.red {
-      @include m-theme() {
-        background-color: themed($m-white);
-      }
-    }
-    &.grey {
-      @include m-theme() {
-        background-color: themed($m-grey-500);
-      }
-    }
     &:nth-child(2) {
       animation-delay: 0.2s;
     }

@@ -136,6 +136,8 @@ import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
+import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v2.component';
+import { PhoneInputCountryV2Component } from './components/phone-input-v2/country.component';
 
 PlotlyModule.plotlyjs = PlotlyJS;
 
@@ -267,6 +269,8 @@ const routes: Routes = [
     EmailConfirmationComponent,
     EmailConfirmationComponent,
     DateDropdownsComponent,
+    PhoneInputV2Component,
+    PhoneInputCountryV2Component,
   ],
   exports: [
     MINDS_PIPES,
@@ -372,6 +376,8 @@ const routes: Routes = [
     EmailConfirmationComponent,
     EmailConfirmationComponent,
     DateDropdownsComponent,
+    PhoneInputV2Component,
+    PhoneInputCountryV2Component,
   ],
   providers: [
     SiteService,

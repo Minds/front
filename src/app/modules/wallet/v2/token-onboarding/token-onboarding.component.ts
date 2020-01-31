@@ -75,6 +75,9 @@ export class WalletTokenOnboardingComponent implements OnInit {
     if (!this.phoneVerified) {
       this.activeStep = 'phone';
     } else {
+      this.formToastService.success(
+        "Congratulations! You're ready to start earning rewards"
+      );
       this.onboardingComplete.emit();
     }
   }
