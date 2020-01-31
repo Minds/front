@@ -23,6 +23,7 @@
 
       <button
         class="mf-button mf-button--alt m-onboardingInput__saveButton"
+        style="height: 38px;"
         [class.disabled]="!number || number.length < 13"
         (click)="savePhoneNumber()"
         *ngIf="!inProgress"

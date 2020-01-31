@@ -5,6 +5,7 @@ m-phoneInput {
   position: relative;
   display: inline-flex;
   margin-bottom: $minds-padding;
+  flex-grow: 1;
   @media (max-width: $max-mobile) {
     width: 100%;
     input {
@@ -17,6 +18,7 @@ m-phoneInput {
   }
 
   .m-phoneInput__wrapper {
+    flex-grow: 1;
     display: flex;
     justify-content: flex-start;
     flex-flow: row nowrap;
@@ -45,11 +47,11 @@ m-phoneInput {
     }
     &.invalid {
       @include m-theme() {
-        border-color: themed($m-red);
+        border-color: themed($m-red-dark);
       }
       input {
         @include m-theme() {
-          border-color: themed($m-red);
+          border-color: themed($m-red-dark);
         }
       }
     }

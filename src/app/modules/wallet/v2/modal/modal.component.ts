@@ -14,6 +14,7 @@ import {
 export class WalletModalComponent implements OnDestroy {
   showModalTimeout: any = null;
   justOpened = true;
+  modalWasClicked = false;
   public _showModal = false;
   @Input()
   public set showModal(val: boolean) {
@@ -39,16 +40,18 @@ export class WalletModalComponent implements OnDestroy {
   // Dismiss modal when backdrop is clicked and modal is open
   @HostListener('document:click', ['$event'])
   clickedBackdrop($event) {
-    if (this._showModal && !this.justOpened) {
+    if (this._showModal && !this.justOpened && !this.modalWasClicked) {
       $event.preventDefault();
       $event.stopPropagation();
       this.close();
     }
+    this.modalWasClicked = false;
   }
 
   // Don't dismiss modal if click somewhere other than backdrop
   clickedModal($event) {
-    $event.stopPropagation();
+    // $event.stopPropagation();
+    this.modalWasClicked = true;
   }
 
   close() {

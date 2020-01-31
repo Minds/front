@@ -7,6 +7,7 @@ import {
   OnDestroy,
   ViewChild,
   Input,
+  HostListener,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
@@ -27,7 +28,7 @@ export const PHONE_INPUT_VALUE_ACCESSOR: any = {
 })
 export class PhoneInputV2Component
   implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
-  @Input() invalid: boolean = true; // todoojm toggle
+  @Input() invalid: boolean = false;
 
   phoneNumber: string = '';
   showDropdown: boolean = false;
@@ -93,6 +94,11 @@ export class PhoneInputV2Component
   clickedInput($event) {
     $event.stopPropagation();
     this.inputFocused = true;
+    this.showDropdown = false;
+  }
+
+  @HostListener('document:click', ['$event'])
+  clickedAnywhere($event) {
     this.showDropdown = false;
   }
 
