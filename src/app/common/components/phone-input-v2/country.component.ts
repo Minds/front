@@ -7,9 +7,13 @@ import {
   EventEmitter,
   OnInit,
   HostListener,
+  AfterViewInit,
+  ViewChildren,
+  QueryList,
 } from '@angular/core';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { verticallyScrollToEnsureElementIsInView } from '../../../helpers/scrollable-container-visibility';
 
 import { Country } from './country';
 import { CountryCode } from './countries';
@@ -19,15 +23,17 @@ import * as moment from 'moment';
   selector: 'm-phoneInput__country',
   templateUrl: 'country.component.html',
 })
-export class PhoneInputCountryV2Component implements OnInit {
+export class PhoneInputCountryV2Component implements OnInit, AfterViewInit {
   @Input() showDropdown: boolean = false;
   @Output() toggledDropdown: EventEmitter<any> = new EventEmitter();
   @Output('country') selectedCountryEvt: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('input', { static: false }) input: ElementRef;
   @ViewChild('dropdown', { static: true }) dropdown: ElementRef;
+  @ViewChildren('countryEl') countryElsList: QueryList<ElementRef>;
 
   countries: Array<Country> = [];
+  countryEls;
   selectedCountry: Country = new Country();
   phoneNumber: string;
   countryCodeData = new CountryCode();
@@ -45,16 +51,8 @@ export class PhoneInputCountryV2Component implements OnInit {
     this.onCountrySelect(this.selectedCountryIndex);
   }
 
-  openDropdown() {
-    this.applyFocus(this.selectedCountryIndex);
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
-        this.toggledDropdown.emit({ showDropdown: true });
-      }, 0);
-    }
-  }
-  closeDropdown() {
-    this.toggledDropdown.emit({ showDropdown: false });
+  ngAfterViewInit() {
+    this.countryEls = this.countryElsList.toArray();
   }
 
   public onCountrySelect(i: number): void {
@@ -65,6 +63,24 @@ export class PhoneInputCountryV2Component implements OnInit {
     if (this.showDropdown) {
       this.closeDropdown();
     }
+  }
+
+  openDropdown() {
+    this.applyFocus(this.selectedCountryIndex);
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        this.toggledDropdown.emit({ showDropdown: true });
+      }, 0);
+      setTimeout(() => {
+        verticallyScrollToEnsureElementIsInView(
+          this.dropdown.nativeElement,
+          this.countryEls[this.selectedCountryIndex].nativeElement
+        );
+      }, 1);
+    }
+  }
+  closeDropdown() {
+    this.toggledDropdown.emit({ showDropdown: false });
   }
 
   @HostListener('window:keydown', ['$event'])
@@ -98,11 +114,10 @@ export class PhoneInputCountryV2Component implements OnInit {
 
   applyFocus(i: number) {
     this.focusedCountryIndex = i;
-    const dropdownEl = this.dropdown.nativeElement;
-    const countryEls = dropdownEl.querySelectorAll('.m-phoneInput__country');
 
-    const countryEl = countryEls[i];
-    countryEl.focus();
+    const countryEl = this.countryEls[i];
+
+    countryEl.nativeElement.focus();
   }
 
   @HostListener('document:mousemove', ['$event'])

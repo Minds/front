@@ -39,7 +39,7 @@ m-phoneInput {
       @include m-theme() {
         border-color: themed($m-blue);
       }
-      input {
+      .m-phoneInput__input {
         @include m-theme() {
           border-color: themed($m-blue);
         }
@@ -162,7 +162,7 @@ m-phoneInput {
     @include m-theme() {
       box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
       background-color: themed($m-white);
-      border: 1px solid themed($m-grey-50);
+      border: 1px solid themed($m-blue);
       border-top: none;
     }
 

@@ -9,11 +9,6 @@ m-onboarding__phoneverification {
     .m-phoneInput__input {
       padding-top: 0;
       padding-bottom: 0;
-      &:focus {
-        @include m-theme() {
-          border-color: themed($m-blue);
-        }
-      }
     }
   }
 }

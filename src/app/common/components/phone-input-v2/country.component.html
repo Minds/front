@@ -6,14 +6,12 @@
   <div class="m-phoneInput__dialCode">+{{ selectedCountry.dialCode }}</div>
   <div class="m-phoneInput__arrow" [ngClass]="{ up: showDropdown }"></div>
 </div>
-
 <ul
   class="m-phoneInput__countryList dropdown"
   id="m-phoneInput__countryList"
   #dropdown
   [hidden]="!showDropdown"
 >
-  <!-- [ngClass]="{ focused: focusedCountryIndex === i }" -->
   <li
     *ngFor="let country of countries; let i = index"
     class="m-phoneInput__country"
@@ -22,6 +20,7 @@
     tabindex="0"
     (mouseenter)="onMouseEnter(i)"
     [ngClass]="{ focused: focusedCountryIndex === i }"
+    #countryEl
   >
     <div class="m-phoneInput__flagBox">
       <div class="m-phoneInput__flag" [ngClass]="country.flagClass"></div>
