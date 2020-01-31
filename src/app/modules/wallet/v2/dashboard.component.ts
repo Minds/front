@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 import { WalletDashboardService } from './dashboard.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { MindsTitle } from '../../../services/ux/title';
+// import { MindsTitle } from '../../../services/ux/title';
 import sidebarMenu from './sidebar-menu.default';
 import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
@@ -56,7 +56,7 @@ export class WalletDashboardComponent implements OnInit {
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
-    protected title: MindsTitle,
+    // protected title: MindsTitle,
     protected storage: Storage,
     @Inject(PLATFORM_ID) private platformId
   ) {}
@@ -75,7 +75,7 @@ export class WalletDashboardComponent implements OnInit {
       this.onboardingComplete = true;
     }
 
-    this.title.setTitle('Wallet');
+    // this.title.setTitle('Wallet');
     this.wallet = this.walletService.getWallet();
 
     this.route.paramMap.subscribe((params: ParamMap) => {

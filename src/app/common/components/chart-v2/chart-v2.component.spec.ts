@@ -26,32 +26,24 @@ describe('ChartV2Component', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ChartV2Component);
     component = fixture.componentInstance;
-    component.rawData = {
-      id: 'views',
-      label: 'Pageviews',
-      permissions: ['admin', 'user'],
-      unit: 'usd',
-      description: '',
-      visualisation: {
-        type: 'chart',
-        segments: [
+    component.label = 'Pageviews';
+    component.unit = 'usd';
+    component.segments = [
+      {
+        buckets: [
           {
-            buckets: [
-              {
-                key: 1567296000000,
-                date: '2019-09-01T00:00:00+00:00',
-                value: 11,
-              },
-              {
-                key: 1567382400000,
-                date: '2019-09-02T00:00:00+00:00',
-                value: 12,
-              },
-            ],
+            key: 1567296000000,
+            date: '2019-09-01T00:00:00+00:00',
+            value: 11,
+          },
+          {
+            key: 1567382400000,
+            date: '2019-09-02T00:00:00+00:00',
+            value: 12,
           },
         ],
       },
-    };
+    ];
   });
 
   it('should create', () => {

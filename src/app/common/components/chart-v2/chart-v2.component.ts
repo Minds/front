@@ -26,7 +26,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
 
   @Input() segments: Array<any>;
   @Input() unit: string = 'number';
-  @Input() label: '';
+  @Input() label: string = '';
 
   @Input() interval;
   @Input() isMini: boolean = false;
