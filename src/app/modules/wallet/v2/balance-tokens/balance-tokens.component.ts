@@ -5,7 +5,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Input,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Client } from '../../../../services/api/client';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
@@ -42,7 +45,8 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected walletService: WalletDashboardService,
-    protected formToastService: FormToastService
+    protected formToastService: FormToastService,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
   ngOnInit() {
@@ -52,11 +56,19 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     this.getPayout();
 
     this.inProgress = false;
-    this.updateTimer$ = setInterval(this.updateNextPayoutDate.bind(this), 1000);
+    if (isPlatformBrowser(this.platformId)) {
+      this.updateTimer$ = setInterval(
+        this.updateNextPayoutDate.bind(this),
+        1000
+      );
+    }
+
     this.detectChanges();
   }
   ngOnDestroy() {
-    clearInterval(this.updateTimer$);
+    if (this.updateTimer$) {
+      clearInterval(this.updateTimer$);
+    }
     if (this.payoutSubscription) {
       this.payoutSubscription.unsubscribe();
     }

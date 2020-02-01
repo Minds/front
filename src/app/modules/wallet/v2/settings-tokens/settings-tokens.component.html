@@ -1,4 +1,4 @@
-<div class="m-walletSettings" id="tokensSettings" *ngIf="wallet">
+<div class="m-walletSettings" *ngIf="wallet">
   <div class="m-walletSettingsView--setup" *ngIf="!display">
     <h4>
       On-chain address
@@ -12,7 +12,7 @@
         <div>
           <img
             class="metamask"
-            [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'"
+            [src]="cdn_assets_url + 'assets/ext/metamask.png'"
           />
           <h2>
             MetaMask

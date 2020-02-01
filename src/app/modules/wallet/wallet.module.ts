@@ -169,6 +169,9 @@ const walletRoutes: Routes = [
     // TODOOJM: also allow **
     redirectTo: 'v2wallet/tokens/overview',
     pathMatch: 'full',
+    data: {
+      title: 'Wallet',
+    },
   },
   { path: 'v2wallet/:currency/:view', component: WalletDashboardComponent },
   { path: 'v2wallet/:currency', component: WalletDashboardComponent },

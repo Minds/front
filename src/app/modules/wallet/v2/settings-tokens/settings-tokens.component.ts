@@ -7,7 +7,12 @@ import {
   Input,
   Output,
   EventEmitter,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { ConfigsService } from '../../../../common/services/configs.service';
+
 import { Router } from '@angular/router';
 import {
   FormGroup,
@@ -24,7 +29,6 @@ import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { getBrowser } from '../../../../utils/browser';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { WalletDashboardService } from '../dashboard.service';
-import { Subscription } from 'rxjs';
 
 enum Views {
   CreateAddress = 1,
@@ -50,8 +54,8 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   currentAddress: string = '';
   downloadingMetamask: boolean = false;
   form;
-  // TODOOJM remove this bc SSR -- used in html > [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'"
-  minds = window.Minds;
+
+  readonly cdnAssetsUrl: string;
 
   readonly Views = Views;
 
@@ -66,8 +70,12 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     protected blockchain: BlockchainService,
     protected web3Wallet: Web3WalletService,
     private formToastService: FormToastService,
-    protected walletService: WalletDashboardService
-  ) {}
+    protected walletService: WalletDashboardService,
+    private configs: ConfigsService,
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   // TODOOJM add fx to reload whenever the current setting is updated
 
@@ -150,13 +158,15 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
         link.click();
         document.body.removeChild(link);
 
-        setTimeout(() => {
-          URL.revokeObjectURL(objectUrl);
-          this.generatedAccount = null;
-          this.addressSetupComplete.emit();
-          this.inProgress = false;
-          this.detectChanges();
-        }, 1000);
+        if (isPlatformBrowser(this.platformId)) {
+          setTimeout(() => {
+            URL.revokeObjectURL(objectUrl);
+            this.generatedAccount = null;
+            this.addressSetupComplete.emit();
+            this.inProgress = false;
+            this.detectChanges();
+          }, 1000);
+        }
       }
       this.display = Views.CurrentAddress;
     } catch (e) {
@@ -211,7 +221,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       default:
         url = 'https://metamask.io';
     }
-    // TODOOJM remove window?
+
     window.open(url);
     this.downloadingMetamask = true;
   }
@@ -220,11 +230,11 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     this.linkingMetamask = true;
     await this.web3Wallet.ready();
     this.detectExternal();
-
-    // TODOOJM remove timers
-    this._externalTimer = setInterval(() => {
-      this.detectExternal();
-    }, 1000);
+    if (isPlatformBrowser(this.platformId)) {
+      this._externalTimer = setInterval(() => {
+        this.detectExternal();
+      }, 1000);
+    }
   }
 
   async detectExternal() {
@@ -235,7 +245,6 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       this.providedAddress = address;
       this.detectChanges();
 
-      // TODOOJM remove timers
       if (this.providedAddress) {
         clearInterval(this._externalTimer);
         this.provideAddress();

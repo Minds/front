@@ -147,7 +147,6 @@ export class WalletDashboardService {
     this.getEthAccount();
     this.getStripeAccount();
 
-    // TODOOJM !!! remove any refs to window.Minds !!!
     // TODOOJM toggle me before pushing
     this.wallet = fakeData.wallet;
 

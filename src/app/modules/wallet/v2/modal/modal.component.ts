@@ -5,7 +5,10 @@ import {
   EventEmitter,
   OnDestroy,
   HostListener,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'm-walletModal',
@@ -23,16 +26,19 @@ export class WalletModalComponent implements OnDestroy {
   }
   @Output() closeModal: EventEmitter<any> = new EventEmitter();
 
-  constructor() {}
+  constructor(@Inject(PLATFORM_ID) protected platformId: Object) {}
 
   show() {
     if (document && document.body) {
       this.justOpened = true;
       document.body.classList.add('m-overlay-modal--shown--no-scroll');
-      // Prevent dismissal of modal when it's just been opened
-      this.showModalTimeout = setTimeout(() => {
-        this.justOpened = false;
-      }, 20);
+
+      if (isPlatformBrowser(this.platformId)) {
+        // Prevent dismissal of modal when it's just been opened
+        this.showModalTimeout = setTimeout(() => {
+          this.justOpened = false;
+        }, 20);
+      }
     }
   }
 

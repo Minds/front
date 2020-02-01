@@ -6,12 +6,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import {
-  FormBuilder,
-  AbstractControl,
-  FormGroup,
-  FormControl,
-} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 
@@ -31,6 +26,8 @@ export class WalletPhoneVerificationComponent implements OnInit {
     code: [''],
     secret: [''],
   });
+
+  readonly userHasPhoneHash: boolean;
 
   @Output() phoneVerificationComplete: EventEmitter<any> = new EventEmitter();
 
@@ -80,7 +77,6 @@ export class WalletPhoneVerificationComponent implements OnInit {
           secret: this.form.value.secret,
         }
       );
-      window.Minds.user.rewards = true;
       this.phoneVerificationComplete.emit();
     } catch (e) {
       this.invalidCode = true;

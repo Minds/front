@@ -1,13 +1,8 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { WalletDashboardService } from '../dashboard.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  AbstractControl,
-} from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Session } from '../../../../services/session';
 
 @Component({
   selector: 'm-walletSettings--cash',
@@ -31,7 +26,8 @@ export class WalletSettingsCashComponent implements OnInit {
   constructor(
     protected walletService: WalletDashboardService,
     private formToastService: FormToastService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    protected session: Session
   ) {}
 
   ngOnInit() {
@@ -98,7 +94,8 @@ export class WalletSettingsCashComponent implements OnInit {
     this.walletService
       .leaveMonetization()
       .then((response: any) => {
-        (<any>window).Minds.user.merchant = [];
+        // TODOOJM what to do here?
+        // (<any>window).Minds.user.merchant = [];
         this.getAccount();
       })
       .catch(e => {

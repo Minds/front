@@ -5,20 +5,18 @@ import {
   ChangeDetectorRef,
   PLATFORM_ID,
   Inject,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
-import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 
 import { Subscription } from 'rxjs';
 import { WalletDashboardService } from './dashboard.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-// import { MindsTitle } from '../../../services/ux/title';
 import sidebarMenu from './sidebar-menu.default';
 import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
-
-// TODOOJM DON"T USE THIS BC SSR??
-import { Storage } from '../../../services/storage';
 
 @Component({
   selector: 'm-walletDashboard',
@@ -26,6 +24,11 @@ import { Storage } from '../../../services/storage';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletDashboardComponent implements OnInit {
+  @ViewChild('tokensSettings', { static: true }) tokenSettingsEl: ElementRef;
+  @ViewChild('cashSettings', { static: true }) cashSettingsEl: ElementRef;
+  @ViewChild('dashboardViewsTabs', { static: true })
+  dashboardViewsTabsEl: ElementRef;
+
   menu: Menu = sidebarMenu;
   paramsSubscription: Subscription;
   wallet = {};
@@ -56,8 +59,6 @@ export class WalletDashboardComponent implements OnInit {
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
-    // protected title: MindsTitle,
-    protected storage: Storage,
     @Inject(PLATFORM_ID) private platformId
   ) {}
 
@@ -68,14 +69,12 @@ export class WalletDashboardComponent implements OnInit {
     }
 
     if (
-      this.storage.get('walletOnboardingComplete') ||
-      (this.session.getLoggedInUser().rewards &&
-        this.session.getLoggedInUser().eth_wallet)
+      this.session.getLoggedInUser().rewards &&
+      this.session.getLoggedInUser().eth_wallet
     ) {
       this.onboardingComplete = true;
     }
 
-    // this.title.setTitle('Wallet');
     this.wallet = this.walletService.getWallet();
 
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -130,7 +129,8 @@ export class WalletDashboardComponent implements OnInit {
   }
 
   onboardingCompleted() {
-    this.storage.set('walletOnboardingComplete', true);
+    // TODOOJM remove once verified its not necessary
+    // this.storage.set('walletOnboardingComplete', true);
     this.onboardingComplete = true;
     this.detectChanges();
   }
@@ -140,7 +140,11 @@ export class WalletDashboardComponent implements OnInit {
       // TODOOJM change 'v2wallet' once url is changed in wallet module
       this.router.navigate([`/v2wallet/${currency}/settings`]);
     } else {
-      const settingsEl = document.getElementById(`${currency}Settings`);
+      const settingsEl =
+        currency === 'cash'
+          ? this.cashSettingsEl.nativeElement
+          : this.tokenSettingsEl.nativeElement;
+
       if (!settingsEl) {
         this.updateView('settings');
       }
@@ -149,7 +153,7 @@ export class WalletDashboardComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       setTimeout(
         () =>
-          document.getElementById('dashboardViewsTabs').scrollIntoView({
+          this.dashboardViewsTabsEl.nativeElement.scrollIntoView({
             behavior: 'smooth',
           }),
         0

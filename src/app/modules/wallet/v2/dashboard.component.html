@@ -40,7 +40,7 @@
               <div
                 class="m-walletDashboardViews__tabsContainer"
                 *ngIf="views[activeCurrencyId].length > 1"
-                id="dashboardViewsTabs"
+                #dashboardViewsTabs
               >
                 <div
                   class="m-walletDashboardViews__tab"
@@ -71,10 +71,12 @@
                     <m-walletSettings--tokens
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'tokens'"
+                      #tokenSettings
                     ></m-walletSettings--tokens>
                     <m-walletSettings--cash
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'cash'"
+                      #cashSettings
                     ></m-walletSettings--cash>
                     <m-walletSettings--eth
                       class="m-walletDashboardViews__view"
