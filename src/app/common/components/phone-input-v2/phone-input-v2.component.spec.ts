@@ -12,7 +12,7 @@ import { PhoneInputCountryV2Component } from './country.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-describe('PhoneInputComponent', () => {
+describe('PhoneInputV2Component', () => {
   let comp: PhoneInputV2Component;
   let fixture: ComponentFixture<PhoneInputV2Component>;
 

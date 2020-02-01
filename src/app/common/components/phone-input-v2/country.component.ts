@@ -10,6 +10,7 @@ import {
   AfterViewInit,
   ViewChildren,
   QueryList,
+  OnDestroy,
 } from '@angular/core';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
@@ -23,7 +24,8 @@ import * as moment from 'moment';
   selector: 'm-phoneInput__country',
   templateUrl: 'country.component.html',
 })
-export class PhoneInputCountryV2Component implements OnInit, AfterViewInit {
+export class PhoneInputCountryV2Component
+  implements OnInit, AfterViewInit, OnDestroy {
   @Input() showDropdown: boolean = false;
   @Output() toggledDropdown: EventEmitter<any> = new EventEmitter();
   @Output('country') selectedCountryEvt: EventEmitter<any> = new EventEmitter();
@@ -39,6 +41,8 @@ export class PhoneInputCountryV2Component implements OnInit, AfterViewInit {
   countryCodeData = new CountryCode();
   selectedCountryIndex = 0;
   focusedCountryIndex = 0;
+  toggleTimeout;
+  scrollTimeout;
 
   lastKeyboardFocusMoment = moment();
   lastMouseMoveMoment = moment();
@@ -68,10 +72,10 @@ export class PhoneInputCountryV2Component implements OnInit, AfterViewInit {
   openDropdown() {
     this.applyFocus(this.selectedCountryIndex);
     if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
+      this.toggleTimeout = setTimeout(() => {
         this.toggledDropdown.emit({ showDropdown: true });
       }, 0);
-      setTimeout(() => {
+      this.scrollTimeout = setTimeout(() => {
         verticallyScrollToEnsureElementIsInView(
           this.dropdown.nativeElement,
           this.countryEls[this.selectedCountryIndex].nativeElement
@@ -162,5 +166,14 @@ export class PhoneInputCountryV2Component implements OnInit, AfterViewInit {
       country.flagClass = country.iso2.toLocaleLowerCase();
       this.countries.push(country);
     });
+  }
+
+  ngOnDestroy() {
+    if (this.toggleTimeout) {
+      clearTimeout(this.toggleTimeout);
+    }
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout);
+    }
   }
 }
