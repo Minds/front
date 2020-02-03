@@ -1,0 +1,18 @@
+{
+  "/api": {
+    "target": "http://localhost:80",
+    "secure": false
+  },
+  "/fs": {
+    "target": "http://localhost:80",
+    "secure": false
+  },
+  "/icon": {
+    "target": "http://localhost:80",
+    "secure": false
+  },
+  "/carousel": {
+    "target": "http://localhost:80",
+    "secure": false
+  }
+}
