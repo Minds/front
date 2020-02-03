@@ -264,20 +264,17 @@ minds-activity-v2 {
     }
 
     button.m-btn {
-      @include m-theme() {
-        border: 1px solid themed($m-grey-100);
-      }
-      border-radius: 2px;
-      padding: 7px 12px;
+      border: none;
+      padding: 0;
       margin: 0;
 
       span {
-        font-size: 14px;
-        line-height: 19px;
+        font-size: 15px;
+        line-height: 20px;
         text-transform: none;
 
         @include m-theme() {
-          color: themed($m-grey-500);
+          color: themed($m-blue);
         }
       }
     }
