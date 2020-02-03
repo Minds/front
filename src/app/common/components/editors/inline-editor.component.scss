@@ -310,6 +310,12 @@ m-inline-editor {
   outline: 0;
 }
 
+.medium-editor-toolbar-form select.medium-editor-toolbar-input:focus {
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+  appearance: menulist;
+}
+
 .medium-editor-toolbar-form a {
   display: inline-block;
   font-size: 24px;

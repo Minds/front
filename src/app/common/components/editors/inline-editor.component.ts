@@ -15,6 +15,8 @@ import { EmbedVideo } from './plugins/embed-video.plugin';
 import { MediumEditor } from 'medium-editor';
 import { ButtonsPlugin } from './plugins/buttons.plugin';
 import { AttachmentService } from '../../../services/attachment';
+import { CodeHighlightService } from '../../../modules/code-highlight/code-highlight.service';
+import { CodeHighlightPlugin } from '../../../modules/code-highlight/code-highlight.plugin';
 
 export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -60,6 +62,7 @@ export class InlineEditorComponent
   private videos = new EmbedVideo({
     buttonText: `<i class="material-icons">play_arrow</i>`,
   });
+  private codeHighlight: CodeHighlightPlugin;
 
   propagateChange = (_: any) => {};
 
@@ -68,9 +71,13 @@ export class InlineEditorComponent
   constructor(
     el: ElementRef,
     private cd: ChangeDetectorRef,
-    private attachment: AttachmentService
+    private attachment: AttachmentService,
+    private codeHighlightService: CodeHighlightService
   ) {
     this.el = el;
+    this.codeHighlight = new CodeHighlightPlugin(this.codeHighlightService, {
+      buttonText: `<i class="material-icons">code</i>`,
+    });
   }
 
   ngOnInit() {
@@ -132,12 +139,17 @@ export class InlineEditorComponent
             name: 'quote',
             contentDefault: '<i class="material-icons">format_quote</i>',
           },
+          {
+            name: 'highlightCode',
+            contentDefault: '<b>Code</b>',
+          },
         ],
       },
       extensions: {
         buttonsPlugin: this.buttons,
         embedImage: this.images,
         embedVideo: this.videos,
+        highlightCode: this.codeHighlight,
       },
     };
 
@@ -163,6 +175,7 @@ export class InlineEditorComponent
       this.buttons.prepare();
       this.images.prepare();
       this.videos.prepare();
+      this.codeHighlight.prepare();
       this.propagateChange((<any>this.editor).elements[0].innerHTML);
       setTimeout(() => {
         resolve();

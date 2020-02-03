@@ -9,7 +9,7 @@ export class CodeHighlightPipe implements PipeTransform {
 
   constructor(private codeHighlightService: CodeHighlightService) {}
 
-  transform(text: string): string {
+  transform(text: string, noWrap: boolean): string {
     if (!text) {
       return text;
     }
@@ -21,10 +21,13 @@ export class CodeHighlightPipe implements PipeTransform {
       (match, lang, code) => {
         language = lang;
 
-        return `<pre><code class="${lang}">${this.codeHighlightService.highlight(
-          language,
-          code
-        )}</code></pre>`;
+        if (noWrap) {
+          return this.codeHighlightService.highlight(language, code).value;
+        }
+
+        return `<pre><code class="${lang}">${
+          this.codeHighlightService.highlight(language, code).value
+        }</code></pre>`;
       }
     );
 
