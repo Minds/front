@@ -97,8 +97,10 @@ export class ActivityContentComponent {
   }
 
   onModalRequested(event: MouseEvent) {
-    event.preventDefault();
-    event.stopPropagation();
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
     this.entity.modal_source_url = this.router.url;
 
