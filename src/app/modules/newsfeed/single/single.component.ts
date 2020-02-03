@@ -94,14 +94,14 @@ export class NewsfeedSingleComponent {
           case 'image':
           case 'video':
           case 'album':
-            this.router.navigate(['/media', this.activity.guid], {
-              replaceUrl: true,
-            });
+            // this.router.navigate(['/media', this.activity.guid], {
+            //   replaceUrl: true,
+            // });
             break;
           case 'blog':
-            this.router.navigate(['/blog/view', this.activity.guid], {
-              replaceUrl: true,
-            });
+            // this.router.navigate(['/blog/view', this.activity.guid], {
+            //   replaceUrl: true,
+            // });
             break;
         }
 

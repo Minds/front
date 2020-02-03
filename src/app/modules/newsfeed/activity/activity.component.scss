@@ -1,0 +1,21 @@
+$activity-padding-lr: 21px;
+
+m-activity {
+  display: block;
+
+  &,
+  &.m-border {
+    border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  @include m-theme() {
+    background: themed($m-white);
+  }
+}
+
+.m-activity--fixedHeight {
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+}

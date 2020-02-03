@@ -34,6 +34,7 @@ import { NewsfeedEntityComponent } from './feeds/entity.component';
 import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
 import { SearchModule } from '../search/search.module';
 import { NewsfeedTilesComponent } from './feeds/tiles.component';
+import { ActivityModule } from './activity/activity.module';
 
 const routes: Routes = [
   {
@@ -88,6 +89,7 @@ const routes: Routes = [
     NoticesModule,
     SearchModule,
     ReferralsModule,
+    ActivityModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,

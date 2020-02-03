@@ -1,12 +1,28 @@
-<m-comments__thread
-  [entity]="entity"
-  [parent]="entity"
-  [canEdit]="canEdit"
-  [canDelete]="canDelete"
-  [readonly]="readonly"
-  [level]="0"
-  [limit]="limit"
-  [scrollable]="scrollable"
-  [conversation]="conversation"
->
-</m-comments__thread>
+<ng-container *ngIf="!showOnlyPoster">
+  <m-comments__thread
+    [entity]="entity"
+    [parent]="entity"
+    [canEdit]="canEdit"
+    [canDelete]="canDelete"
+    [readonly]="readonly"
+    [level]="0"
+    [limit]="limit"
+    [scrollable]="scrollable"
+    [conversation]="conversation"
+  >
+  </m-comments__thread>
+</ng-container>
+
+<ng-container *ngIf="showOnlyPoster">
+  <m-comment__poster
+    [guid]="guid"
+    [parent]="entity"
+    [entity]="entity"
+    [level]="0"
+    (posted)="onPosted($event); showOnlyPoster = false"
+    (optimisticPost)="onOptimisticPost($event)"
+  >
+  </m-comment__poster>
+
+  <div class="" (click)="showOnlyPoster = false">Show comments</div>
+</ng-container>

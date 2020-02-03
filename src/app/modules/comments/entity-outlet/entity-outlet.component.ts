@@ -19,15 +19,14 @@ import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { Upload } from '../../../services/api/upload';
 import { AttachmentService } from '../../../services/attachment';
-import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
+import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
 @Component({
-  selector: 'm-comments__tree',
-  templateUrl: 'tree.component.html',
+  selector: 'm-comments__entityOutlet',
+  templateUrl: 'entity-outlet.component.html',
   providers: [
     AttachmentService,
     {
@@ -40,25 +39,18 @@ import { CommentsService } from '../comments.service';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CommentsTreeComponent implements OnInit, OnDestroy {
+export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
   entity;
   guid: string = '';
   parent: any;
 
   @Input() limit: number = 12;
-  @Output() scrollToBottom: EventEmitter<boolean> = new EventEmitter(true);
-  @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(
-    true
-  );
-
-  @Input() conversation: boolean = false;
-  @Input() scrollable: boolean = false;
-  @Input() readonly: boolean = false;
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
-  @Input() showOnlyPoster: boolean = false;
+  showOnlyPoster: boolean = true;
+  optimisticList: Array<any> = [];
 
-  private shouldReuseRouteFn;
+  // private shouldReuseRouteFn;
 
   constructor(
     public session: Session,
@@ -67,18 +59,18 @@ export class CommentsTreeComponent implements OnInit, OnDestroy {
     public sockets: SocketsService,
     private renderer: Renderer,
     private cd: ChangeDetectorRef,
-    private router: Router
+    public legacyActivityService: ActivityServiceCommentsLegacySupport
   ) {}
 
   ngOnInit() {
-    this.shouldReuseRouteFn = this.router.routeReuseStrategy.shouldReuseRoute;
-    this.router.routeReuseStrategy.shouldReuseRoute = future => {
-      return false;
-    };
+    // this.shouldReuseRouteFn = this.router.routeReuseStrategy.shouldReuseRoute;
+    // this.router.routeReuseStrategy.shouldReuseRoute = future => {
+    //   return false;
+    // };
   }
 
   ngOnDestroy() {
-    this.router.routeReuseStrategy.shouldReuseRoute = this.shouldReuseRouteFn;
+    // this.router.routeReuseStrategy.shouldReuseRoute = this.shouldReuseRouteFn;
   }
 
   @Input('entity')
@@ -93,15 +85,25 @@ export class CommentsTreeComponent implements OnInit, OnDestroy {
     }
   }
 
-  onScrollToBottom() {
-    this.scrollToBottom.next(true);
+  get count(): number {
+    return this.entity['comments:count'] || 0;
   }
 
-  onScrollToCurrentPosition() {
-    this.scrollToCurrentPosition.next(true);
+  onPosted({ comment, index }): void {
+    this.optimisticList[index] = comment;
+    this.detectChanges();
   }
 
-  detectChanges() {
+  onOptimisticPost(comment): void {
+    this.optimisticList.push(comment);
+  }
+
+  openFullComments(): void {
+    this.showOnlyPoster = false;
+    this.detectChanges();
+  }
+
+  detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
