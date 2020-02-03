@@ -9,6 +9,7 @@ export type ActivityDisplayOptions = {
   showComments: boolean;
   showOnlyCommentsInput: boolean;
   showToolbar: boolean;
+  showBoostMenuOptions: boolean;
   showEditedTag: boolean;
   fixedHeight: boolean;
 };
@@ -29,6 +30,7 @@ export type ActivityEntity = {
   time_created: number;
   edited: boolean;
   modal_source_url?: string;
+  ephemeral?: boolean;
 };
 
 @Injectable()
@@ -61,6 +63,7 @@ export class ActivityService {
     showComments: true,
     showOnlyCommentsInput: true,
     showToolbar: true,
+    showBoostMenuOptions: false,
     showEditedTag: false,
     fixedHeight: false,
   };

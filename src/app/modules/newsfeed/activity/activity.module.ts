@@ -17,6 +17,8 @@ import { MediaModule } from '../../media/media.module';
 import { ActivityToolbarComponent } from './toolbar/toolbar.component';
 import { ModalsModule } from '../../modals/modals.module';
 import { LegacyModule } from '../../legacy/legacy.module';
+import { ActivityMenuComponent } from './menu/menu.component';
+import { PostMenuModule } from '../../../common/components/post-menu/post-menu.module';
 
 @NgModule({
   imports: [
@@ -31,12 +33,14 @@ import { LegacyModule } from '../../legacy/legacy.module';
     VideoModule,
     ModalsModule,
     LegacyModule, // For remind button
+    PostMenuModule,
   ],
   declarations: [
     ActivityComponent,
     ActivityOwnerBlockComponent,
     ActivityContentComponent,
     ActivityToolbarComponent,
+    ActivityMenuComponent,
   ],
   providers: [],
   exports: [ActivityComponent],
