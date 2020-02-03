@@ -51,18 +51,28 @@ minds-graph-pie svg {
 minds-button-thumbs-up,
 minds-button-thumbs-down {
   a {
-    @include m-theme() {
-      color: themed($m-blue-grey-500);
+    img {
+      @include m-theme() {
+        color: themed($m-blue-grey-500);
+      }
     }
-    &:hover {
+
+    &:hover > img {
       @include m-theme() {
         color: themed($m-blue-grey-800);
       }
     }
   }
-  .selected:hover {
-    @include m-theme() {
-      color: rgba(themed($m-blue-dark), 0.9) !important;
+
+  .selected {
+    img {
+      filter: invert(49%) sepia(96%) saturate(359%) hue-rotate(172deg)
+        brightness(89%) contrast(96%);
+    }
+
+    &:hover img {
+      filter: invert(31%) sepia(85%) saturate(1089%) hue-rotate(190deg)
+        brightness(87%) contrast(95%) !important;
     }
   }
 }
