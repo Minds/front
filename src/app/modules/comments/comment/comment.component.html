@@ -17,9 +17,9 @@
     <div class="m-comment__bubble">
       <div class="m-commentBubble__username">
         <a [routerLink]="['/', comment.ownerObj.username]">
-          <span title="{{ comment.ownerObj.name }}">{{
-            comment.ownerObj.name
-          }}</span>
+          <span title="{{ comment.ownerObj.name }}">
+            {{ comment.ownerObj.name }}
+          </span>
           <m-channel--badges
             class="m-channel--badges-activity"
             [user]="comment.ownerObj"
@@ -63,9 +63,9 @@
       [ngClass]="{ 'm-comment__ribbonBtn--collapsed': !toggle.value }"
       (click)="toggle.value = !toggle.value"
     >
-      <i class="material-icons">{{
-        !toggle.value ? 'more_vert' : 'keyboard_arrow_left'
-      }}</i>
+      <i class="material-icons">
+        {{ !toggle.value ? 'more_vert' : 'keyboard_arrow_left' }}
+      </i>
     </button>
 
     <ul class="m-comment__ribbon" [hidden]="!toggle.value" #toggle>
@@ -146,11 +146,12 @@
                 class="material-icons"
                 title="Mature content"
                 i18n-title="@@M__COMMON__MATURE_CONTENT"
-                >explicit</i
               >
-              <span i18n="@@M__COMMON__CONFIRM_18"
-                >Click to confirm you are 18+</span
-              >
+                explicit
+              </i>
+              <span i18n="@@M__COMMON__CONFIRM_18">
+                Click to confirm you are 18+
+              </span>
             </span>
           </div>
 
@@ -179,11 +180,12 @@
                 class="material-icons"
                 title="Mature content"
                 i18n-title="@@M__COMMON__MATURE_CONTENT"
-                >explicit</i
               >
-              <span i18n="@@M__COMMON__CONFIRM_18"
-                >Click to confirm you are 18+</span
-              >
+                explicit
+              </i>
+              <span i18n="@@M__COMMON__CONFIRM_18">
+                Click to confirm you are 18+
+              </span>
             </span>
           </div>
 
@@ -213,11 +215,12 @@
                 class="material-icons"
                 title="Mature content"
                 i18n-title="@@M__COMMON__MATURE_CONTENT"
-                >explicit</i
               >
-              <span i18n="@@M__COMMON__CONFIRM_18"
-                >Click to confirm you are 18+</span
-              >
+                explicit
+              </i>
+              <span i18n="@@M__COMMON__CONFIRM_18">
+                Click to confirm you are 18+
+              </span>
             </span>
           </div>
           <a *ngIf="comment.attachment_guid">
@@ -265,24 +268,38 @@
             class="minds-comment-span"
             *ngIf="canPost"
             i18n="@@MINDS__CARDS__COMMENT__PRESS_ESC_TO_CANCEL"
-            >Press ESC to cancel</span
           >
+            Press ESC to cancel
+          </span>
           <div
             class="minds-comment-span mdl-color-text--red-500"
             *ngIf="!canPost && triedToPost"
           >
-            <ng-container i18n="@@M__COMMON__WAIT_UPLOAD"
-              >Please wait until the upload is complete.</ng-container
-            >
+            <ng-container i18n="@@M__COMMON__WAIT_UPLOAD">
+              Please wait until the upload is complete.
+            </ng-container>
           </div>
 
           <div class="mdl-card__actions">
-            <!-- Attachements -->
-            <div
-              class="attachment-button"
-              [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
+            <a
+              class="m-mature-button"
+              (click)="attachment.toggleMature()"
+              title="Mature content"
+              i18n-title="@@M__COMMON__MATURE_CONTENT"
             >
-              <i class="material-icons">attachment</i>
+              <img
+                class="m-matureButton__img"
+                [class.m-matureButton__img--selected]="attachment.isMature()"
+                [src]="minds.cdn_assets_url + 'assets/icons/explicit.svg'"
+              />
+            </a>
+            <!-- Attachments -->
+            <div class="attachment-button">
+              <img
+                class="m-attachmentButton__img"
+                [class.m-attachmentButton__img--selected]="attachment.hasFile()"
+                [src]="minds.cdn_assets_url + 'assets/icons/upload.svg'"
+              />
               <input
                 type="file"
                 id="file"
@@ -291,24 +308,6 @@
                 (change)="uploadAttachment(fileInput)"
               />
             </div>
-
-            <a
-              class="m-mature-button"
-              [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
-              (click)="attachment.toggleMature()"
-              title="Mature content"
-              i18n-title="@@M__COMMON__MATURE_CONTENT"
-            >
-              <i class="material-icons">explicit</i>
-            </a>
-
-            <a
-              class="m-post-button"
-              (click)="applyAndSave(edit, $event)"
-              [ngClass]="{ 'm-button-disabled': !saveEnabled() }"
-            >
-              <i class="material-icons">send</i>
-            </a>
           </div>
         </div>
 
@@ -382,18 +381,20 @@
               (activityService.allowComment$ | async)
             "
             class="material-icons"
-            >reply</i
           >
-          <span *ngIf="comment.replies_count > 0"
-            >{{ comment.replies_count }} Replies</span
-          >
+            reply
+          </i>
+          <span *ngIf="comment.replies_count > 0">
+            {{ comment.replies_count }} Replies
+          </span>
           <span
             *ngIf="
               comment.replies_count <= 0 &&
               (activityService.allowComment$ | async)
             "
-            >Reply</span
           >
+            Reply
+          </span>
         </span>
       </div>
 
@@ -401,14 +402,16 @@
         [title]="comment.time_created * 1000 | date: 'medium'"
         class="m-commentToolbar__timestamp"
         *ngIf="commentAge$ | async as commentAge"
-        >{{ commentAge | friendlydatediff }}</span
       >
+        {{ commentAge | friendlydatediff }}
+      </span>
       <span
         *ngIf="comment.edited"
         class="m-edited-text"
         i18n="@@M__COMMON__EDITED"
-        >edited</span
       >
+        edited
+      </span>
     </div>
 
     <m-comments__thread

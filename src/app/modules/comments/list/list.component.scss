@@ -259,12 +259,12 @@ m-comments__tree,
   }
 
   .m-comments-composer .mdl-card__actions {
-    top: 6px;
+    top: 9px;
     right: $minds-padding;
   }
 
   .minds-editable-container .mdl-card__actions {
-    top: $minds-padding + 44px;
+    top: $minds-padding + 54px;
     right: $minds-padding + 14px;
 
     @media screen and (max-width: $min-tablet) {
@@ -276,8 +276,10 @@ m-comments__tree,
   .minds-editable-container .mdl-card__actions {
     position: absolute;
     z-index: 250;
-    width: auto;
-    display: inline-block;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     padding: 0;
     text-align: right;
 
@@ -289,14 +291,14 @@ m-comments__tree,
       overflow: hidden;
       cursor: pointer;
 
-      i {
+      img {
         cursor: pointer;
       }
 
       &.m-button-disabled {
         cursor: default;
 
-        i {
+        img {
           cursor: default;
           opacity: 0.65;
         }
@@ -320,7 +322,7 @@ m-comments__tree,
       overflow: hidden;
       cursor: pointer;
 
-      i {
+      img {
         cursor: pointer;
       }
 

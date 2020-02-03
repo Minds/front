@@ -10,6 +10,7 @@ import { Component, ElementRef, Input } from '@angular/core';
 })
 export class TooltipComponent {
   @Input() icon;
+  @Input() iconSrc;
   @Input() anchor: 'top' | 'bottom' | 'right' | 'left';
   @Input() iconClass;
   @Input() useParentPosition: boolean = false;

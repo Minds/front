@@ -602,7 +602,7 @@ m-overlay-modal {
         }
 
         .m-comment-attachment .item-image {
-          img,
+          img:not(.m-matureButton__img):not(.m-attachmentButton__img),
           minds-video {
             max-width: 50%;
           }

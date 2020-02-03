@@ -20,13 +20,17 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
       [ngClass]="{ selected: has() }"
       data-cy="data-minds-thumbs-down-button"
     >
-      <i class="material-icons">thumb_down</i>
+      <img
+        class="m-buttonsThumbsDown__icon"
+        [src]="minds.cdn_assets_url + 'assets/icons/downvote.svg'"
+      />
       <span
         class="minds-counter"
         *ngIf="object['thumbs:down:count'] > 0"
         data-cy="data-minds-thumbs-down-counter"
-        >{{ object['thumbs:down:count'] | number }}</span
       >
+        {{ object['thumbs:down:count'] | number }}
+      </span>
     </a>
   `,
   styles: [
@@ -41,6 +45,7 @@ export class ThumbsDownButton implements DoCheck {
   changesDetected: boolean = false;
   object;
   showModal: boolean = false;
+  minds = window.Minds;
 
   constructor(
     private cd: ChangeDetectorRef,

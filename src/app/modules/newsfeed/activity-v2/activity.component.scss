@@ -1,21 +1,23 @@
 minds-activity-v2.mdl-card,
 minds-activity-v2 {
   width: auto;
-  min-height: 720px !important;
-  max-height: 720px !important;
+  //min-height: 750px !important;
+  //max-height: 750px !important;
   margin-bottom: 16px;
   border-radius: 6px;
   overflow: visible;
   justify-content: space-around;
 
-  &.minds-activity-v2__allowOverflow {
-    max-height: none !important;
+  .m-activityv2__content {
+    min-height: 585px;
+    max-height: 585px;
 
-    .m-mature-message {
-      max-height: none !important;
-      //.m-mature-message-content {
-      //  max-height: none;
-      //}
+    &.m-activityv2__content--allowOverflow {
+      max-height: none;
+
+      .m-mature-message {
+        max-height: none !important;
+      }
     }
   }
 
@@ -70,9 +72,9 @@ minds-activity-v2 {
     position: relative;
     //flex-shrink: 0;
     //flex-grow: 0;
-    min-height: 72px;
-    height: 72px;
-    max-height: 72px;
+    min-height: 70px;
+    height: 70px;
+    max-height: 70px;
 
     .avatar {
       img {
@@ -127,7 +129,7 @@ minds-activity-v2 {
   }
 
   .m-activity__actionButtons {
-    height: 60px;
+    height: 52px;
     border-top: 1px solid #eee;
     padding: 23px 0;
 
@@ -157,6 +159,12 @@ minds-activity-v2 {
           }
         }
 
+        img {
+          width: 19px;
+          height: 16px;
+          vertical-align: middle;
+        }
+
         i,
         span {
           vertical-align: middle;
@@ -173,11 +181,21 @@ minds-activity-v2 {
   }
 
   .m-activity__pay {
+    flex-direction: row;
     justify-self: flex-end;
     align-self: center;
 
     margin-left: auto;
     margin-right: 22px;
+
+    span {
+      font-size: 14px;
+      font-weight: bold;
+      color: #7d7d82;
+      letter-spacing: 0;
+      text-align: right;
+      margin-right: 8px;
+    }
 
     img {
       width: 21px;
@@ -192,7 +210,7 @@ minds-activity-v2 {
     //background-color: lightblue;
 
     .m-commentPoster__top {
-      min-height: 78px;
+      max-height: 112px;
 
       m-comment__poster {
         minds-textarea {

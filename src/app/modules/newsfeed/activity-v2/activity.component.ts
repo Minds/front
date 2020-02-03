@@ -81,7 +81,6 @@ export class MindsActivityV2 implements OnInit {
   @HostBinding('hidden')
   isHidden: boolean = false;
 
-  @HostBinding('class.minds-activity-v2__allowOverflow')
   allowOverflow: boolean = false;
 
   @ViewChild(ReadMoreDirective, { static: false }) readMore: ReadMoreDirective;

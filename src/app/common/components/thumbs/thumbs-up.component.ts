@@ -21,13 +21,17 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
       [ngClass]="{ selected: has() }"
       data-cy="data-minds-thumbs-up-button"
     >
-      <i class="material-icons">thumb_up</i>
+      <img
+        class="m-buttonsThumbsUp__icon"
+        [src]="minds.cdn_assets_url + 'assets/icons/upvote.svg'"
+      />
       <span
         class="minds-counter"
         *ngIf="object['thumbs:up:count'] > 0"
         data-cy="data-minds-thumbs-up-counter"
-        >{{ object['thumbs:up:count'] | number }}</span
       >
+        {{ object['thumbs:up:count'] | number }}
+      </span>
     </a>
   `,
   styles: [
@@ -46,6 +50,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     'thumbs:up:user_guids': [],
   };
   showModal: boolean = false;
+  minds = window.Minds;
 
   constructor(
     public session: Session,

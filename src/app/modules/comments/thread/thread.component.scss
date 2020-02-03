@@ -23,13 +23,14 @@
 }
 
 a.m-commentsThread__seeComments {
-  padding-left: 64px;
+  display: block;
+  text-align: center;
   text-decoration: underline;
   font-size: 14px;
   font-weight: normal;
   line-height: 19px;
 
-  margin-bottom: 15px;
+  margin: 15px 0;
 
   @include m-theme() {
     color: themed($m-blue);

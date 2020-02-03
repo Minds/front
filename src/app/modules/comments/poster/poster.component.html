@@ -55,12 +55,27 @@
       <div class="mdl-card__actions">
         <!-- Overflow -->
         <div class="m-comments-composer--overflow"></div>
-        <!-- Attachements -->
-        <div
-          class="attachment-button"
-          [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
+
+        <a
+          class="m-mature-button"
+          (click)="attachment.toggleMature()"
+          title="Mature content"
+          i18n-title="@@M__COMMON__MATURE_CONTENT"
         >
-          <i class="material-icons">attachment</i>
+          <img
+            class="m-matureButton__img"
+            [class.m-matureButton__img--selected]="attachment.isMature()"
+            [src]="minds.cdn_assets_url + 'assets/icons/explicit.svg'"
+          />
+        </a>
+
+        <!-- Attachments -->
+        <div class="attachment-button">
+          <img
+            class="m-attachmentButton__img"
+            [class.m-attachmentButton__img--selected]="attachment.hasFile()"
+            [src]="minds.cdn_assets_url + 'assets/icons/upload.svg'"
+          />
           <input
             type="file"
             id="file"
@@ -69,16 +84,6 @@
             (change)="uploadAttachment(file, $event)"
           />
         </div>
-
-        <a
-          class="m-mature-button"
-          [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
-          (click)="attachment.toggleMature()"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-        >
-          <i class="material-icons">explicit</i>
-        </a>
 
         <a
           class="m-post-button"

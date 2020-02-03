@@ -27,6 +27,7 @@ export class ChannelBadgesComponent {
     'admin',
     'onchain_booster',
   ];
+  minds = window.Minds;
 
   constructor(
     public session: Session,

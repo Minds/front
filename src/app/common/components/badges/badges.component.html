@@ -11,7 +11,7 @@
 
   <li *ngIf="user.is_admin && badges.indexOf('admin') > -1">
     <m-tooltip
-      icon="verified_user"
+      [iconSrc]="minds.cdn_assets_url + 'assets/icons/verified.svg'"
       [iconClass]="{ admin__badge: user.is_admin }"
       i18n="Admin as user status@@COMMON__BADGES__ADMIN"
     >
@@ -21,7 +21,7 @@
 
   <li *ngIf="shouldShowVerifiedBadge()" (click)="verify($event)">
     <m-tooltip
-      icon="verified_user"
+      [iconSrc]="minds.cdn_assets_url + 'assets/icons/verified.svg'"
       [iconClass]="{ selected: user.verified }"
       i18n="Verified as user status@@COMMON__BADGES__VERIFIED"
     >

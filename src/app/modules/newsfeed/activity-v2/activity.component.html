@@ -1,510 +1,526 @@
-<!-- Owner block -->
 <div
-  class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block"
-  [class.m-owner-block--remind]="activity.remind_object"
-  *ngIf="activity.ownerObj && activity.ownerObj.username"
+  class="m-activityv2__content"
+  [class.m-activityv2__content--allowOverflow]="allowOverflow"
 >
-  <i class="material-icons selected" *ngIf="activity.remind_object">repeat</i>
-
-  <div class="avatar" [hovercard]="activity.ownerObj.guid">
-    <a [routerLink]="['/', activity.ownerObj.username]">
-      <img
-        [src]="
-          minds.cdn_url +
-          'icon/' +
-          activity.ownerObj.guid +
-          '/medium/' +
-          getOwnerIconTime()
-        "
-        class="mdl-shadow--2dp"
-      />
-    </a>
-  </div>
-
-  <div class="body">
-    <a [routerLink]="['/', activity.ownerObj.username]">
-      <strong title="{{ activity.ownerObj.name }}">{{
-        activity.ownerObj.name
-      }}</strong>
-      <m-channel--badges
-        class="m-channel--badges-activity"
-        [user]="activity.ownerObj"
-        badges="[ 'admin', 'verified' ]"
-      ></m-channel--badges>
-    </a>
-    <a
-      *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
-      [routerLink]="['/groups/profile', activity.containerObj.guid]"
-      class="mdl-color-text--blue-grey-300"
-    >
-      <strong>({{ activity.containerObj.name }})</strong>
-    </a>
-    <a
-      [routerLink]="['/newsfeed', activity.guid]"
-      class="permalink"
-      *ngIf="activity.guid && !activity.remind_object"
-    >
-      <span>{{ activity.time_created * 1000 | date: 'medium' }}</span>
-      <span
-        *ngIf="activity.edited"
-        class="m-edited-text"
-        i18n="@@M__COMMON__EDITED"
-      >
-        edited
-      </span>
-    </a>
-    <a
-      [routerLink]="['/newsfeed/', activity.entity_guid]"
-      class="permalink"
-      *ngIf="!activity.guid && activity.entity_guid && !activity.remind_object"
-    >
-      <span>{{ activity.time_created * 1000 | date: 'medium' }}</span>
-      <span
-        *ngIf="activity.edited"
-        class="m-edited-text"
-        i18n="@@M__COMMON__EDITED"
-      >
-        edited
-      </span>
-      <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
-        <i class="material-icons">trending_up</i>
-        <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
-      </div>
-      <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
-        <i class="material-icons unlisted">visibility_off</i>
-        <a i18n>Unlisted</a>
-      </div>
-    </a>
-  </div>
-</div>
-
-<m-wire--lock-screen
-  [(entity)]="activity"
-  *ngIf="activity.paywall && !editing"
-></m-wire--lock-screen>
-
-<ng-container *ngIf="!activity.paywall || editing">
-  <!-- Rich content -->
+  <!-- Owner block -->
   <div
-    class="m-rich-embed"
-    *ngIf="activity.perma_url && activity.title"
-    [ngClass]="{
-      'm-mature-content': attachment.shouldBeBlurred(activity),
-      'm-mature-content-shown': attachment.isForcefullyShown(activity)
-    }"
+    class="mdl-card__supporting-text mdl-color-text--grey-600 m-owner-block"
+    [class.m-owner-block--remind]="activity.remind_object"
+    *ngIf="activity.ownerObj && activity.ownerObj.username"
   >
-    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
-      <span class="m-mature-overlay-note">
-        <i
-          class="material-icons"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-        >
-          explicit
-        </i>
-        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
-      </span>
+    <i class="material-icons selected" *ngIf="activity.remind_object">repeat</i>
+
+    <div class="avatar" [hovercard]="activity.ownerObj.guid">
+      <a [routerLink]="['/', activity.ownerObj.username]">
+        <img
+          [src]="
+            minds.cdn_url +
+            'icon/' +
+            activity.ownerObj.guid +
+            '/medium/' +
+            getOwnerIconTime()
+          "
+          class="mdl-shadow--2dp"
+        />
+      </a>
     </div>
-    <minds-rich-embed
-      (mediaModalRequested)="openModal()"
-      [src]="activity"
-      [maxheight]="480"
-    >
-    </minds-rich-embed>
+
+    <div class="body">
+      <a [routerLink]="['/', activity.ownerObj.username]">
+        <strong title="{{ activity.ownerObj.name }}">{{
+          activity.ownerObj.name
+        }}</strong>
+        <m-channel--badges
+          class="m-channel--badges-activity"
+          [user]="activity.ownerObj"
+          badges="[ 'admin', 'verified' ]"
+        ></m-channel--badges>
+      </a>
+      <a
+        *ngIf="activity.containerObj && activity.containerObj.type == 'group'"
+        [routerLink]="['/groups/profile', activity.containerObj.guid]"
+        class="mdl-color-text--blue-grey-300"
+      >
+        <strong>({{ activity.containerObj.name }})</strong>
+      </a>
+      <a
+        [routerLink]="['/newsfeed', activity.guid]"
+        class="permalink"
+        *ngIf="activity.guid && !activity.remind_object"
+      >
+        <span>{{ activity.time_created * 1000 | date: 'medium' }}</span>
+        <span
+          *ngIf="activity.edited"
+          class="m-edited-text"
+          i18n="@@M__COMMON__EDITED"
+        >
+          edited
+        </span>
+      </a>
+      <a
+        [routerLink]="['/newsfeed/', activity.entity_guid]"
+        class="permalink"
+        *ngIf="
+          !activity.guid && activity.entity_guid && !activity.remind_object
+        "
+      >
+        <span>{{ activity.time_created * 1000 | date: 'medium' }}</span>
+        <span
+          *ngIf="activity.edited"
+          class="m-edited-text"
+          i18n="@@M__COMMON__EDITED"
+        >
+          edited
+        </span>
+        <div class="mdl-card__supporting-text is-boosted" *ngIf="boosted">
+          <i class="material-icons">trending_up</i>
+          <a i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL">Boosted</a>
+        </div>
+        <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
+          <i class="material-icons unlisted">visibility_off</i>
+          <a i18n>Unlisted</a>
+        </div>
+      </a>
+    </div>
   </div>
 
-  <div
-    class="mdl-card__supporting-text message"
-    [hidden]="!activity.title || activity.perma_url || editing"
-    [innerHtml]="activity.title | tags"
-  ></div>
-  <!-- Translation -->
-  <div
-    *ngIf="
-      translate &&
-      translate.translation &&
-      translate.translation.translated &&
-      translate.translation.title
-    "
-    class="m-translation-wrapper"
-  >
+  <m-wire--lock-screen
+    [(entity)]="activity"
+    *ngIf="activity.paywall && !editing"
+  ></m-wire--lock-screen>
+
+  <ng-container *ngIf="!activity.paywall || editing">
+    <!-- Rich content -->
     <div
-      class="mdl-card__supporting-text message"
-      [hidden]="!translate.translation.title"
-    >
-      <span [innerHtml]="translate.translation.title | tags"></span>
-    </div>
-  </div>
-  <!-- End translation -->
-
-  <div
-    class="minds-editable-container"
-    *ngIf="editing && activity.custom_type && activity.title"
-  >
-    <!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
-    <textarea
-      class="mdl-card__supporting-text message"
-      name="title"
-      [ngModel]="activity.title"
-      #titleEdit
-      [autoGrow]
-    ></textarea>
-    <m-wire-threshold-input
-      [(threshold)]="activity.wire_threshold"
-      [(enabled)]="activity.paywall"
-    ></m-wire-threshold-input>
-    <button
-      class="mdl-button mdl-button--raised mdl-color--blue-grey-100"
-      (click)="titleEdit.value = activity.title; editing = false"
-      i18n="@@M__ACTION__CANCEL"
-    >
-      Cancel
-    </button>
-    <button
-      class="mdl-button mdl-button--colored mdl-button--raised"
-      (click)="activity.title = titleEdit.value; save()"
-      i18n="@@M__ACTION__SAVE"
-    >
-      Save
-    </button>
-  </div>
-
-  <!-- Video -->
-  <!-- Video -->
-  <div
-    class="item item-image item-image-video m-activity--video"
-    [ngClass]="{
-      'm-mature-content': attachment.shouldBeBlurred(activity),
-      'm-mature-content-shown': attachment.isForcefullyShown(activity)
-    }"
-    *ngIf="activity.custom_type == 'video'"
-  >
-    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
-      <span class="m-mature-overlay-note">
-        <i
-          class="material-icons"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
-        >
-        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
-      </span>
-    </div>
-
-    <m-videoPlayer
-      [guid]="activity.entity_guid"
-      [shouldPlayInModal]="true"
-      [autoplay]="false"
-      (mediaModalRequested)="openModal()"
-    ></m-videoPlayer>
-  </div>
-
-  <!-- Images -->
-  <div
-    class="item item-image allow-select m-activity--image"
-    [ngClass]="{
-      'm-mature-content': attachment.shouldBeBlurred(activity),
-      'm-mature-content-shown': attachment.isForcefullyShown(activity)
-    }"
-    *ngIf="activity.thumbnail_src && !activity.perma_url"
-  >
-    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
-      <span class="m-mature-overlay-note">
-        <i
-          class="material-icons"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-        >
-          explicit
-        </i>
-        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
-      </span>
-    </div>
-
-    <a class="m-activity--image-link">
-      <img
-        [src]="activity.thumbnail_src"
-        (error)="activity.thumbnail_src = null"
-      />
-    </a>
-  </div>
-
-  <!-- Custom type:: batch -->
-  <div
-    class="item item-image allow-select"
-    [ngClass]="{
-      'm-mature-content': attachment.shouldBeBlurred(activity),
-      'm-mature-content-shown': attachment.isForcefullyShown(activity)
-    }"
-    *ngIf="activity.custom_type == 'batch'"
-  >
-    <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
-      <span class="m-mature-overlay-note">
-        <i
-          class="material-icons"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-        >
-          explicit
-        </i>
-        <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
-      </span>
-    </div>
-    <a class="m-activity--image-link">
-      <img
-        [src]="activity.custom_data[0].src"
-        style="width:100%"
-        (error)="
-          activity.custom_data[0].src =
-            minds.cdn_assets_url + 'assets/logos/placeholder-bulb.jpg'
-        "
-        *ngIf="activity.custom_data"
-        (click)="clickedImage()"
-        #batchImage
-      />
-    </a>
-  </div>
-
-  <div class="m-activity__spacer"></div>
-
-  <!-- Messages -->
-
-  <div
-    m-read-more
-    (resized)="refitText()"
-    class="mdl-card__supporting-text message m-mature-message"
-    [class.m-activity--message-remind]="activity.remind_object"
-    [hidden]="!activity.message || editing"
-    #container
-  >
-    <a
-      class="m-mature-text-toggle"
-      (click)="toggleMatureVisibility()"
-      *ngIf="
-        attachment.shouldBeBlurred(activity) ||
-        attachment.isForcefullyShown(activity)
-      "
+      class="m-rich-embed"
+      *ngIf="activity.perma_url && activity.title"
       [ngClass]="{
-        'mdl-color-text--red-500': attachment.isForcefullyShown(activity)
+        'm-mature-content': attachment.shouldBeBlurred(activity),
+        'm-mature-content-shown': attachment.isForcefullyShown(activity)
       }"
     >
-      <i class="material-icons m-material-icons-inline">explicit</i>
-    </a>
-    <!--       [innerHtml]="activity.message | tags"
-     -->
-    <!--      [modelToWatch]="activity.message"-->
-    <span
-      [fittext]="true"
-      [minFontSize]="16"
-      [maxFontSize]="20"
-      [container]="container"
-      [activateOnResize]="true"
-      class="m-mature-message-content"
-      [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
-      (click)="
-        activity.mature && !activity.mature_visibility
-          ? toggleMatureVisibility()
-          : null
+      <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
+        <span class="m-mature-overlay-note">
+          <i
+            class="material-icons"
+            title="Mature content"
+            i18n-title="@@M__COMMON__MATURE_CONTENT"
+          >
+            explicit
+          </i>
+          <span i18n="@@M__COMMON__CONFIRM_18"
+            >Click to confirm you are 18+</span
+          >
+        </span>
+      </div>
+      <minds-rich-embed
+        (mediaModalRequested)="openModal()"
+        [src]="activity"
+        [maxheight]="480"
+      >
+      </minds-rich-embed>
+    </div>
+
+    <div
+      class="mdl-card__supporting-text message"
+      [hidden]="!activity.title || activity.perma_url || editing"
+      [innerHtml]="activity.title | tags"
+    ></div>
+    <!-- Translation -->
+    <div
+      *ngIf="
+        translate &&
+        translate.translation &&
+        translate.translation.translated &&
+        translate.translation.title
       "
-      [innerHtml]="activity.message | tags"
-      [modelToWatch]="activity.message"
+      class="m-translation-wrapper"
     >
-      <!--      asd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd-->
-      <!--      asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd-->
-      <!--      asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd-->
-      <!--      asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd-->
-      <!--      asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asd asd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asd-->
-      <!--      asd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd-->
-      <!--      asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd-->
-      <!--      asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd-->
-      <!--      asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd-->
-      <!--      asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
-      <!--      asdasd asd asd asd asd asd-->
-    </span>
-    <m-read-more--button (click)="toggleOverflow()"></m-read-more--button>
-  </div>
+      <div
+        class="mdl-card__supporting-text message"
+        [hidden]="!translate.translation.title"
+      >
+        <span [innerHtml]="translate.translation.title | tags"></span>
+      </div>
+    </div>
+    <!-- End translation -->
 
-  <m-translate
-    [open]="translateToggle"
-    [entity]="activity"
-    [translateEvent]="translateEvent"
-    (onTranslateInit)="propagateTranslation($event)"
-    (onTranslate)="translateToggle = false"
-    (onTranslateError)="translateToggle = false"
-    #translate
-  ></m-translate>
-
-  <div class="m-activity__spacer"></div>
-
-  <div
-    class="minds-editable-container"
-    *ngIf="
-      editing &&
-      (!activity.custom_type || (activity.custom_type && !activity.title))
-    "
-  >
-    <ng-template
-      #itemTemplate
-      let-choice="choice"
-      let-selectChoice="selectChoice"
+    <div
+      class="minds-editable-container"
+      *ngIf="editing && activity.custom_type && activity.title"
     >
-      <m-post-autocomplete-item-renderer
-        [choice]="choice"
-        [selectChoice]="selectChoice"
-      ></m-post-autocomplete-item-renderer>
-    </ng-template>
-
-    <m-text-input--autocomplete-container>
-      <!-- Please note the intentional single way binding for ngModel, we want to be able to cancel our changes -->
+      <!-- Please not the intentional single way binding for ngModel, we want to be able to cancel our changes -->
       <textarea
         class="mdl-card__supporting-text message"
-        name="message"
-        [ngModel]="activity.message"
-        #messageEdit
+        name="title"
+        [ngModel]="activity.title"
+        #titleEdit
         [autoGrow]
-        mTextInputAutocomplete
-        [findChoices]="suggestions.findSuggestions"
-        [getChoiceLabel]="suggestions.getChoiceLabel"
-        [itemTemplate]="itemTemplate"
-        [triggerCharacters]="['#', '@']"
       ></textarea>
-    </m-text-input--autocomplete-container>
-
-    <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
-      <m-nsfw-selector
-        service="editing"
-        [selected]="activity.nsfw"
-        [locked]="activity.ownerObj.nsfw_lock"
-        (selectedChange)="onNSWFSelections($event)"
+      <m-wire-threshold-input
+        [(threshold)]="activity.wire_threshold"
+        [(enabled)]="activity.paywall"
+      ></m-wire-threshold-input>
+      <button
+        class="mdl-button mdl-button--raised mdl-color--blue-grey-100"
+        (click)="titleEdit.value = activity.title; editing = false"
+        i18n="@@M__ACTION__CANCEL"
       >
-      </m-nsfw-selector>
-    </ng-container>
+        Cancel
+      </button>
+      <button
+        class="mdl-button mdl-button--colored mdl-button--raised"
+        (click)="activity.title = titleEdit.value; save()"
+        i18n="@@M__ACTION__SAVE"
+      >
+        Save
+      </button>
+    </div>
 
-    <m-wire-threshold-input
-      [(threshold)]="activity.wire_threshold"
-      [(enabled)]="activity.paywall"
-    ></m-wire-threshold-input>
-    <m-poster-date-selector
-      *ngIf="checkCreated()"
-      [date]="getTimeCreated()"
-      (dateChange)="onTimeCreatedChange($event)"
-      (onError)="posterDateSelectorError($event)"
-    ></m-poster-date-selector>
-    <button
-      class="mdl-button mdl-button--raised mdl-color--blue-grey-100"
-      (click)="messageEdit.value = activity.message; editing = false"
-      i18n="@@M__ACTION__CANCEL"
+    <!-- Video -->
+    <!-- Video -->
+    <div
+      class="item item-image item-image-video m-activity--video"
+      [ngClass]="{
+        'm-mature-content': attachment.shouldBeBlurred(activity),
+        'm-mature-content-shown': attachment.isForcefullyShown(activity)
+      }"
+      *ngIf="activity.custom_type == 'video'"
     >
-      Cancel
-    </button>
-    <button
-      class="mdl-button mdl-button--colored mdl-button--raised"
-      (click)="activity.message = messageEdit.value; save()"
-      i18n="@@M__ACTION__SAVE"
-    >
-      Save
-    </button>
-  </div>
+      <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
+        <span class="m-mature-overlay-note">
+          <i
+            class="material-icons"
+            title="Mature content"
+            i18n-title="@@M__COMMON__MATURE_CONTENT"
+            >explicit</i
+          >
+          <span i18n="@@M__COMMON__CONFIRM_18"
+            >Click to confirm you are 18+</span
+          >
+        </span>
+      </div>
 
-  <!-- Reminds -->
-  <div *ngIf="activity.remind_object">
-    <ng-container
+      <m-videoPlayer
+        [guid]="activity.entity_guid"
+        [shouldPlayInModal]="true"
+        [autoplay]="false"
+        (mediaModalRequested)="openModal()"
+      ></m-videoPlayer>
+    </div>
+
+    <!-- Images -->
+    <div
+      class="item item-image allow-select m-activity--image"
+      [ngClass]="{
+        'm-mature-content': attachment.shouldBeBlurred(activity),
+        'm-mature-content-shown': attachment.isForcefullyShown(activity)
+      }"
+      *ngIf="activity.thumbnail_src && !activity.perma_url"
+    >
+      <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
+        <span class="m-mature-overlay-note">
+          <i
+            class="material-icons"
+            title="Mature content"
+            i18n-title="@@M__COMMON__MATURE_CONTENT"
+          >
+            explicit
+          </i>
+          <span i18n="@@M__COMMON__CONFIRM_18"
+            >Click to confirm you are 18+</span
+          >
+        </span>
+      </div>
+
+      <a class="m-activity--image-link">
+        <img
+          [src]="activity.thumbnail_src"
+          (error)="activity.thumbnail_src = null"
+        />
+      </a>
+    </div>
+
+    <!-- Custom type:: batch -->
+    <div
+      class="item item-image allow-select"
+      [ngClass]="{
+        'm-mature-content': attachment.shouldBeBlurred(activity),
+        'm-mature-content-shown': attachment.isForcefullyShown(activity)
+      }"
+      *ngIf="activity.custom_type == 'batch'"
+    >
+      <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
+        <span class="m-mature-overlay-note">
+          <i
+            class="material-icons"
+            title="Mature content"
+            i18n-title="@@M__COMMON__MATURE_CONTENT"
+          >
+            explicit
+          </i>
+          <span i18n="@@M__COMMON__CONFIRM_18"
+            >Click to confirm you are 18+</span
+          >
+        </span>
+      </div>
+      <a class="m-activity--image-link">
+        <img
+          [src]="activity.custom_data[0].src"
+          style="width:100%"
+          (error)="
+            activity.custom_data[0].src =
+              minds.cdn_assets_url + 'assets/logos/placeholder-bulb.jpg'
+          "
+          *ngIf="activity.custom_data"
+          (click)="clickedImage()"
+          #batchImage
+        />
+      </a>
+    </div>
+
+    <div class="m-activity__spacer"></div>
+
+    <!-- Messages -->
+
+    <div
+      m-read-more
+      [maxHeightAllowed]="260"
+      (resized)="refitText()"
+      class="mdl-card__supporting-text message m-mature-message"
+      [class.m-activity--message-remind]="activity.remind_object"
+      [hidden]="!activity.message || editing"
+      #container
+    >
+      <a
+        class="m-mature-text-toggle"
+        (click)="toggleMatureVisibility()"
+        *ngIf="
+          attachment.shouldBeBlurred(activity) ||
+          attachment.isForcefullyShown(activity)
+        "
+        [ngClass]="{
+          'mdl-color-text--red-500': attachment.isForcefullyShown(activity)
+        }"
+      >
+        <i class="material-icons m-material-icons-inline">explicit</i>
+      </a>
+      <!--       [innerHtml]="activity.message | tags"
+       -->
+      <!--      [modelToWatch]="activity.message"-->
+      <span
+        [fittext]="true"
+        [minFontSize]="16"
+        [maxFontSize]="20"
+        [container]="container"
+        [activateOnResize]="true"
+        class="m-mature-message-content"
+        [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
+        (click)="
+          activity.mature && !activity.mature_visibility
+            ? toggleMatureVisibility()
+            : null
+        "
+        [innerHtml]="activity.message | tags"
+        [modelToWatch]="activity.message"
+      >
+        <!--      asd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd-->
+        <!--      asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd-->
+        <!--      asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd-->
+        <!--      asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd-->
+        <!--      asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asd asd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asd-->
+        <!--      asd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd-->
+        <!--      asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd-->
+        <!--      asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd-->
+        <!--      asd asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd-->
+        <!--      asd asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asdasd asd asd asd asd asdasd asd asd asd asd-->
+        <!--      asdasd asd asd asd asd asd-->
+      </span>
+      <m-read-more--button (click)="toggleOverflow()"></m-read-more--button>
+    </div>
+
+    <m-translate
+      [open]="translateToggle"
+      [entity]="activity"
+      [translateEvent]="translateEvent"
+      (onTranslateInit)="propagateTranslation($event)"
+      (onTranslate)="translateToggle = false"
+      (onTranslateError)="translateToggle = false"
+      #translate
+    ></m-translate>
+
+    <div class="m-activity__spacer"></div>
+
+    <div
+      class="minds-editable-container"
       *ngIf="
-        !isOwnerBlocked(activity.remind_object);
-        else blockedRemindTemplate
+        editing &&
+        (!activity.custom_type || (activity.custom_type && !activity.title))
       "
     >
-      <minds-remind
-        [object]="activity.remind_object"
-        [events]="childEventsEmitter"
-        [boosted]="activity.boosted"
-        (matureVisibilityChange)="onRemindMatureVisibilityChange()"
-        (videoMetadataLoaded)="setVideoDimensions($event)"
-      ></minds-remind>
-    </ng-container>
-    <ng-template #blockedRemindTemplate>
-      <div class="m-activity__blockedRemind">
-        <div class="m-activityBlockedRemind__description" i18n>
-          This remind is not available because you blocked
-          <a
-            target="_blank"
-            [routerLink]="['/', activity.remind_object.ownerObj.username]"
-            >@{{ activity.remind_object.ownerObj.username }}</a
-          >.
+      <ng-template
+        #itemTemplate
+        let-choice="choice"
+        let-selectChoice="selectChoice"
+      >
+        <m-post-autocomplete-item-renderer
+          [choice]="choice"
+          [selectChoice]="selectChoice"
+        ></m-post-autocomplete-item-renderer>
+      </ng-template>
+
+      <m-text-input--autocomplete-container>
+        <!-- Please note the intentional single way binding for ngModel, we want to be able to cancel our changes -->
+        <textarea
+          class="mdl-card__supporting-text message"
+          name="message"
+          [ngModel]="activity.message"
+          #messageEdit
+          [autoGrow]
+          mTextInputAutocomplete
+          [findChoices]="suggestions.findSuggestions"
+          [getChoiceLabel]="suggestions.getChoiceLabel"
+          [itemTemplate]="itemTemplate"
+          [triggerCharacters]="['#', '@']"
+        ></textarea>
+      </m-text-input--autocomplete-container>
+
+      <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
+        <m-nsfw-selector
+          service="editing"
+          [selected]="activity.nsfw"
+          [locked]="activity.ownerObj.nsfw_lock"
+          (selectedChange)="onNSWFSelections($event)"
+        >
+        </m-nsfw-selector>
+      </ng-container>
+
+      <m-wire-threshold-input
+        [(threshold)]="activity.wire_threshold"
+        [(enabled)]="activity.paywall"
+      ></m-wire-threshold-input>
+      <m-poster-date-selector
+        *ngIf="checkCreated()"
+        [date]="getTimeCreated()"
+        (dateChange)="onTimeCreatedChange($event)"
+        (onError)="posterDateSelectorError($event)"
+      ></m-poster-date-selector>
+      <button
+        class="mdl-button mdl-button--raised mdl-color--blue-grey-100"
+        (click)="messageEdit.value = activity.message; editing = false"
+        i18n="@@M__ACTION__CANCEL"
+      >
+        Cancel
+      </button>
+      <button
+        class="mdl-button mdl-button--colored mdl-button--raised"
+        (click)="activity.message = messageEdit.value; save()"
+        i18n="@@M__ACTION__SAVE"
+      >
+        Save
+      </button>
+    </div>
+
+    <!-- Reminds -->
+    <div *ngIf="activity.remind_object">
+      <ng-container
+        *ngIf="
+          !isOwnerBlocked(activity.remind_object);
+          else blockedRemindTemplate
+        "
+      >
+        <minds-remind
+          [object]="activity.remind_object"
+          [events]="childEventsEmitter"
+          [boosted]="activity.boosted"
+          (matureVisibilityChange)="onRemindMatureVisibilityChange()"
+          (videoMetadataLoaded)="setVideoDimensions($event)"
+        ></minds-remind>
+      </ng-container>
+      <ng-template #blockedRemindTemplate>
+        <div class="m-activity__blockedRemind">
+          <div class="m-activityBlockedRemind__description" i18n>
+            This remind is not available because you blocked
+            <a
+              target="_blank"
+              [routerLink]="['/', activity.remind_object.ownerObj.username]"
+              >@{{ activity.remind_object.ownerObj.username }}</a
+            >.
+          </div>
         </div>
-      </div>
-    </ng-template>
-  </div>
-</ng-container>
+      </ng-template>
+    </div>
+  </ng-container>
 
-<ng-content select="[bottom-content]"></ng-content>
+  <ng-content select="[bottom-content]"></ng-content>
 
-<!-- Action buttons -->
-<!--<div class="tabs" *ngIf="!hideTabs && !isPending(activity)">-->
-<!--  <minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>-->
-<!--  <minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>-->
-<!--  <m-wire-button-->
-<!--    *ngIf="session.getLoggedInUser().guid != activity.owner_guid"-->
-<!--    [object]="activity"-->
-<!--    (done)="wireSubmitted($event)"-->
-<!--  ></m-wire-button>-->
-<!--  <button-->
-<!--    class="m-btn m-btn&#45;&#45;action m-btn&#45;&#45;slim minds-boost-button"-->
-<!--    *ngIf="-->
-<!--      session.getLoggedInUser().guid == activity.owner_guid &&-->
-<!--      !isScheduled(activity.time_created)-->
-<!--    "-->
-<!--    id="boost-actions"-->
-<!--    (click)="showBoost()"-->
-<!--  >-->
-<!--    <span i18n="verb|@@M__ACTION__BOOST">Boost</span>-->
-<!--  </button>-->
-<!--  <minds-button-comment-->
-<!--    [object]="activity"-->
-<!--    (click)="openComments()"-->
-<!--  ></minds-button-comment>-->
-<!--  <minds-button-remind [object]="activity"></minds-button-remind>-->
-<!--</div>-->
-<!-- action bar and comments -->
+  <!-- Action buttons -->
+  <!--<div class="tabs" *ngIf="!hideTabs && !isPending(activity)">-->
+  <!--  <minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>-->
+  <!--  <minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>-->
+  <!--  <m-wire-button-->
+  <!--    *ngIf="session.getLoggedInUser().guid != activity.owner_guid"-->
+  <!--    [object]="activity"-->
+  <!--    (done)="wireSubmitted($event)"-->
+  <!--  ></m-wire-button>-->
+  <!--  <button-->
+  <!--    class="m-btn m-btn&#45;&#45;action m-btn&#45;&#45;slim minds-boost-button"-->
+  <!--    *ngIf="-->
+  <!--      session.getLoggedInUser().guid == activity.owner_guid &&-->
+  <!--      !isScheduled(activity.time_created)-->
+  <!--    "-->
+  <!--    id="boost-actions"-->
+  <!--    (click)="showBoost()"-->
+  <!--  >-->
+  <!--    <span i18n="verb|@@M__ACTION__BOOST">Boost</span>-->
+  <!--  </button>-->
+  <!--  <minds-button-comment-->
+  <!--    [object]="activity"-->
+  <!--    (click)="openComments()"-->
+  <!--  ></minds-button-comment>-->
+  <!--  <minds-button-remind [object]="activity"></minds-button-remind>-->
+  <!--</div>-->
+  <!-- action bar and comments -->
+</div>
 <div class="m-activity__actionButtons">
   <minds-button-thumbs-up [object]="activity"></minds-button-thumbs-up>
   <minds-button-thumbs-down [object]="activity"></minds-button-thumbs-down>
@@ -514,8 +530,9 @@
     class="m-activity__pay"
     *ngIf="session.getLoggedInUser().guid != activity.owner_guid"
   >
+    <span i18n>Wire</span>
     <img
-      [src]="minds.cdn_assets_url + 'assets/icons/pay.png'"
+      [src]="minds.cdn_assets_url + 'assets/icons/wire.svg'"
       (click)="openWireModal()"
     />
   </div>
@@ -566,13 +583,6 @@
     *ngIf="showRatingToggle && session.isAdmin()"
     [(entity)]="activity"
   ></m-safe-toggle>
-  <button
-    class="mdl-button m-translate-button mdl-button--icon mdl-color-text--blue-grey-300"
-    *ngIf="isTranslatable"
-    (click)="translateToggle = true"
-  >
-    <i class="material-icons">public</i>
-  </button>
   <m-post-menu
     [icon]="'more_vert'"
     [entity]="activity"

@@ -11,7 +11,10 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <a (click)="remind()" [ngClass]="{ selected: object.reminded }">
-      <i class="material-icons">repeat</i>
+      <img
+        class="m-buttonsRemind__icon"
+        [src]="minds.cdn_assets_url + 'assets/icons/remind.svg'"
+      />
       <span class="minds-counter" *ngIf="object.reminds > 0">{{
         object.reminds | number
       }}</span>
@@ -32,6 +35,7 @@ export class RemindButton {
   showModal: boolean = false;
   message: string = '';
   remindOpen: boolean = false;
+  minds = window.Minds;
 
   constructor(
     public session: Session,

@@ -24,8 +24,19 @@
 .m-commentPoster__top {
   .m-comment--poster {
     padding: 0 12px 8px 12px;
+
     .minds-body {
       min-height: unset;
     }
   }
+}
+
+.m-matureButton__img--selected {
+  filter: invert(33%) sepia(25%) saturate(5343%) hue-rotate(342deg)
+    brightness(100%) contrast(92%);
+}
+
+.m-attachmentButton__img--selected {
+  filter: invert(65%) sepia(100%) saturate(429%) hue-rotate(355deg)
+    brightness(103%) contrast(102%);
 }

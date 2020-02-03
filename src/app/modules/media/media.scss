@@ -607,7 +607,7 @@ m-media--grid {
 }
 
 .m-comment__attachment {
-  img,
+  img:not(.m-matureButton__img):not(.m-attachmentButton__img),
   minds-video,
   m-video {
     max-width: 50%;
