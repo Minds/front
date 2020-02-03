@@ -17,6 +17,7 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import sidebarMenu from './sidebar-menu.default';
 import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-walletDashboard',

@@ -48,3 +48,30 @@ export function verticallyScrollToEnsureElementIsInView(
     }
   }
 }
+
+export function horizontallyScrollToEnsureElementIsInView(
+  container: HTMLElement,
+  element: HTMLElement,
+  smooth?: boolean // true if you want the scroll to be animated
+) {
+  // Determine container left and right
+  const cLeft = container.scrollLeft;
+  const cRight = cLeft + container.clientWidth;
+
+  // Determine element left and right
+  const eLeft = element.offsetLeft;
+  const eRight = eLeft + element.clientWidth;
+
+  // Check if out of view and scroll horizontally if it is
+  if (smooth) {
+    if (eLeft < cLeft || eRight > cRight) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  } else {
+    if (eLeft < cLeft) {
+      container.scrollLeft -= cLeft - eLeft;
+    } else if (eRight > cRight) {
+      container.scrollLeft += eRight - cRight;
+    }
+  }
+}
