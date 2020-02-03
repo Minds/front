@@ -153,12 +153,6 @@ minds-activity-v2 {
       padding: 0 22px;
 
       a {
-        &:not(.selected) {
-          @include m-theme() {
-            color: themed($m-grey-500);
-          }
-        }
-
         img {
           width: 19px;
           height: 16px;
@@ -210,8 +204,6 @@ minds-activity-v2 {
     //background-color: lightblue;
 
     .m-commentPoster__top {
-      max-height: 112px;
-
       m-comment__poster {
         minds-textarea {
           border-radius: 2px;
