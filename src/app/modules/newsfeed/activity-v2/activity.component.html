@@ -578,7 +578,10 @@
   #toggle
   *ngIf="!hideTabs"
 >
-  <minds-button-subscribe [user]="activity.ownerObj"></minds-button-subscribe>
+  <minds-button-subscribe
+    [user]="activity.ownerObj"
+    *ngIf="!activity.ownerObj.subscribed"
+  ></minds-button-subscribe>
   <m-safe-toggle
     *ngIf="showRatingToggle && session.isAdmin()"
     [(entity)]="activity"
