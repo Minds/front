@@ -85,6 +85,10 @@ $twitter: #03b3ee;
 $whatsapp: #25d366;
 $linkedin: #0071a1;
 
+$alert: #e03c20;
+$link: #1b85d6;
+$primary-button: #5dbac0;
+
 // Theme maps
 // e.g. m-grey-100 in light mode will become m-grey-900 in dark mode
 $themes: (
@@ -142,6 +146,15 @@ $themes: (
     m-twitter: $twitter,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
+    // 2020 Design Palette
+      m-primary-text: #4f4f50,
+    m-secondary-text: #7d7d82,
+    m-primary-bg: #f5f5f5,
+    m-secondary-bg: #ffffff,
+    m-primary-border: #dce2e4,
+    m-alert: $alert,
+    m-link: $link,
+    m-primary-button: $primary-button,
   ),
   dark: (
     m-grey-950: lighten($grey-50, $percent),
@@ -197,6 +210,15 @@ $themes: (
     m-twitter: $twitter,
     m-whatsapp: $whatsapp,
     m-linkedin: $linkedin,
+    // 2020 Design Palette
+      m-primary-text: #ffffff,
+    m-secondary-text: #aeb0b8,
+    m-primary-bg: #252e31,
+    m-secondary-bg: #202527,
+    m-primary-border: #404a4e,
+    m-alert: $alert,
+    m-link: $link,
+    m-primary-button: $primary-button,
   ),
 );
 
@@ -260,3 +282,12 @@ $m-messenger: 'm-messenger';
 $m-twitter: 'm-twitter';
 $m-whatsapp: 'm-whatsapp';
 $m-linkedin: 'm-linkedin';
+
+$m-primary-text: 'm-primary-text';
+$m-secondary-text: 'm-secondary-text';
+$m-primary-bg: 'm-primary-bg';
+$m-secondary-bg: 'm-secondary-bg';
+$m-primary-border: 'm-primary-border';
+$m-alert: 'm-alert';
+$m-link: 'm-link';
+$m-primary-button: 'm-primary-button';

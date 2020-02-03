@@ -7,11 +7,17 @@
     >Have 200 free views on us. Hit post to be boosted.</ng-container
   >
 </div>
-<minds-newsfeed-poster
-  (load)="prepend($event)"
-  [message]="message"
-  #poster
-></minds-newsfeed-poster>
+
+<ng-container *mIfFeature="'activity-composer'; else mindsNewsfeedPoster">
+  <m-composer></m-composer>
+</ng-container>
+<ng-template #mindsNewsfeedPoster>
+  <minds-newsfeed-poster
+    (load)="prepend($event)"
+    [message]="message"
+    #poster
+  ></minds-newsfeed-poster>
+</ng-template>
 
 <div class="minds-list">
   <minds-activity

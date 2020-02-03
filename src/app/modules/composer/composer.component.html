@@ -1,0 +1,44 @@
+<div class="m-composer" [class.m-composer--poppedOut]="poppedOut">
+  <div class="m-composer__container">
+    <div class="m-composer__titleBar">
+      <div class="m-composerTitleBar__title">
+        <label [for]="id">Compose</label>
+      </div>
+
+      <div class="m-composerTitleBar__menuButton">
+        <i class="material-icons">more_vert</i>
+      </div>
+    </div>
+
+    <div class="m-composer__textArea">
+      <textarea
+        placeholder="Speak your mind"
+        i18n-placeholder
+        [id]="id"
+        (focus)="popOut()"
+      ></textarea>
+    </div>
+
+    <div class="m-composer__toolBar">
+      <div>
+        Upload
+      </div>
+
+      <div>
+        NSFW
+      </div>
+
+      <div>
+        Monetize
+      </div>
+
+      <div>
+        Tag
+      </div>
+
+      <div>
+        Post
+      </div>
+    </div>
+  </div>
+</div>
