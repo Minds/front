@@ -10,7 +10,7 @@ export default class AsyncStatus {
 
   done(): this {
     if (this.ready) {
-      throw new Error('Already done');
+      //      throw new Error('Already done');
     }
 
     this.ready = true;
@@ -39,5 +39,9 @@ export default class AsyncStatus {
         }
       });
     });
+  }
+
+  static _() {
+    return new AsyncStatus();
   }
 }

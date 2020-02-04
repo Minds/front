@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-get-metamask',
@@ -11,7 +12,11 @@ export class GetMetamaskComponent {
 
   @Output() actioned: EventEmitter<String> = new EventEmitter();
 
-  minds: Minds = window.Minds;
+  readonly cdnAssetsUrl: string;
+
+  constructor(configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   create() {
     this.actioned.emit(GetMetamaskComponent.ACTION_CREATE);

@@ -23,7 +23,6 @@ import { RecommendedService } from '../components/video/recommended.service';
   ],
 })
 export class MediaEditComponent {
-  minds;
   guid: string;
   entity: any = {
     title: '',
@@ -52,8 +51,6 @@ export class MediaEditComponent {
   ) {}
 
   ngOnInit() {
-    this.minds = window.Minds;
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
         this.guid = params['guid'];

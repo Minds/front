@@ -62,7 +62,7 @@ export class ProChannelFooterComponent {
   }
 
   get viewProfileHref() {
-    return window.Minds.site_url + this.session.getLoggedInUser().username;
+    return this.site.baseUrl + this.session.getLoggedInUser().username;
   }
 
   get isProDomain() {
@@ -96,7 +96,7 @@ export class ProChannelFooterComponent {
   getTarget(link: FooterLink) {
     const domain = this.isProDomain
       ? this.user.pro_settings.domain
-      : window.Minds.site_url;
+      : this.site.baseUrl;
     const regex = new RegExp(`/${domain}/`);
     return regex.exec(link.href) ? '_self' : '_blank';
   }

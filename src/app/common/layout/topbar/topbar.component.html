@@ -1,6 +1,6 @@
 <div class="m-topbar--row">
   <a class="m-topbar--logo" routerLink="/">
-    <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'" />
+    <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
   </a>
 
   <ng-content select="[search]"></ng-content>
@@ -95,7 +95,7 @@
       <li class="m-dropdownList__item">
         <a
           target="_blank"
-          [href]="minds.cdn_assets_url + 'assets/documents/Whitepaper-v0.5.pdf'"
+          [href]="cdnAssetsUrl + 'assets/documents/Whitepaper-v0.5.pdf'"
         >
           <i class="material-icons">description</i>
           <span>Whitepaper</span>

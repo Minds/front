@@ -1,17 +1,20 @@
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
+import { Injectable } from '@angular/core';
+import { Session } from '../../../services/session';
 
+@Injectable()
 export class MessengerEncryptionService {
   public reKeying: boolean = false;
 
   private on: boolean = false;
   private setup: boolean = false;
 
-  static _(client: Client) {
-    return new MessengerEncryptionService(client, new Storage());
-  }
-
-  constructor(public client: Client, public storage: Storage) {}
+  constructor(
+    public client: Client,
+    public storage: Storage,
+    private session: Session
+  ) {}
 
   isOn(): boolean {
     //if(!this.on){
@@ -38,7 +41,7 @@ export class MessengerEncryptionService {
   isSetup(): boolean {
     //TODO: this won't work on nativescript, so move away from window var.
     //if(!this.setup){
-    this.setup = window.Minds.user.chat;
+    this.setup = this.session.getLoggedInUser().chat;
     //}
     return this.setup;
   }

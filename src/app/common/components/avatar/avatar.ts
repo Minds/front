@@ -1,6 +1,8 @@
 import { Component, EventEmitter } from '@angular/core';
 import { UserAvatarService } from '../../services/user-avatar.service';
 import { of, Observable } from 'rxjs';
+import { ConfigsService } from '../../services/configs.service';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'minds-avatar',
@@ -20,7 +22,7 @@ import { of, Observable } from 'rxjs';
     >
       <img
         *ngIf="!(userAvatarService.src$ | async)"
-        src="{{ minds.cdn_assets_url }}assets/avatars/blue/default-large.png"
+        src="{{ cdnAssetsUrl }}assets/avatars/blue/default-large.png"
         class="mdl-shadow--4dp"
       />
       <div *ngIf="editing" class="overlay">
@@ -43,7 +45,8 @@ import { of, Observable } from 'rxjs';
   `,
 })
 export class MindsAvatar {
-  minds: Minds = window.Minds;
+  readonly cdnAssetsUrl: string;
+  readonly cdnUrl: string;
   object;
   editing: boolean = false;
   waitForDoneSignal: boolean = true;
@@ -54,7 +57,14 @@ export class MindsAvatar {
   file: any;
   added: EventEmitter<any> = new EventEmitter();
 
-  constructor(public userAvatarService: UserAvatarService) {}
+  constructor(
+    public userAvatarService: UserAvatarService,
+    configs: ConfigsService,
+    private session: Session
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   set _object(value: any) {
     if (!value) return;
@@ -62,9 +72,12 @@ export class MindsAvatar {
     this.object = value;
 
     if (this.object.type !== 'user') {
-      this.src = `${this.minds.cdn_url}fs/v1/avatars/${this.object.guid}/large/${this.object.icontime}`;
-    } else if (!this.minds.user || this.object.guid !== this.minds.user.guid) {
-      this.src = `${this.minds.cdn_url}icon/${this.object.guid}/large/${this.object.icontime}`;
+      this.src = `${this.cdnUrl}fs/v1/avatars/${this.object.guid}/large/${this.object.icontime}`;
+    } else if (
+      !this.session.getLoggedInUser() ||
+      this.object.guid !== this.session.getLoggedInUser().guid
+    ) {
+      this.src = `${this.cdnUrl}icon/${this.object.guid}/large/${this.object.icontime}`;
     }
   }
 
@@ -131,9 +144,9 @@ export class MindsAvatar {
    */
   isOwnerAvatar(): boolean {
     return (
-      this.minds.user &&
+      this.session.getLoggedInUser() &&
       this.object &&
-      this.object.guid === this.minds.user.guid
+      this.object.guid === this.session.getLoggedInUser().guid
     );
   }
 }

@@ -13,6 +13,7 @@ import { Session } from '../../../services/session';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { NotificationsToasterComponent } from '../../../modules/notifications/toaster.component';
 import { ThemeService } from '../../../common/services/theme.service';
+import { ConfigsService } from '../../services/configs.service';
 import { V2TopbarService } from './v2-topbar.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -23,7 +24,7 @@ import { Location } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class V2TopbarComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   timeout;
   isTouchScreen = false;
   forceBackground: boolean = true;
@@ -48,9 +49,12 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService,
     protected componentFactoryResolver: ComponentFactoryResolver,
+    configs: ConfigsService,
     protected topbarService: V2TopbarService,
     protected router: Router
-  ) {}
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.loadComponent();

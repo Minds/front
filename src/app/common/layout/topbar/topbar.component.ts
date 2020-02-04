@@ -5,6 +5,7 @@ import { Sidebar } from '../../../services/ui/sidebar';
 import { Session } from '../../../services/session';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { NotificationsToasterComponent } from '../../../modules/notifications/toaster.component';
+import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -14,7 +15,7 @@ import { NotificationsToasterComponent } from '../../../modules/notifications/to
 export class TopbarComponent {
   @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   componentRef;
   componentInstance: NotificationsToasterComponent;
@@ -23,8 +24,11 @@ export class TopbarComponent {
     public session: Session,
     public storage: Storage,
     public sidebar: Sidebar,
-    private _componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngAfterViewInit() {
     this.loadComponent();

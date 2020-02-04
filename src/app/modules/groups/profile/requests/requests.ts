@@ -4,15 +4,15 @@ import { GroupsService } from '../../groups-service';
 
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-groups-profile-requests',
   inputs: ['_group : group'],
   templateUrl: 'requests.html',
 })
 export class GroupsProfileRequests {
-  minds = window.Minds;
+  readonly cdnUrl: string;
   group: any;
   $group;
 
@@ -24,8 +24,11 @@ export class GroupsProfileRequests {
   constructor(
     public session: Session,
     public client: Client,
-    public service: GroupsService
-  ) {}
+    public service: GroupsService,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   ngOnInit() {
     this.$group = this.service.$group.subscribe(group => {

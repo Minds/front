@@ -1,4 +1,4 @@
-import { Cookie } from '../../services/cookie';
+import { CookieService } from '../services/cookie.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
@@ -7,13 +7,12 @@ import { environment } from '../../../environments/environment';
  */
 export class MindsHttpClient {
   base: string = '/';
-  cookie: Cookie = new Cookie();
 
-  static _(http: HttpClient) {
-    return new MindsHttpClient(http);
+  static _(http: HttpClient, cookie: CookieService) {
+    return new MindsHttpClient(http, cookie);
   }
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, private cookie: CookieService) {}
 
   /**
    * Return a GET request

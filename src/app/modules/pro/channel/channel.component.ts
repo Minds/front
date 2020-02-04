@@ -10,13 +10,14 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  PLATFORM_ID,
+  Inject,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Session } from '../../../services/session';
 import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
-import { MindsTitle } from '../../../services/ux/title';
 import { ProChannelService } from './channel.service';
 import { SignupModalService } from '../../modals/signup/service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -24,17 +25,11 @@ import { OverlayModalComponent } from '../../../common/components/overlay-modal/
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../common/services/site.service';
 import { ScrollService } from '../../../services/ux/scroll';
+import { captureEvent } from '@sentry/core';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
-  providers: [
-    ProChannelService,
-    OverlayModalService,
-    {
-      provide: SignupModalService,
-      useFactory: SignupModalService._,
-      deps: [Router, ScrollService],
-    },
-  ],
+  providers: [ProChannelService, OverlayModalService, SignupModalService],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
@@ -122,7 +117,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get proSettingsHref() {
-    return window.Minds.site_url + 'pro/settings';
+    return this.site.baseUrl + 'pro/settings';
   }
 
   get isProDomain() {
@@ -159,7 +154,6 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected element: ElementRef,
     protected channelService: ProChannelService,
     protected client: Client,
-    protected title: MindsTitle,
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
@@ -167,7 +161,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected modalService: OverlayModalService,
     protected sessionStorage: SessionsStorageService,
     protected site: SiteService,
-    protected injector: Injector
+    protected injector: Injector,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
@@ -235,6 +230,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.shouldOpenWireModal();
     } catch (e) {
       this.error = e.message;
+      console.error(e);
+      captureEvent(e);
 
       if (e.message === 'E_NOT_PRO') {
         if (this.site.isProDomain) {
@@ -259,6 +256,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.shouldOpenWireModal();
     } catch (e) {
+      console.error(e);
+      captureEvent(e);
       this.error = e.message;
     }
 
@@ -266,6 +265,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   bindCssVariables() {
+    if (isPlatformServer(this.platformId)) return;
     const styles = this.channel.pro_settings.styles;
 
     for (const style in styles) {

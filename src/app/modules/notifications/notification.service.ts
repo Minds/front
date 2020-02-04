@@ -1,8 +1,9 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
 import { Session } from '../../services/session';
-import { MindsTitle } from '../../services/ux/title';
+import { MetaService } from '../../common/services/meta.service';
 import { Subscription, timer } from 'rxjs';
 import { SiteService } from '../../common/services/site.service';
 
@@ -12,6 +13,7 @@ export class NotificationService {
   };
   onReceive: EventEmitter<any> = new EventEmitter();
   notificationPollTimer;
+  count: number = 0;
 
   private updateNotificationCountSubscription: Subscription;
 
@@ -19,21 +21,28 @@ export class NotificationService {
     session: Session,
     client: Client,
     sockets: SocketsService,
-    title: MindsTitle,
+    metaService: MetaService,
+    platformId: Object,
     site: SiteService
   ) {
-    return new NotificationService(session, client, sockets, title, site);
+    return new NotificationService(
+      session,
+      client,
+      sockets,
+      metaService,
+      platformId,
+      site
+    );
   }
 
   constructor(
     public session: Session,
     public client: Client,
     public sockets: SocketsService,
-    public title: MindsTitle,
+    public metaService: MetaService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     protected site: SiteService
   ) {
-    if (!window.Minds.notifications_count) window.Minds.notifications_count = 0;
-
     if (!this.site.isProDomain) {
       this.listen();
     }
@@ -63,8 +72,7 @@ export class NotificationService {
    * Increment the notifications counter
    */
   increment(notifications: number = 1) {
-    window.Minds.notifications_count =
-      window.Minds.notifications_count + notifications;
+    this.count = this.count + notifications;
     this.sync();
   }
 
@@ -72,7 +80,7 @@ export class NotificationService {
    * Clear the notifications. For notification controller
    */
   clear() {
-    window.Minds.notifications_count = 0;
+    this.count = 0;
     this.sync();
   }
 
@@ -81,10 +89,12 @@ export class NotificationService {
    */
   getNotifications() {
     const pollIntervalSeconds = 60;
-    this.notificationPollTimer = timer(0, pollIntervalSeconds * 1000);
-    this.updateNotificationCountSubscription = this.notificationPollTimer.subscribe(
-      () => this.updateNotificationCount()
-    );
+    if (isPlatformBrowser(this.platformId)) {
+      this.notificationPollTimer = timer(0, pollIntervalSeconds * 1000);
+      this.updateNotificationCountSubscription = this.notificationPollTimer.subscribe(
+        () => this.updateNotificationCount()
+      );
+    }
   }
 
   updateNotificationCount() {
@@ -92,12 +102,8 @@ export class NotificationService {
       return;
     }
 
-    if (!window.Minds.notifications_count) {
-      window.Minds.notifications_count = 0;
-    }
-
     this.client.get('api/v1/notifications/count', {}).then((response: any) => {
-      window.Minds.notifications_count = response.count;
+      this.count = response.count;
       this.sync();
     });
   }
@@ -106,16 +112,11 @@ export class NotificationService {
    * Sync Notifications to the topbar Counter
    */
   sync() {
-    for (var i in window.Minds.navigation.topbar) {
-      if (window.Minds.navigation.topbar[i].name === 'Notifications') {
-        window.Minds.navigation.topbar[i].extras.counter =
-          window.Minds.notifications_count;
-      }
-    }
-    this.title.setCounter(window.Minds.notifications_count);
+    this.metaService.setCounter(this.count);
   }
 
   ngOnDestroy() {
-    this.updateNotificationCountSubscription.unsubscribe();
+    if (this.updateNotificationCountSubscription)
+      this.updateNotificationCountSubscription.unsubscribe();
   }
 }

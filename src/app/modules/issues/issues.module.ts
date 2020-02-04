@@ -8,6 +8,10 @@ const routes: Routes = [
   {
     path: 'issues/report',
     component: ReportComponent,
+    data: {
+      title: 'Found a bug?',
+      description: 'Report issues with Minds.com',
+    },
   },
 ];
 

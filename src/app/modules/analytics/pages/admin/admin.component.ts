@@ -4,7 +4,6 @@ import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-analytics__admin',
   templateUrl: 'admin.component.html',
 })

@@ -13,8 +13,6 @@ export class SearchQuestionsComponent {
   searching: boolean = false;
   private throttle;
 
-  minds: Minds = window.Minds;
-
   constructor(
     public client: Client,
     public session: Session,

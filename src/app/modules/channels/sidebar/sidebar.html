@@ -110,8 +110,8 @@
     <!-- END City / Location -->
 
     <div
-      class="m-channel-bio-field mdl-color-text--blue-grey-300"
-      *ngIf="user.tags && !editing"
+      class="m-channel-bio-field m-channel-bio-field--tags mdl-color-text--blue-grey-300"
+      *ngIf="user.tags && user.tags.length && !editing"
     >
       <div
         class="m-channel-bio-field__tags-container"
@@ -224,7 +224,7 @@
 
   <div
     class="m-channel__channel-mode-selector"
-    *ngIf="featuresService.has('permissions')"
+    *ngIf="session.isLoggedIn() && featuresService.has('permissions')"
   >
     <m-channel-mode-selector
       [user]="user"
@@ -304,6 +304,7 @@
 <div class="minds-spacer-2x"></div>
 
 <m-wire-channel
+  *mIfBrowser
   #wire
   [(rewards)]="user.wire_rewards"
   [channel]="user"
@@ -320,6 +321,7 @@
     [channel]="user"
     [linksTo]="['/', user.username, 'images']"
     [size]="9"
+    *mIfBrowser
   ></m-channels--sorted-module>
 
   <div class="minds-spacer-2x"></div>
@@ -331,6 +333,7 @@
     [channel]="user"
     [linksTo]="['/', user.username, 'videos']"
     [size]="9"
+    *mIfBrowser
   ></m-channels--sorted-module>
 
   <div class="minds-spacer-2x"></div>
@@ -342,6 +345,7 @@
     [channel]="user"
     [linksTo]="['/', user.username, 'blogs']"
     [size]="3"
+    *mIfBrowser
   ></m-channels--sorted-module>
 </ng-container>
 <ng-template #legacyModules>
@@ -350,6 +354,7 @@
     [owner]="user"
     type="image"
     [linksTo]="['/media/images', user.username]"
+    *mIfBrowser
   >
     <a
       class="mdl-card__supporting-text mdl-color-text--grey-600"
@@ -367,6 +372,7 @@
     type="video"
     limit="9"
     [linksTo]="['/media/videos', user.username]"
+    *mIfBrowser
   >
     <a
       class="mdl-card__supporting-text mdl-color-text--grey-600"
@@ -384,6 +390,7 @@
     type="blog"
     limit="3"
     [linksTo]="['/blog', user.username]"
+    *mIfBrowser
   >
     <a
       class="mdl-card__supporting-text mdl-color-text--grey-600"

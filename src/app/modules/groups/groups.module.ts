@@ -54,7 +54,13 @@ const routes: Routes = [
       { path: 'requests', component: GroupsProfileRequests },
     ],
   },
-  { path: 'groups/create', component: GroupsCreator },
+  {
+    path: 'groups/create',
+    component: GroupsCreator,
+    data: {
+      title: 'Create a group',
+    },
+  },
   { path: 'groups/:filter', component: GroupsListComponent },
   { path: 'groups', redirectTo: '/groups/top', pathMatch: 'full' },
 ];

@@ -20,6 +20,7 @@ import {
 } from '../../upgrades/upgrade-options.component';
 import currency from '../../../helpers/currency';
 import { Location } from '@angular/common';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-plus--subscription',
@@ -27,6 +28,7 @@ import { Location } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlusSubscriptionComponent implements OnInit {
+  readonly upgrades; // TODO: add type
   @Output() onEnable: EventEmitter<any> = new EventEmitter();
 
   @Output() onDisable: EventEmitter<any> = new EventEmitter();
@@ -49,8 +51,6 @@ export class PlusSubscriptionComponent implements OnInit {
 
   error: string = '';
 
-  minds = window.Minds;
-
   constructor(
     protected service: PlusService,
     protected session: Session,
@@ -58,8 +58,11 @@ export class PlusSubscriptionComponent implements OnInit {
     protected wirePaymentHandlers: WirePaymentHandlersService,
     protected cd: ChangeDetectorRef,
     protected route: ActivatedRoute,
-    protected router: Router
-  ) {}
+    protected router: Router,
+    configs: ConfigsService
+  ) {
+    this.upgrades = configs.get('upgrades');
+  }
 
   ngOnInit() {
     this.isLoggedIn = this.session.isLoggedIn();
@@ -119,10 +122,10 @@ export class PlusSubscriptionComponent implements OnInit {
           {
             interval: this.interval,
             currency: this.currency,
-            amount: this.minds.upgrades.plus[this.interval][this.currency],
+            amount: this.upgrades.plus[this.interval][this.currency],
             onComplete: () => {
               this.active = true;
-              this.minds.user.plus = true;
+              this.session.getLoggedInUser().plus = true;
               this.onEnable.emit(Date.now());
               this.inProgress = false;
               this.detectChanges();
@@ -136,7 +139,7 @@ export class PlusSubscriptionComponent implements OnInit {
         .present();
     } catch (e) {
       this.active = false;
-      this.minds.user.plus = false;
+      this.session.getLoggedInUser().plus = false;
       this.error = (e && e.message) || 'Unknown error';
       this.inProgress = false;
     }
@@ -156,11 +159,11 @@ export class PlusSubscriptionComponent implements OnInit {
     try {
       await this.service.disable();
       this.active = false;
-      this.minds.user.plus = false;
+      this.session.getLoggedInUser().plus = false;
       this.onDisable.emit(Date.now());
     } catch (e) {
       this.active = true;
-      this.minds.user.plus = true;
+      this.session.getLoggedInUser().plus = true;
       this.error = (e && e.message) || 'Unknown error';
     }
 
@@ -172,18 +175,18 @@ export class PlusSubscriptionComponent implements OnInit {
     if (this.interval === 'yearly') {
       return {
         amount: currency(
-          this.minds.upgrades.plus.yearly[this.currency] / 12,
+          this.upgrades.plus.yearly[this.currency] / 12,
           this.currency
         ),
         offerFrom: currency(
-          this.minds.upgrades.plus.monthly[this.currency],
+          this.upgrades.plus.monthly[this.currency],
           this.currency
         ),
       };
     } else if (this.interval === 'monthly') {
       return {
         amount: currency(
-          this.minds.upgrades.plus.monthly[this.currency],
+          this.upgrades.plus.monthly[this.currency],
           this.currency
         ),
         offerFrom: null,

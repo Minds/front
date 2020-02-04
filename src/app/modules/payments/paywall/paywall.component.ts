@@ -11,15 +11,15 @@ import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-paywall',
   templateUrl: 'paywall.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PayWall {
-  minds = (<any>window).Minds;
+  readonly cdnUrl: string;
 
   inProgress: boolean = false;
   error: string;
@@ -35,8 +35,11 @@ export class PayWall {
   constructor(
     public session: Session,
     public client: Client,
-    public cd: ChangeDetectorRef
-  ) {}
+    public cd: ChangeDetectorRef,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   checkout() {
     if (!this.session.isLoggedIn()) {

@@ -8,11 +8,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { TreeNode } from '../../tree/tree-node.model';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 type Category = { id: string; label: string };
 
 @Component({
-  moduleId: module.id,
   selector: 'm-categories--selector',
   templateUrl: 'selector.component.html',
 })
@@ -28,8 +28,8 @@ export class CategoriesSelectorComponent {
     Array<Category>
   > = new EventEmitter<Array<Category>>();
 
-  constructor() {
-    this.categories = window.Minds.categories;
+  constructor(configs: ConfigsService) {
+    this.categories = configs.get('categories');
   }
 
   search(value: string) {
