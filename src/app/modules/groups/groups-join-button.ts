@@ -105,7 +105,6 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
   `,
 })
 export class GroupsJoinButton {
-  minds;
   showModal: boolean = false;
   group: any;
   membership: EventEmitter<any> = new EventEmitter();
@@ -120,9 +119,7 @@ export class GroupsJoinButton {
     public service: GroupsService,
     private router: Router,
     private loginReferrer: LoginReferrerService
-  ) {
-    this.minds = window.Minds;
-  }
+  ) {}
 
   set _group(value: any) {
     this.group = value;

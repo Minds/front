@@ -27,9 +27,9 @@ import { Router } from '@angular/router';
 import { FeaturesService } from '../../../services/features.service';
 import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-card-comment',
   changeDetection: ChangeDetectionStrategy.OnPush,
   inputs: ['parent'],
@@ -39,11 +39,7 @@ import isMobile from '../../../helpers/is-mobile';
   },
   templateUrl: 'comment.component.html',
   providers: [
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload],
-    },
+    AttachmentService,
     {
       provide: CommentsListComponent,
       useValue: forwardRef(() => CommentsListComponent),
@@ -53,7 +49,8 @@ import isMobile from '../../../helpers/is-mobile';
 export class CommentComponent implements OnChanges {
   comment: any;
   editing: boolean = false;
-  minds = window.Minds;
+  readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
 
   canPost: boolean = true;
   triedToPost: boolean = false;
@@ -97,8 +94,12 @@ export class CommentComponent implements OnChanges {
     private cd: ChangeDetectorRef,
     private router: Router,
     private timeDiffService: TimeDiffService,
-    protected featuresService: FeaturesService
-  ) {}
+    protected featuresService: FeaturesService,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.commentAge$ = this.timeDiffService.source.pipe(
@@ -217,7 +218,7 @@ export class CommentComponent implements OnChanges {
     this.triedToPost = false;
 
     this.attachment
-      .remove(file)
+      .remove()
       .then(() => {
         this.canPost = true;
         this.triedToPost = false;

@@ -14,9 +14,29 @@ import { SuggestedQuestionsComponent } from './questions/suggested/suggested.com
 import { AllHelpdeskDashboardComponent } from './dashboard/all.component';
 
 const routes: Routes = [
-  { path: 'help', component: HelpdeskDashboardComponent },
-  { path: 'help/category/edit/:uuid', component: CategoryCreatorComponent },
-  { path: 'help/question/edit/:uuid', component: QuestionCreatorComponent },
+  {
+    path: 'help',
+    component: HelpdeskDashboardComponent,
+    data: {
+      title: 'Help Desk',
+      description: 'Everything you need to know about Minds',
+      ogImage: '/assets/photos/balloon.jpg',
+    },
+  },
+  {
+    path: 'help/category/edit/:uuid',
+    component: CategoryCreatorComponent,
+    data: {
+      title: 'Help Desk > Edit Category',
+    },
+  },
+  {
+    path: 'help/question/edit/:uuid',
+    component: QuestionCreatorComponent,
+    data: {
+      title: 'Help Desk > Edit Question',
+    },
+  },
   { path: 'help/question/:uuid', component: QuestionsComponent },
 ];
 

@@ -5,17 +5,18 @@ import { Client } from '../../../../services/api';
 import { UpdateMarkersService } from '../../../../common/services/update-markers.service';
 import { VideoChatService } from '../../../videochat/videochat.service';
 import { timer, Subscription } from 'rxjs';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-group--member-previews',
   templateUrl: 'member-previews.component.html',
 })
 export class GroupMemberPreviews {
+  readonly cdnUrl: string;
   @Input() group;
   members: Array<any> = [];
   count: Number = 0;
   inProgress: boolean = false;
-  minds = window.Minds;
   gatheringParticipantTimer;
 
   private updateMarkersSubscription: Subscription;
@@ -23,8 +24,11 @@ export class GroupMemberPreviews {
 
   constructor(
     private client: Client,
-    private updateMarkers: UpdateMarkersService
-  ) {}
+    private updateMarkers: UpdateMarkersService,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   ngOnInit() {
     const checkIntervalSeconds = 2;

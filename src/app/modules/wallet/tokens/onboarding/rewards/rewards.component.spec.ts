@@ -26,6 +26,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { sessionMock } from '../../../../../../tests/session-mock.spec';
 import { Router } from '@angular/router';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 describe('TokenRewardsOnboardingComponent', () => {
   let comp: TokenRewardsOnboardingComponent;
@@ -49,6 +50,7 @@ describe('TokenRewardsOnboardingComponent', () => {
         { provide: ChangeDetectorRef, useValue: ChangeDetectorRef },
         { provide: Session, useValue: sessionMock },
         { provide: Router, useValue: RouterTestingModule },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents(); // compile template and css
   }));

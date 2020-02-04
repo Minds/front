@@ -17,7 +17,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { AnalyticsService } from '../../../services/analytics';
@@ -26,6 +26,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeaturesService } from '../../../services/features.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 import { HorizontalFeedService } from '../../../common/services/horizontal-feed.service';
 import { ShareModalComponent } from '../../modals/share/share';
 
@@ -65,7 +66,7 @@ export type MediaModalParams = {
   providers: [ActivityService, ClientMetaService],
 })
 export class MediaModalComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnUrl: string;
 
   entity: any = {};
   originalEntity: any = null;
@@ -109,11 +110,22 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   routerSubscription: Subscription;
 
-  prevEntity: any;
-  nextEntity: any;
+  modalPager = {
+    hasPrev: false,
+    hasNext: false,
+  };
+
+  protected modalPager$: Subscription;
+
+  protected asyncEntity$: Subscription;
 
   @Input('entity') set data(params: MediaModalParams) {
+    this.clearAsyncEntity();
     this.setEntity(params.entity);
+
+    if (this.features.has('modal-pager')) {
+      this.horizontalFeed.setBaseEntity(params.entity);
+    }
   }
 
   videoDirectSrc = [];
@@ -129,14 +141,17 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private site: SiteService,
     private clientMetaService: ClientMetaService,
     private featureService: FeaturesService,
+    @SkipSelf() injector: Injector,
+    configs: ConfigsService,
     private horizontalFeed: HorizontalFeedService,
-    private features: FeaturesService,
-    @SkipSelf() injector: Injector
+    private features: FeaturesService
   ) {
     this.clientMetaService
       .inherit(injector)
       .setSource('single')
       .setMedium('modal');
+
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   updateSources() {
@@ -182,6 +197,21 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
 
+    // -- Initialize Horizontal Feed service context
+
+    if (this.features.has('modal-pager')) {
+      this.modalPager$ = this.horizontalFeed
+        .onChange()
+        .subscribe(async change => {
+          this.modalPager = {
+            hasNext: await this.horizontalFeed.hasNext(),
+            hasPrev: await this.horizontalFeed.hasPrev(),
+          };
+        });
+
+      this.horizontalFeed.setContext('container');
+    }
+
     // -- Load entity
 
     this.load();
@@ -213,27 +243,32 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     this.originalEntity = entity;
     this.entity = entity && JSON.parse(JSON.stringify(entity)); // deep clone
-
-    this.setNeighborEntities(); // async
   }
 
-  async setNeighborEntities() {
-    if (!this.features.has('modal-pager')) {
-      return;
+  clearAsyncEntity() {
+    if (this.asyncEntity$) {
+      this.asyncEntity$.unsubscribe();
+      this.asyncEntity$ = void 0;
     }
+  }
 
-    const { prev, next } = await this.horizontalFeed.get(
-      'container',
-      this.entity
-    );
+  setAsyncEntity(
+    asyncEntity: BehaviorSubject<any>,
+    extraEntityProperties: Object = {}
+  ) {
+    this.clearAsyncEntity();
 
-    if (!this.prevEntity) {
-      this.prevEntity = prev;
-    }
+    this.asyncEntity$ = asyncEntity.subscribe(rawEntity => {
+      if (rawEntity) {
+        const entity = {
+          ...rawEntity,
+          ...extraEntityProperties,
+        };
 
-    if (!this.nextEntity) {
-      this.nextEntity = next;
-    }
+        this.setEntity(entity);
+        this.load();
+      }
+    });
   }
 
   load() {
@@ -307,7 +342,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
             break;
           case 'image':
             this.contentType = 'image';
-            // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
             this.thumbnail = this.entity.thumbnail;
             this.title = this.entity.title;
             this.entity.entity_guid = this.entity.guid;
@@ -327,7 +361,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.attachment_guid;
         this.entity.entity_guid = this.entity.attachment_guid;
-        // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.attachment_guid}/xlarge`;
         this.thumbnail = this.entity.thumbnails.xlarge;
         break;
     }
@@ -656,12 +689,12 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     switch ($event.key) {
       case 'ArrowLeft':
-        if (this.hasPrev()) {
+        if (this.hasModalPager()) {
           this.goToPrev();
         }
         break;
       case 'ArrowRight':
-        if (this.hasNext()) {
+        if (this.hasModalPager()) {
           this.goToNext();
         }
         break;
@@ -680,8 +713,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   // Dismiss modal when backdrop is clicked and modal is open
   @HostListener('document:click', ['$event'])
   clickedBackdrop($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
+    if ($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
     if (this.isOpen) {
       this.overlayModal.dismiss();
     }
@@ -720,34 +755,46 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   // * PAGER * --------------------------------------------------------------------------
 
-  hasPrev(): boolean {
-    return Boolean(this.prevEntity);
+  hasModalPager() {
+    return this.features.has('modal-pager');
   }
 
-  hasNext(): boolean {
-    return Boolean(this.nextEntity);
+  async goToNext(): Promise<void> {
+    if (!this.modalPager.hasNext) {
+      return;
+    }
+
+    this.isLoading = true;
+
+    const modalSourceUrl = this.entity.modal_source_url || '';
+    const response = await this.horizontalFeed.next();
+
+    if (response && response.entity) {
+      this.setAsyncEntity(response.entity, {
+        modal_source_url: modalSourceUrl,
+      });
+    } else {
+      this.isLoading = false;
+    }
   }
 
-  goToNext(): void {
-    const entity = this.nextEntity;
-    entity.modal_source_url = this.entity.modal_source_url || '';
+  async goToPrev(): Promise<void> {
+    if (!this.modalPager.hasPrev) {
+      return;
+    }
 
-    this.prevEntity = this.originalEntity;
-    this.nextEntity = null;
+    this.isLoading = true;
 
-    this.setEntity(entity);
-    this.load();
-  }
+    const modalSourceUrl = this.entity.modal_source_url || '';
+    const response = await this.horizontalFeed.prev();
 
-  goToPrev(): void {
-    const entity = this.prevEntity;
-    entity.modal_source_url = this.entity.modal_source_url || '';
-
-    this.prevEntity = null;
-    this.nextEntity = this.originalEntity;
-
-    this.setEntity(entity);
-    this.load();
+    if (response && response.entity) {
+      this.setAsyncEntity(response.entity, {
+        modal_source_url: modalSourceUrl,
+      });
+    } else {
+      this.isLoading = false;
+    }
   }
 
   // * UTILITY * --------------------------------------------------------------------------
@@ -769,8 +816,14 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.clearAsyncEntity();
+
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
+    }
+
+    if (this.modalPager$) {
+      this.modalPager$.unsubscribe();
     }
 
     if (this.isOpenTimeout) {

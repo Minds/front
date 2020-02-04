@@ -10,8 +10,6 @@ import { Session } from '../../../services/session';
   templateUrl: 'modal.component.html',
 })
 export class ConfirmPasswordModalComponent {
-  minds = window.Minds;
-
   success: boolean = false;
   criticalError: boolean = false;
   error: string = '';

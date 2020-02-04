@@ -22,8 +22,6 @@ export class BoostConsoleHistoryComponent {
   type: BoostConsoleType = 'newsfeed';
   filter: BoostConsoleFilter;
 
-  minds: Minds = window.Minds;
-
   constructor(
     public session: Session,
     private router: Router,

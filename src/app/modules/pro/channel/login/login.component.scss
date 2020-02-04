@@ -174,7 +174,7 @@ m-pro--channel-login {
         display: none;
       }
 
-      .m-login-box input {
+      .m-login-box input:not([type='checkbox']) {
         border: 0;
         border-radius: 3px;
         font-weight: 600;

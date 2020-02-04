@@ -4,19 +4,18 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 
 import { HashtagsSelectorModalComponent } from '../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.component';
+import { MetaService } from '../../common/services/meta.service';
 
 @Component({
   selector: 'm-settings',
   templateUrl: 'settings.component.html',
 })
 export class SettingsComponent {
-  minds: Minds;
   user: any;
   filter: string;
   account_time_created: any;
@@ -29,7 +28,7 @@ export class SettingsComponent {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
+    public metaService: MetaService,
     private overlayModal: OverlayModalService
   ) {}
 
@@ -37,13 +36,14 @@ export class SettingsComponent {
     if (!this.session.isLoggedIn()) {
       return this.router.navigate(['/login']);
     }
-    this.minds = window.Minds;
 
-    this.title.setTitle('Settings');
+    this.metaService
+      .setTitle('Settings')
+      .setDescription('Configure your Minds settings');
 
     this.filter = 'general';
 
-    this.account_time_created = window.Minds.user.time_created;
+    this.account_time_created = this.session.getLoggedInUser().time_created;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {

@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 export class ThumbnailEvent {
   constructor(public source: any, public seconds: any) {}
@@ -11,6 +12,7 @@ export class ThumbnailEvent {
   templateUrl: 'thumbnail-selector.component.html',
 })
 export class ThumbnailSelectorComponent {
+  readonly cinemrUrl: string;
   @ViewChild('thumbnailInput', { static: true }) thumbnailInput: ElementRef;
   element: any;
   src: Array<any> = [];
@@ -36,7 +38,9 @@ export class ThumbnailSelectorComponent {
     if (this.element) this.element.src = this.src;
   }
 
-  constructor(private _element: ElementRef) {}
+  constructor(private _element: ElementRef, configs: ConfigsService) {
+    this.cinemrUrl = configs.get('cinemr_url');
+  }
 
   ngOnInit() {
     this.element = this._element.nativeElement.getElementsByTagName('video')[0];
@@ -65,7 +69,7 @@ export class ThumbnailSelectorComponent {
     for (const num of nums) {
       const number = ('00000' + num).slice(-5); //adds padding to the number: 10 would become 00010
       thumbs.push(
-        `${window.Minds.cinemr_url}${this._entity.cinemr_guid}/thumbnail-${number}.png`
+        `${this.cinemrUrl}${this._entity.cinemr_guid}/thumbnail-${number}.png`
       );
     }
 

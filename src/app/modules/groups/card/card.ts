@@ -2,24 +2,25 @@ import { Component, Inject } from '@angular/core';
 
 import { Client } from '../../../services/api';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-card-group',
   inputs: ['group'],
   templateUrl: 'card.html',
 })
 export class GroupsCard {
-  minds;
+  readonly cdnUrl: string;
   group;
   $updateMarker;
   hasMarker: boolean = false;
 
   constructor(
     public client: Client,
-    private updateMarkers: UpdateMarkersService
+    private updateMarkers: UpdateMarkersService,
+    configs: ConfigsService
   ) {
-    this.minds = window.Minds;
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   ngOnInit() {

@@ -325,6 +325,35 @@ m-onboarding {
             }
           }
 
+          .m-onboarding__location {
+            position: relative;
+
+            ul.m-onboarding__cities {
+              position: absolute;
+              top: 79%;
+              left: 0;
+              right: 0;
+              text-align: left;
+              padding: 8px 16px;
+              margin: 0;
+              list-style: none;
+              z-index: 1;
+
+              @include m-theme() {
+                background-color: themed($m-white);
+                border: 1px solid themed($m-grey-50);
+              }
+
+              li {
+                padding: 8px 0;
+                cursor: pointer;
+                @include m-theme() {
+                  border-bottom: 1px solid themed($m-grey-50);
+                }
+              }
+            }
+          }
+
           .m-onboardingControl__label {
             position: relative;
 
@@ -386,6 +415,8 @@ m-onboarding {
 
                 input {
                   width: 100%;
+                  min-width: 10px;
+                  flex-shrink: 1;
                   padding-left: 8px;
 
                   font-size: 16px;

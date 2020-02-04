@@ -10,7 +10,16 @@ import { BuyTokensComponent } from './buy-tokens.component';
 
 export const routes = [
   { path: 'upgrade', pathMatch: 'full', redirectTo: 'upgrades' },
-  { path: 'upgrades', component: UpgradesComponent },
+  {
+    path: 'upgrades',
+    component: UpgradesComponent,
+    data: {
+      title: 'Upgrade your Minds experience',
+      description:
+        'Minds offers a unique range of powerful upgrades that will supercharge your Minds experience',
+      ogImage: '/assets/marketing/upgrades-1.jpg',
+    },
+  },
 ];
 
 @NgModule({

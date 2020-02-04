@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MindsUser } from '../../../../interfaces/entities';
 import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-onboarding__noticeStep',
@@ -9,9 +10,14 @@ import { Router } from '@angular/router';
 })
 export class NoticeStepComponent implements OnInit {
   user: MindsUser;
-  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+  readonly cdnAssetsUrl: string;
 
-  constructor(private session: Session, private router: Router) {
+  constructor(
+    private session: Session,
+    private router: Router,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.user = session.getLoggedInUser();
   }
 

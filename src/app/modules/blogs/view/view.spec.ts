@@ -20,8 +20,6 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { scrollServiceMock } from '../../../../tests/scroll-service-mock.spec';
 import { ScrollService } from '../../../services/ux/scroll';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { MindsTitle } from '../../../services/ux/title';
 import { AttachmentService } from '../../../services/attachment';
 import { attachmentServiceMock } from '../../../../tests/attachment-service-mock.spec';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
@@ -40,6 +38,8 @@ describe('Blog view component', () => {
     description: 'description',
     ownerObj: {},
     allow_comments: true,
+    perma_url: '/perma',
+    thumbnail: '/thumbnail',
   };
 
   beforeEach(async(() => {
@@ -52,7 +52,6 @@ describe('Blog view component', () => {
         { provide: AttachmentService, useValue: attachmentServiceMock },
         { provide: Client, useValue: clientMock },
         { provide: ContextService, useValue: contextServiceMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: Session, useValue: sessionMock },
       ],

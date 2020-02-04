@@ -151,16 +151,17 @@ export class FeedsService {
   /**
    * Fetches the data.
    */
-  fetch(): FeedsService {
+  fetch(): Promise<any> {
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
-    this.client
+    return this.client
       .get(this.endpoint, {
         ...this.params,
         ...{
           limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
+          export_user_counts: this.exportUserCounts ? 1 : 0,
           from_timestamp: this.pagingToken,
         },
       })
@@ -181,7 +182,6 @@ export class FeedsService {
         }
       })
       .catch(e => console.log(e));
-    return this;
   }
 
   /**

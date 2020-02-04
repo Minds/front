@@ -19,8 +19,6 @@ import { Storage } from '../../../../services/storage';
 import { storageMock } from '../../../../../tests/storage-mock.spec';
 import { ContextService } from '../../../../services/context.service';
 import { contextServiceMock } from '../../../../../tests/context-service-mock.spec';
-import { MindsTitle } from '../../../../services/ux/title';
-import { mindsTitleMock } from '../../../../mocks/services/ux/minds-title.service.mock.spec';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
@@ -61,7 +59,6 @@ describe('NewsfeedTagsComponent', () => {
       ],
       providers: [
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: Navigation, useValue: navigationMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Storage, useValue: storageMock },
@@ -81,14 +78,6 @@ describe('NewsfeedTagsComponent', () => {
     jasmine.clock().install();
 
     fixture = TestBed.createComponent(NewsfeedTagsComponent);
-
-    window.Minds = <any>{
-      user: {
-        guid: 1,
-        name: 'test',
-        opted_in_hashtags: 1,
-      },
-    };
 
     comp = fixture.componentInstance;
 

@@ -19,8 +19,18 @@ minds-form-register {
     align-items: center;
   }
 
-  .m-register-tac {
-    font-size: 11px;
+  .m-register__checkboxes {
+    width: 100%;
+    m-formInput__checkbox {
+      margin-bottom: $minds-margin / 2;
+      font-size: 11px;
+
+      a {
+        @include m-theme() {
+          color: themed($m-grey-400);
+        }
+      }
+    }
   }
 
   //this is exactly the same as modal.scss

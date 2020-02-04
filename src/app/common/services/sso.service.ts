@@ -1,16 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { SiteService } from './site.service';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
+import { ConfigsService } from './configs.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class SsoService {
-  protected readonly minds = window.Minds;
-
   constructor(
     protected site: SiteService,
     protected client: Client,
-    protected session: Session
+    protected session: Session,
+    private configs: ConfigsService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.listen();
   }
@@ -24,13 +26,13 @@ export class SsoService {
   }
 
   isRequired(): boolean {
-    return this.site.isProDomain;
+    return isPlatformBrowser(this.platformId) && this.site.isProDomain;
   }
 
   async connect() {
     try {
       const connect: any = await this.client.postRaw(
-        `${this.minds.site_url}api/v2/sso/connect`
+        `${this.configs.get('site_url')}api/v2/sso/connect`
       );
 
       if (connect && connect.token && connect.status === 'success') {
@@ -56,7 +58,7 @@ export class SsoService {
 
       if (connect && connect.token && connect.status === 'success') {
         await this.client.postRaw(
-          `${this.minds.site_url}api/v2/sso/authorize`,
+          `${this.configs.get('site_url')}api/v2/sso/authorize`,
           {
             token: connect.token,
           }

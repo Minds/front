@@ -56,7 +56,7 @@
             <a
               [routerLink]="[
                 '/pro',
-                minds.user.username,
+                session.getLoggedInUser().username,
                 'settings',
                 'subscription'
               ]"

@@ -4,7 +4,6 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
-import { MindsTitle } from '../../../services/ux/title';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
@@ -26,7 +25,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   moreData: boolean = true;
   rating: number = 1;
-  minds;
   allHashtags: boolean;
 
   paramsSubscription: Subscription;
@@ -41,7 +39,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private storage: Storage,
     private context: ContextService,
     private session: Session,
@@ -49,8 +46,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
     private overlayModal: OverlayModalService,
     private newsfeedService: NewsfeedService
   ) {
-    this.title.setTitle('Newsfeed');
-
     if (this.session.isLoggedIn())
       this.rating = this.session.getLoggedInUser().boost_rating;
 
@@ -70,7 +65,6 @@ export class NewsfeedTopComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.load();
-    this.minds = window.Minds;
 
     this.context.set('activity');
   }

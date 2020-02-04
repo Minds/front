@@ -1,5 +1,9 @@
-import { NgModule } from '@angular/core';
-import { CommonModule as NgCommonModule } from '@angular/common';
+import { NgModule, inject } from '@angular/core';
+import {
+  CommonModule as NgCommonModule,
+  isPlatformServer,
+  Location,
+} from '@angular/common';
 import { RouterModule, Router, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -60,6 +64,7 @@ import { InlineEditorComponent } from './components/editors/inline-editor.compon
 import { AttachmentService } from '../services/attachment';
 import { MaterialBoundSwitchComponent } from './components/material/bound-switch.component';
 import { IfFeatureDirective } from './directives/if-feature.directive';
+import { IfBrowserDirective } from './directives/if-browser.directive';
 import { MindsEmoji } from './components/emoji/emoji';
 import { CategoriesSelectorComponent } from './components/categories/selector/selector.component';
 import { CategoriesSelectedComponent } from './components/categories/selected/selected.component';
@@ -115,7 +120,7 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
 import { ChartV2Component } from './components/chart-v2/chart-v2.component';
-import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
@@ -133,9 +138,14 @@ import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
+import { ConfigsService } from './services/configs.service';
+import { CookieService } from './services/cookie.service';
+import { MetaService } from './services/meta.service';
+import { Title, Meta } from '@angular/platform-browser';
+import { MediaProxyService } from './services/media-proxy.service';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
-
-PlotlyModule.plotlyjs = PlotlyJS;
+import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
+import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 
 const routes: Routes = [
   {
@@ -216,6 +226,7 @@ const routes: Routes = [
     MaterialBoundSwitchComponent,
 
     IfFeatureDirective,
+    IfBrowserDirective,
 
     CategoriesSelectorComponent,
     CategoriesSelectedComponent,
@@ -243,6 +254,7 @@ const routes: Routes = [
     SwitchComponent,
 
     FeaturedContentComponent,
+    AttachmentPasteDirective,
     PosterDateSelectorComponent,
     DraggableListComponent,
     ToggleComponent,
@@ -261,6 +273,7 @@ const routes: Routes = [
     ShadowboxSubmitButtonComponent,
     EmailConfirmationComponent,
     DateDropdownsComponent,
+    FormInputCheckboxComponent,
     ProgressRingComponent,
   ],
   exports: [
@@ -321,6 +334,7 @@ const routes: Routes = [
     MaterialBoundSwitchComponent,
 
     IfFeatureDirective,
+    IfBrowserDirective,
 
     CategoriesSelectorComponent,
     CategoriesSelectedComponent,
@@ -346,6 +360,7 @@ const routes: Routes = [
     SwitchComponent,
     NSFWSelectorComponent,
     FeaturedContentComponent,
+    AttachmentPasteDirective,
     PosterDateSelectorComponent,
     ChannelModeSelectorComponent,
     DraggableListComponent,
@@ -363,17 +378,15 @@ const routes: Routes = [
     ShadowboxSubmitButtonComponent,
     EmailConfirmationComponent,
     DateDropdownsComponent,
+    FormInputCheckboxComponent,
     ProgressRingComponent,
   ],
   providers: [
     SiteService,
     SsoService,
+    AttachmentService,
+    CookieService,
     PagesService,
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload, HttpClient],
-    },
     {
       provide: UpdateMarkersService,
       useFactory: (_http, _session, _sockets) => {
@@ -384,18 +397,10 @@ const routes: Routes = [
     {
       provide: MindsHttpClient,
       useFactory: MindsHttpClient._,
-      deps: [HttpClient],
+      deps: [HttpClient, CookieService],
     },
-    {
-      provide: NSFWSelectorCreatorService,
-      useFactory: _storage => new NSFWSelectorCreatorService(_storage),
-      deps: [Storage],
-    },
-    {
-      provide: NSFWSelectorConsumerService,
-      useFactory: _storage => new NSFWSelectorConsumerService(_storage),
-      deps: [Storage],
-    },
+    NSFWSelectorCreatorService,
+    NSFWSelectorConsumerService,
     {
       provide: BoostedContentService,
       useFactory: (
@@ -432,9 +437,30 @@ const routes: Routes = [
       deps: [Router],
     },
     {
-      provide: V2TopbarService,
-      useFactory: V2TopbarService._,
+      provide: ConfigsService,
+      useFactory: client => new ConfigsService(client),
+      deps: [Client],
     },
+    {
+      provide: MetaService,
+      useFactory: (
+        titleService,
+        metaService,
+        siteService,
+        location,
+        configsService
+      ) =>
+        new MetaService(
+          titleService,
+          metaService,
+          siteService,
+          location,
+          configsService
+        ),
+      deps: [Title, Meta, SiteService, Location, ConfigsService],
+    },
+    MediaProxyService,
+    V2TopbarService,
     {
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,

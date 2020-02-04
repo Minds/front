@@ -175,6 +175,10 @@ m-overlay-modal {
     vertical-align: top;
   }
 
+  .m-mediaModal__media--image {
+    object-fit: contain;
+  }
+
   &.m-mediaModal__mediaWrapper--blog {
     overflow-x: hidden;
     overflow-y: scroll;

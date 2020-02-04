@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-token--onboarding--rewards',
@@ -26,15 +27,18 @@ export class TokenRewardsOnboardingComponent {
   secret: string;
   inProgress: boolean = false;
   error: string;
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   plusPrompt: boolean = false;
 
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected session: Session,
-    protected router: Router
-  ) {}
+    protected router: Router,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     //already completed step
@@ -85,7 +89,7 @@ export class TokenRewardsOnboardingComponent {
         }
       );
 
-      window.Minds.user.rewards = true;
+      this.session.getLoggedInUser().rewards = true;
       this.join();
     } catch (e) {
       this.error = e.message;

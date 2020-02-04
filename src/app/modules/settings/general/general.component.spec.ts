@@ -23,7 +23,8 @@ import { ThirdPartyNetworksService } from '../../../services/third-party-network
 import { Observable } from 'rxjs';
 import { of } from 'rxjs/internal/observable/of';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MockDirective } from '../../../utils/mock';
+import { MockDirective, MockService } from '../../../utils/mock';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');
@@ -77,6 +78,7 @@ describe('SettingsGeneralComponent', () => {
         },
         { provide: ActivatedRoute, useValue: { params: of({ guid: '1000' }) } },
         { provide: Router, useValue: routerMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -104,17 +106,6 @@ describe('SettingsGeneralComponent', () => {
         open_sessions: 1,
       },
       thirdpartynetworks: [],
-    };
-
-    window.Minds.user = {
-      guid: '1000',
-      type: 'user',
-      signup_method: false,
-    };
-
-    window.Minds.categories = {
-      art: 'Art',
-      animals: 'Animals',
     };
 
     fixture.detectChanges();
