@@ -10,6 +10,7 @@ import { Session } from '../../../../../services/session';
 
 import { AttachmentService } from '../../../../../services/attachment';
 import { ActivityService } from '../../../../../common/services/activity.service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -23,6 +24,10 @@ import { ActivityService } from '../../../../../common/services/activity.service
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ActivityPreview {
+  readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
+
   activity: any;
   hideTabs: boolean;
 
@@ -40,9 +45,12 @@ export class ActivityPreview {
     public session: Session,
     public client: Client,
     public attachment: AttachmentService,
-    private _changeDetectorRef: ChangeDetectorRef
+    configs: ConfigsService
   ) {
     this.hideTabs = true;
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
   }
 
   set object(value: any) {
