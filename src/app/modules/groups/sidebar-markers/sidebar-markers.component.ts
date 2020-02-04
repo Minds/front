@@ -1,19 +1,17 @@
 import {
+  ChangeDetectorRef,
   Component,
-  ComponentFactoryResolver,
   DoCheck,
   HostListener,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
-  ChangeDetectorRef,
-  HostListener,
-  Inject,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
-import { interval, timer } from 'rxjs';
-import { startWith, map, tap, throttle } from 'rxjs/operators';
+import { interval } from 'rxjs';
+import { map, startWith, throttle } from 'rxjs/operators';
 
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { Client } from '../../../services/api';
