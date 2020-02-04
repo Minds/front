@@ -17,6 +17,12 @@ export class RequestUrlService {
       requestUrl: this.requestUrl,
     });
 
-    return this.requestUrl;
+    return this.requestUrl || '';
+  }
+
+  getQueryString() {
+    const url = this.get().split('?', 2);
+
+    return url[1] || '';
   }
 }

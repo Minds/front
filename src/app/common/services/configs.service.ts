@@ -9,10 +9,11 @@ export class ConfigsService {
   constructor(private client: Client, private requestUrl: RequestUrlService) {}
 
   async loadFromRemote() {
-    console.log(this.requestUrl.get());
-
     try {
-      this.configs = await this.client.get('api/v1/minds/config');
+      this.configs = await this.client.get(
+        `api/v1/minds/config?${this.requestUrl.getQueryString()}`,
+        null /* ALWAYS NULL */
+      );
     } catch (err) {
       console.error(err);
     }
