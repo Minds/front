@@ -76,13 +76,21 @@ const {
   provideModuleMap,
 } = require('@nguniversal/module-map-ngfactory-loader');
 
-app.engine(
-  'html',
-  ngExpressEngine({
+app.engine('html', (_, options, callback) => {
+  const engine = ngExpressEngine({
     bootstrap: AppServerModuleNgFactory,
-    providers: [provideModuleMap(LAZY_MODULE_MAP)],
-  })
-);
+    providers: [
+      {
+        provide: 'REQUEST_URL',
+        useFactory: () => options.req.url,
+        deps: [],
+      },
+      provideModuleMap(LAZY_MODULE_MAP),
+    ],
+  });
+
+  engine(_, options, callback);
+});
 
 app.set('view engine', 'html');
 app.set('views', DIST_FOLDER);

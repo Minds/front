@@ -186,8 +186,8 @@ export const MINDS_PROVIDERS: any[] = [
   },
   {
     provide: ConfigsService,
-    useFactory: client => new ConfigsService(client),
-    deps: [Client],
+    useFactory: (client, requestUrl) => new ConfigsService(client, requestUrl),
+    deps: [Client, 'REQUEST_URL'],
   },
   {
     provide: FeaturesService,
