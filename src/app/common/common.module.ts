@@ -1,4 +1,4 @@
-import { NgModule, inject } from '@angular/core';
+import { NgModule, Optional } from '@angular/core';
 import {
   CommonModule as NgCommonModule,
   isPlatformServer,
@@ -144,6 +144,7 @@ import { MediaProxyService } from './services/media-proxy.service';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
+import { RequestUrlService } from './services/request-url.service';
 
 const routes: Routes = [
   {
@@ -432,8 +433,9 @@ const routes: Routes = [
     },
     {
       provide: ConfigsService,
-      useFactory: client => new ConfigsService(client),
-      deps: [Client],
+      useFactory: (client, requestUrl) =>
+        new ConfigsService(client, requestUrl),
+      deps: [Client, RequestUrlService],
     },
     {
       provide: MetaService,
@@ -460,6 +462,7 @@ const routes: Routes = [
       useFactory: SidebarMarkersService._,
     },
     HorizontalFeedService,
+    RequestUrlService,
   ],
   entryComponents: [
     NotificationsToasterComponent,

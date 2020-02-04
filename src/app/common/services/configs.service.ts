@@ -1,22 +1,15 @@
+import { Injectable } from '@angular/core';
 import { Client } from '../api/client.service';
-import { Inject, Injectable, Optional, PLATFORM_ID } from '@angular/core';
-import { isPlatformServer } from '@angular/common';
+import { RequestUrlService } from './request-url.service';
 
 @Injectable()
 export class ConfigsService {
   private configs = {};
 
-  constructor(
-    private client: Client,
-    @Inject('REQUEST_URL') @Optional() private requestUrl: string
-  ) {}
+  constructor(private client: Client, private requestUrl: RequestUrlService) {}
 
   async loadFromRemote() {
-    const url = isPlatformServer(PLATFORM_ID)
-      ? this.requestUrl
-      : window.location;
-
-    console.log({ isPlatformServer: isPlatformServer(PLATFORM_ID), url });
+    console.log(this.requestUrl.get());
 
     try {
       this.configs = await this.client.get('api/v1/minds/config');

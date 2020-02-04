@@ -50,6 +50,7 @@ import { ConfigsService } from '../common/services/configs.service';
 import { TransferHttpInterceptorService } from './transfer-http-interceptor.service';
 import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.service';
 import { CookieService } from '../common/services/cookie.service';
+import { RequestUrlService } from '../common/services/request-url.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -187,7 +188,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: ConfigsService,
     useFactory: (client, requestUrl) => new ConfigsService(client, requestUrl),
-    deps: [Client, 'REQUEST_URL'],
+    deps: [Client, RequestUrlService],
   },
   {
     provide: FeaturesService,
@@ -235,4 +236,5 @@ export const MINDS_PROVIDERS: any[] = [
   DiagnosticsService,
   AuthService,
   FormToastService,
+  RequestUrlService,
 ];
