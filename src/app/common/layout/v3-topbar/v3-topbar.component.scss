@@ -3,6 +3,10 @@ m-v3-topbar {
     grid-gap: 0;
     grid-template-columns: 3fr 5fr 4fr;
 
+    @media screen and (max-width: $m-grid-max-tablet) {
+      grid-template-columns: 71px 5fr 4fr;
+    }
+
     &,
     & > * {
       height: 75px;
@@ -233,7 +237,7 @@ m-v3-topbar {
 
 .m-v3-topbarNavItem__Logo {
   margin: 0 8px 0 0;
-  padding: 0 12px;
+  padding: 0;
   //height: 62px;
   box-sizing: border-box;
   border: 0;

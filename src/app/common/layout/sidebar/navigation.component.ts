@@ -1,9 +1,13 @@
 import {
   Component,
   ComponentFactoryResolver,
+  HostListener,
+  Inject,
   OnInit,
+  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
@@ -22,12 +26,19 @@ export class SidebarNavigationComponent implements OnInit {
   componentRef;
   componentInstance: GroupsSidebarMarkersComponent;
 
+  isDesktop: boolean = true;
+
   constructor(
     public navigation: NavigationService,
     public session: Session,
-    private _componentFactoryResolver: ComponentFactoryResolver
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.getUser();
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.onResize();
+    }
   }
 
   ngOnInit() {
@@ -49,5 +60,10 @@ export class SidebarNavigationComponent implements OnInit {
     this.componentRef = viewContainerRef.createComponent(componentFactory);
     this.componentInstance = this.componentRef.instance;
     this.componentInstance.showLabels = true;
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.isDesktop = window.innerWidth > 900;
   }
 }
