@@ -45,6 +45,7 @@ export class CommentPosterComponent {
   canPost: boolean = true;
   inProgress: boolean = false;
   maxLength: number = 1500;
+  cdn_assets_url: string;
 
   constructor(
     public session: Session,
@@ -56,7 +57,9 @@ export class CommentPosterComponent {
     private renderer: Renderer,
     private cd: ChangeDetectorRef,
     private configs: ConfigsService
-  ) {}
+  ) {
+    this.cdn_assets_url = this.configs.get('cdn_assets_url');
+  }
 
   keypress(e: KeyboardEvent) {
     if (!e.shiftKey && e.charCode === 13) {

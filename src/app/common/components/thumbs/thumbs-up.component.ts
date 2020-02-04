@@ -1,15 +1,15 @@
 import {
-  ChangeDetectorRef,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   DoCheck,
-  OnChanges,
 } from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { SignupModalService } from '../../../modules/modals/signup/service';
+import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   selector: 'minds-button-thumbs-up',
@@ -23,7 +23,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
     >
       <img
         class="m-buttonsThumbsUp__icon"
-        [src]="minds.cdn_assets_url + 'assets/icons/upvote.svg'"
+        [src]="cdn_assets_url + 'assets/icons/upvote.svg'"
       />
       <span
         class="minds-counter"
@@ -42,7 +42,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
     `,
   ],
 })
-export class ThumbsUpButton implements DoCheck, OnChanges {
+export class ThumbsUpButton implements DoCheck {
   changesDetected: boolean = false;
   object = {
     guid: null,
@@ -50,15 +50,18 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     'thumbs:up:user_guids': [],
   };
   showModal: boolean = false;
-  minds = window.Minds;
+  cdn_assets_url: string;
 
   constructor(
     public session: Session,
     public client: Client,
     public wallet: WalletService,
     private modal: SignupModalService,
-    private cd: ChangeDetectorRef
-  ) {}
+    private cd: ChangeDetectorRef,
+    private configs: ConfigsService
+  ) {
+    this.cdn_assets_url = this.configs.get('cdn_assets_url');
+  }
 
   set _object(value: any) {
     if (!value) return;
@@ -76,7 +79,7 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
 
     this.client.put('api/v1/thumbs/' + this.object.guid + '/up', {});
     if (!this.has()) {
-      //this.object['thumbs:up:user_guids'].push(this.session.getLoggedInUser().guid);
+      // this.object['thumbs:up:user_guids'].push(this.session.getLoggedInUser().guid);
       this.object['thumbs:up:user_guids'] = [
         this.session.getLoggedInUser().guid,
       ];
@@ -99,8 +102,6 @@ export class ThumbsUpButton implements DoCheck, OnChanges {
     }
     return false;
   }
-
-  ngOnChanges(changes) {}
 
   ngDoCheck() {
     this.changesDetected = false;

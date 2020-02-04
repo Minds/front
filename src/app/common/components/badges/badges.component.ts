@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
+import { ConfigsService } from '../../services/configs.service';
 
 export interface SocialProfileMeta {
   key: string;
@@ -27,13 +28,16 @@ export class ChannelBadgesComponent {
     'admin',
     'onchain_booster',
   ];
-  minds = window.Minds;
+  cdn_assets_url: string;
 
   constructor(
     public session: Session,
     private client: Client,
-    private router: Router
-  ) {}
+    private router: Router,
+    private configs: ConfigsService
+  ) {
+    this.cdn_assets_url = this.configs.get('cdn_assets_url');
+  }
 
   shouldShowVerifiedBadge() {
     if (this.badges.indexOf('verified') === -1) {

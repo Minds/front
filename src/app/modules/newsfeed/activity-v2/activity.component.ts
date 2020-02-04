@@ -34,6 +34,7 @@ import { ReadMoreDirective } from '../../../common/read-more/read-more.directive
 import { ActivityAnalyticsOnViewService } from '../../legacy/components/cards/activity/activity-analytics-on-view.service';
 import { Ng2FittextDirective } from 'ng2-fittext/directives/ng2-fittext.directive';
 import { MindsVideoPlayerComponent } from '../../media/components/video-player/player.component';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -59,8 +60,6 @@ import { MindsVideoPlayerComponent } from '../../media/components/video-player/p
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MindsActivityV2 implements OnInit {
-  minds = window.Minds;
-
   activity: any;
   boosted: boolean = false;
   commentsToggle: boolean = false;
@@ -82,6 +81,9 @@ export class MindsActivityV2 implements OnInit {
   isHidden: boolean = false;
 
   allowOverflow: boolean = false;
+
+  cdn_url;
+  cdn_assets_url;
 
   @ViewChild(ReadMoreDirective, { static: false }) readMore: ReadMoreDirective;
   @ViewChild(Ng2FittextDirective, { static: false })
@@ -204,7 +206,8 @@ export class MindsActivityV2 implements OnInit {
     protected activityService: ActivityService,
     @SkipSelf() injector: Injector,
     protected elementRef: ElementRef,
-    protected signupModal: SignupModalService
+    protected signupModal: SignupModalService,
+    private configs: ConfigsService
   ) {
     this.clientMetaService.inherit(injector);
 
@@ -223,6 +226,9 @@ export class MindsActivityV2 implements OnInit {
 
         this.onViewed.emit({ activity: activity, visible: true });
       });
+
+    this.cdn_url = this.configs.get('cdn_url');
+    this.cdn_assets_url = this.configs.get('cdn_assets_url');
   }
 
   ngOnInit() {
@@ -234,7 +240,7 @@ export class MindsActivityV2 implements OnInit {
   set object(value: any) {
     if (!value) return;
     this.activity = value;
-    this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
+    this.activity.url = this.configs.get('site_url') + 'newsfeed/' + value.guid;
 
     this.activityAnalyticsOnViewService.setEntity(this.activity);
 
@@ -244,8 +250,8 @@ export class MindsActivityV2 implements OnInit {
       this.activity.custom_data[0].src
     ) {
       this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(
-        this.minds.site_url,
-        this.minds.cdn_url
+        this.configs.get('site_url'),
+        this.configs.get('cdn_url')
       );
     }
 

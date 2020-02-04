@@ -3,6 +3,7 @@ import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { SignupModalService } from '../../../../modules/modals/signup/service';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 // had forwardRef(() => RemindComposerModal)
 @Component({
@@ -13,7 +14,7 @@ import { SignupModalService } from '../../../../modules/modals/signup/service';
     <a (click)="remind()" [ngClass]="{ selected: object.reminded }">
       <img
         class="m-buttonsRemind__icon"
-        [src]="minds.cdn_assets_url + 'assets/icons/remind.svg'"
+        [src]="cdn_assets_url + 'assets/icons/remind.svg'"
       />
       <span class="minds-counter" *ngIf="object.reminds > 0">{{
         object.reminds | number
@@ -35,13 +36,16 @@ export class RemindButton {
   showModal: boolean = false;
   message: string = '';
   remindOpen: boolean = false;
-  minds = window.Minds;
+  cdn_assets_url: string;
 
   constructor(
     public session: Session,
     public client: Client,
-    private modal: SignupModalService
-  ) {}
+    private modal: SignupModalService,
+    private configs: ConfigsService
+  ) {
+    this.cdn_assets_url = this.configs.get('cdn_assets_url');
+  }
 
   set _object(value: any) {
     this.object = value;

@@ -9,6 +9,7 @@ import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { SignupModalService } from '../../../modules/modals/signup/service';
+import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   selector: 'minds-button-thumbs-down',
@@ -22,7 +23,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
     >
       <img
         class="m-buttonsThumbsDown__icon"
-        [src]="minds.cdn_assets_url + 'assets/icons/downvote.svg'"
+        [src]="cdn_assets_url + 'assets/icons/downvote.svg'"
       />
       <span
         class="minds-counter"
@@ -45,15 +46,18 @@ export class ThumbsDownButton implements DoCheck {
   changesDetected: boolean = false;
   object;
   showModal: boolean = false;
-  minds = window.Minds;
+  cdn_assets_url: string;
 
   constructor(
     private cd: ChangeDetectorRef,
     public session: Session,
     public client: Client,
     public wallet: WalletService,
-    private modal: SignupModalService
-  ) {}
+    private modal: SignupModalService,
+    private configs: ConfigsService
+  ) {
+    this.cdn_assets_url = this.configs.get('cdn_assets_url');
+  }
 
   set _object(value: any) {
     this.object = value;
@@ -92,8 +96,6 @@ export class ThumbsDownButton implements DoCheck {
     }
     return false;
   }
-
-  ngOnChanges(changes) {}
 
   ngDoCheck() {
     this.changesDetected = false;

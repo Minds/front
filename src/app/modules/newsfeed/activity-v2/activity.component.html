@@ -14,7 +14,7 @@
       <a [routerLink]="['/', activity.ownerObj.username]">
         <img
           [src]="
-            minds.cdn_url +
+            cdn_url +
             'icon/' +
             activity.ownerObj.guid +
             '/medium/' +
@@ -270,7 +270,7 @@
           style="width:100%"
           (error)="
             activity.custom_data[0].src =
-              minds.cdn_assets_url + 'assets/logos/placeholder-bulb.jpg'
+              cdn_assets_url + 'assets/logos/placeholder-bulb.jpg'
           "
           *ngIf="activity.custom_data"
           (click)="clickedImage()"
@@ -532,7 +532,7 @@
   >
     <span i18n>Wire</span>
     <img
-      [src]="minds.cdn_assets_url + 'assets/icons/wire.svg'"
+      [src]="cdn_assets_url + 'assets/icons/wire.svg'"
       (click)="openWireModal()"
     />
   </div>

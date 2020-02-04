@@ -66,7 +66,7 @@
           <img
             class="m-matureButton__img"
             [class.m-matureButton__img--selected]="attachment.isMature()"
-            [src]="minds.cdn_assets_url + 'assets/icons/explicit.svg'"
+            [src]="cdn_assets_url + 'assets/icons/explicit.svg'"
           />
         </a>
 
@@ -75,7 +75,7 @@
           <img
             class="m-attachmentButton__img"
             [class.m-attachmentButton__img--selected]="attachment.hasFile()"
-            [src]="minds.cdn_assets_url + 'assets/icons/upload.svg'"
+            [src]="cdn_assets_url + 'assets/icons/upload.svg'"
           />
           <input
             type="file"
