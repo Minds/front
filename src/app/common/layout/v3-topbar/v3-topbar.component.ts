@@ -10,13 +10,14 @@ import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { NotificationsToasterComponent } from '../../../modules/notifications/toaster.component';
 import { Session } from '../../../services/session';
 import { ThemeService } from '../../services/theme.service';
+import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   selector: 'm-v3-topbar',
   templateUrl: 'v3-topbar.component.html',
 })
 export class V3TopbarComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   timeout;
   isTouchScreen = false;
 
@@ -27,11 +28,14 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   componentInstance: NotificationsToasterComponent;
 
   constructor(
+    protected themeService: ThemeService,
+    protected configs: ConfigsService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
-    private themeService: ThemeService,
     protected componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+  ) {
+    this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.loadComponent();
