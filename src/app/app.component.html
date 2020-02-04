@@ -40,7 +40,11 @@
   </ng-container>
 
   <m-body
-    [class.has-markers-sidebar]="session.isLoggedIn() && !isProDomain"
+    [class.has-markers-sidebar]="
+      session.isLoggedIn() &&
+      !isProDomain &&
+      !featuresService.has('navigation-2020')
+    "
     [class.has-v2-navbar]="featuresService.has('top-feeds')"
     [class.has-v3-navbar]="featuresService.has('navigation-2020')"
     [class.is-pro-domain]="isProDomain"
