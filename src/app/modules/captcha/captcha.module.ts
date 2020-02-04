@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
-import { ReCaptchaComponent } from './recaptcha/recaptcha.component';
-import { RECAPTCHA_SERVICE_PROVIDER } from './recaptcha/recaptcha.service';
+import { CaptchaComponent } from './captcha.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [ReCaptchaComponent],
-  exports: [ReCaptchaComponent],
-  providers: [RECAPTCHA_SERVICE_PROVIDER],
+  imports: [CommonModule, FormsModule],
+  declarations: [CaptchaComponent],
+  exports: [CaptchaComponent],
 })
 export class CaptchaModule {}
