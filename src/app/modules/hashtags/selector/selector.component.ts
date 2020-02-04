@@ -25,7 +25,7 @@ export class HashtagsSelectorComponent {
   >();
 
   parseTags(message) {
-    const regex = /(^|\s||)#(\w+)/gim;
+    const regex = /(^|\s)#(\w+)/gim;
     let tags = [];
 
     let match;

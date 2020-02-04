@@ -23,10 +23,10 @@ describe('TagPipe', () => {
     pipe = new TagsPipe(featuresServiceMock, siteServiceMock);
   });
 
-  it('should transform when # in the middle ', () => {
+  it('should not transform when # in the middle ', () => {
     const string = 'textstring#name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain(
+    expect(transformedString).not.toContain(
       '<a href="/newsfeed/global/top;hashtag=name;period=7d'
     );
   });
@@ -39,18 +39,18 @@ describe('TagPipe', () => {
     );
   });
 
-  it('should transform when # preceded by [] ', () => {
+  it('should not transform when # preceded by [] ', () => {
     const string = 'textstring [#name';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain(
+    expect(transformedString).not.toContain(
       '<a href="/newsfeed/global/top;hashtag=name;period=7d'
     );
   });
 
-  it('should transform when # preceded by () ', () => {
+  it('should not transform when # preceded by () ', () => {
     const string = 'textstring (#name)';
     const transformedString = pipe.transform(<any>string);
-    expect(transformedString).toContain(
+    expect(transformedString).not.toContain(
       '<a href="/newsfeed/global/top;hashtag=name;period=7d'
     );
   });
@@ -190,7 +190,7 @@ describe('TagPipe', () => {
     expect(transformedString).toContain(
       '<a href="/newsfeed/global/top;hashtag=hash1;period=7d'
     );
-    expect(transformedString).toContain(
+    expect(transformedString).not.toContain(
       '<a href="/newsfeed/global/top;hashtag=hash2;period=7d'
     );
     expect(transformedString).toContain(

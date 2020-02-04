@@ -30,7 +30,7 @@ export class TagsPipe implements PipeTransform {
       },
     },
     hash: {
-      rule: /(^|\s||)#(\w+)/gim,
+      rule: /(^|\s)#(\w+)/gim,
       replace: m => {
         if (this.siteService.isProDomain) {
           return `${
@@ -39,7 +39,7 @@ export class TagsPipe implements PipeTransform {
         } else if (this.featureService.has('top-feeds')) {
           return `${
             m.match[1]
-          }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=7d">#${
+          }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=24h">#${
             m.match[2]
           }</a>`;
         }

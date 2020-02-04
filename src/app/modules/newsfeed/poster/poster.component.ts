@@ -131,7 +131,7 @@ export class PosterComponent {
     this.errorMessage = '';
     this.meta.message = $event;
 
-    const regex = /(^|\s||)#(\w+)/gim;
+    const regex = /(^|\s)#(\w+)/gim;
     this.tags = [];
     let match;
 
