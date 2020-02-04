@@ -3,6 +3,7 @@ import 'reflect-metadata';
 
 import { join } from 'path';
 import { readFileSync } from 'fs';
+import * as _url from 'url';
 
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
@@ -170,6 +171,14 @@ app.get('*', cache(), (req, res) => {
         {
           provide: 'ORIGIN_URL',
           useValue: `${http}://${req.headers.host}`,
+        },
+        // for initial query params before router loads
+        {
+          provide: 'QUERY_STRING',
+          useFactory: () => {
+            return _url.parse(req.url, true).search || '';
+          },
+          deps: [],
         },
       ],
     },
