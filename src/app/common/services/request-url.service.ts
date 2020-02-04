@@ -3,9 +3,13 @@ import { isPlatformServer } from '@angular/common';
 
 @Injectable()
 export class RequestUrlService {
-  constructor(
-    @Inject('REQUEST_URL') @Optional() protected requestUrl: string
-  ) {}
+  protected requestUrl: string;
+
+  constructor(@Inject('REQUEST_URL') @Optional() requestUrl: string) {
+    this.requestUrl = isPlatformServer(PLATFORM_ID)
+      ? requestUrl
+      : window.location.toString();
+  }
 
   get() {
     console.log({
@@ -13,8 +17,6 @@ export class RequestUrlService {
       requestUrl: this.requestUrl,
     });
 
-    return isPlatformServer(PLATFORM_ID)
-      ? this.requestUrl
-      : window.location.toString();
+    return this.requestUrl;
   }
 }
