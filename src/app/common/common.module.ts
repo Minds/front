@@ -1,4 +1,4 @@
-import { NgModule, inject } from '@angular/core';
+import { NgModule, inject, Injector } from '@angular/core';
 import {
   CommonModule as NgCommonModule,
   isPlatformServer,
@@ -47,7 +47,6 @@ import { ScrollLock } from './directives/scroll-lock';
 import { TagsLinks } from './directives/tags';
 import { Tooltip } from './directives/tooltip';
 import { MindsAvatar } from './components/avatar/avatar';
-import { CaptchaComponent } from './components/captcha/captcha.component';
 import { Textarea } from './components/editors/textarea.component';
 import { TagcloudComponent } from './components/tagcloud/tagcloud.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
@@ -209,7 +208,6 @@ const routes: Routes = [
     MDL_DIRECTIVES,
     DateSelectorComponent,
     MindsAvatar,
-    CaptchaComponent,
     Textarea,
     InlineEditorComponent,
 
@@ -316,7 +314,6 @@ const routes: Routes = [
     MDL_DIRECTIVES,
     DateSelectorComponent,
     MindsAvatar,
-    CaptchaComponent,
     Textarea,
     InlineEditorComponent,
 
@@ -435,8 +432,9 @@ const routes: Routes = [
     },
     {
       provide: ConfigsService,
-      useFactory: client => new ConfigsService(client),
-      deps: [Client],
+      useFactory: (client, injector) =>
+        new ConfigsService(client, injector.get('QUERY_STRING')),
+      deps: [Client, Injector],
     },
     {
       provide: MetaService,
