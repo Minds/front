@@ -31,6 +31,7 @@ import { By } from '@angular/platform-browser';
 import { sessionMock } from '../../../../../../tests/session-mock.spec';
 import { storageMock } from '../../../../../../tests/storage-mock.spec';
 import { Storage } from '../../../../../services/storage';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 describe('TokenIntroductionOnboardingComponent', () => {
   let comp: TokenIntroductionOnboardingComponent;
@@ -52,6 +53,7 @@ describe('TokenIntroductionOnboardingComponent', () => {
         { provide: Router, useValue: RouterTestingModule },
         { provide: Session, useValue: sessionMock },
         { provide: Storage, useValue: storageMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents(); // compile template and css
   }));

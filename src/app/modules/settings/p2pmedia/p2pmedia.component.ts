@@ -6,9 +6,9 @@ import {
 import { Storage } from '../../../services/storage';
 import { WebtorrentService } from '../../webtorrent/webtorrent.service';
 import { Client } from '../../../services/api/client';
+import { Session } from '../../../services/session';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-settings--p2pmedia',
   templateUrl: 'p2pmedia.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,12 +25,13 @@ export class SettingsP2PMediaComponent {
     protected cd: ChangeDetectorRef,
     protected storage: Storage,
     protected webtorrent: WebtorrentService,
-    protected client: Client
+    protected client: Client,
+    private session: Session
   ) {}
 
   ngOnInit() {
     this.supported = this.webtorrent.isBrowserSupported();
-    this.settings.enableP2p = window.Minds.user.p2p_media_enabled;
+    this.settings.enableP2p = this.session.getLoggedInUser().p2p_media_enabled;
   }
 
   change() {
@@ -38,7 +39,7 @@ export class SettingsP2PMediaComponent {
   }
 
   async save() {
-    window.Minds.user.p2p_media_enabled = this.settings.enableP2p;
+    this.session.getLoggedInUser().p2p_media_enabled = this.settings.enableP2p;
     this.webtorrent.setEnabled(!this.settings.enableP2p);
 
     const url = 'api/v2/settings/p2p';
@@ -50,7 +51,7 @@ export class SettingsP2PMediaComponent {
         await this.client.delete(url);
       }
     } catch (e) {
-      window.Minds.user.p2p_media_enabled = this.settings.enableP2p;
+      this.session.getLoggedInUser().p2p_media_enabled = this.settings.enableP2p;
       this.webtorrent.setEnabled(this.settings.enableP2p);
     }
 

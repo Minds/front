@@ -56,7 +56,6 @@ describe('RegisterComponent', () => {
     comp = fixture.componentInstance;
     featuresServiceMock.mock('register_pages-december-2019', false);
 
-    window.Minds.cdn_assets_url = 'http://dev.minds.io/';
     comp.flags.canPlayInlineVideos = true;
 
     fixture.detectChanges();

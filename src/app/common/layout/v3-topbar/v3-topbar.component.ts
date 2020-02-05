@@ -2,21 +2,27 @@ import {
   ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
+  HostListener,
+  Inject,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { NotificationsToasterComponent } from '../../../modules/notifications/toaster.component';
 import { Session } from '../../../services/session';
 import { ThemeService } from '../../services/theme.service';
+import { ConfigsService } from '../../services/configs.service';
+import { isPlatformBrowser } from '@angular/common';
+import { SidebarNavigationService } from '../sidebar/navigation.service';
 
 @Component({
   selector: 'm-v3-topbar',
   templateUrl: 'v3-topbar.component.html',
 })
 export class V3TopbarComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   timeout;
   isTouchScreen = false;
 
@@ -26,12 +32,23 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   componentRef;
   componentInstance: NotificationsToasterComponent;
 
+  isMobile: boolean = false;
+
   constructor(
+    protected sidebarService: SidebarNavigationService,
+    protected themeService: ThemeService,
+    protected configs: ConfigsService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
-    private themeService: ThemeService,
-    protected componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+    protected componentFactoryResolver: ComponentFactoryResolver,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.onResize();
+    }
+  }
 
   ngOnInit() {
     this.loadComponent();
@@ -75,6 +92,15 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   mouseLeave() {
     clearTimeout(this.timeout);
+  }
+
+  toggleSidebarNav() {
+    this.sidebarService.toggle();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.isMobile = window.innerWidth <= 540;
   }
 
   ngOnDestroy() {

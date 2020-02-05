@@ -18,6 +18,7 @@ import { AttachmentService } from '../../../services/attachment';
 import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
 import { ActivityService } from '../../../common/services/activity.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -30,18 +31,10 @@ import { ActivityService } from '../../../common/services/activity.service';
     'scrollable',
   ],
   templateUrl: 'list.component.html',
-  providers: [
-    {
-      provide: AttachmentService,
-      useFactory: AttachmentService._,
-      deps: [Session, Client, Upload],
-    },
-    ActivityService,
-  ],
+  providers: [AttachmentService, ActivityService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentsListComponent implements OnInit, OnDestroy {
-  minds;
   object;
   guid: string = '';
   parent: any;
@@ -95,10 +88,9 @@ export class CommentsListComponent implements OnInit, OnDestroy {
     public sockets: SocketsService,
     private renderer: Renderer,
     private cd: ChangeDetectorRef,
-    public activityService: ActivityService
-  ) {
-    this.minds = window.Minds;
-  }
+    public activityService: ActivityService,
+    private configs: ConfigsService
+  ) {}
 
   set _object(value: any) {
     this.object = value;
@@ -515,7 +507,7 @@ export class CommentsListComponent implements OnInit, OnDestroy {
     this.triedToPost = false;
 
     this.attachment
-      .remove(file)
+      .remove()
       .then(() => {
         this.canPost = true;
         this.triedToPost = false;
@@ -555,11 +547,13 @@ export class CommentsListComponent implements OnInit, OnDestroy {
 
   getAvatar() {
     if (this.session.isLoggedIn()) {
-      return `${this.minds.cdn_url}icon/${
+      return `${this.configs.get('cdn_url')}icon/${
         this.session.getLoggedInUser().guid
       }/small/${this.session.getLoggedInUser().icontime}`;
     } else {
-      return `${this.minds.cdn_assets_url}assets/avatars/default-small.png`;
+      return `${this.configs.get(
+        'cdn_assets_url'
+      )}assets/avatars/default-small.png`;
     }
   }
 

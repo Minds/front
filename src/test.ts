@@ -18,9 +18,6 @@ import {
 declare const __karma__: any;
 declare const require: any;
 declare const window: any;
-window.Minds = {
-  features: {},
-};
 
 // Prevent Karma from running prematurely.
 __karma__.loaded = function() {};

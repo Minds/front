@@ -5,6 +5,7 @@ import { GroupsService } from '../../groups-service';
 import { MindsHttpClient } from '../../../../common/api/client.service';
 import { map } from 'rxjs/operators';
 import { Session } from '../../../../services/session';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -14,7 +15,7 @@ import { Session } from '../../../../services/session';
   templateUrl: 'members.html',
 })
 export class GroupsProfileMembers {
-  minds = window.Minds;
+  readonly cdnUrl: string;
   @ViewChild('el', { static: true }) el;
 
   group: any;
@@ -37,8 +38,11 @@ export class GroupsProfileMembers {
   constructor(
     public session: Session,
     public client: MindsHttpClient,
-    public service: GroupsService
-  ) {}
+    public service: GroupsService,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   ngOnInit() {
     this.$group = this.service.$group.subscribe(group => {

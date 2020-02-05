@@ -5,7 +5,7 @@
   <div class="m-card--user--banner">
     <div
       class="m-card--user--banner--img"
-      [ngStyle]="{'background-image': 'url(' + minds.cdn_url + 'fs/v1/banners/' + group.guid + ')'}"
+      [ngStyle]="{'background-image': 'url(' + cdnUrl + 'fs/v1/banners/' + group.guid + ')'}"
     ></div>
     <div class="minds-banner-overlay"></div>
   </div>
@@ -16,7 +16,7 @@
   >
     <div class="avatar">
       <img
-        src="{{minds.cdn_url}}fs/v1/avatars/{{group.guid}}/large"
+        src="{{cdnUrl}}fs/v1/avatars/{{group.guid}}/large"
         class="mdl-shadow--2dp"
       />
     </div>

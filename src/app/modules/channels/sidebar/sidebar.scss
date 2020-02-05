@@ -64,3 +64,9 @@
     }
   }
 }
+
+.m-channel-bio-field--tags {
+  @media screen and (max-width: $min-tablet) {
+    display: none;
+  }
+}

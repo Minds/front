@@ -3,13 +3,15 @@ import { Session } from '../../../../../services/session';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 import isMobile from '../../../../../helpers/is-mobile';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-referrals--links',
   templateUrl: 'links.component.html',
 })
 export class ReferralsLinksComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
 
   referrerParam = '';
   registerUrl = '';
@@ -26,15 +28,19 @@ export class ReferralsLinksComponent implements OnInit, OnDestroy {
 
   constructor(
     public session: Session,
-    private overlayModal: OverlayModalService
-  ) {}
+    private overlayModal: OverlayModalService,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
+  }
 
   ngOnInit() {
     // Create custom referral links for current user
     this.referrerParam = '?referrer=' + this.session.getLoggedInUser().username;
-    this.registerUrl = this.minds.site_url + 'register' + this.referrerParam;
+    this.registerUrl = this.siteUrl + 'register' + this.referrerParam;
     this.encodedRegisterUrl =
-      encodeURI(this.minds.site_url) +
+      encodeURI(this.siteUrl) +
       encodeURIComponent('register' + this.referrerParam);
     this.encodedRegisterMessage = 'Join%20me%20on%20Minds%20%f0%9f%92%a1%20';
   }

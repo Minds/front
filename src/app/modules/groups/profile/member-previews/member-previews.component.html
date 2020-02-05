@@ -5,7 +5,7 @@
     *ngFor="let member of members"
   >
     <a [routerLink]="['/', member.username]">
-      <img [src]="minds.cdn_url + 'icon/' + member.guid + '/small'" />
+      <img [src]="cdnUrl + 'icon/' + member.guid + '/small'" />
     </a>
   </li>
   <li class="m-groupMemberPreviews__member--count" routerLink="members">

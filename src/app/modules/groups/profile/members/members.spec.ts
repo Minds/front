@@ -15,6 +15,7 @@ import { GroupsService } from '../../groups-service';
 import { MindsHttpClient } from '../../../../common/api/client.service';
 import { mindsHttpClientMock } from '../../../../mocks/common/api/minds-http-client.service.mock';
 import { groupsServiceMock } from '../../../../mocks/modules/groups/groups.service.mock';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 const user = {
   guid: '1000',
@@ -74,6 +75,12 @@ describe('GroupsProfileMembers', () => {
         { provide: Session, useValue: sessionMock },
         { provide: MindsHttpClient, useValue: mindsHttpClientMock },
         { provide: GroupsService, useValue: groupsServiceMock },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService, {
+            configs: { cdnUrl: 'http://dev.minds.io/' },
+          }),
+        },
       ],
     }).compileComponents();
   }));
@@ -82,8 +89,6 @@ describe('GroupsProfileMembers', () => {
     fixture = TestBed.createComponent(GroupsProfileMembers);
 
     comp = fixture.componentInstance;
-
-    window.Minds.cdn_url = 'http://dev.minds.io/';
 
     mindsHttpClientMock.response = {};
     mindsHttpClientMock.response['api/v1/groups/membership/1234'] = {
@@ -156,7 +161,10 @@ describe('GroupsProfileMembers', () => {
       By.css('.m-search-inline-list img:first-child')
     );
     expect(img).not.toBeNull();
-    expect(img.nativeElement.src).toContain('http://dev.minds.io/icon/3/small');
+    expect(img.nativeElement.src).toContain(
+      //'http://dev.minds.io/icon/3/small'
+      '/icon/3/small'
+    );
 
     const body = fixture.debugElement.query(
       By.css('.m-search-inline-list .m-body')

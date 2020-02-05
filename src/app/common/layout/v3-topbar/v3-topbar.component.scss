@@ -3,9 +3,21 @@ m-v3-topbar {
     grid-gap: 0;
     grid-template-columns: 3fr 5fr 4fr;
 
+    @media screen and (max-width: $m-grid-max-tablet) {
+      grid-template-columns: 71px 5fr 4fr;
+    }
+    @media screen and(max-width: $m-grid-max-mobile) {
+      display: flex;
+    }
+
     &,
     & > * {
       height: 75px;
+    }
+
+    .m-v3Topbar__spacer {
+      flex-grow: 1;
+      opacity: 0;
     }
 
     .m-v3topbar__leftColumn {
@@ -15,6 +27,10 @@ m-v3-topbar {
 
       display: flex;
       align-items: center;
+
+      @media screen and(max-width: $m-grid-max-mobile) {
+        margin-left: 23px;
+      }
     }
 
     .m-v3topbar__middleColumn {
@@ -27,12 +43,18 @@ m-v3-topbar {
       display: flex;
       align-items: center;
       min-width: 0;
+
+      & > * {
+        padding-right: 15px;
+      }
     }
 
-    .m-v3topbar__leftColumn,
-    .m-v3topbar__middleColumn {
-      @include m-theme() {
-        border-right: 1px solid themed($m-grey-400);
+    @media screen and(min-width: $m-grid-max-mobile) {
+      .m-v3topbar__leftColumn,
+      .m-v3topbar__middleColumn {
+        @include m-theme() {
+          border-right: 1px solid themed($m-grey-400);
+        }
       }
     }
   }
@@ -74,6 +96,15 @@ m-v3-topbar {
 
       > .mdl-textfield {
         width: 100%;
+
+        @media screen and(max-width: $m-grid-max-mobile) {
+          width: 20px;
+          transition: width ease-in-out 0.2s;
+
+          &.is-focused {
+            width: 270px;
+          }
+        }
 
         input {
           border: 0;
@@ -233,7 +264,7 @@ m-v3-topbar {
 
 .m-v3-topbarNavItem__Logo {
   margin: 0 8px 0 0;
-  padding: 0 12px;
+  padding: 0;
   //height: 62px;
   box-sizing: border-box;
   border: 0;
@@ -280,9 +311,9 @@ m-v3-topbar {
   }
 }
 
-.m-v3-topbar__UserMenu {
-  min-width: 80px;
-}
+//.m-v3-topbar__UserMenu {
+//  min-width: 80px;
+//}
 
 .m-v3-topbar__Container__LoginWrapper {
   @media screen and (max-width: 480px) {

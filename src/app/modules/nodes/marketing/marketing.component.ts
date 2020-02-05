@@ -5,6 +5,7 @@ import {
   ElementRef,
   ViewChild,
 } from '@angular/core';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-nodes__marketing',
@@ -12,12 +13,14 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NodesMarketingComponent {
-  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+  readonly cdnAssetsUrl: string;
 
   @ViewChild('topAnchor', { static: false })
   readonly topAnchor: ElementRef;
 
-  constructor(protected cd: ChangeDetectorRef) {}
+  constructor(protected cd: ChangeDetectorRef, configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   scrollToTop() {
     if (this.topAnchor.nativeElement) {

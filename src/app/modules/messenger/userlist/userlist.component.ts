@@ -8,8 +8,8 @@ import { Session } from '../../../services/session';
 
 import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.component';
 import { MessengerEncryptionService } from '../encryption/encryption.service';
-import { MessengerSounds } from '../sounds/service';
 import { MessengerEncryption } from '../encryption/encryption.component';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -17,7 +17,7 @@ import { MessengerEncryption } from '../encryption/encryption.component';
   templateUrl: 'userlist.component.html',
 })
 export class MessengerUserlist {
-  sounds = new MessengerSounds();
+  readonly cdnUrl: string;
 
   conversations: Array<any> = [];
   offset: string = '';
@@ -26,9 +26,6 @@ export class MessengerUserlist {
   hasMoreData: boolean = true;
   inProgress: boolean = false;
   cb: number = Date.now();
-
-  minds: Minds = window.Minds;
-  storage: Storage = new Storage();
 
   socketSubscriptions = {
     touchConversation: null,
@@ -44,8 +41,12 @@ export class MessengerUserlist {
     public client: Client,
     public sockets: SocketsService,
     public encryption: MessengerEncryptionService,
-    public dockpanes: MessengerConversationDockpanesService
-  ) {}
+    public dockpanes: MessengerConversationDockpanesService,
+    public storage: Storage,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   ngOnInit() {
     if (this.session.isLoggedIn()) {

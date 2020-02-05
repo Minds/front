@@ -1,10 +1,11 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
-  HostListener,
+  ChangeDetectorRef,
   OnInit,
+  HostListener,
 } from '@angular/core';
+import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   selector: 'm-marketing__footer',
@@ -14,10 +15,15 @@ import {
 export class MarketingFooterComponent implements OnInit {
   readonly year: number = new Date().getFullYear();
 
-  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+  readonly cdnAssetsUrl: string;
   isMobile: boolean;
 
-  constructor(protected cd: ChangeDetectorRef) {}
+  constructor(
+    private configs: ConfigsService,
+    protected cd: ChangeDetectorRef
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.onResize();

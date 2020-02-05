@@ -1,7 +1,9 @@
 <div class="m-marketing m-jobs--marketing">
   <div class="m-marketing--hero">
     <div class="m-marketing--hero--video">
-      <img [src]="minds.cdn_assets_url + 'assets/marketing/yellow-bg.jpg'" />
+      <img
+        [src]="configs.get('cdn_assets_url') + 'assets/marketing/yellow-bg.jpg'"
+      />
     </div>
 
     <div class="m-marketing--hero--inner">
@@ -16,7 +18,9 @@
       </div>
 
       <div class="m-marketing--hero--actions">
-        <img [src]="minds.cdn_assets_url + 'assets/icons/effort.svg'" />
+        <img
+          [src]="configs.get('cdn_assets_url') + 'assets/icons/effort.svg'"
+        />
       </div>
     </div>
   </div>
@@ -67,7 +71,9 @@
           class="m-marketing--section--subsection-right m-marketing--section--subsection-image"
           style="text-align: center"
         >
-          <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.jpg'" />
+          <img
+            [src]="configs.get('cdn_assets_url') + 'assets/logos/bulb.jpg'"
+          />
         </div>
       </div>
     </div>
@@ -78,7 +84,9 @@
       <div class="m-marketing--section--subsection-container">
         <ul class="m-marketing--icon-attributions">
           <li>
-            <img [src]="minds.cdn_assets_url + 'assets/icons/effort.svg'" />
+            <img
+              [src]="configs.get('cdn_assets_url') + 'assets/icons/effort.svg'"
+            />
             icon was made by
             <a href="http://www.freepik.com" title="Freepik">Freepik</a> and
             licensed

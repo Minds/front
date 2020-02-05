@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Client } from '../../../../../services/api/client';
+import { Session } from '../../../../../services/session';
 
 @Component({
   selector: 'm-onboarding__phoneverification',
@@ -19,7 +20,7 @@ export class PhoneVerificationComponent implements OnInit {
   confirming: boolean = false;
   confirmed: boolean = false;
 
-  constructor(private client: Client) {}
+  constructor(private client: Client, private session: Session) {}
 
   ngOnInit() {}
 
@@ -67,7 +68,7 @@ export class PhoneVerificationComponent implements OnInit {
         }
       );
       this.confirmed = true;
-      window.Minds.user.rewards = true;
+      this.session.getLoggedInUser().rewards = true;
     } catch (e) {
       this.codeError = e.message;
     }

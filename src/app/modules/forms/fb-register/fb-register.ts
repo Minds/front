@@ -11,8 +11,6 @@ import { Session } from '../../../services/session';
   templateUrl: 'fb-register.html',
 })
 export class FbRegisterForm {
-  minds = window.Minds;
-
   errorMessage: string = '';
 
   inProgress: boolean = false;
@@ -40,7 +38,7 @@ export class FbRegisterForm {
       )
       .then((data: any) => {
         this.inProgress = false;
-        this.minds.user.username = this.form.value.username;
+        this.session.getLoggedInUser().username = this.form.value.username;
 
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 

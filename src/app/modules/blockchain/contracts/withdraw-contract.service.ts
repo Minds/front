@@ -8,6 +8,7 @@ export class WithdrawContractService {
   protected instance: any;
 
   constructor(protected web3Wallet: Web3WalletService) {
+    console.log('withdraw contract called');
     this.load();
   }
 

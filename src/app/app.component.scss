@@ -1,5 +1,6 @@
 @import 'defaults';
 @import 'themes';
+@import 'foundation/grid-values.scss';
 
 html,
 body {
@@ -38,6 +39,15 @@ m-app {
       grid-gap: 0;
 
       height: 100%;
+
+      @media screen and (max-width: $m-grid-max-tablet) {
+        grid-template-columns: 71px 5fr 4fr;
+      }
+
+      @media screen and(max-width: $m-grid-max-mobile) {
+        display: flex;
+        flex-direction: column;
+      }
     }
   }
 

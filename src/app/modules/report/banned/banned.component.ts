@@ -8,9 +8,9 @@ import {
 import { Router } from '@angular/router';
 
 import { Client } from '../../../common/api/client.service';
-import { MindsTitle } from '../../../services/ux/title';
 import { REASONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-reports__banned',
@@ -18,13 +18,13 @@ import { JurySessionService } from '../juryduty/session/session.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BannedComponent {
-  minds = window.Minds;
   appeals = [];
 
   constructor(
     private client: Client,
     private sessionService: JurySessionService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private session: Session
   ) {}
 
   ngOnInit() {
@@ -42,7 +42,7 @@ export class BannedComponent {
   }
 
   get reason() {
-    const parts = this.minds.user.ban_reason.split('.');
+    const parts = this.session.getLoggedInUser().ban_reason.split('.');
     const isStrike = parseInt(parts[0]) === 14;
     const reasonCode = isStrike ? parseInt(parts[1]) : parseInt(parts[0]);
     const subReasonCode = isStrike

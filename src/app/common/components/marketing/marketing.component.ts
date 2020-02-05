@@ -5,7 +5,7 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { MindsTitle } from '../../../services/ux/title';
+import { MetaService } from '../../services/meta.service';
 import { V2TopbarService } from '../../layout/v2-topbar/v2-topbar.service';
 
 @Component({
@@ -19,13 +19,13 @@ export class MarketingComponent implements OnInit, OnDestroy {
   @Input() forceBackground: boolean = true;
 
   constructor(
-    protected title: MindsTitle,
+    protected metaService: MetaService,
     private topbarService: V2TopbarService
   ) {}
 
   ngOnInit() {
     if (this.pageTitle) {
-      this.title.setTitle(this.pageTitle);
+      this.metaService.setTitle(this.pageTitle);
     }
 
     this.topbarService.toggleMarketingPages(

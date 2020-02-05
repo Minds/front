@@ -18,6 +18,7 @@ import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { OffchainPaymentService } from '../../blockchain/offchain-payment.service';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { Router } from '@angular/router';
+import { Storage } from '../../../services/storage';
 
 type CurrencyType = 'offchain' | 'usd' | 'onchain' | 'creditcard';
 export type BoostType = 'p2p' | 'newsfeed' | 'content';
@@ -121,7 +122,8 @@ export class BoostCreatorComponent implements AfterViewInit {
     private boostContract: BoostContractService,
     private web3Wallet: Web3WalletService,
     private offchainPayment: OffchainPaymentService,
-    protected router: Router
+    protected router: Router,
+    protected storage: Storage
   ) {}
 
   ngOnInit() {
@@ -134,7 +136,7 @@ export class BoostCreatorComponent implements AfterViewInit {
   }
 
   getPreferredPaymentMethod() {
-    let currency = localStorage.getItem('preferred-payment-method');
+    let currency = this.storage.get('preferred-payment-method');
     if (currency === 'creditcard') {
       currency = 'usd';
     }

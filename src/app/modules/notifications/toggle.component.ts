@@ -2,6 +2,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Session } from '../../services/session';
+import { NotificationService } from './notification.service';
 
 @Component({
   moduleId: module.id,
@@ -10,10 +11,9 @@ import { Session } from '../../services/session';
 })
 export class NotificationsTopbarToggleComponent {
   toggled: boolean = false;
-  minds: any = window.Minds;
   @ViewChild('notificationsFlyout', { static: false }) flyout: any;
 
-  constructor(public session: Session) {}
+  constructor(public session: Session, public service: NotificationService) {}
 
   toggle(e) {
     this.toggled = !this.toggled;

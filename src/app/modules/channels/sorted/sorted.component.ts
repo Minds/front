@@ -9,7 +9,10 @@ import {
   ViewChild,
   SkipSelf,
   Injector,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { Session } from '../../../services/session';
 import { PosterComponent } from '../../newsfeed/poster/poster.component';
@@ -74,6 +77,7 @@ export class ChannelSortedComponent implements OnInit {
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector,
     protected cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object,
     public client: Client
   ) {
     this.clientMetaService
@@ -104,9 +108,11 @@ export class ChannelSortedComponent implements OnInit {
     }
 
     try {
+      const limit = isPlatformBrowser(this.platformId) ? 12 : 2;
+
       this.feedsService
         .setEndpoint(`${endpoint}/${this.channel.guid}/${this.type}`)
-        .setLimit(12)
+        .setLimit(limit)
         .fetch();
 
       this.getScheduledCount();

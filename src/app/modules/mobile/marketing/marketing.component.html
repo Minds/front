@@ -2,7 +2,7 @@
   <!--Top / Hero -->
   <div class="m-marketing--hero">
     <div class="m-marketing--hero--video">
-      <img [src]="minds.cdn_assets_url + 'assets/photos/circles.png'" />
+      <img [src]="cdnAssetsUrl + 'assets/photos/circles.png'" />
     </div>
     <div class="m-marketing--hero--inner">
       <div class="m-marketing--hero--slogans">
@@ -28,10 +28,7 @@
       <div class="m-marketing--downloadOption">
         <div class="m-marketing--downloadButton">
           <a [href]="latestRelease.href" target="_blank"
-            ><img
-              [src]="
-                minds.cdn_assets_url + 'assets/marketing/mobile-dl-button.png'
-              "
+            ><img [src]="cdnAssetsUrl + 'assets/marketing/mobile-dl-button.png'"
           /></a>
           <span>(recommended)</span>
         </div>
@@ -173,7 +170,7 @@
           class="m-marketing--section--subsection-right m-marketing--section--subsection-image"
           style="text-align: center"
         >
-          <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.jpg'" />
+          <img [src]="cdnAssetsUrl + 'assets/logos/bulb.jpg'" />
         </div>
       </div>
     </div>

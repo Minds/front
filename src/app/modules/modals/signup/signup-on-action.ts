@@ -21,7 +21,6 @@ export class SignupOnActionModal {
   open: boolean = false;
   action: string = '';
   closed: EventEmitter<any> = new EventEmitter();
-  minds = window.Minds;
   display: string = 'register';
   overrideOnboarding: boolean = false;
 

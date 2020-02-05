@@ -13,6 +13,7 @@ export class TooltipComponent {
   @Input() anchor: 'top' | 'bottom' | 'right' | 'left';
   @Input() iconClass;
   @Input() useParentPosition: boolean = false;
+  @Input() enabled: boolean = true;
 
   hidden: boolean = true;
   offsetTop: number = 0;
@@ -22,6 +23,10 @@ export class TooltipComponent {
   constructor(private element: ElementRef) {}
 
   setHidden(value: boolean) {
+    if (!value && !this.enabled) {
+      return;
+    }
+
     this.hidden = value;
 
     if (!this.hidden && this.useParentPosition) {

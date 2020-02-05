@@ -4,9 +4,7 @@
       <div class="m-wire--avatar">
         <a [routerLink]="['/', owner.username]">
           <img
-            [src]="
-              minds.cdn_url + 'icon/' + owner.guid + '/medium/' + owner.icontime
-            "
+            [src]="cdnUrl + 'icon/' + owner.guid + '/medium/' + owner.icontime"
             class="mdl-shadow--2dp"
           />
         </a>
@@ -184,7 +182,7 @@
           "
         >
           <div class="m-wire--creator-selector-type">
-            <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'" />
+            <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
             <h5>
               <span i18n="@@M__COMMON__OFFCHAIN">Tokens</span>
               <m-tooltip icon="help" i18n="@@WIRE__CREATOR__OFFCHAIN_TOOLTIP">
@@ -255,9 +253,7 @@
         >
           <div class="m-wire--creator-selector-type">
             <img
-              [src]="
-                minds.cdn_assets_url + 'assets/marketing/ethereum_logo.png'
-              "
+              [src]="cdnAssetsUrl + 'assets/marketing/ethereum_logo.png'"
               style="margin-left: -12px"
             />
             <h5>
@@ -282,7 +278,7 @@
         >
           <div class="m-wire--creator-selector-type">
             <img
-              [src]="minds.cdn_assets_url + 'assets/marketing/btc.svg'"
+              [src]="cdnAssetsUrl + 'assets/marketing/btc.svg'"
               style="margin-left: -12px"
             />
             <h5>
