@@ -151,11 +151,7 @@
     </ng-container>
 
     <!-- ADMIN EDIT FLAGS -->
-    <ng-container
-      *ngIf="
-        options.indexOf('set-explicit') !== -1 && (service.isOwner$ | async)
-      "
-    >
+    <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && canEdit">
       <li class="m-dropdownList__item m-postMenu__item--nsfw">
         <m-nsfw-selector
           service="editing"

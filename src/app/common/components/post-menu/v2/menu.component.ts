@@ -46,6 +46,7 @@ export class PostMenuV2Component implements OnInit {
   @Input() options: Array<Option>;
   @Output() optionSelected: EventEmitter<Option> = new EventEmitter<Option>();
   @Input() canDelete: boolean = false;
+  @Input() canEdit: boolean = false;
   @Input() isTranslatable: boolean = false;
   @Input() user: any;
 
