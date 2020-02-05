@@ -84,8 +84,15 @@ $messenger: #0084ff;
 $twitter: #03b3ee;
 $whatsapp: #25d366;
 $linkedin: #0071a1;
+
 $navigation-item: #aeb0b8;
 $navigation-item-hover: #a6a6a6;
+
+$second-text-color: #7d7d82;
+$second-text-color-dark: #aeb0b8;
+
+$primary-border: #dce2e4;
+$primary-border-dark: #404a4e;
 
 // Theme maps
 // e.g. m-grey-100 in light mode will become m-grey-900 in dark mode
@@ -146,6 +153,8 @@ $themes: (
     m-linkedin: $linkedin,
     m-navigation-item: $navigation-item,
     m-navigation-item-hover: $navigation-item-hover,
+    m-second-text-color: $second-text-color,
+    m-primary-border: $primary-border,
   ),
   dark: (
     m-grey-950: lighten($grey-50, $percent),
@@ -203,6 +212,8 @@ $themes: (
     m-linkedin: $linkedin,
     m-navigation-item: lighten($navigation-item, $percent),
     m-navigation-item-hover: lighten($navigation-item-hover, $percent),
+    m-second-text-color: $second-text-color-dark,
+    m-primary-border: $primary-border-dark,
   ),
 );
 
@@ -269,3 +280,7 @@ $m-linkedin: 'm-linkedin';
 
 $m-navigation-item: 'm-navigation-item';
 $m-navigation-item-hover: 'm-navigation-item-hover';
+
+$m-second-text-color: 'm-second-text-color';
+
+$m-primary-border: 'm-primary-border';

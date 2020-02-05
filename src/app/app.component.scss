@@ -43,6 +43,11 @@ m-app {
       @media screen and (max-width: $m-grid-max-tablet) {
         grid-template-columns: 71px 5fr 4fr;
       }
+
+      @media screen and(max-width: $m-grid-max-mobile) {
+        display: flex;
+        flex-direction: column;
+      }
     }
   }
 

@@ -146,6 +146,7 @@ import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
+import { SidebarNavigationService } from './layout/sidebar/navigation.service';
 
 const routes: Routes = [
   {
@@ -462,10 +463,14 @@ const routes: Routes = [
       deps: [Title, Meta, SiteService, Location, ConfigsService],
     },
     MediaProxyService,
-    V2TopbarService,
+    SidebarNavigationService,
     {
       provide: V2TopbarService,
       useFactory: V2TopbarService._,
+    },
+    {
+      provide: SidebarNavigationService,
+      useFactory: SidebarNavigationService._,
     },
     {
       provide: SidebarMarkersService,

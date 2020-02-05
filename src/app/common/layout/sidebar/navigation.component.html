@@ -1,120 +1,176 @@
-<nav>
-  <ul>
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/newsfeed/subscriptions']"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <m-tooltip
-          icon="check"
-          i18n="@@COMMON__NEWSFEED"
-          [enabled]="!isDesktop"
+<div
+  class="m-sidebarNavigation__overlay"
+  [class.m-sidebarNavigation--opened]="isOpened"
+  (click)="toggle()"
+></div>
+<div
+  class="m-sidebar--navigation"
+  [class.m-sidebarNavigation--slide]="isMobile"
+  [class.m-sidebarNavigation--opened]="isOpened"
+>
+  <nav>
+    <div class="m-sidebarNavigation__top">
+      <a routerLink="/" title="Home" i18n-title *ngIf="isMobile">
+        <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
+      </a>
+
+      <i class="material-icons" (click)="toggle()">close</i>
+    </div>
+    <ul>
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/newsfeed/subscriptions']"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggle()"
         >
-          Newsfeed
-        </m-tooltip>
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__NEWSFEED"
+            [enabled]="!isDesktop && !isMobile"
+          >
+            Newsfeed
+          </m-tooltip>
 
-        <span class="m-sidebar--navigation--text" *ngIf="isDesktop" i18n>
-          Newsfeed
-        </span>
-      </a>
-    </li>
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="isDesktop || isMobile"
+            i18n
+          >
+            Newsfeed
+          </span>
+        </a>
+      </li>
 
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/newsfeed/global/top']"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-        [routerLinkActiveOptions]="{ exact: true }"
-      >
-        <m-tooltip
-          icon="check"
-          i18n="@@COMMON__DISCOVER"
-          [enabled]="!isDesktop"
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/newsfeed/global/top']"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggle()"
         >
-          Discover
-        </m-tooltip>
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__DISCOVER"
+            [enabled]="!isDesktop && !isMobile"
+          >
+            Discover
+          </m-tooltip>
 
-        <span class="m-sidebar--navigation--text" *ngIf="isDesktop" i18n>
-          Discover
-        </span>
-      </a>
-    </li>
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="isDesktop || isMobile"
+            i18n
+          >
+            Discover
+          </span>
+        </a>
+      </li>
 
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/wallet']"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-      >
-        <m-tooltip icon="check" i18n="@@COMMON__WALLET" [enabled]="!isDesktop">
-          Wallet
-        </m-tooltip>
-
-        <span class="m-sidebar--navigation--text" *ngIf="isDesktop" i18n>
-          Wallet
-        </span>
-      </a>
-    </li>
-
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/' + user.username]"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-      >
-        <m-tooltip icon="check" i18n="@@COMMON__PROFILE" [enabled]="!isDesktop">
-          Profile
-        </m-tooltip>
-
-        <span class="m-sidebar--navigation--text" *ngIf="isDesktop" i18n>
-          Profile
-        </span>
-      </a>
-    </li>
-
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/analytics']"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-      >
-        <m-tooltip
-          icon="check"
-          i18n="@@COMMON__ANALYTICS"
-          [enabled]="!isDesktop"
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/wallet']"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          (click)="toggle()"
         >
-          Analytics
-        </m-tooltip>
-        <span class="m-sidebar--navigation--text" *ngIf="isDesktop" i18n>
-          Analytics
-        </span>
-      </a>
-    </li>
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__WALLET"
+            [enabled]="!isDesktop && !isMobile"
+          >
+            Wallet
+          </m-tooltip>
 
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/settings']"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-      >
-        <m-tooltip
-          icon="check"
-          i18n="@@COMMON__SETTINGS"
-          [enabled]="!isDesktop"
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="isDesktop || isMobile"
+            i18n
+          >
+            Wallet
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/' + user.username]"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          (click)="toggle()"
         >
-          Settings
-        </m-tooltip>
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__PROFILE"
+            [enabled]="!isDesktop && !isMobile"
+          >
+            Profile
+          </m-tooltip>
 
-        <span class="m-sidebar--navigation--text" *ngIf="isDesktop" i18n>
-          Settings
-        </span>
-      </a>
-    </li>
-  </ul>
-</nav>
-<h5 i18n *ngIf="isDesktop">
-  Groups
-</h5>
-<ng-template dynamic-host></ng-template>
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="isDesktop || isMobile"
+            i18n
+          >
+            Profile
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/analytics']"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__ANALYTICS"
+            [enabled]="!isDesktop && !isMobile"
+          >
+            Analytics
+          </m-tooltip>
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="isDesktop || isMobile"
+            i18n
+          >
+            Analytics
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/settings']"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__SETTINGS"
+            [enabled]="!isDesktop && !isMobile"
+          >
+            Settings
+          </m-tooltip>
+
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="isDesktop || isMobile"
+            i18n
+          >
+            Settings
+          </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <h5 i18n *ngIf="isDesktop || isMobile">
+    Groups
+  </h5>
+  <ng-template dynamic-host></ng-template>
+</div>

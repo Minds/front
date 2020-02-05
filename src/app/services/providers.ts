@@ -1,4 +1,4 @@
-import { NgZone, RendererFactory2, PLATFORM_ID } from '@angular/core';
+import { NgZone, RendererFactory2, PLATFORM_ID, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
@@ -230,7 +230,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: ThemeService,
     useFactory: ThemeService._,
-    deps: [RendererFactory2, Client, Session, Storage],
+    deps: [RendererFactory2, Client, Session, Storage, PLATFORM_ID],
   },
   DiagnosticsService,
   AuthService,

@@ -6,10 +6,18 @@ m-v3-topbar {
     @media screen and (max-width: $m-grid-max-tablet) {
       grid-template-columns: 71px 5fr 4fr;
     }
+    @media screen and(max-width: $m-grid-max-mobile) {
+      display: flex;
+    }
 
     &,
     & > * {
       height: 75px;
+    }
+
+    .m-v3Topbar__spacer {
+      flex-grow: 1;
+      opacity: 0;
     }
 
     .m-v3topbar__leftColumn {
@@ -19,6 +27,10 @@ m-v3-topbar {
 
       display: flex;
       align-items: center;
+
+      @media screen and(max-width: $m-grid-max-mobile) {
+        margin-left: 23px;
+      }
     }
 
     .m-v3topbar__middleColumn {
@@ -33,10 +45,12 @@ m-v3-topbar {
       min-width: 0;
     }
 
-    .m-v3topbar__leftColumn,
-    .m-v3topbar__middleColumn {
-      @include m-theme() {
-        border-right: 1px solid themed($m-grey-400);
+    @media screen and(min-width: $m-grid-max-mobile) {
+      .m-v3topbar__leftColumn,
+      .m-v3topbar__middleColumn {
+        @include m-theme() {
+          border-right: 1px solid themed($m-grey-400);
+        }
       }
     }
   }
@@ -78,6 +92,15 @@ m-v3-topbar {
 
       > .mdl-textfield {
         width: 100%;
+
+        @media screen and(max-width: $m-grid-max-mobile) {
+          width: 20px;
+          transition: width ease-in-out 0.2s;
+
+          &.is-focused {
+            width: 270px;
+          }
+        }
 
         input {
           border: 0;
