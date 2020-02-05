@@ -39,8 +39,8 @@
             <div class="m-walletDashboardViews__wrapper">
               <div
                 class="m-walletDashboardViews__tabsContainer"
-                *ngIf="views[activeCurrencyId].length > 1"
-                #dashboardViewsTabs
+                *ngIf="views[activeCurrencyId]"
+                #dashboardViews
               >
                 <div
                   class="m-walletDashboardViews__tab"

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
-import { WalletDashboardService } from './../dashboard.service';
+import { WalletDashboardService } from '../dashboard.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
 @Component({

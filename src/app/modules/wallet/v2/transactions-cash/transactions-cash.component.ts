@@ -59,7 +59,6 @@ export class WalletTransactionsCashComponent implements OnInit {
 
       this.runningTotal = stripeAccount.pendingBalance.amount / 100;
 
-      console.log('running - start', this.runningTotal);
       this.detectChanges();
     }
 
@@ -147,8 +146,6 @@ export class WalletTransactionsCashComponent implements OnInit {
       }
 
       formattedTx.runningTotal = this.formatAmount(this.runningTotal);
-      console.log('running A', this.runningTotal);
-      console.log('running B', formattedTx.runningTotal.total);
 
       if (formattedTx.superType === 'payout') {
         formattedTx.showRewardsPopup = false;

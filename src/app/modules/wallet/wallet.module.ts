@@ -48,26 +48,9 @@ import { ModalsModule } from '../modals/modals.module';
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
 import { WalletUSDBalanceComponent } from './usd/balance.component';
-import { WalletDashboardComponent } from './v2/dashboard.component';
-import { WalletBalanceTokensV2Component } from './v2/balance-tokens/balance-tokens.component';
-import { WalletChartComponent } from './v2/chart/chart.component';
-import { WalletTransactionsTableComponent } from './v2/transactions-table/transactions-table.component';
-import { WalletRewardsPopupComponent } from './v2/rewards-popup/rewards-popup.component';
-import { WalletDashboardService } from './v2/dashboard.service';
-import { WalletSettingsTokensComponent } from './v2/settings-tokens/settings-tokens.component';
-import { WalletSettingsCashComponent } from './v2/settings-cash/settings-cash.component';
-import { WalletSettingsETHComponent } from './v2/settings-eth/settings-eth.component';
-import { WalletSettingsBTCComponent } from './v2/settings-btc/settings-btc.component';
-import { WalletTokenOnboardingComponent } from './v2/token-onboarding/token-onboarding.component';
-import { WalletModalComponent } from './v2/modal/modal.component';
-import { WalletPhoneVerificationComponent } from './v2/phone-verification/phone-verification.component';
-import { WalletOnchainTransferComponent } from './v2/onchain-transfer/onchain-transfer.component';
-import { WalletBalanceCashComponent } from './v2/balance-cash/balance-cash.component';
-import { WalletPendingCashPayoutComponent } from './v2/pending-cash-payout/pending-cash-payout.component';
-import { WalletTransactionsTokensComponent } from './v2/transactions-tokens/transactions-tokens.component';
-import { WalletTransactionsCashComponent } from './v2/transactions-cash/transactions-cash.component';
+import { WalletV2Module } from './v2/wallet-v2.module';
 
-const walletRoutes: Routes = [
+export const WALLET_ROUTES: Routes = [
   {
     path: 'wallet',
     component: WalletComponent,
@@ -162,19 +145,6 @@ const walletRoutes: Routes = [
       { path: '**', component: WalletOverviewComponent },
     ],
   },
-  {
-    path: 'v2wallet',
-    // TODOOJM: choose actual path.
-    // TODOOJM:IMPORTANT - when switching, also change 'v2wallet'... in dashboard.html (scrollToTokenSettings()).
-    // TODOOJM: also allow **
-    redirectTo: 'v2wallet/tokens/overview',
-    pathMatch: 'full',
-    data: {
-      title: 'Wallet',
-    },
-  },
-  { path: 'v2wallet/:currency/:view', component: WalletDashboardComponent },
-  { path: 'v2wallet/:currency', component: WalletDashboardComponent },
 ];
 
 @NgModule({
@@ -186,7 +156,8 @@ const walletRoutes: Routes = [
     CommonModule,
     CheckoutModule,
     MonetizationOverviewModule,
-    RouterModule.forChild(walletRoutes),
+    RouterModule,
+    // RouterModule.forChild(walletRoutes),
     AdsModule,
     WireModule,
     BlockchainModule,
@@ -194,6 +165,7 @@ const walletRoutes: Routes = [
     PlusModule,
     ModalsModule,
     ReferralsModule,
+    WalletV2Module,
   ],
   declarations: [
     WalletComponent,
@@ -228,23 +200,6 @@ const walletRoutes: Routes = [
     WalletTokenContributionsChartComponent,
     WalletToken101Component,
     WalletUSDBalanceComponent,
-    WalletDashboardComponent,
-    WalletChartComponent,
-    WalletRewardsPopupComponent,
-    WalletTransactionsTableComponent,
-    WalletSettingsTokensComponent,
-    WalletSettingsCashComponent,
-    WalletSettingsETHComponent,
-    WalletSettingsBTCComponent,
-    WalletTokenOnboardingComponent,
-    WalletModalComponent,
-    WalletPhoneVerificationComponent,
-    WalletOnchainTransferComponent,
-    WalletBalanceTokensV2Component,
-    WalletBalanceCashComponent,
-    WalletPendingCashPayoutComponent,
-    WalletTransactionsTokensComponent,
-    WalletTransactionsCashComponent,
   ],
   exports: [
     WalletComponent,
@@ -260,6 +215,5 @@ const walletRoutes: Routes = [
     WalletUSDBalanceComponent,
   ],
   entryComponents: [WalletComponent, WalletUSDTermsComponent],
-  providers: [WalletDashboardService],
 })
 export class WalletModule {}

@@ -7,6 +7,7 @@ import {
   Inject,
   ViewChild,
   ElementRef,
+  AfterViewInit,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -25,10 +26,10 @@ import { FeaturesService } from '../../../services/features.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletDashboardComponent implements OnInit {
-  @ViewChild('tokensSettings', { static: true }) tokenSettingsEl: ElementRef;
-  @ViewChild('cashSettings', { static: true }) cashSettingsEl: ElementRef;
-  @ViewChild('dashboardViewsTabs', { static: true })
-  dashboardViewsTabsEl: ElementRef;
+  @ViewChild('tokensSettings', { static: false }) tokenSettingsEl: ElementRef;
+  @ViewChild('cashSettings', { static: false }) cashSettingsEl: ElementRef;
+  @ViewChild('dashboardViews', { static: false })
+  dashboardViewsEl: ElementRef;
 
   menu: Menu = sidebarMenu;
   paramsSubscription: Subscription;
@@ -64,6 +65,8 @@ export class WalletDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('dashboard router config', this.router.config);
+
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;
@@ -79,7 +82,13 @@ export class WalletDashboardComponent implements OnInit {
     this.wallet = this.walletService.getWallet();
 
     this.route.paramMap.subscribe((params: ParamMap) => {
+      console.log('this route??', this.route, params, params.get('currency'));
+
       this.activeCurrencyId = params.get('currency');
+      if (!this.views[this.activeCurrencyId]) {
+        this.activeCurrencyId = 'tokens';
+        this.router.navigate(['/wallet/tokens']);
+      }
 
       if (
         params.get('view') &&
@@ -115,31 +124,24 @@ export class WalletDashboardComponent implements OnInit {
   updateCurrency($event) {
     this.activeCurrencyId = $event.tabId;
     this.activeViewId = this.views[this.activeCurrencyId][0].id;
-    this.router.navigate([
-      '/v2wallet',
-      this.activeCurrencyId,
-      this.activeViewId,
-    ]);
+    this.router.navigate(['/wallet', this.activeCurrencyId, this.activeViewId]);
     this.detectChanges();
   }
 
   updateView(viewId) {
     this.activeViewId = viewId;
-    this.router.navigate(['/v2wallet', this.activeCurrencyId, viewId]);
+    this.router.navigate(['/wallet', this.activeCurrencyId, viewId]);
     this.detectChanges();
   }
 
   onboardingCompleted() {
-    // TODOOJM remove once verified its not necessary
-    // this.storage.set('walletOnboardingComplete', true);
     this.onboardingComplete = true;
     this.detectChanges();
   }
 
   scrollToSettings(currency: string) {
     if (this.activeCurrencyId !== currency) {
-      // TODOOJM change 'v2wallet' once url is changed in wallet module
-      this.router.navigate([`/v2wallet/${currency}/settings`]);
+      this.router.navigate([`/wallet/${currency}/settings`]);
     } else {
       const settingsEl =
         currency === 'cash'
@@ -154,7 +156,7 @@ export class WalletDashboardComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       setTimeout(
         () =>
-          this.dashboardViewsTabsEl.nativeElement.scrollIntoView({
+          this.dashboardViewsEl.nativeElement.scrollIntoView({
             behavior: 'smooth',
           }),
         0

@@ -12,7 +12,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Client } from '../../../../services/api/client';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
-import { WalletDashboardService } from './../dashboard.service';
+import { WalletDashboardService } from '../dashboard.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import * as moment from 'moment';
 
@@ -65,6 +65,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
 
     this.detectChanges();
   }
+
   ngOnDestroy() {
     if (this.updateTimer$) {
       clearInterval(this.updateTimer$);
@@ -79,10 +80,11 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
       const result: any = await this.client.get(
         `api/v2/blockchain/contributions/overview`
       );
-
-      this.nextPayoutDate = result.nextPayout;
-      this.estimatedTokenPayout = result.currentReward;
-      this.detectChanges();
+      if (result) {
+        this.nextPayoutDate = result.nextPayout;
+        this.estimatedTokenPayout = result.currentReward;
+        this.detectChanges();
+      }
     } catch (e) {
       console.error(e);
     }
