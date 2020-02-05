@@ -1,4 +1,4 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { MindsUser, MindsGroup } from '../../../interfaces/entities';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
@@ -31,11 +31,17 @@ export type ActivityEntity = {
   edited: boolean;
   modal_source_url?: string;
   ephemeral?: boolean;
+  nsfw: Array<number>;
+  paywall: boolean;
 };
 
 @Injectable()
 export class ActivityService {
   entity$ = new BehaviorSubject(null);
+
+  /**
+   * Resolves media posts to a single guid and url
+   */
   canonicalUrl$: Observable<string> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       if (!entity) return '';
@@ -43,19 +49,68 @@ export class ActivityService {
       return `/newsfeed/${guid}`;
     })
   );
+
+  /**
+   * TODO
+   */
   canDelete$: Observable<boolean> = this.entity$.pipe();
-  canShowContent$: Observable<boolean> = this.entity$.pipe();
+
+  /**
+   * Allows for components to give nsfw consent
+   */
+  isNsfwConsented$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  /**
+   * Will be true if not consented and is nsfw
+   */
+  shouldShowNsfwConsent$: Observable<boolean> = combineLatest(
+    this.entity$,
+    this.isNsfwConsented$
+  ).pipe(
+    map(([entity, isConsented]: [ActivityEntity, boolean]) => {
+      return entity.nsfw.length > 0 && !isConsented;
+    })
+  );
+
+  /**
+   * We do not render the contents if nsfw (and no consent) or
+   * a paywall is in place
+   */
+  shouldShowContent$: Observable<boolean> = combineLatest(
+    this.entity$,
+    this.shouldShowNsfwConsent$
+  ).pipe(
+    map(([entity, shouldShowNsfwContsent]: [ActivityEntity, boolean]) => {
+      return !shouldShowNsfwContsent && !entity.paywall;
+    })
+  );
+
+  /**
+   * TODO
+   */
   isBoost$: Observable<boolean> = this.entity$.pipe();
+
+  /**
+   * If the post is a remind this will emit true
+   */
   isRemind$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       return entity && !!entity.remind_object;
     })
   );
+
+  /**
+   * If the post has been editied this will emit true
+   */
   isEdited$: Observable<boolean> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       return entity && entity.edited;
     })
   );
+
+  /**
+   * TODO
+   */
   isUnlisted$: Observable<boolean> = this.entity$.pipe();
 
   displayOptions: ActivityDisplayOptions = {

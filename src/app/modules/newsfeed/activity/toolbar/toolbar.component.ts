@@ -30,7 +30,7 @@ export class ActivityToolbarComponent {
     );
   }
 
-  ngOnDestory() {
+  ngOnDestroy() {
     this.entitySubscription.unsubscribe();
   }
 }

@@ -47,7 +47,7 @@ export class ActivityContentComponent {
     );
   }
 
-  ngOnDestory() {
+  ngOnDestroy() {
     this.entitySubscription.unsubscribe();
   }
 

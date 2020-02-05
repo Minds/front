@@ -19,6 +19,7 @@ import { ModalsModule } from '../../modals/modals.module';
 import { LegacyModule } from '../../legacy/legacy.module';
 import { ActivityMenuComponent } from './menu/menu.component';
 import { PostMenuModule } from '../../../common/components/post-menu/post-menu.module';
+import { ActivityNsfwConsentComponent } from './nsfw-consent/nsfw-consent.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { PostMenuModule } from '../../../common/components/post-menu/post-menu.m
     ActivityContentComponent,
     ActivityToolbarComponent,
     ActivityMenuComponent,
+    ActivityNsfwConsentComponent,
   ],
   providers: [],
   exports: [ActivityComponent],

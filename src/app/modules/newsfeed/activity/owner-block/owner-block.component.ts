@@ -31,7 +31,7 @@ export class ActivityOwnerBlockComponent {
     );
   }
 
-  ngOnDestory() {
+  ngOnDestroy() {
     this.entitySubscription.unsubscribe();
   }
 

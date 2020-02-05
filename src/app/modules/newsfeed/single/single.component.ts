@@ -28,6 +28,7 @@ export class NewsfeedSingleComponent {
   queryParamsSubscription: Subscription;
   focusedCommentGuid: string = '';
   editing = false;
+  fixedHeight = false;
 
   constructor(
     public router: Router,
@@ -70,7 +71,9 @@ export class NewsfeedSingleComponent {
       params => {
         if (params.has('editing')) {
           this.editing = !!params.get('editing');
-          console.log('editing', this.editing);
+        }
+        if (params.has('fixedHeight')) {
+          this.fixedHeight = !!params.get('fixedHeight');
         }
       }
     );

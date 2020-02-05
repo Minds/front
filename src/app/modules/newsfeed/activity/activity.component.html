@@ -5,11 +5,11 @@
 </m-activity__ownerBlock>
 
 <m-activity__content
-  *ngIf="service.canShowContent$ | async"
+  *ngIf="service.shouldShowContent$ | async"
 ></m-activity__content>
 
-<!-- <m-activity__nsfwConsent *ngIf="service.isNsfw$ | async">
-</m-activity__nsfwConsent> -->
+<m-activity__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
+</m-activity__nsfwConsent>
 
 <m-activity__toolbar
   *ngIf="service.displayOptions.showToolbar"

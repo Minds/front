@@ -38,7 +38,7 @@ export class ActivityMenuComponent {
     );
   }
 
-  ngOnDestory() {
+  ngOnDestroy() {
     this.entitySubscription.unsubscribe();
   }
 
