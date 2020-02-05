@@ -20,6 +20,7 @@ import { LegacyModule } from '../../legacy/legacy.module';
 import { ActivityMenuComponent } from './menu/menu.component';
 import { PostMenuModule } from '../../../common/components/post-menu/post-menu.module';
 import { ActivityNsfwConsentComponent } from './nsfw-consent/nsfw-consent.component';
+import { ActivityMetricsComponent } from './metrics/metrics.component';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { ActivityNsfwConsentComponent } from './nsfw-consent/nsfw-consent.compon
     ActivityToolbarComponent,
     ActivityMenuComponent,
     ActivityNsfwConsentComponent,
+    ActivityMetricsComponent,
   ],
   providers: [],
   exports: [ActivityComponent],

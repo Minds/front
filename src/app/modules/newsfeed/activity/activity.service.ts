@@ -33,6 +33,7 @@ export type ActivityEntity = {
   ephemeral?: boolean;
   nsfw: Array<number>;
   paywall: boolean;
+  impressions: number;
 };
 
 @Injectable()

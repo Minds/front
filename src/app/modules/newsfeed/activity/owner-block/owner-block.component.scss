@@ -32,6 +32,12 @@ m-activity__ownerBlock {
   }
 }
 
+.m-activityOwnerBlock__right {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row;
+}
+
 .m-activityOwnerBlock__displayName {
   display: block;
   font-size: 16px;
