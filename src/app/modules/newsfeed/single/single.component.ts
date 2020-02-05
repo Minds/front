@@ -27,6 +27,7 @@ export class NewsfeedSingleComponent {
   paramsSubscription: Subscription;
   queryParamsSubscription: Subscription;
   focusedCommentGuid: string = '';
+  editing = false;
 
   constructor(
     public router: Router,
@@ -64,10 +65,20 @@ export class NewsfeedSingleComponent {
         this.load(params['guid']);
       }
     });
+
+    this.queryParamsSubscription = this.route.queryParamMap.subscribe(
+      params => {
+        if (params.has('editing')) {
+          this.editing = !!params.get('editing');
+          console.log('editing', this.editing);
+        }
+      }
+    );
   }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
+    this.queryParamsSubscription.unsubscribe();
   }
 
   /**
@@ -176,5 +187,9 @@ export class NewsfeedSingleComponent {
 
   delete(activity) {
     this.router.navigate(['/newsfeed']);
+  }
+
+  get showLegacyActivity(): boolean {
+    return this.editing;
   }
 }

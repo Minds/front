@@ -29,9 +29,10 @@
       </ng-container>
     </div>
 
-    <div class="minds-list" *ngIf="false">
+    <div class="minds-list" *ngIf="showLegacyActivity">
       <minds-activity
         *ngIf="activity"
+        [editing]="editing"
         [object]="activity"
         [commentsToggle]="true"
         [focusedCommentGuid]="focusedCommentGuid"
@@ -44,7 +45,7 @@
       </minds-activity>
     </div>
 
-    <div class="minds-list" *ngIf="true && activity">
+    <div class="minds-list" *ngIf="activity && !showLegacyActivity">
       <m-activity
         [entity]="activity"
         [displayOptions]="{ fixedHeight: true }"

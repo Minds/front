@@ -1,3 +1,8 @@
+/////
+/// This component is deprevted.
+/// Use v2 for new components
+/////
+
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
