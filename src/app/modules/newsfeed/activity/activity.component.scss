@@ -13,6 +13,12 @@ m-activity {
   @include m-theme() {
     background: themed($m-bgColor--primary);
   }
+
+  .m-comment .minds-avatar {
+    @include m-theme() {
+      background: themed($m-bgColor--primary);
+    }
+  }
 }
 
 .m-activity--fixedHeight {

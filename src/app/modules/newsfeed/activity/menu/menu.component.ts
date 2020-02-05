@@ -1,19 +1,8 @@
-import {
-  Component,
-  HostListener,
-  ViewChild,
-  Input,
-  ElementRef,
-} from '@angular/core';
+import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ActivityService, ActivityEntity } from '../activity.service';
-import { ConfigsService } from '../../../../common/services/configs.service';
-import { Session } from '../../../../services/session';
-import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { MediaModalComponent } from '../../../media/modal/modal.component';
 
 @Component({
   selector: 'm-activity__menu',
@@ -24,11 +13,7 @@ export class ActivityMenuComponent {
 
   entity: ActivityEntity;
 
-  constructor(
-    public service: ActivityService,
-    private overlayModal: OverlayModalService,
-    private router: Router
-  ) {}
+  constructor(public service: ActivityService, private router: Router) {}
 
   ngOnInit() {
     this.entitySubscription = this.service.entity$.subscribe(

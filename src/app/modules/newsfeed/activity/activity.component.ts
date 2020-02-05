@@ -1,14 +1,6 @@
-import {
-  Component,
-  HostListener,
-  ViewChild,
-  Input,
-  HostBinding,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, Input, HostBinding } from '@angular/core';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
-import { ActivatedRoute, Router } from '@angular/router';
 import { ActivityService } from './activity.service';
 
 @Component({

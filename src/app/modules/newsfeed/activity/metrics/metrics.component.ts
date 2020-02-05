@@ -1,10 +1,4 @@
-import {
-  Component,
-  HostListener,
-  ViewChild,
-  Input,
-  ElementRef,
-} from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ActivityService, ActivityEntity } from '../activity.service';

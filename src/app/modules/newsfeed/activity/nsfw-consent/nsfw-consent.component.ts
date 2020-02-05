@@ -1,19 +1,7 @@
-import {
-  Component,
-  HostListener,
-  ViewChild,
-  Input,
-  ElementRef,
-} from '@angular/core';
-import { Subscription, Observable } from 'rxjs';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { ActivatedRoute, Router } from '@angular/router';
 import { ActivityService, ActivityEntity } from '../activity.service';
-import { ConfigsService } from '../../../../common/services/configs.service';
-import { Session } from '../../../../services/session';
-import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { MediaModalComponent } from '../../../media/modal/modal.component';
 import { map } from 'rxjs/operators';
 import { NSFW_REASONS } from '../../../../common/components/nsfw-selector/nsfw-selector.service';
 
@@ -47,11 +35,7 @@ export class ActivityNsfwConsentComponent {
     })
   );
 
-  constructor(
-    public service: ActivityService,
-    private overlayModal: OverlayModalService,
-    private router: Router
-  ) {}
+  constructor(public service: ActivityService) {}
 
   onConsentedClick(e: MouseEvent): void {
     this.service.isNsfwConsented$.next(true);

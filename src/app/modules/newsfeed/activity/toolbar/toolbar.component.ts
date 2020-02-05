@@ -1,11 +1,7 @@
-import { Component, HostListener, ViewChild, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { ActivatedRoute, Router } from '@angular/router';
 import { ActivityService, ActivityEntity } from '../activity.service';
-import { ConfigsService } from '../../../../common/services/configs.service';
-import { Session } from '../../../../services/session';
-import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
 
 @Component({
   selector: 'm-activity__toolbar',
@@ -16,11 +12,7 @@ export class ActivityToolbarComponent {
 
   entity: ActivityEntity;
 
-  constructor(
-    public service: ActivityService,
-    private configs: ConfigsService,
-    private session: Session
-  ) {}
+  constructor(public service: ActivityService) {}
 
   ngOnInit() {
     this.entitySubscription = this.service.entity$.subscribe(

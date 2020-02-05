@@ -41,6 +41,7 @@ m-activity__nsfwConsent {
     cursor: pointer;
 
     @include m-theme() {
+      background-color: themed($m-bgColor--primary);
       color: themed($m-textColor--primary);
       border-color: themed($m-borderColor--primary);
     }
