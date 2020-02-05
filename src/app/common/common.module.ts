@@ -1,4 +1,4 @@
-import { NgModule, inject } from '@angular/core';
+import { NgModule, inject, Injector } from '@angular/core';
 import {
   CommonModule as NgCommonModule,
   isPlatformServer,
@@ -432,8 +432,9 @@ const routes: Routes = [
     },
     {
       provide: ConfigsService,
-      useFactory: client => new ConfigsService(client),
-      deps: [Client],
+      useFactory: (client, injector) =>
+        new ConfigsService(client, injector.get('QUERY_STRING')),
+      deps: [Client, Injector],
     },
     {
       provide: MetaService,
