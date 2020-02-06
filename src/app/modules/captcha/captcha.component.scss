@@ -1,0 +1,11 @@
+m-captcha {
+  display: block;
+  img {
+    margin-bottom: $minds-margin;
+  }
+}
+
+.m-captcha__refresh {
+  cursor: pointer;
+  position: absolute;
+}

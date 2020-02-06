@@ -11,6 +11,12 @@
     flex-wrap: wrap;
   }
 
+  &.m-topbar--navigation__centered {
+    max-width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
   &:not(.m-topbar--navigation--text-only) .m-topbar--navigation--item span {
     @media screen and (max-width: 840px) {
       display: none;

@@ -183,8 +183,9 @@ export class GroupsProfile {
   }
 
   async load() {
-    if (isPlatformServer(this.platformId)) return;
-    this.resetMarkers();
+    if (isPlatformBrowser(this.platformId)) {
+      this.resetMarkers();
+    }
     this.error = '';
     this.group = null;
 
@@ -199,38 +200,41 @@ export class GroupsProfile {
     if (this.updateMarkersSubscription)
       this.updateMarkersSubscription.unsubscribe();
 
-    this.updateMarkersSubscription = this.updateMarkers
-      .getByEntityGuid(this.guid)
-      .subscribe(
-        (marker => {
-          // this.updateMarkersSubscription = this.updateMarkers.markers.subscribe(markers => {
-          if (!marker) return;
+    if (isPlatformBrowser(this.platformId)) {
+      this.updateMarkersSubscription = this.updateMarkers
+        .getByEntityGuid(this.guid)
+        .subscribe(
+          (marker => {
+            // this.updateMarkersSubscription = this.updateMarkers.markers.subscribe(markers => {
+            if (!marker) return;
 
-          this.group.hasGathering$ = interval(1000).pipe(
-            throttle(() => interval(2000)), //only allow once per 2 seconds
-            startWith(0),
-            map(
-              () =>
-                [marker].filter(
-                  marker =>
-                    marker.entity_guid == this.group.guid &&
-                    marker.marker == 'gathering-heartbeat' &&
-                    marker.updated_timestamp > Date.now() / 1000 - 60 //1 minute tollerance
-                ).length > 0
-            )
-          );
+            this.group.hasGathering$ = interval(1000).pipe(
+              throttle(() => interval(2000)), //only allow once per 2 seconds
+              startWith(0),
+              map(
+                () =>
+                  [marker].filter(
+                    marker =>
+                      marker.entity_guid == this.group.guid &&
+                      marker.marker == 'gathering-heartbeat' &&
+                      marker.updated_timestamp > Date.now() / 1000 - 60 //1 minute tollerance
+                  ).length > 0
+              )
+            );
 
-          let hasMarker =
-            marker.read_timestamp < marker.updated_timestamp &&
-            marker.entity_guid == this.group.guid &&
-            marker.marker != 'gathering-heartbeat';
+            let hasMarker =
+              marker.read_timestamp < marker.updated_timestamp &&
+              marker.entity_guid == this.group.guid &&
+              marker.marker != 'gathering-heartbeat';
 
-          if (hasMarker) this.resetMarkers();
-        }).bind(this)
-      );
+            if (hasMarker) this.resetMarkers();
+          }).bind(this)
+        );
 
-    // Check for comment updates
-    this.joinCommentsSocketRoom();
+      // Check for comment updates
+      this.joinCommentsSocketRoom();
+    }
+
     this.updateMeta();
 
     this.context.set('activity', {
