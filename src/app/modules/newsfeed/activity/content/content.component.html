@@ -6,7 +6,7 @@
   *ngIf="message"
 >
   <span [innerHtml]="message | tags"></span>
-  <m-read-more--button></m-read-more--button>
+  <m-read-more--button [v2]="true"></m-read-more--button>
 
   <m-translate
     *mIfBrowser
@@ -59,11 +59,12 @@
 <div
   #mediaDescriptionEl
   class="m-activityContent__mediaDescription"
+  m-read-more
+  maxHeightAllowed="80"
   *ngIf="mediaDescription"
-  [innerHtml]="mediaDescription | tags"
 >
-  <p [innerHtml]="message | tags"></p>
-  <m-read-more--button></m-read-more--button>
+  <p [innerHtml]="mediaDescription | tags"></p>
+  <m-read-more--button [v2]="true"></m-read-more--button>
 </div>
 
 <!-- Translation -->

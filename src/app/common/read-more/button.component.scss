@@ -22,3 +22,18 @@
     font-family: 'Roboto', Helvetica, sans-serif;
   }
 }
+
+.m-readMoreButton--v2 {
+  text-align: center;
+  box-sizing: border-box;
+
+  > span {
+    color: #1b85d6 !important;
+    font-weight: 400;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-family: 'Roboto', Helvetica, sans-serif;
+  }
+}
