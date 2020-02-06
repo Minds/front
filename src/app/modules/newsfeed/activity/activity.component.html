@@ -20,6 +20,8 @@
   <m-comments__entityOutlet
     [entity]="service.entity$ | async"
     [canDelete]="service.canDelete$ | async"
+    [showOnlyPoster]="service.displayOptions.showOnlyCommentsInput"
+    [fixedHeight]="service.displayOptions.fixedHeight"
   >
   </m-comments__entityOutlet>
 </ng-container>

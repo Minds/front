@@ -73,7 +73,7 @@ export class NewsfeedSingleComponent {
           this.editing = !!params.get('editing');
         }
         if (params.has('fixedHeight')) {
-          this.fixedHeight = !!params.get('fixedHeight');
+          this.fixedHeight = params.get('fixedHeight') === '1';
         }
       }
     );

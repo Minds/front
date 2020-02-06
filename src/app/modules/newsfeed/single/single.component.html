@@ -48,7 +48,10 @@
     <div class="minds-list" *ngIf="activity && !showLegacyActivity">
       <m-activity
         [entity]="activity"
-        [displayOptions]="{ fixedHeight: fixedHeight }"
+        [displayOptions]="{
+          fixedHeight: fixedHeight,
+          showOnlyCommentsInput: fixedHeight
+        }"
       ></m-activity>
     </div>
   </div>

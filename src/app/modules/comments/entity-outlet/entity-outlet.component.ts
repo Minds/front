@@ -47,7 +47,8 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
   @Input() limit: number = 12;
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
-  showOnlyPoster: boolean = true;
+  @Input() fixedHeight = false;
+  @Input() showOnlyPoster = true;
   optimisticList: Array<any> = [];
 
   // private shouldReuseRouteFn;
@@ -57,7 +58,7 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
     public client: Client,
     public attachment: AttachmentService,
     public sockets: SocketsService,
-    private renderer: Renderer,
+    private router: Router,
     private cd: ChangeDetectorRef,
     public legacyActivityService: ActivityServiceCommentsLegacySupport
   ) {}
@@ -90,17 +91,33 @@ export class CommentsEntityOutletComponent implements OnInit, OnDestroy {
   }
 
   onPosted({ comment, index }): void {
+    if (this.fixedHeight) {
+      this.redirectToSinglePage();
+    }
     this.optimisticList[index] = comment;
     this.detectChanges();
   }
 
   onOptimisticPost(comment): void {
+    if (this.fixedHeight) return;
     this.optimisticList.push(comment);
   }
 
   openFullComments(): void {
+    if (this.fixedHeight) {
+      // redirect to full view newsfeed post
+      this.redirectToSinglePage();
+    }
     this.showOnlyPoster = false;
     this.detectChanges();
+  }
+
+  redirectToSinglePage(): void {
+    this.router.navigate([`/newsfeed/${this.entity.guid}`], {
+      queryParams: {
+        fixedHeight: 0,
+      },
+    });
   }
 
   detectChanges(): void {

@@ -111,7 +111,15 @@ export class ActivityContentComponent {
     const messageHeight = this.messageEl
       ? this.messageEl.nativeElement.clientHeight
       : 0;
-    this.remindHeight = this.maxFixedHeightContent - messageHeight;
+
+    let maxFixedHeightContent = this.maxFixedHeightContent;
+
+    // Need to allow extra space for comments entry
+    if (this.entity['comments:count'] > 0) {
+      maxFixedHeightContent = maxFixedHeightContent - 42;
+    }
+
+    this.remindHeight = maxFixedHeightContent - messageHeight;
     this.remindWidth = this.remindHeight * this.fixedHeightRatio;
   }
 
