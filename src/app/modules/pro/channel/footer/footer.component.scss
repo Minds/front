@@ -3,10 +3,17 @@
   margin-bottom: 24px;
   color: var(--m-pro--text-color);
 
-  .m-proChannelFooter__items > * {
-    display: inline-block;
-    margin: 8px 16px;
-    vertical-align: middle;
+  .m-proChannelFooter__items {
+    > * {
+      display: inline-block;
+      margin: 8px 16px;
+      vertical-align: middle;
+    }
+
+    img {
+      height: 24px;
+      filter: grayscale(100%);
+    }
   }
 
   .m-proChannelFooter__socialItems {
@@ -14,9 +21,13 @@
     font-size: 1.5em;
   }
 
-  .m-proChannelFooter__text {
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+  .m-proChannelFooter__static {
+    margin-bottom: 16px;
+
+    .m-proChannelFooter__text {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
   }
 
   a {
