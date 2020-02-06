@@ -18,7 +18,7 @@
   *ngIf="group && (group['is:member'] || group.membership == 2)"
 >
   <!-- Sidebar -->
-  <div class="m-groupGrid__left">
+  <div class="m-groupGrid__left" *mIfBrowser>
     <m-videochat></m-videochat>
 
     <header
@@ -328,7 +328,7 @@
 
   <div class="m-groupGrid__right" [hidden]="!showRight">
     <!-- Conversation filter -->
-    <minds-groups-profile-conversation [group]="group">
+    <minds-groups-profile-conversation [group]="group" *mIfBrowser>
     </minds-groups-profile-conversation>
     <!-- END: Conversation filter -->
   </div>
