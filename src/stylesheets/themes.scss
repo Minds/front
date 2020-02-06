@@ -98,6 +98,9 @@ $themes: (
     m-borderColor--primary: #dce2e4,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #ececec,
+    m-alert: #e03c20,
+    m-link: #1b85d6,
+    m-btn--primary: #1b85d6,
     // legacy colors
       m-grey-950: $grey-950,
     m-grey-900: $grey-900,
@@ -163,6 +166,9 @@ $themes: (
     m-borderColor--primary: #404a4e,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #202527,
+    m-alert: #e03c20,
+    m-link: #1b85d6,
+    m-btn--primary: #1b85d6,
     // legacy colors
       m-grey-950: lighten($grey-50, $percent),
     m-grey-900: lighten($grey-100, $percent),
@@ -290,9 +296,9 @@ $m-bgColor--tertiary: 'm-bgColor--tertiary';
 $m-borderColor--primary: 'm-borderColor--primary';
 $m-borderColor--secondary: 'm-borderColor--secondary';
 $m-borderColor--tertiary: 'm-borderColor--tertiary';
-$m-alert: #e03c20;
-$m-link: #1b85d6;
-$m-btn--primary: #1b85d6;
+$m-alert: 'm-alert';
+$m-link: 'm-link';
+$m-btn--primary: 'm-btn--primary';
 
 $m-borderRadius: 2px;
 $m-boxShadowBlur: 10px;

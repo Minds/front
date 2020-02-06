@@ -1,5 +1,3 @@
-<i class="material-icons selected" *ngIf="service.isRemind$ | async">repeat</i>
-
 <div class="m-activityOwnerBlock__avatar" [hovercard]="owner">
   <a [routerLink]="['/', username]">
     <img [src]="avatarUrl" class="m-border" />
@@ -8,6 +6,11 @@
 
 <div class="m-activityOwnerBlock__body">
   <a class="m-activityOwnerBlock__displayName" [routerLink]="['/', username]">
+    <i
+      class="material-icons m-activityOwnerBlock__remindIcon"
+      *ngIf="service.isRemind$ | async"
+      >repeat</i
+    >
     <strong [title]="displayName">{{ displayName }}</strong>
     <m-channel--badges
       class="m-channel--badges-activity"
@@ -21,7 +24,7 @@
       <strong>({{ group.name }})</strong>
     </a>
   </ng-container>
-  <ng-container *ngIf="!(service.isRemind$ | async)">
+  <ng-container>
     <!-- Perma link to post -->
     <a
       [routerLink]="service.canonicalUrl$ | async"

@@ -1,11 +1,5 @@
-import {
-  Component,
-  HostListener,
-  ViewChild,
-  Input,
-  ElementRef,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
+import { Subscription, timer } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { ActivityService, ActivityEntity } from '../activity.service';
@@ -14,6 +8,8 @@ import { Session } from '../../../../services/session';
 import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../media/modal/modal.component';
+import { ActivityRemindComponent } from '../remind/remind.component';
+import { delay } from 'q';
 
 @Component({
   selector: 'm-activity__content',
@@ -29,6 +25,11 @@ export class ActivityContentComponent {
   @ViewChild('mediaDesciptionEl', { static: false, read: ElementRef })
   mediaDescriptionEl: ElementRef;
 
+  maxFixedHeightContent: number = 540;
+  fixedHeightRatio: number = 500 / 750;
+  remindWidth: number;
+  remindHeight: number;
+
   private entitySubscription: Subscription;
 
   entity: ActivityEntity;
@@ -36,7 +37,8 @@ export class ActivityContentComponent {
   constructor(
     public service: ActivityService,
     private overlayModal: OverlayModalService,
-    private router: Router
+    private router: Router,
+    private el: ElementRef
   ) {}
 
   ngOnInit() {
@@ -45,6 +47,13 @@ export class ActivityContentComponent {
         this.entity = entity;
       }
     );
+  }
+
+  ngAfterViewInit() {
+    // Run after view initialized
+    timer(0)
+      .toPromise()
+      .then(() => this.calculateRemindHeight());
   }
 
   ngOnDestroy() {
@@ -96,6 +105,16 @@ export class ActivityContentComponent {
     return this.entity.entity_guid;
   }
 
+  @HostListener('window:resize')
+  calculateRemindHeight(): void {
+    if (!this.service.displayOptions.fixedHeight) return;
+    const messageHeight = this.messageEl
+      ? this.messageEl.nativeElement.clientHeight
+      : 0;
+    this.remindHeight = this.maxFixedHeightContent - messageHeight;
+    this.remindWidth = this.remindHeight * this.fixedHeightRatio;
+  }
+
   onModalRequested(event: MouseEvent) {
     if (event) {
       event.preventDefault();
@@ -114,4 +133,6 @@ export class ActivityContentComponent {
       )
       .present();
   }
+
+  onImageError(e: Event): void {}
 }

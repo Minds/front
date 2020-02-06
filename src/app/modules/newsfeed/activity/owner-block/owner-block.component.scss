@@ -52,6 +52,15 @@ m-activity__ownerBlock {
   }
 }
 
+.m-activityOwnerBlock__remindIcon {
+  font-size: 18px;
+  margin-right: $minds-margin / 2;
+  vertical-align: middle;
+  @include m-theme() {
+    color: themed($m-link);
+  }
+}
+
 .m-activityOwnerBlock__permalink {
   font-size: 14px;
   line-height: 17px;

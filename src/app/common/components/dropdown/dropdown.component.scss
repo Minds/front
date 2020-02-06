@@ -168,7 +168,7 @@
 
       &.m-dropdownList__item--destructive {
         @include m-theme() {
-          color: $m-alert;
+          color: themed($m-alert);
         }
       }
     }

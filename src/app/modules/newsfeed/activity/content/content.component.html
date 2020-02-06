@@ -29,6 +29,10 @@
     [maxheight]="480"
   >
   </minds-rich-embed>
+  <div
+    class="m-activityContent__fixedHeightSpacer"
+    *ngIf="!mediaDescription"
+  ></div>
 </div>
 
 <div class="m-activityContent__media--video" #mediaEl *ngIf="isVideo">
@@ -83,7 +87,16 @@
 </div> -->
 <!-- End translation -->
 
-<!-- 
-<ng-container *ngIf="service.isRemind$ | async">
-  <m-activity__remind></m-activity__remind>
-</ng-container> -->
+<div
+  class="m-activityContent__remind"
+  #remindContainerEl
+  *ngIf="service.isRemind$ | async"
+>
+  <m-activity__remind
+    [entity]="service.entity$ | async"
+    [style.width]="remindWidth"
+    [style.height]="remindHeight"
+    [style.max-height]="remindHeight"
+  >
+  </m-activity__remind>
+</div>
