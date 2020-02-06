@@ -14,7 +14,7 @@ import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service
   templateUrl: 'homepage-v2.component.html',
 })
 export class HomepageV2Component {
-  @ViewChild('registerForm', { static: false }) registerForm: RegisterForm;
+  @ViewChild('registerForm') registerForm: RegisterForm;
 
   readonly cdnAssetsUrl: string;
   readonly siteUrl: string;

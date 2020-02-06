@@ -10,6 +10,5 @@ import { MonetizationOverviewComponent } from './overview.component';
   imports: [NgCommonModule, RouterModule, CommonModule],
   declarations: [MonetizationOverviewComponent],
   exports: [MonetizationOverviewComponent],
-  entryComponents: [MonetizationOverviewComponent],
 })
 export class MonetizationOverviewModule {}

@@ -5,10 +5,10 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  Renderer,
   ViewChild,
   OnInit,
   OnDestroy,
+  Renderer2,
 } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
@@ -46,7 +46,7 @@ export class CommentsListComponent implements OnInit, OnDestroy {
 
   focusOnInit: boolean = false;
   scrollable: boolean = false;
-  @ViewChild('message', { static: false }) textareaControl: Textarea;
+  @ViewChild('message') textareaControl: Textarea;
   @ViewChild('scrollArea', { static: true }) scrollView: ElementRef;
 
   editing: boolean = false;
@@ -86,7 +86,7 @@ export class CommentsListComponent implements OnInit, OnDestroy {
     public client: Client,
     public attachment: AttachmentService,
     public sockets: SocketsService,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private cd: ChangeDetectorRef,
     public activityService: ActivityService,
     private configs: ConfigsService

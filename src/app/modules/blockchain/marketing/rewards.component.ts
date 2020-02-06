@@ -18,7 +18,7 @@ export class BlockchainMarketingRewardsComponent {
 
   readonly contributionValues: { [key: string]: number };
 
-  @ViewChild('topAnchor', { static: false })
+  @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
 
   constructor(

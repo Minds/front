@@ -27,7 +27,7 @@ import { Session } from '../../services/session';
 export class NotificationsToasterComponent implements OnInit {
   notifications: Array<any> = [];
 
-  @ViewChild(DynamicHostDirective, { static: false })
+  @ViewChild(DynamicHostDirective)
   host: DynamicHostDirective;
 
   constructor(

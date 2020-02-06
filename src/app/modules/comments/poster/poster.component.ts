@@ -6,8 +6,8 @@ import {
   EventEmitter,
   Input,
   Output,
-  Renderer,
   ViewChild,
+  Renderer2,
 } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
@@ -53,7 +53,7 @@ export class CommentPosterComponent {
     public attachment: AttachmentService,
     public sockets: SocketsService,
     public suggestions: AutocompleteSuggestionsService,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     private cd: ChangeDetectorRef,
     private configs: ConfigsService
   ) {}

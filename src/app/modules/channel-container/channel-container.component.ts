@@ -31,10 +31,10 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
   protected param$: Subscription;
 
-  @ViewChild('channelComponent', { static: false })
+  @ViewChild('channelComponent')
   channelComponent: ChannelComponent;
 
-  @ViewChild('proChannelComponent', { static: false })
+  @ViewChild('proChannelComponent')
   proChannelComponent: ProChannelComponent;
 
   constructor(

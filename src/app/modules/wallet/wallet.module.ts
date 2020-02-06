@@ -211,6 +211,5 @@ const walletRoutes: Routes = [
     WalletBalanceTokensComponent,
     WalletUSDBalanceComponent,
   ],
-  entryComponents: [WalletComponent, WalletUSDTermsComponent],
 })
 export class WalletModule {}

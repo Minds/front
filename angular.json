@@ -7,11 +7,16 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
+      "i18n": {
+        "locales": {
+          "es": "src/locale/Minds.es.xlf"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist",
+            "outputPath": "dist/browser",
             "index": "src/index.html",
             "main": "src/main.ts",
             "tsConfig": "src/tsconfig.app.json",
@@ -32,6 +37,13 @@
           },
           "configurations": {
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "localize": ["es"],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": {
@@ -77,6 +89,19 @@
             }
           }
         },
+        "serve-ssr": {
+          "builder": "@nguniversal/builders:ssr-dev-server",
+          "options": {
+            "browserTarget": "minds:build",
+            "serverTarget": "minds:server"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "minds:build:production",
+              "serverTarget": "minds:server:production"
+            }
+          }
+        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
@@ -108,8 +133,8 @@
           "builder": "@angular-devkit/build-angular:server",
           "options": {
             "outputPath": "dist/server",
-            "main": "src/main.server.ts",
-            "tsConfig": "src/tsconfig.server.json"
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json"
           },
           "configurations": {
             "production": {
@@ -150,7 +175,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "m",
-      "styleext": "scss"
+      "styleext": ".ng.scss"
     },
     "@schematics/angular:directive": {
       "prefix": "m"

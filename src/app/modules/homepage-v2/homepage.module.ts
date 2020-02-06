@@ -31,7 +31,6 @@ import { RouterModule } from '@angular/router';
     RouterModule,
   ],
   declarations: [HomepageV2Component],
-  entryComponents: [HomepageV2Component],
   exports: [HomepageV2Component],
 })
 export class HomepageV2Module {}

@@ -17,7 +17,7 @@ import {
 export class ShadowboxHeaderComponent implements AfterViewInit {
   @Input() isScrollable: boolean = true;
   @Input() itemActivated;
-  @ViewChild('shadowboxHeaderContainer', { static: false })
+  @ViewChild('shadowboxHeaderContainer')
   containerEl: ElementRef;
   container;
 

@@ -42,7 +42,7 @@ export class ChannelComponent {
   changed: boolean = false;
   paramsSubscription: Subscription;
 
-  @ViewChild('feed', { static: false }) private feed: ChannelSortedComponent;
+  @ViewChild('feed') private feed: ChannelSortedComponent;
 
   constructor(
     public session: Session,

@@ -169,10 +169,5 @@ export const PRO_DOMAIN_ROUTES = [
     SearchBoxComponent,
   ],
   exports: [ProChannelComponent],
-  entryComponents: [
-    MediaModalComponent,
-    ProUnsubscribeModalComponent,
-    BlogView,
-  ],
 })
 export class ProModule {}

@@ -3,9 +3,9 @@ import {
   ElementRef,
   ChangeDetectorRef,
   EventEmitter,
-  Renderer,
   ViewChild,
   Injector,
+  Renderer2,
 } from '@angular/core';
 
 import { Client } from '../../../services/api';
@@ -76,7 +76,7 @@ export class MessengerConversation {
     public client: Client,
     public sockets: SocketsService,
     public cd: ChangeDetectorRef,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     public encryption: MessengerEncryptionService,
     public dockpanes: MessengerConversationDockpanesService,
     protected blockListService: BlockListService,

@@ -88,7 +88,7 @@ export class BlogView implements OnInit, OnDestroy {
     this.blog = value;
   }
 
-  @ViewChild('lockScreen', { read: ElementRef, static: false }) lockScreen;
+  @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
 
   constructor(
     public session: Session,

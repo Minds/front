@@ -36,7 +36,6 @@ import { TextInputAutocompleteModule } from '../../common/components/autocomplet
     ConfirmPasswordModalComponent,
     TOSUpdatedModal,
   ],
-  entryComponents: [ConfirmPasswordModalComponent],
   exports: [
     ConfirmModal,
     RemindComposerModal,

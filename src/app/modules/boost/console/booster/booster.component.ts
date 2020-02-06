@@ -27,7 +27,7 @@ export class BoostConsoleBooster {
   @Input('type') type: BoostConsoleType;
 
   /* poster component */
-  @ViewChild('poster', { read: ViewContainerRef, static: false })
+  @ViewChild('poster', { read: ViewContainerRef })
   poster: ViewContainerRef;
 
   feed$: Observable<BehaviorSubject<Object>[]>;

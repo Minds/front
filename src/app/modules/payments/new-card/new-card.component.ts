@@ -24,7 +24,7 @@ export class PaymentsNewCard {
   minds = (<any>window).Minds;
   intentKey: string = '';
   intentId: string = '';
-  @ViewChild('iframe', { static: false }) iframe: ElementRef;
+  @ViewChild('iframe') iframe: ElementRef;
   @Output() completed: EventEmitter<void> = new EventEmitter();
 
   _opts: any;

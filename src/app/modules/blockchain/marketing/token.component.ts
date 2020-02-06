@@ -16,7 +16,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 export class BlockchainMarketingTokenComponent {
   readonly cdnAssetsUrl: string;
 
-  @ViewChild('topAnchor', { static: false })
+  @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
 
   constructor(

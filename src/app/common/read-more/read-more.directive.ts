@@ -14,7 +14,7 @@ export class ReadMoreDirective {
   _element: any;
   realHeight: any;
   expandable: boolean = false;
-  @ContentChild(ReadMoreButtonComponent, { static: false }) button;
+  @ContentChild(ReadMoreButtonComponent) button;
   @Input() maxHeightAllowed: number;
 
   constructor(private element: ElementRef, private cd: ChangeDetectorRef) {

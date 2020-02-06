@@ -24,7 +24,7 @@ export class PhoneInputCountryComponent implements OnInit {
   phoneNumber: string;
   countryCodeData = new CountryCode();
 
-  @ViewChild('input', { static: false }) input: ElementRef;
+  @ViewChild('input') input: ElementRef;
   @ViewChild('dropdownMenu', { static: true }) dropdownMenu: ElementRef;
 
   showDropdownMenu: boolean = false;

@@ -1,4 +1,4 @@
-import { Pipe, Renderer } from '@angular/core';
+import { Pipe, Renderer2 } from '@angular/core';
 
 @Pipe({
   name: 'sanitize',

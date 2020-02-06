@@ -43,7 +43,7 @@ export class GroupsProfileLegacyFeed {
   kicking: any;
   paramsSubscription: Subscription;
 
-  @ViewChild('poster', { static: false }) private poster: PosterComponent;
+  @ViewChild('poster') private poster: PosterComponent;
 
   constructor(
     public session: Session,

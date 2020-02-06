@@ -30,6 +30,5 @@ const i18nRoutes: Routes = [
   ],
   declarations: [I18nMarketingComponent],
   exports: [],
-  entryComponents: [I18nMarketingComponent],
 })
 export class I18nModule {}

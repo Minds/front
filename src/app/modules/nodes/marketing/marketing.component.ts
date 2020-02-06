@@ -15,7 +15,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 export class NodesMarketingComponent {
   readonly cdnAssetsUrl: string;
 
-  @ViewChild('topAnchor', { static: false })
+  @ViewChild('topAnchor')
   readonly topAnchor: ElementRef;
 
   constructor(protected cd: ChangeDetectorRef, configs: ConfigsService) {

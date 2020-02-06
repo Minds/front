@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
-import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader';
 import { ServerTransferStateModule } from '@angular/platform-server';
 import { XhrFactory } from '@angular/common/http';
 import * as xhr2 from 'xhr2';
@@ -17,6 +16,7 @@ PlotlyModule.plotlyjs = {
 };
 
 // activate cookie for server-side rendering
+@Injectable()
 export class ServerXhr implements XhrFactory {
   build(): XMLHttpRequest {
     xhr2.prototype._restrictedHeaders.cookie = false;
@@ -25,13 +25,7 @@ export class ServerXhr implements XhrFactory {
 }
 
 @NgModule({
-  imports: [
-    MindsModule,
-    ServerModule,
-    ModuleMapLoaderModule,
-    ServerTransferStateModule,
-    PlotlyModule,
-  ],
+  imports: [MindsModule, ServerModule, ServerTransferStateModule, PlotlyModule],
   providers: [
     { provide: XhrFactory, useClass: ServerXhr },
     {

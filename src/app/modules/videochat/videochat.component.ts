@@ -23,7 +23,7 @@ export class VideoChatComponent implements OnInit {
   @Input() configs: JitsiConfig;
   @HostBinding('class.is-active') isActive = false;
   // @HostBinding('class.j-meetings-meeting--full-width') isFullWidth = false;
-  @ViewChild('meet', { static: false }) meet;
+  @ViewChild('meet') meet;
 
   constructor(
     private service: VideoChatService,

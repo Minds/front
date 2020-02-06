@@ -20,7 +20,7 @@ import { SiteService } from '../../../../../common/services/site.service';
 })
 export class ProTileComponent {
   @Input() entity: any;
-  @ViewChild('img', { static: false }) img: ElementRef;
+  @ViewChild('img') img: ElementRef;
 
   videoDimensions: any = null;
 

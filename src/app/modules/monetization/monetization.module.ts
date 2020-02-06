@@ -66,6 +66,5 @@ const monetizationRoutes: Routes = [
     RevenueOptionsComponent,
     RouterModule,
   ],
-  entryComponents: [MonetizationMarketingComponent, RevenueConsoleComponent],
 })
 export class MonetizationModule {}

@@ -114,6 +114,5 @@ const routes: Routes = [
     NewsfeedTilesComponent,
     NewsfeedComponent,
   ],
-  entryComponents: [NewsfeedComponent, NewsfeedSingleComponent],
 })
 export class NewsfeedModule {}

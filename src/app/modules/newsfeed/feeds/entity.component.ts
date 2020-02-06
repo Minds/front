@@ -21,7 +21,7 @@ import { DynamicHostDirective } from '../../../common/directives/dynamic-host.di
 })
 export class NewsfeedEntityComponent {
   @Output() deleted = new EventEmitter<boolean>();
-  @ViewChild(DynamicHostDirective, { static: false })
+  @ViewChild(DynamicHostDirective)
   host: DynamicHostDirective;
   entity;
 

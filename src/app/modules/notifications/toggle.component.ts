@@ -11,7 +11,7 @@ import { NotificationService } from './notification.service';
 })
 export class NotificationsTopbarToggleComponent {
   toggled: boolean = false;
-  @ViewChild('notificationsFlyout', { static: false }) flyout: any;
+  @ViewChild('notificationsFlyout') flyout: any;
 
   constructor(public session: Session, public service: NotificationService) {}
 

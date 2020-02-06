@@ -24,6 +24,5 @@ import { TextInputAutocompleteModule } from '../../../common/components/autocomp
   ],
   declarations: [PosterComponent, ModalPosterComponent],
   exports: [PosterComponent, ModalPosterComponent],
-  entryComponents: [PosterComponent, ModalPosterComponent],
 })
 export class PosterModule {}

@@ -37,6 +37,5 @@ import { TextInputAutocompleteModule } from '../../common/components/autocomplet
     SidebarSelectorComponent,
   ],
   providers: [TopbarHashtagsService],
-  entryComponents: [HashtagsSelectorModalComponent],
 })
 export class HashtagsModule {}

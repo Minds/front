@@ -78,7 +78,7 @@ export class CommentComponent implements OnChanges {
   commentAge$: Observable<number>;
 
   videoDimensions: Array<any> = null;
-  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
+  @ViewChild('batchImage') batchImage: ElementRef;
 
   @Input() canEdit: boolean = false;
   @Input() canReply = true;

@@ -73,6 +73,5 @@ const routes: Routes = [
     ChannelSidebar,
     ChannelComponent,
   ],
-  entryComponents: [ChannelComponent],
 })
 export class ChannelsModule {}

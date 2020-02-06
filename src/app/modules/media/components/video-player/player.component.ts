@@ -46,7 +46,7 @@ export class MindsVideoPlayerComponent
   /**
    * This is the video player component
    */
-  @ViewChild(PlyrComponent, { static: false }) player: PlyrComponent;
+  @ViewChild(PlyrComponent) player: PlyrComponent;
 
   /**
    * BehaviorSubject holding autoplay value

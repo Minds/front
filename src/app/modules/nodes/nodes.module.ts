@@ -28,6 +28,5 @@ const routes: Routes = [
   ],
   declarations: [NodesMarketingComponent],
   exports: [NodesMarketingComponent],
-  entryComponents: [NodesMarketingComponent],
 })
 export class NodesMarketingModule {}

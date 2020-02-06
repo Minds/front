@@ -62,11 +62,11 @@ export class BlogEdit {
   existingBanner: boolean;
 
   paramsSubscription: Subscription;
-  @ViewChild('inlineEditor', { static: false })
+  @ViewChild('inlineEditor')
   inlineEditor: InlineEditorComponent;
-  @ViewChild('thresholdInput', { static: false })
+  @ViewChild('thresholdInput')
   thresholdInput: WireThresholdInputComponent;
-  @ViewChild('hashtagsSelector', { static: false })
+  @ViewChild('hashtagsSelector')
   hashtagsSelector: HashtagsSelectorComponent;
 
   protected time_created: any;

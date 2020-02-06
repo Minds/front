@@ -1,5 +1,7 @@
 import { V2TopbarComponent } from './v2-topbar.component';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class V2TopbarService {
   private container: V2TopbarComponent;
 

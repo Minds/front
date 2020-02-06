@@ -462,10 +462,5 @@ const routes: Routes = [
     },
     HorizontalFeedService,
   ],
-  entryComponents: [
-    NotificationsToasterComponent,
-    ReferralsLinksComponent,
-    ShareModalComponent,
-  ],
 })
 export class CommonModule {}

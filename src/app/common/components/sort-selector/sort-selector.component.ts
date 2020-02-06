@@ -115,13 +115,13 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
     customType;
   }> = new EventEmitter<{ algorithm; period; customType }>();
 
-  @ViewChild('algorithmDropdown', { static: false })
+  @ViewChild('algorithmDropdown')
   algorithmDropdown: DropdownComponent;
 
-  @ViewChild('periodDropdown', { static: false })
+  @ViewChild('periodDropdown')
   periodDropdown: DropdownComponent;
 
-  @ViewChild('customTypeDropdown', { static: false })
+  @ViewChild('customTypeDropdown')
   customTypeDropdown: DropdownComponent;
 
   expandedAlgorithmDropdown: boolean = true;

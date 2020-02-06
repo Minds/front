@@ -27,7 +27,7 @@ export class InfoStepComponent {
 
   cities: Array<any> = [];
 
-  @ViewChild('phoneVerification', { static: false })
+  @ViewChild('phoneVerification')
   phoneVerification: PhoneVerificationComponent;
 
   constructor(

@@ -23,7 +23,7 @@ export class DraggableListComponent {
   @Input() id: string;
   @Input() headers: string[];
   @Input() disabled: boolean;
-  @ContentChild(TemplateRef, { static: false }) template: TemplateRef<any>;
+  @ContentChild(TemplateRef) template: TemplateRef<any>;
   @Output() emptyListHeaderRowClicked: EventEmitter<any> = new EventEmitter();
   @Output() arrayChanged: EventEmitter<any> = new EventEmitter();
 

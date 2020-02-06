@@ -156,8 +156,8 @@ export class Activity implements OnInit {
     }
   }
 
-  @ViewChild('player', { static: false }) player: MindsVideoPlayerComponent;
-  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
+  @ViewChild('player') player: MindsVideoPlayerComponent;
+  @ViewChild('batchImage') batchImage: ElementRef;
 
   protected time_created: any;
 

@@ -66,7 +66,7 @@ export class ChannelSortedComponent implements OnInit {
 
   viewScheduled: boolean = false;
 
-  @ViewChild('poster', { static: false }) protected poster: PosterComponent;
+  @ViewChild('poster') protected poster: PosterComponent;
 
   scheduledCount: number = 0;
 

@@ -11,6 +11,5 @@ import { CommonModule } from '../../common.module';
   exports: [PostMenuComponent],
   declarations: [PostMenuComponent],
   providers: [],
-  entryComponents: [PostMenuComponent],
 })
 export class PostMenuModule {}

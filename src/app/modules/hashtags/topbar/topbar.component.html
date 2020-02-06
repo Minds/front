@@ -33,10 +33,11 @@
     <li class="m-dropdown--list--item">
       <span
         class="m-topbar--navigation--item m-topbar--hashtags--select-more"
-        i18n="@@MINDS__NEWSFEED__TOPBAR__SUGGESTED_MORE"
         (click)="openModal()"
       >
-        MORE
+        <ng-container i18n="@@MINDS__NEWSFEED__TOPBAR__SUGGESTED_MORE"
+          >MORE</ng-container
+        >
         <m-tooltip
           icon="help"
           i18n="@@MINDS__HASHTAGS__TOPBAR__SUGGESTED_MORE_TOOLTIP"
@@ -70,10 +71,11 @@
 
   <span
     class="m-topbar--navigation--item m-topbar--hashtags--select-more"
-    i18n="@@MINDS__NEWSFEED__TOPBAR__SUGGESTED_MORE"
     (click)="openModal()"
   >
-    MORE
+    <ng-container i18n="@@MINDS__NEWSFEED__TOPBAR__SUGGESTED_MORE"
+      >MORE</ng-container
+    >
     <m-tooltip
       icon="help"
       i18n="@@MINDS__HASHTAGS__TOPBAR__SUGGESTED_MORE_TOOLTIP"

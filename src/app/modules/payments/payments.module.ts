@@ -33,6 +33,5 @@ import { BTCSettingsComponent } from './btc/settings.component';
   ],
   exports: [PayWall, PaywallCancelButton, PaymentsNewCard, PaymentsSelectCard],
   providers: [BTCService],
-  entryComponents: [PaymentsNewCard, BTCComponent, BTCSettingsComponent],
 })
 export class PaymentsModule {}
