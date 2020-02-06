@@ -35,6 +35,8 @@
   }
   .m-shadowboxHeaderTab__label {
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   m-tooltip {
     vertical-align: middle;
@@ -42,6 +44,8 @@
   .m-shadowboxHeaderTab__value {
     font-size: 17px;
     margin-top: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
     @include m-theme() {
       color: themed($m-grey-800);
     }

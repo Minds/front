@@ -33,8 +33,11 @@ m-shadowboxHeader {
       background: transparent; /* Chrome/Safari/Webkit */
     }
   }
+
   .m-tooltip--bubble {
-    width: 160px;
+    top: 50px;
+    width: 100px;
+    margin-left: 4px;
   }
 }
 [class*='m-shadowboxHeader__overflowFade--'] {

@@ -82,19 +82,20 @@ export class WalletDashboardComponent implements OnInit {
     this.wallet = this.walletService.getWallet();
 
     this.route.paramMap.subscribe((params: ParamMap) => {
-      console.log('this route??', this.route, params, params.get('currency'));
+      const currencyParam = params.get('currency');
+      const viewParam = params.get('view');
 
-      this.activeCurrencyId = params.get('currency');
+      this.activeCurrencyId = currencyParam;
       if (!this.views[this.activeCurrencyId]) {
         this.activeCurrencyId = 'tokens';
         this.router.navigate(['/wallet/tokens']);
       }
 
       if (
-        params.get('view') &&
-        this.views[this.activeCurrencyId].find(v => v.id === params.get('view'))
+        viewParam &&
+        this.views[this.activeCurrencyId].find(v => v.id === viewParam)
       ) {
-        this.activeViewId = params.get('view');
+        this.activeViewId = viewParam;
       } else {
         this.activeViewId = this.views[this.activeCurrencyId][0].id;
         this.updateView(this.activeViewId);

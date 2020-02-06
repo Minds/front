@@ -1,4 +1,4 @@
-<ng-container *ngFor="let tab of tabs">
+<ng-container *ngFor="let tab of tabs; let i = index" #shadowboxHeaderTabs>
   <div
     class="m-shadowboxHeaderTab"
     (click)="changeTabs(tab)"
@@ -6,7 +6,13 @@
   >
     <div class="m-shadowboxHeaderTab__label">
       <span>{{ tab.label }}</span>
-      <m-tooltip [anchor]="top" icon="help" *ngIf="tab.description">
+      <m-tooltip
+        [anchor]="top"
+        icon="help"
+        *ngIf="tab.description"
+        (mouseenter)="onMouseEnter($event, i)"
+        [id]="'m-shadowboxHeaderTab--' + i"
+      >
         {{ tab.description }}
       </m-tooltip>
     </div>

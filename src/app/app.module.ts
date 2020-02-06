@@ -81,7 +81,6 @@ import { CookieModule } from '@gorniv/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
-import { WalletContainerModule } from './modules/wallet-container/wallet-container.module';
 import { WalletV2Module } from './modules/wallet/v2/wallet-v2.module';
 
 @Injectable()
@@ -162,7 +161,6 @@ export class SentryErrorHandler implements ErrorHandler {
     UpgradesModule,
     //PlotlyModule,
     WalletV2Module,
-    WalletContainerModule,
 
     //last due to :username route
     ChannelContainerModule,

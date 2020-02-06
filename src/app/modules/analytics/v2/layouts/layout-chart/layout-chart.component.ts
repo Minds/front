@@ -113,6 +113,7 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
       }
     );
   }
+  updateMetric($event) {}
 
   detectChanges() {
     this.cd.markForCheck();

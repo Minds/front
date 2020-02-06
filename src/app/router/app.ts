@@ -8,16 +8,10 @@ import { Pages } from '../controllers/pages/pages';
 import { CanDeactivateGuardService } from '../services/can-deactivate-guard';
 import { RewardsComponent } from '../controllers/rewards/rewards';
 import { ChannelContainerComponent } from '../modules/channel-container/channel-container.component';
-import { WalletContainerComponent } from '../modules/wallet-container/wallet-container.component';
 
 export const MindsAppRoutes: Routes = [
   { path: 'capture', redirectTo: 'media/images/suggested' },
   { path: 'about', redirectTo: 'p/about' },
-  // {
-  //   path: 'wallet',
-  //   component: WalletContainerComponent,
-  //   children: [{ path: '**', component: WalletContainerComponent }],
-  // },
 
   // redirectTo: 'media/:type/:filter
   { path: 'discovery/suggested/channels', redirectTo: 'channels/suggested' },

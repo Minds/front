@@ -383,6 +383,7 @@ const routes: Routes = [
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    ShadowboxHeaderComponent,
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,

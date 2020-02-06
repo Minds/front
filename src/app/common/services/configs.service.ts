@@ -1,17 +1,19 @@
 import { Client } from '../api/client.service';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class ConfigsService {
   private configs = {};
+  public isReady$ = new Subject();
 
   constructor(private client: Client) {}
 
   async loadFromRemote() {
     try {
       this.configs = await this.client.get('api/v1/minds/config');
+      this.isReady$.next(true);
     } catch (err) {
       console.error(err);
     }

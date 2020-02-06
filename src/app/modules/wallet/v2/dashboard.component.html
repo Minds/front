@@ -17,7 +17,6 @@
             [friendlyVals]="true"
             (tabChanged)="updateCurrency($event)"
           ></m-shadowboxHeader__tabs>
-
           <div class="m-shadowboxLayout__body">
             <div class="m-walletDashboardBalances__wrapper">
               <m-walletTokenOnboarding
@@ -39,7 +38,7 @@
             <div class="m-walletDashboardViews__wrapper">
               <div
                 class="m-walletDashboardViews__tabsContainer"
-                *ngIf="views[activeCurrencyId]"
+                *ngIf="views[activeCurrencyId].length > 1"
                 #dashboardViews
               >
                 <div

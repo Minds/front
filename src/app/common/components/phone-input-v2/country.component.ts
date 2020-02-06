@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { verticallyScrollToEnsureElementIsInView } from '../../../helpers/scrollable-container-visibility';
+import { verticallyScrollElementIntoView } from '../../../helpers/scrollable-container-visibility';
 
 import { Country } from './country';
 import { CountryCode } from './countries';
@@ -76,7 +76,7 @@ export class PhoneInputCountryV2Component
         this.toggledDropdown.emit({ showDropdown: true });
       }, 0);
       this.scrollTimeout = setTimeout(() => {
-        verticallyScrollToEnsureElementIsInView(
+        verticallyScrollElementIntoView(
           this.dropdown.nativeElement,
           this.countryEls[this.selectedCountryIndex].nativeElement
         );

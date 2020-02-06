@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable, Inject, APP_INITIALIZER } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
@@ -49,6 +49,11 @@ import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
 import { WalletUSDBalanceComponent } from './usd/balance.component';
 import { WalletV2Module } from './v2/wallet-v2.module';
+import { WALLET_V2_ROUTES } from '../wallet/v2/wallet-v2.module';
+import { FeaturesService } from '../../services/features.service';
+import { ConfigsService } from '../../common/services/configs.service';
+import { WalletDashboardComponent } from './v2/dashboard.component';
+import { BlockchainConsoleComponent } from '../blockchain/console/console.component';
 
 export const WALLET_ROUTES: Routes = [
   {
@@ -121,6 +126,10 @@ export const WALLET_ROUTES: Routes = [
             data: {
               title: 'Referrals',
             },
+          },
+          {
+            path: '**',
+            redirectTo: 'contributions',
           },
         ],
       },
@@ -214,6 +223,55 @@ export const WALLET_ROUTES: Routes = [
     WalletBalanceTokensComponent,
     WalletUSDBalanceComponent,
   ],
-  entryComponents: [WalletComponent, WalletUSDTermsComponent],
+  entryComponents: [
+    WalletComponent,
+    WalletUSDTermsComponent,
+    WalletTokensComponent,
+    WalletTokenTransactionsComponent,
+    WalletTokenWithdrawComponent,
+    WalletTokenJoinComponent,
+    WalletTokenContributionsComponent,
+    WalletTokenAddressesComponent,
+    WalletToken101Component,
+    ReferralsComponent,
+    WalletUSDComponent,
+    WalletUSDTransactionsComponent,
+    WalletUSDEarningsComponent,
+    WalletUSDPayoutsComponent,
+    WalletUSDSettingsComponent,
+    WalletUSDOnboardingComponent,
+    WalletWireComponent,
+    WalletOverviewComponent,
+    WalletDashboardComponent,
+    BlockchainConsoleComponent,
+  ],
 })
-export class WalletModule {}
+export class WalletModule {
+  constructor(
+    @Inject(ConfigsService) configs: ConfigsService,
+    @Inject(FeaturesService) protected features: FeaturesService,
+    @Inject(Router) protected router: Router
+  ) {
+    configs.isReady$.subscribe(() => {
+      const v2Enabled = configs.get('features')['wallet-upgrade'];
+      let newConfig;
+      if (v2Enabled) {
+        newConfig = WALLET_V2_ROUTES.concat(router.config);
+      } else {
+        const cryptoRoutes: Routes = [
+          {
+            path: 'wallet/crypto',
+            component: WalletComponent,
+            children: [
+              { path: '', redirectTo: 'overview', pathMatch: 'full' },
+              { path: 'overview', component: BlockchainConsoleComponent },
+            ],
+          },
+        ];
+        const oldWalletRoutes = cryptoRoutes.concat(WALLET_ROUTES);
+        newConfig = oldWalletRoutes.concat(router.config);
+      }
+      router.resetConfig(newConfig);
+    });
+  }
+}

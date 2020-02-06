@@ -26,10 +26,19 @@
 }
 ////////////////////////////////////////////
 m-walletDashboard {
+  m-shadowboxHeader {
+    min-height: 103px;
+  }
+  .m-shadowboxHeader__wrapper {
+    height: 103px;
+  }
   .m-shadowboxHeaderTab {
     line-height: 21px;
+    min-height: 103px;
+    max-height: 103px;
+    width: 149px;
     .m-shadowboxHeaderTab__label {
-      margin-top: 10px;
+      margin-top: 6px;
       font-size: 18px;
       @include m-theme() {
         color: themed($m-grey-800);

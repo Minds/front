@@ -55,7 +55,6 @@ export class WalletTransactionsCashComponent implements OnInit {
       if (stripeAccount.bankAccount) {
         this.currency = stripeAccount.bankAccount.currency.toUpperCase();
       }
-      console.log('stripe account', stripeAccount);
 
       this.runningTotal = stripeAccount.pendingBalance.amount / 100;
 
@@ -206,7 +205,6 @@ export class WalletTransactionsCashComponent implements OnInit {
       formattedAmount.frac = splitBalance[1].slice(0, 2);
     }
 
-    console.log('formatting...', formattedAmount.total);
     return formattedAmount;
   }
 

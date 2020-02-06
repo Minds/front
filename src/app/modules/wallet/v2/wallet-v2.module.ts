@@ -24,6 +24,7 @@ import { WalletTransactionsTokensComponent } from './transactions-tokens/transac
 import { WalletTransactionsCashComponent } from './transactions-cash/transactions-cash.component';
 
 //////////////////////////////////////////////////
+// TODO add a wildcard and the parameter routes as children once feature-flag is lifted
 export const WALLET_V2_ROUTES: Routes = [
   {
     path: 'wallet',
@@ -33,14 +34,26 @@ export const WALLET_V2_ROUTES: Routes = [
       description: 'Manage all of your transactions and earnings on Minds',
       ogImage: '/assets/photos/graph.jpg',
     },
-    children: [
-      { path: '', redirectTo: 'tokens/overview', pathMatch: 'full' },
-      { path: ':currency/:view', component: WalletDashboardComponent },
-      { path: ':currency', component: WalletDashboardComponent },
-    ],
+  },
+  {
+    path: 'wallet/:currency/:view',
+    component: WalletDashboardComponent,
+    data: {
+      title: 'Wallet',
+      description: 'Manage all of your transactions and earnings on Minds',
+      ogImage: '/assets/photos/graph.jpg',
+    },
+  },
+  {
+    path: 'wallet/:currency',
+    component: WalletDashboardComponent,
+    data: {
+      title: 'Wallet',
+      description: 'Manage all of your transactions and earnings on Minds',
+      ogImage: '/assets/photos/graph.jpg',
+    },
   },
 ];
-// activatedRoute.routeConfig.children
 /////////////////////////////////////////////////
 
 @NgModule({
@@ -50,7 +63,6 @@ export const WALLET_V2_ROUTES: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule,
-    // RouterModule.forChild(walletRoutes),
   ],
   declarations: [
     WalletDashboardComponent,

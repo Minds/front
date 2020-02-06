@@ -8,6 +8,10 @@ import {
   ElementRef,
   HostListener,
 } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { horizontallyScrollElementIntoView } from '../../../helpers/scrollable-container-visibility';
 
 @Component({
   selector: 'm-shadowboxHeader',
@@ -20,6 +24,14 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
   @ViewChild('shadowboxHeaderContainer', { static: false })
   containerEl: ElementRef;
   container;
+  public containerScrollLeft: number = 0;
+
+  firstMetricEl;
+  activeMetricEl;
+
+  tabsSubscription: Subscription;
+
+  tabsArray;
 
   childClientWidth: number;
   faderWidth = 24;
@@ -28,31 +40,39 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
   isAtScrollStart = true;
   showButton = { left: false, right: false };
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(
+    private cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {}
 
   ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        this.container = this.containerEl.nativeElement;
+
+        this.activeMetricEl = <HTMLElement>(
+          document.querySelector('.active.m-shadowboxHeaderTab')
+        );
+
+        this.firstMetricEl = <HTMLElement>(
+          document.querySelector('.m-shadowboxHeaderTab')
+        );
+        this.slideToActiveMetric(this.container, this.activeMetricEl);
+        this.checkOverflow();
+      }, 50);
+    }
+  }
+
+  slideToActiveMetric(container, el) {
+    horizontallyScrollElementIntoView(container, el, true);
+  }
+
+  @HostListener('click', ['$event'])
+  onClick($event) {
+    //  TODO allow click to go through
+    this.slideToActiveMetric(this.container, $event.target);
     this.checkOverflow();
-    // const activeMetric = ;//get the index of the metric with .active
-    // this.slideToActiveMetric();
   }
-
-  // updateMetric(metric) {
-  //   // TODOOJM: if clicked metric is not fully visible, slide() until it is
-  //   this.analyticsService.updateMetric(metric.id);
-  // }
-
-  // ----------------------------------------------------
-  @HostListener('click', ['$event.target'])
-  onClick(target) {
-    // console.log('***Clicked on: ', target);
-    // find index of target
-    // this.slideToActiveMetric(metricIndex);
-  }
-
-  slideToActiveMetric(metricIndex) {
-    // TODOOJM
-  }
-  // ----------------------------------------------------
 
   @HostListener('window:resize')
   onResize() {
@@ -60,35 +80,36 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
   }
 
   onScroll($event) {
+    this.containerScrollLeft = this.container.scrollLeft;
     this.checkOverflow();
   }
 
   checkOverflow() {
+    // assumes all metrics are equal width
     if (!this.isScrollable) {
       return;
     }
 
-    const firstMetric = <HTMLElement>(
-      document.querySelector('.m-shadowboxHeaderTab')
-    );
-    // TODO: figure out how to avoid test failure "Cannot read property 'clientWidth' of null"
-    this.childClientWidth = firstMetric ? firstMetric.clientWidth : 160;
+    if (this.firstMetricEl) {
+      this.childClientWidth = this.firstMetricEl.clientWidth;
 
-    this.container = this.containerEl.nativeElement;
-    this.isOverflown =
-      this.container.scrollWidth - this.container.clientWidth > 0;
+      this.isOverflown =
+        this.container.scrollWidth - this.container.clientWidth > 0;
 
-    this.isAtScrollStart = this.container.scrollLeft < this.faderWidth;
-    this.showButton.left = this.isOverflown && !this.isAtScrollStart;
+      this.isAtScrollStart = this.container.scrollLeft < this.faderWidth;
+      this.showButton.left = this.isOverflown && !this.isAtScrollStart;
 
-    this.isAtScrollEnd =
-      !this.isOverflown ||
-      this.container.scrollWidth -
-        (this.container.scrollLeft + this.container.clientWidth) <
-        this.faderWidth;
+      this.isAtScrollEnd =
+        !this.isOverflown ||
+        this.container.scrollWidth -
+          (this.container.scrollLeft + this.container.clientWidth) <
+          this.faderWidth;
 
-    this.showButton.right =
-      this.isOverflown && this.container.scrollLeft >= 0 && !this.isAtScrollEnd;
+      this.showButton.right =
+        this.isOverflown &&
+        this.container.scrollLeft >= 0 &&
+        !this.isAtScrollEnd;
+    }
     this.detectChanges();
   }
 
