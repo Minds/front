@@ -11,6 +11,7 @@ export type ActivityDisplayOptions = {
   showToolbar: boolean;
   showBoostMenuOptions: boolean;
   showEditedTag: boolean;
+  showVisibiltyState: boolean;
   fixedHeight: boolean;
 };
 
@@ -121,6 +122,7 @@ export class ActivityService {
     showToolbar: true,
     showBoostMenuOptions: false,
     showEditedTag: false,
+    showVisibiltyState: false,
     fixedHeight: false,
   };
 
