@@ -57,6 +57,7 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
         this.firstMetricEl = <HTMLElement>(
           document.querySelector('.m-shadowboxHeaderTab')
         );
+
         this.slideToActiveMetric(this.container, this.activeMetricEl);
         this.checkOverflow();
       }, 50);
