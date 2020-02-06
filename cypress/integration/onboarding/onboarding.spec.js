@@ -73,8 +73,8 @@ context('Onboarding', () => {
 
     // should have a Location input
     cy.get('.m-onboarding__controls > .m-onboarding__control label[data-minds=location]').contains('Location');
-    cy.get('.m-onboarding__controls > .m-onboarding__control input[data-minds=locationInput]').type('London');
-    cy.get('ul.m-onboarding__cities > li:first-child').click();
+    // cy.get('.m-onboarding__controls > .m-onboarding__control input[data-minds=locationInput]').type('London');
+    // cy.get('ul.m-onboarding__cities > li:first-child').click();
 
 
     // should have Date of Birth inputs
@@ -91,7 +91,11 @@ context('Onboarding', () => {
 
     // should have a continue and a skip button
     cy.get('button.mf-button--hollow').contains('Skip');
-    cy.get('button.mf-button--alt').contains('Continue').click();
+    cy.get('button.mf-button--alt').contains('Finish').click();
+
+    // TODO: disable the following line and uncomment the rest when we re-enable the screens
+    // should be in the newsfeed
+    cy.location('pathname').should('eq', '/newsfeed/subscriptions');
 
     // should be in the Groups step
 
@@ -105,8 +109,8 @@ context('Onboarding', () => {
     // cy.get('.m-groupList__list .m-groupList__item:first-child .m-join__subscribe i').contains('add');
 
     // should have a continue and a skip button
-    cy.get('button.mf-button--hollow').contains('Skip');
-    cy.get('button.mf-button--alt').contains('Continue').click();
+    // cy.get('button.mf-button--hollow').contains('Skip');
+    // cy.get('button.mf-button--alt').contains('Continue').click();
 
 
     // should be in the Channels step
@@ -120,10 +124,10 @@ context('Onboarding', () => {
     // cy.get('.m-channelList__list .m-channelList__item:first-child .m-join__subscribe i').contains('add');
 
     // should have a continue and a skip button
-    cy.get('button.mf-button--hollow').contains('Skip');
-    cy.get('button.mf-button--alt').contains('Finish').click();
+    // cy.get('button.mf-button--hollow').contains('Skip');
+    // cy.get('button.mf-button--alt').contains('Finish').click();
 
     // should be in the newsfeed
-    cy.location('pathname').should('eq', '/newsfeed/subscriptions');
+    // cy.location('pathname').should('eq', '/newsfeed/subscriptions');
   });
 });
