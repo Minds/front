@@ -1,14 +1,8 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
-
-import { Storage } from '../../../services/storage';
-import { Client } from '../../../services/api';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { CookieService } from '../../../common/services/cookie.service';
 
 @Component({
   selector: 'm-announcement',
-  host: {
-    '[hidden]': 'hidden',
-  },
   template: `
     <div class="m-announcement">
       <div class="m-announcement--content">
@@ -22,10 +16,11 @@ import { CookieService } from '../../../common/services/cookie.service';
   `,
 })
 export class AnnouncementComponent implements OnInit {
-  hidden: boolean = false;
   @Input() id: string = 'default';
   @Input() canClose: boolean = true;
   @Input() remember: boolean = true;
+
+  @HostBinding('hidden') hidden: boolean = false;
 
   constructor(private cookieService: CookieService) {}
 

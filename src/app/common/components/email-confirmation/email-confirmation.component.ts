@@ -6,6 +6,7 @@ import {
   OnInit,
   Inject,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
 import { EmailConfirmationService } from './email-confirmation.service';
 import { Session } from '../../../services/session';
@@ -15,6 +16,7 @@ import { ConfigsService } from '../../services/configs.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { filter } from 'rxjs/operators';
+import { AnnouncementComponent } from '../announcements/announcement.component';
 
 /**
  * Component that displays an announcement-like banner
@@ -23,7 +25,6 @@ import { filter } from 'rxjs/operators';
  * @see AnnouncementComponent
  */
 @Component({
-  providers: [EmailConfirmationService],
   selector: 'm-emailConfirmation',
   templateUrl: 'email-confirmation.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,6 +34,9 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
   sent: boolean = false;
   shouldShow: boolean = false;
   canClose: boolean = false;
+
+  @ViewChild('announcement', { static: false })
+  announcement: AnnouncementComponent;
 
   protected userEmitter$: Subscription;
   protected routerEvent$: Subscription;
@@ -48,6 +52,7 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
     protected location: Location
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
+    this.service.setContainer(this);
   }
 
   ngOnInit(): void {
@@ -84,6 +89,11 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
     if (this.routerEvent$) {
       this.routerEvent$.unsubscribe();
     }
+  }
+
+  show() {
+    this.announcement.hidden = false;
+    this.detectChanges();
   }
 
   /**

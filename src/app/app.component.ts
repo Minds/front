@@ -4,6 +4,8 @@ import {
   PLATFORM_ID,
   Inject,
   HostBinding,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -32,12 +34,13 @@ import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
 import { ConfigsService } from './common/services/configs.service';
 import { MetaService } from './common/services/meta.service';
 import { filter, map, mergeMap, first } from 'rxjs/operators';
+import { EmailConfirmationService } from './common/components/email-confirmation/email-confirmation.service';
 
 @Component({
   selector: 'm-app',
   templateUrl: 'app.component.html',
 })
-export class Minds {
+export class Minds implements OnInit, OnDestroy {
   name: string;
 
   ready: boolean = false;
@@ -47,6 +50,8 @@ export class Minds {
   showTOSModal: boolean = false;
 
   protected router$: Subscription;
+
+  protected clientError$: Subscription;
 
   protected routerConfig: Route[];
 
@@ -67,6 +72,7 @@ export class Minds {
     public blockListService: BlockListService,
     public featuresService: FeaturesService,
     public themeService: ThemeService,
+    private emailConfirmationService: EmailConfirmationService,
     private bannedService: BannedService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private diagnostics: DiagnosticsService,
@@ -85,6 +91,12 @@ export class Minds {
   }
 
   async ngOnInit() {
+    this.clientError$ = this.client.onError.subscribe(err => {
+      if (err.status === 403 && err.error.must_verify) {
+        this.emailConfirmationService.show();
+      }
+    });
+
     // MH: does loading meta tags before the configs have been set cause issues?
     this.router$ = this.router.events
       .pipe(
@@ -185,6 +197,7 @@ export class Minds {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();
     this.router$.unsubscribe();
+    this.clientError$.unsubscribe();
   }
 
   @HostBinding('class') get cssColorSchemeOverride() {
