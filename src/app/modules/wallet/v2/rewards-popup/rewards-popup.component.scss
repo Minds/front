@@ -4,10 +4,10 @@ m-walletRewardsPopup {
   top: 0;
   left: 0;
   font-weight: 300;
-  @include m-walletColor--medium;
   @include m-walletText--13;
   @include m-theme() {
     background-color: themed($m-white);
+    color: themed($m-textColor--secondary);
     box-shadow: 0 0 10px 0 rgba(themed($m-black), 0.1);
   }
 
@@ -27,8 +27,10 @@ m-walletRewardsPopup {
     margin: 10px 20px 20px 20px;
 
     span {
-      @include m-walletColor--dark;
       @include m-walletText--14;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
     }
   }
   .m-walletRewardsPopup__notice {

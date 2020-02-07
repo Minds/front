@@ -3,8 +3,10 @@
 .m-walletTransactions {
   margin: 40px 70px;
   font-weight: 300;
-  @include m-walletColor--medium;
   @include m-walletText--14;
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+  }
 }
 .m-walletTransactions--cash {
   .m-walletTransactionsTable__row--top {
@@ -25,7 +27,9 @@
 .m-walletTransactionsTable__row--top {
   margin-bottom: 10px;
   .m-walletTransactionsTable__time {
-    @include m-walletColor--dark;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
   }
 }
 
@@ -52,7 +56,9 @@
 m-walletTransactionsTable {
   .m-walletTransactionsTable__row--date {
     margin: 52px 0 27px 0;
-    @include m-walletColor--dark;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
   }
   .m-walletTransactionsTable__row--details {
     margin-bottom: 21px;
@@ -79,7 +85,7 @@ m-walletTransactionsTable {
   .m-walletTransactionsTable__otherUserLink {
     font-weight: 300;
     @include m-theme() {
-      color: themed($m-blue);
+      color: themed($m-link);
     }
   }
   .m-walletTransactionsTable__amountWrapper {
@@ -110,16 +116,23 @@ m-walletTransactionsTable {
       }
     }
     span {
-      @include m-walletColor--medium;
       @include m-walletText--14;
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
     }
   }
   .m-walletTransactionsTable__total--int {
-    @include m-walletColor--dark;
     @include m-walletText--15;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
   }
   .m-walletTransactionsTable__total--frac {
-    @include m-walletColor--medium;
     @include m-walletText--12;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
   }
 }

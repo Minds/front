@@ -11,7 +11,7 @@
   outline: 0;
   &.green {
     @include m-theme() {
-      background-color: themed($m-btn--primary);
+      background-color: themed($m-aqua);
       color: themed($m-white);
     }
     .m-shadowboxSubmitButton__status--saving {
@@ -59,7 +59,7 @@
       }
       &.green {
         @include m-theme() {
-          background-color: themed($m-btn--primary);
+          background-color: rgba(themed($m-aqua), 0.8);
         }
       }
       &.red {
@@ -84,7 +84,7 @@
       }
       &.green {
         @include m-theme() {
-          background-color: themed($m-btn--primary);
+          background-color: themed($m-aqua);
         }
       }
       &.red {

@@ -5,7 +5,7 @@ m-shadowboxHeader {
     font-weight: 400;
     text-decoration: none;
     @include m-theme() {
-      color: themed($m-blue);
+      color: themed($m-link);
     }
   }
 }
@@ -48,7 +48,7 @@ m-shadowboxHeader {
   z-index: 2;
   opacity: 0;
   transition: opacity 0.2s ease, width 0.4s ease;
-  cursor: pointer;
+
   &.m-shadowboxHeader__overflowFade--right {
     @include m-theme() {
       right: 0;
@@ -72,6 +72,7 @@ m-shadowboxHeader {
   &.visible {
     opacity: 1;
     width: 24px;
+    cursor: pointer;
   }
 }
 
@@ -95,7 +96,7 @@ m-shadowboxHeader {
   }
   &:hover {
     @include m-theme() {
-      border: 1px solid themed($m-blue);
+      border: 1px solid themed($m-link);
     }
   }
   &.m-shadowboxHeader__overflowScrollButton--right {
@@ -118,7 +119,7 @@ m-shadowboxHeader {
   line-height: 32px;
   font-weight: 500;
   @include m-theme() {
-    color: themed($m-grey-800);
+    color: themed($m-textColor--primary);
     font-size: 24px;
   }
 }
@@ -126,7 +127,7 @@ m-shadowboxHeader {
   line-height: 22px;
   margin: 0;
   @include m-theme() {
-    color: themed($m-grey-300);
+    color: themed($m-textColor--tertiary);
     font-size: 15px;
   }
 }
