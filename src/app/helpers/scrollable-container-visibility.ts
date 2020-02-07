@@ -22,7 +22,7 @@ export default function checkIfElementIsVerticallyInView(
   return isTotal || isPartial;
 }
 
-export function checkIfElementIsHorizontallyInView(
+export function isElementIsHorizontallyInView(
   container: HTMLElement,
   element: HTMLElement,
   partial?: boolean // if true, returns false if el is partially obscured
