@@ -74,7 +74,7 @@ export class SidebarNavigationComponent implements OnInit {
     this.componentInstance.showLabels = true;
   }
 
-  toggle() {
+  toggle(): void {
     if (this.isMobile) {
       this.isOpened = !this.isOpened;
     }

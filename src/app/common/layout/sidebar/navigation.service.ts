@@ -5,15 +5,11 @@ import { SidebarNavigationComponent } from './navigation.component';
 export class SidebarNavigationService {
   container: SidebarNavigationComponent;
 
-  static _() {
-    return new SidebarNavigationService();
-  }
-
   setContainer(container: SidebarNavigationComponent) {
     this.container = container;
   }
 
-  toggle() {
+  toggle(): void {
     if (this.container) {
       this.container.toggle();
     }

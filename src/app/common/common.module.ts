@@ -469,10 +469,6 @@ const routes: Routes = [
       useFactory: V2TopbarService._,
     },
     {
-      provide: SidebarNavigationService,
-      useFactory: SidebarNavigationService._,
-    },
-    {
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,
     },
