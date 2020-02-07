@@ -18,7 +18,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 
 @Component({
-  selector: 'm-v3-topbar',
+  selector: 'm-v3topbar',
   templateUrl: 'v3-topbar.component.html',
 })
 export class V3TopbarComponent implements OnInit, OnDestroy {
