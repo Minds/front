@@ -3,6 +3,8 @@ import {
   Component,
   HostListener,
   ViewChild,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
@@ -11,7 +13,6 @@ import { interval, Subscription } from 'rxjs';
 import { GroupsService } from '../groups-service';
 
 import { RecentService } from '../../../services/ux/recent';
-import { MindsTitle } from '../../../services/ux/title';
 import { Session } from '../../../services/session';
 import { SocketsService } from '../../../services/sockets';
 
@@ -23,6 +24,10 @@ import { VideoChatService } from '../../videochat/videochat.service';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { filter, map, startWith, throttle } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
+import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { CookieService } from '../../../common/services/cookie.service';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'm-groups--profile',
@@ -39,7 +44,7 @@ export class GroupsProfile {
   };
   editing: boolean = false;
   editDone: boolean = false;
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   showRight: boolean = true;
   activity: Array<any> = [];
@@ -70,15 +75,20 @@ export class GroupsProfile {
     public service: GroupsService,
     public route: ActivatedRoute,
     private router: Router,
-    public title: MindsTitle,
+    public metaService: MetaService,
     private sockets: SocketsService,
     private context: ContextService,
     private recent: RecentService,
     private client: Client,
     public videochat: VideoChatService,
     private cd: ChangeDetectorRef,
-    private updateMarkers: UpdateMarkersService
-  ) {}
+    private updateMarkers: UpdateMarkersService,
+    configs: ConfigsService,
+    private cookieService: CookieService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.context.set('activity');
@@ -130,9 +140,10 @@ export class GroupsProfile {
 
     this.setFilter(this.router.routerState.snapshot.url);
 
-    this.reviewCountInterval = setInterval(() => {
-      this.reviewCountLoad();
-    }, 120 * 1000);
+    if (isPlatformBrowser(this.platformId))
+      this.reviewCountInterval = setInterval(() => {
+        this.reviewCountLoad();
+      }, 120 * 1000);
 
     this.videoChatActiveSubscription = this.videochat.activate$.subscribe(
       next => window.scrollTo(0, 0)
@@ -172,7 +183,9 @@ export class GroupsProfile {
   }
 
   async load() {
-    this.resetMarkers();
+    if (isPlatformBrowser(this.platformId)) {
+      this.resetMarkers();
+    }
     this.error = '';
     this.group = null;
 
@@ -187,39 +200,42 @@ export class GroupsProfile {
     if (this.updateMarkersSubscription)
       this.updateMarkersSubscription.unsubscribe();
 
-    this.updateMarkersSubscription = this.updateMarkers
-      .getByEntityGuid(this.guid)
-      .subscribe(
-        (marker => {
-          // this.updateMarkersSubscription = this.updateMarkers.markers.subscribe(markers => {
-          if (!marker) return;
+    if (isPlatformBrowser(this.platformId)) {
+      this.updateMarkersSubscription = this.updateMarkers
+        .getByEntityGuid(this.guid)
+        .subscribe(
+          (marker => {
+            // this.updateMarkersSubscription = this.updateMarkers.markers.subscribe(markers => {
+            if (!marker) return;
 
-          this.group.hasGathering$ = interval(1000).pipe(
-            throttle(() => interval(2000)), //only allow once per 2 seconds
-            startWith(0),
-            map(
-              () =>
-                [marker].filter(
-                  marker =>
-                    marker.entity_guid == this.group.guid &&
-                    marker.marker == 'gathering-heartbeat' &&
-                    marker.updated_timestamp > Date.now() / 1000 - 60 //1 minute tollerance
-                ).length > 0
-            )
-          );
+            this.group.hasGathering$ = interval(1000).pipe(
+              throttle(() => interval(2000)), //only allow once per 2 seconds
+              startWith(0),
+              map(
+                () =>
+                  [marker].filter(
+                    marker =>
+                      marker.entity_guid == this.group.guid &&
+                      marker.marker == 'gathering-heartbeat' &&
+                      marker.updated_timestamp > Date.now() / 1000 - 60 //1 minute tollerance
+                  ).length > 0
+              )
+            );
 
-          let hasMarker =
-            marker.read_timestamp < marker.updated_timestamp &&
-            marker.entity_guid == this.group.guid &&
-            marker.marker != 'gathering-heartbeat';
+            let hasMarker =
+              marker.read_timestamp < marker.updated_timestamp &&
+              marker.entity_guid == this.group.guid &&
+              marker.marker != 'gathering-heartbeat';
 
-          if (hasMarker) this.resetMarkers();
-        }).bind(this)
-      );
+            if (hasMarker) this.resetMarkers();
+          }).bind(this)
+        );
 
-    // Check for comment updates
-    this.joinCommentsSocketRoom();
-    this.title.setTitle(this.group.name);
+      // Check for comment updates
+      this.joinCommentsSocketRoom();
+    }
+
+    this.updateMeta();
 
     this.context.set('activity', {
       label: this.group.name,
@@ -434,16 +450,23 @@ export class GroupsProfile {
   }
 
   detectConversationsState() {
-    const state = localStorage.getItem('groups:conversations:minimized');
+    const state = this.cookieService.get('groups:conversations:minimized');
     this.showRight = !state || state === 'false'; // it's maximized by default
   }
 
   toggleConversations() {
     this.showRight = !this.showRight;
-    localStorage.setItem(
+    this.cookieService.put(
       'groups:conversations:minimized',
       (!this.showRight).toString()
     );
+  }
+
+  private updateMeta(): void {
+    this.metaService
+      .setTitle(this.group.name)
+      .setDescription(this.group.briefdescription)
+      .setOgImage(this.group.banner_src);
   }
 
   detectChanges() {

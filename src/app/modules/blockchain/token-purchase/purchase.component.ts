@@ -12,7 +12,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api/client';
-import { MindsTitle } from '../../../services/ux/title';
 import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { BlockchainTdeBuyComponent } from '../tde-buy/tde-buy.component';
@@ -46,7 +45,6 @@ export class BlockchainPurchaseComponent implements OnInit {
 
   autodetectedWallet: boolean | null = null;
 
-  minds = window.Minds;
   showPledgeModal: boolean = false;
   showLoginModal: boolean = false;
   showEthModal: boolean = false;
@@ -66,7 +64,6 @@ export class BlockchainPurchaseComponent implements OnInit {
   constructor(
     protected client: Client,
     protected changeDetectorRef: ChangeDetectorRef,
-    protected title: MindsTitle,
     protected overlayModal: OverlayModalService,
     protected web3Wallet: Web3WalletService,
     protected tde: TokenDistributionEventService,

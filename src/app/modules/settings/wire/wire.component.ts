@@ -11,6 +11,7 @@ import {
   WireRewardsTiers,
   WireRewardsType,
 } from '../../wire/interfaces/wire.interfaces';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-settings--wire',
@@ -22,9 +23,6 @@ export class SettingsWireComponent implements OnInit {
   backgroundFile: HTMLInputElement;
 
   ts: number = Date.now();
-
-  user = window.Minds.user;
-  minds = window.Minds;
 
   error: string = '';
 
@@ -44,9 +42,10 @@ export class SettingsWireComponent implements OnInit {
     public session: Session,
     public client: Client,
     public upload: Upload,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private configs: ConfigsService
   ) {
-    this.rewards = this.minds.user.wire_rewards;
+    this.rewards = session.getLoggedInUser().wire_rewards;
   }
 
   ngOnInit() {
@@ -54,8 +53,8 @@ export class SettingsWireComponent implements OnInit {
   }
 
   setUp() {
-    if (this.user.merchant.exclusive) {
-      this.exclusive = this.user.merchant.exclusive;
+    if (this.session.getLoggedInUser().merchant.exclusive) {
+      this.exclusive = this.session.getLoggedInUser().merchant.exclusive;
     }
 
     this.updatePreviewEntity();
@@ -69,13 +68,13 @@ export class SettingsWireComponent implements OnInit {
         min: 1,
       },
       ownerObj: {
-        ...this.user,
+        ...this.session.getLoggedInUser(),
         merchant: {
           exclusive: {
             intro: this.exclusive.intro,
             _backgroundPreview:
               this.preview.src ||
-              this.minds.cdn_url +
+              this.configs.get('cdn_url') +
                 'fs/v1/paywall/preview/' +
                 this.session.getLoggedInUser().guid +
                 '/' +
@@ -164,10 +163,10 @@ export class SettingsWireComponent implements OnInit {
       return this.client
         .post('api/v1/merchant/exclusive', this.exclusive)
         .then(() => {
-          if (!this.minds.user.merchant) {
-            this.minds.user.merchant = {};
+          if (!this.session.getLoggedInUser().merchant) {
+            this.session.getLoggedInUser().merchant = {};
           }
-          this.minds.user.merchant.exclusive = this.exclusive;
+          this.session.getLoggedInUser().merchant.exclusive = this.exclusive;
           this.exclusive.saved = true;
           this.detectChanges();
         });

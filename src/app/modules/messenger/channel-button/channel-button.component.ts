@@ -18,8 +18,6 @@ import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.se
   inputs: ['user'],
 })
 export class MessengerChannelButton {
-  minds: Minds = window.Minds;
-
   user: any;
 
   constructor(

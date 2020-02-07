@@ -12,7 +12,14 @@ import { PlusVerifyComponent } from './verify/verify.component';
 import { PlusService } from './plus.service';
 
 const plusRoutes: Routes = [
-  { path: 'plus', component: PlusMarketingComponent },
+  {
+    path: 'plus',
+    component: PlusMarketingComponent,
+    data: {
+      title: 'Minds Plus',
+      description: `Support Minds and unlock features such as hiding ads, accessing exclusive content, receiving a badge and verifying your channel.`,
+    },
+  },
 ];
 
 @NgModule({

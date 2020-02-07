@@ -3,6 +3,7 @@ m-onboarding__groupList {
   width: 100%;
 
   .m-onboarding__groupList {
+    display: flex;
     h3 {
       margin: 0;
       font-size: 13px;
@@ -11,6 +12,10 @@ m-onboarding__groupList {
       @include m-theme() {
         color: themed($m-grey-800);
       }
+    }
+
+    .mdl-spinner {
+      margin: 0 auto;
     }
   }
 
@@ -27,6 +32,7 @@ m-onboarding__groupList {
     margin: 0;
     padding: 0;
     list-style: none;
+    width: 100%;
   }
 
   .m-groupList__item {
@@ -88,7 +94,6 @@ m-onboarding__groupList {
         display: block;
 
         height: 19px;
-        width: 92px;
         color: #9b9b9b;
         font-family: Roboto;
         font-size: 14px;

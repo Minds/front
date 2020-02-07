@@ -6,17 +6,17 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Session } from '../../services/session';
 import { MindsUser } from '../../interfaces/entities';
+import { ConfigsService } from './configs.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserAvatarService {
-  private minds = window.Minds;
   private user: MindsUser;
   public src$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public loggedIn$: Subscription;
 
-  constructor(public session: Session) {
+  constructor(public session: Session, private configs: ConfigsService) {
     this.init();
 
     // Subscribe to loggedIn$ and on login, update src$.
@@ -41,6 +41,8 @@ export class UserAvatarService {
    * Gets the Src string using the global minds object and the held user object.
    */
   public getSrc(): string {
-    return `${this.minds.cdn_url}icon/${this.user.guid}/large/${this.user.icontime}`;
+    return `${this.configs.get('cdn_url')}icon/${this.user.guid}/large/${
+      this.user.icontime
+    }`;
   }
 }

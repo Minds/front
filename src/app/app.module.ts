@@ -3,13 +3,18 @@ import {
   NgModule,
   Injectable,
   ErrorHandler,
+  APP_INITIALIZER,
+  APP_BOOTSTRAP_LISTENER,
 } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  BrowserTransferStateModule,
+} from '@angular/platform-browser';
+// import { TransferHttpCacheModule } from '@nguniversal/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CaptchaModule } from './modules/captcha/captcha.module';
-import { environment } from '../environments/environment';
 
 import { Minds } from './app.component';
 
@@ -73,14 +78,10 @@ import { UpgradesModule } from './modules/upgrades/upgrades.module';
 import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
 
 import * as Sentry from '@sentry/browser';
+import { CookieModule } from '@gorniv/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
-
-Sentry.init({
-  dsn: 'https://3f786f8407e042db9053434a3ab527a2@sentry.io/1538008', // TODO: do not hardcard
-  release: environment.version,
-  environment: (<any>window.Minds).environment || 'development',
-});
+import { ConfigsService } from './common/services/configs.service';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -101,12 +102,18 @@ export class SentryErrorHandler implements ErrorHandler {
     MINDS_PLUGIN_DECLARATIONS,
   ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
+    BrowserModule.withServerTransition({ appId: 'm-app' }),
+    BrowserTransferStateModule,
+    CookieModule.forRoot(),
+    // TransferHttpCacheModule,
+    //BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(MindsAppRoutes, { onSameUrlNavigation: 'reload' }),
+    RouterModule.forRoot(MindsAppRoutes, {
+      // initialNavigation: 'enabled',
+      onSameUrlNavigation: 'reload',
+    }),
     CaptchaModule,
     CommonModule,
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
@@ -153,6 +160,7 @@ export class SentryErrorHandler implements ErrorHandler {
     ChannelsModule,
     UpgradesModule,
     CodeHighlightModule,
+    //PlotlyModule,
 
     //last due to :username route
     ChannelContainerModule,
@@ -162,6 +170,12 @@ export class SentryErrorHandler implements ErrorHandler {
     MindsAppRoutingProviders,
     MINDS_PROVIDERS,
     MINDS_PLUGIN_PROVIDERS,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: configs => () => configs.loadFromRemote(),
+      deps: [ConfigsService],
+      multi: true,
+    },
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

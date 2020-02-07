@@ -16,7 +16,5 @@ export class GroupsOnboardingComponent {
   static items = ['suggested_groups'];
   static canSkip: boolean = true;
 
-  minds = window.Minds;
-
   @Input() pendingItems: Array<string>;
 }

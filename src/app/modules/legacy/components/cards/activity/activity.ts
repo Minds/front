@@ -31,9 +31,9 @@ import { ActivityService } from '../../../../../common/services/activity.service
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
 import { MindsVideoPlayerComponent } from '../../../../media/components/video-player/player.component';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-activity',
   host: {
     class: 'mdl-card m-border',
@@ -56,7 +56,9 @@ import { MindsVideoPlayerComponent } from '../../../../media/components/video-pl
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Activity implements OnInit {
-  minds = window.Minds;
+  readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
 
   activity: any;
   boosted: boolean = false;
@@ -176,7 +178,8 @@ export class Activity implements OnInit {
     public suggestions: AutocompleteSuggestionsService,
     protected activityService: ActivityService,
     @SkipSelf() injector: Injector,
-    elementRef: ElementRef
+    elementRef: ElementRef,
+    private configs: ConfigsService
   ) {
     this.clientMetaService.inherit(injector);
 
@@ -195,6 +198,10 @@ export class Activity implements OnInit {
 
         this.onViewed.emit({ activity: activity, visible: true });
       });
+
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
   }
 
   ngOnInit() {
@@ -206,7 +213,7 @@ export class Activity implements OnInit {
   set object(value: any) {
     if (!value) return;
     this.activity = value;
-    this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
+    this.activity.url = this.siteUrl + 'newsfeed/' + value.guid;
 
     this.activityAnalyticsOnViewService.setEntity(this.activity);
 
@@ -216,8 +223,8 @@ export class Activity implements OnInit {
       this.activity.custom_data[0].src
     ) {
       this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(
-        this.minds.site_url,
-        this.minds.cdn_url
+        this.configs.get('site_url'),
+        this.configs.get('cdn_url')
       );
     }
 

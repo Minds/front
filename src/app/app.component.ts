@@ -1,4 +1,11 @@
-import { ChangeDetectorRef, Component, HostBinding } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  PLATFORM_ID,
+  Inject,
+  HostBinding,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 import { NotificationService } from './modules/notifications/notification.service';
 import { AnalyticsService } from './services/analytics';
@@ -10,7 +17,7 @@ import { ContextService } from './services/context.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
 import { WebtorrentService } from './modules/webtorrent/webtorrent.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, Route } from '@angular/router';
 import { ChannelOnboardingService } from './modules/onboarding/channel/onboarding.service';
 import { BlockListService } from './common/services/block-list.service';
 import { FeaturesService } from './services/features.service';
@@ -22,16 +29,16 @@ import { SsoService } from './common/services/sso.service';
 import { Subscription } from 'rxjs';
 import { RouterHistoryService } from './common/services/router-history.service';
 import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
+import { ConfigsService } from './common/services/configs.service';
+import { MetaService } from './common/services/meta.service';
+import { filter, map, mergeMap, first } from 'rxjs/operators';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-app',
   templateUrl: 'app.component.html',
 })
 export class Minds {
   name: string;
-
-  minds = window.Minds;
 
   ready: boolean = false;
 
@@ -40,6 +47,8 @@ export class Minds {
   showTOSModal: boolean = false;
 
   protected router$: Subscription;
+
+  protected routerConfig: Route[];
 
   constructor(
     public session: Session,
@@ -59,22 +68,44 @@ export class Minds {
     public featuresService: FeaturesService,
     public themeService: ThemeService,
     private bannedService: BannedService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private diagnostics: DiagnosticsService,
     private routerHistoryService: RouterHistoryService,
     private site: SiteService,
     private sso: SsoService,
-    private cd: ChangeDetectorRef
+    private metaService: MetaService,
+    private configs: ConfigsService,
+    private cd: ChangeDetectorRef,
+    private socketsService: SocketsService
   ) {
     this.name = 'Minds';
-
     if (this.site.isProDomain) {
       this.router.resetConfig(PRO_DOMAIN_ROUTES);
     }
   }
 
   async ngOnInit() {
+    // MH: does loading meta tags before the configs have been set cause issues?
+    this.router$ = this.router.events
+      .pipe(
+        filter(e => e instanceof NavigationEnd),
+        map(() => this.route),
+        map(route => {
+          while (route.firstChild) route = route.firstChild;
+          return route;
+        }),
+        // filter(route => route.outlet === 'primary')
+        mergeMap(route => route.data)
+      )
+      .subscribe(data => {
+        this.metaService.reset(data);
+      });
+
     try {
-      this.diagnostics.setUser(this.minds.user);
+      this.updateMeta(); // Because the router is setup before our configs
+
+      // Setup sentry/diagnostic configs
+      this.diagnostics.setUser(this.configs.get('user'));
       this.diagnostics.listen(); // Listen for user changes
 
       if (this.sso.isRequired()) {
@@ -97,7 +128,9 @@ export class Minds {
   async initialize() {
     this.blockListService.fetch();
 
-    if (!this.site.isProDomain) {
+    if (this.site.isProDomain) {
+      this.site.listen();
+    } else {
       this.notificationService.getNotifications();
     }
 
@@ -107,16 +140,12 @@ export class Minds {
           this.showOnboarding = await this.onboardingService.showModal();
         }
 
-        if (this.minds.user.language !== this.minds.language) {
-          console.log(
-            '[app]:: language change',
-            this.minds.user.language,
-            this.minds.language
-          );
+        const user = this.session.getLoggedInUser();
+        const language = this.configs.get('language');
 
-          setTimeout(() => {
-            window.location.reload(true);
-          });
+        if (user.language !== language) {
+          console.log('[app]:: language change', user.language, language);
+          window.location.reload(true);
         }
       }
     });
@@ -148,11 +177,14 @@ export class Minds {
     this.webtorrent.setUp();
 
     this.themeService.setUp();
+
+    this.socketsService.setUp();
   }
 
   ngOnDestroy() {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();
+    this.router$.unsubscribe();
   }
 
   @HostBinding('class') get cssColorSchemeOverride() {
@@ -165,6 +197,12 @@ export class Minds {
 
   get isProDomain() {
     return this.site.isProDomain;
+  }
+
+  private updateMeta(): void {
+    let route = this.route;
+    while (route.firstChild) route = route.firstChild;
+    this.metaService.reset(route.snapshot.data);
   }
 
   detectChanges() {

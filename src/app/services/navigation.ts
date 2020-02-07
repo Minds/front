@@ -1,15 +1,18 @@
-import { Inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Location } from '@angular/common';
+import { ConfigsService } from '../common/services/configs.service';
 
+@Injectable()
 export class Navigation {
-  static _(location: Location) {
-    return new Navigation(location);
+  readonly navigation;
+
+  constructor(public location: Location, configs: ConfigsService) {
+    this.navigation = configs.get('navigation');
   }
 
-  constructor(@Inject(Location) public location: Location) {}
-
   getItems(container: string = 'sidebar'): Array<any> {
-    var navigation: Array<any> = window.Minds.navigation;
+    var navigation: Array<any> = this.navigation;
+    if (!navigation) return [];
     var items: Array<any> = navigation[container];
     if (!items) return [];
 
@@ -44,8 +47,8 @@ export class Navigation {
   }
 
   setCounter(name: string, count: number = 1) {
-    for (var i in window.Minds.navigation.sidebar) {
-      var item = window.Minds.navigation.sidebar[i];
+    for (var i in this.navigation.sidebar) {
+      var item = this.navigation.sidebar[i];
       if (
         item.name === 'Messenger' &&
         this.location.path().indexOf(item.path.toLowerCase()) === -1

@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 
 import { Storage } from '../../../services/storage';
 import { Client } from '../../../services/api';
+import { CookieService } from '../../../common/services/cookie.service';
 
 @Component({
   selector: 'm-announcement',
@@ -20,22 +21,22 @@ import { Client } from '../../../services/api';
     </div>
   `,
 })
-export class AnnouncementComponent {
-  minds: Minds = window.Minds;
+export class AnnouncementComponent implements OnInit {
   hidden: boolean = false;
   @Input() id: string = 'default';
   @Input() canClose: boolean = true;
   @Input() remember: boolean = true;
 
-  constructor(private storage: Storage) {}
+  constructor(private cookieService: CookieService) {}
 
   ngOnInit() {
-    if (this.storage.get('hide-announcement:' + this.id)) this.hidden = true;
+    if (this.cookieService.get('hide-announcement:' + this.id) === '1')
+      this.hidden = true;
   }
 
   close() {
     if (this.remember) {
-      this.storage.set('hide-announcement:' + this.id, true);
+      this.cookieService.put('hide-announcement:' + this.id, '1');
     }
 
     this.hidden = true;

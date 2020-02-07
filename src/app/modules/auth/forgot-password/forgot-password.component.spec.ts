@@ -18,8 +18,6 @@ import {
   Output,
 } from '@angular/core';
 import { clientMock } from '../../../../tests/client-mock.spec';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { MindsTitle } from '../../../services/ux/title';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api/client';
@@ -78,7 +76,6 @@ describe('ForgotPasswordComponent', () => {
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
       ],
     }).compileComponents();
   }));

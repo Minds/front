@@ -28,6 +28,8 @@ import { WireRewardsTiers } from '../../wire/interfaces/wire.interfaces';
 import { AutoGrow } from '../../../common/directives/autogrow';
 import { Upload } from '../../../services/api/upload';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
+import { MockService } from '../../../utils/mock';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-wire--lock-screen',
@@ -68,6 +70,9 @@ export class NotificationsToasterComponentMock {
 describe('SettingsWireComponent', () => {
   let comp: SettingsWireComponent;
   let fixture: ComponentFixture<SettingsWireComponent>;
+  let debugElement: DebugElement;
+  let sessionService: Session;
+  let sessionGetLoggedUserSpy;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -90,6 +95,7 @@ describe('SettingsWireComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents();
   }));
@@ -99,30 +105,33 @@ describe('SettingsWireComponent', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
-    window.Minds = <any>{
-      user: {
-        merchant: {
-          exclusive: null,
-        },
-        wire_rewards: {
-          description:
-            'Subscribe to my reward tiers below and help support my content!',
-          rewards: {
-            tokens: [
-              {
-                amount: 10,
-                description: 'reward',
-              },
-            ],
-          },
-        },
-      },
-    };
-
     fixture = TestBed.createComponent(SettingsWireComponent);
     clientMock.response = {};
 
     comp = fixture.componentInstance;
+
+    debugElement = fixture.debugElement;
+    sessionService = debugElement.injector.get(Session);
+    sessionGetLoggedUserSpy = spyOn(
+      sessionService,
+      'getLoggedInUser'
+    ).and.returnValue({
+      merchant: {
+        exclusive: null,
+      },
+      wire_rewards: {
+        description:
+          'Subscribe to my reward tiers below and help support my content!',
+        rewards: {
+          tokens: [
+            {
+              amount: 10,
+              description: 'reward',
+            },
+          ],
+        },
+      },
+    });
 
     fixture.detectChanges();
 

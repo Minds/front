@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { Client } from '../../common/api/client.service';
 import { Storage } from '../../services/storage';
+import { CookieService } from '../../common/services/cookie.service';
 
 type ExperimentBucket = {
   experimentId: string;
@@ -13,16 +14,16 @@ export class ExperimentsService {
   experiments = [];
   fetching: boolean = false;
 
-  constructor(private client: Client, private storage: Storage) {}
+  constructor(private client: Client, private cookieService: CookieService) {}
 
   getExperimentBucket(experiment) {
-    return this.storage.get(`experiments:${experiment}`);
+    return this.cookieService.get(`experiments:${experiment}`);
   }
 
   // Return if the bucket is valid
   async shouldRender(opts: ExperimentBucket) {
-    if (this.storage.get(`experiments:${opts.experimentId}`)) {
-      this.experiments[opts.experimentId] = this.storage.get(
+    if (this.cookieService.get(`experiments:${opts.experimentId}`)) {
+      this.experiments[opts.experimentId] = this.cookieService.get(
         `experiments:${opts.experimentId}`
       );
     }
@@ -49,7 +50,7 @@ export class ExperimentsService {
     }
 
     this.experiments[opts.experimentId] = bucket;
-    this.storage.set(`experiments:${opts.experimentId}`, bucket);
+    this.cookieService.put(`experiments:${opts.experimentId}`, bucket);
     this.fetching = false;
 
     return bucket === opts.bucketId;

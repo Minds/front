@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 
@@ -25,13 +24,10 @@ export class ForgotPasswordComponent {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     public session: Session
   ) {}
 
   ngOnInit() {
-    this.title.setTitle('Forgot Password');
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['code']) {
         this.setCode(params['code']);

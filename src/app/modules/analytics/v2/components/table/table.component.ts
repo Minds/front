@@ -25,7 +25,6 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
   columns: Array<any>;
   rows: Array<any>;
   reformattedBuckets: Array<any> = [];
-  minds = window.Minds;
   user;
   loadingSubscription: Subscription;
   loading: boolean;

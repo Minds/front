@@ -1,22 +1,26 @@
-import { NgZone } from '@angular/core';
+import { NgZone, Injectable } from '@angular/core';
 import { Client } from './api';
+import { ConfigsService } from '../common/services/configs.service';
+import { Session } from './session';
 
+@Injectable()
 export class ThirdPartyNetworksService {
   inProgress: boolean = false;
 
-  private siteUrl: string = '';
+  readonly siteUrl: string;
 
   private status: any = {};
   private integrations: any;
   private statusReady: Promise<any>;
 
-  static _(client: Client, zone: NgZone) {
-    return new ThirdPartyNetworksService(client, zone);
-  }
-
-  constructor(private client: Client, private zone: NgZone) {
-    this.siteUrl = window.Minds.site_url;
-    this.integrations = window.Minds.thirdpartynetworks;
+  constructor(
+    private client: Client,
+    private zone: NgZone,
+    configs: ConfigsService,
+    private session: Session
+  ) {
+    this.siteUrl = configs.get('site_url');
+    this.integrations = configs.get('thirdpartynetworks');
   }
 
   // General
@@ -103,8 +107,8 @@ export class ThirdPartyNetworksService {
       .then(() => {
         this.inProgress = false;
 
-        if (window.Minds.user) {
-          window.Minds.user.signup_method = 'ex-facebook';
+        if (this.session.getLoggedInUser()) {
+          this.session.getLoggedInUser().signup_method = 'ex-facebook';
         }
       })
       .catch(e => {

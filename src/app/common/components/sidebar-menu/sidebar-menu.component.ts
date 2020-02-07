@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Session } from '../../../services/session';
+import { ConfigsService } from '../../services/configs.service';
 
 interface Menu {
   header: MenuLink;
@@ -27,14 +28,19 @@ export class SidebarMenuComponent implements OnInit {
   @Input() menu: Menu;
 
   mobileMenuExpanded = false;
-  minds: Minds;
+  readonly cdnUrl: string;
   user;
   userRoles: string[] = ['user'];
 
-  constructor(public route: ActivatedRoute, public session: Session) {}
+  constructor(
+    public route: ActivatedRoute,
+    public session: Session,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   ngOnInit() {
-    this.minds = window.Minds;
     this.user = this.session.getLoggedInUser();
     this.getUserRoles();
     this.grantPermissions();
@@ -44,7 +50,7 @@ export class SidebarMenuComponent implements OnInit {
     if (this.session.isAdmin()) {
       this.userRoles.push('admin');
     }
-    if (this.minds.user.pro) {
+    if (this.user.pro) {
       this.userRoles.push('pro');
     }
   }

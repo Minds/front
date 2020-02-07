@@ -5,6 +5,8 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Storage } from '../../../services/storage';
 import { Router } from '@angular/router';
 import { storageMock } from '../../../../tests/storage-mock.spec';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { MockService } from '../../../utils/mock';
 
 let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');
@@ -22,6 +24,7 @@ describe('OverlayComponent', () => {
         { provide: Storage, useValue: storageMock },
         { provide: Session, useValue: sessionMock },
         { provide: Router, useValue: routerMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents();
   }));

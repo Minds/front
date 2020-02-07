@@ -67,7 +67,7 @@
       class="m-share__button m-share__button--twitter"
       (click)="openTwitter()"
     >
-      <img [src]="minds.cdn_assets_url + 'assets/icons/twitter.svg'" />
+      <img [src]="cdnAssetsUrl + 'assets/icons/twitter.svg'" />
     </button>
 
     <button
@@ -76,7 +76,7 @@
       class="m-share__button m-share__button--facebook"
       (click)="openFacebook()"
     >
-      <img [src]="minds.cdn_assets_url + 'assets/icons/facebook.svg'" />
+      <img [src]="cdnAssetsUrl + 'assets/icons/facebook.svg'" />
     </button>
 
     <button
@@ -86,7 +86,7 @@
       *ngIf="isMobileOrTablet()"
       (click)="openMessenger()"
     >
-      <img [src]="minds.cdn_assets_url + 'assets/icons/messenger.svg'" />
+      <img [src]="cdnAssetsUrl + 'assets/icons/messenger.svg'" />
     </button>
 
     <button
@@ -96,7 +96,7 @@
       *ngIf="isMobileOrTablet()"
       (click)="openWhatsapp()"
     >
-      <img [src]="minds.cdn_assets_url + 'assets/icons/whatsapp.svg'" />
+      <img [src]="cdnAssetsUrl + 'assets/icons/whatsapp.svg'" />
     </button>
 
     <button
@@ -106,7 +106,7 @@
       *ngIf="isMobile()"
       (click)="openSMS()"
     >
-      <img [src]="minds.cdn_assets_url + 'assets/icons/sms.svg'" />
+      <img [src]="cdnAssetsUrl + 'assets/icons/sms.svg'" />
     </button>
 
     <button
@@ -115,7 +115,7 @@
       class="m-share__button m-share__button--email"
       (click)="openEmail()"
     >
-      <img [src]="minds.cdn_assets_url + 'assets/icons/email.svg'" />
+      <img [src]="cdnAssetsUrl + 'assets/icons/email.svg'" />
     </button>
   </div>
 </div>

@@ -63,7 +63,7 @@ export class OnboardingForm {
     this.upload
       .post('api/v1/channel/avatar', [file], { filekey: 'file' })
       .then((response: any) => {
-        window.Minds.user.icontime = Date.now();
+        this.session.getLoggedInUser().icontime = Date.now();
       });
   }
 

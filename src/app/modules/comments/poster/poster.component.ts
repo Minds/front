@@ -19,6 +19,7 @@ import { SocketsService } from '../../../services/sockets';
 import autobind from '../../../helpers/autobind';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { SignupModalService } from '../../modals/signup/service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-comment__poster',
@@ -27,7 +28,6 @@ import { SignupModalService } from '../../modals/signup/service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CommentPosterComponent {
-  minds;
   @Input() guid;
   @Input() entity;
   @Input() parent;
@@ -54,10 +54,9 @@ export class CommentPosterComponent {
     public sockets: SocketsService,
     public suggestions: AutocompleteSuggestionsService,
     private renderer: Renderer,
-    private cd: ChangeDetectorRef
-  ) {
-    this.minds = window.Minds;
-  }
+    private cd: ChangeDetectorRef,
+    private configs: ConfigsService
+  ) {}
 
   keypress(e: KeyboardEvent) {
     if (!e.shiftKey && e.charCode === 13) {
@@ -129,41 +128,61 @@ export class CommentPosterComponent {
     this.attachment.resetRich();
   }
 
-  uploadAttachment(file: HTMLInputElement, e?: any) {
+  async uploadFile(fileInput: HTMLInputElement, event) {
+    if (fileInput.value) {
+      // this prevents IE from executing this code twice
+      try {
+        await this.uploadAttachment(fileInput);
+
+        fileInput.value = null;
+      } catch (e) {
+        fileInput.value = null;
+      }
+    }
+    this.detectChanges();
+  }
+
+  async uploadAttachment(file: HTMLInputElement | File) {
     this.canPost = false;
     this.triedToPost = false;
 
     this.attachment.setHidden(true);
     this.attachment.setContainer(this.entity);
+    this.detectChanges();
+
     this.attachment
       .upload(file, this.detectChanges.bind(this))
       .then(guid => {
         this.canPost = true;
         this.triedToPost = false;
-        file.value = null;
+        if (file instanceof HTMLInputElement) {
+          file.value = null;
+        }
         this.detectChanges();
       })
       .catch(e => {
         console.error(e);
         this.canPost = true;
         this.triedToPost = false;
-        file.value = null;
+        if (file instanceof HTMLInputElement) {
+          file.value = null;
+        }
         this.detectChanges();
       });
 
     this.detectChanges();
   }
 
-  removeAttachment(file: HTMLInputElement) {
+  removeAttachment(fileInput: HTMLInputElement) {
     this.canPost = false;
     this.triedToPost = false;
 
     this.attachment
-      .remove(file)
+      .remove()
       .then(() => {
         this.canPost = true;
         this.triedToPost = false;
-        file.value = '';
+        fileInput.value = null;
       })
       .catch(e => {
         console.error(e);
@@ -184,11 +203,13 @@ export class CommentPosterComponent {
 
   getAvatar() {
     if (this.session.isLoggedIn()) {
-      return `${this.minds.cdn_url}icon/${
+      return `${this.configs.get('cdn_url')}icon/${
         this.session.getLoggedInUser().guid
       }/small/${this.session.getLoggedInUser().icontime}`;
     } else {
-      return `${this.minds.cdn_assets_url}assets/avatars/default-small.png`;
+      return `${this.configs.get(
+        'cdn_assets_url'
+      )}assets/avatars/default-small.png`;
     }
   }
 

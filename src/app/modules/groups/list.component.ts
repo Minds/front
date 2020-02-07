@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 import { MindsGroupListResponse } from '../../interfaces/responses';
 import { ContextService } from '../../services/context.service';
@@ -32,16 +31,13 @@ export class GroupsListComponent {
     public client: Client,
     public route: ActivatedRoute,
     public router: Router,
-    public title: MindsTitle,
     private context: ContextService,
     public session: Session,
     private overlayModal: OverlayModalService
   ) {}
 
   ngOnInit() {
-    this.title.setTitle('Groups');
     this.context.set('group');
-    this.minds = window.Minds;
     this.detectWidth();
 
     this.paramsSubscription = this.route.params.subscribe(params => {

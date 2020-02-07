@@ -30,6 +30,8 @@
           [getChoiceLabel]="suggestions.getChoiceLabel"
           [itemTemplate]="itemTemplate"
           [triggerCharacters]="['#', '@']"
+          m-attachment-paste
+          (filePaste)="uploadAttachment($event)"
         ></textarea>
       </m-text-input--autocomplete-container>
 
@@ -55,7 +57,7 @@
             id="attachment-input-poster"
             #file
             name="attachment"
-            (change)="uploadAttachment(file, $event)"
+            (change)="uploadFile(file, $event)"
           />
         </label>
 

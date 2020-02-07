@@ -52,7 +52,7 @@
           i18n-title
         >
           <img
-            [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"
+            [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
             (touchstart)="touchStart()"
             (mouseenter)="mouseEnter()"
             (mouseleave)="mouseLeave()"
@@ -128,7 +128,7 @@
   </div>
 </div>
 
-<div class="m-v2-topbar__Bottom" *ngIf="showBottombar">
+<div class="m-v2-topbar__Bottom" *ngIf="getCurrentUser() && showBottombar">
   <ng-container *ngTemplateOutlet="navLinks"></ng-container>
 </div>
 

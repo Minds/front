@@ -1,0 +1,82 @@
+.m-adminFeatures {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+
+  .m-adminFeatures--label {
+    margin-bottom: 8px;
+    padding: 0 4px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+  }
+
+  .m-adminFeatures--table {
+    width: 100%;
+    margin-top: 24px;
+
+    th,
+    td {
+      text-align: center;
+
+      &.m-adminFeaturesTable--cell__first {
+        text-align: left;
+      }
+    }
+
+    th {
+      padding: 4px;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid;
+
+      @include m-theme() {
+        color: themed($m-grey-400);
+        border-color: themed($m-black);
+      }
+    }
+
+    td {
+      padding: 8px 4px;
+
+      &.m-adminFeaturesTable--cell__value {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+
+        @include m-theme() {
+          color: themed($m-grey-400);
+        }
+      }
+
+      &.m-adminFeaturesTable--cell__bestValue {
+        font-weight: bold;
+
+        @include m-theme() {
+          text-shadow: 0 0 3px rgba(themed($m-blue), 0.6);
+          color: themed($m-black);
+        }
+      }
+    }
+  }
+
+  .m-adminFeatures--loader {
+    text-align: center;
+    margin: 64px 0;
+  }
+
+  .m-adminFeatures--error {
+    text-align: center;
+    margin: 100px 0;
+    font-size: 28px;
+
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
+}

@@ -4,11 +4,14 @@ import {
   Component,
   OnDestroy,
   OnInit,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'm-wallet-token--overview',
@@ -21,7 +24,8 @@ export class WalletTokenContributionsOverviewComponent
     protected client: Client,
     protected cd: ChangeDetectorRef,
     public session: Session,
-    protected router: Router
+    protected router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   overview = {
@@ -36,7 +40,8 @@ export class WalletTokenContributionsOverviewComponent
 
   ngOnInit() {
     this.load();
-    this.updateTimer$ = setInterval(this.updateNextPayout.bind(this), 1000);
+    if (isPlatformBrowser(this.platformId))
+      this.updateTimer$ = setInterval(this.updateNextPayout.bind(this), 1000);
   }
 
   ngOnDestroy() {

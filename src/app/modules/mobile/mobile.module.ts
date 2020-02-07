@@ -13,6 +13,11 @@ const routes: Routes = [
   {
     path: 'mobile',
     component: MobileMarketingComponent,
+    data: {
+      title: 'Minds Mobile App',
+      description: 'Download the Minds mobile app for Android & iOS.',
+      ogImage: '/assets/photos/mobile-app.jpg',
+    },
   },
 ];
 

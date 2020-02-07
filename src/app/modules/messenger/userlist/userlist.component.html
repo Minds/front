@@ -37,32 +37,6 @@
       </div>
       <div
         class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300"
-        (click)="sounds.mute(); ribbonOpened = false"
-        [hidden]="!sounds.canPlay()"
-      >
-        <i
-          class="material-icons mdl-color-text--blue-grey-100"
-          title="Disable sounds"
-          i18n-title="@@MESSENGER__USERLIST__DISABLE_SOUNDS_TOOLTIP"
-          >notifications</i
-        >
-        <ng-container i18n="@@MESSENGER__USERLIST__MUTE">Mute</ng-container>
-      </div>
-      <div
-        class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300"
-        (click)="sounds.unmute(); ribbonOpened = false"
-        [hidden]="sounds.canPlay()"
-      >
-        <i
-          class="material-icons mdl-color-text--blue-grey-100"
-          title="Enable sounds"
-          i18n-title="@@MESSENGER__USERLIST__ENABLE_SOUNDS_TOOLTIP"
-          >notifications_off</i
-        >
-        <ng-container i18n="@@MESSENGER__USERLIST__UNMUTE">Unmute</ng-container>
-      </div>
-      <div
-        class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300"
         (click)="
           encryption.reKeying = !encryption.reKeying; ribbonOpened = false
         "
@@ -94,7 +68,7 @@
       >
         <!-- This is currently only configured for one-on-one chat -->
         <img
-          [src]="minds.cdn_url + 'icon/' + conversation.participants[0].guid"
+          [src]="cdnUrl + 'icon/' + conversation.participants[0].guid"
           class="mdl-shadow--2dp"
         />
         <span class="m-conversation-label">{{ conversation.username }}</span>

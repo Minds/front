@@ -11,8 +11,6 @@ import MindsClientHttpAdapter from '../../lib/minds-sync/adapters/MindsClientHtt
 import browserStorageAdapterFactory from '../../helpers/browser-storage-adapter-factory';
 import BoostedContentSync from '../../lib/minds-sync/services/BoostedContentSync.js';
 
-import AsyncStatus from '../../helpers/async-status';
-
 @Injectable()
 export class BoostedContentService {
   constructor(

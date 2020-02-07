@@ -3,6 +3,7 @@ export class Material {
     window.componentHandler.upgradeDom();
   }
   static updateElement(element: any) {
-    window.componentHandler.upgradeElement(element);
+    if (window.componentHandler)
+      window.componentHandler.upgradeElement(element);
   }
 }

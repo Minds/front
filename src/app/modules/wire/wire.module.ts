@@ -31,7 +31,15 @@ import { PayMarketingComponent } from './marketing/marketing.component';
 
 const wireRoutes: Routes = [
   { path: 'wire', redirectTo: 'pay' },
-  { path: 'pay', component: PayMarketingComponent },
+  {
+    path: 'pay',
+    component: PayMarketingComponent,
+    data: {
+      title: 'Minds Pay (Wire)',
+      description: 'Send and receive payments in USD, BTC, ETH and Tokens',
+      ogImage: '/assets/product-pages/pay/pay-1.jpg',
+    },
+  },
 ];
 
 @NgModule({
