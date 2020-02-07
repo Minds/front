@@ -11,7 +11,7 @@
   outline: 0;
   &.green {
     @include m-theme() {
-      background-color: #5dbac0;
+      background-color: themed($m-btn--primary);
       color: themed($m-white);
     }
     .m-shadowboxSubmitButton__status--saving {
@@ -24,7 +24,7 @@
   }
   &.red {
     @include m-theme() {
-      background-color: themed($m-red-dark);
+      background-color: themed($m-alert);
       color: themed($m-white);
     }
     .m-shadowboxSubmitButton__status--saving {
@@ -38,7 +38,7 @@
   &.grey {
     @include m-theme() {
       background-color: themed($m-grey-100);
-      color: themed($m-grey-500);
+      color: themed($m-textColor--secondary);
     }
     .m-shadowboxSubmitButton__status--saving {
       span {
@@ -59,12 +59,12 @@
       }
       &.green {
         @include m-theme() {
-          background-color: #55ccb2;
+          background-color: themed($m-btn--primary);
         }
       }
       &.red {
         @include m-theme() {
-          background-color: rgba(themed($m-red), 0.9);
+          background-color: rgba(themed($m-alert), 0.9);
         }
       }
       &.grey {
@@ -84,7 +84,7 @@
       }
       &.green {
         @include m-theme() {
-          background-color: #5dbac0;
+          background-color: themed($m-btn--primary);
         }
       }
       &.red {
