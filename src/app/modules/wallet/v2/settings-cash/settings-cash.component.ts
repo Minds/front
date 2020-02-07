@@ -3,6 +3,7 @@ import { WalletDashboardService } from '../dashboard.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Session } from '../../../../services/session';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-walletSettings--cash',
@@ -11,7 +12,6 @@ import { Session } from '../../../../services/session';
 export class WalletSettingsCashComponent implements OnInit {
   // TODOOJM $account make this observable
   account: any;
-  // TODOOJM $account make this calculated by observable
   payoutMethod = {
     account: null,
     country: 'US',
@@ -19,7 +19,7 @@ export class WalletSettingsCashComponent implements OnInit {
 
   loaded: boolean = false;
   inProgress: boolean = true;
-  editing: boolean = false;
+  editingBank: boolean = false;
   showModal: boolean = false;
   form;
 
@@ -27,7 +27,8 @@ export class WalletSettingsCashComponent implements OnInit {
     protected walletService: WalletDashboardService,
     private formToastService: FormToastService,
     private cd: ChangeDetectorRef,
-    protected session: Session
+    protected session: Session,
+    private configs: ConfigsService
   ) {}
 
   ngOnInit() {
@@ -41,6 +42,7 @@ export class WalletSettingsCashComponent implements OnInit {
     this.walletService
       .getStripeAccount()
       .then((account: any) => {
+        console.log(this.account);
         this.account = account;
         this.payoutMethod.country = account.country;
         this.form.controls.country.setValue(account.country);
@@ -50,7 +52,6 @@ export class WalletSettingsCashComponent implements OnInit {
       })
       .catch(e => {
         this.formToastService.error(e.message);
-        // this.detectChanges();
       });
 
     this.form = new FormGroup({
@@ -65,8 +66,6 @@ export class WalletSettingsCashComponent implements OnInit {
     this.detectChanges();
   }
 
-  async createaccount() {}
-
   async addBank() {
     this.inProgress = true;
     this.detectChanges();
@@ -75,7 +74,7 @@ export class WalletSettingsCashComponent implements OnInit {
       .addStripeBank(this.form.value)
       .then((response: any) => {
         this.inProgress = false;
-        this.editing = false;
+        this.editingBank = false;
         this.formToastService.success(
           'Your bank account was successfully added.'
         );
@@ -94,8 +93,7 @@ export class WalletSettingsCashComponent implements OnInit {
     this.walletService
       .leaveMonetization()
       .then((response: any) => {
-        // TODOOJM what to do here?
-        // (<any>window).Minds.user.merchant = [];
+        this.configs.set('merchant', []);
         this.getAccount();
       })
       .catch(e => {
@@ -104,8 +102,8 @@ export class WalletSettingsCashComponent implements OnInit {
     this.detectChanges();
   }
 
-  edit() {
-    this.editing = true;
+  editBank() {
+    this.editingBank = true;
     this.detectChanges();
   }
 

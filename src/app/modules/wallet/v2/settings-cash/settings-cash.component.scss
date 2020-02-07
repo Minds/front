@@ -1,0 +1,36 @@
+// additional shared styles located in dashboard.component.scss
+m-walletSettings--cash {
+  .m-walletSettingsView--accountSplash {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    margin: 38px 0 59px 0;
+    max-width: 460px;
+  }
+  .m-walletSettingsView--accountSplash__bankPreviewWrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    flex: 3 0 auto;
+    margin-bottom: 10px;
+    span {
+      margin-right: 8px;
+    }
+  }
+  .m-walletSettingsView--accountSplash__linkContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    flex: 0 0 auto;
+    max-width: 146px;
+    a:last-child {
+      margin-left: 8px;
+    }
+  }
+
+  .m-walletSettings--cash__leaveModalButtons {
+    display: flex;
+    flex-flow: row wrap-reverse;
+    justify-content: center;
+  }
+}

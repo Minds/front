@@ -64,7 +64,7 @@
       }
       &.red {
         @include m-theme() {
-          background-color: rgba(themed($m-red), 0.7);
+          background-color: rgba(themed($m-red), 0.9);
         }
       }
       &.grey {

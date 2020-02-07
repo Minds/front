@@ -1,30 +1,38 @@
 <div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="!loaded"></div>
 <div class="m-walletSettings" *ngIf="loaded">
+  <h4>Bank Information</h4>
+  <p>Add your bank account details where rewards are deposited.</p>
   <ng-container *ngIf="!account">
-    <h2>Bank Information</h2>
-    <p>Add your bank account details where rewards are deposited.</p>
     <div class="m-walletSettingsView--addAccount">
-      <m-shadowboxSubmitButton (click)="createAccount()" [disabled]="inProgress"
+      <m-shadowboxSubmitButton (click)="editBank()" [disabled]="inProgress"
         >Add your bank details</m-shadowboxSubmitButton
       >
     </div>
   </ng-container>
-  <ng-container *ngIf="hasAccount">
-    <div class="m-walletSettingsView--accountSplash" *ngIf="!editing">
-      <div>
-        <div>
+  <ng-container *ngIf="account">
+    <div class="m-walletSettingsView--accountSplash" *ngIf="!editingBank">
+      <div class="m-walletSettingsView--accountSplash__bankPreviewWrapper">
+        <span>
           {{ payoutMethod.account.bank_name }}
-        </div>
-        <div>****{{ payoutMethod.account.last4 }}</div>
-
-        <a (click)="edit()"> Update</a>
-        <a (click)="removeBank()"> remove</a>
+        </span>
+        <span>****{{ payoutMethod.account.last4 }}</span>
       </div>
-      <m-shadowboxSubmitButton [color]="red" (click)="leaveMonetization()"
+      <div class="m-walletSettingsView--accountSplash__linkContainer">
+        <a (click)="editBank()">Update</a>
+        <a (click)="removeBank()">Remove</a>
+      </div>
+    </div>
+    <div>
+      <h4>Leave Monetization Program</h4>
+      <p>
+        For security reasons, you won't be able to rejoin the monetization
+        program.
+      </p>
+      <m-shadowboxSubmitButton color="red" (click)="showModal = true"
         >Leave Monetization Program</m-shadowboxSubmitButton
       >
     </div>
-    <div class="m-walletSettingsView--editing" *ngIf="editing"></div>
+    <!-- <div class="m-walletSettingsView--editingBank" *ngIf="editingBank"></div> -->
   </ng-container>
 
   <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
@@ -32,13 +40,12 @@
       Are you sure you want to leave the monetization program? You won't be able
       to rejoin again.
     </p>
-    <p></p>
     <div class="m-walletSettings--cash__leaveModalButtons">
-      <m-shadowboxSubmitButton [color]="grey" (click)="showModal = false"
+      <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
         >Cancel</m-shadowboxSubmitButton
       >
-      <m-shadowboxSubmitButton [color]="red" (click)="leaveMonetization()"
-        >Leave Monetization Program</m-shadowboxSubmitButton
+      <m-shadowboxSubmitButton color="red" (click)="leaveMonetization()"
+        >I'm sure</m-shadowboxSubmitButton
       >
     </div>
   </m-walletModal>

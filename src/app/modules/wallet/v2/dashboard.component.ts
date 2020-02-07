@@ -65,8 +65,6 @@ export class WalletDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('dashboard router config', this.router.config);
-
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']);
       return;
