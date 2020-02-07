@@ -9,6 +9,7 @@ import {
   EventEmitter,
   Inject,
   PLATFORM_ID,
+  ViewRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { ConfigsService } from '../../../../common/services/configs.service';
@@ -164,7 +165,9 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
             this.generatedAccount = null;
             this.addressSetupComplete.emit();
             this.inProgress = false;
-            this.detectChanges();
+            if (!(this.cd as ViewRef).destroyed) {
+              this.detectChanges();
+            }
           }, 1000);
         }
       }
@@ -232,7 +235,9 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     this.detectExternal();
     if (isPlatformBrowser(this.platformId)) {
       this._externalTimer = setInterval(() => {
-        this.detectExternal();
+        if (!(this.cd as ViewRef).destroyed) {
+          this.detectExternal();
+        }
       }, 1000);
     }
   }

@@ -7,8 +7,8 @@ import {
   ViewChild,
   ElementRef,
   HostListener,
+  ViewRef,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { horizontallyScrollElementIntoView } from '../../../helpers/scrollable-container-visibility';
@@ -28,8 +28,6 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
 
   firstMetricEl;
   activeMetricEl;
-
-  tabsSubscription: Subscription;
 
   tabsArray;
 
@@ -116,7 +114,9 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
         this.container.scrollLeft >= 0 &&
         !this.isAtScrollEnd;
     }
-    this.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.detectChanges();
+    }
   }
 
   slide(direction) {

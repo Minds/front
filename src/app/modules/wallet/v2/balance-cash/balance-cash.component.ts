@@ -6,18 +6,20 @@ import {
   Input,
   Output,
   EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { WalletDashboardService } from '../dashboard.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'm-walletBalance--cash',
   templateUrl: './balance-cash.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WalletBalanceCashComponent implements OnInit {
+export class WalletBalanceCashComponent implements OnInit, OnDestroy {
   inProgress: boolean = true;
   stripeAccount;
   hasAccount: boolean = true;
@@ -26,6 +28,7 @@ export class WalletBalanceCashComponent implements OnInit {
   nextPayoutDate = '';
   onSettingsTab: boolean = false;
   currency = 'usd';
+  paramsSubscription: Subscription;
 
   @Output() scrollToCashSettings: EventEmitter<any> = new EventEmitter();
   constructor(
@@ -37,12 +40,20 @@ export class WalletBalanceCashComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.onSettingsTab = params.get('view') === 'settings';
-      this.detectChanges();
-    });
+    this.paramsSubscription = this.route.paramMap.subscribe(
+      (params: ParamMap) => {
+        this.onSettingsTab = params.get('view') === 'settings';
+        this.detectChanges();
+      }
+    );
 
     this.load();
+  }
+
+  ngOnDestroy() {
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 
   async load() {

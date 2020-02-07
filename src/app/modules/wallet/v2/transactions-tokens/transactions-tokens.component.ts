@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
@@ -21,7 +22,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './transactions-tokens.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WalletTransactionsTokensComponent implements OnInit {
+export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
   init: boolean = false;
   inProgress: boolean = true;
   offset: string;
@@ -96,6 +97,12 @@ export class WalletTransactionsTokensComponent implements OnInit {
       this.remoteUsername = params['remote'] || '';
     });
     this.getBalance();
+  }
+
+  ngOnDestroy() {
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 
   async getBalance() {

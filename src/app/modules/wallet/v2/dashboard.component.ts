@@ -8,6 +8,7 @@ import {
   ViewChild,
   ElementRef,
   AfterViewInit,
+  OnDestroy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -25,7 +26,7 @@ import { FeaturesService } from '../../../services/features.service';
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WalletDashboardComponent implements OnInit {
+export class WalletDashboardComponent implements OnInit, OnDestroy {
   @ViewChild('tokensSettings', { static: false }) tokenSettingsEl: ElementRef;
   @ViewChild('cashSettings', { static: false }) cashSettingsEl: ElementRef;
   @ViewChild('dashboardViews', { static: false })
@@ -79,29 +80,37 @@ export class WalletDashboardComponent implements OnInit {
 
     this.wallet = this.walletService.getWallet();
 
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      const currencyParam = params.get('currency');
-      const viewParam = params.get('view');
+    this.paramsSubscription = this.route.paramMap.subscribe(
+      (params: ParamMap) => {
+        const currencyParam = params.get('currency');
+        const viewParam = params.get('view');
 
-      this.activeCurrencyId = currencyParam;
-      if (!this.views[this.activeCurrencyId]) {
-        this.activeCurrencyId = 'tokens';
-        this.router.navigate(['/wallet/tokens']);
-      }
+        this.activeCurrencyId = currencyParam;
+        if (!this.views[this.activeCurrencyId]) {
+          this.activeCurrencyId = 'tokens';
+          this.router.navigate(['/wallet/tokens']);
+        }
 
-      if (
-        viewParam &&
-        this.views[this.activeCurrencyId].find(v => v.id === viewParam)
-      ) {
-        this.activeViewId = viewParam;
-      } else {
-        this.activeViewId = this.views[this.activeCurrencyId][0].id;
-        this.updateView(this.activeViewId);
+        if (
+          viewParam &&
+          this.views[this.activeCurrencyId].find(v => v.id === viewParam)
+        ) {
+          this.activeViewId = viewParam;
+        } else {
+          this.activeViewId = this.views[this.activeCurrencyId][0].id;
+          this.updateView(this.activeViewId);
+        }
+        this.detectChanges();
       }
-      this.detectChanges();
-    });
+    );
     this.setCurrencies();
     this.detectChanges();
+  }
+
+  ngOnDestroy() {
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 
   setCurrencies() {

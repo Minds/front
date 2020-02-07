@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Client } from '../../../../services/api/client';
-import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { WalletDashboardService } from '../dashboard.service';
 import { FormToastService } from '../../../../common/services/form-toast.service';
@@ -39,7 +38,6 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     .format('h:mma');
   nextPayoutDate = 0;
   estimatedTokenPayout;
-  payoutSubscription: Subscription;
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
@@ -69,9 +67,6 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.updateTimer$) {
       clearInterval(this.updateTimer$);
-    }
-    if (this.payoutSubscription) {
-      this.payoutSubscription.unsubscribe();
     }
   }
 
