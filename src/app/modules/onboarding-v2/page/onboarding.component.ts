@@ -3,9 +3,9 @@ import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '../../../services/storage';
 import { OnboardingV2Service } from '../service/onboarding.service';
-import { V2TopbarService } from '../../../common/layout/v2-topbar/v2-topbar.service';
 import { SidebarMarkersService } from '../../../common/layout/sidebar/markers.service';
 import { iOSVersion } from '../../../helpers/is-safari';
+import { TopbarService } from '../../../common/layout/topbar.service';
 
 @Component({
   selector: 'm-onboarding',
@@ -42,7 +42,7 @@ export class OnboardingComponent implements OnDestroy {
     private storage: Storage,
     private route: ActivatedRoute,
     private onboardingService: OnboardingV2Service,
-    private topbarService: V2TopbarService,
+    private topbarService: TopbarService,
     private sidebarMarkersService: SidebarMarkersService
   ) {
     this.iosFallback = iOSVersion() !== null;

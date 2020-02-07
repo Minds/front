@@ -5,6 +5,7 @@ m-login {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  grid-area: content;
 
   &:not(.m-login__newDesign) {
     @include m-theme() {
@@ -37,6 +38,10 @@ m-login {
 
   &.m-login__newDesign {
     margin-top: -52px;
+
+    &.m-login__newNavigation {
+      margin-top: -75px;
+    }
 
     &.m-login__iosFallback {
       .m-grid {

@@ -32,7 +32,7 @@
   </span>
 </div>
 
-<ng-container *mIfFeature="'navigation-2020'; else oldChannel">
+<ng-container *mIfFeature="'navigation-2020'; else v1Channel">
   <div class="m-channel__middleColumn">
     feed goes here
   </div>
@@ -45,7 +45,7 @@
   </div>
 </ng-container>
 
-<ng-template #oldChannel>
+<ng-template #v1Channel>
   <header [hidden]="!isLocked"></header>
 
   <header *ngIf="user" [ngClass]="{ isLocked: isLocked }">

@@ -1,11 +1,9 @@
-import { Injectable } from '@angular/core';
 import { SidebarNavigationComponent } from './navigation.component';
 
-@Injectable()
 export class SidebarNavigationService {
   container: SidebarNavigationComponent;
 
-  setContainer(container: SidebarNavigationComponent) {
+  setContainer(container: SidebarNavigationComponent): void {
     this.container = container;
   }
 

@@ -4,7 +4,12 @@
   </div>
 </ng-template>
 
-<div class="m-v3Topbar__top">
+<div
+  class="m-v3Topbar__top"
+  [class.m-v3Topbar__marketingPages]="marketingPages"
+  [class.m-v3Topbar__noBackground]="!showBackground"
+  [style.visibility]="showTopbar ? 'visible' : 'hidden'"
+>
   <div class="m-grid">
     <div class="m-v3Topbar__leftColumn">
       <nav class="m-v3Topbar__nav">

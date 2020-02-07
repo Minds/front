@@ -1,6 +1,20 @@
 m-sidebar--navigation {
   display: contents;
 
+  &.m-sidebarNavigation--opened {
+    .m-sidebarNavigation__overlay {
+      z-index: 999998;
+
+      @include m-theme() {
+        background-color: rgba(themed($m-grey-700), 0.2);
+      }
+    }
+
+    .m-sidebar--navigation.m-sidebarNavigation--slide {
+      transform: translateX(316px);
+    }
+  }
+
   .m-sidebarNavigation__overlay {
     position: fixed;
     top: 0;
@@ -32,6 +46,10 @@ m-sidebar--navigation {
       border-right: 1px solid themed($m-grey-400);
     }
 
+    .m-sidebarNavigation__top {
+      display: none;
+    }
+
     &.m-sidebarNavigation--slide {
       position: fixed;
       top: 0;
@@ -44,9 +62,9 @@ m-sidebar--navigation {
 
       transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
-      &.m-sidebarNavigation--opened {
-        transform: translateX(316px);
-      }
+      //&.m-sidebarNavigation--opened {
+      //  transform: translateX(316px);
+      //}
 
       .m-sidebarNavigation__top {
         display: flex;
@@ -101,93 +119,6 @@ m-sidebar--navigation {
     ul {
       list-style: none;
       padding: 0;
-    }
-
-    h5 {
-      font-size: 11px;
-      line-height: 30px;
-      letter-spacing: 1.83px;
-      text-transform: uppercase;
-      @include m-theme() {
-        color: rgba(themed($m-black), 0.3);
-      }
-    }
-
-    m-group--sidebar-markers {
-      .m-groupSidebarMarkers__list {
-        margin: 0;
-        padding: 0;
-        width: auto !important;
-        height: auto !important;
-        max-width: unset;
-        min-height: unset;
-        box-shadow: unset !important;
-        display: block !important;
-        overflow: unset !important;
-
-        & > li {
-          width: auto;
-          height: auto;
-          border: unset !important;
-
-          a {
-            padding: 8px 0;
-            font-size: 14px;
-            font-weight: normal;
-            line-height: 30px;
-
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            overflow-x: hidden;
-
-            @include m-theme() {
-              color: themed($m-black);
-            }
-
-            &.m-groupSidebarMarkers__newGroup,
-            &.m-groupSidebarMarkers__discoverGroups {
-              @include m-theme() {
-                color: themed($m-grey-200);
-              }
-
-              i.material-icons {
-                @include m-theme() {
-                  color: themed($m-grey-500);
-                }
-              }
-            }
-
-            m-tooltip {
-              vertical-align: middle;
-              margin-right: 21px;
-
-              img {
-                width: 27px;
-                height: 27px;
-              }
-
-              i.material-icons {
-                font-size: 20px;
-                width: 27px;
-                height: 27px;
-              }
-            }
-          }
-        }
-
-        infinite-scroll {
-          padding: 2px 0 !important;
-          width: 48px !important;
-
-          .m-infinite-scroll-manual {
-            font-size: 10px;
-            padding: 2px;
-            background-color: transparent !important;
-            transform: rotate(0) !important;
-            text-align: left;
-          }
-        }
-      }
     }
   }
 

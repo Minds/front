@@ -10,8 +10,8 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 import { OnboardingService } from '../onboarding/onboarding.service';
 import { CookieService } from '../../common/services/cookie.service';
 import { FeaturesService } from '../../services/features.service';
-import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
 import { iOSVersion } from '../../helpers/is-safari';
+import { TopbarService } from '../../common/layout/topbar.service';
 
 @Component({
   selector: 'm-login',
@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.m-login__newDesign')
   newDesign: boolean = false;
+  @HostBinding('class.m-login__newNavigation')
+  newNavigation: boolean = false;
   @HostBinding('class.m-login__iosFallback')
   iosFallback: boolean = false;
 
@@ -46,7 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private cookieService: CookieService,
     private onboarding: OnboardingService,
     private featuresService: FeaturesService,
-    private topbarService: V2TopbarService
+    private topbarService: TopbarService
   ) {}
 
   ngOnInit() {
@@ -68,6 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.newDesign = this.featuresService.has('register_pages-december-2019');
+    this.newNavigation = this.featuresService.has('navigation-2020');
 
     if (this.newDesign) {
       this.topbarService.toggleVisibility(false);

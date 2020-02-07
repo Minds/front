@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   DoCheck,
+  HostBinding,
   HostListener,
   Inject,
   Input,
@@ -26,6 +27,7 @@ import { GroupsService } from '../groups-service';
 export class GroupsSidebarMarkersComponent
   implements OnInit, DoCheck, OnDestroy {
   @Input() showLabels: boolean = false;
+  layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
   inProgress: boolean = false;
   $updateMarker;
   markers = [];
@@ -35,6 +37,9 @@ export class GroupsSidebarMarkersComponent
   tooltipsAnchor: string = 'right';
 
   @ViewChild('list', { static: true }) list;
+
+  @HostBinding('class.m-groupSidebarMarkers__leftSidebar')
+  leftSidebar: boolean = false;
 
   constructor(
     private client: Client,
@@ -146,5 +151,13 @@ export class GroupsSidebarMarkersComponent
 
   @HostListener('window:resize') onResize() {
     this.tooltipsAnchor = window.innerWidth <= 992 ? 'top' : 'right';
+
+    if (window.innerWidth > 900) {
+      this.layoutMode = 'desktop';
+    } else if (window.innerWidth > 540 && window.innerWidth <= 900) {
+      this.layoutMode = 'tablet';
+    } else {
+      this.layoutMode = 'phone';
+    }
   }
 }

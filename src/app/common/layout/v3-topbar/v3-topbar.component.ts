@@ -16,6 +16,7 @@ import { ThemeService } from '../../services/theme.service';
 import { ConfigsService } from '../../services/configs.service';
 import { isPlatformBrowser } from '@angular/common';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
+import { TopbarService } from '../topbar.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -32,6 +33,11 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   componentRef;
   componentInstance: NotificationsToasterComponent;
 
+  showTopbar: boolean = true;
+  forceBackground: boolean = true;
+  showBackground: boolean = true;
+  marketingPages: boolean = false;
+
   isMobile: boolean = false;
 
   constructor(
@@ -41,6 +47,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     protected session: Session,
     protected cd: ChangeDetectorRef,
     protected componentFactoryResolver: ComponentFactoryResolver,
+    protected topbarService: TopbarService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
@@ -53,6 +60,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadComponent();
     this.session.isLoggedIn(() => this.detectChanges());
+
+    this.topbarService.setContainer(this);
   }
 
   getCurrentUser() {
@@ -96,6 +105,32 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   toggleSidebarNav() {
     this.sidebarService.toggle();
+  }
+
+  /**
+   * Marketing pages set this to true in order to change how the topbar looks
+   * @param value
+   * @param forceBackground
+   */
+  toggleMarketingPages(value: boolean, forceBackground: boolean = true) {
+    this.marketingPages = value;
+    this.forceBackground = forceBackground;
+    this.onScroll();
+    this.detectChanges();
+  }
+
+  @HostListener('window:scroll')
+  onScroll() {
+    this.showBackground = this.forceBackground
+      ? true
+      : this.marketingPages
+      ? window.document.body.scrollTop > 52
+      : true;
+  }
+
+  toggleVisibility(visible: boolean) {
+    this.showTopbar = visible;
+    this.detectChanges();
   }
 
   @HostListener('window:resize')

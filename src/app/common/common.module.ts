@@ -133,7 +133,6 @@ import { FormDescriptorComponent } from './components/form-descriptor/form-descr
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
 import { PagesService } from './services/pages.service';
-import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
@@ -147,6 +146,7 @@ import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
 import { SidebarNavigationService } from './layout/sidebar/navigation.service';
+import { TopbarService } from './layout/topbar.service';
 
 const routes: Routes = [
   {
@@ -464,10 +464,7 @@ const routes: Routes = [
     },
     MediaProxyService,
     SidebarNavigationService,
-    {
-      provide: V2TopbarService,
-      useFactory: V2TopbarService._,
-    },
+    TopbarService,
     {
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,

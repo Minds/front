@@ -187,6 +187,14 @@ export class Minds implements OnInit, OnDestroy {
     this.socketsService.setUp();
   }
 
+  hasMarkersSidebar() {
+    return (
+      this.session.isLoggedIn() &&
+      !this.isProDomain &&
+      !this.featuresService.has('navigation-2020')
+    );
+  }
+
   ngOnDestroy() {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();

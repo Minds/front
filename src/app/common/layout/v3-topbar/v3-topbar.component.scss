@@ -81,6 +81,13 @@ m-v3topbar {
     width: 100%;
   }
 
+  &.m-v3Topbar__noBackground {
+    @include m-theme() {
+      background-color: transparent;
+      border-bottom: none;
+    }
+  }
+
   .m-v3Topbar__searchBox {
     width: 100%;
     height: 100%;
