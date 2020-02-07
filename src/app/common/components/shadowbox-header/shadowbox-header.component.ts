@@ -70,9 +70,14 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
 
   @HostListener('click', ['$event'])
   onClick($event) {
-    //  TODO allow click to go through
-    this.slideToActiveMetric(this.container, $event.target);
-    this.checkOverflow();
+    const targetMetric = $event.target;
+    console.log('clickevent', $event);
+    if (targetMetric.className === 'm-shadowboxHeader__overflowFade--left') {
+      this.slide('left');
+    } else {
+      this.slideToActiveMetric(this.container, targetMetric);
+      this.checkOverflow();
+    }
   }
 
   @HostListener('window:resize')

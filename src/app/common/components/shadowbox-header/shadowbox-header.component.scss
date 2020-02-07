@@ -48,6 +48,7 @@ m-shadowboxHeader {
   z-index: 2;
   opacity: 0;
   transition: opacity 0.2s ease, width 0.4s ease;
+  cursor: pointer;
   &.m-shadowboxHeader__overflowFade--right {
     @include m-theme() {
       right: 0;

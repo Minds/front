@@ -1,28 +1,31 @@
 // credit to Adam Reis via https://stackoverflow.com/questions/16308037/detect-when-elements-within-a-scrollable-div-are-out-of-view
 
-export default function checkIfElementIsVerticallyInView(
+export default function isElementVerticallyInView(
   container: HTMLElement,
   element: HTMLElement,
   partial?: boolean // if true, returns false if el is partially obscured
 ) {
-  // Determine container top and bottom
-  const cTop = container.scrollTop;
-  const cBottom = cTop + container.clientHeight;
+  if (container && element) {
+    // Determine container top and bottom
+    const cTop = container.scrollTop;
+    const cBottom = cTop + container.clientHeight;
 
-  // Determine element top and bottom
-  const eTop = element.offsetTop;
-  const eBottom = eTop + element.clientHeight;
+    // Determine element top and bottom
+    const eTop = element.offsetTop;
+    const eBottom = eTop + element.clientHeight;
 
-  // Check if in view
-  const isTotal = eTop >= cTop && eBottom <= cBottom;
-  const isPartial =
-    partial &&
-    ((eTop < cTop && eBottom > cTop) || (eBottom > cBottom && eTop < cBottom));
+    // Check if in view
+    const isTotal = eTop >= cTop && eBottom <= cBottom;
+    const isPartial =
+      partial &&
+      ((eTop < cTop && eBottom > cTop) ||
+        (eBottom > cBottom && eTop < cBottom));
 
-  return isTotal || isPartial;
+    return isTotal || isPartial;
+  }
 }
 
-export function isElementIsHorizontallyInView(
+export function isElementHorizontallyInView(
   container: HTMLElement,
   element: HTMLElement,
   partial?: boolean // if true, returns false if el is partially obscured
@@ -82,33 +85,34 @@ export function horizontallyScrollElementIntoView(
   element: HTMLElement,
   smooth?: boolean // true if you want the scroll to be animated
 ) {
-  // Determine container left and right
-  const cLeft = container.scrollLeft;
-  const cRight = cLeft + container.clientWidth;
+  if (container && element) {
+    // Determine container left and right
+    const cLeft = container.scrollLeft;
+    const cRight = cLeft + container.clientWidth;
 
-  // Determine element left and right
-  const eLeft = element.offsetLeft;
-  const eRight = eLeft + element.clientWidth;
+    // Determine element left and right
+    const eLeft = element.offsetLeft;
+    const eRight = eLeft + element.clientWidth;
 
-  let targetScrollLeft;
+    let targetScrollLeft;
 
-  if (eLeft < cLeft || (eLeft < cLeft && eRight > cLeft)) {
-    // wholly or partially obscured on left
-    targetScrollLeft = container.scrollLeft - cLeft - eLeft;
-  } else if (eRight > cRight || (eRight > cRight && eLeft < cRight)) {
-    // wholly or partially obscured on right
-    targetScrollLeft = container.scrollLeft + eRight - cRight;
+    if (eLeft < cLeft || (eLeft < cLeft && eRight > cLeft)) {
+      // wholly or partially obscured on left
+      targetScrollLeft = container.scrollLeft - cLeft - eLeft;
+    } else if (eRight > cRight || (eRight > cRight && eLeft < cRight)) {
+      // wholly or partially obscured on right
+      targetScrollLeft = container.scrollLeft + eRight - cRight;
+    }
+
+    if (smooth) {
+      const opts: ScrollToOptions = {
+        top: 0,
+        left: targetScrollLeft,
+        behavior: 'smooth',
+      };
+      container.scrollTo(opts);
+    } else {
+      container.scrollLeft = targetScrollLeft;
+    }
   }
-
-  if (smooth) {
-    const opts: ScrollToOptions = {
-      top: 0,
-      left: targetScrollLeft,
-      behavior: 'smooth',
-    };
-    container.scrollTo(opts);
-  } else {
-    container.scrollLeft = targetScrollLeft;
-  }
-  // }
 }
