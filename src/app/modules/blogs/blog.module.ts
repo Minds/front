@@ -21,7 +21,6 @@ import { WireModule } from '../wire/wire.module';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
-import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
@@ -30,6 +29,9 @@ const routes: Routes = [
     path: 'blog/edit/:guid',
     component: BlogEdit,
     canDeactivate: [CanDeactivateGuardService],
+    data: {
+      title: 'Edit Blog',
+    },
   },
   { path: 'blog/:filter', component: BlogListComponent },
   { path: 'blog', redirectTo: '/blog/top', pathMatch: 'full' },
@@ -51,7 +53,6 @@ const routes: Routes = [
     WireModule,
     HashtagsModule,
     ModalsModule,
-    CodeHighlightModule,
   ],
   declarations: [
     BlogView,

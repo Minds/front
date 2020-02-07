@@ -88,9 +88,6 @@ declare namespace MediumEditor {
       preRelease: string;
       toString: Function;
     };
-
-    id: number;
-    options: any;
   }
 
   export interface CoreOptions {

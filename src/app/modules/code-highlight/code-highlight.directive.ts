@@ -18,9 +18,6 @@ export class CodeHighlightDirective implements AfterViewInit {
       `.${codeHighlightWrapperClass}`
     );
 
-    console.log('element', this.element);
-    console.log('codeWrapperNodes', codeWrapperNodes);
-
     for (let i = 0; i < codeWrapperNodes.length; ++i) {
       const codeNode = document.createElement('code');
       codeNode.appendChild(
