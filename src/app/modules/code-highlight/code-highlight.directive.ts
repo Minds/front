@@ -14,7 +14,7 @@ export class CodeHighlightDirective implements AfterViewInit {
 
   ngAfterViewInit() {
     const codeWrapperNodes = this.element.nativeElement.querySelectorAll(
-      `.${codeHighlightWrapperClass}`
+      `.${CodeHighlightService.moduleWrapperClass}`
     );
 
     for (let i = 0; i < codeWrapperNodes.length; ++i) {
@@ -41,5 +41,3 @@ export class CodeHighlightDirective implements AfterViewInit {
     }
   }
 }
-
-export const codeHighlightWrapperClass: string = 'm-code-highlight--blog';

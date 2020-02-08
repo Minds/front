@@ -31,7 +31,11 @@ export class CodeHighlightPipe implements PipeTransform {
           highlighted = highlightResult.value;
         }
 
-        return `<pre><code class="language-${language}">${highlighted}</code></pre>`;
+        return (
+          `<div class="${CodeHighlightService.moduleWrapperClass}">` +
+          `<pre><code class="language-${language}">${highlighted}</code></pre>` +
+          `</div>`
+        );
       }
     );
 

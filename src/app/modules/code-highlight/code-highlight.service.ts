@@ -9,6 +9,8 @@ export interface ICodeHighlightResult {
 
 @Injectable()
 export class CodeHighlightService {
+  static moduleWrapperClass: string = 'm-code-highlight';
+
   highlight(lang: string, code: string): ICodeHighlightResult {
     if (this.getLanguages().indexOf(lang) < 0) {
       return this.highlightAuto(code);

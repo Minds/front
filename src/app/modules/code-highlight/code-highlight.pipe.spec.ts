@@ -1,4 +1,5 @@
 import { CodeHighlightPipe } from './code-highlight.pipe';
+import { CodeHighlightService } from './code-highlight.service';
 import { codeHighlightServiceMock } from '../../mocks/modules/code-highlight/code-highlight-service.mock';
 
 describe('CodeHighlightPipe', () => {
@@ -16,8 +17,8 @@ describe('CodeHighlightPipe', () => {
     const string = `\`\`\`javascript console.log(a);\`\`\``;
     const transformedString = pipe.transform(string);
 
-    expect(transformedString).toContain(
-      `<pre><code class="language-javascript">console.log(a);</code></pre>`
+    expect(transformedString).toBe(
+      `<div class="${CodeHighlightService.moduleWrapperClass}"><pre><code class="language-javascript">console.log(a);</code></pre></div>`
     );
 
     expect(codeHighlightServiceMock.highlight).toHaveBeenCalledWith(
@@ -30,8 +31,8 @@ describe('CodeHighlightPipe', () => {
     const string = `\`\`\`auto console.log(a);\`\`\``;
     const transformedString = pipe.transform(string);
 
-    expect(transformedString).toContain(
-      `<pre><code class="language-javascript">console.log(a);</code></pre>`
+    expect(transformedString).toBe(
+      `<div class="${CodeHighlightService.moduleWrapperClass}"><pre><code class="language-javascript">console.log(a);</code></pre></div>`
     );
 
     expect(codeHighlightServiceMock.highlight).not.toHaveBeenCalled();
@@ -44,8 +45,8 @@ describe('CodeHighlightPipe', () => {
     const string = `\`\`\` console.log(a);\`\`\``;
     const transformedString = pipe.transform(string);
 
-    expect(transformedString).toContain(
-      `<pre><code class="language-javascript">console.log(a);</code></pre>`
+    expect(transformedString).toBe(
+      `<div class="${CodeHighlightService.moduleWrapperClass}"><pre><code class="language-javascript">console.log(a);</code></pre></div>`
     );
 
     expect(codeHighlightServiceMock.highlight).not.toHaveBeenCalled();

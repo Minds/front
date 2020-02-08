@@ -2,26 +2,23 @@ import { Component, DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
-import {
-  CodeHighlightDirective,
-  codeHighlightWrapperClass,
-} from './code-highlight.directive';
+import { CodeHighlightDirective } from './code-highlight.directive';
 import { CodeHighlightService } from './code-highlight.service';
 import { codeHighlightServiceMock } from '../../mocks/modules/code-highlight/code-highlight-service.mock';
 
 @Component({
   template: `
   <div m-code-highlight>
-    <div class="${codeHighlightWrapperClass}" data-language="javascript">
+    <div class="${CodeHighlightService.moduleWrapperClass}" data-language="javascript">
       console.log('foo');
     </div>
-    <div class="${codeHighlightWrapperClass}" data-language="php">
+    <div class="${CodeHighlightService.moduleWrapperClass}" data-language="php">
       <?php echo '<p>Hello World</p>'; ?>
     </div>
-    <div class="${codeHighlightWrapperClass}" data-language="auto">
+    <div class="${CodeHighlightService.moduleWrapperClass}" data-language="auto">
       console.log('foo');
     </div>
-    <div class="${codeHighlightWrapperClass}">
+    <div class="${CodeHighlightService.moduleWrapperClass}">
       console.log('foo');
     </div>
     <div>
@@ -51,7 +48,7 @@ describe('CodeHighlightDirective', () => {
       By.directive(CodeHighlightDirective)
     );
     moduleWrappers = directiveElement.queryAll(
-      By.css(`div.${codeHighlightWrapperClass}`)
+      By.css(`div.${CodeHighlightService.moduleWrapperClass}`)
     );
   });
 
@@ -114,7 +111,7 @@ describe('CodeHighlightDirective', () => {
 
   it('should not highlight text as code when no module wrapper class is present', () => {
     const bareWrapper = directiveElement.query(
-      By.css(`div:not(.${codeHighlightWrapperClass})`)
+      By.css(`div:not(.${CodeHighlightService.moduleWrapperClass})`)
     ).nativeElement;
 
     expect(bareWrapper.children.length).toBe(0);
