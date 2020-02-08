@@ -471,7 +471,8 @@ describe('Activity', () => {
       imports: [
         RouterTestingModule,
         FormsModule,
-        CodeHighlightModule /*, CommonModule*/,
+        CodeHighlightModule,
+        /*CommonModule*/
       ],
       providers: [
         { provide: Client, useValue: clientMock },

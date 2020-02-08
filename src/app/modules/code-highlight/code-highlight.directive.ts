@@ -1,6 +1,5 @@
 import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 import { CodeHighlightService } from './code-highlight.service';
-import { codeHighlightWrapperClass } from './code-highlight.util';
 
 @Directive({
   selector: '[m-code-highlight]',
@@ -24,6 +23,12 @@ export class CodeHighlightDirective implements AfterViewInit {
         document.createTextNode(codeWrapperNodes[i].textContent)
       );
 
+      const languageHint = codeWrapperNodes[i].dataset['language'];
+
+      if (languageHint && languageHint !== 'auto') {
+        codeNode.classList.add(`language-${languageHint}`);
+      }
+
       const preNode = document.createElement('pre');
       preNode.appendChild(codeNode);
 
@@ -36,3 +41,5 @@ export class CodeHighlightDirective implements AfterViewInit {
     }
   }
 }
+
+export const codeHighlightWrapperClass: string = 'm-code-highlight--blog';

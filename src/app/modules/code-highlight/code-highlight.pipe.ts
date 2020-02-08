@@ -9,7 +9,7 @@ export class CodeHighlightPipe implements PipeTransform {
 
   constructor(private codeHighlightService: CodeHighlightService) {}
 
-  transform(text: string, noWrap: boolean): string {
+  transform(text: string): string {
     if (!text) {
       return text;
     }
@@ -17,17 +17,21 @@ export class CodeHighlightPipe implements PipeTransform {
     let language: string;
 
     const transformed = text.replace(
-      /```(\w+)(.*)```/gims,
+      /```(\w+)?\s(.*)```/gims,
       (match, lang, code) => {
         language = lang;
 
-        if (noWrap) {
-          return this.codeHighlightService.highlight(language, code).value;
+        let highlighted;
+
+        if (lang && lang !== 'auto') {
+          highlighted = this.codeHighlightService.highlight(lang, code).value;
+        } else {
+          const highlightResult = this.codeHighlightService.highlightAuto(code);
+          language = highlightResult.language;
+          highlighted = highlightResult.value;
         }
 
-        return `<pre><code class="${lang}">${
-          this.codeHighlightService.highlight(language, code).value
-        }</code></pre>`;
+        return `<pre><code class="language-${language}">${highlighted}</code></pre>`;
       }
     );
 

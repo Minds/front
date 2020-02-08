@@ -10,7 +10,9 @@ export interface ICodeHighlightResult {
 @Injectable()
 export class CodeHighlightService {
   highlight(lang: string, code: string): ICodeHighlightResult {
-    if (hljs && hljs.listLanguages().indexOf(lang) > -1) {
+    if (this.getLanguages().indexOf(lang) < 0) {
+      return this.highlightAuto(code);
+    } else if (hljs) {
       return hljs.highlight(lang, code, true);
     }
 
