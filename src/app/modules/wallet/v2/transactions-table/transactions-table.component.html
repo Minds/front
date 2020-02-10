@@ -3,10 +3,7 @@
     <div class="m-walletTransactionsTable__row--date" *ngIf="tx.displayDate">
       {{ tx.displayDate }}
     </div>
-    <div
-      class="m-walletTransactionsTable__row--details"
-      [ngClass]="{ 'm-walletTransactionsTable__transactionFailed': tx?.failed }"
-    >
+    <div class="m-walletTransactionsTable__row--details">
       <div class="m-walletTransactionsTable__time">{{ tx.displayTime }}</div>
       <ng-container [ngSwitch]="tx.superType">
         <!-- REWARDS -->

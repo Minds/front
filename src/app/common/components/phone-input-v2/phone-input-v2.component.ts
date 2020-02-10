@@ -9,11 +9,8 @@ import {
   Input,
   HostListener,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 
-import { Country } from './country';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { CountryCode } from './countries';
 
 export const PHONE_INPUT_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -29,6 +26,8 @@ export const PHONE_INPUT_VALUE_ACCESSOR: any = {
 export class PhoneInputV2Component
   implements ControlValueAccessor, OnInit, OnChanges, OnDestroy {
   @Input() invalid: boolean = false;
+  @Input() initCountryCode: string = '';
+  @Input() allowedCountries: string[] = [];
 
   phoneNumber: string = '';
   showDropdown: boolean = false;
@@ -37,10 +36,11 @@ export class PhoneInputV2Component
   @ViewChild('wrapper', { static: true }) wrapper: ElementRef;
   @ViewChild('input', { static: true }) input: ElementRef;
   selectedCountry;
+  init: boolean = false;
 
   propagateChange = (_: any) => {};
 
-  constructor(private fb: FormBuilder) {}
+  constructor() {}
 
   ngOnInit() {}
 
@@ -64,10 +64,6 @@ export class PhoneInputV2Component
     return this.selectedCountry.dialCode + this.phoneNumber;
   }
 
-  ngOnChanges(changes: any) {
-    this.propagateChange(changes);
-  }
-
   writeValue(value: any) {
     if (value && value.length > 10) {
       this.phoneNumber = value.substring(value.length - 11, value.length - 1);
@@ -87,8 +83,11 @@ export class PhoneInputV2Component
   countrySelected($event) {
     this.selectedCountry = $event;
     this.onPhoneNumberChange();
-    this.input.nativeElement.focus();
-    this.inputFocused = true;
+    if (this.init) {
+      this.input.nativeElement.focus();
+      this.inputFocused = true;
+    }
+    this.init = true;
   }
 
   clickedInput($event) {
@@ -100,6 +99,10 @@ export class PhoneInputV2Component
   @HostListener('document:click', ['$event'])
   clickedAnywhere($event) {
     this.showDropdown = false;
+  }
+
+  ngOnChanges(changes: any) {
+    this.propagateChange(changes);
   }
 
   ngOnDestroy() {

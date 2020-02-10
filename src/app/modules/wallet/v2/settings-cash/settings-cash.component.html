@@ -2,49 +2,403 @@
 <div class="m-walletSettings" *ngIf="loaded">
   <h4>Bank Information</h4>
   <p>Add your bank account details where rewards are deposited.</p>
-  <ng-container *ngIf="!account">
-    <div class="m-walletSettingsView--addAccount">
-      <m-shadowboxSubmitButton (click)="editBank()" [disabled]="inProgress"
-        >Add your bank details</m-shadowboxSubmitButton
-      >
+  <div
+    class="m-walletSettingsView--addAccount"
+    *ngIf="!isMonetized && !editingAccount"
+  >
+    <m-shadowboxSubmitButton
+      (click)="enterCreateAccountMode(true)"
+      [disabled]="inProgress"
+      >Add your bank details</m-shadowboxSubmitButton
+    >
+  </div>
+  <!-- ACCOUNT FORM -------------------------------------------->
+  <form [formGroup]="accountForm" *ngIf="!isMonetized() && editingAccount">
+    <!-- **** INPUT: COUNTRY DROPDOWN -->
+    <div class="m-walletForm__field--text stretchedField">
+      <div class="m-walletSettings__row--label">
+        <label for="country" i18n>Country</label>
+      </div>
+      <div class="m-walletForm__row--input">
+        <minds-country-input
+          type="text"
+          id="country"
+          name="country"
+          formControlName="country"
+          class="form-control"
+          data-minds="country"
+          [allowed]="allowedCountries"
+          [country]="country.value"
+          (countryChange)="country.setValue($event)"
+        ></minds-country-input>
+        <!-- <m-countryInput
+          type="text"
+          id="country"
+          name="country"
+          formControlName="country"
+          class="form-control"
+          data-minds="country"
+          [allowedCountries]="allowedCountries"
+          [initCountryCode]="country.value"
+          (countryChange)="country.setValue($event)"
+        ></minds-country-input> -->
+      </div>
     </div>
-  </ng-container>
-  <ng-container *ngIf="account">
-    <div class="m-walletSettingsView--accountSplash" *ngIf="!editingBank">
+    <!-- (NAMES) -->
+    <div class="m-walletForm__nameFieldsContainer">
+      <!-- **** INPUT: FIRST NAME -->
+      <div class="m-walletForm__field--text stretchedField">
+        <div class="m-walletForm__row--label">
+          <label for="firstName" i18n>First Name</label>
+        </div>
+        <div class="m-walletForm__row--input">
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            formControlName="firstName"
+            class="form-control"
+            data-minds="firstName"
+          />
+        </div>
+      </div>
+      <!-- **** INPUT: LAST NAME -->
+      <div class="m-walletForm__field--text stretchedField">
+        <div class="m-walletForm__row--label">
+          <label for="lastName" i18n>Last Name</label>
+        </div>
+        <div class="m-walletForm__row--input">
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            formControlName="lastName"
+            class="form-control"
+            data-minds="lastName"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- **** INPUT: DATE OF BIRTH -->
+    <div class="m-walletForm__field--text">
+      <div class="m-walletForm__row--label">
+        <label for="dob" i18n>Date of Birth</label>
+      </div>
+      <div class="m-walletForm__row--input">
+        <minds-date-input
+          id="dob"
+          name="dob"
+          class="form-control"
+          formControlName="dob"
+          data-minds="dob"
+          [date]="dob.value"
+          (dateChange)="dob.setValue($event)"
+        ></minds-date-input>
+      </div>
+    </div>
+
+    <!-- **** INPUT: PHONE NUMBER -->
+    <div class="m-walletForm__field--text">
+      <div class="m-walletForm__row--label">
+        <label for="phoneNumber" i18n>Phone Number</label>
+      </div>
+      <div class="m-walletForm__row--input">
+        <m-phoneInput
+          id="phoneNumber"
+          name="phoneNumber"
+          formControlName="phoneNumber"
+          class="form-control"
+          data-minds="phoneNumber"
+          [initCountryCode]="country.value"
+          [allowedCountries]="allowedCountries"
+        >
+        </m-phoneInput>
+      </div>
+    </div>
+
+    <!-- **** INPUT: PERSONAL ID# -->
+    <div
+      class="m-walletForm__field--text stretchedField"
+      *ngIf="isCountry(['HK', 'SG'])"
+    >
+      <div class="m-walletForm__row--label">
+        <label for="personalId" i18n *ngIf="isCountry(['HK'])"
+          >Hong Kong Identity Card (HKID)</label
+        >
+        <label for="personalId" i18n *ngIf="isCountry(['SG'])"
+          >National Registration Identity Card (NRIC)</label
+        >
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          type="text"
+          id="personalId"
+          name="personalId"
+          formControlName="personalId"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <!-- **** INPUT: SSN -->
+
+    <div
+      class="m-walletForm__field--text stretchedField"
+      *ngIf="isCountry(['US'])"
+    >
+      <div class="m-walletForm__row--label">
+        <label for="ssn" i18n>SSN (last 4 digits)</label>
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          type="text"
+          id="ssn"
+          name="ssn"
+          formControlName="ssn"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <!-- **** INPUT: ADDRESS -- STREET -->
+
+    <div class="m-walletForm__field--text stretchedField">
+      <div class="m-walletForm__row--label">
+        <label for="street" i18n>Address</label>
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          type="text"
+          id="street"
+          name="street"
+          formControlName="street"
+          class="form-control"
+        />
+      </div>
+    </div>
+    <!-- **** INPUT: ADDRESS -- CITY -->
+
+    <div
+      class="m-walletForm__field--text stretchedField"
+      *ngIf="!isCountry(['SG'])"
+    >
+      <div class="m-walletForm__row--label">
+        <label for="city" i18n>City</label>
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          type="text"
+          id="city"
+          name="city"
+          formControlName="city"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <!-- **** INPUT: ADDRESS -- STATE -->
+
+    <div
+      class="m-walletForm__field--text stretchedField"
+      *ngIf="isCountry(['US'])"
+    >
+      <div class="m-walletForm__row--label">
+        <label for="state" i18n>State</label>
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          type="text"
+          id="city"
+          name="city"
+          formControlName="city"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <div
+      class="m-walletForm__field--text stretchedField"
+      *ngIf="isCountry(['AU', 'CA', 'IE'])"
+    >
+      <div class="m-walletForm__row--label">
+        <label for="state" i18n>State / Province</label>
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          type="text"
+          id="state"
+          name="state"
+          formControlName="state"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <!-- **** INPUT: ADDRESS -- ZIP -->
+
+    <div
+      class="m-walletForm__field--text stretchedField"
+      *ngIf="!isCountry(['HK'])"
+    >
+      <div class="m-walletForm__row--label">
+        <label for="postCode" i18n *ngIf="isCountry(['US'])">Zip Code</label>
+        <label for="postCode" i18n *ngIf="!isCountry(['US'])"
+          >Postal Code</label
+        >
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          type="text"
+          id="postCode"
+          name="postCode"
+          formControlName="postCode"
+          class="form-control"
+        />
+      </div>
+    </div>
+  </form>
+  <!-- BANK FORM -->
+  <form
+    [formGroup]="bankForm"
+    *ngIf="(!isMonetized() && editingAccount) || editingBank"
+  >
+    <!-- ***INPUT BANKCOUNTRY DROPDOWN-->
+    <div class="m-walletForm__field--text stretchedField" *ngIf="editingBank">
+      <div class="m-walletSettings__row--label">
+        <label for="bankCountry" i18n>Country</label>
+      </div>
+      <div class="m-walletForm__row--input">
+        <minds-country-input
+          type="text"
+          id="bankCountry"
+          name="bankCountry"
+          formControlName="bankCountry"
+          class="form-control"
+          data-minds="bankCountry"
+          [allowed]="allowedCountries"
+          [country]="bankCountry.value"
+          (countryChange)="bankCountry.setValue($event)"
+        ></minds-country-input>
+        <!-- <m-countryInput
+          type="text"
+          id="bankCountry"
+          name="bankCountry"
+          formControlName="bankCountry"
+          class="form-control"
+          data-minds="bankCountry"
+          [allowedCountries]="allowedCountries"
+          [initCountryCode]="bankCountry.value"
+          (countryChange)="bankCountry.setValue($event)"
+        ></m-countryInput > -->
+      </div>
+    </div>
+    <!-- ***INPUT ACCOUNT NUMBER -->
+    <div class="m-walletForm__field--text stretchedField">
+      <div class="m-walletForm__row--label">
+        <label for="accountNumber" i18n>Bank Account Number / IBAN</label
+        ><m-tooltip icon="help">placeholder</m-tooltip>
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          type="text"
+          id="accountNumber"
+          name="accountNumber"
+          formControlName="accountNumber"
+          class="form-control"
+          data-minds="accountNumber"
+        />
+      </div>
+    </div>
+    <!-- ***INPUT ROUTING NUMBER -->
+    <div class="m-walletForm__field--text stretchedField">
+      <div class="m-walletForm__row--label">
+        <label for="routingNumber" i18n>Routing Number / Sort Code</label>
+        <m-tooltip icon="help">placeholder</m-tooltip>
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          type="text"
+          id="routingNumber"
+          name="routingNumber"
+          formControlName="routingNumber"
+          class="form-control"
+          data-minds="routingNumber"
+        />
+      </div>
+    </div>
+  </form>
+  <!-- TOS AGREEMENT FORM -->
+  <!-- *** INPUT: TOS AGREEMENT CHECKBOX -->
+  <form [formGroup]="stripeAgreeForm" *ngIf="!isMonetized() && editingAccount">
+    <div class="m-walletSettings__field--checkbox">
+      <div class="m-walletSettings__row--input">
+        <m-formInput__checkbox formControlName="stripeAgree">
+          I have read and agree to the
+          <a href="https://stripe.com/legal" target="_blank">
+            Stripe Services Agreement </a
+          >.
+        </m-formInput__checkbox>
+      </div>
+    </div>
+  </form>
+  <!-- FORMS SUBMIT BUTTON -->
+  <m-shadowboxSubmitButton
+    (click)="editingAccount ? createAccount() : addBank()"
+    >Update Bank Information</m-shadowboxSubmitButton
+  >
+
+  <!-- ADDITIONAL REQUIREMENTS/DOC UPLOADS -->
+  <!-- TODOOJM -->
+
+  <!-- MONETIZED ACCOUNT SPLASH ---------------------------------- -->
+  <ng-container *ngIf="isMonetized() && !editingBank && hasBankAccount">
+    <div class="m-walletSettingsView--accountSplash">
       <div class="m-walletSettingsView--accountSplash__bankPreviewWrapper">
         <span>
-          {{ payoutMethod.account.bank_name }}
+          {{ account.bankAccount.bank_name }}
         </span>
-        <span>****{{ payoutMethod.account.last4 }}</span>
+        <span>****{{ account.bankAccount.last4 }}</span>
       </div>
       <div class="m-walletSettingsView--accountSplash__linkContainer">
-        <a (click)="editBank()">Update</a>
-        <a (click)="removeBank()">Remove</a>
+        <a (click)="enterEditBankMode(true)">Update</a>
+        <a (click)="showModal = true; modalContent = 'removeBank'">Remove</a>
       </div>
     </div>
+
     <div>
       <h4>Leave Monetization Program</h4>
       <p>
         For security reasons, you won't be able to rejoin the monetization
         program.
       </p>
-      <m-shadowboxSubmitButton color="red" (click)="showModal = true"
+      <m-shadowboxSubmitButton
+        color="red"
+        (click)="showModal = true; modalContent = 'leaveMonetization'"
         >Leave Monetization Program</m-shadowboxSubmitButton
       >
     </div>
-    <!-- <div class="m-walletSettingsView--editingBank" *ngIf="editingBank"></div> -->
   </ng-container>
-
+  <!-- CONFIRMATION MODAL ------------------------------------------>
   <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
-    <p>
+    <p *ngIf="modalContent === 'leaveMonetization'">
       Are you sure you want to leave the monetization program? You won't be able
       to rejoin again.
+    </p>
+    <p *ngIf="modalContent === 'removeBank'">
+      Are you sure you want to remove your bank account information? You won't
+      be able to receive payments until you add another one.
     </p>
     <div class="m-walletSettings--cash__leaveModalButtons">
       <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
         >Cancel</m-shadowboxSubmitButton
       >
-      <m-shadowboxSubmitButton color="red" (click)="leaveMonetization()"
+      <m-shadowboxSubmitButton
+        color="red"
+        (click)="
+          modalContent === 'leaveMonetization'
+            ? leaveMonetization()
+            : removeBank()
+        "
         >I'm sure</m-shadowboxSubmitButton
       >
     </div>

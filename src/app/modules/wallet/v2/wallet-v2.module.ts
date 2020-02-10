@@ -22,6 +22,9 @@ import { WalletBalanceCashComponent } from './balance-cash/balance-cash.componen
 import { WalletPendingCashPayoutComponent } from './pending-cash-payout/pending-cash-payout.component';
 import { WalletTransactionsTokensComponent } from './transactions-tokens/transactions-tokens.component';
 import { WalletTransactionsCashComponent } from './transactions-cash/transactions-cash.component';
+import { WalletCashOnboardingComponent } from './settings-cash/cash-onboarding/cash-onboarding.component';
+import { WalletCashOnboardingExtrasComponent } from './settings-cash/cash-onboarding-extras/cash-onboarding-extras.component';
+import { WalletBankFormComponent } from './settings-cash/bank-form/bank-form.component';
 
 //////////////////////////////////////////////////
 // TODO add a wildcard and the parameter routes as children once feature-flag is lifted
@@ -82,6 +85,9 @@ export const WALLET_V2_ROUTES: Routes = [
     WalletPendingCashPayoutComponent,
     WalletTransactionsTokensComponent,
     WalletTransactionsCashComponent,
+    WalletCashOnboardingComponent,
+    WalletCashOnboardingExtrasComponent,
+    WalletBankFormComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [WalletDashboardService],

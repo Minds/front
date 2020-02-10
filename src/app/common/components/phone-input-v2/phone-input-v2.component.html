@@ -1,5 +1,5 @@
 <div
-  class="m-phoneInput__wrapper m-walletForm__row--input"
+  class="m-phoneInput__wrapper"
   [ngClass]="{
     dropdownShown: showDropdown,
     focused: showDropdown || inputFocused,
@@ -8,7 +8,9 @@
   #wrapper
 >
   <m-phoneInput__country
-    (country)="countrySelected($event)"
+    [initCountryCode]="initCountryCode"
+    [allowedCountries]="allowedCountries"
+    (countrySelected)="countrySelected($event)"
     (toggledDropdown)="toggledDropdown($event)"
     [showDropdown]="showDropdown"
   ></m-phoneInput__country>
@@ -26,7 +28,5 @@
     (click)="clickedInput($event)"
     (focusout)="inputFocused = false"
     #input
-    required
-    autofocus
   />
 </div>

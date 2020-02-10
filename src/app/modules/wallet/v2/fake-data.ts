@@ -384,8 +384,8 @@ const fakeData = {
         },
         receiver: {
           guid: '930229554033729555',
-          name: 'omadrid2',
-          username: 'omadrid2',
+          name: 'FAILomadrid2',
+          username: 'FAILomadrid2',
         },
         wallet_address: 'offchain',
         tx: 'oc:1052397161095897106',

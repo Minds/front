@@ -47,7 +47,7 @@ m-walletDashboard {
     display: flex;
     flex-flow: row nowrap;
     @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--secondary);
+      border-bottom: 1px solid themed($m-borderColor--tertiary);
     }
   }
   .m-walletDashboardViews__tab {
@@ -157,6 +157,17 @@ m-walletDashboard {
     justify-content: flex-end;
     align-items: center;
   }
+  .m-walletForm__multifieldGroup {
+    margin-top: 58px;
+  }
+  .m-walletForm__nameFieldsContainer {
+    display: flex;
+    box-sizing: border-box;
+
+    [class*='m-walletForm__field'] {
+      flex: 1 0 50%;
+    }
+  }
   [class*='m-walletForm__field'] {
     font-size: 15px;
     line-height: 20px;
@@ -223,10 +234,12 @@ m-walletDashboard {
       align-self: flex-end;
     }
     label,
-    input,
     .m-walletForm__row--validation {
       flex: 1 1 auto;
       max-width: auto;
+    }
+    input {
+      flex: 1 1 100%;
     }
   }
   input {
@@ -342,31 +355,36 @@ m-walletDashboard {
     }
   }
 
-  input {
-    outline: 0;
-    font-size: 15px;
-    line-height: 20px;
-    font-weight: 300;
-    width: 0;
-    min-width: 0;
-    padding: 10px 20px;
-    border-radius: 2px;
-    cursor: text;
+  // input {
+  //   outline: 0;
+  //   font-size: 15px;
+  //   line-height: 20px;
+  //   font-weight: 300;
+  //   width: 0;
+  //   min-width: 0;
+  //   padding: 10px 20px;
+  //   border-radius: 2px;
+  //   cursor: text;
 
-    @include m-theme() {
-      color: themed($m-textColor--primary);
-      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
-      border: 1px solid themed($m-borderColor--primary);
-    }
+  //   @include m-theme() {
+  //     color: themed($m-textColor--primary);
+  //     box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+  //     border: 1px solid themed($m-borderColor--primary);
+  //   }
+  //   &:not(.m-phoneInput__input) {
+  //     @include m-theme() {
+  //       border: 1px solid themed($m-borderColor--primary);
+  //     }
+  //   }
 
-    &:focus {
-      &:not(:read-only) {
-        @include m-theme() {
-          border-color: themed($m-blue);
-        }
-      }
-    }
-  }
+  //   &:focus {
+  //     &:not(:read-only) {
+  //       @include m-theme() {
+  //         border-color: themed($m-blue);
+  //       }
+  //     }
+  //   }
+  // }
   .m-walletSettingsView--addressCurrent {
     h2 {
       margin-bottom: 23px;

@@ -11,8 +11,9 @@ import {
   ViewChildren,
   QueryList,
   OnDestroy,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
-import { Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { verticallyScrollElementIntoView } from '../../../helpers/scrollable-container-visibility';
 
@@ -27,8 +28,10 @@ import * as moment from 'moment';
 export class PhoneInputCountryV2Component
   implements OnInit, AfterViewInit, OnDestroy {
   @Input() showDropdown: boolean = false;
+  @Input() initCountryCode: string;
+  @Input() allowedCountries: string[];
   @Output() toggledDropdown: EventEmitter<any> = new EventEmitter();
-  @Output('country') selectedCountryEvt: EventEmitter<any> = new EventEmitter();
+  @Output() countrySelected: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('input', { static: false }) input: ElementRef;
   @ViewChild('dropdown', { static: true }) dropdown: ElementRef;
@@ -51,7 +54,12 @@ export class PhoneInputCountryV2Component
 
   ngOnInit() {
     this.closeDropdown();
+
     this.fetchCountryData();
+    if (this.initCountryCode) {
+      this.setInitCountry();
+    }
+
     this.onCountrySelect(this.selectedCountryIndex);
   }
 
@@ -63,7 +71,7 @@ export class PhoneInputCountryV2Component
     this.focusedCountryIndex = i;
     this.selectedCountryIndex = i;
     this.selectedCountry = this.countries[i];
-    this.selectedCountryEvt.next(this.selectedCountry);
+    this.countrySelected.next(this.selectedCountry);
     if (this.showDropdown) {
       this.closeDropdown();
     }
@@ -155,17 +163,45 @@ export class PhoneInputCountryV2Component
     }
   }
 
+  countryIsAllowed(iso2) {
+    return this.allowedCountries.indexOf(iso2) > -1;
+  }
+
   protected fetchCountryData(): void {
+    for (let i = 0; i < this.allowedCountries.length; i++) {
+      this.allowedCountries[i] = this.allowedCountries[i].toLowerCase();
+    }
+
     this.countryCodeData.countries.forEach(c => {
-      const country = new Country();
-      country.name = c[0].toString();
-      country.iso2 = c[1].toString();
-      country.dialCode = c[2].toString();
-      country.priority = +c[3] || 0;
-      country.areaCode = +c[4] || null;
-      country.flagClass = country.iso2.toLocaleLowerCase();
-      this.countries.push(country);
+      if (
+        this.allowedCountries.length > 0 ||
+        this.countryIsAllowed(c[1].toString())
+      ) {
+        this.pushCountry(c);
+      }
     });
+  }
+
+  pushCountry(c) {
+    const country = new Country();
+    country.name = c[0].toString();
+    country.iso2 = c[1].toString();
+    country.dialCode = c[2].toString();
+    country.priority = +c[3] || 0;
+    country.areaCode = +c[4] || null;
+    country.flagClass = country.iso2.toLocaleLowerCase();
+    this.countries.push(country);
+  }
+
+  setInitCountry() {
+    this.initCountryCode = this.initCountryCode.toLowerCase();
+
+    const initCountryIndex = this.countries.findIndex(c => {
+      return this.initCountryCode === c.iso2;
+    });
+    if (initCountryIndex > -1) {
+      this.selectedCountryIndex = initCountryIndex;
+    }
   }
 
   ngOnDestroy() {

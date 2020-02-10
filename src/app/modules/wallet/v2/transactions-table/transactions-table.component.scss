@@ -72,11 +72,7 @@ m-walletTransactionsTable {
       }
     }
   }
-  .m-walletTransactionsTable__transactionFailed {
-    .m-walletTransactionsTable__amountWrapper span {
-      text-decoration: line-through;
-    }
-  }
+
   .m-walletTransactionsTable__avatar {
     border-radius: 100%;
     height: 27px;
@@ -107,11 +103,6 @@ m-walletTransactionsTable {
       &.neutral {
         @include m-theme() {
           color: themed($m-blue);
-        }
-      }
-      &.failed {
-        @include m-theme() {
-          color: themed($m-grey-100);
         }
       }
     }

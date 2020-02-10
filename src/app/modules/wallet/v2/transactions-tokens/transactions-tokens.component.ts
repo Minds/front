@@ -17,7 +17,6 @@ import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 
 @Component({
-  // moduleId: module.id,
   selector: 'm-walletTransactions--tokens',
   templateUrl: './transactions-tokens.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -177,52 +176,49 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
   formatResponse(transactions) {
     transactions.forEach(tx => {
-      const formattedTx: any = {};
+      if (!tx.failed) {
+        const formattedTx: any = {};
 
-      const txAmount = toFriendlyCryptoVal(tx.amount);
-      formattedTx.amount = txAmount;
+        const txAmount = toFriendlyCryptoVal(tx.amount);
+        formattedTx.amount = txAmount;
+        formattedTx.runningTotal = this.formatAmount(this.runningTotal);
 
-      if (!tx.failed && tx.type !== 'withdraw') {
-        this.runningTotal -= txAmount;
-      }
-      formattedTx.runningTotal = this.formatAmount(this.runningTotal);
+        formattedTx.type = tx.contract;
+        formattedTx.timestamp = tx.timestamp;
 
-      formattedTx.type = tx.contract;
-      formattedTx.failed = tx.failed;
-      formattedTx.timestamp = tx.timestamp;
-
-      if (tx.contract.indexOf('offchain:') !== -1) {
-        formattedTx.superType = tx.contract.substr(9);
-      } else {
-        formattedTx.superType = tx.contract;
-      }
-
-      if (formattedTx.superType === 'reward') {
-        formattedTx.showRewardsPopup = false;
-      }
-
-      if (formattedTx.superType === 'wire') {
-        formattedTx.otherUser = this.getOtherUser(tx);
-      }
-
-      formattedTx.delta = this.getDelta(tx);
-
-      const txMoment = moment(tx.timestamp * 1000).local();
-      formattedTx.displayDate = null;
-      formattedTx.displayTime = txMoment.format('hh:mm a');
-
-      if (this.isNewDay(this.currentDayInLoop, txMoment)) {
-        this.currentDayInLoop = txMoment;
-
-        // If tx occured yesterday, use 'yesterday' instead of date
-        const yesterday = moment().subtract(1, 'day');
-        if (txMoment.isSame(yesterday, 'day')) {
-          formattedTx.displayDate = 'Yesterday';
+        if (tx.contract.indexOf('offchain:') !== -1) {
+          formattedTx.superType = tx.contract.substr(9);
         } else {
-          formattedTx.displayDate = moment(txMoment).format('ddd MMM Do');
+          formattedTx.superType = tx.contract;
         }
+
+        if (formattedTx.superType === 'reward') {
+          formattedTx.showRewardsPopup = false;
+        }
+
+        if (formattedTx.superType === 'wire') {
+          formattedTx.otherUser = this.getOtherUser(tx);
+        }
+
+        formattedTx.delta = this.getDelta(tx);
+
+        const txMoment = moment(tx.timestamp * 1000).local();
+        formattedTx.displayDate = null;
+        formattedTx.displayTime = txMoment.format('hh:mm a');
+
+        if (this.isNewDay(this.currentDayInLoop, txMoment)) {
+          this.currentDayInLoop = txMoment;
+
+          // If tx occured yesterday, use 'yesterday' instead of date
+          const yesterday = moment().subtract(1, 'day');
+          if (txMoment.isSame(yesterday, 'day')) {
+            formattedTx.displayDate = 'Yesterday';
+          } else {
+            formattedTx.displayDate = moment(txMoment).format('ddd MMM Do');
+          }
+        }
+        this.transactions.push(formattedTx);
       }
-      this.transactions.push(formattedTx);
     });
     this.inProgress = false;
   }
@@ -275,9 +271,6 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
     let delta = 'neutral';
     if (tx.type !== 'withdraw') {
       delta = tx.amount < 0 ? 'negative' : 'positive';
-    }
-    if (tx.failed) {
-      delta = 'failed';
     }
     return delta;
   }

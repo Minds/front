@@ -20,8 +20,8 @@ m-walletSettings--cash {
   .m-walletSettingsView--accountSplash__linkContainer {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-around;
-    flex: 0 0 auto;
+    justify-content: space-between;
+    flex: 1 0 auto;
     max-width: 146px;
     a:last-child {
       margin-left: 8px;
@@ -32,5 +32,22 @@ m-walletSettings--cash {
     display: flex;
     flex-flow: row wrap-reverse;
     justify-content: center;
+  }
+
+  // FORM -------------------
+  [class*='m-walletForm__field'] {
+    margin-bottom: 19px;
+  }
+
+  .m-walletForm__nameFieldsContainer {
+    display: flex;
+    box-sizing: border-box;
+
+    [class*='m-walletForm__field'] {
+      flex: 1 0 50%;
+      &:first-child {
+        margin-right: 19px;
+      }
+    }
   }
 }

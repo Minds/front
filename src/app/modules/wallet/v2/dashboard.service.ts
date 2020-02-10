@@ -270,10 +270,22 @@ export class WalletDashboardService {
     // }
   }
 
-  async updateStripeAccount() {
+  async createStripeAccount(form) {
     try {
       const response = <any>(
-        await this.client.post('api/v2/payments/stripe/connect')
+        await this.client.post('api/v1/merchant/onboard', form)
+      );
+      return response;
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
+  }
+
+  async updateStripeAccount(form) {
+    try {
+      const response = <any>(
+        await this.client.post('api/v2/payments/stripe/connect', form)
       );
       return response;
     } catch (e) {
@@ -294,17 +306,15 @@ export class WalletDashboardService {
     }
   }
   async removeStripeBank() {
-    return true;
-    // TODOOJM this endpoint doesn't exist yet.
-    // try {
-    //   const response = <any>(
-    //     await this.client.delete('api/v2/payments/stripe/connect/bank')
-    //   );
-    //   return response;
-    // } catch (e) {
-    //   console.error(e);
-    //   return e;
-    // }
+    try {
+      const response = <any>(
+        await this.client.delete('api/v2/payments/stripe/connect/bank')
+      );
+      return response;
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
   }
   // async uploadDocument(fileInput: HTMLInputElement, documentType: string) {
   //   const file = fileInput ? fileInput.files[0] : null;

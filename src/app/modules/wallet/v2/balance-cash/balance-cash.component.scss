@@ -1,6 +1,6 @@
 m-walletBalance--cash {
   display: block;
-  max-width: 700px;
+  max-width: 680px;
   > * {
     font-weight: 300;
     font-size: 15px;
@@ -12,6 +12,7 @@ m-walletBalance--cash {
   .m-walletBalance--cash__colContainer {
     display: flex;
     justify-content: space-between;
+    flex-flow: row wrap;
   }
 
   .m-walletBalance--cash__colTitle {
