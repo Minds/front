@@ -64,7 +64,7 @@
     "ngx-plyr": "^3.0.1",
     "node-cache": "^5.1.0",
     "plotly.js": "^1.47.4",
-    "plyr": "^3.5.6",
+    "plyr": "^3.5.7",
     "qrcodejs2": "0.0.2",
     "rxjs": "~6.5.2",
     "socket.io-client": "^2.2.0",
