@@ -103,7 +103,10 @@ app.get('/undefined', (req, res) => {
 
 // cache
 const NodeCache = require('node-cache');
-const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
+const myCache = new NodeCache({
+  stdTTL: 2 * 60, // 2 minute cache
+  checkperiod: 60, // Check every minute
+});
 
 const cache = () => {
   return (req, res, next) => {
@@ -131,6 +134,10 @@ const cache = () => {
     }
   };
 };
+
+app.get('node-cache-stats', (req, res) => {
+  res.sendResponse(myCache.getStats());
+});
 
 // All regular routes use the Universal engine
 app.get('*', cache(), (req, res) => {
