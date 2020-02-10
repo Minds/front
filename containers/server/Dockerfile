@@ -8,7 +8,7 @@ COPY . /dist
 RUN npm install pm2 -g
 
 CMD pm2-runtime /dist/server \
-    --max-memory-restart 1900M \
+    --max-memory-restart 1G \
     --instances 2
 
 VOLUME ["/dist"]
