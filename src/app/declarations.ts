@@ -14,6 +14,7 @@ import { AdminInteractions } from './controllers/admin/interactions/interactions
 import { InteractionsTableComponent } from './controllers/admin/interactions/table/table.component';
 import { AdminPurchasesComponent } from './controllers/admin/purchases/purchases.component';
 import { AdminWithdrawals } from './controllers/admin/withdrawals/withdrawals.component';
+import { AdminFeaturesComponent } from './controllers/admin/features/admin-features.component';
 
 export const MINDS_DECLARATIONS: any[] = [
   // Components
@@ -35,4 +36,5 @@ export const MINDS_DECLARATIONS: any[] = [
   AdminPurchasesComponent,
   AdminWithdrawals,
   AdminReportsDownload,
+  AdminFeaturesComponent,
 ];

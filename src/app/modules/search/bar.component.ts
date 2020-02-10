@@ -67,7 +67,7 @@ export class SearchBarComponent {
   }
 
   unListen() {
-    this.routerSubscription.unsubscribe();
+    if (this.routerSubscription) this.routerSubscription.unsubscribe();
   }
 
   handleUrl(url: string) {

@@ -12,6 +12,9 @@ PlotlyModule.plotlyjs = PlotlyJS;
 @NgModule({
   imports: [MindsModule, PlotlyModule, CookieModule],
   bootstrap: [Minds],
-  providers: [{ provide: 'ORIGIN_URL', useValue: location.origin }],
+  providers: [
+    { provide: 'ORIGIN_URL', useValue: location.origin },
+    { provide: 'QUERY_STRING', useValue: location.search || '' },
+  ],
 })
 export class AppBrowserModule {}

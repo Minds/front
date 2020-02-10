@@ -1,5 +1,5 @@
 import { Client } from '../api/client.service';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, Optional } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
@@ -7,11 +7,16 @@ import { map, tap } from 'rxjs/operators';
 export class ConfigsService {
   private configs = {};
 
-  constructor(private client: Client) {}
+  constructor(
+    private client: Client,
+    @Inject('QUERY_STRING') private queryString: string
+  ) {}
 
   async loadFromRemote() {
     try {
-      this.configs = await this.client.get('api/v1/minds/config');
+      this.configs = await this.client.get(
+        `api/v1/minds/config${this.queryString}`
+      );
     } catch (err) {
       console.error(err);
     }

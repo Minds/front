@@ -1,7 +1,12 @@
 <ng-container *ngIf="error || channel; else loader">
   <ng-container
     *ngIf="
-      error || !proEnabled || !channel.pro_published || isOwner || isAdmin;
+      error ||
+        !proEnabled ||
+        !showPro ||
+        !channel.pro_published ||
+        isOwner ||
+        isAdmin;
       else isProChannel
     "
   >

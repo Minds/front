@@ -1,4 +1,4 @@
-import { NgZone, RendererFactory2, PLATFORM_ID, Inject } from '@angular/core';
+import { NgZone, RendererFactory2, PLATFORM_ID, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
@@ -186,8 +186,9 @@ export const MINDS_PROVIDERS: any[] = [
   },
   {
     provide: ConfigsService,
-    useFactory: client => new ConfigsService(client),
-    deps: [Client],
+    useFactory: (client, injector) =>
+      new ConfigsService(client, injector.get('QUERY_STRING')),
+    deps: [Client, Injector],
   },
   {
     provide: FeaturesService,

@@ -19,6 +19,8 @@ export class FeaturesService {
   has(feature: string): boolean {
     const features = this.configs.get('features');
 
+    if (!features) return false;
+
     if (!feature) {
       throw new Error('Invalid feature ID');
     }
