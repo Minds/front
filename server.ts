@@ -112,7 +112,7 @@ const cache = () => {
         .filter(kv => kv[0] !== 'mwa' && kv[0] !== 'XSRF-TOKEN')
         .join(':') || 'loggedout';
     const key =
-      `__express__/${sessKey}/` +
+      `__express__/${req.headers.host}/${sessKey}/` +
       (req.originalUrl || req.url) +
       (isMobileOrTablet() ? '/mobile' : '/desktop');
     const exists = myCache.has(key);
