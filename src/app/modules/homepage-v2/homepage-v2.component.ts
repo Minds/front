@@ -8,6 +8,7 @@ import { RegisterForm } from '../forms/register/register';
 import { FeaturesService } from '../../services/features.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service';
+import { MetaService } from '../../common/services/meta.service';
 
 @Component({
   selector: 'm-homepage__v2',
@@ -27,7 +28,8 @@ export class HomepageV2Component {
     private loginReferrer: LoginReferrerService,
     private featuresService: FeaturesService,
     configs: ConfigsService,
-    private onboardingService: OnboardingV2Service
+    private onboardingService: OnboardingV2Service,
+    private metaService: MetaService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
@@ -38,6 +40,13 @@ export class HomepageV2Component {
       this.router.navigate(['/newsfeed']);
       return;
     }
+
+    this.metaService
+      .setTitle('Minds', false)
+      .setOgUrl(this.siteUrl)
+      .setDescription(
+        `Take back control of your social media. A place to have open conversations and bring people together.`
+      );
   }
 
   registered() {

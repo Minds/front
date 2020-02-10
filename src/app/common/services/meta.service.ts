@@ -118,7 +118,10 @@ export class MetaService {
       .setDescription(data.description || DEFAULT_META_DESCRIPTION)
       .setOgType('website')
       .setOgUrl(data.ogUrl || this.location.path())
-      .setOgImage(data.ogImage || null, { width: 0, height: 0 })
+      .setOgImage(data.ogImage || '/assets/logos/placeholder.jpg', {
+        width: 765,
+        height: 458,
+      })
       .setRobots(data.robots || 'all');
   }
 
