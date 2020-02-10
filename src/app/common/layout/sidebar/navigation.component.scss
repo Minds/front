@@ -78,7 +78,7 @@ m-sidebar--navigation {
         padding: 0 24px;
 
         @include m-theme() {
-          border-bottom: 1px solid themed($m-primary-border);
+          border-bottom: 1px solid themed($m-borderColor--primary);
         }
 
         a > img {
@@ -89,7 +89,7 @@ m-sidebar--navigation {
         i.material-icons {
           cursor: pointer;
           @include m-theme() {
-            color: themed($m-second-text-color);
+            color: themed($m-textColor--secondary);
           }
         }
       }
@@ -134,7 +134,7 @@ m-sidebar--navigation {
     font-size: 17px;
     line-height: 44px;
     @include m-theme() {
-      color: themed($m-navigation-item);
+      color: themed($m-textColor--secondary);
     }
 
     &.m-sidebar--navigation--item-active {

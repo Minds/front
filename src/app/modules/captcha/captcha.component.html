@@ -1,0 +1,10 @@
+<ng-container *ngIf="captcha">
+  <img [src]="captcha.base64Image" />
+  <i class="material-icons m-captcha__refresh" (click)="refresh()">refresh</i>
+  <input
+    [ngModel]="captcha.clientText"
+    (ngModelChange)="onValueChange($event)"
+    type="text"
+    placeholder="Enter the characters above"
+  />
+</ng-container>

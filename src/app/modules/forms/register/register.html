@@ -134,6 +134,16 @@
         </ng-container>
       </div>
     </div>
+
+    <div
+      *ngIf="form.value.password"
+      class="mdl-cell mdl-cell--12-col m-registerForm__captcha"
+    >
+      <label for="captcha" *ngIf="showLabels" i18n>
+        Captcha
+      </label>
+      <m-captcha formControlName="captcha"></m-captcha>
+    </div>
   </div>
 
   <div
