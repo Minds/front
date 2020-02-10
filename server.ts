@@ -136,11 +136,11 @@ const cache = () => {
 };
 
 app.get('/node-cache-stats', (req, res) => {
-  res.sendResponse(myCache.getStats());
+  res.send(myCache.getStats());
 });
 
 // All regular routes use the Universal engine
-app.get('*', (req, res) => {
+app.get('*', cache(), (req, res) => {
   const http =
     req.headers['x-forwarded-proto'] === undefined
       ? 'http'
