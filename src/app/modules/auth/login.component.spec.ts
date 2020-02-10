@@ -22,15 +22,20 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
 import { onboardingServiceMock } from '../../mocks/modules/onboarding/onboarding.service.mock.spec';
 import { OnboardingService } from '../onboarding/onboarding.service';
-import { MindsTitle } from '../../services/ux/title';
-import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock.spec';
 import { signupModalServiceMock } from '../../mocks/modules/modals/signup/signup-modal-service.mock';
 import { SignupModalService } from '../modals/signup/service';
 import { By } from '@angular/platform-browser';
+import { Storage } from '../../services/storage';
+import {
+  CookieService,
+  CookieOptionsProvider,
+  COOKIE_OPTIONS,
+  CookieModule,
+} from '@gorniv/ngx-universal';
 import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
-import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
+import { TopbarService } from '../../common/layout/topbar.service';
 import { MockService } from '../../utils/mock';
 
 @Component({
@@ -73,16 +78,19 @@ describe('LoginComponent', () => {
         ReactiveFormsModule,
         CommonModule,
         FormsModule,
+        CookieModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
         { provide: OnboardingService, useValue: onboardingServiceMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: SignupModalService, useValue: signupModalServiceMock },
+        Storage,
+        CookieService,
+        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
         { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: V2TopbarService, useValue: MockService(V2TopbarService) },
+        { provide: TopbarService, useValue: MockService(TopbarService) },
       ],
     }).compileComponents();
   }));

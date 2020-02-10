@@ -15,15 +15,12 @@ import { AttachmentService } from '../../../../../../services/attachment';
 })
 export class VideoCard {
   entity: any;
-  minds: {};
 
   constructor(
     public session: Session,
     public client: Client,
     public attachment: AttachmentService
-  ) {
-    this.minds = window.Minds;
-  }
+  ) {}
 
   set object(value: any) {
     this.entity = value;

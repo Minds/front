@@ -1,19 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FeedsService } from '../../../../../common/services/feeds.service';
 import { first } from 'rxjs/operators';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-onboarding__groupList',
   templateUrl: 'list.component.html',
 })
 export class GroupListComponent implements OnInit {
-  minds = window.Minds;
+  readonly cdnUrl: string;
   inProgress: boolean = false;
   error: string;
 
   entities: any[] = [];
 
-  constructor(public feedsService: FeedsService) {}
+  constructor(
+    public feedsService: FeedsService,
+    protected cd: ChangeDetectorRef,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   ngOnInit() {
     this.feedsService.feed.subscribe(async entities => {

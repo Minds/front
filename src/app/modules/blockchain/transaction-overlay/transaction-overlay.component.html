@@ -2,7 +2,7 @@
   <div class="m--blockchain--transaction-overlay--content">
     <ng-container *ngIf="comp !== COMP_SETUP_METAMASK">
       <img
-        [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'"
+        [src]="cdnAssetsUrl + 'assets/logos/logo.svg'"
         class="m--blockchain--transaction-overlay--logo"
       />
       <h2
@@ -193,7 +193,7 @@
           </div>
           <a
             class="m--blockchain--transaction-overlay--coloured-button"
-            href="{{ minds.site_url }}token"
+            href="{{ siteUrl }}token"
             target="_blank"
           >
             <span>Buy Tokens</span>

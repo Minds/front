@@ -9,7 +9,7 @@
   <div class="avatar" [hovercard]="activity.ownerObj.guid">
     <a [routerLink]="['/', activity.ownerObj.username]">
       <img
-        [src]="minds.cdn_url + 'icon/' + activity.ownerObj.guid + '/medium/' + getOwnerIconTime()"
+        [src]="cdnUrl + 'icon/' + activity.ownerObj.guid + '/medium/' + getOwnerIconTime()"
         class="mdl-shadow--2dp"
       />
     </a>
@@ -126,6 +126,7 @@
   </div>
 
   <m-translate
+    *mIfBrowser
     [open]="translateToggle"
     [entity]="activity"
     [translateEvent]="translateEvent"
@@ -351,7 +352,7 @@
       <img
         [src]="activity.custom_data[0].src"
         style="width:100%"
-        (error)="activity.custom_data[0].src = minds.cdn_assets_url + 'assets/logos/placeholder-bulb.jpg'"
+        (error)="activity.custom_data[0].src = cdnAssetsUrl + 'assets/logos/placeholder-bulb.jpg'"
         *ngIf="activity.custom_data"
         (click)="clickedImage()"
         #batchImage
@@ -399,7 +400,7 @@
   ></m-wire-button>
   <button
     class="m-btn m-btn--action m-btn--slim minds-boost-button"
-    *ngIf="session.getLoggedInUser().guid == activity.owner_guid 
+    *ngIf="session.getLoggedInUser().guid == activity.owner_guid
       && !isScheduled(activity.time_created)"
     id="boost-actions"
     (click)="showBoost()"
@@ -432,12 +433,14 @@
   </div>
 </div>
 
-<m-comments__tree
-  *ngIf="commentsToggle"
-  [entity]="activity"
-  [canDelete]="canDelete"
->
-</m-comments__tree>
+<ng-container *mIfBrowser>
+  <m-comments__tree
+    *ngIf="commentsToggle"
+    [entity]="activity"
+    [canDelete]="canDelete"
+  >
+  </m-comments__tree>
+</ng-container>
 
 <div
   class="m-activity--boost-notice mdl-card__supporting-text mdl-color--blue-grey-50"

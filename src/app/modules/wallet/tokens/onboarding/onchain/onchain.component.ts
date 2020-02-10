@@ -14,6 +14,7 @@ import { LocalWalletService } from '../../../../blockchain/local-wallet.service'
 import { BlockchainService } from '../../../../blockchain/blockchain.service';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { getBrowser } from '../../../../../utils/browser';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 enum Views {
   CreateAddress = 1,
@@ -27,6 +28,7 @@ enum Views {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TokenOnChainOnboardingComponent {
+  readonly cdnAssetsUrl: string;
   @Input() skippable: boolean = true;
   @Output() next: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
@@ -36,7 +38,6 @@ export class TokenOnChainOnboardingComponent {
   providedAddress: string = '';
   hasExternal: boolean = false;
   downloadingMetamask: boolean = false;
-  minds = window.Minds;
 
   readonly Views = Views;
 
@@ -49,8 +50,11 @@ export class TokenOnChainOnboardingComponent {
     protected router: Router,
     protected localWallet: LocalWalletService,
     protected blockchain: BlockchainService,
-    protected web3Wallet: Web3WalletService
-  ) {}
+    protected web3Wallet: Web3WalletService,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     //already completed step

@@ -17,7 +17,6 @@ export class SignupOnScrollModal implements OnInit, OnDestroy {
   open: boolean = false;
   route: string = '';
   scroll_listener;
-  minds = window.Minds;
 
   display: string = 'initial';
 

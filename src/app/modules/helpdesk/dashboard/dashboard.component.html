@@ -111,7 +111,7 @@
             class="m-helpdesk--dashboard--big-item m-helpdesk--dashboard--help-and-support"
             (click)="router.navigate(['/groups/profile', '100000000000000681'])"
           >
-            <img [src]="minds.cdn_assets_url + 'assets/help-desk/chat.png'" />
+            <img [src]="cdnAssetsUrl + 'assets/help-desk/chat.png'" />
             <div class="m-helpdesk--dashboard--big-item--text">
               <h3 class="m-helpdesk--dashboard--big-item--title">
                 Help & Support Group
@@ -127,9 +127,7 @@
           <div
             class="m-helpdesk--dashboard--big-item m-helpdesk--dashboard--token-sales-and-enterprise"
           >
-            <img
-              [src]="minds.cdn_assets_url + 'assets/help-desk/briefcase.png'"
-            />
+            <img [src]="cdnAssetsUrl + 'assets/help-desk/briefcase.png'" />
             <div class="m-helpdesk--dashboard--big-item--text">
               <h3 class="m-helpdesk--dashboard--big-item--title">
                 Token Sales & Enterprise

@@ -5,6 +5,8 @@ import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { SidebarMenuComponent } from './sidebar-menu.component';
 import sidebarMenu from '../../../modules/pro/settings/sidebar-menu.default';
+import { ConfigsService } from '../../services/configs.service';
+import { MockService } from '../../../utils/mock';
 
 describe('SidebarMenuComponent', () => {
   let component: SidebarMenuComponent;
@@ -14,7 +16,10 @@ describe('SidebarMenuComponent', () => {
     TestBed.configureTestingModule({
       declarations: [SidebarMenuComponent],
       imports: [RouterTestingModule],
-      providers: [{ provide: Session, useValue: sessionMock }],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+      ],
     }).compileComponents();
   }));
 

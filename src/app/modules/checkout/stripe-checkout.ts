@@ -6,8 +6,7 @@ import {
 } from '@angular/core';
 
 import { Client } from '../../services/api';
-import { WalletService } from '../../services/wallet';
-import { Storage } from '../../services/storage';
+import { ConfigsService } from '../../common/services/configs.service';
 
 interface CreditCard {
   number?: number;
@@ -104,7 +103,7 @@ interface CreditCard {
   `,
 })
 export class StripeCheckout {
-  minds = window.Minds;
+  readonly stripeKey: string;
   loading: boolean = false;
   inProgress: boolean = false;
   confirmation: boolean = false;
@@ -129,7 +128,13 @@ export class StripeCheckout {
   @Input() useCreditCard: boolean = true;
   @Input() useBitcoin: boolean = false;
 
-  constructor(public client: Client, private cd: ChangeDetectorRef) {}
+  constructor(
+    public client: Client,
+    private cd: ChangeDetectorRef,
+    configs: ConfigsService
+  ) {
+    this.stripeKey = configs.get('stripe_key');
+  }
 
   ngOnInit() {
     setTimeout(() => {
@@ -141,7 +146,7 @@ export class StripeCheckout {
 
   setupStripe() {
     if ((<any>window).Stripe) {
-      (<any>window).Stripe.setPublishableKey(this.minds.stripe_key);
+      (<any>window).Stripe.setPublishableKey(this.stripeKey);
     }
   }
 

@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
 
-import { MindsTitle } from '../../../services/ux/title';
 import { ACCESS, LICENSES } from '../../../services/list-options';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
@@ -13,9 +12,9 @@ import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.comp
 import { Tag } from '../../hashtags/types/tag';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { DialogService } from '../../../common/services/confirm-leave-dialog.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-blog-edit',
   host: {
     class: 'm-blog',
@@ -23,7 +22,7 @@ import { DialogService } from '../../../common/services/confirm-leave-dialog.ser
   templateUrl: 'edit.html',
 })
 export class BlogEdit {
-  minds = window.Minds;
+  readonly cdnUrl: string;
 
   guid: string;
   blog: any = {
@@ -78,11 +77,11 @@ export class BlogEdit {
     public upload: Upload,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     protected inMemoryStorageService: InMemoryStorageService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    configs: ConfigsService
   ) {
-    this.getCategories();
+    this.cdnUrl = configs.get('cdn_url');
 
     window.addEventListener(
       'attachment-preview-loaded',
@@ -108,8 +107,6 @@ export class BlogEdit {
       this.router.navigate(['/login']);
       return;
     }
-
-    this.title.setTitle('New Blog');
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['guid']) {
@@ -169,7 +166,7 @@ export class BlogEdit {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.editing || !window.Minds.user) {
+    if (!this.editing || !this.session.getLoggedInUser()) {
       return true;
     }
 
@@ -182,26 +179,11 @@ export class BlogEdit {
     }
   }
 
-  getCategories() {
-    this.categories = [];
-
-    for (let category in window.Minds.categories) {
-      this.categories.push({
-        id: category,
-        label: window.Minds.categories[category],
-        selected: false,
-      });
-    }
-
-    this.categories.sort((a, b) => (a.label > b.label ? 1 : -1));
-  }
-
   load() {
     this.client.get('api/v1/blog/' + this.guid, {}).then((response: any) => {
       if (response.blog) {
         this.blog = response.blog;
         this.guid = response.blog.guid;
-        this.title.setTitle(this.blog.title);
 
         if (this.blog.thumbnail_src) this.existingBanner = true;
         //this.hashtagsSelector.setTags(this.blog.tags);

@@ -31,7 +31,6 @@ import { TouchSequence } from 'selenium-webdriver';
   providers: [CommentsService],
 })
 export class CommentsThreadComponent implements OnInit {
-  minds;
   @Input() parent;
   @Input() entity;
   @Input() entityGuid;
@@ -74,9 +73,7 @@ export class CommentsThreadComponent implements OnInit {
     protected blockListService: BlockListService,
     private cd: ChangeDetectorRef,
     public activityService: ActivityService
-  ) {
-    this.minds = window.Minds;
-  }
+  ) {}
 
   ngOnInit() {
     this.load(true);

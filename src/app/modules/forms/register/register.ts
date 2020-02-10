@@ -17,7 +17,6 @@ import {
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { ReCaptchaComponent } from '../../../modules/captcha/recaptcha/recaptcha.component';
 import { ExperimentsService } from '../../experiments/experiments.service';
 import { RouterHistoryService } from '../../../common/services/router-history.service';
 import { PopoverComponent } from '../popover-validation/popover.component';
@@ -28,7 +27,7 @@ import { FeaturesService } from '../../../services/features.service';
   selector: 'minds-form-register',
   templateUrl: 'register.html',
 })
-export class RegisterForm implements OnInit {
+export class RegisterForm {
   @Input() referrer: string;
   @Input() parentId: string = '';
   @Input() showTitle: boolean = false;
@@ -52,9 +51,7 @@ export class RegisterForm implements OnInit {
 
   form: FormGroup;
   fbForm: FormGroup;
-  minds = window.Minds;
 
-  @ViewChild('reCaptcha', { static: false }) reCaptcha: ReCaptchaComponent;
   @ViewChild('popover', { static: false }) popover: PopoverComponent;
 
   constructor(
@@ -79,18 +76,12 @@ export class RegisterForm implements OnInit {
         password: ['', Validators.required],
         password2: ['', [Validators.required]],
         tos: [false, Validators.requiredTrue],
-        exclusive_promotions: [false],
+        exclusive_promotions: [true],
         captcha: [''],
         previousUrl: this.routerHistoryService.getPreviousUrl(),
       },
       { validators: [this.passwordConfirmingValidator] }
     );
-  }
-
-  ngOnInit() {
-    if (this.reCaptcha) {
-      this.reCaptcha.reset();
-    }
   }
 
   showError(field: string) {
@@ -122,10 +113,6 @@ export class RegisterForm implements OnInit {
       'disabled_cookies=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 
     if (this.form.value.password !== this.form.value.password2) {
-      if (this.reCaptcha) {
-        this.reCaptcha.reset();
-      }
-
       this.errorMessage = 'Passwords must match.';
       return;
     }
@@ -149,9 +136,6 @@ export class RegisterForm implements OnInit {
       .catch(e => {
         console.log(e);
         this.inProgress = false;
-        if (this.reCaptcha) {
-          this.reCaptcha.reset();
-        }
 
         if (e.status === 'failed') {
           // incorrect login details

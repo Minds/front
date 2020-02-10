@@ -5,8 +5,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { MindsTitle } from '../../../services/ux/title';
-import { V2TopbarService } from '../../layout/v2-topbar/v2-topbar.service';
+import { MetaService } from '../../services/meta.service';
+import { TopbarService } from '../../layout/topbar.service';
 
 @Component({
   selector: 'm-marketing',
@@ -19,16 +19,16 @@ export class MarketingComponent implements OnInit, OnDestroy {
   @Input() forceBackground: boolean = true;
 
   constructor(
-    protected title: MindsTitle,
-    private topbarService: V2TopbarService
+    protected metaService: MetaService,
+    private navigationService: TopbarService
   ) {}
 
   ngOnInit() {
     if (this.pageTitle) {
-      this.title.setTitle(this.pageTitle);
+      this.metaService.setTitle(this.pageTitle);
     }
 
-    this.topbarService.toggleMarketingPages(
+    this.navigationService.toggleMarketingPages(
       true,
       this.showBottombar,
       this.forceBackground
@@ -36,6 +36,6 @@ export class MarketingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.topbarService.toggleMarketingPages(false);
+    this.navigationService.toggleMarketingPages(false);
   }
 }

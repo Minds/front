@@ -96,9 +96,8 @@ export class SettingsEmailsComponent implements OnInit {
         notifications: this.notifications,
       })
       .then((response: any) => {
-        if (this.emailChanged && window.Minds.user) {
-          window.Minds.user.email_confirmed = false;
-          this.session.inject(window.Minds.user);
+        if (this.emailChanged && this.session.getLoggedInUser()) {
+          this.session.getLoggedInUser().email_confirmed = false;
         }
 
         this.changed = false;

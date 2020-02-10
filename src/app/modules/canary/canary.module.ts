@@ -10,6 +10,11 @@ const routes: Routes = [
   {
     path: 'canary',
     component: CanaryPageComponent,
+    data: {
+      title: 'Canary',
+      description: 'Receive the latest Minds features before everyone else',
+      ogImage: '/assets/photos/canary.jpg',
+    },
   },
 ];
 

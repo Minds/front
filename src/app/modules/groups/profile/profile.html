@@ -7,7 +7,7 @@
 </div>
 
 <div class="m-error-splash" *ngIf="error && !group">
-  <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" />
+  <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
   <h3 class="mdl-color-text--red-300">{{error}}</h3>
   <span class="mdl-color-text--blue-grey-300">Check the url is correct</span>
   <router-outlet></router-outlet>
@@ -18,7 +18,7 @@
   *ngIf="group && (group['is:member'] || group.membership == 2)"
 >
   <!-- Sidebar -->
-  <div class="m-groupGrid__left">
+  <div class="m-groupGrid__left" *mIfBrowser>
     <m-videochat></m-videochat>
 
     <header
@@ -328,7 +328,7 @@
 
   <div class="m-groupGrid__right" [hidden]="!showRight">
     <!-- Conversation filter -->
-    <minds-groups-profile-conversation [group]="group">
+    <minds-groups-profile-conversation [group]="group" *mIfBrowser>
     </minds-groups-profile-conversation>
     <!-- END: Conversation filter -->
   </div>

@@ -1,87 +1,169 @@
-<nav>
-  <ul>
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/newsfeed/subscriptions']"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [title]="'Newsfeed'"
-      >
-        <i class="material-icons">check</i>
-
-        <span class="m-sidebar--navigation--text" i18n>Newsfeed</span>
+<div class="m-sidebarNavigation__overlay" (click)="toggle()"></div>
+<div
+  class="m-sidebar--navigation"
+  [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
+>
+  <nav>
+    <div class="m-sidebarNavigation__top">
+      <a routerLink="/" title="Home" i18n-title>
+        <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
       </a>
-    </li>
 
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/newsfeed/global/top']"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-        [routerLinkActiveOptions]="{ exact: true }"
-        [title]="'Discover'"
-      >
-        <i class="material-icons">check</i>
+      <i class="material-icons" (click)="toggle()">close</i>
+    </div>
+    <ul>
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/newsfeed/subscriptions']"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__NEWSFEED"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Newsfeed
+          </m-tooltip>
 
-        <span class="m-sidebar--navigation--text" i18n>Discover</span>
-      </a>
-    </li>
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Newsfeed
+          </span>
+        </a>
+      </li>
 
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/wallet']"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-        [title]="'Wallet'"
-      >
-        <i class="material-icons">check</i>
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/newsfeed/global/top']"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__DISCOVER"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Discover
+          </m-tooltip>
 
-        <span class="m-sidebar--navigation--text" i18n>Wallet</span>
-      </a>
-    </li>
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Discover
+          </span>
+        </a>
+      </li>
 
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/' + user.username]"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-        [title]="'Profile'"
-      >
-        <i class="material-icons">check</i>
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/wallet']"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__WALLET"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Wallet
+          </m-tooltip>
 
-        <span class="m-sidebar--navigation--text" i18n>Profile</span>
-      </a>
-    </li>
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Wallet
+          </span>
+        </a>
+      </li>
 
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/analytics']"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-        [title]="'Analytics'"
-      >
-        <i class="material-icons">check</i>
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/' + user.username]"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__PROFILE"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Profile
+          </m-tooltip>
 
-        <span class="m-sidebar--navigation--text" i18n>Analytics</span>
-      </a>
-    </li>
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Profile
+          </span>
+        </a>
+      </li>
 
-    <li>
-      <a
-        class="m-sidebar--navigation--item"
-        [routerLink]="['/settings']"
-        [routerLinkActive]="'m-sidebar--navigation--item-active'"
-        [title]="'Settings'"
-      >
-        <i class="material-icons">check</i>
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/analytics']"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__ANALYTICS"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Analytics
+          </m-tooltip>
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Analytics
+          </span>
+        </a>
+      </li>
 
-        <span class="m-sidebar--navigation--text" i18n>Settings</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-<h5 i18n>
-  Groups
-</h5>
-<ng-template dynamic-host></ng-template>
+      <li>
+        <a
+          class="m-sidebar--navigation--item"
+          [routerLink]="['/settings']"
+          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__SETTINGS"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Settings
+          </m-tooltip>
+
+          <span
+            class="m-sidebar--navigation--text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Settings
+          </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <ng-template dynamic-host></ng-template>
+</div>

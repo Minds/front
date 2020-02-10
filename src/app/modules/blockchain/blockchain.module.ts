@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Inject, PLATFORM_ID } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule as NgCommonModule } from '@angular/common';
 
@@ -27,6 +27,7 @@ import { BlockchainEthModalComponent } from './eth-modal/eth-modal.component';
 import { BlockchainMarketingOnboardComponent } from './token-purchase/onboard.component';
 import { BlockchainPurchaseComponent } from './token-purchase/purchase.component';
 import { ModalsModule } from '../modals/modals.module';
+import { ConfigsService } from '../../common/services/configs.service';
 
 const cryptoRoutes: Routes = [
   {
@@ -70,38 +71,19 @@ const cryptoRoutes: Routes = [
     {
       provide: Web3WalletService,
       useFactory: Web3WalletService._,
-      deps: [LocalWalletService, TransactionOverlayService],
+      deps: [
+        LocalWalletService,
+        TransactionOverlayService,
+        PLATFORM_ID,
+        ConfigsService,
+      ],
     },
-    {
-      provide: TokenContractService,
-      useFactory: TokenContractService._,
-      deps: [Web3WalletService, TransactionOverlayService],
-    },
-    {
-      provide: WireContractService,
-      useFactory: WireContractService._,
-      deps: [Web3WalletService, TokenContractService],
-    },
-    {
-      provide: WithdrawContractService,
-      useFactory: WithdrawContractService._,
-      deps: [Web3WalletService],
-    },
-    {
-      provide: BoostContractService,
-      useFactory: BoostContractService._,
-      deps: [Web3WalletService, TokenContractService],
-    },
-    {
-      provide: TokenDistributionEventService,
-      useFactory: TokenDistributionEventService._,
-      deps: [Web3WalletService],
-    },
-    {
-      provide: OffchainPaymentService,
-      useFactory: OffchainPaymentService._,
-      deps: [Client],
-    },
+    TokenContractService,
+    WireContractService,
+    WithdrawContractService,
+    BoostContractService,
+    TokenDistributionEventService,
+    OffchainPaymentService,
   ],
   exports: [
     BlockchainWalletSelector,

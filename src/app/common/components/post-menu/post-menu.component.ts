@@ -77,20 +77,9 @@ export class PostMenuComponent implements OnInit {
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
     public featuresService: FeaturesService
-  ) {
-    this.initCategories();
-  }
+  ) {}
 
   ngOnInit() {}
-
-  initCategories() {
-    for (let category in window.Minds.categories) {
-      this.categories.push({
-        id: category,
-        label: window.Minds.categories[category],
-      });
-    }
-  }
 
   cardMenuHandler() {
     this.opened = !this.opened;

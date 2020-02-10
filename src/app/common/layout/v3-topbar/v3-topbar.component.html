@@ -1,98 +1,114 @@
-<ng-template #navLinks>
-  <a
-    class="m-v3-topbarNav__Item m-v3-topbarNav__RouterNav"
-    routerLink="/newsfeed/subscriptions"
-    routerLinkActive="m-v3-topbarNav__Item--active"
-    title="Newsfeed"
-    i18n-title
-    data-cy="data-minds-nav-newsfeed-button"
-  >
-    <i class="material-icons">home</i>
-    <span class="m-v3-topbarNavItem__Text" i18n>Newsfeed</span>
-  </a>
-
-  <a
-    class="m-v3-topbarNav__Item m-v3-topbarNav__RouterNav"
-    routerLink="/newsfeed/global"
-    routerLinkActive="m-v3-topbarNav__Item--active"
-    title="Discovery"
-    i18n-title
-    data-cy="data-minds-nav-discovery-button"
-  >
-    <i class="material-icons">search</i>
-    <span class="m-v3-topbarNavItem__Text" i18n>Discovery</span>
-  </a>
-
-  <a
-    class="m-v3-topbarNav__Item m-v3-topbarNav__RouterNav"
-    routerLink="/wallet"
-    routerLinkActive="m-v3-topbarNav__Item--active"
-    title="Wallet"
-    i18n-title
-    data-cy="data-minds-nav-wallet-button"
-  >
-    <i class="material-icons">account_balance</i>
-    <span class="m-v3-topbarNavItem__Text" i18n>Wallet</span>
-  </a>
+<ng-template #searchBar>
+  <div class="m-v3Topbar__searchBox">
+    <ng-content select="[search]"></ng-content>
+  </div>
 </ng-template>
 
-<div class="m-v3-topbar__Top">
+<div
+  class="m-v3Topbar__top"
+  [class.m-v3Topbar__marketingPages]="marketingPages"
+  [class.m-v3Topbar__noBackground]="!showBackground"
+  [style.visibility]="showTopbar ? 'visible' : 'hidden'"
+>
   <div class="m-grid">
-    <div class="m-v3topbar__leftColumn">
-      <nav class="m-v3-topbar__Nav">
+    <div class="m-v3Topbar__leftColumn">
+      <nav class="m-v3Topbar__nav">
         <a
-          class="m-v3-topbarNav__Item m-v3-topbarNavItem__Logo"
+          class="m-v3TopbarNav__item m-v3TopbarNavItem__logo"
           routerLink="/"
           title="Home"
           i18n-title
+          *ngIf="!isMobile; else hamburgerMenu"
         >
           <img
-            [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"
+            [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
             (touchstart)="touchStart()"
             (mouseenter)="mouseEnter()"
             (mouseleave)="mouseLeave()"
           />
         </a>
+
+        <ng-template #hamburgerMenu>
+          <div class="m-v3TopbarNav__item" (click)="toggleSidebarNav()">
+            <i class="material-icons">menu</i>
+          </div>
+        </ng-template>
       </nav>
     </div>
 
-    <div class="m-v3topbar__middleColumn">
+    <div class="m-v3Topbar__spacer" *ngIf="isMobile"></div>
+
+    <div class="m-v3Topbar__middleColumn" *ngIf="!isMobile">
       <!--      <a-->
-      <!--        class="m-v3-topbar__Avatar"-->
+      <!--        class="m-v3Topbar__avatar"-->
       <!--        *ngIf="getCurrentUser()"-->
       <!--        [routerLink]="['/', getCurrentUser()?.username]"-->
-      <!--        routerLinkActive="m-v3-topbar__Avatar&#45;&#45;active"-->
+      <!--        routerLinkActive="m-v3Topbar__avatar&#45;&#45;active"-->
       <!--      >-->
       <!--        <minds-avatar-->
       <!--          [object]="getCurrentUser()"-->
       <!--          [editMode]="false"-->
       <!--        ></minds-avatar>-->
       <!--      </a>-->
-      <ng-container *ngIf="getCurrentUser()">
-        <div class="m-v3-topbar__SearchBox">
-          <ng-content select="[search]"></ng-content>
-        </div>
-      </ng-container>
+      <ng-container *ngTemplateOutlet="searchBar"></ng-container>
     </div>
 
-    <div class="m-v3topbar__rightColumn">
+    <div class="m-v3Topbar__rightColumn">
+      <ng-container *ngIf="isMobile && getCurrentUser()">
+        <ng-container *ngTemplateOutlet="searchBar"></ng-container>
+      </ng-container>
+
       <!-- edit -->
 
       <!-- notifications -->
 
       <!-- logged in user avatar -->
 
-      <div class="m-v3-topbar__UserMenu" *ngIf="getCurrentUser()">
+      <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
         <ng-content select="[icons]"></ng-content>
       </div>
     </div>
   </div>
 </div>
 
-<div class="m-v3-topbar__Bottom">
-  <ng-container *ngTemplateOutlet="navLinks"></ng-container>
+<div class="m-v3Topbar__bottom">
+  <a
+    class="m-v3TopbarNav__item m-v3TopbarNav__routerNav"
+    routerLink="/newsfeed/subscriptions"
+    routerLinkActive="m-v3TopbarNav__item--active"
+    title="Newsfeed"
+    i18n-title
+    data-cy="data-minds-nav-newsfeed-button"
+  >
+    <i class="material-icons">home</i>
+    <span class="m-v3TopbarNavItem__text" i18n>Newsfeed</span>
+  </a>
+
+  <a
+    class="m-v3TopbarNav__item m-v3TopbarNav__routerNav"
+    routerLink="/newsfeed/global"
+    routerLinkActive="m-v3TopbarNav__item--active"
+    title="Discovery"
+    i18n-title
+    data-cy="data-minds-nav-discovery-button"
+  >
+    <i class="material-icons">search</i>
+    <span class="m-v3TopbarNavItem__text" i18n>Discovery</span>
+  </a>
+
+  <a
+    class="m-v3TopbarNav__item m-v3TopbarNav__routerNav"
+    routerLink="/wallet"
+    routerLinkActive="m-v3TopbarNav__item--active"
+    title="Wallet"
+    i18n-title
+    data-cy="data-minds-nav-wallet-button"
+  >
+    <i class="material-icons">account_balance</i>
+    <span class="m-v3TopbarNavItem__text" i18n>Wallet</span>
+  </a>
 </div>
 
-<div class="m-v3-topbar__NotificationsToaster">
+<div class="m-v3Topbar__notificationsToaster">
   <ng-template dynamic-host></ng-template>
 </div>

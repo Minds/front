@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { Client } from '../../../services/api';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-admin-featured',
   templateUrl: 'featured.html',
 })
@@ -17,9 +16,7 @@ export class AdminFeatured {
 
   constructor(public client: Client) {}
 
-  ngOnInit() {
-    this.loadCategories(window.Minds.categories);
-  }
+  ngOnInit() {}
 
   load(refresh: boolean = false) {
     if (this.inProgress) {
@@ -63,16 +60,5 @@ export class AdminFeatured {
   setCategory(category: string) {
     this.category = category;
     this.load(true);
-  }
-
-  loadCategories(categories: any) {
-    this.categories = [];
-
-    for (let category in categories) {
-      this.categories.push({
-        id: category,
-        value: window.Minds.categories[category],
-      });
-    }
   }
 }

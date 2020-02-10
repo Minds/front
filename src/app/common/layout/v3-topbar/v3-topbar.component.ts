@@ -2,21 +2,28 @@ import {
   ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
+  HostListener,
+  Inject,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { NotificationsToasterComponent } from '../../../modules/notifications/toaster.component';
 import { Session } from '../../../services/session';
 import { ThemeService } from '../../services/theme.service';
+import { ConfigsService } from '../../services/configs.service';
+import { isPlatformBrowser } from '@angular/common';
+import { SidebarNavigationService } from '../sidebar/navigation.service';
+import { TopbarService } from '../topbar.service';
 
 @Component({
-  selector: 'm-v3-topbar',
+  selector: 'm-v3topbar',
   templateUrl: 'v3-topbar.component.html',
 })
 export class V3TopbarComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   timeout;
   isTouchScreen = false;
 
@@ -26,16 +33,35 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   componentRef;
   componentInstance: NotificationsToasterComponent;
 
+  showTopbar: boolean = true;
+  forceBackground: boolean = true;
+  showBackground: boolean = true;
+  marketingPages: boolean = false;
+
+  isMobile: boolean = false;
+
   constructor(
+    protected sidebarService: SidebarNavigationService,
+    protected themeService: ThemeService,
+    protected configs: ConfigsService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
-    private themeService: ThemeService,
-    protected componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+    protected componentFactoryResolver: ComponentFactoryResolver,
+    protected topbarService: TopbarService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+
+    if (isPlatformBrowser(this.platformId)) {
+      this.onResize();
+    }
+  }
 
   ngOnInit() {
     this.loadComponent();
     this.session.isLoggedIn(() => this.detectChanges());
+
+    this.topbarService.setContainer(this);
   }
 
   getCurrentUser() {
@@ -75,6 +101,41 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   mouseLeave() {
     clearTimeout(this.timeout);
+  }
+
+  toggleSidebarNav() {
+    this.sidebarService.toggle();
+  }
+
+  /**
+   * Marketing pages set this to true in order to change how the topbar looks
+   * @param value
+   * @param forceBackground
+   */
+  toggleMarketingPages(value: boolean, forceBackground: boolean = true) {
+    this.marketingPages = value;
+    this.forceBackground = forceBackground;
+    this.onScroll();
+    this.detectChanges();
+  }
+
+  @HostListener('window:scroll')
+  onScroll() {
+    this.showBackground = this.forceBackground
+      ? true
+      : this.marketingPages
+      ? window.document.body.scrollTop > 52
+      : true;
+  }
+
+  toggleVisibility(visible: boolean) {
+    this.showTopbar = visible;
+    this.detectChanges();
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.isMobile = window.innerWidth <= 540;
   }
 
   ngOnDestroy() {

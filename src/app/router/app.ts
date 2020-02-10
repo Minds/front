@@ -29,8 +29,8 @@ export const MindsAppRoutes: Routes = [
 
   /* /Legacy routes */
 
-  { path: 'admin/:filter/:type', component: Admin },
-  { path: 'admin/:filter', component: Admin },
+  { path: 'admin/:filter/:type', component: Admin, data: { title: 'Admin' } },
+  { path: 'admin/:filter', component: Admin, data: { title: 'Admin' } },
 
   { path: 'p/:page', component: Pages },
 

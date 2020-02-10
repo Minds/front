@@ -205,7 +205,7 @@ m-search--bar-suggestions {
 
       &:hover {
         @include m-theme() {
-          background-color: themed($m-search-suggestion-hover);
+          background-color: themed($m-bgColor--tertiary);
         }
       }
 

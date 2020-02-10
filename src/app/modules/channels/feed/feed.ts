@@ -31,8 +31,6 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
   @Input() user: MindsUser;
   @Input() openWireModal: boolean = false;
 
-  minds = window.Minds;
-
   filter: any = 'feed';
   isLocked: boolean = false;
   username: string;

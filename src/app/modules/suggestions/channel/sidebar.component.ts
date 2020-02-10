@@ -1,19 +1,26 @@
 import { Component } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-suggestions__sidebar',
   templateUrl: 'sidebar.component.html',
 })
 export class SuggestionsSidebar {
-  minds = window.Minds;
+  readonly cdnUrl: string;
   suggestions: Array<any> = [];
   lastOffset = 0;
   inProgress: boolean = false;
   error: string;
 
-  constructor(private client: Client, private storage: Storage) {}
+  constructor(
+    private client: Client,
+    private storage: Storage,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   async ngOnInit() {
     this.load();

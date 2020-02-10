@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { ContextService } from '../../services/context.service';
@@ -35,13 +34,10 @@ export class Discovery {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private context: ContextService
   ) {}
 
   ngOnInit() {
-    this.title.setTitle('Discovery');
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
         this._filter = params['filter'];
@@ -185,21 +181,7 @@ export class Discovery {
   }
 
   setCity(row: any) {
-    this.cities = [];
-    if (row.address.city) window.Minds.user.city = row.address.city;
-    if (row.address.town) window.Minds.user.city = row.address.town;
-    this.city = window.Minds.user.city;
-    this.entities = [];
-    this.inProgress = true;
-    this.client
-      .post('api/v1/channel/info', {
-        coordinates: row.lat + ',' + row.lon,
-        city: window.Minds.user.city,
-      })
-      .then((response: any) => {
-        this.inProgress = false;
-        this.setNearby(true);
-      });
+    // Deprecated
   }
 
   setNearby(nearby: boolean) {

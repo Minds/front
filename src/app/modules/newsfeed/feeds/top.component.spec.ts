@@ -19,8 +19,6 @@ import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { navigationMock } from '../../../../tests/navigation-service-mock.spec';
 import { Upload } from '../../../services/api/upload';
 import { Navigation } from '../../../services/navigation';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { MindsTitle } from '../../../services/ux/title';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
@@ -84,7 +82,6 @@ describe('NewsfeedTopComponent', () => {
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: Navigation, useValue: navigationMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Storage, useValue: storageMock },
@@ -101,14 +98,6 @@ describe('NewsfeedTopComponent', () => {
     jasmine.clock().install();
 
     fixture = TestBed.createComponent(NewsfeedTopComponent);
-
-    window.Minds = <any>{
-      user: {
-        guid: 1,
-        name: 'test',
-        opted_in_hashtags: 1,
-      },
-    };
 
     comp = fixture.componentInstance;
 

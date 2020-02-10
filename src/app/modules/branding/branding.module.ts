@@ -13,7 +13,16 @@ import { MindsFormsModule } from '../forms/forms.module';
 
 import { BrandingComponent } from './branding.component';
 
-const routes: Routes = [{ path: 'branding', component: BrandingComponent }];
+const routes: Routes = [
+  {
+    path: 'branding',
+    component: BrandingComponent,
+    data: {
+      title: 'Branding',
+      description: 'Logos, assets and styling guides',
+    },
+  },
+];
 
 @NgModule({
   imports: [

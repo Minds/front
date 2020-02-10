@@ -2,9 +2,7 @@
   <a href="javascript:;" (click)="selectChoice.next(choice)">
     <img
       class="m-postAutocompleteItemRenderer__avatar mdl-shadow--2dp"
-      [src]="
-        minds.cdn_url + 'icon/' + choice.guid + '/medium/' + choice.icontime
-      "
+      [src]="cdnUrl + 'icon/' + choice.guid + '/medium/' + choice.icontime"
     />
     {{ choice.username }}
   </a>

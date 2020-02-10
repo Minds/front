@@ -19,7 +19,7 @@ import { MockComponent, MockService } from '../../utils/mock';
 import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
-import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
+import { TopbarService } from '../../common/layout/topbar.service';
 
 describe('RegisterComponent', () => {
   let comp: RegisterComponent;
@@ -44,7 +44,7 @@ describe('RegisterComponent', () => {
         { provide: SignupModalService, useValue: signupModalServiceMock },
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: V2TopbarService, useValue: MockService(V2TopbarService) },
+        { provide: TopbarService, useValue: MockService(TopbarService) },
       ],
     }).compileComponents();
   }));
@@ -56,7 +56,6 @@ describe('RegisterComponent', () => {
     comp = fixture.componentInstance;
     featuresServiceMock.mock('register_pages-december-2019', false);
 
-    window.Minds.cdn_assets_url = 'http://dev.minds.io/';
     comp.flags.canPlayInlineVideos = true;
 
     fixture.detectChanges();

@@ -19,4 +19,8 @@ export class Storage {
   destroy(key: string) {
     return window.localStorage.removeItem(key);
   }
+
+  clear() {
+    window.localStorage.clear();
+  }
 }

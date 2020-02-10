@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { GroupsService } from '../../groups/groups-service';
 import { Session } from '../../../services/session';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-suggestions__sidebarGroups',
   templateUrl: 'sidebar.component.html',
 })
 export class GroupSuggestionsSidebarComponent {
-  minds = window.Minds;
+  readonly cdnUrl: string;
   lastOffset: number = 0;
 
   entities: Array<any> = [];
@@ -17,8 +18,11 @@ export class GroupSuggestionsSidebarComponent {
   constructor(
     private client: Client,
     public session: Session,
-    public service: GroupsService
-  ) {}
+    public service: GroupsService,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   ngOnInit() {
     this.load();

@@ -8,7 +8,7 @@ import {
 } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
-import { Mock, MockComponent } from '../../../utils/mock';
+import { Mock, MockComponent, MockService } from '../../../utils/mock';
 
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
 import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec';
 import { ChannelsTileComponent } from './tile.component';
 import { Session } from '../../../services/session';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 describe('ChannelsTileComponent', () => {
   let comp: ChannelsTileComponent;
@@ -62,7 +63,10 @@ describe('ChannelsTileComponent', () => {
         }),
       ],
       imports: [FormsModule, RouterTestingModule, NgCommonModule],
-      providers: [{ provide: Session, useValue: sessionMock }],
+      providers: [
+        { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+      ],
     }).compileComponents(); // compile template and css
   }));
 
@@ -82,8 +86,11 @@ describe('ChannelsTileComponent', () => {
       impressions: 18200,
     };
 
-    window.Minds.user = {
-      guid: 'guidguid',
+    spyOn(
+      fixture.debugElement.injector.get(Session),
+      'getLoggedInUser'
+    ).and.returnValue({
+      guid: 'guidguid1',
       type: 'user',
       subtype: false,
       time_created: '1499978809',
@@ -124,7 +131,7 @@ describe('ChannelsTileComponent', () => {
       boost_rating: '2',
       spam: 0,
       deleted: 0,
-    };
+    });
 
     fixture.detectChanges();
 

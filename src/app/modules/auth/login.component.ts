@@ -4,13 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { SignupModalService } from '../modals/signup/service';
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { LoginReferrerService } from '../../services/login-referrer.service';
+import { OnboardingService } from '../onboarding/onboarding.service';
+import { CookieService } from '../../common/services/cookie.service';
 import { FeaturesService } from '../../services/features.service';
-import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
 import { iOSVersion } from '../../helpers/is-safari';
+import { TopbarService } from '../../common/layout/topbar.service';
 
 @Component({
   selector: 'm-login',
@@ -22,10 +23,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   hideLogin: boolean = false;
   inProgress: boolean = false;
   referrer: string;
-  minds = window.Minds;
+  private redirectTo: string;
 
   @HostBinding('class.m-login__newDesign')
   newDesign: boolean = false;
+  @HostBinding('class.m-login__newNavigation')
+  newNavigation: boolean = false;
   @HostBinding('class.m-login__iosFallback')
   iosFallback: boolean = false;
 
@@ -35,18 +38,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   paramsSubscription: Subscription;
 
-  private redirectTo: string;
-
   constructor(
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
+    public session: Session,
+    private cookieService: CookieService,
+    private onboarding: OnboardingService,
     private featuresService: FeaturesService,
-    private topbarService: V2TopbarService,
-    public session: Session
+    private topbarService: TopbarService
   ) {}
 
   ngOnInit() {
@@ -55,8 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loginReferrer.navigate();
     }
 
-    this.title.setTitle('Login');
-    this.redirectTo = localStorage.getItem('redirect');
+    this.redirectTo = this.cookieService.get('redirect');
 
     this.paramsSubscription = this.route.queryParams.subscribe(params => {
       if (params['referrer']) {
@@ -69,6 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.newDesign = this.featuresService.has('register_pages-december-2019');
+    this.newNavigation = this.featuresService.has('navigation-2020');
 
     if (this.newDesign) {
       this.topbarService.toggleVisibility(false);

@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import * as BN from 'bn.js';
 
 import { Web3WalletService } from '../web3-wallet.service';
 import { TransactionOverlayService } from '../transaction-overlay/transaction-overlay.service';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface TokenApproveAndCallParam {
   type: string;
@@ -17,9 +18,12 @@ export class TokenContractService {
 
   constructor(
     protected web3Wallet: Web3WalletService,
-    protected overlayService: TransactionOverlayService
+    protected overlayService: TransactionOverlayService,
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
-    this.load();
+    if (isPlatformBrowser(platformId)) {
+      this.load();
+    }
   }
 
   async load() {
@@ -112,14 +116,5 @@ export class TokenContractService {
     }
 
     return this.web3Wallet.eth.constructor.abi.encodeParams(types, values);
-  }
-
-  // Service provider
-
-  static _(
-    web3Wallet: Web3WalletService,
-    overlayService: TransactionOverlayService
-  ) {
-    return new TokenContractService(web3Wallet, overlayService);
   }
 }

@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, config } from 'rxjs';
 
 import { Session } from '../../../services/session';
 import { ProService } from '../pro.service';
@@ -19,6 +19,7 @@ import {
   UpgradeOptionInterval,
 } from '../../upgrades/upgrade-options.component';
 import currency from '../../../helpers/currency';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-pro--subscription',
@@ -26,6 +27,8 @@ import currency from '../../../helpers/currency';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProSubscriptionComponent implements OnInit {
+  readonly upgrades: any; // TODO add types
+
   @Output() onEnable: EventEmitter<any> = new EventEmitter();
 
   @Output() onDisable: EventEmitter<any> = new EventEmitter();
@@ -46,8 +49,6 @@ export class ProSubscriptionComponent implements OnInit {
 
   error: string = '';
 
-  minds = window.Minds;
-
   constructor(
     protected service: ProService,
     public session: Session,
@@ -55,8 +56,11 @@ export class ProSubscriptionComponent implements OnInit {
     protected wirePaymentHandlers: WirePaymentHandlersService,
     protected cd: ChangeDetectorRef,
     protected route: ActivatedRoute,
-    protected router: Router
-  ) {}
+    protected router: Router,
+    configs: ConfigsService
+  ) {
+    this.upgrades = configs.get('upgrades');
+  }
 
   ngOnInit() {
     this.isLoggedIn = this.session.isLoggedIn();
@@ -115,10 +119,10 @@ export class ProSubscriptionComponent implements OnInit {
           {
             interval: this.interval,
             currency: this.currency,
-            amount: this.minds.upgrades.pro[this.interval][this.currency],
+            amount: this.upgrades.pro[this.interval][this.currency],
             onComplete: () => {
               this.active = true;
-              this.minds.user.pro = true;
+              this.session.getLoggedInUser().pro = true;
               this.onEnable.emit(Date.now());
               this.inProgress = false;
               this.detectChanges();
@@ -132,7 +136,7 @@ export class ProSubscriptionComponent implements OnInit {
         .present();
     } catch (e) {
       this.active = false;
-      this.minds.user.pro = false;
+      this.session.getLoggedInUser().pro = false;
       this.error = (e && e.message) || 'Unknown error';
       this.inProgress = false;
     }
@@ -152,11 +156,11 @@ export class ProSubscriptionComponent implements OnInit {
     try {
       await this.service.disable();
       this.active = false;
-      this.minds.user.pro = false;
+      this.session.getLoggedInUser().pro = false;
       this.onDisable.emit(Date.now());
     } catch (e) {
       this.active = true;
-      this.minds.user.pro = true;
+      this.session.getLoggedInUser().pro = true;
       this.error = (e && e.message) || 'Unknown error';
     }
 
@@ -168,18 +172,18 @@ export class ProSubscriptionComponent implements OnInit {
     if (this.interval === 'yearly') {
       return {
         amount: currency(
-          this.minds.upgrades.pro.yearly[this.currency] / 12,
+          this.upgrades.pro.yearly[this.currency] / 12,
           this.currency
         ),
         offerFrom: currency(
-          this.minds.upgrades.pro.monthly[this.currency],
+          this.upgrades.pro.monthly[this.currency],
           this.currency
         ),
       };
     } else if (this.interval === 'monthly') {
       return {
         amount: currency(
-          this.minds.upgrades.pro.monthly[this.currency],
+          this.upgrades.pro.monthly[this.currency],
           this.currency
         ),
         offerFrom: null,

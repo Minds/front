@@ -1,21 +1,25 @@
 import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 export class MessengerConversationDockpanesService {
   conversations: Array<any> = [];
 
-  static _(session: Session) {
-    return new MessengerConversationDockpanesService(new Storage(), session);
-  }
-
-  constructor(public storage: Storage, public session: Session) {
+  constructor(
+    public storage: Storage,
+    public session: Session,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
     this.session.getLoggedInUser(user => this.onLogOut(user));
 
-    this.loadFromCache();
+    if (isPlatformBrowser(platformId)) {
+      this.loadFromCache();
 
-    setInterval(() => {
-      this.syncFromCache();
-    }, 1000);
+      setInterval(() => {
+        this.syncFromCache();
+      }, 1000);
+    }
   }
 
   open(conversation) {

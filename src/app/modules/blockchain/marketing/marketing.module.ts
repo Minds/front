@@ -16,6 +16,11 @@ const routes: Routes = [
   {
     path: 'token',
     component: BlockchainMarketingTokenComponent,
+    data: {
+      title: 'Token',
+      description: 'The fuel of the Minds network',
+      ogImage: '/assets/product-pages/token/token-1.jpg',
+    },
   },
   {
     path: 'reward',
@@ -24,6 +29,11 @@ const routes: Routes = [
   {
     path: 'rewards',
     component: BlockchainMarketingRewardsComponent,
+    data: {
+      title: 'Rewards',
+      description: 'Earn tokens for your contributions to the network',
+      ogImage: '/assets/product-pages/rewards/rewards-1.jpg',
+    },
   },
 ];
 

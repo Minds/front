@@ -11,7 +11,6 @@ import { Subject, Subscription, from } from 'rxjs';
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { MindsTitle } from '../../../services/ux/title';
 import { SiteService } from '../../../common/services/site.service';
 import { debounceTime } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -113,7 +112,6 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
-    protected title: MindsTitle,
     protected site: SiteService,
     protected sanitizer: DomSanitizer,
     private formToastService: FormToastService,
@@ -200,8 +198,6 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
     this.settings = settings;
 
-    this.title.setTitle('Pro Settings');
-
     this.inProgress = false;
     this.detectChanges();
   }
@@ -278,7 +274,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     this.error = null;
     try {
       await this.service.disable();
-      this.router.navigate(['/', window.Minds.user.name]);
+      this.router.navigate(['/', this.session.getLoggedInUser().name]);
     } catch (e) {
       this.error = e.message;
       this.formToastService.error('Error: ' + this.error);

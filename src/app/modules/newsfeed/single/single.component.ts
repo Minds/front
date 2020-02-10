@@ -10,6 +10,8 @@ import { EntitiesService } from '../../../common/services/entities.service';
 import { Client } from '../../../services/api/client';
 import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-newsfeed--single',
@@ -17,7 +19,8 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
   templateUrl: 'single.component.html',
 })
 export class NewsfeedSingleComponent {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
   inProgress: boolean = false;
   activity: any;
   error: string = '';
@@ -34,12 +37,16 @@ export class NewsfeedSingleComponent {
     protected client: Client,
     protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    private metaService: MetaService,
+    @SkipSelf() injector: Injector,
+    configs: ConfigsService
   ) {
     this.clientMetaService
       .inherit(injector)
       .setSource('single')
       .setMedium('single');
+    this.siteUrl = configs.get('site_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {
@@ -98,6 +105,8 @@ export class NewsfeedSingleComponent {
             break;
         }
 
+        this.updateMeta();
+
         this.inProgress = false;
 
         if (this.activity.ownerObj) {
@@ -141,6 +150,28 @@ export class NewsfeedSingleComponent {
       });
 
     return fakeEmitter;
+  }
+
+  private updateMeta(): void {
+    const activity = this.activity.remind_object || this.activity;
+    this.metaService
+      .setTitle(`@${activity.ownerObj.username} on Minds`)
+      .setDescription(
+        activity.title ||
+          activity.message ||
+          `Subscribe to @${activity.ownerObj.username} on Minds`
+      )
+      .setOgImage(
+        activity.custom_type === 'batch'
+          ? activity.custom_data[0]['src']
+          : activity.thumbnail_src,
+        { width: 2000, height: 1000 }
+      );
+
+    if (activity.custom_type === 'video') {
+      this.metaService.setOgType('video');
+      this.metaService.setOgImage(activity.custom_data['thumbnail_src']);
+    }
   }
 
   delete(activity) {

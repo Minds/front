@@ -43,6 +43,8 @@ import { localWalletServiceMock } from '../../../../tests/local-wallet-service-m
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CookieModule, CookieService } from '@gorniv/ngx-universal';
+import { Storage } from '../../../services/storage';
 
 /* tslint:disable */
 @Component({
@@ -226,28 +228,6 @@ describe('BoostCreatorComponent', () => {
   let submitSection: DebugElement;
   let boostSubmitButton: DebugElement;
 
-  window.Minds.categories = {
-    art: 'Art',
-    animals: 'Animals',
-    music: 'Music',
-    science: 'Science',
-    technology: 'Technology',
-    gaming: 'Gaming',
-    history: 'History',
-    nature: 'Nature',
-    news: 'News',
-    politics: 'Politics',
-    comedy: 'Comedy',
-    film: 'Film ',
-    education: 'Education',
-    sports: 'Sports',
-    food: 'Food',
-    modeling: 'Modeling',
-    spirituality: 'Spirituality ',
-    travel: 'Travel',
-    health: 'Health',
-  };
-
   const boostUser = {
     guid: '123',
     type: 'user',
@@ -421,7 +401,7 @@ describe('BoostCreatorComponent', () => {
         BoostP2PSearchMock,
         BoostCheckoutMock,
       ],
-      imports: [FormsModule, RouterTestingModule],
+      imports: [FormsModule, RouterTestingModule, CookieModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
@@ -439,6 +419,8 @@ describe('BoostCreatorComponent', () => {
           provide: TransactionOverlayService,
           useValue: transactionOverlayServiceMock,
         },
+        Storage,
+        CookieService,
       ],
     }).compileComponents();
   }));

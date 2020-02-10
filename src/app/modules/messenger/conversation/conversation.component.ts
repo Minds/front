@@ -18,9 +18,9 @@ import { MessengerEncryptionService } from '../encryption/encryption.service';
 import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.service';
 import { MessengerSounds } from '../sounds/service';
 import { BlockListService } from '../../../common/services/block-list.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-messenger--conversation',
   host: {
     '(window:focus)': 'onFocus($event)',
@@ -30,9 +30,7 @@ import { BlockListService } from '../../../common/services/block-list.service';
   templateUrl: 'conversation.component.html',
 })
 export class MessengerConversation {
-  minds: Minds = window.Minds;
-
-  sounds = new MessengerSounds();
+  readonly cdnUrl: string;
 
   tabId: string;
 
@@ -81,9 +79,11 @@ export class MessengerConversation {
     private renderer: Renderer,
     public encryption: MessengerEncryptionService,
     public dockpanes: MessengerConversationDockpanesService,
-    protected blockListService: BlockListService
+    protected blockListService: BlockListService,
+    configs: ConfigsService
   ) {
     this.buildTabId();
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   ngOnInit() {
@@ -187,7 +187,7 @@ export class MessengerConversation {
             if (!this.focused && document.title.indexOf('\u2022') === -1)
               document.title = '\u2022 ' + document.title;
 
-            this.sounds.play('new');
+            // this.sounds.play('new');
           }
         }
       );

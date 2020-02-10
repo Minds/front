@@ -16,9 +16,9 @@ import { TokenContractService } from '../contracts/token-contract.service';
 import { Router } from '@angular/router';
 import { Web3WalletService } from '../web3-wallet.service';
 import { GetMetamaskComponent } from '../metamask/getmetamask.component';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm--blockchain--transaction-overlay',
   templateUrl: 'transaction-overlay.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -29,7 +29,8 @@ export class TransactionOverlayComponent implements OnInit {
   message: string = '';
   comp: number;
 
-  minds: Minds = window.Minds;
+  readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
 
   data: { unlock; tx; extras } = {
     unlock: {
@@ -57,8 +58,12 @@ export class TransactionOverlayComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     protected token: TokenContractService,
     protected web3Wallet: Web3WalletService,
-    protected router: Router
-  ) {}
+    protected router: Router,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
+  }
 
   ngOnInit() {
     this.service.setComponent(this);

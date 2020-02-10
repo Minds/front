@@ -10,8 +10,6 @@ import { BoostConsoleFilter } from '../../console/console.component';
 export class BoostPublisherPayoutsComponent {
   _filter: BoostConsoleFilter;
 
-  minds: Minds = window.Minds;
-
   startDate: string;
   inProgress: boolean = false;
   payoutRequestInProgress: boolean = false;
@@ -20,16 +18,16 @@ export class BoostPublisherPayoutsComponent {
 
   submit(publisher: boolean) {
     this.inProgress = true;
-    this.minds.user.show_boosts = true;
+    this.session.getLoggedInUser().show_boosts = true;
     this.client
-      .post(`api/v1/settings/${this.minds.user.guid}`, {
+      .post(`api/v1/settings/${this.session.getLoggedInUser().guid}`, {
         show_boosts: publisher,
       })
       .then(() => {
         this.inProgress = false;
       })
       .catch(() => {
-        this.minds.user.show_boosts = false;
+        this.session.getLoggedInUser().show_boosts = false;
         this.inProgress = false;
       });
   }

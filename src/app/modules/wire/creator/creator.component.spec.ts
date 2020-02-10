@@ -49,8 +49,9 @@ import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-moc
 import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
-import { MockComponent } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { storageMock } from '../../../../tests/storage-mock.spec';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 /* tslint:disable */
 @Component({
@@ -231,6 +232,10 @@ describe('WireCreatorComponent', () => {
         {
           provide: TransactionOverlayService,
           useValue: transactionOverlayServiceMock,
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
         },
       ],
     }).compileComponents(); // compile template and css

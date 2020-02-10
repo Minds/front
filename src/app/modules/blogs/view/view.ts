@@ -13,7 +13,6 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { MindsTitle } from '../../../services/ux/title';
 import { ScrollService } from '../../../services/ux/scroll';
 import { AnalyticsService } from '../../../services/analytics';
 import { MindsBlogEntity } from '../../../interfaces/entities';
@@ -25,9 +24,10 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-blog-view',
   host: {
     class: 'm-blog',
@@ -36,7 +36,9 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
   providers: [ActivityService, ClientMetaService],
 })
 export class BlogView implements OnInit, OnDestroy {
-  minds;
+  readonly cdnUrl: string;
+  readonly siteUrl: string;
+
   guid: string;
   blog: MindsBlogEntity;
   // sharetoggle: boolean = false;
@@ -94,7 +96,7 @@ export class BlogView implements OnInit, OnDestroy {
     public router: Router,
     _element: ElementRef,
     public scroll: ScrollService,
-    public title: MindsTitle,
+    public metaService: MetaService,
     public attachment: AttachmentService,
     private context: ContextService,
     public analytics: AnalyticsService,
@@ -103,14 +105,16 @@ export class BlogView implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    configs: ConfigsService
   ) {
     this.clientMetaService
       .inherit(injector)
       .setSource('single')
       .setMedium('single');
 
-    this.minds = window.Minds;
+    this.cdnUrl = configs.get('cdn_url');
+    this.siteUrl = configs.get('site_url');
     this.element = _element.nativeElement;
     optimizedResize.add(this.onResize.bind(this));
   }
@@ -130,15 +134,15 @@ export class BlogView implements OnInit, OnDestroy {
           bounds.top < this.scroll.view.clientHeight &&
           bounds.top + bounds.height > this.scroll.view.clientHeight
         ) {
-          let url = `${this.minds.site_url}blog/view/${this.blog.guid}`;
+          let url = `${this.siteUrl}blog/view/${this.blog.guid}`;
 
           if (this.blog.route) {
-            url = `${this.minds.site_url}${this.blog.route}`;
+            url = `${this.siteUrl}${this.blog.route}`;
           }
 
           if (!this.visible) {
             window.history.pushState(null, this.blog.title, url);
-            this.title.setTitle(this.blog.title);
+            this.updateMeta();
             this.analyticsService.send('pageview', {
               url: `/blog/view/${this.blog.guid}`,
             });
@@ -212,7 +216,7 @@ export class BlogView implements OnInit, OnDestroy {
 
   openShareModal() {
     const url: string =
-      this.minds.site_url +
+      this.siteUrl +
       (this.blog.route ? this.blog.route : 'blog/view/' + this.blog.guid);
 
     this.overlayModal
@@ -232,5 +236,18 @@ export class BlogView implements OnInit, OnDestroy {
    */
   onResize(event: Event) {
     this.calculateLockScreenHeight();
+  }
+
+  private updateMeta(): void {
+    const description =
+      this.blog.description.length > 140
+        ? this.blog.description.substr(0, 140) + '...'
+        : this.blog.description;
+    this.metaService
+      .setTitle(this.blog.custom_meta['title'] || this.blog.title)
+      .setDescription(description)
+      //.setAuthor(this.blog.custom_meta['author'] || `@${this.blog.ownerObj.username}`)
+      .setOgUrl(this.blog.perma_url)
+      .setOgImage(this.blog.thumbnail);
   }
 }

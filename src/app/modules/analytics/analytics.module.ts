@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import * as PlotlyJS from 'plotly.js/dist/plotly.js';
+//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
 import { PlotlyModule } from 'angular-plotly.js';
 
 import { AdminAnalyticsComponent } from './pages/admin/admin.component';
@@ -63,7 +63,7 @@ import { FormsModule } from '@angular/forms';
 import { AnalyticsSearchSuggestionsComponent } from './v2/components/search-suggestions/search-suggestions.component';
 import { AnalyticsBenchmarkComponent } from './v2/components/benchmark/benchmark.component';
 
-PlotlyModule.plotlyjs = PlotlyJS;
+//PlotlyModule.plotlyjs = PlotlyJS;
 
 const routes: Routes = [
   {
@@ -72,21 +72,20 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard/traffic', pathMatch: 'full' },
       {
-        path: 'admin',
-        component: AdminAnalyticsComponent,
-        children: [
-          { path: '', redirectTo: 'network', pathMatch: 'full' },
-          { path: 'network', component: SiteNetworkActivityAnalyticsComponent },
-          { path: 'token', component: SiteTokenTransactionsAnalyticsComponent },
-          // { path: 'plus', component: OffChainBoostsCardComponent},
-        ],
-      },
-      {
         path: 'dashboard',
         redirectTo: 'dashboard/traffic',
         pathMatch: 'full',
       },
-      { path: 'dashboard/:category', component: AnalyticsDashboardComponent },
+      {
+        path: 'dashboard/:category',
+        component: AnalyticsDashboardComponent,
+        data: {
+          title: 'Analytics',
+          description:
+            'Track your traffic, earnings, engagement and trending analytics',
+          ogImage: '/assets/photos/network.jpg',
+        },
+      },
     ],
   },
 ];

@@ -1,5 +1,5 @@
-import { Injectable, Injector } from '@angular/core';
-import { Location } from '@angular/common';
+import { Injectable, Injector, Inject, PLATFORM_ID } from '@angular/core';
+import { Location, isPlatformServer } from '@angular/common';
 import hashCode from '../../helpers/hash-code';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api';
@@ -27,7 +27,8 @@ export class ClientMetaService {
   constructor(
     protected location: Location,
     protected session: Session,
-    protected client: Client
+    protected client: Client,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.id = ++uniqId;
 
@@ -152,6 +153,7 @@ export class ClientMetaService {
   }
 
   async recordView(entity) {
+    if (isPlatformServer(this.platformId)) return; // Browser will record too.
     await this.client.post('api/v2/analytics/views/entity/' + entity.guid, {
       client_meta: this.build(),
     });

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
   selector: 'm-upgrades__buyTokens',
@@ -7,9 +8,11 @@ import { Router } from '@angular/router';
   templateUrl: 'buy-tokens.component.html',
 })
 export class BuyTokensComponent {
-  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+  readonly cdnAssetsUrl: string;
 
-  constructor(protected router: Router) {}
+  constructor(protected router: Router, configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   onPurchaseComplete(purchase: any) {}
 }

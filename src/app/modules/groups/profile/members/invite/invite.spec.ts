@@ -16,6 +16,7 @@ import { clientMock } from '../../../../../../tests/client-mock.spec';
 import { Client } from '../../../../../services/api/client';
 import { MockDirective, MockService } from '../../../../../utils/mock';
 import { GroupsService } from '../../../groups-service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 const user = {
   guid: '1000',
@@ -54,6 +55,12 @@ describe('GroupsProfileMembersInvite', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: GroupsService, useValue: groupsServiceMock },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService, {
+            configs: { cdnUrl: 'http://dev.minds.io/' },
+          }),
+        },
       ],
     }).compileComponents();
   }));
@@ -66,8 +73,6 @@ describe('GroupsProfileMembersInvite', () => {
     comp.group = {
       guid: 123,
     };
-
-    window.Minds.cdn_url = 'http://dev.minds.io/';
 
     clientMock.response = {};
 
@@ -196,7 +201,8 @@ describe('GroupsProfileMembersInvite', () => {
     const img = fixture.debugElement.query(By.css('.m-search-inline-item img'));
     expect(img).not.toBeNull();
     expect(img.nativeElement.src).toContain(
-      'http://dev.minds.io/icon/1/small/1'
+      //'http://dev.minds.io/icon/1/small/1'
+      '/icon/1/small/1'
     );
 
     const body = fixture.debugElement.query(

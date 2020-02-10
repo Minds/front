@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Client } from '../../../services/api';
 
 import { requiredFor, optionalFor } from './onboarding.validators';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-monetization--onboarding',
@@ -20,7 +21,6 @@ export class MonetizationOnboardingComponent implements OnInit {
   inProgress: boolean = false;
   restrictAsVerified: boolean = false;
 
-  minds = window.Minds;
   merchant: any;
   error: string;
 
@@ -31,7 +31,8 @@ export class MonetizationOnboardingComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private client: Client,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private session: Session
   ) {}
 
   ngOnInit() {
@@ -109,8 +110,9 @@ export class MonetizationOnboardingComponent implements OnInit {
       .then((response: any) => {
         this.inProgress = false;
 
-        if (!this.minds.user.programs) this.minds.user.programs = [];
-        this.minds.user.programs.push('affiliate');
+        if (!this.session.getLoggedInUser().programs)
+          this.session.getLoggedInUser().programs = [];
+        this.session.getLoggedInUser().programs.push('affiliate');
 
         this.completed.emit(response);
         this.detectChanges();

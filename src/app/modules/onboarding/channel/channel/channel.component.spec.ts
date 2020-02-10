@@ -52,15 +52,6 @@ describe('ChannelSetupOnboardingComponent', () => {
     jasmine.clock().install();
     fixture = TestBed.createComponent(ChannelSetupOnboardingComponent);
 
-    window.Minds = <any>{
-      user: {
-        guid: 1,
-        name: 'test',
-        briefdescription: '',
-        opted_in_hashtags: 1,
-      },
-    };
-
     clientMock.response = {};
 
     comp = fixture.componentInstance;

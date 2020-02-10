@@ -11,9 +11,6 @@ import { WalletTransactionsComponent } from '../wallet/transactions/transactions
 import { MonetizationMarketingComponent } from './marketing.component';
 import { MonetizationTermsComponent } from './terms.component';
 import { MonetizationOnboardingComponent } from './onboarding/onboarding.component';
-import { AffiliateMarketingComponent } from './affiliate/marketing.component';
-import { AffiliateLinkComponent } from './affiliate/link.component';
-import { AffiliateTermsComponent } from './affiliate/terms.component';
 import { RevenueGraphComponent } from './revenue/graph.component';
 import { RevenueLedgerComponent } from './revenue/ledger.component';
 import { RevenueOptionsComponent } from './revenue/options.component';
@@ -36,7 +33,6 @@ const monetizationRoutes: Routes = [
       { path: 'earnings', component: RevenueLedgerComponent },
       { path: 'payouts', component: RevenueLedgerComponent },
       { path: 'options', component: RevenueOptionsComponent },
-      { path: 'affiliates', component: AffiliateLinkComponent },
     ],
   },
 ];
@@ -56,9 +52,6 @@ const monetizationRoutes: Routes = [
     MonetizationMarketingComponent,
     MonetizationTermsComponent,
     MonetizationOnboardingComponent,
-    AffiliateMarketingComponent,
-    AffiliateLinkComponent,
-    AffiliateTermsComponent,
     RevenueGraphComponent,
     RevenueLedgerComponent,
     RevenueOptionsComponent,
@@ -68,18 +61,11 @@ const monetizationRoutes: Routes = [
     MonetizationMarketingComponent,
     MonetizationTermsComponent,
     MonetizationOnboardingComponent,
-    AffiliateMarketingComponent,
-    AffiliateTermsComponent,
     RevenueGraphComponent,
     RevenueLedgerComponent,
     RevenueOptionsComponent,
     RouterModule,
   ],
-  entryComponents: [
-    MonetizationMarketingComponent,
-    AffiliateMarketingComponent,
-    AffiliateLinkComponent,
-    RevenueConsoleComponent,
-  ],
+  entryComponents: [MonetizationMarketingComponent, RevenueConsoleComponent],
 })
 export class MonetizationModule {}

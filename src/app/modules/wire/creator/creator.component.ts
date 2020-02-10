@@ -19,6 +19,7 @@ import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.comp
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { Router } from '@angular/router';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 export type PayloadType =
   | 'onchain'
@@ -42,13 +43,13 @@ export interface WireStruc {
 }
 
 @Component({
-  moduleId: module.id,
   providers: [CurrencyPipe],
   selector: 'm-wire--creator',
   templateUrl: 'creator.component.html',
 })
 export class WireCreatorComponent {
-  minds = window.Minds;
+  readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
 
   wire: WireStruc = {
     amount: 1,
@@ -144,8 +145,12 @@ export class WireCreatorComponent {
     private web3Wallet: Web3WalletService,
     private tokenContract: TokenContractService,
     private router: Router,
-    public storage: Storage
-  ) {}
+    public storage: Storage,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.load().then(() => {

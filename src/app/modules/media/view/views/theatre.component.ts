@@ -57,8 +57,6 @@ export class MediaTheatreComponent {
   counterSeconds: number = 0;
   counterLimit: number = 10;
 
-  minds = window.Minds;
-
   videoDirectSrc = [];
   videoTorrentSrc = [];
 
@@ -75,13 +73,6 @@ export class MediaTheatreComponent {
   }
 
   getThumbnail() {
-    // const url =
-    //   this.object.paywalled ||
-    //   (this.object.wire_threshold && this.object.wire_threshold !== '0')
-    //     ? this.minds.site_url
-    //     : this.minds.cdn_url;
-
-    // return url + `fs/v1/thumbnail/${this.object.guid}/xlarge`;
     return this.object.thumbnail_src;
   }
 

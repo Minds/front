@@ -261,7 +261,7 @@ export class ProChannelService implements OnDestroy {
     switch (this.getEntityTaxonomy(entity)) {
       case 'group':
         window.open(
-          `${window.Minds.site_url}groups/profile/${entity.guid}`,
+          `${this.site.baseUrl}groups/profile/${entity.guid}`,
           '_blank'
         );
         break;

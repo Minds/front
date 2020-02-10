@@ -29,7 +29,13 @@ export interface MindsBlogEntity {
   access_id?: number;
   license?: string;
   allow_comments: boolean;
-  perma_url?: string;
+  custom_meta?: {
+    title: string;
+    description: string;
+    author: string;
+  };
+  perma_url: string;
+  thumbnail: string;
 }
 
 export interface Message {}
@@ -57,6 +63,13 @@ export interface MindsUser {
   username: string;
   chat?: boolean;
   icontime: number;
+  avatar_url?: {
+    tiny: string;
+    small: string;
+    medium: string;
+    large: string;
+    master: string;
+  };
   blocked?: boolean;
   carousels?: any[] | boolean;
   city?: string;

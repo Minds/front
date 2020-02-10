@@ -20,7 +20,6 @@ import { ChannelSidebar } from './sidebar/sidebar';
 import { ChannelFeedComponent } from './feed/feed';
 import { ChannelSocialProfiles } from './social-profiles/social-profiles';
 import { ChannelComponent } from './channel.component';
-import { ChannelsListComponent } from './list.component';
 import { ChannelsTileComponent } from './tile/tile.component';
 import { PosterModule } from '../newsfeed/poster/poster.module';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
@@ -32,8 +31,7 @@ import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
 import { ChannelSidebarV2Component } from './sidebar-v2/sidebar-v2.component';
 
 const routes: Routes = [
-  { path: 'channels/:filter', component: ChannelsListComponent },
-  { path: 'channels', redirectTo: '/channels/top', pathMatch: 'full' },
+  { path: 'channels', redirectTo: '/newsfeed/global/top', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -59,7 +57,6 @@ const routes: Routes = [
     ChannelSubscribers,
     ChannelSubscriptions,
     ChannelSocialProfiles,
-    ChannelsListComponent,
     ChannelsTileComponent,
     ChannelFeedComponent,
     ChannelSidebar,
@@ -79,6 +76,6 @@ const routes: Routes = [
     ChannelSidebarV2Component,
     ChannelComponent,
   ],
-  entryComponents: [ChannelComponent, ChannelsListComponent],
+  entryComponents: [ChannelComponent],
 })
 export class ChannelsModule {}

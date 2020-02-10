@@ -12,12 +12,10 @@ type Hashtag = {
 };
 
 @Component({
-  moduleId: module.id,
   selector: 'm-hashtags-selector-modal',
   templateUrl: 'hashtags-selector.component.html',
 })
 export class HashtagsSelectorModalComponent {
-  minds = window.Minds;
   inProgress: boolean = false;
   hashtags: Array<Hashtag> = [];
   error: string = '';

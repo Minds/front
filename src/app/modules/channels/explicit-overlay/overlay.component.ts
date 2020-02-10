@@ -2,12 +2,14 @@ import { Component, Input } from '@angular/core';
 import { Session } from '../../../services/session';
 import { Router } from '@angular/router';
 import { Storage } from '../../../services/storage';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-channel--explicit-overlay',
   templateUrl: 'overlay.component.html',
 })
 export class ExplicitOverlayComponent {
+  readonly siteUrl: string;
   public hidden = true;
   public _channel: any;
 
@@ -19,14 +21,14 @@ export class ExplicitOverlayComponent {
   constructor(
     public session: Session,
     public storage: Storage,
-    public router: Router
-  ) {}
+    public router: Router,
+    configs: ConfigsService
+  ) {
+    this.siteUrl = configs.get('site_url');
+  }
 
   login() {
-    this.storage.set(
-      'redirect',
-      window.Minds.site_url + this._channel.username
-    );
+    this.storage.set('redirect', this.siteUrl + this._channel.username);
     this.router.navigate(['/login']);
   }
 

@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { NotificationService } from './notification.service';
@@ -28,14 +27,12 @@ export class NotificationsComponent {
   inProgress: boolean = false;
   _filter: string = 'all';
 
-  minds: any = window.Minds;
   paramsSubscription: Subscription;
 
   constructor(
     public session: Session,
     public client: Client,
     public router: Router,
-    public title: MindsTitle,
     public notificationService: NotificationService,
     public route: ActivatedRoute,
     public el: ElementRef
@@ -62,7 +59,6 @@ export class NotificationsComponent {
 
     this.notificationService.clear();
     if (!this.loadOnDemand) {
-      this.title.setTitle('Notifications');
       this.load(true);
     }
   }
@@ -73,7 +69,7 @@ export class NotificationsComponent {
     } else {
       setTimeout(() => {
         if (
-          this.minds.notifications_count > 0 &&
+          this.notificationService.count > 0 &&
           this.notificationList.nativeElement.scrollTop <= 100
         ) {
           this.load(true);
@@ -115,7 +111,6 @@ export class NotificationsComponent {
         if (!data['load-next']) this.moreData = false;
         this.offset = data['load-next'];
         this.inProgress = false;
-        this.minds.notifications_count = 0;
         this.notificationService.clear();
       });
   }

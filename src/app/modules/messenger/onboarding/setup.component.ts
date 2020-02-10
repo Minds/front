@@ -23,7 +23,6 @@ export class MessengerOnboardingSetupComponent {
 
   inProgress: boolean = false;
   error: string;
-  minds = window.Minds;
   password: string;
   password2: string;
 

@@ -4,18 +4,20 @@ import {
   Reason,
   rejectionReasons,
 } from '../../controllers/admin/boosts/rejection-reasons';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-notification',
   inputs: ['_notification: notification'],
   templateUrl: 'notification.component.html',
 })
 export class NotificationComponent {
   notification: any;
-  minds = window.Minds;
+  readonly cdnUrl: string;
 
-  constructor(public session: Session) {}
+  constructor(public session: Session, configs: ConfigsService) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   set _notification(value: any) {
     this.notification = value;

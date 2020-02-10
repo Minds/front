@@ -2,10 +2,13 @@ import {
   ChangeDetectorRef,
   Component,
   DoCheck,
+  HostBinding,
   HostListener,
+  Inject,
   Input,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
 import { interval } from 'rxjs';
@@ -14,6 +17,7 @@ import { map, startWith, throttle } from 'rxjs/operators';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
+import { isPlatformBrowser } from '@angular/common';
 import { GroupsService } from '../groups-service';
 
 @Component({
@@ -23,6 +27,7 @@ import { GroupsService } from '../groups-service';
 export class GroupsSidebarMarkersComponent
   implements OnInit, DoCheck, OnDestroy {
   @Input() showLabels: boolean = false;
+  layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
   inProgress: boolean = false;
   $updateMarker;
   markers = [];
@@ -33,19 +38,25 @@ export class GroupsSidebarMarkersComponent
 
   @ViewChild('list', { static: true }) list;
 
+  @HostBinding('class.m-groupSidebarMarkers__leftSidebar')
+  leftSidebar: boolean = false;
+
   constructor(
     private client: Client,
     public session: Session,
     private updateMarkers: UpdateMarkersService,
+    @Inject(PLATFORM_ID) private platformId: Object,
     private groupsService: GroupsService,
     private cd: ChangeDetectorRef
   ) {}
 
   async ngOnInit() {
     this.onResize();
-    await this.load(true);
-    this.listenForMarkers();
-    this.listenForMembershipUpdates();
+    if (isPlatformBrowser(this.platformId)) {
+      await this.load(true);
+      this.listenForMarkers();
+      this.listenForMembershipUpdates();
+    }
   }
 
   /**
@@ -140,5 +151,13 @@ export class GroupsSidebarMarkersComponent
 
   @HostListener('window:resize') onResize() {
     this.tooltipsAnchor = window.innerWidth <= 992 ? 'top' : 'right';
+
+    if (window.innerWidth > 900) {
+      this.layoutMode = 'desktop';
+    } else if (window.innerWidth > 540 && window.innerWidth <= 900) {
+      this.layoutMode = 'tablet';
+    } else {
+      this.layoutMode = 'phone';
+    }
   }
 }

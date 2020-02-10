@@ -39,7 +39,7 @@ export class TagsPipe implements PipeTransform {
         } else if (this.featureService.has('top-feeds')) {
           return `${
             m.match[1]
-          }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=24h">#${
+          }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=7d">#${
             m.match[2]
           }</a>`;
         }

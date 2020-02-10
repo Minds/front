@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Session } from '../../services/session';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
   selector: 'm-boost__marketing',
@@ -14,7 +15,7 @@ import { Session } from '../../services/session';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BoostMarketingComponent {
-  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+  readonly cdnAssetsUrl: string;
 
   @ViewChild('topAnchor', { static: false })
   readonly topAnchor: ElementRef;
@@ -22,8 +23,11 @@ export class BoostMarketingComponent {
   constructor(
     protected router: Router,
     protected session: Session,
-    protected cd: ChangeDetectorRef
-  ) {}
+    protected cd: ChangeDetectorRef,
+    private configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   scrollToTop() {
     if (this.topAnchor.nativeElement) {

@@ -10,7 +10,6 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 
-import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 
@@ -18,6 +17,7 @@ import { AnalyticsDashboardService } from './dashboard.service';
 import { Filter } from './../../../interfaces/dashboard';
 import sidebarMenu from './sidebar-menu.default';
 import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
+import { MetaService } from '../../../common/services/meta.service';
 
 @Component({
   selector: 'm-analytics__dashboard',
@@ -48,7 +48,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private router: Router,
     public session: Session,
-    public title: MindsTitle,
     public analyticsService: AnalyticsDashboardService,
     private cd: ChangeDetectorRef
   ) {}
@@ -58,8 +57,6 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/login']);
       return;
     }
-
-    this.title.setTitle('Analytics');
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       const cat = params.get('category');

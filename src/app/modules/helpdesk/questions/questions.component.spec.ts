@@ -12,10 +12,10 @@ import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { MockComponent } from '../../../utils/mock';
+import { MockComponent, MockService } from '../../../utils/mock';
 import { SafePipe } from '../../../common/pipes/safe';
-import { MindsTitle } from '../../../services/ux/title';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
+import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 describe('QuestionsComponent', () => {
   let comp: QuestionsComponent;
@@ -46,11 +46,15 @@ describe('QuestionsComponent', () => {
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
+        { provide: MetaService, useValue: MockService(MetaService) },
         { provide: Client, useValue: clientMock },
         {
           provide: ActivatedRoute,
           useValue: { params: of({ uuid: 'uuid1' }) },
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
         },
       ],
     }).compileComponents();

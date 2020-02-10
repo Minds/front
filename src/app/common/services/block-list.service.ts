@@ -13,7 +13,9 @@ export class BlockListService {
     protected session: Session,
     protected storage: Storage
   ) {
-    this.blocked = new BehaviorSubject(JSON.parse(this.storage.get('blocked')));
+    //OK to remove as SSR will handle
+    //this.blocked = new BehaviorSubject(JSON.parse(this.storage.get('blocked')));
+    this.blocked = new BehaviorSubject([]);
   }
 
   fetch() {
@@ -24,7 +26,8 @@ export class BlockListService {
           this.blocked.next(response.guids); // re-emit as we have a change
 
         this.storage.set('blocked', JSON.stringify(response.guids)); // save to storage
-      });
+      })
+      .catch(err => null);
     return this;
   }
 

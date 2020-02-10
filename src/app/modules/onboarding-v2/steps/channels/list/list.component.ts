@@ -1,21 +1,25 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FeedsService } from '../../../../../common/services/feeds.service';
 import { first } from 'rxjs/operators';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-onboarding__channelList',
   templateUrl: 'list.component.html',
 })
 export class ChannelListComponent implements OnInit {
-  minds = window.Minds;
+  readonly cdnUrl: string;
   inProgress: boolean = false;
   error: string;
   entities: any[] = [];
 
   constructor(
     public feedsService: FeedsService,
-    protected cd: ChangeDetectorRef
-  ) {}
+    protected cd: ChangeDetectorRef,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   ngOnInit() {
     this.feedsService.clear();

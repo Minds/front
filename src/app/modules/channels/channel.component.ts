@@ -1,10 +1,10 @@
-import { Component, ViewChild, SkipSelf, Injector } from '@angular/core';
+import { Component, ViewChild, SkipSelf, Injector, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
 import { Client, Upload } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
+
 import { Session } from '../../services/session';
 import { ScrollService } from '../../services/ux/scroll';
 import { RecentService } from '../../services/ux/recent';
@@ -18,20 +18,21 @@ import { DialogService } from '../../common/services/confirm-leave-dialog.servic
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ClientMetaService } from '../../common/services/client-meta.service';
+import { MetaService } from '../../common/services/meta.service';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-channel',
   templateUrl: 'channel.component.html',
   providers: [ClientMetaService],
 })
 export class ChannelComponent {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   filter: any = 'feed';
   isLocked: boolean = false;
 
   username: string;
-  user: MindsUser;
+  @Input() user: MindsUser;
   offset: string = '';
   moreData: boolean = true;
   inProgress: boolean = false;
@@ -48,7 +49,7 @@ export class ChannelComponent {
     public client: Client,
     public upload: Upload,
     public router: Router,
-    public title: MindsTitle,
+    public metaService: MetaService,
     public scroll: ScrollService,
     public features: FeaturesService,
     private route: ActivatedRoute,
@@ -57,16 +58,19 @@ export class ChannelComponent {
     private dialogService: DialogService,
     private blockListService: BlockListService,
     private clientMetaService: ClientMetaService,
+    private configs: ConfigsService,
     @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)
       .setSource('single')
       .setMedium('single');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {
-    this.title.setTitle('Channel');
+    this.updateMeta();
+
     this.context.set('activity');
     this.onScroll();
 
@@ -77,7 +81,8 @@ export class ChannelComponent {
       this.editing = false;
 
       if (params['username']) {
-        this.changed = this.username !== params['username'];
+        const username = this.user ? this.user.username : this.username;
+        this.changed = username !== params['username'];
         this.username = params['username'];
 
         feedChanged = true;
@@ -99,6 +104,7 @@ export class ChannelComponent {
 
       if (this.changed) {
         this.load();
+        console.log('reloading channel...');
       } else if (feedChanged) {
         console.log('reload feed with new settings');
       }
@@ -109,11 +115,34 @@ export class ChannelComponent {
     this.paramsSubscription.unsubscribe();
   }
 
+  ngAfterViewInit() {
+    this.updateMeta();
+  }
+
+  private updateMeta(): void {
+    if (this.user) {
+      this.metaService.setTitle(`${this.user.name} (@${this.user.username})`);
+      this.metaService.setDescription(
+        this.user.briefdescription || `Subscribe to @${this.user.username}`
+      );
+      this.metaService.setOgUrl(`/${this.user.username.toLowerCase()}`);
+      this.metaService.setOgImage(this.user.avatar_url.master, {
+        width: 2000,
+        height: 1000,
+      });
+      this.metaService.setRobots(this.user.is_mature ? 'noindex' : 'all');
+    } else if (this.username) {
+      this.metaService.setTitle(this.username);
+    } else {
+      this.metaService.setTitle('Channel');
+    }
+  }
+
   load() {
     this.error = '';
 
     this.user = null;
-    this.title.setTitle(this.username);
+    this.updateMeta();
 
     this.client
       .get('api/v1/channel/' + this.username, {})
@@ -131,7 +160,7 @@ export class ChannelComponent {
         ) {
           this.editing = false;
         }
-        this.title.setTitle(`${this.user.name} (@${this.user.username})`);
+        this.updateMeta();
 
         this.context.set('activity', {
           label: `@${this.user.username} posts`,

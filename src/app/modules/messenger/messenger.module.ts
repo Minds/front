@@ -56,16 +56,8 @@ import { Session } from '../../services/session';
     MessengerOnboardingSetupComponent,
   ],
   providers: [
-    {
-      provide: MessengerConversationDockpanesService,
-      useFactory: MessengerConversationDockpanesService._,
-      deps: [Session],
-    },
-    {
-      provide: MessengerEncryptionService,
-      useFactory: MessengerEncryptionService._,
-      deps: [Client, Storage],
-    },
+    MessengerConversationDockpanesService,
+    MessengerEncryptionService,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

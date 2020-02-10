@@ -225,18 +225,7 @@ export class GroupsSettingsButton {
     public router: Router
   ) {}
 
-  ngOnInit() {
-    this.initCategories();
-  }
-
-  initCategories() {
-    for (let category in window.Minds.categories) {
-      this.categories.push({
-        id: category,
-        label: window.Minds.categories[category],
-      });
-    }
-  }
+  ngOnInit() {}
 
   async mute() {
     this.group['is:muted'] = true;

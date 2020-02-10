@@ -3,9 +3,9 @@ import { CurrencyPipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 import { Client } from '../../../services/api';
+import { Session } from '../../../services/session';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-wire-console--ledger',
   templateUrl: 'ledger.component.html',
   providers: [CurrencyPipe],
@@ -23,7 +23,8 @@ export class WireConsoleLedgerComponent {
   constructor(
     private client: Client,
     private currencyPipe: CurrencyPipe,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private session: Session
   ) {
     const d = new Date();
     d.setMonth(d.getMonth() - 1);
@@ -34,7 +35,10 @@ export class WireConsoleLedgerComponent {
     if (!this.type) {
       this.type = 'sent';
 
-      if (window.Minds.user.merchant && window.Minds.user.merchant.exclusive) {
+      if (
+        this.session.getLoggedInUser().merchant &&
+        this.session.getLoggedInUser().merchant.exclusive
+      ) {
         this.type = 'received';
       }
     }
@@ -42,9 +46,9 @@ export class WireConsoleLedgerComponent {
     if (!this.method) {
       this.method = 'points';
 
-      if (window.Minds.user.merchant) {
+      if (this.session.getLoggedInUser().merchant) {
         this.method = 'money';
-      } else if (window.Minds.user.eth_wallet) {
+      } else if (this.session.getLoggedInUser().eth_wallet) {
         this.method = 'tokens';
       }
     }
@@ -124,6 +128,6 @@ export class WireConsoleLedgerComponent {
   }
 
   canSelectMethod() {
-    return !!window.Minds.user.merchant;
+    return !!this.session.getLoggedInUser().merchant;
   }
 }

@@ -9,19 +9,20 @@ import { Session } from '../../services/session';
 import { SignupModalService } from '../modals/signup/service';
 import { LoginReferrerService } from '../../services/login-referrer.service';
 import { OnboardingService } from '../onboarding/onboarding.service';
+import { ConfigsService } from '../../common/services/configs.service';
 import { PagesService } from '../../common/services/pages.service';
-import { MindsTitle } from '../../services/ux/title';
 import { FeaturesService } from '../../services/features.service';
-import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
 import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service';
+import { MetaService } from '../../common/services/meta.service';
 import { iOSVersion } from '../../helpers/is-safari';
+import { TopbarService } from '../../common/layout/topbar.service';
 
 @Component({
   selector: 'm-register',
   templateUrl: 'register.component.html',
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   errorMessage: string = '';
   twofactorToken: string = '';
   hideLogin: boolean = false;
@@ -50,12 +51,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public session: Session,
     private onboarding: OnboardingService,
     public navigation: NavigationService,
+    configs: ConfigsService,
     public pagesService: PagesService,
     private featuresService: FeaturesService,
-    private topbarService: V2TopbarService,
+    private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
-    public title: MindsTitle
+    private metaService: MetaService
   ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
@@ -83,7 +86,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.title.setTitle('Register');
+    this.metaService.setTitle('Register');
 
     if (/iP(hone|od)/.test(window.navigator.userAgent)) {
       this.flags.canPlayInlineVideos = false;

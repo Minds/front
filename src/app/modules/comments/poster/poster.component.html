@@ -34,6 +34,7 @@
             [placeholder]="
               conversation ? 'Enter your message' : 'Enter your comment'
             "
+            (filePaste)="uploadAttachment($event)"
             mTextInputAutocomplete
             [findChoices]="suggestions.findSuggestions"
             [getChoiceLabel]="suggestions.getChoiceLabel"
@@ -66,7 +67,7 @@
             id="file"
             #file
             name="attachment"
-            (change)="uploadAttachment(file, $event)"
+            (change)="uploadFile(file, $event)"
           />
         </div>
 
