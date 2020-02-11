@@ -90,7 +90,7 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.useNewNavigation = this.featuresService.has('navigation-2020');
+    this.useNewNavigation = this.featuresService.has('navigation');
     // MH: does loading meta tags before the configs have been set cause issues?
     this.router$ = this.router.events
       .pipe(
@@ -191,7 +191,7 @@ export class Minds implements OnInit, OnDestroy {
     return (
       this.session.isLoggedIn() &&
       !this.isProDomain &&
-      !this.featuresService.has('navigation-2020')
+      !this.featuresService.has('navigation')
     );
   }
 

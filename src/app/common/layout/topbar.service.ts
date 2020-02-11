@@ -14,7 +14,7 @@ export class TopbarService {
   }
 
   constructor(private featuresService: FeaturesService) {
-    this.useV3Topbar = this.featuresService.has('navigation-2020');
+    this.useV3Topbar = this.featuresService.has('navigation');
   }
 
   setContainer(container: V2TopbarComponent | V3TopbarComponent) {

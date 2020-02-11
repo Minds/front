@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.newDesign = this.featuresService.has('register_pages-december-2019');
-    this.newNavigation = this.featuresService.has('navigation-2020');
+    this.newNavigation = this.featuresService.has('navigation');
 
     if (this.newDesign) {
       this.topbarService.toggleVisibility(false);

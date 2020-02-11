@@ -82,7 +82,7 @@ export class NewsfeedComponent implements OnInit, OnDestroy {
     protected newsfeedService: NewsfeedService,
     protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService
   ) {
-    this.newNavigation = this.featuresService.has('navigation-2020');
+    this.newNavigation = this.featuresService.has('navigation');
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
 

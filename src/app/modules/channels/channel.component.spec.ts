@@ -130,7 +130,7 @@ describe('ChannelComponent', () => {
     featuresServiceMock.mock('es-feeds', false);
     featuresServiceMock.mock('top-feeds', false);
     featuresServiceMock.mock('channel-filter-feeds', false);
-    featuresServiceMock.mock('navigation-2020', false);
+    featuresServiceMock.mock('navigation', false);
 
     comp = fixture.componentInstance;
     comp.username = 'username';
