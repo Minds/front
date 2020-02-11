@@ -28,12 +28,6 @@ m-walletSettings--cash {
     }
   }
 
-  .m-walletSettings--cash__leaveModalButtons {
-    display: flex;
-    flex-flow: row wrap-reverse;
-    justify-content: center;
-  }
-
   // FORM -------------------
   [class*='m-walletForm__field'] {
     margin-bottom: 19px;
@@ -49,5 +43,8 @@ m-walletSettings--cash {
         margin-right: 19px;
       }
     }
+  }
+  .m-tooltip--bubble {
+    right: 12px;
   }
 }

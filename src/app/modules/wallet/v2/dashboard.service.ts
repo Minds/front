@@ -305,6 +305,7 @@ export class WalletDashboardService {
       return e;
     }
   }
+
   async removeStripeBank() {
     try {
       const response = <any>(
@@ -316,6 +317,7 @@ export class WalletDashboardService {
       return e;
     }
   }
+
   // async uploadDocument(fileInput: HTMLInputElement, documentType: string) {
   //   const file = fileInput ? fileInput.files[0] : null;
   //   this.editing = true;

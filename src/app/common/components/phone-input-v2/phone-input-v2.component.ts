@@ -44,6 +44,16 @@ export class PhoneInputV2Component
 
   ngOnInit() {}
 
+  countrySelected($event) {
+    this.selectedCountry = $event;
+    this.onPhoneNumberChange();
+    if (this.init) {
+      this.input.nativeElement.focus();
+      this.inputFocused = true;
+    }
+    this.init = true;
+  }
+
   public onPhoneNumberChange(): void {
     this.propagateChange(this.number);
   }
@@ -78,16 +88,6 @@ export class PhoneInputV2Component
 
   toggledDropdown($event) {
     this.showDropdown = $event.showDropdown;
-  }
-
-  countrySelected($event) {
-    this.selectedCountry = $event;
-    this.onPhoneNumberChange();
-    if (this.init) {
-      this.input.nativeElement.focus();
-      this.inputFocused = true;
-    }
-    this.init = true;
   }
 
   clickedInput($event) {

@@ -174,7 +174,7 @@ export class PhoneInputCountryV2Component
 
     this.countryCodeData.countries.forEach(c => {
       if (
-        this.allowedCountries.length > 0 ||
+        this.allowedCountries.length === 0 ||
         this.countryIsAllowed(c[1].toString())
       ) {
         this.pushCountry(c);

@@ -89,18 +89,19 @@ m-walletTransactionsTable {
     i {
       transform-origin: center center;
       &.positive {
-        transform: rotate(-90deg);
+        transform: rotate(-90deg) translateX(2px);
         @include m-theme() {
           color: themed($m-green-dark);
         }
       }
       &.negative {
-        transform: rotate(90deg);
+        transform: rotate(90deg) translateX(-4px);
         @include m-theme() {
           color: themed($m-red-dark);
         }
       }
       &.neutral {
+        transform: translateY(-2px);
         @include m-theme() {
           color: themed($m-blue);
         }

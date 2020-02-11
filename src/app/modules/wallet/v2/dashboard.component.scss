@@ -160,6 +160,11 @@ m-walletDashboard {
   .m-walletForm__multifieldGroup {
     margin-top: 58px;
   }
+  .m-walletForm__buttonsContainer {
+    display: flex;
+    flex-flow: row wrap-reverse;
+    justify-content: center;
+  }
   .m-walletForm__nameFieldsContainer {
     display: flex;
     box-sizing: border-box;

@@ -1,1 +1,103 @@
-<p>cash-onboarding-extras works!</p>
+<div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="!loaded"></div>
+<div class="m-walletOnboardingExtrasForm" *ngIf="loaded">
+  <p>
+    You are required to provide additional information so we can verify your
+    identity in order to receive payouts.
+    <ng-container
+      *ngIf="
+        account.requirement.indexOf('individual.verification.document') > -1
+      "
+    >
+      <b (click)="file.click()">Upload Photo ID</b>
+      <br />
+      <br />
+      <button (click)="file.click()" class="m-btn m-btn--action m-btn--slim">
+        <ng-container *ngIf="!inProgress">Select & Upload</ng-container>
+        <ng-container *ngIf="inProgress">Uploading...</ng-container>
+      </button>
+      <input
+        type="file"
+        #file
+        name="file"
+        (change)="uploadDocument(file, 'document')"
+        accept="image/*"
+        style="display: none;"
+      />
+    </ng-container>
+    <ng-container
+      *ngIf="
+        account.requirement.indexOf(
+          'individual.verification.additional_document'
+        ) > -1
+      "
+    >
+      <b (click)="file.click()">Upload a document with proof of address</b>
+      <br />
+      <br />
+      <button (click)="file.click()" class="m-btn m-btn--action m-btn--slim">
+        <ng-container *ngIf="!inProgress">Select & Upload</ng-container>
+        <ng-container *ngIf="inProgress">Uploading...</ng-container>
+      </button>
+      <input
+        type="file"
+        #file
+        name="file"
+        (change)="uploadDocument(file, 'additional_document')"
+        accept="image/*"
+        style="display: none;"
+      />
+    </ng-container>
+    <ng-container *ngIf="account.requirement.indexOf('tos_acceptance.') > -1">
+      <b>
+        Accept the
+        <a href="https://stripe.com/legal" target="_blank">
+          Stripe Services Agreement
+        </a>
+      </b>
+      <br />
+      <br />
+      <button (click)="acceptTos()" class="m-btn m-btn--action m-btn--slim">
+        <ng-container *ngIf="!inProgress">Accept Terms</ng-container>
+        <ng-container *ngIf="inProgress">Accepting...</ng-container>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="account.requirement.indexOf('individual.phone') > -1">
+      <b>Provide a phone number</b>
+      <br />
+      <m-phone-input #phone></m-phone-input>
+      <br />
+      <button
+        (click)="updateField('phone', phone.value)"
+        class="m-btn m-btn--action m-btn--slim"
+      >
+        <ng-container *ngIf="!inProgress">Save</ng-container>
+        <ng-container *ngIf="inProgress">Saving...</ng-container>
+      </button>
+    </ng-container>
+    <ng-container *ngIf="account.requirement.indexOf('external_account') > -1">
+      <b>Complete the payout method step below</b>
+    </ng-container>
+    <ng-container
+      *ngIf="account.requirement.indexOf('individual.id_number') > -1"
+    >
+      <b
+        >Provide your Personal ID / Social Security Number (SSN) / National
+        Insurance Number</b
+      >
+      <br />
+      <input
+        class="m-input m-revenueOptions__input"
+        #personalId
+        placeholder="Personal Id"
+      />
+      <br />
+      <button
+        (click)="updateField('id_number', personalId.value)"
+        class="m-btn m-btn--action m-btn--slim"
+      >
+        <ng-container *ngIf="!inProgress">Save</ng-container>
+        <ng-container *ngIf="inProgress">Saving...</ng-container>
+      </button>
+    </ng-container>
+  </p>
+</div>
