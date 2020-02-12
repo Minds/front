@@ -1,0 +1,64 @@
+m-channelbiofields {
+  .m-channelBiofields {
+    margin: 7px 0;
+    //&.m-channelBiofields--flex {
+    //  display: flex;
+    //  flex-flow: row wrap;
+    //  align-items: center;
+    //  margin: auto;
+    //  justify-content: center;
+    //}
+
+    .m-channelBiofields__field {
+      @include m-theme() {
+        color: themed($m-black);
+      }
+    }
+
+    .m-channelBiofields__city {
+      i.material-icons {
+        font-size: 22px;
+        line-height: 30px;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
+
+      span {
+        font-size: 14px;
+        line-height: 30px;
+      }
+    }
+
+    .m-channelBiofields__editor {
+    }
+
+    .m-channelBiofields__cityInput {
+      display: flex;
+
+      input {
+        border: 0;
+        padding: 0 8px;
+      }
+    }
+
+    .m-channelBiofields__cityAutocomplete {
+    }
+  }
+
+  .m-channelSidebar__briefDescription {
+    margin: 7px 0;
+
+    span {
+      white-space: pre-line;
+      text-align: center;
+    }
+
+    textarea {
+      box-sizing: border-box;
+      padding: 8px;
+      text-align: left;
+      width: 100%;
+      border: 0 !important;
+    }
+  }
+}
