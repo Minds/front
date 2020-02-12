@@ -24,6 +24,7 @@ export class InfoStepComponent {
   locationError: string;
   date: string;
   dateOfBirthError: string;
+  dateOfBirthChanged: boolean = false;
 
   cities: Array<any> = [];
 
@@ -86,6 +87,9 @@ export class InfoStepComponent {
   }
 
   async updateDateOfBirth() {
+    if (!this.dateOfBirthChanged) {
+      return true;
+    }
     this.dateOfBirthError = null;
 
     try {
@@ -102,6 +106,7 @@ export class InfoStepComponent {
 
   selectedDateChange(date: string) {
     this.date = date;
+    this.dateOfBirthChanged = true;
   }
 
   cancel() {
