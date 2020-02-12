@@ -3,27 +3,33 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 @Component({
   selector: 'm-date__dropdowns',
   template: `
-    <select
-      data-minds="monthDropdown"
-      [ngModel]="selectedMonth"
-      (ngModelChange)="selectMonth($event)"
-    >
-      <option *ngFor="let month of monthNames">{{ month }}</option>
-    </select>
-    <select
-      data-minds="dayDropdown"
-      [ngModel]="selectedDay"
-      (ngModelChange)="selectDay($event)"
-    >
-      <option *ngFor="let day of days">{{ day }}</option>
-    </select>
-    <select
-      data-minds="yearDropdown"
-      [ngModel]="selectedYear"
-      (ngModelChange)="selectYear($event)"
-    >
-      <option *ngFor="let year of years">{{ year }}</option>
-    </select>
+    <div class="m-dateDropdowns__selectWrapper">
+      <select
+        data-minds="monthDropdown"
+        [ngModel]="selectedMonth"
+        (ngModelChange)="selectMonth($event)"
+      >
+        <option *ngFor="let month of monthNames">{{ month }}</option>
+      </select>
+    </div>
+    <div class="m-dateDropdowns__selectWrapper">
+      <select
+        data-minds="dayDropdown"
+        [ngModel]="selectedDay"
+        (ngModelChange)="selectDay($event)"
+      >
+        <option *ngFor="let day of days">{{ day }}</option>
+      </select>
+    </div>
+    <div class="m-dateDropdowns__selectWrapper">
+      <select
+        data-minds="yearDropdown"
+        [ngModel]="selectedYear"
+        (ngModelChange)="selectYear($event)"
+      >
+        <option *ngFor="let year of years">{{ year }}</option>
+      </select>
+    </div>
   `,
 })
 export class DateDropdownsComponent implements OnInit {
@@ -56,30 +62,42 @@ export class DateDropdownsComponent implements OnInit {
   ngOnInit() {
     this.years = this.range(100, this.selectedYear, false);
     this.selectedYear = this.years[0];
-    this.selectMonth('January');
+    this.selectMonth('January', false);
   }
 
-  selectMonth(month: string) {
+  selectMonth(month: string, emit: boolean = true) {
     this.selectedMonth = month;
 
     this.populateDays(
       this.getDaysInMonth(this.getMonthNumber(month), this.selectedYear)
     );
-    this.selectedDateChange.emit(this.buildDate());
+
+    if (emit) {
+      this.emitChanges();
+    }
   }
 
-  selectDay(day: string) {
+  selectDay(day: string, emit: boolean = true) {
     this.selectedDay = day;
 
-    this.selectedDateChange.emit(this.buildDate());
+    if (emit) {
+      this.emitChanges();
+    }
   }
 
-  selectYear(year) {
+  selectYear(year, emit: boolean = true) {
     this.selectedYear = year;
 
     this.populateDays(
       this.getDaysInMonth(this.getMonthNumber(this.selectedMonth), year)
     );
+
+    if (emit) {
+      this.emitChanges();
+    }
+  }
+
+  emitChanges() {
     this.selectedDateChange.emit(this.buildDate());
   }
 

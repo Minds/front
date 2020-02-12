@@ -21,14 +21,14 @@ export class OnboardingComponent implements OnDestroy {
       name: 'Info',
       selected: false,
     },
-    {
-      name: 'Groups',
-      selected: false,
-    },
-    {
-      name: 'Channels',
-      selected: false,
-    },
+    // {
+    //   name: 'Groups',
+    //   selected: false,
+    // },
+    // {
+    //   name: 'Channels',
+    //   selected: false,
+    // },
   ];
   showTitle: boolean = false;
   shown: boolean = false;
