@@ -48,6 +48,9 @@ minds-notification.mdl-card {
 }
 
 minds-notifications {
+  grid-area: content/span 2;
+  min-width: 0;
+
   .m-notifications--load-new {
     text-transform: uppercase;
     font-family: 'Roboto', Helvetica, sans-serif;

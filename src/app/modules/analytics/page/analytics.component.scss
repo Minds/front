@@ -2,6 +2,9 @@
 
 m-analytics {
   display: block;
+  grid-area: content / span 2;
+  min-width: 0;
+
   @include m-theme() {
     background-color: themed($m-white);
   }

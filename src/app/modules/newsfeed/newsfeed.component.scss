@@ -1,7 +1,7 @@
 @import 'defaults';
 
 m-newsfeed {
-  grid-area: content;
+  grid-area: content / span 2;
   min-width: 0;
 }
 

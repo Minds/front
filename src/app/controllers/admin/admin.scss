@@ -1,5 +1,10 @@
 @import 'defaults';
 
+minds-admin {
+  grid-area: content / span 2;
+  min-width: 0;
+}
+
 minds-admin-boosts {
   minds-button-comment {
     display: none !important;
