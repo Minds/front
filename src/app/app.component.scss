@@ -35,7 +35,7 @@ m-app {
       grid-template-areas: 'nav content side' 'footer footer footer';
 
       grid-template-columns: 3fr 5fr 4fr;
-      grid-template-rows: auto 1fr auto;
+      grid-template-rows: 1fr;
       grid-gap: 0;
 
       height: 100%;
