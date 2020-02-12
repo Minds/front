@@ -65,9 +65,7 @@ export class WalletSettingsCashComponent implements OnInit {
     this.inProgress = true;
     this.detectChanges();
 
-    // todoojm uncomment
-    // const hasMerchant = this.user && this.user.merchant.id;
-    const hasMerchant = true;
+    const hasMerchant = this.user && this.user.merchant.id;
 
     if (!hasMerchant) {
       this.view = 'onboarding';

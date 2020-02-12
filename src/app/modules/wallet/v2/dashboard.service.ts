@@ -242,32 +242,32 @@ export class WalletDashboardService {
 
   async getStripeAccount() {
     //TODOOJM toggle
-    return fakeData.stripe_account.account;
+    // return fakeData.stripe_account.account;
 
-    // const merchant = this.session.getLoggedInUser().merchant;
-    // if (merchant && merchant.service === 'stripe') {
-    //   try {
-    //     const { account } = <any>(
-    //       await this.client.get('api/v2/payments/stripe/connect')
-    //     );
-    //     if (account && account.totalBalance) {
-    //       this.wallet.cash.balance =
-    //         (account.totalBalance.amount - account.pendingBalance.amount) / 100;
-    //       if (account.bankAccount) {
-    //         const c = account.bankAccount.currency;
-    //         this.wallet.cash.label = c.toUpperCase;
-    //         this.wallet.cash.unit = c;
-    //       }
-    //     }
+    const merchant = this.session.getLoggedInUser().merchant;
+    if (merchant && merchant.service === 'stripe') {
+      try {
+        const { account } = <any>(
+          await this.client.get('api/v2/payments/stripe/connect')
+        );
+        if (account && account.totalBalance) {
+          this.wallet.cash.balance =
+            (account.totalBalance.amount - account.pendingBalance.amount) / 100;
+          if (account.bankAccount) {
+            const c = account.bankAccount.currency;
+            this.wallet.cash.label = c.toUpperCase;
+            this.wallet.cash.unit = c;
+          }
+        }
 
-    //     return account;
-    //   } catch (e) {
-    //     console.error(e);
-    //     return;
-    //   }
-    // } else {
-    //   return;
-    // }
+        return account;
+      } catch (e) {
+        console.error(e);
+        return;
+      }
+    } else {
+      return;
+    }
   }
 
   async createStripeAccount(form) {
@@ -318,39 +318,6 @@ export class WalletDashboardService {
     }
   }
 
-  // async uploadDocument(fileInput: HTMLInputElement, documentType: string) {
-  //   const file = fileInput ? fileInput.files[0] : null;
-  //   this.editing = true;
-  //   this.detectChanges();
-  //   await this.upload.post(
-  //     'api/v2/payments/stripe/connect/document/' + documentType,
-  //     [file]
-  //   );
-  //   this.editing = false;
-  //   this.account = null;
-  //   this.getSettings();
-  // }
-
-  // async updateField(fieldName: string, value: string) {
-  //   this.editing = true;
-  //   this.detectChanges();
-  //   let body = {};
-  //   body[fieldName] = value;
-  //   await this.client.post('api/v2/payments/stripe/connect/update', body);
-  //   this.editing = false;
-  //   this.account = null;
-  //   this.getSettings();
-  // }
-
-  // async acceptTos() {
-  //   this.editing = true;
-  //   this.detectChanges();
-  //   await this.client.put('api/v2/payments/stripe/connect/terms');
-  //   this.editing = false;
-  //   this.account = null;
-  //   this.getSettings();
-  // }
-
   async leaveMonetization() {
     try {
       const response = <any>(
@@ -377,12 +344,13 @@ export class WalletDashboardService {
 
   async getStripeTransactions(offset) {
     try {
-      // const response  = <any>(
-      //   await this.client.get('api/v2/payments/stripe/transactions')
-      // );
-      // return response;
+      const response = <any>(
+        await this.client.get('api/v2/payments/stripe/transactions')
+      );
+      return response;
+
       // TODOOJM toggle fake data
-      return fakeData.tx_usd;
+      // return fakeData.tx_usd;
     } catch (e) {
       console.error(e);
       return;
@@ -391,13 +359,15 @@ export class WalletDashboardService {
 
   async getStripePayouts() {
     try {
-      // const response = <any>(
-      //   await this.client.get('api/v1/monetization/service/analytics/list?offset=&limit=12&type=payouts'
-      // );
+      const response = <any>(
+        await this.client.get(
+          'api/v1/monetization/service/analytics/list?offset=&limit=12&type=payouts'
+        )
+      );
 
       // TODOOJM toggle fake data
-      // return response.transactions;
-      return fakeData.stripe_payouts;
+      return response.transactions;
+      // return fakeData.stripe_payouts;
     } catch (e) {
       console.error(e);
       return;
@@ -408,53 +378,58 @@ export class WalletDashboardService {
     const opts = { timespan: activeTimespanId };
 
     // TODOOJM toggle
-    // try {
-    //   const response = <any>await this.client.post('api/v2/analytics/dashboards/engagement?metric=token_balance', opts);
-    //   return response;
-    // } catch (e) {
-    //   console.error(e);
-    //   return e;
-    // }
+    try {
+      const response = <any>(
+        await this.client.post(
+          'api/v2/analytics/dashboards/engagement?metric=token_balance',
+          opts
+        )
+      );
+      return response;
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
 
-    return fakeData.token_chart;
+    // return fakeData.token_chart;
   }
 
   async getProEarnings() {
-    return 77.3;
+    // return 77.3;
 
-    // try {
-    //   const response = <any>(
-    //     await this.client.post(
-    //       'api/v2/analytics/dashboards/earnings?metric=earnings_total&timespan=today'
-    //     )
-    //   );
+    try {
+      const response = <any>(
+        await this.client.post(
+          'api/v2/analytics/dashboards/earnings?metric=earnings_total&timespan=today'
+        )
+      );
 
-    //   const earnings =
-    //     response.dashboard.metrics
-    //       .find(m => m.id === 'earnings_total')
-    //       .visualisation.segments[0].buckets.slice(-1)[0].value / 100;
+      const earnings =
+        response.dashboard.metrics
+          .find(m => m.id === 'earnings_total')
+          .visualisation.segments[0].buckets.slice(-1)[0].value / 100;
 
-    //   return earnings;
-    // } catch (e) {
-    //   console.error(e);
-    //   return e;
-    // }
+      return earnings;
+    } catch (e) {
+      console.error(e);
+      return e;
+    }
   }
 
   async getTokenTransactions(opts) {
     try {
       // TODOOJM uncomment
-      // const response  = <any>(
-      //   await this.client.get(`api/v2/blockchain/transactions/ledger`, opts)
-      // );
-      // return response;
+      const response = <any>(
+        await this.client.get(`api/v2/blockchain/transactions/ledger`, opts)
+      );
+      return response;
 
       // TODOOJM remove
-      if (!opts.contract) {
-        return fakeData.tx_tokens;
-      } else {
-        return fakeData.tx_tokens_filtered;
-      }
+      // if (!opts.contract) {
+      //   return fakeData.tx_tokens;
+      // } else {
+      //   return fakeData.tx_tokens_filtered;
+      // }
     } catch (e) {
       console.error(e);
       return;
@@ -492,19 +467,19 @@ export class WalletDashboardService {
 
   async getDailyTokenContributionScores(dateRangeOpts) {
     // TODOOJM toggle
-    // try {
-    //   const response: any = await this.client.post(
-    //     'api/v2/blockchain/contributions',
-    //     dateRangeOpts
-    //   );
-    //   if (!response.contributions) {
-    //     return false;
-    //   }
-    //   return response;
-    // } catch (e) {
-    //   console.error(e);
-    //   return false;
-    // }
-    return fakeData.pendingTokenRewards;
+    try {
+      const response: any = await this.client.post(
+        'api/v2/blockchain/contributions',
+        dateRangeOpts
+      );
+      if (!response.contributions) {
+        return false;
+      }
+      return response;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+    // return fakeData.pendingTokenRewards;
   }
 }

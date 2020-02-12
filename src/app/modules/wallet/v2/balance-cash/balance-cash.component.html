@@ -1,13 +1,4 @@
 <div class="m-walletBalance--cash" *ngIf="loaded">
-  <div
-    class="m-walletTransactions__onboarding"
-    *ngIf="!hasAccount && !onSettingsTab"
-  >
-    <p>
-      <a (click)="scrollTocCashSettings.emit()">Add your bank information</a>
-    </p>
-    <p>Start receiving payouts by adding your bank details.</p>
-  </div>
   <div *ngIf="!inProgress" class="m-walletBalance--cash__colContainer">
     <!-- ---PENDING BALANCE ------------------------------------------------- -->
     <div class="m-walletBalance--cash__col">
