@@ -61,7 +61,7 @@ export class ChannelListComponent implements OnInit {
           query,
           nsfw,
         })
-        .setLimit(3)
+        .setLimit(12)
         .setExportUserCounts(true)
         .fetch();
     } catch (e) {
