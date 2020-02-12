@@ -1,10 +1,13 @@
-import { Component, DebugElement } from '@angular/core';
+import { Component, DebugElement, Provider } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { CodeHighlightDirective } from './code-highlight.directive';
 import { CodeHighlightService } from './code-highlight.service';
 import { codeHighlightServiceMock } from '../../mocks/modules/code-highlight/code-highlight-service.mock';
+import { FeaturesService } from '../../services/features.service';
+import { MockService } from '../../utils/mock';
+import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 
 @Component({
   template: `
@@ -34,90 +37,128 @@ describe('CodeHighlightDirective', () => {
   let directiveElement: DebugElement;
   let moduleWrappers: DebugElement[];
 
-  beforeEach(() => {
+  const createComponent = (providers: Provider[] = []) => {
     fixture = TestBed.configureTestingModule({
       declarations: [CodeHighlightDirective, MockComponent],
       providers: [
         { provide: CodeHighlightService, useValue: codeHighlightServiceMock },
+        ...providers,
       ],
     }).createComponent(MockComponent);
 
     fixture.detectChanges();
+  };
 
-    directiveElement = fixture.debugElement.query(
-      By.directive(CodeHighlightDirective)
-    );
-    moduleWrappers = directiveElement.queryAll(
-      By.css(`div.${CodeHighlightService.moduleWrapperClass}`)
-    );
+  describe('when feature enabled', () => {
+    beforeEach(() => {
+      featuresServiceMock.mock('code-highlight', true);
+
+      createComponent([
+        { provide: FeaturesService, useValue: featuresServiceMock },
+      ]);
+
+      directiveElement = fixture.debugElement.query(
+        By.directive(CodeHighlightDirective)
+      );
+      moduleWrappers = directiveElement.queryAll(
+        By.css(`div.${CodeHighlightService.moduleWrapperClass}`)
+      );
+    });
+
+    afterEach(() => {
+      codeHighlightServiceMock.reset();
+    });
+
+    it('should highlight code blocks', () => {
+      const moduleWrapper = moduleWrappers[0].nativeElement;
+      const pre = moduleWrapper.children[0];
+
+      expect(pre.tagName.toLowerCase()).toBe('pre');
+      expect(pre.children.length).toBe(1);
+
+      const code = pre.children[0];
+
+      expect(code.tagName.toLowerCase()).toBe('code');
+      expect(code.classList).toContain('language-javascript');
+
+      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
+        moduleWrapper
+      );
+    });
+
+    it('should highlight multiple child code blocks with different languages', () => {
+      const moduleWrapper = moduleWrappers[1].nativeElement;
+      const pre = moduleWrapper.children[0];
+      const code = pre.children[0];
+
+      expect(code.classList).toContain('language-php');
+
+      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
+        moduleWrapper
+      );
+    });
+
+    it('should automatically highlight when language hint is set to auto', () => {
+      const moduleWrapper = moduleWrappers[2].nativeElement;
+      const pre = moduleWrapper.children[0];
+      const code = pre.children[0];
+
+      expect(code.classList.length).toBe(0);
+
+      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
+        moduleWrapper
+      );
+    });
+
+    it('should automatically highlight when no language hint is present', () => {
+      const moduleWrapper = moduleWrappers[3].nativeElement;
+      const pre = moduleWrapper.children[0];
+      const code = pre.children[0];
+
+      expect(code.classList.length).toBe(0);
+
+      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
+        moduleWrapper
+      );
+    });
+
+    it('should not highlight text as code when no module wrapper class is present', () => {
+      const bareWrapper = directiveElement.query(
+        By.css(`div:not(.${CodeHighlightService.moduleWrapperClass})`)
+      ).nativeElement;
+
+      expect(bareWrapper.children.length).toBe(0);
+
+      expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
+        bareWrapper
+      );
+    });
   });
 
-  afterEach(() => {
-    codeHighlightServiceMock.reset();
-  });
+  describe('when feature disabled', () => {
+    beforeEach(() => {
+      featuresServiceMock.mock('code-highlight', false);
 
-  it('should highlight code blocks', () => {
-    const moduleWrapper = moduleWrappers[0].nativeElement;
-    const pre = moduleWrapper.children[0];
+      createComponent([
+        { provide: FeaturesService, useValue: featuresServiceMock },
+      ]);
 
-    expect(pre.tagName.toLowerCase()).toBe('pre');
-    expect(pre.children.length).toBe(1);
+      directiveElement = fixture.debugElement.query(
+        By.directive(CodeHighlightDirective)
+      );
+      moduleWrappers = directiveElement.queryAll(
+        By.css(`div.${CodeHighlightService.moduleWrapperClass}`)
+      );
+    });
 
-    const code = pre.children[0];
+    afterEach(() => {
+      codeHighlightServiceMock.reset();
+    });
 
-    expect(code.tagName.toLowerCase()).toBe('code');
-    expect(code.classList).toContain('language-javascript');
+    it("shouldn't highlight when feature is disabled", () => {
+      const moduleWrapper = moduleWrappers[0].nativeElement;
 
-    expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-      moduleWrapper
-    );
-  });
-
-  it('should highlight multiple child code blocks with different languages', () => {
-    const moduleWrapper = moduleWrappers[1].nativeElement;
-    const pre = moduleWrapper.children[0];
-    const code = pre.children[0];
-
-    expect(code.classList).toContain('language-php');
-
-    expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-      moduleWrapper
-    );
-  });
-
-  it('should automatically highlight when language hint is set to auto', () => {
-    const moduleWrapper = moduleWrappers[2].nativeElement;
-    const pre = moduleWrapper.children[0];
-    const code = pre.children[0];
-
-    expect(code.classList.length).toBe(0);
-
-    expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-      moduleWrapper
-    );
-  });
-
-  it('should automatically highlight when no language hint is present', () => {
-    const moduleWrapper = moduleWrappers[3].nativeElement;
-    const pre = moduleWrapper.children[0];
-    const code = pre.children[0];
-
-    expect(code.classList.length).toBe(0);
-
-    expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-      moduleWrapper
-    );
-  });
-
-  it('should not highlight text as code when no module wrapper class is present', () => {
-    const bareWrapper = directiveElement.query(
-      By.css(`div:not(.${CodeHighlightService.moduleWrapperClass})`)
-    ).nativeElement;
-
-    expect(bareWrapper.children.length).toBe(0);
-
-    expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
-      bareWrapper
-    );
+      expect(moduleWrapper.children.length).toBe(0);
+    });
   });
 });

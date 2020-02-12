@@ -1,5 +1,6 @@
 import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 import { CodeHighlightService } from './code-highlight.service';
+import { FeaturesService } from '../../services/features.service';
 
 @Directive({
   selector: '[m-code-highlight]',
@@ -9,10 +10,15 @@ export class CodeHighlightDirective implements AfterViewInit {
 
   constructor(
     private element: ElementRef,
-    private codeHighlightService: CodeHighlightService
+    private codeHighlightService: CodeHighlightService,
+    private featuresService: FeaturesService
   ) {}
 
   ngAfterViewInit() {
+    if (!this.featuresService.has('code-highlight')) {
+      return;
+    }
+
     const codeWrapperNodes = this.element.nativeElement.querySelectorAll(
       `.${CodeHighlightService.moduleWrapperClass}`
     );

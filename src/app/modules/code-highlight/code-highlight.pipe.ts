@@ -1,16 +1,19 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import { CodeHighlightService } from './code-highlight.service';
+import { FeaturesService } from '../../services/features.service';
 
 @Pipe({
   name: 'codeHighlight',
 })
 export class CodeHighlightPipe implements PipeTransform {
-  result: string = '';
-
-  constructor(private codeHighlightService: CodeHighlightService) {}
+  constructor(
+    private codeHighlightService: CodeHighlightService,
+    private featuresService: FeaturesService
+  ) {}
 
   transform(text: string): string {
-    if (!text) {
+    if (!text || !this.featuresService.has('code-highlight')) {
       return text;
     }
 
