@@ -81,6 +81,8 @@ import { CookieModule } from '@gorniv/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
+import { TopbarWrapperComponent } from './page/topbar.component';
+import { PageComponent } from './page/page.component';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -96,6 +98,8 @@ export class SentryErrorHandler implements ErrorHandler {
   bootstrap: [Minds],
   declarations: [
     Minds,
+    TopbarWrapperComponent,
+    PageComponent,
     MINDS_APP_ROUTING_DECLARATIONS,
     MINDS_DECLARATIONS,
     MINDS_PLUGIN_DECLARATIONS,
