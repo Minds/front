@@ -3,24 +3,25 @@
   <h4>Bank Information</h4>
   <!-- ONBOARDING FORM ------------------ -->
   <m-walletCashOnboarding
-    *ngIf="view === 'onboardingForm'"
+    *ngIf="view === 'onboarding'"
+    [account]="account"
     [allowedCountries]="allowedCountries"
-    (accountCreated)="getAccount(); checkAdditionalReqts()"
+    (submitted)="setView()"
   ></m-walletCashOnboarding>
-  <!-- ADDITIONAL REQUIREMENTS FORM ----------- -->
-  <m-walletCashOnboardingExtras
-    *ngIf="view === 'additionalReqtsForm'"
-    (submittedRequirements)="getAccount(); checkAdditionalReqts()"
-  ></m-walletCashOnboardingExtras>
   <!-- BANK FORM --------------------------- -->
   <m-walletBankForm
-    *ngIf="view === 'bankForm'"
+    *ngIf="view === 'bank'"
+    [account]="account"
     [allowedCountries]="allowedCountries"
+    (submitted)="setView()"
   ></m-walletBankForm>
-  <!-- PENDING APPROVAL ----------------------- -->
-  <div *ngIf="view === 'pendingApproval'"></div>
-  <!-- ERROR ---------------------------------- -->
-  <div *ngIf="view === 'error'">
-    <p>{{ error }}</p>
-  </div>
+  <!-- EXTRA REQUIREMENTS FORM ----------- -->
+  <m-walletCashOnboardingExtras
+    *ngIf="view === 'extras'"
+    [account]="account"
+    [allowedCountries]="allowedCountries"
+    (submitted)="setView()"
+  ></m-walletCashOnboardingExtras>
+  <!-- ERROR --------------------------- -->
+  <p *ngIf="view === 'error'" class="m-walletForm__error">{{ error }}</p>
 </div>

@@ -69,14 +69,11 @@ export class WalletPhoneVerificationComponent implements OnInit {
     this.inProgress = true;
     this.detectChanges();
     try {
-      const response: any = await this.client.post(
-        'api/v2/blockchain/rewards/confirm',
-        {
-          number: this.form.value.number,
-          code: this.form.value.code,
-          secret: this.form.value.secret,
-        }
-      );
+      await this.client.post('api/v2/blockchain/rewards/confirm', {
+        number: this.form.value.number,
+        code: this.form.value.code,
+        secret: this.form.value.secret,
+      });
       this.phoneVerificationComplete.emit();
     } catch (e) {
       this.invalidCode = true;
@@ -95,7 +92,9 @@ export class WalletPhoneVerificationComponent implements OnInit {
     this.detectChanges();
   }
   onSubmit() {
-    this.confirming ? this.confirmCode() : this.validateNumber();
+    if (!this.inProgress) {
+      this.confirming ? this.confirmCode() : this.validateNumber();
+    }
   }
   detectChanges() {
     this.cd.markForCheck();

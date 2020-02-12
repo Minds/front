@@ -7,6 +7,7 @@ import {
   Input,
   Inject,
   PLATFORM_ID,
+  ViewRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Client } from '../../../../services/api/client';
@@ -115,7 +116,9 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   }
 
   detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 }

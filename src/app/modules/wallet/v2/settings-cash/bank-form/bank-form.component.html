@@ -1,39 +1,34 @@
-<div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="!loaded"></div>
-<div class="m-walletBankForm" *ngIf="loaded">
+<div class="m-walletBankForm" *ngIf="account">
   <!-- HAS NOT SET UP BANK ACCOUNT / IS UPDATING BANK ACCOUNT ------------------ -->
   <ng-container *ngIf="!leftMonetization">
-    <form
-      [formGroup]="bankForm"
-      *ngIf="!account.bankAccount || !account.bankAccount.last4 || editing"
-    >
+    <form [formGroup]="form" *ngIf="!hasBankAccount() || editing">
       <p>Enter bank account details to receive payments.</p>
-      <!-- ***INPUT BANKCOUNTRY DROPDOWN-->
-      <div class="m-walletForm__field--text stretchedField" *ngIf="editingBank">
+      <!-- ***INPUT COUNTRY DROPDOWN-->
+      <div class="m-walletForm__field--text stretchedField">
         <div class="m-walletSettings__row--label">
-          <label for="bankCountry" i18n>Country</label>
+          <label for="country" i18n>Country</label>
         </div>
         <div class="m-walletForm__row--input">
           <minds-country-input
             type="text"
-            id="bankCountry"
-            name="bankCountry"
-            formControlName="bankCountry"
+            id="country"
+            name="country"
             class="form-control"
-            data-minds="bankCountry"
+            data-minds="country"
             [allowed]="allowedCountries"
-            [country]="bankCountry.value"
-            (countryChange)="bankCountry.setValue($event)"
+            [country]="country.value"
+            (countryChange)="country.setValue($event)"
           ></minds-country-input>
           <!-- <m-countryInput
         type="text"
-        id="bankCountry"
-        name="bankCountry"
-        formControlName="bankCountry"
+        id="country"
+        name="country"
+        formControlName="country"
         class="form-control"
-        data-minds="bankCountry"
+        data-minds="country"
         [allowedCountries]="allowedCountries"
-        [initCountryCode]="bankCountry.value"
-        (countryChange)="bankCountry.setValue($event)"
+        [initCountryCode]="country.value"
+        (countryChange)="country.setValue($event)"
       ></m-countryInput > -->
         </div>
       </div>
@@ -71,55 +66,59 @@
           />
         </div>
       </div>
+      <!-- ERROR -------------- -->
+      <div class="m-walletForm__error">
+        <p>{{ error }}</p>
+      </div>
       <!-- FORM BUTTONS -------------- -->
       <div class="m-walletForm__buttonsContainer">
-        <!-- TODOOJM consider a confirmation popup on cancel -->
         <m-shadowboxSubmitButton
           (click)="showModal = true; modalContent = 'leaveEditMode'"
           [disabled]="inProgress"
           color="grey"
           >Cancel</m-shadowboxSubmitButton
         >
-        <m-shadowboxSubmitButton
-          (click)="createAccount()"
-          [disabled]="inProgress"
-          >Update Personal Information</m-shadowboxSubmitButton
+        <m-shadowboxSubmitButton (click)="addBank()" [disabled]="inProgress"
+          >Add Bank Account</m-shadowboxSubmitButton
         >
       </div>
     </form>
     <!-- BANK ACCOUNT IS ALREADY SET UP ------------------ -->
-    <div
-      class="m-walletSettingsView--accountSplash"
-      *ngIf="account.bankAccount.last4"
-    >
-      <p>Your bank account details where cash rewards are deposited.</p>
-
-      <div class="m-walletSettingsView--accountSplash__bankPreviewWrapper">
-        <span>
-          {{ account.bankAccount.bank_name }}
-        </span>
-        <span>****{{ account.bankAccount.last4 }}</span>
+    <ng-container *ngIf="hasBankAccount() && !editing">
+      <div class="m-walletSettingsView--hasAccount__accountSummary">
+        <p>Your bank account where cash rewards are deposited.</p>
+        <div class="m-walletSettingsView--hasAccount__detailsWrapper">
+          <div class="m-walletSettingsView--hasAccount__bankWrapper">
+            <span>
+              {{ account.bankAccount.bank_name }}
+            </span>
+            <span>****{{ account.bankAccount.last4 }}</span>
+          </div>
+          <div class="m-walletSettingsView--hasAccount__linksContainer">
+            <a (click)="enterEditMode()">Update</a>
+            <a (click)="showModal = true; modalContent = 'removeBank'"
+              >Remove</a
+            >
+          </div>
+        </div>
       </div>
-      <div class="m-walletSettingsView--accountSplash__linkContainer">
-        <a (click)="enterEditMode()">Update</a>
-        <a (click)="showModal = true; modalContent = 'removeBank'">Remove</a>
-      </div>
-    </div>
 
-    <div>
-      <h4>Leave Monetization Program</h4>
-      <p>
-        For security reasons, you won't be able to rejoin the monetization
-        program.
-      </p>
-      <m-shadowboxSubmitButton
-        color="red"
-        (click)="showModal = true; modalContent = 'leaveMonetization'"
-        >Leave Monetization Program</m-shadowboxSubmitButton
-      >
-    </div>
+      <div class="m-walletSettingsView--hasAccount__leaveMonetization">
+        <h4>Leave Monetization Program</h4>
+        <p>
+          For security reasons, you won't be able to rejoin the monetization
+          program.
+        </p>
+        <m-shadowboxSubmitButton
+          color="red"
+          (click)="showModal = true; modalContent = 'leaveMonetization'"
+          >Leave Monetization Program</m-shadowboxSubmitButton
+        >
+      </div>
+    </ng-container>
     <!-- CONFIRMATION MODAL: LEAVE EDIT MODE -------------------- -->
     <m-walletModal
+      class="m-walletModal--confirmation"
       [showModal]="showModal && modalContent === 'leaveEditMode'"
       (closeModal)="showModal = false"
     >
@@ -128,39 +127,45 @@
         be lost.
       </p>
 
-      <div class="m-walletSettings--cash__leaveModalButtons">
+      <div class="m-walletForm__buttonsContainer">
         <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
           >Cancel</m-shadowboxSubmitButton
         >
-        <m-shadowboxSubmitButton color="red" (click)="leaveEditMode()"
+        <m-shadowboxSubmitButton
+          color="red"
+          (click)="leaveEditMode()"
+          [disabled]="inProgress"
+          [saving]="inProgress"
           >I'm sure</m-shadowboxSubmitButton
         >
       </div>
     </m-walletModal>
     <!-- CONFIRMATION MODAL: LEAVE MONETIZATION -------------------- -->
     <m-walletModal
+      class="m-walletModal--confirmation"
       [showModal]="showModal && modalContent === 'leaveMonetization'"
       (closeModal)="showModal = false"
     >
-      <p *ngIf="modalContent === 'leaveMonetization'">
+      <p>
         Are you sure you want to leave the monetization program? You won't be
         able to rejoin again.
       </p>
-      <p *ngIf="modalContent === 'removeBank'">
-        Are you sure you want to remove your bank account information? You won't
-        be able to receive payments until you add another one.
-      </p>
-      <div class="m-walletSettings--cash__leaveModalButtons">
+      <div class="m-walletForm__buttonsContainer">
         <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
           >Cancel</m-shadowboxSubmitButton
         >
-        <m-shadowboxSubmitButton color="red" (click)="leaveMonetization()"
+        <m-shadowboxSubmitButton
+          color="red"
+          (click)="leaveMonetization()"
+          [disabled]="inProgress"
+          [saving]="inProgress"
           >I'm sure</m-shadowboxSubmitButton
         >
       </div>
     </m-walletModal>
     <!-- CONFIRMATION MODAL: REMOVE BANK -------------------- -->
     <m-walletModal
+      class="m-walletModal--confirmation"
       [showModal]="showModal && modalContent === 'removeBank'"
       (closeModal)="showModal = false"
     >
@@ -168,11 +173,15 @@
         Are you sure you want to remove your bank account information? You won't
         be able to receive payments until you add another one.
       </p>
-      <div class="m-walletSettings--cash__leaveModalButtons">
+      <div class="m-walletForm__buttonsContainer">
         <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
           >Cancel</m-shadowboxSubmitButton
         >
-        <m-shadowboxSubmitButton color="red" (click)="removeBank()"
+        <m-shadowboxSubmitButton
+          color="red"
+          (click)="removeBank()"
+          [disabled]="inProgress"
+          [saving]="inProgress"
           >I'm sure</m-shadowboxSubmitButton
         >
       </div>

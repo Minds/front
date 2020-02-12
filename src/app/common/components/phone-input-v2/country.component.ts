@@ -154,6 +154,7 @@ export class PhoneInputCountryV2Component
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const uppercaseKey = $event.key.toUpperCase();
     if (this.showDropdown && chars.indexOf(uppercaseKey)) {
+      this.lastKeyboardFocusMoment = moment();
       for (let i = 0; i < this.countries.length; ++i) {
         if (this.countries[i].name.trim()[0].toUpperCase() === uppercaseKey) {
           this.applyFocus(i);

@@ -11,9 +11,8 @@
     To start earning rewards, you will need to enter a unique phone number.
   </p>
 </div>
-<!-- TODOOJM: ensure the three options to trigger onSubmit() don't double-trigger the fx -->
-<!-- <form [formGroup]="form" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()"> -->
-<form [formGroup]="form">
+<!-- TODOOJM: check on the enter key behavior -->
+<form [formGroup]="form" (keyup.enter)="onSubmit()">
   <div class="m-walletForm__wrapper">
     <div class="m-walletForm__fieldsContainer">
       <div class="m-walletForm__field--text stretchedField" *ngIf="!confirming">
@@ -21,8 +20,10 @@
           <label for="number" i18n>Mobile Phone Number</label>
           <m-tooltip icon="help">
             <ng-container i18n
-              >Your mobile number is used for unique identification. It is is
-              private and encrypted.</ng-container
+              >Minds will not store the number you provide. It will be hashed
+              using SHA-256 and combined with a salt key for privacy and unique
+              identification purposes. VOIP numbers are not
+              allowed.</ng-container
             >
           </m-tooltip>
         </div>
@@ -84,11 +85,6 @@
   </div>
 </form>
 
-<div class="m-walletModal__footnote--privacy" *ngIf="!confirming">
-  Note: Minds does not store the phone numbers you provide. The numbers are
-  hashed using SHA-256 and combined with a salt key for privacy and security
-  purposes.
-</div>
 <div class="m-walletModal__footnote--formStatus" *ngIf="confirming">
   <div class="m-walletPhoneVerification__formStatusCodeSent">
     Verification code sent to +{{ form.value.number }}

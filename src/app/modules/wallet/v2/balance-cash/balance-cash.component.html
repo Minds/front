@@ -1,4 +1,4 @@
-<div class="m-walletBalance--cash" *ngIf="!inProgress">
+<div class="m-walletBalance--cash" *ngIf="loaded">
   <div
     class="m-walletTransactions__onboarding"
     *ngIf="!hasAccount && !onSettingsTab"
@@ -9,9 +9,14 @@
     <p>Start receiving payouts by adding your bank details.</p>
   </div>
   <div *ngIf="!inProgress" class="m-walletBalance--cash__colContainer">
+    <!-- ---PENDING BALANCE ------------------------------------------------- -->
     <div class="m-walletBalance--cash__col">
       <div class="m-walletBalance--cash__colTitle">
-        Pending Balance<m-tooltip icon="help">placeholder</m-tooltip>
+        Pending Balance<m-tooltip icon="help"
+          >TO DO: this is the total amount of wires and earnings that you will
+          receive. Add something about payout date being estimated. And might
+          take up to 7 days
+        </m-tooltip>
       </div>
       <div class="m-walletBalance--cash__colValWrapper">
         <span class="m-walletBalance--cash__colVal--int">{{
@@ -26,10 +31,18 @@
           >.{{ pendingBalance.frac }}</span
         >
       </div>
+      <div class="m-walletBalance--cash__colSubtitle">
+        <p>Estimated Payout</p>
+        <p>{{ nextPayoutDate }}</p>
+      </div>
     </div>
+    <!-- ---TOTAL PAID OUT------------------------------------------------- -->
+
     <div class="m-walletBalance--cash__col" *ngIf="hasAccount">
       <div class="m-walletBalance--cash__colTitle">
-        Total Paid Out<m-tooltip icon="help">placeholder</m-tooltip>
+        Total Paid Out<m-tooltip icon="help"
+          >The amount you've already received</m-tooltip
+        >
       </div>
 
       <div class="m-walletBalance--cash__colValWrapper">
@@ -43,14 +56,32 @@
         >
       </div>
     </div>
-    <div class="m-walletBalance--cash__col" *ngIf="hasAccount">
+    <!-- ---PRO EARNINGS------------------------------------------------- -->
+    <div class="m-walletBalance--cash__col" *ngIf="isPro">
       <div class="m-walletBalance--cash__colTitle">
-        Next Payout<m-tooltip icon="help">placeholder</m-tooltip>
+        Pro Earnings<m-tooltip icon="help"
+          >At the end of each month, your Pro earnings will move into your
+          pending balance if you've reached the $100 threshold. When this
+          happens, your Pro earnings will be reset to zero. If you haven't
+          reached the threshold, your earnings will rollover to the next
+          month.</m-tooltip
+        >
       </div>
       <div class="m-walletBalance--cash__colValWrapper">
         <span class="m-walletBalance--cash__colVal--int">{{
-          nextPayoutDate
-        }}</span>
+          proEarnings.int | number: '1.0-0' | currency: 'USD' | slice: 0:-3
+        }}</span
+        ><span
+          class="m-walletBalance--cash__colVal--frac"
+          *ngIf="pendingBalance.frac"
+          >.{{ proEarnings.frac }}</span
+        >
+      </div>
+
+      <div class="m-walletBalance--cash__colSubtitle">
+        <p>
+          Go to <a routerLink="/analytics/dashboard/earnings">Pro Analytics</a>
+        </p>
       </div>
     </div>
   </div>

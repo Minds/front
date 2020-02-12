@@ -14,16 +14,11 @@
   </p>
   <div *ngIf="wallet.onchain.address">
     <div>
-      <p>Ether total</p>
+      <p class="m-walletForm__row--label">Ether total</p>
       <p>{{ wallet.eth.balance }}</p>
     </div>
-    <!-- TODOOJM make it so you don't have to go to /token to buy eth -->
-    <!-- <m-shadowboxSubmitButton (click)="showModal()"> -->
     <m-shadowboxSubmitButton [routerLink]="['/token', { purchaseEth: 'open' }]">
       Buy Ether
     </m-shadowboxSubmitButton>
   </div>
 </div>
-<m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
-  <p>TODOOJM: implement 'buy eth' modal. See issue #2423</p>
-</m-walletModal>

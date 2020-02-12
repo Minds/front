@@ -1,14 +1,12 @@
-<div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="!loaded"></div>
-<div class="m-walletCashOnboarding" *ngIf="loaded">
+<div class="m-walletCashOnboarding">
   <div class="m-walletCashOnboardingView--addDetails" *ngIf="!editing">
-    <m-shadowboxSubmitButton
-      (click)="toggleEditMode(true)"
-      [disabled]="inProgress"
+    <p>Add your bank account details where cash rewards will be deposited.</p>
+    <m-shadowboxSubmitButton (click)="enterEditMode()" color="grey"
       >Set up cash payments</m-shadowboxSubmitButton
     >
   </div>
   <div class="m-walletCashOnboardingView--form" *ngIf="editing">
-    <form [formGroup]="accountForm" *ngIf="!isMonetized() && editingAccount">
+    <form [formGroup]="form">
       <p>Enter personal details to setup your cash payment account.</p>
       <!-- ------------------------------------------------------------ -->
 
@@ -23,7 +21,6 @@
               type="text"
               id="country"
               name="country"
-              formControlName="country"
               class="form-control"
               data-minds="country"
               [allowed]="allowedCountries"
@@ -84,7 +81,12 @@
             <label for="dob" i18n>Date of Birth</label>
           </div>
           <div class="m-walletForm__row--input">
-            <minds-date-input
+            <m-date__dropdowns
+              name="dob"
+              class="form-control"
+              (selectedDateChange)="dob.setValue($event)"
+            ></m-date__dropdowns>
+            <!-- <minds-date-input
               id="dob"
               name="dob"
               class="form-control"
@@ -92,7 +94,7 @@
               data-minds="dob"
               [date]="dob.value"
               (dateChange)="dob.setValue($event)"
-            ></minds-date-input>
+            ></minds-date-input> -->
           </div>
         </div>
 
@@ -207,9 +209,9 @@
           <div class="m-walletForm__row--input">
             <input
               type="text"
-              id="city"
-              name="city"
-              formControlName="city"
+              id="state"
+              name="state"
+              formControlName="state"
               class="form-control"
             />
           </div>
@@ -261,22 +263,25 @@
       <!-- ------------------------------------------------------------ -->
 
       <!-- **** INPUT: TOS CHECKBOX -->
-      <div class="m-walletSettings__field--checkbox">
+      <div class="m-walletForm__field--checkbox">
         <div class="m-walletSettings__row--input">
           <m-formInput__checkbox formControlName="stripeAgree">
             I have read and agree to the
             <a href="https://stripe.com/legal" target="_blank">
-              Stripe Services Agreement </a
-            >.
+              Stripe Services Agreement
+            </a>
           </m-formInput__checkbox>
         </div>
       </div>
 
       <!-- ------------------------------------------------------------ -->
+      <!-- ERROR -------------- -->
+      <div class="m-walletForm__error">
+        <p>{{ error }}</p>
+      </div>
 
       <!-- FORM BUTTONS -------------- -->
       <div class="m-walletForm__buttonsContainer">
-        <!-- TODOOJM  confirmation popup on cancel -->
         <m-shadowboxSubmitButton
           (click)="toggleEditMode(false)"
           [disabled]="inProgress"
@@ -286,9 +291,30 @@
         <m-shadowboxSubmitButton
           (click)="createAccount()"
           [disabled]="inProgress"
+          [saving]="inProgress"
           >Update Personal Information</m-shadowboxSubmitButton
         >
       </div>
     </form>
   </div>
+  <!-- CONFIRMATION MODAL: LEAVE EDIT MODE -------------------- -->
+  <m-walletModal
+    [showModal]="showModal"
+    (closeModal)="showModal = false"
+    class="m-walletModal--confirmation"
+  >
+    <p>
+      Are you sure you want to stop? Any personal information you've entered
+      will be lost.
+    </p>
+
+    <div class="m-walletForm__buttonsContainer">
+      <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
+        >Cancel</m-shadowboxSubmitButton
+      >
+      <m-shadowboxSubmitButton color="red" (click)="leaveEditMode()"
+        >I'm sure</m-shadowboxSubmitButton
+      >
+    </div>
+  </m-walletModal>
 </div>

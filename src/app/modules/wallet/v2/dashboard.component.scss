@@ -101,15 +101,16 @@ m-walletDashboard {
     display: block;
     flex: 0 1 auto;
     margin: 0 0 0 21px;
-    min-width: 105px;
+    // min-width: 105px;
     box-sizing: border-box;
 
     .m-shadowboxSubmitButton {
       box-sizing: border-box;
       max-height: none;
       min-height: 42px;
-      height: 42px;
-      min-width: 0;
+      // height: 42px;
+      height: auto;
+      min-width: 105px;
       font-weight: 300;
       padding: 7px 15px;
       font-size: 15px;
@@ -118,6 +119,12 @@ m-walletDashboard {
     .m-shadowboxSubmitButton__status--unsaved {
       font-size: 15px;
       line-height: 20px;
+    }
+  }
+
+  .m-walletModal--confirmation {
+    & > p {
+      margin-top: none;
     }
   }
 
@@ -163,14 +170,21 @@ m-walletDashboard {
   .m-walletForm__buttonsContainer {
     display: flex;
     flex-flow: row wrap-reverse;
-    justify-content: center;
+    justify-content: space-evenly;
+    margin-top: 10px;
+    m-shadowboxSubmitButton {
+      margin-top: 8px;
+    }
   }
   .m-walletForm__nameFieldsContainer {
     display: flex;
     box-sizing: border-box;
 
     [class*='m-walletForm__field'] {
-      flex: 1 0 50%;
+      flex: 1 0 auto;
+      &:first-child {
+        margin-right: 19px;
+      }
     }
   }
   [class*='m-walletForm__field'] {
@@ -281,6 +295,11 @@ m-walletDashboard {
   .m-walletForm__fieldsContainer {
     flex: 1 1 auto;
   }
+  .m-walletForm__error p {
+    @include m-theme() {
+      color: themed($m-alert);
+    }
+  }
 
   m-phoneInput {
     margin-bottom: 0;
@@ -289,6 +308,31 @@ m-walletDashboard {
       min-width: 240px;
     }
   }
+
+  m-date__dropdowns {
+    select {
+      outline: none;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+        box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+      }
+      &:focus {
+        @include m-theme() {
+          border: 1px solid themed($m-blue);
+        }
+      }
+    }
+  }
+
+  m-formInput__checkbox {
+    .m-formInput__checkbox {
+      label {
+        @include m-walletText--14();
+      }
+    }
+  }
+  //////////////////////////////////////////
   @media screen and (max-width: 500px) {
     m-shadowboxSubmitButton {
       margin: 21px 0 0 0;
@@ -360,36 +404,6 @@ m-walletDashboard {
     }
   }
 
-  // input {
-  //   outline: 0;
-  //   font-size: 15px;
-  //   line-height: 20px;
-  //   font-weight: 300;
-  //   width: 0;
-  //   min-width: 0;
-  //   padding: 10px 20px;
-  //   border-radius: 2px;
-  //   cursor: text;
-
-  //   @include m-theme() {
-  //     color: themed($m-textColor--primary);
-  //     box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
-  //     border: 1px solid themed($m-borderColor--primary);
-  //   }
-  //   &:not(.m-phoneInput__input) {
-  //     @include m-theme() {
-  //       border: 1px solid themed($m-borderColor--primary);
-  //     }
-  //   }
-
-  //   &:focus {
-  //     &:not(:read-only) {
-  //       @include m-theme() {
-  //         border-color: themed($m-blue);
-  //       }
-  //     }
-  //   }
-  // }
   .m-walletSettingsView--addressCurrent {
     h2 {
       margin-bottom: 23px;

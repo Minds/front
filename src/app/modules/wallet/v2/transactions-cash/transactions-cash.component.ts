@@ -48,15 +48,15 @@ export class WalletTransactionsCashComponent implements OnInit {
   }
 
   async getStripeAccount() {
-    const stripeAccount = await this.walletService.getStripeAccount();
-    if (!stripeAccount) {
+    const account = await this.walletService.getStripeAccount();
+    if (!account) {
       return;
     } else {
-      if (stripeAccount.bankAccount) {
-        this.currency = stripeAccount.bankAccount.currency.toUpperCase();
+      if (account.bankAccount) {
+        this.currency = account.bankAccount.currency.toUpperCase();
       }
 
-      this.runningTotal = stripeAccount.pendingBalance.amount / 100;
+      this.runningTotal = account.pendingBalance.amount / 100;
 
       this.detectChanges();
     }

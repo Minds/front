@@ -3,20 +3,20 @@
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
   <div class="m-walletTransactionsTable__wrapper" *ngIf="init">
-    <div class="m-walletTransactionsTable__row--top">
+    <!-- <div class="m-walletTransactionsTable__row--top">
       <div class="m-walletTransactionsTable__time">
         Upcoming
       </div>
       <div class="m-walletTransactionsTable__typeWrapper">
-        <!-- (mouseenter)="showRewardsPopup = true"
-        (mouseleave)="showRewardsPopup = false" -->
+        (mouseenter)="showRewardsPopup = true"
+        (mouseleave)="showRewardsPopup = false"
         <i class="material-icons">star_border</i
         ><span>Estimated Pro Earnings</span>
       </div>
-      <!-- <m-walletPendingCashPayout
+      <m-walletPendingCashPayout
         *ngIf="showRewardsPopup"
-      ></m-walletPendingCashPayout> -->
-    </div>
+      ></m-walletPendingCashPayout>
+    </div> -->
     <ng-container *ngIf="!inProgress || transactions">
       <m-walletTransactionsTable
         [currency]="currency"

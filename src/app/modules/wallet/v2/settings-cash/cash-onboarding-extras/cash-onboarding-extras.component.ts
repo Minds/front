@@ -2,8 +2,14 @@
 // from certain countries/regions (e.g. Australia, NZ, Europe)
 // before their accounts can be verified
 
-import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 
 import { WalletDashboardService } from '../../dashboard.service';
 import { Client, Upload } from '../../../../../services/api';
@@ -13,9 +19,10 @@ import { Client, Upload } from '../../../../../services/api';
   templateUrl: './cash-onboarding-extras.component.html',
 })
 export class WalletCashOnboardingExtrasComponent implements OnInit {
-  loaded: boolean = false;
-  inProgress: boolean = true;
-  account;
+  @Input() account;
+  @Input() allowedCountries: string[];
+  @Output() submitted: EventEmitter<any> = new EventEmitter();
+  inProgress: boolean;
   error: string = '';
   constructor(
     protected walletService: WalletDashboardService,
@@ -25,25 +32,10 @@ export class WalletCashOnboardingExtrasComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getAccount();
-  }
-
-  async getAccount() {
-    this.error = '';
-    this.inProgress = true;
-    this.detectChanges();
-
-    this.walletService
-      .getStripeAccount()
-      .then((account: any) => {
-        this.account = account;
-      })
-      .catch(e => {
-        this.error = e.message;
-      });
-
-    this.inProgress = false;
-    this.detectChanges();
+    // if (!this.account) {
+    //   this.submitted.emit();
+    //   // this.detectChanges();
+    // }
   }
 
   async uploadDocument(fileInput: HTMLInputElement, documentType: string) {
@@ -55,8 +47,8 @@ export class WalletCashOnboardingExtrasComponent implements OnInit {
       [file]
     );
     this.inProgress = false;
-    this.account = null;
-    this.getAccount();
+    this.detectChanges();
+    this.submitted.emit();
   }
 
   async updateField(fieldName: string, value: string) {
@@ -66,8 +58,8 @@ export class WalletCashOnboardingExtrasComponent implements OnInit {
     body[fieldName] = value;
     await this.client.post('api/v2/payments/stripe/connect/update', body);
     this.inProgress = false;
-    this.account = null;
-    this.getAccount();
+    this.detectChanges();
+    this.submitted.emit();
   }
 
   async acceptTos() {
@@ -75,8 +67,8 @@ export class WalletCashOnboardingExtrasComponent implements OnInit {
     this.detectChanges();
     await this.client.put('api/v2/payments/stripe/connect/terms');
     this.inProgress = false;
-    this.account = null;
-    this.getAccount();
+    this.detectChanges();
+    this.submitted.emit();
   }
 
   detectChanges() {

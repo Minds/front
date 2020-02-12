@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectorRef,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { requiredFor, optionalFor } from './../settings-cash.validators';
 import { WalletDashboardService } from '../../dashboard.service';
@@ -12,10 +19,11 @@ import localLabels from './local-labels';
 })
 export class WalletBankFormComponent implements OnInit {
   @Input() allowedCountries: string[];
-  account;
+  @Input() account;
+  @Output() submitted: EventEmitter<any> = new EventEmitter();
   form;
+  error: string = '';
 
-  loaded: boolean = false;
   inProgress: boolean = false;
   editing: boolean = false;
   showModal: boolean = false;
@@ -33,34 +41,40 @@ export class WalletBankFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // if (!this.account) {
+    //   this.submitted.emit();
+    //   // this.detectChanges();
+    //   return;
+    // }
     this.form = this.fb.group({
       country: ['', Validators.required],
       accountNumber: ['', Validators.required],
       routingNumber: ['', requiredFor(['US'])],
     });
-    this.getAccount();
-  }
-
-  async getAccount() {
-    this.inProgress = true;
-    this.detectChanges();
-
-    this.walletService
-      .getStripeAccount()
-      .then((account: any) => {
-        this.account = account;
-        this.initCountry = account.bankAccount.country || account.country;
-        this.country.patchValue(this.initCountry);
-
-        this.country.setValue(account.country);
-      })
-      .catch(e => {
-        this.formToastService.error(e.message);
-      });
-    this.loaded = true;
-    this.inProgress = false;
+    this.initCountry = this.hasBankAccount
+      ? this.account.bankAccount.country
+      : this.account.country;
+    this.country.patchValue(this.initCountry);
     this.detectChanges();
   }
+
+  // async getAccount() {
+  //   this.inProgress = true;
+  //   this.detectChanges();
+
+  //   this.walletService
+  //     .getStripeAccount()
+  //     .then((account: any) => {
+  //       this.account = account;
+  //       this.initCountry = account.bankAccount.country || account.country;
+  //       this.country.patchValue(this.initCountry);
+  //     })
+  //     .catch(e => {
+  //       this.formToastService.error(e.message);
+  //     });
+  //   this.inProgress = false;
+  //   this.detectChanges();
+  // }
   async removeBank() {
     this.inProgress = true;
     this.detectChanges();
@@ -68,57 +82,56 @@ export class WalletBankFormComponent implements OnInit {
     this.walletService
       .removeStripeBank()
       .then((response: any) => {
-        this.inProgress = false;
         this.formToastService.success(
           'Your bank account was successfully removed.'
         );
-        this.getAccount();
       })
       .catch(e => {
-        this.inProgress = false;
         this.formToastService.error(e.message);
       });
+    this.inProgress = false;
     this.detectChanges();
+    if (!this.error) {
+      this.submitted.emit();
+    }
   }
 
   async leaveMonetization() {
     this.showModal = false;
+    this.inProgress = true;
     this.detectChanges();
     this.walletService
       .leaveMonetization()
       .then((response: any) => {
         this.configs.set('merchant', []);
-        // this.getAccount();
         this.leftMonetization = true;
       })
       .catch(e => {
         this.formToastService.error(e.message);
       });
+    this.inProgress = false;
     this.detectChanges();
   }
 
   async addBank() {
+    this.error = '';
     this.walletService
       .addStripeBank(this.form.value)
       .then((response: any) => {
         this.editing = false;
 
-        const toasterMessage = this.isMonetized()
-          ? 'Your bank account has been successfully updated'
-          : 'Your request to join the monetization program has been submitted';
+        const toasterMessage = 'Your bank account has been successfully added';
         this.formToastService.success(toasterMessage);
-
-        this.getAccount();
-        // if(filling out form for the first time){
-        // emit 'pending' to parent
-        // } else emit 'hasAccount' to parent
       })
       .catch(e => {
-        // this.error = e.message;
-        // todoojm - error handling
+        // TODO backend should include e.param and handle errors inline
+        this.error = e.message;
       });
     this.inProgress = false;
     this.detectChanges();
+    if (!this.error) {
+      this.submitted.emit();
+    }
   }
 
   enterEditMode() {
@@ -135,6 +148,13 @@ export class WalletBankFormComponent implements OnInit {
     this.detectChanges();
   }
 
+  hasBankAccount() {
+    if (this.account.requirement) {
+      return this.account.requirement.indexOf('external_account') === -1;
+    } else {
+      return true;
+    }
+  }
   isCountry(countries: string[]) {
     return countries.indexOf(this.country.value) > -1;
   }
@@ -142,14 +162,6 @@ export class WalletBankFormComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-  }
-
-  isMonetized() {
-    // TODOOJM uncomment after form is done
-    // if (this.user && this.user.merchant.id) {
-    //   return true;
-    // }
-    return false;
   }
 
   get accountNumber() {

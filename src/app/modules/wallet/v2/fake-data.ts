@@ -157,7 +157,15 @@ const fakeData = {
       routingNumber: '123455678',
       destination: 'bank',
       status: 'active',
-      verified: true,
+      // verified: true,
+      verified: false,
+      ////////////////
+      // bankAccount: null,
+      // requirement: 'external_account',
+      ////////////////
+      // requirement:
+      //   'individual.verification.document.individual.verification.additional_documenttos_acceptance.individual.phoneexternal_accountidividual.id_number',
+      requirement: 'individual.verification.document', //t.individual.verification.additional_documenttos_acceptance.individual.phoneexternal_accountidividual.id_number',
       bankAccount: {
         id: 'qeorij_823_a0g7',
         object: 'bank_account',
@@ -177,7 +185,6 @@ const fakeData = {
       payoutInterval: 'daily',
       payoutDelay: 2,
       payoutAnchor: null,
-      requirement: null,
       totalBalance: {
         amount: 1100,
         currency: 'gbp',

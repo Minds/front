@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { WalletDashboardService } from '../dashboard.service';
-import { FormToastService } from '../../../../common/services/form-toast.service';
 import { Session } from '../../../../services/session';
 
 @Component({
@@ -14,12 +13,7 @@ export class WalletSettingsCashComponent implements OnInit {
   account;
   error: string = '';
 
-  view:
-    | 'onboardingForm'
-    | 'additionalReqtsForm'
-    | 'bankForm'
-    | 'pendingApproval'
-    | 'error';
+  view: 'onboarding' | 'bank' | 'extras' | 'error';
 
   allowedCountries: string[] = [
     'AT',
@@ -48,7 +42,6 @@ export class WalletSettingsCashComponent implements OnInit {
 
   constructor(
     protected walletService: WalletDashboardService,
-    private formToastService: FormToastService,
     private cd: ChangeDetectorRef,
     protected session: Session
   ) {}
@@ -56,58 +49,70 @@ export class WalletSettingsCashComponent implements OnInit {
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
 
-    this.setFormView();
-
+    this.setView();
     this.loaded = true;
+    this.detectChanges();
+  }
+
+  async setView() {
+    // Flow should be:
+    // 1. onboarding
+    // 2. bank
+    // 3. (if necessary) extras
+    // 4. (once verified) bank
+
+    this.view = null;
+    this.inProgress = true;
+    this.detectChanges();
+
+    // todoojm uncomment
+    // const hasMerchant = this.user && this.user.merchant.id;
+    const hasMerchant = true;
+
+    if (!hasMerchant) {
+      this.view = 'onboarding';
+    } else {
+      await this.getAccount();
+
+      if (this.error) {
+        return;
+      }
+
+      if (!this.hasBankAccount() || this.account.verified) {
+        this.view = 'bank';
+      } else if (!this.account.verified && this.account.requirement) {
+        this.view = 'extras';
+      }
+    }
     this.inProgress = false;
     this.detectChanges();
   }
 
-  setFormView() {
-    this.inProgress = true;
-    this.detectChanges();
-
-    const hasMerchant = this.user && this.user.merchant.id;
-
-    if (!hasMerchant) {
-      this.view = 'onboardingForm';
-    } else {
-      this.getAccount();
-      if (this.error) {
-        return;
-      }
-      // if pending (???) pending; return
-
-      // if additional reqts, additinoalReqts
-      // else bankForm
-    }
-  }
-
   async getAccount() {
+    this.inProgress = true;
     this.error = '';
+
     this.walletService
       .getStripeAccount()
       .then((account: any) => {
         this.account = account;
-
-        // TODOOJM handle view selection
-        // if (!this.account.bankAccount || !this.account.bankAccount.last4) {
-        //   this.view = 'bankForm';
-        // } else {
-        // }
+        // console.log('888 this account', this.account);
+        // this.setView();
       })
       .catch(e => {
         this.error = e.message;
         this.view = 'error';
+        this.inProgress = false;
+        this.detectChanges();
       });
-
-    this.inProgress = false;
-    this.detectChanges();
   }
 
-  switchView(view) {
-    this.view = view;
-    this.detectChanges();
+  hasBankAccount() {
+    if (this.account.requirement) {
+      return this.account.requirement.indexOf('external_account') === -1;
+    } else {
+      return true;
+    }
   }
 
   detectChanges() {

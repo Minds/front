@@ -419,6 +419,28 @@ export class WalletDashboardService {
     return fakeData.token_chart;
   }
 
+  async getProEarnings() {
+    return 77.3;
+
+    // try {
+    //   const response = <any>(
+    //     await this.client.post(
+    //       'api/v2/analytics/dashboards/earnings?metric=earnings_total&timespan=today'
+    //     )
+    //   );
+
+    //   const earnings =
+    //     response.dashboard.metrics
+    //       .find(m => m.id === 'earnings_total')
+    //       .visualisation.segments[0].buckets.slice(-1)[0].value / 100;
+
+    //   return earnings;
+    // } catch (e) {
+    //   console.error(e);
+    //   return e;
+    // }
+  }
+
   async getTokenTransactions(opts) {
     try {
       // TODOOJM uncomment

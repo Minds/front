@@ -1,103 +1,185 @@
-<div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="!loaded"></div>
-<div class="m-walletOnboardingExtrasForm" *ngIf="loaded">
-  <p>
-    You are required to provide additional information so we can verify your
-    identity in order to receive payouts.
-    <ng-container
-      *ngIf="
-        account.requirement.indexOf('individual.verification.document') > -1
-      "
+<div class="m-walletOnboardingExtrasForm" *ngIf="account">
+  <!-- TODOOJM sketchy *ngIf for pending notice. -->
+  <!-- <p *ngIf="!account.verified">
+    Your account is pending verification. Verification status updates will be
+    sent in your notifications.
+  </p> -->
+  <!-- <p></p> -->
+  <!-- **** INPUT: PHOTO ID -->
+  <!-- <ng-container
+    *ngIf="account.requirement.indexOf('individual.verification.document') > -1"
+  >
+    <b (click)="file.click()">Upload Photo ID</b>
+    <br />
+    <br />
+    <button (click)="file.click()" class="m-btn m-btn--action m-btn--slim">
+      <ng-container *ngIf="!inProgress">Select & Upload</ng-container>
+      <ng-container *ngIf="inProgress">Uploading...</ng-container>
+    </button>
+    <input
+      type="file"
+      #file
+      name="file"
+      (change)="uploadDocument(file, 'document')"
+      accept="image/*"
+      style="display: none;"
+    />
+  </ng-container> -->
+
+  <ng-container
+    *ngIf="account.requirement.indexOf('individual.verification.document') > -1"
+  >
+    <div class="m-walletForm__field--text">
+      <div class="m-walletForm__row--label">
+        <label for="photoId" i18n>Photo ID</label>
+      </div>
+      <div class="m-walletSettings__row--input">
+        <input
+          type="file"
+          #file
+          name="photoId"
+          (change)="uploadDocument(file, 'document')"
+          accept="image/*"
+          style="display: none;"
+        />
+      </div>
+    </div>
+    <m-shadowboxSubmitButton
+      (click)="file.click()"
+      [disabled]="inProgress"
+      [saving]="inProgress"
+      >Select & Upload</m-shadowboxSubmitButton
     >
-      <b (click)="file.click()">Upload Photo ID</b>
-      <br />
-      <br />
-      <button (click)="file.click()" class="m-btn m-btn--action m-btn--slim">
-        <ng-container *ngIf="!inProgress">Select & Upload</ng-container>
-        <ng-container *ngIf="inProgress">Uploading...</ng-container>
-      </button>
-      <input
-        type="file"
-        #file
-        name="file"
-        (change)="uploadDocument(file, 'document')"
-        accept="image/*"
-        style="display: none;"
-      />
-    </ng-container>
-    <ng-container
-      *ngIf="
-        account.requirement.indexOf(
-          'individual.verification.additional_document'
-        ) > -1
-      "
+  </ng-container>
+
+  <!-- **** INPUT: PROOF OF ADDRESS -->
+  <ng-container
+    *ngIf="
+      account.requirement.indexOf(
+        'individual.verification.additional_document'
+      ) > -1
+    "
+  >
+    <div class="m-walletForm__field--text">
+      <div class="m-walletForm__row--label">
+        <label for="proofOfAddress" i18n>Proof of Address</label>
+      </div>
+      <div class="m-walletSettings__row--input">
+        <input
+          type="file"
+          #file
+          name="proofOfAddress"
+          (change)="uploadDocument(file, 'additional_document')"
+          accept="image/*"
+          style="display: none;"
+        />
+      </div>
+    </div>
+    <m-shadowboxSubmitButton
+      (click)="file.click()"
+      [disabled]="inProgress"
+      [saving]="inProgress"
+      >Select & Upload</m-shadowboxSubmitButton
     >
-      <b (click)="file.click()">Upload a document with proof of address</b>
-      <br />
-      <br />
-      <button (click)="file.click()" class="m-btn m-btn--action m-btn--slim">
-        <ng-container *ngIf="!inProgress">Select & Upload</ng-container>
-        <ng-container *ngIf="inProgress">Uploading...</ng-container>
-      </button>
-      <input
-        type="file"
-        #file
-        name="file"
-        (change)="uploadDocument(file, 'additional_document')"
-        accept="image/*"
-        style="display: none;"
-      />
-    </ng-container>
-    <ng-container *ngIf="account.requirement.indexOf('tos_acceptance.') > -1">
-      <b>
-        Accept the
-        <a href="https://stripe.com/legal" target="_blank">
-          Stripe Services Agreement
-        </a>
-      </b>
-      <br />
-      <br />
-      <button (click)="acceptTos()" class="m-btn m-btn--action m-btn--slim">
-        <ng-container *ngIf="!inProgress">Accept Terms</ng-container>
-        <ng-container *ngIf="inProgress">Accepting...</ng-container>
-      </button>
-    </ng-container>
-    <ng-container *ngIf="account.requirement.indexOf('individual.phone') > -1">
-      <b>Provide a phone number</b>
-      <br />
-      <m-phone-input #phone></m-phone-input>
-      <br />
-      <button
-        (click)="updateField('phone', phone.value)"
-        class="m-btn m-btn--action m-btn--slim"
-      >
-        <ng-container *ngIf="!inProgress">Save</ng-container>
-        <ng-container *ngIf="inProgress">Saving...</ng-container>
-      </button>
-    </ng-container>
-    <ng-container *ngIf="account.requirement.indexOf('external_account') > -1">
-      <b>Complete the payout method step below</b>
-    </ng-container>
-    <ng-container
-      *ngIf="account.requirement.indexOf('individual.id_number') > -1"
+  </ng-container>
+
+  <!-- <ng-container
+    *ngIf="
+      account.requirement.indexOf(
+        'individual.verification.additional_document'
+      ) > -1
+    "
+  >
+    <b (click)="file.click()">Upload a document with proof of address</b>
+    <br />
+    <br />
+    <button (click)="file.click()" class="m-btn m-btn--action m-btn--slim">
+      <ng-container *ngIf="!inProgress">Select & Upload</ng-container>
+      <ng-container *ngIf="inProgress">Uploading...</ng-container>
+    </button>
+    <input
+      type="file"
+      #file
+      name="file"
+      (change)="uploadDocument(file, 'additional_document')"
+      accept="image/*"
+      style="display: none;"
+    />
+  </ng-container> -->
+
+  <!-- **** INPUT: TOS CHECKBOX -->
+  <ng-container *ngIf="account.requirement.indexOf('tos_acceptance.') > -1">
+    <div class="m-walletForm__field--checkbox">
+      <div class="m-walletSettings__row--input">
+        <m-formInput__checkbox formControlName="stripeAgree">
+          I have read and agree to the
+          <a href="https://stripe.com/legal" target="_blank">
+            Stripe Services Agreement
+          </a>
+        </m-formInput__checkbox>
+      </div>
+    </div>
+    <m-shadowboxSubmitButton
+      (click)="acceptTos()"
+      [disabled]="inProgress"
+      [saving]="inProgress"
+      >Save</m-shadowboxSubmitButton
     >
-      <b
-        >Provide your Personal ID / Social Security Number (SSN) / National
-        Insurance Number</b
-      >
-      <br />
-      <input
-        class="m-input m-revenueOptions__input"
-        #personalId
-        placeholder="Personal Id"
-      />
-      <br />
-      <button
-        (click)="updateField('id_number', personalId.value)"
-        class="m-btn m-btn--action m-btn--slim"
-      >
-        <ng-container *ngIf="!inProgress">Save</ng-container>
-        <ng-container *ngIf="inProgress">Saving...</ng-container>
-      </button>
-    </ng-container>
-  </p>
+  </ng-container>
+
+  <!-- **** INPUT: PHONE NUMBER -->
+  <ng-container *ngIf="account.requirement.indexOf('individual.phone') > -1">
+    <div class="m-walletForm__field--text">
+      <div class="m-walletForm__row--label">
+        <label for="phoneNumber" i18n>Phone Number</label>
+      </div>
+      <div class="m-walletForm__row--input">
+        <m-phoneInput
+          #phone
+          id="phoneNumber"
+          name="phoneNumber"
+          class="form-control"
+          data-minds="phoneNumber"
+          initCountryCode="account.country"
+          [allowedCountries]="allowedCountries"
+        >
+        </m-phoneInput>
+      </div>
+    </div>
+    <m-shadowboxSubmitButton
+      (click)="updateField('phone', phone.value)"
+      [disabled]="inProgress"
+      [saving]="inProgress"
+      >Save</m-shadowboxSubmitButton
+    >
+  </ng-container>
+
+  <!-- **** INPUT: PERSONAL ID -->
+  <ng-container
+    *ngIf="account.requirement.indexOf('individual.id_number') > -1"
+  >
+    <div class="m-walletForm__field--text">
+      <div class="m-walletForm__row--label">
+        <label for="personalId" i18n
+          >Personal ID / Social Security Number (SSN) / National Insurance
+          Number</label
+        >
+      </div>
+      <div class="m-walletForm__row--input">
+        <input
+          #personalId
+          id="personalId"
+          name="personalId"
+          class="form-control"
+          data-minds="personalId"
+        />
+      </div>
+    </div>
+    <m-shadowboxSubmitButton
+      (click)="updateField('id_number', personalId.value)"
+      [disabled]="inProgress"
+      [saving]="inProgress"
+      >Save</m-shadowboxSubmitButton
+    >
+  </ng-container>
 </div>

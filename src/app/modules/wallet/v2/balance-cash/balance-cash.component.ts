@@ -14,6 +14,7 @@ import { WalletDashboardService } from '../dashboard.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
+import { ConfigsService } from '../../../../common/services/configs.service';
 @Component({
   selector: 'm-walletBalance--cash',
   templateUrl: './balance-cash.component.html',
@@ -21,14 +22,17 @@ import { Subscription } from 'rxjs';
 })
 export class WalletBalanceCashComponent implements OnInit, OnDestroy {
   inProgress: boolean = true;
-  stripeAccount;
+  account;
   hasAccount: boolean = true;
+  isPro: boolean = false;
   pendingBalance;
   totalPaidOut;
   nextPayoutDate = '';
+  proEarnings;
   onSettingsTab: boolean = false;
   currency = 'usd';
   paramsSubscription: Subscription;
+  loaded: boolean = false;
 
   @Output() scrollToCashSettings: EventEmitter<any> = new EventEmitter();
   constructor(
@@ -36,7 +40,8 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected walletService: WalletDashboardService,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    private configs: ConfigsService
   ) {}
 
   ngOnInit() {
@@ -46,8 +51,14 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
         this.detectChanges();
       }
     );
+    // TOOOJM toggle
+    this.isPro = true;
+    // this.isPro = this.configs.get('pro');
 
     this.load();
+    this.getProEarnings();
+    // this.loaded = true;
+    this.detectChanges();
   }
 
   ngOnDestroy() {
@@ -57,28 +68,28 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
   }
 
   async load() {
-    // TODOOJM $stripe - this is not accurate for all stripe accounts
+    // TODOOJM confirm that mark has migrated all stripe accts to monthly intervals
     this.nextPayoutDate = moment()
       .endOf('month')
       .format('ddd Do MMM');
 
-    this.stripeAccount = await this.walletService.getStripeAccount();
+    this.account = await this.walletService.getStripeAccount();
 
-    if (!this.stripeAccount || !this.stripeAccount.accountNumber) {
+    if (!this.account || !this.account.accountNumber) {
       this.hasAccount = false;
       this.pendingBalance = this.formatBalance(0);
       this.totalPaidOut = this.formatBalance(0);
     } else {
       this.pendingBalance = this.formatBalance(
-        this.stripeAccount.pendingBalance.amount / 100
+        this.account.pendingBalance.amount / 100
       );
-      if (this.stripeAccount.bankAccount) {
-        this.currency = this.stripeAccount.bankAccount.currency.toUpperCase();
+      if (this.account.bankAccount) {
+        this.currency = this.account.bankAccount.currency.toUpperCase();
       }
 
       let totalPaidOutRaw =
-        (this.stripeAccount.totalBalance.amount -
-          this.stripeAccount.pendingBalance.amount) /
+        (this.account.totalBalance.amount -
+          this.account.pendingBalance.amount) /
         100;
 
       if (totalPaidOutRaw < 0) {
@@ -92,7 +103,25 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
+  async getProEarnings() {
+    this.inProgress = true;
+    this.detectChanges();
+
+    // try {
+    //   const response: number = await this.walletService.getProEarnings();
+    //   this.proEarnings = this.formatBalance(response);
+    // } catch (e) {
+    //   console.error(e.message);
+    //   this.proEarnings = this.formatBalance(0);
+    // }
+    this.proEarnings = this.formatBalance(123.4);
+    this.inProgress = false;
+    this.loaded = true;
+    this.detectChanges();
+  }
+
   formatBalance(balance) {
+    console.log(balance);
     const formattedBalance = {
       total: balance,
       int: 0,
@@ -102,12 +131,15 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
       return formattedBalance;
     }
     const splitBalance = balance.toString().split('.');
+    console.log('888 splitBal...', splitBalance);
 
     formattedBalance.int = splitBalance[0];
+    console.log('888 int...', formattedBalance);
 
     if (splitBalance[1]) {
       const frac = splitBalance[1].toString();
       formattedBalance.frac = frac.length < 2 ? frac.concat('0') : frac;
+      console.log('888 frac...', formattedBalance);
     }
     return formattedBalance;
   }

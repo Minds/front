@@ -6,7 +6,7 @@ m-walletBalance--cash {
     font-size: 15px;
     line-height: 20px;
     @include m-theme() {
-      color: themed($m-grey-300);
+      color: themed($m-textColor--secondary);
     }
   }
   .m-walletBalance--cash__colContainer {
@@ -17,6 +17,7 @@ m-walletBalance--cash {
 
   .m-walletBalance--cash__colTitle {
     position: relative;
+    margin-top: 8px;
     m-tooltip {
       position: relative;
       margin-left: 4px;
@@ -34,45 +35,74 @@ m-walletBalance--cash {
     .m-walletBalance--cash__colTitle {
       .m-tooltip--bubble {
         position: absolute;
-        right: -24px;
+        min-width: 140px;
+        right: -64px;
       }
     }
   }
+
   .m-walletBalance--cash__col {
+    max-width: 200px;
     .m-walletBalance--cash__colTitle {
       font-size: 16px;
       line-height: 21px;
+      min-width: 78px;
     }
+
     .m-walletBalance--cash__colVal--int {
       font-size: 24px;
       line-height: 32px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
     }
     .m-walletBalance--cash__colVal--frac {
       font-size: 17px;
       line-height: 23px;
     }
+    .m-walletBalance--cash__colSubtitle {
+      p,
+      a {
+        font-size: 13px;
+        line-height: 15px;
+      }
+      p {
+        margin: 8px 0 0 0;
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+      }
+      p:first-child {
+        margin-top: 12px;
+      }
+      a {
+        margin-top: 0;
+      }
+    }
   }
 
-  .m-walletBalance--cash__colTitle {
-    min-width: 78px;
-  }
+  // .m-walletBalance--cash__colTitle {
+  //   min-width: 78px;
+  //   font-size: 16px;
+  //   line-height: 21px;
+  // }
   .m-walletBalance--cash__colValWrapper {
     font-size: 13px;
     line-height: 18px;
     font-weight: 500;
     margin-top: 8px;
   }
-  .m-walletBalance--cash__colVal--int {
-    font-size: 16px;
-    line-height: 21px;
-    @include m-theme() {
-      color: themed($m-grey-800);
-    }
-  }
-  .m-walletBalance--cash__colVal--frac {
-    font-size: 13px;
-    line-height: 18px;
-  }
+  // .m-walletBalance--cash__colVal--int {
+  //   font-size: 16px;
+  //   line-height: 21px;
+  //   @include m-theme() {
+  //     color: themed($m-grey-800);
+  //   }
+  // }
+  // .m-walletBalance--cash__colVal--frac {
+  //   font-size: 13px;
+  //   line-height: 18px;
+  // }
   a {
     display: inline-block;
     margin-top: 14px;

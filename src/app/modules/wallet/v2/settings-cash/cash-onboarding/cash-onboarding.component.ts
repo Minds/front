@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ChangeDetectorRef,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { requiredFor, optionalFor } from './../settings-cash.validators';
 import { WalletDashboardService } from '../../dashboard.service';
@@ -10,12 +17,15 @@ import { FormToastService } from '../../../../../common/services/form-toast.serv
 })
 export class WalletCashOnboardingComponent implements OnInit {
   @Input() allowedCountries: string[];
+  @Input() account;
+  @Output() submitted: EventEmitter<any> = new EventEmitter();
   form;
   user;
 
-  loaded: boolean = false;
   inProgress: boolean = false;
+  showModal: boolean = false;
   editing;
+  error: string = '';
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -25,6 +35,11 @@ export class WalletCashOnboardingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // if (!this.account) {
+    //   this.submitted.emit();
+    //   // this.detectChanges();
+    //   return;
+    // }
     this.form = this.fb.group({
       country: ['US', Validators.required],
 
@@ -42,39 +57,19 @@ export class WalletCashOnboardingComponent implements OnInit {
       postCode: ['', optionalFor(['HK', 'IE', 'JP'])],
       stripeAgree: ['', Validators.required],
     });
-    this.getAccount();
-  }
-
-  async getAccount() {
-    this.inProgress = true;
-    this.detectChanges();
-
-    this.walletService
-      .getStripeAccount()
-      .then((account: any) => {})
-      .catch(e => {
-        this.formToastService.error(e.message);
-      });
-
-    this.loaded = true;
-    this.inProgress = false;
     this.detectChanges();
   }
 
   async createAccount() {
     this.inProgress = true;
-    // this.error = '';
+    this.error = '';
 
-    const formVal = this.form.value;
-    formVal.stripeAgree = this.stripeAgree.value;
-    console.log('formVal w/ agree', formVal);
     this.walletService
-      .createStripeAccount(formVal)
+      .createStripeAccount(this.form.value)
       .then((response: any) => {
         console.log('createAccount response', response);
-        this.inProgress = false;
 
-        // Is this kind of stuff necessary anymore?
+        // TODOOJM ask: Is this kind of stuff necessary? Is it ephemeral? what's it doing?
         if (!this.user.programs) {
           this.user.programs = [];
         }
@@ -89,19 +84,28 @@ export class WalletCashOnboardingComponent implements OnInit {
             amount: 10,
           },
         };
+        this.detectChanges();
       })
       .catch(e => {
-        this.inProgress = false;
-
-        // TODOOJM handle errors inline
-        // this.error = e.message;
+        // TODO backend should include e.param and handle errors inline
+        this.error = e.message;
       });
 
+    this.inProgress = false;
+
     this.detectChanges();
+    if (!this.error) {
+      this.submitted.emit();
+    }
   }
 
-  toggleEditMode(bool) {
-    this.editing = bool;
+  enterEditMode() {
+    this.editing = true;
+    this.detectChanges();
+  }
+  leaveEditMode() {
+    this.editing = false;
+    this.form.reset();
     this.detectChanges();
   }
 
@@ -114,13 +118,6 @@ export class WalletCashOnboardingComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  isMonetized() {
-    // TODOOJM uncomment after form is done
-    // if (this.user && this.user.merchant.id) {
-    //   return true;
-    // }
-    return false;
-  }
   get country() {
     return this.form.get('country');
   }

@@ -1,10 +1,5 @@
 m-walletPhoneVerification {
-  .m-walletModal__footnote--privacy {
-    margin-top: 10px;
-    font-size: 13px;
-    line-height: 18px;
-  }
-  .m-walletModal__footnote--formStatus {
+  .m-walletModal__footnote {
     .m-walletPhoneVerification__formStatusCodeSent {
       margin-bottom: 6px;
       @include m-theme() {
@@ -34,6 +29,7 @@ m-walletPhoneVerification {
       .m-walletForm__row--label m-tooltip {
         .m-tooltip--bubble {
           right: 12px;
+          width: 174px;
         }
       }
       [class*='m-walletForm__row'] {
