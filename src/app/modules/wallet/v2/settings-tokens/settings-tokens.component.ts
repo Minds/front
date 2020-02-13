@@ -11,9 +11,6 @@ import {
   PLATFORM_ID,
   ViewRef,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { ConfigsService } from '../../../../common/services/configs.service';
-
 import { Router } from '@angular/router';
 import {
   FormGroup,
@@ -21,7 +18,8 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
-
+import { isPlatformBrowser } from '@angular/common';
+import { ConfigsService } from '../../../../common/services/configs.service';
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { LocalWalletService } from '../../../blockchain/local-wallet.service';
@@ -72,14 +70,13 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     protected web3Wallet: Web3WalletService,
     private formToastService: FormToastService,
     protected walletService: WalletDashboardService,
-    private configs: ConfigsService,
+    configs: ConfigsService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   // TODOOJM add fx to reload whenever the current setting is updated
-
   ngOnInit() {
     this.load();
   }

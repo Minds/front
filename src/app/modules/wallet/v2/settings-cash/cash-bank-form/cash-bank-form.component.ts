@@ -7,17 +7,17 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { requiredFor, optionalFor } from './../settings-cash.validators';
+import { requiredFor, optionalFor } from '../settings-cash.validators';
 import { WalletDashboardService } from '../../dashboard.service';
 import { FormToastService } from '../../../../../common/services/form-toast.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import localLabels from './local-labels';
 
 @Component({
-  selector: 'm-walletBankForm',
-  templateUrl: './bank-form.component.html',
+  selector: 'm-walletCashBankForm',
+  templateUrl: './cash-bank-form.component.html',
 })
-export class WalletBankFormComponent implements OnInit {
+export class WalletCashBankFormComponent implements OnInit {
   @Input() allowedCountries: string[];
   @Input() account;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
@@ -41,11 +41,6 @@ export class WalletBankFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // if (!this.account) {
-    //   this.submitted.emit();
-    //   // this.detectChanges();
-    //   return;
-    // }
     this.form = this.fb.group({
       country: ['', Validators.required],
       accountNumber: ['', Validators.required],

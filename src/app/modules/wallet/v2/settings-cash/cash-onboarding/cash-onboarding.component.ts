@@ -35,11 +35,6 @@ export class WalletCashOnboardingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // if (!this.account) {
-    //   this.submitted.emit();
-    //   // this.detectChanges();
-    //   return;
-    // }
     this.form = this.fb.group({
       country: ['US', Validators.required],
 
@@ -69,7 +64,6 @@ export class WalletCashOnboardingComponent implements OnInit {
       .then((response: any) => {
         console.log('createAccount response', response);
 
-        // TODOOJM ask: Is this kind of stuff necessary? Is it ephemeral? what's it doing?
         if (!this.user.programs) {
           this.user.programs = [];
         }
@@ -78,11 +72,6 @@ export class WalletCashOnboardingComponent implements OnInit {
         this.user.merchant = {
           id: response.id,
           service: 'stripe',
-          status: 'awaiting-document',
-          exclusive: {
-            enabled: true,
-            amount: 10,
-          },
         };
         this.detectChanges();
       })

@@ -1,4 +1,4 @@
-<div class="m-walletBankForm" *ngIf="account">
+<div class="m-walletCashBankForm" *ngIf="account">
   <!-- HAS NOT SET UP BANK ACCOUNT / IS UPDATING BANK ACCOUNT ------------------ -->
   <ng-container *ngIf="!leftMonetization">
     <form [formGroup]="form" *ngIf="!hasBankAccount() || editing">

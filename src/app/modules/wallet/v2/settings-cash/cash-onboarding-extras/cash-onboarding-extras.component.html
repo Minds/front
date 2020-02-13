@@ -1,31 +1,5 @@
 <div class="m-walletOnboardingExtrasForm" *ngIf="account">
-  <!-- TODOOJM sketchy *ngIf for pending notice -->
-  <!-- <p *ngIf="!account.verified">
-    Your account is pending verification. Verification status updates will be
-    sent in your notifications.
-  </p> -->
-  <!-- <p></p> -->
   <!-- **** INPUT: PHOTO ID -->
-  <!-- <ng-container
-    *ngIf="account.requirement.indexOf('individual.verification.document') > -1"
-  >
-    <b (click)="file.click()">Upload Photo ID</b>
-    <br />
-    <br />
-    <button (click)="file.click()" class="m-btn m-btn--action m-btn--slim">
-      <ng-container *ngIf="!inProgress">Select & Upload</ng-container>
-      <ng-container *ngIf="inProgress">Uploading...</ng-container>
-    </button>
-    <input
-      type="file"
-      #file
-      name="file"
-      (change)="uploadDocument(file, 'document')"
-      accept="image/*"
-      style="display: none;"
-    />
-  </ng-container> -->
-
   <ng-container
     *ngIf="account.requirement.indexOf('individual.verification.document') > -1"
   >
@@ -82,30 +56,6 @@
       >Select & Upload</m-shadowboxSubmitButton
     >
   </ng-container>
-
-  <!-- <ng-container
-    *ngIf="
-      account.requirement.indexOf(
-        'individual.verification.additional_document'
-      ) > -1
-    "
-  >
-    <b (click)="file.click()">Upload a document with proof of address</b>
-    <br />
-    <br />
-    <button (click)="file.click()" class="m-btn m-btn--action m-btn--slim">
-      <ng-container *ngIf="!inProgress">Select & Upload</ng-container>
-      <ng-container *ngIf="inProgress">Uploading...</ng-container>
-    </button>
-    <input
-      type="file"
-      #file
-      name="file"
-      (change)="uploadDocument(file, 'additional_document')"
-      accept="image/*"
-      style="display: none;"
-    />
-  </ng-container> -->
 
   <!-- **** INPUT: TOS CHECKBOX -->
   <ng-container *ngIf="account.requirement.indexOf('tos_acceptance.') > -1">

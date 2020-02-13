@@ -9,12 +9,12 @@
     (submitted)="setView()"
   ></m-walletCashOnboarding>
   <!-- BANK FORM --------------------------- -->
-  <m-walletBankForm
+  <m-walletCashBankForm
     *ngIf="view === 'bank'"
     [account]="account"
     [allowedCountries]="allowedCountries"
     (submitted)="setView()"
-  ></m-walletBankForm>
+  ></m-walletCashBankForm>
   <!-- EXTRA REQUIREMENTS FORM ----------- -->
   <m-walletCashOnboardingExtras
     *ngIf="view === 'extras'"

@@ -1,21 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { WalletCashOnboardingComponent } from './cash-onboarding.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-describe('WalletCashOnboardingComponent', () => {
-  let component: WalletCashOnboardingComponent;
-  let fixture: ComponentFixture<WalletCashOnboardingComponent>;
+import { WalletCashBankFormComponent } from './cash-bank-form.component';
+
+describe('WalletCashBankFormComponent', () => {
+  let component: WalletCashBankFormComponent;
+  let fixture: ComponentFixture<WalletCashBankFormComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [WalletCashOnboardingComponent],
+      declarations: [WalletCashBankFormComponent],
       imports: [ReactiveFormsModule],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WalletCashOnboardingComponent);
+    fixture = TestBed.createComponent(WalletCashBankFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

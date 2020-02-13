@@ -5,15 +5,6 @@ import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import toFriendlyCryptoVal from '../../../helpers/friendly-crypto';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
-import {
-  map,
-  distinctUntilChanged,
-  switchMap,
-  startWith,
-  tap,
-  delay,
-  debounceTime,
-} from 'rxjs/operators';
 
 import fakeData from './fake-data';
 
@@ -67,93 +58,20 @@ export class WalletDashboardService {
     // loading: false,
   };
 
-  // private store = new BehaviorSubject<WalletState>(_state);
-  // private state$ = this.store.asObservable();
-
-  // tokens$ = this.state$.pipe(
-  //   map(state => state.tokens),
-  //   distinctUntilChanged()
-  // );
-  // offchain$ = this.state$.pipe(
-  //   map(state => state.offchain),
-  //   distinctUntilChanged()
-  // );
-  // onchain$ = this.state$.pipe(
-  //   map(state => state.onchain),
-  //   distinctUntilChanged()
-  // );
-  // receiver$ = this.state$.pipe(
-  //   map(state => state.receiver),
-  //   distinctUntilChanged()
-  // );
-  // usd$ = this.state$.pipe(
-  //   map(state => state.usd),
-  //   distinctUntilChanged()
-  // );
-  // eth$ = this.state$.pipe(
-  //   map(state => state.eth),
-  //   distinctUntilChanged()
-  // );
-  // btc$ = this.state$.pipe(
-  //   map(state => state.btc),
-  //   distinctUntilChanged()
-  // );
-
-  // loading$ = this.state$.pipe(map(state => state.loading));
-
-  /**
-   * Viewmodel that resolves once all the data is ready (or updated)...
-   */
-  // wallet$: Observable<WalletState> = combineLatest([
-  //   this.tokens$,
-  //   this.onchain$,
-  //   this.receiver$,
-  //   this.offchain$,
-  //   this.usd$,
-  //   this.eth$,
-  //   this.btc$,
-  //   this.loading$,
-  // ]).pipe(
-  //   map(([tokens, onchain, receiver, offchain, usd, eth, btc, loading]) => {
-  //     return { tokens, onchain, receiver, offchain, usd, eth, btc, loading };
-  //   })
-  // );
-
   constructor(
     private client: Client,
     protected web3Wallet: Web3WalletService,
     protected tokenContract: TokenContractService,
     protected session: Session
-  ) {
-    // /**
-    //  * Subscribe to multiple streams to trigger state updates
-    //  */
-    // combineLatest([this.tokens$, this.pagination$])
-    //   .pipe(
-    //     switchMap(([criteria, pagination]) => {
-    //       return this.findAllUsers(criteria, pagination);
-    //     })
-    //   )
-    //   .subscribe(users => {
-    //     this.updateState({ ..._state, users, loading: false });
-    //   });
-    // // TODOOJM make sure I unsubscribe to this
-    // // WARNING if state is updating both of 'tokens' and pogination'
-  }
+  ) {}
 
-  // TODOOJM: make wallet an observable and have the dashboard component subscribe to it
   getWallet() {
     this.getTokenAccounts();
     this.getEthAccount();
     this.getStripeAccount();
 
-    // TODOOJM toggle me before pushing
-    this.wallet = fakeData.wallet;
-
-    // TODOOJM remove
-    console.log('********');
-    console.log(this.wallet);
-    console.log('********');
+    // TODOOJM toggle
+    // this.wallet = fakeData.wallet;
 
     this.walletLoaded = true;
     return this.wallet;
