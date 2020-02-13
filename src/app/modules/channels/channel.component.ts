@@ -70,6 +70,9 @@ export class ChannelComponent {
 
   ngOnInit() {
     this.updateMeta();
+    if (this.user) {
+      this.clientMetaService.recordView(this.user);
+    }
 
     this.context.set('activity');
     this.onScroll();
@@ -171,6 +174,7 @@ export class ChannelComponent {
           this.addRecent();
         }
 
+        // this.load() is only called if this.user was not previously set
         this.clientMetaService.recordView(this.user);
       })
       .catch(e => {
