@@ -173,4 +173,38 @@ describe('Service: Attachment Service', () => {
     tick(1000);
     expect(clientMock.get).toHaveBeenCalledTimes(1);
   }));
+
+  it('should populate the request array', fakeAsync(() => {
+    spyOn(service, 'addPreviewRequest');
+
+    service.preview('https://github.com/releases');
+    tick(1000);
+
+    expect(service.addPreviewRequest).toHaveBeenCalledTimes(1);
+  }));
+
+  it('should check the request array on response', fakeAsync(() => {
+    spyOn(service, 'getPreviewRequests');
+
+    service.preview('https://github.com/releases');
+    tick(1000);
+
+    expect(service.getPreviewRequests).toHaveBeenCalledTimes(1);
+  }));
+
+  it('should reset the request array when called', fakeAsync(() => {
+    service.addPreviewRequest('https://github.com/releases');
+    expect(service.getPreviewRequests().length).toBe(1);
+
+    service.resetPreviewRequests();
+    tick(1000);
+
+    expect(service.getPreviewRequests().length).toBe(0);
+  }));
+
+  it('should discard changes if request array has been cleared', fakeAsync(() => {
+    service.preview('https://github.com/releases');
+    tick(1000);
+    expect(this.meta).toBeFalsy();
+  }));
 });
