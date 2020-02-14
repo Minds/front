@@ -10,7 +10,10 @@ import { AnalyticsService } from '../../../services/analytics';
 import { MindsBlogResponse } from '../../../interfaces/responses';
 import { MindsBlogEntity } from '../../../interfaces/entities';
 import { ConfigsService } from '../../../common/services/configs.service';
-import { MetaService } from '../../../common/services/meta.service';
+import {
+  MetaService,
+  MIN_METRIC_FOR_ROBOTS,
+} from '../../../common/services/meta.service';
 
 @Component({
   selector: 'm-blog-view-infinite',
@@ -125,6 +128,9 @@ export class BlogViewInfinite {
       .setDescription(description)
       //.setAuthor(this.blog.custom_meta['author'] || `@${this.blog.ownerObj.username}`)
       .setOgUrl(blog.perma_url)
-      .setOgImage(blog.thumbnail_src);
+      .setOgImage(blog.thumbnail_src)
+      .setRobots(
+        blog['thumbs:up:count'] >= MIN_METRIC_FOR_ROBOTS ? 'all' : 'noindex'
+      );
   }
 }

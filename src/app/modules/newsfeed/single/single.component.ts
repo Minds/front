@@ -10,7 +10,10 @@ import { EntitiesService } from '../../../common/services/entities.service';
 import { Client } from '../../../services/api/client';
 import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
-import { MetaService } from '../../../common/services/meta.service';
+import {
+  MetaService,
+  MIN_METRIC_FOR_ROBOTS,
+} from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
@@ -166,6 +169,9 @@ export class NewsfeedSingleComponent {
           ? activity.custom_data[0]['src']
           : activity.thumbnail_src,
         { width: 2000, height: 1000 }
+      )
+      .setRobots(
+        activity['thumbs:up:count'] >= MIN_METRIC_FOR_ROBOTS ? 'all' : 'noindex'
       );
 
     if (activity.custom_type === 'video') {
