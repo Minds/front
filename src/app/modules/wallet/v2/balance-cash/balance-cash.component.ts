@@ -145,6 +145,11 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
     return formattedBalance;
   }
 
+  scrollToSettings() {
+    this.scrollToCashSettings.emit();
+    this.detectChanges();
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
