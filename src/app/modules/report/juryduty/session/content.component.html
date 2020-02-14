@@ -16,14 +16,49 @@
       <p>{{ report.appeal_note }}</p>
     </div>
 
+    <div
+      class="m-juryDutySessionContent__entityVersion"
+      *ngIf="report.original_entity"
+    >
+      <ng-container *ngIf="showOriginal">
+        <span>
+          Currently displaying the <b>reported</b> version of the entity.
+        </span>
+        <a (click)="toggleVersion()">
+          Show current version
+        </a>
+      </ng-container>
+
+      <ng-container *ngIf="!showOriginal">
+        <span>
+          Currently displaying the <b>current</b> version of the entity.
+        </span>
+        <a (click)="toggleVersion()">
+          Show reported version
+        </a>
+      </ng-container>
+    </div>
+
     <ng-container *ngIf="report.entity; else noEntity">
-      <minds-card
-        *ngIf="report.entity"
-        class=""
-        [object]="report.entity"
-        [flags]="{ hideToolbar: true }"
-        hostClass="mdl-card m-border"
-      ></minds-card>
+      <ng-container
+        *ngIf="showOriginal && report.original_entity; else currentVersion"
+      >
+        <minds-card
+          *ngIf="report.original_entity"
+          [object]="report.original_entity"
+          [flags]="{ hideToolbar: true }"
+          hostClass="mdl-card m-border"
+        ></minds-card>
+      </ng-container>
+
+      <ng-template #currentVersion>
+        <minds-card
+          *ngIf="report.entity"
+          [object]="report.entity"
+          [flags]="{ hideToolbar: true }"
+          hostClass="mdl-card m-border"
+        ></minds-card>
+      </ng-template>
     </ng-container>
     <ng-template #noEntity>
       <p>The post could not be loaded. Please overturn the report</p>
@@ -31,15 +66,15 @@
 
     <div class="m-juryDutySessionContent__options">
       <button class="m-btn m-btn--slim" (click)="uphold()">
-        <ng-container *ngIf="report.is_appeal; else upholdLabel"
-          >Reject Appeal</ng-container
-        >
+        <ng-container *ngIf="report.is_appeal; else upholdLabel">
+          Reject Appeal
+        </ng-container>
         <ng-template #upholdLabel>Uphold Report</ng-template>
       </button>
       <button class="m-btn m-btn--slim" (click)="overturn()">
-        <ng-container *ngIf="report.is_appeal; else overturnLabel"
-          >Accept Appeal</ng-container
-        >
+        <ng-container *ngIf="report.is_appeal; else overturnLabel">
+          Accept Appeal
+        </ng-container>
         <ng-template #overturnLabel>Overturn Report</ng-template>
       </button>
     </div>

@@ -1,15 +1,4 @@
-import {
-  Component,
-  Input,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-  ChangeDetectorRef,
-} from '@angular/core';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { Client } from '../../../../services/api';
-import { Session } from '../../../../services/session';
-import { REASONS } from '../../../../services/list-options';
+import { Component, Input } from '@angular/core';
 import { JurySessionService } from './session.service';
 
 @Component({
@@ -19,6 +8,7 @@ import { JurySessionService } from './session.service';
 export class JuryDutySessionContentComponent {
   @Input() report;
   decided: boolean = false;
+  showOriginal: boolean = true;
 
   constructor(private sessionService: JurySessionService) {}
 
@@ -37,6 +27,10 @@ export class JuryDutySessionContentComponent {
     }
 
     return friendlyString;
+  }
+
+  toggleVersion() {
+    this.showOriginal = !this.showOriginal;
   }
 
   async overturn() {
