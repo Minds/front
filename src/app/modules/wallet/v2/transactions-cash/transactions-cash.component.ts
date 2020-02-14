@@ -20,6 +20,8 @@ import * as moment from 'moment';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletTransactionsCashComponent implements OnInit {
+  @Input() noAccount: boolean = false;
+
   init: boolean = false;
   inProgress: boolean = true;
   offset: string;
@@ -45,28 +47,54 @@ export class WalletTransactionsCashComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getStripeAccount();
+    if (!this.noAccount) {
+      this.getStripeAccount();
+    } else {
+      this.init = true;
+    }
+    this.detectChanges();
   }
 
   async getStripeAccount() {
-    const account = await this.walletService.getStripeAccount();
-    if (!account) {
-      this.init = true;
-      this.detectChanges();
-      return;
-    } else {
-      if (account.bankAccount) {
-        this.currency = account.bankAccount.currency.toUpperCase();
-      }
+    try {
+      const account = await this.walletService.getStripeAccount();
+      console.log('txcashAcct', account);
+      if (account) {
+        if (account.bankAccount) {
+          this.currency = account.bankAccount.currency.toUpperCase();
+        }
 
-      this.runningTotal = account.pendingBalance.amount / 100;
+        this.runningTotal = account.pendingBalance.amount / 100;
+      }
+    } catch (e) {
+      console.error(e);
+      this.moreData = false;
+    } finally {
+      this.init = true;
+      this.inProgress = false;
       this.detectChanges();
     }
-
-    this.load(true);
   }
 
-  async load(refresh: boolean) {
+  //   const account = await this.walletService.getStripeAccount();
+  //   console.log('txcashAcct', account);
+  //   if (!account) {
+  //     this.init = true;
+  //     this.detectChanges();
+  //     return;
+  //   } else {
+  //     if (account.bankAccount) {
+  //       this.currency = account.bankAccount.currency.toUpperCase();
+  //     }
+
+  //     this.runningTotal = account.pendingBalance.amount / 100;
+  //     this.detectChanges();
+  //   }
+
+  //   this.loadTransactions(true);
+  // }
+
+  async loadTransactions(refresh: boolean) {
     if (this.inProgress && !refresh) {
       return;
     }

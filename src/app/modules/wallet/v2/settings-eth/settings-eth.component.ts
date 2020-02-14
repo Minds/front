@@ -25,7 +25,6 @@ export class WalletSettingsETHComponent implements OnInit {
 
   async load() {
     this.ethWallet = await this.walletService.getEthAccount();
-    console.log('ethw', this.ethWallet);
     this.detectChanges();
   }
   detectChanges() {

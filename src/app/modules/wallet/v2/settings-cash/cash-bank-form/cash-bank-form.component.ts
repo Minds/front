@@ -92,22 +92,22 @@ export class WalletCashBankFormComponent implements OnInit {
     }
   }
 
-  async leaveMonetization() {
-    this.showModal = false;
-    this.inProgress = true;
-    this.detectChanges();
-    this.walletService
-      .leaveMonetization()
-      .then((response: any) => {
-        this.configs.set('merchant', []);
-        this.leftMonetization = true;
-      })
-      .catch(e => {
-        this.formToastService.error(e.message);
-      });
-    this.inProgress = false;
-    this.detectChanges();
-  }
+  // async leaveMonetization() {
+  //   this.showModal = false;
+  //   this.inProgress = true;
+  //   this.detectChanges();
+  //   this.walletService
+  //     .leaveMonetization()
+  //     .then((response: any) => {
+  //       this.configs.set('merchant', []);
+  //       this.leftMonetization = true;
+  //     })
+  //     .catch(e => {
+  //       this.formToastService.error(e.message);
+  //     });
+  //   this.inProgress = false;
+  //   this.detectChanges();
+  // }
 
   async addBank() {
     this.error = '';

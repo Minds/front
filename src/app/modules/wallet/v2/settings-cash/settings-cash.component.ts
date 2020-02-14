@@ -80,9 +80,10 @@ export class WalletSettingsCashComponent implements OnInit {
     if (!hasMerchant) {
       this.view = 'onboarding';
     } else {
-      await this.getAccount();
-
+      this.account = await this.getAccount();
+      console.log('888settingscashaccount', this.account);
       if (this.error) {
+        this.detectChanges();
         return;
       }
 
@@ -118,7 +119,7 @@ export class WalletSettingsCashComponent implements OnInit {
   }
 
   hasBankAccount() {
-    if (this.account.requirement) {
+    if (this.account && this.account.requirement) {
       return this.account.requirement.indexOf('external_account') === -1;
     } else {
       return true;

@@ -35,6 +35,7 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
   loaded: boolean = false;
 
   @Output() scrollToCashSettings: EventEmitter<any> = new EventEmitter();
+
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,

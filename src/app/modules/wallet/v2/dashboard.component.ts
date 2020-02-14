@@ -18,7 +18,6 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import sidebarMenu from './sidebar-menu.default';
 import { Menu } from '../../../common/components/sidebar-menu/sidebar-menu.component';
 import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
-import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-walletDashboard',
@@ -38,20 +37,20 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
 
   activeCurrencyId: string;
   activeViewId: string;
-  onboardingComplete = false;
+  tokenOnboardingComplete = false;
 
   views: any = {
     tokens: [
-      { id: 'overview', label: 'Overview' },
-      { id: 'transactions', label: 'Transactions' },
-      { id: 'settings', label: 'Settings' },
+      { id: 'overview', label: 'Overview', display: true },
+      { id: 'transactions', label: 'Transactions', display: true },
+      { id: 'settings', label: 'Settings', display: true },
     ],
     cash: [
-      { id: 'transactions', label: 'Transactions' },
-      { id: 'settings', label: 'Settings' },
+      { id: 'transactions', label: 'Transactions', display: true },
+      { id: 'settings', label: 'Settings', display: true },
     ],
-    eth: [{ id: 'settings', label: 'Settings' }],
-    btc: [{ id: 'settings', label: 'Settings' }],
+    eth: [{ id: 'settings', label: 'Settings', display: true }],
+    btc: [{ id: 'settings', label: 'Settings', display: true }],
   };
 
   currencies: ShadowboxHeaderTab[] = [];
@@ -75,7 +74,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       this.session.getLoggedInUser().rewards &&
       this.session.getLoggedInUser().eth_wallet
     ) {
-      this.onboardingComplete = true;
+      this.tokenOnboardingComplete = true;
     }
 
     this.paramsSubscription = this.route.paramMap.subscribe(
@@ -161,8 +160,8 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
-  onboardingCompleted() {
-    this.onboardingComplete = true;
+  tokenOnboardingCompleted() {
+    this.tokenOnboardingComplete = true;
     this.detectChanges();
   }
 
@@ -189,6 +188,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
         0
       );
     }
+    this.detectChanges();
   }
 
   detectChanges() {

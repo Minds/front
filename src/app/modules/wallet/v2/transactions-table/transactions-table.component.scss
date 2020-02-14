@@ -13,11 +13,6 @@
     justify-content: flex-start;
   }
 }
-.m-walletTransactions__spinner {
-  display: flex;
-  justify-content: center;
-}
-
 [class*='m-walletTransactionsTable__row'] {
   display: flex;
   justify-content: space-between;
@@ -130,6 +125,16 @@ m-walletTransactionsTable {
 
     @include m-theme() {
       color: themed($m-textColor--secondary);
+    }
+  }
+}
+.m-walletTransactions__noTxNotice {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 48px;
+  p {
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
     }
   }
 }

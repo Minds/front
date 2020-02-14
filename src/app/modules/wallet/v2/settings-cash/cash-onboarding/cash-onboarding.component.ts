@@ -60,35 +60,34 @@ export class WalletCashOnboardingComponent implements OnInit {
   async createAccount() {
     this.inProgress = true;
     this.error = '';
+    this.detectChanges();
 
     console.log('createAccountFormval', this.form.value);
-    this.walletService
-      .createStripeAccount(this.form.value)
-      .then((response: any) => {
-        console.log('createStripeAccount response', response);
 
-        if (!this.user.programs) {
-          this.user.programs = [];
-        }
-        this.user.programs.push('affiliate');
+    try {
+      const response: any = await this.walletService.createStripeAccount(
+        this.form.value
+      );
 
-        this.user.merchant = {
-          id: response.id,
-          service: 'stripe',
-        };
+      console.log('createStripeAccount response', response);
 
-        this.detectChanges();
-      })
-      .catch(e => {
-        // TODO backend should include e.param to allow inline error handling
-        this.error = e.message;
-      });
+      if (!this.user.programs) {
+        this.user.programs = [];
+      }
+      this.user.programs.push('affiliate');
 
-    this.inProgress = false;
-
-    this.detectChanges();
-    if (!this.error) {
+      this.user.merchant = {
+        id: response.id,
+        service: 'stripe',
+      };
+      console.log('888emitting submitted');
       this.submitted.emit();
+    } catch (e) {
+      // TODO backend should include e.param to allow inline error handling
+      this.error = e.message;
+    } finally {
+      this.inProgress = false;
+      this.detectChanges();
     }
   }
 

@@ -1,7 +1,4 @@
-<div *ngIf="inProgress" class="m-wallet__spinner">
-  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-</div>
-<m-pageLayout [menu]="menu" *ngIf="!inProgress">
+<m-pageLayout [menu]="menu">
   <div class="m-walletDashboard" m-pageLayout__main *ngIf="currencies">
     <m-dashboardLayout>
       <ng-container m-dashboardLayout__header>
@@ -11,7 +8,10 @@
           </h3>
         </div>
       </ng-container>
-      <ng-container m-dashboardLayout__body>
+      <div *ngIf="inProgress" class="m-wallet__spinner">
+        <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+      </div>
+      <ng-container m-dashboardLayout__body *ngIf="!inProgress">
         <m-shadowboxLayout>
           <m-shadowboxHeader__tabs
             class="m-shadowboxLayout__header"
@@ -23,8 +23,10 @@
           <div class="m-shadowboxLayout__body">
             <div class="m-walletDashboardBalances__wrapper">
               <m-walletTokenOnboarding
-                *ngIf="activeCurrencyId === 'tokens' && !onboardingComplete"
-                (onboardingCompleted)="onboardingCompleted()"
+                *ngIf="
+                  activeCurrencyId === 'tokens' && !tokenOnboardingComplete
+                "
+                (onboardingCompleted)="tokenOnboardingCompleted()"
                 (scrollToTokenSettings)="scrollToSettings('tokens')"
               ></m-walletTokenOnboarding>
               <m-walletBalance--tokens
@@ -66,6 +68,7 @@
                   ></m-walletTransactions--tokens>
                   <m-walletTransactions--cash
                     *ngIf="activeCurrencyId === 'cash'"
+                    [noAccount]="wallet.cash.address === null"
                   ></m-walletTransactions--cash>
                 </ng-container>
                 <ng-container *ngIf="activeViewId === 'settings'">

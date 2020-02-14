@@ -169,24 +169,25 @@ export class WalletDashboardService {
 
   async getStripeAccount() {
     const merchant = this.session.getLoggedInUser().merchant;
+
     if (merchant && merchant.service === 'stripe') {
       try {
         const { account } = <any>(
           await this.client.get('api/v2/payments/stripe/connect')
         );
         if (account) {
+          console.log('svc getAcc', account);
           this.wallet.cash.address = 'stripe';
           this.wallet.cash.balance =
             (account.totalBalance.amount - account.pendingBalance.amount) / 100;
           if (account.bankAccount) {
-            const bankCurrency = account.bankAccount.currency;
-            this.wallet.cash.label = bankCurrency.toUpperCase;
+            const bankCurrency: string = account.bankAccount.currency;
+            this.wallet.cash.label = bankCurrency.toUpperCase();
             this.wallet.cash.unit = bankCurrency;
           } else {
             // Has stripe account but not setup bank account
-            const defaultCurrency = account.pendingBalance.currency;
-            this.wallet.cash.label = defaultCurrency.toUpperCase;
-            this.wallet.cash.unit = defaultCurrency;
+            this.wallet.cash.label = 'USD';
+            this.wallet.cash.unit = 'usd';
           }
         }
         return account;
@@ -200,7 +201,6 @@ export class WalletDashboardService {
   }
 
   async createStripeAccount(form) {
-    console.log('stripeform', form);
     try {
       const response = <any>(
         await this.client.put('api/v2/wallet/usd/account', form)

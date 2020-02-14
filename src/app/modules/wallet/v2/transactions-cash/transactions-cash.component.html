@@ -1,23 +1,12 @@
 <div class="m-walletTransactions m-walletTransactions--cash">
-  <div *ngIf="inProgress || !init" class="m-walletTransactions__spinner">
+  <div *ngIf="!init" class="m-wallet__spinner">
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
-  <div class="m-walletTransactionsTable__wrapper" *ngIf="init">
-    <!-- <div class="m-walletTransactionsTable__row--top">
-      <div class="m-walletTransactionsTable__time">
-        Upcoming
-      </div>
-      <div class="m-walletTransactionsTable__typeWrapper">
-        (mouseenter)="showRewardsPopup = true"
-        (mouseleave)="showRewardsPopup = false"
-        <i class="material-icons">star_border</i
-        ><span>Estimated Pro Earnings</span>
-      </div>
-      <m-walletPendingCashPayout
-        *ngIf="showRewardsPopup"
-      ></m-walletPendingCashPayout>
-    </div> -->
-    <ng-container *ngIf="!inProgress || transactions">
+  <ng-container *ngIf="init">
+    <div
+      class="m-walletTransactionsTable__wrapper"
+      *ngIf="transactions.length >= 1 || !noAccount"
+    >
       <m-walletTransactionsTable
         [currency]="currency"
         [transactions]="transactions"
@@ -25,13 +14,16 @@
       </m-walletTransactionsTable>
       <infinite-scroll
         distance="25%"
-        (load)="load(false)"
+        (load)="loadTransactions(false)"
         [moreData]="moreData"
         [inProgress]="inProgress"
       ></infinite-scroll>
-    </ng-container>
-  </div>
-  <div class="m-walletTransactions__noTxNotice" *ngIf="init && !transactions">
-    You don't have any cash transactions yet.
-  </div>
+    </div>
+    <div
+      class="m-walletTransactions__noTxNotice"
+      *ngIf="transactions.length === 0 || noAccount"
+    >
+      <p>You don't have any cash transactions yet.</p>
+    </div>
+  </ng-container>
 </div>

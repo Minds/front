@@ -1,5 +1,8 @@
 <div class="m-walletBalance--cash" *ngIf="!inProgress">
-  <div class="m-walletBalance---cash__onboardingNotice">
+  <div
+    class="m-walletBalance---cash__onboardingNotice"
+    *ngIf="!hasAccount || !account.bankAccount"
+  >
     <p (click)="scrollToSettings()">
       <a>Add your bank information</a>
     </p>
