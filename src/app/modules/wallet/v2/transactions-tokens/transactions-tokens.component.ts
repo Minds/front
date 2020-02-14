@@ -234,7 +234,7 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
     if (typeFilter !== this.selectedTransactionType) {
       this.filterApplied = typeFilter === 'all' ? false : true;
       this.selectedTransactionType = typeFilter;
-      this.load(true);
+      this.loadTransactions(true);
     }
   }
 
