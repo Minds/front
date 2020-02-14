@@ -138,7 +138,7 @@ export class ChannelComponent {
       });
       this.metaService.setRobots(
         this.user.is_mature ||
-          this.user['subscribers_count'] > MIN_METRIC_FOR_ROBOTS
+          this.user['subscribers_count'] < MIN_METRIC_FOR_ROBOTS
           ? 'noindex'
           : 'all'
       );
