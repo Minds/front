@@ -33,6 +33,7 @@ export class AttachmentService {
   private pendingDelete: boolean = false;
 
   private xhr: XMLHttpRequest = null;
+  private previewRequests: string[] = [];
 
   constructor(
     public session: Session,
@@ -356,7 +357,37 @@ export class AttachmentService {
     this.meta.description = '';
   }
 
-  preview(content: string, detectChangesFn?: Function) {
+  /**
+   * Resets preview requests to null.
+   */
+  resetPreviewRequests(): AttachmentService {
+    this.previewRequests = [];
+    return this;
+  }
+
+  /**
+   * Returns preview requests.
+   */
+  getPreviewRequests(): string[] {
+    return this.previewRequests;
+  }
+
+  /**
+   * Adds a new preview request.
+   * @param { string } url -
+   */
+  addPreviewRequest(url: string): AttachmentService {
+    this.previewRequests.push(url);
+    return this;
+  }
+
+  /**
+   * Gets attachment preview from content.
+   * @param { string } content - Content to be parsed for preview URL.
+   * @param { Function } detectChangesFn - Function to be ran on change emission.
+   * @returns void.
+   */
+  preview(content: string, detectChangesFn?: Function): void {
     let match = content.match(/(\b(https?|ftp|file):\/\/[^\s\]\)]+)/gi),
       url;
 
@@ -389,6 +420,7 @@ export class AttachmentService {
     }
 
     this.attachment.richUrl = url;
+    this.addPreviewRequest(url);
 
     if (detectChangesFn) detectChangesFn();
 
@@ -401,7 +433,7 @@ export class AttachmentService {
       this.clientService
         .get('api/v1/newsfeed/preview', { url })
         .then((data: any) => {
-          if (!data) {
+          if (!data || this.getPreviewRequests().length < 1) {
             this.resetRich();
             if (detectChangesFn) detectChangesFn();
             return;

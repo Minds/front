@@ -383,6 +383,7 @@ m-onboarding {
             line-height: 21px;
             padding-left: 8px;
             margin-bottom: 8px;
+            box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
 
             @include m-theme() {
               color: themed($m-grey-800);
@@ -405,6 +406,7 @@ m-onboarding {
               flex-grow: 1;
               display: flex;
               margin-bottom: 8px;
+              box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
 
               .m-phone-input--wrapper {
                 justify-content: flex-start;
@@ -421,6 +423,7 @@ m-onboarding {
 
                   font-size: 16px;
                   line-height: 21px;
+                  box-shadow: none;
 
                   @include m-theme() {
                     color: themed($m-grey-800);

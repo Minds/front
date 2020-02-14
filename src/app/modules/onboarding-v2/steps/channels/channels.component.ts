@@ -9,6 +9,6 @@ export class ChannelsStepComponent {
   constructor(private router: Router) {}
 
   finish() {
-    this.router.navigate(['/newsfeed']);
+    this.router.navigate(['/newsfeed/global/top']);
   }
 }

@@ -6,6 +6,7 @@ import { ConfigsService } from './configs.service';
 
 const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
+export const MIN_METRIC_FOR_ROBOTS = 5;
 
 @Injectable()
 export class MetaService {

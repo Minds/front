@@ -18,7 +18,10 @@ import { DialogService } from '../../common/services/confirm-leave-dialog.servic
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ClientMetaService } from '../../common/services/client-meta.service';
-import { MetaService } from '../../common/services/meta.service';
+import {
+  MetaService,
+  MIN_METRIC_FOR_ROBOTS,
+} from '../../common/services/meta.service';
 import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
@@ -70,6 +73,9 @@ export class ChannelComponent {
 
   ngOnInit() {
     this.updateMeta();
+    if (this.user) {
+      this.clientMetaService.recordView(this.user);
+    }
 
     this.context.set('activity');
     this.onScroll();
@@ -130,7 +136,12 @@ export class ChannelComponent {
         width: 2000,
         height: 1000,
       });
-      this.metaService.setRobots(this.user.is_mature ? 'noindex' : 'all');
+      this.metaService.setRobots(
+        this.user.is_mature ||
+          this.user['subscribers_count'] < MIN_METRIC_FOR_ROBOTS
+          ? 'noindex'
+          : 'all'
+      );
     } else if (this.username) {
       this.metaService.setTitle(this.username);
     } else {
@@ -171,6 +182,7 @@ export class ChannelComponent {
           this.addRecent();
         }
 
+        // this.load() is only called if this.user was not previously set
         this.clientMetaService.recordView(this.user);
       })
       .catch(e => {
