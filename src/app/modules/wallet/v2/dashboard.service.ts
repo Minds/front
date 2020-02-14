@@ -4,58 +4,70 @@ import { Session } from '../../../services/session';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import toFriendlyCryptoVal from '../../../helpers/friendly-crypto';
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 
-import fakeData from './fake-data';
+export interface WalletCurrency {
+  label: string;
+  unit: string;
+  balance: number;
+  address: string | null;
+}
 
+export interface Wallet {
+  tokens: WalletCurrency;
+  offchain: WalletCurrency;
+  onchain: WalletCurrency;
+  receiver: WalletCurrency;
+  cash: WalletCurrency;
+  eth: WalletCurrency;
+  btc: WalletCurrency;
+}
 @Injectable()
 export class WalletDashboardService {
   walletLoaded = false;
   totalTokens = 0;
-  wallet: any = {
+  wallet: Wallet = {
     tokens: {
       label: 'Tokens',
       unit: 'tokens',
-      balance: '0',
+      balance: 0,
       address: null,
     },
     offchain: {
       label: 'Off-chain',
       unit: 'tokens',
-      balance: '0',
+      balance: 0,
       address: 'offchain',
     },
     onchain: {
       label: 'On-chain',
       unit: 'tokens',
-      balance: '0',
+      balance: 0,
       address: null,
     },
     receiver: {
       label: 'Receiver',
       unit: 'tokens',
-      balance: '0',
+      balance: 0,
       address: null,
     },
     cash: {
       label: 'Cash',
       unit: 'cash',
-      balance: '0',
+      balance: 0,
       address: null,
     },
     eth: {
       label: 'Ether',
       unit: 'eth',
-      balance: '0',
+      balance: 0,
       address: null,
     },
     btc: {
       label: 'Bitcoin',
       unit: 'btc',
-      balance: '0',
+      balance: 0,
       address: null,
     },
-    // loading: false,
   };
 
   constructor(
@@ -65,13 +77,10 @@ export class WalletDashboardService {
     protected session: Session
   ) {}
 
-  getWallet() {
-    this.getTokenAccounts();
-    this.getEthAccount();
-    this.getStripeAccount();
-
-    // TODOOJM toggle
-    // this.wallet = fakeData.wallet;
+  async getWallet() {
+    await this.getTokenAccounts();
+    await this.getEthAccount();
+    await this.getStripeAccount();
 
     this.walletLoaded = true;
     return this.wallet;
@@ -141,7 +150,7 @@ export class WalletDashboardService {
         this.wallet.onchain.balance
       );
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -159,25 +168,27 @@ export class WalletDashboardService {
   }
 
   async getStripeAccount() {
-    //TODOOJM toggle
-    // return fakeData.stripe_account.account;
-
     const merchant = this.session.getLoggedInUser().merchant;
     if (merchant && merchant.service === 'stripe') {
       try {
         const { account } = <any>(
           await this.client.get('api/v2/payments/stripe/connect')
         );
-        if (account && account.totalBalance) {
+        if (account) {
+          this.wallet.cash.address = 'stripe';
           this.wallet.cash.balance =
             (account.totalBalance.amount - account.pendingBalance.amount) / 100;
           if (account.bankAccount) {
-            const c = account.bankAccount.currency;
-            this.wallet.cash.label = c.toUpperCase;
-            this.wallet.cash.unit = c;
+            const bankCurrency = account.bankAccount.currency;
+            this.wallet.cash.label = bankCurrency.toUpperCase;
+            this.wallet.cash.unit = bankCurrency;
+          } else {
+            // Has stripe account but not setup bank account
+            const defaultCurrency = account.pendingBalance.currency;
+            this.wallet.cash.label = defaultCurrency.toUpperCase;
+            this.wallet.cash.unit = defaultCurrency;
           }
         }
-
         return account;
       } catch (e) {
         console.error(e);
@@ -189,22 +200,12 @@ export class WalletDashboardService {
   }
 
   async createStripeAccount(form) {
+    console.log('stripeform', form);
     try {
       const response = <any>(
-        await this.client.post('api/v1/merchant/onboard', form)
+        await this.client.put('api/v2/wallet/usd/account', form)
       );
-      return response;
-    } catch (e) {
-      console.error(e);
-      return e;
-    }
-  }
 
-  async updateStripeAccount(form) {
-    try {
-      const response = <any>(
-        await this.client.post('api/v2/payments/stripe/connect', form)
-      );
       return response;
     } catch (e) {
       console.error(e);
@@ -285,7 +286,6 @@ export class WalletDashboardService {
 
       // TODOOJM toggle fake data
       return response.transactions;
-      // return fakeData.stripe_payouts;
     } catch (e) {
       console.error(e);
       return;
@@ -293,31 +293,25 @@ export class WalletDashboardService {
   }
 
   async getTokenChart(activeTimespanId) {
-    const opts = { timespan: activeTimespanId };
-
-    // TODOOJM toggle
+    const opts = {
+      metric: 'token_balance',
+      timespan: activeTimespanId,
+    };
     try {
       const response = <any>(
-        await this.client.post(
-          'api/v2/analytics/dashboards/engagement?metric=token_balance',
-          opts
-        )
+        await this.client.get('api/v2/analytics/dashboards/token', opts)
       );
       return response;
     } catch (e) {
       console.error(e);
       return e;
     }
-
-    // return fakeData.token_chart;
   }
 
   async getProEarnings() {
-    // return 77.3;
-
     try {
       const response = <any>(
-        await this.client.post(
+        await this.client.get(
           'api/v2/analytics/dashboards/earnings?metric=earnings_total&timespan=today'
         )
       );
@@ -336,18 +330,10 @@ export class WalletDashboardService {
 
   async getTokenTransactions(opts) {
     try {
-      // TODOOJM uncomment
       const response = <any>(
         await this.client.get(`api/v2/blockchain/transactions/ledger`, opts)
       );
       return response;
-
-      // TODOOJM remove
-      // if (!opts.contract) {
-      //   return fakeData.tx_tokens;
-      // } else {
-      //   return fakeData.tx_tokens_filtered;
-      // }
     } catch (e) {
       console.error(e);
       return;
@@ -384,7 +370,6 @@ export class WalletDashboardService {
   }
 
   async getDailyTokenContributionScores(dateRangeOpts) {
-    // TODOOJM toggle
     try {
       const response: any = await this.client.post(
         'api/v2/blockchain/contributions',
@@ -398,6 +383,5 @@ export class WalletDashboardService {
       console.error(e);
       return false;
     }
-    // return fakeData.pendingTokenRewards;
   }
 }

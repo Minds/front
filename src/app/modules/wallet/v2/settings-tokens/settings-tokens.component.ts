@@ -77,6 +77,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   }
 
   // TODOOJM add fx to reload whenever the current setting is updated
+
   ngOnInit() {
     this.load();
   }
@@ -124,7 +125,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     } catch (e) {
       console.error(e);
       // TODOOJM get rid of form toast
-      this.formToastService.error(e);
+      // this.formToastService.error(e);
     } finally {
       this.inProgress = false;
       this.detectChanges();
@@ -172,7 +173,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
     } catch (e) {
       console.error(e);
       // TODOOJM get rid of form toast
-      this.formToastService.error(e);
+      // this.formToastService.error(e);
       this.inProgress = false;
     }
   }
@@ -228,6 +229,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
 
   async useExternal() {
     this.linkingMetamask = true;
+    this.inProgress = true;
     await this.web3Wallet.ready();
     this.detectExternal();
     if (isPlatformBrowser(this.platformId)) {
@@ -237,6 +239,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
         }
       }, 1000);
     }
+    this.detectChanges();
   }
 
   async detectExternal() {
@@ -245,12 +248,36 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
 
     if (this.providedAddress !== address) {
       this.providedAddress = address;
+      this.currentAddress = address;
+      if (isPlatformBrowser(this.platformId)) {
+        if (address) {
+          clearInterval(this._externalTimer);
+          // this.provideAddress();
+          this.provideMetamaskAddress(address);
+          this.detectChanges();
+        }
+      }
+      this.detectChanges();
+    }
+  }
+
+  async provideMetamaskAddress(address) {
+    try {
+      this.inProgress = true;
       this.detectChanges();
 
-      if (this.providedAddress) {
-        clearInterval(this._externalTimer);
-        this.provideAddress();
-      }
+      await this.blockchain.setWallet({ address: address });
+      this.currentAddress = address;
+      this.display = Views.CurrentAddress;
+      this.addressSetupComplete.emit();
+    } catch (e) {
+      // TODOOJM get rid of form toast
+      this.formToastService.error(e);
+      console.error(e);
+    } finally {
+      this.inProgress = false;
+      this.linkingMetamask = false;
+      this.detectChanges();
     }
   }
 

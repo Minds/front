@@ -71,6 +71,7 @@ export class WalletCashBankFormComponent implements OnInit {
   //   this.detectChanges();
   // }
   async removeBank() {
+    this.showModal = false;
     this.inProgress = true;
     this.detectChanges();
 
@@ -138,6 +139,7 @@ export class WalletCashBankFormComponent implements OnInit {
   }
 
   leaveEditMode() {
+    this.showModal = false;
     this.editing = false;
     this.form.reset();
     this.detectChanges();

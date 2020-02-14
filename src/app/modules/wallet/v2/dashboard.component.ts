@@ -7,13 +7,12 @@ import {
   Inject,
   ViewChild,
   ElementRef,
-  AfterViewInit,
   OnDestroy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import { Subscription } from 'rxjs';
-import { WalletDashboardService } from './dashboard.service';
+import { WalletDashboardService, Wallet } from './dashboard.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import sidebarMenu from './sidebar-menu.default';
@@ -34,7 +33,8 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
 
   menu: Menu = sidebarMenu;
   paramsSubscription: Subscription;
-  wallet = {};
+  wallet: Wallet;
+  inProgress: boolean = true;
 
   activeCurrencyId: string;
   activeViewId: string;
@@ -78,8 +78,6 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       this.onboardingComplete = true;
     }
 
-    this.wallet = this.walletService.getWallet();
-
     this.paramsSubscription = this.route.paramMap.subscribe(
       (params: ParamMap) => {
         const currencyParam = params.get('currency');
@@ -103,8 +101,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
         this.detectChanges();
       }
     );
-    this.setCurrencies();
-    this.detectChanges();
+    this.loadWallet();
   }
 
   ngOnDestroy() {
@@ -113,19 +110,41 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
+  async loadWallet() {
+    try {
+      this.wallet = await this.walletService.getWallet();
+      if (this.wallet) {
+        this.setCurrencies();
+        this.inProgress = false;
+      }
+    } catch (e) {
+      console.error(e);
+    }
+    this.detectChanges();
+  }
+
   setCurrencies() {
-    const headerCurrencies = ['tokens', 'cash', 'eth', 'btc'];
+    this.currencies = [];
+    const headerCurrencies: string[] = ['tokens', 'cash', 'eth', 'btc'];
     headerCurrencies.forEach(currency => {
       const headerTab: ShadowboxHeaderTab = {
         id: currency,
         label: this.wallet[currency].label,
         unit: this.wallet[currency].unit,
-        isLocalCurrency: currency === 'cash' ? true : false,
+        value: this.wallet[currency].balance,
+        isLocalCurrency: false,
       };
-      if (currency !== 'btc') {
-        headerTab.value = this.wallet[currency].balance;
+
+      // Handle currency formatting for cash
+      if (currency === 'cash') {
+        if (this.wallet.cash.unit === 'cash') {
+          headerTab.unit = 'usd';
+        } else {
+          headerTab.isLocalCurrency = true;
+        }
       }
       this.currencies.push(headerTab);
+      this.detectChanges();
     });
   }
 

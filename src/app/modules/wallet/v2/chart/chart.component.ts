@@ -23,19 +23,17 @@ export class WalletChartComponent implements OnInit {
 
   async load() {
     this.inProgress = true;
-    let queryTsId = '1W';
-    if (this.init) {
-      queryTsId = this.activeTimespan.id;
-    }
 
-    const response: any = await this.walletService.getTokenChart(queryTsId);
+    const timespanId = this.init ? this.activeTimespan.id : '30d';
+
+    const response: any = await this.walletService.getTokenChart(timespanId);
     if (response && response.dashboard) {
       this.dashboard = response.dashboard;
       this.dashboard.timespans = this.mapTimespanLabels(
         response.dashboard.timespans
       );
       this.activeTimespan = this.dashboard.timespans.find(
-        ts => ts.selected === true
+        ts => ts.id === timespanId
       );
 
       const activeMetricId = this.dashboard.metric;
@@ -65,7 +63,9 @@ export class WalletChartComponent implements OnInit {
     };
 
     timespans.forEach(t => {
-      t.label = labelMap[t.id];
+      if (labelMap[t.id]) {
+        t.label = labelMap[t.id];
+      }
     });
 
     return timespans;

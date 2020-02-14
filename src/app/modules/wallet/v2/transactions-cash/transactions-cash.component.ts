@@ -4,6 +4,7 @@ import {
   Component,
   Input,
   OnInit,
+  ViewRef,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
@@ -50,6 +51,8 @@ export class WalletTransactionsCashComponent implements OnInit {
   async getStripeAccount() {
     const account = await this.walletService.getStripeAccount();
     if (!account) {
+      this.init = true;
+      this.detectChanges();
       return;
     } else {
       if (account.bankAccount) {
@@ -57,7 +60,6 @@ export class WalletTransactionsCashComponent implements OnInit {
       }
 
       this.runningTotal = account.pendingBalance.amount / 100;
-
       this.detectChanges();
     }
 
@@ -217,7 +219,9 @@ export class WalletTransactionsCashComponent implements OnInit {
   }
 
   detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 }

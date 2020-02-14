@@ -1,14 +1,14 @@
 <div class="m-walletCashOnboarding">
   <div class="m-walletCashOnboardingView--addDetails" *ngIf="!editing">
     <p>Add your bank account details where cash rewards will be deposited.</p>
-    <m-shadowboxSubmitButton (click)="enterEditMode()" color="grey"
-      >Set up cash payments</m-shadowboxSubmitButton
-    >
+    <m-shadowboxSubmitButton (click)="enterEditMode()"
+      >Add your bank details</m-shadowboxSubmitButton
+    >`
   </div>
 
   <div class="m-walletCashOnboardingView--form" *ngIf="editing">
     <form [formGroup]="form">
-      <p>Enter personal details to setup your cash payment account.</p>
+      <p>Enter personal details to start setting up your cash account.</p>
       <!-- ------------------------------------------------------------ -->
 
       <!-- **** INPUT: COUNTRY DROPDOWN -->
@@ -87,15 +87,6 @@
               class="form-control"
               (selectedDateChange)="dob.setValue($event)"
             ></m-date__dropdowns>
-            <!-- <minds-date-input
-              id="dob"
-              name="dob"
-              class="form-control"
-              formControlName="dob"
-              data-minds="dob"
-              [date]="dob.value"
-              (dateChange)="dob.setValue($event)"
-            ></minds-date-input> -->
           </div>
         </div>
 
@@ -124,19 +115,19 @@
           *ngIf="isCountry(['HK', 'SG'])"
         >
           <div class="m-walletForm__row--label">
-            <label for="personalId" i18n *ngIf="isCountry(['HK'])"
+            <label for="personalIdNumber" i18n *ngIf="isCountry(['HK'])"
               >Hong Kong Identity Card (HKID)</label
             >
-            <label for="personalId" i18n *ngIf="isCountry(['SG'])"
+            <label for="personalIdNumber" i18n *ngIf="isCountry(['SG'])"
               >National Registration Identity Card (NRIC)</label
             >
           </div>
           <div class="m-walletForm__row--input">
             <input
               type="text"
-              id="personalId"
-              name="personalId"
-              formControlName="personalId"
+              id="personalIdNumber"
+              name="personalIdNumber"
+              formControlName="personalIdNumber"
               class="form-control"
             />
           </div>
@@ -267,10 +258,12 @@
       <div class="m-walletForm__field--checkbox">
         <div class="m-walletSettings__row--input">
           <m-formInput__checkbox formControlName="stripeAgree">
-            I have read and agree to the
-            <a href="https://stripe.com/legal" target="_blank">
-              Stripe Services Agreement
-            </a>
+            <span
+              >I have read and agree to the
+              <a href="https://stripe.com/legal" target="_blank">
+                Stripe Services Agreement
+              </a></span
+            >
           </m-formInput__checkbox>
         </div>
       </div>
@@ -284,14 +277,14 @@
       <!-- FORM BUTTONS -------------- -->
       <div class="m-walletForm__buttonsContainer">
         <m-shadowboxSubmitButton
-          (click)="toggleEditMode(false)"
+          (click)="showModal = true"
           [disabled]="inProgress"
           color="grey"
           >Cancel</m-shadowboxSubmitButton
         >
         <m-shadowboxSubmitButton
           (click)="createAccount()"
-          [disabled]="inProgress"
+          [disabled]="inProgress || form.invalid"
           [saving]="inProgress"
           >Update Personal Information</m-shadowboxSubmitButton
         >

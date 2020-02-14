@@ -16,6 +16,14 @@
 }
 ////////////////////////////////////////////
 m-walletDashboard {
+  .m-wallet__spinner {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  m-tooltip {
+    z-index: 99999;
+  }
   m-shadowboxHeader {
     min-height: 103px;
   }
@@ -351,8 +359,8 @@ m-walletDashboard {
           min-width: 100%;
           max-width: 100%;
         }
-        m-phoneInput input {
-          min-width: none;
+        .m-phoneInput__input {
+          min-width: 0;
         }
       }
     }
@@ -398,7 +406,7 @@ m-walletDashboard {
     font-size: 14px;
     line-height: 19px;
     margin: 23px 0 0 0;
-    // font-weight: 300;
+    font-weight: 400; // TODOOJM - make this 300 on the install metamask page
     @include m-theme() {
       color: themed($m-textColor--tertiary);
     }
@@ -417,16 +425,15 @@ m-walletDashboard {
     flex-flow: row wrap;
     font-size: 15px;
     line-height: 20px;
-    // font-weight: 300;
 
     div:first-child {
-      margin-right: 18px;
+      margin: 0 18px 8px 0;
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
     }
     a {
-      font-size: 15px;
+      font-size: 14px;
       line-height: 20px;
       font-weight: 300;
     }
@@ -490,6 +497,9 @@ m-walletDashboard {
             transparent
           )
           10 100%;
+      }
+      a {
+        font-weight: 300;
       }
     }
     div {

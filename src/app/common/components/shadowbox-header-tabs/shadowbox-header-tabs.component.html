@@ -41,13 +41,6 @@
             : (tab.value | token: 18 | number: '1.0-3')
         }}
       </ng-template>
-      <ng-template ngSwitchCase="btc">
-        {{
-          friendlyVals
-            ? (tab.value | number: '1.0-3')
-            : (tab.value | token: 18 | number: '1.0-3')
-        }}
-      </ng-template>
       <ng-template ngSwitchCase="number">
         {{ tab.value | number }}
       </ng-template>
@@ -59,6 +52,7 @@
             : (tab.value / 100 | number: '1.2-2')
         }}
       </ng-template>
+      <ng-template ngSwitchCase="btc"> </ng-template>
       <ng-template ngSwitchDefault>
         {{ tab.value | number: '1.0-3' }}
       </ng-template>

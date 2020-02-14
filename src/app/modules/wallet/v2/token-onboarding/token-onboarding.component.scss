@@ -39,6 +39,10 @@ m-walletTokenOnboarding {
     @include m-theme() {
       border-right: 1px solid themed($m-grey-50);
     }
+
+    .m-walletTokenOnboardingModal__view--verifyPhone {
+      margin-top: 12px;
+    }
   }
   .m-walletTokenOnboardingStep__title {
     font-weight: 500;
@@ -74,6 +78,13 @@ m-walletTokenOnboarding {
     @include m-theme() {
       color: themed($m-grey-600);
     }
+  }
+
+  .m-walletForm__wrapper {
+    margin-bottom: 38px;
+  }
+  .m-phoneInput__countryList {
+    max-height: 114px;
   }
 
   // ***************************************************

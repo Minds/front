@@ -69,7 +69,6 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
   @HostListener('click', ['$event'])
   onClick($event) {
     const targetMetric = $event.target;
-    console.log('clickevent', $event);
     if (targetMetric.className === 'm-shadowboxHeader__overflowFade--left') {
       this.slide('left');
     } else {

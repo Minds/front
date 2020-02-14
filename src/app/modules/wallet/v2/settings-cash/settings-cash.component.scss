@@ -47,6 +47,9 @@ m-walletSettings--cash {
   m-walletCashOnboarding {
     .m-walletForm__field--checkbox {
       margin-top: 100px;
+      span {
+        font-size: 14px;
+      }
     }
   }
 }

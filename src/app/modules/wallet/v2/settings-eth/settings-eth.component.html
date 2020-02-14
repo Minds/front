@@ -1,4 +1,4 @@
-<div class="m-walletSettings" *ngIf="wallet">
+<div class="m-walletSettings" *ngIf="ethWallet">
   <h2>Ether Address</h2>
   <p>
     Your Ether address is the same as your on-chain address.<m-tooltip
@@ -12,10 +12,10 @@
     To view or change your address, go to
     <a (click)="scrollToTokenSettings.emit()">token settings</a>.
   </p>
-  <div *ngIf="wallet.onchain.address">
+  <div *ngIf="ethWallet.address" class="m-walletSettings--eth__balanceWrapper">
     <div>
-      <p class="m-walletForm__row--label">Ether total</p>
-      <p>{{ wallet.eth.balance }}</p>
+      <p class="m-walletSettings--eth__balanceLabel">Ether total</p>
+      <p class="m-walletSettings--eth__balanceVal">{{ ethWallet.balance }}</p>
     </div>
     <m-shadowboxSubmitButton [routerLink]="['/token', { purchaseEth: 'open' }]">
       Buy Ether

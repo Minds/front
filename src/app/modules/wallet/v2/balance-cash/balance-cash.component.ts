@@ -51,13 +51,14 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
         this.detectChanges();
       }
     );
-    // TOOOJM toggle
-    this.isPro = true;
-    // this.isPro = this.configs.get('pro');
+    this.isPro = this.configs.get('pro');
 
     this.load();
-    this.getProEarnings();
-    // this.loaded = true;
+
+    if (this.isPro) {
+      this.getProEarnings();
+    }
+    this.loaded = true;
     this.detectChanges();
   }
 
@@ -68,7 +69,8 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
   }
 
   async load() {
-    // TODOOJM confirm that mark has migrated all stripe accts to monthly intervals
+    // TODOOJM confirm that Mark has migrated all stripe accts to monthly intervals
+    // TODOOJM OR just get the payout date from the stripe account itself
     this.nextPayoutDate = moment()
       .endOf('month')
       .format('ddd Do MMM');
@@ -92,6 +94,7 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
           this.account.pendingBalance.amount) /
         100;
 
+      console.log('888totalpaidoutraw', totalPaidOutRaw);
       if (totalPaidOutRaw < 0) {
         totalPaidOutRaw = 0;
       }
@@ -107,16 +110,14 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
     this.inProgress = true;
     this.detectChanges();
 
-    // try {
-    //   const response: number = await this.walletService.getProEarnings();
-    //   this.proEarnings = this.formatBalance(response);
-    // } catch (e) {
-    //   console.error(e.message);
-    //   this.proEarnings = this.formatBalance(0);
-    // }
-    this.proEarnings = this.formatBalance(123.4);
+    try {
+      const response: number = await this.walletService.getProEarnings();
+      this.proEarnings = this.formatBalance(response);
+    } catch (e) {
+      console.error(e.message);
+      this.proEarnings = this.formatBalance(0);
+    }
     this.inProgress = false;
-    this.loaded = true;
     this.detectChanges();
   }
 

@@ -4,6 +4,7 @@ import {
   Input,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  ViewRef,
 } from '@angular/core';
 import { WalletDashboardService } from '../dashboard.service';
 
@@ -58,7 +59,9 @@ export class WalletRewardsPopupComponent implements OnInit {
     this.detectChanges();
   }
   detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 }

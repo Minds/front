@@ -4,6 +4,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  ViewRef,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
@@ -36,6 +37,7 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
   showRewardsPopup: boolean = false;
   startOfToday = moment().startOf('day');
+
   // For admins viewing a remote user's transactions
   remote: boolean = false;
   remoteUsername: string = '';
@@ -107,10 +109,10 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
   async getBalance() {
     const tokenAccounts = await this.walletService.getTokenAccounts();
     this.runningTotal = tokenAccounts.tokens.balance;
-    this.load(true);
+    this.loadTransactions(true);
   }
 
-  async load(refresh: boolean) {
+  async loadTransactions(refresh: boolean) {
     if (this.inProgress && !refresh) {
       return;
     }
@@ -276,7 +278,9 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
   }
 
   detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 }

@@ -9,7 +9,7 @@ import {
 import { FormBuilder, Validators } from '@angular/forms';
 import { requiredFor, optionalFor } from './../settings-cash.validators';
 import { WalletDashboardService } from '../../dashboard.service';
-import { FormToastService } from '../../../../../common/services/form-toast.service';
+import { Session } from '../../../../../services/session';
 
 @Component({
   selector: 'm-walletCashOnboarding',
@@ -31,10 +31,12 @@ export class WalletCashOnboardingComponent implements OnInit {
     private cd: ChangeDetectorRef,
     protected walletService: WalletDashboardService,
     private fb: FormBuilder,
-    private formToastService: FormToastService
+    protected session: Session
   ) {}
 
   ngOnInit() {
+    this.user = this.session.getLoggedInUser();
+
     this.form = this.fb.group({
       country: ['US', Validators.required],
 
@@ -59,10 +61,11 @@ export class WalletCashOnboardingComponent implements OnInit {
     this.inProgress = true;
     this.error = '';
 
+    console.log('createAccountFormval', this.form.value);
     this.walletService
       .createStripeAccount(this.form.value)
       .then((response: any) => {
-        console.log('createAccount response', response);
+        console.log('createStripeAccount response', response);
 
         if (!this.user.programs) {
           this.user.programs = [];
@@ -73,10 +76,11 @@ export class WalletCashOnboardingComponent implements OnInit {
           id: response.id,
           service: 'stripe',
         };
+
         this.detectChanges();
       })
       .catch(e => {
-        // TODO backend should include e.param and handle errors inline
+        // TODO backend should include e.param to allow inline error handling
         this.error = e.message;
       });
 
@@ -93,6 +97,7 @@ export class WalletCashOnboardingComponent implements OnInit {
     this.detectChanges();
   }
   leaveEditMode() {
+    this.showModal = false;
     this.editing = false;
     this.form.reset();
     this.detectChanges();

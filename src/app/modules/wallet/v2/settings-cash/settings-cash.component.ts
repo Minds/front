@@ -1,4 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { WalletDashboardService } from '../dashboard.service';
 import { Session } from '../../../../services/session';
 
@@ -7,6 +13,9 @@ import { Session } from '../../../../services/session';
   templateUrl: './settings-cash.component.html',
 })
 export class WalletSettingsCashComponent implements OnInit {
+  @Output() accountChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() scrollToCashSettings: EventEmitter<any> = new EventEmitter<any>();
+
   loaded: boolean = false;
   inProgress: boolean = true;
   user;
@@ -61,7 +70,8 @@ export class WalletSettingsCashComponent implements OnInit {
     // 3. (if necessary) extras
     // 4. (once verified) bank
 
-    this.view = null;
+    const previousView = this.view;
+    // this.view = null;
     this.inProgress = true;
     this.detectChanges();
 
@@ -82,6 +92,9 @@ export class WalletSettingsCashComponent implements OnInit {
         this.view = 'extras';
       }
     }
+    if (this.loaded && previousView === this.view && this.view !== 'error') {
+      this.accountChanged.emit();
+    }
     this.inProgress = false;
     this.detectChanges();
   }
@@ -94,8 +107,7 @@ export class WalletSettingsCashComponent implements OnInit {
       .getStripeAccount()
       .then((account: any) => {
         this.account = account;
-        // console.log('888 this account', this.account);
-        // this.setView();
+        this.setView();
       })
       .catch(e => {
         this.error = e.message;

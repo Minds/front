@@ -1,31 +1,42 @@
-<div class="m-walletBalance--cash" *ngIf="loaded">
-  <div *ngIf="!inProgress" class="m-walletBalance--cash__colContainer">
+<div class="m-walletBalance--cash" *ngIf="!inProgress">
+  <div class="m-walletBalance---cash__onboardingNotice">
+    <p (click)="scrollToCashSettings.emit()">
+      <a>Add your bank information</a>
+    </p>
+    <p>Start receiving cash payouts by adding your bank details.</p>
+  </div>
+  <div class="m-walletBalance--cash__colContainer">
     <!-- ---PENDING BALANCE ------------------------------------------------- -->
     <div class="m-walletBalance--cash__col">
       <div class="m-walletBalance--cash__colTitle">
         Pending Balance<m-tooltip icon="help"
-          >TO DO: this is the total amount of wires and earnings that you will
-          receive. Add something about payout date being estimated. And might
-          take up to 7 days
+          >The total amount of cash you are scheduled to receive from wires
+          and/or earnings. The payout date is estimated and it may take up to 7
+          days before your balance reaches your bank account.
         </m-tooltip>
       </div>
-      <div class="m-walletBalance--cash__colValWrapper">
-        <span class="m-walletBalance--cash__colVal--int">{{
-          pendingBalance.int
-            | number: '1.0-0'
-            | currency: currency
-            | slice: 0:-3
-        }}</span
-        ><span
-          class="m-walletBalance--cash__colVal--frac"
-          *ngIf="pendingBalance.frac"
-          >.{{ pendingBalance.frac }}</span
-        >
+      <div class="m-walletBalance--cash__colValWrapper" *ngIf="!hasAccount">
+        <span class="m-walletBalance--cash__colVal--int">$0</span>
       </div>
-      <div class="m-walletBalance--cash__colSubtitle">
-        <p>Estimated Payout</p>
-        <p>{{ nextPayoutDate }}</p>
-      </div>
+      <ng-container *ngIf="hasAccount">
+        <div class="m-walletBalance--cash__colValWrapper">
+          <span class="m-walletBalance--cash__colVal--int">{{
+            pendingBalance.int
+              | number: '1.0-0'
+              | currency: currency
+              | slice: 0:-3
+          }}</span
+          ><span
+            class="m-walletBalance--cash__colVal--frac"
+            *ngIf="pendingBalance.frac"
+            >.{{ pendingBalance.frac }}</span
+          >
+        </div>
+        <div class="m-walletBalance--cash__colSubtitle">
+          <p>Estimated Payout</p>
+          <p>{{ nextPayoutDate }}</p>
+        </div>
+      </ng-container>
     </div>
     <!-- ---TOTAL PAID OUT------------------------------------------------- -->
 
@@ -71,7 +82,8 @@
 
       <div class="m-walletBalance--cash__colSubtitle">
         <p>
-          Go to <a routerLink="/analytics/dashboard/earnings">Pro Analytics</a>
+          Go to
+          <a routerLink="/analytics/dashboard/earnings">Pro Analytics</a>
         </p>
       </div>
     </div>

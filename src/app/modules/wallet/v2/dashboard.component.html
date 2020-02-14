@@ -1,4 +1,7 @@
-<m-pageLayout [menu]="menu">
+<div *ngIf="inProgress" class="m-wallet__spinner">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+<m-pageLayout [menu]="menu" *ngIf="!inProgress">
   <div class="m-walletDashboard" m-pageLayout__main *ngIf="currencies">
     <m-dashboardLayout>
       <ng-container m-dashboardLayout__header>
@@ -70,11 +73,13 @@
                     <m-walletSettings--tokens
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'tokens'"
+                      (onchainAddressChanged)="loadWallet()"
                       #tokenSettings
                     ></m-walletSettings--tokens>
                     <m-walletSettings--cash
                       class="m-walletDashboardViews__view"
                       *ngIf="activeCurrencyId === 'cash'"
+                      (accountChanged)="loadWallet()"
                       #cashSettings
                     ></m-walletSettings--cash>
                     <m-walletSettings--eth

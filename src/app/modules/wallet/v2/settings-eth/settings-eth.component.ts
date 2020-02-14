@@ -1,21 +1,35 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { WalletDashboardService } from '../dashboard.service';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ChangeDetectorRef,
+} from '@angular/core';
+import { WalletDashboardService, WalletCurrency } from '../dashboard.service';
 
 @Component({
   selector: 'm-walletSettings--eth',
   templateUrl: './settings-eth.component.html',
 })
 export class WalletSettingsETHComponent implements OnInit {
-  wallet;
-  showModal = false;
+  ethWallet: WalletCurrency;
   @Output() scrollToTokenSettings: EventEmitter<any> = new EventEmitter();
-  constructor(protected walletService: WalletDashboardService) {}
+  constructor(
+    protected walletService: WalletDashboardService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.load();
   }
 
-  load() {
-    this.wallet = this.walletService.getWallet();
+  async load() {
+    this.ethWallet = await this.walletService.getEthAccount();
+    console.log('ethw', this.ethWallet);
+    this.detectChanges();
+  }
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

@@ -72,6 +72,11 @@ m-walletTransactionsTable {
       }
     }
   }
+  .m-walletTransactionsTable__typeWrapper {
+    &.containsPopover {
+      cursor: defaut;
+    }
+  }
 
   .m-walletTransactionsTable__avatar {
     border-radius: 100%;

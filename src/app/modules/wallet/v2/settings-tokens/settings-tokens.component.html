@@ -38,18 +38,16 @@
         </ng-container>
         <ng-container *ngIf="linkingMetamask">
           <ng-container *ngIf="hasExternal">
-            <p *ngIf="providedAddress">
+            <!-- <p *ngIf="providedAddress">
               {{ providedAddress }}
-            </p>
-
+            </p> -->
             <p *ngIf="!providedAddress">
               MetaMask is either locked or connected to another network.
             </p>
           </ng-container>
-          <p *ngIf="hasExternal && providedAddress">
+          <!-- <p *ngIf="hasExternal && providedAddress">
             Please ensure you select the "Main Ethereum Network".
-          </p>
-
+          </p> -->
           <p *ngIf="downloadingMetamask">
             Note: You might need to reload Minds after installing and setting up
             MetaMask.

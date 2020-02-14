@@ -11,7 +11,7 @@ m-walletBalance--cash {
   }
   .m-walletBalance--cash__colContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-flow: row wrap;
   }
 
@@ -43,6 +43,7 @@ m-walletBalance--cash {
 
   .m-walletBalance--cash__col {
     max-width: 200px;
+    margin-right: 18px;
     .m-walletBalance--cash__colTitle {
       font-size: 16px;
       line-height: 21px;
@@ -81,32 +82,38 @@ m-walletBalance--cash {
     }
   }
 
-  // .m-walletBalance--cash__colTitle {
-  //   min-width: 78px;
-  //   font-size: 16px;
-  //   line-height: 21px;
-  // }
   .m-walletBalance--cash__colValWrapper {
     font-size: 13px;
     line-height: 18px;
     font-weight: 500;
     margin-top: 8px;
   }
-  // .m-walletBalance--cash__colVal--int {
-  //   font-size: 16px;
-  //   line-height: 21px;
-  //   @include m-theme() {
-  //     color: themed($m-grey-800);
-  //   }
-  // }
-  // .m-walletBalance--cash__colVal--frac {
-  //   font-size: 13px;
-  //   line-height: 18px;
-  // }
+
   a {
     display: inline-block;
     margin-top: 14px;
     font-size: 14px;
     line-height: 19px;
+  }
+
+  // ONBOARDING NOTICE ///////////////////////////
+  .m-walletBalance---cash__onboardingNotice {
+    margin-bottom: 30px;
+    padding: 20px 23px;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    p {
+      font-size: 13px;
+      line-height: 18px;
+      margin: 0;
+    }
+    a {
+      font-size: 14px;
+      line-height: 19px;
+      margin: 0 0 3px 0;
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 }

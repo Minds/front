@@ -110,23 +110,23 @@
   >
     <div class="m-walletForm__field--text">
       <div class="m-walletForm__row--label">
-        <label for="personalId" i18n
+        <label for="personalIdNumber" i18n
           >Personal ID / Social Security Number (SSN) / National Insurance
           Number</label
         >
       </div>
       <div class="m-walletForm__row--input">
         <input
-          #personalId
-          id="personalId"
-          name="personalId"
+          #personalIdNumber
+          id="personalIdNumber"
+          name="personalIdNumber"
           class="form-control"
-          data-minds="personalId"
+          data-minds="personalIdNumber"
         />
       </div>
     </div>
     <m-shadowboxSubmitButton
-      (click)="updateField('id_number', personalId.value)"
+      (click)="updateField('id_number', personalIdNumber.value)"
       [disabled]="inProgress"
       [saving]="inProgress"
       >Save</m-shadowboxSubmitButton

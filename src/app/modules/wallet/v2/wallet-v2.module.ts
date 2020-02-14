@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, PLATFORM_ID } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -25,6 +25,12 @@ import { WalletTransactionsCashComponent } from './transactions-cash/transaction
 import { WalletCashOnboardingComponent } from './settings-cash/cash-onboarding/cash-onboarding.component';
 import { WalletCashOnboardingExtrasComponent } from './settings-cash/cash-onboarding-extras/cash-onboarding-extras.component';
 import { WalletCashBankFormComponent } from './settings-cash/cash-bank-form/cash-bank-form.component';
+import { Web3WalletService } from '../../blockchain/web3-wallet.service';
+import { LocalWalletService } from '../../blockchain/local-wallet.service';
+import { TransactionOverlayService } from '../../blockchain/transaction-overlay/transaction-overlay.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
+import { WithdrawContractService } from '../../blockchain/contracts/withdraw-contract.service';
 
 //////////////////////////////////////////////////
 // TODO add a wildcard and the parameter routes as children once feature-flag is lifted
@@ -90,6 +96,21 @@ export const WALLET_V2_ROUTES: Routes = [
     WalletCashBankFormComponent,
   ],
   exports: [WalletDashboardComponent],
-  providers: [WalletDashboardService],
+  providers: [
+    WalletDashboardService,
+    {
+      provide: Web3WalletService,
+      useFactory: Web3WalletService._,
+      deps: [
+        LocalWalletService,
+        TransactionOverlayService,
+        PLATFORM_ID,
+        ConfigsService,
+      ],
+    },
+    TokenContractService,
+    WithdrawContractService,
+    ConfigsService,
+  ],
 })
 export class WalletV2Module {}
