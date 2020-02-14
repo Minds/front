@@ -120,13 +120,13 @@ const cache = () => {
       (isMobileOrTablet() ? '/mobile' : '/desktop');
     const exists = myCache.has(key);
     if (exists) {
-      console.log(`from cache: ${key}`);
       const cachedBody = myCache.get(key);
       res.send(cachedBody);
       return;
     } else {
       res.sendResponse = res.send;
       res.send = body => {
+        if (res.finished) return;
         myCache.set(key, body);
         res.sendResponse(body);
       };
