@@ -198,7 +198,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: BlockchainService,
     useFactory: BlockchainService._,
-    deps: [Client],
+    deps: [Client, Session],
   },
   {
     provide: WebtorrentService,
