@@ -330,9 +330,7 @@
   > a.m-v2-topbarLoginWrapper__login {
     padding: 0;
     border: none !important;
-    @media screen and(max-width: $max-mobile) {
-      margin-right: 10px;
-    }
+    margin-right: $minds-margin * 2;
   }
 
   > a.m-v2-topbarLoginWrapper__joinMindsNow {
