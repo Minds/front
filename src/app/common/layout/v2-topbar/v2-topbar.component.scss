@@ -56,7 +56,6 @@
     }
 
     .m-v2-topbar__Container__LoginWrapper > a {
-      margin-right: 40px;
       @include m-theme() {
         background: transparent;
         border: 1px solid themed($m-black-always);
