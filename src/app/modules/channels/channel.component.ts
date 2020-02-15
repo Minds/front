@@ -127,21 +127,26 @@ export class ChannelComponent {
 
   private updateMeta(): void {
     if (this.user) {
-      this.metaService.setTitle(`${this.user.name} (@${this.user.username})`);
-      this.metaService.setDescription(
-        this.user.briefdescription || `Subscribe to @${this.user.username}`
-      );
-      this.metaService.setOgUrl(`/${this.user.username.toLowerCase()}`);
-      this.metaService.setOgImage(this.user.avatar_url.master, {
-        width: 2000,
-        height: 1000,
-      });
-      this.metaService.setRobots(
-        this.user.is_mature ||
+      const url = `/${this.user.username.toLowerCase()}`;
+      this.metaService
+        .setTitle(`${this.user.name} (@${this.user.username})`)
+        .setDescription(
+          this.user.briefdescription || `Subscribe to @${this.user.username}`
+        )
+        .setOgUrl(url)
+        .setCanonicalUrl(url)
+        .setOgImage(this.user.avatar_url.master, {
+          width: 2000,
+          height: 1000,
+        })
+        .setRobots(
           this.user['subscribers_count'] < MIN_METRIC_FOR_ROBOTS
-          ? 'noindex'
-          : 'all'
-      );
+            ? 'noindex'
+            : 'all'
+        );
+      if (this.user.is_mature || this.user.nsfw.length) {
+        this.metaService.setNsfw(true);
+      }
     } else if (this.username) {
       this.metaService.setTitle(this.username);
     } else {

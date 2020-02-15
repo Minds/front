@@ -39,6 +39,7 @@ describe('ChannelModeSelector', () => {
       subscribers_count: 182,
       impressions: 18200,
       mode: ChannelMode.PUBLIC,
+      nsfw: [],
     };
 
     clientMock.response['api/v1/channel/info'] = { status: 'success' };

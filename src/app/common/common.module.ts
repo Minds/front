@@ -442,24 +442,7 @@ const routes: Routes = [
         ),
       deps: [Client, Injector, RedirectService, Location],
     },
-    {
-      provide: MetaService,
-      useFactory: (
-        titleService,
-        metaService,
-        siteService,
-        location,
-        configsService
-      ) =>
-        new MetaService(
-          titleService,
-          metaService,
-          siteService,
-          location,
-          configsService
-        ),
-      deps: [Title, Meta, SiteService, Location, ConfigsService],
-    },
+    MetaService,
     MediaProxyService,
     V2TopbarService,
     {

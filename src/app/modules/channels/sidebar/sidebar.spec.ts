@@ -191,6 +191,7 @@ describe('ChannelSidebar', () => {
       subscribers_count: 182,
       impressions: 18200,
       mode: ChannelMode.PUBLIC,
+      nsfw: [],
     };
     comp.editing = false;
     uploadMock.response[`api/v1/channel/avatar`] = {

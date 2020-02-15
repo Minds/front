@@ -8,6 +8,7 @@ import { RegisterForm } from '../forms/register/register';
 import { FeaturesService } from '../../services/features.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service';
+import { MetaService } from '../../common/services/meta.service';
 
 @Component({
   selector: 'm-homepage__v2',
@@ -18,16 +19,19 @@ export class HomepageV2Component {
 
   readonly cdnAssetsUrl: string;
   readonly siteUrl: string;
+  readonly headline = 'Take back control of your social media';
+  readonly description =
+    'A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.';
 
   constructor(
     public client: Client,
     public router: Router,
     public navigation: NavigationService,
     public session: Session,
-    private loginReferrer: LoginReferrerService,
     private featuresService: FeaturesService,
     configs: ConfigsService,
-    private onboardingService: OnboardingV2Service
+    private onboardingService: OnboardingV2Service,
+    private metaService: MetaService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
@@ -38,6 +42,10 @@ export class HomepageV2Component {
       this.router.navigate(['/newsfeed']);
       return;
     }
+    this.metaService
+      .setDescription(`${this.headline}. ${this.description.split('.')[0]}.`)
+      .setCanonicalUrl('/')
+      .setOgUrl('/');
   }
 
   registered() {
