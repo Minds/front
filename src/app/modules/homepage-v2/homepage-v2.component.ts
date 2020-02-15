@@ -43,7 +43,8 @@ export class HomepageV2Component {
       return;
     }
     this.metaService
-      .setDescription(`${this.headline}. ${this.description.split('.')[0]}.`)
+      .setTitle(`Minds - ${this.headline}`, false)
+      .setDescription(this.description)
       .setCanonicalUrl('/')
       .setOgUrl('/');
   }
