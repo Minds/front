@@ -272,11 +272,6 @@
             class="mdl-cell mdl-cell--12-col m-media--description"
             *ngIf="entity.description"
             [innerHtml]="entity.description | safe"
-            [hidden]="
-              descriptionContainer.innerText &&
-              !descriptionContainer.innerText.trim('')
-            "
-            #descriptionContainer
           ></div>
         </div>
 
