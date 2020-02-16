@@ -41,7 +41,7 @@ enum Views {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
-  @Output() addressSetupComplete: EventEmitter<any> = new EventEmitter();
+  @Output() onchainAddressChanged: EventEmitter<any> = new EventEmitter();
   wallet;
   inProgress: boolean = false;
   linkingMetamask: boolean = false;
@@ -81,6 +81,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.load();
   }
+
   async load() {
     this.wallet = await this.walletService.getWallet();
     // Check if already has an address
@@ -88,7 +89,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       this.session.getLoggedInUser().eth_wallet || this.wallet.receiver.address;
     if (this.currentAddress) {
       this.display = Views.CurrentAddress;
-      this.addressSetupComplete.emit();
+      this.onchainAddressChanged.emit();
     }
 
     this.form = new FormGroup({
@@ -144,7 +145,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveBlob(blob, filename);
         this.inProgress = false;
-        this.addressSetupComplete.emit();
+        this.onchainAddressChanged.emit();
         this.detectChanges();
       } else {
         const link = window.document.createElement('a'),
@@ -161,7 +162,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
           setTimeout(() => {
             URL.revokeObjectURL(objectUrl);
             this.generatedAccount = null;
-            this.addressSetupComplete.emit();
+            this.onchainAddressChanged.emit();
             this.inProgress = false;
             if (!(this.cd as ViewRef).destroyed) {
               this.detectChanges();
@@ -194,7 +195,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       this.detectChanges();
 
       await this.blockchain.setWallet({ address: this.addressInput.value });
-      this.addressSetupComplete.emit();
+      this.onchainAddressChanged.emit();
     } catch (e) {
       // TODOOJM get rid of form toast
       this.formToastService.error(e);
@@ -269,7 +270,7 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
       await this.blockchain.setWallet({ address: address });
       this.currentAddress = address;
       this.display = Views.CurrentAddress;
-      this.addressSetupComplete.emit();
+      this.onchainAddressChanged.emit();
     } catch (e) {
       // TODOOJM get rid of form toast
       this.formToastService.error(e);

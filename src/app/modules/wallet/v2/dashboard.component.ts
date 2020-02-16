@@ -25,8 +25,6 @@ import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletDashboardComponent implements OnInit, OnDestroy {
-  @ViewChild('tokensSettings', { static: false }) tokenSettingsEl: ElementRef;
-  @ViewChild('cashSettings', { static: false }) cashSettingsEl: ElementRef;
   @ViewChild('dashboardViews', { static: false })
   dashboardViewsEl: ElementRef;
 
@@ -37,7 +35,9 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
 
   activeCurrencyId: string;
   activeViewId: string;
-  tokenOnboardingComplete = false;
+  tokenOnboardingComplete: boolean = false;
+  hasOnchainAddress: boolean = false;
+  phoneVerified: boolean = false;
 
   views: any = {
     tokens: [
@@ -70,10 +70,9 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (
-      this.session.getLoggedInUser().rewards &&
-      this.session.getLoggedInUser().eth_wallet
-    ) {
+    this.phoneVerified = this.session.getLoggedInUser().rewards;
+    this.hasOnchainAddress = this.session.getLoggedInUser().eth_wallet;
+    if (this.phoneVerified && this.hasOnchainAddress) {
       this.tokenOnboardingComplete = true;
     }
 
@@ -135,6 +134,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       };
 
       // Handle currency formatting for cash
+      // TODOOJM this isn't going to work
       if (currency === 'cash') {
         if (this.wallet.cash.unit === 'cash') {
           headerTab.unit = 'usd';
@@ -165,30 +165,31 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
+  onchainAddressChanged() {
+    this.hasOnchainAddress = true;
+    this.detectChanges();
+
+    this.loadWallet();
+  }
+
   scrollToSettings(currency: string) {
-    if (this.activeCurrencyId !== currency) {
-      this.router.navigate([`/wallet/${currency}/settings`]);
+    if (
+      this.activeCurrencyId !== currency ||
+      this.activeViewId !== 'settings'
+    ) {
+      this.router.navigate([`/wallet/${currency}/settings`]).then(() => {
+        this.scrollToSettingsEl();
+      });
     } else {
-      const settingsEl =
-        currency === 'cash'
-          ? this.cashSettingsEl.nativeElement
-          : this.tokenSettingsEl.nativeElement;
-
-      if (!settingsEl) {
-        this.updateView('settings');
-      }
-    }
-
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(
-        () =>
-          this.dashboardViewsEl.nativeElement.scrollIntoView({
-            behavior: 'smooth',
-          }),
-        0
-      );
+      this.scrollToSettingsEl();
     }
     this.detectChanges();
+  }
+
+  scrollToSettingsEl() {
+    this.dashboardViewsEl.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+    });
   }
 
   detectChanges() {

@@ -30,7 +30,7 @@
           ></m-dropdownSelector>
         </div>
       </div>
-      <ng-container *ngIf="transactions.length >= 1">
+      <ng-container *ngIf="transactions.length !== 0">
         <m-walletTransactionsTable
           currency="tokens"
           [transactions]="transactions"

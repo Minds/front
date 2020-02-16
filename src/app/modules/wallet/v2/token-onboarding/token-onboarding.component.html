@@ -18,11 +18,11 @@
       <span>2.</span>
       <a
         (click)="clickedAddressStep()"
-        [ngClass]="{ disabled: !phoneVerified, stepComplete: addressAdded }"
+        [ngClass]="{ disabled: !phoneVerified, stepComplete: hasAddress }"
       >
         Add your on-chain address</a
       >
-      <i class="material-icons" *ngIf="addressAdded">check</i>
+      <i class="material-icons" *ngIf="hasAddress">check</i>
     </div>
     <div class="m-walletTokenOnboardingStep__desc">
       Your Ethereum address allows you to start receiving payments on the

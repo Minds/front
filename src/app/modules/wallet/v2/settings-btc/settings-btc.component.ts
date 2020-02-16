@@ -3,7 +3,6 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
-  EventEmitter,
 } from '@angular/core';
 import {
   FormGroup,
@@ -36,18 +35,25 @@ export class WalletSettingsBTCComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.load();
-  }
-  async load() {
-    // Check if already has an address
-    const { address } = <any>await this.client.get('api/v2/wallet/btc/address');
-    this.currentAddress = address;
-
     this.form = new FormGroup({
       addressInput: new FormControl('', {
         validators: [Validators.required, this.validateAddressFormat],
       }),
     });
+    this.load();
+  }
+  async load() {
+    try {
+      // Check if already has an address
+      const { address } = <any>(
+        await this.client.get('api/v2/wallet/btc/address')
+      );
+      if (address) {
+        this.currentAddress = address;
+      }
+    } catch (e) {
+      console.error(e);
+    }
     this.loaded = true;
     this.detectChanges();
   }

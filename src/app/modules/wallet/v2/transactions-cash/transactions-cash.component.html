@@ -5,7 +5,7 @@
   <ng-container *ngIf="init">
     <div
       class="m-walletTransactionsTable__wrapper"
-      *ngIf="transactions.length >= 1 || !noAccount"
+      *ngIf="transactions.length !== 0"
     >
       <m-walletTransactionsTable
         [currency]="currency"
@@ -21,7 +21,7 @@
     </div>
     <div
       class="m-walletTransactions__noTxNotice"
-      *ngIf="transactions.length === 0 || noAccount"
+      *ngIf="transactions.length === 0"
     >
       <p>You don't have any cash transactions yet.</p>
     </div>

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
-import { WalletDashboardService } from '../dashboard.service';
+import { WalletDashboardService, WalletCurrency } from '../dashboard.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
@@ -21,7 +21,10 @@ import { ConfigsService } from '../../../../common/services/configs.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletBalanceCashComponent implements OnInit, OnDestroy {
-  inProgress: boolean = true;
+  @Output() scrollToCashSettings: EventEmitter<any> = new EventEmitter();
+  @Input() viewId: string;
+  @Input() cashWallet: WalletCurrency; // TODOOJM USE ME & make me a setter
+
   account;
   hasAccount: boolean = true;
   isPro: boolean = false;
@@ -33,8 +36,6 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
   currency = 'usd';
   paramsSubscription: Subscription;
   loaded: boolean = false;
-
-  @Output() scrollToCashSettings: EventEmitter<any> = new EventEmitter();
 
   constructor(
     protected client: Client,
@@ -76,19 +77,25 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
       .endOf('month')
       .format('ddd Do MMM');
 
-    this.account = await this.walletService.getStripeAccount();
-
-    if (!this.account || !this.account.accountNumber) {
+    // this.account = await this.walletService.getStripeAccount();
+    // if (!this.account || !this.account.accountNumber) {
+    if (this.cashWallet.address !== 'stripe') {
       this.hasAccount = false;
       this.pendingBalance = this.formatBalance(0);
       this.totalPaidOut = this.formatBalance(0);
     } else {
-      this.pendingBalance = this.formatBalance(
-        this.account.pendingBalance.amount / 100
-      );
-      if (this.account.bankAccount) {
-        this.currency = this.account.bankAccount.currency.toUpperCase();
-      }
+      this.hasAccount = true;
+      this.pendingBalance = this.formatBalance(this.cashWallet.balance);
+      this.currency = this.cashWallet.label.toUpperCase();
+
+      this.account = await this.walletService.getStripeAccount();
+
+      // this.pendingBalance = this.formatBalance(
+      //   this.account.pendingBalance.amount / 100
+      // );
+      // if (this.account.bankAccount) {
+      //   this.currency = this.account.bankAccount.currency.toUpperCase();
+      // }
 
       let totalPaidOutRaw =
         (this.account.totalBalance.amount -
@@ -103,14 +110,10 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
       this.totalPaidOut = this.formatBalance(totalPaidOutRaw);
     }
 
-    this.inProgress = false;
     this.detectChanges();
   }
 
   async getProEarnings() {
-    this.inProgress = true;
-    this.detectChanges();
-
     try {
       const response: number = await this.walletService.getProEarnings();
       this.proEarnings = this.formatBalance(response);
@@ -118,7 +121,6 @@ export class WalletBalanceCashComponent implements OnInit, OnDestroy {
       console.error(e.message);
       this.proEarnings = this.formatBalance(0);
     }
-    this.inProgress = false;
     this.detectChanges();
   }
 

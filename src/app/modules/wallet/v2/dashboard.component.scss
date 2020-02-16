@@ -363,203 +363,261 @@ m-walletDashboard {
       }
     }
   }
-}
 
-// *******************************************************
-// ** SETTINGS - COMMON STYLES ***************************
-// *******************************************************
+  // *******************************************************
+  // ** SETTINGS - COMMON STYLES ***************************
+  // *******************************************************
 
-.m-walletSettings {
-  // font-weight: 300;
-  @include m-theme() {
-    color: themed($m-textColor--primary);
-  }
-  m-shadowboxSubmitButton {
-    margin: 27px 0 0 0;
-  }
-  h2 {
-    margin: 0;
-    font-size: 26px;
-    line-height: 34px;
-  }
-  h4 {
-    margin: 0;
-    font-size: 21px;
-    line-height: 28px;
-  }
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .m-walletSettings {
     // font-weight: 300;
-  }
-  a {
-    // font-weight: 300;
-    text-decoration: underline;
-    cursor: pointer;
-    font-size: 14px;
-    line-height: 19px;
-  }
-  p {
-    font-size: 14px;
-    line-height: 19px;
-    margin: 23px 0 0 0;
-    font-weight: 400; // TODOOJM - make this 300 on the install metamask page
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--primary);
     }
-  }
-
-  .m-walletSettingsView--addressCurrent {
+    m-shadowboxSubmitButton {
+      margin: 27px 0 0 0;
+    }
     h2 {
-      margin-bottom: 23px;
+      margin: 0;
+      font-size: 26px;
+      line-height: 34px;
     }
-  }
-  .m-walletSettingsView--addressCurrent__title {
-    margin-bottom: 13px;
-  }
-  .m-walletSettingsView--addressCurrent__addressContainer {
-    display: flex;
-    flex-flow: row wrap;
-    font-size: 15px;
-    line-height: 20px;
-
-    div:first-child {
-      margin: 0 18px 8px 0;
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-      }
+    h4 {
+      margin: 0;
+      font-size: 21px;
+      line-height: 28px;
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      // font-weight: 300;
     }
     a {
+      // font-weight: 300;
+      text-decoration: underline;
+      cursor: pointer;
       font-size: 14px;
-      line-height: 20px;
-      font-weight: 300;
-    }
-  }
-
-  .m-walletSettings__setupOptions__recommendation {
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: flex-end;
-    font-size: 12px;
-    line-height: 16px;
-    margin: 31px 0 0 0;
-    @include m-theme() {
-      color: themed($m-textColor--tertiary);
-    }
-    i {
-      font-size: 18px;
-      margin-right: 8px;
-    }
-  }
-  .m-walletSettingsView__setupOptions__container {
-    display: flex;
-    flex-flow: row wrap;
-    li {
-      box-sizing: border-box;
-      flex: 1 1 50%;
-      padding: 16px 0 16px 54px;
+      line-height: 19px;
     }
     p {
+      font-size: 14px;
+      line-height: 19px;
+      margin: 23px 0 0 0;
+      font-weight: 400; // TODOOJM - make this 300 on the install metamask page
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+
+    .m-walletSettingsView--addressCurrent {
+      h2 {
+        margin-bottom: 23px;
+      }
+    }
+    .m-walletSettingsView--addressCurrent__title {
+      margin-bottom: 13px;
+    }
+    .m-walletSettingsView--addressCurrent__addressContainer {
+      display: flex;
+      flex-flow: row wrap;
+      font-size: 15px;
+      line-height: 20px;
+
+      div:first-child {
+        margin: 0 18px 8px 0;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      a {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 300;
+      }
+    }
+
+    .m-walletSettings__setupOptions__recommendation {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: flex-end;
+      font-size: 12px;
+      line-height: 16px;
+      margin: 31px 0 0 0;
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+      i {
+        font-size: 18px;
+        margin-right: 8px;
+      }
+    }
+    .m-walletSettingsView__setupOptions__container {
+      display: flex;
+      flex-flow: row wrap;
+      li {
+        box-sizing: border-box;
+        flex: 1 1 50%;
+        padding: 16px 0 16px 54px;
+      }
+      p {
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      .m-walletSettingsView__setupOption--custom {
+        div {
+          margin-top: 16px;
+          display: inline-block;
+          a,
+          span {
+            display: inline-block;
+            margin-right: 5px;
+            font-weight: 300;
+          }
+          span {
+            @include m-theme() {
+              color: themed($m-textColor--tertiary);
+            }
+          }
+        }
+      }
+      .m-walletSettingsView__setupOption--metamask {
+        padding-right: 32px;
+        padding-left: 0;
+        border-width: 0;
+        border-right-width: 1px;
+        border-style: solid;
+        @include m-theme() {
+          border-image: linear-gradient(
+              transparent,
+              rgba(themed($m-grey-200), 0.6),
+              transparent
+            )
+            10 100%;
+        }
+        a {
+          font-weight: 300;
+        }
+      }
+      div {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        img {
+          height: 34px;
+          margin-right: 12px;
+        }
+      }
+    }
+    span.m-walletSettings__address--emphasis {
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
     }
-    .m-walletSettingsView__setupOption--custom {
-      div {
-        margin-top: 16px;
-        display: inline-block;
-        a,
+
+    a.m-walletSettings__backButton {
+      margin-top: 33px;
+      display: inline-flex;
+      flex-flow: row nowrap;
+      align-items: baseline;
+      text-decoration: none;
+
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+      &:hover {
         span {
-          display: inline-block;
-          margin-right: 5px;
-          font-weight: 300;
+          text-decoration: underline;
         }
-        span {
-          @include m-theme() {
-            color: themed($m-textColor--tertiary);
+      }
+      i {
+        font-size: 14px;
+        font-weight: 300;
+        margin-right: 10px;
+      }
+    }
+
+    @media screen and (max-width: $min-tablet) {
+      .m-walletSettingsView__setupOptions__container {
+        li.m-walletSettingsView__setupOption--custom {
+          padding-left: 32px;
+        }
+      }
+    }
+
+    @media screen and (max-width: 520px) {
+      .m-walletSettingsView__setupOptions__container {
+        li {
+          flex-basis: 100%;
+          &.m-walletSettingsView__setupOption--metamask {
+            padding: 16px 0 32px 0;
+            border-right-width: 0;
+          }
+          &.m-walletSettingsView__setupOption--custom {
+            padding: 32px 0 0 0;
           }
         }
       }
     }
-    .m-walletSettingsView__setupOption--metamask {
-      padding-right: 32px;
-      padding-left: 0;
-      border-width: 0;
-      border-right-width: 1px;
-      border-style: solid;
-      @include m-theme() {
-        border-image: linear-gradient(
-            transparent,
-            rgba(themed($m-grey-200), 0.6),
-            transparent
-          )
-          10 100%;
-      }
-      a {
-        font-weight: 300;
-      }
-    }
-    div {
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: center;
-      img {
-        height: 34px;
-        margin-right: 12px;
-      }
-    }
-  }
-  span.m-walletSettings__address--emphasis {
-    @include m-theme() {
-      color: themed($m-textColor--primary);
-    }
   }
 
-  a.m-walletSettings__backButton {
-    margin-top: 33px;
-    display: inline-flex;
-    flex-flow: row nowrap;
-    align-items: baseline;
-    text-decoration: none;
-
-    @include m-theme() {
-      color: themed($m-textColor--tertiary);
+  @media screen and (max-width: $max-mobile) {
+    [class*='m-walletTokenOnboardingStep--'] {
+      padding: 19px;
     }
-    &:hover {
-      span {
-        text-decoration: underline;
-      }
-    }
-    i {
-      font-size: 14px;
-      font-weight: 300;
-      margin-right: 10px;
-    }
-  }
-
-  @media screen and (max-width: $min-tablet) {
-    .m-walletSettingsView__setupOptions__container {
-      li.m-walletSettingsView__setupOption--custom {
-        padding-left: 32px;
-      }
-    }
-  }
-
-  @media screen and (max-width: 520px) {
-    .m-walletSettingsView__setupOptions__container {
-      li {
-        flex-basis: 100%;
-        &.m-walletSettingsView__setupOption--metamask {
-          padding: 16px 0 32px 0;
-          border-right-width: 0;
+    m-walletModal {
+      .m-walletModal__close {
+        top: 14px;
+        right: 20px;
+        @include m-theme() {
+          background-color: rgba(0, 0, 0, 0);
+          box-shadow: none;
         }
-        &.m-walletSettingsView__setupOption--custom {
-          padding: 32px 0 0 0;
+        &:hover {
+          @include m-theme() {
+            box-shadow: none;
+          }
+        }
+      }
+      .m-walletModal {
+        min-width: 90vw;
+        min-height: 96vh;
+        padding: 20px;
+        .m-phoneInput__wrapper {
+          min-width: 200px;
+        }
+
+        .m-walletForm__wrapper {
+          margin-bottom: 0px;
+        }
+        .m-walletModal__title {
+          // font-size: 20px;
+          // line-height: 25px;
+        }
+        .m-walletModal__desc p {
+          // font-size: 14px;
+          // line-height: 19px;
+        }
+        .m-walletModal__footnote--formStatus {
+          font-size: 13px;
+          line-height: 18px;
+          > div {
+            &:first-child {
+              margin-bottom: 8px;
+            }
+          }
+        }
+        m-shadowboxSubmitButton {
+          margin-bottom: 10px;
+        }
+
+        m-phoneInput {
+          .m-phoneInput__countryList {
+            max-height: 124px;
+          }
         }
       }
     }
   }
 }
-
 ///////////////////////////////////

@@ -10,7 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
-import { WalletDashboardService } from '../dashboard.service';
+import { WalletDashboardService, WalletCurrency } from '../dashboard.service';
 
 import * as moment from 'moment';
 
@@ -21,6 +21,7 @@ import * as moment from 'moment';
 })
 export class WalletTransactionsCashComponent implements OnInit {
   @Input() noAccount: boolean = false;
+  @Input() cashWallet: WalletCurrency; // TODOOJM USE ME
 
   init: boolean = false;
   inProgress: boolean = true;
@@ -47,6 +48,7 @@ export class WalletTransactionsCashComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('cash transactions noAccount: ', this.noAccount);
     if (!this.noAccount) {
       this.getStripeAccount();
     } else {
@@ -58,13 +60,13 @@ export class WalletTransactionsCashComponent implements OnInit {
   async getStripeAccount() {
     try {
       const account = await this.walletService.getStripeAccount();
-      console.log('txcashAcct', account);
       if (account) {
         if (account.bankAccount) {
           this.currency = account.bankAccount.currency.toUpperCase();
         }
 
         this.runningTotal = account.pendingBalance.amount / 100;
+        this.loadTransactions(true);
       }
     } catch (e) {
       console.error(e);
@@ -75,24 +77,6 @@ export class WalletTransactionsCashComponent implements OnInit {
       this.detectChanges();
     }
   }
-
-  //   const account = await this.walletService.getStripeAccount();
-  //   console.log('txcashAcct', account);
-  //   if (!account) {
-  //     this.init = true;
-  //     this.detectChanges();
-  //     return;
-  //   } else {
-  //     if (account.bankAccount) {
-  //       this.currency = account.bankAccount.currency.toUpperCase();
-  //     }
-
-  //     this.runningTotal = account.pendingBalance.amount / 100;
-  //     this.detectChanges();
-  //   }
-
-  //   this.loadTransactions(true);
-  // }
 
   async loadTransactions(refresh: boolean) {
     if (this.inProgress && !refresh) {
@@ -117,12 +101,8 @@ export class WalletTransactionsCashComponent implements OnInit {
         opts
       );
 
-      if (refresh) {
-        this.transactions = [];
-      }
-
       if (response) {
-        if (response && response.transactions) {
+        if (response.transactions) {
           this.formatResponse(response.transactions);
         }
 
@@ -143,6 +123,11 @@ export class WalletTransactionsCashComponent implements OnInit {
     } finally {
       this.init = true;
       this.inProgress = false;
+      console.log(
+        'cash transactions:',
+        this.transactions.length,
+        this.transactions
+      );
       this.detectChanges();
     }
   }

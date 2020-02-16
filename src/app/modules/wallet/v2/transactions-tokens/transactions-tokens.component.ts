@@ -146,12 +146,8 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
       const response: any = await this.walletService.getTokenTransactions(opts);
 
-      if (refresh) {
-        this.transactions = [];
-      }
-
       if (response) {
-        if (response && response.transactions) {
+        if (response.transactions) {
           this.formatResponse(response.transactions);
         }
 

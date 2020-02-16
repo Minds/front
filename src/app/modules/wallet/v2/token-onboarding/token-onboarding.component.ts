@@ -1,46 +1,57 @@
 import {
   Component,
-  OnInit,
   Input,
   Output,
   EventEmitter,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Session } from '../../../../services/session';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { Session } from '../../../../services/session';
 
+type TokenOnboardingStep = 'phone' | 'address';
 @Component({
   selector: 'm-walletTokenOnboarding',
   templateUrl: './token-onboarding.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WalletTokenOnboardingComponent implements OnInit {
-  phoneVerified = false;
-  addressAdded = false;
+export class WalletTokenOnboardingComponent {
+  private _hasAddress: boolean;
+  @Input() set hasAddress(value: boolean) {
+    this._hasAddress = value;
+    if (value) {
+      this.addressSetupComplete();
+    }
+    this.detectChanges();
+  }
+  get hasAddress(): boolean {
+    return this._hasAddress;
+  }
+
+  private _phoneVerified: boolean;
+  @Input() set phoneVerified(value: boolean) {
+    this._phoneVerified = value;
+    if (value) {
+      this.phoneVerificationComplete();
+    }
+    this.detectChanges();
+  }
+  get phoneVerified(): boolean {
+    return this._phoneVerified;
+  }
+
   showModal = false;
-  activeStep = 'phone'; // || address
+  activeStep: TokenOnboardingStep = 'phone';
+  user;
 
   @Output() onboardingComplete: EventEmitter<any> = new EventEmitter();
   @Output() scrollToTokenSettings: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    protected session: Session,
     protected cd: ChangeDetectorRef,
     private formToastService: FormToastService,
-    protected router: Router,
-    private route: ActivatedRoute
+    protected session: Session
   ) {}
-
-  ngOnInit() {
-    this.phoneVerified = this.session.getLoggedInUser().rewards;
-    this.addressAdded = this.session.getLoggedInUser().eth_wallet;
-    if (this.phoneVerified && this.addressAdded) {
-      this.onboardingComplete.emit();
-    }
-    this.detectChanges();
-  }
 
   clickedPhoneStep() {
     if (!this.phoneVerified) {
@@ -51,7 +62,7 @@ export class WalletTokenOnboardingComponent implements OnInit {
   }
 
   clickedAddressStep() {
-    if (!this.addressAdded) {
+    if (!this.hasAddress) {
       this.activeStep = 'address';
       this.scrollToTokenSettings.emit();
     }
@@ -59,29 +70,36 @@ export class WalletTokenOnboardingComponent implements OnInit {
   }
 
   phoneVerificationComplete() {
-    this.phoneVerified = true;
+    this._phoneVerified = true;
+    this.session.getLoggedInUser().rewards = true;
     this.showModal = false;
-    this.formToastService.success('Your phone number has been verified');
-    if (!this.addressAdded) {
+    if (!this._hasAddress) {
       this.activeStep = 'address';
+      this.detectChanges();
     } else {
-      this.onboardingComplete.emit();
+      this.finishedOnboarding();
     }
   }
 
   addressSetupComplete() {
-    this.addressAdded = true;
+    this._hasAddress = true;
+    this.session.getLoggedInUser().eth_wallet = true;
     this.showModal = false;
-    if (!this.phoneVerified) {
+    if (!this._phoneVerified) {
       this.activeStep = 'phone';
+      this.detectChanges();
     } else {
-      this.formToastService.success(
-        "Congratulations! You're ready to start earning rewards"
-      );
-      this.onboardingComplete.emit();
+      this.finishedOnboarding();
     }
   }
 
+  finishedOnboarding() {
+    this.formToastService.success(
+      "You're ready to start earning token rewards!"
+    );
+    this.onboardingComplete.emit();
+    this.detectChanges();
+  }
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

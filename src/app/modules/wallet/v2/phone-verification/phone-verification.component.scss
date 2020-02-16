@@ -20,7 +20,6 @@ m-walletPhoneVerification {
       width: 100%;
     }
   }
-  // TODOOJM tweak this so countryList max-height doesn't overflow
   @media screen and (max-width: 771px) {
     m-shadowboxSubmitButton {
       margin: 0 0 21px 0;
@@ -44,11 +43,6 @@ m-walletPhoneVerification {
             }
           }
         }
-      }
-    }
-    m-phoneInput {
-      .m-phoneInput__countryList {
-        max-height: 200px;
       }
     }
   }

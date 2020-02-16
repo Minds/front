@@ -1,21 +1,33 @@
-<div class="m-walletBalance--cash" *ngIf="!inProgress">
+<div *ngIf="!loaded" class="m-wallet__spinner">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+<div class="m-walletBalance--cash" *ngIf="loaded">
   <div
     class="m-walletBalance---cash__onboardingNotice"
-    *ngIf="!hasAccount || !account.bankAccount"
+    *ngIf="viewId !== 'settings' && (!hasAccount || !account.bankAccount)"
   >
     <p (click)="scrollToSettings()">
       <a>Add your bank information</a>
     </p>
-    <p>Start receiving cash payouts by adding your bank details.</p>
+    <p>
+      <ng-container *ngIf="!hasAccount"
+        >Start receiving cash payouts by adding your bank details.
+      </ng-container>
+      <ng-container *ngIf="hasAccount"
+        >Finish adding your bank details to start receiving cash payouts.
+      </ng-container>
+    </p>
   </div>
   <div class="m-walletBalance--cash__colContainer">
-    <!-- ---PENDING BALANCE ------------------------------------------------- -->
+    <!-- ---PENDING BALANCE ------------------- -->
+
     <div class="m-walletBalance--cash__col">
       <div class="m-walletBalance--cash__colTitle">
         Pending Balance<m-tooltip icon="help"
-          >The total amount of cash you are scheduled to receive from wires
-          and/or earnings. The payout date is estimated and it may take up to 7
-          days before your balance reaches your bank account.
+          >The total amount of cash you are scheduled to receive from
+          wires<ng-container *ngIf="isPro"> and/or Pro earnings</ng-container>.
+          The payout date is an estimation and it may take up to 7 days before
+          your cash reaches your bank account.
         </m-tooltip>
       </div>
       <div class="m-walletBalance--cash__colValWrapper" *ngIf="!hasAccount">
@@ -41,7 +53,8 @@
         </div>
       </ng-container>
     </div>
-    <!-- ---TOTAL PAID OUT------------------------------------------------- -->
+
+    <!-- ---TOTAL PAID OUT ------------------- -->
 
     <div class="m-walletBalance--cash__col" *ngIf="hasAccount">
       <div class="m-walletBalance--cash__colTitle">
@@ -61,7 +74,9 @@
         >
       </div>
     </div>
-    <!-- ---PRO EARNINGS------------------------------------------------- -->
+
+    <!-- ---PRO EARNINGS ------------------- -->
+
     <div class="m-walletBalance--cash__col" *ngIf="isPro">
       <div class="m-walletBalance--cash__colTitle">
         Pro Earnings<m-tooltip icon="help"

@@ -5,11 +5,24 @@ import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import toFriendlyCryptoVal from '../../../helpers/friendly-crypto';
 
+export interface SplitBalance {
+  total: number;
+  int: number;
+  frac: number | null;
+}
+
+export interface StripeDetails {
+  pendingBalance: SplitBalance;
+  totalPaidOut: SplitBalance;
+  isLocalCurrency: boolean;
+}
+
 export interface WalletCurrency {
   label: string;
   unit: string;
   balance: number;
   address: string | null;
+  stripeDetails?: StripeDetails;
 }
 
 export interface Wallet {
@@ -23,7 +36,6 @@ export interface Wallet {
 }
 @Injectable()
 export class WalletDashboardService {
-  walletLoaded = false;
   totalTokens = 0;
   wallet: Wallet = {
     tokens: {
@@ -82,7 +94,7 @@ export class WalletDashboardService {
     await this.getEthAccount();
     await this.getStripeAccount();
 
-    this.walletLoaded = true;
+    console.log('***', this.wallet);
     return this.wallet;
   }
 
@@ -155,16 +167,19 @@ export class WalletDashboardService {
   }
 
   async getEthAccount() {
-    const address = await this.web3Wallet.getCurrentWallet();
-    if (!address) {
-      return;
+    try {
+      const address = await this.web3Wallet.getCurrentWallet();
+      if (address) {
+        this.wallet.eth.address = address;
+        const ethBalance = await this.web3Wallet.getBalance(address);
+        if (ethBalance) {
+          this.wallet.eth.balance = toFriendlyCryptoVal(ethBalance);
+        }
+      }
+      return this.wallet.eth;
+    } catch (e) {
+      console.error(e);
     }
-    this.wallet.eth.address = address;
-    const ethBalance = await this.web3Wallet.getBalance(address);
-    if (ethBalance) {
-      this.wallet.eth.balance = toFriendlyCryptoVal(ethBalance);
-    }
-    return this.wallet.eth;
   }
 
   async getStripeAccount() {
@@ -175,21 +190,32 @@ export class WalletDashboardService {
         const { account } = <any>(
           await this.client.get('api/v2/payments/stripe/connect')
         );
-        if (account) {
-          console.log('svc getAcc', account);
-          this.wallet.cash.address = 'stripe';
-          this.wallet.cash.balance =
-            (account.totalBalance.amount - account.pendingBalance.amount) / 100;
-          if (account.bankAccount) {
-            const bankCurrency: string = account.bankAccount.currency;
-            this.wallet.cash.label = bankCurrency.toUpperCase();
-            this.wallet.cash.unit = bankCurrency;
-          } else {
-            // Has stripe account but not setup bank account
-            this.wallet.cash.label = 'USD';
-            this.wallet.cash.unit = 'usd';
-          }
+
+        const friendlyAccount = { ...account };
+
+        console.log('svc getAcc', account);
+        this.wallet.cash.address = 'stripe';
+        this.wallet.cash.balance =
+          (account.totalBalance.amount - account.pendingBalance.amount) / 100;
+        if (!account.bankAccount) {
+          // Has stripe account but not setup bank account
+          this.wallet.cash.label = 'USD';
+          this.wallet.cash.unit = 'usd';
+          friendlyAccount.isLocalCurrency = false;
+        } else {
+          const bankCurrency: string = account.bankAccount.currency;
+          this.wallet.cash.label = bankCurrency.toUpperCase();
+          this.wallet.cash.unit = bankCurrency;
+          friendlyAccount.isLocalCurrency = true;
         }
+
+        // TODOOJM
+        //pendingBalanceFriendly
+        // totalPaidOutFriendly = (account.totalBalance.amount - account.pendingBalance.amount) / 100;
+        // formatBalance(int, frac, total)
+
+        //return friendlyAccount
+
         return account;
       } catch (e) {
         console.error(e);
@@ -201,6 +227,7 @@ export class WalletDashboardService {
   }
 
   async createStripeAccount(form) {
+    console.log('creatingstripeaccount', form);
     try {
       const response = <any>(
         await this.client.put('api/v2/wallet/usd/account', form)
@@ -268,24 +295,7 @@ export class WalletDashboardService {
       );
       return response;
 
-      // TODOOJM toggle fake data
       // return fakeData.tx_usd;
-    } catch (e) {
-      console.error(e);
-      return;
-    }
-  }
-
-  async getStripePayouts() {
-    try {
-      const response = <any>(
-        await this.client.get(
-          'api/v1/monetization/service/analytics/list?offset=&limit=12&type=payouts'
-        )
-      );
-
-      // TODOOJM toggle fake data
-      return response.transactions;
     } catch (e) {
       console.error(e);
       return;
@@ -383,5 +393,24 @@ export class WalletDashboardService {
       console.error(e);
       return false;
     }
+  }
+
+  // Returns an object with separated dollars and cents
+  // as well as the original total
+  public splitBalance(balance) {
+    const splitBalance: SplitBalance = {
+      total: balance,
+      int: 0,
+      frac: null,
+    };
+
+    const balanceArray = balance.toString().split('.');
+
+    splitBalance.int = balanceArray[0];
+    if (balanceArray[1]) {
+      splitBalance.frac = balanceArray[1].slice(0, 2);
+    }
+
+    return splitBalance;
   }
 }

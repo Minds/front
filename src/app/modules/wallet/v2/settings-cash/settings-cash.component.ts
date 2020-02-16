@@ -4,8 +4,9 @@ import {
   ChangeDetectorRef,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
-import { WalletDashboardService } from '../dashboard.service';
+import { WalletDashboardService, WalletCurrency } from '../dashboard.service';
 import { Session } from '../../../../services/session';
 
 @Component({
@@ -13,6 +14,7 @@ import { Session } from '../../../../services/session';
   templateUrl: './settings-cash.component.html',
 })
 export class WalletSettingsCashComponent implements OnInit {
+  @Input() cashWallet: WalletCurrency; // TODOOJM handle
   @Output() accountChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() scrollToCashSettings: EventEmitter<any> = new EventEmitter<any>();
 
@@ -69,13 +71,13 @@ export class WalletSettingsCashComponent implements OnInit {
     // 2. bank
     // 3. (if necessary) extras
     // 4. (once verified) bank
-
+    console.log('888 ... setting view');
     const previousView = this.view;
     // this.view = null;
     this.inProgress = true;
     this.detectChanges();
 
-    const hasMerchant = this.user && this.user.merchant.id;
+    const hasMerchant = this.user && this.user.merchant.service === 'stripe';
 
     if (!hasMerchant) {
       this.view = 'onboarding';

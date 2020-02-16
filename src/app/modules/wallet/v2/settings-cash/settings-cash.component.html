@@ -1,4 +1,6 @@
-<div class="mdl-spinner mdl-js-spinner is-active" [mdl] *ngIf="!loaded"></div>
+<div *ngIf="!loaded" class="m-wallet__spinner">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
 <div class="m-walletSettings" *ngIf="loaded">
   <h4>Bank Information</h4>
   <!-- ONBOARDING FORM ------------------ -->

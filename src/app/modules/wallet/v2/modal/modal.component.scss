@@ -120,13 +120,14 @@ m-walletModal {
     .m-walletModal {
       padding: 46px 50px;
       max-width: 80vw;
+      width: 80vw;
       max-height: 90vh;
     }
   }
   @media screen and (max-width: $max-mobile) {
     .m-walletModal {
       padding: 26px 35px;
-      max-width: 90vw;
+      width: 90vw;
       max-height: 95vh;
     }
   }
