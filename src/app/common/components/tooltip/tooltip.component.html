@@ -1,5 +1,8 @@
 <div class="m-tooltip" [class.m-tooltip--anchored]="!!anchor">
-  <i *ngIf="icon" class="material-icons" [ngClass]="iconClass">{{ icon }}</i>
+  <i *ngIf="icon && !iconSrc" class="material-icons" [ngClass]="iconClass">{{
+    icon
+  }}</i>
+  <img *ngIf="iconSrc && !icon" [src]="cdnAssetsUrl + iconSrc" />
   <ng-content select="[m-tooltip--anchor]"></ng-content>
 
   <div

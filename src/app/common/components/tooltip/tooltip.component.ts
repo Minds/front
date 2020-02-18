@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input } from '@angular/core';
+import { ConfigsService } from '../../services/configs.service';
 
 @Component({
   selector: 'm-tooltip',
@@ -12,15 +13,20 @@ export class TooltipComponent {
   @Input() icon;
   @Input() anchor: 'top' | 'bottom' | 'right' | 'left';
   @Input() iconClass;
+  @Input() iconSrc;
   @Input() useParentPosition: boolean = false;
   @Input() enabled: boolean = true;
+
+  public readonly cdnAssetsUrl: string;
 
   hidden: boolean = true;
   offsetTop: number = 0;
   offsetRight: number = 0;
   offsetLeft: number = 0;
 
-  constructor(private element: ElementRef) {}
+  constructor(private element: ElementRef, private configs: ConfigsService) {
+    this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+  }
 
   setHidden(value: boolean) {
     if (!value && !this.enabled) {
