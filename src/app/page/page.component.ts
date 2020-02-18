@@ -27,7 +27,6 @@ export class PageComponent implements OnInit {
 
     this.navigationService.visibleChange.subscribe((visible: boolean) => {
       this.isSidebarVisible = visible;
-      console.warn('got here', visible);
     });
   }
   get isProDomain() {
