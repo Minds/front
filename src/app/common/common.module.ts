@@ -118,9 +118,6 @@ import { MarketingFooterComponent } from './components/marketing/footer.componen
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
-import { ChartV2Component } from './components/chart-v2/chart-v2.component';
-//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
-import { PlotlyModule } from 'angular-plotly.js';
 import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
 import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
@@ -162,7 +159,6 @@ const routes: Routes = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    PlotlyModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     RouterModule.forChild(routes),
@@ -263,7 +259,6 @@ const routes: Routes = [
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
-    ChartV2Component,
     PageLayoutComponent,
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
@@ -370,7 +365,6 @@ const routes: Routes = [
     MarketingComponent,
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
-    ChartV2Component,
     PageLayoutComponent,
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,

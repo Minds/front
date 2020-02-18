@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { UtcDatePipe } from '../../pipes/utcdate';
-import { AbbrPipe } from '../../pipes/abbr';
-import { MockService } from '../../../utils/mock';
-import { ThemeService } from '../../services/theme.service';
+import { UtcDatePipe } from '../../../../common/pipes/utcdate';
+import { AbbrPipe } from '../../../../common/pipes/abbr';
+import { MockService } from '../../../../utils/mock';
+import { ThemeService } from '../../../../common/services/theme.service';
 import { ChartV2Component } from './chart-v2.component';
 
 describe('ChartV2Component', () => {

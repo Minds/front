@@ -13,7 +13,7 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { AdminFirehoseComponent } from './firehose.component';
 import { Session } from '../../../services/session';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NewsfeedHashtagSelectorService } from '../../../modules/newsfeed/services/newsfeed-hashtag-selector.service';
+import { NewsfeedHashtagSelectorService } from '../../newsfeed/services/newsfeed-hashtag-selector.service';
 import { newsfeedHashtagSelectorServiceMock } from '../../../../tests/newsfeed-hashtag-selector-service-mock.spec';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';

@@ -18,7 +18,6 @@ import { ScrollToTopService } from './services/scroll-to-top.service';
 import { ContextService } from './services/context.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
-import { WebtorrentService } from './modules/webtorrent/webtorrent.service';
 import { ActivatedRoute, NavigationEnd, Router, Route } from '@angular/router';
 import { ChannelOnboardingService } from './modules/onboarding/channel/onboarding.service';
 import { BlockListService } from './common/services/block-list.service';
@@ -44,6 +43,8 @@ export class Minds implements OnInit, OnDestroy {
 
   ready: boolean = false;
 
+  showOnboarding: boolean = false;
+
   showTOSModal: boolean = false;
 
   protected router$: Subscription;
@@ -61,7 +62,7 @@ export class Minds implements OnInit, OnDestroy {
     public context: ContextService,
     public web3Wallet: Web3WalletService,
     public client: Client,
-    public webtorrent: WebtorrentService,
+    public onboardingService: ChannelOnboardingService,
     public router: Router,
     public blockListService: BlockListService,
     public featuresService: FeaturesService,
@@ -136,6 +137,10 @@ export class Minds implements OnInit, OnDestroy {
 
     this.session.isLoggedIn(async is => {
       if (is && !this.site.isProDomain) {
+        if (!this.site.isProDomain) {
+          this.showOnboarding = await this.onboardingService.showModal();
+        }
+
         const user = this.session.getLoggedInUser();
         const language = this.configs.get('language');
 
@@ -144,6 +149,14 @@ export class Minds implements OnInit, OnDestroy {
           window.location.reload(true);
         }
       }
+    });
+
+    this.onboardingService.onClose.subscribe(() => {
+      this.showOnboarding = false;
+    });
+
+    this.onboardingService.onOpen.subscribe(async () => {
+      this.showOnboarding = await this.onboardingService.showModal(true);
     });
 
     this.loginReferrer
@@ -161,8 +174,6 @@ export class Minds implements OnInit, OnDestroy {
     this.context.listen();
 
     this.web3Wallet.setUp();
-
-    this.webtorrent.setUp();
 
     this.themeService.setUp();
 
