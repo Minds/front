@@ -40,7 +40,7 @@ export class SearchBarSuggestionsComponent implements OnInit {
     private context: ContextService,
     private cd: ChangeDetectorRef
   ) {
-    this.newNavigation = this.featuresService.has('navigation-2020');
+    this.newNavigation = this.featuresService.has('navigation');
   }
 
   @Input('q') set _q(value: string) {
