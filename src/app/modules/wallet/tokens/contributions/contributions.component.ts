@@ -2,14 +2,16 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { isPlatformServer } from '@angular/common';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-wallet-token--contributions',
   templateUrl: 'contributions.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +27,8 @@ export class WalletTokenContributionsComponent {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     public session: Session,
-    protected router: Router
+    protected router: Router,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
   ngOnInit() {
@@ -42,6 +45,10 @@ export class WalletTokenContributionsComponent {
 
   async load(refresh: boolean) {
     if (this.inProgress && !refresh) {
+      return;
+    }
+
+    if (isPlatformServer(this.platformId)) {
       return;
     }
 

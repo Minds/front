@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnDestroy } from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '../../../services/storage';
@@ -6,12 +6,14 @@ import { OnboardingV2Service } from '../service/onboarding.service';
 import { SidebarMarkersService } from '../../../common/layout/sidebar/markers.service';
 import { iOSVersion } from '../../../helpers/is-safari';
 import { TopbarService } from '../../../common/layout/topbar.service';
+import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-onboarding',
   templateUrl: 'onboarding.component.html',
 })
-export class OnboardingComponent implements OnDestroy {
+export class OnboardingComponent implements OnInit, OnDestroy {
   steps = [
     {
       name: 'Hashtags',
@@ -21,20 +23,23 @@ export class OnboardingComponent implements OnDestroy {
       name: 'Info',
       selected: false,
     },
-    {
-      name: 'Groups',
-      selected: false,
-    },
-    {
-      name: 'Channels',
-      selected: false,
-    },
+    // {
+    //   name: 'Groups',
+    //   selected: false,
+    // },
+    // {
+    //   name: 'Channels',
+    //   selected: false,
+    // },
   ];
   showTitle: boolean = false;
   shown: boolean = false;
 
   @HostBinding('class.m-onboarding__iosFallback')
   iosFallback: boolean = false;
+
+  @HostBinding('class.m-onboarding__newNavigation')
+  newNavigation: boolean = false;
 
   constructor(
     private session: Session,
@@ -43,12 +48,16 @@ export class OnboardingComponent implements OnDestroy {
     private route: ActivatedRoute,
     private onboardingService: OnboardingV2Service,
     private topbarService: TopbarService,
-    private sidebarMarkersService: SidebarMarkersService
-  ) {
+    private navigationService: SidebarNavigationService,
+    private sidebarMarkersService: SidebarMarkersService,
+    private featuresService: FeaturesService
+  ) {}
+
+  ngOnInit() {
     this.iosFallback = iOSVersion() !== null;
 
-    route.url.subscribe(() => {
-      const section: string = route.snapshot.firstChild.routeConfig.path;
+    this.route.url.subscribe(() => {
+      const section: string = this.route.snapshot.firstChild.routeConfig.path;
       if (section === 'notice') {
         this.showTitle = false;
       } else {
@@ -70,12 +79,24 @@ export class OnboardingComponent implements OnDestroy {
       return;
     }
 
+    this.newNavigation = this.featuresService.has('navigation');
+
     this.topbarService.toggleVisibility(false);
-    this.sidebarMarkersService.toggleVisibility(false);
+
+    if (this.newNavigation) {
+      this.navigationService.setVisible(false);
+    } else {
+      this.sidebarMarkersService.toggleVisibility(false);
+    }
   }
 
   ngOnDestroy() {
     this.topbarService.toggleVisibility(true);
-    this.sidebarMarkersService.toggleVisibility(true);
+
+    if (this.newNavigation) {
+      this.navigationService.setVisible(true);
+    } else {
+      this.sidebarMarkersService.toggleVisibility(true);
+    }
   }
 }

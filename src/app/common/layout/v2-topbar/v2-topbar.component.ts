@@ -140,6 +140,9 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
     if (this.timeout) {
       clearTimeout(this.timeout);
     }
+    if (this.router$) {
+      this.router$.unsubscribe();
+    }
   }
 
   private listen() {

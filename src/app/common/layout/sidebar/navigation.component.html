@@ -165,5 +165,7 @@
     </ul>
   </nav>
 
-  <ng-template dynamic-host></ng-template>
+  <div class="m-sidebar--groups" [hidden]="!user">
+    <ng-template dynamic-host></ng-template>
+  </div>
 </div>

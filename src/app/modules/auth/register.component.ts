@@ -29,8 +29,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   videoError: boolean = false;
   referrer: string;
+
   @HostBinding('class.m-register__newDesign')
   newDesign: boolean = false;
+
+  @HostBinding('class.m-register__newNavigation')
+  newNavigation: boolean = false;
+
   @HostBinding('class.m-register__iosFallback')
   iosFallback: boolean = false;
 
@@ -65,6 +70,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     this.newDesign = this.featuresService.has('register_pages-december-2019');
+    this.newNavigation = this.featuresService.has('navigation');
+
     if (this.newDesign) {
       this.topbarService.toggleVisibility(false);
       this.iosFallback = iOSVersion() !== null;

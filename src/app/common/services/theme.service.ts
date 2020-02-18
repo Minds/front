@@ -24,7 +24,7 @@ export class ThemeService {
     private client: Client,
     private session: Session,
     private storage: Storage,
-    private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
   }

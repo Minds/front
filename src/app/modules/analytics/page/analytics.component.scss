@@ -2,6 +2,9 @@
 
 m-analytics {
   display: block;
+  grid-area: content / span 2;
+  min-width: 0;
+
   @include m-theme() {
     background-color: themed($m-white);
   }
@@ -19,4 +22,8 @@ m-analytics {
       margin-bottom: 8px;
     }
   }
+}
+
+.m-grid m-analytics .m-analytics__content {
+  margin: unset;
 }

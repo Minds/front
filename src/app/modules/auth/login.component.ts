@@ -27,8 +27,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.m-login__newDesign')
   newDesign: boolean = false;
+
   @HostBinding('class.m-login__newNavigation')
   newNavigation: boolean = false;
+
   @HostBinding('class.m-login__iosFallback')
   iosFallback: boolean = false;
 
@@ -70,7 +72,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     this.newDesign = this.featuresService.has('register_pages-december-2019');
-    this.newNavigation = this.featuresService.has('navigation-2020');
+    this.newNavigation = this.featuresService.has('navigation');
 
     if (this.newDesign) {
       this.topbarService.toggleVisibility(false);

@@ -1,7 +1,7 @@
 @import 'defaults';
 
 m-newsfeed {
-  grid-area: content;
+  grid-area: content / span 2;
   min-width: 0;
 }
 
@@ -18,6 +18,9 @@ m-newsfeed {
   }
 }
 
+.m-grid .m-newsfeed.mdl-grid {
+  margin: unset;
+}
 .m-newsfeed {
   max-width: 1280px;
   flex-wrap: nowrap;

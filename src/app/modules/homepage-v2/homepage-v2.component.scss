@@ -1,8 +1,14 @@
 @import 'defaults';
 
+.m-grid m-homepage__v2 m-marketing {
+  margin-top: -75px;
+  padding-top: 75px;
+}
 m-homepage__v2 {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
+
+  grid-area: content / span 2;
 
   m-marketing {
     position: relative;

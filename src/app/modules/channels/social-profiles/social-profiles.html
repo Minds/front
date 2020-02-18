@@ -10,7 +10,7 @@
     <a
       *ngIf="profile.key && profile.value"
       [href]="getSocialProfileURL(profile.value)"
-      rel="noopener noreferrer"
+      rel="noopener nofollow ugc"
       target="_blank"
       ><i [ngClass]="[ getSocialProfileIconClass(profile) ]"></i
     ></a>

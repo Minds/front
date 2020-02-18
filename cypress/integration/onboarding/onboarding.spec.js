@@ -1,17 +1,61 @@
+import generateRandomId from "../../support/utilities";
+
 context('Onboarding', () => {
 
-  const remindText = 'remind test text';
+  const username = generateRandomId();
+  const password = `${generateRandomId()}0oA!`;
+  const email = 'test@minds.com';
+
+  const usernameField = 'minds-form-register #username';
+  const emailField = 'minds-form-register #email';
+  const passwordField = 'minds-form-register #password';
+  const password2Field = 'minds-form-register #password2';
+  const checkbox = '[data-cy=data-minds-accept-tos-input]';
+  const submitButton = 'minds-form-register .mdl-card__actions button';
 
   before(() => {
-    cy.getCookie('minds_sess')
-      .then((sessionCookie) => {
-        if (sessionCookie === null) {
-          return cy.login(true);
-        }
-      });
-    cy.visit(`/onboarding`);
+    cy.visit('/register');
+    cy.location('pathname').should('eq', '/register');
+    cy.server();
+    cy.route("POST", "**/api/v1/register").as("register");
 
-    // create two test groups
+    cy.get(usernameField)
+      .focus()
+      .type(username);
+
+    cy.get(emailField)
+      .focus()
+      .type(email);
+
+    cy.get(passwordField)
+      .focus()
+      .type(password);
+
+    cy.wait(500);
+
+    cy.get(password2Field)
+      .focus()
+      .type(password);
+
+    cy.get(checkbox)
+      .click({ force: true });
+
+    //submit
+    cy.get(submitButton)
+      .click()
+      .wait('@register')
+      .then((xhr) => {
+          expect(xhr.status).to.equal(200);
+        }
+      );
+
+    cy.wait(500);
+    cy.location('pathname').should('eq', '/onboarding/notice');
+  });
+
+  after(() => {
+    cy.deleteUser(username, password);
+    cy.clearCookies();
   });
 
   beforeEach(() => {
@@ -21,7 +65,7 @@ context('Onboarding', () => {
   it('should go through the process of onboarding', () => {
     // notice should appear
     cy.get('h1.m-onboarding__noticeTitle').contains('Welcome to the Minds Community');
-    cy.get('h2.m-onboarding__noticeTitle').contains(`@${Cypress.env().username}`);
+    cy.get('h2.m-onboarding__noticeTitle').contains(username);
 
     // should redirect to /hashtags
     cy.get('.m-onboarding__form button.mf-button').contains("Let's Get Setup").click();
@@ -73,8 +117,8 @@ context('Onboarding', () => {
 
     // should have a Location input
     cy.get('.m-onboarding__controls > .m-onboarding__control label[data-minds=location]').contains('Location');
-    cy.get('.m-onboarding__controls > .m-onboarding__control input[data-minds=locationInput]').type('London');
-    cy.get('ul.m-onboarding__cities > li:first-child').click();
+    // cy.get('.m-onboarding__controls > .m-onboarding__control input[data-minds=locationInput]').type('London');
+    // cy.get('ul.m-onboarding__cities > li:first-child').click();
 
 
     // should have Date of Birth inputs
@@ -91,7 +135,11 @@ context('Onboarding', () => {
 
     // should have a continue and a skip button
     cy.get('button.mf-button--hollow').contains('Skip');
-    cy.get('button.mf-button--alt').contains('Continue').click();
+    cy.get('button.mf-button--alt').contains('Finish').click();
+
+    // TODO: disable the following line and uncomment the rest when we re-enable the screens
+    // should be in the newsfeed
+    cy.location('pathname').should('eq', '/newsfeed/subscriptions');
 
     // should be in the Groups step
 
@@ -105,8 +153,8 @@ context('Onboarding', () => {
     // cy.get('.m-groupList__list .m-groupList__item:first-child .m-join__subscribe i').contains('add');
 
     // should have a continue and a skip button
-    cy.get('button.mf-button--hollow').contains('Skip');
-    cy.get('button.mf-button--alt').contains('Continue').click();
+    // cy.get('button.mf-button--hollow').contains('Skip');
+    // cy.get('button.mf-button--alt').contains('Continue').click();
 
 
     // should be in the Channels step
@@ -120,10 +168,10 @@ context('Onboarding', () => {
     // cy.get('.m-channelList__list .m-channelList__item:first-child .m-join__subscribe i').contains('add');
 
     // should have a continue and a skip button
-    cy.get('button.mf-button--hollow').contains('Skip');
-    cy.get('button.mf-button--alt').contains('Finish').click();
+    // cy.get('button.mf-button--hollow').contains('Skip');
+    // cy.get('button.mf-button--alt').contains('Finish').click();
 
     // should be in the newsfeed
-    cy.location('pathname').should('eq', '/newsfeed/subscriptions');
+    // cy.location('pathname').should('eq', '/newsfeed/subscriptions');
   });
 });

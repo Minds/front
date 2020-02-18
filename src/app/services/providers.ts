@@ -50,6 +50,7 @@ import { ConfigsService } from '../common/services/configs.service';
 import { TransferHttpInterceptorService } from './transfer-http-interceptor.service';
 import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.service';
 import { CookieService } from '../common/services/cookie.service';
+import { RedirectService } from '../common/services/redirect.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -186,9 +187,14 @@ export const MINDS_PROVIDERS: any[] = [
   },
   {
     provide: ConfigsService,
-    useFactory: (client, injector) =>
-      new ConfigsService(client, injector.get('QUERY_STRING')),
-    deps: [Client, Injector],
+    useFactory: (client, injector, redirect, location) =>
+      new ConfigsService(
+        client,
+        injector.get('QUERY_STRING'),
+        redirect,
+        location
+      ),
+    deps: [Client, Injector, RedirectService, Location],
   },
   {
     provide: FeaturesService,
