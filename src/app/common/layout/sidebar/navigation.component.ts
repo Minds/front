@@ -24,7 +24,7 @@ import { ConfigsService } from '../../services/configs.service';
 export class SidebarNavigationComponent implements OnInit {
   readonly cdnAssetsUrl: string;
 
-  @ViewChild(DynamicHostDirective, { static: false })
+  @ViewChild(DynamicHostDirective, { static: true })
   host: DynamicHostDirective;
 
   user;
@@ -67,7 +67,9 @@ export class SidebarNavigationComponent implements OnInit {
         this.service.visibleChange.emit(!this.hidden);
       }
     });
+  }
 
+  ngAfterViewInit() {
     this.createGroupsSideBar();
   }
 
@@ -78,9 +80,6 @@ export class SidebarNavigationComponent implements OnInit {
   }
 
   createGroupsSideBar() {
-    if (!this.host) {
-      return;
-    }
     const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
         GroupsSidebarMarkersComponent
       ),

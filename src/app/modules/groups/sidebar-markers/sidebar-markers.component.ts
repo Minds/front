@@ -53,12 +53,20 @@ export class GroupsSidebarMarkersComponent
   async ngOnInit() {
     this.onResize();
     if (isPlatformBrowser(this.platformId)) {
-      await this.load(true);
-      this.listenForMarkers();
-      this.listenForMembershipUpdates();
+      this.initialize();
+
+      this.session.getLoggedInUser(user => {
+        this.initialize();
+      });
     } else {
       this.inProgress = true; // Server side should start in loading spinner state
     }
+  }
+
+  async initialize() {
+    await this.load(true);
+    this.listenForMarkers();
+    this.listenForMembershipUpdates();
   }
 
   /**

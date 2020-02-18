@@ -165,7 +165,7 @@
     </ul>
   </nav>
 
-  <div class="m-sidebar--groups" *ngIf="session.isLoggedIn()">
+  <div class="m-sidebar--groups" [hidden]="!user">
     <ng-template dynamic-host></ng-template>
   </div>
 </div>
