@@ -89,7 +89,6 @@
         i18n-placeholder="@@M__COMMON__USERNAME"
         autocomplete="username"
         (keydown.enter)="login(); $event.preventDefault();"
-        autofocus
       />
       <div class="m-login__error" *ngIf="!!usernameError">
         <ng-container

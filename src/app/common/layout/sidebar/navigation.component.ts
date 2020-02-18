@@ -1,6 +1,7 @@
 import {
   Component,
   ComponentFactoryResolver,
+  HostBinding,
   HostListener,
   Inject,
   OnInit,
@@ -23,18 +24,21 @@ import { ConfigsService } from '../../services/configs.service';
 export class SidebarNavigationComponent implements OnInit {
   readonly cdnAssetsUrl: string;
 
-  @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: true })
+  host: DynamicHostDirective;
 
   user;
 
   componentRef;
   componentInstance: GroupsSidebarMarkersComponent;
 
-  isDesktop: boolean = true;
+  layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
 
-  isMobile: boolean = false;
-
+  @HostBinding('class.m-sidebarNavigation--opened')
   isOpened: boolean = false;
+
+  @HostBinding('hidden')
+  hidden: boolean = true;
 
   constructor(
     public navigation: NavigationService,
@@ -47,13 +51,25 @@ export class SidebarNavigationComponent implements OnInit {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
     this.service.setContainer(this);
     this.getUser();
-
-    if (isPlatformBrowser(this.platformId)) {
-      this.onResize();
-    }
   }
 
   ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      this.onResize();
+    }
+
+    this.hidden = !this.session.isLoggedIn();
+    this.service.visibleChange.emit(!this.hidden);
+
+    this.session.isLoggedIn(async is => {
+      if (is) {
+        this.hidden = false;
+        this.service.visibleChange.emit(!this.hidden);
+      }
+    });
+  }
+
+  ngAfterViewInit() {
     this.createGroupsSideBar();
   }
 
@@ -69,23 +85,39 @@ export class SidebarNavigationComponent implements OnInit {
       ),
       viewContainerRef = this.host.viewContainerRef;
 
+    viewContainerRef.clear();
+
     this.componentRef = viewContainerRef.createComponent(componentFactory);
     this.componentInstance = this.componentRef.instance;
     this.componentInstance.showLabels = true;
+    this.componentInstance.leftSidebar = true;
   }
 
-  toggle() {
-    if (this.isMobile) {
+  toggle(): void {
+    if (this.layoutMode === 'phone') {
       this.isOpened = !this.isOpened;
+    }
+  }
+
+  setVisible(value: boolean): void {
+    this.hidden = !value;
+
+    if (value) {
+      this.createGroupsSideBar();
     }
   }
 
   @HostListener('window:resize')
   onResize() {
-    this.isDesktop = window.innerWidth > 900;
-    this.isMobile = window.innerWidth <= 540;
+    if (window.innerWidth > 900) {
+      this.layoutMode = 'desktop';
+    } else if (window.innerWidth > 540 && window.innerWidth <= 900) {
+      this.layoutMode = 'tablet';
+    } else {
+      this.layoutMode = 'phone';
+    }
 
-    if (!this.isMobile) {
+    if (this.layoutMode !== 'phone') {
       this.isOpened = false;
     }
   }

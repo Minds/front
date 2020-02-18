@@ -101,7 +101,8 @@ describe('ChannelComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Session, useValue: sessionMock },
-        { provide: MetaService, useValue: MockService(MetaService) },
+        MetaService,
+        SiteService,
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: RecentService, useValue: recentServiceMock },
         { provide: ContextService, useValue: contextServiceMock },
@@ -114,7 +115,7 @@ describe('ChannelComponent', () => {
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: BlockListService, useValue: MockService(BlockListService) },
         { provide: ClientMetaService, useValue: clientMetaServiceMock },
-        ConfigsService,
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -130,7 +131,7 @@ describe('ChannelComponent', () => {
     featuresServiceMock.mock('es-feeds', false);
     featuresServiceMock.mock('top-feeds', false);
     featuresServiceMock.mock('channel-filter-feeds', false);
-    featuresServiceMock.mock('navigation-2020', false);
+    featuresServiceMock.mock('navigation', false);
 
     comp = fixture.componentInstance;
     comp.username = 'username';
@@ -149,6 +150,7 @@ describe('ChannelComponent', () => {
         large: 'thumbs',
         master: 'thumbs',
       },
+      nsfw: [],
     };
     comp.editing = false;
     fixture.detectChanges();

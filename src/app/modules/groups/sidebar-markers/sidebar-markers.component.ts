@@ -2,6 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   DoCheck,
+  HostBinding,
   HostListener,
   Inject,
   Input,
@@ -26,6 +27,7 @@ import { GroupsService } from '../groups-service';
 export class GroupsSidebarMarkersComponent
   implements OnInit, DoCheck, OnDestroy {
   @Input() showLabels: boolean = false;
+  layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
   inProgress: boolean = false;
   $updateMarker;
   markers = [];
@@ -35,6 +37,9 @@ export class GroupsSidebarMarkersComponent
   tooltipsAnchor: string = 'right';
 
   @ViewChild('list', { static: true }) list;
+
+  @HostBinding('class.m-groupSidebarMarkers__leftSidebar')
+  leftSidebar: boolean = false;
 
   constructor(
     private client: Client,
@@ -48,10 +53,20 @@ export class GroupsSidebarMarkersComponent
   async ngOnInit() {
     this.onResize();
     if (isPlatformBrowser(this.platformId)) {
-      await this.load(true);
-      this.listenForMarkers();
-      this.listenForMembershipUpdates();
+      this.initialize();
+
+      this.session.getLoggedInUser(user => {
+        this.initialize();
+      });
+    } else {
+      this.inProgress = true; // Server side should start in loading spinner state
     }
+  }
+
+  async initialize() {
+    await this.load(true);
+    this.listenForMarkers();
+    this.listenForMembershipUpdates();
   }
 
   /**
@@ -63,6 +78,10 @@ export class GroupsSidebarMarkersComponent
         return;
       }
       if (update.show) {
+        // if the group already exists in the list, don't re-add it
+        if (this.groups.findIndex(g => g.guid == update.guid) !== -1) {
+          return;
+        }
         this.groupsService.load(update.guid).then(group => {
           this.groups.unshift(group);
         });
@@ -146,5 +165,13 @@ export class GroupsSidebarMarkersComponent
 
   @HostListener('window:resize') onResize() {
     this.tooltipsAnchor = window.innerWidth <= 992 ? 'top' : 'right';
+
+    if (window.innerWidth > 900) {
+      this.layoutMode = 'desktop';
+    } else if (window.innerWidth > 540 && window.innerWidth <= 900) {
+      this.layoutMode = 'tablet';
+    } else {
+      this.layoutMode = 'phone';
+    }
   }
 }

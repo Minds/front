@@ -1,4 +1,4 @@
-import { NgZone, RendererFactory2, PLATFORM_ID, Inject } from '@angular/core';
+import { NgZone, RendererFactory2, PLATFORM_ID, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TransferState } from '@angular/platform-browser';
@@ -50,6 +50,7 @@ import { ConfigsService } from '../common/services/configs.service';
 import { TransferHttpInterceptorService } from './transfer-http-interceptor.service';
 import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.service';
 import { CookieService } from '../common/services/cookie.service';
+import { RedirectService } from '../common/services/redirect.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -186,8 +187,14 @@ export const MINDS_PROVIDERS: any[] = [
   },
   {
     provide: ConfigsService,
-    useFactory: client => new ConfigsService(client),
-    deps: [Client],
+    useFactory: (client, injector, redirect, location) =>
+      new ConfigsService(
+        client,
+        injector.get('QUERY_STRING'),
+        redirect,
+        location
+      ),
+    deps: [Client, Injector, RedirectService, Location],
   },
   {
     provide: FeaturesService,

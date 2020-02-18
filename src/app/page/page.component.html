@@ -1,0 +1,53 @@
+<m-body
+  [class.has-markers-sidebar]="hasMarkersSidebar()"
+  [class.has-v2-navbar]="featuresService.has('top-feeds')"
+  [class.has-v3-navbar]="featuresService.has('navigation')"
+  [class.is-pro-domain]="isProDomain"
+>
+  <m-emailConfirmation *ngIf="!isProDomain"></m-emailConfirmation>
+  <m-announcement [id]="'festival:sale'" *mIfFeature="'radiocity'">
+    <span
+      class="m-blockchain--wallet-address-notice--action"
+      i18n="@@MINDS_FESTIVAL_TICKET_SALE"
+    >
+      BREAKING: Tickets on sale for "MINDS: FESTIVAL OF IDEAS" @ Radio City on
+      6/13/2020. HELP US SELL OUT FAST!
+    </span>
+  </m-announcement>
+  <m-blockchain--wallet-address-notice></m-blockchain--wallet-address-notice>
+
+  <ng-container *mIfFeature="'navigation'; else oldLayout">
+    <div class="m-grid" [class.m-grid__noSidebar]="!isSidebarVisible">
+      <m-sidebar--navigation></m-sidebar--navigation>
+      <router-outlet></router-outlet>
+    </div>
+  </ng-container>
+  <ng-template #oldLayout>
+    <router-outlet></router-outlet>
+  </ng-template>
+</m-body>
+
+<ng-container *mIfBrowser>
+  <m-messenger *ngIf="session.isLoggedIn() && !isProDomain"></m-messenger>
+</ng-container>
+
+<m-hovercard-popup></m-hovercard-popup>
+
+<m-overlay-modal></m-overlay-modal>
+
+<m--blockchain--transaction-overlay></m--blockchain--transaction-overlay>
+
+<m-modal--tos-updated *ngIf="session.isLoggedIn()"></m-modal--tos-updated>
+
+<ng-container *mIfBrowser>
+  <m-juryDutySession__summons
+    *ngIf="session.isLoggedIn() && !isProDomain"
+  ></m-juryDutySession__summons>
+</ng-container>
+
+<m-modal-signup
+  *ngIf="!isProDomain && !session.getLoggedInUser()"
+  [open]="false"
+></m-modal-signup>
+
+<m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>

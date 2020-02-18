@@ -56,7 +56,6 @@
     }
 
     .m-v2-topbar__Container__LoginWrapper > a {
-      margin-right: 40px;
       @include m-theme() {
         background: transparent;
         border: 1px solid themed($m-black-always);
@@ -330,9 +329,7 @@
   > a.m-v2-topbarLoginWrapper__login {
     padding: 0;
     border: none !important;
-    @media screen and(max-width: $max-mobile) {
-      margin-right: 10px;
-    }
+    margin-right: $minds-margin * 2;
   }
 
   > a.m-v2-topbarLoginWrapper__joinMindsNow {

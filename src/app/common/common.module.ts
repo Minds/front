@@ -1,4 +1,4 @@
-import { NgModule, inject } from '@angular/core';
+import { NgModule, inject, Injector } from '@angular/core';
 import {
   CommonModule as NgCommonModule,
   isPlatformServer,
@@ -47,7 +47,6 @@ import { ScrollLock } from './directives/scroll-lock';
 import { TagsLinks } from './directives/tags';
 import { Tooltip } from './directives/tooltip';
 import { MindsAvatar } from './components/avatar/avatar';
-import { CaptchaComponent } from './components/captcha/captcha.component';
 import { Textarea } from './components/editors/textarea.component';
 import { TagcloudComponent } from './components/tagcloud/tagcloud.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
@@ -133,7 +132,6 @@ import { FormDescriptorComponent } from './components/form-descriptor/form-descr
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
 import { PagesService } from './services/pages.service';
-import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
@@ -145,8 +143,10 @@ import { MediaProxyService } from './services/media-proxy.service';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
+import { RedirectService } from './services/redirect.service';
 import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
 import { SidebarNavigationService } from './layout/sidebar/navigation.service';
+import { TopbarService } from './layout/topbar.service';
 import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
 
 const routes: Routes = [
@@ -214,7 +214,6 @@ const routes: Routes = [
     MDL_DIRECTIVES,
     DateSelectorComponent,
     MindsAvatar,
-    CaptchaComponent,
     Textarea,
     InlineEditorComponent,
 
@@ -325,7 +324,6 @@ const routes: Routes = [
     MDL_DIRECTIVES,
     DateSelectorComponent,
     MindsAvatar,
-    CaptchaComponent,
     Textarea,
     InlineEditorComponent,
 
@@ -445,37 +443,19 @@ const routes: Routes = [
     },
     {
       provide: ConfigsService,
-      useFactory: client => new ConfigsService(client),
-      deps: [Client],
-    },
-    {
-      provide: MetaService,
-      useFactory: (
-        titleService,
-        metaService,
-        siteService,
-        location,
-        configsService
-      ) =>
-        new MetaService(
-          titleService,
-          metaService,
-          siteService,
-          location,
-          configsService
+      useFactory: (client, injector, redirect, location) =>
+        new ConfigsService(
+          client,
+          injector.get('QUERY_STRING'),
+          redirect,
+          location
         ),
-      deps: [Title, Meta, SiteService, Location, ConfigsService],
+      deps: [Client, Injector, RedirectService, Location],
     },
+    MetaService,
     MediaProxyService,
     SidebarNavigationService,
-    {
-      provide: V2TopbarService,
-      useFactory: V2TopbarService._,
-    },
-    {
-      provide: SidebarNavigationService,
-      useFactory: SidebarNavigationService._,
-    },
+    TopbarService,
     {
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,

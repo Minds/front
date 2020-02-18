@@ -12,10 +12,10 @@ import { OnboardingService } from '../onboarding/onboarding.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { PagesService } from '../../common/services/pages.service';
 import { FeaturesService } from '../../services/features.service';
-import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
 import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service';
 import { MetaService } from '../../common/services/meta.service';
 import { iOSVersion } from '../../helpers/is-safari';
+import { TopbarService } from '../../common/layout/topbar.service';
 
 @Component({
   selector: 'm-register',
@@ -29,8 +29,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   videoError: boolean = false;
   referrer: string;
+
   @HostBinding('class.m-register__newDesign')
   newDesign: boolean = false;
+
+  @HostBinding('class.m-register__newNavigation')
+  newNavigation: boolean = false;
+
   @HostBinding('class.m-register__iosFallback')
   iosFallback: boolean = false;
 
@@ -54,7 +59,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     configs: ConfigsService,
     public pagesService: PagesService,
     private featuresService: FeaturesService,
-    private topbarService: V2TopbarService,
+    private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
     private metaService: MetaService
   ) {
@@ -65,6 +70,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     this.newDesign = this.featuresService.has('register_pages-december-2019');
+    this.newNavigation = this.featuresService.has('navigation');
+
     if (this.newDesign) {
       this.topbarService.toggleVisibility(false);
       this.iosFallback = iOSVersion() !== null;

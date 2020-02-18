@@ -9,6 +9,7 @@ import { MetaService } from '../../common/services/meta.service';
 import { PagesService } from '../../common/services/pages.service';
 
 @Component({
+  selector: 'm-pages',
   moduleId: module.id,
   templateUrl: 'pages.html',
 })

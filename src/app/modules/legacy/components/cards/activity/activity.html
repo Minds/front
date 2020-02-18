@@ -21,6 +21,7 @@
         >{{activity.ownerObj.name}}</strong
       >
       <m-channel--badges
+        data-nosnippet
         class="m-channel--badges-activity"
         [user]="activity.ownerObj"
         badges="[ 'admin', 'verified' ]"
@@ -400,7 +401,7 @@
   ></m-wire-button>
   <button
     class="m-btn m-btn--action m-btn--slim minds-boost-button"
-    *ngIf="session.getLoggedInUser().guid == activity.owner_guid 
+    *ngIf="session.getLoggedInUser().guid == activity.owner_guid
       && !isScheduled(activity.time_created)"
     id="boost-actions"
     (click)="showBoost()"

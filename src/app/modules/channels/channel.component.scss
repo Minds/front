@@ -4,7 +4,8 @@
  * Channel profile pages
  */
 m-channel {
-  display: contents;
+  grid-area: content / span 2;
+  min-width: 0;
 
   .m-channel__middleColumn {
     grid-area: content;
@@ -16,8 +17,9 @@ m-channel {
 
   .m-channel__rightColumn {
     grid-area: side;
-    //padding-left: 59px;
-    //padding-right: 33.3%;
+    padding-left: 56px;
+    padding-right: 33%;
+    margin-top: 25px;
     min-width: 0;
   }
 

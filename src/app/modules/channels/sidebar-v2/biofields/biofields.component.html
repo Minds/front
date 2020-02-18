@@ -1,0 +1,102 @@
+<div class="m-channelBiofields">
+  <!--      [ngClass]="{'m-channelBiofields&#45;&#45;flex': !editing}"-->
+  <!-- City / Location -->
+  <div
+    class="m-channelBiofields__field m-channelBiofields__city"
+    [hidden]="editing || !user.city"
+  >
+    <i class="material-icons">location_on</i>
+    <span>{{ user.city }}</span>
+  </div>
+
+  <div class="m-channelBiofields__editor" *ngIf="editing && isOwner()">
+    <div class="m-channelBiofields__cityInput">
+      <i class="material-icons">location_on</i>
+      <input
+        (keyup)="findCity(user.city)"
+        name="city"
+        [(ngModel)]="user.city"
+        class=""
+        placeholder="Enter your city..."
+        i18n-placeholder="@@M__COMMON__ENTER_CITY"
+      />
+    </div>
+    <div
+      class="m-channelBiofields__cityAutocomplete"
+      *ngIf="editing && cities.length > 0"
+    >
+      <p i18n="@@M__COMMON__SELECT_CITY">
+        Select your city:
+      </p>
+      <li
+        (click)="setCity(c)"
+        *ngFor="let c of cities"
+        [hidden]="!(c.address.town || c.address.city)"
+      >
+        {{ c.address.town }}{{ c.address.city }}, {{ c.address.state }}
+      </li>
+    </div>
+  </div>
+  <!-- END City / Location -->
+
+  <!--      <div-->
+  <!--        class="m-channelBiofields__field"-->
+  <!--        *ngIf="user.tags && !editing"-->
+  <!--      >-->
+  <!--        <div-->
+  <!--          class="m-channelBiofields__field__tags-container"-->
+  <!--          [hidden]="editing || !user.tags"-->
+  <!--        >-->
+  <!--          <i class="material-icons">local_offer</i>-->
+  <!--          <span *ngFor="let tag of user.tags">#{{tag}}</span>-->
+  <!--        </div>-->
+  <!--      </div>-->
+
+  <!--      <div-->
+  <!--        class="m-channel-bio-editor m-channel-city-editor"-->
+  <!--        *ngIf="editing && isOwner()"-->
+  <!--      >-->
+  <!--        <div class="m-channel-bio-input">-->
+  <!--          <i class="material-icons">local_offer</i>-->
+  <!--          <m-hashtags-selector-->
+  <!--            #hashtagsSelector-->
+  <!--            [alignLeft]="true"-->
+  <!--            [tags]="user.tags"-->
+  <!--            (tagsChange)="onTagsChange($event)"-->
+  <!--            (tagsAdded)="onTagsAdded($event)"-->
+  <!--            (tagsRemoved)="onTagsRemoved($event)"-->
+  <!--          >-->
+  <!--          </m-hashtags-selector>-->
+  <!--        </div>-->
+  <!--        <div-->
+  <!--          class="mdl-card mdl-shadow&#45;&#45;2dp"-->
+  <!--          style="min-height:0;"-->
+  <!--          *ngIf="errorMessage"-->
+  <!--        >-->
+  <!--          <div class="mdl-card__supporting-text">-->
+  <!--            {{errorMessage}}-->
+  <!--          </div>-->
+  <!--        </div>-->
+  <!--      </div>-->
+
+  <!--      <m-channel&#45;&#45;social-profiles-->
+  <!--        [user]="user"-->
+  <!--        [editing]="editing && isOwner()"-->
+  <!--        (changed)="setSocialProfile($event)"-->
+  <!--      ></m-channel&#45;&#45;social-profiles>-->
+</div>
+
+<div class="m-channelSidebar__briefDescription">
+  <span [innerHtml]="user.briefdescription | tags" [hidden]="editing"> </span>
+
+  <div *ngIf="editing && isOwner()">
+    <!-- OWNER EDIT FORM -->
+    <textarea
+      [autoGrow]
+      class="mdl-textfield__input"
+      type="text"
+      name="briefdescription"
+      [(ngModel)]="user.briefdescription"
+    ></textarea>
+  </div>
+</div>

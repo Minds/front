@@ -67,6 +67,7 @@ export class CommentPosterComponent {
   async post(e) {
     e.preventDefault();
 
+    this.attachment.resetPreviewRequests();
     if (this.content.length > this.maxLength) {
       return;
     }

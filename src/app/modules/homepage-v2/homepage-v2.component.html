@@ -5,8 +5,6 @@
   [showBottombar]="false"
   [forceBackground]="false"
   [class.m-homepage__formExperiment]="!!registerForm"
-  pageTitle="Minds Social Network"
-  i18n-pageTitle
 >
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
@@ -18,13 +16,11 @@
         </h1>
 
         <h2 ngPreserveWhitespaces i18n>
-          Take back control of your social media
+          {{ headline }}
         </h2>
 
         <p class="m-marketing__description" i18n>
-          A place to have open conversations and bring people together. Free
-          your mind and get paid for creating content, driving traffic and
-          referring friends.
+          {{ description }}
         </p>
 
         <button
