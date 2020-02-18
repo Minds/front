@@ -89,7 +89,20 @@ $linkedin: #0071a1;
 // e.g. m-grey-100 in light mode will become m-grey-900 in dark mode
 $themes: (
   light: (
-    m-grey-950: $grey-950,
+    m-textColor--primary: #4f4f50,
+    m-textColor--secondary: #7d7d82,
+    m-textColor--tertiary: #9b9b9b,
+    m-bgColor--primary: #ffffff,
+    m-bgColor--secondary: #f5f5f5,
+    m-bgColor--tertiary: #e3e4e9,
+    m-borderColor--primary: #dce2e4,
+    m-borderColor--secondary: #979797,
+    m-borderColor--tertiary: #ececec,
+    m-alert: #e03c20,
+    m-link: #1b85d6,
+    m-btn--primary: #1b85d6,
+    // legacy colors
+      m-grey-950: $grey-950,
     m-grey-900: $grey-900,
     m-grey-800: $grey-800,
     m-grey-700: $grey-700,
@@ -144,7 +157,20 @@ $themes: (
     m-linkedin: $linkedin,
   ),
   dark: (
-    m-grey-950: lighten($grey-50, $percent),
+    m-textColor--primary: #ffffff,
+    m-textColor--secondary: #aeb0b8,
+    m-textColor--tertiary: #797b82,
+    m-bgColor--primary: #252e31,
+    m-bgColor--secondary: #202527,
+    m-bgColor--tertiary: #404e53,
+    m-borderColor--primary: #404a4e,
+    m-borderColor--secondary: #979797,
+    m-borderColor--tertiary: #202527,
+    m-alert: #e03c20,
+    m-link: #1b85d6,
+    m-btn--primary: #1b85d6,
+    // legacy colors
+      m-grey-950: lighten($grey-50, $percent),
     m-grey-900: lighten($grey-100, $percent),
     m-grey-800: lighten($grey-200, $percent),
     m-grey-700: lighten($grey-300, $percent),
@@ -260,3 +286,20 @@ $m-messenger: 'm-messenger';
 $m-twitter: 'm-twitter';
 $m-whatsapp: 'm-whatsapp';
 $m-linkedin: 'm-linkedin';
+
+$m-textColor--primary: 'm-textColor--primary';
+$m-textColor--secondary: 'm-textColor--secondary';
+$m-textColor--tertiary: 'm-textColor--tertiary';
+$m-bgColor--primary: 'm-bgColor--primary';
+$m-bgColor--secondary: 'm-bgColor--secondary';
+$m-bgColor--tertiary: 'm-bgColor--tertiary';
+$m-borderColor--primary: 'm-borderColor--primary';
+$m-borderColor--secondary: 'm-borderColor--secondary';
+$m-borderColor--tertiary: 'm-borderColor--tertiary';
+$m-alert: 'm-alert';
+$m-link: 'm-link';
+$m-btn--primary: 'm-btn--primary';
+
+$m-borderRadius: 2px;
+$m-boxShadowBlur: 10px;
+$m-boxShadowOffset: 2px;

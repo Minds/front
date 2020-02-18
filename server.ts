@@ -3,6 +3,7 @@ import 'reflect-metadata';
 
 import { join } from 'path';
 import { readFileSync } from 'fs';
+import * as _url from 'url';
 
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
@@ -102,7 +103,10 @@ app.get('/undefined', (req, res) => {
 
 // cache
 const NodeCache = require('node-cache');
-const myCache = new NodeCache({ stdTTL: 5 * 60, checkperiod: 120 });
+const myCache = new NodeCache({
+  stdTTL: 2 * 60, // 2 minute cache
+  checkperiod: 60, // Check every minute
+});
 
 const cache = () => {
   return (req, res, next) => {
@@ -111,18 +115,18 @@ const cache = () => {
         .filter(kv => kv[0] !== 'mwa' && kv[0] !== 'XSRF-TOKEN')
         .join(':') || 'loggedout';
     const key =
-      `__express__/${sessKey}/` +
+      `__express__/${req.headers.host}/${sessKey}/` +
       (req.originalUrl || req.url) +
       (isMobileOrTablet() ? '/mobile' : '/desktop');
     const exists = myCache.has(key);
     if (exists) {
-      console.log(`from cache: ${key}`);
       const cachedBody = myCache.get(key);
       res.send(cachedBody);
       return;
     } else {
       res.sendResponse = res.send;
       res.send = body => {
+        if (res.finished) return;
         myCache.set(key, body);
         res.sendResponse(body);
       };
@@ -130,6 +134,10 @@ const cache = () => {
     }
   };
 };
+
+app.get('/node-cache-stats', (req, res) => {
+  res.send(myCache.getStats());
+});
 
 // All regular routes use the Universal engine
 app.get('*', cache(), (req, res) => {
@@ -171,6 +179,14 @@ app.get('*', cache(), (req, res) => {
           provide: 'ORIGIN_URL',
           useValue: `${http}://${req.headers.host}`,
         },
+        // for initial query params before router loads
+        {
+          provide: 'QUERY_STRING',
+          useFactory: () => {
+            return _url.parse(req.url, true).search || '';
+          },
+          deps: [],
+        },
       ],
     },
     (err, html) => {
@@ -189,3 +205,5 @@ app.get('*', cache(), (req, res) => {
 app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
 });
+
+app.keepAliveTimeout = 65000;

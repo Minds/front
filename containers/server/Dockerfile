@@ -5,6 +5,10 @@ FROM node:13-alpine
 
 COPY . /dist
 
-CMD node /dist/server
+RUN npm install pm2 -g
+
+CMD pm2-runtime /dist/server \
+    --max-memory-restart 512M \
+    --instances 2
 
 VOLUME ["/dist"]

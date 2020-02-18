@@ -202,6 +202,8 @@ prepare:production:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
     - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
     - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
+    - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $CI_REGISTRY_IMAGE/server:latest
+    - docker push $CI_REGISTRY_IMAGE/server:latest
   only:
     refs:
       - master
@@ -253,7 +255,7 @@ review:start:
   image: minds/helm-eks:latest
   script:
     - aws eks update-kubeconfig --name=sandbox
-    - git clone --branch=epic/SSR https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
+    - git clone --branch=master https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
     - "helm upgrade \
       --install \
       --reuse-values \
@@ -292,7 +294,7 @@ review:stop:
     - docker:dind
   script:
     ## Sync assets with CDN
-    - aws s3 sync dist $S3_REPOSITORY_URL
+    - aws s3 sync dist $S3_REPOSITORY_URL --cache-control max-age=31536000
     - $(aws ecr get-login --no-include-email --region us-east-1)
     ## Update docker server container
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
@@ -333,8 +335,8 @@ review:preprod:
   environment:
     name: preprod
     url: https://www.minds.com # requires preprod cookie
-  dependencies:
-    - build:review
+  # dependencies:
+  #   - build:review
   # except:
   #   refs:
   #     - master

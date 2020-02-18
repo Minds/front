@@ -4,6 +4,8 @@ import {
   ViewChild,
   ChangeDetectorRef,
   HostListener,
+  OnInit,
+  OnDestroy,
   Inject,
   PLATFORM_ID,
 } from '@angular/core';
@@ -20,7 +22,7 @@ import { GroupsService } from '../groups-service';
   selector: 'm-group--sidebar-markers',
   templateUrl: 'sidebar-markers.component.html',
 })
-export class GroupsSidebarMarkersComponent {
+export class GroupsSidebarMarkersComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   $updateMarker;
   markers = [];
@@ -46,6 +48,8 @@ export class GroupsSidebarMarkersComponent {
       await this.load(true);
       this.listenForMarkers();
       this.listenForMembershipUpdates();
+    } else {
+      this.inProgress = true; // Server side should start in loading spinner state
     }
   }
 
@@ -58,6 +62,10 @@ export class GroupsSidebarMarkersComponent {
         return;
       }
       if (update.show) {
+        // if the group already exists in the list, don't re-add it
+        if (this.groups.findIndex(g => g.guid == update.guid) !== -1) {
+          return;
+        }
         this.groupsService.load(update.guid).then(group => {
           this.groups.unshift(group);
         });

@@ -21,12 +21,16 @@ export const FORM_INPUT_CHECKBOX_VALUE_ACCESSOR: any = {
   templateUrl: 'checkbox.component.html',
   providers: [FORM_INPUT_CHECKBOX_VALUE_ACCESSOR],
 })
-export class FormInputCheckboxComponent
-  implements ControlValueAccessor, OnChanges {
+export class FormInputCheckboxComponent implements ControlValueAccessor {
   readonly id: string;
   value: boolean = false;
 
   @ViewChild('input', { static: true }) input: ElementRef;
+
+  updateValue(value: boolean) {
+    this.value = value;
+    this.propagateChange(this.value);
+  }
 
   propagateChange = (_: any) => {};
 
@@ -36,10 +40,6 @@ export class FormInputCheckboxComponent
       Math.random()
         .toString(36)
         .substring(2); // Confirm duplicates not possible?
-  }
-
-  ngOnChanges(changes: any) {
-    this.propagateChange(changes);
   }
 
   writeValue(value: any): void {

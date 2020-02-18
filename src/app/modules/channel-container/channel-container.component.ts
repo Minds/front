@@ -28,6 +28,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   channel: MindsUser;
 
   protected username: string;
+  protected showPro: boolean;
 
   protected param$: Subscription;
 
@@ -50,10 +51,11 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
     this.param$ = this.route.params.subscribe(params => {
       if (params['username']) {
         this.username = params['username'];
+        this.showPro = !params['pro'] || params['pro'] !== '0';
 
         if (
           this.username &&
-          (!this.channel || this.channel.username != this.username)
+          (!this.channel || this.channel.username !== this.username)
         ) {
           this.load();
         }
@@ -74,7 +76,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   }
 
   async load() {
-    if (!this.username) {
+    if (!this.username || this.showPro === undefined) {
       return;
     }
 
@@ -88,6 +90,7 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
       this.channel = response.channel;
 
       const shouldRedirectToProHandler =
+        this.showPro &&
         !this.site.isProDomain &&
         this.channel.pro_published &&
         !this.isOwner &&

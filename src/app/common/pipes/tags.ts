@@ -20,13 +20,13 @@ export class TagsPipe implements PipeTransform {
     url: {
       rule: /(\b(https?|ftp|file):\/\/[^\s\]]+)/gim,
       replace: m => {
-        return `<a href="${m.match[1]}" target="_blank" rel="noopener noreferrer">${m.match[1]}</a>`;
+        return `<a href="${m.match[1]}" target="_blank" rel="noopener nofollow ugc">${m.match[1]}</a>`;
       },
     },
     mail: {
       rule: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gim,
       replace: m => {
-        return `<a href="mailto:${m.match[0]}" target="_blank" rel="noopener noreferrer">${m.match[0]}</a>`;
+        return `<a href="mailto:${m.match[0]}" target="_blank" rel="noopener nofollow ugc">${m.match[0]}</a>`;
       },
     },
     hash: {
@@ -39,7 +39,7 @@ export class TagsPipe implements PipeTransform {
         } else if (this.featureService.has('top-feeds')) {
           return `${
             m.match[1]
-          }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=24h">#${
+          }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=7d">#${
             m.match[2]
           }</a>`;
         }
