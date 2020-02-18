@@ -58,9 +58,9 @@ m-walletModal {
       max-height: 90vh;
     }
     @media screen and (max-width: $max-mobile) {
-      padding: 26px 32px;
+      // padding: 26px 32px;
       min-width: 90vw;
-      min-height: 99vh;
+      min-height: 90vh;
       max-height: 95vh;
     }
   }

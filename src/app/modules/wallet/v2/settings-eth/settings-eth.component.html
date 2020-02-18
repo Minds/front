@@ -1,7 +1,6 @@
-<!-- <div *ngIf="!ethWallet" class="m-wallet__spinner">
-  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-</div> -->
-<!-- <div class="m-walletSettings" *ngIf="ethWallet"> -->
+<!-- -------------------------------------------- -->
+<!--- ADDRESS - SETUP - ---------------------------->
+<!-- -------------------------------------------- -->
 <div class="m-walletSettings">
   <h2>Ether Address</h2>
   <div class="m-walletTertiaryText--desc">
@@ -20,7 +19,9 @@
   </div>
   <div *ngIf="ethWallet.address" class="m-walletSettings--eth__balanceWrapper">
     <div>
-      <p class="m-walletSettings--eth__balanceLabel">Ether total</p>
+      <p class="m-walletSettings--eth__balanceLabel m-walletTertiaryText--16">
+        Ether total
+      </p>
       <p class="m-walletSettings--eth__balanceVal">{{ ethWallet.balance }}</p>
     </div>
     <m-shadowboxSubmitButton [routerLink]="['/token', { purchaseEth: 'open' }]">

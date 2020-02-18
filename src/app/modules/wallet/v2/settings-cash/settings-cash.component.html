@@ -1,12 +1,11 @@
-<div *ngIf="!loaded" class="m-wallet__spinner">
+<div *ngIf="inProgress" class="m-wallet__spinner">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
-<div class="m-walletSettings" *ngIf="loaded">
+<div class="m-walletSettings" *ngIf="!inProgress">
   <h2>Bank Information</h2>
   <!-- ONBOARDING FORM ------------------ -->
   <m-walletCashOnboarding
     *ngIf="view === 'onboarding'"
-    [account]="account"
     [allowedCountries]="allowedCountries"
     (submitted)="setView()"
   ></m-walletCashOnboarding>

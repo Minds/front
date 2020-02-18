@@ -17,7 +17,7 @@ import { Session } from '../../../../../services/session';
 })
 export class WalletCashOnboardingComponent implements OnInit {
   @Input() allowedCountries: string[];
-  @Input() account;
+  // @Input() account;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
   form;
   user;

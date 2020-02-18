@@ -19,18 +19,6 @@ export class ShadowboxSubmitButtonComponent implements AfterViewInit {
   @Input() saving: boolean = false;
   @Input() disabled: boolean = false;
   @Input() color: 'green' | 'grey' | 'red' = 'green';
-
-  // private _saving: boolean;
-  // @Input() set saving(value: boolean) {
-  //   this._saving = value;
-  //   if (this.buttonTextWidth === 0) {
-  //     this.setSavingWidth();
-  //   }
-  // }
-  // get saving(): boolean {
-  //   return this._saving;
-  // }
-
   constructor() {}
 
   ngAfterViewInit() {
@@ -38,8 +26,6 @@ export class ShadowboxSubmitButtonComponent implements AfterViewInit {
       this.setSavingWidth();
     }
   }
-
-  enterSavingStatus() {}
 
   // Prevent button width from shrinking during saving animation
   @HostListener('window:resize')

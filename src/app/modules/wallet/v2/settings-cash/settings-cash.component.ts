@@ -8,23 +8,32 @@ import {
 } from '@angular/core';
 import { WalletDashboardService, WalletCurrency } from '../dashboard.service';
 import { Session } from '../../../../services/session';
-
 @Component({
   selector: 'm-walletSettings--cash',
   templateUrl: './settings-cash.component.html',
 })
 export class WalletSettingsCashComponent implements OnInit {
-  @Input() cashWallet: WalletCurrency; // TODOOJM handle
   @Output() accountChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() scrollToCashSettings: EventEmitter<any> = new EventEmitter<any>();
 
-  loaded: boolean = false;
+  private _cashWallet: WalletCurrency;
+  @Input() set cashWallet(c: WalletCurrency) {
+    this._cashWallet = c;
+    this.detectChanges();
+    if (this.init) {
+      this.setView();
+    }
+  }
+  get cashWallet(): WalletCurrency {
+    return this._cashWallet;
+  }
+
+  init: boolean = false;
   inProgress: boolean = true;
-  user;
   account;
   error: string = '';
 
-  view: 'onboarding' | 'bank' | 'extras' | 'error';
+  view: string;
 
   allowedCountries: string[] = [
     'AT',
@@ -58,47 +67,36 @@ export class WalletSettingsCashComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.user = this.session.getLoggedInUser();
-
     this.setView();
-    this.loaded = true;
     this.detectChanges();
   }
 
   async setView() {
-    // Flow should be:
-    // 1. onboarding
-    // 2. bank
-    // 3. (if necessary) extras
-    // 4. (once verified) bank
-    console.log('888 ... setting view');
-    const previousView = this.view;
-    // this.view = null;
-    this.inProgress = true;
-    this.detectChanges();
+    const previousView = this.view || 'onboarding';
 
-    const hasMerchant = this.user && this.user.merchant.service === 'stripe';
+    // const user = this.session.getLoggedInUser();
+    // const hasMerchant = user && user.merchant.service === 'stripe';
 
-    if (!hasMerchant) {
+    // if (!hasMerchant) {
+    if (!this.cashWallet.stripeDetails.hasAccount) {
       this.view = 'onboarding';
     } else {
-      this.account = await this.getAccount();
-      console.log('888settingscashaccount', this.account);
-      if (this.error) {
-        this.detectChanges();
-        return;
-      }
+      await this.getAccount();
 
-      if (!this.hasBankAccount() || this.account.verified) {
+      if (
+        this.cashWallet.stripeDetails.verified ||
+        !this.cashWallet.stripeDetails.hasBank
+      ) {
         this.view = 'bank';
-      } else if (!this.account.verified && this.account.requirement) {
+      } else {
         this.view = 'extras';
       }
     }
-    if (this.loaded && previousView === this.view && this.view !== 'error') {
+    if (this.init && previousView !== this.view && this.view !== 'error') {
       this.accountChanged.emit();
     }
     this.inProgress = false;
+    this.init = true;
     this.detectChanges();
   }
 
@@ -110,24 +108,14 @@ export class WalletSettingsCashComponent implements OnInit {
       .getStripeAccount()
       .then((account: any) => {
         this.account = account;
-        this.setView();
+        this.detectChanges();
       })
       .catch(e => {
         this.error = e.message;
         this.view = 'error';
-        this.inProgress = false;
         this.detectChanges();
       });
   }
-
-  hasBankAccount() {
-    if (this.account && this.account.requirement) {
-      return this.account.requirement.indexOf('external_account') === -1;
-    } else {
-      return true;
-    }
-  }
-
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();

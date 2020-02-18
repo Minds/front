@@ -49,9 +49,15 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.tokenBalance = this.formatBalance(this.wallet.tokens.balance);
-    this.offchainBalance = this.formatBalance(this.wallet.offchain.balance);
-    this.onchainBalance = this.formatBalance(this.wallet.onchain.balance);
+    this.tokenBalance = this.walletService.splitBalance(
+      this.wallet.tokens.balance
+    );
+    this.offchainBalance = this.walletService.splitBalance(
+      this.wallet.offchain.balance
+    );
+    this.onchainBalance = this.walletService.splitBalance(
+      this.wallet.onchain.balance
+    );
     this.getPayout();
 
     this.inProgress = false;
@@ -93,22 +99,22 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     }
   }
 
-  formatBalance(balance) {
-    const formattedBalance = {
-      total: balance,
-      int: 0,
-      frac: null,
-    };
-    if (balance <= 0) {
-      return formattedBalance;
-    }
-    const splitBalance = balance.toString().split('.');
+  // formatBalance(balance) {
+  //   const formattedBalance = {
+  //     total: balance,
+  //     int: 0,
+  //     frac: null,
+  //   };
+  //   if (balance <= 0) {
+  //     return formattedBalance;
+  //   }
+  //   const splitBalance = balance.toString().split('.');
 
-    formattedBalance.int = splitBalance[0];
-    formattedBalance.frac = splitBalance[1];
+  //   formattedBalance.int = splitBalance[0];
+  //   formattedBalance.frac = splitBalance[1];
 
-    return formattedBalance;
-  }
+  //   return formattedBalance;
+  // }
 
   transferComplete() {
     this.formToastService.success('On-chain transfer complete');

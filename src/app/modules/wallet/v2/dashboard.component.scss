@@ -37,10 +37,10 @@ m-walletDashboard {
   // TEXT ////////////////////////////////////
   ////////////////////////////////////////////
   h2 {
-    font-weight: 500px;
+    font-weight: 500;
     font-size: 26px;
     line-height: 34px;
-    margin: 0 0 17px 0;
+    margin: 0 0 18px 0;
 
     @include m-theme() {
       color: themed($m-textColor--primary);
@@ -62,37 +62,51 @@ m-walletDashboard {
     @include m-theme() {
       color: themed($m-textColor--tertiary);
     }
-  }
-  .m-walletTertiaryText--desc {
-    margin-bottom: 40px;
-  }
-  .m-walletTertiaryText--label {
-    margin-bottom: 13px;
-  }
-  .m-walletTertiaryText--backButton {
-    margin-top: 40px;
-    display: inline-flex;
-    flex-flow: row nowrap;
-    align-items: baseline;
-    text-decoration: none !important;
-
-    @include m-theme() {
-      color: themed($m-textColor--tertiary);
+    &[class*='--15'] {
+      font-size: 15px;
+      line-height: 19px;
     }
-    &:hover {
-      span {
-        text-decoration: underline;
+    &[class*='--16'] {
+      font-size: 16px;
+      line-height: 20px;
+    }
+    &[class*='--desc'] {
+      margin-bottom: 40px;
+    }
+    &[class*='--label'] {
+      margin-bottom: 13px;
+    }
+    &[class*='--emphasis'] {
+      @include m-theme() {
+        color: themed($m-textColor--primary);
       }
     }
-    i {
-      font-size: 14px;
-      font-weight: 300;
-      margin-right: 10px;
+    &[class*='--error'] {
+      @include m-theme() {
+        color: themed($m-red);
+      }
     }
-  }
-  .m-walletTertiaryText--error {
-    @include m-theme() {
-      color: themed($m-red);
+    &[class*='--backButton'] {
+      margin-top: 40px;
+      font-weight: 300;
+      display: inline-flex;
+      flex-flow: row nowrap;
+      align-items: baseline;
+      text-decoration: none !important;
+
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+      &:hover {
+        span {
+          text-decoration: underline;
+        }
+      }
+      i {
+        font-size: 14px;
+        font-weight: 300;
+        margin-right: 10px;
+      }
     }
   }
 
@@ -165,7 +179,6 @@ m-walletDashboard {
       }
     }
   }
-
   ////////////////////////////////////////////
   // BALANCES  ///////////////////////////////
   ////////////////////////////////////////////
@@ -248,7 +261,7 @@ m-walletDashboard {
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     margin: 50px 57px 0 57px;
     @media screen and (max-width: $min-tablet) {
-      margin: 30px 24px 0 24px;
+      margin: 30px 36px 0 36px;
     }
     @media screen and (max-width: $max-mobile) {
       margin: 30px 16px 0 16px;
@@ -264,26 +277,61 @@ m-walletDashboard {
   }
 
   ////////////////////////////////////////////
-  // BUTTON LAYOUTS /////////////////////
+  // BUTTON LAYOUTS //////////////////////////
   ////////////////////////////////////////////
-  // [class*='m-walletForm__wrapper'] {
-
-  // }
   .m-walletButtonLayout--buttonInline {
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-end;
     align-items: center;
-    @media screen and (max-width: $max-mobile) {
+
+    m-shadowboxSubmitButton {
+      margin-top: 8px;
+      margin: 8px 0 0 18px;
       .m-shadowboxSubmitButton {
-        min-width: 100%;
+        min-height: 42px;
+        width: 100%;
       }
     }
   }
+
   .m-walletButtonLayout--buttonOffsetRight {
-    //m-walletForm__wrapper
-    // m-walletForm__fieldsContainer
-    // m-shadowboxSubmitButton
+    .stretchedField {
+      .m-walletForm__row--input {
+        flex-flow: row nowrap;
+      }
+      .m-walletForm__row--validation {
+        justify-content: flex-end;
+        align-self: unset;
+      }
+
+      label,
+      input,
+      .m-walletForm__row--validation {
+        flex: 1 1 calc(100% - 160px);
+        max-width: calc(100% - 160px);
+        @media screen and (max-width: $max-mobile) {
+          label,
+          input,
+          .m-walletForm__row--validation {
+            flex: 1 1 100%;
+            min-width: 100%;
+            max-width: 100%;
+          }
+        }
+      }
+    }
+    .m-walletForm__fieldsContainer {
+      margin-bottom: 38px;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      .m-walletForm__row--label m-tooltip {
+        .m-tooltip--bubble {
+          right: 12px;
+        }
+      }
+    }
 
     & ~ .m-walletTertiaryText--backButton {
       margin-top: 20px;
@@ -296,6 +344,13 @@ m-walletDashboard {
   form {
     margin: 0;
     padding: 0;
+    &:not(.m-walletButtonLayout--buttonOffsetRight) {
+      .m-walletForm__row--label m-tooltip {
+        .m-tooltip--bubble {
+          right: 12px;
+        }
+      }
+    }
   }
 
   .m-walletForm__fieldsContainer {
@@ -305,10 +360,20 @@ m-walletDashboard {
   .m-walletForm__buttonsContainer {
     display: flex;
     flex-flow: row wrap-reverse;
-    justify-content: space-evenly;
-    margin-top: 10px;
+    justify-content: flex-end;
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+    }
     m-shadowboxSubmitButton {
-      margin-top: 8px;
+      margin: 8px 0 18px 0;
+
+      @media screen and (max-width: $max-mobile) {
+        width: 100%;
+        margin: 8px 0 0 0;
+        .m-shadowboxSubmitButton {
+          width: 100%;
+        }
+      }
     }
   }
 
@@ -341,6 +406,7 @@ m-walletDashboard {
       align-items: center;
       flex-flow: row nowrap;
       position: relative;
+      font-weight: 300;
       @include m-theme() {
         color: themed($m-textColor--tertiary);
       }
@@ -442,11 +508,11 @@ m-walletDashboard {
     //   margin: 21px 0 0 0;
     // }
     .stretchedField {
-      .m-walletForm__row--label m-tooltip {
-        .m-tooltip--bubble {
-          right: 12px;
-        }
-      }
+      // .m-walletForm__row--label m-tooltip {
+      //   .m-tooltip--bubble {
+      //     right: 12px;
+      //   }
+      // }
       [class*='m-walletForm__row'] {
         flex-flow: row wrap;
         label,

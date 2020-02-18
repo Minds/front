@@ -17,76 +17,73 @@
   (keyup.enter)="onSubmit()"
   class="m-walletButtonLayout--buttonInline"
 >
-  <div class="m-walletForm__wrapper">
-    <div class="m-walletForm__fieldsContainer">
-      <div class="m-walletForm__field--text stretchedField" *ngIf="!confirming">
-        <div class="m-walletForm__row--label">
-          <label for="number" i18n>Mobile Phone Number</label>
-          <m-tooltip icon="help">
-            <ng-container i18n
-              >Minds will not store the number you provide. It will be hashed
-              using SHA-256 and combined with a salt key for privacy and unique
-              identification purposes. VOIP numbers are not
-              allowed.</ng-container
-            >
-          </m-tooltip>
-        </div>
-        <m-phoneInput
-          formControlName="number"
-          class="m-walletForm__row--input"
-          [ngClass]="{ invalid: invalidNumber }"
-          name="number"
-          id="number"
-          ngDefaultControl
-        ></m-phoneInput>
-        <div class="m-walletForm__row--validation">
-          <p *ngIf="invalidNumber">
-            Invalid phone number
-          </p>
-        </div>
+  <div class="m-walletForm__fieldsContainer">
+    <div class="m-walletForm__field--text stretchedField" *ngIf="!confirming">
+      <div class="m-walletForm__row--label">
+        <label for="number" i18n>Mobile Phone Number</label>
+        <m-tooltip icon="help">
+          <ng-container i18n
+            >Minds will not store the number you provide. It will be hashed
+            using SHA-256 and combined with a salt key for privacy and unique
+            identification purposes. VOIP numbers are not allowed.</ng-container
+          >
+        </m-tooltip>
       </div>
-      <div class="m-walletForm__field--text stretchedField" *ngIf="confirming">
-        <div class="m-walletForm__row--label">
-          <label for="code" i18n>Verification Code</label>
-          <m-tooltip icon="help">
-            <ng-container i18n
-              >Please enter the code we just sent to +{{
-                form.value.number
-              }}.</ng-container
-            >
-          </m-tooltip>
-        </div>
-        <div
-          class="m-walletForm__row--input"
-          [ngClass]="{ invalid: invalidCode }"
-        >
-          <input
-            type="text"
-            id="code"
-            name="code"
-            formControlName="code"
-            class="form-control"
-            autofocus
-          />
-        </div>
-        <div class="m-walletForm__row--validation">
-          <p *ngIf="invalidCode">
-            Invalid verification code
-          </p>
-        </div>
+      <m-phoneInput
+        formControlName="number"
+        class="m-walletForm__row--input"
+        [ngClass]="{ invalid: invalidNumber }"
+        name="number"
+        id="number"
+        ngDefaultControl
+      ></m-phoneInput>
+      <div class="m-walletForm__row--validation">
+        <p *ngIf="invalidNumber">
+          Invalid phone number
+        </p>
       </div>
     </div>
-    <!-- TODOOJM button disabling -->
-    <!-- (from onboarding: !number || number.length < 13) -->
-    <!-- [disabled]="inProgress || invalidNumber || invalidCode" -->
-    <m-shadowboxSubmitButton
-      [disabled]="inProgress"
-      [saving]="inProgress"
-      (click)="onSubmit()"
-    >
-      {{ !confirming ? 'Send Verification' : 'Verify Code' }}
-    </m-shadowboxSubmitButton>
+    <div class="m-walletForm__field--text stretchedField" *ngIf="confirming">
+      <div class="m-walletForm__row--label">
+        <label for="code" i18n>Verification Code</label>
+        <m-tooltip icon="help">
+          <ng-container i18n
+            >Please enter the code we just sent to +{{
+              form.value.number
+            }}.</ng-container
+          >
+        </m-tooltip>
+      </div>
+      <div
+        class="m-walletForm__row--input"
+        [ngClass]="{ invalid: invalidCode }"
+      >
+        <input
+          type="text"
+          id="code"
+          name="code"
+          formControlName="code"
+          class="form-control"
+          autofocus
+        />
+      </div>
+      <div class="m-walletForm__row--validation">
+        <p *ngIf="invalidCode">
+          Invalid verification code
+        </p>
+      </div>
+    </div>
   </div>
+  <!-- TODOOJM button disabling -->
+  <!-- (from onboarding: !number || number.length < 13) -->
+  <!-- [disabled]="inProgress || invalidNumber || invalidCode" -->
+  <m-shadowboxSubmitButton
+    [disabled]="inProgress"
+    [saving]="inProgress"
+    (click)="onSubmit()"
+  >
+    {{ !confirming ? 'Send Verification' : 'Verify Code' }}
+  </m-shadowboxSubmitButton>
 </form>
 
 <div class="m-walletModal__footnote" *ngIf="confirming">

@@ -111,7 +111,7 @@
       <!-- Address created -->
       <p *ngIf="generatedAccount" class="m-walletTertiaryText--desc">
         The address
-        <span class="m-walletSettings__createdAddress">{{
+        <span class="m-walletTertiaryText--emphasis">{{
           generatedAccount.address
         }}</span>
         was successully saved as your on-chain address. Click the button below
@@ -143,48 +143,52 @@
         wallet's private key and MetaMask cannot be installed in your browser.
       </p>
 
-      <form *ngIf="form" [formGroup]="form">
-        <div class="m-walletForm__wrapper">
-          <div class="m-walletForm__fieldsContainer">
-            <div class="m-walletForm__field--text stretchedField">
-              <div class="m-walletForm__row--label">
-                <label for="addressInput" i18n>On-chain Address</label>
-                <m-tooltip icon="help">
-                  <ng-container i18n
-                    >This address is where you will receive on-chain Minds
-                    tokens and Ether payments</ng-container
-                  >
-                </m-tooltip>
-              </div>
-              <div
-                class="m-walletForm__row--input"
-                [ngClass]="{
-                  invalid:
-                    (form.dirty || form.touched) &&
-                    addressInput.hasError('format')
-                }"
-              >
-                <input
-                  type="text"
-                  id="addressInput"
-                  name="addressInput"
-                  formControlName="addressInput"
-                  class="form-control"
-                  [readonly]="inProgress"
-                />
-              </div>
-              <div class="m-walletForm__row--validation">
-                <p
-                  *ngIf="
-                    (form.dirty || form.touched) &&
-                    addressInput.hasError('format')
-                  "
+      <form
+        *ngIf="form"
+        [formGroup]="form"
+        class="m-walletButtonLayout--buttonOffsetRight"
+      >
+        <div class="m-walletForm__fieldsContainer">
+          <div class="m-walletForm__field--text stretchedField">
+            <div class="m-walletForm__row--label">
+              <label for="addressInput" i18n>On-chain Address</label>
+              <m-tooltip icon="help">
+                <ng-container i18n
+                  >This address is where you will receive on-chain Minds tokens
+                  and Ether payments</ng-container
                 >
-                  Invalid address format
-                </p>
-              </div>
+              </m-tooltip>
+            </div>
+            <div
+              class="m-walletForm__row--input"
+              [ngClass]="{
+                invalid:
+                  (form.dirty || form.touched) &&
+                  addressInput.hasError('format')
+              }"
+            >
+              <input
+                type="text"
+                id="addressInput"
+                name="addressInput"
+                formControlName="addressInput"
+                class="form-control"
+                [readonly]="inProgress"
+              />
+            </div>
+            <div class="m-walletForm__row--validation">
+              <p
+                *ngIf="
+                  (form.dirty || form.touched) &&
+                  addressInput.hasError('format')
+                "
+              >
+                Invalid address format
+              </p>
             </div>
           </div>
+        </div>
+        <div class="m-walletForm__buttonsContainer">
           <m-shadowboxSubmitButton
             [disabled]="
               inProgress ||

@@ -60,7 +60,9 @@
         >
         tokens
       </div>
-      <a
+      <!-- TODOOJM TOGGLE -->
+      <a (click)="showModal = true">Transfer to On-Chain</a>
+      <!-- <a
         *ngIf="
           session.getLoggedInUser().rewards &&
           wallet.offchain.balance > 0 &&
@@ -68,7 +70,7 @@
         "
         (click)="showModal = true"
         >Transfer to On-Chain</a
-      >
+      > -->
     </div>
   </div>
   <div class="m-walletBalance--tokens__learnMore">

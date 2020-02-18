@@ -46,7 +46,10 @@ export class WalletCashBankFormComponent implements OnInit {
       accountNumber: ['', Validators.required],
       routingNumber: ['', requiredFor(['US'])],
     });
-    this.initCountry = this.hasBankAccount
+
+    console.log('kk', this.account);
+
+    this.initCountry = this.hasBankAccount()
       ? this.account.bankAccount.country
       : this.account.country;
     this.country.patchValue(this.initCountry);

@@ -31,7 +31,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   menu: Menu = sidebarMenu;
   paramsSubscription: Subscription;
   wallet: Wallet;
-  inProgress: boolean = true;
+  inProgress: boolean;
 
   activeCurrencyId: string;
   activeViewId: string;
@@ -69,6 +69,8 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/login']);
       return;
     }
+    this.inProgress = true;
+    this.detectChanges();
 
     this.phoneVerified = this.session.getLoggedInUser().rewards;
     this.hasOnchainAddress = this.session.getLoggedInUser().eth_wallet;
@@ -134,7 +136,6 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       };
 
       // Handle currency formatting for cash
-      // TODOOJM this isn't going to work
       if (currency === 'cash') {
         if (this.wallet.cash.unit === 'cash') {
           headerTab.unit = 'usd';

@@ -1,10 +1,10 @@
-<div *ngIf="!loaded" class="m-wallet__spinner">
+<div *ngIf="!init" class="m-wallet__spinner">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
-<div class="m-walletBalance--cash" *ngIf="loaded">
+<div class="m-walletBalance--cash" *ngIf="init && cashWallet">
   <div
     class="m-walletBalance---cash__onboardingNotice"
-    *ngIf="viewId !== 'settings' && (!hasAccount || !account.bankAccount)"
+    *ngIf="viewId !== 'settings' && (!hasAccount || !hasBank)"
   >
     <p (click)="scrollToSettings()">
       <a>Add your bank information</a>
@@ -19,8 +19,9 @@
     </p>
   </div>
   <div class="m-walletBalance--cash__colContainer">
-    <!-- ---PENDING BALANCE ------------------- -->
-
+    <!-- -------------------------------------------- -->
+    <!--- PENDING BALANCE ------------------------------>
+    <!-- -------------------------------------------- -->
     <div class="m-walletBalance--cash__col">
       <div class="m-walletBalance--cash__colTitle">
         Pending Balance<m-tooltip icon="help"
@@ -47,16 +48,21 @@
             >.{{ pendingBalance.frac }}</span
           >
         </div>
-        <div class="m-walletBalance--cash__colSubtitle">
+        <!-- -------------------------------------------- -->
+        <!--- PAYOUT DATE----------------------------------->
+        <!-- -------------------------------------------- -->
+        <div *ngIf="hasBank" class="m-walletBalance--cash__colSubtitle">
           <p>Estimated Payout</p>
           <p>{{ nextPayoutDate }}</p>
         </div>
       </ng-container>
     </div>
 
-    <!-- ---TOTAL PAID OUT ------------------- -->
+    <!-- -------------------------------------------- -->
+    <!--- TOTAL PAID OUT-------------------------------->
+    <!-- -------------------------------------------- -->
 
-    <div class="m-walletBalance--cash__col" *ngIf="hasAccount">
+    <div class="m-walletBalance--cash__col" *ngIf="hasBank">
       <div class="m-walletBalance--cash__colTitle">
         Total Paid Out<m-tooltip icon="help"
           >The amount you've already received</m-tooltip
@@ -75,9 +81,11 @@
       </div>
     </div>
 
-    <!-- ---PRO EARNINGS ------------------- -->
+    <!-- -------------------------------------------- -->
+    <!--- PRO EARNINGS --------------------------------->
+    <!-- -------------------------------------------- -->
 
-    <div class="m-walletBalance--cash__col" *ngIf="isPro">
+    <div class="m-walletBalance--cash__col" *ngIf="proEarnings">
       <div class="m-walletBalance--cash__colTitle">
         Pro Earnings<m-tooltip icon="help"
           >At the end of each month, your Pro earnings will move into your

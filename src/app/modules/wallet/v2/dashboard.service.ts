@@ -12,9 +12,11 @@ export interface SplitBalance {
 }
 
 export interface StripeDetails {
-  pendingBalance: SplitBalance;
-  totalPaidOut: SplitBalance;
-  isLocalCurrency: boolean;
+  pendingBalanceSplit: SplitBalance;
+  totalPaidOutSplit: SplitBalance;
+  hasAccount: boolean;
+  hasBank: boolean;
+  verified: boolean;
 }
 
 export interface WalletCurrency {
@@ -37,6 +39,8 @@ export interface Wallet {
 @Injectable()
 export class WalletDashboardService {
   totalTokens = 0;
+  stripeDetails: StripeDetails;
+  stripeAccount;
   wallet: Wallet = {
     tokens: {
       label: 'Tokens',
@@ -185,36 +189,49 @@ export class WalletDashboardService {
   async getStripeAccount() {
     const merchant = this.session.getLoggedInUser().merchant;
 
+    const zeroSplit = this.splitBalance(0);
+
+    this.stripeDetails = {
+      hasAccount: false,
+      hasBank: false,
+      pendingBalanceSplit: zeroSplit,
+      totalPaidOutSplit: zeroSplit,
+      verified: false,
+    };
     if (merchant && merchant.service === 'stripe') {
       try {
-        const { account } = <any>(
+        let { account } = <any>(
           await this.client.get('api/v2/payments/stripe/connect')
         );
 
-        const friendlyAccount = { ...account };
+        this.stripeDetails.hasAccount = true;
+        this.stripeDetails.verified = account.verified;
 
-        console.log('svc getAcc', account);
         this.wallet.cash.address = 'stripe';
         this.wallet.cash.balance =
           (account.totalBalance.amount - account.pendingBalance.amount) / 100;
-        if (!account.bankAccount) {
-          // Has stripe account but not setup bank account
-          this.wallet.cash.label = 'USD';
-          this.wallet.cash.unit = 'usd';
-          friendlyAccount.isLocalCurrency = false;
-        } else {
+        if (account.bankAccount) {
+          // this.wallet.cash.label = 'USD';
+          // this.wallet.cash.unit = 'usd';
+          // this.stripeDetails.hasBank = false;
+          // } else {
           const bankCurrency: string = account.bankAccount.currency;
           this.wallet.cash.label = bankCurrency.toUpperCase();
           this.wallet.cash.unit = bankCurrency;
-          friendlyAccount.isLocalCurrency = true;
+          this.stripeDetails.hasBank = true;
         }
 
-        // TODOOJM
-        //pendingBalanceFriendly
-        // totalPaidOutFriendly = (account.totalBalance.amount - account.pendingBalance.amount) / 100;
-        // formatBalance(int, frac, total)
+        this.stripeDetails.pendingBalanceSplit = this.splitBalance(
+          account.pendingBalance.amount / 100
+        );
+        this.stripeDetails.totalPaidOutSplit = this.splitBalance(
+          (account.totalBalance.amount - account.pendingBalance.amount) / 100
+        );
 
-        //return friendlyAccount
+        this.wallet.cash.stripeDetails = this.stripeDetails;
+        account = { ...account, ...this.stripeDetails };
+
+        console.log('svc has account(merge)', account);
 
         return account;
       } catch (e) {
@@ -222,7 +239,10 @@ export class WalletDashboardService {
         return;
       }
     } else {
-      return;
+      this.wallet.cash.stripeDetails = this.stripeDetails;
+
+      console.log('svc has NO account', this.stripeDetails);
+      return this.stripeDetails;
     }
   }
 

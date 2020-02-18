@@ -41,7 +41,6 @@ enum Views {
 })
 export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   @Output() onchainAddressChanged: EventEmitter<any> = new EventEmitter();
-  // @Input() wallet: Wallet;
   inProgress: boolean = false;
   linkingMetamask: boolean = false;
   error: string = '';
