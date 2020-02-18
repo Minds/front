@@ -17,7 +17,7 @@
   <m-blockchain--wallet-address-notice></m-blockchain--wallet-address-notice>
 
   <ng-container *mIfFeature="'navigation'; else oldLayout">
-    <div class="m-grid">
+    <div class="m-grid" [class.m-grid__noSidebar]="!isSidebarVisible">
       <m-sidebar--navigation></m-sidebar--navigation>
       <router-outlet></router-outlet>
     </div>

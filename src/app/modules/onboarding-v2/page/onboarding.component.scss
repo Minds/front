@@ -5,7 +5,17 @@ m-onboarding {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
+  grid-area: content / span 2;
+
   position: relative;
+
+  &.m-onboarding__newNavigation {
+    margin-top: -75px;
+    .m-grid {
+      margin-top: -75px;
+      padding-top: 75px;
+    }
+  }
 
   @media screen and (max-width: $max-mobile) {
     margin-bottom: 60px;

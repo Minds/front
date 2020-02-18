@@ -27,8 +27,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.m-login__newDesign')
   newDesign: boolean = false;
+
   @HostBinding('class.m-login__newNavigation')
   newNavigation: boolean = false;
+
   @HostBinding('class.m-login__iosFallback')
   iosFallback: boolean = false;
 

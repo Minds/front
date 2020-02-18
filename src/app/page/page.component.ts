@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Session } from '../services/session';
 import { FeaturesService } from '../services/features.service';
 import { SiteService } from '../common/services/site.service';
-import { ConfigsService } from '../common/services/configs.service';
-import { ChannelOnboardingService } from '../modules/onboarding/channel/onboarding.service';
+import { SidebarNavigationService } from '../common/layout/sidebar/navigation.service';
 
 @Component({
   selector: 'm-page',
@@ -14,44 +13,23 @@ export class PageComponent implements OnInit {
 
   showOnboarding: boolean = false;
 
+  isSidebarVisible: boolean = true;
+
   constructor(
     public session: Session,
     public featuresService: FeaturesService,
-    public onboardingService: ChannelOnboardingService,
-    private site: SiteService,
-    private configs: ConfigsService
+    private navigationService: SidebarNavigationService,
+    private site: SiteService
   ) {}
 
   ngOnInit() {
     this.useNewNavigation = this.featuresService.has('navigation');
-  }
 
-  async initialize() {
-    this.session.isLoggedIn(async is => {
-      if (is && !this.site.isProDomain) {
-        if (!this.site.isProDomain) {
-          this.showOnboarding = await this.onboardingService.showModal();
-        }
-
-        const user = this.session.getLoggedInUser();
-        const language = this.configs.get('language');
-
-        if (user.language !== language) {
-          console.log('[app]:: language change', user.language, language);
-          window.location.reload(true);
-        }
-      }
-    });
-
-    this.onboardingService.onClose.subscribe(() => {
-      this.showOnboarding = false;
-    });
-
-    this.onboardingService.onOpen.subscribe(async () => {
-      this.showOnboarding = await this.onboardingService.showModal(true);
+    this.navigationService.visibleChange.subscribe((visible: boolean) => {
+      this.isSidebarVisible = visible;
+      console.warn('got here', visible);
     });
   }
-
   get isProDomain() {
     return this.site.isProDomain;
   }

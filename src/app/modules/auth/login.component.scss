@@ -5,7 +5,7 @@ m-login {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   position: relative;
-  grid-area: content;
+  grid-area: content / span 2;
 
   &:not(.m-login__newDesign) {
     @include m-theme() {

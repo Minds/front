@@ -48,6 +48,12 @@ m-app {
         display: flex;
         flex-direction: column;
       }
+
+      &.m-grid__noSidebar {
+        grid-template-areas: 'content side' 'footer footer';
+
+        grid-template-columns: 5fr 4fr;
+      }
     }
   }
 
