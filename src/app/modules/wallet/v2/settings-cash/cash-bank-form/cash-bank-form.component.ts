@@ -47,8 +47,6 @@ export class WalletCashBankFormComponent implements OnInit {
       routingNumber: ['', requiredFor(['US'])],
     });
 
-    console.log('kk', this.account);
-
     this.initCountry = this.hasBankAccount()
       ? this.account.bankAccount.country
       : this.account.country;
@@ -114,9 +112,13 @@ export class WalletCashBankFormComponent implements OnInit {
 
   async addBank() {
     this.error = '';
+    this.inProgress = true;
+    this.detectChanges();
+
     this.walletService
       .addStripeBank(this.form.value)
       .then((response: any) => {
+        console.log('addBank response', response);
         this.editing = false;
 
         const toasterMessage = 'Your bank account has been successfully added';
