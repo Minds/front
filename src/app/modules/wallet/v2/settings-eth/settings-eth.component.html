@@ -4,18 +4,20 @@
 <!-- <div class="m-walletSettings" *ngIf="ethWallet"> -->
 <div class="m-walletSettings">
   <h2>Ether Address</h2>
-  <p>
-    Your Ether address is the same as your on-chain address.<m-tooltip
-      icon="help"
-    >
-      Why? On-chain tokens run on the Ethereum network and require Ether to
-      send.
-    </m-tooltip>
-  </p>
-  <p>
-    To view or change your address, go to
-    <a (click)="scrollToTokenSettings.emit()">token settings</a>.
-  </p>
+  <div class="m-walletTertiaryText--desc">
+    <p>
+      Your Ether address is the same as your on-chain address.<m-tooltip
+        icon="help"
+      >
+        Why? On-chain tokens run on the Ethereum network and require Ether to
+        send.
+      </m-tooltip>
+    </p>
+    <p>
+      To view or change your address, go to
+      <a (click)="scrollToTokenSettings.emit()">token settings</a>.
+    </p>
+  </div>
   <div *ngIf="ethWallet.address" class="m-walletSettings--eth__balanceWrapper">
     <div>
       <p class="m-walletSettings--eth__balanceLabel">Ether total</p>

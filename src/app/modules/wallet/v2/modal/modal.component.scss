@@ -51,26 +51,25 @@ m-walletModal {
       display: inline-block;
       font-weight: 300;
     }
-  }
-
-  .m-walletModal__title {
-    font-weight: 500;
-    font-size: 24px;
-    line-height: 32px;
-    margin-bottom: 18px;
-    @include m-theme() {
-      color: themed($m-grey-800);
+    @media screen and (max-width: $min-tablet) {
+      padding: 46px 50px;
+      max-width: 80vw;
+      width: 80vw;
+      max-height: 90vh;
+    }
+    @media screen and (max-width: $max-mobile) {
+      padding: 26px 32px;
+      min-width: 90vw;
+      min-height: 99vh;
+      max-height: 95vh;
     }
   }
-  .m-walletModal__desc {
+
+  .m-walletTertiaryText--desc {
     margin-bottom: 30px;
-    p {
-      font-size: 16px;
-      line-height: 21px;
-    }
   }
 
-  [class*='m-walletModal__footnote--'] {
+  [class*='m-walletModal__footnote'] {
     margin: 10px 0 11px 0;
     font-size: 15px;
     line-height: 20px;
@@ -115,20 +114,18 @@ m-walletModal {
         opacity: 0.6;
       }
     }
-  }
-  @media screen and (max-width: $min-tablet) {
-    .m-walletModal {
-      padding: 46px 50px;
-      max-width: 80vw;
-      width: 80vw;
-      max-height: 90vh;
-    }
-  }
-  @media screen and (max-width: $max-mobile) {
-    .m-walletModal {
-      padding: 26px 35px;
-      width: 90vw;
-      max-height: 95vh;
+    @media screen and (max-width: $max-mobile) {
+      top: 14px;
+      right: 20px;
+      @include m-theme() {
+        background-color: rgba(0, 0, 0, 0);
+        box-shadow: none;
+      }
+      &:hover {
+        @include m-theme() {
+          box-shadow: none;
+        }
+      }
     }
   }
 }

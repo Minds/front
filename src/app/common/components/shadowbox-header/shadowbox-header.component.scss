@@ -154,9 +154,9 @@ m-shadowboxHeader {
       }
     }
   }
-  .m-shadowboxHeader__wrapper {
-    @include m-theme() {
-      box-shadow: none;
-    }
-  }
+  // .m-shadowboxHeader__wrapper {
+  //   @include m-theme() {
+  //     box-shadow: none;
+  //   }
+  // }
 }

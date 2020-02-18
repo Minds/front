@@ -1,18 +1,22 @@
-<div class="m-walletModal__title">
+<h2>
   Phone Verification
-</div>
+</h2>
 <div class="m-walletModal__desc">
-  <p>
+  <p class="m-walletTertiaryText">
     You can earn tokens for your contributions to the Minds network. The more
     interactions on your content, the greater your share of the daily token
     reward pool to your off-chain address.
   </p>
-  <p>
+  <p class="m-walletTertiaryText">
     To start earning rewards, you will need to enter a unique phone number.
   </p>
 </div>
 <!-- TODOOJM: check on the enter key behavior -->
-<form [formGroup]="form" (keyup.enter)="onSubmit()">
+<form
+  [formGroup]="form"
+  (keyup.enter)="onSubmit()"
+  class="m-walletButtonLayout--buttonInline"
+>
   <div class="m-walletForm__wrapper">
     <div class="m-walletForm__fieldsContainer">
       <div class="m-walletForm__field--text stretchedField" *ngIf="!confirming">
@@ -85,11 +89,9 @@
   </div>
 </form>
 
-<div class="m-walletModal__footnote--formStatus" *ngIf="confirming">
-  <div class="m-walletPhoneVerification__formStatusCodeSent">
-    Verification code sent to +{{ form.value.number }}
-  </div>
-  <div class="m-walletPhoneVerification__formStatusActions">
+<div class="m-walletModal__footnote" *ngIf="confirming">
+  <div>Verification code sent to +{{ form.value.number }}</div>
+  <div>
     Didn't receive it? <a (click)="validateNumber()">Send it again</a> or
     <a (click)="changePhone()">change phone number</a>
   </div>

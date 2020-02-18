@@ -150,6 +150,10 @@ button {
     }
   }
 }
+.m-shadowboxSubmitButton__status--unsaved {
+  font-size: 15px;
+  line-height: 20px;
+}
 
 @media screen and (max-width: $max-mobile) {
   m-shadowboxSubmitButton {

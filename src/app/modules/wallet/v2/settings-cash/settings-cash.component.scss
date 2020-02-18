@@ -1,11 +1,5 @@
 // additional shared styles located in dashboard.component.scss
 m-walletSettings--cash {
-  .m-walletSettings {
-    h4 {
-      margin-bottom: 15px;
-    }
-  }
-
   .m-walletSettingsView--hasAccount__detailsWrapper {
     max-width: 460px;
     margin: 38px 0 59px 0;
@@ -34,21 +28,51 @@ m-walletSettings--cash {
     }
   }
 
-  // FORM -------------------
-  [class*='m-walletForm__field'] {
-    margin-bottom: 19px;
-  }
-
   .m-tooltip--bubble {
     right: 12px;
   }
 
-  // TOS checkbox
-  m-walletCashOnboarding {
-    .m-walletForm__field--checkbox {
-      margin-top: 100px;
-      span {
-        font-size: 14px;
+  ////////////////////////////////////////////
+  // FORMS ///////////////////////////////////
+  ////////////////////////////////////////////
+  // [class*='m-walletForm__field'] {
+  //   margin-bottom: 19px;
+  // }
+  .m-walletForm__nameFieldsContainer {
+    display: flex;
+    box-sizing: border-box;
+    flex-flow: row wrap;
+
+    [class*='m-walletForm__field'] {
+      flex: 1 0 auto;
+      min-width: 300px;
+      &:first-child {
+        margin-right: 19px;
+      }
+    }
+  }
+  .m-walletForm__multifieldGroup {
+    margin-top: 58px;
+  }
+
+  .m-walletForm__field--checkbox {
+    margin-top: 100px;
+    @media screen and (max-width: $max-mobile) {
+      margin-top: 40px;
+    }
+  }
+  m-date__dropdowns {
+    select {
+      outline: none;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border: 1px solid themed($m-borderColor--primary);
+        box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+      }
+      &:focus {
+        @include m-theme() {
+          border: 1px solid themed($m-blue);
+        }
       }
     }
   }

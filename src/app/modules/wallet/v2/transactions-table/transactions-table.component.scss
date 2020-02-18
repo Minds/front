@@ -3,7 +3,8 @@
 .m-walletTransactions {
   margin: 40px 70px;
   font-weight: 300;
-  @include m-walletText--14;
+  font-size: 14px;
+  line-height: 19px;
   @include m-theme() {
     color: themed($m-textColor--secondary);
   }
@@ -108,21 +109,23 @@ m-walletTransactionsTable {
       }
     }
     span {
-      @include m-walletText--14;
+      font-size: 14px;
+      line-height: 19px;
       @include m-theme() {
         color: themed($m-textColor--secondary);
       }
     }
   }
   .m-walletTransactionsTable__total--int {
-    @include m-walletText--15;
+    font-size: 15px;
+    line-height: 20px;
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
   }
   .m-walletTransactionsTable__total--frac {
-    @include m-walletText--12;
-
+    font-size: 12px;
+    line-height: 16px;
     @include m-theme() {
       color: themed($m-textColor--secondary);
     }

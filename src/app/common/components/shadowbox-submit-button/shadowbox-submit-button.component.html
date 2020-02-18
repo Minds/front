@@ -9,10 +9,18 @@
     red: color === 'red'
   }"
 >
-  <div *ngIf="!saving" class="m-shadowboxSubmitButton__status--unsaved">
+  <div
+    *ngIf="!saving"
+    class="m-shadowboxSubmitButton__status--unsaved"
+    #buttonTextContainer
+  >
     <ng-content></ng-content>
   </div>
-  <div *ngIf="saving" class="m-shadowboxSubmitButton__status--saving">
+  <div
+    *ngIf="saving"
+    class="m-shadowboxSubmitButton__status--saving"
+    [style.width]="buttonTextWidth + 'px'"
+  >
     <span></span>
     <span></span>
     <span></span>

@@ -1,43 +1,152 @@
-@mixin m-walletText--15 {
-  font-size: 15px;
-  line-height: 20px;
-}
-@mixin m-walletText--14 {
-  font-size: 14px;
-  line-height: 19px;
-}
-@mixin m-walletText--13 {
-  font-size: 13px;
-  line-height: 18px;
-}
-@mixin m-walletText--12 {
-  font-size: 12px;
-  line-height: 16px;
-}
-////////////////////////////////////////////
 m-walletDashboard {
+  ////////////////////////////////////////////
+  // COMMON //////////////////////////////////
+  ////////////////////////////////////////////
+
   .m-wallet__spinner {
     display: flex;
     justify-content: space-around;
     align-items: center;
   }
 
+  m-shadowboxSubmitButton {
+    box-sizing: border-box;
+    display: block;
+    // flex: 0 1 auto;
+    // margin: 0 0 0 21px;
+
+    .m-shadowboxSubmitButton {
+      box-sizing: border-box;
+      max-height: none;
+      min-height: 42px;
+      height: auto;
+      min-width: 105px;
+      font-weight: 300;
+      padding: 7px 15px;
+      font-size: 15px;
+      line-height: 20px;
+    }
+  }
+
+  .m-walletModal--confirmation {
+    & > p {
+      margin-top: none;
+    }
+  }
+  ////////////////////////////////////////////
+  // TEXT ////////////////////////////////////
+  ////////////////////////////////////////////
+  h2 {
+    font-weight: 500px;
+    font-size: 26px;
+    line-height: 34px;
+    margin: 0 0 17px 0;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  [class*='m-walletPrimaryText'] {
+    font-size: 15px;
+    line-height: 20px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  [class*='m-walletTertiaryText'] {
+    font-size: 14px;
+    line-height: 19px;
+
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+  .m-walletTertiaryText--desc {
+    margin-bottom: 40px;
+  }
+  .m-walletTertiaryText--label {
+    margin-bottom: 13px;
+  }
+  .m-walletTertiaryText--backButton {
+    margin-top: 40px;
+    display: inline-flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+    text-decoration: none !important;
+
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+    &:hover {
+      span {
+        text-decoration: underline;
+      }
+    }
+    i {
+      font-size: 14px;
+      font-weight: 300;
+      margin-right: 10px;
+    }
+  }
+  .m-walletTertiaryText--error {
+    @include m-theme() {
+      color: themed($m-red);
+    }
+  }
+
+  ////////////////////////////////////////////
+  // HEADER TABS /////////////////////////////
+  ////////////////////////////////////////////
+  m-pagelayout {
+    @media screen and (max-width: $min-tablet) {
+      padding-top: 36px;
+    }
+    @media screen and (max-width: $max-mobile) {
+      padding-top: 24px;
+    }
+  }
   m-shadowboxHeader {
     min-height: 103px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @media screen and (max-width: $max-mobile) {
+      min-height: 85px;
+    }
   }
   .m-shadowboxHeader__wrapper {
     height: 103px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @media screen and (max-width: $max-mobile) {
+      height: 85px;
+    }
   }
   .m-shadowboxHeaderTab {
-    line-height: 21px;
+    width: 149px;
     min-height: 103px;
     max-height: 103px;
-    width: 149px;
+    line-height: 21px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @media screen and (max-width: $max-mobile) {
+      width: 111px;
+      min-height: 85px;
+      max-height: 85px;
+      padding: 13px 15px 15px 20px;
+    }
+
     .m-shadowboxHeaderTab__label {
       margin-top: 6px;
       font-size: 18px;
       @include m-theme() {
         color: themed($m-textColor--primary);
+      }
+      @media screen and (max-width: $max-mobile) {
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 19px;
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
       }
     }
     .m-shadowboxHeaderTab__value {
@@ -46,14 +155,48 @@ m-walletDashboard {
       @include m-theme() {
         color: themed($m-textColor--tertiary);
       }
+      @media screen and (max-width: $max-mobile) {
+        font-size: 17px;
+        line-height: 23px;
+        margin-top: 2px;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
     }
   }
+
+  ////////////////////////////////////////////
+  // BALANCES  ///////////////////////////////
+  ////////////////////////////////////////////
+  .m-walletDashboardBalance__wrapper {
+    margin: 50px 53px 34px 53px;
+    @media screen and (max-width: $min-tablet) {
+      margin: 50px 36px 34px 36px;
+    }
+    @media screen and (max-width: $max-mobile) {
+      margin: 22px 24px 25px 24px;
+    }
+  }
+  ////////////////////////////////////////////
+  // VIEW TABS ///////////////////////////////
+  ////////////////////////////////////////////
+
   .m-walletDashboardViews__tabsContainer {
     box-sizing: border-box;
     display: flex;
     flex-flow: row nowrap;
+    margin: 0 40px;
     @include m-theme() {
       border-bottom: 1px solid themed($m-borderColor--tertiary);
+    }
+    @media screen and (max-width: $min-tablet) {
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+    @media screen and (max-width: $max-mobile) {
+      margin-left: 0;
+      margin-right: 0;
     }
   }
   .m-walletDashboardViews__tab {
@@ -81,98 +224,84 @@ m-walletDashboard {
         color: themed($m-textColor--primary);
       }
     }
+    @media screen and (max-width: $max-mobile) {
+      padding: 10px 9px;
+      margin: 0px 3px;
+      &:first-child {
+        margin-left: 16px;
+      }
+    }
+  }
+
+  ////////////////////////////////////////////
+  // VIEWS ///////////////////////////////////
+  ////////////////////////////////////////////
+  .m-walletDashboardViews__viewsContainer {
+    min-height: 550px;
+    @media screen and (max-width: $max-mobile) {
+      min-height: 0px;
+    }
   }
   .m-walletDashboardViews__view {
     display: block;
     padding-bottom: 50px;
-  }
-
-  .m-walletDashboardBalances__wrapper {
-    margin: 50px 53px 34px 53px;
-  }
-  .m-walletDashboardViews__tabsContainer {
-    margin: 0 40px;
-  }
-  .m-walletDashboardViews__viewsContainer {
-    min-height: 550px;
-  }
-  .m-walletDashboardViews__view {
-    margin: 50px 57px 0 57px;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    &.m-walletDashboardViews__view--overview {
-      margin: 50px 0 0 0;
-    }
-  }
-  m-shadowboxSubmitButton {
-    display: block;
-    flex: 0 1 auto;
-    margin: 0 0 0 21px;
-    // min-width: 105px;
-    box-sizing: border-box;
-
-    .m-shadowboxSubmitButton {
-      box-sizing: border-box;
-      max-height: none;
-      min-height: 42px;
-      // height: 42px;
-      height: auto;
-      min-width: 105px;
-      font-weight: 300;
-      padding: 7px 15px;
-      font-size: 15px;
-      line-height: 20px;
-    }
-    .m-shadowboxSubmitButton__status--unsaved {
-      font-size: 15px;
-      line-height: 20px;
-    }
-  }
-
-  .m-walletModal--confirmation {
-    & > p {
-      margin-top: none;
-    }
-  }
-
-  // *******************************************************
-  // ** DASHBOARD - MEDIA QUERIES **************************
-  // *******************************************************
-  @media screen and (max-width: $min-tablet) {
-    .m-walletDashboardBalances__wrapper {
-      margin: 50px 24px 34px 24px;
-    }
-    .m-walletDashboardViews__tabsContainer {
-      margin-left: 16px;
-      margin-right: 16px;
-    }
-    .m-walletDashboardViews__view {
+    margin: 50px 57px 0 57px;
+    @media screen and (max-width: $min-tablet) {
       margin: 30px 24px 0 24px;
     }
+    @media screen and (max-width: $max-mobile) {
+      margin: 30px 16px 0 16px;
+    }
   }
-  @media screen and (max-width: $max-mobile) {
-    .m-walletDashboardViews__tab {
-      padding: 10px 9px;
-      margin: 0px 3px;
+  m-walletChart {
+    .m-walletDashboardViews__view {
+      margin: 50px 0 0 0;
+    }
+    @media screen and (max-width: $min-tablet) {
+      margin: 30px 0 0 0;
     }
   }
 
-  // *******************************************************
-  // ** FORMS - COMMON STYLES ******************************
-  // *******************************************************
+  ////////////////////////////////////////////
+  // BUTTON LAYOUTS /////////////////////
+  ////////////////////////////////////////////
+  // [class*='m-walletForm__wrapper'] {
+
+  // }
+  .m-walletButtonLayout--buttonInline {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: center;
+    @media screen and (max-width: $max-mobile) {
+      .m-shadowboxSubmitButton {
+        min-width: 100%;
+      }
+    }
+  }
+  .m-walletButtonLayout--buttonOffsetRight {
+    //m-walletForm__wrapper
+    // m-walletForm__fieldsContainer
+    // m-shadowboxSubmitButton
+
+    & ~ .m-walletTertiaryText--backButton {
+      margin-top: 20px;
+    }
+  }
+
+  ////////////////////////////////////////////
+  // FORMS ///////////////////////////////////
+  ////////////////////////////////////////////
   form {
     margin: 0;
     padding: 0;
   }
 
-  .m-walletForm__wrapper {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-end;
-    align-items: center;
+  .m-walletForm__fieldsContainer {
+    flex: 1 1 auto;
   }
-  .m-walletForm__multifieldGroup {
-    margin-top: 58px;
-  }
+
   .m-walletForm__buttonsContainer {
     display: flex;
     flex-flow: row wrap-reverse;
@@ -182,17 +311,7 @@ m-walletDashboard {
       margin-top: 8px;
     }
   }
-  .m-walletForm__nameFieldsContainer {
-    display: flex;
-    box-sizing: border-box;
 
-    [class*='m-walletForm__field'] {
-      flex: 1 0 auto;
-      &:first-child {
-        margin-right: 19px;
-      }
-    }
-  }
   [class*='m-walletForm__field'] {
     font-size: 15px;
     line-height: 20px;
@@ -218,7 +337,7 @@ m-walletDashboard {
     &[class*='--label'] {
       font-size: 15px;
       line-height: 20px;
-      margin: 0 0 12px 0;
+      margin: 0 0 13px 0;
       align-items: center;
       flex-flow: row nowrap;
       position: relative;
@@ -235,7 +354,7 @@ m-walletDashboard {
         margin: 0;
         font-weight: 300;
         @include m-theme() {
-          color: themed($m-alert); //red-dark
+          color: themed($m-alert);
         }
       }
     }
@@ -250,7 +369,7 @@ m-walletDashboard {
         input,
         .m-phoneInput__wrapper {
           @include m-theme() {
-            border-color: themed($m-alert) !important; //red-dark
+            border-color: themed($m-alert) !important;
           }
         }
       }
@@ -298,15 +417,6 @@ m-walletDashboard {
     }
   }
 
-  .m-walletForm__fieldsContainer {
-    flex: 1 1 auto;
-  }
-  .m-walletForm__error p {
-    @include m-theme() {
-      color: themed($m-alert);
-    }
-  }
-
   m-phoneInput {
     margin-bottom: 0;
     .m-phoneInput__wrapper {
@@ -315,34 +425,22 @@ m-walletDashboard {
     }
   }
 
-  m-date__dropdowns {
-    select {
-      outline: none;
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-        border: 1px solid themed($m-borderColor--primary);
-        box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
-      }
-      &:focus {
-        @include m-theme() {
-          border: 1px solid themed($m-blue);
+  .m-walletForm__field--checkbox {
+    m-formInput__checkbox {
+      .m-formInput__checkbox {
+        span,
+        label {
+          font-size: 14px;
+          line-height: 19px;
         }
-      }
-    }
-  }
-
-  m-formInput__checkbox {
-    .m-formInput__checkbox {
-      label {
-        @include m-walletText--14();
       }
     }
   }
   //////////////////////////////////////////
   @media screen and (max-width: 500px) {
-    m-shadowboxSubmitButton {
-      margin: 21px 0 0 0;
-    }
+    // m-shadowboxSubmitButton {
+    //   margin: 21px 0 0 0;
+    // }
     .stretchedField {
       .m-walletForm__row--label m-tooltip {
         .m-tooltip--bubble {
@@ -363,261 +461,36 @@ m-walletDashboard {
       }
     }
   }
-
-  // *******************************************************
-  // ** SETTINGS - COMMON STYLES ***************************
-  // *******************************************************
+  ////////////////////////////////////////////
+  // SETTINGS ////////////////////////////////
+  ////////////////////////////////////////////
 
   .m-walletSettings {
-    // font-weight: 300;
-    @include m-theme() {
-      color: themed($m-textColor--primary);
-    }
-    m-shadowboxSubmitButton {
-      margin: 27px 0 0 0;
-    }
-    h2 {
-      margin: 0;
-      font-size: 26px;
-      line-height: 34px;
-    }
-    h4 {
-      margin: 0;
-      font-size: 21px;
-      line-height: 28px;
-    }
-    ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      // font-weight: 300;
-    }
     a {
-      // font-weight: 300;
       text-decoration: underline;
       cursor: pointer;
       font-size: 14px;
       line-height: 19px;
     }
-    p {
-      font-size: 14px;
-      line-height: 19px;
-      margin: 23px 0 0 0;
-      font-weight: 400; // TODOOJM - make this 300 on the install metamask page
-      @include m-theme() {
-        color: themed($m-textColor--tertiary);
-      }
-    }
 
-    .m-walletSettingsView--addressCurrent {
-      h2 {
-        margin-bottom: 23px;
-      }
-    }
-    .m-walletSettingsView--addressCurrent__title {
-      margin-bottom: 13px;
-    }
-    .m-walletSettingsView--addressCurrent__addressContainer {
+    .m-walletSettings__currentAddressContainer {
       display: flex;
       flex-flow: row wrap;
       font-size: 15px;
       line-height: 20px;
 
-      div:first-child {
+      div {
         margin: 0 18px 8px 0;
-        @include m-theme() {
-          color: themed($m-textColor--primary);
-        }
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
       }
       a {
-        font-size: 14px;
-        line-height: 20px;
-        font-weight: 300;
-      }
-    }
-
-    .m-walletSettings__setupOptions__recommendation {
-      display: flex;
-      flex-flow: row nowrap;
-      align-items: flex-end;
-      font-size: 12px;
-      line-height: 16px;
-      margin: 31px 0 0 0;
-      @include m-theme() {
-        color: themed($m-textColor--tertiary);
-      }
-      i {
-        font-size: 18px;
-        margin-right: 8px;
-      }
-    }
-    .m-walletSettingsView__setupOptions__container {
-      display: flex;
-      flex-flow: row wrap;
-      li {
-        box-sizing: border-box;
-        flex: 1 1 50%;
-        padding: 16px 0 16px 54px;
-      }
-      p {
-        @include m-theme() {
-          color: themed($m-textColor--primary);
-        }
-      }
-      .m-walletSettingsView__setupOption--custom {
-        div {
-          margin-top: 16px;
-          display: inline-block;
-          a,
-          span {
-            display: inline-block;
-            margin-right: 5px;
-            font-weight: 300;
-          }
-          span {
-            @include m-theme() {
-              color: themed($m-textColor--tertiary);
-            }
-          }
-        }
-      }
-      .m-walletSettingsView__setupOption--metamask {
-        padding-right: 32px;
-        padding-left: 0;
-        border-width: 0;
-        border-right-width: 1px;
-        border-style: solid;
-        @include m-theme() {
-          border-image: linear-gradient(
-              transparent,
-              rgba(themed($m-grey-200), 0.6),
-              transparent
-            )
-            10 100%;
-        }
-        a {
-          font-weight: 300;
-        }
-      }
-      div {
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        img {
-          height: 34px;
-          margin-right: 12px;
-        }
-      }
-    }
-    span.m-walletSettings__address--emphasis {
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-      }
-    }
-
-    a.m-walletSettings__backButton {
-      margin-top: 33px;
-      display: inline-flex;
-      flex-flow: row nowrap;
-      align-items: baseline;
-      text-decoration: none;
-
-      @include m-theme() {
-        color: themed($m-textColor--tertiary);
-      }
-      &:hover {
-        span {
-          text-decoration: underline;
-        }
-      }
-      i {
+        display: inline-block;
+        margin: 0;
         font-size: 14px;
         font-weight: 300;
-        margin-right: 10px;
-      }
-    }
-
-    @media screen and (max-width: $min-tablet) {
-      .m-walletSettingsView__setupOptions__container {
-        li.m-walletSettingsView__setupOption--custom {
-          padding-left: 32px;
-        }
-      }
-    }
-
-    @media screen and (max-width: 520px) {
-      .m-walletSettingsView__setupOptions__container {
-        li {
-          flex-basis: 100%;
-          &.m-walletSettingsView__setupOption--metamask {
-            padding: 16px 0 32px 0;
-            border-right-width: 0;
-          }
-          &.m-walletSettingsView__setupOption--custom {
-            padding: 32px 0 0 0;
-          }
-        }
-      }
-    }
-  }
-
-  @media screen and (max-width: $max-mobile) {
-    [class*='m-walletTokenOnboardingStep--'] {
-      padding: 19px;
-    }
-    m-walletModal {
-      .m-walletModal__close {
-        top: 14px;
-        right: 20px;
-        @include m-theme() {
-          background-color: rgba(0, 0, 0, 0);
-          box-shadow: none;
-        }
-        &:hover {
-          @include m-theme() {
-            box-shadow: none;
-          }
-        }
-      }
-      .m-walletModal {
-        min-width: 90vw;
-        min-height: 96vh;
-        padding: 20px;
-        .m-phoneInput__wrapper {
-          min-width: 200px;
-        }
-
-        .m-walletForm__wrapper {
-          margin-bottom: 0px;
-        }
-        .m-walletModal__title {
-          // font-size: 20px;
-          // line-height: 25px;
-        }
-        .m-walletModal__desc p {
-          // font-size: 14px;
-          // line-height: 19px;
-        }
-        .m-walletModal__footnote--formStatus {
-          font-size: 13px;
-          line-height: 18px;
-          > div {
-            &:first-child {
-              margin-bottom: 8px;
-            }
-          }
-        }
-        m-shadowboxSubmitButton {
-          margin-bottom: 10px;
-        }
-
-        m-phoneInput {
-          .m-phoneInput__countryList {
-            max-height: 124px;
-          }
-        }
       }
     }
   }
 }
-///////////////////////////////////

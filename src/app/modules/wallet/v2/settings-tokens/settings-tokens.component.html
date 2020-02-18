@@ -1,17 +1,20 @@
-<div *ngIf="!wallet" class="m-wallet__spinner">
+<div *ngIf="!wallet" class="m-wallet__spinner m-wallet__spinner--tokenSettings">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
 <div class="m-walletSettings" *ngIf="wallet">
-  <div class="m-walletSettingsView--setup" *ngIf="!display">
-    <h4>
+  <!-- -------------------------------------------- -->
+  <!--- ADDRESS - OPTIONS - -------------------------->
+  <!-- -------------------------------------------- -->
+  <div *ngIf="!display">
+    <h2>
       On-chain address
-    </h4>
+    </h2>
     <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
-    <div class="m-walletSettings__setupOptions__recommendation">
+    <div class="m-walletSettings__recommendation">
       <i class="material-icons">thumb_up</i><span>RECOMMENDED</span>
     </div>
-    <ul class="m-walletSettingsView__setupOptions__container">
-      <li class="m-walletSettingsView__setupOption--metamask">
+    <ul class="m-walletSettings__tokenSetupOptionsContainer">
+      <li class="m-walletSettings__tokenSetupOption--metamask">
         <div>
           <img
             class="metamask"
@@ -58,7 +61,7 @@
         </ng-container>
       </li>
 
-      <li class="m-walletSettingsView__setupOption--custom">
+      <li class="m-walletSettings__tokenSetupOption--custom">
         <h2>
           Custom
         </h2>
@@ -74,26 +77,26 @@
       </li>
       <p *ngIf="currentAddress">
         <a
-          class="m-walletSettings__backButton"
+          class="m-walletTertiaryText--backButton"
           (click)="display = Views.CurrentAddress"
           ><i class="material-icons">❮</i
           ><span>Back to current address</span></a
         >
       </p>
     </ul>
+    <p class="m-walletTertiaryText--error" *ngIf="error">{{ error }}</p>
   </div>
 
   <ul *ngIf="display">
-    <!---CUSTOM - CREATE ADDRESS----------------------------------------->
-    <li
-      class="m-walletSettingsView--addressCreate"
-      *ngIf="display === Views.CreateAddress"
-    >
+    <!-- -------------------------------------------- -->
+    <!--- ADDRESS - CREATE ----------------------------->
+    <!-- -------------------------------------------- -->
+    <li *ngIf="display === Views.CreateAddress">
       <!-- Address not created yet -->
       <h2>
         Create Address
       </h2>
-      <p *ngIf="!generatedAccount">
+      <p *ngIf="!generatedAccount" class="m-walletTertiaryText--desc">
         Generate a custom address to use instead of MetaMask. Once the address
         is generated, you will be provided with a link to download the address
         and private key.
@@ -106,9 +109,9 @@
         Create Address
       </m-shadowboxSubmitButton>
       <!-- Address created -->
-      <p *ngIf="generatedAccount">
+      <p *ngIf="generatedAccount" class="m-walletTertiaryText--desc">
         The address
-        <span class="m-walletSettings__address--emphasis">{{
+        <span class="m-walletSettings__createdAddress">{{
           generatedAccount.address
         }}</span>
         was successully saved as your on-chain address. Click the button below
@@ -123,20 +126,18 @@
       >
         Download Private Key
       </m-shadowboxSubmitButton>
-      <a class="m-walletSettings__backButton" (click)="display = null"
+      <a class="m-walletTertiaryText--backButton" (click)="display = null"
         ><i class="material-icons">❮</i><span>Back to settings</span></a
       >
     </li>
-
-    <!---CUSTOM - PROVIDE ADDRESS---------------------------->
-    <li
-      class="m-walletSettingsView--addressProvide"
-      *ngIf="display === Views.ProvideAddress"
-    >
+    <!-- -------------------------------------------- -->
+    <!--- ADDRESS - PROVIDE ---------------------------->
+    <!-- -------------------------------------------- -->
+    <li *ngIf="display === Views.ProvideAddress">
       <h2>
         Provide Address
       </h2>
-      <p>
+      <p class="m-walletTertiaryText--desc">
         Enter the address that will be stored as your wallet for Minds on-chain
         tokens and Ether payments. To conduct transactions you will need your
         wallet's private key and MetaMask cannot be installed in your browser.
@@ -196,34 +197,37 @@
           </m-shadowboxSubmitButton>
         </div>
       </form>
-      <a class="m-walletSettings__backButton" (click)="display = null"
+      <a class="m-walletTertiaryText--backButton" (click)="display = null"
         ><i class="material-icons">❮</i><span>Back to settings</span></a
       >
     </li>
 
-    <!---CURRENT ADDRESS ----------------------------------------------->
-    <li
-      class="m-walletSettingsView--addressCurrent"
-      *ngIf="display === Views.CurrentAddress"
-    >
+    <!-- -------------------------------------------- -->
+    <!--- ADDRESS - CURRENT ---------------------------->
+    <!-- -------------------------------------------- -->
+    <li *ngIf="display === Views.CurrentAddress">
       <h2>
         On-chain Address
       </h2>
       <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
 
-      <p class="m-walletSettingsView--addressCurrent__title">
+      <p class="m-walletTertiaryText--label">
         Current address
       </p>
-      <div class="m-walletSettingsView--addressCurrent__addressContainer">
-        <div>{{ currentAddress }}</div>
-        <div><a (click)="display = null">Change Address</a></div>
+      <div class="m-walletSettings__currentAddressContainer">
+        <div class="m-walletPrimaryText">{{ currentAddress }}</div>
+        <a (click)="display = null">Change Address</a>
       </div>
     </li>
   </ul>
+  <p class="m-walletTertiaryText--error" *ngIf="error">{{ error }}</p>
 </div>
 
+<!-- -------------------------------------------- -->
+<!--- ONCHAIN DESCRIPTION TEMPLATE ----------------->
+<!-- -------------------------------------------- -->
 <ng-template #onchainDesc>
-  <p>
+  <p class="m-walletTertiaryText--desc">
     To receive on-chain payments from other channels (e.g. from a Wire or a
     Boost), you will need an on-chain address. You can change it here at any
     time. Note: your on-chain address is the same as your Ether address.

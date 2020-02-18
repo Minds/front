@@ -1,23 +1,25 @@
-<div class="m-walletModal__title">
+<h2>
   On-Chain Transfer
-</div>
-<div class="m-walletModal__desc">
-  <p>
-    You can request to transfer up to
-    <span class="m-walletOnchainTransfer__offchainBalance"
-      >{balance, plural, =1 {{{balance | number}} token} other
-      {{{balance | number}} tokens}}</span
-    >
-    from your rewards to your on-chain wallet below. You may only transfer once
-    per day.
-  </p>
-  <p class="m-walletOnchainTransfer__gasNotice">
-    Note: a small amount of ETH will be charged to cover the transaction fee.
-    Transfers go through an approval process and may take up to 72 hours to
-    complete.
-  </p>
-</div>
-<form *ngIf="form" [formGroup]="form">
+</h2>
+<p class="m-walletTertiaryText">
+  You can request to transfer up to
+  <span class="m-walletOnchainTransfer__offchainBalance"
+    >{balance, plural, =1 {{{balance | number}} token} other
+    {{{balance | number}} tokens}}</span
+  >
+  from your rewards to your on-chain wallet below. You may only transfer once
+  per day.
+</p>
+<p class="m-walletTertiaryText m-walletOnchainTransfer__gasNotice">
+  Note: a small amount of ETH will be charged to cover the transaction fee.
+  Transfers go through an approval process and may take up to 72 hours to
+  complete.
+</p>
+<form
+  *ngIf="form"
+  [formGroup]="form"
+  class="m-walletButtonLayout--buttonInline"
+>
   <div class="m-walletForm__wrapper">
     <div class="m-walletForm__fieldsContainer">
       <div class="m-walletForm__field--text stretchedField">

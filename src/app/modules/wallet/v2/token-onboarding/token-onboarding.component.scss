@@ -34,6 +34,9 @@ m-walletTokenOnboarding {
     box-sizing: border-box;
     flex-basis: 50%;
     min-width: 200px;
+    @media screen and (max-width: $max-mobile) {
+      padding: 19px;
+    }
   }
   .m-walletTokenOnboardingStep--verifyPhone {
     @include m-theme() {
@@ -48,7 +51,7 @@ m-walletTokenOnboarding {
     font-weight: 500;
     display: flex;
     flex-flow: row nowrap;
-    align-items: center;
+    align-items: flex-start;
     @include m-theme() {
       color: themed($m-grey-800);
     }
@@ -82,9 +85,6 @@ m-walletTokenOnboarding {
 
   .m-walletForm__wrapper {
     margin-bottom: 38px;
-  }
-  .m-phoneInput__countryList {
-    max-height: 114px;
   }
 
   // ***************************************************

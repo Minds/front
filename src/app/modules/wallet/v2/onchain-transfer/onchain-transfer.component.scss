@@ -1,7 +1,7 @@
 m-walletOnchainTransfer {
   .m-walletOnchainTransfer__offchainBalance {
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
   }
   p.m-walletOnchainTransfer__gasNotice {

@@ -2,7 +2,7 @@
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
 <div class="m-walletSettings" *ngIf="loaded">
-  <h4>Bank Information</h4>
+  <h2>Bank Information</h2>
   <!-- ONBOARDING FORM ------------------ -->
   <m-walletCashOnboarding
     *ngIf="view === 'onboarding'"
@@ -25,5 +25,7 @@
     (submitted)="setView()"
   ></m-walletCashOnboardingExtras>
   <!-- ERROR ----------------------------- -->
-  <p *ngIf="view === 'error'" class="m-walletForm__error">{{ error }}</p>
+  <p *ngIf="view === 'error'" class="m-walletTertiaryText--error">
+    {{ error }}
+  </p>
 </div>

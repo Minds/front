@@ -9,6 +9,10 @@ m-walletSettings--eth {
     & > div {
       margin-right: 24px;
     }
+
+    @media screen and (max-width: $max-mobile) {
+      margin-top: 34px;
+    }
   }
 
   .m-walletSettings--eth__balanceLabel {

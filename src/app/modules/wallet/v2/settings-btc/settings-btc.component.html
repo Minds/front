@@ -2,15 +2,15 @@
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
 <div class="m-walletSettings" *ngIf="loaded">
-  <!---PROVIDE ADDRESS---------------------------->
-  <div
-    class="m-walletSettingsView--addressProvide"
-    *ngIf="!currentAddress && !showForm"
-  >
+  <!-- -------------------------------------------- -->
+  <!--- ADDRESS - SETUP - ---------------------------->
+  <!-- -------------------------------------------- -->
+
+  <div *ngIf="!currentAddress && !showForm">
     <h2>
       Setup your Bitcoin Address
     </h2>
-    <p>
+    <p class="m-walletTertiaryText--desc">
       You can receive Bitcoin payments by linking your Bitcoin receiver address
       below.
     </p>
@@ -18,20 +18,29 @@
       Add Bitcoin address
     </m-shadowboxSubmitButton>
   </div>
-  <div class="m-walletSettingsView--addressProvide" *ngIf="showForm">
+
+  <!-- -------------------------------------------- -->
+  <!--- ADDRESS - PROVIDE ---------------------------->
+  <!-- -------------------------------------------- -->
+
+  <div *ngIf="showForm">
     <h2>
       Update Bitcoin Address
     </h2>
-    <p>
+    <p class="m-walletTertiaryText--desc">
       Note: You may want to rotate this address frequently to avoid third party
       tracking.
     </p>
 
-    <form *ngIf="form" [formGroup]="form">
+    <form
+      *ngIf="form"
+      [formGroup]="form"
+      class="m-walletButtonLayout--buttonOffsetRight"
+    >
       <div class="m-walletForm__wrapper">
         <div class="m-walletForm__fieldsContainer">
           <div class="m-walletForm__field--text stretchedField">
-            <div class="m-walletForm__row--label">
+            <div class="m-walletForm__row--label m-walletTertiaryText--label">
               <label for="addressInput" i18n>Bitcoin Address</label>
               <m-tooltip icon="help">
                 <ng-container i18n
@@ -84,31 +93,29 @@
       </div>
     </form>
     <a
-      class="m-walletSettings__backButton"
+      class="m-walletTertiaryText--backButton"
       *ngIf="currentAddress"
       (click)="showForm = false"
       ><i class="material-icons">❮</i><span>Back to current address</span></a
     >
   </div>
 
-  <!---CURRENT ADDRESS ----------------------------------------------->
-  <div
-    class="m-walletSettingsView--addressCurrent"
-    *ngIf="currentAddress && !showForm"
-  >
+  <!-- -------------------------------------------- -->
+  <!--- ADDRESS - CURRENT ---------------------------->
+  <!-- -------------------------------------------- -->
+
+  <div *ngIf="currentAddress && !showForm">
     <h2>
       Bitcoin Address
     </h2>
     <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
 
-    <p class="m-walletSettingsView--addressCurrent__title">
-      Current receiver address
+    <p class="m-walletTertiaryText--label">
+      Current bitcoin address
     </p>
-    <div class="m-walletSettingsView--addressCurrent__addressContainer">
-      <div>{{ currentAddress }}</div>
-      <div>
-        <a (click)="addressInput.value = ''; showForm = true">Change Address</a>
-      </div>
+    <div class="m-walletSettings__currentAddressContainer">
+      <div class="m-walletPrimaryText">{{ currentAddress }}</div>
+      <a (click)="addressInput.value = ''; showForm = true">Change Address</a>
     </div>
   </div>
 </div>
