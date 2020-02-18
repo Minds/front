@@ -28,7 +28,7 @@ export class NoticeStepComponent implements OnInit {
   }
 
   skip() {
-    this.router.navigate(['/newsfeed']);
+    this.router.navigate(['/newsfeed/global/top']);
   }
 
   isMobile() {

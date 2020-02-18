@@ -9,6 +9,10 @@ import { MindsModule } from './app.module';
 import { Minds } from './app.component';
 import { PlotlyModule } from 'angular-plotly.js';
 import { CookieService, CookieBackendService } from '@gorniv/ngx-universal';
+import {
+  ServerRedirectService,
+  RedirectService,
+} from './common/services/redirect.service';
 
 PlotlyModule.plotlyjs = {
   plot: () => {
@@ -37,6 +41,10 @@ export class ServerXhr implements XhrFactory {
     {
       provide: CookieService,
       useClass: CookieBackendService,
+    },
+    {
+      provide: RedirectService,
+      useClass: ServerRedirectService,
     },
   ],
   bootstrap: [Minds],

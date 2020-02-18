@@ -15,6 +15,7 @@
     </span>
   </m-announcement>
   <m-blockchain--wallet-address-notice></m-blockchain--wallet-address-notice>
+
   <ng-container *mIfFeature="'navigation'; else oldLayout">
     <div class="m-grid">
       <m-sidebar--navigation></m-sidebar--navigation>
@@ -50,5 +51,3 @@
 ></m-modal-signup>
 
 <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
-
-<m-cookies-notice *ngIf="!session.isLoggedIn()"></m-cookies-notice>

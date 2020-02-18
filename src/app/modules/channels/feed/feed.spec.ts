@@ -91,6 +91,7 @@ describe('ChannelFeed', () => {
       impressions: 18200,
       pinned_posts: ['a', 'b', 'c'],
       mode: ChannelMode.PUBLIC,
+      nsfw: [],
     };
     comp.feed = [
       { guid: 'aaaa' },
