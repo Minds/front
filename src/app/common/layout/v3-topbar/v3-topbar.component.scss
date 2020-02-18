@@ -31,6 +31,10 @@ m-v3topbar {
       @media screen and(max-width: $m-grid-max-mobile) {
         margin-left: 23px;
       }
+
+      &.m-v3Topbar__leftColumn__rightAlign {
+        justify-content: flex-end;
+      }
     }
 
     .m-v3Topbar__middleColumn {
@@ -88,6 +92,49 @@ m-v3topbar {
     }
   }
 
+  &.m-v3Topbar__marketingPages {
+    flex-direction: row;
+
+    @include m-theme() {
+      border: none;
+    }
+
+    .m-grid {
+      > * {
+        border: none !important;
+      }
+    }
+
+    //.m-v2-topbar {
+    //  padding: 15px 0 15px;
+    //  max-width: 1084px;
+    //  margin: 0 auto;
+    //
+    //  @media screen and (max-width: 1168px) {
+    //    margin: 0 25px;
+    //  }
+    //
+    //  .m-v2-topbarNavItem__Logo {
+    //    margin: 0;
+    //    padding: 0;
+    //  }
+    //}
+
+    .m-v3TopbarContainer__loginWrapper > a {
+      @include m-theme() {
+        background: transparent;
+        border: 1px solid themed($m-black-always);
+        color: themed($m-black-always);
+      }
+    }
+  }
+
+  &.m-v3Topbar__loggedOut {
+    .m-grid > * {
+      border: none !important;
+    }
+  }
+
   .m-v3Topbar__searchBox {
     width: 100%;
     height: 100%;
@@ -133,6 +180,53 @@ m-v3topbar {
             0 1px 8px 0 rgba(themed($m-black), 0.12);
         }
       }
+    }
+  }
+
+  .m-v3TopbarContainer__loginWrapper {
+    > a {
+      text-decoration: none;
+      height: 32px;
+      border-radius: 18px;
+      font-size: 12px;
+      letter-spacing: 1.25px;
+      box-shadow: none;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      font-family: 'Roboto', sans-serif;
+      cursor: pointer;
+      @include m-theme() {
+        background-color: themed($m-white);
+        border: 1px solid themed($m-blue);
+        color: themed($m-blue);
+      }
+    }
+
+    > a.m-v3TopbarLoginWrapper__login,
+    > a.m-v3TopbarLoginWrapper__joinMindsNow {
+      font-size: 16px;
+      line-height: 21px;
+      font-weight: normal;
+      text-transform: none;
+      white-space: nowrap;
+
+      @include m-theme() {
+        color: themed($m-grey-800) !important;
+      }
+    }
+
+    > a.m-v3TopbarLoginWrapper__login {
+      padding: 0;
+      border: none !important;
+      margin-right: $minds-margin * 2;
+    }
+
+    > a.m-v3TopbarLoginWrapper__joinMindsNow {
+      @include m-theme() {
+        border: 1px solid themed($m-grey-800) !important;
+      }
+      margin-right: 0 !important;
+      border-radius: 4px;
     }
   }
 

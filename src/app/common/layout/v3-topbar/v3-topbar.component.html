@@ -8,17 +8,21 @@
   class="m-v3Topbar__top"
   [class.m-v3Topbar__marketingPages]="marketingPages"
   [class.m-v3Topbar__noBackground]="!showBackground"
+  [class.m-v3Topbar__loggedOut]="!getCurrentUser()"
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"
 >
   <div class="m-grid">
-    <div class="m-v3Topbar__leftColumn">
+    <div
+      class="m-v3Topbar__leftColumn"
+      [class.m-v3Topbar__leftColumn__rightAlign]="!getCurrentUser()"
+    >
       <nav class="m-v3Topbar__nav">
         <a
           class="m-v3TopbarNav__item m-v3TopbarNavItem__logo"
           routerLink="/"
           title="Home"
           i18n-title
-          *ngIf="!isMobile; else hamburgerMenu"
+          *ngIf="shouldShowLogo(); else hamburgerMenu"
         >
           <img
             [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
@@ -38,7 +42,7 @@
 
     <div class="m-v3Topbar__spacer" *ngIf="isMobile"></div>
 
-    <div class="m-v3Topbar__middleColumn" *ngIf="!isMobile">
+    <div class="m-v3Topbar__middleColumn" *ngIf="!isMobile && getCurrentUser()">
       <!--      <a-->
       <!--        class="m-v3Topbar__avatar"-->
       <!--        *ngIf="getCurrentUser()"-->
@@ -54,6 +58,27 @@
     </div>
 
     <div class="m-v3Topbar__rightColumn">
+      <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
+        <div class="m-v3TopbarContainer__loginWrapper">
+          <a
+            class="m-v3TopbarLoginWrapper__login"
+            routerLink="/login"
+            title="Login"
+            i18n-title
+          >
+            Login
+          </a>
+
+          <a
+            class="m-v3TopbarLoginWrapper__joinMindsNow"
+            routerLink="/register"
+            title="Join Minds Now"
+            i18n-title
+          >
+            Join Minds Now
+          </a>
+        </div>
+      </ng-container>
       <ng-container *ngIf="isMobile && getCurrentUser()">
         <ng-container *ngTemplateOutlet="searchBar"></ng-container>
       </ng-container>
