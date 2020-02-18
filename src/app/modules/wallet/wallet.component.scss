@@ -5,6 +5,9 @@ m-wallet {
   min-width: 0;
 }
 
+.m-grid .m-wallet--wrapper {
+  margin: unset;
+}
 .m-wallet--wrapper {
   max-width: 1280px;
   margin: auto;

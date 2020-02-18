@@ -18,6 +18,9 @@ m-newsfeed {
   }
 }
 
+.m-grid .m-newsfeed.mdl-grid {
+  margin: unset;
+}
 .m-newsfeed {
   max-width: 1280px;
   flex-wrap: nowrap;

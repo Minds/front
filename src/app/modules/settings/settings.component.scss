@@ -5,6 +5,10 @@ m-settings {
   min-width: 0;
 }
 
+.m-grid .m-settings--wrapper {
+  margin: unset;
+}
+
 .m-settings--wrapper {
   max-width: 1280px;
   margin: auto;
