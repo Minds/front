@@ -19,6 +19,7 @@
     "baseUrl": "./",
     "paths": {
       "fs": [ "./shims/noop" ],
+      "bn.js": [ "../node_modules/bn.js/lib/bn.js" ]
     }
   }
 }

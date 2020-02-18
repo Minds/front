@@ -11,9 +11,9 @@ import {
   HostBinding,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ThemeService } from '../../services/theme.service';
+import { ThemeService } from '../../../../common/services/theme.service';
 import chartPalette from './chart-palette.default';
-import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
+import isMobileOrTablet from '../../../../helpers/is-mobile-or-tablet';
 
 @Component({
   selector: 'm-chartV2',

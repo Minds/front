@@ -10,7 +10,10 @@ import { EntitiesService } from '../../../common/services/entities.service';
 import { Client } from '../../../services/api/client';
 import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
-import { MetaService } from '../../../common/services/meta.service';
+import {
+  MetaService,
+  MIN_METRIC_FOR_ROBOTS,
+} from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
@@ -154,19 +157,37 @@ export class NewsfeedSingleComponent {
 
   private updateMeta(): void {
     const activity = this.activity.remind_object || this.activity;
+
+    const title: string =
+      activity.title ||
+      activity.message ||
+      `@${activity.ownerObj.username}'s post on Minds`;
+
+    let description: string;
+    if (title.length > 60) {
+      description = `...${title.substr(57)}`;
+    } else {
+      description = activity.blurb || '';
+    }
+    description += `. Subscribe to @${activity.ownerObj.username} on Minds`;
+
     this.metaService
-      .setTitle(`@${activity.ownerObj.username} on Minds`)
-      .setDescription(
-        activity.title ||
-          activity.message ||
-          `Subscribe to @${activity.ownerObj.username} on Minds`
-      )
+      .setTitle(title)
+      .setDescription(description)
       .setOgImage(
         activity.custom_type === 'batch'
           ? activity.custom_data[0]['src']
           : activity.thumbnail_src,
         { width: 2000, height: 1000 }
+      )
+      .setCanonicalUrl(`/newsfeed/${activity.guid}`)
+      .setRobots(
+        activity['thumbs:up:count'] >= MIN_METRIC_FOR_ROBOTS ? 'all' : 'noindex'
       );
+
+    if (activity.nsfw.length) {
+      this.metaService.setNsfw(true);
+    }
 
     if (activity.custom_type === 'video') {
       this.metaService.setOgType('video');

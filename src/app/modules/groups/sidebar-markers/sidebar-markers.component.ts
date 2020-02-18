@@ -48,6 +48,8 @@ export class GroupsSidebarMarkersComponent implements OnInit, OnDestroy {
       await this.load(true);
       this.listenForMarkers();
       this.listenForMembershipUpdates();
+    } else {
+      this.inProgress = true; // Server side should start in loading spinner state
     }
   }
 

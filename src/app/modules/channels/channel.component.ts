@@ -18,7 +18,10 @@ import { DialogService } from '../../common/services/confirm-leave-dialog.servic
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ClientMetaService } from '../../common/services/client-meta.service';
-import { MetaService } from '../../common/services/meta.service';
+import {
+  MetaService,
+  MIN_METRIC_FOR_ROBOTS,
+} from '../../common/services/meta.service';
 import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
@@ -124,16 +127,26 @@ export class ChannelComponent {
 
   private updateMeta(): void {
     if (this.user) {
-      this.metaService.setTitle(`${this.user.name} (@${this.user.username})`);
-      this.metaService.setDescription(
-        this.user.briefdescription || `Subscribe to @${this.user.username}`
-      );
-      this.metaService.setOgUrl(`/${this.user.username.toLowerCase()}`);
-      this.metaService.setOgImage(this.user.avatar_url.master, {
-        width: 2000,
-        height: 1000,
-      });
-      this.metaService.setRobots(this.user.is_mature ? 'noindex' : 'all');
+      const url = `/${this.user.username.toLowerCase()}`;
+      this.metaService
+        .setTitle(`${this.user.name} (@${this.user.username})`)
+        .setDescription(
+          this.user.briefdescription || `Subscribe to @${this.user.username}`
+        )
+        .setOgUrl(url)
+        .setCanonicalUrl(url)
+        .setOgImage(this.user.avatar_url.master, {
+          width: 2000,
+          height: 1000,
+        })
+        .setRobots(
+          this.user['subscribers_count'] < MIN_METRIC_FOR_ROBOTS
+            ? 'noindex'
+            : 'all'
+        );
+      if (this.user.is_mature || this.user.nsfw.length) {
+        this.metaService.setNsfw(true);
+      }
     } else if (this.username) {
       this.metaService.setTitle(this.username);
     } else {
