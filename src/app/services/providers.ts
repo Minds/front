@@ -31,7 +31,6 @@ import { RecentService } from './ux/recent';
 import { ContextService } from './context.service';
 import { FeaturesService } from './features.service';
 import { BlockchainService } from '../modules/blockchain/blockchain.service';
-import { WebtorrentService } from '../modules/webtorrent/webtorrent.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -205,11 +204,6 @@ export const MINDS_PROVIDERS: any[] = [
     provide: BlockchainService,
     useFactory: BlockchainService._,
     deps: [Client],
-  },
-  {
-    provide: WebtorrentService,
-    useFactory: WebtorrentService._,
-    deps: WebtorrentService._deps,
   },
   {
     provide: TimeDiffService,

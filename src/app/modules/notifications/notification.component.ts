@@ -1,9 +1,6 @@
 import { Component } from '@angular/core';
 import { Session } from '../../services/session';
-import {
-  Reason,
-  rejectionReasons,
-} from '../../controllers/admin/boosts/rejection-reasons';
+import { Reason, rejectionReasons } from '../boost/rejection-reasons';
 import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({

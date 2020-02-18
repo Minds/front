@@ -8,10 +8,10 @@ import { ActivityService } from '../../common/services/activity.service';
 
 @Component({
   selector: 'minds-admin',
-  templateUrl: 'admin.html',
+  templateUrl: 'admin.component.html',
   providers: [ActivityService],
 })
-export class Admin {
+export class AdminComponent {
   filter: string = '';
   paramsSubscription: Subscription;
 

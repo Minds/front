@@ -5,7 +5,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { Reason, rejectionReasons } from '../rejection-reasons';
+import { Reason, rejectionReasons } from '../../../boost/rejection-reasons';
 
 @Component({
   moduleId: module.id,

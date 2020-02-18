@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api';
 import { RejectionReasonModalComponent } from './modal/rejection-reason-modal.component';
-import { Reason, rejectionReasons } from './rejection-reasons';
-import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
+import { Reason, rejectionReasons } from '../../boost/rejection-reasons';
+import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 
