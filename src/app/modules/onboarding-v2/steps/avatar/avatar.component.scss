@@ -1,0 +1,20 @@
+m-onboarding--avatarStep {
+  .m-onboarding__controls {
+    display: flex;
+    flex-direction: column;
+
+    image-cropper {
+      padding: 0 !important;
+    }
+
+    & > img {
+      width: 125px;
+      margin: 0 auto 100px;
+    }
+
+    input[type='file'] {
+      height: 0;
+      width: 0;
+    }
+  }
+}
