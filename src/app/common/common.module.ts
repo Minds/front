@@ -145,6 +145,7 @@ import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v2.component';
 import { PhoneInputCountryV2Component } from './components/phone-input-v2/country.component';
+import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
 import { RedirectService } from './services/redirect.service';
 
 const routes: Routes = [
@@ -276,6 +277,7 @@ const routes: Routes = [
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
     FormInputCheckboxComponent,
+    ExplicitOverlayComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -384,6 +386,7 @@ const routes: Routes = [
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
     FormInputCheckboxComponent,
+    ExplicitOverlayComponent,
   ],
   providers: [
     SiteService,
