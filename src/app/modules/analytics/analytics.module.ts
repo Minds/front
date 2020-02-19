@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 
-//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
-import { PlotlyModule } from 'angular-plotly.js';
-
 import { AdminAnalyticsComponent } from './pages/admin/admin.component';
 import { CommonModule } from '../../common/common.module';
 import { CommonModule as NgCommonModule } from '@angular/common';
@@ -62,11 +59,14 @@ import { FormsModule } from '@angular/forms';
 import { AnalyticsSearchSuggestionsComponent } from './v2/components/search-suggestions/search-suggestions.component';
 import { AnalyticsBenchmarkComponent } from './v2/components/benchmark/benchmark.component';
 
-//PlotlyModule.plotlyjs = PlotlyJS;
+import * as PlotlyJS from 'plotly.js/dist/plotly-basic.min.js';
+import { PlotlyModule } from 'angular-plotly.js';
+import { ChartV2Component } from './components/chart-v2/chart-v2.component';
+PlotlyModule.plotlyjs = PlotlyJS;
 
 const routes: Routes = [
   {
-    path: 'analytics',
+    path: '',
     component: AnalyticsComponent,
     children: [
       { path: '', redirectTo: 'dashboard/traffic', pathMatch: 'full' },
@@ -157,6 +157,7 @@ const routes: Routes = [
     AnalyticsSearchComponent,
     AnalyticsSearchSuggestionsComponent,
     AnalyticsBenchmarkComponent,
+    ChartV2Component,
   ],
   providers: [AnalyticsDashboardService],
 })

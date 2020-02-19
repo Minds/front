@@ -31,7 +31,6 @@ import { RecentService } from './ux/recent';
 import { ContextService } from './context.service';
 import { FeaturesService } from './features.service';
 import { BlockchainService } from '../modules/blockchain/blockchain.service';
-import { WebtorrentService } from '../modules/webtorrent/webtorrent.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
 import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -50,6 +49,7 @@ import { ConfigsService } from '../common/services/configs.service';
 import { TransferHttpInterceptorService } from './transfer-http-interceptor.service';
 import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.service';
 import { CookieService } from '../common/services/cookie.service';
+import { RedirectService } from '../common/services/redirect.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -186,9 +186,14 @@ export const MINDS_PROVIDERS: any[] = [
   },
   {
     provide: ConfigsService,
-    useFactory: (client, injector) =>
-      new ConfigsService(client, injector.get('QUERY_STRING')),
-    deps: [Client, Injector],
+    useFactory: (client, injector, redirect, location) =>
+      new ConfigsService(
+        client,
+        injector.get('QUERY_STRING'),
+        redirect,
+        location
+      ),
+    deps: [Client, Injector, RedirectService, Location],
   },
   {
     provide: FeaturesService,
@@ -199,11 +204,6 @@ export const MINDS_PROVIDERS: any[] = [
     provide: BlockchainService,
     useFactory: BlockchainService._,
     deps: [Client, Session],
-  },
-  {
-    provide: WebtorrentService,
-    useFactory: WebtorrentService._,
-    deps: WebtorrentService._deps,
   },
   {
     provide: TimeDiffService,

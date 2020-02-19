@@ -56,7 +56,6 @@
     }
 
     .m-v2-topbar__Container__LoginWrapper > a {
-      margin-right: 40px;
       @include m-theme() {
         background: transparent;
         border: 1px solid themed($m-black-always);
@@ -135,11 +134,15 @@
   justify-content: space-between;
   width: 100%;
   height: 52px;
-  max-width: 1084px;
+  max-width: 1296px;
   margin: 0 auto;
-  padding: 15px 0 15px;
+  padding: 0 8px;
   //padding-right: 46px;
   box-sizing: border-box;
+
+  @media screen and (min-width: 1296px) {
+    padding: 0 46px 0 0;
+  }
 
   @media screen and (max-width: 480px) {
     .m-v2-topbarNav__RouterNav {
@@ -293,7 +296,6 @@
   }
 
   > a {
-    margin-right: 40px;
     text-decoration: none;
     height: 32px;
     border-radius: 18px;
@@ -327,9 +329,7 @@
   > a.m-v2-topbarLoginWrapper__login {
     padding: 0;
     border: none !important;
-    @media screen and(max-width: $max-mobile) {
-      margin-right: 10px;
-    }
+    margin-right: $minds-margin * 2;
   }
 
   > a.m-v2-topbarLoginWrapper__joinMindsNow {
