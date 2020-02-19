@@ -428,17 +428,6 @@ const routes: Routes = [
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
-    {
-      provide: ConfigsService,
-      useFactory: (client, injector, redirect, location) =>
-        new ConfigsService(
-          client,
-          injector.get('QUERY_STRING'),
-          redirect,
-          location
-        ),
-      deps: [Client, Injector, RedirectService, Location],
-    },
     MetaService,
     MediaProxyService,
     V2TopbarService,
