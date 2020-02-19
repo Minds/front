@@ -31,6 +31,7 @@ import { TransactionOverlayService } from '../../blockchain/transaction-overlay/
 import { ConfigsService } from '../../../common/services/configs.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { WithdrawContractService } from '../../blockchain/contracts/withdraw-contract.service';
+import { AnalyticsModule } from '../../analytics/analytics.module';
 
 //////////////////////////////////////////////////
 // TODO add a wildcard and the parameter routes as children once feature-flag is lifted
@@ -72,6 +73,7 @@ export const WALLET_V2_ROUTES: Routes = [
     ReactiveFormsModule,
     CommonModule,
     RouterModule,
+    AnalyticsModule,
   ],
   declarations: [
     WalletDashboardComponent,

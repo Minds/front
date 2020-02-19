@@ -1,5 +1,4 @@
 import { Client } from '../api/client.service';
-import { Injectable, Inject } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Injectable, Inject, Optional, Injector } from '@angular/core';
 import { RedirectService } from './redirect.service';
