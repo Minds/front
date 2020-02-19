@@ -58,9 +58,7 @@ m-walletModal {
       max-height: 90vh;
     }
     @media screen and (max-width: $max-mobile) {
-      // padding: 26px 32px;
-      min-width: 90vw;
-      min-height: 90vh;
+      max-width: 90vw;
       max-height: 95vh;
     }
   }
@@ -114,18 +112,18 @@ m-walletModal {
         opacity: 0.6;
       }
     }
-    @media screen and (max-width: $max-mobile) {
-      top: 14px;
-      right: 20px;
-      @include m-theme() {
-        background-color: rgba(0, 0, 0, 0);
-        box-shadow: none;
-      }
-      &:hover {
-        @include m-theme() {
-          box-shadow: none;
-        }
-      }
-    }
+    // @media screen and (max-width: $max-mobile) {
+    //   top: 14px;
+    //   right: 20px;
+    //   @include m-theme() {
+    //     background-color: rgba(0, 0, 0, 0);
+    //     box-shadow: none;
+    //   }
+    //   &:hover {
+    //     @include m-theme() {
+    //       box-shadow: none;
+    //     }
+    //   }
+    // }
   }
 }

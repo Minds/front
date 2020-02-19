@@ -94,9 +94,9 @@ export class WalletTokenOnboardingComponent {
   }
 
   finishedOnboarding() {
-    this.formToastService.success(
-      "You're ready to start earning token rewards!"
-    );
+    // this.formToastService.success(
+    //   "You're ready to start earning token rewards!"
+    // );
     this.onboardingComplete.emit();
     this.detectChanges();
   }

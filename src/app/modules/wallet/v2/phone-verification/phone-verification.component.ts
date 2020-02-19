@@ -5,6 +5,7 @@ import {
   EventEmitter,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  ViewRef,
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Client } from '../../../../services/api';
@@ -85,7 +86,6 @@ export class WalletPhoneVerificationComponent implements OnInit {
 
   changePhone() {
     this.form.reset();
-    console.log(this.form.value);
     this.invalidNumber = false;
     this.invalidCode = false;
     this.confirming = false;
@@ -97,7 +97,9 @@ export class WalletPhoneVerificationComponent implements OnInit {
     }
   }
   detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 }

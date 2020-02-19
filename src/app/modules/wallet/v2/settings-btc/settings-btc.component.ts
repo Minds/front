@@ -21,7 +21,7 @@ import { WalletDashboardService } from '../dashboard.service';
 })
 export class WalletSettingsBTCComponent implements OnInit {
   showForm: boolean = false;
-  loaded: boolean = false;
+  init: boolean = false;
   inProgress: boolean = false;
   error: string;
   currentAddress: string = '';
@@ -54,7 +54,7 @@ export class WalletSettingsBTCComponent implements OnInit {
     } catch (e) {
       console.error(e);
     }
-    this.loaded = true;
+    this.init = true;
     this.detectChanges();
   }
 

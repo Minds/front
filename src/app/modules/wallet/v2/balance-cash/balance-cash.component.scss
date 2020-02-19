@@ -30,6 +30,11 @@ m-walletBalance--cash {
       margin-left: 12px;
       min-width: 100px;
     }
+    &::first-child {
+      .m-tooltip--bubble {
+        min-width: 150px;
+      }
+    }
   }
   .m-walletBalance--cash__col:last-child {
     .m-walletBalance--cash__colTitle {
@@ -43,7 +48,7 @@ m-walletBalance--cash {
 
   .m-walletBalance--cash__col {
     max-width: 200px;
-    margin-right: 18px;
+    margin: 0 18px 16px 0;
     .m-walletBalance--cash__colTitle {
       font-size: 16px;
       line-height: 21px;
@@ -68,7 +73,7 @@ m-walletBalance--cash {
         line-height: 15px;
       }
       p {
-        margin: 8px 0 0 0;
+        margin: 4px 0 0 0;
         @include m-theme() {
           color: themed($m-textColor--tertiary);
         }

@@ -1,13 +1,21 @@
-<div class="m-walletCashOnboardingExtrasForm" *ngIf="account">
-  <p>Start receiving cash payouts by adding your bank details.</p>
-  <!-- **** INPUT: PHOTO ID -->
+<div
+  class="m-walletCashOnboardingExtras"
+  *ngIf="account"
+  class="m-walletButtonLayout--buttonOffsetRight"
+>
+  <p class="m-walletTertiaryText--desc">
+    We need some additional information before we can verify your account.
+  </p>
+  <!-- -------------------------------------------- -->
+  <!--- INPUT - PHOTO ID ----------------------------->
+  <!-- -------------------------------------------- -->
   <ng-container
     *ngIf="account.requirement.indexOf('individual.verification.document') > -1"
   >
-    <div class="m-walletForm__field--text">
-      <div class="m-walletForm__row--label">
+    <div class="m-walletForm__field--file">
+      <!-- <div class="m-walletForm__row--label">
         <label for="photoId" i18n>Photo ID</label>
-      </div>
+      </div> -->
       <div class="m-walletSettings__row--input">
         <input
           type="file"
@@ -19,15 +27,22 @@
         />
       </div>
     </div>
-    <m-shadowboxSubmitButton
-      (click)="file.click()"
-      [disabled]="inProgress"
-      [saving]="inProgress"
-      >Select & Upload</m-shadowboxSubmitButton
-    >
+    <div class="m-walletForm__buttonsContainer">
+      <m-shadowboxSubmitButton
+        (click)="file.click()"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        >Upload Photo ID</m-shadowboxSubmitButton
+      >
+    </div>
+    <div class="m-walletForm__row--validation">
+      <p *ngIf="error">{{ error }}</p>
+    </div>
   </ng-container>
 
-  <!-- **** INPUT: PROOF OF ADDRESS -->
+  <!-- -------------------------------------------- -->
+  <!--- INPUT - PROOF OF ADDRESS --------------------->
+  <!-- -------------------------------------------- -->
   <ng-container
     *ngIf="
       account.requirement.indexOf(
@@ -35,10 +50,10 @@
       ) > -1
     "
   >
-    <div class="m-walletForm__field--text">
-      <div class="m-walletForm__row--label">
+    <div class="m-walletForm__field--file">
+      <!-- <div class="m-walletForm__row--label">
         <label for="proofOfAddress" i18n>Proof of Address</label>
-      </div>
+      </div> -->
       <div class="m-walletSettings__row--input">
         <input
           type="file"
@@ -50,37 +65,24 @@
         />
       </div>
     </div>
-    <m-shadowboxSubmitButton
-      (click)="file.click()"
-      [disabled]="inProgress"
-      [saving]="inProgress"
-      >Select & Upload</m-shadowboxSubmitButton
-    >
-  </ng-container>
-
-  <!-- **** INPUT: TOS CHECKBOX -->
-  <ng-container *ngIf="account.requirement.indexOf('tos_acceptance.') > -1">
-    <div class="m-walletForm__field--checkbox">
-      <div class="m-walletSettings__row--input">
-        <m-formInput__checkbox formControlName="stripeAgree">
-          I have read and agree to the
-          <a href="https://stripe.com/legal" target="_blank">
-            Stripe Services Agreement
-          </a>
-        </m-formInput__checkbox>
-      </div>
+    <div class="m-walletForm__buttonsContainer">
+      <m-shadowboxSubmitButton
+        (click)="file.click()"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        >Upload Proof of Address</m-shadowboxSubmitButton
+      >
     </div>
-    <m-shadowboxSubmitButton
-      (click)="acceptTos()"
-      [disabled]="inProgress"
-      [saving]="inProgress"
-      >Save</m-shadowboxSubmitButton
-    >
+    <div class="m-walletForm__row--validation">
+      <p *ngIf="error">{{ error }}</p>
+    </div>
   </ng-container>
 
-  <!-- **** INPUT: PHONE NUMBER -->
+  <!-- -------------------------------------------- -->
+  <!--- INPUT - PHONE NUMBER ------------------------->
+  <!-- -------------------------------------------- -->
   <ng-container *ngIf="account.requirement.indexOf('individual.phone') > -1">
-    <div class="m-walletForm__field--text">
+    <div class="m-walletForm__field--text stretchedField">
       <div class="m-walletForm__row--label">
         <label for="phoneNumber" i18n>Phone Number</label>
       </div>
@@ -97,19 +99,26 @@
         </m-phoneInput>
       </div>
     </div>
-    <m-shadowboxSubmitButton
-      (click)="updateField('phone', phone.value)"
-      [disabled]="inProgress"
-      [saving]="inProgress"
-      >Save</m-shadowboxSubmitButton
-    >
+    <div class="m-walletForm__row--validation">
+      <p *ngIf="error">{{ error }}</p>
+    </div>
+    <div class="m-walletForm__buttonsContainer">
+      <m-shadowboxSubmitButton
+        (click)="updateField('phone', phone.value)"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        >Save</m-shadowboxSubmitButton
+      >
+    </div>
   </ng-container>
 
-  <!-- **** INPUT: PERSONAL ID -->
+  <!-- -------------------------------------------- -->
+  <!--- INPUT - PERSONAL ID-- ------------------------>
+  <!-- -------------------------------------------- -->
   <ng-container
     *ngIf="account.requirement.indexOf('individual.id_number') > -1"
   >
-    <div class="m-walletForm__field--text">
+    <div class="m-walletForm__field--text stretchedField">
       <div class="m-walletForm__row--label">
         <label for="personalIdNumber" i18n
           >Personal ID / Social Security Number (SSN) / National Insurance
@@ -126,11 +135,39 @@
         />
       </div>
     </div>
-    <m-shadowboxSubmitButton
-      (click)="updateField('id_number', personalIdNumber.value)"
-      [disabled]="inProgress"
-      [saving]="inProgress"
-      >Save</m-shadowboxSubmitButton
-    >
+    <div class="m-walletForm__row--validation">
+      <p *ngIf="error">{{ error }}</p>
+    </div>
+    <div class="m-walletForm__buttonsContainer">
+      <m-shadowboxSubmitButton
+        (click)="updateField('id_number', personalIdNumber.value)"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        >Save</m-shadowboxSubmitButton
+      >
+    </div>
+  </ng-container>
+  <!-- -------------------------------------------- -->
+  <!--- INPUT - TOS CHECKBOX ------------------------->
+  <!-- -------------------------------------------- -->
+  <ng-container *ngIf="account.requirement.indexOf('tos_acceptance.') > -1">
+    <div class="m-walletForm__field--checkbox">
+      <div class="m-walletSettings__row--input">
+        <m-formInput__checkbox>
+          I have read and agree to the
+          <a href="https://stripe.com/legal" target="_blank">
+            Stripe Services Agreement
+          </a>
+        </m-formInput__checkbox>
+      </div>
+    </div>
+    <div class="m-walletForm__buttonsContainer">
+      <m-shadowboxSubmitButton
+        (click)="acceptTos()"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        >Save</m-shadowboxSubmitButton
+      >
+    </div>
   </ng-container>
 </div>

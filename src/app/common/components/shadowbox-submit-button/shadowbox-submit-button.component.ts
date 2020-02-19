@@ -12,24 +12,41 @@ import {
   templateUrl: './shadowbox-submit-button.component.html',
 })
 export class ShadowboxSubmitButtonComponent implements AfterViewInit {
-  buttonTextWidth: number = 0;
+  buttonTextWidth: number;
   @ViewChild('buttonTextContainer', { static: false })
   buttonTextContainer: ElementRef;
 
-  @Input() saving: boolean = false;
   @Input() disabled: boolean = false;
   @Input() color: 'green' | 'grey' | 'red' = 'green';
+
+  private _saving: boolean;
+  @Input() set saving(value: boolean) {
+    if (value && !this.buttonTextWidth) {
+      // Handles width for buttons that are not visible onInit
+      this.setSavingWidth();
+    }
+    this._saving = value;
+  }
+  get saving(): boolean {
+    return this._saving;
+  }
+
   constructor() {}
 
   ngAfterViewInit() {
-    if (this.buttonTextContainer.nativeElement) {
-      this.setSavingWidth();
-    }
+    this.setSavingWidth();
   }
 
   // Prevent button width from shrinking during saving animation
   @HostListener('window:resize')
+  resize() {
+    this.setSavingWidth();
+  }
+
   setSavingWidth() {
-    this.buttonTextWidth = this.buttonTextContainer.nativeElement.clientWidth;
+    if (this.buttonTextContainer && !this.saving) {
+      const elWidth = this.buttonTextContainer.nativeElement.clientWidth;
+      this.buttonTextWidth = elWidth > 0 ? elWidth : this.buttonTextWidth;
+    }
   }
 }

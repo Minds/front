@@ -4,7 +4,6 @@
 
 import {
   Component,
-  OnInit,
   ChangeDetectorRef,
   Input,
   Output,
@@ -18,7 +17,7 @@ import { Client, Upload } from '../../../../../services/api';
   selector: 'm-walletCashOnboardingExtras',
   templateUrl: './cash-onboarding-extras.component.html',
 })
-export class WalletCashOnboardingExtrasComponent implements OnInit {
+export class WalletCashOnboardingExtrasComponent {
   @Input() account;
   @Input() allowedCountries: string[];
   @Output() submitted: EventEmitter<any> = new EventEmitter();
@@ -31,24 +30,15 @@ export class WalletCashOnboardingExtrasComponent implements OnInit {
     private upload: Upload
   ) {}
 
-  ngOnInit() {
-    // if (!this.account) {
-    //   this.submitted.emit();
-    //   // this.detectChanges();
-    // }
-  }
-
   async uploadDocument(fileInput: HTMLInputElement, documentType: string) {
     const file = fileInput ? fileInput.files[0] : null;
     this.inProgress = true;
     this.detectChanges();
-    await this.upload.post(
+    const response: any = await this.upload.post(
       'api/v2/payments/stripe/connect/document/' + documentType,
       [file]
     );
-    this.inProgress = false;
-    this.detectChanges();
-    this.submitted.emit();
+    this.handleResponse(response);
   }
 
   async updateField(fieldName: string, value: string) {
@@ -56,19 +46,30 @@ export class WalletCashOnboardingExtrasComponent implements OnInit {
     this.detectChanges();
     let body = {};
     body[fieldName] = value;
-    await this.client.post('api/v2/payments/stripe/connect/update', body);
-    this.inProgress = false;
-    this.detectChanges();
-    this.submitted.emit();
+    const response: any = await this.client.post(
+      'api/v2/payments/stripe/connect/update',
+      body
+    );
+    this.handleResponse(response);
   }
 
   async acceptTos() {
     this.inProgress = true;
     this.detectChanges();
-    await this.client.put('api/v2/payments/stripe/connect/terms');
-    this.inProgress = false;
-    this.detectChanges();
-    this.submitted.emit();
+    const response: any = await this.client.put(
+      'api/v2/payments/stripe/connect/terms'
+    );
+    this.handleResponse(response);
+  }
+
+  handleResponse(response) {
+    if (response.status === 'error') {
+      this.error = response.message;
+      this.inProgress = false;
+      this.detectChanges();
+    } else {
+      this.submitted.emit();
+    }
   }
 
   detectChanges() {

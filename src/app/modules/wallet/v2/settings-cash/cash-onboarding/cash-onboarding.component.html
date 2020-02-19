@@ -17,12 +17,12 @@
       </p>
 
       <div class="m-walletForm__fieldsContainer">
-        <div class="m-walletForm__multifieldGroup">
+        <div class="m-walletForm__fieldGroupWrapper">
           <!-- -------------------------------------------- -->
           <!--- INPUT - COUNTRY DROPDOWN---------------------->
           <!-- -------------------------------------------- -->
           <div class="m-walletForm__field--text stretchedField">
-            <div class="m-walletSettings__row--label">
+            <div class="m-walletForm__row--label">
               <label for="country" i18n>Country</label>
             </div>
             <div class="m-walletForm__row--input">
@@ -41,7 +41,7 @@
           <!-- -------------------------------------------- -->
           <!--- NAMES ---------------------------------------->
           <!-- -------------------------------------------- -->
-          <div class="m-walletForm__nameFieldsContainer">
+          <div class="m-walletForm__fieldPairWrapper">
             <!-- -------------------------------------------- -->
             <!--- INPUT - FIRST NAME --------------------------->
             <!-- -------------------------------------------- -->
@@ -55,7 +55,7 @@
                   id="firstName"
                   name="firstName"
                   formControlName="firstName"
-                  class="form-control"
+                  class="form-control fieldPairInput"
                   data-minds="firstName"
                 />
               </div>
@@ -73,7 +73,7 @@
                   id="lastName"
                   name="lastName"
                   formControlName="lastName"
-                  class="form-control"
+                  class="form-control fieldPairInput"
                   data-minds="lastName"
                 />
               </div>
@@ -98,7 +98,7 @@
           <!-- -------------------------------------------- -->
           <!--- INPUT - PHONE NUMBER ------------------------->
           <!-- -------------------------------------------- -->
-          <div class="m-walletForm__field--text">
+          <div class="m-walletForm__field--text stretchedField">
             <div class="m-walletForm__row--label">
               <label for="phoneNumber" i18n>Phone Number</label>
             </div>
@@ -166,7 +166,7 @@
         <!-- -------------------------------------------- -->
         <!--- ADDRESS -------------------------------------->
         <!-- -------------------------------------------- -->
-        <div class="m-walletForm__multifieldGroup">
+        <div class="m-walletForm__fieldGroupWrapper">
           <!-- -------------------------------------------- -->
           <!--- INPUT - STREET ADDRESS ----------------------->
           <!-- -------------------------------------------- -->
@@ -302,7 +302,7 @@
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__buttonsContainer">
         <m-shadowboxSubmitButton
-          (click)="showModal = true"
+          (click)="cancelForm()"
           [disabled]="inProgress"
           color="grey"
           >Cancel</m-shadowboxSubmitButton
@@ -331,7 +331,7 @@
 
     <div class="m-walletForm__buttonsContainer">
       <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
-        >Cancel</m-shadowboxSubmitButton
+        >Go back</m-shadowboxSubmitButton
       >
       <m-shadowboxSubmitButton color="red" (click)="leaveEditMode()"
         >I'm sure</m-shadowboxSubmitButton

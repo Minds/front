@@ -40,7 +40,6 @@ export interface Wallet {
 export class WalletDashboardService {
   totalTokens = 0;
   stripeDetails: StripeDetails;
-  stripeAccount;
   wallet: Wallet = {
     tokens: {
       label: 'Tokens',
@@ -98,7 +97,6 @@ export class WalletDashboardService {
     await this.getEthAccount();
     await this.getStripeAccount();
 
-    console.log('***', this.wallet);
     return this.wallet;
   }
 
@@ -211,10 +209,6 @@ export class WalletDashboardService {
         this.wallet.cash.balance =
           (account.totalBalance.amount - account.pendingBalance.amount) / 100;
         if (account.bankAccount) {
-          // this.wallet.cash.label = 'USD';
-          // this.wallet.cash.unit = 'usd';
-          // this.stripeDetails.hasBank = false;
-          // } else {
           const bankCurrency: string = account.bankAccount.currency;
           this.wallet.cash.label = bankCurrency.toUpperCase();
           this.wallet.cash.unit = bankCurrency;
@@ -230,9 +224,7 @@ export class WalletDashboardService {
 
         this.wallet.cash.stripeDetails = this.stripeDetails;
         account = { ...account, ...this.stripeDetails };
-
-        console.log('svc has account(merge)', account);
-
+        console.log(account);
         return account;
       } catch (e) {
         console.error(e);
@@ -240,24 +232,33 @@ export class WalletDashboardService {
       }
     } else {
       this.wallet.cash.stripeDetails = this.stripeDetails;
-
-      console.log('svc has NO account', this.stripeDetails);
       return this.stripeDetails;
     }
   }
 
   async createStripeAccount(form) {
-    console.log('creatingstripeaccount', form);
-    try {
-      const response = <any>(
-        await this.client.put('api/v2/wallet/usd/account', form)
-      );
+    console.log('~~~service: createStripeAccount');
 
-      return response;
-    } catch (e) {
-      console.error(e);
-      return e;
-    }
+    this.client
+      .put('api/v2/wallet/usd/account', form)
+      .then((response: any) => {
+        console.log('~~~service: createStripeAccount: response', response);
+        return response;
+      })
+      .catch(e => {
+        console.error(e.message);
+      });
+
+    // try {
+    //   const response = <any>(
+    //     await this.client.put('api/v2/wallet/usd/account', form)
+    //   );
+    //   console.log('~~~service: createStripeAccount: response', response);
+    //   return response;
+    // } catch (e) {
+    //   console.error(e);
+    //   return e;
+    // }
   }
 
   async addStripeBank(form) {
@@ -277,6 +278,7 @@ export class WalletDashboardService {
       const response = <any>(
         await this.client.delete('api/v2/payments/stripe/connect/bank')
       );
+
       return response;
     } catch (e) {
       console.error(e);

@@ -41,6 +41,7 @@
       color: themed($m-textColor--secondary);
     }
     .m-shadowboxSubmitButton__status--saving {
+      text-align: center;
       span {
         @include m-theme() {
           background-color: themed($m-grey-500);

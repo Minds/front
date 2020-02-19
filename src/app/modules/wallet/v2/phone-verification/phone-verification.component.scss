@@ -1,11 +1,11 @@
 m-walletPhoneVerification {
   .m-walletModal__footnote {
     div {
-      @include m-theme() {
-        color: themed($m-grey-800);
-      }
       &:first-child {
-        margin-bottom: 8px;
+        margin-bottom: 18px;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
       }
     }
   }

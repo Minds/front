@@ -1,16 +1,16 @@
-<div class="m-walletCashBankForm" *ngIf="account">
+<div *ngIf="inProgress" class="m-wallet__spinner">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+<div class="m-walletCashBankForm">
   <!-- -------------------------------------------- -->
-  <!--- BANK ACCOUNT IS NOT YET SET UP --------------->
+  <!--- FORM - BANK ACCOUNT IS NOT YET SET UP -------->
   <!--- OR IS BEING UPDATED-------- ------------------>
   <!-- -------------------------------------------- -->
   <!-- <ng-container *ngIf="!leftMonetization"> -->
-  <!-- -------------------------------------------- -->
-  <!--- FORM ----------------------------------------->
-  <!-- -------------------------------------------- -->
   <form
     [formGroup]="form"
     class="m-walletButtonLayout--buttonOffsetRight"
-    *ngIf="!hasBankAccount() || editing"
+    *ngIf="!hasBank || editing"
   >
     <p class="m-walletTertiaryText--desc">
       Finish adding your bank details to start receiving cash payouts.
@@ -20,7 +20,7 @@
       <!--- INPUT - COUNTRY DROPDOWN---------------------->
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__field--text stretchedField">
-        <div class="m-walletSettings__row--label">
+        <div class="m-walletForm__row--label">
           <label for="country" i18n>Country</label>
         </div>
         <div class="m-walletForm__row--input">
@@ -41,8 +41,8 @@
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__field--text stretchedField">
         <div class="m-walletForm__row--label">
-          <label for="accountNumber" i18n>Bank Account Number / IBAN</label
-          ><m-tooltip icon="help">placeholder</m-tooltip>
+          <label for="accountNumber" i18n>Bank Account Number / IBAN</label>
+          <!-- <m-tooltip icon="help">placeholder</m-tooltip> -->
         </div>
         <div class="m-walletForm__row--input">
           <input
@@ -61,7 +61,7 @@
       <div class="m-walletForm__field--text stretchedField">
         <div class="m-walletForm__row--label">
           <label for="routingNumber" i18n>Routing Number / Sort Code</label>
-          <m-tooltip icon="help">placeholder</m-tooltip>
+          <!-- <m-tooltip icon="help">placeholder</m-tooltip> -->
         </div>
         <div class="m-walletForm__row--input">
           <input
@@ -86,7 +86,7 @@
     <!-- -------------------------------------------- -->
     <div class="m-walletForm__buttonsContainer">
       <m-shadowboxSubmitButton
-        (click)="showModal = true; modalContent = 'leaveEditMode'"
+        (click)="cancelEdits()"
         [disabled]="inProgress"
         color="grey"
         >Cancel</m-shadowboxSubmitButton
@@ -102,9 +102,11 @@
   <!-- -------------------------------------------- -->
   <!--- BANK ACCOUNT ALREADY SET UP ------------------>
   <!-- -------------------------------------------- -->
-  <ng-container *ngIf="hasBankAccount() && !editing">
+  <ng-container *ngIf="hasBank && !editing">
     <div class="m-walletSettingsView--hasAccount__accountSummary">
-      <p>Your bank account where cash rewards are deposited.</p>
+      <p class="m-walletTertiaryText--desc">
+        Your bank account where cash rewards are deposited.
+      </p>
       <div class="m-walletSettingsView--hasAccount__detailsWrapper">
         <div class="m-walletSettingsView--hasAccount__bankWrapper">
           <span>
@@ -113,8 +115,12 @@
           <span>****{{ account.bankAccount.last4 }}</span>
         </div>
         <div class="m-walletSettingsView--hasAccount__linksContainer">
-          <a (click)="enterEditMode()">Update</a>
-          <a (click)="showModal = true; modalContent = 'removeBank'">Remove</a>
+          <a><span (click)="enterEditMode()">Update</span></a>
+          <a
+            ><span (click)="showModal = true; modalContent = 'removeBank'"
+              >Remove</span
+            ></a
+          >
         </div>
       </div>
     </div>
@@ -149,7 +155,7 @@
 
     <div class="m-walletForm__buttonsContainer">
       <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
-        >Cancel</m-shadowboxSubmitButton
+        >Go back</m-shadowboxSubmitButton
       >
       <m-shadowboxSubmitButton
         color="red"

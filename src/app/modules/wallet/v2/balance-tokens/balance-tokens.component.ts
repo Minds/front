@@ -99,23 +99,6 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     }
   }
 
-  // formatBalance(balance) {
-  //   const formattedBalance = {
-  //     total: balance,
-  //     int: 0,
-  //     frac: null,
-  //   };
-  //   if (balance <= 0) {
-  //     return formattedBalance;
-  //   }
-  //   const splitBalance = balance.toString().split('.');
-
-  //   formattedBalance.int = splitBalance[0];
-  //   formattedBalance.frac = splitBalance[1];
-
-  //   return formattedBalance;
-  // }
-
   transferComplete() {
     this.formToastService.success('On-chain transfer complete');
     this.showModal = false;

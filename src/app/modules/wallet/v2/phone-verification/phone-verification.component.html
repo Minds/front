@@ -74,9 +74,22 @@
       </div>
     </div>
   </div>
-  <!-- TODOOJM button disabling -->
-  <!-- (from onboarding: !number || number.length < 13) -->
-  <!-- [disabled]="inProgress || invalidNumber || invalidCode" -->
+  <!-- <m-shadowboxSubmitButton
+    *ngIf="!confirming"
+    [disabled]="inProgress"
+    [saving]="inProgress"
+    (click)="onSubmit()"
+  >
+    Send Verification
+  </m-shadowboxSubmitButton>
+  <m-shadowboxSubmitButton
+    *ngIf="confirming"
+    [disabled]="inProgress"
+    [saving]="inProgress"
+    (click)="onSubmit()"
+  >
+    Verify Code
+  </m-shadowboxSubmitButton> -->
   <m-shadowboxSubmitButton
     [disabled]="inProgress"
     [saving]="inProgress"
@@ -88,7 +101,7 @@
 
 <div class="m-walletModal__footnote" *ngIf="confirming">
   <div>Verification code sent to +{{ form.value.number }}</div>
-  <div>
+  <div class="m-walletTertiaryText">
     Didn't receive it? <a (click)="validateNumber()">Send it again</a> or
     <a (click)="changePhone()">change phone number</a>
   </div>

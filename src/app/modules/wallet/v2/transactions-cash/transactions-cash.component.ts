@@ -48,7 +48,6 @@ export class WalletTransactionsCashComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('cash transactions noAccount: ', this.noAccount);
     if (!this.noAccount) {
       this.getStripeAccount();
     } else {
@@ -123,11 +122,6 @@ export class WalletTransactionsCashComponent implements OnInit {
     } finally {
       this.init = true;
       this.inProgress = false;
-      console.log(
-        'cash transactions:',
-        this.transactions.length,
-        this.transactions
-      );
       this.detectChanges();
     }
   }
@@ -159,7 +153,9 @@ export class WalletTransactionsCashComponent implements OnInit {
         this.runningTotal = 0;
       }
 
-      formattedTx.runningTotal = this.formatAmount(this.runningTotal);
+      formattedTx.runningTotal = this.walletService.splitBalance(
+        this.runningTotal
+      );
 
       if (formattedTx.superType === 'payout') {
         formattedTx.showRewardsPopup = false;
@@ -206,22 +202,22 @@ export class WalletTransactionsCashComponent implements OnInit {
     };
   }
 
-  formatAmount(amount) {
-    const formattedAmount = {
-      total: amount,
-      int: 0,
-      frac: null,
-    };
+  // formatAmount(amount) {
+  //   const formattedAmount = {
+  //     total: amount,
+  //     int: 0,
+  //     frac: null,
+  //   };
 
-    const splitBalance = amount.toString().split('.');
+  //   const splitBalance = amount.toString().split('.');
 
-    formattedAmount.int = splitBalance[0];
-    if (splitBalance[1]) {
-      formattedAmount.frac = splitBalance[1].slice(0, 2);
-    }
+  //   formattedAmount.int = splitBalance[0];
+  //   if (splitBalance[1]) {
+  //     formattedAmount.frac = splitBalance[1].slice(0, 2);
+  //   }
 
-    return formattedAmount;
-  }
+  //   return formattedAmount;
+  // }
 
   getDelta(tx) {
     let delta = 'neutral';

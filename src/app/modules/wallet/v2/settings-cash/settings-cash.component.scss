@@ -26,6 +26,12 @@ m-walletSettings--cash {
     a:last-child {
       margin-left: 28px;
     }
+    a {
+      cursor: default;
+    }
+    span {
+      cursor: pointer;
+    }
   }
 
   .m-tooltip--bubble {
@@ -35,45 +41,14 @@ m-walletSettings--cash {
   ////////////////////////////////////////////
   // FORMS ///////////////////////////////////
   ////////////////////////////////////////////
-  // [class*='m-walletForm__field'] {
-  //   margin-bottom: 19px;
-  // }
-  .m-walletForm__nameFieldsContainer {
-    display: flex;
-    box-sizing: border-box;
-    flex-flow: row wrap;
-
-    [class*='m-walletForm__field'] {
-      flex: 1 0 auto;
-      min-width: 300px;
-      &:first-child {
-        margin-right: 19px;
-      }
-    }
-  }
-  .m-walletForm__multifieldGroup {
-    margin-top: 58px;
+  [class*='m-walletForm__field'] {
+    margin-bottom: 19px;
   }
 
   .m-walletForm__field--checkbox {
     margin-top: 100px;
     @media screen and (max-width: $max-mobile) {
       margin-top: 40px;
-    }
-  }
-  m-date__dropdowns {
-    select {
-      outline: none;
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-        border: 1px solid themed($m-borderColor--primary);
-        box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
-      }
-      &:focus {
-        @include m-theme() {
-          border: 1px solid themed($m-blue);
-        }
-      }
     }
   }
 }

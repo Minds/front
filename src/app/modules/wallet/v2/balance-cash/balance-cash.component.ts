@@ -38,16 +38,13 @@ export class WalletBalanceCashComponent implements OnInit {
   //   return this._cashWallet;
   // }
 
-  // account;
   hasAccount: boolean = false;
   hasBank: boolean = false;
   pendingBalance: SplitBalance;
   totalPaidOut: SplitBalance;
   proEarnings: SplitBalance;
   nextPayoutDate = '';
-  // onSettingsTab: boolean = false;
   currency = 'usd';
-  // paramsSubscription: Subscription;
   init: boolean = false;
 
   constructor(
@@ -60,15 +57,6 @@ export class WalletBalanceCashComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // this.paramsSubscription = this.route.paramMap.subscribe(
-    //   (params: ParamMap) => {
-    //     this.onSettingsTab = params.get('view') === 'settings';
-    //     this.detectChanges();
-    //   }
-    // );
-
-    // this.load();
-
     // TODOOJM confirm that Mark has migrated all stripe accts to monthly intervals
     // TODOOJM OR just get the payout date from the stripe account itself
     this.nextPayoutDate = moment()
@@ -89,48 +77,6 @@ export class WalletBalanceCashComponent implements OnInit {
     this.detectChanges();
   }
 
-  // ngOnDestroy() {
-  //   if (this.paramsSubscription) {
-  //     this.paramsSubscription.unsubscribe();
-  //   }
-  // }
-
-  // async load() {
-  // // TODOOJM confirm that Mark has migrated all stripe accts to monthly intervals
-  // // TODOOJM OR just get the payout date from the stripe account itself
-  // this.nextPayoutDate = moment()
-  //   .endOf('month')
-  //   .format('ddd Do MMM');
-
-  // this.account = await this.walletService.getStripeAccount();
-  // if (!this.account || !this.account.accountNumber) {
-  // if (this.cashWallet.address !== 'stripe') {
-  //   // this.hasAccount = false;
-  // this.pendingBalance = this.walletService.splitBalance(0);
-  // this.totalPaidOut = this.walletService.splitBalance(0);
-  // } else {
-  // this.hasAccount = true;
-  // this.pendingBalance = this.walletService.splitBalance(
-  //   this.cashWallet.balance
-  // );
-  // this.currency = this.cashWallet.label.toUpperCase();
-  // this.account = await this.walletService.getStripeAccount();
-  // this.pendingBalance = this.walletService.splitBalance(
-  //   this.account.pendingBalance.amount / 100
-  // );
-  // if (this.account.bankAccount) {
-  //   this.currency = this.account.bankAccount.currency.toUpperCase();
-  // }
-  // let totalPaidOutRaw =
-  //   (this.account.totalBalance.amount -
-  //     this.account.pendingBalance.amount) /
-  //   100;
-  // this.totalPaidOut = this.walletService.splitBalance(totalPaidOutRaw);
-  // }
-
-  // this.detectChanges();
-  // }
-
   async getProEarnings() {
     try {
       const response: number = await this.walletService.getProEarnings();
@@ -141,30 +87,6 @@ export class WalletBalanceCashComponent implements OnInit {
     }
     this.detectChanges();
   }
-
-  // formatBalance(balance) {
-  //   console.log(balance);
-  //   const formattedBalance = {
-  //     total: balance,
-  //     int: 0,
-  //     frac: null,
-  //   };
-  //   if (balance <= 0) {
-  //     return formattedBalance;
-  //   }
-  //   const splitBalance = balance.toString().split('.');
-  //   console.log('888 splitBal...', splitBalance);
-
-  //   formattedBalance.int = splitBalance[0];
-  //   console.log('888 int...', formattedBalance);
-
-  //   if (splitBalance[1]) {
-  //     const frac = splitBalance[1].toString();
-  //     formattedBalance.frac = frac.length < 2 ? frac.concat('0') : frac;
-  //     console.log('888 frac...', formattedBalance);
-  //   }
-  //   return formattedBalance;
-  // }
 
   scrollToSettings() {
     this.scrollToCashSettings.emit();

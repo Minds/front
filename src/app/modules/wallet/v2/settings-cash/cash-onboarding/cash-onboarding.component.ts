@@ -10,6 +10,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { requiredFor, optionalFor } from './../settings-cash.validators';
 import { WalletDashboardService } from '../../dashboard.service';
 import { Session } from '../../../../../services/session';
+import { Client } from '../../../../../services/api';
 
 @Component({
   selector: 'm-walletCashOnboarding',
@@ -17,7 +18,6 @@ import { Session } from '../../../../../services/session';
 })
 export class WalletCashOnboardingComponent implements OnInit {
   @Input() allowedCountries: string[];
-  // @Input() account;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
   form;
   user;
@@ -31,7 +31,8 @@ export class WalletCashOnboardingComponent implements OnInit {
     private cd: ChangeDetectorRef,
     protected walletService: WalletDashboardService,
     private fb: FormBuilder,
-    protected session: Session
+    protected session: Session,
+    private client: Client
   ) {}
 
   ngOnInit() {
@@ -58,36 +59,81 @@ export class WalletCashOnboardingComponent implements OnInit {
   }
 
   async createAccount() {
+    if (this.inProgress || this.form.invalid) {
+      return;
+    }
+
     this.inProgress = true;
     this.error = '';
-    this.detectChanges();
-
-    console.log('createAccountFormval', this.form.value);
 
     try {
-      const response: any = await this.walletService.createStripeAccount(
-        this.form.value
+      const response = <any>(
+        await this.client.put('api/v2/wallet/usd/account', this.form.value)
       );
+      this.inProgress = false;
 
-      console.log('createStripeAccount response', response);
-
-      if (!this.user.programs) {
-        this.user.programs = [];
+      if (!this.session.getLoggedInUser().programs) {
+        this.session.getLoggedInUser().programs = [];
       }
-      this.user.programs.push('affiliate');
+      this.session.getLoggedInUser().programs.push('affiliate');
 
-      this.user.merchant = {
-        id: response.id,
+      this.session.getLoggedInUser().merchant = {
+        id: response.account.id,
         service: 'stripe',
       };
-      console.log('888emitting submitted');
-      this.submitted.emit();
-    } catch (e) {
-      // TODO backend should include e.param to allow inline error handling
-      this.error = e.message;
-    } finally {
-      this.inProgress = false;
       this.detectChanges();
+      // this.router.navigate(['/wallet/usd/']);
+    } catch (e) {
+      this.inProgress = false;
+      this.error = e.message;
+      this.detectChanges();
+    }
+  }
+
+  // async createAccount() {
+  //   if (!this.form.valid) {
+  //     return;
+  //   }
+  //   this.inProgress = true;
+  //   this.error = '';
+  //   this.detectChanges();
+
+  //   console.log('createAccountFormval', this.form.value);
+
+  //   this.walletService
+  //     .createStripeAccount(this.form.value)
+  //     .then((response: any) => {
+  //       console.log('createAccount response', response);
+  //       if (response && response.status !== 'error') {
+  //         if (!this.user.programs) {
+  //           this.user.programs = [];
+  //         }
+  //         this.user.programs.push('affiliate');
+
+  //         this.user.merchant = {
+  //           id: response.id,
+  //           service: 'stripe',
+  //         };
+  //         this.inProgress = false;
+  //         this.detectChanges();
+
+  //         console.log('submit event');
+  //         this.submitted.emit();
+  //       }
+  //     })
+  //     .catch(e => {
+  //       // TODO backend should include e.param and handle errors inline
+
+  //       this.error = e.message;
+  //       console.log('catch');
+  //       this.inProgress = false;
+  //       this.detectChanges();
+  //     });
+  // }
+
+  cancelForm() {
+    if (!this.inProgress) {
+      this.showModal = true;
     }
   }
 

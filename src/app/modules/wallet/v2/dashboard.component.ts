@@ -8,6 +8,7 @@ import {
   ViewChild,
   ElementRef,
   OnDestroy,
+  ViewRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -194,7 +195,9 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   }
 
   detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 }

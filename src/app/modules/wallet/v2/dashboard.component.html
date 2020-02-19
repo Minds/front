@@ -1,4 +1,5 @@
 <m-pageLayout [menu]="menu">
+  <!-- <div class="m-walletDashboard" m-pageLayout__main *ngIf="currencies"> -->
   <div class="m-walletDashboard" m-pageLayout__main *ngIf="currencies">
     <m-dashboardLayout>
       <ng-container m-dashboardLayout__header>
@@ -8,10 +9,12 @@
           </h3>
         </div>
       </ng-container>
-      <div *ngIf="inProgress" class="m-wallet__spinner">
-        <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-      </div>
-      <ng-container m-dashboardLayout__body *ngIf="!inProgress">
+      <ng-container m-dashboardLayout__body *ngIf="!currencies || inProgress">
+        <div *ngIf="!currencies" class="m-wallet__spinner">
+          <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+        </div>
+      </ng-container>
+      <ng-container m-dashboardLayout__body *ngIf="currencies && !inProgress">
         <m-shadowboxLayout>
           <m-shadowboxHeader__tabs
             class="m-shadowboxLayout__header"
