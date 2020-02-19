@@ -11,6 +11,14 @@ describe('CodeHighlightPipe', () => {
     pipe = new CodeHighlightPipe(codeHighlightServiceMock, featuresServiceMock);
   };
 
+  const createCodeBlockHtmlString = (lang, code) => {
+    return (
+      `<div class="${CodeHighlightService.moduleWrapperClass}">` +
+      `<pre><code class="language-${lang}">${code}</code></pre>` +
+      `</div>`
+    );
+  };
+
   describe('when feature is enabled', () => {
     beforeEach(() => {
       setup(true);
@@ -25,7 +33,7 @@ describe('CodeHighlightPipe', () => {
       const transformedString = pipe.transform(string);
 
       expect(transformedString).toBe(
-        `<div class="${CodeHighlightService.moduleWrapperClass}"><pre><code class="language-javascript">console.log(a);</code></pre></div>`
+        createCodeBlockHtmlString('javascript', 'console.log(a);')
       );
 
       expect(codeHighlightServiceMock.highlight).toHaveBeenCalledWith(
@@ -39,7 +47,7 @@ describe('CodeHighlightPipe', () => {
       const transformedString = pipe.transform(string);
 
       expect(transformedString).toBe(
-        `<div class="${CodeHighlightService.moduleWrapperClass}"><pre><code class="language-javascript">console.log(a);</code></pre></div>`
+        createCodeBlockHtmlString('javascript', 'console.log(a);')
       );
 
       expect(codeHighlightServiceMock.highlight).not.toHaveBeenCalled();
@@ -53,12 +61,40 @@ describe('CodeHighlightPipe', () => {
       const transformedString = pipe.transform(string);
 
       expect(transformedString).toBe(
-        `<div class="${CodeHighlightService.moduleWrapperClass}"><pre><code class="language-javascript">console.log(a);</code></pre></div>`
+        createCodeBlockHtmlString('javascript', 'console.log(a);')
       );
 
       expect(codeHighlightServiceMock.highlight).not.toHaveBeenCalled();
       expect(codeHighlightServiceMock.highlightAuto).toHaveBeenCalledWith(
         'console.log(a);'
+      );
+    });
+
+    it('should transform multiple code blocks with different languages and fence styles', () => {
+      const string =
+        '```javascript function (bar) { console.log(`${bar}`); }```\n' +
+        "```php <?php echo 'hello world' ?> ```\n" +
+        '\n' +
+        '```javascript\n' +
+        'function (bar) {\n' +
+        '  console.log(`${bar}`);\n' +
+        '}\n' +
+        '```';
+      const transformedString = pipe.transform(string);
+
+      expect(transformedString).toBe(
+        createCodeBlockHtmlString(
+          'javascript',
+          'function (bar) { console.log(`${bar}`); }'
+        ) +
+          '\n' +
+          createCodeBlockHtmlString('php', "<?php echo 'hello world' ?> ") +
+          '\n' +
+          '\n' +
+          createCodeBlockHtmlString(
+            'javascript',
+            'function (bar) {\n  console.log(`${bar}`);\n}\n'
+          )
       );
     });
   });

@@ -2,7 +2,7 @@ export let codeHighlightServiceMock = new (function() {
   this.highlightBlock = jasmine.createSpy('highlightBlock');
 
   this.highlight = jasmine.createSpy('highlight').and.callFake((lang, code) => {
-    return { value: code };
+    return { value: code, language: lang };
   });
 
   this.highlightAuto = jasmine.createSpy('highlightAuto').and.callFake(code => {
