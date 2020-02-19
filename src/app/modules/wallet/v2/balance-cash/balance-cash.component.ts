@@ -6,7 +6,6 @@ import {
   Input,
   Output,
   EventEmitter,
-  OnDestroy,
 } from '@angular/core';
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
@@ -15,9 +14,7 @@ import {
   WalletCurrency,
   SplitBalance,
 } from '../dashboard.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
 import * as moment from 'moment';
-import { Subscription } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 @Component({
   selector: 'm-walletBalance--cash',
@@ -29,10 +26,10 @@ export class WalletBalanceCashComponent implements OnInit {
   @Input() viewId: string;
   @Input() cashWallet: WalletCurrency;
 
-  // TODOOJM
   // private _cashWallet: WalletCurrency;
   // @Input() set cashWallet(value: WalletCurrency) {
   //   this._cashWallet = value;
+  //   this.load();
   // }
   // get wallet(): WalletCurrency {
   //   return this._cashWallet;
@@ -52,28 +49,31 @@ export class WalletBalanceCashComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected walletService: WalletDashboardService,
-    // protected route: ActivatedRoute,
     private configs: ConfigsService
   ) {}
 
   ngOnInit() {
-    // TODOOJM confirm that Mark has migrated all stripe accts to monthly intervals
-    // TODOOJM OR just get the payout date from the stripe account itself
+    this.load();
+
+    // TODO confirm that Mark has migrated all stripe accts to monthly intervals
+    // OR just get the payout date from the stripe account itself
     this.nextPayoutDate = moment()
       .endOf('month')
       .format('ddd Do MMM');
-
-    this.hasAccount = this.cashWallet.stripeDetails.hasAccount;
-    this.hasBank = this.cashWallet.stripeDetails.hasBank;
-    this.pendingBalance = this.cashWallet.stripeDetails.pendingBalanceSplit;
-    this.totalPaidOut = this.cashWallet.stripeDetails.totalPaidOutSplit;
-
-    this.currency = this.hasBank ? this.cashWallet.label : 'USD';
 
     if (this.configs.get('pro')) {
       this.getProEarnings();
     }
     this.init = true;
+    this.detectChanges();
+  }
+
+  load() {
+    this.hasAccount = this.cashWallet.stripeDetails.hasAccount;
+    this.hasBank = this.cashWallet.stripeDetails.hasBank;
+    this.pendingBalance = this.cashWallet.stripeDetails.pendingBalanceSplit;
+    this.totalPaidOut = this.cashWallet.stripeDetails.totalPaidOutSplit;
+    this.currency = this.hasBank ? this.cashWallet.label : 'USD';
     this.detectChanges();
   }
 

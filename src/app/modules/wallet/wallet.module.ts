@@ -54,6 +54,7 @@ import { FeaturesService } from '../../services/features.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { WalletDashboardComponent } from './v2/dashboard.component';
 import { BlockchainConsoleComponent } from '../blockchain/console/console.component';
+import { AnalyticsModule } from '../analytics/analytics.module';
 
 export const WALLET_ROUTES: Routes = [
   {
@@ -175,6 +176,7 @@ export const WALLET_ROUTES: Routes = [
     ModalsModule,
     ReferralsModule,
     WalletV2Module,
+    AnalyticsModule,
   ],
   declarations: [
     WalletComponent,

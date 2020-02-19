@@ -21,7 +21,6 @@ import * as moment from 'moment';
 })
 export class WalletTransactionsCashComponent implements OnInit {
   @Input() noAccount: boolean = false;
-  @Input() cashWallet: WalletCurrency; // TODOOJM USE ME
 
   init: boolean = false;
   inProgress: boolean = true;

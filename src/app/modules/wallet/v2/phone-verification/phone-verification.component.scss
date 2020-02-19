@@ -21,16 +21,7 @@ m-walletPhoneVerification {
     }
   }
 
-  // m-shadowboxSubmitButton {
-  //   width: 147px;
-  //   button {
-  //     width: 100%;
-  //   }
-  // }
   @media screen and (max-width: 771px) {
-    // m-shadowboxSubmitButton {
-    //   margin: 0 0 21px 0;
-    // }
     .stretchedField {
       .m-walletForm__row--label m-tooltip {
         .m-tooltip--bubble {
@@ -38,7 +29,6 @@ m-walletPhoneVerification {
           width: 174px;
         }
       }
-      // TODOOJM look into this
       [class*='m-walletForm__row'] {
         &:not(.m-phoneInput__wrapper) {
           flex-flow: row wrap;

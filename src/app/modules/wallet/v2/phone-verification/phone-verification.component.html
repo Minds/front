@@ -11,12 +11,7 @@
     To start earning rewards, you will need to enter a unique phone number.
   </p>
 </div>
-<!-- TODOOJM: check on the enter key behavior -->
-<form
-  [formGroup]="form"
-  (keyup.enter)="onSubmit()"
-  class="m-walletButtonLayout--buttonInline"
->
+<form [formGroup]="form" class="m-walletButtonLayout--buttonInline">
   <div class="m-walletForm__fieldsContainer">
     <div class="m-walletForm__field--text stretchedField" *ngIf="!confirming">
       <div class="m-walletForm__row--label">
@@ -74,22 +69,6 @@
       </div>
     </div>
   </div>
-  <!-- <m-shadowboxSubmitButton
-    *ngIf="!confirming"
-    [disabled]="inProgress"
-    [saving]="inProgress"
-    (click)="onSubmit()"
-  >
-    Send Verification
-  </m-shadowboxSubmitButton>
-  <m-shadowboxSubmitButton
-    *ngIf="confirming"
-    [disabled]="inProgress"
-    [saving]="inProgress"
-    (click)="onSubmit()"
-  >
-    Verify Code
-  </m-shadowboxSubmitButton> -->
   <m-shadowboxSubmitButton
     [disabled]="inProgress"
     [saving]="inProgress"

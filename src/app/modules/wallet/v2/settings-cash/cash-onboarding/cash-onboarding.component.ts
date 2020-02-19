@@ -82,54 +82,12 @@ export class WalletCashOnboardingComponent implements OnInit {
         service: 'stripe',
       };
       this.detectChanges();
-      // this.router.navigate(['/wallet/usd/']);
     } catch (e) {
       this.inProgress = false;
       this.error = e.message;
       this.detectChanges();
     }
   }
-
-  // async createAccount() {
-  //   if (!this.form.valid) {
-  //     return;
-  //   }
-  //   this.inProgress = true;
-  //   this.error = '';
-  //   this.detectChanges();
-
-  //   console.log('createAccountFormval', this.form.value);
-
-  //   this.walletService
-  //     .createStripeAccount(this.form.value)
-  //     .then((response: any) => {
-  //       console.log('createAccount response', response);
-  //       if (response && response.status !== 'error') {
-  //         if (!this.user.programs) {
-  //           this.user.programs = [];
-  //         }
-  //         this.user.programs.push('affiliate');
-
-  //         this.user.merchant = {
-  //           id: response.id,
-  //           service: 'stripe',
-  //         };
-  //         this.inProgress = false;
-  //         this.detectChanges();
-
-  //         console.log('submit event');
-  //         this.submitted.emit();
-  //       }
-  //     })
-  //     .catch(e => {
-  //       // TODO backend should include e.param and handle errors inline
-
-  //       this.error = e.message;
-  //       console.log('catch');
-  //       this.inProgress = false;
-  //       this.detectChanges();
-  //     });
-  // }
 
   cancelForm() {
     if (!this.inProgress) {

@@ -19,7 +19,6 @@ export class WalletSettingsCashComponent implements OnInit {
 
   private _cashWallet: WalletCurrency;
   @Input() set cashWallet(c: WalletCurrency) {
-    console.log('SettingsCash.ts : wallet input has been updated');
     this._cashWallet = c;
     this.detectChanges();
     if (this.init) {
@@ -75,15 +74,8 @@ export class WalletSettingsCashComponent implements OnInit {
   }
 
   async setView() {
-    console.log('setting cashSettings view_________');
     const previousView = this.view || 'onboarding';
-
-    // const user = this.session.getLoggedInUser();
-    // const hasMerchant = user && user.merchant.service === 'stripe';
-
-    // if (!hasMerchant) {
     if (!this.cashWallet.stripeDetails.hasAccount) {
-      console.log('view is: onboarding');
       this.view = 'onboarding';
     } else {
       this.inProgress = true;
@@ -93,16 +85,13 @@ export class WalletSettingsCashComponent implements OnInit {
       this.walletService
         .getStripeAccount()
         .then((account: any) => {
-          console.log('cashSettings getStripeAccount response', account);
           this.account = account;
           if (
             !this.account.requirement ||
             this.account.requirement.indexOf('external_account') > -1
           ) {
-            console.log('view is: bank');
             this.view = 'bank';
           } else {
-            console.log('view is: extras');
             this.view = 'extras';
           }
 
@@ -111,14 +100,12 @@ export class WalletSettingsCashComponent implements OnInit {
         .catch(e => {
           this.error = e.message;
           this.view = 'error';
-          console.log('view is: error');
           this.detectChanges();
         });
     }
     this.inProgress = false;
     this.detectChanges();
     if (this.init && previousView !== this.view && this.view !== 'error') {
-      console.log('**Event Emitter: accountChanged');
       this.accountChanged.emit();
     }
   }

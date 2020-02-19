@@ -79,7 +79,6 @@
                     *ngIf="activeCurrencyId === 'tokens'"
                   ></m-walletTransactions--tokens>
                   <m-walletTransactions--cash
-                    [cashWallet]="wallet.cash"
                     *ngIf="activeCurrencyId === 'cash'"
                     [noAccount]="wallet.cash.address === null"
                   ></m-walletTransactions--cash>

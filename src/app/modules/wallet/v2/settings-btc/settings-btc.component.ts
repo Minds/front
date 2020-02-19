@@ -59,7 +59,7 @@ export class WalletSettingsBTCComponent implements OnInit {
   }
 
   validateAddressFormat(control: AbstractControl) {
-    // This allows for some false positives bc bech32 format allows for longer length
+    // This allows for some false positives because bech32 format allows for longer length
     // but will catch some negatives so is better than nothing
     if (
       control.value.length &&
@@ -84,7 +84,6 @@ export class WalletSettingsBTCComponent implements OnInit {
       this.currentAddress = this.addressInput.value;
       this.showForm = false;
     } catch (e) {
-      // TODOOJM get rid of form toast
       this.formToastService.error(e);
       console.error(e);
     } finally {

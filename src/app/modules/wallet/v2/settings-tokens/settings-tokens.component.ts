@@ -88,11 +88,6 @@ export class WalletSettingsTokensComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    //TODOOJM remove
-    console.log(
-      '*** tksettings-- session.user.rewards:',
-      this.session.getLoggedInUser().rewards
-    );
     this.form = new FormGroup({
       addressInput: new FormControl('', {
         validators: [Validators.required, this.validateAddressFormat],

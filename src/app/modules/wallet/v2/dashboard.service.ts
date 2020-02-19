@@ -224,7 +224,6 @@ export class WalletDashboardService {
 
         this.wallet.cash.stripeDetails = this.stripeDetails;
         account = { ...account, ...this.stripeDetails };
-        console.log(account);
         return account;
       } catch (e) {
         console.error(e);
@@ -237,28 +236,14 @@ export class WalletDashboardService {
   }
 
   async createStripeAccount(form) {
-    console.log('~~~service: createStripeAccount');
-
     this.client
       .put('api/v2/wallet/usd/account', form)
       .then((response: any) => {
-        console.log('~~~service: createStripeAccount: response', response);
         return response;
       })
       .catch(e => {
         console.error(e.message);
       });
-
-    // try {
-    //   const response = <any>(
-    //     await this.client.put('api/v2/wallet/usd/account', form)
-    //   );
-    //   console.log('~~~service: createStripeAccount: response', response);
-    //   return response;
-    // } catch (e) {
-    //   console.error(e);
-    //   return e;
-    // }
   }
 
   async addStripeBank(form) {

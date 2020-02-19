@@ -93,7 +93,6 @@ export class WalletCashBankFormComponent implements OnInit {
     this.walletService
       .addStripeBank(this.form.value)
       .then((response: any) => {
-        console.log('addBank response', response);
         this.editing = false;
 
         if (response.status !== 'error') {
@@ -137,6 +136,7 @@ export class WalletCashBankFormComponent implements OnInit {
     this.detectChanges();
   }
 
+  // DISABLED b/c 'remove' button makes it redundant
   // async leaveMonetization() {
   //   this.showModal = false;
   //   this.inProgress = true;
