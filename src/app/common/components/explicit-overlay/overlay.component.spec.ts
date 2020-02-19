@@ -5,7 +5,7 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Storage } from '../../../services/storage';
 import { Router } from '@angular/router';
 import { storageMock } from '../../../../tests/storage-mock.spec';
-import { ConfigsService } from '../../../common/services/configs.service';
+import { ConfigsService } from '../../services/configs.service';
 import { MockService } from '../../../utils/mock';
 
 let routerMock = new (function() {
@@ -55,7 +55,7 @@ describe('OverlayComponent', () => {
   });
 
   it('should not show overlay when mature visibility is set', () => {
-    comp.channel = {
+    comp.entity = {
       mature_visibility: true,
     };
     comp.showOverlay();
@@ -63,8 +63,8 @@ describe('OverlayComponent', () => {
     expect(comp.hidden).toBeTruthy();
   });
 
-  it('should overlay when channel is mature', () => {
-    comp._channel = {
+  it('should overlay when entity is mature', () => {
+    comp._entity = {
       is_mature: true,
     };
     comp.showOverlay();
@@ -72,8 +72,8 @@ describe('OverlayComponent', () => {
     expect(comp.hidden).toBeFalsy();
   });
 
-  it('should overlay when channel is nsfw for one reason', () => {
-    comp._channel = {
+  it('should overlay when entity is nsfw for one reason', () => {
+    comp._entity = {
       nsfw: [1],
     };
     comp.showOverlay();
@@ -81,8 +81,8 @@ describe('OverlayComponent', () => {
     expect(comp.hidden).toBeFalsy();
   });
 
-  it('should overlay when channel is nsfw for multiple reason', () => {
-    comp._channel = {
+  it('should overlay when entity is nsfw for multiple reason', () => {
+    comp._entity = {
       nsfw: [1, 2, 3],
     };
     comp.showOverlay();
@@ -90,8 +90,44 @@ describe('OverlayComponent', () => {
     expect(comp.hidden).toBeFalsy();
   });
 
-  it('should overlay not show overlay if channel is not nsfw, mature and no mature_visibility', () => {
-    comp._channel = {
+  it('should overlay when entity has nsfw_lock for one reason', () => {
+    comp._entity = {
+      nsfw_lock: [1],
+    };
+    comp.showOverlay();
+    fixture.detectChanges();
+    expect(comp.hidden).toBeFalsy();
+  });
+
+  it('should overlay when entity has nsfw_lock for multiple reasons', () => {
+    comp._entity = {
+      nsfw_lock: [1, 2, 3],
+    };
+    comp.showOverlay();
+    fixture.detectChanges();
+    expect(comp.hidden).toBeFalsy();
+  });
+
+  it('should have type `channel` when entity is a user', () => {
+    comp.entity = {
+      type: 'user',
+    };
+    comp.showOverlay();
+    fixture.detectChanges();
+    expect(comp.type).toBe('channel');
+  });
+
+  it('should have type `group` when entity is a group', () => {
+    comp.entity = {
+      type: 'group',
+    };
+    comp.showOverlay();
+    fixture.detectChanges();
+    expect(comp.type).toBe('group');
+  });
+
+  it('should overlay not show overlay if entity is not nsfw, mature and no mature_visibility', () => {
+    comp._entity = {
       mature_visibility: false,
       is_mature: false,
       nsfw: [],
@@ -102,7 +138,7 @@ describe('OverlayComponent', () => {
   });
 
   it('should not register undefined values as a false positive, and show the overlay', () => {
-    comp._channel = {
+    comp._entity = {
       mature_visibility: undefined,
       is_mature: undefined,
       nsfw: undefined,
