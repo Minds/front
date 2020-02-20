@@ -27,6 +27,7 @@ export class SettingsGeneralComponent {
   mature: boolean = false;
   enabled_mails: boolean = true;
   toaster_notifications: boolean = true;
+  show_share_buttons: boolean = true;
 
   password: string;
   password1: string;
@@ -102,6 +103,7 @@ export class SettingsGeneralComponent {
       this.selectedCategories = response.channel.categories || [];
       this.openSessions = response.channel.open_sessions || 1;
       this.toaster_notifications = response.channel.toaster_notifications;
+      this.show_share_buttons = !response.channel.hide_share_buttons;
 
       this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
 
@@ -158,6 +160,7 @@ export class SettingsGeneralComponent {
         language: this.language,
         categories: this.selectedCategories,
         toaster_notifications: this.toaster_notifications,
+        hide_share_buttons: !this.show_share_buttons,
       })
       .then((response: any) => {
         this.changed = false;
