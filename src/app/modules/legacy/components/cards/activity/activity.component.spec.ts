@@ -8,6 +8,8 @@ import {
   Input,
   Output,
   NO_ERRORS_SCHEMA,
+  Pipe,
+  PipeTransform,
 } from '@angular/core';
 
 import { Activity } from './activity';
@@ -52,6 +54,7 @@ import { clientMetaServiceMock } from '../../../../../../tests/client-meta-servi
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
 import { SiteService } from '../../../../../common/services/site.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { TagsPipeMock } from '../../../../../mocks/pipes/tagsPipe.mock';
 
 /* tslint:disable */
 // START MOCKS
@@ -416,7 +419,7 @@ describe('Activity', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        TagsPipe,
+        TagsPipeMock,
         DomainPipe,
         AbbrPipe,
         ExcerptPipe,
