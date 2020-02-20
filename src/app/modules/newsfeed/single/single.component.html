@@ -47,5 +47,6 @@
   [url]="siteUrl + 'newsfeed/' + activity?.guid"
   [title]="activity?.title || ''"
   [embed]="activity"
+  *ngIf="!session.getLoggedInUser().hide_share_buttons"
 >
 </m-social-icons>

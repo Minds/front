@@ -154,7 +154,12 @@
   </div>
 </ng-container>
 
-<m-social-icons [url]="blog.perma_url" [title]="blog.title"> </m-social-icons>
+<m-social-icons
+  [url]="blog.perma_url"
+  [title]="blog.title"
+  *ngIf="!session.getLoggedInUser().hide_share_buttons"
+>
+</m-social-icons>
 
 <m-modal-confirm
   *ngIf="deleteToggle"
