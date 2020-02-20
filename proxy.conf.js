@@ -17,6 +17,17 @@ const PROXY_CONFIG = [
     },
     secure: false,
     changeOrigin: true,
+    cookieDomainRewrite: '',
+    onProxyRes: (proxyRes, req, res) => {
+      const sc = proxyRes.headers['set-cookie'];
+      if (Array.isArray(sc)) {
+        proxyRes.headers['set-cookie'] = sc.map(sc => {
+          return sc.split(';')
+            .filter(v => v.trim().toLowerCase() !== 'secure')
+            .join('; ')
+        });
+      }
+    },
     withCredentials: true,
     logLevel: process.env['PROXY_LOG_LEVEL'] || 'info',
   }
