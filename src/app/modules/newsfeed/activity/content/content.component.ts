@@ -21,6 +21,7 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../media/modal/modal.component';
 import { ActivityRemindComponent } from '../remind/remind.component';
 import { delay } from 'q';
+import isMobile from '../../../../helpers/is-mobile';
 
 @Component({
   selector: 'm-activity__content',
@@ -208,6 +209,13 @@ export class ActivityContentComponent {
   }
 
   onModalRequested(event: MouseEvent) {
+    const isNotTablet = Math.min(screen.width, screen.height) < 768;
+    const tooSmallForModal: boolean = screen.width < 768;
+
+    if ((isMobile() && isNotTablet) || tooSmallForModal) {
+      return;
+    }
+
     if (event) {
       event.preventDefault();
       event.stopPropagation();
