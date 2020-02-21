@@ -173,6 +173,7 @@ export class ActivityService {
   private patchForeignEntity(entity): ActivityEntity {
     switch (entity.subtype) {
       case 'image':
+        entity.guid = entity.entity_guid;
         entity.custom_type = 'batch';
         entity.custom_data = [
           {
