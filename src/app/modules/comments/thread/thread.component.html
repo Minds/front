@@ -137,7 +137,7 @@
 </span>
 
 <m-comment__poster
-  *ngIf="level === 0 && !inProgress && activityService.allowComment$ | async"
+  *ngIf="activityService.allowComment$ | async"
   [guid]="guid"
   [parent]="parent"
   [entity]="entity"
