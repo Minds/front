@@ -35,7 +35,7 @@ import {
 import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
-import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
+import { TopbarService } from '../../common/layout/topbar.service';
 import { MockService } from '../../utils/mock';
 
 @Component({
@@ -90,7 +90,7 @@ describe('LoginComponent', () => {
         CookieService,
         { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
         { provide: FeaturesService, useValue: featuresServiceMock },
-        { provide: V2TopbarService, useValue: MockService(V2TopbarService) },
+        { provide: TopbarService, useValue: MockService(TopbarService) },
       ],
     }).compileComponents();
   }));
@@ -101,6 +101,7 @@ describe('LoginComponent', () => {
     jasmine.clock().install();
 
     featuresServiceMock.mock('register_pages-december-2019', false);
+    featuresServiceMock.mock('navigation', false);
 
     fixture = TestBed.createComponent(LoginComponent);
 

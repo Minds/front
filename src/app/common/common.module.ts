@@ -129,7 +129,6 @@ import { FormDescriptorComponent } from './components/form-descriptor/form-descr
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
 import { PagesService } from './services/pages.service';
-import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
@@ -144,6 +143,9 @@ import { AttachmentPasteDirective } from './directives/paste/attachment-paste.di
 import { TagsService } from './services/tags.service';
 import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
 import { RedirectService } from './services/redirect.service';
+import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
+import { SidebarNavigationService } from './layout/sidebar/navigation.service';
+import { TopbarService } from './layout/topbar.service';
 
 const routes: Routes = [
   {
@@ -174,6 +176,7 @@ const routes: Routes = [
 
     // V2 Layout
     V2TopbarComponent,
+    V3TopbarComponent,
     UserMenuComponent,
 
     //
@@ -281,6 +284,9 @@ const routes: Routes = [
     // V2 Layout
     V2TopbarComponent,
     UserMenuComponent,
+
+    // V3 Layout
+    V3TopbarComponent,
 
     //
 
@@ -431,7 +437,8 @@ const routes: Routes = [
     },
     MetaService,
     MediaProxyService,
-    V2TopbarService,
+    SidebarNavigationService,
+    TopbarService,
     {
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,

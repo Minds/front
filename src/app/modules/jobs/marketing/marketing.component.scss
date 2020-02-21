@@ -1,45 +1,49 @@
-.m-jobs--marketing {
-  .m-marketing--hero {
-    padding: 24px 0 !important;
+m-jobs--marketing {
+  grid-area: content / span 2;
 
-    .m-marketing--hero--inner {
-      padding-top: 52px;
-      padding-bottom: 52px;
-      flex-wrap: wrap;
+  .m-jobs--marketing {
+    .m-marketing--hero {
+      padding: 24px 0 !important;
+
+      .m-marketing--hero--inner {
+        padding-top: 52px;
+        padding-bottom: 52px;
+        flex-wrap: wrap;
+      }
     }
-  }
 
-  .m-marketing--section--subsection--first
-    .m-marketing--section--subsection-container {
-    padding-top: 32px !important;
-  }
-
-  .m-marketing--hero--actions img {
-    max-height: 250px;
-  }
-
-  @media screen and (max-width: 662px) {
-    .m-marketing--hero--actions {
-      flex-basis: 100% !important;
-      margin-top: 16px;
+    .m-marketing--section--subsection--first
+      .m-marketing--section--subsection-container {
+      padding-top: 32px !important;
     }
-  }
 
-  @media screen and (min-width: 500px) {
-    .m-marketing--hero--slogans h2 {
-      font-size: 62px !important;
-      line-height: 1.25;
+    .m-marketing--hero--actions img {
+      max-height: 250px;
     }
-  }
 
-  .m-job--marketing--list {
-    padding-left: 24px;
+    @media screen and (max-width: 662px) {
+      .m-marketing--hero--actions {
+        flex-basis: 100% !important;
+        margin-top: 16px;
+      }
+    }
 
-    li {
-      font-size: 16px;
-      line-height: 2.5;
-      @include m-theme() {
-        color: themed($m-grey-600);
+    @media screen and (min-width: 500px) {
+      .m-marketing--hero--slogans h2 {
+        font-size: 62px !important;
+        line-height: 1.25;
+      }
+    }
+
+    .m-job--marketing--list {
+      padding-left: 24px;
+
+      li {
+        font-size: 16px;
+        line-height: 2.5;
+        @include m-theme() {
+          color: themed($m-grey-600);
+        }
       }
     }
   }

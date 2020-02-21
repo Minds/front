@@ -220,7 +220,7 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: ThemeService,
     useFactory: ThemeService._,
-    deps: [RendererFactory2, Client, Session, Storage],
+    deps: [RendererFactory2, Client, Session, Storage, PLATFORM_ID],
   },
   DiagnosticsService,
   AuthService,

@@ -5,9 +5,14 @@ m-register {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  grid-area: content / span 2;
 
   &.m-register__newDesign {
     margin-top: -52px;
+
+    &.m-register__newNavigation {
+      margin-top: -75px;
+    }
 
     &.m-register__iosFallback {
       .m-grid {

@@ -5,6 +5,7 @@
   [class.m-notifications--topbar-toggle--icon--active]="service.count > 0"
 >
   <i class="material-icons">notifications</i>
+  <span *ngIf="newNavigation && service.count > 0">{{ service.count }}</span>
 </a>
 
 <div

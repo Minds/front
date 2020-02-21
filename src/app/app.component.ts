@@ -4,6 +4,8 @@ import {
   PLATFORM_ID,
   Inject,
   HostBinding,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -36,7 +38,7 @@ import { filter, map, mergeMap, first } from 'rxjs/operators';
   selector: 'm-app',
   templateUrl: 'app.component.html',
 })
-export class Minds {
+export class Minds implements OnInit, OnDestroy {
   name: string;
 
   ready: boolean = false;
@@ -77,6 +79,7 @@ export class Minds {
     private socketsService: SocketsService
   ) {
     this.name = 'Minds';
+
     if (this.site.isProDomain) {
       this.router.resetConfig(PRO_DOMAIN_ROUTES);
     }
