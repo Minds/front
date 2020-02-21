@@ -38,6 +38,7 @@ import { BlogEdit } from '../blogs/edit/edit';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { ModalsModule } from '../modals/modals.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { ProRedirectComponent } from './redirect.component';
 
 const routes: Routes = [
   {
@@ -134,6 +135,10 @@ export const PRO_DOMAIN_ROUTES = [
         path: ':type',
         component: ProChannelListComponent,
       },
+      {
+        path: 'groups/profile/:guid',
+        component: ProRedirectComponent,
+      },
     ],
   },
 ];
@@ -171,6 +176,7 @@ export const PRO_DOMAIN_ROUTES = [
     ProGroupTileComponent,
     ProUnsubscribeModalComponent,
     ProHamburgerMenu,
+    ProRedirectComponent,
     SubscribeButtonComponent,
     SearchBoxComponent,
   ],
@@ -179,6 +185,7 @@ export const PRO_DOMAIN_ROUTES = [
     MediaModalComponent,
     ProUnsubscribeModalComponent,
     BlogView,
+    ProRedirectComponent,
   ],
 })
 export class ProModule {}
