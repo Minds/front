@@ -18,7 +18,9 @@
           [src]="cdnAssetsUrl + 'icon/' + user.guid + '/small/' + user.icontime"
           alt=""
         />
-        @{{ user.username }}
+        <ng-container *ngIf="layoutMode === 'desktop'">
+          @{{ user.username }}
+        </ng-container>
       </a>
     </div>
     <ul>

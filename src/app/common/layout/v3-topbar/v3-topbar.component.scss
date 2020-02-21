@@ -368,9 +368,14 @@ m-v3topbar {
   }
 }
 
-//.m-v3Topbar__userMenu {
-//  min-width: 80px;
-//}
+.m-v3Topbar__userMenu {
+  display: flex;
+  align-items: center;
+
+  > * {
+    margin: 0 4px;
+  }
+}
 
 .m-v3TopbarContainer__loginWrapper {
   @media screen and (max-width: 480px) {
