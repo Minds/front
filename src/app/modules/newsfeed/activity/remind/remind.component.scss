@@ -1,0 +1,20 @@
+m-activity__remind {
+  display: block;
+  margin: auto;
+  border-radius: $m-borderRadius;
+  box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.05);
+  width: 100%;
+
+  @include m-theme() {
+    background: themed($m-bgColor--primary);
+    border: 1px solid themed($m-borderColor--primary);
+  }
+}
+
+.m-activity--fixedHeight {
+  m-activity__remind {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+}

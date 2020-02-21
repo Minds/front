@@ -1,0 +1,19 @@
+.m-commentsEntityOutlet__expand {
+  padding: $minds-padding $minds-padding $minds-padding * 2;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: center;
+  width: 100%;
+  @include m-theme() {
+    color: themed($m-blue);
+  }
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+m-comments__entityOutlet {
+  .m-comment--poster {
+    padding-bottom: 0;
+  }
+}

@@ -30,7 +30,7 @@ m-pro--channel {
   }
 
   minds-textarea {
-    background-color: var(--m-pro--transparent-background-color) !important;
+    // background-color: var(--m-pro--transparent-background-color) !important;
   }
 
   .m-blog-view m-blog-view.m-blog {
@@ -95,7 +95,7 @@ m-pro--channel {
 }
 
 .m-pro__channel {
-  max-width: 1296px;
+  max-width: 1382px;
   margin: 0 auto;
   display: grid;
   grid-template-rows: 100px 1fr 100px;
@@ -172,7 +172,7 @@ m-pro--channel {
   .m-proChannel__body {
     grid-row: 2 / span 1;
     grid-column: 1 / span 12;
-    padding: 0;
+    padding: 0 16px;
 
     @media screen and (max-width: $max-mobile) {
       grid-row: 2 / span 2;
@@ -216,7 +216,7 @@ m-pro--channel {
     font-weight: bold;
   }
 
-  .minds-avatar {
+  .m-proChannel__topbar .minds-avatar {
     margin: 0;
     width: 40px;
     height: 40px;

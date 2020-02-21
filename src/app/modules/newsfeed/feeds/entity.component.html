@@ -7,14 +7,22 @@
   </ng-container>
 
   <ng-container *ngSwitchDefault>
-    <minds-activity
-      [object]="entity"
-      [boostToggle]="entity.boostToggle"
-      (delete)="delete(entity)"
-      [showRatingToggle]="true"
-      [slot]="slot"
-      class="mdl-card m-border item"
-      [attr.data-minds-activity-guid]="entity.guid"
-    ></minds-activity>
+    <m-activity
+      [entity]="entity"
+      [displayOptions]="displayOptions"
+      *ngIf="displayOptions.v2 === true; else v1"
+    >
+    </m-activity>
+    <ng-template #v1>
+      <minds-activity
+        [object]="entity"
+        [boostToggle]="entity.boostToggle"
+        (delete)="delete(entity)"
+        [showRatingToggle]="true"
+        [slot]="slot"
+        class="mdl-card m-border item"
+        [attr.data-minds-activity-guid]="entity.guid"
+      ></minds-activity>
+    </ng-template>
   </ng-container>
 </ng-container>

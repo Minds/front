@@ -4,7 +4,7 @@
 >
   <div class="minds-avatar">
     <a [routerLink]="['/', session.getLoggedInUser().username]">
-      <img [src]="getAvatar()" class="mdl-shadow--2dp" />
+      <img [src]="getAvatar()" class="m-border" />
     </a>
   </div>
 
@@ -32,7 +32,7 @@
             (keyup)="getPostPreview(content)"
             (keypress)="keypress($event)"
             [placeholder]="
-              conversation ? 'Enter your message' : 'Enter your comment'
+              conversation ? 'Enter your message' : 'Write your comment'
             "
             (filePaste)="uploadAttachment($event)"
             mTextInputAutocomplete
@@ -61,7 +61,7 @@
           class="attachment-button"
           [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
         >
-          <i class="material-icons">attachment</i>
+          <i class="material-icons">image</i>
           <input
             type="file"
             id="file"
@@ -77,6 +77,7 @@
           (click)="attachment.toggleMature()"
           title="Mature content"
           i18n-title="@@M__COMMON__MATURE_CONTENT"
+          *ngIf="content.length || attachment.hasFile()"
         >
           <i class="material-icons">explicit</i>
         </a>
@@ -85,6 +86,7 @@
           class="m-post-button"
           (click)="post($event)"
           [ngClass]="{ 'm-button-disabled': !postEnabled() }"
+          *ngIf="content.length || attachment.hasFile()"
         >
           <i class="material-icons">send</i>
         </a>

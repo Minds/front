@@ -4,7 +4,7 @@ import {
   isPlatformServer,
   Location,
 } from '@angular/common';
-import { RouterModule, Router, Routes } from '@angular/router';
+import { RouterModule, Router, Routes, ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';

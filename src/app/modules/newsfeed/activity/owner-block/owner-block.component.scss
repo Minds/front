@@ -1,0 +1,72 @@
+m-activity__ownerBlock {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: $activity-padding-lr;
+  padding-right: $activity-padding-lr / 2;
+  box-sizing: border-box;
+}
+
+.m-activityOwnerBlock__avatar {
+  align-self: center;
+  padding-right: $minds-padding;
+  img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+}
+
+.m-activityOwnerBlock__body {
+  flex: 1;
+  align-self: center;
+
+  > a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.m-activityOwnerBlock__right {
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.m-activityOwnerBlock__displayName {
+  display: block;
+  font-size: 16px;
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.m-activityOwnerBlock__remindIcon {
+  font-size: 18px;
+  margin-right: $minds-margin / 2;
+  vertical-align: middle;
+  @include m-theme() {
+    color: themed($m-link);
+  }
+}
+
+.m-activityOwnerBlock__permalink {
+  font-size: 14px;
+  line-height: 17px;
+  font-weight: normal;
+
+  @include m-theme() {
+    color: themed($m-textColor--tertiary);
+  }
+}

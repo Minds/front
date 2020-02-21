@@ -1,0 +1,107 @@
+<div
+  #messageEl
+  m-read-more
+  class="m-activityContent__message"
+  [class.m-activityContent__message--remind]="entity.remind_object"
+  [class.m-activityContent__message--isTextOnly]="isTextOnly"
+  [class.m-activityContent__message--short]="message.length <= 300"
+  [maxHeightAllowed]="isTextOnly ? maxFixedHeightContent : 320"
+  *ngIf="message"
+>
+  <span [innerHtml]="message | tags"></span>
+  <m-read-more--button [v2]="true"></m-read-more--button>
+
+  <m-translate
+    *mIfBrowser
+    [open]="translateToggle"
+    [entity]="entity"
+    [translateEvent]="translateEvent"
+    (onTranslateInit)="propagateTranslation($event)"
+    (onTranslate)="translateToggle = false"
+    (onTranslateError)="translateToggle = false"
+    #translate
+  ></m-translate>
+</div>
+
+<!-- Rich content -->
+<div class="m-activityContent__media--richEmbed" *ngIf="isRichEmbed">
+  <div class="m-activityContent__fixedHeightSpacer"></div>
+  <minds-rich-embed
+    (mediaModalRequested)="onModalRequested($event)"
+    [src]="entity"
+    [maxheight]="320"
+  >
+  </minds-rich-embed>
+  <div
+    class="m-activityContent__fixedHeightSpacer"
+    *ngIf="!mediaDescription"
+  ></div>
+</div>
+
+<div class="m-activityContent__media--video" #mediaEl *ngIf="isVideo">
+  <div class="m-activityContent__fixedHeightSpacer"></div>
+  <m-videoPlayer
+    [guid]="videoGuid"
+    [shouldPlayInModal]="true"
+    [autoplay]="false"
+    (mediaModalRequested)="onModalRequested($event)"
+    [style.height]="videoHeight"
+  ></m-videoPlayer>
+  <div class="m-activityContent__fixedHeightSpacer"></div>
+</div>
+
+<div class="m-activityContent__media--image" *ngIf="isImage">
+  <a
+    class="m-activityContentMedia__link"
+    [routerLink]="['/media', imageGuid]"
+    (click)="onModalRequested($event)"
+  >
+    <img
+      [src]="imageUrl"
+      [style.height]="imageHeight"
+      (error)="onImageError($event)"
+      (click)="onModalRequested($event)"
+    />
+  </a>
+</div>
+
+<div
+  #mediaDescriptionEl
+  class="m-activityContent__mediaDescription"
+  m-read-more
+  [maxHeightAllowed]="service.displayOptions.fixedHeight ? 80 : 320"
+  *ngIf="mediaDescription"
+>
+  <p [innerHtml]="mediaDescription | tags"></p>
+  <m-read-more--button [v2]="true"></m-read-more--button>
+</div>
+
+<!-- Translation -->
+<!-- <div
+  *ngIf="
+    translate &&
+    translate.translation &&
+    translate.translation.translated &&
+    translate.translation.title
+  "
+  class="m-translation-wrapper"
+>
+  <div class="" [hidden]="!translate.translation.title">
+    <span [innerHtml]="translate.translation.title | tags"></span>
+  </div>
+</div> -->
+<!-- End translation -->
+
+<div
+  class="m-activityContent__remind"
+  #remindContainerEl
+  *ngIf="service.isRemind$ | async"
+>
+  <m-activity__remind
+    [entity]="service.entity$ | async"
+    [style.width]="remindWidth"
+    [style.height]="remindHeight"
+    [style.max-height]="remindHeight"
+  >
+  </m-activity__remind>
+</div>
