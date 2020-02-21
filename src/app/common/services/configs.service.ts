@@ -3,7 +3,7 @@ import { Injectable, Inject, Optional, Injector } from '@angular/core';
 import { RedirectService } from './redirect.service';
 import { Location } from '@angular/common';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ConfigsService {
   private configs = {};
 

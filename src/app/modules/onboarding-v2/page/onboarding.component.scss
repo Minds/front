@@ -80,14 +80,14 @@ m-onboarding {
     max-width: 692px;
     margin: 0 auto;
 
-    @include m-theme() {
-      background-color: themed($m-white);
-    }
-
     .m-onboarding__form {
       display: block;
       padding: 55px 70px 80px;
       color: #9b9b9b;
+
+      @include m-theme() {
+        background-color: themed($m-white);
+      }
 
       &::before {
         content: '';
@@ -218,6 +218,17 @@ m-onboarding {
 
           @media screen and (min-width: $m-grid-max-tablet) {
             content: '';
+          }
+        }
+
+        h3 {
+          font-size: 20px;
+          line-height: 35px;
+          font-weight: 500;
+          margin-top: 0;
+
+          @include m-theme() {
+            color: themed($m-grey-800);
           }
         }
 

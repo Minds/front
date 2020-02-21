@@ -13,7 +13,7 @@ module.exports = function (config) {
       require('@angular-devkit/build-angular/plugins/karma'),
       require('karma-mocha-reporter'),
     ],
-   // webpack: { node: { fs: 'empty', } },
+    // webpack: { node: { fs: 'empty', } },
     client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },

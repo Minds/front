@@ -118,9 +118,6 @@ import { MarketingFooterComponent } from './components/marketing/footer.componen
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
-import { ChartV2Component } from './components/chart-v2/chart-v2.component';
-//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
-import { PlotlyModule } from 'angular-plotly.js';
 import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
 import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
@@ -143,6 +140,8 @@ import { MediaProxyService } from './services/media-proxy.service';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
+import { TagsService } from './services/tags.service';
+import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
 import { RedirectService } from './services/redirect.service';
 import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
 import { SidebarNavigationService } from './layout/sidebar/navigation.service';
@@ -162,7 +161,6 @@ const routes: Routes = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    PlotlyModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     RouterModule.forChild(routes),
@@ -263,7 +261,6 @@ const routes: Routes = [
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
-    ChartV2Component,
     PageLayoutComponent,
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
@@ -275,6 +272,7 @@ const routes: Routes = [
     EmailConfirmationComponent,
     DateDropdownsComponent,
     FormInputCheckboxComponent,
+    ExplicitOverlayComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -370,7 +368,6 @@ const routes: Routes = [
     MarketingComponent,
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
-    ChartV2Component,
     PageLayoutComponent,
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
@@ -381,6 +378,7 @@ const routes: Routes = [
     EmailConfirmationComponent,
     DateDropdownsComponent,
     FormInputCheckboxComponent,
+    ExplicitOverlayComponent,
   ],
   providers: [
     SiteService,
@@ -437,17 +435,6 @@ const routes: Routes = [
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
-    {
-      provide: ConfigsService,
-      useFactory: (client, injector, redirect, location) =>
-        new ConfigsService(
-          client,
-          injector.get('QUERY_STRING'),
-          redirect,
-          location
-        ),
-      deps: [Client, Injector, RedirectService, Location],
-    },
     MetaService,
     MediaProxyService,
     SidebarNavigationService,
@@ -457,6 +444,7 @@ const routes: Routes = [
       useFactory: SidebarMarkersService._,
     },
     HorizontalFeedService,
+    TagsService,
   ],
   entryComponents: [
     NotificationsToasterComponent,

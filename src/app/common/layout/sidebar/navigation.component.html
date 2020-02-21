@@ -11,6 +11,16 @@
 
       <i class="material-icons" (click)="toggle()">close</i>
     </div>
+
+    <div class="m-sidebarNavigation__user" *ngIf="user">
+      <a [routerLink]="['/' + user.username]" (click)="toggle()">
+        <img
+          [src]="cdnAssetsUrl + 'icon/' + user.guid + '/small/' + user.icontime"
+          alt=""
+        />
+        @{{ user.username }}
+      </a>
+    </div>
     <ul>
       <li>
         <a
@@ -21,7 +31,7 @@
           (click)="toggle()"
         >
           <m-tooltip
-            icon="check"
+            icon="home"
             i18n="@@COMMON__NEWSFEED"
             [enabled]="layoutMode === 'tablet'"
           >
@@ -72,7 +82,7 @@
           (click)="toggle()"
         >
           <m-tooltip
-            icon="check"
+            iconSrc="assets/icons/wire.svg"
             i18n="@@COMMON__WALLET"
             [enabled]="layoutMode === 'tablet'"
           >
@@ -92,37 +102,12 @@
       <li>
         <a
           class="m-sidebar--navigation--item"
-          [routerLink]="['/' + user.username]"
-          [routerLinkActive]="'m-sidebar--navigation--item-active'"
-          (click)="toggle()"
-        >
-          <m-tooltip
-            icon="check"
-            i18n="@@COMMON__PROFILE"
-            [enabled]="layoutMode === 'tablet'"
-          >
-            Profile
-          </m-tooltip>
-
-          <span
-            class="m-sidebar--navigation--text"
-            *ngIf="layoutMode !== 'tablet'"
-            i18n
-          >
-            Profile
-          </span>
-        </a>
-      </li>
-
-      <li>
-        <a
-          class="m-sidebar--navigation--item"
           [routerLink]="['/analytics']"
           [routerLinkActive]="'m-sidebar--navigation--item-active'"
           (click)="toggle()"
         >
           <m-tooltip
-            icon="check"
+            icon="show_chart"
             i18n="@@COMMON__ANALYTICS"
             [enabled]="layoutMode === 'tablet'"
           >
@@ -146,7 +131,7 @@
           (click)="toggle()"
         >
           <m-tooltip
-            icon="check"
+            icon="more_horiz"
             i18n="@@COMMON__SETTINGS"
             [enabled]="layoutMode === 'tablet'"
           >

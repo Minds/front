@@ -1,9 +1,10 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
 import { Session } from '../../../../services/session';
 import { MindsUser } from '../../../../interfaces/entities';
-import { Client } from '../../../../services/api';
+import { Client, Upload } from '../../../../services/api';
 import { Router } from '@angular/router';
 import { PhoneVerificationComponent } from './phone-input/input.component';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-onboarding__infoStep',
@@ -34,7 +35,9 @@ export class InfoStepComponent {
   constructor(
     private session: Session,
     private client: Client,
-    private router: Router
+    private upload: Upload,
+    private router: Router,
+    private configs: ConfigsService
   ) {
     this.user = session.getLoggedInUser();
 
@@ -104,6 +107,16 @@ export class InfoStepComponent {
     return true;
   }
 
+  updateUser(prop: string, value: any) {
+    const user = this.configs.get('user');
+    user[prop] = value;
+
+    const clonedUser = Object.assign({}, user);
+    this.configs.set('user', clonedUser);
+
+    this.session.userEmitter.next(clonedUser);
+  }
+
   selectedDateChange(date: string) {
     this.date = date;
     this.dateOfBirthChanged = true;
@@ -117,12 +130,12 @@ export class InfoStepComponent {
   }
 
   skip() {
-    this.router.navigate(['/newsfeed']);
+    this.router.navigate(['/onboarding', 'avatar']);
   }
 
   continue() {
     if (this.saveData()) {
-      this.router.navigate(['/newsfeed']);
+      this.router.navigate(['/onboarding', 'avatar']);
     }
   }
 

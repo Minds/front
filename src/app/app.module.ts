@@ -18,16 +18,7 @@ import { CaptchaModule } from './modules/captcha/captcha.module';
 
 import { Minds } from './app.component';
 
-import {
-  MINDS_APP_ROUTING_DECLARATIONS,
-  MindsAppRoutes,
-  MindsAppRoutingProviders,
-} from './router/app';
-
-import { MINDS_DECLARATIONS } from './declarations';
-import { MINDS_PLUGIN_DECLARATIONS } from './plugin-declarations';
 import { MINDS_PROVIDERS } from './services/providers';
-import { MINDS_PLUGIN_PROVIDERS } from './plugin-providers';
 
 import { CommonModule } from './common/common.module';
 import { MonetizationModule } from './modules/monetization/monetization.module';
@@ -71,7 +62,6 @@ import { MobileModule } from './modules/mobile/mobile.module';
 import { IssuesModule } from './modules/issues/issues.module';
 import { CanaryModule } from './modules/canary/canary.module';
 import { HttpClientModule } from '@angular/common/http';
-import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { ProModule } from './modules/pro/pro.module';
 import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { UpgradesModule } from './modules/upgrades/upgrades.module';
@@ -83,6 +73,8 @@ import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
 import { TopbarWrapperComponent } from './page/topbar.component';
 import { PageComponent } from './page/page.component';
+import { AppRoutingModule } from './app-routing.module';
+import { Pages } from './controllers/pages/pages';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -96,14 +88,7 @@ export class SentryErrorHandler implements ErrorHandler {
 
 @NgModule({
   bootstrap: [Minds],
-  declarations: [
-    Minds,
-    TopbarWrapperComponent,
-    PageComponent,
-    MINDS_APP_ROUTING_DECLARATIONS,
-    MINDS_DECLARATIONS,
-    MINDS_PLUGIN_DECLARATIONS,
-  ],
+  declarations: [Minds, TopbarWrapperComponent, PageComponent, Pages],
   imports: [
     BrowserModule.withServerTransition({ appId: 'm-app' }),
     BrowserTransferStateModule,
@@ -113,14 +98,9 @@ export class SentryErrorHandler implements ErrorHandler {
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(MindsAppRoutes, {
-      // initialNavigation: 'enabled',
-      onSameUrlNavigation: 'reload',
-    }),
     CaptchaModule,
     CommonModule,
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
-    AnalyticsModule,
     WalletModule,
     //CheckoutModule,
     MonetizationModule,
@@ -162,16 +142,15 @@ export class SentryErrorHandler implements ErrorHandler {
     CanaryModule,
     ChannelsModule,
     UpgradesModule,
-    //PlotlyModule,
 
     //last due to :username route
+    AppRoutingModule,
     ChannelContainerModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },
-    MindsAppRoutingProviders,
     MINDS_PROVIDERS,
-    MINDS_PLUGIN_PROVIDERS,
+    ConfigsService,
     {
       provide: APP_INITIALIZER,
       useFactory: configs => () => configs.loadFromRemote(),

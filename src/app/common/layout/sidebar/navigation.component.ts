@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ComponentFactoryResolver,
   HostBinding,
@@ -16,12 +17,13 @@ import { GroupsSidebarMarkersComponent } from '../../../modules/groups/sidebar-m
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { SidebarNavigationService } from './navigation.service';
 import { ConfigsService } from '../../services/configs.service';
+import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
   selector: 'm-sidebar--navigation',
   templateUrl: 'navigation.component.html',
 })
-export class SidebarNavigationComponent implements OnInit {
+export class SidebarNavigationComponent implements OnInit, AfterViewInit {
   readonly cdnAssetsUrl: string;
 
   @ViewChild(DynamicHostDirective, { static: true })

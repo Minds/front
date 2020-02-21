@@ -3,6 +3,12 @@
     <ng-container search>
       <m-search--bar [defaultSizes]="false"></m-search--bar>
     </ng-container>
+
+    <ng-container icons>
+      <m-notifications--topbar-toggle
+        *ngIf="session.isLoggedIn()"
+      ></m-notifications--topbar-toggle>
+    </ng-container>
   </m-v3topbar>
 </ng-container>
 

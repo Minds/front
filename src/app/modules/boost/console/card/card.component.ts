@@ -1,10 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { BoostService } from '../../boost.service';
-import {
-  Reason,
-  rejectionReasons,
-} from '../../../../controllers/admin/boosts/rejection-reasons';
+import { Reason, rejectionReasons } from '../../rejection-reasons';
 
 @Component({
   moduleId: module.id,
