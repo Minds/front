@@ -81,8 +81,8 @@ describe('ChannelComponent', () => {
           template: '',
         }),
         MockComponent({
-          selector: 'm-channel--explicit-overlay',
-          inputs: ['channel'],
+          selector: 'm-explicit-overlay',
+          inputs: ['entity'],
         }),
         MockComponent({
           selector: 'm-sort-selector',

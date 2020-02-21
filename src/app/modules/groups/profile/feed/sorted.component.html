@@ -63,6 +63,8 @@
           (delete)="delete(entity)"
           [slot]="i + 1"
           [attr.data-minds-activity-guid]="entity.guid"
+          [disableBoosting]="group['membership'] === 0"
+          [disableReminding]="group['membership'] === 0"
         >
           <!-- Menu Actions -->
 

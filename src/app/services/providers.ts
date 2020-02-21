@@ -185,17 +185,6 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [Router, Storage, Client],
   },
   {
-    provide: ConfigsService,
-    useFactory: (client, injector, redirect, location) =>
-      new ConfigsService(
-        client,
-        injector.get('QUERY_STRING'),
-        redirect,
-        location
-      ),
-    deps: [Client, Injector, RedirectService, Location],
-  },
-  {
     provide: FeaturesService,
     useFactory: FeaturesService._,
     deps: [Session, Router, ConfigsService],
