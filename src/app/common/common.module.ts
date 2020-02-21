@@ -141,6 +141,8 @@ import { MediaProxyService } from './services/media-proxy.service';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
+import { TagsService } from './services/tags.service';
+import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
 import { RedirectService } from './services/redirect.service';
 
 const routes: Routes = [
@@ -267,6 +269,7 @@ const routes: Routes = [
     EmailConfirmationComponent,
     DateDropdownsComponent,
     FormInputCheckboxComponent,
+    ExplicitOverlayComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -369,6 +372,7 @@ const routes: Routes = [
     EmailConfirmationComponent,
     DateDropdownsComponent,
     FormInputCheckboxComponent,
+    ExplicitOverlayComponent,
   ],
   providers: [
     SiteService,
@@ -425,17 +429,6 @@ const routes: Routes = [
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
-    {
-      provide: ConfigsService,
-      useFactory: (client, injector, redirect, location) =>
-        new ConfigsService(
-          client,
-          injector.get('QUERY_STRING'),
-          redirect,
-          location
-        ),
-      deps: [Client, Injector, RedirectService, Location],
-    },
     MetaService,
     MediaProxyService,
     V2TopbarService,
@@ -444,6 +437,7 @@ const routes: Routes = [
       useFactory: SidebarMarkersService._,
     },
     HorizontalFeedService,
+    TagsService,
   ],
   entryComponents: [
     NotificationsToasterComponent,

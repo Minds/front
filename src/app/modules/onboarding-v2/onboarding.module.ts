@@ -23,6 +23,8 @@ import { OnboardingV2Service } from './service/onboarding.service';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { PhoneVerificationComponent } from './steps/info/phone-input/input.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { AvatarStepComponent } from './steps/avatar/avatar.component';
 
 const routes: Routes = [
   {
@@ -45,6 +47,10 @@ const routes: Routes = [
       {
         path: 'info',
         component: InfoStepComponent,
+      },
+      {
+        path: 'avatar',
+        component: AvatarStepComponent,
       },
       {
         path: 'groups',
@@ -72,6 +78,7 @@ const routes: Routes = [
     MindsFormsModule,
     LegacyModule,
     GroupsModule,
+    ImageCropperModule,
   ],
   exports: [],
   declarations: [
@@ -83,6 +90,7 @@ const routes: Routes = [
     GroupsStepComponent,
     ChannelsStepComponent,
     ChannelListComponent,
+    AvatarStepComponent,
     GroupListComponent,
     PhoneVerificationComponent,
   ],

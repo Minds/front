@@ -14,6 +14,7 @@ export class MetaService {
   private counter: number;
   private sep = ' | ';
   private title: string = '';
+  private ogTitle: string = '';
 
   constructor(
     private titleService: Title,
@@ -33,6 +34,9 @@ export class MetaService {
       : DEFAULT_META_TITLE;
 
     value = this.stripHtml(value);
+
+    // Full title for og:title
+    this.ogTitle = value || defaultTitle;
 
     if (value.length > 60) {
       value = value.substr(0, 57) + '...';
@@ -186,7 +190,7 @@ export class MetaService {
     }
     this.metaService.updateTag({
       name: 'og:title',
-      content: this.title,
+      content: this.ogTitle,
     });
   }
 
