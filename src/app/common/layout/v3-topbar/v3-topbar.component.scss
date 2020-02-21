@@ -47,6 +47,10 @@ m-v3topbar {
       display: flex;
       align-items: center;
       min-width: 0;
+
+      & > * {
+        padding-right: 15px;
+      }
     }
 
     @media screen and(min-width: $m-grid-max-mobile) {
@@ -364,9 +368,9 @@ m-v3topbar {
   }
 }
 
-.m-v3Topbar__userMenu {
-  min-width: 80px;
-}
+//.m-v3Topbar__userMenu {
+//  min-width: 80px;
+//}
 
 .m-v3TopbarContainer__loginWrapper {
   @media screen and (max-width: 480px) {

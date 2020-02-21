@@ -146,6 +146,7 @@ import { RedirectService } from './services/redirect.service';
 import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
 import { SidebarNavigationService } from './layout/sidebar/navigation.service';
 import { TopbarService } from './layout/topbar.service';
+import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
 
 const routes: Routes = [
   {
@@ -178,6 +179,7 @@ const routes: Routes = [
     V2TopbarComponent,
     V3TopbarComponent,
     UserMenuComponent,
+    UserMenuV3Component,
 
     //
 
@@ -287,6 +289,7 @@ const routes: Routes = [
 
     // V3 Layout
     V3TopbarComponent,
+    UserMenuV3Component,
 
     //
 
@@ -386,6 +389,7 @@ const routes: Routes = [
     AttachmentService,
     CookieService,
     PagesService,
+    AttachmentService,
     {
       provide: UpdateMarkersService,
       useFactory: (_http, _session, _sockets) => {
