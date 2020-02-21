@@ -90,7 +90,7 @@ export class Activity implements OnInit {
   element: any;
   visible: boolean = false;
 
-  editing: boolean = false;
+  @Input() editing: boolean = false;
   @Input() hideTabs: boolean;
 
   @Output() _delete: EventEmitter<any> = new EventEmitter();

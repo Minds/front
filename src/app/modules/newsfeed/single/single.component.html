@@ -13,7 +13,10 @@
     >
   </div>
 
-  <div class="mdl-cell mdl-cell--8-col">
+  <div
+    class="mdl-cell mdl-cell--8-col"
+    style="max-width: 500px; padding-bottom: 37px;"
+  >
     <div class="m--spam-notice mdl-shadow--2dp" *ngIf="activity?.spam">
       <ng-container i18n="@@MINDS__NEWSFEED__SINGLE__FLAGGED_AS_SPAM"
         >This activity is flagged as spam.</ng-container
@@ -26,9 +29,10 @@
       </ng-container>
     </div>
 
-    <div class="minds-list">
+    <div class="minds-list" *ngIf="showLegacyActivity">
       <minds-activity
         *ngIf="activity"
+        [editing]="editing"
         [object]="activity"
         [commentsToggle]="true"
         [focusedCommentGuid]="focusedCommentGuid"
@@ -39,6 +43,16 @@
         [attr.data-minds-activity-guid]="activity.guid"
       >
       </minds-activity>
+    </div>
+
+    <div class="minds-list" *ngIf="activity && !showLegacyActivity">
+      <m-activity
+        [entity]="activity"
+        [displayOptions]="{
+          fixedHeight: fixedHeight,
+          showOnlyCommentsInput: fixedHeight
+        }"
+      ></m-activity>
     </div>
   </div>
 </div>
