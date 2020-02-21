@@ -30,7 +30,7 @@
             *ngIf="contentType === 'image'"
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
-            [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
+            [@slowFade]="isLoading ? 'out' : 'in'"
           >
             <img
               class="m-mediaModal__media--image"
@@ -73,7 +73,7 @@
             *ngIf="contentType === 'blog'"
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
-            [@slowFadeAnimation]="isLoading ? 'out' : 'in'"
+            [@slowFade]="isLoading ? 'out' : 'in'"
           >
             <m-blog-view
               [blog]="entity"
@@ -86,7 +86,7 @@
           <div
             class="m-mediaModal__overlayContainer"
             *ngIf="overlayVisible && contentType !== 'rich-embed'"
-            @fastFadeAnimation
+            @fastFade
           >
             <div
               class="m-mediaModal__overlayTitleWrapper"
@@ -159,27 +159,28 @@
               </div>
             </div>
           </div>
-
+          <!-- PAGER ARROWS -->
           <a
-            *ngIf="hasModalPager() && modalPager.hasPrev"
+            *ngIf="hasModalPager() && modalPager.hasPrev && pagerVisible"
             class="m-mediaModal__pager m-mediaModal__pager--previous"
-            [class.m-mediaModal__pager--visible]="overlayVisible"
             (click)="goToPrev()"
+            @fastFade
           >
             <i class="material-icons">chevron_left</i>
           </a>
 
           <a
-            *ngIf="hasModalPager() && modalPager.hasNext"
+            *ngIf="hasModalPager() && modalPager.hasNext && pagerVisible"
             class="m-mediaModal__pager m-mediaModal__pager--next"
-            [class.m-mediaModal__pager--visible]="overlayVisible"
             (click)="goToNext()"
+            @fastFade
           >
             <i class="material-icons">chevron_right</i>
           </a>
         </div>
       </div>
 
+      <!-- (END STAGE WRAPPER) -->
       <!-- CONTENT -->
       <div class="m-mediaModal__contentContainer">
         <div class="m-mediaModal__contentBody">
