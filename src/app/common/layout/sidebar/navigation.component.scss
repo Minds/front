@@ -71,17 +71,6 @@ m-sidebar--navigation {
     min-width: 0;
     box-sizing: border-box;
 
-  .m-sidebar--navigation--item {
-    display: flex;
-    //flex-direction: column;
-    align-items: center;
-    text-decoration: none;
-    font-family: 'Roboto', Helvetica, sans-serif;
-    margin: 15px 0;
-    font-weight: bold;
-
-    font-size: 17px;
-    line-height: 44px;
     @include m-theme() {
       background-color: themed($m-body-bg);
       border-right: 1px solid themed($m-grey-400);
@@ -136,7 +125,7 @@ m-sidebar--navigation {
       }
 
       .m-sidebarNavigation__user {
-        padding-top: 37px;
+        padding: 37px 35px 0;
       }
 
       ul {
