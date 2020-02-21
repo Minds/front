@@ -1,0 +1,45 @@
+<div class="m-channelStats">
+  <!--      <a-->
+  <!--        [routerLink]="['/', user.username, 'feed']"-->
+  <!--        class="mdl-tabs__tab mdl-color-text&#45;&#45;blue-grey-500"-->
+  <!--        *ngIf="user.activity_count"-->
+  <!--      >-->
+  <!--        <span i18n="Count of activities@@M__COMMON__FEED_COUNT">Feed</span>-->
+  <!--        <b>{{user.activity_count | number}}</b>-->
+  <!--      </a>-->
+  <a
+    *ngIf="user.supporters_count && session.getLoggedInUser().guid != user.guid"
+  >
+    <span class="m-channelStats__title" i18n>
+      Followers
+    </span>
+    <span class="m-channelStats__count">{{
+      user.supporters_count | abbr
+    }}</span>
+  </a>
+  <a
+    [routerLink]="['/', user.username, 'supporters']"
+    *ngIf="user.supporters_count && session.getLoggedInUser().guid == user.guid"
+  >
+    <span class="m-channelStats__title" i18n>
+      Followers
+    </span>
+    <span class="m-channelStats__count">{{
+      user.supporters_count | abbr
+    }}</span>
+  </a>
+  <a [routerLink]="['/', user.username, 'subscribers']">
+    <span class="m-channelStats__title" i18n>
+      Following
+    </span>
+    <span class="m-channelStats__count">{{
+      user.subscribers_count | abbr
+    }}</span>
+  </a>
+  <a>
+    <span class="m-channelStats__title" i18n>
+      Views
+    </span>
+    <span class="m-channelStats__count">{{ user.impressions | abbr }}</span>
+  </a>
+</div>

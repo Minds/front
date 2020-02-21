@@ -1,5 +1,13 @@
 @import 'defaults';
 
+m-wallet {
+  grid-area: content / span 2;
+  min-width: 0;
+}
+
+.m-grid .m-wallet--wrapper {
+  margin: unset;
+}
 .m-wallet--wrapper {
   max-width: 1280px;
   margin: auto;

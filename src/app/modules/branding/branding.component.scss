@@ -1,42 +1,50 @@
 @import 'defaults';
 
-.m-branding {
-  .m-marketing--header {
-    @include m-theme() {
-      background-color: themed($m-white);
-    }
-  }
-  .m-marketing--header-inner {
-    text-align: center;
+m-branding {
+  grid-area: content / span 2;
 
-    h1 {
+  .m-branding {
+    .m-marketing--header {
       @include m-theme() {
-        color: themed($m-grey-800);
+        background-color: themed($m-white);
       }
     }
-    h3 {
-      padding-right: 0;
-      @include m-theme() {
-        color: themed($m-grey-600);
-      }
-    }
-  }
 
-  .m-marketing--contents {
-    text-align: center;
-    img {
-      max-height: 156px;
-      @media only screen and (max-width: 460px) {
-        max-width: 332px;
+    .m-marketing--header-inner {
+      text-align: center;
+
+      h1 {
+        @include m-theme() {
+          color: themed($m-grey-800);
+        }
+      }
+
+      h3 {
+        padding-right: 0;
+        @include m-theme() {
+          color: themed($m-grey-600);
+        }
       }
     }
-    label {
-      display: block;
-      font-weight: 600;
-      text-transform: uppercase;
-      margin: 56px 0;
-      @include m-theme() {
-        color: themed($m-grey-600);
+
+    .m-marketing--contents {
+      text-align: center;
+
+      img {
+        max-height: 156px;
+        @media only screen and (max-width: 460px) {
+          max-width: 332px;
+        }
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        text-transform: uppercase;
+        margin: 56px 0;
+        @include m-theme() {
+          color: themed($m-grey-600);
+        }
       }
     }
   }

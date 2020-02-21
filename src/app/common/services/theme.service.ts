@@ -1,8 +1,15 @@
-import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import {
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+  Renderer2,
+  RendererFactory2,
+} from '@angular/core';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class ThemeService {
@@ -16,7 +23,8 @@ export class ThemeService {
     private rendererFactory: RendererFactory2,
     private client: Client,
     private session: Session,
-    private storage: Storage
+    private storage: Storage,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
   }
@@ -25,9 +33,16 @@ export class ThemeService {
     rendererFactory: RendererFactory2,
     client: Client,
     session: Session,
-    storage: Storage
+    storage: Storage,
+    platformId: Object
   ) {
-    return new ThemeService(rendererFactory, client, session, storage);
+    return new ThemeService(
+      rendererFactory,
+      client,
+      session,
+      storage,
+      platformId
+    );
   }
 
   // TODO after release of MacOS 10.14.4
@@ -92,13 +107,15 @@ export class ThemeService {
       this.renderer.removeClass(document.body, 'm-theme__dark');
       this.renderer.addClass(document.body, 'm-theme__light');
     }
-    //this.clearTransitions();
+    this.clearTransitions();
   }
 
   clearTransitions() {
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => {
-      this.renderer.removeClass(document.body, 'm-theme-in-transition');
-    }, 1000);
+    if (isPlatformBrowser(this.platformId)) {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        this.renderer.removeClass(document.body, 'm-theme-in-transition');
+      }, 1000);
+    }
   }
 }
