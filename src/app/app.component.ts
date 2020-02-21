@@ -35,6 +35,7 @@ import { ConfigsService } from './common/services/configs.service';
 import { MetaService } from './common/services/meta.service';
 import { filter, map, mergeMap, first } from 'rxjs/operators';
 import { EmailConfirmationService } from './common/components/email-confirmation/email-confirmation.service';
+import { Upload } from './services/api/upload';
 
 @Component({
   selector: 'm-app',
@@ -52,6 +53,7 @@ export class Minds implements OnInit, OnDestroy {
   protected router$: Subscription;
 
   protected clientError$: Subscription;
+  protected uploadError$: Subscription;
 
   protected routerConfig: Route[];
 
@@ -66,6 +68,7 @@ export class Minds implements OnInit, OnDestroy {
     public context: ContextService,
     public web3Wallet: Web3WalletService,
     public client: Client,
+    public upload: Upload,
     public webtorrent: WebtorrentService,
     public onboardingService: ChannelOnboardingService,
     public router: Router,
@@ -91,11 +94,13 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    this.clientError$ = this.client.onError.subscribe(err => {
-      if (err.status === 403 && err.error.must_verify) {
-        this.emailConfirmationService.show();
-      }
-    });
+    this.clientError$ = this.client.onError.subscribe(
+      this.checkXHRError.bind(this)
+    );
+
+    this.uploadError$ = this.upload.onError.subscribe(
+      this.checkXHRError.bind(this)
+    );
 
     // MH: does loading meta tags before the configs have been set cause issues?
     this.router$ = this.router.events
@@ -134,6 +139,12 @@ export class Minds implements OnInit, OnDestroy {
       await this.initialize();
     } catch (e) {
       console.error('initialize()', e);
+    }
+  }
+
+  checkXHRError(err: string | any) {
+    if (err.status === 403 && err.error.must_verify) {
+      this.emailConfirmationService.show();
     }
   }
 
