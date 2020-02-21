@@ -1,4 +1,10 @@
-import { Component, Inject, Input, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Input,
+  ChangeDetectorRef,
+  OnInit,
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { Session } from '../../../services/session';
 import { Client, Upload } from '../../../services/api';
@@ -7,18 +13,21 @@ import {
   ContextService,
   ContextServiceResponse,
 } from '../../../services/context.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-search--bar-suggestions',
   templateUrl: 'suggestions.component.html',
 })
-export class SearchBarSuggestionsComponent {
+export class SearchBarSuggestionsComponent implements OnInit {
   suggestions: Array<any> = [];
   recent: any[];
   q: string = '';
   currentContext: ContextServiceResponse;
   @Input() active: boolean;
   @Input() disabled: boolean = false;
+
+  newNavigation: boolean = false;
 
   private searchTimeout;
 
@@ -27,9 +36,12 @@ export class SearchBarSuggestionsComponent {
     public client: Client,
     public location: Location,
     public recentService: RecentService,
+    private featuresService: FeaturesService,
     private context: ContextService,
     private cd: ChangeDetectorRef
-  ) {}
+  ) {
+    this.newNavigation = this.featuresService.has('navigation');
+  }
 
   @Input('q') set _q(value: string) {
     if (this.searchTimeout) {
@@ -67,9 +79,14 @@ export class SearchBarSuggestionsComponent {
     this.loadRecent();
   }
 
+  clearHistory() {
+    this.recentService.clear('recent:text');
+    this.recent = [];
+  }
+
   loadRecent() {
     if (this.session.getLoggedInUser()) {
-      this.recent = this.recentService.fetch('recent', 6);
+      this.recent = this.recentService.fetch('recent:text', 6);
     }
   }
 

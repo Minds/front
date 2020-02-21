@@ -3,6 +3,7 @@ import { Session } from '../services/session';
 import { FeaturesService } from '../services/features.service';
 import { SiteService } from '../common/services/site.service';
 import { SidebarNavigationService } from '../common/layout/sidebar/navigation.service';
+import { ChannelOnboardingService } from '../modules/onboarding/channel/onboarding.service';
 
 @Component({
   selector: 'm-page',
@@ -19,6 +20,7 @@ export class PageComponent implements OnInit {
     public session: Session,
     public featuresService: FeaturesService,
     private navigationService: SidebarNavigationService,
+    private onboardingService: ChannelOnboardingService,
     private site: SiteService
   ) {}
 
@@ -28,7 +30,24 @@ export class PageComponent implements OnInit {
     this.navigationService.visibleChange.subscribe((visible: boolean) => {
       this.isSidebarVisible = visible;
     });
+
+    this.session.isLoggedIn(async is => {
+      if (is && !this.site.isProDomain) {
+        if (!this.site.isProDomain) {
+          this.showOnboarding = await this.onboardingService.showModal();
+        }
+      }
+    });
+
+    this.onboardingService.onClose.subscribe(() => {
+      this.showOnboarding = false;
+    });
+
+    this.onboardingService.onOpen.subscribe(async () => {
+      this.showOnboarding = await this.onboardingService.showModal(true);
+    });
   }
+
   get isProDomain() {
     return this.site.isProDomain;
   }
