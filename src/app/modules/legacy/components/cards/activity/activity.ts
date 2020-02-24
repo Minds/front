@@ -32,6 +32,7 @@ import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
 import { MindsVideoPlayerComponent } from '../../../../media/components/video-player/player.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { RedirectService } from '../../../../../common/services/redirect.service';
 
 @Component({
   selector: 'minds-activity',
@@ -181,7 +182,8 @@ export class Activity implements OnInit {
     protected activityService: ActivityService,
     @SkipSelf() injector: Injector,
     elementRef: ElementRef,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private redirectService: RedirectService
   ) {
     this.clientMetaService.inherit(injector);
 
@@ -577,13 +579,19 @@ export class Activity implements OnInit {
     }
   }
 
-  openModal() {
+  onRichEmbedClick(e: Event): void {
     if (
       this.activity.perma_url &&
       this.activity.perma_url.indexOf(this.configs.get('site_url')) === 0
-    )
+    ) {
+      this.redirectService.redirect(this.activity.perma_url);
       return; // Don't open modal for minds links
+    }
 
+    this.openModal();
+  }
+
+  openModal() {
     this.activity.modal_source_url = this.router.url;
 
     this.overlayModal
