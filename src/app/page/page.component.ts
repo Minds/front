@@ -27,6 +27,9 @@ export class PageComponent implements OnInit {
   ngOnInit() {
     this.useNewNavigation = this.featuresService.has('navigation');
 
+    this.isSidebarVisible = this.navigationService.container
+      ? !this.navigationService.container.hidden
+      : true;
     this.navigationService.visibleChange.subscribe((visible: boolean) => {
       this.isSidebarVisible = visible;
     });

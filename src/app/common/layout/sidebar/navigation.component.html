@@ -6,7 +6,7 @@
   <nav>
     <div class="m-sidebarNavigation__top">
       <a routerLink="/" title="Home" i18n-title>
-        <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
+        <img [src]="cdnUrl + 'assets/logos/bulb.svg'" />
       </a>
 
       <i class="material-icons" (click)="toggle()">close</i>
@@ -15,7 +15,7 @@
     <div class="m-sidebarNavigation__user" *ngIf="user">
       <a [routerLink]="['/' + user.username]" (click)="toggle()">
         <img
-          [src]="cdnAssetsUrl + 'icon/' + user.guid + '/small/' + user.icontime"
+          [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
           alt=""
         />
         <ng-container *ngIf="layoutMode === 'desktop'">

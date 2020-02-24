@@ -16,6 +16,7 @@ import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service
 import { MetaService } from '../../common/services/meta.service';
 import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
+import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 
 @Component({
   selector: 'm-register',
@@ -51,13 +52,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
+    public pagesService: PagesService,
     private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
     public session: Session,
     private onboarding: OnboardingService,
     public navigation: NavigationService,
+    private navigationService: SidebarNavigationService,
     configs: ConfigsService,
-    public pagesService: PagesService,
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
@@ -75,6 +77,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
     if (this.newDesign) {
       this.topbarService.toggleVisibility(false);
       this.iosFallback = iOSVersion() !== null;
+
+      if (this.featuresService.has('navigation')) {
+        this.navigationService.setVisible(false);
+      }
     }
   }
 
@@ -125,6 +131,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.paramsSubscription.unsubscribe();
     }
     this.topbarService.toggleVisibility(true);
+
+    if (this.featuresService.has('navigation')) {
+      this.navigationService.setVisible(true);
+    }
   }
 
   private navigateToRedirection() {

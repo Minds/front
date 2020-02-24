@@ -83,14 +83,10 @@
         <ng-container *ngTemplateOutlet="searchBar"></ng-container>
       </ng-container>
 
-      <!-- edit -->
-
-      <!-- notifications -->
-
-      <!-- logged in user avatar -->
-
       <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
+        <!-- edit -->
         <ng-content select="[icons]"></ng-content>
+        <div class="m-v3Topbar__spacer"></div>
         <m-usermenu__v3
           [useAvatar]="true"
           [showFooterLinks]="true"

@@ -24,7 +24,7 @@ import { MindsUser } from '../../../interfaces/entities';
   templateUrl: 'navigation.component.html',
 })
 export class SidebarNavigationComponent implements OnInit, AfterViewInit {
-  readonly cdnAssetsUrl: string;
+  readonly cdnUrl: string;
 
   @ViewChild(DynamicHostDirective, { static: true })
   host: DynamicHostDirective;
@@ -32,7 +32,7 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
   user;
 
   componentRef;
-  componentInstance: GroupsSidebarMarkersComponent;
+  groupsSidebar: GroupsSidebarMarkersComponent;
 
   layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
 
@@ -50,7 +50,7 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
     private _componentFactoryResolver: ComponentFactoryResolver,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+    this.cdnUrl = this.configs.get('cdn_url');
     this.service.setContainer(this);
     this.getUser();
   }
@@ -90,9 +90,9 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
     viewContainerRef.clear();
 
     this.componentRef = viewContainerRef.createComponent(componentFactory);
-    this.componentInstance = this.componentRef.instance;
-    this.componentInstance.showLabels = true;
-    this.componentInstance.leftSidebar = true;
+    this.groupsSidebar = this.componentRef.instance;
+    this.groupsSidebar.showLabels = true;
+    this.groupsSidebar.leftSidebar = true;
   }
 
   toggle(): void {
@@ -121,6 +121,10 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
 
     if (this.layoutMode !== 'phone') {
       this.isOpened = false;
+    }
+
+    if (this.groupsSidebar) {
+      this.groupsSidebar.showLabels = this.layoutMode !== 'tablet';
     }
   }
 }
