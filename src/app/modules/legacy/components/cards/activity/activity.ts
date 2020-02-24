@@ -578,6 +578,9 @@ export class Activity implements OnInit {
   }
 
   openModal() {
+    if (this.activity.perma_url.indexOf(this.configs.get('site_url')) === 0)
+      return; // Don't open modal for minds links
+
     this.activity.modal_source_url = this.router.url;
 
     this.overlayModal
