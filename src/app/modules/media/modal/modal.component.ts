@@ -306,7 +306,6 @@ export class MediaModalComponent implements OnInit, OnDestroy {
             break;
           default:
             if (
-              this.featureService.has('media-modal') &&
               this.entity.perma_url &&
               this.entity.title &&
               !this.entity.entity_guid

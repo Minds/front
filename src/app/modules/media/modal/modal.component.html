@@ -63,7 +63,11 @@
             class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--richEmbed"
             *ngIf="contentType === 'rich-embed'"
           >
-            <minds-rich-embed [src]="entity" [maxheight]="480">
+            <minds-rich-embed
+              [src]="entity"
+              [maxheight]="480"
+              [embeddedInline]="true"
+            >
             </minds-rich-embed>
           </div>
 

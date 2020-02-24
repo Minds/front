@@ -209,10 +209,7 @@ export class ActivityContentComponent {
   }
 
   onModalRequested(event: MouseEvent) {
-    const isNotTablet = Math.min(screen.width, screen.height) < 768;
-    const tooSmallForModal: boolean = screen.width < 768;
-
-    if ((isMobile() && isNotTablet) || tooSmallForModal) {
+    if (!this.overlayModal.canOpenInModal()) {
       return;
     }
 
