@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Session } from '../services/session';
-import { FeaturesService } from '../services/features.service';
-import { SiteService } from '../common/services/site.service';
-import { SidebarNavigationService } from '../common/layout/sidebar/navigation.service';
-import { ChannelOnboardingService } from '../modules/onboarding/channel/onboarding.service';
+import { Session } from '../../../services/session';
+import { FeaturesService } from '../../../services/features.service';
+import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
+import { ChannelOnboardingService } from '../../onboarding/channel/onboarding.service';
+import { SiteService } from '../../../common/services/site.service';
 
 @Component({
   selector: 'm-page',

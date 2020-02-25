@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Session } from '../services/session';
-import { FeaturesService } from '../services/features.service';
+import { Session } from '../../../services/session';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-topbarwrapper',

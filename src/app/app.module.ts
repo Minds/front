@@ -71,10 +71,9 @@ import { CookieModule } from '@gorniv/ngx-universal';
 import { HomepageModule } from './modules/homepage/homepage.module';
 import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
-import { TopbarWrapperComponent } from './page/topbar.component';
-import { PageComponent } from './page/page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
+import { LayoutModule } from './modules/layout/layout.module';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -88,7 +87,7 @@ export class SentryErrorHandler implements ErrorHandler {
 
 @NgModule({
   bootstrap: [Minds],
-  declarations: [Minds, TopbarWrapperComponent, PageComponent, Pages],
+  declarations: [Minds, Pages],
   imports: [
     BrowserModule.withServerTransition({ appId: 'm-app' }),
     BrowserTransferStateModule,
@@ -99,6 +98,7 @@ export class SentryErrorHandler implements ErrorHandler {
     FormsModule,
     HttpClientModule,
     CaptchaModule,
+    LayoutModule,
     CommonModule,
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
     WalletModule,
