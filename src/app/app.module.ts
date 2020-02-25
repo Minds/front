@@ -151,6 +151,7 @@ export class SentryErrorHandler implements ErrorHandler {
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },
     MINDS_PROVIDERS,
+    ConfigsService,
     {
       provide: APP_INITIALIZER,
       useFactory: configs => () => configs.loadFromRemote(),

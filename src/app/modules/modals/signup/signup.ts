@@ -32,10 +32,8 @@ export class SignupModal {
   overrideOnboarding: boolean = false;
 
   get logo() {
-    return this.site.isProDomain
-      ? `${this.configs.get('cdn_url')}fs/v1/thumbnail/${
-          this.site.pro.logo_guid
-        }/master`
+    return this.site.isProDomain && this.site.pro.logo_image
+      ? this.site.pro.logo_image
       : `${this.configs.get('cdn_assets_url')}assets/logos/logo.svg`;
   }
 

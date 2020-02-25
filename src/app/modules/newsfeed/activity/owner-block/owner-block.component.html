@@ -1,0 +1,85 @@
+<div class="m-activityOwnerBlock__avatar" [hovercard]="owner">
+  <a [routerLink]="['/', username]">
+    <img [src]="avatarUrl" class="m-border" />
+  </a>
+</div>
+
+<div class="m-activityOwnerBlock__body">
+  <a class="m-activityOwnerBlock__displayName" [routerLink]="['/', username]">
+    <i
+      class="material-icons m-activityOwnerBlock__remindIcon"
+      *ngIf="service.isRemind$ | async"
+      >repeat</i
+    >
+    <strong [title]="displayName">{{ displayName }}</strong>
+    <m-channel--badges
+      class="m-channel--badges-activity"
+      [user]="owner"
+      badges="[ 'admin', 'verified' ]"
+    ></m-channel--badges>
+  </a>
+  <ng-container *ngIf="group">
+    <!-- Show group name-->
+    <a [routerLink]="['/groups/profile', group.guid]">
+      <strong>({{ group.name }})</strong>
+    </a>
+  </ng-container>
+  <ng-container>
+    <!-- Perma link to post -->
+    <a
+      [routerLink]="service.canonicalUrl$ | async"
+      class="m-activityOwnerBlock__permalink"
+    >
+      <span
+        class="m-activityOwnerBlockPermalink__text--timestamp"
+        [title]="entity.time_created * 1000 | date: 'medium'"
+      >
+        {{ friendlyTime }}
+      </span>
+      <span
+        *ngIf="
+          service.displayOptions.showEditedTag && (service.isEdited$ | async)
+        "
+        class="m-activityOwnerBlockPermalink__text--edited"
+        i18n="@@M__COMMON__EDITED"
+        >edited</span
+      >
+      <ng-template [ngTemplateOutlet]="boostedTag"></ng-template>
+      <div
+        class="m-activityOwnerBlockPermalink__text--visibility"
+        *ngIf="
+          service.displayOptions.showVisibiltyState &&
+          (service.isUnlisted$ | async)
+        "
+      >
+        <i class="material-icons unlisted">visibility_off</i>
+        <a i18n>Unlisted</a>
+      </div>
+    </a>
+  </ng-container>
+</div>
+
+<div class="m-activityOwnerBlock__right">
+  <ng-content select=".m-activityOwnerBlock__right"></ng-content>
+</div>
+
+<ng-template #boostedTag>
+  <div
+    class="mdl-card__supporting-text is-boosted"
+    *ngIf="service.isBoosted$ | async"
+    [class.is-onchain]="entity.boosted_onchain"
+  >
+    <i class="material-icons">trending_up</i>
+    <a
+      i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL"
+      [hidden]="entity.boosted_onchain"
+      >Boosted</a
+    >
+    <a
+      i18n="@@MINDS__CARDS__ACTIVITY__BOOSTED_LABEL_ONCHAIN"
+      [hidden]="!entity.boosted_onchain"
+      [routerLink]="['/token']"
+      >Boosted Onchain</a
+    >
+  </div>
+</ng-template>

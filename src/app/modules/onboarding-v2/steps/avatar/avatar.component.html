@@ -1,0 +1,66 @@
+<div class="m-onboarding__controls">
+  <ng-container *ngIf="cropping">
+    <h3 i18n>Position your photo</h3>
+
+    <image-cropper
+      [imageChangedEvent]="imageChangedEvent"
+      [aspectRatio]="1 / 1"
+      [resizeToWidth]="0"
+      [cropperMinWidth]="128"
+      [onlyScaleDown]="true"
+      [roundCropper]="false"
+      [alignImage]="'left'"
+      format="png"
+      [backgroundColor]="'white'"
+      (imageCropped)="onImageCropped($event)"
+      (imageLoaded)="onImageLoaded()"
+      [style.display]="imageLoaded ? null : 'none'"
+    >
+    </image-cropper>
+  </ng-container>
+
+  <img [src]="cdnAssetsUrl + 'assets/photos.png'" *ngIf="!cropping" />
+
+  <input
+    id="onboarding-avatar-input"
+    type="file"
+    accept="image/*"
+    #file
+    (change)="add($event)"
+  />
+
+  <div class="m-onboarding__actionButtons">
+    <button
+      class="mf-button mf-button--hollow"
+      (click)="cancel()"
+      *ngIf="cropping"
+      i18n
+    >
+      Cancel
+    </button>
+    <button
+      class="mf-button mf-button--hollow"
+      (click)="skip()"
+      *ngIf="!cropping"
+      i18n
+    >
+      Skip
+    </button>
+    <button
+      class="mf-button mf-button--alt"
+      (click)="uploadPhoto()"
+      *ngIf="!cropping"
+      i18n
+    >
+      Upload a Photo
+    </button>
+    <button
+      class="mf-button mf-button--alt"
+      (click)="continue()"
+      *ngIf="cropping"
+      i18n
+    >
+      Finish
+    </button>
+  </div>
+</div>

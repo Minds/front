@@ -1,0 +1,12 @@
+<div *ngFor="let category of categories$ | async">
+  <h2 i18n>
+    <a [routerLink]="getCategoryRoute(category.tag?.tag)">{{
+      category.tag?.label
+    }}</a>
+  </h2>
+
+  <m-feedGrid
+    [entities]="category.entities | async"
+    [maxColumns]="3"
+  ></m-feedGrid>
+</div>

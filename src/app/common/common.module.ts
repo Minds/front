@@ -4,7 +4,7 @@ import {
   isPlatformServer,
   Location,
 } from '@angular/common';
-import { RouterModule, Router, Routes } from '@angular/router';
+import { RouterModule, Router, Routes, ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -103,7 +103,6 @@ import { FeedsService } from './services/feeds.service';
 import { EntitiesService } from './services/entities.service';
 import { BlockListService } from './services/block-list.service';
 import { SettingsService } from '../modules/settings/settings.service';
-import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
@@ -145,6 +144,7 @@ import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
 import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v2.component';
 import { PhoneInputCountryV2Component } from './components/phone-input-v2/country.component';
+import { TagsService } from './services/tags.service';
 import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
 import { RedirectService } from './services/redirect.service';
 
@@ -443,17 +443,6 @@ const routes: Routes = [
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
-    {
-      provide: ConfigsService,
-      useFactory: (client, injector, redirect, location) =>
-        new ConfigsService(
-          client,
-          injector.get('QUERY_STRING'),
-          redirect,
-          location
-        ),
-      deps: [Client, Injector, RedirectService, Location],
-    },
     MetaService,
     MediaProxyService,
     V2TopbarService,
@@ -462,6 +451,7 @@ const routes: Routes = [
       useFactory: SidebarMarkersService._,
     },
     HorizontalFeedService,
+    TagsService,
   ],
   entryComponents: [
     NotificationsToasterComponent,

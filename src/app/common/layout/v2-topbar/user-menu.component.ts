@@ -54,7 +54,6 @@ export class UserMenuComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-    this.themeService.applyThemePreference();
   }
 
   toggleTheme() {

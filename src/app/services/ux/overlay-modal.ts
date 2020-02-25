@@ -1,6 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 
 import { OverlayModalComponent } from '../../common/components/overlay-modal/overlay-modal.component';
+import isMobile from '../../helpers/is-mobile';
 
 @Injectable()
 export class OverlayModalService {
@@ -83,5 +84,16 @@ export class OverlayModalService {
     this._onDidDismissFn = void 0;
 
     return this;
+  }
+
+  canOpenInModal(): boolean {
+    const isNotTablet = Math.min(screen.width, screen.height) < 768;
+    const tooSmallForModal: boolean = screen.width < 768;
+
+    if ((isMobile() && isNotTablet) || tooSmallForModal) {
+      return false;
+    }
+
+    return true;
   }
 }

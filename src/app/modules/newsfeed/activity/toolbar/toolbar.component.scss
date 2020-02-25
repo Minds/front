@@ -1,0 +1,70 @@
+m-activity__toolbar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0 25px 16px;
+  padding-top: $minds-padding * 2;
+  box-sizing: border-box;
+  text-align: center;
+
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--tertiary);
+  }
+
+  > * {
+    margin-right: 22px;
+
+    > a {
+      line-height: 18px;
+
+      i.material-icons {
+        font-size: 18px;
+        @include m-theme() {
+          color: themed($m-grey-500);
+        }
+      }
+
+      &.selected {
+        i.material-icons {
+          @include m-theme() {
+            color: themed($m-blue);
+          }
+        }
+      }
+
+      i.material-icons,
+      .minds-counter {
+        vertical-align: middle;
+      }
+    }
+  }
+
+  minds-button-comment {
+    cursor: pointer;
+    .selected i.material-icons,
+    .selected .minds-counter {
+      @include m-theme() {
+        color: themed($m-grey-500);
+      }
+    }
+  }
+
+  :last-child {
+    margin-right: 0;
+  }
+
+  m-wire-button {
+    .m-wire-button {
+      border: 0 !important;
+      padding: 0;
+      > .ion-icon {
+        @include m-theme() {
+          color: themed($m-grey-500);
+        }
+      }
+      span {
+        display: none;
+      }
+    }
+  }
+}

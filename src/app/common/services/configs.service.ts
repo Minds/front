@@ -1,10 +1,10 @@
 import { Client } from '../api/client.service';
 import { Subject } from 'rxjs';
-import { Injectable, Inject, Optional, Injector } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { RedirectService } from './redirect.service';
 import { Location } from '@angular/common';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ConfigsService {
   private configs = {};
   public isReady$ = new Subject();
