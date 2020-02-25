@@ -1,6 +1,6 @@
 <div class="m-sidebarNavigation__overlay" (click)="toggle()"></div>
 <div
-  class="m-sidebar--navigation"
+  class="m-sidebarNavigation"
   [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
 >
   <nav>
@@ -26,9 +26,9 @@
     <ul>
       <li>
         <a
-          class="m-sidebar--navigation--item"
+          class="m-sidebarNavigation__item"
           [routerLink]="['/newsfeed/subscriptions']"
-          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="toggle()"
         >
@@ -41,7 +41,7 @@
           </m-tooltip>
 
           <span
-            class="m-sidebar--navigation--text"
+            class="m-sidebarNavigationItem__text"
             *ngIf="layoutMode !== 'tablet'"
             i18n
           >
@@ -52,9 +52,9 @@
 
       <li>
         <a
-          class="m-sidebar--navigation--item"
+          class="m-sidebarNavigation__item"
           [routerLink]="['/newsfeed/global/top']"
-          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
           [routerLinkActiveOptions]="{ exact: true }"
           (click)="toggle()"
         >
@@ -67,7 +67,7 @@
           </m-tooltip>
 
           <span
-            class="m-sidebar--navigation--text"
+            class="m-sidebarNavigationItem__text"
             *ngIf="layoutMode !== 'tablet'"
             i18n
           >
@@ -78,9 +78,9 @@
 
       <li>
         <a
-          class="m-sidebar--navigation--item"
+          class="m-sidebarNavigation__item"
           [routerLink]="['/wallet']"
-          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
           (click)="toggle()"
         >
           <m-tooltip
@@ -92,7 +92,7 @@
           </m-tooltip>
 
           <span
-            class="m-sidebar--navigation--text"
+            class="m-sidebarNavigationItem__text"
             *ngIf="layoutMode !== 'tablet'"
             i18n
           >
@@ -103,9 +103,9 @@
 
       <li>
         <a
-          class="m-sidebar--navigation--item"
+          class="m-sidebarNavigation__item"
           [routerLink]="['/analytics']"
-          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
           (click)="toggle()"
         >
           <m-tooltip
@@ -116,7 +116,7 @@
             Analytics
           </m-tooltip>
           <span
-            class="m-sidebar--navigation--text"
+            class="m-sidebarNavigationItem__text"
             *ngIf="layoutMode !== 'tablet'"
             i18n
           >
@@ -127,9 +127,9 @@
 
       <li>
         <a
-          class="m-sidebar--navigation--item"
+          class="m-sidebarNavigation__item"
           [routerLink]="['/settings']"
-          [routerLinkActive]="'m-sidebar--navigation--item-active'"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
           (click)="toggle()"
         >
           <m-tooltip
@@ -141,7 +141,7 @@
           </m-tooltip>
 
           <span
-            class="m-sidebar--navigation--text"
+            class="m-sidebarNavigationItem__text"
             *ngIf="layoutMode !== 'tablet'"
             i18n
           >

@@ -43,17 +43,6 @@
     <div class="m-v3Topbar__spacer" *ngIf="isMobile"></div>
 
     <div class="m-v3Topbar__middleColumn" *ngIf="!isMobile && getCurrentUser()">
-      <!--      <a-->
-      <!--        class="m-v3Topbar__avatar"-->
-      <!--        *ngIf="getCurrentUser()"-->
-      <!--        [routerLink]="['/', getCurrentUser()?.username]"-->
-      <!--        routerLinkActive="m-v3Topbar__avatar&#45;&#45;active"-->
-      <!--      >-->
-      <!--        <minds-avatar-->
-      <!--          [object]="getCurrentUser()"-->
-      <!--          [editMode]="false"-->
-      <!--        ></minds-avatar>-->
-      <!--      </a>-->
       <ng-container *ngTemplateOutlet="searchBar"></ng-container>
     </div>
 
@@ -86,7 +75,7 @@
       <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
         <!-- edit -->
         <ng-content select="[icons]"></ng-content>
-        <div class="m-v3Topbar__spacer"></div>
+        <div class="m-v3Topbar__spacer" *ngIf="!isMobile"></div>
         <m-usermenu__v3
           [useAvatar]="true"
           [showFooterLinks]="true"
