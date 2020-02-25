@@ -17,6 +17,7 @@ import { ConfigsService } from '../../services/configs.service';
 import { V2TopbarService } from './v2-topbar.service';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-v2-topbar',
@@ -51,7 +52,8 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
     protected componentFactoryResolver: ComponentFactoryResolver,
     configs: ConfigsService,
     protected topbarService: V2TopbarService,
-    protected router: Router
+    protected router: Router,
+    public featuresService: FeaturesService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }

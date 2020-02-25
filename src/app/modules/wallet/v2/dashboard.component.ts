@@ -87,7 +87,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
         this.activeCurrencyId = currencyParam;
         if (!this.views[this.activeCurrencyId]) {
           this.activeCurrencyId = 'tokens';
-          this.router.navigate(['/wallet/tokens']);
+          this.router.navigate(['/wallet/canary/tokens']);
         }
 
         if (
@@ -152,13 +152,17 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   updateCurrency($event) {
     this.activeCurrencyId = $event.tabId;
     this.activeViewId = this.views[this.activeCurrencyId][0].id;
-    this.router.navigate(['/wallet', this.activeCurrencyId, this.activeViewId]);
+    this.router.navigate([
+      '/wallet/canary',
+      this.activeCurrencyId,
+      this.activeViewId,
+    ]);
     this.detectChanges();
   }
 
   updateView(viewId) {
     this.activeViewId = viewId;
-    this.router.navigate(['/wallet', this.activeCurrencyId, viewId]);
+    this.router.navigate(['/wallet/canary', this.activeCurrencyId, viewId]);
     this.detectChanges();
   }
 
@@ -179,7 +183,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       this.activeCurrencyId !== currency ||
       this.activeViewId !== 'settings'
     ) {
-      this.router.navigate([`/wallet/${currency}/settings`]).then(() => {
+      this.router.navigate([`/wallet/canary/${currency}/settings`]).then(() => {
         this.scrollToSettingsEl();
       });
     } else {
@@ -189,9 +193,10 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
   }
 
   scrollToSettingsEl() {
-    this.dashboardViewsEl.nativeElement.scrollIntoView({
-      behavior: 'smooth',
-    });
+    if (this.dashboardViewsEl && this.dashboardViewsEl.nativeElement)
+      this.dashboardViewsEl.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+      });
   }
 
   detectChanges() {

@@ -31,40 +31,29 @@ import { TransactionOverlayService } from '../../blockchain/transaction-overlay/
 import { ConfigsService } from '../../../common/services/configs.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { WithdrawContractService } from '../../blockchain/contracts/withdraw-contract.service';
-import { AnalyticsModule } from '../../analytics/analytics.module';
+import { ChartV2Module } from '../../analytics/components/chart-v2/chart-v2.module';
 
-//////////////////////////////////////////////////
-// TODO add a wildcard and the parameter routes as children once feature-flag is lifted
 export const WALLET_V2_ROUTES: Routes = [
   {
-    path: 'wallet',
+    path: 'canary',
     component: WalletDashboardComponent,
     data: {
       title: 'Wallet',
       description: 'Manage all of your transactions and earnings on Minds',
       ogImage: '/assets/photos/graph.jpg',
     },
-  },
-  {
-    path: 'wallet/:currency/:view',
-    component: WalletDashboardComponent,
-    data: {
-      title: 'Wallet',
-      description: 'Manage all of your transactions and earnings on Minds',
-      ogImage: '/assets/photos/graph.jpg',
-    },
-  },
-  {
-    path: 'wallet/:currency',
-    component: WalletDashboardComponent,
-    data: {
-      title: 'Wallet',
-      description: 'Manage all of your transactions and earnings on Minds',
-      ogImage: '/assets/photos/graph.jpg',
-    },
+    children: [
+      {
+        path: ':currency',
+        component: WalletDashboardComponent,
+      },
+      {
+        path: ':currency/:view',
+        component: WalletDashboardComponent,
+      },
+    ],
   },
 ];
-/////////////////////////////////////////////////
 
 @NgModule({
   imports: [
@@ -72,8 +61,8 @@ export const WALLET_V2_ROUTES: Routes = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    RouterModule,
-    AnalyticsModule,
+    RouterModule.forChild(WALLET_V2_ROUTES),
+    ChartV2Module,
   ],
   declarations: [
     WalletDashboardComponent,
@@ -112,7 +101,6 @@ export const WALLET_V2_ROUTES: Routes = [
     },
     TokenContractService,
     WithdrawContractService,
-    ConfigsService,
   ],
 })
 export class WalletV2Module {}

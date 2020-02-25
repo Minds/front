@@ -21,10 +21,8 @@ import { RevenueConsoleComponent } from './revenue/console.component';
 import { WalletComponent } from '../wallet/wallet.component';
 
 const monetizationRoutes: Routes = [
-  //{ path: 'affiliates',  component: AffiliateMarketingComponent },
-  //{ path: 'monetization', component: MonetizationMarketingComponent },
   {
-    path: 'wallet/revenue',
+    path: '',
     component: WalletComponent,
     children: [
       { path: '', redirectTo: 'earnings', pathMatch: 'full' },

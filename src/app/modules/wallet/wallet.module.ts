@@ -22,7 +22,6 @@ import { WalletToggleComponent } from './toggle.component';
 import { WalletFlyoutComponent } from './flyout/flyout.component';
 import { WalletTokensComponent } from './tokens/tokens.component';
 import { WalletPointsComponent } from './points/points.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletTokenSettingsComponent } from './tokens/settings/settings.component';
 import { WalletTokenTransactionsComponent } from './tokens/transactions/transactions.component';
 import { WalletTokenContributionsComponent } from './tokens/contributions/contributions.component';
@@ -54,11 +53,11 @@ import { FeaturesService } from '../../services/features.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { WalletDashboardComponent } from './v2/dashboard.component';
 import { BlockchainConsoleComponent } from '../blockchain/console/console.component';
-import { AnalyticsModule } from '../analytics/analytics.module';
+import { ChartV2Module } from '../analytics/components/chart-v2/chart-v2.module';
 
 export const WALLET_ROUTES: Routes = [
   {
-    path: 'wallet',
+    path: '',
     component: WalletComponent,
     data: {
       title: 'Wallet',
@@ -151,6 +150,14 @@ export const WALLET_ROUTES: Routes = [
           { path: 'onboarding', component: WalletUSDOnboardingComponent },
         ],
       },
+      {
+        path: 'crypto',
+        component: WalletComponent,
+        children: [
+          { path: '', redirectTo: 'overview', pathMatch: 'full' },
+          { path: 'overview', component: BlockchainConsoleComponent },
+        ],
+      },
       { path: 'wire', component: WalletWireComponent },
       { path: '**', component: WalletOverviewComponent },
     ],
@@ -160,14 +167,13 @@ export const WALLET_ROUTES: Routes = [
 @NgModule({
   imports: [
     NgCommonModule,
-    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
     CheckoutModule,
     MonetizationOverviewModule,
     RouterModule,
-    // RouterModule.forChild(walletRoutes),
+    RouterModule.forChild([...WALLET_ROUTES, ...WALLET_V2_ROUTES]),
     AdsModule,
     WireModule,
     BlockchainModule,
@@ -176,7 +182,7 @@ export const WALLET_ROUTES: Routes = [
     ModalsModule,
     ReferralsModule,
     WalletV2Module,
-    AnalyticsModule,
+    ChartV2Module,
   ],
   declarations: [
     WalletComponent,
@@ -248,32 +254,4 @@ export const WALLET_ROUTES: Routes = [
     BlockchainConsoleComponent,
   ],
 })
-export class WalletModule {
-  constructor(
-    @Inject(ConfigsService) configs: ConfigsService,
-    @Inject(FeaturesService) protected features: FeaturesService,
-    @Inject(Router) protected router: Router
-  ) {
-    configs.isReady$.subscribe(() => {
-      const v2Enabled = configs.get('features')['wallet-upgrade'];
-      let newConfig;
-      if (v2Enabled) {
-        newConfig = WALLET_V2_ROUTES.concat(router.config);
-      } else {
-        const cryptoRoutes: Routes = [
-          {
-            path: 'wallet/crypto',
-            component: WalletComponent,
-            children: [
-              { path: '', redirectTo: 'overview', pathMatch: 'full' },
-              { path: 'overview', component: BlockchainConsoleComponent },
-            ],
-          },
-        ];
-        const oldWalletRoutes = cryptoRoutes.concat(WALLET_ROUTES);
-        newConfig = oldWalletRoutes.concat(router.config);
-      }
-      router.resetConfig(newConfig);
-    });
-  }
-}
+export class WalletModule {}

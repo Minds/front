@@ -134,7 +134,6 @@ import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
-import { ConfigsService } from './services/configs.service';
 import { CookieService } from './services/cookie.service';
 import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';

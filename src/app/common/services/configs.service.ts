@@ -1,5 +1,5 @@
 import { Client } from '../api/client.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Injectable, Inject } from '@angular/core';
 import { RedirectService } from './redirect.service';
 import { Location } from '@angular/common';
@@ -7,7 +7,7 @@ import { Location } from '@angular/common';
 @Injectable({ providedIn: 'root' })
 export class ConfigsService {
   private configs = {};
-  public isReady$ = new Subject();
+  public isReady$ = new BehaviorSubject(false);
 
   constructor(
     private client: Client,

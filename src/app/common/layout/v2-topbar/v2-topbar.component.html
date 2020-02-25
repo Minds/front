@@ -25,7 +25,9 @@
 
   <a
     class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
-    routerLink="/wallet"
+    [routerLink]="
+      featuresService.has('wallet-v2') ? '/wallet/canary' : '/wallet'
+    "
     routerLinkActive="m-v2-topbarNav__Item--active"
     title="Wallet"
     i18n-title
