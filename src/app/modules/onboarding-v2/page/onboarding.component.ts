@@ -42,7 +42,7 @@ export class OnboardingComponent implements OnInit, OnDestroy {
   @HostBinding('class.m-onboarding__iosFallback')
   iosFallback: boolean = false;
 
-  @HostBinding('class.m-onboarding__newNavigation')
+  @HostBinding('class.m-onboarding--newNavigation')
   newNavigation: boolean = false;
 
   constructor(

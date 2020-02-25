@@ -31,10 +31,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   videoError: boolean = false;
   referrer: string;
 
-  @HostBinding('class.m-register__newDesign')
+  @HostBinding('class.m-register--newDesign')
   newDesign: boolean = false;
 
-  @HostBinding('class.m-register__newNavigation')
+  @HostBinding('class.m-register--newNavigation')
   newNavigation: boolean = false;
 
   @HostBinding('class.m-register__iosFallback')

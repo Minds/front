@@ -7,7 +7,7 @@ m-login {
   position: relative;
   grid-area: content / span 2;
 
-  &:not(.m-login__newDesign) {
+  &:not(.m-login--newDesign) {
     @include m-theme() {
       background-color: themed($m-white);
     }
@@ -36,10 +36,10 @@ m-login {
     }
   }
 
-  &.m-login__newDesign {
+  &.m-login--newDesign {
     margin-top: -52px;
 
-    &.m-login__newNavigation {
+    &.m-login--newNavigation {
       margin-top: -75px;
     }
 

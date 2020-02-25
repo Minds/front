@@ -26,10 +26,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   referrer: string;
   private redirectTo: string;
 
-  @HostBinding('class.m-login__newDesign')
+  @HostBinding('class.m-login--newDesign')
   newDesign: boolean = false;
 
-  @HostBinding('class.m-login__newNavigation')
+  @HostBinding('class.m-login--newNavigation')
   newNavigation: boolean = false;
 
   @HostBinding('class.m-login__iosFallback')

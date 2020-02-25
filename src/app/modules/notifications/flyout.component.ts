@@ -22,7 +22,7 @@ export class NotificationsFlyoutComponent {
 
   @ViewChild('notifications', { static: true }) notificationList: any;
 
-  @HostBinding('class.m-notificationsFlyout__newDesign')
+  @HostBinding('class.m-notificationsFlyout--newDesign')
   newNavigation: boolean = false;
 
   constructor(private featuresService: FeaturesService) {

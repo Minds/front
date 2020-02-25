@@ -14,7 +14,7 @@ export class NotificationsTopbarToggleComponent {
   toggled: boolean = false;
   @ViewChild('notificationsFlyout', { static: false }) flyout: any;
 
-  @HostBinding('class.m-notificationsTopbarToggle__newNav')
+  @HostBinding('class.m-notificationsTopbarToggle--newNav')
   newNavigation: boolean = false;
 
   constructor(

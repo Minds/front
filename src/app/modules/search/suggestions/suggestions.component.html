@@ -1,6 +1,6 @@
 <div
   class="m-search-bar-suggestions-list"
-  [class.m-searchBar__newDesign]="newNavigation"
+  [class.m-searchBar--newDesign]="newNavigation"
   [hidden]="disabled || !active"
   (mousedown)="mousedown($event)"
   *ngIf="session.isLoggedIn()"
