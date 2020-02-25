@@ -1,8 +1,9 @@
-import { Injectable, Optional } from '@angular/core';
+import { Injectable, Optional, Inject } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser';
 import { SiteService } from './site.service';
 import { Location } from '@angular/common';
 import { ConfigsService } from './configs.service';
+import { DOCUMENT } from '@angular/common';
 
 const DEFAULT_META_TITLE = 'Minds';
 const DEFAULT_META_DESCRIPTION = '...';
@@ -13,13 +14,15 @@ export class MetaService {
   private counter: number;
   private sep = ' | ';
   private title: string = '';
+  private ogTitle: string = '';
 
   constructor(
     private titleService: Title,
     private metaService: Meta,
     private site: SiteService,
     private location: Location,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    @Inject(DOCUMENT) private dom
   ) {
     this.reset();
   }
@@ -30,6 +33,15 @@ export class MetaService {
       ? this.site.title + ' - ' + this.site.oneLineHeadline
       : DEFAULT_META_TITLE;
 
+    value = this.stripHtml(value);
+
+    // Full title for og:title
+    this.ogTitle = value || defaultTitle;
+
+    if (value.length > 60) {
+      value = value.substr(0, 57) + '...';
+    }
+
     if (value && join) {
       title = [value, defaultTitle]
         .filter(fragment => Boolean(fragment))
@@ -39,12 +51,17 @@ export class MetaService {
     } else {
       title = defaultTitle;
     }
+
     this.title = title;
     this.applyTitle();
     return this;
   }
 
   setDescription(value: string): MetaService {
+    value = this.stripHtml(value);
+    if (value.length > 160) {
+      value = value.substr(0, 157) + '...';
+    }
     this.metaService.updateTag({ name: 'description', content: value });
     return this;
   }
@@ -52,6 +69,33 @@ export class MetaService {
   setCounter(value: number): MetaService {
     this.counter = value;
     this.applyTitle();
+    return this;
+  }
+
+  setCanonicalUrl(value: string): MetaService {
+    // Find and clear or canonical links
+    const links: HTMLLinkElement[] = this.dom.head.querySelectorAll(
+      '[rel="canonical"]'
+    );
+    if (links.length) {
+      for (const link of links) {
+        this.dom.head.removeChild(link);
+      }
+    }
+
+    if (value) {
+      // TODO: fix duplicated code with ogUrl here...
+      if (value && value.indexOf('/') === 0) {
+        // Relative path
+        value = this.site.baseUrl + value.substr(1);
+      }
+
+      let link: HTMLLinkElement;
+      link = this.dom.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      link.setAttribute('href', value);
+      this.dom.head.appendChild(link);
+    }
     return this;
   }
 
@@ -101,8 +145,21 @@ export class MetaService {
     return this;
   }
 
+  setLanguage(language: string): MetaService {
+    return this;
+  }
+
   setRobots(value: string): MetaService {
     this.metaService.updateTag({ name: 'robots', content: value });
+    return this;
+  }
+
+  setNsfw(value: boolean): MetaService {
+    if (value) {
+      this.metaService.updateTag({ name: 'rating', content: 'adult' });
+    } else {
+      this.metaService.removeTag("name='rating'");
+    }
     return this;
   }
 
@@ -120,7 +177,9 @@ export class MetaService {
       .setOgType('website')
       .setOgUrl(data.ogUrl || this.location.path())
       .setOgImage(data.ogImage || null, { width: 0, height: 0 })
-      .setRobots(data.robots || 'all');
+      .setCanonicalUrl('') // Only user canonical when required
+      .setRobots(data.robots || 'all')
+      .setNsfw(false);
   }
 
   private applyTitle(): void {
@@ -131,7 +190,19 @@ export class MetaService {
     }
     this.metaService.updateTag({
       name: 'og:title',
-      content: this.title,
+      content: this.ogTitle,
     });
+  }
+
+  /**
+   * Removes any html found and returns on text
+   * @param value
+   * @return string
+   */
+  private stripHtml(value: string): string {
+    if (!value) return '';
+    const fakeEl = this.dom.createElement('span');
+    fakeEl.innerHTML = value;
+    return fakeEl.textContent || fakeEl.innerText;
   }
 }

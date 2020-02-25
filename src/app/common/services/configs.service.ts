@@ -1,9 +1,10 @@
 import { Client } from '../api/client.service';
-import { Injectable, Inject, Optional, Injector } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Injectable, Inject } from '@angular/core';
 import { RedirectService } from './redirect.service';
 import { Location } from '@angular/common';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class ConfigsService {
   private configs = {};
 

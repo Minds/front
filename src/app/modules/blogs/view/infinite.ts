@@ -127,10 +127,16 @@ export class BlogViewInfinite {
       .setTitle(blog.custom_meta['title'] || blog.title)
       .setDescription(description)
       //.setAuthor(this.blog.custom_meta['author'] || `@${this.blog.ownerObj.username}`)
+      .setOgType('article')
+      .setCanonicalUrl(blog.perma_url)
       .setOgUrl(blog.perma_url)
       .setOgImage(blog.thumbnail_src)
       .setRobots(
         blog['thumbs:up:count'] >= MIN_METRIC_FOR_ROBOTS ? 'all' : 'noindex'
       );
+
+    if (blog.nsfw.length) {
+      this.metaService.setNsfw(true);
+    }
   }
 }

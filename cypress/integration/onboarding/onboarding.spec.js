@@ -141,14 +141,53 @@ context('Onboarding', () => {
     // should be in the newsfeed
     cy.location('pathname').should('eq', '/newsfeed/subscriptions');
 
+    // should be in the Avatar step
+
+    // should have a continue and a skip button
+    cy.get('button.mf-button--hollow').contains('Skip');
+    cy.get('button.mf-button--alt').contains('Upload a Photo');
+
+    // add avatar
+    cy.uploadFile(
+      '#onboarding-avatar-input',
+      '../fixtures/international-space-station-1776401_1920.jpg',
+      'image/jpg'
+    );
+
+    // continue should move you to the next step (groups)
+    cy.get('button.mf-button--alt').contains('Continue').click();
+
+    cy.get('.m-onboarding__groupList').should('exist');
+
+    // go back to avatar and test Cancel
+    cy.visit(`/onboarding/avatar`);
+
+    cy.location('pathname')
+      .should('eq', '/onboarding/avatar');
+
+    // add avatar
+    cy.uploadFile(
+      '#onboarding-avatar-input',
+      '../fixtures/international-space-station-1776401_1920.jpg',
+      'image/jpg'
+    );
+
+    cy.wait(1000);
+
+    // should cancel cropping
+    cy.get('button.mf-button--hollow').contains('Cancel').click();
+
+    // should redirect to next step
+    cy.get('button.mf-button--hollow').contains('Skip').click();
+
     // should be in the Groups step
 
     // should have a groups list
-    // cy.get('.m-groupList__list').should('exist');
+    cy.get('.m-onboarding__groupList').should('exist');
 
     // clicking on a group join button should join the group
     // cy.get('.m-groupList__list .m-groupList__item:first-child .m-join__subscribe').contains('add').click();
-    // // button should change to a check, and clicking on it should leave the group
+    // button should change to a check, and clicking on it should leave the group
     // cy.get('.m-groupList__list .m-groupList__item:first-child .m-join__subscribed').contains('check').click();
     // cy.get('.m-groupList__list .m-groupList__item:first-child .m-join__subscribe i').contains('add');
 
@@ -158,6 +197,8 @@ context('Onboarding', () => {
 
 
     // should be in the Channels step
+
+    cy.get('.m-onboarding__channelList').should('exist');
 
     // should have a channels list
     // cy.get('.m-channelList__list').should('exist');

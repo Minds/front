@@ -56,6 +56,7 @@ export class CommentsTreeComponent implements OnInit, OnDestroy {
   @Input() readonly: boolean = false;
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
+  @Input() showOnlyPoster: boolean = false;
 
   private shouldReuseRouteFn;
 

@@ -18,7 +18,6 @@ import { ScrollToTopService } from './services/scroll-to-top.service';
 import { ContextService } from './services/context.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
-import { WebtorrentService } from './modules/webtorrent/webtorrent.service';
 import { ActivatedRoute, NavigationEnd, Router, Route } from '@angular/router';
 import { ChannelOnboardingService } from './modules/onboarding/channel/onboarding.service';
 import { BlockListService } from './common/services/block-list.service';
@@ -69,7 +68,6 @@ export class Minds implements OnInit, OnDestroy {
     public web3Wallet: Web3WalletService,
     public client: Client,
     public upload: Upload,
-    public webtorrent: WebtorrentService,
     public onboardingService: ChannelOnboardingService,
     public router: Router,
     public blockListService: BlockListService,
@@ -196,8 +194,6 @@ export class Minds implements OnInit, OnDestroy {
     this.context.listen();
 
     this.web3Wallet.setUp();
-
-    this.webtorrent.setUp();
 
     this.themeService.setUp();
 

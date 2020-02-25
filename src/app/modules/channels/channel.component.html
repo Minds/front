@@ -154,4 +154,8 @@
   </section>
 </div>
 
-<m-channel--explicit-overlay [channel]="user"></m-channel--explicit-overlay>
+<m-explicit-overlay
+  [entity]="user"
+  message="This channel contains content that is NSFW"
+  i18n-message
+></m-explicit-overlay>

@@ -21,6 +21,7 @@
         >{{activity.ownerObj.name}}</strong
       >
       <m-channel--badges
+        data-nosnippet
         class="m-channel--badges-activity"
         [user]="activity.ownerObj"
         badges="[ 'admin', 'verified' ]"
@@ -221,7 +222,7 @@
       </span>
     </div>
     <minds-rich-embed
-      (mediaModalRequested)="openModal()"
+      (mediaModalRequested)="onRichEmbedClick($event)"
       [src]="activity"
       [maxheight]="480"
     >
@@ -400,8 +401,7 @@
   ></m-wire-button>
   <button
     class="m-btn m-btn--action m-btn--slim minds-boost-button"
-    *ngIf="session.getLoggedInUser().guid == activity.owner_guid 
-      && !isScheduled(activity.time_created)"
+    *ngIf="showBoostButton()"
     id="boost-actions"
     (click)="showBoost()"
   >
@@ -411,7 +411,10 @@
     [object]="activity"
     (click)="openComments()"
   ></minds-button-comment>
-  <minds-button-remind [object]="activity"></minds-button-remind>
+  <minds-button-remind
+    *ngIf="showRemindButton()"
+    [object]="activity"
+  ></minds-button-remind>
 </div>
 
 <!-- Activity metrics -->

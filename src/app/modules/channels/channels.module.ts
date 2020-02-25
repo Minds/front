@@ -23,7 +23,6 @@ import { ChannelComponent } from './channel.component';
 import { ChannelsTileComponent } from './tile/tile.component';
 import { PosterModule } from '../newsfeed/poster/poster.module';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
-import { ExplicitOverlayComponent } from './explicit-overlay/overlay.component';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ChannelSortedModuleComponent } from './sorted/module.component';
@@ -59,7 +58,6 @@ const routes: Routes = [
     ChannelsTileComponent,
     ChannelFeedComponent,
     ChannelSidebar,
-    ExplicitOverlayComponent,
     ChannelSortedComponent,
     ChannelSortedModuleComponent,
   ],

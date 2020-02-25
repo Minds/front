@@ -13,6 +13,12 @@
   <router-outlet></router-outlet>
 </div>
 
+<m-explicit-overlay
+  [entity]="group"
+  message="This group contains content that is NSFW"
+  i18n-message
+></m-explicit-overlay>
+
 <div
   class="m-group__grid"
   *ngIf="group && (group['is:member'] || group.membership == 2)"

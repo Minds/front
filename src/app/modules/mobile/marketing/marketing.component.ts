@@ -5,7 +5,6 @@ import {
 } from '@angular/core';
 import { Session } from '../../../services/session';
 import { MobileService } from '../mobile.service';
-import { first } from 'lodash';
 import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
@@ -47,9 +46,9 @@ export class MobileMarketingComponent {
       this.detectChanges();
 
       this.releases = await this.service.getReleases();
-      this.latestRelease = await first(
-        this.releases.filter(rel => rel.latest && !rel.unstable)
-      );
+      this.latestRelease = this.releases.filter(
+        rel => rel.latest && !rel.unstable
+      )[0];
     } catch (e) {
       console.error(e);
       this.error = e.message || 'Unknown error';

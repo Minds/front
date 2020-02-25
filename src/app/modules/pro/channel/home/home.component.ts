@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { NavItems, ProChannelService } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
@@ -17,8 +17,6 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 })
 export class ProChannelHomeComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
-
-  featuredContent: Array<any> = [];
 
   categories: Array<{
     tag: { tag: string; label: string };
@@ -35,44 +33,11 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.load();
     this.setMenuNavItems();
   }
 
   ngOnDestroy() {
     this.channelService.destroyMenuNavItems();
-  }
-
-  async load() {
-    const MAX_FEATURED_CONTENT = 17; // 1 + (8 * 2)
-
-    this.inProgress = true;
-    this.featuredContent = [];
-    this.categories = [];
-    this.moreData = true;
-
-    this.detectChanges();
-
-    try {
-      this.featuredContent = await this.channelService.getFeaturedContent();
-      this.detectChanges();
-
-      const { content } = await this.channelService.getContent({
-        limit: MAX_FEATURED_CONTENT,
-      });
-      this.featuredContent = this.featuredContent
-        .concat(content)
-        .slice(0, MAX_FEATURED_CONTENT);
-      this.detectChanges();
-
-      this.categories = await this.channelService.getAllCategoriesContent();
-      this.detectChanges();
-    } catch (e) {
-      this.moreData = false;
-    }
-
-    this.inProgress = false;
-    this.detectChanges();
   }
 
   setMenuNavItems() {

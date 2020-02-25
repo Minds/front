@@ -1,0 +1,14 @@
+<minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
+<minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
+
+<minds-button-remind [object]="entity"></minds-button-remind>
+<minds-button-comment
+  [object]="entity"
+  (click)="toggleComments()"
+></minds-button-comment>
+
+<ng-container *ngIf="session.getLoggedInUser().guid != entity.ownerObj.guid">
+  <div class="m-layout__spacer"></div>
+
+  <m-wire-button [object]="entity"></m-wire-button>
+</ng-container>

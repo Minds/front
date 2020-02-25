@@ -1,5 +1,11 @@
 ///<reference path="../../../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  fakeAsync,
+  tick,
+} from '@angular/core/testing';
 import {
   Component,
   DebugElement,
@@ -8,6 +14,8 @@ import {
   Input,
   Output,
   NO_ERRORS_SCHEMA,
+  Pipe,
+  PipeTransform,
 } from '@angular/core';
 
 import { Activity } from './activity';
@@ -52,6 +60,8 @@ import { clientMetaServiceMock } from '../../../../../../tests/client-meta-servi
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
 import { SiteService } from '../../../../../common/services/site.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { TagsPipeMock } from '../../../../../mocks/pipes/tagsPipe.mock';
+import { RedirectService } from '../../../../../common/services/redirect.service';
 
 /* tslint:disable */
 // START MOCKS
@@ -416,7 +426,7 @@ describe('Activity', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        TagsPipe,
+        TagsPipeMock,
         DomainPipe,
         AbbrPipe,
         ExcerptPipe,
@@ -506,6 +516,7 @@ describe('Activity', () => {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
+        RedirectService,
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents(); // compile template and css
@@ -569,5 +580,56 @@ describe('Activity', () => {
     expect(views.nativeElement.textContent).toContain(100);
   });
 
+  it('should default disableReminding to FALSE', () => {
+    expect(comp.disableReminding).toBeFalsy();
+  });
+
+  it('should not show remind button if disableReminding set to true', () => {
+    spyOn(comp, 'isScheduled').and.callFake(function() {
+      return false;
+    });
+    comp.disableReminding = true;
+    comp.activity.time_created = 999999999999999999999;
+    expect(comp.showRemindButton()).toBeFalsy();
+  });
+
+  it('should show remind button if disableReminding set to false', () => {
+    spyOn(comp, 'isScheduled').and.callFake(function() {
+      return false;
+    });
+    comp.disableReminding = false;
+    comp.activity.time_created = 999999999999999999999;
+    expect(comp.showRemindButton()).toBeTruthy();
+  });
+
+  it('should default disableBoosting to FALSE', () => {
+    expect(comp.disableBoosting).toBeFalsy();
+  });
+
+  it('should not show boost button if disableReminding set to true', () => {
+    spyOn(comp, 'isScheduled').and.callFake(function() {
+      return false;
+    });
+    spyOn(comp.session, 'getLoggedInUser').and.callFake(function() {
+      return { guid: '123' };
+    });
+    comp.disableBoosting = true;
+    comp.activity.time_created = 999999999999999999999;
+    comp.activity.owner_guid = '123';
+    expect(comp.showBoostButton()).toBeFalsy();
+  });
+
+  it('should show boost button if disableReminding set to false', () => {
+    spyOn(comp, 'isScheduled').and.callFake(function() {
+      return false;
+    });
+    spyOn(comp.session, 'getLoggedInUser').and.callFake(function() {
+      return { guid: '123' };
+    });
+    comp.disableBoosting = false;
+    comp.activity.time_created = 999999999999999999999;
+    comp.activity.owner_guid = '123';
+    expect(comp.showBoostButton()).toBeTruthy();
+  });
   // TODO test the rest of the features
 });

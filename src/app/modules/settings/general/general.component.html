@@ -177,6 +177,27 @@
 
 <!-- END: LANGUAGE -->
 
+<!-- START: SHARE BUTTONS  -->
+<div class="m-settings--section m-border m-settings--share-buttons">
+  <h4 i18n="@@MINDS__SETTINGS__SHARE_BUTTONS_TITLE">Share Buttons</h4>
+  <div class="mdl-card__supporting-text">
+    <input
+      type="checkbox"
+      id="show_share_buttons"
+      (click)="change()"
+      name="show_share_buttons"
+      [(ngModel)]="show_share_buttons"
+    />
+    <label for="show_share_buttons">
+      <ng-container i18n="@@MINDS__SETTINGS__SHOW_SHARE_BUTTONS_LABEL">
+        Show share buttons
+      </ng-container>
+    </label>
+  </div>
+</div>
+
+<!-- END: SHARE BUTTONS -->
+
 <!-- START: SESSIONS -->
 <div class="m-settings--section m-border m-settings--close-all-sessions">
   <h4 i18n="@@MINDS__SETTINGS__SESSIONS">Sessions</h4>

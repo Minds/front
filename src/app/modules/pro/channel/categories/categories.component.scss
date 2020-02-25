@@ -2,6 +2,11 @@ m-pro--channel--categories {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  margin: 16px 0 32px;
+
+  @media screen and (max-width: $max-mobile) {
+    display: none;
+  }
 
   .m-proChannel__category {
     cursor: pointer;

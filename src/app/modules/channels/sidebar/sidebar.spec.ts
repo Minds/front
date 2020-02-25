@@ -44,6 +44,7 @@ import { ChannelModulesComponent } from '../modules/modules';
 import { SiteService } from '../../../common/services/site.service';
 import { IfBrowserDirective } from '../../../common/directives/if-browser.directive';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { TagsPipeMock } from '../../../mocks/pipes/tagsPipe.mock';
 import {
   CookieService,
   CookieOptionsProvider,
@@ -70,7 +71,7 @@ describe('ChannelSidebar', () => {
           selector: 'm-channel--social-profiles',
           inputs: ['user', 'editing'],
         }),
-        TagsPipe,
+        TagsPipeMock,
         MockComponent({
           selector: 'm-wire-channel',
           inputs: ['channel', 'editing', 'rewards'],
@@ -191,6 +192,7 @@ describe('ChannelSidebar', () => {
       subscribers_count: 182,
       impressions: 18200,
       mode: ChannelMode.PUBLIC,
+      nsfw: [],
     };
     comp.editing = false;
     uploadMock.response[`api/v1/channel/avatar`] = {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Client } from '../../../../services/api';
 import isMobile from '../../../../helpers/is-mobile';
 
@@ -44,6 +45,11 @@ export class VideoPlayerService {
    */
   isModal = false;
 
+  /**
+   * Observable for if ready
+   */
+  onReady$: Subject<void> = new Subject();
+
   constructor(private client: Client) {}
 
   /**
@@ -81,6 +87,8 @@ export class VideoPlayerService {
       this.sources = (<any>response).sources;
       this.poster = (<any>response).poster;
       this.status = (<any>response).transcode_status;
+      this.onReady$.next();
+      this.onReady$.complete();
     } catch (e) {
       console.error(e);
     }

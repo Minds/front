@@ -18,9 +18,11 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { WireModule } from '../wire/wire.module';
 import { VideoModule } from '../media/components/video/video.module';
 import { ProChannelHomeComponent } from './channel/home/home.component';
+import { ProChannelHomeCategoryContent } from './channel/home/category-content/category-content.component';
 import { ProGroupTileComponent } from './channel/tiles/group/group-tile.component';
 import { ProUnsubscribeModalComponent } from './channel/unsubscribe-modal/modal.component';
 import { ProCategoriesComponent } from './channel/categories/categories.component';
+import { ProChannelContentListComponent } from './channel/content-list/content-list.component';
 import { BlogView } from '../blogs/view/view';
 import { MediaModalComponent } from '../media/modal/modal.component';
 import { AuthModule } from '../auth/auth.module';
@@ -35,6 +37,8 @@ import { BlogViewInfinite } from '../blogs/view/infinite';
 import { BlogEdit } from '../blogs/edit/edit';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { ModalsModule } from '../modals/modals.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { ProRedirectComponent } from './redirect.component';
 
 const routes: Routes = [
   {
@@ -131,6 +135,10 @@ export const PRO_DOMAIN_ROUTES = [
         path: ':type',
         component: ProChannelListComponent,
       },
+      {
+        path: 'groups/profile/:guid',
+        component: ProRedirectComponent,
+      },
     ],
   },
 ];
@@ -149,6 +157,7 @@ export const PRO_DOMAIN_ROUTES = [
     VideoModule,
     AuthModule,
     ModalsModule,
+    ActivityModule,
   ],
   providers: [ProService],
   declarations: [
@@ -161,10 +170,13 @@ export const PRO_DOMAIN_ROUTES = [
     ProChannelComponent,
     ProChannelLoginComponent,
     ProChannelListComponent,
+    ProChannelContentListComponent,
     ProChannelFooterComponent,
+    ProChannelHomeCategoryContent,
     ProGroupTileComponent,
     ProUnsubscribeModalComponent,
     ProHamburgerMenu,
+    ProRedirectComponent,
     SubscribeButtonComponent,
     SearchBoxComponent,
   ],
@@ -173,6 +185,7 @@ export const PRO_DOMAIN_ROUTES = [
     MediaModalComponent,
     ProUnsubscribeModalComponent,
     BlogView,
+    ProRedirectComponent,
   ],
 })
 export class ProModule {}
