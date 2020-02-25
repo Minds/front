@@ -106,6 +106,8 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
 
     if (value) {
       this.createGroupsSideBar();
+    } else {
+      this.host.viewContainerRef.clear();
     }
   }
 
