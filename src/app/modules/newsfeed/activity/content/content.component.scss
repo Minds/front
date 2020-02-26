@@ -1,0 +1,143 @@
+m-activity__content {
+  display: block;
+  width: 100%;
+}
+.m-activity--fixedHeight {
+  m-activity__content {
+    flex: 1;
+    // overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .m-activityContent__media--video,
+  .m-activityContent__media--image,
+  .m-activityContent__media--richEmbed,
+  .m-activityContent__remind {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .m-activityContent__media--image img {
+    height: 100%;
+    max-height: unset;
+  }
+  .m-activityContent__fixedHeightSpacer {
+    flex: 1;
+  }
+}
+
+.m-activityContent__remind {
+  overflow: hidden;
+}
+
+.m-activityContent__media--video,
+.m-activityContent__media--image,
+.m-activityContent__media--richEmbed {
+  @include m-theme() {
+    background: themed($m-bgColor--secondary);
+  }
+}
+
+.m-activityContent__message {
+  font-size: 15px;
+  padding: 0px $activity-padding-lr 16px;
+
+  &.m-activityContent__message--isTextOnly {
+    word-break: break-word;
+
+    &.m-activityContent__message--short {
+      line-height: 34px;
+      font-size: 28px;
+    }
+  }
+}
+.m-activity--noOwnerBlock .m-activityContent__message {
+  padding-top: 16px;
+}
+
+.m-activityContent__message,
+.m-activityContent__mediaDescription {
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+
+  a {
+    text-decoration: none;
+    font-weight: 600;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.m-activityContent__mediaDescription {
+  padding: 16px $activity-padding-lr;
+  font-size: 16px;
+  margin: 0;
+  p {
+    margin: 0;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+  }
+}
+
+.m-activityContent__media--video {
+  .m-videoPlayer__placeholder {
+    padding-top: 56.25%;
+    height: 0;
+  }
+}
+
+.m-activityContent__media--image {
+  a {
+    height: 100%;
+    widows: 100%;
+  }
+  img {
+    object-fit: contain;
+    width: 100%;
+    max-height: 800px;
+  }
+}
+
+.m-activityContent__media--richEmbed {
+  img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+  }
+  .meta {
+    padding: 20px $activity-padding-lr;
+    display: block;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  h2 {
+    font-size: 15px;
+    text-decoration: none;
+  }
+  .m-blurb {
+    display: none;
+  }
+  .m-url {
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary) !important;
+    }
+  }
+}
+
+.m-activityContent__remind {
+  padding: 0px $activity-padding-lr 16px;
+}

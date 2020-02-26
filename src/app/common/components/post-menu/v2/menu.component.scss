@@ -1,0 +1,14 @@
+.m-postMenu__button {
+  border: 0;
+  cursor: pointer;
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+  }
+
+  i {
+    font-size: 32px;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+}

@@ -61,6 +61,7 @@ import { AutocompleteSuggestionsService } from '../../../../suggestions/services
 import { SiteService } from '../../../../../common/services/site.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { TagsPipeMock } from '../../../../../mocks/pipes/tagsPipe.mock';
+import { RedirectService } from '../../../../../common/services/redirect.service';
 
 /* tslint:disable */
 // START MOCKS
@@ -515,6 +516,7 @@ describe('Activity', () => {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
+        RedirectService,
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents(); // compile template and css

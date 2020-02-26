@@ -4,7 +4,7 @@ import {
   isPlatformServer,
   Location,
 } from '@angular/common';
-import { RouterModule, Router, Routes } from '@angular/router';
+import { RouterModule, Router, Routes, ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -103,7 +103,6 @@ import { FeedsService } from './services/feeds.service';
 import { EntitiesService } from './services/entities.service';
 import { BlockListService } from './services/block-list.service';
 import { SettingsService } from '../modules/settings/settings.service';
-import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';

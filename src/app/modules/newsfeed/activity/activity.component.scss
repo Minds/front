@@ -1,0 +1,28 @@
+$activity-padding-lr: 21px;
+
+m-activity {
+  display: block;
+  position: relative;
+
+  &,
+  &.m-border {
+    border-radius: $m-borderRadius;
+    box-shadow: 0 $m-boxShadowOffset $m-boxShadowBlur rgba(0, 0, 0, 0.05);
+  }
+
+  @include m-theme() {
+    background: themed($m-bgColor--primary);
+  }
+
+  .m-comment .minds-avatar {
+    @include m-theme() {
+      background: themed($m-bgColor--primary);
+    }
+  }
+}
+
+.m-activity--fixedHeight {
+  height: 750px;
+  display: flex;
+  flex-direction: column;
+}

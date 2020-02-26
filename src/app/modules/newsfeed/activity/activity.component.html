@@ -1,0 +1,28 @@
+<m-activity__ownerBlock *ngIf="service.displayOptions.showOwnerBlock">
+  <ng-container class="m-activityOwnerBlock__right">
+    <m-activity__metrics></m-activity__metrics>
+    <m-activity__menu></m-activity__menu>
+  </ng-container>
+</m-activity__ownerBlock>
+
+<m-activity__content
+  *ngIf="service.shouldShowContent$ | async"
+></m-activity__content>
+
+<m-activity__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
+</m-activity__nsfwConsent>
+
+<m-activity__toolbar
+  *ngIf="service.displayOptions.showToolbar"
+></m-activity__toolbar>
+
+<ng-container *mIfBrowser>
+  <m-comments__entityOutlet
+    *ngIf="service.displayOptions.showComments"
+    [entity]="service.entity$ | async"
+    [canDelete]="service.canDelete$ | async"
+    [showOnlyPoster]="service.displayOptions.showOnlyCommentsInput"
+    [fixedHeight]="service.displayOptions.fixedHeight"
+  >
+  </m-comments__entityOutlet>
+</ng-container>

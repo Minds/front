@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
 import { Session } from '../../../../services/session';
@@ -15,7 +16,7 @@ import { Navigation as NavigationService } from '../../../../services/navigation
   templateUrl: 'user-menu.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserMenuV3Component implements OnInit {
+export class UserMenuV3Component implements OnInit, OnDestroy {
   @Input() useAvatar: boolean = false;
   @Input() showFooterLinks: boolean = false;
 
@@ -58,7 +59,6 @@ export class UserMenuV3Component implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-    this.themeService.applyThemePreference();
   }
 
   toggleTheme() {

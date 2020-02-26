@@ -217,11 +217,7 @@ export const MINDS_PROVIDERS: any[] = [
     provide: InMemoryStorageService,
     useFactory: InMemoryStorageService._,
   },
-  {
-    provide: ThemeService,
-    useFactory: ThemeService._,
-    deps: [RendererFactory2, Client, Session, Storage, PLATFORM_ID],
-  },
+  ThemeService,
   DiagnosticsService,
   AuthService,
   FormToastService,
