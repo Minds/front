@@ -115,7 +115,9 @@ export class GroupsSidebarMarkersComponent implements OnInit, OnDestroy {
   }
 
   async load(refresh: boolean = false) {
-    if (this.inProgress) return false;
+    if (this.inProgress || !this.session.getLoggedInUser()) {
+      return false;
+    }
     this.inProgress = true;
     try {
       const response: any = await this.client.get('api/v1/groups/member', {
