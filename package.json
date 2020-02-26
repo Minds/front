@@ -39,6 +39,8 @@
     "@angular/platform-browser-dynamic": "~8.1.1",
     "@angular/platform-server": "~8.1.1",
     "@angular/router": "~8.1.1",
+    "@ckeditor/ckeditor5-angular": "^1.1.2",
+    "@ckeditor/ckeditor5-build-balloon": "^17.0.0",
     "@gorniv/ngx-universal": "^2.0.1",
     "@nguniversal/common": "~8.1.1",
     "@nguniversal/express-engine": "^8.1.1",

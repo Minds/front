@@ -13,6 +13,7 @@ import { Tag } from '../../hashtags/types/tag';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { DialogService } from '../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'minds-blog-edit',
@@ -79,6 +80,7 @@ export class BlogEdit {
     public route: ActivatedRoute,
     protected inMemoryStorageService: InMemoryStorageService,
     private dialogService: DialogService,
+    public featuresService: FeaturesService,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -165,6 +167,10 @@ export class BlogEdit {
     });
   }
 
+  onContentChange(val) {
+    this.blog.description = val;
+  }
+
   canDeactivate(): Observable<boolean> | boolean {
     if (!this.editing || !this.session.getLoggedInUser()) {
       return true;
@@ -229,57 +235,70 @@ export class BlogEdit {
     this.error = msg;
   }
 
-  save() {
+  save(): void {
     if (!this.canSave) return;
 
     if (!this.validate()) return;
 
     this.error = '';
+    if (!this.showNewEditor()) {
+      this.inlineEditor.prepareForSave().then(() => {
+        this.dispatchSave();
+      });
+      return;
+    }
+    this.dispatchSave();
+  }
 
-    this.inlineEditor.prepareForSave().then(() => {
-      const blog = Object.assign({}, this.blog);
+  /**
+   * Prepares and dispatches blog save.
+   */
+  dispatchSave(): void {
+    const blog = Object.assign({}, this.blog);
 
-      // only allowed props
-      blog.nsfw = this.blog.nsfw;
-      blog.mature = blog.mature ? 1 : 0;
-      blog.monetization = blog.monetization ? 1 : 0;
-      blog.monetized = blog.monetized ? 1 : 0;
-      blog.time_created = blog.time_created || Math.floor(Date.now() / 1000);
+    // only allowed props
+    blog.nsfw = this.blog.nsfw;
+    blog.mature = blog.mature ? 1 : 0;
+    blog.monetization = blog.monetization ? 1 : 0;
+    blog.monetized = blog.monetized ? 1 : 0;
+    blog.time_created = blog.time_created || Math.floor(Date.now() / 1000);
+    blog.editor_version = this.showNewEditor() ? 2 : 1;
 
-      this.editing = false;
-      this.inProgress = true;
-      this.canSave = false;
-      this.check_for_banner()
-        .then(() => {
-          this.upload
-            .post('api/v1/blog/' + this.guid, [this.banner], blog)
-            .then((response: any) => {
-              this.inProgress = false;
-              this.canSave = true;
-              this.blog.time_created = null;
+    this.editing = false;
+    this.inProgress = true;
+    this.canSave = false;
+    this.check_for_banner()
+      .then(() => {
+        this.upload
+          .post('api/v1/blog/' + this.guid, [this.banner], blog)
+          .then((response: any) => {
+            this.inProgress = false;
+            this.canSave = true;
+            this.blog.time_created = null;
 
-              if (response.status !== 'success') {
-                this.error = response.message;
-                return;
-              }
-              this.router.navigate(
-                response.route
-                  ? ['/' + response.route]
-                  : ['/blog/view', response.guid]
-              );
-            })
-            .catch(e => {
-              this.error = e;
-              this.canSave = true;
-              this.inProgress = false;
-            });
-        })
-        .catch(() => {
-          this.error = 'error:no-banner';
-          this.inProgress = false;
-          this.canSave = true;
-        });
-    });
+            if (response.status !== 'success') {
+              this.error = response.message;
+              return;
+            }
+            this.router.navigate(
+              response.route
+                ? ['/' + response.route]
+                : ['/blog/view', response.guid]
+            );
+          })
+          .catch(e => {
+            console.error(e);
+            this.error = e;
+            this.canSave = true;
+            this.inProgress = false;
+          });
+      })
+      .catch(e => {
+        console.error(e);
+        this.error = 'error:no-banner';
+        this.inProgress = false;
+        this.canSave = true;
+      });
   }
 
   add_banner(banner: any) {
@@ -352,5 +371,16 @@ export class BlogEdit {
    */
   onNSFWSelections(nsfw) {
     this.blog.nsfw = nsfw.map(reason => reason.value);
+  }
+
+  /**
+   * True if new editor should be shown to user.
+   * (new blogs, or already v2 blogs only, when feat flag is enabled)
+   */
+  showNewEditor(): boolean {
+    return (
+      this.featuresService.has('ckeditor5') &&
+      (!this.blog.time_created || Number(this.blog.editor_version) === 2)
+    );
   }
 }
