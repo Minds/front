@@ -47,13 +47,23 @@
   </div>
 
   <div class="mdl-cell mdl-cell--12-col minds-blog-descriptions">
-    <m-inline-editor
-      name="description"
-      [(ngModel)]="blog.description"
-      placeholder="Go ahead and write some content!"
-      i18n-placeholder="@@BLOGS__EDIT__INLINE_EDITOR_PLACEHOLDER"
-      #inlineEditor
-    ></m-inline-editor>
+    <ng-container *ngIf="!showNewEditor(); else newEditor">
+      <m-inline-editor
+        name="description"
+        [(ngModel)]="blog.description"
+        placeholder="Go ahead and write some content!"
+        i18n-placeholder="@@BLOGS__EDIT__INLINE_EDITOR_PLACEHOLDER"
+        #inlineEditor
+      ></m-inline-editor>
+    </ng-container>
+    <ng-template #newEditor>
+      <ng-container *mIfBrowser>
+        <m-blog__editor
+          (contentChanged)="onContentChange($event)"
+          [content]="blog.description"
+        ></m-blog__editor>
+      </ng-container>
+    </ng-template>
   </div>
 
   <div class="mdl-cell mdl-cell--12-col">
