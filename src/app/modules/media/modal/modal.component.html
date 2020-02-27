@@ -31,13 +31,38 @@
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
             [@slowFade]="isLoading ? 'out' : 'in'"
+            [ngClass]="{
+              'm-mature-content': attachment.shouldBeBlurred(entity),
+              'm-mature-content-shown': attachment.isForcefullyShown(entity)
+            }"
           >
+            <div
+              class="m-mature-overlay"
+              (click)="toggleMatureVisibility()"
+              [style.width]="mediaWidth + 'px'"
+              [style.height]="mediaHeight + 'px'"
+            >
+              <span
+                class="m-mature-overlay-note"
+                [style.height]="mediaHeight + 'px'"
+              >
+                <i
+                  class="material-icons"
+                  title="Mature content"
+                  i18n-title="@@M__COMMON__MATURE_CONTENT"
+                  >explicit</i
+                >
+                <span i18n="@@M__COMMON__CONFIRM_18"
+                  >Click to confirm you are 18+</span
+                >
+              </span>
+            </div>
             <img
               class="m-mediaModal__media--image"
               [src]="thumbnail"
               (load)="isLoaded()"
-              [style.height]="entityHeight + 'px'"
               [style.width]="entityWidth + 'px'"
+              [style.height]="entityHeight + 'px'"
             />
           </div>
 
@@ -47,7 +72,32 @@
             *ngIf="contentType === 'video'"
             [style.width]="mediaWidth + 'px'"
             [style.height]="mediaHeight + 'px'"
+            [ngClass]="{
+              'm-mature-content': attachment.shouldBeBlurred(entity),
+              'm-mature-content-shown': attachment.isForcefullyShown(entity)
+            }"
           >
+            <div
+              class="m-mature-overlay"
+              (click)="toggleMatureVisibility()"
+              [style.width]="mediaWidth + 'px'"
+              [style.height]="mediaHeight + 'px'"
+            >
+              <span
+                class="m-mature-overlay-note"
+                [style.height]="mediaHeight + 'px'"
+              >
+                <i
+                  class="material-icons"
+                  title="Mature content"
+                  i18n-title="@@M__COMMON__MATURE_CONTENT"
+                  >explicit</i
+                >
+                <span i18n="@@M__COMMON__CONFIRM_18"
+                  >Click to confirm you are 18+</span
+                >
+              </span>
+            </div>
             <m-videoPlayer
               [guid]="entity.guid"
               shouldPlayInModal="false"
@@ -58,11 +108,36 @@
             ></m-videoPlayer>
           </div>
 
-          <!-- RICH-EMBED -->
+          <!-- MEDIA: RICH-EMBED -->
           <div
             class="m-mediaModal__mediaWrapper m-mediaModal__mediaWrapper--richEmbed"
             *ngIf="contentType === 'rich-embed'"
+            [ngClass]="{
+              'm-mature-content': attachment.shouldBeBlurred(entity),
+              'm-mature-content-shown': attachment.isForcefullyShown(entity)
+            }"
           >
+            <div
+              class="m-mature-overlay"
+              (click)="toggleMatureVisibility()"
+              [style.width]="mediaWidth + 'px'"
+              [style.height]="mediaHeight + 'px'"
+            >
+              <span
+                class="m-mature-overlay-note"
+                [style.height]="mediaHeight + 'px'"
+              >
+                <i
+                  class="material-icons"
+                  title="Mature content"
+                  i18n-title="@@M__COMMON__MATURE_CONTENT"
+                  >explicit</i
+                >
+                <span i18n="@@M__COMMON__CONFIRM_18"
+                  >Click to confirm you are 18+</span
+                >
+              </span>
+            </div>
             <minds-rich-embed
               [src]="entity"
               [maxheight]="480"
@@ -89,7 +164,11 @@
           <!-- OVERLAY -->
           <div
             class="m-mediaModal__overlayContainer"
-            *ngIf="overlayVisible && contentType !== 'rich-embed'"
+            *ngIf="
+              overlayVisible &&
+              contentType !== 'rich-embed' &&
+              !attachment.shouldBeBlurred(entity)
+            "
             @fastFade
           >
             <div
@@ -278,7 +357,7 @@
               </div>
               <!-- MESSAGE -->
               <div
-                class="m-mediaModal__message mdl-card__supporting-text"
+                class="m-mediaModal__message mdl-card__supporting-text m-mature-message"
                 m-read-more
                 *ngIf="
                   this.contentType !== 'blog' &&
@@ -288,9 +367,32 @@
                 "
                 [maxHeightAllowed]="136"
               >
+                <a
+                  class="m-mature-text-toggle"
+                  (click)="toggleMatureVisibility()"
+                  *ngIf="
+                    attachment.shouldBeBlurred(entity) ||
+                    attachment.isForcefullyShown(entity)
+                  "
+                  [ngClass]="{
+                    'mdl-color-text--red-500': attachment.isForcefullyShown(
+                      entity
+                    )
+                  }"
+                >
+                  <i class="material-icons m-material-icons-inline">explicit</i>
+                </a>
                 <span
                   class="m-mature-message-content"
                   [innerHtml]="title | tags"
+                  [ngClass]="{
+                    'm-mature-text': attachment.shouldBeBlurred(entity)
+                  }"
+                  (click)="
+                    entity.mature && !entity.mature_visibility
+                      ? toggleMatureVisibility()
+                      : null
+                  "
                 >
                 </span>
                 <m-read-more--button></m-read-more--button>
