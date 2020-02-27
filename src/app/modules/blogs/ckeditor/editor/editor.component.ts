@@ -27,34 +27,11 @@ export class BlogEditorComponent {
 
   Editor: any;
 
-  // TODO: Manually adjust configuration when custom built.
-  editorConfig: Object = {
-    /**
-      plugins: [ Alignment ],
-      alignment: {
-        options: [ 'left', 'right' ]
-      },
-      toolbar: [
-        'heading',
-        '|',
-        'bulletedList',
-        'numberedList',
-        'alignment',
-        'undo',
-        'redo',
-        'bold',
-        'italic',
-        'bulletedList',
-        'numberedList',
-        'blockQuote',
-      ],
-    */
-  };
   constructor(@Inject(PLATFORM_ID) protected platformId: Object) {}
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      const BalloonEditor = require('@ckeditor/ckeditor5-build-balloon');
+      const BalloonEditor = require('@bhayward93/ckeditor5-build-minds');
       this.Editor = BalloonEditor;
     }
   }
