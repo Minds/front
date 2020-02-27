@@ -29,6 +29,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { HorizontalFeedService } from '../../../common/services/horizontal-feed.service';
 import { ShareModalComponent } from '../../modals/share/share';
+import { AttachmentService } from '../../../services/attachment';
 
 export type MediaModalParams = {
   entity: any;
@@ -148,7 +149,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     @SkipSelf() injector: Injector,
     configs: ConfigsService,
     private horizontalFeed: HorizontalFeedService,
-    private features: FeaturesService
+    private features: FeaturesService,
+    public attachment: AttachmentService
   ) {
     this.clientMetaService
       .inherit(injector)
@@ -823,6 +825,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
         class: 'm-overlay-modal--medium m-overlayModal__share',
       })
       .present();
+  }
+
+  toggleMatureVisibility() {
+    this.entity.mature_visibility = !this.entity.mature_visibility;
   }
 
   ngOnDestroy() {
