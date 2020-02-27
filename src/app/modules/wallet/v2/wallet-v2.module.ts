@@ -1,30 +1,29 @@
 import { NgModule, PLATFORM_ID } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, RouterOutlet } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '../../../common/common.module';
 
 import { WalletDashboardComponent } from './dashboard.component';
-import { WalletBalanceTokensV2Component } from './balance-tokens/balance-tokens.component';
-import { WalletChartComponent } from './chart/chart.component';
-import { WalletTransactionsTableComponent } from './transactions-table/transactions-table.component';
-import { WalletRewardsPopupComponent } from './rewards-popup/rewards-popup.component';
-import { WalletDashboardService } from './dashboard.service';
-import { WalletSettingsTokensComponent } from './settings-tokens/settings-tokens.component';
-import { WalletSettingsCashComponent } from './settings-cash/settings-cash.component';
-import { WalletSettingsETHComponent } from './settings-eth/settings-eth.component';
-import { WalletSettingsBTCComponent } from './settings-btc/settings-btc.component';
-import { WalletTokenOnboardingComponent } from './token-onboarding/token-onboarding.component';
-import { WalletModalComponent } from './modal/modal.component';
-import { WalletPhoneVerificationComponent } from './phone-verification/phone-verification.component';
-import { WalletOnchainTransferComponent } from './onchain-transfer/onchain-transfer.component';
-import { WalletBalanceCashComponent } from './balance-cash/balance-cash.component';
-import { WalletPendingCashPayoutComponent } from './pending-cash-payout/pending-cash-payout.component';
-import { WalletTransactionsTokensComponent } from './transactions-tokens/transactions-tokens.component';
-import { WalletTransactionsCashComponent } from './transactions-cash/transactions-cash.component';
-import { WalletCashOnboardingComponent } from './settings-cash/cash-onboarding/cash-onboarding.component';
-import { WalletCashOnboardingExtrasComponent } from './settings-cash/cash-onboarding-extras/cash-onboarding-extras.component';
-import { WalletCashBankFormComponent } from './settings-cash/cash-bank-form/cash-bank-form.component';
+import { WalletBalanceTokensV2Component } from './tokens/balance/balance-tokens.component';
+import { WalletChartComponent } from './components/chart/chart.component';
+import { WalletTransactionsTableComponent } from './components/transactions-table/transactions-table.component';
+import { WalletRewardsPopupComponent } from './components/rewards-popup/rewards-popup.component';
+import { WalletSettingsTokensComponent } from './tokens/settings/settings-tokens.component';
+import { WalletSettingsCashComponent } from './cash/settings/settings-cash.component';
+import { WalletSettingsETHComponent } from './eth/settings/settings-eth.component';
+import { WalletSettingsBTCComponent } from './btc/settings/settings-btc.component';
+import { WalletTokenOnboardingComponent } from './tokens/onboarding/token-onboarding.component';
+import { WalletModalComponent } from './components/modal/modal.component';
+import { WalletPhoneVerificationComponent } from './components/phone-verification/phone-verification.component';
+import { WalletOnchainTransferComponent } from './components/onchain-transfer/onchain-transfer.component';
+import { WalletBalanceCashComponent } from './cash/balance/balance-cash.component';
+import { WalletPendingCashPayoutComponent } from './components/pending-cash-payout/pending-cash-payout.component';
+import { WalletTransactionsTokensComponent } from './tokens/transactions/transactions-tokens.component';
+import { WalletTransactionsCashComponent } from './cash/transactions/transactions-cash.component';
+import { WalletCashOnboardingComponent } from './cash/settings/cash-onboarding/cash-onboarding.component';
+import { WalletCashOnboardingExtrasComponent } from './cash/settings/cash-onboarding-extras/cash-onboarding-extras.component';
+import { WalletCashBankFormComponent } from './cash/settings/cash-bank-form/cash-bank-form.component';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { LocalWalletService } from '../../blockchain/local-wallet.service';
 import { TransactionOverlayService } from '../../blockchain/transaction-overlay/transaction-overlay.service';
@@ -32,6 +31,10 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { WithdrawContractService } from '../../blockchain/contracts/withdraw-contract.service';
 import { ChartV2Module } from '../../analytics/components/chart-v2/chart-v2.module';
+import { WalletV2TokensComponent } from './tokens/tokens.component';
+import { WalletV2CashComponent } from './cash/cash.component';
+import { WalletV2EthComponent } from './eth/eth.component';
+import { WalletV2BtcComponent } from './btc/btc.component';
 
 export const WALLET_V2_ROUTES: Routes = [
   {
@@ -44,12 +47,73 @@ export const WALLET_V2_ROUTES: Routes = [
     },
     children: [
       {
-        path: ':currency',
-        component: WalletDashboardComponent,
+        path: 'tokens',
+        component: WalletV2TokensComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'overview',
+            pathMatch: 'full',
+          },
+          {
+            path: 'overview',
+            component: WalletChartComponent,
+          },
+          {
+            path: 'transactions',
+            component: WalletTransactionsTokensComponent,
+          },
+          {
+            path: 'settings',
+            component: WalletSettingsTokensComponent,
+          },
+        ],
       },
       {
-        path: ':currency/:view',
-        component: WalletDashboardComponent,
+        path: 'cash',
+        component: WalletV2CashComponent,
+        children: [
+          {
+            path: 'transactions',
+            component: WalletTransactionsCashComponent,
+          },
+          {
+            path: 'settings',
+            component: WalletSettingsCashComponent,
+          },
+        ],
+      },
+      {
+        path: 'eth',
+        component: WalletV2EthComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'settings',
+          },
+          {
+            path: 'settings',
+            component: WalletSettingsETHComponent,
+          },
+        ],
+      },
+      {
+        path: 'btc',
+        component: WalletV2BtcComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'settings',
+          },
+          {
+            path: 'settings',
+            component: WalletSettingsBTCComponent,
+          },
+        ],
+      },
+      {
+        path: '**',
+        redirectTo: 'tokens',
       },
     ],
   },
@@ -61,6 +125,7 @@ export const WALLET_V2_ROUTES: Routes = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
+    RouterModule,
     RouterModule.forChild(WALLET_V2_ROUTES),
     ChartV2Module,
   ],
@@ -85,10 +150,14 @@ export const WALLET_V2_ROUTES: Routes = [
     WalletCashOnboardingComponent,
     WalletCashOnboardingExtrasComponent,
     WalletCashBankFormComponent,
+    // MH fixed:
+    WalletV2TokensComponent,
+    WalletV2CashComponent,
+    WalletV2EthComponent,
+    WalletV2BtcComponent,
   ],
   exports: [WalletDashboardComponent],
   providers: [
-    WalletDashboardService,
     {
       provide: Web3WalletService,
       useFactory: Web3WalletService._,

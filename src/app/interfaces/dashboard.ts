@@ -100,4 +100,5 @@ export interface ShadowboxHeaderTab {
   positiveTrend?: boolean;
   description?: string;
   isLocalCurrency?: boolean;
+  routerLink?: string;
 }

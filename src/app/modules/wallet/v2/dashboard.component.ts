@@ -13,7 +13,7 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 
 import { Subscription } from 'rxjs';
-import { WalletDashboardService, Wallet } from './dashboard.service';
+import { WalletV2Service, Wallet } from './wallet-v2.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import sidebarMenu from './sidebar-menu.default';
@@ -24,6 +24,7 @@ import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
   selector: 'm-walletDashboard',
   templateUrl: './dashboard.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [WalletV2Service],
 })
 export class WalletDashboardComponent implements OnInit, OnDestroy {
   @ViewChild('dashboardViews', { static: false })
@@ -36,9 +37,6 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
 
   activeCurrencyId: string;
   activeViewId: string;
-  tokenOnboardingComplete: boolean = false;
-  hasOnchainAddress: boolean = false;
-  phoneVerified: boolean = false;
 
   views: any = {
     tokens: [
@@ -54,10 +52,10 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     btc: [{ id: 'settings', label: 'Settings', display: true }],
   };
 
-  currencies: ShadowboxHeaderTab[] = [];
+  tabs: ShadowboxHeaderTab[] = [];
 
   constructor(
-    protected walletService: WalletDashboardService,
+    protected walletService: WalletV2Service,
     protected session: Session,
     protected router: Router,
     protected route: ActivatedRoute,
@@ -70,39 +68,16 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       this.router.navigate(['/login']);
       return;
     }
+
+    this.walletService.loadWallet();
+
     this.inProgress = true;
     this.detectChanges();
 
-    this.phoneVerified = this.session.getLoggedInUser().rewards;
-    this.hasOnchainAddress = this.session.getLoggedInUser().eth_wallet;
-    if (this.phoneVerified && this.hasOnchainAddress) {
-      this.tokenOnboardingComplete = true;
-    }
-
-    this.paramsSubscription = this.route.paramMap.subscribe(
-      (params: ParamMap) => {
-        const currencyParam = params.get('currency');
-        const viewParam = params.get('view');
-
-        this.activeCurrencyId = currencyParam;
-        if (!this.views[this.activeCurrencyId]) {
-          this.activeCurrencyId = 'tokens';
-          this.router.navigate(['/wallet/canary/tokens']);
-        }
-
-        if (
-          viewParam &&
-          this.views[this.activeCurrencyId].find(v => v.id === viewParam)
-        ) {
-          this.activeViewId = viewParam;
-        } else {
-          this.activeViewId = this.views[this.activeCurrencyId][0].id;
-          this.updateView(this.activeViewId);
-        }
-        this.detectChanges();
-      }
-    );
-    this.loadWallet();
+    this.walletService.wallet$.subscribe((wallet: Wallet) => {
+      this.wallet = wallet;
+      this.updateTabs();
+    });
   }
 
   ngOnDestroy() {
@@ -111,21 +86,8 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  async loadWallet() {
-    try {
-      this.wallet = await this.walletService.getWallet();
-      if (this.wallet) {
-        this.setCurrencies();
-        this.inProgress = false;
-      }
-    } catch (e) {
-      console.error(e);
-    }
-    this.detectChanges();
-  }
-
-  setCurrencies() {
-    this.currencies = [];
+  updateTabs() {
+    this.tabs = [];
     const headerCurrencies: string[] = ['tokens', 'cash', 'eth', 'btc'];
     headerCurrencies.forEach(currency => {
       const headerTab: ShadowboxHeaderTab = {
@@ -134,6 +96,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
         unit: this.wallet[currency].unit,
         value: this.wallet[currency].balance,
         isLocalCurrency: false,
+        routerLink: `${this.walletService.basePath}/${currency}`,
       };
 
       // Handle currency formatting for cash
@@ -144,7 +107,7 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
           headerTab.isLocalCurrency = true;
         }
       }
-      this.currencies.push(headerTab);
+      this.tabs.push(headerTab);
       this.detectChanges();
     });
   }
@@ -158,24 +121,6 @@ export class WalletDashboardComponent implements OnInit, OnDestroy {
       this.activeViewId,
     ]);
     this.detectChanges();
-  }
-
-  updateView(viewId) {
-    this.activeViewId = viewId;
-    this.router.navigate(['/wallet/canary', this.activeCurrencyId, viewId]);
-    this.detectChanges();
-  }
-
-  tokenOnboardingCompleted() {
-    this.tokenOnboardingComplete = true;
-    this.detectChanges();
-  }
-
-  onchainAddressChanged() {
-    this.hasOnchainAddress = true;
-    this.detectChanges();
-
-    this.loadWallet();
   }
 
   scrollToSettings(currency: string) {

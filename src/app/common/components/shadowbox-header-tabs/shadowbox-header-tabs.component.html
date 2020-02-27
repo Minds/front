@@ -1,8 +1,10 @@
 <ng-container *ngFor="let tab of tabs; let i = index" #shadowboxHeaderTabs>
-  <div
+  <a
     class="m-shadowboxHeaderTab"
     (click)="changeTabs(tab)"
     [ngClass]="{ active: tab.id === activeTabId }"
+    [routerLink]="tab.routerLink"
+    routerLinkActive="active"
   >
     <div class="m-shadowboxHeaderTab__label">
       <span>{{ tab.label }}</span>
@@ -69,5 +71,5 @@
       <i class="material-icons" *ngIf="tab.delta < 0">arrow_downward</i>
       <span>{{ tab.delta | percent: '1.0-1' }}</span>
     </div>
-  </div>
+  </a>
 </ng-container>

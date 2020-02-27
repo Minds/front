@@ -1,6 +1,5 @@
 <m-pageLayout>
-  <!-- <div class="m-walletDashboard" m-pageLayout__main *ngIf="currencies"> -->
-  <div class="m-walletDashboard" m-pageLayout__main *ngIf="currencies">
+  <div class="m-walletDashboard" m-pageLayout__main *ngIf="tabs">
     <m-dashboardLayout>
       <ng-container m-dashboardLayout__header>
         <div>
@@ -9,108 +8,22 @@
           </h3>
         </div>
       </ng-container>
-      <ng-container m-dashboardLayout__body *ngIf="!currencies || inProgress">
-        <div *ngIf="!currencies" class="m-wallet__spinner">
+      <ng-container m-dashboardLayout__body *ngIf="!tabs || inProgress">
+        <div *ngIf="!tabs" class="m-wallet__spinner">
           <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
         </div>
       </ng-container>
-      <ng-container m-dashboardLayout__body *ngIf="currencies && !inProgress">
+      <ng-container m-dashboardLayout__body>
         <m-shadowboxLayout>
           <m-shadowboxHeader__tabs
             class="m-shadowboxLayout__header"
-            [tabs]="currencies"
+            [tabs]="tabs"
             [activeTabId]="activeCurrencyId"
             [friendlyVals]="true"
             (tabChanged)="updateCurrency($event)"
           ></m-shadowboxHeader__tabs>
           <div class="m-shadowboxLayout__body">
-            <div
-              class="m-walletDashboardBalance__wrapper"
-              *ngIf="
-                activeCurrencyId === 'tokens' || activeCurrencyId === 'cash'
-              "
-            >
-              <m-walletTokenOnboarding
-                *ngIf="
-                  activeCurrencyId === 'tokens' && !tokenOnboardingComplete
-                "
-                [hasAddress]="hasOnchainAddress"
-                [phoneVerified]="phoneVerified"
-                (onboardingComplete)="tokenOnboardingCompleted()"
-                (scrollToTokenSettings)="scrollToSettings('tokens')"
-              ></m-walletTokenOnboarding>
-              <m-walletBalance--tokens
-                [wallet]="wallet"
-                class="m-shadowboxLayout__body"
-                *ngIf="activeCurrencyId === 'tokens'"
-              ></m-walletBalance--tokens>
-              <m-walletBalance--cash
-                class="m-shadowboxLayout__body"
-                *ngIf="activeCurrencyId === 'cash'"
-                [viewId]="activeViewId"
-                [cashWallet]="wallet.cash"
-                (scrollToCashSettings)="scrollToSettings('cash')"
-              ></m-walletBalance--cash>
-            </div>
-            <div class="m-walletDashboardViews__wrapper">
-              <div
-                class="m-walletDashboardViews__tabsContainer"
-                *ngIf="views[activeCurrencyId].length > 1"
-                #dashboardViews
-              >
-                <div
-                  class="m-walletDashboardViews__tab"
-                  [ngClass]="{ active: view.id === activeViewId }"
-                  *ngFor="let view of views[activeCurrencyId]"
-                  (click)="updateView(view.id)"
-                >
-                  {{ view.label }}
-                </div>
-              </div>
-              <div class="m-walletDashboardViews__viewsContainer">
-                <m-walletChart
-                  class="m-walletDashboardViews__view"
-                  *ngIf="
-                    activeCurrencyId === 'tokens' && activeViewId === 'overview'
-                  "
-                ></m-walletChart>
-                <ng-container *ngIf="activeViewId === 'transactions'">
-                  <m-walletTransactions--tokens
-                    *ngIf="activeCurrencyId === 'tokens'"
-                  ></m-walletTransactions--tokens>
-                  <m-walletTransactions--cash
-                    *ngIf="activeCurrencyId === 'cash'"
-                    [noAccount]="wallet.cash.address === null"
-                  ></m-walletTransactions--cash>
-                </ng-container>
-                <ng-container *ngIf="activeViewId === 'settings'">
-                  <div class="m-walletDashboardSettings__wrapper">
-                    <m-walletSettings--tokens
-                      class="m-walletDashboardViews__view"
-                      [wallet]="wallet"
-                      *ngIf="activeCurrencyId === 'tokens'"
-                      (onchainAddressChanged)="onchainAddressChanged()"
-                    ></m-walletSettings--tokens>
-                    <m-walletSettings--cash
-                      class="m-walletDashboardViews__view"
-                      *ngIf="activeCurrencyId === 'cash'"
-                      [cashWallet]="wallet.cash"
-                      (accountChanged)="loadWallet()"
-                    ></m-walletSettings--cash>
-                    <m-walletSettings--eth
-                      class="m-walletDashboardViews__view"
-                      *ngIf="activeCurrencyId === 'eth'"
-                      [ethWallet]="wallet.eth"
-                      (scrollToTokenSettings)="scrollToSettings('tokens')"
-                    ></m-walletSettings--eth>
-                    <m-walletSettings--btc
-                      class="m-walletDashboardViews__view"
-                      *ngIf="activeCurrencyId === 'btc'"
-                    ></m-walletSettings--btc>
-                  </div>
-                </ng-container>
-              </div>
-            </div>
+            <router-outlet></router-outlet>
           </div>
         </m-shadowboxLayout>
       </ng-container>
