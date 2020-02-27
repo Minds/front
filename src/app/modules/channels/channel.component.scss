@@ -4,6 +4,25 @@
  * Channel profile pages
  */
 m-channel {
+  grid-area: content / span 2;
+  min-width: 0;
+
+  .m-channel__middleColumn {
+    grid-area: content;
+
+    @include m-theme() {
+      border-right: 1px solid themed($m-grey-400);
+    }
+  }
+
+  .m-channel__rightColumn {
+    grid-area: side;
+    padding-left: 56px;
+    padding-right: 33%;
+    margin-top: 25px;
+    min-width: 0;
+  }
+
   header {
     display: flex;
     align-items: flex-end;
@@ -18,6 +37,7 @@ m-channel {
 
     m-channel--carousel {
       height: 440px;
+
       .minds-banner .minds-banner-overlay {
         display: none;
       }
@@ -51,8 +71,10 @@ m-channel {
       .minds-channel-title > div h1 {
         font-size: 18px !important;
       }
+
       .minds-channel-title .minds-avatar {
         margin: 8px 8px 0 8px;
+
         img {
           max-height: 52px;
         }
@@ -67,6 +89,7 @@ m-channel {
 
     a {
       flex: auto;
+
       span {
         width: 100%;
         display: block;
@@ -85,6 +108,7 @@ m-channel {
 
       > * {
         margin-right: 4px;
+
         button {
           @include m-theme() {
             color: themed($m-blue-grey-50);
@@ -93,6 +117,7 @@ m-channel {
         }
       }
     }
+
     .minds-button-edit > button,
     minds-button-user-dropdown > button {
       padding: 6px;
@@ -102,6 +127,7 @@ m-channel {
 
   .m-channel--blocked {
     margin: 100px auto;
+
     h3 {
       font-size: 26px;
       text-align: center;
@@ -109,6 +135,7 @@ m-channel {
       margin: 0;
       font-weight: bolder;
     }
+
     a {
       text-align: center;
       width: 100%;
@@ -201,6 +228,7 @@ m-channel {
   .minds-channel-sidebar,
   .m-channel-sidebar {
     margin-top: 72px;
+
     .mdl-card,
     .m-channel--bio {
       width: 100%;
@@ -211,6 +239,7 @@ m-channel {
         > button {
           position: relative;
         }
+
         .minds-dropdown-menu {
           position: absolute;
           top: 112px;
@@ -233,6 +262,7 @@ m-channel {
 
       minds-avatar {
         margin: -75px auto 0;
+
         .minds-avatar {
           margin: auto;
           border-radius: 50%;
@@ -243,18 +273,22 @@ m-channel {
           align-items: center;
           background-size: cover;
           background-position: center center;
+
           img {
             display: none;
           }
         }
       }
+
       .m-channel--name {
         word-break: break-word;
         text-align: center;
+
         > * {
           display: inline-block;
           vertical-align: middle;
         }
+
         h2 {
           letter-spacing: 0.25px;
           font-weight: 800;
@@ -264,17 +298,21 @@ m-channel {
           font-size: 28px;
           margin: 0;
         }
+
         .minds-button-edit > button {
           font-size: 16px;
         }
+
         minds-user-dropdown > button {
           font-size: 24px;
         }
+
         button {
           border: 0;
           margin-right: -26px;
         }
       }
+
       .m-channel--username {
         h2 {
           margin: 0;
@@ -288,10 +326,12 @@ m-channel {
           }
         }
       }
+
       textarea {
         text-align: center;
       }
     }
+
     m-channel--modules {
       @media screen and (max-width: $min-tablet - 1) {
         display: none;
@@ -353,6 +393,7 @@ m-channel {
       i {
         padding: 0 $minds-padding;
       }
+
       span {
         flex: 1;
       }
@@ -389,6 +430,7 @@ m-channel {
         i {
           padding-right: $minds-padding;
         }
+
         input {
           flex: 1;
           padding: $minds-padding;
@@ -476,8 +518,12 @@ m-channel {
           }
         }
       }
-    } // END: Bio editor
-  } //END : Bio fields
+    }
+
+    // END: Bio editor
+  }
+
+  //END : Bio fields
 
   .minds-channel-edit-avatar {
     max-height: 180px;
@@ -515,6 +561,7 @@ m-channel {
       text-decoration: none;
       display: block;
     }
+
     a:hover {
       text-decoration: underline;
     }
@@ -535,8 +582,10 @@ m-channel {
       &.isLocked {
         height: 120px;
       }
+
       .channel-grid {
         width: 100%;
+
         .minds-channel-title {
           width: 100% !important;
 
@@ -546,8 +595,10 @@ m-channel {
             font-size: 14px;
           }
         }
+
         .minds-tabs {
           width: 100%;
+
           .mdl-tabs__tab {
             padding: 0 $minds-padding;
           }

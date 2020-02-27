@@ -12,10 +12,11 @@ import { OnboardingService } from '../onboarding/onboarding.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { PagesService } from '../../common/services/pages.service';
 import { FeaturesService } from '../../services/features.service';
-import { V2TopbarService } from '../../common/layout/v2-topbar/v2-topbar.service';
 import { OnboardingV2Service } from '../onboarding-v2/service/onboarding.service';
 import { MetaService } from '../../common/services/meta.service';
 import { iOSVersion } from '../../helpers/is-safari';
+import { TopbarService } from '../../common/layout/topbar.service';
+import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 
 @Component({
   selector: 'm-register',
@@ -29,8 +30,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   videoError: boolean = false;
   referrer: string;
-  @HostBinding('class.m-register__newDesign')
+
+  @HostBinding('class.m-register--newDesign')
   newDesign: boolean = false;
+
+  @HostBinding('class.m-register--newNavigation')
+  newNavigation: boolean = false;
+
   @HostBinding('class.m-register__iosFallback')
   iosFallback: boolean = false;
 
@@ -46,15 +52,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
+    public pagesService: PagesService,
     private modal: SignupModalService,
     private loginReferrer: LoginReferrerService,
     public session: Session,
     private onboarding: OnboardingService,
     public navigation: NavigationService,
+    private navigationService: SidebarNavigationService,
     configs: ConfigsService,
-    public pagesService: PagesService,
     private featuresService: FeaturesService,
-    private topbarService: V2TopbarService,
+    private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
     private metaService: MetaService
   ) {
@@ -65,9 +72,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
 
     this.newDesign = this.featuresService.has('register_pages-december-2019');
+    this.newNavigation = this.featuresService.has('navigation');
+
     if (this.newDesign) {
       this.topbarService.toggleVisibility(false);
       this.iosFallback = iOSVersion() !== null;
+
+      if (this.featuresService.has('navigation')) {
+        this.navigationService.setVisible(false);
+      }
     }
   }
 
@@ -118,6 +131,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.paramsSubscription.unsubscribe();
     }
     this.topbarService.toggleVisibility(true);
+
+    if (this.featuresService.has('navigation')) {
+      this.navigationService.setVisible(true);
+    }
   }
 
   private navigateToRedirection() {

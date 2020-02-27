@@ -13,6 +13,7 @@ m-pro--channel {
   background-size: cover;
   background-blend-mode: overlay;
   background-color: var(--m-pro--more-transparent-background-color) !important;
+  grid-area: content / span 2;
 
   &.m-pro-channel--plainBackground {
     background-blend-mode: initial;

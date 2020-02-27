@@ -4,6 +4,8 @@ import {
   PLATFORM_ID,
   Inject,
   HostBinding,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -36,12 +38,10 @@ import { filter, map, mergeMap, first } from 'rxjs/operators';
   selector: 'm-app',
   templateUrl: 'app.component.html',
 })
-export class Minds {
+export class Minds implements OnInit, OnDestroy {
   name: string;
 
   ready: boolean = false;
-
-  showOnboarding: boolean = false;
 
   showTOSModal: boolean = false;
 
@@ -60,7 +60,6 @@ export class Minds {
     public context: ContextService,
     public web3Wallet: Web3WalletService,
     public client: Client,
-    public onboardingService: ChannelOnboardingService,
     public router: Router,
     public blockListService: BlockListService,
     public featuresService: FeaturesService,
@@ -77,6 +76,7 @@ export class Minds {
     private socketsService: SocketsService
   ) {
     this.name = 'Minds';
+
     if (this.site.isProDomain) {
       this.router.resetConfig(PRO_DOMAIN_ROUTES);
     }
@@ -134,10 +134,6 @@ export class Minds {
 
     this.session.isLoggedIn(async is => {
       if (is && !this.site.isProDomain) {
-        if (!this.site.isProDomain) {
-          this.showOnboarding = await this.onboardingService.showModal();
-        }
-
         const user = this.session.getLoggedInUser();
         const language = this.configs.get('language');
 
@@ -146,14 +142,6 @@ export class Minds {
           window.location.reload(true);
         }
       }
-    });
-
-    this.onboardingService.onClose.subscribe(() => {
-      this.showOnboarding = false;
-    });
-
-    this.onboardingService.onOpen.subscribe(async () => {
-      this.showOnboarding = await this.onboardingService.showModal(true);
     });
 
     this.loginReferrer

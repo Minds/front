@@ -1,0 +1,31 @@
+<ng-container *mIfFeature="'navigation'; else v2Topbar">
+  <m-v3topbar>
+    <ng-container search>
+      <m-search--bar [defaultSizes]="false"></m-search--bar>
+    </ng-container>
+
+    <ng-container icons>
+      <m-notifications--topbar-toggle
+        *ngIf="session.isLoggedIn()"
+      ></m-notifications--topbar-toggle>
+    </ng-container>
+  </m-v3topbar>
+</ng-container>
+
+<ng-template #v2Topbar>
+  <m-v2-topbar>
+    <ng-container search>
+      <m-search--bar [defaultSizes]="false"></m-search--bar>
+    </ng-container>
+
+    <ng-container icons>
+      <m-notifications--topbar-toggle
+        *ngIf="session.isLoggedIn()"
+      ></m-notifications--topbar-toggle>
+    </ng-container>
+  </m-v2-topbar>
+
+  <m-sidebar--markers
+    [class.has-v2-navbar]="featuresService.has('top-feeds')"
+  ></m-sidebar--markers>
+</ng-template>

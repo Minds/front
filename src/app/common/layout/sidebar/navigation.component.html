@@ -1,33 +1,158 @@
-<nav class="m-sidebar--navigation">
-  <div *ngFor="let item of navigation.getItems()">
-    <a
-      class="m-sidebar--navigation--item"
-      [ngClass]="{ 'm-sidebar--navigation--item-active': item.active }"
-      [routerLink]="[item.path, item.params]"
-      [title]="item.text"
-      *ngIf="
-        item.visibility == 2 ||
-        (item.visibility === 0 && session.isLoggedIn()) ||
-        (item.visibility === -1 && session.isAdmin())
-      "
-    >
-      <i class="material-icons">{{ item.icon }}</i>
+<div class="m-sidebarNavigation__overlay" (click)="toggle()"></div>
+<div
+  class="m-sidebarNavigation"
+  [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
+>
+  <nav>
+    <div class="m-sidebarNavigation__top">
+      <a routerLink="/" title="Home" i18n-title>
+        <img [src]="cdnUrl + 'assets/logos/bulb.svg'" />
+      </a>
 
-      <span class="m-sidebar--navigation--text">{{ item.text }}</span>
-    </a>
+      <i class="material-icons" (click)="toggle()">close</i>
+    </div>
 
-    <div *ngFor="let subitem of item.submenus" [hidden]="!item.active">
-      <a
-        class="m-sidebar--navigation--item subitem"
-        [ngClass]="{ 'm-sidebar--navigation--item-active': subitem.active }"
-        [routerLink]="[subitem.path, subitem.params]"
-        [title]="subitem.text"
-        *ngIf="!(!session.isLoggedIn() && subitem.visibility < 2)"
-      >
-        <i class="material-icons">{{ subitem.icon }}</i>
-
-        <span class="m-sidebar--navigation--text">{{ subitem.text }}</span>
+    <div class="m-sidebarNavigation__user" *ngIf="user">
+      <a [routerLink]="['/' + user.username]" (click)="toggle()">
+        <img
+          [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
+          alt=""
+        />
+        <ng-container *ngIf="layoutMode === 'desktop'">
+          @{{ user.username }}
+        </ng-container>
       </a>
     </div>
+    <ul>
+      <li>
+        <a
+          class="m-sidebarNavigation__item"
+          [routerLink]="['/newsfeed/subscriptions']"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="home"
+            i18n="@@COMMON__NEWSFEED"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Newsfeed
+          </m-tooltip>
+
+          <span
+            class="m-sidebarNavigationItem__text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Newsfeed
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="m-sidebarNavigation__item"
+          [routerLink]="['/newsfeed/global/top']"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="check"
+            i18n="@@COMMON__DISCOVER"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Discover
+          </m-tooltip>
+
+          <span
+            class="m-sidebarNavigationItem__text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Discover
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="m-sidebarNavigation__item"
+          [routerLink]="['/wallet']"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            iconSrc="assets/icons/wire.svg"
+            i18n="@@COMMON__WALLET"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Wallet
+          </m-tooltip>
+
+          <span
+            class="m-sidebarNavigationItem__text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Wallet
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="m-sidebarNavigation__item"
+          [routerLink]="['/analytics']"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="show_chart"
+            i18n="@@COMMON__ANALYTICS"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Analytics
+          </m-tooltip>
+          <span
+            class="m-sidebarNavigationItem__text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Analytics
+          </span>
+        </a>
+      </li>
+
+      <li>
+        <a
+          class="m-sidebarNavigation__item"
+          [routerLink]="['/settings']"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          (click)="toggle()"
+        >
+          <m-tooltip
+            icon="more_horiz"
+            i18n="@@COMMON__SETTINGS"
+            [enabled]="layoutMode === 'tablet'"
+          >
+            Settings
+          </m-tooltip>
+
+          <span
+            class="m-sidebarNavigationItem__text"
+            *ngIf="layoutMode !== 'tablet'"
+            i18n
+          >
+            Settings
+          </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="m-sidebar--groups" [hidden]="!user">
+    <ng-template dynamic-host></ng-template>
   </div>
-</nav>
+</div>

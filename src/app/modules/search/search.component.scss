@@ -5,17 +5,28 @@ m-search--bar {
 
   .mdl-textfield {
     width: 100%;
-    .material-icons {
+
+    .m-searchBar__searchIcon {
       position: absolute;
       margin: 6px;
       font-size: 20px;
     }
+
+    .m-searchBar__cleanIcon {
+      position: absolute;
+      margin: 6px;
+      font-size: 20px;
+      right: 0;
+      top: 20px;
+    }
+
     input {
       @include m-theme() {
         background-color: themed($m-white);
         border: 1px solid rgba(themed($m-black), 0.12);
       }
     }
+
     input,
     label {
       padding: $minds-padding $minds-padding $minds-padding $minds-padding * 4;
@@ -38,6 +49,7 @@ m-search--bar {
 
       input {
         border: 0 !important;
+
         &:focus {
           width: 75vw;
           @include m-theme() {
@@ -129,9 +141,51 @@ m-search--bar-suggestions {
     z-index: 5000;
     box-sizing: border-box;
     width: 200%;
+
     @include m-theme() {
       background-color: themed($m-white);
       border: 1px solid themed($m-grey-50);
+    }
+
+    &.m-searchBar--newDesign {
+      padding: 27px 0;
+
+      & > * {
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+      }
+
+      .m-search-bar-suggestions-suggestion {
+        font-size: 16px;
+        line-height: 21px;
+
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+        @include m-theme() {
+          color: themed($m-black);
+          border: none;
+        }
+
+        &:first-of-type {
+          padding-top: 20px;
+        }
+      }
+    }
+
+    .m-searchBarSuggestions__searchHistory,
+    .m-searchBarSuggestions__clearHistory {
+      font-size: 14px;
+      line-height: 21px;
+
+      @include m-theme() {
+        color: themed($m-grey-700);
+      }
+    }
+
+    .m-searchBarSuggestions__clearHistory {
+      float: right;
+      cursor: pointer;
     }
 
     .m-search-bar-suggestions-suggestion {
@@ -147,6 +201,12 @@ m-search--bar-suggestions {
       @include m-theme() {
         border-bottom: 1px solid themed($m-grey-50);
         color: themed($m-grey-700);
+      }
+
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-bgColor--tertiary);
+        }
       }
 
       img {
