@@ -36,6 +36,7 @@ export interface MindsBlogEntity {
   };
   perma_url: string;
   thumbnail: string;
+  editor_version?: number;
 }
 
 export interface Message {}

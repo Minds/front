@@ -37,6 +37,7 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
 import { clientMetaServiceMock } from '../../../../tests/client-meta-service-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
+import { FeaturesService } from '../../../services/features.service';
 
 describe('Blog view component', () => {
   let comp: BlogView;
@@ -67,6 +68,7 @@ describe('Blog view component', () => {
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: ClientMetaService, useValue: clientMetaServiceMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: FeaturesService, useValue: MockService(FeaturesService) },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     })
@@ -92,7 +94,7 @@ describe('Blog view component', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should have an instance of m-social-icons if the owner has it enabled', () => {
+  it('should have an instance of m-social-icons if the logged in user has it enabled', () => {
     let socialIcons = fixture.debugElement.query(By.css('m-social-icons'));
 
     expect(socialIcons).not.toBeNull();
