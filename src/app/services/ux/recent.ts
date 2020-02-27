@@ -36,6 +36,12 @@ export class RecentService {
     return this;
   }
 
+  clear(key: string) {
+    this.delete(key);
+
+    return this;
+  }
+
   //
 
   private read(key: string): any[] {
@@ -44,6 +50,10 @@ export class RecentService {
 
   private write(key: string, data: any[]) {
     this.storage.set(`recent:${key}`, JSON.stringify(data));
+  }
+
+  private delete(key: string) {
+    this.storage.destroy(`recent:${key}`);
   }
 
   //

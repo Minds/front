@@ -1,5 +1,14 @@
 @import 'defaults';
 
+m-settings {
+  grid-area: content / span 2;
+  min-width: 0;
+}
+
+.m-grid .m-settings--wrapper {
+  margin: unset;
+}
+
 .m-settings--wrapper {
   max-width: 1280px;
   margin: auto;

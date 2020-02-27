@@ -1,5 +1,6 @@
 @import 'defaults';
 @import 'themes';
+@import 'foundation/grid-values.scss';
 
 html,
 body {
@@ -27,17 +28,33 @@ m-app {
     @include m-theme() {
       background-color: themed($m-body-bg);
     }
-    //  display: inline-block;
-    //  overflow:visible;
-    //  flex-grow: 1;
-    //  z-index: 1;
-    //  margin-top: $layout-header-height;
-    //  margin-left: $layout-sidebar-width;
-    //  width: 100%;
-    //
-    // @media screen and (max-width: $min-tablet){
-    //   margin-left:0;
-    //  }
+
+    & > .m-grid {
+      display: grid;
+
+      grid-template-areas: 'nav content side' 'footer footer footer';
+
+      grid-template-columns: 3fr 5fr 4fr;
+      grid-template-rows: 1fr;
+      grid-gap: 0;
+
+      height: 100%;
+
+      @media screen and (max-width: $m-grid-max-tablet) {
+        grid-template-columns: 71px 5fr 4fr;
+      }
+
+      @media screen and(max-width: $m-grid-max-mobile) {
+        display: flex;
+        flex-direction: column;
+      }
+
+      &.m-grid__noSidebar {
+        grid-template-areas: 'content side' 'footer footer';
+
+        grid-template-columns: 5fr 4fr;
+      }
+    }
   }
 
   p {
@@ -55,6 +72,7 @@ m-app {
       color: rgba(themed($m-black), 0.75);
     }
   }
+
   .mdl-card__supporting-text {
     font-family: 'Roboto', Helvetica, sans-serif;
   }
@@ -142,6 +160,7 @@ m-app {
     }
   }
 }
+
 .m-loader {
   width: 100%;
   padding: 16px;

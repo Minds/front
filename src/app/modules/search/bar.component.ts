@@ -2,7 +2,10 @@ import {
   Component,
   ElementRef,
   HostBinding,
+  HostListener,
   Input,
+  OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
@@ -10,15 +13,14 @@ import { Subscription } from 'rxjs';
 import { ContextService } from '../../services/context.service';
 import { Session } from '../../services/session';
 import { FeaturesService } from '../../services/features.service';
+import { RecentService } from '../../services/ux/recent';
 
 @Component({
   selector: 'm-search--bar',
-  host: {
-    '(keyup)': 'keyup($event)',
-  },
   templateUrl: 'bar.component.html',
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnInit, OnDestroy {
+  @Input() showCleanIcon: boolean = false;
   active: boolean;
   suggestionsDisabled: boolean = false;
   q: string;
@@ -35,9 +37,10 @@ export class SearchBarComponent {
 
   constructor(
     public router: Router,
+    public session: Session,
     private context: ContextService,
     private featureService: FeaturesService,
-    public session: Session
+    private recentService: RecentService
   ) {}
 
   ngOnInit() {
@@ -112,8 +115,11 @@ export class SearchBarComponent {
     } else {
       this.router.navigate(['search', qs]);
     }
+
+    this.recentService.store('recent:text', this.q);
   }
 
+  @HostListener('keyup', ['$event'])
   keyup(e) {
     if (e.keyCode === 13 && this.session.isLoggedIn()) {
       this.search();
@@ -131,6 +137,10 @@ export class SearchBarComponent {
     if (this.searchInput.nativeElement) {
       this.searchInput.nativeElement.blur();
     }
+  }
+
+  clean() {
+    this.q = '';
   }
 
   protected getActiveSearchContext(fragments: string[]) {
