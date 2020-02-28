@@ -17,7 +17,7 @@
     <div class="m-walletTokenOnboardingStep__title">
       <span>2.</span>
       <a
-        (click)="clickedAddressStep()"
+        routerLink="settings"
         [ngClass]="{ disabled: !phoneVerified, stepComplete: hasAddress }"
       >
         Add your on-chain address</a

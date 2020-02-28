@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
 import { Client } from '../../../common/api/client.service';
 import { Session } from '../../../services/session';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import toFriendlyCryptoVal from '../../../helpers/friendly-crypto';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface SplitBalance {
   total: number;
@@ -14,6 +15,7 @@ export interface SplitBalance {
 
 export interface StripeDetails {
   bankAccount?: any;
+  totalBalance?: any;
   pendingBalance?: { amount: number };
   pendingBalanceSplit: SplitBalance;
   totalPaidOutSplit: SplitBalance;
@@ -102,9 +104,9 @@ export class WalletV2Service {
   ) {}
 
   async loadWallet(): Promise<void> {
-    await this.getTokenAccounts();
-    await this.getEthAccount();
-    await this.getStripeAccount();
+    this.getTokenAccounts();
+    this.getEthAccount();
+    this.loadStripeAccount();
 
     this.wallet$.next(this.wallet);
   }
@@ -135,8 +137,9 @@ export class WalletV2Service {
 
       if (response && response.addresses) {
         this.totalTokens = toFriendlyCryptoVal(response.balance);
+        this.wallet.tokens.balance = toFriendlyCryptoVal(response.balance);
         response.addresses.forEach(address => {
-          if (address.label === 'Offchain') {
+          if (address.address === 'offchain') {
             this.wallet.offchain.balance = toFriendlyCryptoVal(address.balance);
           } else if (address.label === 'Receiver') {
             this.wallet.onchain.balance = toFriendlyCryptoVal(address.balance);
@@ -144,6 +147,7 @@ export class WalletV2Service {
             this.wallet.receiver.address = address.address;
           }
         });
+        this.wallet$.next(this.wallet);
         return this.wallet;
       } else {
         console.error('No data');
@@ -162,6 +166,7 @@ export class WalletV2Service {
 
       this.wallet.onchain.address = address;
       if (this.wallet.receiver.address === address) {
+        this.wallet$.next(this.wallet);
         return; // don't re-add onchain balance to totalTokens
       }
 
@@ -172,6 +177,7 @@ export class WalletV2Service {
       this.wallet.tokens.balance += toFriendlyCryptoVal(
         this.wallet.onchain.balance
       );
+      this.wallet$.next(this.wallet);
     } catch (e) {
       console.error(e);
     }
@@ -193,9 +199,20 @@ export class WalletV2Service {
     }
   }
 
-  async getStripeAccount(): Promise<StripeDetails> {
-    const merchant = this.session.getLoggedInUser().merchant;
+  async loadStripeAccount(): Promise<StripeDetails> {
+    try {
+      let { account } = <any>(
+        await this.client.get('api/v2/payments/stripe/connect')
+      );
+      this.setStripeAccount(account);
+    } catch (e) {
+      this.setStripeAccount(null);
+    }
+    return this.wallet.cash.stripeDetails;
+  }
 
+  setStripeAccount(@Optional() account: StripeDetails): void {
+    const merchant = this.session.getLoggedInUser().merchant;
     const zeroSplit = this.splitBalance(0);
 
     this.stripeDetails = {
@@ -205,79 +222,78 @@ export class WalletV2Service {
       totalPaidOutSplit: zeroSplit,
       verified: false,
     };
-    if (merchant && merchant.service === 'stripe') {
-      try {
-        let { account } = <any>(
-          await this.client.get('api/v2/payments/stripe/connect')
-        );
 
-        this.stripeDetails.hasAccount = true;
-        this.stripeDetails.verified = account.verified;
+    //merchant && merchant.service === 'stripe'
+    if (account) {
+      this.stripeDetails.hasAccount = true;
+      this.stripeDetails.verified = account.verified;
 
-        this.wallet.cash.address = 'stripe';
+      this.wallet.cash.address = 'stripe';
+      if (account.totalBalance && account.pendingBalance) {
         this.wallet.cash.balance =
           (account.totalBalance.amount - account.pendingBalance.amount) / 100;
-        if (account.bankAccount) {
-          const bankCurrency: string = account.bankAccount.currency;
-          this.wallet.cash.label = bankCurrency.toUpperCase();
-          this.wallet.cash.unit = bankCurrency;
-          this.stripeDetails.hasBank = true;
-        }
-
         this.stripeDetails.pendingBalanceSplit = this.splitBalance(
           account.pendingBalance.amount / 100
         );
         this.stripeDetails.totalPaidOutSplit = this.splitBalance(
           (account.totalBalance.amount - account.pendingBalance.amount) / 100
         );
-
-        this.wallet.cash.stripeDetails = this.stripeDetails;
-        account = { ...account, ...this.stripeDetails };
-        return account;
-      } catch (e) {
-        console.error(e);
-        return;
+      } else {
+        this.wallet.cash.balance = 0;
       }
+
+      if (account.bankAccount) {
+        const bankCurrency: string = account.bankAccount.currency;
+        this.wallet.cash.label = bankCurrency.toUpperCase();
+        this.wallet.cash.unit = bankCurrency;
+        this.stripeDetails.hasBank = true;
+      }
+
+      this.stripeDetails = { ...account, ...this.stripeDetails };
+
+      this.wallet.cash.stripeDetails = this.stripeDetails;
     } else {
       this.wallet.cash.stripeDetails = this.stripeDetails;
-      return this.stripeDetails;
     }
+
+    this.wallet$.next(this.wallet);
   }
 
   async createStripeAccount(form): Promise<void> {
-    this.client
-      .put('api/v2/wallet/usd/account', form)
-      .then((response: any) => {
-        return response;
-      })
-      .catch(e => {
-        console.error(e.message);
-      });
+    const response = <any>(
+      await this.client.put('api/v2/wallet/usd/account', form)
+    );
+
+    if (!this.session.getLoggedInUser().programs) {
+      this.session.getLoggedInUser().programs = [];
+    }
+    this.session.getLoggedInUser().programs.push('affiliate');
+
+    this.session.getLoggedInUser().merchant = {
+      id: response.account.id,
+      service: 'stripe',
+    };
+
+    this.setStripeAccount(response.account);
   }
 
   async addStripeBank(form) {
-    try {
-      const response = <any>(
-        await this.client.post('api/v2/payments/stripe/connect/bank', form)
-      );
-      return response;
-    } catch (e) {
-      console.error(e);
-      return e;
-    }
+    const response = <any>(
+      await this.client.post('api/v2/payments/stripe/connect/bank', form)
+    );
+
+    // Refresh the account
+    await this.loadStripeAccount();
+
+    return response;
   }
 
   async removeStripeBank() {
-    try {
-      const response = <any>(
-        await this.client.delete('api/v2/payments/stripe/connect/bank')
-      );
+    const response = <any>(
+      await this.client.delete('api/v2/payments/stripe/connect/bank')
+    );
 
-      return response;
-    } catch (e) {
-      console.error(e);
-      return e;
-    }
+    return response;
   }
 
   async leaveMonetization() {
@@ -397,7 +413,7 @@ export class WalletV2Service {
 
   async getDailyTokenContributionScores(dateRangeOpts) {
     try {
-      const response: any = await this.client.post(
+      const response: any = await this.client.get(
         'api/v2/blockchain/contributions',
         dateRangeOpts
       );

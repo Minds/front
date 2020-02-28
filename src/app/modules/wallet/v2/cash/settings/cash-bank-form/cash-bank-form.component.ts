@@ -25,7 +25,7 @@ export class WalletCashBankFormComponent implements OnInit {
   form;
   error: string = '';
 
-  inProgress: boolean = true;
+  inProgress: boolean = false;
   editing: boolean = false;
   showModal: boolean = false;
   modalContent: 'leaveEditMode' | 'leaveMonetization' | 'removeBank';
@@ -46,6 +46,7 @@ export class WalletCashBankFormComponent implements OnInit {
       accountNumber: ['', Validators.required],
       routingNumber: ['', requiredFor(['US'])],
     });
+
     if (this.account) {
       this.initCountry = this.hasBank
         ? this.account.bankAccount.country
@@ -54,26 +55,23 @@ export class WalletCashBankFormComponent implements OnInit {
 
       this.editing = !this.hasBank;
     }
-
-    this.inProgress = false;
-    this.detectChanges();
   }
 
-  async removeBank() {
+  async removeBank(): Promise<void> {
     this.showModal = false;
     this.inProgress = true;
     this.detectChanges();
 
-    this.walletService
-      .removeStripeBank()
-      .then((response: any) => {
-        this.formToastService.success(
-          'Your bank account was successfully removed.'
-        );
-      })
-      .catch(e => {
-        this.formToastService.error(e.message);
-      });
+    try {
+      const response = await this.walletService.removeStripeBank();
+
+      this.formToastService.success(
+        'Your bank account was successfully removed.'
+      );
+    } catch (e) {
+      this.formToastService.error(e.message);
+    }
+
     this.inProgress = false;
     this.detectChanges();
 
@@ -82,7 +80,7 @@ export class WalletCashBankFormComponent implements OnInit {
     }
   }
 
-  async addBank() {
+  async addBank(): Promise<void> {
     if (!this.form.valid) {
       return;
     }
@@ -90,21 +88,20 @@ export class WalletCashBankFormComponent implements OnInit {
     this.inProgress = true;
     this.detectChanges();
 
-    this.walletService
-      .addStripeBank(this.form.value)
-      .then((response: any) => {
-        this.editing = false;
+    try {
+      const response = await this.walletService.addStripeBank(this.form.value);
 
-        if (response.status !== 'error') {
-          const toasterMessage =
-            'Your bank account has been successfully added';
-          this.formToastService.success(toasterMessage);
-        }
-      })
-      .catch(e => {
-        // TODO backend should include e.param and handle errors inline
-        this.error = e.message;
-      });
+      this.editing = false;
+
+      if (response.status !== 'error') {
+        const toasterMessage = 'Your bank account has been successfully added';
+        this.formToastService.success(toasterMessage);
+      }
+    } catch (e) {
+      // TODO backend should include e.param and handle errors inline
+      this.error = e.message;
+    }
+
     this.inProgress = false;
     this.detectChanges();
 

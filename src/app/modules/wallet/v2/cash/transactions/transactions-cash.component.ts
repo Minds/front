@@ -10,7 +10,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
-import { WalletV2Service, WalletCurrency } from '../../wallet-v2.service';
+import {
+  WalletV2Service,
+  WalletCurrency,
+  StripeDetails,
+} from '../../wallet-v2.service';
 
 import * as moment from 'moment';
 
@@ -21,7 +25,7 @@ import * as moment from 'moment';
 })
 export class WalletTransactionsCashComponent implements OnInit {
   init: boolean = false;
-  inProgress: boolean = true;
+  inProgress: boolean = false;
   offset: string;
   moreData: boolean = true;
   currency: string = 'USD';
@@ -55,14 +59,14 @@ export class WalletTransactionsCashComponent implements OnInit {
 
   async getStripeAccount() {
     try {
-      const account = await this.walletService.getStripeAccount();
+      const account: StripeDetails = await this.walletService.loadStripeAccount();
       if (account) {
         if (account.bankAccount) {
           this.currency = account.bankAccount.currency.toUpperCase();
         }
 
         this.runningTotal = account.pendingBalance.amount / 100;
-        this.loadTransactions(true);
+        await this.loadTransactions(true);
       }
     } catch (e) {
       console.error(e);

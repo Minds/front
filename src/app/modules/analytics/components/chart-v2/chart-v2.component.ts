@@ -109,14 +109,16 @@ export class ChartV2Component implements OnInit, OnDestroy {
   initPlot() {
     this.pointsPerSegment = this.segments[0].buckets.length;
 
+    const yLowerBound = this.getLowerBound(this.segments[0].buckets);
+
     for (let i = 0; i < this.pointsPerSegment; i++) {
       this.shapes[i] = {
         type: 'line',
         layer: 'below',
         x0: this.segments[0].buckets[i].date,
-        y0: 0,
+        y0: yLowerBound,
         x1: this.segments[0].buckets[i].date,
-        y1: 0,
+        y1: yLowerBound,
         line: {
           color: 'rgba(0, 0, 0, 0)',
           width: 2,
@@ -414,6 +416,11 @@ export class ChartV2Component implements OnInit, OnDestroy {
         }
       }
     });
+  }
+
+  getLowerBound(rows): number {
+    const values = this.unpack(rows, 'value');
+    return Math.min(...values);
   }
 
   getColor(colorId) {

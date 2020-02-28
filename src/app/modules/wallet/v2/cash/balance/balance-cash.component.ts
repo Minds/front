@@ -7,10 +7,14 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
+import { ActivatedRoute, UrlSegment } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import {
   WalletV2Service,
+  Wallet,
   WalletCurrency,
   SplitBalance,
 } from '../../wallet-v2.service';
@@ -23,6 +27,7 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 })
 export class WalletBalanceCashComponent implements OnInit {
   cashWallet: WalletCurrency;
+  cashWalletSubscription: Subscription;
 
   hasAccount: boolean = false;
   hasBank: boolean = false;
@@ -33,29 +38,45 @@ export class WalletBalanceCashComponent implements OnInit {
   currency = 'usd';
   init: boolean = false;
 
+  childRouteSubscription: Subscription;
+  childRoutePath: string;
+
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected walletService: WalletV2Service,
-    private configs: ConfigsService
-  ) {
-    this.cashWallet = this.walletService.wallet.cash;
-  }
+    private configs: ConfigsService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.load();
-
     this.nextPayoutDate = moment()
       .endOf('month')
       .format('ddd Do MMM');
 
+    this.cashWalletSubscription = this.walletService.wallet$
+      .pipe(map((wallet: Wallet) => wallet.cash))
+      .subscribe((cashWallet: WalletCurrency) => {
+        this.cashWallet = cashWallet;
+        this.load();
+      });
+
+    this.childRouteSubscription = this.route.firstChild.url.subscribe(
+      (url: UrlSegment[]) => {
+        this.childRoutePath = url[0].path;
+        this.detectChanges();
+      }
+    );
+
     if (this.configs.get('pro')) {
       this.getProEarnings();
     }
+  }
 
-    this.init = true;
-    this.detectChanges();
+  ngOnDestroy() {
+    this.childRouteSubscription.unsubscribe();
+    this.cashWalletSubscription.unsubscribe();
   }
 
   load(): void {
@@ -65,6 +86,7 @@ export class WalletBalanceCashComponent implements OnInit {
     this.pendingBalance = this.cashWallet.stripeDetails.pendingBalanceSplit;
     this.totalPaidOut = this.cashWallet.stripeDetails.totalPaidOutSplit;
     this.currency = this.hasBank ? this.cashWallet.label : 'USD';
+    this.init = true;
     this.detectChanges();
   }
 

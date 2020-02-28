@@ -20,7 +20,8 @@ export class TimediffPipe {
     }
 
     if (displaySeconds) {
-      output += `${seconds}s`;
+      const paddedSeconds = seconds.toString().padStart(2, '0');
+      output += `${paddedSeconds}s`;
     }
 
     return output;

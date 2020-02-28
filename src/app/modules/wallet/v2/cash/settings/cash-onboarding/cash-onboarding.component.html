@@ -34,7 +34,7 @@
                 data-minds="country"
                 [allowed]="allowedCountries"
                 [country]="country.value"
-                (countryChange)="country.setValue($event)"
+                (countryChange)="country.setValue($event); revalidateForm()"
               ></minds-country-input>
             </div>
           </div>

@@ -66,6 +66,7 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
 
     this.metricsSubscription = this.analyticsService.metrics$.subscribe(
       metrics => {
+        this.tabs = [];
         for (const metric of metrics) {
           const permissionGranted = metric.permissions.some(role =>
             this.userRoles.includes(role)
@@ -113,7 +114,12 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
       }
     );
   }
-  updateMetric($event) {}
+
+  updateMetric($event) {
+    this.activeTabId = $event.tabId;
+    this.analyticsService.updateMetric($event.tabId);
+    this.detectChanges();
+  }
 
   detectChanges() {
     this.cd.markForCheck();

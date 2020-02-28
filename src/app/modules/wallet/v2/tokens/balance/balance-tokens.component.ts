@@ -10,6 +10,7 @@ import {
   ViewRef,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { WalletV2Service, Wallet } from '../../wallet-v2.service';
@@ -23,6 +24,7 @@ import * as moment from 'moment';
 })
 export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   wallet: Wallet;
+  walletSubscription: Subscription;
 
   tokenBalance;
   offchainBalance;
@@ -50,19 +52,22 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.walletService.wallet$.subscribe((wallet: Wallet) => {
-      this.wallet = wallet;
+    this.walletSubscription = this.walletService.wallet$.subscribe(
+      (wallet: Wallet) => {
+        this.wallet = wallet;
 
-      this.tokenBalance = this.walletService.splitBalance(
-        this.wallet.tokens.balance
-      );
-      this.offchainBalance = this.walletService.splitBalance(
-        this.wallet.offchain.balance
-      );
-      this.onchainBalance = this.walletService.splitBalance(
-        this.wallet.onchain.balance
-      );
-    });
+        this.tokenBalance = this.walletService.splitBalance(
+          this.wallet.tokens.balance
+        );
+        this.offchainBalance = this.walletService.splitBalance(
+          this.wallet.offchain.balance
+        );
+        this.onchainBalance = this.walletService.splitBalance(
+          this.wallet.onchain.balance
+        );
+        this.detectChanges();
+      }
+    );
 
     this.getPayout();
 
@@ -81,6 +86,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     if (this.updateTimer$) {
       clearInterval(this.updateTimer$);
     }
+    this.walletSubscription.unsubscribe();
   }
 
   async getPayout() {

@@ -3,10 +3,11 @@ import {
   OnInit,
   Input,
   ChangeDetectorRef,
+  ViewRef,
   Output,
   EventEmitter,
 } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl } from '@angular/forms';
 import { requiredFor, optionalFor } from '../settings-cash.validators';
 import { WalletV2Service } from '../../../wallet-v2.service';
 import { Session } from '../../../../../../services/session';
@@ -67,20 +68,8 @@ export class WalletCashOnboardingComponent implements OnInit {
     this.error = '';
 
     try {
-      const response = <any>(
-        await this.client.put('api/v2/wallet/usd/account', this.form.value)
-      );
+      await this.walletService.createStripeAccount(this.form.value);
       this.inProgress = false;
-
-      if (!this.session.getLoggedInUser().programs) {
-        this.session.getLoggedInUser().programs = [];
-      }
-      this.session.getLoggedInUser().programs.push('affiliate');
-
-      this.session.getLoggedInUser().merchant = {
-        id: response.account.id,
-        service: 'stripe',
-      };
       this.detectChanges();
     } catch (e) {
       this.inProgress = false;
@@ -110,7 +99,14 @@ export class WalletCashOnboardingComponent implements OnInit {
     return countries.indexOf(this.country.value) > -1;
   }
 
-  detectChanges() {
+  revalidateForm(): void {
+    Object.values(this.form.controls).forEach((control: FormControl) => {
+      control.updateValueAndValidity();
+    });
+  }
+
+  detectChanges(): void {
+    if ((this.cd as ViewRef).destroyed) return;
     this.cd.markForCheck();
     this.cd.detectChanges();
   }

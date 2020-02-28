@@ -24,7 +24,7 @@ import { Subscription } from 'rxjs';
 })
 export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
   init: boolean = false;
-  inProgress: boolean = true;
+  inProgress: boolean = false;
   offset: string;
   moreData: boolean = true;
 
@@ -136,7 +136,7 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
       if (this.selectedTransactionType) {
         opts.contract =
           this.selectedTransactionType === 'all'
-            ? null
+            ? ''
             : this.selectedTransactionType;
       }
 

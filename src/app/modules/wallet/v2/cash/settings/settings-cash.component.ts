@@ -9,16 +9,22 @@ import {
   AfterViewInit,
   ElementRef,
 } from '@angular/core';
-import { WalletV2Service, WalletCurrency } from '../../wallet-v2.service';
+import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import {
+  WalletV2Service,
+  Wallet,
+  WalletCurrency,
+} from '../../wallet-v2.service';
 import { Session } from '../../../../../services/session';
+
 @Component({
   selector: 'm-walletSettings--cash',
   templateUrl: './settings-cash.component.html',
 })
 export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
-  @Output() accountChanged: EventEmitter<any> = new EventEmitter<any>();
-
   cashWallet: WalletCurrency;
+  cashWalletSubscription: Subscription;
 
   init: boolean = false;
   inProgress: boolean = false;
@@ -60,10 +66,16 @@ export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit() {
-    this.cashWallet = this.walletService.wallet.cash;
-    this.setView();
-    this.init = true;
-    this.detectChanges();
+    this.cashWalletSubscription = this.walletService.wallet$
+      .pipe(map((wallet: Wallet) => wallet.cash))
+      .subscribe((cashWallet: WalletCurrency) => {
+        this.cashWallet = cashWallet;
+        this.setView();
+      });
+  }
+
+  ngOnDestroy() {
+    this.cashWalletSubscription.unsubscribe();
   }
 
   ngAfterViewInit() {
@@ -84,38 +96,38 @@ export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
       this.error = '';
       this.detectChanges();
 
-      this.walletService
-        .getStripeAccount()
-        .then((account: any) => {
-          this.account = account;
-          if (
-            !this.account.requirement ||
-            this.account.requirement.indexOf('external_account') > -1
-          ) {
-            this.view = 'bank';
-          } else {
-            this.view = 'extras';
-          }
+      try {
+        this.account = this.cashWallet.stripeDetails;
 
-          this.detectChanges();
-        })
-        .catch(e => {
-          this.error = e.message;
-          this.view = 'error';
-          this.detectChanges();
-        });
+        if (
+          !this.account.requirement ||
+          this.account.requirement.indexOf('external_account') > -1
+        ) {
+          this.view = 'bank';
+        } else {
+          this.view = 'extras';
+        }
+
+        this.detectChanges();
+      } catch (e) {
+        this.error = e.message;
+        this.view = 'error';
+        this.detectChanges();
+      }
     }
+
+    this.init = true;
     this.inProgress = false;
     this.detectChanges();
-    if (this.init && previousView !== this.view && this.view !== 'error') {
-      this.accountChanged.emit();
-    }
+  }
+
+  cancelStripeAccount() {
+    this.walletService.cancelStripeAccount();
   }
 
   detectChanges(): void {
-    if (!(this.cd as ViewRef).destroyed) {
-      this.cd.markForCheck();
-      this.cd.detectChanges();
-    }
+    if ((this.cd as ViewRef).destroyed) return;
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

@@ -3,6 +3,7 @@
   <div *ngIf="inProgress" class="m-wallet__spinner">
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
+  <a (click)="cancelStripeAccount()">DEV: delete</a>
   <ng-container *ngIf="!inProgress">
     <!-- ONBOARDING FORM ------------------ -->
     <m-walletCashOnboarding

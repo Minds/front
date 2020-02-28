@@ -4,7 +4,7 @@
 <div class="m-walletBalance--cash" *ngIf="init && cashWallet">
   <div
     class="m-walletBalance---cash__onboardingNotice"
-    *ngIf="viewId !== 'settings' && (!hasAccount || !hasBank)"
+    *ngIf="childRoutePath !== 'settings' && (!hasAccount || !hasBank)"
   >
     <p>
       <a routerLink="settings">Add your bank information</a>

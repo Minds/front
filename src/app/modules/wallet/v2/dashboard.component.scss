@@ -254,7 +254,7 @@ m-walletDashboard {
   // VIEWS ///////////////////////////////////
   ////////////////////////////////////////////
   .m-walletDashboardViews__viewsContainer {
-    min-height: 550px;
+    min-height: 100px;
     @media screen and (max-width: $max-mobile) {
       min-height: 0px;
     }

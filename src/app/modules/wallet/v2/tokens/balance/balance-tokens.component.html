@@ -61,7 +61,7 @@
         *ngIf="
           session.getLoggedInUser().rewards &&
           wallet.offchain.balance > 0 &&
-          wallet.onchain.address
+          (wallet.onchain.address || wallet.receiver.address)
         "
         (click)="showModal = true"
         >Transfer to On-Chain</a
@@ -77,7 +77,7 @@
       estimatedTokenPayout | token: 18 | number: '1.0-3'
     }}</span>
     tokens. Next payout in
-    <span>{{ nextPayoutDate | timediff }}</span> (Daily at
+    <span>{{ nextPayoutDate | timediff: true }}</span> (Daily at
     {{ localPayoutTime }})
   </div>
   <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
