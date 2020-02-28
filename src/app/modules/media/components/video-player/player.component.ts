@@ -1,7 +1,7 @@
 import {
   Component,
   OnDestroy,
-  OnInit,
+  OnChanges,
   Input,
   ViewChild,
   Output,
@@ -26,7 +26,7 @@ import { Observable, BehaviorSubject, Subscription } from 'rxjs';
   providers: [VideoPlayerService],
 })
 export class MindsVideoPlayerComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+  implements OnChanges, OnDestroy, AfterViewInit {
   /**
    * MH: dislike having to emit an event to open modal, but this is
    * the quickest work around for now
@@ -89,7 +89,7 @@ export class MindsVideoPlayerComponent
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     if (isPlatformBrowser(this.platformId)) {
       this.service.load();
     }

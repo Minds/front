@@ -1,5 +1,9 @@
 @import 'defaults';
 
+m-pages {
+  grid-area: content / span 2;
+  min-width: 0;
+}
 .m-pages {
   font-family: Roboto, Helvetica, Arial, sans-serif;
   @include m-theme() {

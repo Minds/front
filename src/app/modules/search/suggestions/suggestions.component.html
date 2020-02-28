@@ -1,29 +1,53 @@
 <div
   class="m-search-bar-suggestions-list"
+  [class.m-searchBar--newDesign]="newNavigation"
   [hidden]="disabled || !active"
   (mousedown)="mousedown($event)"
   *ngIf="session.isLoggedIn()"
 >
   <ng-container *ngIf="!q">
-    <ng-container *ngFor="let suggestion of recent">
-      <a
-        class="m-search-bar-suggestions-suggestion"
-        *ngIf="suggestion.type == 'user'"
-        [routerLink]="['/', suggestion.username]"
+    <ng-container *ngIf="newNavigation; else oldSuggestions">
+      <span class="m-searchBarSuggestions__searchHistory" i18n>
+        Search History
+      </span>
+      <span
+        class="m-searchBarSuggestions__clearHistory"
+        (click)="clearHistory()"
+        i18n
       >
-        <img src="icon/{{ suggestion.guid }}/small" /> @{{
-          suggestion.username
-        }}
-      </a>
-      <a
-        class="m-search-bar-suggestions-suggestion"
-        *ngIf="suggestion.type == 'group'"
-        [routerLink]="['/groups/profile/', suggestion.guid]"
-      >
-        <img src="fs/v1/avatars/{{ suggestion.guid }}/small" />
-        {{ suggestion.name }}
-      </a>
+        Clear History
+      </span>
+
+      <ng-container *ngFor="let suggestion of recent">
+        <a
+          class="m-search-bar-suggestions-suggestion"
+          [routerLink]="['/newsfeed/global/top']"
+        >
+          {{ suggestion }}
+        </a>
+      </ng-container>
     </ng-container>
+
+    <ng-template #oldSuggestions>
+      <ng-container *ngFor="let suggestion of recent">
+        <a
+          class="m-search-bar-suggestions-suggestion"
+          *ngIf="suggestion.type == 'user'"
+          [routerLink]="['/', suggestion.username]"
+        >
+          <img src="icon/{{ suggestion.guid }}/small" />
+          @{{ suggestion.username }}
+        </a>
+        <a
+          class="m-search-bar-suggestions-suggestion"
+          *ngIf="suggestion.type == 'group'"
+          [routerLink]="['/groups/profile/', suggestion.guid]"
+        >
+          <img src="fs/v1/avatars/{{ suggestion.guid }}/small" />
+          {{ suggestion.name }}
+        </a>
+      </ng-container>
+    </ng-template>
   </ng-container>
 
   <ng-container *ngIf="q">
@@ -52,7 +76,7 @@
     </ng-container>-->
     <a
       class="m-search-bar-suggestions-suggestion m-search-bar-suggestions-context"
-      *ngIf="q"
+      *ngIf="!newNavigation && q"
       [routerLink]="['/newsfeed/global/top', { query: q }]"
     >
       <b i18n="@@SEARCH__SUGGESTIONS__MINDS_CONTEXT_LABEL">Search Minds:</b>
@@ -75,9 +99,9 @@
           }
         ]"
       >
-        <b i18n="@@SEARCH_CONTEXT_COLON"
-          >Search {{ currentContext.entity.label }}:</b
-        >
+        <b i18n="@@SEARCH_CONTEXT_COLON">
+          Search {{ currentContext.entity.label }}:
+        </b>
         <span>{{ q }}</span>
       </a>
 

@@ -1,6 +1,6 @@
 <div
   class="m-wire-channel--call-to-action"
-  *ngIf="session.getLoggedInUser().guid != channel.guid"
+  *ngIf="!channelV2Design && session.getLoggedInUser().guid != channel.guid"
 >
   <button class="mdl-shadow--8dp" (click)="sendWire()">
     <i class="ion-icon ion-flash"></i>
@@ -11,10 +11,21 @@
   </button>
 </div>
 
-<m-wire-channel--overview [channel]="channel"></m-wire-channel--overview>
+<div
+  class="m-wire-channel--support"
+  (click)="sendWire()"
+  *ngIf="channelV2Design && session.getLoggedInUser().guid != channel.guid"
+>
+  <span i18n>Support {{ channel.username }}</span>
+</div>
+
+<m-wire-channel--overview
+  [channel]="channel"
+  *ngIf="!channelV2Design"
+></m-wire-channel--overview>
 
 <div *ngIf="shouldShow()" class="mdl-card mdl-shadow--2dp">
-  <div class="mdl-card__title">
+  <div class="mdl-card__title" *ngIf="shouldShowTitle()">
     <h2 class="mdl-card__title-text" i18n="@@WIRE__CHANNEL__REWARDS_TITLE">
       Rewards
     </h2>

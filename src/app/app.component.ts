@@ -1,13 +1,12 @@
 import {
   ChangeDetectorRef,
   Component,
-  PLATFORM_ID,
-  Inject,
   HostBinding,
-  OnInit,
+  Inject,
   OnDestroy,
+  OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 
 import { NotificationService } from './modules/notifications/notification.service';
 import { AnalyticsService } from './services/analytics';
@@ -18,8 +17,7 @@ import { ScrollToTopService } from './services/scroll-to-top.service';
 import { ContextService } from './services/context.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
-import { ActivatedRoute, NavigationEnd, Router, Route } from '@angular/router';
-import { ChannelOnboardingService } from './modules/onboarding/channel/onboarding.service';
+import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
 import { BlockListService } from './common/services/block-list.service';
 import { FeaturesService } from './services/features.service';
 import { ThemeService } from './common/services/theme.service';
@@ -32,9 +30,9 @@ import { RouterHistoryService } from './common/services/router-history.service';
 import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
 import { ConfigsService } from './common/services/configs.service';
 import { MetaService } from './common/services/meta.service';
-import { filter, map, mergeMap, first } from 'rxjs/operators';
-import { EmailConfirmationService } from './common/components/email-confirmation/email-confirmation.service';
+import { filter, map, mergeMap } from 'rxjs/operators';
 import { Upload } from './services/api/upload';
+import { EmailConfirmationService } from './common/components/email-confirmation/email-confirmation.service';
 
 @Component({
   selector: 'm-app',
@@ -44,8 +42,6 @@ export class Minds implements OnInit, OnDestroy {
   name: string;
 
   ready: boolean = false;
-
-  showOnboarding: boolean = false;
 
   showTOSModal: boolean = false;
 
@@ -68,12 +64,11 @@ export class Minds implements OnInit, OnDestroy {
     public web3Wallet: Web3WalletService,
     public client: Client,
     public upload: Upload,
-    public onboardingService: ChannelOnboardingService,
+    private emailConfirmationService: EmailConfirmationService,
     public router: Router,
     public blockListService: BlockListService,
     public featuresService: FeaturesService,
     public themeService: ThemeService,
-    private emailConfirmationService: EmailConfirmationService,
     private bannedService: BannedService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private diagnostics: DiagnosticsService,
@@ -86,6 +81,7 @@ export class Minds implements OnInit, OnDestroy {
     private socketsService: SocketsService
   ) {
     this.name = 'Minds';
+
     if (this.site.isProDomain) {
       this.router.resetConfig(PRO_DOMAIN_ROUTES);
     }
@@ -157,10 +153,6 @@ export class Minds implements OnInit, OnDestroy {
 
     this.session.isLoggedIn(async is => {
       if (is && !this.site.isProDomain) {
-        if (!this.site.isProDomain) {
-          this.showOnboarding = await this.onboardingService.showModal();
-        }
-
         const user = this.session.getLoggedInUser();
         const language = this.configs.get('language');
 
@@ -169,14 +161,6 @@ export class Minds implements OnInit, OnDestroy {
           window.location.reload(true);
         }
       }
-    });
-
-    this.onboardingService.onClose.subscribe(() => {
-      this.showOnboarding = false;
-    });
-
-    this.onboardingService.onOpen.subscribe(async () => {
-      this.showOnboarding = await this.onboardingService.showModal(true);
     });
 
     this.loginReferrer
@@ -205,6 +189,7 @@ export class Minds implements OnInit, OnDestroy {
     this.scrollToTop.unlisten();
     this.router$.unsubscribe();
     this.clientError$.unsubscribe();
+    this.uploadError$.unsubscribe();
   }
 
   @HostBinding('class') get cssColorSchemeOverride() {

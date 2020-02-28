@@ -21,6 +21,8 @@ import { Mock, MockComponent, MockService } from '../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { ConfigsService } from '../../common/services/configs.service';
+import { TimeDiffService } from '../../services/timediff.service';
+import { FriendlyDateDiffPipe } from '../../common/pipes/friendlydatediff';
 
 describe('NotificationsComponent', () => {
   let comp: NotificationsComponent;
@@ -33,7 +35,7 @@ describe('NotificationsComponent', () => {
         NotificationsComponent,
         MockComponent({
           selector: 'minds-notification',
-          inputs: ['notification'],
+          inputs: ['notification', 'showElapsedTime'],
         }),
         MockComponent({
           selector: 'infinite-scroll',

@@ -1,63 +1,7 @@
 <ng-container *ngIf="ready">
   <ng-container *ngIf="!isProDomain">
-    <m-v2-topbar>
-      <ng-container search>
-        <m-search--bar [defaultSizes]="false"></m-search--bar>
-      </ng-container>
-
-      <ng-container icons>
-        <m-notifications--topbar-toggle
-          *ngIf="session.isLoggedIn()"
-        ></m-notifications--topbar-toggle>
-      </ng-container>
-    </m-v2-topbar>
-
-    <m-sidebar--markers
-      [class.has-v2-navbar]="featuresService.has('top-feeds')"
-    ></m-sidebar--markers>
+    <m-topbarwrapper></m-topbarwrapper>
   </ng-container>
 
-  <m-body
-    [class.has-markers-sidebar]="session.isLoggedIn() && !isProDomain"
-    [class.has-v2-navbar]="featuresService.has('top-feeds')"
-    [class.is-pro-domain]="isProDomain"
-  >
-    <m-emailConfirmation *ngIf="!isProDomain"></m-emailConfirmation>
-    <m-announcement [id]="'festival:sale'" *mIfFeature="'radiocity'">
-      <span
-        class="m-blockchain--wallet-address-notice--action"
-        i18n="@@MINDS_FESTIVAL_TICKET_SALE"
-      >
-        BREAKING: Tickets on sale for "MINDS: FESTIVAL OF IDEAS" @ Radio City on
-        6/13/2020. HELP US SELL OUT FAST!
-      </span>
-    </m-announcement>
-    <m-blockchain--wallet-address-notice></m-blockchain--wallet-address-notice>
-    <router-outlet></router-outlet>
-  </m-body>
-
-  <ng-container *mIfBrowser>
-    <m-messenger *ngIf="session.isLoggedIn() && !isProDomain"></m-messenger>
-  </ng-container>
-
-  <m-hovercard-popup></m-hovercard-popup>
-
-  <m-overlay-modal></m-overlay-modal>
-
-  <m--blockchain--transaction-overlay></m--blockchain--transaction-overlay>
-
-  <m-modal--tos-updated *ngIf="session.isLoggedIn()"></m-modal--tos-updated>
-
-  <ng-container *mIfBrowser>
-    <m-juryDutySession__summons
-      *ngIf="session.isLoggedIn() && !isProDomain"
-    ></m-juryDutySession__summons>
-  </ng-container>
-
-  <m-modal-signup
-    *ngIf="!isProDomain && !session.getLoggedInUser()"
-    [open]="false"
-  ></m-modal-signup>
-
-  <m-channel--onboarding *ngIf="showOnboarding"></m-channel--onboarding>
+  <m-page></m-page>
 </ng-container>

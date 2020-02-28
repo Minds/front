@@ -1,0 +1,93 @@
+m-channel__sidebarv2 {
+  .m-channelSidebar__buttons {
+    display: flex;
+    margin: 7px 0;
+
+    button:first-child {
+      margin-right: 47px;
+    }
+
+    button {
+      font-size: 14px;
+      line-height: 30px;
+      background-color: transparent;
+      border-color: transparent;
+
+      @include m-theme() {
+        color: themed($m-black);
+      }
+
+      img {
+        height: 14px;
+        margin-right: 8px;
+      }
+    }
+  }
+
+  m-channels--sorted-module {
+    background-color: transparent !important;
+    border: 0 !important;
+    margin: 7px 0;
+    max-width: 245px;
+
+    .m-channels--sorted-module__Title {
+      padding: 0;
+
+      .mdl-card__title-text {
+        font-size: 14px;
+        line-height: 30px;
+        font-weight: bold;
+        margin-bottom: 9px;
+      }
+    }
+
+    .m-channels--sorted-module__Tiles {
+      > a {
+        height: 45px;
+        width: 45px;
+        flex-grow: 0;
+        flex-shrink: 0;
+        padding: 0;
+        margin-right: 15px;
+        margin-bottom: 15px;
+        box-sizing: content-box;
+
+        &.m-mature-module-thumbnail {
+          i.material-icons {
+            font-size: 2em !important;
+          }
+        }
+      }
+    }
+
+    .m-channels--sorted-module__viewMore {
+      padding: 0 0 16px;
+    }
+  }
+
+  m-wire-channel {
+    .mdl-card {
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+    .mdl-card__title {
+      padding: 8px 0;
+    }
+
+    .m-wire-channel--rewards {
+      //padding: 0 16px;
+
+      .m-wire-channel--description {
+        padding: 16px 0;
+      }
+
+      m-wire-channel-table {
+        table {
+          td {
+            padding: 8px 0;
+          }
+        }
+      }
+    }
+  }
+}

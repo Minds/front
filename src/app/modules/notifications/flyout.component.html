@@ -1,4 +1,7 @@
-<div class="m-notifications--flyout--wrapper mdl-card mdl-shadow--3dp">
+<div
+  class="m-notifications--flyout--wrapper mdl-card mdl-shadow--3dp"
+  [class.m-notificationsFlyout--newNavigation]="newNavigation"
+>
   <div class="m-notifications--flyout--scrollable-container">
     <minds-notifications
       #notifications
@@ -6,17 +9,36 @@
       [hidden]="!visible"
       [visible]="visible"
       [useOwnScrollSource]="true"
+      [showTabs]="!newNavigation"
+      [showShadows]="!newNavigation"
+      [showInfiniteScroll]="!newNavigation"
+      [showElapsedTime]="newNavigation"
+      limit="5"
     ></minds-notifications>
   </div>
   <div
-    class="m-notifications--flyout--bottom-container mdl-color--blue-grey-50 mdl-color-text--blue-grey-200"
+    class="m-notificationsFlyout__bottomContainer"
+    *ngIf="newNavigation; else oldBottomContainer"
   >
     <a
       [routerLink]="['/notifications']"
       (click)="close()"
       i18n="@@NOTIFICATIONS__FLYOUT__VIEW_ALL_ACTION"
     >
-      View all
+      See All Notifications
     </a>
   </div>
+  <ng-template #oldBottomContainer>
+    <div
+      class="m-notifications--flyout--bottom-container mdl-color--blue-grey-50 mdl-color-text--blue-grey-200"
+    >
+      <a
+        [routerLink]="['/notifications']"
+        (click)="close()"
+        i18n="@@NOTIFICATIONS__FLYOUT__VIEW_ALL_ACTION"
+      >
+        View all
+      </a>
+    </div>
+  </ng-template>
 </div>
