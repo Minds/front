@@ -185,23 +185,16 @@
     </ng-container>
   </div>
 
-  <div
-    class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
-    [mdl]
-  >
+  <div class="m-login-mfa-input">
     <input
+      #code
       class="mdl-textfield__input"
       type="text"
       id="code"
-      #code
+      placeholder="Enter your code here"
+      i18n="@@M__COMMON__ENTER_2FA_CODE"
       (keydown.enter)="twofactorAuth(code)"
     />
-    <label
-      class="mdl-textfield__label"
-      for="code"
-      i18n="@@M__COMMON__ENTER_2FA_CODE"
-      >Enter your code here</label
-    >
   </div>
   <div></div>
 
