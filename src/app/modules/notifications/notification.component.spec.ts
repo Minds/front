@@ -23,6 +23,8 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 
 import { ExcerptPipe } from '../../common/pipes/excerpt';
 import { ConfigsService } from '../../common/services/configs.service';
+import { FriendlyDateDiffPipe } from '../../common/pipes/friendlydatediff';
+import { TimeDiffService } from '../../services/timediff.service';
 
 describe('NotificationComponent', () => {
   let comp: NotificationComponent;
@@ -32,6 +34,7 @@ describe('NotificationComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         MaterialMock,
+        FriendlyDateDiffPipe,
         NotificationComponent,
         TokenPipe,
         ExcerptPipe,
@@ -40,6 +43,7 @@ describe('NotificationComponent', () => {
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: TimeDiffService, useValue: MockService(TimeDiffService) },
       ],
     }).compileComponents(); // compile template and css
   }));

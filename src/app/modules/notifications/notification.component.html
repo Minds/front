@@ -1792,7 +1792,20 @@
     <span hidden>View: {{ notification.notification_view }}</span>
   </ng-template>
 
-  <span class="ts mdl-color-text--grey">{{
-    notification.time_created * 1000 | date: 'medium'
-  }}</span>
+  <span
+    class="ts mdl-color-text--grey m-notification__friendlyTS"
+    [title]="notification.time_created * 1000 | date: 'medium'"
+    *ngIf="
+      showElapsedTime && notificationAge$ | async as notificationAge;
+      else creationDateBlock
+    "
+  >
+    {{ notificationAge | friendlydatediff }}
+  </span>
+
+  <ng-template #creationDateBlock>
+    <span class="ts mdl-color-text--grey">
+      {{ notification.time_created * 1000 | date: 'medium' }}
+    </span>
+  </ng-template>
 </div>

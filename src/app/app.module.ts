@@ -71,6 +71,7 @@ import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
 import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
+import { LayoutModule } from './modules/layout/layout.module';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -95,6 +96,7 @@ export class SentryErrorHandler implements ErrorHandler {
     FormsModule,
     HttpClientModule,
     CaptchaModule,
+    LayoutModule,
     CommonModule,
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
     //CheckoutModule,

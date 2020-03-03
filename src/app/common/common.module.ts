@@ -130,7 +130,6 @@ import { SsoService } from './services/sso.service';
 import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
 import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
 import { PagesService } from './services/pages.service';
-import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
@@ -146,6 +145,10 @@ import { PhoneInputCountryV2Component } from './components/phone-input-v2/countr
 import { TagsService } from './services/tags.service';
 import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
 import { RedirectService } from './services/redirect.service';
+import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
+import { SidebarNavigationService } from './layout/sidebar/navigation.service';
+import { TopbarService } from './layout/topbar.service';
+import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
 
 const routes: Routes = [
   {
@@ -176,7 +179,9 @@ const routes: Routes = [
 
     // V2 Layout
     V2TopbarComponent,
+    V3TopbarComponent,
     UserMenuComponent,
+    UserMenuV3Component,
 
     //
 
@@ -289,6 +294,10 @@ const routes: Routes = [
     V2TopbarComponent,
     UserMenuComponent,
 
+    // V3 Layout
+    V3TopbarComponent,
+    UserMenuV3Component,
+
     //
 
     TooltipComponent,
@@ -393,6 +402,7 @@ const routes: Routes = [
     AttachmentService,
     CookieService,
     PagesService,
+    AttachmentService,
     {
       provide: UpdateMarkersService,
       useFactory: (_http, _session, _sockets) => {
@@ -444,7 +454,8 @@ const routes: Routes = [
     },
     MetaService,
     MediaProxyService,
-    V2TopbarService,
+    SidebarNavigationService,
+    TopbarService,
     {
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,

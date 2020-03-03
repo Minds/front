@@ -122,6 +122,7 @@ describe('NewsfeedComponent', () => {
     featuresServiceMock.mock('top-feeds', false);
     featuresServiceMock.mock('suggested-users', false);
     featuresServiceMock.mock('pro', false);
+    featuresServiceMock.mock('navigation', false);
 
     sessionMock.user.admin = false;
     sessionMock.loggedIn = true;
@@ -334,6 +335,6 @@ describe('NewsfeedComponent', () => {
       By.css('.m-newsfeed-footer .copyright')
     );
     expect(copyright).not.toBeNull();
-    expect(copyright.nativeElement.textContent).toContain('© Minds 2019');
+    expect(copyright.nativeElement.textContent).toContain('© Minds 2020');
   });
 });

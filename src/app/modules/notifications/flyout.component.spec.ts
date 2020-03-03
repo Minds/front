@@ -1,21 +1,15 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
-import {
-  async,
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-  tick,
-} from '@angular/core/testing';
-import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Client } from '../../services/api/client';
 import { By } from '@angular/platform-browser';
 import { clientMock } from '../../../tests/client-mock.spec';
-import { MaterialMock } from '../../../tests/material-mock.spec';
 import { NotificationsFlyoutComponent } from './flyout.component';
 
-import { Mock, MockComponent, MockDirective } from '../../utils/mock';
+import { MockComponent, MockDirective } from '../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FeaturesService } from '../../services/features.service';
+import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 
 describe('NotificationsFlyoutComponent', () => {
   let comp: NotificationsFlyoutComponent;
@@ -28,14 +22,26 @@ describe('NotificationsFlyoutComponent', () => {
         MockComponent(
           {
             selector: 'minds-notifications',
-            inputs: ['loadOnDemand', 'hidden', 'visible', 'useOwnScrollSource'],
+            inputs: [
+              'loadOnDemand',
+              'hidden',
+              'visible',
+              'useOwnScrollSource',
+              'showTabs',
+              'showShadows',
+              'showInfiniteScroll',
+              'showElapsedTime',
+            ],
           },
           ['onVisible']
         ),
         NotificationsFlyoutComponent,
       ],
       imports: [RouterTestingModule],
-      providers: [{ provide: Client, useValue: clientMock }],
+      providers: [
+        { provide: Client, useValue: clientMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
+      ],
     }).compileComponents(); // compile template and css
   }));
 
@@ -44,6 +50,9 @@ describe('NotificationsFlyoutComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
+
+    featuresServiceMock.mock('navigation', false);
+
     fixture = TestBed.createComponent(NotificationsFlyoutComponent);
     clientMock.response = {};
 

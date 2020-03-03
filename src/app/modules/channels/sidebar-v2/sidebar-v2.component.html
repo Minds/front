@@ -1,0 +1,46 @@
+<div class="m-channelSidebar__buttons">
+  <button class="m-channelSidebar__messageButton" i18n>
+    <img [src]="cdnAssetsUrl + 'assets/icons/wire.svg'" />
+    <span>Message</span>
+  </button>
+
+  <button class="m-channelSidebar__payButton" i18n>
+    <img [src]="cdnAssetsUrl + 'assets/icons/wire.svg'" />
+    <span>Pay</span>
+  </button>
+</div>
+
+<m-channelstats [user]="user"></m-channelstats>
+
+<m-channelbiofields [user]="user" [editing]="editing"></m-channelbiofields>
+
+<m-channels--sorted-module
+  title="Images"
+  i18n-title
+  type="images"
+  [channel]="user"
+  [linksTo]="['/', user.username, 'images']"
+  [size]="8"
+  *mIfBrowser
+></m-channels--sorted-module>
+
+<m-channels--sorted-module
+  title="Videos"
+  i18n-title
+  type="videos"
+  [channel]="user"
+  [linksTo]="['/', user.username, 'videos']"
+  [size]="8"
+  *mIfBrowser
+></m-channels--sorted-module>
+
+<button (click)="changeEditing.emit(true)">toggle editing</button>
+
+<m-wire-channel
+  *mIfBrowser
+  #wire
+  [(rewards)]="user.wire_rewards"
+  [channel]="user"
+  [editing]="editing"
+  [channelV2Design]="true"
+></m-wire-channel>
