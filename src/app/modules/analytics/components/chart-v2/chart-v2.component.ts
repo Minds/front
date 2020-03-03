@@ -211,8 +211,8 @@ export class ChartV2Component implements OnInit, OnDestroy {
       autoexpand: 'true',
       autosize: 'true',
       hovermode: 'x',
-      paper_bgcolor: this.getColor('m-white'),
-      plot_bgcolor: this.getColor('m-white'),
+      paper_bgcolor: this.getColor('m-bgColor--primary'),
+      plot_bgcolor: this.getColor('m-bgColor--primary'),
       font: {
         family: 'Roboto',
       },

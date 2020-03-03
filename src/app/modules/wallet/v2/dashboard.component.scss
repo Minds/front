@@ -3,10 +3,15 @@ m-walletDashboard {
     background-color: themed($m-bgColor--primary);
   }
   display: block;
+  grid-area: content / span 2;
 
   ////////////////////////////////////////////
   // COMMON //////////////////////////////////
   ////////////////////////////////////////////
+
+  m-tooltip {
+    vertical-align: middle;
+  }
 
   .m-wallet__spinner {
     display: flex;
@@ -206,7 +211,7 @@ m-walletDashboard {
     margin: 0 40px;
     list-style: none;
     @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--tertiary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
     @media screen and (max-width: $min-tablet) {
       margin-left: 24px;
@@ -231,7 +236,7 @@ m-walletDashboard {
 
     @include m-theme() {
       color: themed($m-textColor--tertiary);
-      border-bottom: 3px solid themed($m-white);
+      border-bottom: 3px solid transparent;
     }
     &.selected {
       @include m-theme() {
