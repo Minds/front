@@ -27,7 +27,7 @@ export class BlockchainMarketingRewardsComponent {
     private configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
-    this.contributionValues = configs.get('contributions_values');
+    this.contributionValues = configs.get('contribution_values');
   }
 
   scrollToTop() {

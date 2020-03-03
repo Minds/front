@@ -1,4 +1,10 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,7 +12,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { Client, Upload } from '../../services/api';
 import { Navigation as NavigationService } from '../../services/navigation';
-import { MindsActivityObject } from '../../interfaces/entities';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { ContextService } from '../../services/context.service';
@@ -16,12 +21,13 @@ import { SideBarSelectorChange } from '../hashtags/sidebar-selector/sidebar-sele
 import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
 import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.component';
 import { PagesService } from '../../common/services/pages.service';
+import { FeaturesService } from '../../services/features.service';
 
 @Component({
   selector: 'm-newsfeed',
   templateUrl: 'newsfeed.component.html',
 })
-export class NewsfeedComponent {
+export class NewsfeedComponent implements OnInit, OnDestroy {
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
   offset: string = '';
@@ -57,6 +63,8 @@ export class NewsfeedComponent {
 
   all: boolean;
 
+  newNavigation: boolean = false;
+
   @ViewChild('poster', { static: false }) private poster: PosterComponent;
 
   constructor(
@@ -66,13 +74,15 @@ export class NewsfeedComponent {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
+    public featuresService: FeaturesService,
+    public pagesService: PagesService,
     protected storage: Storage,
     protected overlayModal: OverlayModalService,
     protected context: ContextService,
     protected newsfeedService: NewsfeedService,
-    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
-    public pagesService: PagesService
+    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService
   ) {
+    this.newNavigation = this.featuresService.has('navigation');
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
 

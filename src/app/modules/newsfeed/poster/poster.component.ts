@@ -226,7 +226,9 @@ export class PosterComponent {
       })
       .catch(e => {
         this.inProgress = false;
-        alert(e.message);
+        if (!e.must_verify) {
+          alert(e.message);
+        }
       });
   }
 

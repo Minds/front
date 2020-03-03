@@ -14,6 +14,41 @@ m-notifications--flyout {
     right: -80px;
   }
 
+  &.m-notificationsFlyout--newDesign {
+    minds-notifications {
+      .notifications-grid {
+        &.m-notificationsGrid__noScroll {
+          overflow-y: auto;
+        }
+
+        .mdl-cell--12-col minds-notification {
+          .body {
+            a {
+              @include m-theme() {
+                color: themed($m-textColor--primary);
+              }
+              .pseudo-link {
+                @include m-theme() {
+                  color: themed($m-link) !important;
+                }
+              }
+            }
+
+            .ts.m-notification__friendlyTS {
+              text-transform: unset;
+              font-size: 12px;
+              letter-spacing: 0;
+
+              @include m-theme() {
+                color: themed($m-textColor--secondary);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   minds-notifications {
     .mdl-tabs__tab-bar {
       height: 40px;
@@ -39,6 +74,12 @@ m-notifications--flyout {
   .m-notifications--flyout--wrapper {
     max-height: calc(95vh - 60px);
     overflow: visible;
+
+    &.m-notificationsFlyout--newNavigation {
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+      }
+    }
   }
 
   .notifications-grid {
@@ -60,6 +101,7 @@ m-notifications--flyout {
 
         .body {
           padding: 0 8px;
+
           p {
             font-size: 13px;
             line-height: 18px;
@@ -67,6 +109,7 @@ m-notifications--flyout {
             -webkit-font-smoothing: antialiased;
             text-rendering: optimizeLegibility;
           }
+
           .ts {
             font-size: 10px;
             font-family: 'Roboto', Helvetica, sans-serif;
@@ -76,6 +119,28 @@ m-notifications--flyout {
             -webkit-font-smoothing: antialiased;
           }
         }
+      }
+    }
+  }
+
+  .m-notificationsFlyout__bottomContainer {
+    padding: 18px 0;
+    text-align: center;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+
+    a {
+      font-size: 12px;
+      letter-spacing: 0;
+      font-weight: normal;
+
+      text-decoration: none;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
       }
     }
   }

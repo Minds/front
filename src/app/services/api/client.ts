@@ -1,17 +1,19 @@
 import { CookieService } from '../../common/services/cookie.service';
-import { PLATFORM_ID, Inject } from '@angular/core';
+import { PLATFORM_ID, Inject, forwardRef, EventEmitter } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
 import { Location } from '@angular/common';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
+import { EmailConfirmationService } from '../../common/components/email-confirmation/email-confirmation.service';
 
 /**
  * API Class
  */
 export class Client {
   base: string = '/';
+  onError: EventEmitter<any> = new EventEmitter<any>();
 
   static _(
     http: HttpClient,
@@ -59,6 +61,7 @@ export class Client {
           return resolve(data);
         },
         err => {
+          this.onError.next(err);
           if (err.data && !err.data()) {
             return reject(err || new Error('GET error'));
           }
@@ -93,6 +96,7 @@ export class Client {
             return resolve(data);
           },
           err => {
+            this.onError.next(err);
             if (err.data && !err.data()) {
               return reject(err || new Error('GET error'));
             }
@@ -126,6 +130,7 @@ export class Client {
             return resolve(data);
           },
           err => {
+            this.onError.next(err);
             if (err.data && !err.data()) {
               return reject(err || new Error('POST error'));
             }
@@ -160,6 +165,7 @@ export class Client {
             return resolve(data);
           },
           err => {
+            this.onError.next(err);
             if (err.data && !err.data()) {
               return reject(err || new Error('POST error'));
             }
@@ -199,6 +205,7 @@ export class Client {
             return resolve(data);
           },
           err => {
+            this.onError.next(err);
             if (err.status === 401 && err.data().loggedin === false) {
               if (this.location.path() !== '/login') {
                 localStorage.setItem('redirect', this.location.path());
@@ -231,6 +238,7 @@ export class Client {
             return resolve(data);
           },
           err => {
+            this.onError.next(err);
             if (err.status === 401 && err.error.loggedin === false) {
               if (this.location.path() !== '/login') {
                 localStorage.setItem('redirect', this.location.path());

@@ -5,6 +5,10 @@ m-tooltip {
   .m-tooltip--anchored {
     position: relative;
   }
+
+  img {
+    height: 24px;
+  }
 }
 
 .m-tooltip--bubble {
