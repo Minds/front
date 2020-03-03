@@ -33,7 +33,7 @@ m-body {
   max-width: 1140px;
 }
 
-[class*="m-pageLayout__pane"] {
+[class*='m-pageLayout__pane'] {
   box-sizing: border-box;
 }
 
@@ -52,7 +52,7 @@ m-body {
   min-width: 580px;
   width: 100%;
 
-  .m-pageLayout__pane--main  {
+  .m-pageLayout__pane--main {
     width: 580px;
     max-width: 580px;
   }
@@ -65,7 +65,7 @@ m-body {
 }
 
 @media screen and (max-width: $max-mobile) {
-  [class*="m-pageLayout__pane"] {
+  [class*='m-pageLayout__pane'] {
     @include m-theme() {
       border: 0;
     }

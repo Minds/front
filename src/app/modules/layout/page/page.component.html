@@ -17,8 +17,13 @@
   <m-blockchain--wallet-address-notice></m-blockchain--wallet-address-notice>
 
   <ng-container *mIfFeature="'navigation'; else oldLayout">
-    <div class="m-pageLayout__container" [class.m-pageLayout__container--noSidebar]="!isSidebarVisible">
-      <m-sidebar--navigation class="m-pageLayout__pane--left"></m-sidebar--navigation>
+    <div
+      class="m-pageLayout__container"
+      [class.m-pageLayout__container--noSidebar]="!isSidebarVisible"
+    >
+      <m-sidebar--navigation
+        class="m-pageLayout__pane--left"
+      ></m-sidebar--navigation>
       <div class="m-pageLayout__pane--main">
         <router-outlet></router-outlet>
       </div>

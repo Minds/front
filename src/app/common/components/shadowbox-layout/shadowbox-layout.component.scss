@@ -9,12 +9,13 @@ m-body.has-v3-navbar {
   m-shadowboxLayout {
     box-shadow: none;
   }
-  .m-shadowboxLayout__bottom, .m-shadowboxLayout__footer {
+  .m-shadowboxLayout__bottom,
+  .m-shadowboxLayout__footer {
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
     }
   }
-} 
+}
 
 m-shadowboxHeader.isScrollable {
   .m-shadowboxLayout__header {

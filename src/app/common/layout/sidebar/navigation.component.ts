@@ -129,5 +129,4 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
       this.groupsSidebar.showLabels = this.layoutMode !== 'tablet';
     }
   }
-
 }

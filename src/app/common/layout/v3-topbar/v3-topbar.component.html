@@ -42,7 +42,10 @@
 
     <div class="m-pageLayout__pane--main m-pageLayout__container">
       <div class="m-v3Topbar__spacer" *ngIf="isMobile"></div>
-      <div class="m-v3Topbar__middleColumn m-pageLayout__pane--main" *ngIf="!isMobile && getCurrentUser()">
+      <div
+        class="m-v3Topbar__middleColumn m-pageLayout__pane--main"
+        *ngIf="!isMobile && getCurrentUser()"
+      >
         <ng-container *ngTemplateOutlet="searchBar"></ng-container>
       </div>
 
@@ -50,39 +53,39 @@
         <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
           <div class="m-v3TopbarContainer__loginWrapper">
             <a
-            class="m-v3TopbarLoginWrapper__login"
-            routerLink="/login"
-            title="Login"
-            i18n-title
-          >
-            Login
-          </a>
+              class="m-v3TopbarLoginWrapper__login"
+              routerLink="/login"
+              title="Login"
+              i18n-title
+            >
+              Login
+            </a>
 
-          <a
-            class="m-v3TopbarLoginWrapper__joinMindsNow"
-            routerLink="/register"
-            title="Join Minds Now"
-            i18n-title
-          >
-            Join Minds Now
-          </a>
+            <a
+              class="m-v3TopbarLoginWrapper__joinMindsNow"
+              routerLink="/register"
+              title="Join Minds Now"
+              i18n-title
+            >
+              Join Minds Now
+            </a>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="isMobile && getCurrentUser()">
+          <ng-container *ngTemplateOutlet="searchBar"></ng-container>
+        </ng-container>
+
+        <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
+          <div class="m-v3Topbar__spacer" *ngIf="!isMobile"></div>
+          <!-- edit -->
+          <ng-content select="[icons]"></ng-content>
+          <m-usermenu__v3
+            [useAvatar]="true"
+            [showFooterLinks]="true"
+          ></m-usermenu__v3>
         </div>
-      </ng-container>
-      <ng-container *ngIf="isMobile && getCurrentUser()">
-        <ng-container *ngTemplateOutlet="searchBar"></ng-container>
-      </ng-container>
-
-      <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
-        <div class="m-v3Topbar__spacer" *ngIf="!isMobile"></div>
-        <!-- edit -->
-        <ng-content select="[icons]"></ng-content>
-        <m-usermenu__v3
-          [useAvatar]="true"
-          [showFooterLinks]="true"
-        ></m-usermenu__v3>
       </div>
     </div>
-  </div>
   </div>
 </div>
 

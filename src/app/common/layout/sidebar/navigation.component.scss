@@ -1,5 +1,4 @@
 m-sidebar--navigation {
-
   @media screen and (max-width: $max-mobile) {
     display: none;
   }
@@ -79,9 +78,8 @@ m-sidebar--navigation {
     box-sizing: border-box;
 
     &::-webkit-scrollbar {
-        display: none;
+      display: none;
     }
-
 
     @include m-theme() {
       background-color: themed($m-bgColor--primary);
