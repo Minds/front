@@ -30,6 +30,7 @@ import { filter } from 'rxjs/operators';
 })
 export class EmailConfirmationComponent implements OnInit, OnDestroy {
   readonly fromEmailConfirmation: number;
+  invalid: boolean = false;
   sent: boolean = false;
   shouldShow: boolean = false;
   canClose: boolean = false;
@@ -48,9 +49,12 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
     protected location: Location
   ) {
     this.fromEmailConfirmation = configs.get('from_email_confirmation');
+    console.log('i bet this says null:', this.fromEmailConfirmation);
   }
 
   ngOnInit(): void {
+    console.log(this.session.getLoggedInUser());
+
     this.setShouldShow(this.session.getLoggedInUser());
 
     this.userEmitter$ = this.session.userEmitter.subscribe(user => {
@@ -91,11 +95,21 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
    * @param {Object} user
    */
   setShouldShow(user): void {
+    const isOnboarding = this.location.path().indexOf('/onboarding') === 0;
+
     this.shouldShow =
-      !(this.location.path().indexOf('/onboarding') === 0) &&
-      !this.fromEmailConfirmation &&
       user &&
-      user.email_confirmed === false;
+      user.email_confirmed === false &&
+      !isOnboarding &&
+      (!this.fromEmailConfirmation ||
+        (this.fromEmailConfirmation && user.email_confirmation_token_invalid));
+
+    // this.shouldShow =
+    // !(this.location.path().indexOf('/onboarding') === 0) &&
+    //   !this.fromEmailConfirmation &&
+    //   user &&
+    //   user.email_confirmed === false;
+    this.detectChanges();
   }
 
   /**
@@ -107,9 +121,10 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
 
     try {
       const sent = await this.service.send();
-
+      this.invalid = false;
       if (!sent) {
         this.sent = false;
+        this.invalid = true;
       }
     } catch (e) {}
 

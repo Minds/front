@@ -4,12 +4,25 @@
     [canClose]="canClose"
     [remember]="false"
   >
-    Please confirm your email address.
-    <ng-container *ngIf="!sent"
-      >Didn't get it?
-      <span class="m-announcement__clickable" (click)="send()"
-        >Click here to send again.</span
-      ></ng-container
-    >
+    <ng-container *ngIf="!invalid">
+      Please confirm your email address.
+      <ng-container *ngIf="!sent"
+        >Didn't get it?
+        <ng-container *ngTemplateOutlet="sendAgain"></ng-container
+        >></ng-container
+      >
+    </ng-container>
+    <ng-container *ngIf="invalid">
+      Your confirmation link has expired.
+      <ng-container *ngTemplateOutlet="sendAgain"></ng-container>
+    </ng-container>
   </m-announcement>
 </ng-container>
+
+<ng-template #sendAgain>
+  <ng-container *ngIf="!sent">
+    <span class="m-announcement__clickable" (click)="send()"
+      >Click here to send again.</span
+    ></ng-container
+  ></ng-template
+>
