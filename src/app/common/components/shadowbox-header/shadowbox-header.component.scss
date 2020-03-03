@@ -20,6 +20,13 @@ m-shadowboxHeader {
     box-shadow: 0 7px 15px -7px rgba(themed($m-black-always), 0.1);
   }
 }
+m-body.has-v3-navbar {
+  .m-shadowboxHeader__wrapper {
+    @include m-theme() {
+      box-shadow: none;
+    }
+  }
+}
 .m-shadowboxHeader__container {
   overflow-x: hidden;
   overflow-y: hidden;
@@ -54,8 +61,8 @@ m-shadowboxHeader {
       right: 0;
       background: linear-gradient(
         to right,
-        rgba(themed($m-white), 0) 0,
-        themed($m-white) 50%
+        rgba(themed($m-bgColor--primary), 0) 0,
+        themed($m-bgColor--primary) 50%
       );
     }
   }
@@ -64,8 +71,8 @@ m-shadowboxHeader {
       left: 0;
       background: linear-gradient(
         to left,
-        rgba(themed($m-white), 0) 0,
-        themed($m-white) 50%
+        rgba(themed($m-bgColor--primary), 0) 0,
+        themed($m-bgColor--primary) 50%
       );
     }
   }

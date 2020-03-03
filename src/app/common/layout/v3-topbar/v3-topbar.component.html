@@ -11,9 +11,9 @@
   [class.m-v3Topbar__loggedOut]="!getCurrentUser()"
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"
 >
-  <div class="m-grid">
+  <div class="m-v3TopbarTop__inner m-pageLayout__container">
     <div
-      class="m-v3Topbar__leftColumn"
+      class="m-v3Topbar__leftColumn m-pageLayout__pane--left"
       [class.m-v3Topbar__leftColumn__rightAlign]="!getCurrentUser()"
     >
       <nav class="m-v3Topbar__nav">
@@ -40,16 +40,16 @@
       </nav>
     </div>
 
-    <div class="m-v3Topbar__spacer" *ngIf="isMobile"></div>
+    <div class="m-pageLayout__pane--main m-pageLayout__container">
+      <div class="m-v3Topbar__spacer" *ngIf="isMobile"></div>
+      <div class="m-v3Topbar__middleColumn m-pageLayout__pane--main" *ngIf="!isMobile && getCurrentUser()">
+        <ng-container *ngTemplateOutlet="searchBar"></ng-container>
+      </div>
 
-    <div class="m-v3Topbar__middleColumn" *ngIf="!isMobile && getCurrentUser()">
-      <ng-container *ngTemplateOutlet="searchBar"></ng-container>
-    </div>
-
-    <div class="m-v3Topbar__rightColumn">
-      <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
-        <div class="m-v3TopbarContainer__loginWrapper">
-          <a
+      <div class="m-v3Topbar__rightColumn m-pageLayout__pane--right">
+        <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
+          <div class="m-v3TopbarContainer__loginWrapper">
+            <a
             class="m-v3TopbarLoginWrapper__login"
             routerLink="/login"
             title="Login"
@@ -73,15 +73,16 @@
       </ng-container>
 
       <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
+        <div class="m-v3Topbar__spacer" *ngIf="!isMobile"></div>
         <!-- edit -->
         <ng-content select="[icons]"></ng-content>
-        <div class="m-v3Topbar__spacer" *ngIf="!isMobile"></div>
         <m-usermenu__v3
           [useAvatar]="true"
           [showFooterLinks]="true"
         ></m-usermenu__v3>
       </div>
     </div>
+  </div>
   </div>
 </div>
 

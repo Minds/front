@@ -8,7 +8,7 @@
   box-sizing: border-box;
   overflow: visible;
   @include m-theme() {
-    border-bottom: 8px solid themed($m-white);
+    border-bottom: 8px solid transparent;
   }
   @include m-theme() {
     color: themed($m-grey-300);
