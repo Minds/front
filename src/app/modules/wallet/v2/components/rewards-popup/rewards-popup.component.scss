@@ -1,11 +1,14 @@
 m-walletRewardsPopup {
   z-index: 1;
   position: absolute;
-  top: 0;
+  top: 36px;
   left: 0;
+  width: 188px;
+  min-height: 26px;
   font-weight: 300;
   font-size: 13px;
   line-height: 18px;
+
   @include m-theme() {
     background-color: themed($m-white);
     color: themed($m-textColor--tertiary);
@@ -15,6 +18,7 @@ m-walletRewardsPopup {
   .m-walletRewardsPopup__row {
     display: flex;
     justify-content: space-between;
+    text-transform: capitalize;
   }
 
   .m-walletRewardsPopup__metricsContainer {

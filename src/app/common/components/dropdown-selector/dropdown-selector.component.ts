@@ -19,6 +19,7 @@ export class DropdownSelectorComponent implements OnInit {
   @Input() filter: Filter;
   @Input() dropUp: boolean = false;
   @Input() showLabel: boolean = true;
+  @Input() inlineLabel = false;
   @Output() selectionMade: EventEmitter<any> = new EventEmitter();
 
   expanded = false;
@@ -34,7 +35,6 @@ export class DropdownSelectorComponent implements OnInit {
   }
 
   updateFilter(option: Option) {
-    console.log('filter', option.id, option.label);
     this.expanded = false;
     if ('available' in option && !option.available) {
       return;

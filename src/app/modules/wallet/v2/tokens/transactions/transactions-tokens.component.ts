@@ -30,7 +30,7 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
   transactions: any[] = [];
   runningTotal: number = 0;
-  currentDayInLoop = moment();
+  currentDayInLoop = moment().add(1, 'day');
 
   selectedTransactionType: string = 'all';
   filterApplied: boolean = false;
@@ -45,7 +45,7 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
   filter: Filter = {
     id: 'type',
-    label: 'Transaction Type',
+    label: 'Type',
     options: [
       {
         id: 'all',

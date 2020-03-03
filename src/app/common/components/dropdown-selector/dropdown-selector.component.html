@@ -1,4 +1,4 @@
-<div class="m-dropdownSelector__labelWrapper" *ngIf="showLabel">
+<div class="m-dropdownSelector__labelWrapper" *ngIf="showLabel && !inlineLabel">
   <span>{{ filter.label }}</span>
   <m-tooltip icon="help" *ngIf="filter.description">
     <div>{{ filter.description }}</div>
@@ -23,7 +23,8 @@
 >
   <div class="m-dropdownSelector__header" (click)="expanded = !expanded">
     <span class="m-dropdownSelector__option">
-      {{ selectedOption.label }}
+      <label *ngIf="showLabel && inlineLabel">{{ filter.label }}</label>
+      <span>{{ selectedOption.label }}</span>
     </span>
     <i class="material-icons" *ngIf="!expanded">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>

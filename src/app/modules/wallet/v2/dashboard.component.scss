@@ -122,6 +122,9 @@ m-walletDashboard {
     @media screen and (max-width: $max-mobile) {
       padding-top: 24px;
     }
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
   }
   m-shadowboxHeader {
     min-height: 103px;
@@ -255,10 +258,11 @@ m-walletDashboard {
   ////////////////////////////////////////////
   .m-walletDashboardViews__viewsContainer {
     min-height: 100px;
+    padding: 40px;
     @media screen and (max-width: $max-mobile) {
       min-height: 0px;
+      padding: 16px;
     }
-    padding: 40px;
   }
   .m-walletDashboardViews__view {
     display: block;

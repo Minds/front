@@ -38,23 +38,25 @@ export class WalletRewardsPopupComponent implements OnInit {
 
     const opts = {
       from: startOfDay,
-      to: startOfDay + 86400, // 24 hours later
+      to: Number(startOfDay) + 86400, // 24 hours later
     };
-    const response = await this.walletService.getDailyTokenContributionScores(
-      opts
-    );
+    try {
+      const response = await this.walletService.getDailyTokenContributionScores(
+        opts
+      );
 
-    if (response) {
-      const dailyContributions = response.contributions[0];
-      this.totalScore = dailyContributions.score;
-      this.metrics = [];
-      Object.keys(dailyContributions.metrics).forEach(key => {
-        const metric = dailyContributions.metrics[key];
-        metric.key = key;
-        metric.id = key;
-        this.metrics.push(metric);
-      });
-    }
+      if (response) {
+        const dailyContributions = response.contributions[0];
+        this.totalScore = dailyContributions.score;
+        this.metrics = [];
+        Object.keys(dailyContributions.metrics).forEach(key => {
+          const metric = dailyContributions.metrics[key];
+          metric.key = key;
+          metric.id = key;
+          this.metrics.push(metric);
+        });
+      }
+    } catch (e) {}
     this.inProgress = false;
     this.detectChanges();
   }

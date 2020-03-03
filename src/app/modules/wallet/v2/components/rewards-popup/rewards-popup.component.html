@@ -11,7 +11,10 @@
       <span>{{ metric.score }}</span>
     </div>
   </div>
-  <div class="m-walletRewardsPopup__totalScoreWrapper">
+  <div
+    class="m-walletRewardsPopup__totalScoreWrapper"
+    *ngIf="metrics && metrics.length"
+  >
     <div class="m-walletRewardsPopup__row">
       <span>Total Score</span>
       <span>{{ totalScore }}</span>

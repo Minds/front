@@ -8,7 +8,7 @@
     color: themed($m-textColor--secondary);
   }
 }
-.m-walletTransactions--cash {
+/*.m-walletTransactions--cash {
   .m-walletTransactionsTable__row--top {
     justify-content: flex-start;
   }
@@ -18,7 +18,7 @@
   justify-content: space-between;
   position: relative;
   align-items: center;
-}
+}*/
 .m-walletTransactionsTable__row--top {
   margin-bottom: 10px;
   .m-walletTransactionsTable__time {
@@ -29,31 +29,53 @@
 }
 
 .m-walletTransactionsTable__filterWrapper {
-  display: flex;
+  /*display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
-  align-items: center;
+  align-items: center;*/
   m-dropdownselector {
+    vertical-align: center;
     margin: 0;
   }
 }
 
 @media screen and (max-width: $min-tablet) {
   .m-walletTransactions {
-    margin: 34px 62px;
+    margin: 34px 0px;
   }
 }
 @media screen and (max-width: $max-mobile) {
   .m-walletTransactions {
-    margin: 26px 40px;
+    margin: 26px 0px;
   }
 }
 ////////////////////////////////////////////////
+.m-walletTransactionsTable__wrapper {
+  width: 100%;
+}
 m-walletTransactionsTable {
+  table {
+    width: 100%;
+  }
+  .m-walletTransactionsTable__row--spacer {
+    height: 42px;
+  }
+
   .m-walletTransactionsTable__row--date {
-    margin: 52px 0 27px 0;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+  td {
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .m-walletTransactionsTable__time {
     @include m-theme() {
       color: themed($m-textColor--primary);
+    }
+    @media screen and (max-width: $max-mobile) {
+      display: none;
     }
   }
   .m-walletTransactionsTable__row--details {
@@ -68,9 +90,21 @@ m-walletTransactionsTable {
       }
     }
   }
-  .m-walletTransactionsTable__typeWrapper {
-    &.containsPopover {
-      cursor: defaut;
+  [class*='m-walletTransactionsTable__typeWrapper'] {
+    position: relative;
+    cursor: default;
+    vertical-align: middle;
+
+    > * {
+      vertical-align: middle;
+    }
+    > *:first-child {
+      margin-right: $minds-margin;
+    }
+    > span {
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
     }
   }
 
@@ -78,15 +112,20 @@ m-walletTransactionsTable {
     border-radius: 100%;
     height: 27px;
     width: 27px;
+    margin-right: 20px;
   }
+
   .m-walletTransactionsTable__otherUserLink {
     font-weight: 300;
     @include m-theme() {
       color: themed($m-link);
     }
   }
+
   .m-walletTransactionsTable__amountWrapper {
-    display: flex;
+    > * {
+      vertical-align: middle;
+    }
     i {
       transform-origin: center center;
       &.positive {
@@ -116,6 +155,11 @@ m-walletTransactionsTable {
       }
     }
   }
+
+  .m-walletTransactionsTable__totalWrapper {
+    text-align: right;
+  }
+
   .m-walletTransactionsTable__total--int {
     font-size: 15px;
     line-height: 20px;
@@ -130,6 +174,10 @@ m-walletTransactionsTable {
       color: themed($m-textColor--secondary);
     }
   }
+
+  .m-walletTransactionsTable__typeWrapper--reward {
+    position: relative;
+  }
 }
 .m-walletTransactions__noTxNotice {
   display: flex;
@@ -139,5 +187,15 @@ m-walletTransactionsTable {
     @include m-theme() {
       color: themed($m-textColor--tertiary);
     }
+  }
+}
+
+.m-walletTransactions__filter {
+  justify-content: flex-end;
+  flex-direction: row;
+  display: flex;
+
+  m-dropdownselector {
+    margin: 0;
   }
 }
