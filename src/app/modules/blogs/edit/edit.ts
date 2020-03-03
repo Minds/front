@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -21,7 +21,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   },
   templateUrl: 'edit.html',
 })
-export class BlogEdit {
+export class BlogEdit implements OnInit, OnDestroy {
   readonly cdnUrl: string;
 
   guid: string;
@@ -269,7 +269,9 @@ export class BlogEdit {
               );
             })
             .catch(e => {
-              this.error = e;
+              if (!e.must_verify) {
+                this.error = e.message;
+              }
               this.canSave = true;
               this.inProgress = false;
             });
