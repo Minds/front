@@ -1,13 +1,12 @@
 import {
   ChangeDetectorRef,
   Component,
-  PLATFORM_ID,
-  Inject,
   HostBinding,
+  Inject,
   OnDestroy,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 
 import { NotificationService } from './modules/notifications/notification.service';
 import { AnalyticsService } from './services/analytics';
@@ -18,8 +17,7 @@ import { ScrollToTopService } from './services/scroll-to-top.service';
 import { ContextService } from './services/context.service';
 import { Web3WalletService } from './modules/blockchain/web3-wallet.service';
 import { Client } from './services/api/client';
-import { ActivatedRoute, NavigationEnd, Router, Route } from '@angular/router';
-import { ChannelOnboardingService } from './modules/onboarding/channel/onboarding.service';
+import { ActivatedRoute, NavigationEnd, Route, Router } from '@angular/router';
 import { BlockListService } from './common/services/block-list.service';
 import { FeaturesService } from './services/features.service';
 import { ThemeService } from './common/services/theme.service';
@@ -32,7 +30,9 @@ import { RouterHistoryService } from './common/services/router-history.service';
 import { PRO_DOMAIN_ROUTES } from './modules/pro/pro.module';
 import { ConfigsService } from './common/services/configs.service';
 import { MetaService } from './common/services/meta.service';
-import { filter, map, mergeMap, first } from 'rxjs/operators';
+import { filter, map, mergeMap } from 'rxjs/operators';
+import { Upload } from './services/api/upload';
+import { EmailConfirmationService } from './common/components/email-confirmation/email-confirmation.service';
 
 @Component({
   selector: 'm-app',
@@ -47,6 +47,9 @@ export class Minds implements OnInit, OnDestroy {
 
   protected router$: Subscription;
 
+  protected clientError$: Subscription;
+  protected uploadError$: Subscription;
+
   protected routerConfig: Route[];
 
   constructor(
@@ -60,6 +63,8 @@ export class Minds implements OnInit, OnDestroy {
     public context: ContextService,
     public web3Wallet: Web3WalletService,
     public client: Client,
+    public upload: Upload,
+    private emailConfirmationService: EmailConfirmationService,
     public router: Router,
     public blockListService: BlockListService,
     public featuresService: FeaturesService,
@@ -83,6 +88,14 @@ export class Minds implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this.clientError$ = this.client.onError.subscribe(
+      this.checkXHRError.bind(this)
+    );
+
+    this.uploadError$ = this.upload.onError.subscribe(
+      this.checkXHRError.bind(this)
+    );
+
     // MH: does loading meta tags before the configs have been set cause issues?
     this.router$ = this.router.events
       .pipe(
@@ -120,6 +133,12 @@ export class Minds implements OnInit, OnDestroy {
       await this.initialize();
     } catch (e) {
       console.error('initialize()', e);
+    }
+  }
+
+  checkXHRError(err: string | any) {
+    if (err.status === 403 && err.error.must_verify) {
+      this.emailConfirmationService.show();
     }
   }
 
@@ -169,6 +188,8 @@ export class Minds implements OnInit, OnDestroy {
     this.loginReferrer.unlisten();
     this.scrollToTop.unlisten();
     this.router$.unsubscribe();
+    this.clientError$.unsubscribe();
+    this.uploadError$.unsubscribe();
   }
 
   @HostBinding('class') get cssColorSchemeOverride() {
