@@ -13,6 +13,8 @@ import {
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { AttachmentService } from '../../../../services/attachment';
+import { SiteService } from '../../../../common/services/site.service';
+
 declare var require: any;
 
 @Component({
@@ -37,7 +39,8 @@ export class BlogEditorComponent {
 
   constructor(
     @Inject(PLATFORM_ID) protected platformId: Object,
-    private attachment: AttachmentService
+    private attachment: AttachmentService,
+    private site: SiteService
   ) {}
 
   ngOnInit() {
@@ -49,7 +52,7 @@ export class BlogEditorComponent {
       this.Editor.config = {
         uploadHandler: async file => {
           const response = this.attachment.upload(await file);
-          return `http://localhost:8080/fs/v1/thumbnail/${await response}/xlarge`;
+          return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
         },
       };
     }
