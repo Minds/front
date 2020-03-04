@@ -12,7 +12,7 @@ m-usermenu__v3 {
       background-position: center;
       background-size: cover;
       @include m-theme() {
-        border: 1px solid themed($m-white);
+        border: 1px solid themed($m-borderColor--tertiary);
       }
     }
 
@@ -24,8 +24,9 @@ m-usermenu__v3 {
       right: -20px;
 
       @include m-theme() {
-        background-color: themed($m-white);
-        color: themed($m-grey-700);
+        background-color: themed($m-bgColor--secondary);
+        color: themed($m-textColor--primary);
+        box-shadow: none;
       }
 
       li.m-userMenuDropdown__item {
@@ -35,30 +36,33 @@ m-usermenu__v3 {
         border: 0 !important;
 
         @include m-theme() {
-          color: #c3c5cb;
+          color: themed($m-textColor--secondary);
         }
 
         &:not(.m-userMenuDropdown__username):not(.m-userMenuDropdown__spacer):not(.m-userMenuDropdown__footer):hover {
           @include m-theme() {
             background-color: themed($m-bgColor--primary);
+            color: themed($m-textColor--primary);
           }
         }
 
         &.m-userMenuDropdown__username {
-          font-size: 18px;
-          line-height: 24px;
-          font-weight: bold;
-          padding-top: 29px;
-          padding-bottom: 14px;
+          padding-top: 26px;
+          padding-bottom: 8px;
 
-          @include m-theme() {
-            color: themed($m-white) !important;
+          > a {
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 24px;
+            @include m-theme() {
+              color: themed($m-textColor--primary) !important;
+            }
           }
         }
 
         &.m-userMenuDropdown__spacer {
           height: 1px;
-          margin: 0;
+          margin: $minds-margin 0;
           padding: 0;
 
           @include m-theme() {

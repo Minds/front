@@ -47,7 +47,7 @@ p {
 .m-border {
   border-radius: 6px;
   @include m-theme() {
-    border: 1px solid themed($m-grey-50);
+    border: 1px solid themed($m-borderColor--tertiary);
   }
 }
 

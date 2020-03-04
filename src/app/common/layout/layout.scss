@@ -23,6 +23,10 @@ m-body {
   }
 }
 
+// Temporary wrapper to avoid conflicts
+
+//.m-theme__2020 {
+
 .m-pageLayout__container {
   display: flex;
   flex-direction: row;
@@ -84,3 +88,4 @@ m-body {
     border-left: 0;
   }
 }
+//}

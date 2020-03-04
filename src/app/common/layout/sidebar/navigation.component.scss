@@ -183,8 +183,8 @@ m-sidebar--navigation {
       color: themed($m-textColor--secondary);
     }
 
-    &.m-sidebarNavigation__item--active {
-      font-weight: bold;
+    &.m-sidebarNavigation__item--active,
+    &:hover {
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
@@ -192,10 +192,22 @@ m-sidebar--navigation {
 
     m-tooltip {
       i.material-icons,
+      i.m-icon--hashtag,
       img {
         margin-right: 24px;
         height: 23px;
       }
+    }
+    .m-icon--hashtag {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 26px;
+      margin-right: 24px;
+      text-align: center;
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      line-height: 24px;
     }
   }
 }

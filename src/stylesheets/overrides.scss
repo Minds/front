@@ -42,7 +42,7 @@
 .mdl-card {
   z-index: initial;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
   .mdl-card__supporting-text {
     -webkit-font-smoothing: antialiased;

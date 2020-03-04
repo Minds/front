@@ -1,85 +1,16 @@
-<div class="m-toolbar" *mIfFeature="'!top-feeds'; else noToolbarSpacer">
-  <div class="m-topbar--row">
-    <div class="m-topbar--navigation m-topbar--navigation--text-only">
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/newsfeed/suggested"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span i18n="@@M__COMMON_TOPBAR_SUGGESTED">Top</span>
-        <m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_SUGGESTED_TOOLTIP">
-          Top displays your top suggested content on Minds based on hashtags.
-        </m-tooltip>
-      </a>
-      <a
-        class="m-topbar--navigation--item"
-        routerLink="/newsfeed/subscriptions"
-        routerLinkActive="m-topbar--navigation--item-active"
-        *ngIf="session.isLoggedIn()"
-      >
-        <span i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIPTIONS">
-          Subscriptions
-        </span>
-        <m-tooltip
-          icon="help"
-          i18n="@@MINDS__NEWSFEED__TOPBAR__SUBSCRIPTIONS_TOOLTIP"
-        >
-          Your Newsfeed contains posts from channels that you are subscribed to,
-          as well as boosted posts from the wider network.
-        </m-tooltip>
-      </a>
-
-      <a
-        class="m-topbar--navigation--item"
-        *ngIf="session.getLoggedInUser()"
-        routerLink="/newsfeed/boost"
-        routerLinkActive="m-topbar--navigation--item-active"
-      >
-        <span i18n="@@MINDS__NEWSFEED__TOPBAR__BOOSTFEED">BoostFeed</span>
-        <m-tooltip
-          icon="help"
-          i18n="@@MINDS__NEWSFEED__TOPBAR__BOOSTFEED_TOOLTIP"
-        >
-          The Boostfeed only shows boosted posts from the wider network. To
-          Boost your content, click the Boost icon on the topbar.
-        </m-tooltip>
-      </a>
-
-      <div class="m-layout--spacer"></div>
-
-      <a
-        class="m-topbar--navigation--item m-topbar--navigation--item-active"
-        *ngIf="session.getLoggedInUser() && !!tag"
-      >
-        <span>#{{ tag }}</span>
-      </a>
-
-      <m-topbar--hashtags
-        (selectionChange)="reloadTopFeed($event)"
-        [enabled]="isSorted"
-        *ngIf="!preventHashtagOverflow"
-      ></m-topbar--hashtags>
-
-      <m-newsfeed--dropdown></m-newsfeed--dropdown>
-    </div>
-  </div>
-  <div class="m-topbar--row" *ngIf="preventHashtagOverflow">
-    <div class="m-topbar--navigation m-topbar--navigation--text-only">
-      <div class="m-layout--spacer"></div>
-
-      <m-topbar--hashtags
-        (selectionChange)="reloadTopFeed($event)"
-        [enabled]="isSorted"
-      ></m-topbar--hashtags>
-    </div>
-  </div>
-</div>
-<ng-template #noToolbarSpacer>
+<ng-container *mIfFeature="'!navigation'">
   <div class="m-layout--vertical-spacer"></div>
-</ng-template>
+</ng-container>
 
-<div class="mdl-grid m-newsfeed m-page">
-  <div class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar m-newsfeed__sidebar">
+<div
+  class="m-newsfeed m-page"
+  [class.mdl-grid]="!newNavigation"
+  [class.m-pageLayout__container]="newNavigation"
+>
+  <div
+    class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar m-newsfeed__sidebar"
+    *mIfFeature="'!navigation'"
+  >
     <minds-card-user
       *ngIf="session.isLoggedIn()"
       [object]="session.getLoggedInUser()"
@@ -87,20 +18,9 @@
       class="mdl-card m-border"
     ></minds-card-user>
 
-    <ng-container *mIfFeature="'top-feeds'">
-      <h3 class="m-newsfeedSidebar__header">
-        <span>Hashtags</span>
-      </h3>
-      <div class="mdl-card mdl-color--white m-border">
-        <m-hashtags--sidebar-selector
-          [disabled]="!isSorted"
-          [currentHashtag]="hashtag"
-          (filterChange)="hashtagFilterChange($event)"
-          (switchAttempt)="navigateToGlobal()"
-        ></m-hashtags--sidebar-selector>
-      </div>
-      <div class="minds-spacer minds-spacer-2x"></div>
-    </ng-container>
+    <ng-container *ngTemplateOutlet="hashtagSelector"> </ng-container>
+
+    <div class="minds-spacer minds-spacer-2x"></div>
 
     <div class="m-page--sidebar--navigation">
       <a
@@ -206,31 +126,39 @@
   </div>
 
   <div
-    class="mdl-cell mdl-cell--8-col m-newsfeed--feed"
+    class="m-newsfeed--feed"
+    [class.mdl-cell]="!newNavigation"
+    [class.mdl-cell--8-col]="!newNavigation"
+    [class.m-pageLayout__pane--main]="newNavigation"
     [ngClass]="{ 'm-newsfeed--logged-out': !session.getLoggedInUser() }"
   >
-    <ng-container *mIfFeature="'top-feeds'">
-      <div class="mdl-card m-newsfeed__CompactHashtagSelector">
-        <m-hashtags--sidebar-selector
-          [compact]="true"
-          [disabled]="!isSorted"
-          [currentHashtag]="hashtag"
-          (filterChange)="hashtagFilterChange($event)"
-          (switchAttempt)="navigateToGlobal()"
-        ></m-hashtags--sidebar-selector>
-      </div>
-    </ng-container>
-
+    <div class="mdl-card m-newsfeed__CompactHashtagSelector">
+      <m-hashtags--sidebar-selector
+        [compact]="true"
+        [disabled]="!isSorted"
+        [currentHashtag]="hashtag"
+        (filterChange)="hashtagFilterChange($event)"
+        (switchAttempt)="navigateToGlobal()"
+      ></m-hashtags--sidebar-selector>
+    </div>
     <router-outlet></router-outlet>
   </div>
 
   <div
-    class="mdl-cell mdl-cell--4-col m-newsfeed--boost-sidebar m-newsfeed__sidebar"
+    class="m-newsfeed--boost-sidebar m-newsfeed__sidebar"
+    [class.mdl-cell]="!newNavigation"
+    [class.mdl-cell--4-col]="!newNavigation"
+    [class.m-pageLayout__pane--right]="newNavigation"
     *ngIf="showRightSidebar"
   >
     <ng-container *mIfFeature="'suggested-users'">
       <m-suggestions__sidebar></m-suggestions__sidebar>
     </ng-container>
+
+    <ng-container *mIfFeature="'navigation'">
+      <ng-container *ngTemplateOutlet="hashtagSelector"></ng-container>
+    </ng-container>
+
     <m-notices__sidebar></m-notices__sidebar>
     <m-ads-boost
       limit="8"
@@ -244,3 +172,17 @@
     <div class="minds-spacer minds-spacer-2x"></div>
   </div>
 </div>
+
+<ng-template #hashtagSelector>
+  <h3 class="m-newsfeedSidebar__header">
+    <span>Hashtags</span>
+  </h3>
+  <div class="mdl-card m-border">
+    <m-hashtags--sidebar-selector
+      [disabled]="!isSorted"
+      [currentHashtag]="hashtag"
+      (filterChange)="hashtagFilterChange($event)"
+      (switchAttempt)="navigateToGlobal()"
+    ></m-hashtags--sidebar-selector>
+  </div>
+</ng-template>

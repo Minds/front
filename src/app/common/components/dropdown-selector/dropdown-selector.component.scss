@@ -103,8 +103,8 @@ m-dropdownSelector {
   transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 
   @include m-theme() {
-    background-color: themed($m-white);
-    color: themed($m-grey-300);
+    background-color: themed($m-bgColor--secondary);
+    color: themed($m-textColor--secondary);
   }
   @include m-theme() {
     border: 1px solid themed($m-grey-100);

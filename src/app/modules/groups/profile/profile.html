@@ -20,11 +20,11 @@
 ></m-explicit-overlay>
 
 <div
-  class="m-group__grid"
+  class="m-group__grid m-pageLayout__container"
   *ngIf="group && (group['is:member'] || group.membership == 2)"
 >
   <!-- Sidebar -->
-  <div class="m-groupGrid__left" *mIfBrowser>
+  <div class="m-groupGrid__left m-pageLayout__pane--main" *mIfBrowser>
     <m-videochat></m-videochat>
 
     <header
@@ -332,7 +332,10 @@
     <i class="material-icons" *ngIf="!showRight">keyboard_arrow_left</i>
   </div>
 
-  <div class="m-groupGrid__right" [hidden]="!showRight">
+  <div
+    class="m-groupGrid__right m-pageLayout__pane--right"
+    [hidden]="!showRight"
+  >
     <!-- Conversation filter -->
     <minds-groups-profile-conversation [group]="group" *mIfBrowser>
     </minds-groups-profile-conversation>
