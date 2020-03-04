@@ -15,6 +15,9 @@ import { WireModule } from '../wire/wire.module';
 // import { SettingsService } from './settings.service';
 
 import { SettingsV2Component } from './settings-v2.component';
+import { SettingsV2DisplayNameComponent } from './account/display-name/display-name.component';
+import { SettingsV2SessionsComponent } from './security/sessions/sessions.component';
+import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.component';
 // import { SettingsGeneralComponent } from './general/general.component';
 // import { SettingsDisableChannelComponent } from './disable/disable.component';
 // import { SettingsTwoFactorComponent } from './two-factor/two-factor.component';
@@ -32,12 +35,28 @@ const settingsRoutes: Routes = [
   {
     path: '',
     component: SettingsV2Component,
+    data: {
+      title: 'Settings',
+      description: 'Configure your Minds settings',
+      ogImage: '/assets/photos/network.jpg',
+    },
     children: [
-      { path: '', redirectTo: 'settings/canary', pathMatch: 'full' },
-      // children: [
-      //   { path: '', redirectTo: 'general', pathMatch: 'full' },
-      //   { path: 'general/:card', component: SettingsGeneralComponent },
-      //   { path: 'general', component: SettingsGeneralComponent },
+      { path: '', redirectTo: 'settings/canary/account', pathMatch: 'full' },
+      {
+        path: 'account',
+        component: SettingsV2Component,
+        children: [
+          { path: 'displayName', component: SettingsV2DisplayNameComponent },
+        ],
+      },
+      {
+        path: 'security',
+        component: SettingsV2Component,
+        children: [
+          { path: 'twoFactor', component: SettingsV2TwoFactorComponent },
+          { path: 'sessions', component: SettingsV2SessionsComponent },
+        ],
+      },
       //   { path: 'wire', component: SettingsWireComponent },
       //   { path: 'disable', component: SettingsDisableChannelComponent },
       //   { path: 'twoFactor', component: SettingsTwoFactorComponent },
@@ -92,6 +111,9 @@ const settingsRoutes: Routes = [
   ],
   declarations: [
     SettingsV2Component,
+    SettingsV2DisplayNameComponent,
+    SettingsV2SessionsComponent,
+    SettingsV2TwoFactorComponent,
     // SettingsGeneralComponent,
     // SettingsDisableChannelComponent,
     // SettingsTwoFactorComponent,

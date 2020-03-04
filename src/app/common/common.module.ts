@@ -383,6 +383,7 @@ const routes: Routes = [
     DateDropdownsComponent,
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
+    NestedMenuComponent,
   ],
   providers: [
     SiteService,

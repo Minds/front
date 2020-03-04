@@ -1,1 +1,24 @@
-<p>settings works!</p>
+<div class="m-settingsV2">
+  <m-nestedMenu
+    class="m-settingsV2__mainMenu"
+    [menus]="mainMenus"
+    (itemSelected)="mainMenuItemSelected($event)"
+  ></m-nestedMenu>
+  <m-nestedMenu
+    class="m-settingsV2__subMenu"
+    isNested="true"
+    [menus]="subMenus.other"
+    (itemSelected)="subMenuItemSelected($event)"
+  ></m-nestedMenu>
+
+  <!-- <div class="m-settingsV2__settingsView">
+    <div class="m-settingsV2__headerWrapper">
+      <div class="m-settingsV2__backButton">
+        <i class="material-icons">arrow_back</i><span>Back</span>
+      </div>
+      <div class="m-settingsV2__headerLabel">TEST</div>
+    </div>
+  </div> -->
+</div>
+
+<router-outlet></router-outlet>
