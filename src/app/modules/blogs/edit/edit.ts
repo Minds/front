@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -22,7 +22,7 @@ import { FeaturesService } from '../../../services/features.service';
   },
   templateUrl: 'edit.html',
 })
-export class BlogEdit {
+export class BlogEdit implements OnInit, OnDestroy {
   readonly cdnUrl: string;
 
   guid: string;

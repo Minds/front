@@ -575,8 +575,16 @@ m-media--modal {
       border-bottom: 1px solid themed($m-grey-100);
     }
   }
-  .m-wire-button > .ion-icon {
-    transform: scale(1.4);
+  .m-wire-button {
+    @include m-theme() {
+      border: none;
+    }
+    span {
+      display: none;
+    }
+    > .ion-icon {
+      transform: scale(1.4);
+    }
   }
 }
 
