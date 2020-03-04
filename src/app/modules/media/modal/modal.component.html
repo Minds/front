@@ -5,7 +5,9 @@
       [style.width]="modalWidth + 'px'"
       [style.height]="stageHeight + 'px'"
     >
-      <!-- The stageWrapper is the element that goes into fullscreen -->
+      <!-- STACKABLE MODAL -->
+      <m-stackableModal [settings]="stackableModalSettings"></m-stackableModal>
+      <!-- STAGE WRAPPER (this is the element that goes into fullscreen) -->
       <div
         class="m-mediaModal__stageWrapper"
         [style.width]="stageWidth + 'px'"
@@ -416,7 +418,10 @@
                     [object]="originalEntity"
                   ></minds-button-remind>
                   <div>
-                    <a (click)="openShareModal()">
+                    <a
+                      class="m-mediaModal__actionButton--share"
+                      (click)="openShareModal()"
+                    >
                       <i class="material-icons">share</i>
                     </a>
                   </div>
