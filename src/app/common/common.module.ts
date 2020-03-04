@@ -147,6 +147,7 @@ import { SidebarNavigationService } from './layout/sidebar/navigation.service';
 import { TopbarService } from './layout/topbar.service';
 import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
 import { NestedMenuComponent } from './layout/nested-menu/nested-menu.component';
+import { StackableModalComponent } from './components/stackable-modal/stackable-modal.component';
 
 const routes: Routes = [
   {
@@ -276,6 +277,7 @@ const routes: Routes = [
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
     NestedMenuComponent,
+    StackableModalComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -384,6 +386,7 @@ const routes: Routes = [
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
     NestedMenuComponent,
+    StackableModalComponent,
   ],
   providers: [
     SiteService,
