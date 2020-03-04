@@ -5,6 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { MonetizationOverviewModule } from '../monetization/monetization.overview.module';
+import {
+  MONETIZATION_REVENUE_COMPONENTS,
+  RevenueConsoleComponent,
+} from '../monetization/monetization.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { AdsModule } from '../ads/ads.module';
 import { WireModule } from '../wire/wire.module';
@@ -217,6 +221,7 @@ export const WALLET_ROUTES: Routes = [
     WalletTokenContributionsChartComponent,
     WalletToken101Component,
     WalletUSDBalanceComponent,
+    ...MONETIZATION_REVENUE_COMPONENTS,
   ],
   exports: [
     WalletComponent,
@@ -230,6 +235,7 @@ export const WALLET_ROUTES: Routes = [
     WalletBalanceUSDComponent,
     WalletBalanceTokensComponent,
     WalletUSDBalanceComponent,
+    ...MONETIZATION_REVENUE_COMPONENTS,
   ],
   entryComponents: [
     WalletComponent,
@@ -252,6 +258,7 @@ export const WALLET_ROUTES: Routes = [
     WalletOverviewComponent,
     WalletDashboardComponent,
     BlockchainConsoleComponent,
+    RevenueConsoleComponent,
   ],
 })
 export class WalletModule {}
