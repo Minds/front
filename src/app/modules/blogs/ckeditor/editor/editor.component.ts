@@ -23,7 +23,14 @@ declare var require: any;
   templateUrl: 'editor.component.html',
 })
 export class BlogEditorComponent {
+  /**
+   * Content to place into the editor on load.
+   */
   @Input() content: string;
+
+  /**
+   * Emitted when content changes.
+   */
   @Output() contentChanged: EventEmitter<Event> = new EventEmitter<Event>();
 
   Editor: any;
@@ -34,9 +41,11 @@ export class BlogEditorComponent {
   ) {}
 
   ngOnInit() {
+    // Render on browser side.
     if (isPlatformBrowser(this.platformId)) {
-      const BalloonEditor = require('@bhayward93/ckeditor5-build-minds');
-      this.Editor = BalloonEditor;
+      // Must be required here for client-side loading.
+      const MindsEditor = require('@bhayward93/ckeditor5-build-minds');
+      this.Editor = MindsEditor;
       this.Editor.config = {
         uploadHandler: async file => {
           const response = this.attachment.upload(await file);
