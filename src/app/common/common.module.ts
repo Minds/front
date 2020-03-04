@@ -146,6 +146,7 @@ import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
 import { SidebarNavigationService } from './layout/sidebar/navigation.service';
 import { TopbarService } from './layout/topbar.service';
 import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
+import { NestedMenuComponent } from './layout/nested-menu/nested-menu.component';
 
 const routes: Routes = [
   {
@@ -274,6 +275,7 @@ const routes: Routes = [
     DateDropdownsComponent,
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
+    NestedMenuComponent,
   ],
   exports: [
     MINDS_PIPES,
