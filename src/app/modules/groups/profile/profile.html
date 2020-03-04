@@ -20,11 +20,16 @@
 ></m-explicit-overlay>
 
 <div
-  class="m-group__grid m-pageLayout__container"
+  class="m-group__grid"
+  [class.m-pageLayout__container]="hasNewNavigation"
   *ngIf="group && (group['is:member'] || group.membership == 2)"
 >
   <!-- Sidebar -->
-  <div class="m-groupGrid__left m-pageLayout__pane--main" *mIfBrowser>
+  <div
+    class="m-groupGrid__left"
+    [class.m-pageLayout__pane--main]="hasNewNavigation"
+    *mIfBrowser
+  >
     <m-videochat></m-videochat>
 
     <header
@@ -333,7 +338,8 @@
   </div>
 
   <div
-    class="m-groupGrid__right m-pageLayout__pane--right"
+    class="m-groupGrid__right"
+    [class.m-pageLayout__pane--main]="hasNewNavigation"
     [hidden]="!showRight"
   >
     <!-- Conversation filter -->

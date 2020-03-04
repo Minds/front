@@ -40,7 +40,7 @@ minds-groups-profile-conversation {
     box-sizing: border-box;
     padding-bottom: 24px;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--secondary);
     }
 
     .minds-comments-container,
