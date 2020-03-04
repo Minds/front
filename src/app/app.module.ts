@@ -144,7 +144,6 @@ export class SentryErrorHandler implements ErrorHandler {
     ChannelsModule,
     UpgradesModule,
     CodeHighlightModule,
-    //PlotlyModule,
 
     //last due to :username route
     AppRoutingModule,
