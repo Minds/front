@@ -36,6 +36,7 @@ export interface MindsBlogEntity {
   };
   perma_url: string;
   thumbnail: string;
+  editor_version?: number;
 }
 
 export interface Message {}
@@ -115,10 +116,12 @@ export interface MindsUser {
     has_custom_background?: boolean;
   };
   mode: ChannelMode;
+  nsfw: Array<number>;
 }
 
 export interface MindsGroup {
   guid: string;
+  type: string;
   name: string;
   banner: boolean;
 }

@@ -35,6 +35,7 @@ export class ReadMoreDirective {
       if (this.realHeight > this.maxHeightAllowed) {
         this._element.style.maxHeight = this.maxHeightAllowed + 'px';
         this._element.style.position = 'relative';
+        this._element.style.overflow = 'hidden';
         setTimeout(() => {
           this.expandable = true;
           this.detectChanges();
@@ -45,6 +46,7 @@ export class ReadMoreDirective {
 
   expand() {
     this._element.style.maxHeight = 'none';
+    this._element.style.overflow = 'visible';
     this.expandable = false;
     this.detectChanges();
   }

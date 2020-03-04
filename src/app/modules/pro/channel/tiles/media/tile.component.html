@@ -1,19 +1,8 @@
-<div
-  class="m-proChannelTile__container"
-  (click)="tileClicked()"
-  [ngSwitch]="getType(entity)"
->
-  <m-videoPlayer
-    *ngSwitchCase="'object:video'"
-    [guid]="entity.guid"
-    [shouldPlayInModal]="true"
-    [autoplay]="false"
-    (mediaModalRequested)="openModal()"
-  ></m-videoPlayer>
-
-  <img *ngSwitchDefault [src]="entity.thumbnail_src" #img />
-</div>
-
-<div class="m-proChannelTile__text" (click)="tileClicked()" *ngIf="getTitle()">
-  <h2 [title]="getTitle()">{{ getTitle() }}</h2>
-</div>
+<m-activity
+  [entity]="entity"
+  [displayOptions]="{
+    fixedHeight: false,
+    showComments: false,
+    showOwnerBlock: true
+  }"
+></m-activity>

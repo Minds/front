@@ -20,7 +20,7 @@ import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { Upload } from '../../../services/api/upload';
 import { ContextService } from '../../../services/context.service';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
-import { of } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { EntitiesService } from '../../../common/services/entities.service';
 import { MockService, MockComponent } from '../../../utils/mock';
@@ -29,6 +29,7 @@ import { featuresServiceMock } from '../../../../tests/features-service-mock.spe
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { SocialIcons } from '../../legacy/components/social-icons/social-icons';
+import { ActivityComponent } from '../activity/activity.component';
 
 @Component({
   selector: 'minds-activity',
@@ -39,6 +40,7 @@ class MindsActivityMock {
   @Input() object: any;
   @Input() commentsToggle: boolean;
   @Input() showRatingToggle: boolean;
+  @Input() editing: boolean;
 }
 
 let routerMock = new (function() {
@@ -59,6 +61,10 @@ describe('NewsfeedSingleComponent', () => {
           selector: 'm-social-icons',
           inputs: ['url', 'title', 'embed'],
         }),
+        MockComponent({
+          selector: 'm-activity',
+          inputs: ['entity', 'displayOptions'],
+        }),
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
@@ -73,10 +79,10 @@ describe('NewsfeedSingleComponent', () => {
             snapshot: {
               queryParamMap: convertToParamMap({}),
             },
+            queryParamMap: new BehaviorSubject(convertToParamMap({})),
           },
         },
         { provide: MetaService, useValue: MockService(MetaService) },
-        { provide: Router, useValue: routerMock },
         { provide: EntitiesService, useValue: MockService(EntitiesService) },
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
@@ -110,7 +116,9 @@ describe('NewsfeedSingleComponent', () => {
     };
 
     sessionMock.user.admin = false;
+    sessionMock.user.hide_share_buttons = false;
     featuresServiceMock.mock('sync-feeds', false);
+    featuresServiceMock.mock('activity-v2--single-page', true);
 
     fixture.detectChanges();
 
@@ -158,7 +166,7 @@ describe('NewsfeedSingleComponent', () => {
   it('it should show the activity', () => {
     fixture.detectChanges();
     expect(
-      fixture.debugElement.query(By.css('.minds-list minds-activity'))
+      fixture.debugElement.query(By.css('.minds-list m-activity'))
     ).not.toBeNull();
   });
 
@@ -191,5 +199,18 @@ describe('NewsfeedSingleComponent', () => {
     expect(spamNotice.nativeElement.textContent).not.toContain(
       'If you wish to appeal, please contact us at info@minds.com.'
     );
+  });
+
+  it('should have an instance of m-social-icons if the owner has it enabled', () => {
+    let socialIcons = fixture.debugElement.query(By.css('m-social-icons'));
+
+    expect(socialIcons).not.toBeNull();
+
+    sessionMock.user.hide_share_buttons = true;
+
+    fixture.detectChanges();
+
+    socialIcons = fixture.debugElement.query(By.css('m-social-icons'));
+    expect(socialIcons).toBeNull();
   });
 });

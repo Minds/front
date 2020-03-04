@@ -1,14 +1,18 @@
 import {
-  Component,
-  ComponentFactoryResolver,
-  ViewChild,
   ChangeDetectorRef,
+  Component,
+  DoCheck,
+  HostBinding,
   HostListener,
   Inject,
+  Input,
+  OnDestroy,
+  OnInit,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
-import { interval, timer } from 'rxjs';
-import { startWith, map, tap, throttle } from 'rxjs/operators';
+import { interval } from 'rxjs';
+import { map, startWith, throttle } from 'rxjs/operators';
 
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { Client } from '../../../services/api';
@@ -20,7 +24,10 @@ import { GroupsService } from '../groups-service';
   selector: 'm-group--sidebar-markers',
   templateUrl: 'sidebar-markers.component.html',
 })
-export class GroupsSidebarMarkersComponent {
+export class GroupsSidebarMarkersComponent
+  implements OnInit, DoCheck, OnDestroy {
+  @Input() showLabels: boolean = false;
+  layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
   inProgress: boolean = false;
   $updateMarker;
   markers = [];
@@ -30,6 +37,9 @@ export class GroupsSidebarMarkersComponent {
   tooltipsAnchor: string = 'right';
 
   @ViewChild('list', { static: true }) list;
+
+  @HostBinding('class.m-groupSidebarMarkers__leftSidebar')
+  leftSidebar: boolean = false;
 
   constructor(
     private client: Client,
@@ -43,10 +53,20 @@ export class GroupsSidebarMarkersComponent {
   async ngOnInit() {
     this.onResize();
     if (isPlatformBrowser(this.platformId)) {
-      await this.load(true);
-      this.listenForMarkers();
-      this.listenForMembershipUpdates();
+      this.initialize();
+
+      this.session.getLoggedInUser(user => {
+        this.initialize();
+      });
+    } else {
+      this.inProgress = true; // Server side should start in loading spinner state
     }
+  }
+
+  async initialize() {
+    await this.load(true);
+    this.listenForMarkers();
+    this.listenForMembershipUpdates();
   }
 
   /**
@@ -58,6 +78,10 @@ export class GroupsSidebarMarkersComponent {
         return;
       }
       if (update.show) {
+        // if the group already exists in the list, don't re-add it
+        if (this.groups.findIndex(g => g.guid == update.guid) !== -1) {
+          return;
+        }
         this.groupsService.load(update.guid).then(group => {
           this.groups.unshift(group);
         });
@@ -107,7 +131,9 @@ export class GroupsSidebarMarkersComponent {
   }
 
   async load(refresh: boolean = false) {
-    if (this.inProgress) return false;
+    if (this.inProgress || !this.session.getLoggedInUser()) {
+      return false;
+    }
     this.inProgress = true;
     try {
       const response: any = await this.client.get('api/v1/groups/member', {
@@ -141,5 +167,13 @@ export class GroupsSidebarMarkersComponent {
 
   @HostListener('window:resize') onResize() {
     this.tooltipsAnchor = window.innerWidth <= 992 ? 'top' : 'right';
+
+    if (window.innerWidth > 900) {
+      this.layoutMode = 'desktop';
+    } else if (window.innerWidth > 540 && window.innerWidth <= 900) {
+      this.layoutMode = 'tablet';
+    } else {
+      this.layoutMode = 'phone';
+    }
   }
 }

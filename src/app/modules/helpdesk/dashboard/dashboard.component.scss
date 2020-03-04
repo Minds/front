@@ -1,5 +1,9 @@
 @import 'defaults';
 
+m-helpdesk--dashboard {
+  grid-area: content / span 2;
+}
+
 .m-helpdesk__dashboard {
   @include m-theme() {
     background-color: themed($m-white);

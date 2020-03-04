@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { UserAvatarService } from '../../services/user-avatar.service';
 import { of, Observable } from 'rxjs';
 import { ConfigsService } from '../../services/configs.service';
@@ -56,6 +56,8 @@ export class MindsAvatar {
   showPrompt: boolean = true;
   file: any;
   added: EventEmitter<any> = new EventEmitter();
+
+  @ViewChild('file', { static: false }) fileInput: ElementRef;
 
   constructor(
     public userAvatarService: UserAvatarService,
@@ -119,6 +121,10 @@ export class MindsAvatar {
 
     console.log(this.waitForDoneSignal);
     if (this.waitForDoneSignal !== true) this.done();
+  }
+
+  openFileDialog() {
+    this.fileInput.nativeElement.click();
   }
 
   /**

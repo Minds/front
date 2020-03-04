@@ -17,6 +17,7 @@ import { CommentsThreadComponent } from './thread/thread.component';
 import { CommentsService } from './comments.service';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
+import { CommentsEntityOutletComponent } from './entity-outlet/entity-outlet.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
     CommentPosterComponent,
     CommentsTreeComponent,
     CommentsThreadComponent,
+    CommentsEntityOutletComponent,
   ],
   exports: [
     CommentsScrollDirective,
@@ -47,6 +49,7 @@ import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
     CommentPosterComponent,
     CommentsTreeComponent,
     CommentsThreadComponent,
+    CommentsEntityOutletComponent,
   ],
   providers: [CommentsService],
 })

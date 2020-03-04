@@ -1,0 +1,48 @@
+<m-comments__tree
+  *ngIf="!showOnlyPoster"
+  [entity]="entity"
+  [canDelete]="canDelete"
+>
+</m-comments__tree>
+
+<ng-container *ngIf="showOnlyPoster">
+  <m-comment__poster
+    *ngIf="legacyActivityService.allowComment$ | async"
+    [guid]="guid"
+    [parent]="entity"
+    [entity]="entity"
+    [currentIndex]="0"
+    [level]="0"
+    (posted)="onPosted($event)"
+    (optimisticPost)="onOptimisticPost($event)"
+  >
+  </m-comment__poster>
+
+  <div
+    class="m-commentsEntityOutlet__optimisticList"
+    *ngIf="optimisticList.length > 0"
+  >
+    <ng-container *ngFor="let comment of optimisticList">
+      <m-comment
+        [comment]="comment"
+        [entity]="entity"
+        [parent]="parent"
+        [level]="0"
+        [canEdit]="canEdit"
+        [canDelete]="canDelete"
+        [showReplies]="comment.show_replies"
+        (delete)="delete(i)"
+        (saved)="edited(i, $event)"
+        (onReply)="reply($event.comment)"
+      ></m-comment>
+    </ng-container>
+  </div>
+
+  <div
+    class="m-commentsEntityOutlet__expand"
+    *ngIf="count > 0"
+    (click)="openFullComments()"
+  >
+    Show all comments ({{ count }})
+  </div>
+</ng-container>

@@ -23,11 +23,13 @@ import { ChannelComponent } from './channel.component';
 import { ChannelsTileComponent } from './tile/tile.component';
 import { PosterModule } from '../newsfeed/poster/poster.module';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
-import { ExplicitOverlayComponent } from './explicit-overlay/overlay.component';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ChannelSortedModuleComponent } from './sorted/module.component';
 import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
+import { ChannelSidebarV2Component } from './sidebar-v2/sidebar-v2.component';
+import { ChannelStatsComponent } from './sidebar-v2/stats/channel-stats.component';
+import { ChannelBiofieldsComponent } from './sidebar-v2/biofields/biofields.component';
 
 const routes: Routes = [
   { path: 'channels', redirectTo: '/newsfeed/global/top', pathMatch: 'full' },
@@ -59,9 +61,11 @@ const routes: Routes = [
     ChannelsTileComponent,
     ChannelFeedComponent,
     ChannelSidebar,
-    ExplicitOverlayComponent,
+    ChannelSidebarV2Component,
     ChannelSortedComponent,
     ChannelSortedModuleComponent,
+    ChannelStatsComponent,
+    ChannelBiofieldsComponent,
   ],
   exports: [
     ChannelModulesComponent,
@@ -71,6 +75,7 @@ const routes: Routes = [
     ChannelSocialProfiles,
     ChannelFeedComponent,
     ChannelSidebar,
+    ChannelSidebarV2Component,
     ChannelComponent,
   ],
   entryComponents: [ChannelComponent],

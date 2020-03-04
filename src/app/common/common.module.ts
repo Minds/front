@@ -4,7 +4,7 @@ import {
   isPlatformServer,
   Location,
 } from '@angular/common';
-import { RouterModule, Router, Routes } from '@angular/router';
+import { RouterModule, Router, Routes, ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -103,7 +103,6 @@ import { FeedsService } from './services/feeds.service';
 import { EntitiesService } from './services/entities.service';
 import { BlockListService } from './services/block-list.service';
 import { SettingsService } from '../modules/settings/settings.service';
-import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
@@ -118,9 +117,6 @@ import { MarketingFooterComponent } from './components/marketing/footer.componen
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
-import { ChartV2Component } from './components/chart-v2/chart-v2.component';
-//import * as PlotlyJS from 'plotly.js/dist/plotly.js';
-import { PlotlyModule } from 'angular-plotly.js';
 import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
 import { ShadowboxLayoutComponent } from './components/shadowbox-layout/shadowbox-layout.component';
@@ -132,7 +128,6 @@ import { FormDescriptorComponent } from './components/form-descriptor/form-descr
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
 import { PagesService } from './services/pages.service';
-import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
@@ -144,6 +139,13 @@ import { MediaProxyService } from './services/media-proxy.service';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
+import { TagsService } from './services/tags.service';
+import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
+import { RedirectService } from './services/redirect.service';
+import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
+import { SidebarNavigationService } from './layout/sidebar/navigation.service';
+import { TopbarService } from './layout/topbar.service';
+import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
 
 const routes: Routes = [
   {
@@ -159,7 +161,6 @@ const routes: Routes = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    PlotlyModule,
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     RouterModule.forChild(routes),
@@ -175,7 +176,9 @@ const routes: Routes = [
 
     // V2 Layout
     V2TopbarComponent,
+    V3TopbarComponent,
     UserMenuComponent,
+    UserMenuV3Component,
 
     //
 
@@ -259,7 +262,6 @@ const routes: Routes = [
     MarketingFooterComponent,
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
-    ChartV2Component,
     PageLayoutComponent,
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
@@ -271,6 +273,7 @@ const routes: Routes = [
     EmailConfirmationComponent,
     DateDropdownsComponent,
     FormInputCheckboxComponent,
+    ExplicitOverlayComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -282,6 +285,10 @@ const routes: Routes = [
     // V2 Layout
     V2TopbarComponent,
     UserMenuComponent,
+
+    // V3 Layout
+    V3TopbarComponent,
+    UserMenuV3Component,
 
     //
 
@@ -363,7 +370,6 @@ const routes: Routes = [
     MarketingComponent,
     MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
-    ChartV2Component,
     PageLayoutComponent,
     DashboardLayoutComponent,
     ShadowboxLayoutComponent,
@@ -374,6 +380,7 @@ const routes: Routes = [
     EmailConfirmationComponent,
     DateDropdownsComponent,
     FormInputCheckboxComponent,
+    ExplicitOverlayComponent,
   ],
   providers: [
     SiteService,
@@ -381,6 +388,7 @@ const routes: Routes = [
     AttachmentService,
     CookieService,
     PagesService,
+    AttachmentService,
     {
       provide: UpdateMarkersService,
       useFactory: (_http, _session, _sockets) => {
@@ -430,37 +438,16 @@ const routes: Routes = [
       useFactory: router => new RouterHistoryService(router),
       deps: [Router],
     },
-    {
-      provide: ConfigsService,
-      useFactory: (client, injector) =>
-        new ConfigsService(client, injector.get('QUERY_STRING')),
-      deps: [Client, Injector],
-    },
-    {
-      provide: MetaService,
-      useFactory: (
-        titleService,
-        metaService,
-        siteService,
-        location,
-        configsService
-      ) =>
-        new MetaService(
-          titleService,
-          metaService,
-          siteService,
-          location,
-          configsService
-        ),
-      deps: [Title, Meta, SiteService, Location, ConfigsService],
-    },
+    MetaService,
     MediaProxyService,
-    V2TopbarService,
+    SidebarNavigationService,
+    TopbarService,
     {
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,
     },
     HorizontalFeedService,
+    TagsService,
   ],
   entryComponents: [
     NotificationsToasterComponent,

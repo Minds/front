@@ -1,20 +1,24 @@
-.m-marketing-i18n {
-  .m-marketing--hero--video {
-    background: url('<%= APP_CDN %>/assets/photos/satellite.jpg');
-    background-position: -100px center;
-  }
+m-plus--marketing {
+  grid-area: content / span 2;
 
-  .m-marketing--hero--actions {
-    .m-marketing--marketing-action-button {
-      a {
-        letter-spacing: 3px;
-        font-size: 18px;
-        line-height: 35px;
-        padding: 8px 24px;
-        font-weight: 300;
-        font-family: 'Roboto', Helvetica, sans-serif;
-        @include m-theme() {
-          color: themed($m-white);
+  .m-marketing-i18n {
+    .m-marketing--hero--video {
+      background: url('<%= APP_CDN %>/assets/photos/satellite.jpg');
+      background-position: -100px center;
+    }
+
+    .m-marketing--hero--actions {
+      .m-marketing--marketing-action-button {
+        a {
+          letter-spacing: 3px;
+          font-size: 18px;
+          line-height: 35px;
+          padding: 8px 24px;
+          font-weight: 300;
+          font-family: 'Roboto', Helvetica, sans-serif;
+          @include m-theme() {
+            color: themed($m-white);
+          }
         }
       }
     }

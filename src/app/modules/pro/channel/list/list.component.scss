@@ -33,7 +33,7 @@ m-pro--channel-list {
   }
 
   .m-proChannelList__content {
-    width: 85%;
+    width: 100%;
     margin: 0 auto;
     justify-content: center;
 
@@ -62,7 +62,7 @@ m-pro--channel-list {
 
   .m-proChannelListContent__loadMore {
     width: 100%;
-    font-size: 20px;
+    font-size: 16px;
     padding: 16px;
     margin-top: 32px;
     cursor: pointer;
@@ -79,35 +79,23 @@ m-pro--channel-list {
 
   ul.m-proChannelListContent__list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 24px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: $minds-margin * 2;
     list-style: none;
     padding: 0;
 
+    @media screen and (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
     @media screen and (max-width: $max-mobile) {
+      grid-template-columns: repeat(1, 1fr);
       grid-template-columns: 100%;
     }
 
     > * {
       min-width: 0;
       min-height: 0;
-    }
-
-    &.m-proChannelListContent__normalList {
-      grid-template-columns: 100%;
-
-      & > li {
-        width: 500px;
-        justify-self: center;
-
-        @media screen and (max-width: $min-tablet) {
-          width: 100%;
-        }
-
-        minds-activity {
-          min-width: 100%;
-        }
-      }
     }
 
     & > li {
@@ -136,11 +124,6 @@ m-pro--channel-list {
             padding: 0 $minds-padding * 2;
           }
         }
-      }
-
-      & > video {
-        width: 250px;
-        max-width: 100%;
       }
     }
   }

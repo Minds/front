@@ -76,8 +76,13 @@ describe('ChannelComponent', () => {
           inputs: ['user', 'editing'],
         }),
         MockComponent({
-          selector: 'm-channel--explicit-overlay',
-          inputs: ['channel'],
+          selector: 'm-channel__sidebarv2',
+          inputs: ['user', 'editing'],
+          template: '',
+        }),
+        MockComponent({
+          selector: 'm-explicit-overlay',
+          inputs: ['entity'],
         }),
         MockComponent({
           selector: 'm-sort-selector',
@@ -96,7 +101,8 @@ describe('ChannelComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Session, useValue: sessionMock },
-        { provide: MetaService, useValue: MockService(MetaService) },
+        MetaService,
+        SiteService,
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: RecentService, useValue: recentServiceMock },
         { provide: ContextService, useValue: contextServiceMock },
@@ -118,12 +124,15 @@ describe('ChannelComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
+
     fixture = TestBed.createComponent(ChannelComponent);
     clientMock.response = {};
     uploadMock.response = {};
     featuresServiceMock.mock('es-feeds', false);
     featuresServiceMock.mock('top-feeds', false);
     featuresServiceMock.mock('channel-filter-feeds', false);
+    featuresServiceMock.mock('navigation', false);
+
     comp = fixture.componentInstance;
     comp.username = 'username';
     comp.user = {
@@ -141,6 +150,7 @@ describe('ChannelComponent', () => {
         large: 'thumbs',
         master: 'thumbs',
       },
+      nsfw: [],
     };
     comp.editing = false;
     fixture.detectChanges();

@@ -5,7 +5,17 @@ m-onboarding {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
+  grid-area: content / span 2;
+
   position: relative;
+
+  &.m-onboarding--newNavigation {
+    margin-top: -75px;
+    .m-grid {
+      margin-top: -75px;
+      padding-top: 75px;
+    }
+  }
 
   @media screen and (max-width: $max-mobile) {
     margin-bottom: 60px;
@@ -70,14 +80,14 @@ m-onboarding {
     max-width: 692px;
     margin: 0 auto;
 
-    @include m-theme() {
-      background-color: themed($m-white);
-    }
-
     .m-onboarding__form {
       display: block;
       padding: 55px 70px 80px;
       color: #9b9b9b;
+
+      @include m-theme() {
+        background-color: themed($m-white);
+      }
 
       &::before {
         content: '';
@@ -208,6 +218,17 @@ m-onboarding {
 
           @media screen and (min-width: $m-grid-max-tablet) {
             content: '';
+          }
+        }
+
+        h3 {
+          font-size: 20px;
+          line-height: 35px;
+          font-weight: 500;
+          margin-top: 0;
+
+          @include m-theme() {
+            color: themed($m-grey-800);
           }
         }
 
@@ -383,6 +404,7 @@ m-onboarding {
             line-height: 21px;
             padding-left: 8px;
             margin-bottom: 8px;
+            box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
 
             @include m-theme() {
               color: themed($m-grey-800);
@@ -405,6 +427,7 @@ m-onboarding {
               flex-grow: 1;
               display: flex;
               margin-bottom: 8px;
+              box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
 
               .m-phone-input--wrapper {
                 justify-content: flex-start;
@@ -421,6 +444,7 @@ m-onboarding {
 
                   font-size: 16px;
                   line-height: 21px;
+                  box-shadow: none;
 
                   @include m-theme() {
                     color: themed($m-grey-800);

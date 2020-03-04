@@ -1,43 +1,47 @@
 @import '../../foundation/grid-values';
 
-.m-plus__marketing {
-  .m-plusMarketing__verify {
-    margin-top: 50px;
+m-plus__marketing {
+  grid-area: content / span 2;
 
-    @include m-theme() {
-      color: themed($m-black);
-    }
+  .m-plus__marketing {
+    .m-plusMarketing__verify {
+      margin-top: 50px;
 
-    @media screen and (max-width: $m-grid-min-vp) {
-      margin-top: 30px;
-      text-align: center;
-    }
+      @include m-theme() {
+        color: themed($m-black);
+      }
 
-    > * {
-      vertical-align: middle;
-      color: inherit;
-    }
+      @media screen and (max-width: $m-grid-min-vp) {
+        margin-top: 30px;
+        text-align: center;
+      }
 
-    > i.material-icons {
-      margin-right: 0.35em;
+      > * {
+        vertical-align: middle;
+        color: inherit;
+      }
 
-      &.m-plusMarketingVerify__verifiedIcon {
-        @include m-theme() {
-          color: themed($m-blue);
+      > i.material-icons {
+        margin-right: 0.35em;
+
+        &.m-plusMarketingVerify__verifiedIcon {
+          @include m-theme() {
+            color: themed($m-blue);
+          }
+        }
+
+        &.m-plusMarketingVerify__unverifiedIcon {
+          opacity: 0.2;
         }
       }
 
-      &.m-plusMarketingVerify__unverifiedIcon {
-        opacity: 0.2;
-      }
-    }
+      > a {
+        border-bottom: 1px solid;
+        cursor: pointer;
 
-    > a {
-      border-bottom: 1px solid;
-      cursor: pointer;
-
-      @include m-theme() {
-        border-color: themed($m-grey-400);
+        @include m-theme() {
+          border-color: themed($m-grey-400);
+        }
       }
     }
   }

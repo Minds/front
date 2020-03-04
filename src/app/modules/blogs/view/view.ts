@@ -24,6 +24,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FeaturesService } from '../../../services/features.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
@@ -105,6 +106,7 @@ export class BlogView implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private clientMetaService: ClientMetaService,
+    public featuresService: FeaturesService,
     @SkipSelf() injector: Injector,
     configs: ConfigsService
   ) {

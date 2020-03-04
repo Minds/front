@@ -10,28 +10,29 @@ import {
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   moduleId: module.id,
   selector: 'm-overlay-modal',
-  template: `
-    <div
-      class="m-overlay-modal--backdrop"
-      [hidden]="hidden"
-      (click)="dismiss()"
-    ></div>
-    <div class="m-overlay-modal {{ class }}" [hidden]="hidden" #modalElement>
-      <a class="m-overlay-modal--close" (click)="dismiss()"
-        ><i class="material-icons">close</i></a
-      >
-      <ng-template dynamic-host></ng-template>
-    </div>
-  `,
+  templateUrl: 'overlay-modal.component.html',
+  animations: [
+    trigger('fadeOut', [
+      transition(':enter', [
+        style({ opacity: '1' }),
+        animate(
+          '500ms 1s cubic-bezier(0.23, 1, 0.32, 1)',
+          style({ opacity: '0' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class OverlayModalComponent implements AfterViewInit {
   hidden: boolean = true;
   class: string = '';
   root: HTMLElement;
+  isMediaModal: boolean = false;
 
   @ViewChild(DynamicHostDirective, { static: true })
   private host: DynamicHostDirective;
@@ -66,6 +67,9 @@ export class OverlayModalComponent implements AfterViewInit {
     };
 
     this.class = opts.class;
+
+    this.isMediaModal =
+      this.class.indexOf('m-overlayModal--media') > -1 ? true : false;
 
     if (!componentClass) {
       throw new Error('Unknown component class');
@@ -118,6 +122,12 @@ export class OverlayModalComponent implements AfterViewInit {
     if (this.root) {
       this.root.classList.add('m-overlay-modal--shown');
       document.body.classList.add('m-overlay-modal--shown--no-scroll');
+    }
+  }
+
+  onEscKeyup() {
+    if (this.isMediaModal) {
+      this.dismiss();
     }
   }
 

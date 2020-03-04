@@ -1,0 +1,17 @@
+m-feedGrid {
+  padding: 0;
+
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 16px;
+
+  @media screen and (max-width: $max-mobile) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.m-feedGrid__item {
+  > m-newsfeed__entity {
+    display: block;
+  }
+}

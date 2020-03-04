@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TopbarHashtagsService } from '../../../hashtags/service/topbar.service';
 import { Router } from '@angular/router';
+import { Storage } from '../../../../services/storage';
 
 type Hashtag = {
   value: string;
@@ -16,9 +17,14 @@ export class HashtagsStepComponent implements OnInit {
   error: string;
   inProgress: boolean;
 
-  constructor(private service: TopbarHashtagsService, private router: Router) {}
+  constructor(
+    private service: TopbarHashtagsService,
+    private storage: Storage,
+    private router: Router
+  ) {}
 
   ngOnInit() {
+    this.storage.set('preferred_hashtag_state', '1'); // turn on preferred hashtags for discovery
     this.load();
   }
 

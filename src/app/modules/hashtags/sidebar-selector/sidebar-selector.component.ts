@@ -38,7 +38,7 @@ export class SidebarSelectorComponent implements OnInit {
   showAll: boolean = true;
   loading: boolean;
   showExtendedList: boolean = false;
-  showTrending: boolean = false;
+  showTrending: boolean = true;
 
   constructor(
     protected topbarHashtagsService: TopbarHashtagsService,

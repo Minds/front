@@ -1,104 +1,100 @@
-import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import {
+  Inject,
+  Injectable,
+  PLATFORM_ID,
+  Renderer2,
+  RendererFactory2,
+} from '@angular/core';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
-import { Storage } from '../../services/storage';
 import { BehaviorSubject, Subscription } from 'rxjs';
+import { DOCUMENT, isPlatformServer } from '@angular/common';
 
 @Injectable()
 export class ThemeService {
   renderer: Renderer2;
-  isDark: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  isDark$ = this.isDark.asObservable();
-  allowSetStorage: boolean = true;
+  isDark$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isDarkSubscription: Subscription;
+  sessionSubscription: Subscription;
   timer;
 
   constructor(
-    private rendererFactory: RendererFactory2,
+    rendererFactory: RendererFactory2,
     private client: Client,
     private session: Session,
-    private storage: Storage
+    @Inject(PLATFORM_ID) private platformId,
+    @Inject(DOCUMENT) private dom
   ) {
     this.renderer = rendererFactory.createRenderer(null, null);
-  }
-
-  static _(
-    rendererFactory: RendererFactory2,
-    client: Client,
-    session: Session,
-    storage: Storage
-  ) {
-    return new ThemeService(rendererFactory, client, session, storage);
+    this.isDarkSubscription = this.isDark$.subscribe(isDark => {
+      this.renderTheme();
+    });
+    this.sessionSubscription = this.session.loggedinEmitter.subscribe(
+      isLoggedIn => {
+        this.emitThemePreference();
+      }
+    );
   }
 
   // TODO after release of MacOS 10.14.4
   // Setup a listener for below to automatically toggle into dark mode for Macs --
   // prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
-  setUp() {
-    window.addEventListener('storage', event => {
-      if (event.key === 'dark_theme' && this.session.isLoggedIn()) {
-        if (
-          (event.newValue === 'true' && this.isDark.value === false) ||
-          (event.newValue === 'false' && this.isDark.value === true)
-        ) {
-          this.toggleTheme();
-        }
-      }
-    });
-
-    this.applyThemePreference();
+  setUp(): void {
+    this.emitThemePreference();
   }
 
-  applyThemePreference() {
-    // apply theme on page load (via app.component)
-    // and/or after login/logout (via user-menu.component)
-
-    // pages where user !isLoggedIn are always light theme,
-    // so they are prevented from triggering storage events on other tabs
-    this.allowSetStorage = this.session.isLoggedIn();
-
-    if (this.session.getLoggedInUser().theme === 'dark') this.isDark.next(true);
-    else this.isDark.next(false);
-    this.renderTheme();
-  }
-
-  toggleUserThemePreference() {
-    if (this.isDark.value) {
+  /**
+   * Toggles, saves and emits theme change
+   */
+  toggleUserThemePreference(): void {
+    if (this.isDark$.value) {
       this.client.post('api/v2/settings/theme', {
         theme: 'light',
       });
+      this.session.getLoggedInUser().theme = 'light';
     } else {
       this.client.post('api/v2/settings/theme', {
         theme: 'dark',
       });
+      this.session.getLoggedInUser().theme = 'dark';
     }
 
-    this.toggleTheme();
+    this.emitThemePreference();
   }
 
-  toggleTheme() {
-    this.isDark.next(!this.isDark.value);
+  /**
+   * Emits an events that others can listen to
+   */
+  emitThemePreference(): void {
+    const shouldBeDark: boolean =
+      this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().theme === 'dark';
+    this.isDark$.next(shouldBeDark);
+  }
+
+  toggleTheme(): void {
+    this.isDark$.next(!this.isDark$.value);
     this.renderTheme();
   }
 
-  renderTheme() {
-    if (this.allowSetStorage) this.storage.set('dark_theme', this.isDark.value);
-
-    this.renderer.addClass(document.body, 'm-theme-in-transition');
-    if (this.isDark.value) {
-      this.renderer.removeClass(document.body, 'm-theme__light');
-      this.renderer.addClass(document.body, 'm-theme__dark');
+  renderTheme(): void {
+    this.renderer.addClass(this.dom.body, 'm-theme-in-transition');
+    if (this.isDark$.value) {
+      this.renderer.removeClass(this.dom.body, 'm-theme__light');
+      this.renderer.addClass(this.dom.body, 'm-theme__dark');
     } else {
-      this.renderer.removeClass(document.body, 'm-theme__dark');
-      this.renderer.addClass(document.body, 'm-theme__light');
+      this.renderer.removeClass(this.dom.body, 'm-theme__dark');
+      this.renderer.addClass(this.dom.body, 'm-theme__light');
     }
-    //this.clearTransitions();
+    this.clearTransitions();
   }
 
-  clearTransitions() {
+  clearTransitions(): void {
     clearTimeout(this.timer);
+    const delay: number = isPlatformServer(this.platformId) ? 0 : 1000;
     this.timer = setTimeout(() => {
-      this.renderer.removeClass(document.body, 'm-theme-in-transition');
-    }, 1000);
+      this.renderer.removeClass(this.dom.body, 'm-theme-in-transition');
+    }, delay);
   }
 }

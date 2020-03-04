@@ -138,3 +138,13 @@
     background-color: rgba(themed($m-black-always), 0.5);
   }
 }
+
+.m-overlay-modal.m-overlayModal--media {
+  .m-overlay-modal--close {
+    .m-overlay-modal--escHint {
+      font-weight: 400;
+      display: block;
+      opacity: 0;
+    }
+  }
+}

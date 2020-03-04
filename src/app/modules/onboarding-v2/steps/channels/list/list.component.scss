@@ -4,6 +4,8 @@ m-onboarding__channelList {
 
   .m-onboarding__channelList {
     display: flex;
+    position: relative;
+
     h3 {
       margin: 0;
       font-size: 13px;
@@ -33,6 +35,8 @@ m-onboarding__channelList {
     padding: 0;
     list-style: none;
     width: 100%;
+    max-height: 245px;
+    overflow-y: auto;
   }
 
   .m-channelList__item {
@@ -41,6 +45,27 @@ m-onboarding__channelList {
 
     &:last-of-type {
       border-bottom: 0;
+    }
+
+    &:nth-child(4) {
+      & ~ :last-child {
+        position: relative;
+        z-index: 1;
+      }
+
+      & ~ :nth-last-child(2):after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0) 0%,
+          #fff 100%
+        );
+        height: 65px;
+      }
     }
 
     a {

@@ -8,13 +8,23 @@
   </a>
 
   <ul>
-    <li class="m-proHamburgerMenu__logo" *ngIf="channel">
-      <img
+    <ng-container
+      *ngIf="!channel.pro_settings.has_custom_logo; else customLogo"
+    >
+      <minds-avatar
+        [object]="channel"
         [routerLink]="homeRouterLink"
-        [src]="channel.pro_settings.logo_image"
-        (click)="closeMenu()"
-      />
-    </li>
+      ></minds-avatar>
+    </ng-container>
+    <ng-template #customLogo>
+      <li class="m-proHamburgerMenu__logo" *ngIf="channel">
+        <img
+          [routerLink]="homeRouterLink"
+          [src]="channel.pro_settings.logo_image"
+          (click)="closeMenu()"
+        />
+      </li>
+    </ng-template>
 
     <li
       class="m-proHamburgerMenu__subscribe"

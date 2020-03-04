@@ -2,6 +2,7 @@ import { TagsPipe } from './tags';
 import { FeaturesService } from '../../services/features.service';
 import { MockService } from '../../utils/mock';
 import { SiteService } from '../services/site.service';
+import { TagsService } from '../services/tags.service';
 
 describe('TagPipe', () => {
   const featuresServiceMock: any = MockService(FeaturesService, {
@@ -17,10 +18,12 @@ describe('TagPipe', () => {
     },
   });
 
+  const tagsService: any = new TagsService();
+
   let pipe;
 
   beforeEach(() => {
-    pipe = new TagsPipe(featuresServiceMock, siteServiceMock);
+    pipe = new TagsPipe(featuresServiceMock, siteServiceMock, tagsService);
   });
 
   it('should transform when # in the middle ', () => {

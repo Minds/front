@@ -24,6 +24,7 @@ export class NewsfeedEntityComponent {
   @ViewChild(DynamicHostDirective, { static: false })
   host: DynamicHostDirective;
   entity;
+  @Input() displayOptions = { v2: false };
 
   constructor(
     protected componentFactoryResolver: ComponentFactoryResolver,

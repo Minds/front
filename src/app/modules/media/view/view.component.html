@@ -272,8 +272,6 @@
             class="mdl-cell mdl-cell--12-col m-media--description"
             *ngIf="entity.description"
             [innerHtml]="entity.description | safe"
-            [hidden]="!descriptionContainer.innerText.trim('')"
-            #descriptionContainer
           ></div>
         </div>
 
@@ -327,7 +325,11 @@
   [url]="siteUrl + 'media/' + entity.guid"
   [title]="entity.title || ''"
   [embed]="entity"
-  *ngIf="entity && !attachment.shouldBeBlurred(entity)"
+  *ngIf="
+    entity &&
+    !attachment.shouldBeBlurred(entity) &&
+    !session.getLoggedInUser().hide_share_buttons
+  "
 >
 </m-social-icons>
 

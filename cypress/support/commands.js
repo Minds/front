@@ -1,4 +1,5 @@
 import 'cypress-file-upload';
+import jwt from 'jsonwebtoken';
 
 /**
  * @author Marcelo, Ben and Brian
@@ -40,29 +41,32 @@ const registerForm = {
 };
 
 const settings = {
-  deleteAccountButton: 'm-settings--disable-channel > div:nth-child(2) > div > button',
-  deleteSubmitButton: 'm-confirm-password--modal > div > form > div:nth-child(2) > button',
+  deleteAccountButton:
+    'm-settings--disable-channel > div:nth-child(2) > div > button',
+  deleteSubmitButton:
+    'm-confirm-password--modal > div > form > div:nth-child(2) > button',
 };
 const nav = {
-  hamburgerMenu: '.m-v2-topbar__UserMenu > m-user-menu > div.m-user-menu.m-dropdown > a',
+  hamburgerMenu:
+    '.m-v2-topbar__UserMenu > m-user-menu > div.m-user-menu.m-dropdown > a',
   logoutButton: '.m-user-menu.m-dropdown > ul > li:nth-child(11) > a',
-  byIndex: (i) => `.m-user-menu.m-dropdown > ul > li:nth-child(${i}) > a`,
+  byIndex: i => `.m-user-menu.m-dropdown > ul > li:nth-child(${i}) > a`,
 };
 
 const defaults = {
   email: 'test@minds.com',
-}
+};
 
 const loginForm = {
   password: 'minds-form-login .m-login-box .mdl-cell:last-child input',
   username: 'minds-form-login .m-login-box .mdl-cell:first-child input',
   submit: '[data-cy=data-minds-login-button]',
-}
+};
 
 const poster = {
   textArea: 'm-text-input--autocomplete-container textarea',
   postButton: '.m-posterActionBar__PostButton',
-}
+};
 
 /**
  * Logs a user in.
@@ -73,25 +77,30 @@ const poster = {
  */
 Cypress.Commands.add('login', (canary = false, username, password) => {
   cy.clearCookies();
-  cy.setCookie('staging', "1"); // Run in staging mode. Note: does not impact review sites
-  username =  username ? username : Cypress.env().username;
-  password =  password ? password : Cypress.env().password;
+  cy.setCookie('staging', '1'); // Run in staging mode. Note: does not impact review sites
+  username = username ? username : Cypress.env().username;
+  password = password ? password : Cypress.env().password;
 
   cy.visit('/login');
 
   cy.server();
-  cy.route("POST", "/api/v1/authenticate").as("postLogin");
+  cy.route('POST', '/api/v1/authenticate').as('postLogin');
 
-  cy.get(loginForm.username).focus().type(username);
-  cy.get(loginForm.password).focus().type(password);
+  cy.get(loginForm.username)
+    .focus()
+    .type(username);
+  cy.get(loginForm.password)
+    .focus()
+    .type(password);
 
   cy.get(loginForm.submit)
     .focus()
-    .click({force: true})
-    .wait('@postLogin').then((xhr) => {
-    expect(xhr.status).to.equal(200);
-    expect(xhr.response.body.status).to.equal('success');
-  });
+    .click({ force: true })
+    .wait('@postLogin')
+    .then(xhr => {
+      expect(xhr.status).to.equal(200);
+      expect(xhr.response.body.status).to.equal('success');
+    });
 });
 
 /**
@@ -99,7 +108,7 @@ Cypress.Commands.add('login', (canary = false, username, password) => {
  * @returns void
  */
 Cypress.Commands.add('logout', () => {
-  cy.visit('/logout')
+  cy.visit('/logout');
 });
 
 /**
@@ -117,36 +126,51 @@ Cypress.Commands.add('newUser', (username = '', password = '') => {
     .should('eq', `/register`);
 
   cy.server();
-  cy.route("POST", '**/api/v1/register').as('registerPOST');
+  cy.route('POST', '**/api/v1/register').as('registerPOST');
 
-  cy.get(registerForm.username).focus().type(username);
-  cy.get(registerForm.email).focus().type(defaults.email);
-  cy.get(registerForm.password).focus().type(password);
+  cy.get(registerForm.username)
+    .focus()
+    .type(username);
+  cy.get(registerForm.email)
+    .focus()
+    .type(defaults.email);
+  cy.get(registerForm.password)
+    .focus()
+    .type(password);
   cy.wait(500); // give second password field chance to appear - not tied to a request.
 
-  cy.get(registerForm.password2).focus().type(password);
-  cy.get(registerForm.checkbox).click({force: true});
+  cy.get(registerForm.password2)
+    .focus()
+    .type(password);
+  cy.get(registerForm.checkbox).click({ force: true });
 
   //submit.
-  cy.get(registerForm.submitButton).click({force: true})
-    .wait('@registerPOST').then((xhr) => {
+  cy.get(registerForm.submitButton)
+    .click({ force: true })
+    .wait('@registerPOST')
+    .then(xhr => {
       expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.deep.equal("success");
+      expect(xhr.response.body.status).to.deep.equal('success');
     });
 
   //onboarding modal shown.
-  cy.get(onboarding.welcomeTextContainer)
-    .contains(onboarding.welcomeText);
+  cy.get(onboarding.welcomeTextContainer).contains(onboarding.welcomeText);
 
   //skip onboarding.
-  cy.get(onboarding.nextButton).click()
-  cy.get(onboarding.nextButton).click()
-  cy.get(onboarding.nextButton).click()
-  cy.get(onboarding.nextButton).click()
+  cy.get(onboarding.nextButton).click();
+  cy.get(onboarding.nextButton).click();
+  cy.get(onboarding.nextButton).click();
+  cy.get(onboarding.nextButton).click();
 });
 
 Cypress.Commands.add('preserveCookies', () => {
-  Cypress.Cookies.preserveOnce('staging', 'minds_sess', 'mwa', 'XSRF-TOKEN', 'staging-features');
+  Cypress.Cookies.preserveOnce(
+    'staging',
+    'minds_sess',
+    'mwa',
+    'XSRF-TOKEN',
+    'staging-features'
+  );
 });
 
 /**
@@ -160,27 +184,30 @@ Cypress.Commands.add('preserveCookies', () => {
  */
 Cypress.Commands.add('deleteUser', (username, password) => {
   cy.server();
-  cy.route("POST", '**/api/v2/settings/password/validate').as('validatePost');
-  cy.route("POST", '**/api/v2/settings/delete').as('deletePOST');
+  cy.route('POST', '**/api/v2/settings/password/validate').as('validatePost');
+  cy.route('POST', '**/api/v2/settings/delete').as('deletePOST');
 
   cy.visit('/settings/disable');
-  cy.location('pathname', { timeout: 30000 })
-    .should('eq', `/settings/disable`);
+  cy.location('pathname', { timeout: 30000 }).should('eq', `/settings/disable`);
 
   cy.get(settings.deleteAccountButton).click({ force: true });
-  cy.get('#password').focus().type(password);
+  cy.get('#password')
+    .focus()
+    .type(password);
 
-  cy.get(settings.deleteSubmitButton).click({ force: true })
-    .wait('@validatePost').then((xhr) => {
+  cy.get(settings.deleteSubmitButton)
+    .click({ force: true })
+    .wait('@validatePost')
+    .then(xhr => {
       expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.deep.equal("success");
+      expect(xhr.response.body.status).to.deep.equal('success');
     })
-    .wait('@deletePOST').then((xhr) => {
+    .wait('@deletePOST')
+    .then(xhr => {
       expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.deep.equal("success");
+      expect(xhr.response.body.status).to.deep.equal('success');
     });
 });
-
 
 /**
  * Uploads a file.
@@ -190,12 +217,12 @@ Cypress.Commands.add('deleteUser', (username, password) => {
  * @returns void
  */
 Cypress.Commands.add('uploadFile', (selector, fileName, type = '') => {
-  cy.fixture(fileName).then((content) => {
-    cy.log("Content", fileName);
+  cy.fixture(fileName).then(content => {
+    cy.log('Content', fileName);
     cy.get(selector).upload({
       fileContent: content,
       fileName: fileName,
-      mimeType: type
+      mimeType: type,
     });
   });
 });
@@ -205,14 +232,14 @@ Cypress.Commands.add('uploadFile', (selector, fileName, type = '') => {
  * @param { string } message - The message to be posted
  * @returns void
  */
-Cypress.Commands.add('post', (message) => {
+Cypress.Commands.add('post', message => {
   cy.server();
-  cy.route("POST", '**/v1/newsfeed**').as('postActivity');
+  cy.route('POST', '**/v1/newsfeed**').as('postActivity');
   cy.get(poster.textArea).type(message);
   cy.get(poster.postButton).click();
-  cy.wait('@postActivity').then((xhr) => {
+  cy.wait('@postActivity').then(xhr => {
     expect(xhr.status).to.equal(200);
-    expect(xhr.response.body.status).to.deep.equal("success");
+    expect(xhr.response.body.status).to.deep.equal('success');
   });
 });
 
@@ -269,7 +296,7 @@ Cypress.Commands.add('isInViewport', element => {
     expect(rect.bottom).not.to.be.greaterThan(bottom);
     expect(rect.top).not.to.be.greaterThan(bottom);
     expect(rect.bottom).not.to.be.greaterThan(bottom);
-  })
+  });
 });
 
 /**
@@ -285,6 +312,19 @@ Cypress.Commands.add('isNotInViewport', element => {
     expect(rect.bottom).to.be.greaterThan(bottom);
     expect(rect.top).to.be.greaterThan(bottom);
     expect(rect.bottom).to.be.greaterThan(bottom);
-  })
+  });
 });
 
+Cypress.Commands.add('completeCaptcha', () => {
+  var bypassKey = Cypress.env().captcha_bypass_key;
+  const captcha = Date.now();
+  const token = jwt.sign({ data: captcha }, bypassKey, {
+    expiresIn: '5m',
+  });
+
+  cy.get('m-captcha input')
+    .focus()
+    .type(captcha);
+
+  cy.setCookie('captcha_bypass', token);
+});

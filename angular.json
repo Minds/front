@@ -21,7 +21,6 @@
             "styles": [
               "node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
               "node_modules/plyr/dist/plyr.css",
-              "node_modules/material-design-icons/iconfont/material-icons.css",
               "node_modules/highlight.js/styles/github.css",
               "src/main.css"
             ],

@@ -1,3 +1,7 @@
+/**
+ * Boost creator modal
+ * TODO: Refactor / rebuild - legacy USD code is not functional.
+ **/
 import {
   Component,
   Input,
@@ -137,10 +141,7 @@ export class BoostCreatorComponent implements AfterViewInit {
 
   getPreferredPaymentMethod() {
     let currency = this.storage.get('preferred-payment-method');
-    if (currency === 'creditcard') {
-      currency = 'usd';
-    }
-    if (['offchain', 'usd', 'onchain'].indexOf(currency) !== -1)
+    if (['offchain', 'onchain'].indexOf(currency) !== -1)
       this.boost.currency = <CurrencyType>(currency ? currency : 'offchain');
     else {
       this.boost.currency = 'offchain';
