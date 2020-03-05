@@ -28,6 +28,7 @@ import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { CookieService } from '../../../common/services/cookie.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { SiteService } from '../../../common/services/site.service';
 
 @Component({
   selector: 'm-groups--profile',
@@ -75,6 +76,7 @@ export class GroupsProfile {
     public service: GroupsService,
     public route: ActivatedRoute,
     private router: Router,
+    private site: SiteService,
     public metaService: MetaService,
     private sockets: SocketsService,
     private context: ContextService,
@@ -466,7 +468,9 @@ export class GroupsProfile {
     this.metaService
       .setTitle(this.group.name)
       .setDescription(this.group.briefdescription)
-      .setOgImage(this.group.banner_src);
+      .setOgImage(
+        `${this.site.baseUrl}fs/v1/banners/${this.group.guid}/0/${this.group.banner}`
+      );
   }
 
   detectChanges() {
