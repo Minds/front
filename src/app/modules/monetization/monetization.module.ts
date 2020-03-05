@@ -21,6 +21,7 @@ import { RevenueConsoleComponent } from './revenue/console.component';
 import { WalletComponent } from '../wallet/wallet.component';
 
 export { RevenueConsoleComponent } from './revenue/console.component';
+export { RevenueOptionsComponent } from './revenue/options.component';
 
 export const MONETIZATION_REVENUE_COMPONENTS = [
   RevenueConsoleComponent,

@@ -8,6 +8,7 @@ import { MonetizationOverviewModule } from '../monetization/monetization.overvie
 import {
   MONETIZATION_REVENUE_COMPONENTS,
   RevenueConsoleComponent,
+  RevenueOptionsComponent,
 } from '../monetization/monetization.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { AdsModule } from '../ads/ads.module';
@@ -259,6 +260,7 @@ export const WALLET_ROUTES: Routes = [
     WalletDashboardComponent,
     BlockchainConsoleComponent,
     RevenueConsoleComponent,
+    RevenueOptionsComponent,
   ],
 })
 export class WalletModule {}
