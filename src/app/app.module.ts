@@ -91,7 +91,7 @@ export class SentryErrorHandler implements ErrorHandler {
     BrowserTransferStateModule,
     CookieModule.forRoot(),
     // TransferHttpCacheModule,
-    //BrowserAnimationsModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
