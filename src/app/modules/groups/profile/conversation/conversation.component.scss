@@ -40,7 +40,7 @@ minds-groups-profile-conversation {
     box-sizing: border-box;
     padding-bottom: 24px;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--secondary);
     }
 
     .minds-comments-container,
@@ -109,5 +109,11 @@ minds-groups-profile-conversation {
   }
   .mdl-card__actions {
     //  top: 9px !important;
+  }
+}
+
+.m-theme__2020 {
+  minds-groups-profile-conversation {
+    top: 75px;
   }
 }

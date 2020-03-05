@@ -53,7 +53,7 @@ minds-card-user,
     display: flex;
     text-decoration: none;
     @include m-theme() {
-      color: themed($m-white-always);
+      color: themed($m-bgColor--secondary);
     }
 
     img {
@@ -378,7 +378,7 @@ minds-activity-preview {
     }
     .mdl-card__menu {
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--secondary);
       }
     }
     minds-card-comment:hover {

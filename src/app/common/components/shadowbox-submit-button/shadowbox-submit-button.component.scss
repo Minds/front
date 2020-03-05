@@ -3,34 +3,100 @@
   position: relative;
   cursor: pointer;
   padding: 10px 20px;
-  background-color: #4fc3a9;
+
   min-height: 43px;
   border: 0;
   transition: all 0.2s ease;
   border-radius: 2px;
   outline: 0;
-  @include m-theme() {
-    color: themed($m-white);
+  &.green {
+    @include m-theme() {
+      background-color: themed($m-aqua);
+      color: themed($m-white);
+    }
+    .m-shadowboxSubmitButton__status--saving {
+      span {
+        @include m-theme() {
+          background-color: themed($m-white);
+        }
+      }
+    }
+  }
+  &.red {
+    @include m-theme() {
+      background-color: themed($m-alert);
+      color: themed($m-white);
+    }
+    .m-shadowboxSubmitButton__status--saving {
+      span {
+        @include m-theme() {
+          background-color: themed($m-white);
+        }
+      }
+    }
+  }
+  &.grey {
+    @include m-theme() {
+      background-color: themed($m-grey-100);
+      color: themed($m-textColor--secondary);
+    }
+    .m-shadowboxSubmitButton__status--saving {
+      text-align: center;
+      span {
+        @include m-theme() {
+          background-color: themed($m-grey-500);
+        }
+      }
+    }
   }
   &:hover {
     &:not(:disabled) {
       transform: scale(1.02);
-      background-color: #55ccb2;
+
       @include m-theme() {
         box-shadow: 0 3px 3px -2px rgba(themed($m-black), 0.2),
           0 2px 5px 0 rgba(themed($m-black), 0.14),
           0 1px 7px 0 rgba(themed($m-black), 0.12);
+      }
+      &.green {
+        @include m-theme() {
+          background-color: rgba(themed($m-aqua), 0.8);
+        }
+      }
+      &.red {
+        @include m-theme() {
+          background-color: rgba(themed($m-alert), 0.9);
+        }
+      }
+      &.grey {
+        @include m-theme() {
+          background-color: rgba(themed($m-grey-50), 0.7);
+        }
       }
     }
   }
   &:active {
     &:not(:disabled) {
       transform: scale(0.999);
-      background-color: #4fc3a9;
       @include m-theme() {
         box-shadow: 0 3px 2px -2px rgba(themed($m-black), 0.2),
           0 2px 3px 0 rgba(themed($m-black), 0.14),
           0 1px 5px 0 rgba(themed($m-black), 0.12);
+      }
+      &.green {
+        @include m-theme() {
+          background-color: themed($m-aqua);
+        }
+      }
+      &.red {
+        @include m-theme() {
+          background-color: themed($m-red-dark);
+        }
+      }
+      &.grey {
+        @include m-theme() {
+          background-color: themed($m-grey-100);
+        }
       }
     }
   }
@@ -38,9 +104,7 @@
   &[disabled] {
     cursor: default;
     &:not(.saving) {
-      @include m-theme() {
-        background-color: themed($m-grey-100);
-      }
+      opacity: 0.6;
     }
   }
 }
@@ -58,11 +122,11 @@ button {
   }
   20% {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.02);
   }
   100% {
     opacity: 0.2;
-    transform: scale(0.9);
+    transform: scale(0.95);
   }
 }
 
@@ -77,9 +141,6 @@ button {
     animation-duration: 1.4s;
     animation-iteration-count: infinite;
     animation-fill-mode: both;
-    @include m-theme() {
-      background-color: themed($m-white);
-    }
     &:nth-child(2) {
       animation-delay: 0.2s;
     }
@@ -87,6 +148,10 @@ button {
       animation-delay: 0.4s;
     }
   }
+}
+.m-shadowboxSubmitButton__status--unsaved {
+  font-size: 15px;
+  line-height: 20px;
 }
 
 @media screen and (max-width: $max-mobile) {

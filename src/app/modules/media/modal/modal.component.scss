@@ -574,6 +574,11 @@ m-media--modal {
     @include m-theme() {
       border-bottom: 1px solid themed($m-grey-100);
     }
+    .m-mediaModal__actionButton--share {
+      @include m-theme() {
+        color: themed($m-blue-grey-600);
+      }
+    }
   }
   .m-wire-button {
     @include m-theme() {

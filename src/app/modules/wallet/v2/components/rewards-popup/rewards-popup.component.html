@@ -1,0 +1,29 @@
+<div class="m-walletRewardsPopup">
+  <div *ngIf="inProgress" class="m-wallet__spinner">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+  <div
+    class="m-walletRewardsPopup__metricsContainer"
+    *ngFor="let metric of metrics"
+  >
+    <div class="m-walletRewardsPopup__row">
+      <span>{{ metric.id }}</span>
+      <span>{{ metric.score }}</span>
+    </div>
+  </div>
+  <div
+    class="m-walletRewardsPopup__totalScoreWrapper"
+    *ngIf="metrics && metrics.length"
+  >
+    <div class="m-walletRewardsPopup__row">
+      <span>Total Score</span>
+      <span>{{ totalScore }}</span>
+    </div>
+  </div>
+  <div
+    *ngIf="!inProgress && (!metrics || !totalScore)"
+    class="m-walletRewardsPopup__notice"
+  >
+    You haven't earned any daily rewards yet.
+  </div>
+</div>

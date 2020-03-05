@@ -143,67 +143,6 @@ describe('NewsfeedComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it('should have Top, Subscribed and BoostFeed sections in the toolbar', () => {
-    const top = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(1) > span'
-      )
-    );
-    const topTooltip = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(1) > m-tooltip'
-      )
-    );
-
-    const subscribed = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(2) > span'
-      )
-    );
-    const subscribedTooltip = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(2) > m-tooltip'
-      )
-    );
-
-    const boostfeed = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(3) > span'
-      )
-    );
-    const boostfeedTooltip = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(3) > m-tooltip'
-      )
-    );
-
-    expect(top).not.toBeNull();
-    expect(top.nativeElement.textContent).toContain('Top');
-    expect(topTooltip.nativeElement.textContent).toContain(
-      'Top displays your top suggested content on Minds based on hashtags'
-    );
-
-    expect(subscribed).not.toBeNull();
-    expect(subscribed.nativeElement.textContent).toContain('Subscriptions');
-    expect(subscribedTooltip.nativeElement.textContent).toContain(
-      'Your Newsfeed contains posts from channels that you are subscribed to, as well as boosted posts from the wider network'
-    );
-
-    expect(boostfeed).not.toBeNull();
-    expect(boostfeed.nativeElement.textContent).toContain('BoostFeed');
-    expect(boostfeedTooltip.nativeElement.textContent).toContain(
-      'The Boostfeed only shows boosted posts from the wider network. To Boost your content, click the Boost icon on the topbar'
-    );
-  });
-
-  it('should have an m-newsfeed--dropdown', () => {
-    expect(
-      fixture.debugElement.query(
-        By.css('.m-topbar--navigation m-newsfeed--dropdown')
-      )
-    ).not.toBeNull();
-  });
-
   it('should have a User card in the sidebar', () => {
     expect(
       fixture.debugElement.query(By.css('.m-newsfeed--sidebar minds-card-user'))

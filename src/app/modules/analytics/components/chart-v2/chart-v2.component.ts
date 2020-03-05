@@ -24,7 +24,10 @@ export class ChartV2Component implements OnInit, OnDestroy {
   @ViewChild('hoverInfoDiv', { static: true }) hoverInfoDivEl: ElementRef;
   @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
-  @Input() rawData;
+  @Input() segments: Array<any>;
+  @Input() unit: string = 'number';
+  @Input() label: string = '';
+
   @Input() interval;
   @Input() isMini: boolean = false;
   @Input() showHoverInfo: boolean = true;
@@ -48,7 +51,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
     displayModeBar: false,
   };
 
-  segments;
+  allPointsAreZero = true;
   isComparison = false;
   pointsPerSegment: number;
   markerFills;
@@ -72,10 +75,11 @@ export class ChartV2Component implements OnInit, OnDestroy {
   ngOnInit() {
     this.isTouchDevice = isMobileOrTablet();
     this.hoverInfoDiv = this.hoverInfoDivEl.nativeElement;
-    this.segments = this.isMini
-      ? this.rawData.visualisation.segments.slice(0, 1)
-      : this.rawData.visualisation.segments;
+    if (this.isMini) {
+      this.segments = this.segments.slice(0, 1);
+    }
     if (this.segments.length === 2) {
+      // TODO uncomment and test once there are comparison segments available
       // this.isComparison = true;
       // Reverse the segments so comparison line is layered behind current line
       // this.segments.reverse();
@@ -105,14 +109,16 @@ export class ChartV2Component implements OnInit, OnDestroy {
   initPlot() {
     this.pointsPerSegment = this.segments[0].buckets.length;
 
+    const yLowerBound = this.getLowerBound(this.segments[0].buckets);
+
     for (let i = 0; i < this.pointsPerSegment; i++) {
       this.shapes[i] = {
         type: 'line',
         layer: 'below',
         x0: this.segments[0].buckets[i].date,
-        y0: 0,
+        y0: yLowerBound,
         x1: this.segments[0].buckets[i].date,
-        y1: 0,
+        y1: yLowerBound,
         line: {
           color: 'rgba(0, 0, 0, 0)',
           width: 2,
@@ -195,7 +201,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
       this.layout.xaxis.tickformat = this.xTickFormat;
     }
 
-    if (this.rawData.unit && this.rawData.unit === 'usd') {
+    if (this.unit === 'usd') {
       this.yTickFormat = '$.2f';
     }
 
@@ -205,8 +211,8 @@ export class ChartV2Component implements OnInit, OnDestroy {
       autoexpand: 'true',
       autosize: 'true',
       hovermode: 'x',
-      paper_bgcolor: this.getColor('m-white'),
-      plot_bgcolor: this.getColor('m-white'),
+      paper_bgcolor: this.getColor('m-bgColor--primary'),
+      plot_bgcolor: this.getColor('m-bgColor--primary'),
       font: {
         family: 'Roboto',
       },
@@ -240,16 +246,21 @@ export class ChartV2Component implements OnInit, OnDestroy {
           color: this.getColor('m-grey-130'),
         },
         fixedrange: true,
+        automargin: true,
       },
       margin: {
         t: this.isMini ? 0 : 16,
+        l: this.isMini ? 0 : 16,
         b: this.isMini ? 0 : 80,
-        l: 0,
         r: this.isMini ? 0 : 80,
         pad: 16,
       },
       shapes: this.shapes,
     };
+
+    if (this.allPointsAreZero) {
+      this.layout.yaxis.range = [-1, 9];
+    }
   }
   // * EVENTS -----------------------------------
 
@@ -312,7 +323,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
     // TODO: format value strings here and remove ngSwitch from template?
     this.hoverInfo['date'] = this.segments[0].buckets[this.hoverPoint].date;
     this.hoverInfo['value'] =
-      this.rawData.unit !== 'usd'
+      this.unit !== 'usd'
         ? this.segments[0].buckets[this.hoverPoint].value
         : this.segments[0].buckets[this.hoverPoint].value / 100;
 
@@ -322,17 +333,18 @@ export class ChartV2Component implements OnInit, OnDestroy {
       const segment = this.segments[pt];
       this.hoverInfo['values'][pt] = {
         value:
-          this.rawData.unit !== 'usd'
+          this.unit !== 'usd'
             ? segment.buckets[this.hoverPoint].value
             : segment.buckets[this.hoverPoint].value / 100,
-        label: segment.label || this.rawData.label,
+        label: segment.label || this.label,
         color: this.getColor(chartPalette.segmentColorIds[pt]),
       };
     }
 
+    // TODO uncomment and test once there are comparison segments available
     // if (this.isComparison && this.segments[1]) {
     //   this.hoverInfo['comparisonValue'] =
-    //     this.rawData.unit !== 'usd'
+    //     this.unit !== 'usd'
     //       ? this.segments[0].buckets[this.hoverPoint].value
     //       : this.segments[0].buckets[this.hoverPoint].value / 100;
     //
@@ -393,12 +405,22 @@ export class ChartV2Component implements OnInit, OnDestroy {
     return rows.map(row => {
       if (key === 'date') {
         return row[key].slice(0, 10);
-      } else if (this.rawData.unit && this.rawData.unit === 'usd') {
-        return row[key] / 100;
       } else {
-        return row[key];
+        if (this.allPointsAreZero && row[key] !== 0) {
+          this.allPointsAreZero = false;
+        }
+        if (this.unit === 'usd') {
+          return row[key] / 100;
+        } else {
+          return row[key];
+        }
       }
     });
+  }
+
+  getLowerBound(rows): number {
+    const values = this.unpack(rows, 'value');
+    return Math.min(...values);
   }
 
   getColor(colorId) {

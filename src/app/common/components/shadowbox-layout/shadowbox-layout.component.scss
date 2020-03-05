@@ -4,6 +4,19 @@ m-shadowboxLayout {
     box-shadow: 0px 0px 10px -3px rgba(themed($m-black-always), 0.3);
   }
 }
+
+m-body.has-v3-navbar {
+  m-shadowboxLayout {
+    box-shadow: none;
+  }
+  .m-shadowboxLayout__bottom,
+  .m-shadowboxLayout__footer {
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+    }
+  }
+}
+
 m-shadowboxHeader.isScrollable {
   .m-shadowboxLayout__header {
     display: flex;

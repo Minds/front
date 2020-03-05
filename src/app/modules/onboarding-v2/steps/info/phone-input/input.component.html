@@ -15,7 +15,7 @@
   </div>
   <div class="m-onboarding__phoneInput">
     <div class="m-onboarding__input">
-      <m-phone-input [(ngModel)]="number" ngDefaultControl></m-phone-input>
+      <m-phoneInput [(ngModel)]="number" ngDefaultControl></m-phoneInput>
 
       <div class="m-onboarding__spinnerWrapper" *ngIf="inProgress">
         <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
@@ -23,6 +23,7 @@
 
       <button
         class="mf-button mf-button--alt m-onboardingInput__saveButton"
+        style="height: 38px !important;"
         [class.disabled]="!number || number.length < 13"
         (click)="savePhoneNumber()"
         *ngIf="!inProgress"

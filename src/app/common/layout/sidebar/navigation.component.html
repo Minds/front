@@ -1,4 +1,8 @@
-<div class="m-sidebarNavigation__overlay" (click)="toggle()"></div>
+<div
+  class="m-sidebarNavigation__overlay"
+  (click)="toggle()"
+  *ngIf="false"
+></div>
 <div
   class="m-sidebarNavigation"
   [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
@@ -59,11 +63,11 @@
           (click)="toggle()"
         >
           <m-tooltip
-            icon="check"
             i18n="@@COMMON__DISCOVER"
             [enabled]="layoutMode === 'tablet'"
           >
-            Discover
+            <i class="m-icon--hashtag" m-tooltip--anchor>#</i>
+            Discovery
           </m-tooltip>
 
           <span
@@ -71,7 +75,7 @@
             *ngIf="layoutMode !== 'tablet'"
             i18n
           >
-            Discover
+            Discovery
           </span>
         </a>
       </li>
@@ -79,7 +83,7 @@
       <li>
         <a
           class="m-sidebarNavigation__item"
-          [routerLink]="['/wallet']"
+          [routerLink]="['/wallet/canary']"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           (click)="toggle()"
         >
@@ -109,7 +113,7 @@
           (click)="toggle()"
         >
           <m-tooltip
-            icon="show_chart"
+            icon="insert_chart"
             i18n="@@COMMON__ANALYTICS"
             [enabled]="layoutMode === 'tablet'"
           >

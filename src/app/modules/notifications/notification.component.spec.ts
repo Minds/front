@@ -381,31 +381,6 @@ describe('NotificationComponent', () => {
     expect(notification.nativeElement.innerHTML).toBe('Title');
   });
 
-  it('Should load the notification channel_monetized', () => {
-    comp.notification = {
-      type: 'notification',
-      guid: '843204301747658770',
-      notification_view: 'channel_monetized',
-      entityObj: {
-        type: 'activity',
-        title: 'Title',
-      },
-      fromObj: {
-        name: 'name',
-      },
-      params: {
-        time_created: 2222,
-        bid: 10,
-      },
-    };
-    fixture.detectChanges();
-    expect(comp.notification).not.toBeNull();
-    const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain(
-      '<!---->Your channel is now monetized. Congratulations!'
-    );
-  });
-
   it('Should load the notification payout_accepted', () => {
     comp.notification = {
       type: 'notification',
