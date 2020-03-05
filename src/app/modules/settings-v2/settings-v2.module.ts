@@ -18,6 +18,7 @@ import { SettingsV2Component } from './settings-v2.component';
 import { SettingsV2DisplayNameComponent } from './account/display-name/display-name.component';
 import { SettingsV2SessionsComponent } from './security/sessions/sessions.component';
 import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.component';
+import { SettingsModule } from '../settings/settings.module';
 // import { SettingsGeneralComponent } from './general/general.component';
 // import { SettingsDisableChannelComponent } from './disable/disable.component';
 // import { SettingsTwoFactorComponent } from './two-factor/two-factor.component';
@@ -31,7 +32,90 @@ import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.c
 // import { SettingsBlockedChannelsComponent } from './blocked-channels/blocked-channels.component';
 // import { SettingsTiersComponent } from './tiers/tiers.component';
 
-const settingsRoutes: Routes = [
+// export const WALLET_V2_ROUTES: Routes = [
+//   {
+//     path: '',
+//     component: SettingsV2Component,
+//     data: {
+//       title: 'Settings',
+//       description: 'Configure your Minds settings',
+//       ogImage: '/assets/photos/network.jpg',
+//     },
+//     children: [
+//       {
+//         path: 'account',
+//         component: SettingsV2AccountComponent,
+//         children: [
+//           // {
+//           //   path: '',
+//           //   redirectTo: 'overview',
+//           //   pathMatch: 'full',
+//           // },
+//           {
+//             path: 'overview',
+//             component: WalletChartComponent,
+//           },
+//           {
+//             path: 'transactions',
+//             component: WalletTransactionsTokensComponent,
+//           },
+//           {
+//             path: 'settings',
+//             component: WalletSettingsTokensComponent,
+//           },
+//         ],
+//       },
+//       {
+//         path: 'cash',
+//         component: WalletV2CashComponent,
+//         children: [
+//           {
+//             path: 'transactions',
+//             component: WalletTransactionsCashComponent,
+//           },
+//           {
+//             path: 'settings',
+//             component: WalletSettingsCashComponent,
+//           },
+//         ],
+//       },
+//       {
+//         path: 'eth',
+//         component: WalletV2EthComponent,
+//         children: [
+//           {
+//             path: '',
+//             redirectTo: 'settings',
+//           },
+//           {
+//             path: 'settings',
+//             component: WalletSettingsETHComponent,
+//           },
+//         ],
+//       },
+//       {
+//         path: 'btc',
+//         component: WalletV2BtcComponent,
+//         children: [
+//           {
+//             path: '',
+//             redirectTo: 'settings',
+//           },
+//           {
+//             path: 'settings',
+//             component: WalletSettingsBTCComponent,
+//           },
+//         ],
+//       },
+//       {
+//         path: '**',
+//         redirectTo: 'tokens',
+//       },
+//     ],
+//   },
+// ];
+
+const SETTINGS_V2_ROUTES: Routes = [
   {
     path: '',
     component: SettingsV2Component,
@@ -41,7 +125,7 @@ const settingsRoutes: Routes = [
       ogImage: '/assets/photos/network.jpg',
     },
     children: [
-      { path: '', redirectTo: 'settings/canary/account', pathMatch: 'full' },
+      { path: '', redirectTo: 'account', pathMatch: 'full' },
       {
         path: 'account',
         component: SettingsV2Component,
@@ -56,6 +140,10 @@ const settingsRoutes: Routes = [
           { path: 'twoFactor', component: SettingsV2TwoFactorComponent },
           { path: 'sessions', component: SettingsV2SessionsComponent },
         ],
+      },
+      {
+        path: '**',
+        redirectTo: 'account',
       },
       //   { path: 'wire', component: SettingsWireComponent },
       //   { path: 'disable', component: SettingsDisableChannelComponent },
@@ -104,10 +192,11 @@ const settingsRoutes: Routes = [
     CheckoutModule,
     // ModalsModule,
     LegacyModule,
-    RouterModule.forChild(settingsRoutes),
+    RouterModule.forChild(SETTINGS_V2_ROUTES),
     ReportModule,
     PaymentsModule,
     WireModule,
+    SettingsModule,
   ],
   declarations: [
     SettingsV2Component,
