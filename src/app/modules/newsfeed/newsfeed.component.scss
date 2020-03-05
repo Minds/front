@@ -195,3 +195,12 @@ m-newsfeed {
 .m-newsfeed__sidebar .minds-usercard-block .avatar img {
   object-fit: cover;
 }
+
+.m-theme__2020 .m-newsfeed {
+  [class*='m-pageLayout__pane'] {
+    padding: $minds-padding * 2;
+  }
+  .m-newsfeed__sidebar {
+    max-width: initial;
+  }
+}

@@ -1,0 +1,32 @@
+<div
+  class="m-phoneInput__wrapper"
+  [ngClass]="{
+    dropdownShown: showDropdown,
+    focused: showDropdown || inputFocused,
+    invalid: invalid
+  }"
+  #wrapper
+>
+  <m-phoneInput__country
+    [initCountryCode]="initCountryCode"
+    [allowedCountries]="allowedCountries"
+    (countrySelected)="countrySelected($event)"
+    (toggledDropdown)="toggledDropdown($event)"
+    [showDropdown]="showDropdown"
+  ></m-phoneInput__country>
+
+  <input
+    type="tel"
+    id="phone"
+    autocomplete="off"
+    placeholder="916-555-5555"
+    (keypress)="onInputKeyPress($event)"
+    [(ngModel)]="phoneNumber"
+    (ngModelChange)="onPhoneNumberChange()"
+    [placeholder]="selectedCountry.placeHolder"
+    class="form-control m-phoneInput__input"
+    (click)="clickedInput($event)"
+    (focusout)="inputFocused = false"
+    #input
+  />
+</div>

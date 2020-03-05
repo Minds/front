@@ -127,11 +127,12 @@ import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-bu
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
+import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
+import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
 import { PagesService } from './services/pages.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
-import { ConfigsService } from './services/configs.service';
 import { CookieService } from './services/cookie.service';
 import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
@@ -139,6 +140,8 @@ import { MediaProxyService } from './services/media-proxy.service';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
+import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v2.component';
+import { PhoneInputCountryV2Component } from './components/phone-input-v2/country.component';
 import { TagsService } from './services/tags.service';
 import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
 import { RedirectService } from './services/redirect.service';
@@ -271,8 +274,13 @@ const routes: Routes = [
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    ShadowboxHeaderTabsComponent,
+    TimespanFilterComponent,
+    EmailConfirmationComponent,
     EmailConfirmationComponent,
     DateDropdownsComponent,
+    PhoneInputV2Component,
+    PhoneInputCountryV2Component,
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
     StackableModalComponent,
@@ -379,8 +387,14 @@ const routes: Routes = [
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    ShadowboxHeaderComponent,
+    ShadowboxHeaderTabsComponent,
+    TimespanFilterComponent,
+    EmailConfirmationComponent,
     EmailConfirmationComponent,
     DateDropdownsComponent,
+    PhoneInputV2Component,
+    PhoneInputCountryV2Component,
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
     StackableModalComponent,

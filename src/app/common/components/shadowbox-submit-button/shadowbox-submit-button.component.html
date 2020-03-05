@@ -2,7 +2,27 @@
   class="m-shadowboxSubmitButton"
   type="submit"
   [disabled]="disabled"
-  [ngClass]="{ saving: saveStatus === 'saving' }"
+  [ngClass]="{
+    saving: saving,
+    green: color === 'green',
+    grey: color === 'grey',
+    red: color === 'red'
+  }"
 >
-  <ng-content></ng-content>
+  <div
+    *ngIf="!saving"
+    class="m-shadowboxSubmitButton__status--unsaved"
+    #buttonTextContainer
+  >
+    <ng-content></ng-content>
+  </div>
+  <div
+    *ngIf="saving"
+    class="m-shadowboxSubmitButton__status--saving"
+    [style.width]="buttonTextWidth + 'px'"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </button>

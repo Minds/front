@@ -1,7 +1,7 @@
-<div class="m-dropdownSelector__labelWrapper" *ngIf="showLabel">
+<div class="m-dropdownSelector__labelWrapper" *ngIf="showLabel && !inlineLabel">
   <span>{{ filter.label }}</span>
-  <m-tooltip icon="help">
-    <div>{{ filter?.description }}</div>
+  <m-tooltip icon="help" *ngIf="filter.description">
+    <div>{{ filter.description }}</div>
     <ul>
       <ng-container *ngFor="let option of filter.options">
         <li>
@@ -23,7 +23,8 @@
 >
   <div class="m-dropdownSelector__header" (click)="expanded = !expanded">
     <span class="m-dropdownSelector__option">
-      {{ selectedOption.label }}
+      <label *ngIf="showLabel && inlineLabel">{{ filter.label }}</label>
+      <span>{{ selectedOption.label }}</span>
     </span>
     <i class="material-icons" *ngIf="!expanded">keyboard_arrow_down</i>
     <i class="material-icons" *ngIf="expanded">keyboard_arrow_up</i>
@@ -34,7 +35,7 @@
         class="m-dropdownSelector__option"
         (click)="updateFilter(option)"
         [ngClass]="{
-          unavailable: option.available === false
+          unavailable: option?.available === false
         }"
       >
         {{ option.label }}

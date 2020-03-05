@@ -8,7 +8,7 @@
   box-sizing: border-box;
   border-radius: 3px;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   img {

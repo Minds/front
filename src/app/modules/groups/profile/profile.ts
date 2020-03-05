@@ -27,6 +27,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { CookieService } from '../../../common/services/cookie.service';
+import { FeaturesService } from '../../../services/features.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 @Component({
@@ -69,6 +70,7 @@ export class GroupsProfile {
   private updateMarkersSubscription;
 
   private lastWidth: number;
+  readonly hasNewNavigation: boolean;
 
   constructor(
     public session: Session,
@@ -85,8 +87,10 @@ export class GroupsProfile {
     private updateMarkers: UpdateMarkersService,
     configs: ConfigsService,
     private cookieService: CookieService,
+    featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
+    this.hasNewNavigation = featuresService.has('navigation');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 

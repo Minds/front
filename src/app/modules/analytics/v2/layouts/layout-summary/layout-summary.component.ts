@@ -17,7 +17,7 @@ export class AnalyticsLayoutSummaryComponent implements OnInit {
   tiles = [
     {
       id: 'pageviews',
-      label: 'Daily pageviews',
+      label: 'Daily Pageviews',
       unit: 'number',
       interval: 'day',
       endpoint:

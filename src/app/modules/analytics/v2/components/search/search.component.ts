@@ -1,11 +1,8 @@
 import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 // import { Observable, Subscription } from 'rxjs';
-import {
-  AnalyticsDashboardService,
-  Filter,
-  Option,
-} from '../../dashboard.service';
+import { AnalyticsDashboardService } from '../../dashboard.service';
 import { Session } from '../../../../../services/session';
+import { Filter, Option } from '../../../../../interfaces/dashboard';
 
 @Component({
   selector: 'm-analytics__search',

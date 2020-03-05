@@ -1,7 +1,10 @@
 m-sidebar--navigation {
-  display: contents;
+  @media screen and (max-width: $max-mobile) {
+    display: none;
+  }
 
   &.m-sidebarNavigation--opened {
+    display: block;
     .m-sidebarNavigation__overlay {
       z-index: 999998;
 
@@ -58,22 +61,29 @@ m-sidebar--navigation {
         height: 26px;
         border-radius: 50%;
 
-        margin-right: 28px;
+        margin-right: 20px;
       }
     }
   }
 
   .m-sidebarNavigation {
-    grid-area: nav;
-
-    padding-top: 8px !important;
-    padding-left: 33.3%;
+    padding-top: 26px;
     min-width: 0;
+    display: block;
+    width: 250px; // TODO make this a constant
+    height: calc(100vh - 75px);
+    overflow: scroll;
+    position: fixed;
+    z-index: 2;
     box-sizing: border-box;
 
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
     @include m-theme() {
-      background-color: themed($m-body-bg);
-      border-right: 1px solid themed($m-grey-400);
+      background-color: themed($m-bgColor--primary);
+      border-right: 1px solid themed($m-borderColor--primary);
     }
 
     .m-sidebarNavigation__top {
@@ -89,6 +99,7 @@ m-sidebar--navigation {
       max-width: 79vw;
       z-index: 999999;
       padding: 0;
+      border-right: 0;
 
       transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1);
 
@@ -153,6 +164,7 @@ m-sidebar--navigation {
     ul {
       list-style: none;
       padding: 0;
+      margin: 0;
     }
   }
 
@@ -162,7 +174,7 @@ m-sidebar--navigation {
     align-items: center;
     text-decoration: none;
     font-family: 'Roboto', Helvetica, sans-serif;
-    margin: 15px 0;
+    margin: 4px 0;
     font-weight: bold;
 
     font-size: 17px;
@@ -171,18 +183,31 @@ m-sidebar--navigation {
       color: themed($m-textColor--secondary);
     }
 
-    &.m-sidebarNavigation__item--active {
-      font-weight: bold;
+    &.m-sidebarNavigation__item--active,
+    &:hover {
       @include m-theme() {
-        color: themed($m-black);
+        color: themed($m-textColor--primary);
       }
     }
 
     m-tooltip {
       i.material-icons,
+      i.m-icon--hashtag,
       img {
-        margin-right: 30px;
+        margin-right: 24px;
+        height: 23px;
       }
+    }
+    .m-icon--hashtag {
+      font-style: normal;
+      font-weight: bold;
+      font-size: 26px;
+      margin-right: 24px;
+      text-align: center;
+      width: 24px;
+      height: 24px;
+      display: inline-block;
+      line-height: 24px;
     }
   }
 }

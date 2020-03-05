@@ -1,10 +1,14 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable, Inject, APP_INITIALIZER } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { MonetizationOverviewModule } from '../monetization/monetization.overview.module';
+import {
+  MONETIZATION_REVENUE_COMPONENTS,
+  RevenueConsoleComponent,
+} from '../monetization/monetization.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { AdsModule } from '../ads/ads.module';
 import { WireModule } from '../wire/wire.module';
@@ -22,7 +26,6 @@ import { WalletToggleComponent } from './toggle.component';
 import { WalletFlyoutComponent } from './flyout/flyout.component';
 import { WalletTokensComponent } from './tokens/tokens.component';
 import { WalletPointsComponent } from './points/points.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletTokenSettingsComponent } from './tokens/settings/settings.component';
 import { WalletTokenTransactionsComponent } from './tokens/transactions/transactions.component';
 import { WalletTokenContributionsComponent } from './tokens/contributions/contributions.component';
@@ -48,10 +51,17 @@ import { ModalsModule } from '../modals/modals.module';
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
 import { WalletUSDBalanceComponent } from './usd/balance.component';
+import { WalletV2Module } from './v2/wallet-v2.module';
+import { WALLET_V2_ROUTES } from '../wallet/v2/wallet-v2.module';
+import { FeaturesService } from '../../services/features.service';
+import { ConfigsService } from '../../common/services/configs.service';
+import { WalletDashboardComponent } from './v2/dashboard.component';
+import { BlockchainConsoleComponent } from '../blockchain/console/console.component';
+import { ChartV2Module } from '../analytics/components/chart-v2/chart-v2.module';
 
-const walletRoutes: Routes = [
+export const WALLET_ROUTES: Routes = [
   {
-    path: 'wallet',
+    path: '',
     component: WalletComponent,
     data: {
       title: 'Wallet',
@@ -121,6 +131,10 @@ const walletRoutes: Routes = [
               title: 'Referrals',
             },
           },
+          {
+            path: '**',
+            redirectTo: 'contributions',
+          },
         ],
       },
       {
@@ -140,6 +154,14 @@ const walletRoutes: Routes = [
           { path: 'onboarding', component: WalletUSDOnboardingComponent },
         ],
       },
+      {
+        path: 'crypto',
+        component: WalletComponent,
+        children: [
+          { path: '', redirectTo: 'overview', pathMatch: 'full' },
+          { path: 'overview', component: BlockchainConsoleComponent },
+        ],
+      },
       { path: 'wire', component: WalletWireComponent },
       { path: '**', component: WalletOverviewComponent },
     ],
@@ -149,13 +171,13 @@ const walletRoutes: Routes = [
 @NgModule({
   imports: [
     NgCommonModule,
-    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
     CheckoutModule,
     MonetizationOverviewModule,
-    RouterModule.forChild(walletRoutes),
+    RouterModule,
+    RouterModule.forChild([...WALLET_ROUTES, ...WALLET_V2_ROUTES]),
     AdsModule,
     WireModule,
     BlockchainModule,
@@ -163,6 +185,8 @@ const walletRoutes: Routes = [
     PlusModule,
     ModalsModule,
     ReferralsModule,
+    WalletV2Module,
+    ChartV2Module,
   ],
   declarations: [
     WalletComponent,
@@ -197,6 +221,7 @@ const walletRoutes: Routes = [
     WalletTokenContributionsChartComponent,
     WalletToken101Component,
     WalletUSDBalanceComponent,
+    ...MONETIZATION_REVENUE_COMPONENTS,
   ],
   exports: [
     WalletComponent,
@@ -210,7 +235,30 @@ const walletRoutes: Routes = [
     WalletBalanceUSDComponent,
     WalletBalanceTokensComponent,
     WalletUSDBalanceComponent,
+    ...MONETIZATION_REVENUE_COMPONENTS,
   ],
-  entryComponents: [WalletComponent, WalletUSDTermsComponent],
+  entryComponents: [
+    WalletComponent,
+    WalletUSDTermsComponent,
+    WalletTokensComponent,
+    WalletTokenTransactionsComponent,
+    WalletTokenWithdrawComponent,
+    WalletTokenJoinComponent,
+    WalletTokenContributionsComponent,
+    WalletTokenAddressesComponent,
+    WalletToken101Component,
+    ReferralsComponent,
+    WalletUSDComponent,
+    WalletUSDTransactionsComponent,
+    WalletUSDEarningsComponent,
+    WalletUSDPayoutsComponent,
+    WalletUSDSettingsComponent,
+    WalletUSDOnboardingComponent,
+    WalletWireComponent,
+    WalletOverviewComponent,
+    WalletDashboardComponent,
+    BlockchainConsoleComponent,
+    RevenueConsoleComponent,
+  ],
 })
 export class WalletModule {}
