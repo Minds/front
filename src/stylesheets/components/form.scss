@@ -15,8 +15,8 @@
   width: 100%;
   @include m-theme() {
     border: 1px solid themed($m-grey-50);
-    background-color: themed($m-white) !important;
-    color: rgba(themed($m-black), 0.87) !important;
+    background-color: themed($m-bgColor--primary) !important;
+    color: rgba(themed($m-textColor--primary), 0.87) !important;
   }
 }
 

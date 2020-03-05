@@ -1,5 +1,5 @@
 import { Client } from '../api/client.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Injectable, Inject } from '@angular/core';
 import { RedirectService } from './redirect.service';
 import { Location } from '@angular/common';
@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 @Injectable({ providedIn: 'root' })
 export class ConfigsService {
   private configs = {};
+  public isReady$ = new BehaviorSubject(false);
 
   constructor(
     private client: Client,
@@ -20,6 +21,7 @@ export class ConfigsService {
       this.configs = await this.client.get(
         `api/v1/minds/config${this.queryString}`
       );
+      this.isReady$.next(true);
       this.redirectToRootIfInvalidDomain();
     } catch (err) {
       console.error(err);

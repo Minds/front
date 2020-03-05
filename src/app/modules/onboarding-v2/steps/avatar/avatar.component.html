@@ -19,7 +19,11 @@
     </image-cropper>
   </ng-container>
 
-  <img [src]="cdnAssetsUrl + 'assets/photos.png'" *ngIf="!cropping" />
+  <img
+    [src]="cdnAssetsUrl + 'assets/photos.png'"
+    (click)="uploadPhoto()"
+    *ngIf="!cropping"
+  />
 
   <input
     id="onboarding-avatar-input"

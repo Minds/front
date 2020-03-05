@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { NavItems, ProChannelService } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { MetaService } from '../../../../common/services/meta.service';
 
 @Component({
   selector: 'm-pro--channel-home',
@@ -29,11 +30,13 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected channelService: ProChannelService,
     protected modalService: OverlayModalService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    protected metaService: MetaService
   ) {}
 
   ngOnInit() {
     this.setMenuNavItems();
+    this.updateMeta();
   }
 
   ngOnDestroy() {
@@ -85,5 +88,16 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  /**
+   * Updates metatags of channel.
+   */
+  private updateMeta(): void {
+    const proSettings = this.channelService.currentChannel.pro_settings;
+    this.metaService
+      .setTitle(proSettings.title)
+      .setDescription(proSettings.headline)
+      .setOgImage(proSettings.logo_image);
   }
 }

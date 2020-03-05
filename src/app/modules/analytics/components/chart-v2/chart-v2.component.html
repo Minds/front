@@ -39,7 +39,7 @@
           class="m-chartV2__hoverInfoRow__hex"
           [style.background-color]="value.color"
         ></span>
-        <ng-container [ngSwitch]="rawData?.unit">
+        <ng-container [ngSwitch]="unit">
           <ng-template ngSwitchCase="number">
             {{ value.value | number: '1.0-0' | abbr }}
             {{ value.label | lowercase }}
@@ -54,16 +54,13 @@
             {{ value.value | number: '1.1-3' }} Tokens
           </ng-template>
           <ng-template ngSwitchDefault>
-            {{ value.value | number: '1.0-3' }} {{ rawData?.unit }}
+            {{ value.value | number: '1.0-3' }} {{ unit }}
           </ng-template>
         </ng-container>
       </div>
       <div class="m-chartV2__hoverInfo__row" *ngIf="isComparison">
         vs
-        <ng-container
-          [ngSwitch]="rawData?.unit"
-          class="m-chartV2__hoverInfo__row"
-        >
+        <ng-container [ngSwitch]="unit" class="m-chartV2__hoverInfo__row">
           <ng-template ngSwitchCase="number">
             {{ hoverInfo.comparisonValue | number: '1.0-0' | abbr }}
           </ng-template>
