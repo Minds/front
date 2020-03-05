@@ -216,7 +216,7 @@ class InlineEditorComponentMock {
   registerOnTouched(fn: any) {}
 }
 
-describe('BlogEdit', () => {
+xdescribe('BlogEdit', () => {
   let comp: BlogEdit;
   let fixture: ComponentFixture<BlogEdit>;
 
@@ -306,11 +306,11 @@ describe('BlogEdit', () => {
     jasmine.clock().uninstall();
   });
 
-  xit('should have an instance of minds-textarea used for the title', () => {
+  it('should have an instance of minds-textarea used for the title', () => {
     expect(fixture.debugElement.query(By.css('.m-h1-input'))).not.toBeNull();
   });
 
-  xit('should have an instance of m-inline-editor used for the description', () => {
+  it('should have an instance of m-inline-editor used for the description', () => {
     expect(
       fixture.debugElement.query(
         By.css('.minds-blog-descriptions > m-inline-editor')
@@ -335,7 +335,7 @@ describe('BlogEdit', () => {
     expect(comp.blog.categories.length).toBe(1);
   });*/
 
-  xit('should have a save draft button', () => {
+  it('should have a save draft button', () => {
     const draft = fixture.debugElement.query(
       By.css('.m-button.m-button--draft')
     );
@@ -343,7 +343,7 @@ describe('BlogEdit', () => {
     expect(draft.nativeElement.innerText).toContain('Save draft');
   });
 
-  xit('clicking on save draft button should call save()', () => {
+  it('clicking on save draft button should call save()', () => {
     spyOn(comp, 'save').and.stub();
     const draft = fixture.debugElement.query(
       By.css('.m-button.m-button--draft')
@@ -356,7 +356,7 @@ describe('BlogEdit', () => {
     expect(comp.save).toHaveBeenCalled();
   });
 
-  xit('should have a publish button', () => {
+  it('should have a publish button', () => {
     const publish = fixture.debugElement.query(
       By.css('.m-button.m-button--submit')
     );
@@ -364,7 +364,7 @@ describe('BlogEdit', () => {
     expect(publish.nativeElement.innerText).toContain('Publish');
   });
 
-  xit('clicking on publish button should set blog.published to 1 and then call publish()', () => {
+  it('clicking on publish button should set blog.published to 1 and then call publish()', () => {
     spyOn(comp, 'save').and.stub();
     const publish = fixture.debugElement.query(
       By.css('.m-button.m-button--submit')
@@ -376,7 +376,7 @@ describe('BlogEdit', () => {
     expect(comp.save).toHaveBeenCalled();
   });
 
-  xit('should have a m-wire-threshold-input', () => {
+  it('should have a m-wire-threshold-input', () => {
     const threshold = fixture.debugElement.query(
       By.css('m-wire-threshold-input')
     );
@@ -384,11 +384,11 @@ describe('BlogEdit', () => {
     expect(threshold.nativeElement.disabled).toBeFalsy();
   });
 
-  xit('should know if a banner already exists', () => {
+  it('should know if a banner already exists', () => {
     expect(comp.existingBanner).toBeFalsy();
   });
 
-  xit('should not allow initial submission without a banner', () => {
+  it('should not allow initial submission without a banner', () => {
     const publish = fixture.debugElement.query(
       By.css('.m-button.m-button--submit')
     );
