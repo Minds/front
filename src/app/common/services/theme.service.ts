@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
+import { FeaturesService } from '../../services/features.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
 
@@ -22,6 +23,7 @@ export class ThemeService {
     rendererFactory: RendererFactory2,
     private client: Client,
     private session: Session,
+    private features: FeaturesService,
     @Inject(PLATFORM_ID) private platformId,
     @Inject(DOCUMENT) private dom
   ) {
@@ -80,6 +82,9 @@ export class ThemeService {
 
   renderTheme(): void {
     this.renderer.addClass(this.dom.body, 'm-theme-in-transition');
+    if (this.features.has('navigation')) {
+      this.renderer.addClass(this.dom.body, 'm-theme__2020');
+    }
     if (this.isDark$.value) {
       this.renderer.removeClass(this.dom.body, 'm-theme__light');
       this.renderer.addClass(this.dom.body, 'm-theme__dark');

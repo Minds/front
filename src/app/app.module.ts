@@ -21,8 +21,6 @@ import { Minds } from './app.component';
 import { MINDS_PROVIDERS } from './services/providers';
 
 import { CommonModule } from './common/common.module';
-import { MonetizationModule } from './modules/monetization/monetization.module';
-import { WalletModule } from './modules/wallet/wallet.module';
 import { CheckoutModule } from './modules/checkout/checkout.module';
 import { PlusModule } from './modules/plus/plus.module';
 import { I18nModule } from './modules/i18n/i18n.module';
@@ -94,7 +92,7 @@ export class SentryErrorHandler implements ErrorHandler {
     BrowserTransferStateModule,
     CookieModule.forRoot(),
     // TransferHttpCacheModule,
-    //BrowserAnimationsModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
@@ -102,9 +100,7 @@ export class SentryErrorHandler implements ErrorHandler {
     LayoutModule,
     CommonModule,
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
-    WalletModule,
     //CheckoutModule,
-    MonetizationModule,
     PlusModule,
     AdsModule,
     BoostModule,

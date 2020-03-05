@@ -1,10 +1,3 @@
-export interface Category {
-  id: string;
-  label: string;
-  metrics?: string[]; // TODO: remove this
-  permissions?: string[];
-}
-
 export interface Response {
   status: string;
   dashboard: Dashboard;
@@ -12,6 +5,7 @@ export interface Response {
 
 export interface Dashboard {
   category: string;
+  description?: string;
   timespan: string;
   timespans: Timespan[];
   metric: string;
@@ -24,6 +18,8 @@ export interface Filter {
   id: string;
   label: string;
   options: Option[];
+  description?: string;
+  expanded?: boolean;
 }
 
 export interface Option {
@@ -31,6 +27,7 @@ export interface Option {
   label: string;
   available?: boolean;
   selected?: boolean;
+  description?: string;
   interval?: string;
   comparison_interval?: number;
   from_ts_ms?: number;
@@ -40,11 +37,13 @@ export interface Option {
 export interface Metric {
   id: string;
   label: string;
-  permissions: string[];
-  summary: Summary;
+  permissions?: string[];
+  summary?: Summary;
+  unit?: string;
+  description?: string;
   visualisation: Visualisation | null;
+  value?: number;
 }
-
 export interface Summary {
   current_value: number;
   comparison_value: number;
@@ -54,34 +53,52 @@ export interface Summary {
 
 export interface Visualisation {
   type: string;
-  segments: Array<Buckets>;
+  segments?: Buckets[];
+  buckets?: Bucket[];
+  columns?: Array<any>;
 }
 
 export interface Buckets {
   buckets: Bucket[];
 }
 export interface Bucket {
-  key: number;
-  date: string;
-  value: number;
+  key: number | string;
+  date?: string;
+  value?: number;
+  values?: {};
 }
 
 export interface Timespan {
   id: string;
   label: string;
   interval: string;
-  comparison_interval: number;
+  comparison_interval?: number;
   from_ts_ms: number;
   from_ts_iso: string;
+  selected?: boolean;
 }
 
 export interface UserState {
   category: string;
+  description?: string;
   timespan: string;
   timespans: Timespan[];
   metric: string;
   metrics: Metric[];
-  filter: string[];
-  filters: Filter[];
+  filter?: string[];
+  filters?: Filter[];
   loading: boolean;
+}
+
+export interface ShadowboxHeaderTab {
+  id: string;
+  label: string;
+  value?: string | number;
+  unit?: string;
+  delta?: number;
+  hasChanged?: boolean;
+  positiveTrend?: boolean;
+  description?: string;
+  isLocalCurrency?: boolean;
+  routerLink?: string;
 }

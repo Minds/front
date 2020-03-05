@@ -1,0 +1,57 @@
+<div class="m-walletTransactions">
+  <div *ngIf="!init" class="m-wallet__spinner">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+  <ng-container *ngIf="init">
+    <div class="m-walletTransactions__filter">
+      <m-dropdownSelector
+        *ngIf="transactions"
+        [filter]="filter"
+        [inlineLabel]="true"
+        (selectionMade)="filterSelected($event)"
+      >
+      </m-dropdownSelector>
+    </div>
+    <ng-template #firstRow>
+      <tr class="m-walletTransactionsTable__row--top">
+        <td class="m-walletTransactionsTable__row--date">
+          Upcoming
+        </td>
+        <td
+          class="m-walletTransactionsTable__typeWrapper containsPopover"
+          style="position: relative"
+          (mouseenter)="showRewardsPopup = true"
+          (mouseleave)="showRewardsPopup = false"
+        >
+          <i class="material-icons">star_border</i
+          ><span>Today's Daily Rewards</span>
+          <m-walletRewardsPopup
+            [timestamp]="startOfToday"
+            *ngIf="showRewardsPopup"
+          ></m-walletRewardsPopup>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-container *ngIf="transactions.length !== 0">
+      <m-walletTransactionsTable
+        currency="tokens"
+        [transactions]="transactions"
+        [filterApplied]="filterApplied"
+      >
+        <ng-container *ngTemplateOutlet="firstRow"></ng-container>
+      </m-walletTransactionsTable>
+      <infinite-scroll
+        distance="25%"
+        (load)="loadTransactions(false)"
+        [moreData]="moreData"
+        [inProgress]="inProgress"
+      ></infinite-scroll>
+    </ng-container>
+    <div
+      class="m-walletTransactions__noTxNotice"
+      *ngIf="transactions.length === 0"
+    >
+      <p>You don't have any token transactions yet.</p>
+    </div>
+  </ng-container>
+</div>

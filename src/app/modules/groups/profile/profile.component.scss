@@ -66,7 +66,7 @@
   max-width: 780px;
   box-sizing: border-box;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   minds-groups-settings-button.m-button {
@@ -224,5 +224,11 @@ m-groups--profile .m-group__grid header {
   box-sizing: border-box;
   @include m-theme() {
     background-color: themed($m-white);
+  }
+}
+
+.m-theme__2020 {
+  .m-groupGrid__toggleBtn {
+    top: 75px;
   }
 }

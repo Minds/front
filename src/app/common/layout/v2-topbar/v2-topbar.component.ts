@@ -14,6 +14,7 @@ import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { NotificationsToasterComponent } from '../../../modules/notifications/toaster.component';
 import { ThemeService } from '../../../common/services/theme.service';
 import { ConfigsService } from '../../services/configs.service';
+import { FeaturesService } from '../../../services/features.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { TopbarService } from '../topbar.service';
 
@@ -49,6 +50,7 @@ export class V2TopbarComponent implements OnInit, OnDestroy {
     private themeService: ThemeService,
     protected componentFactoryResolver: ComponentFactoryResolver,
     configs: ConfigsService,
+    public featuresService: FeaturesService,
     protected topbarService: TopbarService,
     protected router: Router
   ) {

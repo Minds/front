@@ -1,0 +1,147 @@
+<table>
+  <ng-content></ng-content>
+
+  <ng-container *ngIf="transactions">
+    <ng-container *ngFor="let tx of transactions">
+      <ng-container *ngIf="tx.displayDate">
+        <tr class="m-walletTransactionsTable__row--spacer"></tr>
+        <tr class="m-walletTransactionsTable__row--date">
+          <td colspan="4">{{ tx.displayDate }}</td>
+        </tr>
+      </ng-container>
+      <tr>
+        <td class="m-walletTransactionsTable__time">{{ tx.displayTime }}</td>
+        <td class="m-walletTransactionsTable__details">
+          <ng-container [ngSwitch]="tx.superType">
+            <!-- REWARDS -->
+            <ng-template ngSwitchCase="reward">
+              <div
+                class="m-walletTransactionsTable__typeWrapper--reward"
+                (mouseenter)="tx.showRewardsPopup = true"
+                (mouseleave)="tx.showRewardsPopup = false"
+              >
+                <i class="material-icons">star_border</i
+                ><span>Minds Reward</span>
+                <m-walletRewardsPopup
+                  *ngIf="tx.showRewardsPopup"
+                  [timestamp]="tx.timestamp"
+                ></m-walletRewardsPopup>
+              </div>
+            </ng-template>
+
+            <!-- BOOSTS -->
+            <ng-template ngSwitchCase="boost">
+              <div class="m-walletTransactionsTable__typeWrapper--boost">
+                <i class="material-icons">trending_up</i
+                ><span>{{ getTypeLabel(tx.superType) }}ed Content</span>
+              </div>
+            </ng-template>
+
+            <!-- PURCHASES -->
+            <ng-template ngSwitchCase="token">
+              <div class="m-walletTransactionsTable__typeWrapper--purchase">
+                <i class="material-icons">shopping_cart</i><span>Purchase</span>
+              </div></ng-template
+            >
+
+            <!-- ON-CHAIN TRANSFERS -->
+            <ng-template ngSwitchCase="withdraw"
+              ><div class="m-walletTransactionsTable__typeWrapper--withdraw">
+                <i class="material-icons m-walletTransactionsTable__icon--arrow"
+                  >arrow_forward</i
+                ><span>{{ getTypeLabel(tx.superType) }}</span>
+              </div></ng-template
+            >
+
+            <!-- PAYOUTS -->
+            <ng-template ngSwitchCase="payout"
+              ><div class="m-walletTransactionsTable__typeWrapper--payout">
+                <i class="material-icons m-walletTransactionsTable__icon--arrow"
+                  >arrow_forward</i
+                ><span>Payout</span>
+              </div></ng-template
+            >
+
+            <!-- PRO EARNINGS -->
+            <ng-template ngSwitchCase="pro_earning"
+              ><div class="m-walletTransactionsTable__typeWrapper--pro_earning">
+                <i class="material-icons m-walletTransactionsTable__icon--arrow"
+                  >arrow_forward</i
+                ><span>Pro Earnings</span>
+              </div></ng-template
+            >
+
+            <!-- WIRES -->
+            <ng-template ngSwitchCase="wire">
+              <div class="m-walletTransactionsTable__typeWrapper--wire">
+                <img
+                  class="m-walletTransactionsTable__avatar"
+                  [routerLink]="['/', tx.otherUser.username]"
+                  [src]="tx.otherUser.avatar"
+                />
+                <span
+                  >{{ getTypeLabel(tx.superType) }}
+                  {{ tx.otherUser.isSender ? 'from' : 'to' }}
+                  <a
+                    class="m-walletTransactionsTable__otherUserLink"
+                    [routerLink]="['/', tx.otherUser.username]"
+                  >
+                    @{{ tx.otherUser.username }}</a
+                  ></span
+                >
+              </div>
+            </ng-template>
+
+            <ng-template ngSwitchDefault
+              ><div class="m-walletTransactionsTable__typeWrapper--default">
+                <span>Transaction</span>
+              </div></ng-template
+            >
+          </ng-container>
+        </td>
+        <td class="m-walletTransactionsTable__amountWrapper">
+          <i
+            class="material-icons"
+            [ngClass]="{
+              neutral: tx.delta === 'neutral',
+              positive: tx.delta === 'positive',
+              negative: tx.delta === 'negative'
+            }"
+            >play_arrow</i
+          >
+          <span *ngIf="currency === 'tokens'">{{ tx.amount }}</span>
+          <span *ngIf="currency !== 'tokens'">{{
+            tx.amount | currency: currency
+          }}</span>
+        </td>
+        <td
+          class="m-walletTransactionsTable__totalWrapper"
+          *ngIf="
+            (currency === 'tokens' && !filterApplied) || currency !== 'tokens'
+          "
+        >
+          <span
+            class="m-walletTransactionsTable__total--int"
+            *ngIf="currency === 'tokens'"
+            >{{ tx.runningTotal.int | number: '1.0-0' }}</span
+          >
+          <span
+            class="m-walletTransactionsTable__total--int"
+            *ngIf="currency !== 'tokens'"
+            >{{
+              tx.runningTotal.int
+                | number: '1.0-0'
+                | currency: currency
+                | slice: 0:-3
+            }}</span
+          >
+          <span
+            class="m-walletTransactionsTable__total--frac"
+            *ngIf="tx.runningTotal.frac"
+            >.{{ tx.runningTotal.frac }}</span
+          >
+        </td>
+      </tr>
+    </ng-container>
+  </ng-container>
+</table>
