@@ -10,7 +10,7 @@ import { clientMock } from '../../../tests/client-mock.spec';
 import { uploadMock } from '../../../tests/upload-mock.spec';
 
 import { GroupsJoinButton } from './groups-join-button';
-import { GroupsService } from './groups-service';
+import { GroupsService } from './groups.service';
 import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { RouterTestingModule } from '@angular/router/testing';

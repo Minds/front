@@ -1,4 +1,4 @@
-import { Inject, EventEmitter } from '@angular/core';
+import { Inject } from '@angular/core';
 import { Client, Upload } from '../../services/api';
 import { UpdateMarkersService } from '../../common/services/update-markers.service';
 import { BehaviorSubject } from 'rxjs';
@@ -347,6 +347,14 @@ export class GroupsService {
       .then((response: any) => {
         return !!response.done;
       });
+  }
+
+  async toggleConversation(guid: any, enabled: boolean) {
+    const response: any = await this.clientService.post(
+      `${this.base}group/${guid}`,
+      { conversationDisabled: !enabled }
+    );
+    return !!response.done;
   }
 
   /**

@@ -5,7 +5,7 @@ import {
   OnInit,
   SkipSelf,
 } from '@angular/core';
-import { GroupsService } from '../../groups-service';
+import { GroupsService } from '../../groups.service';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ClientMetaService } from '../../../../common/services/client-meta.service';
