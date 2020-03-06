@@ -4,7 +4,7 @@ import { SettingsV2SessionsComponent } from './sessions.component';
 
 describe('SettingsV2SessionsComponent', () => {
   let component: SettingsV2SessionsComponent;
-  let fixture: ComponentFixture<SessionsComponent>;
+  let fixture: ComponentFixture<SettingsV2SessionsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

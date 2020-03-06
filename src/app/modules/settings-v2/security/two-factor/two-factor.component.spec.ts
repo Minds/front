@@ -4,7 +4,7 @@ import { SettingsV2TwoFactorComponent } from './two-factor.component';
 
 describe('SettingsV2TwoFactorComponent', () => {
   let component: SettingsV2TwoFactorComponent;
-  let fixture: ComponentFixture<TwoFactorComponent>;
+  let fixture: ComponentFixture<SettingsV2TwoFactorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

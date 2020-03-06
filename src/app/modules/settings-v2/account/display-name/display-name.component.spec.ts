@@ -4,7 +4,7 @@ import { SettingsV2DisplayNameComponent } from './display-name.component';
 
 describe('SettingsV2DisplayNameComponent', () => {
   let component: SettingsV2DisplayNameComponent;
-  let fixture: ComponentFixture<DisplayNameComponent>;
+  let fixture: ComponentFixture<SettingsV2DisplayNameComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
