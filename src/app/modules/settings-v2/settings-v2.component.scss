@@ -11,8 +11,8 @@ m-settingsV2 {
         display: none;
       }
     }
-    .m-settingsV2__subMenu,
-    .m-settingsV2__settingsView {
+
+    m-settingsV2__tierTwoView {
       flex: 1 0 340px;
       // flex: 1 0 auto;
       max-width: 637px;
@@ -21,6 +21,7 @@ m-settingsV2 {
   .m-settingsV2__settingsView {
     font-size: 16px;
     line-height: 21px;
+    margin-top: 29px;
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
@@ -28,7 +29,7 @@ m-settingsV2 {
       &:not(.m-settingsV2__headerWrapper) {
         margin: 0 71px;
         @media screen and (max-width: $max-mobile) {
-          margin-left: 0 24px;
+          margin: 0 24px;
         }
       }
     }
@@ -46,18 +47,39 @@ m-settingsV2 {
       }
 
       .m-settingsV2__backButton {
+        cursor: pointer;
+        margin-bottom: 0;
+        text-decoration: none;
+        font-weight: 300;
         flex: 0 0 35px;
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
         span {
+          font-size: 15px;
           display: none;
+          font-weight: 300;
+          margin-left: 5px;
+
           @media screen and (max-width: $max-mobile) {
             display: inline-flex;
             margin: 0;
+          }
+        }
+        i {
+          font-size: 17px;
+          transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        &:hover {
+          // @include m-theme() {
+          //   color: rgba(themed($m-textColor--secondary), 0.6);
+          // }
+          i {
+            transform: scale(1.2);
           }
         }
       }
@@ -74,9 +96,6 @@ m-settingsV2 {
         font-size: 15px;
         line-height: 20px;
       }
-    }
-
-    .m-settingsV2__formField {
     }
   }
 }

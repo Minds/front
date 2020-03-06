@@ -4,120 +4,24 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CheckoutModule } from '../checkout/checkout.module';
-/// // import { ModalsModule } from '../modals/modals.module';
+import { ModalsModule } from '../modals/modals.module';
 import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { ReportModule } from '../report/report.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { WireModule } from '../wire/wire.module';
-
-// // import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
-// import { SettingsService } from './settings.service';
+// import { SettingsModule } from '../settings/settings.module';
 
 import { SettingsV2Component } from './settings-v2.component';
 import { SettingsV2DisplayNameComponent } from './account/display-name/display-name.component';
 import { SettingsV2SessionsComponent } from './security/sessions/sessions.component';
 import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.component';
-import { SettingsModule } from '../settings/settings.module';
-// import { SettingsGeneralComponent } from './general/general.component';
-// import { SettingsDisableChannelComponent } from './disable/disable.component';
-// import { SettingsTwoFactorComponent } from './two-factor/two-factor.component';
-// import { SettingsSubscriptionsComponent } from './subscriptions/subscriptions.component';
-// import { SettingsEmailsComponent } from './emails/emails.component';
-// import { SettingsBillingComponent } from './billing/billing.component';
-// import { SettingsBillingSavedCardsComponent } from './billing/saved-cards/saved-cards.component';
-// import { SettingsBillingSubscriptionsComponent } from './billing/subscriptions/subscriptions.component';
-// import { SettingsReportedContentComponent } from './reported-content/reported-content.component';
-// import { SettingsWireComponent } from './wire/wire.component';
-// import { SettingsBlockedChannelsComponent } from './blocked-channels/blocked-channels.component';
-// import { SettingsTiersComponent } from './tiers/tiers.component';
-
-// export const WALLET_V2_ROUTES: Routes = [
-//   {
-//     path: '',
-//     component: SettingsV2Component,
-//     data: {
-//       title: 'Settings',
-//       description: 'Configure your Minds settings',
-//       ogImage: '/assets/photos/network.jpg',
-//     },
-//     children: [
-//       {
-//         path: 'account',
-//         component: SettingsV2AccountComponent,
-//         children: [
-//           // {
-//           //   path: '',
-//           //   redirectTo: 'overview',
-//           //   pathMatch: 'full',
-//           // },
-//           {
-//             path: 'overview',
-//             component: WalletChartComponent,
-//           },
-//           {
-//             path: 'transactions',
-//             component: WalletTransactionsTokensComponent,
-//           },
-//           {
-//             path: 'settings',
-//             component: WalletSettingsTokensComponent,
-//           },
-//         ],
-//       },
-//       {
-//         path: 'cash',
-//         component: WalletV2CashComponent,
-//         children: [
-//           {
-//             path: 'transactions',
-//             component: WalletTransactionsCashComponent,
-//           },
-//           {
-//             path: 'settings',
-//             component: WalletSettingsCashComponent,
-//           },
-//         ],
-//       },
-//       {
-//         path: 'eth',
-//         component: WalletV2EthComponent,
-//         children: [
-//           {
-//             path: '',
-//             redirectTo: 'settings',
-//           },
-//           {
-//             path: 'settings',
-//             component: WalletSettingsETHComponent,
-//           },
-//         ],
-//       },
-//       {
-//         path: 'btc',
-//         component: WalletV2BtcComponent,
-//         children: [
-//           {
-//             path: '',
-//             redirectTo: 'settings',
-//           },
-//           {
-//             path: 'settings',
-//             component: WalletSettingsBTCComponent,
-//           },
-//         ],
-//       },
-//       {
-//         path: '**',
-//         redirectTo: 'tokens',
-//       },
-//     ],
-//   },
-// ];
+import { SettingsV2TierTwoViewComponent } from './layout/tier-two-view/tier-two-view.component';
+import { SettingsV2EmailAddressComponent } from './account/email-address/email-address.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
-    path: '',
+    path: 'settings/canary',
     component: SettingsV2Component,
     data: {
       title: 'Settings',
@@ -128,60 +32,68 @@ const SETTINGS_V2_ROUTES: Routes = [
       { path: '', redirectTo: 'account', pathMatch: 'full' },
       {
         path: 'account',
-        component: SettingsV2Component,
+        component: SettingsV2TierTwoViewComponent,
+        data: {
+          isMenu: true,
+          title: 'Account',
+          description: 'Configure your general account settings.',
+        },
         children: [
-          { path: 'displayName', component: SettingsV2DisplayNameComponent },
+          {
+            path: 'display-name',
+            component: SettingsV2DisplayNameComponent,
+            data: {
+              title: 'Display Name',
+              description: 'Customize your display name.',
+            },
+          },
+          {
+            path: 'email-address',
+            component: SettingsV2EmailAddressComponent,
+            data: {
+              title: 'Email Address',
+              description:
+                'Change the email address where notifications are sent.',
+            },
+          },
+          { path: '**', redirectTo: '' },
         ],
       },
       {
         path: 'security',
-        component: SettingsV2Component,
+        component: SettingsV2TierTwoViewComponent,
+        data: {
+          isMenu: true,
+          title: 'Security',
+          description: 'Configure your account security settings.',
+        },
         children: [
-          { path: 'twoFactor', component: SettingsV2TwoFactorComponent },
-          { path: 'sessions', component: SettingsV2SessionsComponent },
+          {
+            path: 'two-factor',
+            component: SettingsV2TwoFactorComponent,
+            data: {
+              title: 'Two-factor Authentication',
+              description:
+                'Add an extra layer of security to your account by enabling 2FA.',
+            },
+          },
+          {
+            path: 'sessions',
+            component: SettingsV2SessionsComponent,
+            data: {
+              title: 'Sessions',
+              description: 'Close all sessions with a single click.',
+            },
+          },
         ],
       },
-      {
-        path: '**',
-        redirectTo: 'account',
-      },
-      //   { path: 'wire', component: SettingsWireComponent },
-      //   { path: 'disable', component: SettingsDisableChannelComponent },
-      //   { path: 'twoFactor', component: SettingsTwoFactorComponent },
-      //   { path: 'emails', component: SettingsEmailsComponent },
-      //   { path: 'billing', component: SettingsBillingComponent },
-      //   { path: 'reported-content', component: SettingsReportedContentComponent },
-      //   { path: 'blocked-channels', component: SettingsBlockedChannelsComponent },
-      //   { path: 'tiers', component: SettingsTiersComponent },
+      // {
+      //   path: '**',
+      //   redirectTo: 'account',
+      // },
     ],
   },
 ];
-
-// const routes: Routes = [
-//   {
-// TODOOJM leave this path empty for lazy loader
-//     path: '',
-//     component: AnalyticsComponent,
-//     children: [
-//       { path: '', redirectTo: 'dashboard/traffic', pathMatch: 'full' },
-//       {
-//         path: 'dashboard',
-//         redirectTo: 'dashboard/traffic',
-//         pathMatch: 'full',
-//       },
-//       {
-//         path: 'dashboard/:category',
-//         component: AnalyticsDashboardComponent,
-//         data: {
-//           title: 'Analytics',
-//           description:
-//             'Track your traffic, earnings, engagement and trending analytics',
-//           ogImage: '/assets/photos/network.jpg',
-//         },
-//       },
-//     ],
-//   },
-// ];
 
 @NgModule({
   imports: [
@@ -190,31 +102,21 @@ const SETTINGS_V2_ROUTES: Routes = [
     ReactiveFormsModule,
     CommonModule,
     CheckoutModule,
-    // ModalsModule,
+    ModalsModule, // todoojm where is this used?
     LegacyModule,
     RouterModule.forChild(SETTINGS_V2_ROUTES),
     ReportModule,
     PaymentsModule,
     WireModule,
-    SettingsModule,
+    // SettingsModule,
   ],
   declarations: [
     SettingsV2Component,
     SettingsV2DisplayNameComponent,
     SettingsV2SessionsComponent,
     SettingsV2TwoFactorComponent,
-    // SettingsGeneralComponent,
-    // SettingsDisableChannelComponent,
-    // SettingsTwoFactorComponent,
-    // SettingsSubscriptionsComponent,
-    // SettingsEmailsComponent,
-    // SettingsBillingComponent,
-    // SettingsBillingSavedCardsComponent,
-    // SettingsBillingSubscriptionsComponent,
-    // SettingsReportedContentComponent,
-    // SettingsWireComponent,
-    // SettingsBlockedChannelsComponent,
-    // SettingsTiersComponent,
+    SettingsV2TierTwoViewComponent,
+    SettingsV2EmailAddressComponent,
   ],
   // providers: [SettingsService],
   exports: [

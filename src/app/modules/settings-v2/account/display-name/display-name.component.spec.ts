@@ -2,8 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SettingsV2DisplayNameComponent } from './display-name.component';
 
-describe('DisplayNameComponent', () => {
-  let component: DisplayNameComponent;
+describe('SettingsV2DisplayNameComponent', () => {
+  let component: SettingsV2DisplayNameComponent;
   let fixture: ComponentFixture<DisplayNameComponent>;
 
   beforeEach(async(() => {

@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SettingsV2Component } from './settings-v2.component';
 
-describe('SettingsComponent', () => {
+describe('SettingsV2Component', () => {
   let component: SettingsV2Component;
-  let fixture: ComponentFixture<SettingsComponent>;
+  let fixture: ComponentFixture<SettingsV2Component>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

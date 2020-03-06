@@ -6,10 +6,10 @@ m-nestedMenu {
     line-height: 21px;
     font-weight: 300;
     min-height: 100vh;
+    // min-height: calc(100vh - 75px);
 
     @include m-theme {
       border-right: 1px solid themed($m-borderColor--primary);
-      color: themed($m-textColor--secondary);
     }
     @media screen and (max-width: $max-mobile) {
       width: 100%;
@@ -28,6 +28,8 @@ m-nestedMenu {
     & > * {
       box-sizing: border-box;
       width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
       @include m-theme() {
         border-bottom: 1px solid themed($m-borderColor--primary);
       }
@@ -47,6 +49,7 @@ m-nestedMenu {
     .m-nestedMenu__backButton {
       display: none;
       font-size: 15px;
+      font-weight: 300;
       line-height: inherit;
       align-items: center;
       margin: 0 0 6px -1px;
@@ -81,21 +84,22 @@ m-nestedMenu {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-decoration: none;
+    font-weight: 300;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-
-    &:hover {
-      @include m-theme() {
-        background-color: themed($m-borderColor--primary);
-      }
+    @include m-theme {
+      color: themed($m-textColor--secondary);
     }
 
-    &:active {
+    &:hover,
+    &.m-nestedMenu__itemWrapper--active {
       @include m-theme() {
         color: themed($m-textColor--primary);
+        background-color: themed($m-borderColor--primary);
       }
       i {
         @include m-theme {
-          color: themed($m-textColor--tertiary);
+          color: themed($m-textColor--primary);
         }
       }
     }

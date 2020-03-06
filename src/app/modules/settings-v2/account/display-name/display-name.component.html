@@ -1,1 +1,55 @@
-<p>display-name works!</p>
+display-name works!
+<!-- <form
+  *ngIf="form"
+  [formGroup]="form"
+  class="m-settingsButtonLayout--buttonOffsetRight"
+>
+  <div class="m-settingsForm__fieldsContainer">
+    <div class="m-settingsForm__field--text stretchedField">
+      <div class="m-settingsForm__row--label m-settingsTertiaryText--label">
+        <label for="displayName" i18n>Display Name</label>
+        <m-tooltip icon="help">
+          <ng-container i18n>Placeholder</ng-container>
+        </m-tooltip>
+      </div>
+      <div
+        class="m-settingsForm__row--input"
+        [ngClass]="{
+          invalid:
+            (form.dirty || form.touched) && addressInput.hasError('required')
+        }"
+      >
+        <input
+          type="text"
+          id="displayName"
+          name="displayName"
+          formControlName="displayName"
+          class="form-control"
+          [readonly]="inProgress"
+          autofocus
+        />
+      </div>
+      <div class="m-settingsForm__row--validation">
+        <p
+          *ngIf="
+            (form.dirty || form.touched) && addressInput.hasError('required')
+          "
+        >
+          Display name required.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="m-settingsForm__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="
+        inProgress ||
+        ((this.form.dirty || this.form.touched) && this.form.invalid)
+      "
+      [saving]="inProgress"
+      (click)="update()"
+    >
+      Update Display Name
+    </m-shadowboxSubmitButton>
+  </div>
+</form> -->

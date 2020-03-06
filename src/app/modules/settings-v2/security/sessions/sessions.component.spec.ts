@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SettingsV2SessionsComponent } from './sessions.component';
 
-describe('SessionsComponent', () => {
+describe('SettingsV2SessionsComponent', () => {
   let component: SettingsV2SessionsComponent;
   let fixture: ComponentFixture<SessionsComponent>;
 

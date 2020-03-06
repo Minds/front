@@ -1,0 +1,25 @@
+<ng-container *ngIf="init">
+  <m-nestedMenu
+    *ngIf="isMenu"
+    class="m-settingsV2__tierTwoView"
+    isNested="true"
+    [menus]="tierTwoMenus[menuHeaderId]"
+  ></m-nestedMenu>
+
+  <ng-container *ngIf="!isMenu">
+    <div class="m-settingsV2__settingsView">
+      <div class="m-settingsV2__headerWrapper">
+        <a class="m-settingsV2__backButton" (click)="goBack()">
+          <i class="material-icons">arrow_back</i><span>Back</span>
+        </a>
+        <div class="m-settingsV2__headerLabel">{{ routeData.title }}</div>
+      </div>
+      <div class="m-settingsV2__viewWrapper">
+        <div class="m-settingsV2__desc">{{ routeData?.description }}</div>
+        <div class="m-formWrapper">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

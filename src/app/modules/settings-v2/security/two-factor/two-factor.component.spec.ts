@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SettingsV2TwoFactorComponent } from './two-factor.component';
 
-describe('TwoFactorComponent', () => {
+describe('SettingsV2TwoFactorComponent', () => {
   let component: SettingsV2TwoFactorComponent;
   let fixture: ComponentFixture<TwoFactorComponent>;
 
