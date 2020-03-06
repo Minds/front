@@ -1,6 +1,7 @@
 <div class="m-settingsV2">
   <m-nestedMenu
     class="m-settingsV2__mainMenu"
+    [ngClass]="{ mobileVisible: mobileVisible }"
     [menus]="mainMenus"
   ></m-nestedMenu>
   <router-outlet></router-outlet>

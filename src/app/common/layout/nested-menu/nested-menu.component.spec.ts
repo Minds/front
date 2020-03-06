@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NestedMenuComponent } from './nested-menu.component';
+import { Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('NestedMenuComponent', () => {
   let component: NestedMenuComponent;
@@ -9,6 +11,7 @@ describe('NestedMenuComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [NestedMenuComponent],
+      providers: [{ provide: Router, useValue: RouterTestingModule }],
     }).compileComponents();
   }));
 

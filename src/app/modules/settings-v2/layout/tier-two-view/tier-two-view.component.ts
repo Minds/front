@@ -136,6 +136,6 @@ export class SettingsV2TierTwoViewComponent implements OnInit {
   }
 
   goBack(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    this.router.navigate(['../'], { relativeTo: this.route.firstChild });
   }
 }

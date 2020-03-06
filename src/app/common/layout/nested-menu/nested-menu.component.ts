@@ -22,26 +22,22 @@ export interface NestedMenu {
 export class NestedMenuComponent implements OnInit {
   @Input() isNested: boolean = false; // Determines whether to display the back button
   @Input() menus: NestedMenu[];
-  // @Input() routerLinkPrefix: string = '/';
-  // @Input() useMenuIdInRouterLink: boolean = true;
   @Output() itemSelected: EventEmitter<any> = new EventEmitter();
+  @Output() clickedBack: EventEmitter<any> = new EventEmitter();
 
   constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {}
 
-  itemClicked(menuHeaderId, itemId) {
+  itemClicked(menuHeaderId, itemId): void {
     const item = { menuHeaderId: menuHeaderId, itemId: itemId };
     this.itemSelected.emit({ item: item });
   }
 
   goBack(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    // if (!this.isNested) {
+    //   this.router.navigate(['../'], { relativeTo: this.route });
+    // }
+    console.log('nested menu cliked back');
   }
-
-  // getRouterLink(menuHeaderId, itemId) {
-  //   const routerLinkMiddle = this.useMenuIdInRouterLink ? menuHeaderId : '';
-  //   const routerLinkSuffix = `/${routerLinkMiddle}/${itemId}`;
-  //   return this.routerLinkPrefix + routerLinkSuffix;
-  // }
 }

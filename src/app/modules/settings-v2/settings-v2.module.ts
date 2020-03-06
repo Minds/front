@@ -87,10 +87,10 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
         ],
       },
-      // {
-      //   path: '**',
-      //   redirectTo: 'account',
-      // },
+      {
+        path: '**',
+        redirectTo: '',
+      },
     ],
   },
 ];

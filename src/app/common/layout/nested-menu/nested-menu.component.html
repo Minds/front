@@ -5,9 +5,11 @@
   >
     <div class="m-nestedMenu__headerWrapper">
       <ng-container *ngIf="first">
-        <a class="m-nestedMenu__backButton" *ngIf="isNested" (click)="goBack()">
-          <i class="material-icons">arrow_back</i><span>Back</span>
-        </a>
+        <div class="m-nestedMenu__backButton">
+          <a *ngIf="isNested" (click)="goBack()">
+            <i class="material-icons">arrow_back</i><span>Back</span>
+          </a>
+        </div>
       </ng-container>
       <div class="m-nestedMenu__headerLabel">{{ menu.header.label }}</div>
     </div>

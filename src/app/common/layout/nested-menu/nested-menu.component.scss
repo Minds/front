@@ -47,24 +47,41 @@ m-nestedMenu {
     }
 
     .m-nestedMenu__backButton {
-      display: none;
+      margin: 0 0 6px -1px;
       font-size: 15px;
       font-weight: 300;
       line-height: inherit;
-      align-items: center;
-      margin: 0 0 6px -1px;
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
+      display: none;
+
+      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       @media screen and (max-width: $max-mobile) {
+        display: inline-block;
+      }
+      a {
+        cursor: pointer;
         display: flex;
+        text-decoration: none;
+        margin-bottom: 0;
+        align-items: center;
+        justify-content: flex-start;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      span {
+        margin-left: 5px;
       }
       i {
         font-size: 17px;
         line-height: inherit;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
       }
-      span {
-        margin-left: 5px;
+      &:hover {
+        i {
+          transform: scale(1.1);
+        }
       }
     }
     .m-nestedMenu__headerLabel {
