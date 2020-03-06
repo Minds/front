@@ -18,7 +18,7 @@ import { UpdateMarkersService } from '../../../common/services/update-markers.se
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { isPlatformBrowser } from '@angular/common';
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
 @Component({
   selector: 'm-group--sidebar-markers',
