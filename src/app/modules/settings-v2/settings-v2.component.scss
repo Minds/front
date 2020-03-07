@@ -9,13 +9,22 @@ m-settingsV2 {
       flex: 0 1 269px;
       @media screen and (max-width: $max-mobile) {
         display: none;
+        flex-grow: 1;
+        &.showMainMenuOnMobile {
+          display: block;
+        }
       }
     }
 
-    m-settingsV2__tierTwoView {
+    .m-settingsV2__secondaryPanel {
       flex: 1 0 340px;
-      // flex: 1 0 auto;
       max-width: 637px;
+      @media screen and (max-width: $max-mobile) {
+        display: none;
+        &.showSecondaryMenuOnMobile {
+          display: block;
+        }
+      }
     }
   }
   .m-settingsV2__settingsView {
@@ -26,7 +35,7 @@ m-settingsV2 {
       color: themed($m-textColor--primary);
     }
     @media screen and (max-width: $max-mobile) {
-      margin-top: 13px;
+      margin-top: 15px;
     }
     & > * {
       &:not(.m-settingsV2__headerWrapper) {
@@ -50,15 +59,13 @@ m-settingsV2 {
       }
 
       .m-settingsV2__backButton {
-        cursor: pointer;
-        font-weight: 300;
         flex: 0 0 35px;
-
         transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
         a {
-          display: flex;
+          display: inline-flex;
           align-items: center;
           justify-content: flex-start;
+          font-weight: 300;
 
           cursor: pointer;
           text-decoration: none;
@@ -71,7 +78,6 @@ m-settingsV2 {
         span {
           font-size: 15px;
           display: none;
-          font-weight: 300;
           margin-left: 5px;
 
           @media screen and (max-width: $max-mobile) {

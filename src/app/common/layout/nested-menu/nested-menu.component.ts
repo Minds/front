@@ -35,9 +35,6 @@ export class NestedMenuComponent implements OnInit {
   }
 
   goBack(): void {
-    // if (!this.isNested) {
-    //   this.router.navigate(['../'], { relativeTo: this.route });
-    // }
-    console.log('nested menu cliked back');
+    this.clickedBack.emit();
   }
 }

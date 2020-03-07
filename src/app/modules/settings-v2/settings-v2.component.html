@@ -1,8 +1,41 @@
 <div class="m-settingsV2">
   <m-nestedMenu
     class="m-settingsV2__mainMenu"
-    [ngClass]="{ mobileVisible: mobileVisible }"
+    [ngClass]="{ showMainMenuOnMobile: showMainMenuOnMobile }"
     [menus]="mainMenus"
+    (itemSelected)="showMainMenuOnMobile = false"
   ></m-nestedMenu>
-  <router-outlet></router-outlet>
+  <!-- <router-outlet></router-outlet> -->
+  <div
+    *ngIf="init"
+    class="m-settingsV2__secondaryPanel"
+    [ngClass]="{ showSecondaryMenuOnMobile: !showMainMenuOnMobile }"
+  >
+    <m-nestedMenu
+      *ngIf="secondaryPanelIsMenu"
+      class="m-settingsV2__secondaryMenuView"
+      isNested="true"
+      [menus]="secondaryMenus[menuHeaderId]"
+      (clickedBack)="showMainMenuOnMobile = true"
+    ></m-nestedMenu>
+
+    <ng-container *ngIf="!secondaryPanelIsMenu">
+      <div class="m-settingsV2__settingsView">
+        <div class="m-settingsV2__headerWrapper">
+          <div class="m-settingsV2__backButton">
+            <a (click)="goBack()">
+              <i class="material-icons">arrow_back</i><span>Back</span>
+            </a>
+          </div>
+          <div class="m-settingsV2__headerLabel">{{ routeData.title }}</div>
+        </div>
+        <div class="m-settingsV2__viewWrapper">
+          <div class="m-settingsV2__desc">{{ routeData?.description }}</div>
+          <div class="m-formWrapper">
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
 </div>

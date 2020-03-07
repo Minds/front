@@ -17,7 +17,7 @@
       <a
         class="m-nestedMenu__itemWrapper"
         (click)="itemClicked(menu.header.id, item.id)"
-        [routerLink]="item.id"
+        [routerLink]="isNested ? item.id : ['../' + item.id]"
         routerLinkActive="m-nestedMenu__itemWrapper--active"
       >
         <span>{{ item.label }}</span>

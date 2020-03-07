@@ -10,19 +10,17 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { ReportModule } from '../report/report.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { WireModule } from '../wire/wire.module';
-// import { SettingsModule } from '../settings/settings.module';
 
 import { SettingsV2Component } from './settings-v2.component';
 import { SettingsV2DisplayNameComponent } from './account/display-name/display-name.component';
 import { SettingsV2SessionsComponent } from './security/sessions/sessions.component';
 import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.component';
-import { SettingsV2TierTwoViewComponent } from './layout/tier-two-view/tier-two-view.component';
 import { SettingsV2EmailAddressComponent } from './account/email-address/email-address.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
     path: 'settings/canary',
-    component: SettingsV2Component,
+    // component: SettingsV2Component,
     data: {
       title: 'Settings',
       description: 'Configure your Minds settings',
@@ -32,7 +30,7 @@ const SETTINGS_V2_ROUTES: Routes = [
       { path: '', redirectTo: 'account', pathMatch: 'full' },
       {
         path: 'account',
-        component: SettingsV2TierTwoViewComponent,
+        component: SettingsV2Component,
         data: {
           isMenu: true,
           title: 'Account',
@@ -56,12 +54,12 @@ const SETTINGS_V2_ROUTES: Routes = [
                 'Change the email address where notifications are sent.',
             },
           },
-          { path: '**', redirectTo: '' },
+          // { path: '**', redirectTo: '' },
         ],
       },
       {
         path: 'security',
-        component: SettingsV2TierTwoViewComponent,
+        component: SettingsV2Component,
         data: {
           isMenu: true,
           title: 'Security',
@@ -87,10 +85,10 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
         ],
       },
-      {
-        path: '**',
-        redirectTo: '',
-      },
+      // {
+      //   path: '**',
+      //   redirectTo: '',
+      // },
     ],
   },
 ];
@@ -115,7 +113,6 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2DisplayNameComponent,
     SettingsV2SessionsComponent,
     SettingsV2TwoFactorComponent,
-    SettingsV2TierTwoViewComponent,
     SettingsV2EmailAddressComponent,
   ],
   // providers: [SettingsService],

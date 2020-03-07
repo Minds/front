@@ -11,7 +11,7 @@ describe('NestedMenuComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [NestedMenuComponent],
-      providers: [{ provide: Router, useValue: RouterTestingModule }],
+      imports: [RouterTestingModule],
     }).compileComponents();
   }));
 

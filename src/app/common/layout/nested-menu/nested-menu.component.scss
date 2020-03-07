@@ -49,7 +49,7 @@ m-nestedMenu {
     .m-nestedMenu__backButton {
       margin: 0 0 6px -1px;
       font-size: 15px;
-      font-weight: 300;
+
       line-height: inherit;
       display: none;
 
@@ -64,6 +64,7 @@ m-nestedMenu {
         margin-bottom: 0;
         align-items: center;
         justify-content: flex-start;
+        font-weight: 300;
 
         @include m-theme() {
           color: themed($m-textColor--secondary);
