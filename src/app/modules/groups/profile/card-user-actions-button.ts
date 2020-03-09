@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
 @Component({
   selector: 'minds-groups-card-user-actions-button',

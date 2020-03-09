@@ -10,6 +10,7 @@
     <m-activity
       [entity]="entity"
       [displayOptions]="displayOptions"
+      (deleted)="delete($event)"
       *ngIf="displayOptions.v2 === true; else v1"
     >
     </m-activity>
@@ -17,7 +18,7 @@
       <minds-activity
         [object]="entity"
         [boostToggle]="entity.boostToggle"
-        (delete)="delete(entity)"
+        (deleted)="delete($event)"
         [showRatingToggle]="true"
         [slot]="slot"
         class="mdl-card m-border item"

@@ -1,7 +1,7 @@
 import { Component, EventEmitter } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
-import { GroupsService } from '../../../groups-service';
+import { GroupsService } from '../../../groups.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({

@@ -46,7 +46,7 @@ context('Groups', () => {
     cy.route("POST", "**/api/v1/groups/group/*/banner*").as("postBanner");
 
     // get current groups count of sidebar
-    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
+    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => {
       cy.wait('@postGroup').then((xhr) => {
         expect(xhr.status).to.equal(200);
         expect(xhr.response.body.status).to.equal('success');
@@ -102,6 +102,20 @@ context('Groups', () => {
     });
   })
 
+  it('should be able to toggle conversations', () => {
+    cy.visit('/groups/profile/1075117317781721095/feed');
+
+    cy.get('minds-groups-settings-button > button').click();
+    cy.contains('Disable Conversation').click();
+
+    cy.get('.m-groupGrid__right').should('not.exist');
+
+    cy.get('minds-groups-settings-button > button').click();
+    cy.contains('Enable Conversation').click();
+
+    cy.get('.m-groupGrid__right').should('exist');
+  });
+
   it('should post an activity inside the group and record the view when scrolling', () => {
     cy.contains(groupId).click();
 
@@ -137,7 +151,7 @@ context('Groups', () => {
   });
 
   it('should delete a group', () => {
-    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
+    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => {
       // cy.get(`m-group--sidebar-markers li:nth-child(${size - 2})`).click();
       cy.contains(groupId).click();
       // cleanup

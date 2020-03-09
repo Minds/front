@@ -3,21 +3,15 @@ import {
   ChangeDetectorRef,
   Component,
   Injector,
-  OnDestroy,
-  OnInit,
   Input,
-  SimpleChanges,
   OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, Subscription, Observable } from 'rxjs';
-import { map, filter, catchError } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
-import {
-  NavItems,
-  ProChannelService,
-  RouterLinkToType,
-} from '../channel.service';
+import { ProChannelService } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 @Component({
@@ -26,8 +20,7 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [FeedsService],
 })
-export class ProChannelContentListComponent
-  implements OnInit, OnDestroy, OnChanges {
+export class ProChannelContentListComponent implements OnChanges {
   @Input() canAutoScroll = true;
   @Input() category: string;
   @Input() limit: number = 12;
@@ -49,15 +42,9 @@ export class ProChannelContentListComponent
     this.entities$ = this.feedsService.feed.pipe();
   }
 
-  ngOnInit() {
-    //this.load(true);
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     this.load(true);
   }
-
-  ngOnDestroy() {}
 
   async load(refresh: boolean = false) {
     if (refresh) {

@@ -5,7 +5,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { GroupsService } from '../../groups-service';
+import { GroupsService } from '../../groups.service';
 import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
 import { Client } from '../../../../services/api/client';

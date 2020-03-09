@@ -1,29 +1,29 @@
 import {
   Component,
+  Inject,
   Injector,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
   SkipSelf,
   ViewChild,
-  Inject,
-  PLATFORM_ID,
 } from '@angular/core';
-import { Subscription, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import {
   ActivatedRoute,
+  NavigationEnd,
   Router,
   RouterEvent,
-  NavigationEnd,
 } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { MindsActivityObject } from '../../../interfaces/entities';
-import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { PosterComponent } from '../poster/poster.component';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NewsfeedService } from '../services/newsfeed.service';
@@ -35,8 +35,7 @@ import { isPlatformServer } from '@angular/common';
   providers: [ClientMetaService, FeedsService],
   templateUrl: 'subscribed.component.html',
 })
-export class NewsfeedSubscribedComponent {
-  newsfeed: Array<Object>;
+export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   feed: BehaviorSubject<Array<Object>> = new BehaviorSubject([]);
   prepended: Array<any> = [];
   offset: string | number = '';
@@ -152,7 +151,6 @@ export class NewsfeedSubscribedComponent {
     if (refresh) {
       this.moreData = true;
       this.offset = 0;
-      this.newsfeed = [];
     }
 
     this.inProgress = true;
@@ -253,18 +251,17 @@ export class NewsfeedSubscribedComponent {
 
   delete(activity) {
     let i: any;
+
     for (i in this.prepended) {
       if (this.prepended[i] === activity) {
         this.prepended.splice(i, 1);
         return;
       }
     }
-    for (i in this.newsfeed) {
-      if (this.newsfeed[i] === activity) {
-        this.newsfeed.splice(i, 1);
-        return;
-      }
-    }
+
+    this.feedsService.deleteItem(activity, (item, obj) => {
+      return item.guid === obj.guid;
+    });
   }
 
   canDeactivate() {
