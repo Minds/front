@@ -60,7 +60,7 @@
           class="mdl-card item"
           [object]="entity | async"
           [canDelete]="group['is:owner'] || group['is:moderator']"
-          (delete)="delete(entity)"
+          (deleted)="delete($event)"
           [slot]="i + 1"
           [attr.data-minds-activity-guid]="entity.guid"
           [disableBoosting]="group['membership'] === 0"

@@ -1,8 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
-
-import normalizeUrn from '../../../../../helpers/normalize-urn';
-import { FeedsService } from '../../../../../common/services/feeds.service';
 import { EntitiesService } from '../../../../../common/services/entities.service';
 import { ProChannelService } from '../../channel.service';
 import { Client } from '../../../../../services/api/client';
@@ -11,12 +8,11 @@ import { Client } from '../../../../../services/api/client';
   selector: 'm-proChannelHome__categoryContent',
   templateUrl: './category-content.component.html',
 })
-export class ProChannelHomeCategoryContent {
+export class ProChannelHomeCategoryContent implements OnInit {
   categories$: BehaviorSubject<any> = new BehaviorSubject(null);
 
   constructor(
     public entitiesService: EntitiesService,
-    private feedsService: FeedsService,
     protected channelService: ProChannelService,
     protected client: Client
   ) {}
@@ -52,5 +48,23 @@ export class ProChannelHomeCategoryContent {
     }
 
     return this.channelService.getRouterLink('all', { hashtag: tag });
+  }
+
+  /**
+   * Called on activity deletion,
+   * removes entity from this.entities$.
+   *
+   * @param category - the category the activity belongs to
+   * @param activity - the activity deleted.
+   */
+  onActivityDelete(category: any, activity: any): void {
+    const entities = category.entities$.getValue();
+
+    entities.forEach((item, index) => {
+      if (item.guid === activity.guid) {
+        entities.splice(index, 1);
+      }
+    });
+    category.entities$.next(entities);
   }
 }
