@@ -235,18 +235,17 @@ export class BlogEdit implements OnInit, OnDestroy {
     this.error = msg;
   }
 
-  save(): void {
-    if (!this.canSave) return;
-
-    if (!this.validate()) return;
-
-    this.error = '';
-    if (!this.showNewEditor()) {
-      this.inlineEditor.prepareForSave().then(() => {
-        this.dispatchSave();
-      });
+  async save(): Promise<void> {
+    if (!this.canSave || !this.validate()) {
       return;
     }
+
+    this.error = '';
+
+    if (!this.shouldUseCKEditor()) {
+      await this.inlineEditor.prepareForSave();
+    }
+
     this.dispatchSave();
   }
 
@@ -262,7 +261,7 @@ export class BlogEdit implements OnInit, OnDestroy {
     blog.monetization = blog.monetization ? 1 : 0;
     blog.monetized = blog.monetized ? 1 : 0;
     blog.time_created = blog.time_created || Math.floor(Date.now() / 1000);
-    blog.editor_version = this.showNewEditor() ? 2 : 1;
+    blog.editor_version = this.getEditorVersion();
 
     this.editing = false;
     this.inProgress = true;
@@ -376,11 +375,20 @@ export class BlogEdit implements OnInit, OnDestroy {
   /**
    * True if new editor should be shown to user.
    * (new blogs, or already v2 blogs only, when feat flag is enabled)
+   * @returns { number } - true if ckeditor should be shown.
    */
-  showNewEditor(): boolean {
+  shouldUseCKEditor(): boolean {
     return (
       this.featuresService.has('ckeditor5') &&
       (!this.blog.time_created || Number(this.blog.editor_version) === 2)
     );
+  }
+
+  /**
+   * Determines what editor version should be used.
+   * @returns { number } - version number.
+   */
+  getEditorVersion(): number {
+    return this.shouldUseCKEditor() ? 2 : 1;
   }
 }
