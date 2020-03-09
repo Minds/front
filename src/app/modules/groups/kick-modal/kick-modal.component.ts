@@ -6,7 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
 @Component({
   selector: 'm-groups__kick-modal',

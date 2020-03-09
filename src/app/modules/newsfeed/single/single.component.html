@@ -36,7 +36,7 @@
         [object]="activity"
         [commentsToggle]="true"
         [focusedCommentGuid]="focusedCommentGuid"
-        (delete)="delete(activity)"
+        (deleted)="delete($event)"
         [showRatingToggle]="true"
         [slot]="1"
         class="mdl-card mdl-shadow--2dp item"

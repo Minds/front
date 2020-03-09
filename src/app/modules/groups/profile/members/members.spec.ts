@@ -11,7 +11,7 @@ import {
   MockDirective,
   MockService,
 } from '../../../../utils/mock';
-import { GroupsService } from '../../groups-service';
+import { GroupsService } from '../../groups.service';
 import { MindsHttpClient } from '../../../../common/api/client.service';
 import { mindsHttpClientMock } from '../../../../mocks/common/api/minds-http-client.service.mock';
 import { groupsServiceMock } from '../../../../mocks/modules/groups/groups.service.mock';
