@@ -85,7 +85,7 @@ export class AnalyticsLayoutChartComponent implements OnInit, OnDestroy {
           tab.description = metric.description ? metric.description : null;
 
           if (metric.summary) {
-            tab.value = metric.summary.comparison_value;
+            tab.value = metric.summary.current_value;
             if (metric.summary.comparison_value !== 0) {
               tab.delta =
                 (metric.summary.current_value -
