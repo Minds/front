@@ -14,7 +14,7 @@
       [boostToggle]="activity.boostToggle"
       [boost]="boostFeed"
       [showBoostMenuOptions]="boostFeed"
-      (delete)="delete(activity)"
+      (deleted)="delete($event)"
       [slot]="i + 1"
       class="mdl-card m-border item"
       [attr.data-minds-activity-guid]="activity.guid"
