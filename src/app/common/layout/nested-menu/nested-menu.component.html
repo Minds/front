@@ -14,15 +14,28 @@
       <div class="m-nestedMenu__headerLabel">{{ menu.header.label }}</div>
     </div>
     <ng-container *ngFor="let item of menu.items">
-      <a
-        class="m-nestedMenu__itemWrapper"
-        (click)="itemClicked(menu.header.id, item.id)"
-        [routerLink]="isNested ? item.id : ['../' + item.id]"
-        routerLinkActive="m-nestedMenu__itemWrapper--active"
-      >
-        <span>{{ item.label }}</span>
-        <i class="material-icons">chevron_right</i>
-      </a>
+      <ng-container *ngIf="!item.route; else redirect">
+        <a
+          class="m-nestedMenu__itemWrapper"
+          (click)="itemClicked(menu.header.id, item.id)"
+          [routerLink]="isNested ? item.id : ['../' + item.id]"
+          routerLinkActive="m-nestedMenu__itemWrapper--active"
+        >
+          <span>{{ item.label }}</span>
+          <i class="material-icons">chevron_right</i>
+        </a>
+      </ng-container>
+      <!-- TODOOJM confirm #redirect route -->
+      <ng-template #redirect>
+        <a
+          class="m-nestedMenu__itemWrapper"
+          (click)="itemClicked(menu.header.id, item.id)"
+          [routerLink]="['/' + item.route]"
+          routerLinkActive="m-nestedMenu__itemWrapper--active"
+        >
+          <span>{{ item.label }}</span>
+        </a>
+      </ng-template>
     </ng-container>
   </div>
 </div>

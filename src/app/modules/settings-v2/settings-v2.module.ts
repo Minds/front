@@ -11,12 +11,18 @@ import { ReportModule } from '../report/report.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { WireModule } from '../wire/wire.module';
 
+import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
+
 import { SettingsV2Component } from './settings-v2.component';
 import { SettingsV2DisplayNameComponent } from './account/display-name/display-name.component';
 import { SettingsV2SessionsComponent } from './security/sessions/sessions.component';
 import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.component';
 import { SettingsV2EmailAddressComponent } from './account/email-address/email-address.component';
-import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
+import { SettingsV2DisplayLanguageComponent } from './account/display-language/display-language.component';
+import { SettingsV2PasswordComponent } from './account/password/password.component';
+import { SettingsV2NotificationsComponent } from './account/notifications/notifications.component';
+import { SettingsV2NsfwContentComponent } from './account/nsfw-content/nsfw-content.component';
+import { SettingsV2ShareButtonsComponent } from './account/share-buttons/share-buttons.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -57,7 +63,54 @@ const SETTINGS_V2_ROUTES: Routes = [
                 'Change the email address where notifications are sent.',
             },
           },
-          // { path: '**', redirectTo: '' },
+          {
+            path: 'display-language',
+            component: SettingsV2DisplayLanguageComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Display Language',
+              description: 'Change the web interface language.',
+            },
+          },
+          {
+            path: 'password',
+            component: SettingsV2PasswordComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Password',
+              description: 'Change account password.',
+            },
+          },
+          {
+            path: 'notifications',
+            component: SettingsV2NotificationsComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Notifications',
+              description: 'Change what notifications you receive, and when.',
+            },
+          },
+          {
+            path: 'nsfw-content',
+            component: SettingsV2NsfwContentComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'NSFW Content',
+              description:
+                'Control how NSFW content is displayed in your newsfeed.',
+            },
+          },
+          {
+            path: 'share-buttons',
+            component: SettingsV2ShareButtonsComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Share Buttons',
+              description: 'Control whether you see the share button overlay.',
+            },
+          },
+          // TODOOJM do something about upgrade to pro/plus
+          // { path: '**', redirectTo: 'account' },
         ],
       },
       {
@@ -119,6 +172,11 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2SessionsComponent,
     SettingsV2TwoFactorComponent,
     SettingsV2EmailAddressComponent,
+    SettingsV2DisplayLanguageComponent,
+    SettingsV2PasswordComponent,
+    SettingsV2NotificationsComponent,
+    SettingsV2NsfwContentComponent,
+    SettingsV2ShareButtonsComponent,
   ],
   // providers: [SettingsService],
   exports: [

@@ -25,6 +25,11 @@ m-nestedMenu {
         line-height: 20px;
       }
     }
+    &:last-child {
+      .m-nestedMenu__itemWrapper:last-child {
+        margin-bottom: 60px;
+      }
+    }
     & > * {
       box-sizing: border-box;
       width: 100%;

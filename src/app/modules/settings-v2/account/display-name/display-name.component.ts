@@ -20,6 +20,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 })
 export class SettingsV2DisplayNameComponent implements OnInit {
   inProgress: boolean = false;
+  currentName: string;
   user: MindsUser;
   form;
 
@@ -33,21 +34,30 @@ export class SettingsV2DisplayNameComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
-    this.load();
-  }
-
-  async load() {
-    this.inProgress = true;
-    this.detectChanges();
+    this.currentName = this.user.name;
+    // TODOOJM
+    // this.settingsService.settings$.subscribe(
+    //   (settings: EditableUserSettings) => {
+    //     this.currentName = settings.name;
+    //     this.detectChanges();
+    //   }
+    // );
 
     this.form = new FormGroup({
-      name: new FormControl(this.session.getLoggedInUser().name, {
+      name: new FormControl(this.currentName, {
         validators: [Validators.required],
       }),
     });
-    this.inProgress = false;
-    this.detectChanges();
+    // this.load();
   }
+
+  // async load() {
+  //   this.inProgress = true;
+  //   this.detectChanges();
+
+  //   this.inProgress = false;
+  //   this.detectChanges();
+  // }
 
   async update() {
     if (!this.canSubmit()) {
@@ -57,7 +67,7 @@ export class SettingsV2DisplayNameComponent implements OnInit {
       this.inProgress = true;
       this.detectChanges();
 
-      this.settingsService.loadSettings(this.user.guid);
+      await this.settingsService.loadSettings(this.user.guid);
 
       const response: any = await this.settingsService.updateSettings(
         this.user.guid,

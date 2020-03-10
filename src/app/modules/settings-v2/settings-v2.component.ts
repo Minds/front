@@ -37,8 +37,14 @@ export class SettingsV2Component implements OnInit {
           id: 'account',
         },
         items: [
+          // TODOOJM get this from routes?
           { label: 'Display Name', id: 'display-name' },
           { label: 'Email Address', id: 'email-address' },
+          { label: 'Display Language', id: 'display-language' },
+          { label: 'Password', id: 'password' },
+          { label: 'Notifications', id: 'notifications' },
+          { label: 'NSFW Content', id: 'nsfw-content' },
+          { label: 'Share Buttons', id: 'share-buttons' },
         ],
       },
       {
@@ -47,8 +53,8 @@ export class SettingsV2Component implements OnInit {
           id: 'account-upgrade',
         },
         items: [
-          { label: 'Upgrade to Pro', id: 'upgrade-to-pro' },
-          { label: 'Upgrade to Plus', id: 'upgrade-to-plus' },
+          { label: 'Upgrade to Pro', id: 'upgrade-to-pro', route: '/pro' },
+          { label: 'Upgrade to Plus', id: 'upgrade-to-plus', route: '/plus' },
         ],
       },
     ],
@@ -136,6 +142,10 @@ export class SettingsV2Component implements OnInit {
     if (this.session.getLoggedInUser().pro) {
       this.mainMenus[0].items.splice(1, 0, { label: 'Pro', id: 'pro' });
     }
+
+    // TODOOJM
+    // Initialize settings$
+    // this.settingsService.loadSettings(this.session.getLoggedInUser().guid);
 
     this.route.url.subscribe(url => {
       this.menuHeaderId = url[0].path;
