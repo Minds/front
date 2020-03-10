@@ -31,14 +31,14 @@ context('Settings', () => {
     cy.route('GET', '**/api/v1/blog/**').as('getBlog');
     cy.route('DELETE', '**/api/v1/blog/**').as('deleteBlog');
 
-    cy.visit('/settings/general')
-      .wait('@getSettings')
-      .then(xhr => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.response.body.status).to.equal('success');
-      });
-      // .location('pathname')
-      // .should('eq', '/settings/general');
+    cy.visit('/settings/general');
+      // .wait('@getSettings')
+      // .then(xhr => {
+      //   expect(xhr.status).to.equal(200);
+      //   expect(xhr.response.body.status).to.equal('success');
+      // });
+      // // .location('pathname')
+      // // .should('eq', '/settings/general');
   });
 
   const uploadAvatar = () => {

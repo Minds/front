@@ -1,17 +1,18 @@
+import generateRandomId from '../support/utilities';
+
 context('Subscription', () => {
 
-  const user = 'minds';
   const subscribeButton = 'minds-button-subscribe > button';
   const messageButton = 'm-messenger--channel-button > button';
   const userDropdown = 'minds-button-user-dropdown > button';
 
+  const username = generateRandomId();
+  const password = `${generateRandomId()}0oA!`;
+
   before(() => {
-    cy.getCookie('minds_sess')
-    .then((sessionCookie) => {
-      if (sessionCookie === null) {
-        return cy.login(true);
-      }
-    });
+    cy.newUser(username, password);
+    cy.logout();
+    cy.login(true);
   });
 
   beforeEach(() => {
@@ -20,9 +21,9 @@ context('Subscription', () => {
     cy.route("POST", "**/api/v1/subscribe/*").as("subscribe");
     cy.route("DELETE", "**/api/v1/subscribe/*").as("unsubscribe");
 
-    cy.visit(`/${user}/`);
+    cy.visit(`/${username}/`);
     cy.location('pathname')
-      .should('eq', `/${user}/`);
+      .should('eq', `/${username}/`);
   });
 
   it('should allow a user to subscribe to another', () => {
@@ -34,7 +35,8 @@ context('Subscription', () => {
   });
 
   function subscribe() {
-    cy.get(subscribeButton)
+    cy.get("button")
+      .contains("Subscribe")
       .click()
       .wait('@subscribe').then((xhr) => {
       expect(xhr.status).to.equal(200);

@@ -147,14 +147,14 @@ context('Newsfeed', () => {
       .should(
         'have.attr',
         'href',
-        '/newsfeed/global/top;hashtag=art;period=24h'
+        '/newsfeed/global/top;hashtag=art;period=7d'
       );
     cy.get('.minds-list > minds-activity:first-child .message a:last-child')
       .contains('#hashtag')
       .should(
         'have.attr',
         'href',
-        '/newsfeed/global/top;hashtag=hashtag;period=24h'
+        '/newsfeed/global/top;hashtag=hashtag;period=7d'
       );
 
     deleteActivityFromNewsfeed();
@@ -571,9 +571,7 @@ context('Newsfeed', () => {
 
         //get activity, make assertions tht would not be true for modals.
         cy.get(`[minds-data-activity-guid='${xhr.response.body.guid}']`)
-          .should('be.visible')
-          .get('iframe')          
-          .should('be.visible')
+          .contains('play_arrow')
           .get('.minds-more')
           .should('be.visible');
         
@@ -635,9 +633,10 @@ context('Newsfeed', () => {
       });
   });
 
-  it('should not open spotify in a modal', () => {
+  // iframely
+  it('should not open giphy in a modal', () => {
     const content = generateRandomId() + " ",
-      url = 'http://giphygifs.s3.amazonaws.com/media/IzVquL965ib4s/giphy.gif';
+      url = 'https://giphy.com/gifs/test-gw3IWyGkC0rsazTi';
 
     // set up post.
     newActivityContent(content);
