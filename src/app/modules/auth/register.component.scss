@@ -48,7 +48,7 @@ m-register {
     }
 
     @media screen and (max-width: $m-grid-max-mobile) {
-      margin-top: -52px 0 50px;
+      margin: -52px 0 50px;
       padding: 0 26px;
 
       &::before {
