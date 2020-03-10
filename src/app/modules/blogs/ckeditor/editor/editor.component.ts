@@ -12,6 +12,9 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { AttachmentService } from '../../../../services/attachment';
+import { SiteService } from '../../../../common/services/site.service';
+
 declare var require: any;
 
 @Component({
@@ -22,40 +25,36 @@ declare var require: any;
   templateUrl: 'editor.component.html',
 })
 export class BlogEditorComponent {
+  /**
+   * Content to place into the editor on load.
+   */
   @Input() content: string;
+
+  /**
+   * Emitted when content changes.
+   */
   @Output() contentChanged: EventEmitter<Event> = new EventEmitter<Event>();
 
   Editor: any;
 
-  // TODO: Manually adjust configuration when custom built.
-  editorConfig: Object = {
-    /**
-      plugins: [ Alignment ],
-      alignment: {
-        options: [ 'left', 'right' ]
-      },
-      toolbar: [
-        'heading',
-        '|',
-        'bulletedList',
-        'numberedList',
-        'alignment',
-        'undo',
-        'redo',
-        'bold',
-        'italic',
-        'bulletedList',
-        'numberedList',
-        'blockQuote',
-      ],
-    */
-  };
-  constructor(@Inject(PLATFORM_ID) protected platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) protected platformId: Object,
+    private attachment: AttachmentService,
+    private site: SiteService
+  ) {}
 
   ngOnInit() {
+    // Render on browser side.
     if (isPlatformBrowser(this.platformId)) {
-      const BalloonEditor = require('@ckeditor/ckeditor5-build-balloon');
-      this.Editor = BalloonEditor;
+      // Must be required here for client-side loading.
+      const MindsEditor = require('@bhayward93/ckeditor5-build-minds');
+      this.Editor = MindsEditor;
+      this.Editor.config = {
+        uploadHandler: async file => {
+          const response = this.attachment.upload(await file);
+          return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
+        },
+      };
     }
   }
 

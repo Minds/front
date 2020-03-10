@@ -47,7 +47,7 @@
   </div>
 
   <div class="mdl-cell mdl-cell--12-col minds-blog-descriptions">
-    <ng-container *ngIf="!showNewEditor(); else newEditor">
+    <ng-container *ngIf="!shouldUseCKEditor(); else newEditor">
       <m-inline-editor
         name="description"
         [(ngModel)]="blog.description"
