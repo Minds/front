@@ -64,7 +64,11 @@ context('Topbar', () => {
     cy.location('pathname').should('eq', '/canary');
   });
 
-  it('clicking on the dropdown on the right should allow to toggle Dark Mode', () => {
+  /* TODO: This test needs to be conditional.
+   * sometimes the menu is left in Dark Mode position and it errors out. 
+   * https://gitlab.com/minds/front/-/issues/2665
+   */ 
+  it.skip('clicking on the dropdown on the right should allow to toggle Dark Mode', () => {
     // open the menu
     cy.get('m-user-menu .m-user-menu__Anchor').click();
 

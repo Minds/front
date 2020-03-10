@@ -36,7 +36,7 @@ const registerForm = {
   email: 'minds-form-register #email',
   password: 'minds-form-register #password',
   password2: 'minds-form-register #password2',
-  checkbox: 'minds-form-register label:nth-child(2) .mdl-ripple--center',
+  checkbox: '[data-cy=minds-accept-tos-input] [type=checkbox]',
   submitButton: 'minds-form-register .mdl-card__actions button',
 };
 
@@ -143,6 +143,8 @@ Cypress.Commands.add('newUser', (username = '', password = '') => {
     .focus()
     .type(password);
   cy.get(registerForm.checkbox).click({ force: true });
+  
+  cy.completeCaptcha();
 
   //submit.
   cy.get(registerForm.submitButton)
@@ -153,14 +155,9 @@ Cypress.Commands.add('newUser', (username = '', password = '') => {
       expect(xhr.response.body.status).to.deep.equal('success');
     });
 
-  //onboarding modal shown.
-  cy.get(onboarding.welcomeTextContainer).contains(onboarding.welcomeText);
-
-  //skip onboarding.
-  cy.get(onboarding.nextButton).click();
-  cy.get(onboarding.nextButton).click();
-  cy.get(onboarding.nextButton).click();
-  cy.get(onboarding.nextButton).click();
+  // skip onboarding
+  cy.location('pathname').should('eq', '/onboarding/notice');
+  cy.contains("No thanks, I'll do it later").click();
 });
 
 Cypress.Commands.add('preserveCookies', () => {
