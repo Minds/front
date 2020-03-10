@@ -1,55 +1,44 @@
-display-name works!
-<!-- <form
-  *ngIf="form"
-  [formGroup]="form"
-  class="m-settingsButtonLayout--buttonOffsetRight"
->
-  <div class="m-settingsForm__fieldsContainer">
-    <div class="m-settingsForm__field--text stretchedField">
-      <div class="m-settingsForm__row--label m-settingsTertiaryText--label">
-        <label for="displayName" i18n>Display Name</label>
-        <m-tooltip icon="help">
-          <ng-container i18n>Placeholder</ng-container>
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="name" i18n>Display Name</label>
+        <m-tooltip [anchor]="tooltipAnchor">
+          <span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n>
+            Placeholder
+          </ng-container>
         </m-tooltip>
       </div>
       <div
-        class="m-settingsForm__row--input"
+        class="m-form__row--input"
         [ngClass]="{
-          invalid:
-            (form.dirty || form.touched) && addressInput.hasError('required')
+          invalid: form.invalid
         }"
       >
         <input
           type="text"
-          id="displayName"
-          name="displayName"
-          formControlName="displayName"
+          id="name"
+          name="name"
+          formControlName="name"
           class="form-control"
           [readonly]="inProgress"
-          autofocus
         />
       </div>
-      <div class="m-settingsForm__row--validation">
-        <p
-          *ngIf="
-            (form.dirty || form.touched) && addressInput.hasError('required')
-          "
-        >
+      <div class="m-form__row--validation">
+        <p *ngIf="form.invalid">
           Display name required.
         </p>
       </div>
     </div>
   </div>
-  <div class="m-settingsForm__buttonsContainer">
+  <div class="m-form__buttonsContainer">
     <m-shadowboxSubmitButton
-      [disabled]="
-        inProgress ||
-        ((this.form.dirty || this.form.touched) && this.form.invalid)
-      "
+      [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="update()"
     >
-      Update Display Name
+      Save Display Name
     </m-shadowboxSubmitButton>
   </div>
-</form> -->
+</form>

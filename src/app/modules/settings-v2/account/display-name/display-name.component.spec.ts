@@ -7,6 +7,8 @@ import { FormToastService } from '../../../../common/services/form-toast.service
 import { MockService } from '../../../../utils/mock';
 import { Session } from '../../../../services/session';
 import { sessionMock } from '../../../../../tests/session-mock.spec';
+import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
+import { SettingsV2Service } from '../../settings-v2.service';
 
 describe('SettingsV2DisplayNameComponent', () => {
   let component: SettingsV2DisplayNameComponent;
@@ -19,6 +21,11 @@ describe('SettingsV2DisplayNameComponent', () => {
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
         { provide: FormToastService, useValue: MockService(FormToastService) },
+        { provide: DialogService, useValue: MockService(DialogService) },
+        {
+          provide: SettingsV2Service,
+          useValue: MockService(SettingsV2Service),
+        },
       ],
     }).compileComponents();
   }));

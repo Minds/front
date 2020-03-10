@@ -16,6 +16,7 @@ import { SettingsV2DisplayNameComponent } from './account/display-name/display-n
 import { SettingsV2SessionsComponent } from './security/sessions/sessions.component';
 import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.component';
 import { SettingsV2EmailAddressComponent } from './account/email-address/email-address.component';
+import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -40,6 +41,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'display-name',
             component: SettingsV2DisplayNameComponent,
+            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Display Name',
               description: 'Customize your display name.',
@@ -48,6 +50,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'email-address',
             component: SettingsV2EmailAddressComponent,
+            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Email Address',
               description:
@@ -69,6 +72,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'two-factor',
             component: SettingsV2TwoFactorComponent,
+            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Two-factor Authentication',
               description:
@@ -78,6 +82,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'sessions',
             component: SettingsV2SessionsComponent,
+            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Sessions',
               description: 'Close all sessions with a single click.',

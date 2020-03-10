@@ -18,11 +18,11 @@
     }
   }
 
+  // The button is right-aligned and the input
+  // field width is 160px less than 100%
+  // (except on mobile, where everything is 100%)
   .m-formLayout--buttonOffsetRight {
     .stretchedField {
-      .m-form__row--input {
-        flex-flow: row nowrap;
-      }
       label,
       input:not(.m-phoneInput__input),
       minds-country-input,
@@ -37,27 +37,15 @@
           max-width: 100%;
         }
       }
-      // @media screen and (max-width: $max-mobile) {
-      //   .m-phoneInput__input {
-      //     min-width: 0;
-      //   }
-      // }
+    }
+  }
 
-      // @media screen and (max-width: 500px) {
-      //   [class*='m-form__row'] {
-      //     flex-flow: row wrap;
-      //     label,
-      //     input,
-      //     minds-country-input {
-      //       flex: 1 1 100%;
-      //       min-width: 100%;
-      //       max-width: 100%;
-      //     }
-      //     .m-phoneInput__input {
-      //       min-width: 0;
-      //     }
-      //   }
-      // }
+  .m-formLayout--buttonRight,
+  .m-formLayout--buttonOffsetRight {
+    .stretchedField {
+      .m-form__row--input {
+        flex-flow: row nowrap;
+      }
 
       .m-form__row--validation {
         justify-content: flex-end;
@@ -66,6 +54,11 @@
     }
     .m-form__fieldsContainer {
       margin-bottom: 38px;
+    }
+
+    .m-form__buttonsContainer {
+      margin-top: 25px;
+      margin-bottom: 57px;
     }
 
     @media screen and (max-width: $max-mobile) {
@@ -100,21 +93,6 @@
     flex: 1 1 auto;
   }
 
-  // Used for first/last name inputs
-  // .m-form__fieldPairWrapper {
-  //   display: flex;
-  //   box-sizing: border-box;
-  //   flex-flow: row wrap;
-
-  //   [class*='m-form__field'] {
-  //     flex: 1 0 auto;
-  //     min-width: 300px;
-  //     &:first-child {
-  //       margin-right: 19px;
-  //     }
-  //   }
-  // }
-
   .m-form__buttonsContainer {
     display: flex;
     flex-flow: row wrap-reverse;
@@ -124,6 +102,9 @@
     }
     m-shadowboxSubmitButton {
       margin: 8px 0 0 18px;
+      &:first-child {
+        margin-left: 0px;
+      }
 
       @media screen and (max-width: $max-mobile) {
         width: 100%;
@@ -136,19 +117,21 @@
   }
 
   [class*='m-form__field'] {
-    font-size: 15px;
-    line-height: 20px;
-    display: flex;
-    flex-flow: column nowrap;
-    m-tooltip {
-      margin-left: 10px;
-      .m-tooltip {
-        margin: 0;
-      }
-      .m-tooltip--bubble {
-        bottom: 18px;
-        margin-left: 12px;
-        font-weight: 400;
+    &:not(.m-form__fieldsContainer) {
+      font-size: 15px;
+      line-height: 20px;
+      display: flex;
+      flex-flow: column nowrap;
+      m-tooltip {
+        margin-left: 10px;
+        .m-tooltip {
+          margin: 0;
+        }
+        .m-tooltip--bubble {
+          bottom: 18px;
+          margin-left: 12px;
+          font-weight: 400;
+        }
       }
     }
   }
@@ -160,13 +143,27 @@
     &[class*='--label'] {
       font-size: 15px;
       line-height: 20px;
-      margin: 0 0 13px 0;
+      margin: 0 0 12px 0;
       align-items: center;
       flex-flow: row nowrap;
       position: relative;
       font-weight: 300;
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--primary);
+      }
+      m-tooltip {
+        .m-tooltip > span {
+          @include m-theme() {
+            color: themed($m-textColor--tertiary);
+          }
+        }
+        .m-tooltip--bubble {
+          font-weight: 300;
+          @include m-theme() {
+            background-color: themed($m-blue);
+            color: themed($m-white);
+          }
+        }
       }
     }
     &[class*='--validation'] {
@@ -204,7 +201,6 @@
     label,
     .m-form__row--validation {
       flex: 1 1 auto;
-      max-width: auto;
     }
     input {
       flex: 1 1 100%;

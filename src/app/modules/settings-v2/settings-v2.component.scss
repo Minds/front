@@ -112,5 +112,11 @@ m-settingsV2 {
         line-height: 20px;
       }
     }
+
+    .m-formWrapper .m-form__fieldsContainer input {
+      @include m-theme() {
+        box-shadow: none;
+      }
+    }
   }
 }

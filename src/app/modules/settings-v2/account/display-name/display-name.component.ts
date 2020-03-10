@@ -6,68 +6,70 @@ import {
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Client } from '../../../../services/api/client';
-import { FormToastService } from '../../../../common/services/form-toast.service';
 import { Session } from '../../../../services/session';
+
+import { FormToastService } from '../../../../common/services/form-toast.service';
+import { SettingsV2Service } from '../../settings-v2.service';
+import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
+import { Observable } from 'rxjs';
+import { MindsUser } from '../../../../interfaces/entities';
 @Component({
   selector: 'm-settingsV2__displayName',
   templateUrl: './display-name.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsV2DisplayNameComponent implements OnInit {
   inProgress: boolean = false;
-  currentName: string = '';
+  user: MindsUser;
   form;
-  error: string;
 
   constructor(
-    protected client: Client,
     protected cd: ChangeDetectorRef,
     private formToastService: FormToastService,
-    private session: Session
+    private session: Session,
+    protected settingsService: SettingsV2Service,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
+    this.user = this.session.getLoggedInUser();
     this.load();
   }
 
   async load() {
-    this.currentName = this.session.getLoggedInUser().name;
+    this.inProgress = true;
+    this.detectChanges();
 
-    // this.inProgress = true;
-    // try {
-    //   this.client.get('api/v1/settings/' + this.guid).then((response: any) => {
-    //   // Get current name
-    //   // const { name } = <any>await this.client.get('api/v2/wallet/btc/address');
-    //   // if (name) {
-    //   // }
-    // } catch (e) {
-    //   console.error(e);
-    // }
-    // this.inProgress = false;
     this.form = new FormGroup({
-      displayName: new FormControl(this.currentName, {
+      name: new FormControl(this.session.getLoggedInUser().name, {
         validators: [Validators.required],
       }),
     });
+    this.inProgress = false;
     this.detectChanges();
   }
 
   async update() {
-    if (this.form.invalid || this.inProgress) {
+    if (!this.canSubmit()) {
       return;
     }
     try {
       this.inProgress = true;
       this.detectChanges();
 
-      await this.client.post('api/v2/wallet/btc/address', {
-        address: this.displayName.value,
-      });
-      this.currentName = this.displayName.value;
-      this.formToastService.success('Save success');
+      this.settingsService.loadSettings(this.user.guid);
+
+      const response: any = await this.settingsService.updateSettings(
+        this.user.guid,
+        this.form.value
+      );
+      if (response.status === 'success') {
+        this.formToastService.success('Display name saved');
+        this._markFormPristine();
+        this.user.name = this.name;
+      }
     } catch (e) {
       this.formToastService.error(e);
-      console.error(e);
     } finally {
       this.inProgress = false;
 
@@ -75,12 +77,30 @@ export class SettingsV2DisplayNameComponent implements OnInit {
     }
   }
 
+  private _markFormPristine(): void {
+    Object.keys(this.form.controls).forEach(control => {
+      this.form.controls[control].markAsPristine();
+    });
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.form.pristine) {
+      return true;
+    }
+
+    return this.dialogService.confirm('Discard changes?');
+  }
+
+  canSubmit(): boolean {
+    return this.form.valid && !this.inProgress && !this.form.pristine;
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
 
-  get displayName() {
-    return this.form.get('displayName');
+  get name() {
+    return this.form.get('name');
   }
 }

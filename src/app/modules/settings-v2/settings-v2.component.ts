@@ -139,7 +139,6 @@ export class SettingsV2Component implements OnInit {
 
     this.route.url.subscribe(url => {
       this.menuHeaderId = url[0].path;
-      console.log('path', url[0]);
     });
 
     // Get the title, description and whether it's a menu
@@ -153,9 +152,6 @@ export class SettingsV2Component implements OnInit {
   }
 
   setupSecondaryPanel(): void {
-    // const route
-    console.log('SETUP!!', this.route.snapshot);
-
     this.secondaryPanelIsMenu = false;
     let snapshot = this.route.snapshot;
     if (snapshot.firstChild && snapshot.firstChild.data['title']) {
