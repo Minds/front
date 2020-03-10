@@ -62,6 +62,8 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
   primaryColorPickerVal: string;
   plainBgColorPickerVal: string;
 
+  bgImageSelected: boolean = false;
+
   hexPattern = '^#([0-9A-Fa-f]{6})$'; // accepts 6-digit codes only, hash required
 
   domainValidationSubject: Subject<any> = new Subject<any>();
@@ -234,6 +236,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     }
 
     this.settings[type] = files.item(0);
+    this.bgImageSelected = true;
     this.form.markAsDirty();
     this.detectChanges();
   }
@@ -260,6 +263,9 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
         this.settings[type]._mindsBlobUrl = URL.createObjectURL(
           this.settings[type] as File
         );
+      }
+      if (type === 'background') {
+        this.bgImageSelected = true;
       }
 
       return this.sanitizer.bypassSecurityTrustUrl(
@@ -421,6 +427,10 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     if (!this.isActive) {
       this.router.navigate(['/pro']);
     }
+  }
+
+  showFilePreviewOverlay() {
+    return !this.settings.has_custom_background && !this.bgImageSelected;
   }
 
   detectChanges() {

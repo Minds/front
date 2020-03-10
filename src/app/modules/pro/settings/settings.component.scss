@@ -306,17 +306,18 @@ m-proSettings {
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
       @include m-theme() {
         background: rgba(themed($m-black-always), 0.4);
       }
       &:hover {
-        // .m-proSettings__filePreviewOverlay {
         opacity: 1;
-        // display: flex;
-        // align-items: center;
-        // justify-content: center;
-        // }
+      }
+      &.m-proSettings__filePreviewOverlay--show {
+        opacity: 0.6;
+        &:hover {
+          opacity: 1;
+        }
       }
     }
 
