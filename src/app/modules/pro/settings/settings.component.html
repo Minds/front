@@ -531,7 +531,12 @@
                             *ngIf="getPreviewAssetSrc('background')"
                             [src]="getPreviewAssetSrc('background')"
                           />
-                          <span class="m-proSettings__filePreviewOverlay">
+                          <span
+                            class="m-proSettings__filePreviewOverlay"
+                            [ngClass]="{
+                              'm-proSettings__filePreviewOverlay--show': showFilePreviewOverlay()
+                            }"
+                          >
                             <i class="material-icons">cloud_upload</i>
                           </span>
                         </label>
