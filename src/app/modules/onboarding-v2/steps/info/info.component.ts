@@ -5,6 +5,7 @@ import { Client, Upload } from '../../../../services/api';
 import { Router } from '@angular/router';
 import { PhoneVerificationComponent } from './phone-input/input.component';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-onboarding__infoStep',
@@ -26,6 +27,7 @@ export class InfoStepComponent {
   date: string;
   dateOfBirthError: string;
   dateOfBirthChanged: boolean = false;
+  ageError: boolean = false;
 
   cities: Array<any> = [];
 
@@ -90,9 +92,6 @@ export class InfoStepComponent {
   }
 
   async updateDateOfBirth() {
-    if (!this.dateOfBirthChanged) {
-      return true;
-    }
     this.dateOfBirthError = null;
 
     try {
@@ -120,6 +119,8 @@ export class InfoStepComponent {
   selectedDateChange(date: string) {
     this.date = date;
     this.dateOfBirthChanged = true;
+
+    this.validateDate();
   }
 
   cancel() {
@@ -144,7 +145,20 @@ export class InfoStepComponent {
     this.tooltipAnchor = window.innerWidth <= 480 ? 'top' : 'left';
   }
 
+  private validateDate(): boolean {
+    if (moment().diff(moment(this.date), 'years') < 13) {
+      this.ageError = true;
+      return false;
+    }
+
+    this.ageError = false;
+    return true;
+  }
+
   private saveData() {
+    if (!this.validateDate()) {
+      return false;
+    }
     return this.updateLocation() && this.updateDateOfBirth();
   }
 }
