@@ -72,6 +72,7 @@ import { ConfigsService } from './common/services/configs.service';
 import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
+import { SettingsV2Module } from './modules/settings-v2/settings-v2.module';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -138,6 +139,7 @@ export class SentryErrorHandler implements ErrorHandler {
     CanaryModule,
     ChannelsModule,
     UpgradesModule,
+    SettingsV2Module,
 
     //last due to :username route
     AppRoutingModule,

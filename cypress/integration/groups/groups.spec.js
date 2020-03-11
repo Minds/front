@@ -35,8 +35,9 @@ context('Groups', () => {
 
     // click on hashtags dropdown
     cy.get('m-hashtags-selector .m-dropdown--label-container').click();
-    // select #ART
-    cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div > span').contains('art').click();
+    // select #ART TODO: Set tags on sandboxes
+    // cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div > span').contains('art').click();
+
     // type in another hashtag manually
     cy.get('m-hashtags-selector m-form-tags-input input').type('hashtag{enter}').click();
     // click away
@@ -145,9 +146,9 @@ context('Groups', () => {
   });
 
   it('should navigate to discovery when Find a Group clicked', () => {
-    cy.contains('Find a Group').click()
+    cy.contains('Discover Groups').click()
     cy.location('pathname')
-      .should('eq', '/newsfeed/global/top%3Bperiod%3D12h%3Btype%3Dgroups%3Ball%3D1');
+      .should('eq', '/newsfeed/global/top;period=12h;type=groups;all=1');
   });
 
   it('should delete a group', () => {

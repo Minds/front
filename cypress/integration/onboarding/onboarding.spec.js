@@ -10,7 +10,7 @@ context('Onboarding', () => {
   const emailField = 'minds-form-register #email';
   const passwordField = 'minds-form-register #password';
   const password2Field = 'minds-form-register #password2';
-  const checkbox = '[data-cy=data-minds-accept-tos-input]';
+  const checkbox = '[data-cy=minds-accept-tos-input] [type=checkbox]';
   const submitButton = 'minds-form-register .mdl-card__actions button';
 
   before(() => {
@@ -39,6 +39,8 @@ context('Onboarding', () => {
 
     cy.get(checkbox)
       .click({ force: true });
+
+    cy.completeCaptcha();
 
     //submit
     cy.get(submitButton)
@@ -106,11 +108,11 @@ context('Onboarding', () => {
     cy.get('.m-onboarding__controls .m-onboarding__control label').contains('Mobile Phone Number');
 
     // open country dropdown
-    cy.get('.m-onboarding__controls .m-phone-input--selected-flag').click();
+    cy.get('.m-phoneInput__selectedFlag').click();
     // click on UK
-    cy.get('.m-phone-input--country-list li span[data-minds=54]').click();
+    cy.contains('Argentina').click();
     // Uk should be selected
-    cy.get('.m-phone-input--selected-flag .m-phone-input--dial-code').contains('+54');
+    cy.get('.m-phoneInput__selectedFlag').contains('+54');
 
     // add the number
     cy.get('#phone').type('012345678');
@@ -134,15 +136,9 @@ context('Onboarding', () => {
     cy.get('.m-onboarding__controls > .m-onboarding__control select[data-minds=yearDropdown]').select('1991');
 
     // should have a continue and a skip button
-    cy.get('button.mf-button--hollow').contains('Skip');
-    cy.get('button.mf-button--alt').contains('Finish').click();
-
-    // TODO: disable the following line and uncomment the rest when we re-enable the screens
-    // should be in the newsfeed
-    cy.location('pathname').should('eq', '/newsfeed/subscriptions');
+    cy.get('button.mf-button--alt').contains('Continue').click({force: true});
 
     // should be in the Avatar step
-
     // should have a continue and a skip button
     cy.get('button.mf-button--hollow').contains('Skip');
     cy.get('button.mf-button--alt').contains('Upload a Photo');
@@ -155,9 +151,9 @@ context('Onboarding', () => {
     );
 
     // continue should move you to the next step (groups)
-    cy.get('button.mf-button--alt').contains('Continue').click();
+    cy.contains('Finish').click();
 
-    cy.get('.m-onboarding__groupList').should('exist');
+    // cy.get('.m-onboarding__groupList').should('exist');
 
     // go back to avatar and test Cancel
     cy.visit(`/onboarding/avatar`);
@@ -183,7 +179,7 @@ context('Onboarding', () => {
     // should be in the Groups step
 
     // should have a groups list
-    cy.get('.m-onboarding__groupList').should('exist');
+    // cy.get('.m-onboarding__groupList').should('exist');
 
     // clicking on a group join button should join the group
     // cy.get('.m-groupList__list .m-groupList__item:first-child .m-join__subscribe').contains('add').click();
@@ -197,8 +193,7 @@ context('Onboarding', () => {
 
 
     // should be in the Channels step
-
-    cy.get('.m-onboarding__channelList').should('exist');
+    // cy.get('.m-onboarding__channelList').should('exist');
 
     // should have a channels list
     // cy.get('.m-channelList__list').should('exist');
