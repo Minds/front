@@ -1,0 +1,10 @@
+m-walletChart {
+  display: block;
+  height: 44vh;
+
+  m-chartV2 {
+    @media screen and (max-width: $max-mobile) {
+      margin-left: 0;
+    }
+  }
+}

@@ -12,7 +12,9 @@
     [(ngModel)]="phoneNumber"
     (ngModelChange)="onPhoneNumberChange()"
     [placeholder]="selectedCountry.placeHolder"
+    class="form-control m-phoneInput__input"
     #input
     required
+    autofocus
   />
 </div>

@@ -12,6 +12,10 @@ m-phone-input {
     }
   }
 
+  span {
+    font-weight: 300;
+  }
+
   .m-phone-input--wrapper {
     display: flex;
     @media (min-width: $max-mobile) {
@@ -70,6 +74,7 @@ m-phone-input {
     cursor: pointer;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
+    outline: 0;
     @include m-theme() {
       background-color: themed($m-white);
     }
@@ -85,13 +90,13 @@ m-phone-input {
       border-left: 4px solid transparent;
       border-right: 4px solid transparent;
       @include m-theme() {
-        border-top: 6px solid themed($m-grey-700);
+        border-top: 6px solid themed($m-grey-300);
       }
     }
     .m-phone-input--arrow.up {
       border-top: none;
       @include m-theme() {
-        border-bottom: 6px solid themed($m-grey-700);
+        border-bottom: 6px solid themed($m-grey-300);
       }
     }
   }

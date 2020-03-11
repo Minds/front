@@ -67,7 +67,7 @@ m-sidebarMenu {
       a.selected,
       &:hover a {
         @include m-theme() {
-          color: themed($m-blue);
+          color: themed($m-link);
         }
       }
       &:last-child {

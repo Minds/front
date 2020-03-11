@@ -119,7 +119,7 @@ const fakeData: Array<any> = [
       },
       {
         id: 'active_users',
-        label: 'Active UsersA',
+        label: 'Active Users B',
         permissions: ['admin', 'user'],
         summary: {
           current_value: 120962,
@@ -149,7 +149,7 @@ const fakeData: Array<any> = [
       },
       {
         id: 'views',
-        label: 'Pageviews',
+        label: 'Pageviews USD',
         permissions: ['admin', 'user'],
         summary: {
           current_value: 83898,

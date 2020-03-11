@@ -10,6 +10,10 @@ const chartPalette = {
   ],
   themeMaps: [
     {
+      id: 'm-bgColor--primary',
+      themeMap: ['#f5f5f5', '#252e31'],
+    },
+    {
       id: 'm-white',
       themeMap: ['#fff', '#232323'],
     },
