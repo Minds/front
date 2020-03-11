@@ -43,6 +43,9 @@ m-login {
   .m-login__spacer {
     flex-grow: 1;
   }
+  a {
+    font-weight: 400;
+  }
 }
 
 .m-login-box {
@@ -85,4 +88,8 @@ m-login {
     padding-left: $minds-padding * 2;
     text-decoration: none;
   }
+}
+
+.m-login-mfa-input {
+  padding: 20px 0;
 }

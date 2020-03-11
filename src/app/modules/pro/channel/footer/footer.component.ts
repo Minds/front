@@ -3,10 +3,13 @@ import { ProChannelService } from '../channel.service';
 import { Session } from '../../../../services/session';
 import { AuthService } from '../../../../services/auth.service';
 import { SiteService } from '../../../../common/services/site.service';
+import { MessengerConversationDockpanesService } from '../../../messenger/dockpanes/dockpanes.service';
+import { MessengerConversationBuilderService } from '../../../messenger/dockpanes/conversation-builder.service';
 import {
   getSocialProfileMeta,
   socialProfileMeta,
 } from '../../../channels/social-profiles/meta';
+import { Router } from '@angular/router';
 
 export type FooterLink = { title: string; href: string };
 
@@ -17,9 +20,12 @@ export type FooterLink = { title: string; href: string };
 export class ProChannelFooterComponent {
   constructor(
     protected channelService: ProChannelService,
+    private router: Router,
     protected session: Session,
     protected auth: AuthService,
-    protected site: SiteService
+    protected site: SiteService,
+    protected dockpanes: MessengerConversationDockpanesService,
+    protected conversationBuilder: MessengerConversationBuilderService
   ) {}
 
   get socialProfilesMeta() {
@@ -99,5 +105,23 @@ export class ProChannelFooterComponent {
       : this.site.baseUrl;
     const regex = new RegExp(`/${domain}/`);
     return regex.exec(link.href) ? '_self' : '_blank';
+  }
+
+  /**
+   * Called when Message label is clicked.
+   */
+  onMessageClicked(): void {
+    if (!this.currentUser) {
+      this.router.navigate(['/login']);
+    }
+    this.dockpanes.open(this.conversationBuilder.buildConversation(this.user));
+  }
+
+  /**
+   * Determined whether message button should be shown.
+   * @return { boolean } true if the message button should be shown.
+   */
+  showMessageButton(): boolean {
+    return !this.isProDomain && this.currentUser.guid !== this.user.guid;
   }
 }

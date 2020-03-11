@@ -397,6 +397,7 @@ const routes: Routes = [
     PhoneInputCountryV2Component,
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
+    MarketingFooterComponent,
     StackableModalComponent,
   ],
   providers: [

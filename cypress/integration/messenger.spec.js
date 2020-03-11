@@ -4,7 +4,9 @@
  */
 import generateRandomId from '../support/utilities';
 
-context('Messenger', () => {
+// Skipped as it currently requires email confirmation to message
+// https://gitlab.com/minds/front/-/issues/2660
+context.skip('Messenger', () => {
   const targetUser = 'minds';
   const messagePassword = 'Passw0rd!';
   const messageContent = 'this is a test message!';
