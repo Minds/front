@@ -1,16 +1,15 @@
 import {
-  AfterViewInit,
+  Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Component,
-  ElementRef,
   EventEmitter,
-  Injector,
+  ElementRef,
   Input,
-  OnInit,
   Output,
-  SkipSelf,
   ViewChild,
+  OnInit,
+  SkipSelf,
+  Injector,
 } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
@@ -34,7 +33,6 @@ import isMobile from '../../../../../helpers/is-mobile';
 import { MindsVideoPlayerComponent } from '../../../../media/components/video-player/player.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { RedirectService } from '../../../../../common/services/redirect.service';
-import { ActivityAVideoAutoplayService } from './activity-video-autoplay.service';
 
 @Component({
   selector: 'minds-activity',
@@ -52,13 +50,12 @@ import { ActivityAVideoAutoplayService } from './activity-video-autoplay.service
   providers: [
     ClientMetaService,
     ActivityAnalyticsOnViewService,
-    ActivityAVideoAutoplayService,
     ActivityService,
   ],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Activity implements OnInit, AfterViewInit {
+export class Activity implements OnInit {
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
   readonly siteUrl: string;
@@ -81,8 +78,6 @@ export class Activity implements OnInit, AfterViewInit {
   @Input() slot: number = -1;
 
   visibilityEvents: boolean = true;
-  autoplaying: boolean = false;
-
   @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
     this.visibilityEvents = visibilityEvents;
 
@@ -164,14 +159,7 @@ export class Activity implements OnInit, AfterViewInit {
     }
   }
 
-  player: MindsVideoPlayerComponent;
-
-  @ViewChild('player', { static: false }) set _player(
-    player: MindsVideoPlayerComponent
-  ) {
-    this.player = player;
-  }
-
+  @ViewChild('player', { static: false }) player: MindsVideoPlayerComponent;
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   protected time_created: any;
@@ -187,14 +175,13 @@ export class Activity implements OnInit, AfterViewInit {
     private router: Router,
     protected blockListService: BlockListService,
     protected activityAnalyticsOnViewService: ActivityAnalyticsOnViewService,
-    protected activityVideoAutoplayService: ActivityAVideoAutoplayService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     protected featuresService: FeaturesService,
     public suggestions: AutocompleteSuggestionsService,
     protected activityService: ActivityService,
     @SkipSelf() injector: Injector,
-    private elementRef: ElementRef,
+    elementRef: ElementRef,
     private configs: ConfigsService,
     private redirectService: RedirectService
   ) {
@@ -216,44 +203,9 @@ export class Activity implements OnInit, AfterViewInit {
         this.onViewed.emit({ activity: activity, visible: true });
       });
 
-    this.activityVideoAutoplayService.setElementRef(elementRef);
-
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
-  }
-
-  tryAutoplay() {
-    if (
-      !this.newsfeedService.userPlaying ||
-      !this.newsfeedService.userPlaying.isPlaying()
-    ) {
-      if (this.newsfeedService.currentlyPlaying) {
-        this.newsfeedService.currentlyPlaying.stop();
-      }
-      if (this.player) {
-        this.player.mute();
-        this.player.play();
-        this.newsfeedService.currentlyPlaying = this.player.player.player;
-        this.autoplaying = true;
-      } else {
-        console.warn('player is not defined');
-      }
-    }
-  }
-
-  stopPlaying() {
-    if (!this.newsfeedService.userPlaying && this.player) {
-      this.player.stop();
-      this.autoplaying = false;
-    }
-  }
-
-  userPlay() {
-    const user = this.session.getLoggedInUser();
-    if (user.plus && user.autoplay_videos) {
-      this.newsfeedService.userPlaying = this.player;
-    }
   }
 
   ngOnInit() {
@@ -262,30 +214,12 @@ export class Activity implements OnInit, AfterViewInit {
     this.loadBlockedUsers();
   }
 
-  ngAfterViewInit() {
-    const user = this.session.getLoggedInUser();
-    if (user.plus && user.autoplay_videos) {
-      if (this.activity.custom_type === 'video') {
-        this.activityVideoAutoplayService
-          .setEnabled(this.visibilityEvents)
-          .setElementRef(this.elementRef)
-          .onView(activity => {
-            this.tryAutoplay();
-          })
-          .onStopViewing(activity => {
-            this.stopPlaying();
-          });
-      }
-    }
-  }
-
   set object(value: any) {
     if (!value) return;
     this.activity = value;
     this.activity.url = this.siteUrl + 'newsfeed/' + value.guid;
 
     this.activityAnalyticsOnViewService.setEntity(this.activity);
-    this.activityVideoAutoplayService.setEntity(this.activity);
 
     if (
       this.activity.custom_type === 'batch' &&
@@ -322,7 +256,7 @@ export class Activity implements OnInit, AfterViewInit {
   }
 
   getOwnerIconTime() {
-    const session = this.session.getLoggedInUser();
+    let session = this.session.getLoggedInUser();
     if (session && session.guid === this.activity.ownerObj.guid) {
       return session.icontime;
     } else {
