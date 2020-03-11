@@ -400,6 +400,7 @@ const routes: Routes = [
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
     NestedMenuComponent,
+    MarketingFooterComponent,
     StackableModalComponent,
   ],
   providers: [

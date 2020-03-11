@@ -842,6 +842,11 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     if (this.contentType !== 'video' && this.contentType !== 'rich-embed') {
       this.entity.mature_visibility = !this.entity.mature_visibility;
     } else {
+      // Don't allow to toggle overlay back on if it was
+      // removed before it was opened in the media modal
+      if (this.attachment.isForcefullyShown(this.entity)) {
+        this.canToggleMatureVideoOverlay = false;
+      }
       // Toggle-ability of video player overlay is disabled
       // after one toggle so that users can access video controls
       if (this.canToggleMatureVideoOverlay) {

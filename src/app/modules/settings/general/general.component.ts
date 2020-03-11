@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   selector: 'm-settings--general',
   templateUrl: 'general.component.html',
 })
-export class SettingsGeneralComponent {
+export class SettingsGeneralComponent implements OnInit, OnDestroy {
   settings: string;
 
   error: string = '';
@@ -28,6 +28,7 @@ export class SettingsGeneralComponent {
   enabled_mails: boolean = true;
   toaster_notifications: boolean = true;
   show_share_buttons: boolean = true;
+  autoplay_videos: boolean = false;
 
   password: string;
   password1: string;
@@ -54,7 +55,7 @@ export class SettingsGeneralComponent {
 
   ngOnInit() {
     this.languages = [];
-    for (let code in this.configs.get('languages')) {
+    for (const code in this.configs.get('languages')) {
       if (this.configs.get('languages').hasOwnProperty(code)) {
         this.languages.push({
           code,
@@ -104,6 +105,7 @@ export class SettingsGeneralComponent {
       this.openSessions = response.channel.open_sessions || 1;
       this.toaster_notifications = response.channel.toaster_notifications;
       this.show_share_buttons = !response.channel.hide_share_buttons;
+      this.autoplay_videos = response.channel.autoplay_videos;
 
       this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
 
@@ -161,6 +163,7 @@ export class SettingsGeneralComponent {
         categories: this.selectedCategories,
         toaster_notifications: this.toaster_notifications,
         hide_share_buttons: !this.show_share_buttons,
+        autoplay_videos: this.autoplay_videos,
       })
       .then((response: any) => {
         this.changed = false;
@@ -184,6 +187,7 @@ export class SettingsGeneralComponent {
         }
 
         user.toaster_notifications = this.toaster_notifications;
+        user.autoplay_videos = this.autoplay_videos;
 
         this.inProgress = false;
       })

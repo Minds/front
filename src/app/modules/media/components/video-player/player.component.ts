@@ -1,29 +1,29 @@
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
+  EventEmitter,
+  Inject,
+  Input,
   OnDestroy,
   OnChanges,
-  Input,
-  ViewChild,
   Output,
-  EventEmitter,
-  ChangeDetectorRef,
-  Inject,
   PLATFORM_ID,
-  AfterViewInit,
+  ViewChild,
 } from '@angular/core';
 import { PLAYER_ANIMATIONS } from './player.animations';
-import { VideoPlayerService, VideoSource } from './player.service';
-import isMobile from '../../../../helpers/is-mobile';
+import { VideoPlayerService } from './player.service';
 import Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
-import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { Session } from '../../../../services/session';
 
 @Component({
   selector: 'm-videoPlayer',
   templateUrl: 'player.component.html',
   animations: PLAYER_ANIMATIONS,
-  providers: [VideoPlayerService],
+  providers: [VideoPlayerService, Session],
 })
 export class MindsVideoPlayerComponent
   implements OnChanges, OnDestroy, AfterViewInit {
@@ -46,7 +46,13 @@ export class MindsVideoPlayerComponent
   /**
    * This is the video player component
    */
-  @ViewChild(PlyrComponent, { static: false }) player: PlyrComponent;
+  player: PlyrComponent;
+
+  @ViewChild(PlyrComponent, { static: false }) set _player(
+    player: PlyrComponent
+  ) {
+    this.player = player;
+  }
 
   /**
    * BehaviorSubject holding autoplay value
@@ -130,6 +136,8 @@ export class MindsVideoPlayerComponent
     this.service.setShouldPlayInModal(shouldPlayInModal);
   }
 
+  @Input() autoplaying: boolean = false;
+
   get poster(): string {
     return this.service.poster;
   }
@@ -173,6 +181,47 @@ export class MindsVideoPlayerComponent
     console.error('Placeholder was clicked but we have no action to take');
   }
 
+  onOverlayClick(e: MouseEvent): void {
+    if (this.player) {
+      this.unmute();
+
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  }
+
+  unmute(): void {
+    if (this.player) {
+      this.player.player.muted = false;
+    }
+  }
+
+  mute(): void {
+    if (this.player) {
+      this.player.player.muted = true;
+    }
+  }
+
+  isMuted(): boolean {
+    return this.player ? this.player.player.muted : false;
+  }
+
+  play(): void {
+    if (this.player) {
+      this.player.player.play();
+    }
+  }
+
+  isPlaying(): boolean {
+    return this.player ? this.player.player.playing : false;
+  }
+
+  stop(): void {
+    if (this.player) {
+      this.player.player.stop();
+    }
+  }
+
   /**
    * Pause the player, if there is one
    * @return void
@@ -180,7 +229,6 @@ export class MindsVideoPlayerComponent
   pause(): void {
     if (this.player) {
       this.player.player.pause();
-      return;
     }
   }
 
