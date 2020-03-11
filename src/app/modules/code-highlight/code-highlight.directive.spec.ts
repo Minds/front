@@ -11,25 +11,11 @@ import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 
 @Component({
   template: `
-  <div m-code-highlight>
-    <div class="${CodeHighlightService.moduleWrapperClass}" data-language="javascript">
-      console.log('foo');
+    <div m-code-highlight>
+      Some other text
+      <pre><code class="language-javascript">console.log('foo');</code></pre>
+      <pre><code class="language-php">echo 'hi';</code></pre>
     </div>
-    <div class="${CodeHighlightService.moduleWrapperClass}" data-language="php">
-      <?php echo '<p>Hello World</p>'; ?>
-    </div>
-    <div class="${CodeHighlightService.moduleWrapperClass}" data-language="auto">
-      console.log('foo');
-    </div>
-    <div class="${CodeHighlightService.moduleWrapperClass}">
-      console.log('foo');
-    </div>
-    <div>
-      console.log('foo');
-    </div>
-    <pre><code class="language-javascript">console.log('foo');</code></pre>
-    <pre><code class="language-php">echo 'hi';</code></pre>
-  </div>
   `,
 })
 class MockComponent {}
@@ -37,7 +23,6 @@ class MockComponent {}
 describe('CodeHighlightDirective', () => {
   let fixture: ComponentFixture<MockComponent>;
   let directiveElement: DebugElement;
-  let moduleWrappers: DebugElement[];
 
   const createComponent = (providers: Provider[] = []) => {
     fixture = TestBed.configureTestingModule({
@@ -49,6 +34,10 @@ describe('CodeHighlightDirective', () => {
     }).createComponent(MockComponent);
 
     fixture.detectChanges();
+
+    directiveElement = fixture.debugElement.query(
+      By.directive(CodeHighlightDirective)
+    );
   };
 
   describe('when feature enabled', () => {
@@ -58,13 +47,6 @@ describe('CodeHighlightDirective', () => {
       createComponent([
         { provide: FeaturesService, useValue: featuresServiceMock },
       ]);
-
-      directiveElement = fixture.debugElement.query(
-        By.directive(CodeHighlightDirective)
-      );
-      moduleWrappers = directiveElement.queryAll(
-        By.css(`div.${CodeHighlightService.moduleWrapperClass}`)
-      );
     });
 
     afterEach(() => {
@@ -72,71 +54,6 @@ describe('CodeHighlightDirective', () => {
     });
 
     it('should highlight code blocks', () => {
-      const moduleWrapper = moduleWrappers[0].nativeElement;
-      const pre = moduleWrapper.children[0];
-
-      expect(pre.tagName.toLowerCase()).toBe('pre');
-      expect(pre.children.length).toBe(1);
-
-      const code = pre.children[0];
-
-      expect(code.tagName.toLowerCase()).toBe('code');
-      expect(code.classList).toContain('language-javascript');
-
-      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-        moduleWrapper
-      );
-    });
-
-    it('should highlight multiple child code blocks with different languages', () => {
-      const moduleWrapper = moduleWrappers[1].nativeElement;
-      const pre = moduleWrapper.children[0];
-      const code = pre.children[0];
-
-      expect(code.classList).toContain('language-php');
-
-      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-        moduleWrapper
-      );
-    });
-
-    it('should automatically highlight when language hint is set to auto', () => {
-      const moduleWrapper = moduleWrappers[2].nativeElement;
-      const pre = moduleWrapper.children[0];
-      const code = pre.children[0];
-
-      expect(code.classList.length).toBe(0);
-
-      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-        moduleWrapper
-      );
-    });
-
-    it('should automatically highlight when no language hint is present', () => {
-      const moduleWrapper = moduleWrappers[3].nativeElement;
-      const pre = moduleWrapper.children[0];
-      const code = pre.children[0];
-
-      expect(code.classList.length).toBe(0);
-
-      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-        moduleWrapper
-      );
-    });
-
-    it('should not highlight text as code when no module wrapper class is present', () => {
-      const bareWrapper = directiveElement.query(
-        By.css(`div:not(.${CodeHighlightService.moduleWrapperClass})`)
-      ).nativeElement;
-
-      expect(bareWrapper.children.length).toBe(0);
-
-      expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
-        bareWrapper
-      );
-    });
-
-    it('should also highlight unwrapped code blocks', () => {
       const pre = directiveElement.queryAll(By.css(`pre`));
 
       expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
@@ -155,13 +72,6 @@ describe('CodeHighlightDirective', () => {
       createComponent([
         { provide: FeaturesService, useValue: featuresServiceMock },
       ]);
-
-      directiveElement = fixture.debugElement.query(
-        By.directive(CodeHighlightDirective)
-      );
-      moduleWrappers = directiveElement.queryAll(
-        By.css(`div.${CodeHighlightService.moduleWrapperClass}`)
-      );
     });
 
     afterEach(() => {
@@ -169,9 +79,14 @@ describe('CodeHighlightDirective', () => {
     });
 
     it("shouldn't highlight when feature is disabled", () => {
-      const moduleWrapper = moduleWrappers[0].nativeElement;
+      const pre = directiveElement.queryAll(By.css(`pre`));
 
-      expect(moduleWrapper.children.length).toBe(0);
+      expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
+        pre[0].nativeElement
+      );
+      expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
+        pre[1].nativeElement
+      );
     });
   });
 });
