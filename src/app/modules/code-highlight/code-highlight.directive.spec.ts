@@ -27,6 +27,8 @@ import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
     <div>
       console.log('foo');
     </div>
+    <pre><code class="language-javascript">console.log('foo');</code></pre>
+    <pre><code class="language-php">echo 'hi';</code></pre>
   </div>
   `,
 })
@@ -131,6 +133,17 @@ describe('CodeHighlightDirective', () => {
 
       expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
         bareWrapper
+      );
+    });
+
+    it('should also highlight unwrapped code blocks', () => {
+      const pre = directiveElement.queryAll(By.css(`pre`));
+
+      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
+        pre[0].nativeElement
+      );
+      expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
+        pre[1].nativeElement
       );
     });
   });

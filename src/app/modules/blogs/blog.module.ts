@@ -23,6 +23,7 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { BlogEditorComponent } from './ckeditor/editor/editor.component';
+import { CodeHighlightModule } from '../code-highlight/code-highlight.module';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
@@ -56,6 +57,7 @@ const routes: Routes = [
     HashtagsModule,
     ModalsModule,
     CKEditorModule,
+    CodeHighlightModule,
   ],
   declarations: [
     BlogView,

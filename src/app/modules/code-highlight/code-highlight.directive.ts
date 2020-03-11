@@ -19,17 +19,23 @@ export class CodeHighlightDirective implements AfterViewInit {
       return;
     }
 
-    const codeWrapperNodes = this.element.nativeElement.querySelectorAll(
+    this.highlightBlocks(this.element.nativeElement.querySelectorAll('pre'));
+
+    const moduleWrappedNodes = this.element.nativeElement.querySelectorAll(
       `.${CodeHighlightService.moduleWrapperClass}`
     );
 
-    for (let i = 0; i < codeWrapperNodes.length; ++i) {
+    this.highlightBlocks(this.transformModuleWrappedNodes(moduleWrappedNodes));
+  }
+
+  transformModuleWrappedNodes(wrappedNodes) {
+    for (let i = 0; i < wrappedNodes.length; ++i) {
       const codeNode = document.createElement('code');
       codeNode.appendChild(
-        document.createTextNode(codeWrapperNodes[i].textContent)
+        document.createTextNode(wrappedNodes[i].textContent)
       );
 
-      const languageHint = codeWrapperNodes[i].dataset['language'];
+      const languageHint = wrappedNodes[i].dataset['language'];
 
       if (languageHint && languageHint !== 'auto') {
         codeNode.classList.add(`language-${languageHint}`);
@@ -38,12 +44,18 @@ export class CodeHighlightDirective implements AfterViewInit {
       const preNode = document.createElement('pre');
       preNode.appendChild(codeNode);
 
-      while (codeWrapperNodes[i].firstChild) {
-        codeWrapperNodes[i].firstChild.remove();
+      while (wrappedNodes[i].firstChild) {
+        wrappedNodes[i].firstChild.remove();
       }
-      codeWrapperNodes[i].appendChild(preNode);
+      wrappedNodes[i].appendChild(preNode);
+    }
 
-      this.codeHighlightService.highlightBlock(codeWrapperNodes[i]);
+    return wrappedNodes;
+  }
+
+  highlightBlocks(blocks) {
+    for (let i = 0; i < blocks.length; i++) {
+      this.codeHighlightService.highlightBlock(blocks[i]);
     }
   }
 }
