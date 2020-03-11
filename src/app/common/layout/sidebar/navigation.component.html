@@ -16,18 +16,23 @@
       <i class="material-icons" (click)="toggle()">close</i>
     </div>
 
-    <div class="m-sidebarNavigation__user" *ngIf="user">
-      <a [routerLink]="['/' + user.username]" (click)="toggle()">
-        <img
-          [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
-          alt=""
-        />
-        <ng-container *ngIf="layoutMode === 'desktop'">
-          @{{ user.username }}
-        </ng-container>
-      </a>
-    </div>
     <ul>
+      <li *ngIf="user">
+        <a
+          class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
+          [routerLink]="['/' + user.username]"
+          (click)="toggle()"
+        >
+          <img
+            [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
+            alt=""
+          />
+          <span class="m-sidebarNavigationItem__text">
+            @{{ user.username }}
+          </span>
+        </a>
+      </li>
+
       <li>
         <a
           class="m-sidebarNavigation__item"
@@ -44,11 +49,7 @@
             Newsfeed
           </m-tooltip>
 
-          <span
-            class="m-sidebarNavigationItem__text"
-            *ngIf="layoutMode !== 'tablet'"
-            i18n
-          >
+          <span class="m-sidebarNavigationItem__text" i18n>
             Newsfeed
           </span>
         </a>
@@ -70,11 +71,7 @@
             Discovery
           </m-tooltip>
 
-          <span
-            class="m-sidebarNavigationItem__text"
-            *ngIf="layoutMode !== 'tablet'"
-            i18n
-          >
+          <span class="m-sidebarNavigationItem__text" i18n>
             Discovery
           </span>
         </a>
@@ -95,11 +92,7 @@
             Wallet
           </m-tooltip>
 
-          <span
-            class="m-sidebarNavigationItem__text"
-            *ngIf="layoutMode !== 'tablet'"
-            i18n
-          >
+          <span class="m-sidebarNavigationItem__text" i18n>
             Wallet
           </span>
         </a>
@@ -119,11 +112,7 @@
           >
             Analytics
           </m-tooltip>
-          <span
-            class="m-sidebarNavigationItem__text"
-            *ngIf="layoutMode !== 'tablet'"
-            i18n
-          >
+          <span class="m-sidebarNavigationItem__text" i18n>
             Analytics
           </span>
         </a>
@@ -144,11 +133,7 @@
             Settings
           </m-tooltip>
 
-          <span
-            class="m-sidebarNavigationItem__text"
-            *ngIf="layoutMode !== 'tablet'"
-            i18n
-          >
+          <span class="m-sidebarNavigationItem__text" i18n>
             Settings
           </span>
         </a>

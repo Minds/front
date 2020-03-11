@@ -8,7 +8,7 @@
   align-items: center;
 
   @media screen and(max-width: $m-grid-max-mobile) {
-    margin-left: 23px;
+    // margin-left: 23px;
   }
 
   &.m-v3Topbar__leftColumn__rightAlign {
@@ -56,8 +56,8 @@
 
   @media screen and (max-width: 900px) {
     // Markers sidebar
-    width: 100%;
-    padding-right: 20px;
+    // width: 100%;
+    //padding-right: 20px;
   }
 
   &.m-v3Topbar__noBackground {
@@ -247,11 +247,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-
-  @media screen and (max-width: 810px) {
-    width: 100%;
-    justify-content: space-between;
-  }
 }
 
 .m-v3TopbarNav__item {
@@ -300,19 +295,28 @@
       display: none;
     }
   }
-}
 
-.m-v3TopbarNavItem__logo {
-  margin: 0 8px 0 0;
-  padding: 0;
-  //height: 62px;
-  box-sizing: border-box;
-  border: 0;
-  cursor: pointer;
-  transition: opacity 0.5s ease;
+  &.m-v3TopbarNav__item--logo {
+    margin: 0 8px 0 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+    cursor: pointer;
+    transition: opacity 0.5s ease;
 
-  img {
-    height: 36px;
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+
+    img {
+      height: 36px;
+    }
+  }
+
+  &.m-v3TopbarNav__item--hamburger {
+    @media screen and (min-width: $max-mobile) {
+      display: none;
+    }
   }
 }
 
