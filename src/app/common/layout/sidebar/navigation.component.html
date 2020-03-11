@@ -45,6 +45,8 @@
             icon="home"
             i18n="@@COMMON__NEWSFEED"
             [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
           >
             Newsfeed
           </m-tooltip>
@@ -66,6 +68,8 @@
           <m-tooltip
             i18n="@@COMMON__DISCOVER"
             [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
           >
             <i class="m-icon--hashtag" m-tooltip--anchor>#</i>
             Discovery
@@ -88,6 +92,8 @@
             iconSrc="assets/icons/wire.svg"
             i18n="@@COMMON__WALLET"
             [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
           >
             Wallet
           </m-tooltip>
@@ -109,6 +115,8 @@
             icon="insert_chart"
             i18n="@@COMMON__ANALYTICS"
             [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
           >
             Analytics
           </m-tooltip>
@@ -129,6 +137,8 @@
             icon="more_horiz"
             i18n="@@COMMON__SETTINGS"
             [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
           >
             Settings
           </m-tooltip>
