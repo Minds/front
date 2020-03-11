@@ -13,7 +13,7 @@
       <div
         class="m-form__row--input"
         [ngClass]="{
-          invalid: form.invalid
+          invalid: (form.touched || form.dirty) && form.invalid
         }"
       >
         <input
@@ -22,11 +22,11 @@
           name="name"
           formControlName="name"
           class="form-control"
-          [readonly]="inProgress"
+          [readonly]="inProgress || !init"
         />
       </div>
       <div class="m-form__row--validation">
-        <p *ngIf="form.invalid">
+        <p *ngIf="(form.touched || form.dirty) && form.invalid">
           Display name required.
         </p>
       </div>

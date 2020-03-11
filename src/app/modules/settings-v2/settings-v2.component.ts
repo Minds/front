@@ -3,7 +3,12 @@ import { NestedMenu } from '../../common/layout/nested-menu/nested-menu.componen
 import { Session } from '../../services/session';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { SettingsV2Service } from './settings-v2.service';
+import { FormToastService } from '../../common/services/form-toast.service';
 
+/** Main component that determines what form/menu
+ * should be displayed in the settings-v2 module
+ */
 @Component({
   selector: 'm-settingsV2',
   templateUrl: './settings-v2.component.html',
@@ -37,7 +42,7 @@ export class SettingsV2Component implements OnInit {
           id: 'account',
         },
         items: [
-          // TODOOJM get this from routes?
+          // TODOOJM ok to get this from routes?
           { label: 'Display Name', id: 'display-name' },
           { label: 'Email Address', id: 'email-address' },
           { label: 'Display Language', id: 'display-language' },
@@ -131,7 +136,9 @@ export class SettingsV2Component implements OnInit {
   constructor(
     public router: Router,
     private route: ActivatedRoute,
-    protected session: Session
+    protected session: Session,
+    protected settingsService: SettingsV2Service,
+    protected formToastService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -143,10 +150,6 @@ export class SettingsV2Component implements OnInit {
       this.mainMenus[0].items.splice(1, 0, { label: 'Pro', id: 'pro' });
     }
 
-    // TODOOJM
-    // Initialize settings$
-    // this.settingsService.loadSettings(this.session.getLoggedInUser().guid);
-
     this.route.url.subscribe(url => {
       this.menuHeaderId = url[0].path;
     });
@@ -155,13 +158,20 @@ export class SettingsV2Component implements OnInit {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(event => {
-        this.setupSecondaryPanel();
+        this.setSecondaryPanel();
       });
 
-    this.setupSecondaryPanel();
+    this.setSecondaryPanel();
+    this.load();
   }
 
-  setupSecondaryPanel(): void {
+  async load(): Promise<void> {
+    // Initialize settings$
+    this.settingsService.loadSettings(this.session.getLoggedInUser().guid);
+    this.init = true;
+  }
+
+  setSecondaryPanel(): void {
     this.secondaryPanelIsMenu = false;
     let snapshot = this.route.snapshot;
     if (snapshot.firstChild && snapshot.firstChild.data['title']) {
@@ -172,7 +182,21 @@ export class SettingsV2Component implements OnInit {
       }
     }
     this.routeData = snapshot.data;
-    this.init = true;
+  }
+
+  /** Subscribe to output events from components
+   * activated from within the router outlet
+   */
+  onActivate(elementRef): void {
+    if (elementRef.formSubmitted) {
+      elementRef.formSubmitted.subscribe($event => {
+        if ($event.formSubmitted) {
+          this.formToastService.success('Changes saved');
+        } else {
+          this.formToastService.error($event.error || 'Save error');
+        }
+      });
+    }
   }
 
   goBack(): void {

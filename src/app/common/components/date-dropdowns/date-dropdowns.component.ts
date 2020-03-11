@@ -5,6 +5,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   template: `
     <div class="m-dateDropdowns__selectWrapper">
       <select
+        class="m-dateDropdowns__select"
         data-minds="monthDropdown"
         [ngModel]="selectedMonth"
         (ngModelChange)="selectMonth($event)"
@@ -14,6 +15,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
     </div>
     <div class="m-dateDropdowns__selectWrapper">
       <select
+        class="m-dateDropdowns__select"
         data-minds="dayDropdown"
         [ngModel]="selectedDay"
         (ngModelChange)="selectDay($event)"
@@ -23,6 +25,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
     </div>
     <div class="m-dateDropdowns__selectWrapper">
       <select
+        class="m-dateDropdowns__select"
         data-minds="yearDropdown"
         [ngModel]="selectedYear"
         (ngModelChange)="selectYear($event)"

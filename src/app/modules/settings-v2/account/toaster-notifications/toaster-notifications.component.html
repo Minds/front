@@ -1,0 +1,23 @@
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--checkbox stretchedField">
+      <div class="m-form__row--input">
+        <m-formInput__checkbox
+          formControlName="toasterNotifications"
+          class="form-control"
+        >
+          Enable toaster notifications
+        </m-formInput__checkbox>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="update()"
+    >
+      Update Toaster Preference
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

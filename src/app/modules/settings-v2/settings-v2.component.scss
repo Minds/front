@@ -31,6 +31,7 @@ m-settingsV2 {
     font-size: 16px;
     line-height: 21px;
     margin-top: 29px;
+    margin-bottom: 48px;
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
@@ -111,11 +112,65 @@ m-settingsV2 {
         font-size: 15px;
         line-height: 20px;
       }
+      a {
+        font-weight: inherit;
+        text-decoration: none;
+        @include m-theme() {
+          color: themed($m-link);
+        }
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
-    .m-formWrapper .m-form__fieldsContainer input {
+    .m-formWrapper .m-form__fieldsContainer {
+      input,
+      select {
+        @include m-theme() {
+          box-shadow: none;
+        }
+      }
+    }
+
+    m-settingsV2__password {
+      .m-form__field--text {
+        &:first-child {
+          margin-bottom: 48px;
+        }
+      }
+    }
+
+    m-popover {
+      width: 100%;
+      .m-popover__content {
+        margin-top: 1.5rem;
+      }
+      input {
+        width: 100%;
+      }
+    }
+    .m-formInput__checkbox {
+      font-size: 15px;
+      line-height: 20px;
       @include m-theme() {
-        box-shadow: none;
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-formLayout--buttonLeft {
+      .m-form__buttonsContainer {
+        margin-top: 35px;
+      }
+    }
+
+    // TODOOJM remove after cleanup of transplant components
+    .m-settings--section {
+      input {
+        width: 100%;
+      }
+      h4 {
+        display: none;
       }
     }
   }

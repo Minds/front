@@ -47,7 +47,7 @@ const settingsRoutes: Routes = [
       { path: 'tiers', component: SettingsTiersComponent },
     ],
   },
-  { path: 'settings/canary', component: SettingsV2Component },
+  // { path: 'settings/canary', component: SettingsV2Component },
 ];
 
 @NgModule({
@@ -64,7 +64,7 @@ const settingsRoutes: Routes = [
     PaymentsModule,
     WireModule,
     ReferralsModule,
-    SettingsV2Module,
+    // SettingsV2Module,
   ],
   declarations: [
     SettingsComponent,
@@ -85,6 +85,12 @@ const settingsRoutes: Routes = [
   exports: [
     SettingsBillingSavedCardsComponent,
     SettingsBillingSubscriptionsComponent,
+    SettingsTwoFactorComponent,
+    SettingsSubscriptionsComponent,
+    SettingsReportedContentComponent,
+    SettingsWireComponent,
+    SettingsBlockedChannelsComponent,
+    SettingsTiersComponent,
   ],
 })
 export class SettingsModule {}

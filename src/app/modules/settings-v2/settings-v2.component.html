@@ -5,7 +5,6 @@
     [menus]="mainMenus"
     (itemSelected)="showMainMenuOnMobile = false"
   ></m-nestedMenu>
-  <!-- <router-outlet></router-outlet> -->
   <div
     *ngIf="init"
     class="m-settingsV2__secondaryPanel"
@@ -32,7 +31,8 @@
         <div class="m-settingsV2__viewWrapper">
           <div class="m-settingsV2__desc">{{ routeData?.description }}</div>
           <div class="m-formWrapper">
-            <router-outlet></router-outlet>
+            <router-outlet (activate)="onActivate($event)"></router-outlet>
+            <!-- <router-outlet></router-outlet> -->
           </div>
         </div>
       </div>

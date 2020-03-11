@@ -3,30 +3,34 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
-
-import { FormToastService } from '../../../../common/services/form-toast.service';
-import { SettingsV2Service } from '../../settings-v2.service';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
+
+import { SettingsV2Service } from '../../settings-v2.service';
+
 @Component({
   selector: 'm-settingsV2__displayName',
   templateUrl: './display-name.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2DisplayNameComponent implements OnInit {
+export class SettingsV2DisplayNameComponent implements OnInit, OnDestroy {
+  @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
+  init: boolean = false;
   inProgress: boolean = false;
-  currentName: string;
   user: MindsUser;
+  settingsSubscription: Subscription;
   form;
 
   constructor(
     protected cd: ChangeDetectorRef,
-    private formToastService: FormToastService,
     private session: Session,
     protected settingsService: SettingsV2Service,
     private dialogService: DialogService
@@ -34,30 +38,22 @@ export class SettingsV2DisplayNameComponent implements OnInit {
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
-    this.currentName = this.user.name;
-    // TODOOJM
-    // this.settingsService.settings$.subscribe(
-    //   (settings: EditableUserSettings) => {
-    //     this.currentName = settings.name;
-    //     this.detectChanges();
-    //   }
-    // );
-
     this.form = new FormGroup({
-      name: new FormControl(this.currentName, {
+      name: new FormControl('', {
         validators: [Validators.required],
       }),
     });
-    // this.load();
+
+    this.settingsSubscription = this.settingsService.settings$.subscribe(
+      (settings: any) => {
+        this.name.setValue(settings.name);
+        this.detectChanges();
+      }
+    );
+
+    this.init = true;
+    this.detectChanges();
   }
-
-  // async load() {
-  //   this.inProgress = true;
-  //   this.detectChanges();
-
-  //   this.inProgress = false;
-  //   this.detectChanges();
-  // }
 
   async update() {
     if (!this.canSubmit()) {
@@ -67,30 +63,21 @@ export class SettingsV2DisplayNameComponent implements OnInit {
       this.inProgress = true;
       this.detectChanges();
 
-      await this.settingsService.loadSettings(this.user.guid);
-
       const response: any = await this.settingsService.updateSettings(
         this.user.guid,
         this.form.value
       );
       if (response.status === 'success') {
-        this.formToastService.success('Display name saved');
-        this._markFormPristine();
         this.user.name = this.name;
+        this.formSubmitted.emit({ formSubmitted: true });
+        this.form.reset();
       }
     } catch (e) {
-      this.formToastService.error(e);
+      this.formSubmitted.emit({ formSubmitted: false, error: e });
     } finally {
       this.inProgress = false;
-
       this.detectChanges();
     }
-  }
-
-  private _markFormPristine(): void {
-    Object.keys(this.form.controls).forEach(control => {
-      this.form.controls[control].markAsPristine();
-    });
   }
 
   canDeactivate(): Observable<boolean> | boolean {
@@ -108,6 +95,12 @@ export class SettingsV2DisplayNameComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  ngOnDestroy() {
+    if (this.settingsSubscription) {
+      this.settingsSubscription.unsubscribe();
+    }
   }
 
   get name() {

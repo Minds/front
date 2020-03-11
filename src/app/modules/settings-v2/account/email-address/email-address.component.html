@@ -7,7 +7,7 @@
       <div
         class="m-form__row--input"
         [ngClass]="{
-          invalid: form.invalid
+          invalid: (form.touched || form.dirty) && form.invalid
         }"
       >
         <input
@@ -16,16 +16,15 @@
           name="email"
           formControlName="email"
           class="form-control"
-          email
-          [readonly]="inProgress"
+          [readonly]="inProgress || !init"
         />
       </div>
       <div class="m-form__row--validation">
-        <p *ngIf="form.invalid">
-          Invalid email address.
-        </p>
-        <p *ngIf="email.hasError('required')">
+        <p *ngIf="(form.touched || form.dirty) && email.hasError('email')">
           Invalid email address
+        </p>
+        <p *ngIf="(form.touched || form.dirty) && email.hasError('required')">
+          Email address required
         </p>
       </div>
     </div>

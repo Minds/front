@@ -3,52 +3,55 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
-
-import { FormToastService } from '../../../../common/services/form-toast.service';
-import { SettingsV2Service } from '../../settings-v2.service';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { MindsUser } from '../../../../interfaces/entities';
+
+import { SettingsV2Service } from '../../settings-v2.service';
 
 @Component({
   selector: 'm-settingsV2__emailAddress',
   templateUrl: './email-address.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2EmailAddressComponent implements OnInit {
+export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
+  @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
+  init: boolean = false;
   inProgress: boolean = false;
-  guid;
+  user: MindsUser;
+  settingsSubscription: Subscription;
   form;
 
   constructor(
     protected cd: ChangeDetectorRef,
-    private formToastService: FormToastService,
     private session: Session,
     protected settingsService: SettingsV2Service,
     private dialogService: DialogService
   ) {}
 
   ngOnInit() {
-    this.guid = this.session.getLoggedInUser().guid;
-    this.load();
-  }
-
-  async load() {
-    this.inProgress = true;
-    this.detectChanges();
-
-    const response: any = await this.settingsService.loadSettings(this.guid);
-    const email = response.channel.email;
-
+    this.user = this.session.getLoggedInUser();
     this.form = new FormGroup({
-      email: new FormControl(email, {
-        validators: [Validators.required],
+      email: new FormControl('', {
+        validators: [Validators.required, Validators.email],
       }),
     });
-    this.inProgress = false;
+
+    this.settingsSubscription = this.settingsService.settings$.subscribe(
+      (settings: any) => {
+        this.email.setValue(settings.email);
+        this.detectChanges();
+      }
+    );
+
+    this.init = true;
     this.detectChanges();
   }
 
@@ -60,29 +63,20 @@ export class SettingsV2EmailAddressComponent implements OnInit {
       this.inProgress = true;
       this.detectChanges();
 
-      this.settingsService.loadSettings(this.guid);
-
       const response: any = await this.settingsService.updateSettings(
-        this.guid,
+        this.user.guid,
         this.form.value
       );
       if (response.status === 'success') {
-        this.formToastService.success('Email address saved');
-        this._markFormPristine();
+        this.formSubmitted.emit({ formSubmitted: true });
+        this.form.reset();
       }
     } catch (e) {
-      this.formToastService.error(e);
+      this.formSubmitted.emit({ formSubmitted: false, error: e });
     } finally {
       this.inProgress = false;
-
       this.detectChanges();
     }
-  }
-
-  private _markFormPristine(): void {
-    Object.keys(this.form.controls).forEach(control => {
-      this.form.controls[control].markAsPristine();
-    });
   }
 
   canDeactivate(): Observable<boolean> | boolean {
@@ -100,6 +94,12 @@ export class SettingsV2EmailAddressComponent implements OnInit {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  ngOnDestroy() {
+    if (this.settingsSubscription) {
+      this.settingsSubscription.unsubscribe();
+    }
   }
 
   get email() {

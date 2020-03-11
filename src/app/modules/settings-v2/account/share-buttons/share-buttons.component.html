@@ -1,1 +1,23 @@
-<p>share-buttons works!</p>
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--checkbox stretchedField">
+      <div class="m-form__row--input">
+        <m-formInput__checkbox
+          formControlName="showButtons"
+          class="form-control"
+        >
+          Show share buttons
+        </m-formInput__checkbox>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="update()"
+    >
+      Update Preference
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

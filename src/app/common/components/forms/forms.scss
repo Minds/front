@@ -27,6 +27,8 @@
       input:not(.m-phoneInput__input),
       minds-country-input,
       m-phoneInput,
+      .m-dateDropdowns__selectWrapper,
+      select:not(.m-dateDropdowns__select),
       .m-form__row--validation {
         flex: 1 1 calc(100% - 160px);
         min-width: calc(100% - 160px);
@@ -67,6 +69,11 @@
           right: 12px;
         }
       }
+    }
+  }
+  .m-formLayout--buttonLeft {
+    .m-form__buttonsContainer {
+      justify-content: flex-start;
     }
   }
 
@@ -188,6 +195,7 @@
       flex-flow: row nowrap;
       &.invalid {
         input,
+        select,
         .m-phoneInput__wrapper {
           @include m-theme() {
             border-color: themed($m-alert) !important;
@@ -202,11 +210,20 @@
     .m-form__row--validation {
       flex: 1 1 auto;
     }
-    input {
+    input,
+    select:not(.m-dateDropdowns__select) {
       flex: 1 1 100%;
     }
   }
   input {
+    cursor: text;
+  }
+  select {
+    cursor: pointer;
+  }
+
+  input,
+  select {
     outline: 0;
     font-size: 15px;
     line-height: 20px;
@@ -215,7 +232,6 @@
     min-width: 0;
     padding: 10px 20px;
     border-radius: 2px;
-    cursor: text;
 
     @include m-theme() {
       color: themed($m-textColor--primary);
@@ -223,7 +239,7 @@
   }
   input:not(.m-phoneInput__input),
   .m-phoneInput__wrapper,
-  minds-country-input select {
+  select {
     border-radius: 2px;
     @include m-theme() {
       box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
@@ -255,6 +271,24 @@
       }
     }
   }
+  .m-form__field--select {
+    .m-form__row--input {
+      &::after {
+        content: '\25bc';
+        font-size: 10px;
+        padding: 10px;
+        position: absolute;
+        right: 0;
+        top: 0;
+        text-align: center;
+        pointer-events: none;
+
+        @include m-theme() {
+          color: themed($m-grey-200);
+        }
+      }
+    }
+  }
 
   .m-form__field--checkbox {
     m-formInput__checkbox {
@@ -268,25 +302,25 @@
     }
   }
 
-  minds-country-input {
-    select {
-      outline: 0;
-      min-height: 42px;
-      padding: 10px 20px;
-      border-radius: 2px;
-      font-size: 15px;
-      line-height: 20px;
-      font-weight: 300;
-      @include m-theme() {
-        background-color: themed($m-white);
-        color: themed($m-textColor--primary);
-      }
+  select:not(.m-dateDropdowns__select) {
+    box-sizing: border-box;
+    outline: 0;
+    min-height: 42px;
+    height: 42px;
+    padding: 10px 20px;
+    border-radius: 2px;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 300;
+    @include m-theme() {
+      background-color: themed($m-white);
+      color: themed($m-textColor--primary);
     }
-    &::before {
-      margin: 3px 4px 0 0;
-      @include m-theme() {
-        color: themed($m-textColor--tertiary);
-      }
+  }
+  &::before {
+    margin: 3px 4px 0 0;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
     }
   }
 
