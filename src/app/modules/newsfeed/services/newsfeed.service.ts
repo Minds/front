@@ -2,16 +2,11 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
-import { MindsVideoPlayerComponent } from '../../media/components/video-player/player.component';
 
 @Injectable()
 export class NewsfeedService {
   allHashtags: boolean = false;
   onReloadFeed: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  userPlaying: MindsVideoPlayerComponent;
-
-  currentlyPlaying: MindsVideoPlayerComponent;
 
   constructor(
     private client: Client,

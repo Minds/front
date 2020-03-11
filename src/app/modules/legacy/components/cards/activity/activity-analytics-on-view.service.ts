@@ -76,20 +76,13 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
       return;
     }
 
-    // top of the element
     const top = this.element.offsetTop;
-    // bottom of the element
     const bottom = top + this.element.offsetHeight;
-    // top of viewport
     const vpTop = this.scroll.view.scrollTop;
-    // bottom of viewport
     const vpBottom = vpTop + this.scroll.view.clientHeight;
-    // it's either the height of the viewport or the height of the element + the viewport's (in case the element's not 100% on screen
     const totalH = Math.max(bottom, vpBottom) - Math.min(top, vpTop);
     const vpComp = totalH - this.scroll.view.clientHeight;
-    // the part of the component (in pixels) that's ON the screen
     const vpEl = this.element.offsetHeight - vpComp;
-    // if vpEl is negative, we set it to 0 (it's not in the screen), otherwise, return the percentage of the component that's visible
     const visible = vpEl <= 0 ? 0 : vpEl / this.element.offsetHeight;
 
     if (visible > 0 && !this.visible) {
