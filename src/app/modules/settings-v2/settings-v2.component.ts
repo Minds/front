@@ -47,9 +47,10 @@ export class SettingsV2Component implements OnInit {
           { label: 'Email Address', id: 'email-address' },
           { label: 'Display Language', id: 'display-language' },
           { label: 'Password', id: 'password' },
-          { label: 'Notifications', id: 'notifications' },
+          { label: 'Notifications', id: 'email-notifications' },
           { label: 'NSFW Content', id: 'nsfw-content' },
           { label: 'Share Buttons', id: 'share-buttons' },
+          { label: 'Toaster Notifications', id: 'toaster-notifications' },
         ],
       },
       {

@@ -122,6 +122,15 @@ const SETTINGS_V2_ROUTES: Routes = [
               description: 'Control whether you see the share button overlay.',
             },
           },
+          {
+            path: 'toaster-notifications',
+            component: SettingsV2ToasterNotificationsComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Toaster Notifications',
+              description: 'Control whether you receive toaster notifications.',
+            },
+          },
           // { path: '**', redirectTo: 'account' },
         ],
       },
