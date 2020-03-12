@@ -4,12 +4,7 @@
       <div class="m-form__row--label">
         <label for="name" i18n>Display Name</label>
       </div>
-      <div
-        class="m-form__row--input"
-        [ngClass]="{
-          invalid: (form.touched || form.dirty) && form.invalid
-        }"
-      >
+      <div class="m-form__row--input">
         <input
           type="text"
           id="name"
@@ -19,11 +14,7 @@
           [readonly]="inProgress || !init"
         />
       </div>
-      <div class="m-form__row--validation">
-        <p *ngIf="(form.touched || form.dirty) && form.invalid">
-          Display name required.
-        </p>
-      </div>
+      <div class="m-form__row--validation"></div>
     </div>
   </div>
   <div class="m-form__buttonsContainer">

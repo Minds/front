@@ -36,6 +36,8 @@ import { SettingsV2DeactivateAccountComponent } from './other/deactivate-account
 import { SettingsV2DeleteAccountComponent } from './other/delete-account/delete-account.component';
 import { SettingsV2ToasterNotificationsComponent } from './account/toaster-notifications/toaster-notifications.component';
 import { WalletV2Module } from '../wallet/v2/wallet-v2.module';
+import { ProModule } from '../pro/pro.module';
+import { ProSettingsComponent } from '../pro/settings/settings.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -128,9 +130,37 @@ const SETTINGS_V2_ROUTES: Routes = [
               description: 'Control whether you receive toaster notifications.',
             },
           },
-          // { path: '**', redirectTo: 'account' },
+          { path: '**', redirectTo: 'account' },
         ],
       },
+      // {
+      //   path: 'pro',
+      //   component: SettingsV2Component,
+      //   data: {
+      //     isMenu: true,
+      //     title: 'Pro Settings',
+      //     description: 'Customize your Pro channel.',
+      //   },
+      //   children: [
+      //     {
+      //       path: 'general',
+      //       component: ProSettingsComponent,
+      //       canDeactivate: [CanDeactivateGuardService],
+      //       data: {
+      //         title: 'General',
+      //         description: 'Customize your title and headline.',
+      //       },
+      //     },
+      //     {
+      //       path: 'theme',
+      //       component: ProSettingsComponent,
+      //       data: {
+      //         title: 'Theme',
+      //         description: "Set up your site's color theme.",
+      //       },
+      //     },
+      //   ],
+      // },
       {
         path: 'security',
         component: SettingsV2Component,
@@ -282,6 +312,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     MindsFormsModule,
     SettingsModule,
     WalletV2Module,
+    ProModule,
   ],
   declarations: [
     SettingsV2Component,

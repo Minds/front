@@ -28,6 +28,7 @@ export class SettingsV2Component implements OnInit {
       },
       items: [
         { label: 'Account', id: 'account' },
+        // { label: 'Pro', id: 'pro' }, // TODOOJM remove this once Pro is testable
         { label: 'Security', id: 'security' },
         { label: 'Billing', id: 'billing' },
         { label: 'Other', id: 'other' },
