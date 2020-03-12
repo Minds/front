@@ -4,12 +4,7 @@ const enginePort = process.env['ENGINE_PORT'] || (engineSecure ? 443 : 80);
 
 const PROXY_CONFIG = [
   {
-    context: [
-      '/api',
-      '/fs',
-      '/icon',
-      '/carousel',
-    ],
+    context: ['/api', '/fs', '/icon', '/carousel'],
     target: {
       protocol: engineSecure ? 'https:' : 'http:',
       host: engineHost,
@@ -17,9 +12,10 @@ const PROXY_CONFIG = [
     },
     secure: false,
     changeOrigin: true,
+    cookieDomainRewrite: '',
     withCredentials: true,
     logLevel: process.env['PROXY_LOG_LEVEL'] || 'info',
-  }
+  },
 ];
 
 module.exports = PROXY_CONFIG;
