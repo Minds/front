@@ -4,7 +4,7 @@
   padding: 24px;
   margin-bottom: 16px;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   h2 {

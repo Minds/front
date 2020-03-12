@@ -27,8 +27,8 @@ m-shadowboxHeader.isScrollable {
   position: relative;
   transition: all 0.3s ease;
   @include m-theme() {
-    border-top: 1px solid rgba(themed($m-grey-200), 0.4);
-    background-color: themed($m-white);
+    border-top: 1px solid rgba(themed($m-borderColor--primary), 0.4);
+    background-color: themed($m-bgColor--secondary);
   }
 }
 .m-shadowboxLayout__footer {

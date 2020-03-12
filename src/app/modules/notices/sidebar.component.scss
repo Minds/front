@@ -43,7 +43,7 @@
   list-style: none;
   overflow: hidden;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 }
 

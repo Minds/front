@@ -34,8 +34,8 @@
     display: block;
     cursor: pointer;
     @include m-theme() {
-      background-color: themed($m-white);
-      color: themed($m-grey-800);
+      background-color: themed($m-bgColor--secondary);
+      color: themed($m-textColor--primary);
     }
 
     .m-messenger--dockpane-tab-title {
@@ -104,8 +104,8 @@
     align-items: center;
 
     @include m-theme() {
-      background-color: themed($m-white);
-      border-bottom: 1px solid themed($m-grey-50);
+      background-color: themed($m-bgColor--secondary);
+      border-bottom: 1px solid themed($m-borderColor--tertiary);
     }
 
     .m-messenger--dockpane-tab-icon {

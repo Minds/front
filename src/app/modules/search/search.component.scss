@@ -22,8 +22,8 @@ m-search--bar {
 
     input {
       @include m-theme() {
-        background-color: themed($m-white);
-        border: 1px solid rgba(themed($m-black), 0.12);
+        background-color: themed($m-bgColor--secondary);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
 
