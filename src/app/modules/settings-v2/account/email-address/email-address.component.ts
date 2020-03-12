@@ -15,6 +15,8 @@ import { Observable, Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/modal.component';
 
 @Component({
   selector: 'm-settingsV2__emailAddress',
@@ -25,15 +27,17 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
-  user: MindsUser;
+  user;
   settingsSubscription: Subscription;
   form;
+  currentEmail: string = '';
 
   constructor(
     protected cd: ChangeDetectorRef,
     private session: Session,
     protected settingsService: SettingsV2Service,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    protected overlayModal: OverlayModalService
   ) {}
 
   ngOnInit() {
@@ -46,6 +50,7 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
 
     this.settingsSubscription = this.settingsService.settings$.subscribe(
       (settings: any) => {
+        this.currentEmail = settings.email;
         this.email.setValue(settings.email);
         this.detectChanges();
       }
@@ -55,10 +60,25 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
-  async update() {
+  save() {
     if (!this.canSubmit()) {
       return;
     }
+
+    const creator = this.overlayModal.create(
+      ConfirmPasswordModalComponent,
+      {},
+      {
+        class: 'm-overlay-modal--small',
+        onComplete: wire => {
+          this.submit();
+        },
+      }
+    );
+    creator.present();
+  }
+
+  async submit() {
     try {
       this.inProgress = true;
       this.detectChanges();
@@ -69,6 +89,7 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
       );
       if (response.status === 'success') {
         this.formSubmitted.emit({ formSubmitted: true });
+        this.user.email_confirmed = false;
         this.form.reset();
       }
     } catch (e) {
@@ -80,7 +101,7 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.form.pristine) {
+    if (this.form.pristine || this.email.value === this.currentEmail) {
       return true;
     }
 
@@ -88,7 +109,8 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
   }
 
   canSubmit(): boolean {
-    return this.form.valid && !this.inProgress && !this.form.pristine;
+    const valChanged = this.email.value !== this.currentEmail;
+    return !this.inProgress && this.form.valid && valChanged;
   }
 
   detectChanges() {

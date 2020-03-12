@@ -3,12 +3,6 @@
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
         <label for="name" i18n>Display Name</label>
-        <m-tooltip [anchor]="tooltipAnchor">
-          <span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n>
-            Placeholder
-          </ng-container>
-        </m-tooltip>
       </div>
       <div
         class="m-form__row--input"
@@ -36,7 +30,7 @@
     <m-shadowboxSubmitButton
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="update()"
+      (click)="submit()"
     >
       Save Display Name
     </m-shadowboxSubmitButton>

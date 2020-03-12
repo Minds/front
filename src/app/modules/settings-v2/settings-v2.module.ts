@@ -35,11 +35,11 @@ import { SettingsV2PostPreviewComponent } from './other/post-preview/post-previe
 import { SettingsV2DeactivateAccountComponent } from './other/deactivate-account/deactivate-account.component';
 import { SettingsV2DeleteAccountComponent } from './other/delete-account/delete-account.component';
 import { SettingsV2ToasterNotificationsComponent } from './account/toaster-notifications/toaster-notifications.component';
+import { WalletV2Module } from '../wallet/v2/wallet-v2.module';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
-    path: 'settings/canary',
-    // component: SettingsV2Component,
+    path: '',
     data: {
       title: 'Settings',
       description: 'Configure your Minds settings',
@@ -52,7 +52,7 @@ const SETTINGS_V2_ROUTES: Routes = [
         component: SettingsV2Component,
         data: {
           isMenu: true,
-          title: 'Account',
+          title: 'Account Settings',
           description: 'Configure your general account settings.',
         },
         children: [
@@ -78,7 +78,6 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'display-language',
             component: SettingsV2DisplayLanguageComponent,
-            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Display Language',
               description: 'Change the web interface language.',
@@ -93,6 +92,24 @@ const SETTINGS_V2_ROUTES: Routes = [
               description: 'Change account password.',
             },
           },
+
+          {
+            path: 'nsfw-content',
+            component: SettingsV2NsfwContentComponent,
+            data: {
+              title: 'NSFW Content',
+              description:
+                'Control how NSFW content is displayed in your newsfeed.',
+            },
+          },
+          {
+            path: 'share-buttons',
+            component: SettingsV2ShareButtonsComponent,
+            data: {
+              title: 'Share Buttons',
+              description: 'Control whether you see the share button overlay.',
+            },
+          },
           {
             path: 'email-notifications',
             component: SettingsV2EmailNotificationsComponent,
@@ -104,28 +121,8 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
-            path: 'nsfw-content',
-            component: SettingsV2NsfwContentComponent,
-            canDeactivate: [CanDeactivateGuardService],
-            data: {
-              title: 'NSFW Content',
-              description:
-                'Control how NSFW content is displayed in your newsfeed.',
-            },
-          },
-          {
-            path: 'share-buttons',
-            component: SettingsV2ShareButtonsComponent,
-            canDeactivate: [CanDeactivateGuardService],
-            data: {
-              title: 'Share Buttons',
-              description: 'Control whether you see the share button overlay.',
-            },
-          },
-          {
             path: 'toaster-notifications',
             component: SettingsV2ToasterNotificationsComponent,
-            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Toaster Notifications',
               description: 'Control whether you receive toaster notifications.',
@@ -139,7 +136,7 @@ const SETTINGS_V2_ROUTES: Routes = [
         component: SettingsV2Component,
         data: {
           isMenu: true,
-          title: 'Security',
+          title: 'Security Settings',
           description: 'Configure your account security settings.',
         },
         children: [
@@ -168,7 +165,7 @@ const SETTINGS_V2_ROUTES: Routes = [
         component: SettingsV2Component,
         data: {
           isMenu: true,
-          title: 'Billing',
+          title: 'Billing Settings',
           description: 'Configure your account billing settings.',
         },
         children: [
@@ -178,16 +175,17 @@ const SETTINGS_V2_ROUTES: Routes = [
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Payment Methods',
-              description: 'Placeholder',
+              description:
+                'Manage credit cards associated with your Minds account.',
             },
           },
           {
             path: 'recurring-payments',
             component: SettingsV2RecurringPaymentsComponent,
-            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'RecurringPayments',
-              description: 'Placeholder',
+              description:
+                'Track recurring payments you make to support other channels.',
             },
           },
         ],
@@ -197,7 +195,7 @@ const SETTINGS_V2_ROUTES: Routes = [
         component: SettingsV2Component,
         data: {
           isMenu: true,
-          title: 'Other',
+          title: 'Other Settings',
           description: 'Additional settings.',
         },
         children: [
@@ -207,7 +205,8 @@ const SETTINGS_V2_ROUTES: Routes = [
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Reported Content',
-              description: 'Placeholder',
+              description:
+                'Oversee disciplinary measures taken on your posts and channel.',
             },
           },
           {
@@ -216,7 +215,8 @@ const SETTINGS_V2_ROUTES: Routes = [
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Blocked Channels',
-              description: 'Placeholder',
+              description:
+                'Block certain channels from appearing in your feed.',
             },
           },
           {
@@ -225,7 +225,8 @@ const SETTINGS_V2_ROUTES: Routes = [
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Subscription Tiers',
-              description: 'Placeholder',
+              description:
+                'Define incentives for users to support your channel.',
             },
           },
           {
@@ -234,7 +235,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Post Preview',
-              description: 'Placeholder',
+              description: 'Customize the appearance of your paywalled posts.',
             },
           },
           {
@@ -242,7 +243,8 @@ const SETTINGS_V2_ROUTES: Routes = [
             component: SettingsV2DeactivateAccountComponent,
             data: {
               title: 'Deactivate Account',
-              description: 'Placeholder',
+              description:
+                'Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.',
             },
           },
           {
@@ -250,7 +252,8 @@ const SETTINGS_V2_ROUTES: Routes = [
             component: SettingsV2DeleteAccountComponent,
             data: {
               title: 'Delete Account',
-              description: 'Placeholder',
+              description:
+                'Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable. Your username will be released back to the public.',
             },
           },
         ],
@@ -278,6 +281,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     WireModule,
     MindsFormsModule,
     SettingsModule,
+    WalletV2Module,
   ],
   declarations: [
     SettingsV2Component,

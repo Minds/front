@@ -5,85 +5,114 @@ import {
   OnInit,
   Output,
   EventEmitter,
-  OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
 
-import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
-import { Observable, Subscription } from 'rxjs';
-import { MindsUser } from '../../../../interfaces/entities';
-
-import { SettingsV2Service } from '../../settings-v2.service';
+import { Observable } from 'rxjs';
+import { Client } from '../../../../services/api';
 
 @Component({
   selector: 'm-settingsV2__emailNotifications',
   templateUrl: './email-notifications.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2EmailNotificationsComponent
-  implements OnInit, OnDestroy {
+export class SettingsV2EmailNotificationsComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
-  user: MindsUser;
-  settingsSubscription: Subscription;
-  form;
+  changed: boolean = false;
+
+  notifications: any = {
+    when: {
+      unread_notifications: false,
+      wire_received: false,
+      boost_completed: false,
+    },
+    with: {
+      top_posts: false, // weekly
+      channel_improvement_tips: false,
+      posts_missed_since_login: false,
+      new_channels: false,
+    },
+    global: {
+      minds_news: false,
+      minds_tips: false,
+      exclusive_promotions: false,
+    },
+  };
 
   constructor(
     protected cd: ChangeDetectorRef,
-    private session: Session,
-    protected settingsService: SettingsV2Service,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    public client: Client
   ) {}
 
   ngOnInit() {
-    this.user = this.session.getLoggedInUser();
-    this.form = new FormGroup({
-      mature: new FormControl(''),
-    });
+    this.load();
+  }
 
-    this.settingsSubscription = this.settingsService.settings$.subscribe(
-      (settings: any) => {
-        this.mature.setValue(!!parseInt(settings.mature, 10));
-        this.detectChanges();
+  async load() {
+    this.inProgress = true;
+    this.detectChanges();
+
+    const response: any = await this.client.get('api/v2/settings/emails');
+    console.log('LOAD', response.notifications[4]);
+    response.notifications.forEach((item, index, list) => {
+      let value = item.value;
+      if (item.value === '1') {
+        value = true;
+      } else if (item.value === '0') {
+        value = false;
       }
-    );
-
+      this.notifications[item.campaign][item.topic] = value;
+    });
     this.init = true;
+    this.inProgress = false;
     this.detectChanges();
   }
 
-  async update() {
+  async submit() {
     if (!this.canSubmit()) {
       return;
     }
-    try {
-      this.inProgress = true;
-      this.detectChanges();
+    this.inProgress = true;
+    this.detectChanges();
+    console.log('submit', this.notifications.when);
 
-      const formValue = {
-        mature: this.mature.value ? 1 : 0,
-      };
-
-      const response: any = await this.settingsService.updateSettings(
-        this.user.guid,
-        formValue
-      );
-      if (response.status === 'success') {
+    this.client
+      .post('api/v2/settings/emails', {
+        notifications: this.notifications,
+      })
+      .then((response: any) => {
+        this.load();
         this.formSubmitted.emit({ formSubmitted: true });
-        this.form.markAsPristine();
-      }
-    } catch (e) {
-      this.formSubmitted.emit({ formSubmitted: false, error: e });
-    } finally {
-      this.inProgress = false;
-      this.detectChanges();
+        this.changed = false;
+        this.inProgress = false;
+        this.detectChanges();
+      })
+      .catch(e => {
+        this.formSubmitted.emit({ formSubmitted: false, error: e });
+        this.inProgress = false;
+        this.detectChanges();
+      });
+  }
+
+  change() {
+    this.changed = true;
+    this.detectChanges();
+  }
+
+  onTopPostsCheckboxChange(value: boolean) {
+    if (value) {
+      this.notifications.with.top_posts = 'weekly';
+    } else {
+      this.notifications.with.top_posts = false;
     }
+    this.detectChanges();
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.form.pristine) {
+    if (!this.changed) {
       return true;
     }
 
@@ -91,21 +120,11 @@ export class SettingsV2EmailNotificationsComponent
   }
 
   canSubmit(): boolean {
-    return this.form.valid && !this.inProgress && !this.form.pristine;
+    return !this.inProgress && this.changed;
   }
 
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
-  }
-
-  ngOnDestroy() {
-    if (this.settingsSubscription) {
-      this.settingsSubscription.unsubscribe();
-    }
-  }
-
-  get mature() {
-    return this.form.get('mature');
   }
 }

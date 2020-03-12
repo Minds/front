@@ -53,7 +53,7 @@ export class SettingsV2ShareButtonsComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
-  async update() {
+  async submit() {
     if (!this.canSubmit()) {
       return;
     }
@@ -79,14 +79,6 @@ export class SettingsV2ShareButtonsComponent implements OnInit, OnDestroy {
       this.inProgress = false;
       this.detectChanges();
     }
-  }
-
-  canDeactivate(): Observable<boolean> | boolean {
-    if (this.form.pristine) {
-      return true;
-    }
-
-    return this.dialogService.confirm('Discard changes?');
   }
 
   canSubmit(): boolean {

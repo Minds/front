@@ -3,17 +3,11 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
-  Output,
-  EventEmitter,
-  OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Session } from '../../../../services/session';
-import { Subscription } from 'rxjs';
-import { MindsUser } from '../../../../interfaces/entities';
-
-import { SettingsV2Service } from '../../settings-v2.service';
+import { Client } from '../../../../services/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-settingsV2__deactivateAccount',
@@ -21,79 +15,75 @@ import { SettingsV2Service } from '../../settings-v2.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsV2DeactivateAccountComponent implements OnInit {
-  @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
-  init: boolean = false;
   inProgress: boolean = false;
-  user: MindsUser;
-  settingsSubscription: Subscription;
   form;
 
   constructor(
     protected cd: ChangeDetectorRef,
-    private session: Session,
-    protected settingsService: SettingsV2Service
+    public client: Client,
+    public router: Router
   ) {}
 
   ngOnInit() {
-    // this.user = this.session.getLoggedInUser();
-    // this.form = new FormGroup({
-    //   agree: new FormControl(''),
-    // });
-    // this.settingsSubscription = this.settingsService.settings$.subscribe(
-    //   (settings: any) => {
-    //     this.mature.setValue(!!parseInt(settings.mature, 10));
-    //     this.detectChanges();
-    //   }
-    // );
-    // this.init = true;
-    // this.detectChanges();
+    this.form = new FormGroup({
+      understood: new FormControl('', {
+        validators: [Validators.requiredTrue],
+      }),
+    });
+
+    this.detectChanges();
   }
 
-  //   async update() {
-  //     if (!this.canSubmit()) {
-  //       return;
+  submit() {
+    this.client
+      .delete('api/v1/channel')
+      .then((response: any) => {
+        this.router.navigate(['/logout']);
+      })
+      .catch((e: any) => {
+        alert('Sorry, we could not disable your account');
+        this.detectChanges();
+      });
+  }
+
+  // delete() {
+  //   if (
+  //     !confirm(
+  //       'Your account and all data related to it will be deleted permanently. Are you sure you want to proceed?'
+  //     )
+  //   ) {
+  //     return;
+  //   }
+  //   const creator = this.overlayModal.create(
+  //     ConfirmPasswordModalComponent,
+  //     {},
+  //     {
+  //       class: 'm-overlay-modal--small',
+  //       onComplete: ({ password }) => {
+  //         this.client
+  //           .post('api/v2/settings/delete', { password })
+  //           .then((response: any) => {
+  //             this.router.navigate(['/logout']);
+  //           })
+  //           .catch((e: any) => {
+  //             alert('Sorry, we could not delete your account');
+  //           });
+  //       },
   //     }
-  //     try {
-  //       this.inProgress = true;
-  //       this.detectChanges();
-
-  //       const formValue = {
-  //         mature: this.mature.value ? 1 : 0,
-  //       };
-
-  //       const response: any = await this.settingsService.updateSettings(
-  //         this.user.guid,
-  //         formValue
-  //       );
-  //       if (response.status === 'success') {
-  //         this.formSubmitted.emit({ formSubmitted: true });
-  //         this.form.markAsPristine();
-  //       }
-  //     } catch (e) {
-  //       this.formSubmitted.emit({ formSubmitted: false, error: e });
-  //     } finally {
-  //       this.inProgress = false;
-  //       this.detectChanges();
-  //     }
-  //   }
-
-  //   canSubmit(): boolean {
-  //     return this.form.valid && !this.inProgress && !this.form.pristine;
-  //   }
-
-  //   detectChanges() {
-  //     this.cd.markForCheck();
-  //     this.cd.detectChanges();
-  //   }
-
-  //   ngOnDestroy() {
-  //     if (this.settingsSubscription) {
-  //       this.settingsSubscription.unsubscribe();
-  //     }
-  //   }
-
-  //   get agree() {
-  //     return this.form.get('agree');
-  //   }
+  //   );
+  //   creator.present();
   // }
+
+  canSubmit(): boolean {
+    return this.form.valid && !this.inProgress && !this.form.pristine;
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
+  get understood() {
+    return this.form.get('understood');
+  }
 }

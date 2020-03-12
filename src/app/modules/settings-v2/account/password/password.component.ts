@@ -84,7 +84,7 @@ export class SettingsV2PasswordComponent implements OnInit {
     this.detectChanges();
   }
 
-  async update() {
+  async submit() {
     if (!this.canSubmit()) {
       return;
     }

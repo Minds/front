@@ -1,10 +1,12 @@
-<p>delete-account works!</p>
-<!-- <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonLeft">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--checkbox stretchedField">
       <div class="m-form__row--input">
-        <m-formInput__checkbox formControlName="mature" class="form-control">
-          Always show NSFW content (18+)
+        <m-formInput__checkbox
+          formControlName="understood"
+          class="form-control"
+        >
+          I understand and wish to continue.
         </m-formInput__checkbox>
       </div>
     </div>
@@ -13,10 +15,10 @@
     <m-shadowboxSubmitButton
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      [color]="red"
-      (click)="update()"
+      color="red"
+      (click)="submit()"
     >
-      Update NSFW Preference
+      Delete Account
     </m-shadowboxSubmitButton>
   </div>
-</form> -->
+</form>

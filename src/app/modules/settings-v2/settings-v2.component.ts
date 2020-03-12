@@ -42,15 +42,22 @@ export class SettingsV2Component implements OnInit {
           id: 'account',
         },
         items: [
-          // TODOOJM ok to get this from routes?
           { label: 'Display Name', id: 'display-name' },
           { label: 'Email Address', id: 'email-address' },
           { label: 'Display Language', id: 'display-language' },
           { label: 'Password', id: 'password' },
-          { label: 'Notifications', id: 'email-notifications' },
           { label: 'NSFW Content', id: 'nsfw-content' },
           { label: 'Share Buttons', id: 'share-buttons' },
-          { label: 'Toaster Notifications', id: 'toaster-notifications' },
+        ],
+      },
+      {
+        header: {
+          label: 'Notifications',
+          id: 'notifications',
+        },
+        items: [
+          { label: 'Email', id: 'email-notifications' },
+          { label: 'Toaster', id: 'toaster-notifications' },
         ],
       },
       {

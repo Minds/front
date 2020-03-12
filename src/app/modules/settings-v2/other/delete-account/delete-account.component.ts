@@ -3,17 +3,13 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
-  Output,
-  EventEmitter,
-  OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Session } from '../../../../services/session';
-import { Subscription } from 'rxjs';
-import { MindsUser } from '../../../../interfaces/entities';
-
-import { SettingsV2Service } from '../../settings-v2.service';
+import { Client } from '../../../../services/api';
+import { Router } from '@angular/router';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/modal.component';
 
 @Component({
   selector: 'm-settingsV2__deleteAccount',
@@ -21,79 +17,58 @@ import { SettingsV2Service } from '../../settings-v2.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsV2DeleteAccountComponent implements OnInit {
-  @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
-  init: boolean = false;
   inProgress: boolean = false;
-  user: MindsUser;
-  settingsSubscription: Subscription;
   form;
 
   constructor(
     protected cd: ChangeDetectorRef,
-    private session: Session,
-    protected settingsService: SettingsV2Service
+    public client: Client,
+    public router: Router,
+    protected overlayModal: OverlayModalService
   ) {}
 
   ngOnInit() {
-    // this.user = this.session.getLoggedInUser();
-    // this.form = new FormGroup({
-    //   agree: new FormControl(''),
-    // });
-    // this.settingsSubscription = this.settingsService.settings$.subscribe(
-    //   (settings: any) => {
-    //     this.mature.setValue(!!parseInt(settings.mature, 10));
-    //     this.detectChanges();
-    //   }
-    // );
-    // this.init = true;
-    // this.detectChanges();
+    this.form = new FormGroup({
+      understood: new FormControl('', {
+        validators: [Validators.requiredTrue],
+      }),
+    });
+
+    this.detectChanges();
   }
 
-  //   async update() {
-  //     if (!this.canSubmit()) {
-  //       return;
-  //     }
-  //     try {
-  //       this.inProgress = true;
-  //       this.detectChanges();
+  submit() {
+    const creator = this.overlayModal.create(
+      ConfirmPasswordModalComponent,
+      {},
+      {
+        class: 'm-overlay-modal--small',
+        onComplete: ({ password }) => {
+          this.client
+            .post('api/v2/settings/delete', { password })
+            .then((response: any) => {
+              this.router.navigate(['/logout']);
+            })
+            .catch((e: any) => {
+              alert('Sorry, we could not delete your account');
+              this.detectChanges();
+            });
+        },
+      }
+    );
+    creator.present();
+  }
 
-  //       const formValue = {
-  //         mature: this.mature.value ? 1 : 0,
-  //       };
+  canSubmit(): boolean {
+    return this.form.valid && !this.inProgress && !this.form.pristine;
+  }
 
-  //       const response: any = await this.settingsService.updateSettings(
-  //         this.user.guid,
-  //         formValue
-  //       );
-  //       if (response.status === 'success') {
-  //         this.formSubmitted.emit({ formSubmitted: true });
-  //         this.form.markAsPristine();
-  //       }
-  //     } catch (e) {
-  //       this.formSubmitted.emit({ formSubmitted: false, error: e });
-  //     } finally {
-  //       this.inProgress = false;
-  //       this.detectChanges();
-  //     }
-  //   }
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
 
-  //   canSubmit(): boolean {
-  //     return this.form.valid && !this.inProgress && !this.form.pristine;
-  //   }
-
-  //   detectChanges() {
-  //     this.cd.markForCheck();
-  //     this.cd.detectChanges();
-  //   }
-
-  //   ngOnDestroy() {
-  //     if (this.settingsSubscription) {
-  //       this.settingsSubscription.unsubscribe();
-  //     }
-  //   }
-
-  //   get agree() {
-  //     return this.form.get('agree');
-  //   }
-  // }
+  get understood() {
+    return this.form.get('understood');
+  }
 }

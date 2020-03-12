@@ -27,6 +27,7 @@ export class SettingsV2DisplayNameComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   user: MindsUser;
   settingsSubscription: Subscription;
+  currentName: string;
   form;
 
   constructor(
@@ -46,6 +47,7 @@ export class SettingsV2DisplayNameComponent implements OnInit, OnDestroy {
 
     this.settingsSubscription = this.settingsService.settings$.subscribe(
       (settings: any) => {
+        this.currentName = settings.name;
         this.name.setValue(settings.name);
         this.detectChanges();
       }
@@ -55,7 +57,7 @@ export class SettingsV2DisplayNameComponent implements OnInit, OnDestroy {
     this.detectChanges();
   }
 
-  async update() {
+  async submit() {
     if (!this.canSubmit()) {
       return;
     }
@@ -81,7 +83,7 @@ export class SettingsV2DisplayNameComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.form.pristine) {
+    if (this.form.pristine || this.name.value === this.currentName) {
       return true;
     }
 
@@ -89,7 +91,8 @@ export class SettingsV2DisplayNameComponent implements OnInit, OnDestroy {
   }
 
   canSubmit(): boolean {
-    return this.form.valid && !this.inProgress && !this.form.pristine;
+    const valChanged = this.name.value !== this.currentName;
+    return !this.inProgress && this.form.valid && valChanged;
   }
 
   detectChanges() {

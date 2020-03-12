@@ -103,6 +103,18 @@ m-settingsV2 {
         flex: 1 0 auto;
       }
     }
+    .m-settingsV2__subheader {
+      font-size: 18px;
+      line-height: 24px;
+      margin-bottom: 15px;
+      font-weight: 400;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+      &:not(:first-child) {
+        margin-top: 41px;
+      }
+    }
     .m-settingsV2__desc {
       margin: 11px 0 48px 0;
       @include m-theme() {
@@ -164,6 +176,12 @@ m-settingsV2 {
       }
     }
 
+    m-settingsV2__emailNotifications {
+      .m-form__field--checkbox:not(:last-child) {
+        margin-bottom: 10px;
+      }
+    }
+
     // TODOOJM remove after cleanup of transplant components
     .m-settings--section {
       input {
@@ -172,6 +190,11 @@ m-settingsV2 {
       h4 {
         display: none;
       }
+    }
+    .m-settingsV2__spinner {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 }

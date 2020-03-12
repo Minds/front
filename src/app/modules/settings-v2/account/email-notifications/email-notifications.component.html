@@ -1,20 +1,216 @@
-<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+<div *ngIf="!init" class="m-settingsV2__spinner">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+<div *ngIf="init" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
-    <div class="m-form__field--checkbox stretchedField">
+    <div class="m-settingsV2__subheader">Email me when</div>
+    <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <m-formInput__checkbox formControlName="mature" class="form-control">
-          Always show NSFW content (18+)
-        </m-formInput__checkbox>
+        <!-- <m-formInput__checkbox
+          (click)="change()"
+          [(ngModel)]="notifications.when.unread_notifications"
+          class="form-control"
+        >
+          I have unread notifications
+        </m-formInput__checkbox> -->
+
+        <input
+          type="checkbox"
+          id="unread-notifications"
+          name="unread-notifications"
+          (click)="change()"
+          [(ngModel)]="notifications.when.unread_notifications"
+        />
+
+        <label for="unread-notifications">
+          <ng-container i18n="@@MINDS__SETTINGS__UNREAD_NOTIFICATIONS_LABEL">
+            I have unread notifications
+          </ng-container>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <!-- <m-formInput__checkbox
+          (click)="change()"
+          [(ngModel)]="notifications.when.wire_received"
+          class="form-control"
+        >
+          I receive a wire
+        </m-formInput__checkbox> -->
+        <input
+          type="checkbox"
+          id="wire-received"
+          name="wire-received"
+          (click)="change()"
+          [(ngModel)]="notifications.when.wire_received"
+        />
+
+        <label for="wire-received">
+          <ng-container i18n="@@MINDS__SETTINGS__WIRE_RECEIVED_LABEL">
+            I receive a wire
+          </ng-container>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <!-- <m-formInput__checkbox
+          (click)="change()"
+          [(ngModel)]="notifications.when.boost_completed"
+          class="form-control"
+        >
+          My boost has been completed
+        </m-formInput__checkbox> -->
+        <input
+          type="checkbox"
+          id="boost-completed"
+          name="boost-completed"
+          (click)="change()"
+          [(ngModel)]="notifications.when.boost_completed"
+        />
+
+        <label for="boost-completed">
+          <ng-container i18n="@@MINDS__SETTINGS__BOOST_COMPLETED_LABEL">
+            My boost has been completed
+          </ng-container>
+        </label>
+      </div>
+    </div>
+    <div class="m-settingsV2__subheader">Email me with</div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <input
+          type="checkbox"
+          id="top-posts"
+          name="top-posts"
+          (click)="change()"
+          [ngModel]="!!notifications.with.top_posts"
+          (ngModelChange)="onTopPostsCheckboxChange($event)"
+        />
+        <label for="top-posts">
+          <ng-container i18n="@@MINDS__SETTINGS__TOP_POSTS_LABEL">
+            Top posts from my network
+          </ng-container>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <input
+          type="checkbox"
+          id="channel-improvement-tips"
+          name="channel-improvement-tips"
+          (click)="change()"
+          [(ngModel)]="notifications.with.channel_improvement_tips"
+        />
+
+        <label for="channel-improvement-tips">
+          <ng-container i18n="@@MINDS__SETTINGS__TIPS_IMPROVE_CHANNEL_LABEL">
+            Tips on how to improve my channel
+          </ng-container>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <input
+          type="checkbox"
+          id="missed-since-login"
+          name="missed-since-login"
+          (click)="change()"
+          [(ngModel)]="notifications.with.posts_missed_since_login"
+        />
+
+        <label for="missed-since-login">
+          <ng-container
+            i18n="@@MINDS__SETTINGS__SINCE_MISSED_SINCE_LAST_LOGIN_LABEL"
+          >
+            Things I've missed since my last login
+          </ng-container>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <input
+          type="checkbox"
+          id="new-channels"
+          name="new-channels"
+          (click)="change()"
+          [(ngModel)]="notifications.with.new_channels"
+        />
+
+        <label for="new-channels">
+          <ng-container i18n="@@MINDS__SETTINGS__NEW_CHANNELS_LABEL">
+            New channels to subscribe to
+          </ng-container>
+        </label>
+      </div>
+    </div>
+
+    <div class="m-settingsV2__subheader">Keep me updated with</div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <input
+          type="checkbox"
+          id="minds-news"
+          name="minds-news"
+          (click)="change()"
+          [(ngModel)]="notifications.global.minds_news"
+        />
+
+        <label for="minds-news">
+          <ng-container i18n="@@MINDS__SETTINGS__MINDS_NEWS_LABEL">
+            News about new Minds products and features
+          </ng-container>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <input
+          type="checkbox"
+          id="minds-tips"
+          name="minds-tips"
+          (click)="change()"
+          [(ngModel)]="notifications.global.minds_tips"
+        />
+        <label for="minds-tips">
+          <ng-container
+            i18n="@@MINDS__SETTINGS__TIPS_ON_HOW_TO_USE_MINDS_LABEL"
+          >
+            Tips on how to use Minds
+          </ng-container>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <input
+          type="checkbox"
+          id="exclusive-promotions"
+          name="exclusive-promotions"
+          (click)="change()"
+          [(ngModel)]="notifications.global.exclusive_promotions"
+        />
+
+        <label for="exclusive-promotions">
+          <ng-container i18n="@@MINDS__SETTINGS__EXCLUSIVE_PROMOTIONS_LABEL">
+            Exclusive promotions
+          </ng-container>
+        </label>
       </div>
     </div>
   </div>
+
   <div class="m-form__buttonsContainer">
     <m-shadowboxSubmitButton
       [disabled]="!canSubmit()"
       [saving]="inProgress"
-      (click)="update()"
+      (click)="submit()"
     >
-      Update NSFW Preference
+      Update Preferences
     </m-shadowboxSubmitButton>
   </div>
-</form>
+</div>
