@@ -18,7 +18,7 @@
     [object]="activity"
     [boostToggle]="activity.boostToggle"
     class="mdl-card m-border item"
-    (delete)="delete(activity)"
+    (deleted)="delete($event)"
     [slot]="i + 1"
     [attr.data-minds-activity-guid]="activity.guid"
   ></minds-activity>
@@ -27,7 +27,7 @@
     [object]="activity"
     [boostToggle]="activity.boostToggle"
     class="mdl-card m-border item"
-    (delete)="delete(activity)"
+    (deleted)="delete($event)"
     [slot]="i + (pinned?.length || 0) + 1"
     [attr.data-minds-activity-guid]="activity.guid"
   ></minds-activity>

@@ -7,6 +7,11 @@ import {
   Optional,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
@@ -28,7 +33,7 @@ import { Subscription } from 'rxjs';
     class: 'm-border',
   },
 })
-export class ActivityComponent {
+export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() set entity(entity) {
     this.service.setEntity(entity);
   }
@@ -36,6 +41,8 @@ export class ActivityComponent {
   @Input() set displayOptions(options) {
     this.service.setDisplayOptions(options);
   }
+
+  @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
 
   @HostBinding('class.m-activity--fixedHeight')
   isFixedHeight: boolean;
@@ -81,5 +88,9 @@ export class ActivityComponent {
     const height =
       this.el.nativeElement.clientWidth / ACTIVITY_FIXED_HEIGHT_RATIO;
     this.service.height$.next(height);
+  }
+
+  delete() {
+    this.deleted.emit(this.entity);
   }
 }

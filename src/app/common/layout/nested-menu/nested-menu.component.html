@@ -1,0 +1,28 @@
+<div class="m-nestedMenu" [ngClass]="{ isNested: isNested }">
+  <div
+    class="m-nestedMenu__menuWrapper"
+    *ngFor="let menu of menus; let first = first"
+  >
+    <div class="m-nestedMenu__headerWrapper">
+      <ng-container *ngIf="first">
+        <div class="m-nestedMenu__backButton">
+          <a *ngIf="isNested" (click)="goBack()">
+            <i class="material-icons">arrow_back</i><span>Back</span>
+          </a>
+        </div>
+      </ng-container>
+      <div class="m-nestedMenu__headerLabel">{{ menu.header.label }}</div>
+    </div>
+    <ng-container *ngFor="let item of menu.items">
+      <a
+        class="m-nestedMenu__itemWrapper"
+        (click)="itemClicked(menu.header.id, item.id)"
+        [routerLink]="isNested ? item.id : ['../' + item.id]"
+        routerLinkActive="m-nestedMenu__itemWrapper--active"
+      >
+        <span>{{ item.label }}</span>
+        <i class="material-icons">chevron_right</i>
+      </a>
+    </ng-container>
+  </div>
+</div>

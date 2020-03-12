@@ -123,6 +123,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     hasPrev: false,
     hasNext: false,
   };
+  canToggleMatureVideoOverlay: boolean = true;
 
   protected modalPager$: Subscription;
 
@@ -789,6 +790,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       this.setAsyncEntity(response.entity, {
         modal_source_url: modalSourceUrl,
       });
+      this.canToggleMatureVideoOverlay = true;
     } else {
       this.isLoading = false;
     }
@@ -808,6 +810,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       this.setAsyncEntity(response.entity, {
         modal_source_url: modalSourceUrl,
       });
+      this.canToggleMatureVideoOverlay = true;
     } else {
       this.isLoading = false;
     }
@@ -836,7 +839,21 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   }
 
   toggleMatureVisibility() {
-    this.entity.mature_visibility = !this.entity.mature_visibility;
+    if (this.contentType !== 'video' && this.contentType !== 'rich-embed') {
+      this.entity.mature_visibility = !this.entity.mature_visibility;
+    } else {
+      // Don't allow to toggle overlay back on if it was
+      // removed before it was opened in the media modal
+      if (this.attachment.isForcefullyShown(this.entity)) {
+        this.canToggleMatureVideoOverlay = false;
+      }
+      // Toggle-ability of video player overlay is disabled
+      // after one toggle so that users can access video controls
+      if (this.canToggleMatureVideoOverlay) {
+        this.entity.mature_visibility = !this.entity.mature_visibility;
+        this.canToggleMatureVideoOverlay = false;
+      }
+    }
   }
 
   ngOnDestroy() {

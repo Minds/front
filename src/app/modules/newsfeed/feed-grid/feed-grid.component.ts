@@ -5,6 +5,12 @@ import {
   PLATFORM_ID,
   ElementRef,
   ChangeDetectorRef,
+  OnInit,
+  AfterViewInit,
+  OnChanges,
+  OnDestroy,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { isPlatformServer, isPlatformBrowser } from '@angular/common';
 import {
@@ -23,9 +29,11 @@ import * as Macy from 'macy';
   selector: 'm-feedGrid',
   templateUrl: './feed-grid.component.html',
 })
-export class FeedGridComponent {
+export class FeedGridComponent
+  implements OnInit, AfterViewInit, OnChanges, OnDestroy {
   @Input() maxColumns = 3;
   @Input('entities') entities: any[];
+  @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
 
   windowResizeSubscription: Subscription;
   recalculateSubscription: Subscription;
@@ -94,5 +102,9 @@ export class FeedGridComponent {
     if (!this.macyInstance) return;
     if (isPlatformServer(this.platformId)) return;
     setTimeout(() => this.macyInstance.recalculate(true));
+  }
+
+  delete(activity: any) {
+    this.deleted.emit(activity);
   }
 }

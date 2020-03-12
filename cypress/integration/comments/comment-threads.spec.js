@@ -34,6 +34,7 @@ context('Comment Threads', () => {
 
   const thumbsUpButton = '[data-cy=data-minds-thumbs-up-button]'
   const thumbsDownButton = '[data-cy=data-minds-thumbs-down-button]'
+
   before(() => {
     //make a post new.
     cy.getCookie('minds_sess')
@@ -58,20 +59,20 @@ context('Comment Threads', () => {
     cy.route('PUT', '**/api/v1/thumbs/**').as('thumbsPut');
   });
 
-  after(() => {
-    //delete the post
-    cy.get(postMenu).click();
-    cy.get(deletePostOption).click();
-    cy.get(deletePostButton).click();
-  });
-
   it('should post three tiers of comments', () => {
     //Reveal the conversation
     cy.get(commentButton).click();
 
     //Add the first level of comments
     cy.get(commentInput).type(testMessage[1]);
-    cy.get(postCommentButton).click();
+
+    cy.get(postCommentButton)
+      .click()
+      .wait('@postComment')
+      .then(xhr => {
+        expect(xhr.status).to.equal(200);
+      });
+
     cy.get(commentContent).contains(testMessage[1]);
 
     //Add the second level of comments
@@ -88,10 +89,13 @@ context('Comment Threads', () => {
 
     cy.get(postCommentButton)
       .first()
-      .click();
+      .click()
+      .wait('@postComment')
+      .then(xhr => {
+        expect(xhr.status).to.equal(200);
+      });
 
     cy.get(commentContent).contains(testMessage[2]);
-    
 
     //Add the third level of comments
     cy.get('minds-activity:first')
@@ -110,8 +114,12 @@ context('Comment Threads', () => {
   
     cy.get(postCommentButton)
       .first()
-      .click();
-
+      .click()
+      .wait('@postComment')
+      .then(xhr => {
+        expect(xhr.status).to.equal(200);
+      });
+  
     cy.get(commentContent).contains(testMessage[3]);
     
     // Waiting on component init here.
@@ -123,29 +131,44 @@ context('Comment Threads', () => {
     // avoids clicking thumbs in activity feed.
     cy.get('.m-comment__toolbar').within(($list) => {
 
-    // thumbs up and down
-    cy.get(thumbsUpButton)
-      .click({multiple: true});
-    
-    cy.get(thumbsDownButton)
-      .click({multiple: true});
+      // thumbs up and down
+      cy.get(thumbsUpButton)
+        .each((button) => {
+          cy.wrap(button)
+            .click()
+            .wait('@thumbsPut')
+            .then(xhr => {
+              expect(xhr.status).to.equal(200);
+            });
+        });
+      
+      // thumbs up and down
+      cy.get(thumbsDownButton)
+        .each((button) => {
+          cy.wrap(button).click()
+          .wait('@thumbsPut')
+          .then(xhr => {
+            expect(xhr.status).to.equal(200);
+          });
+        });
+      
 
-    // check counters  
-    cy.get(thumbsUpCounters)
+      // check counters  
+      cy.get(thumbsUpCounters)
+          .each((counter) => {
+            expect(counter[0].innerHTML).to.eql('1');
+          });
+
+      cy.get(thumbsDownCounters)
         .each((counter) => {
           expect(counter[0].innerHTML).to.eql('1');
         });
     });
-
-    cy.get(thumbsDownCounters)
-      .each((counter) => {
-        expect(counter[0].innerHTML).to.eql('1');
-      });
   });
 
   it('should allow the user to make a mature comment', () => {
     // type message
-    cy.get('minds-textarea')
+    cy.get('minds-textarea div')
       .last()
       .type("naughty message");
 
@@ -178,7 +201,7 @@ context('Comment Threads', () => {
     
     // get share link
     cy.get(postMenu).click();
-    cy.contains('Share').click();
+    cy.get(".minds-dropdown-menu").contains('Share').click();
     
     // store share link
      cy.get('.m-share__copyableLinkText')

@@ -26,6 +26,8 @@ import { SettingsWireComponent } from './wire/wire.component';
 import { WireModule } from '../wire/wire.module';
 import { SettingsBlockedChannelsComponent } from './blocked-channels/blocked-channels.component';
 import { SettingsTiersComponent } from './tiers/tiers.component';
+import { SettingsV2Module } from '../settings-v2/settings-v2.module';
+import { SettingsV2Component } from '../settings-v2/settings-v2.component';
 
 const settingsRoutes: Routes = [
   {
@@ -45,6 +47,7 @@ const settingsRoutes: Routes = [
       { path: 'tiers', component: SettingsTiersComponent },
     ],
   },
+  { path: 'settings/canary', component: SettingsV2Component },
 ];
 
 @NgModule({
@@ -61,6 +64,7 @@ const settingsRoutes: Routes = [
     PaymentsModule,
     WireModule,
     ReferralsModule,
+    SettingsV2Module,
   ],
   declarations: [
     SettingsComponent,
