@@ -52,7 +52,7 @@ export class GroupMemberPreviews {
     try {
       let response: any = await this.client.get(
         `api/v1/groups/membership/${this.group.guid}`,
-        { limit: 12 }
+        { limit: 8 }
       );
 
       if (!response.members) {
