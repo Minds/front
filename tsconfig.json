@@ -19,7 +19,8 @@
     "baseUrl": "./",
     "paths": {
       "fs": [ "./shims/noop" ],
-      "bn.js": [ "../node_modules/bn.js/lib/bn.js" ]
+      "bn.js": [ "../node_modules/bn.js/lib/bn.js" ],
+      "ngx-plyr": [ "../node_modules/ngx-plyr/dist/ngx-plyr" ]
     }
   }
 }
