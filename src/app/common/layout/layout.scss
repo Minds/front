@@ -101,9 +101,13 @@ $layoutRightFullWidth: 310px;
 
 .m-pageLayout__pane--right {
   width: $layoutRightFullWidth;
+  padding-right: 0;
 
   @media screen and (max-width: $layoutMin3ColWidth) {
     display: none;
+  }
+  @include m-theme() {
+    border-left: 1px solid themed($m-borderColor--primary);
   }
 }
 
