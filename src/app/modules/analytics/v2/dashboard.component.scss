@@ -2,9 +2,6 @@ m-analytics__dashboard {
   display: block;
   position: relative;
   width: 100%;
-  @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
-  }
 }
 
 .m-analytics__spinnerContainer {
