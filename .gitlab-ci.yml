@@ -62,7 +62,7 @@ qa:e2e:
     paths:
       - .npm
       - cache/Cypress
-  allow_failure: true #manual inspection in case of timeouts
+  allow_failure: false
 
 qa:manual:
   stage: qa
