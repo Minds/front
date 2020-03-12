@@ -621,9 +621,9 @@ context('Newsfeed', () => {
       });
   });
 
-  it('should not open spotify in a modal', () => {
+  it('should not open giphy in a modal', () => {
     const content = generateRandomId() + " ",
-      url = 'http://giphygifs.s3.amazonaws.com/media/IzVquL965ib4s/giphy.gif';
+      url = 'https://giphy.com/gifs/test-gw3IWyGkC0rsazTi';
 
     // set up post.
     newActivityContent(content);
