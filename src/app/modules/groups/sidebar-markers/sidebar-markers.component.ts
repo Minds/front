@@ -168,9 +168,9 @@ export class GroupsSidebarMarkersComponent
   @HostListener('window:resize') onResize() {
     this.tooltipsAnchor = window.innerWidth <= 992 ? 'top' : 'right';
 
-    if (window.innerWidth > 900) {
+    if (window.innerWidth > 1000) {
       this.layoutMode = 'desktop';
-    } else if (window.innerWidth > 540 && window.innerWidth <= 900) {
+    } else if (window.innerWidth > 480 && window.innerWidth <= 1000) {
       this.layoutMode = 'tablet';
     } else {
       this.layoutMode = 'phone';

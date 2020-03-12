@@ -15,7 +15,7 @@
   padding: 8px;
   margin-bottom: 8px;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   m-date-selector {
