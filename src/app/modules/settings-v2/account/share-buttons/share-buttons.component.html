@@ -2,12 +2,22 @@
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--checkbox stretchedField">
       <div class="m-form__row--input">
-        <m-formInput__checkbox
-          formControlName="showButtons"
-          class="form-control"
-        >
-          Show share buttons
-        </m-formInput__checkbox>
+        <label
+          for="showButtons"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >Show share buttons
+          <input
+            type="checkbox"
+            id="showButtons"
+            name="showButtons"
+            formControlName="showButtons"
+            class="form-control"
+            data-minds="showButtons"
+            [readonly]="inProgress || !init"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
       </div>
     </div>
   </div>

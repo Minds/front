@@ -2,9 +2,26 @@
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--checkbox stretchedField">
       <div class="m-form__row--input">
-        <m-formInput__checkbox formControlName="mature" class="form-control">
-          Always show NSFW content (18+)
-        </m-formInput__checkbox>
+        <div class="m-form__field--checkbox">
+          <div class="m-form__row--input">
+            <label
+              for="mature"
+              class="m-form__customInputWrapper__checkbox"
+              i18n
+              >Always show NSFW content (18+)
+              <input
+                type="checkbox"
+                id="mature"
+                name="mature"
+                formControlName="mature"
+                class="form-control"
+                data-minds="mature"
+                [readonly]="inProgress || !init"
+              />
+              <span class="m-form__customInput__checkbox"></span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -2,12 +2,22 @@
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--checkbox stretchedField">
       <div class="m-form__row--input">
-        <m-formInput__checkbox
-          formControlName="toasterNotifications"
-          class="form-control"
-        >
-          Enable toaster notifications
-        </m-formInput__checkbox>
+        <label
+          for="toasterNotifications"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >Enable toaster notifications
+          <input
+            type="checkbox"
+            id="toasterNotifications"
+            name="toasterNotifications"
+            formControlName="toasterNotifications"
+            class="form-control"
+            data-minds="toasterNotifications"
+            [readonly]="inProgress || !init"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
       </div>
     </div>
   </div>

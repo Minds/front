@@ -56,7 +56,7 @@ export class SettingsV2EmailNotificationsComponent implements OnInit {
     this.detectChanges();
 
     const response: any = await this.client.get('api/v2/settings/emails');
-    console.log('LOAD', response.notifications[4]);
+    console.log('LOAD emailnotif', response.notifications[4]);
     response.notifications.forEach((item, index, list) => {
       let value = item.value;
       if (item.value === '1') {

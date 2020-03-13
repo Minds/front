@@ -37,7 +37,8 @@ import { SettingsV2DeleteAccountComponent } from './other/delete-account/delete-
 import { SettingsV2ToasterNotificationsComponent } from './account/toaster-notifications/toaster-notifications.component';
 import { WalletV2Module } from '../wallet/v2/wallet-v2.module';
 import { ProModule } from '../pro/pro.module';
-import { ProSettingsComponent } from '../pro/settings/settings.component';
+import { SettingsV2ProGeneralComponent } from './pro/general/general.component';
+import { SettingsV2ProThemeComponent } from './pro/theme/theme.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -133,34 +134,44 @@ const SETTINGS_V2_ROUTES: Routes = [
           { path: '**', redirectTo: 'account' },
         ],
       },
-      // {
-      //   path: 'pro',
-      //   component: SettingsV2Component,
-      //   data: {
-      //     isMenu: true,
-      //     title: 'Pro Settings',
-      //     description: 'Customize your Pro channel.',
-      //   },
-      //   children: [
-      //     {
-      //       path: 'general',
-      //       component: ProSettingsComponent,
-      //       canDeactivate: [CanDeactivateGuardService],
-      //       data: {
-      //         title: 'General',
-      //         description: 'Customize your title and headline.',
-      //       },
-      //     },
-      //     {
-      //       path: 'theme',
-      //       component: ProSettingsComponent,
-      //       data: {
-      //         title: 'Theme',
-      //         description: "Set up your site's color theme.",
-      //       },
-      //     },
-      //   ],
-      // },
+      {
+        path: 'pro_canary',
+        component: SettingsV2Component,
+        data: {
+          isMenu: true,
+          title: 'Pro Settings',
+          description: 'Customize your Pro channel.',
+        },
+        children: [
+          {
+            path: 'general',
+            component: SettingsV2ProGeneralComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'General Settings',
+              description: 'Customize your title and headline.',
+            },
+          },
+          {
+            path: 'theme',
+            component: SettingsV2ProThemeComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Theme',
+              description: "Set up your site's color theme.",
+            },
+          },
+          // Upload custom logo and background images
+          // Set up your category filter hashtags
+          // Set up your site's footer links
+          // Customize your site domain
+          // Select the currency type you wish you be paid out in. Please note
+          //    payouts only occur after your
+          //    <a routerLink="/analytics/dashboard/earnings">earnings</a> are
+          //     equivalent to $100 or greater.
+          // Manage your subscription
+        ],
+      },
       {
         path: 'security',
         component: SettingsV2Component,
@@ -334,6 +345,8 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2DeactivateAccountComponent,
     SettingsV2DeleteAccountComponent,
     SettingsV2ToasterNotificationsComponent,
+    SettingsV2ProGeneralComponent,
+    SettingsV2ProThemeComponent,
   ],
   providers: [SettingsV2Service],
   exports: [SettingsV2Component],

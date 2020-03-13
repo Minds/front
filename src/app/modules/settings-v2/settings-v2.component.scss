@@ -138,7 +138,8 @@ m-settingsV2 {
 
     .m-formWrapper .m-form__fieldsContainer {
       input,
-      select {
+      select,
+      textarea {
         @include m-theme() {
           box-shadow: none;
         }
@@ -149,6 +150,9 @@ m-settingsV2 {
       .m-form__field--text {
         &:first-child {
           margin-bottom: 48px;
+        }
+        &:nth-child(2) {
+          margin-bottom: 2px;
         }
       }
     }

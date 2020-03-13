@@ -1,4 +1,5 @@
 m-nestedMenu {
+  display: block;
   box-sizing: border-box;
   .m-nestedMenu {
     display: block;
@@ -6,7 +7,8 @@ m-nestedMenu {
     line-height: 21px;
     font-weight: 300;
     min-height: 100vh;
-    // min-height: calc(100vh - 75px);
+    padding-bottom: 60px;
+    height: 100%;
 
     @include m-theme {
       border-right: 1px solid themed($m-borderColor--primary);
@@ -25,11 +27,7 @@ m-nestedMenu {
         line-height: 20px;
       }
     }
-    &:last-child {
-      .m-nestedMenu__itemWrapper:last-child {
-        margin-bottom: 60px;
-      }
-    }
+
     & > * {
       box-sizing: border-box;
       width: 100%;

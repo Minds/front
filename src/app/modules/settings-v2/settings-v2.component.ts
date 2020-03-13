@@ -5,6 +5,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { SettingsV2Service } from './settings-v2.service';
 import { FormToastService } from '../../common/services/form-toast.service';
+import { ProService } from '../pro/pro.service';
 
 /** Main component that determines what form/menu
  * should be displayed in the settings-v2 module
@@ -28,7 +29,7 @@ export class SettingsV2Component implements OnInit {
       },
       items: [
         { label: 'Account', id: 'account' },
-        // { label: 'Pro', id: 'pro' }, // TODOOJM remove this once Pro is testable
+        { label: 'Pro', id: 'pro_canary' },
         { label: 'Security', id: 'security' },
         { label: 'Billing', id: 'billing' },
         { label: 'Other', id: 'other' },
@@ -96,15 +97,34 @@ export class SettingsV2Component implements OnInit {
         ],
       },
     ],
-    pro: [
+    pro_canary: [
       {
         header: {
-          label: 'Pro',
+          label: 'General Pro Settings',
           id: 'pro',
         },
         items: [
           { label: 'General', id: 'general' },
           { label: 'Theme', id: 'theme' },
+          { label: 'Assets', id: 'assets' },
+          { label: 'Hashtags', id: 'hashtags' },
+          { label: 'Footer', id: 'footer' },
+          { label: 'Domain', id: 'domain' },
+          { label: 'Payouts', id: 'payouts' },
+        ],
+      },
+      {
+        header: {
+          label: 'Pro Subscription Management',
+          id: 'pro-subscription',
+        },
+        items: [
+          { label: 'Cancel Pro Subscription', id: 'cancel-pro-subscription' },
+          {
+            label: 'View Pro Channel',
+            id: 'view-pro-channel',
+            route: '/TODOOJM',
+          },
         ],
       },
     ],
@@ -147,17 +167,19 @@ export class SettingsV2Component implements OnInit {
     private route: ActivatedRoute,
     protected session: Session,
     protected settingsService: SettingsV2Service,
+    protected proService: ProService,
     protected formToastService: FormToastService
   ) {}
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
-      return this.router.navigate(['/login']);
+      this.router.navigate(['/login'], { replaceUrl: true });
+      return;
     }
 
-    if (this.session.getLoggedInUser().pro) {
-      this.mainMenus[0].items.splice(1, 0, { label: 'Pro', id: 'pro' });
-    }
+    // if (this.session.getLoggedInUser().pro) {
+    //   this.mainMenus[0].items.splice(1, 0, { label: 'Pro', id: 'pro' });
+    // }
 
     this.route.url.subscribe(url => {
       this.menuHeaderId = url[0].path;
@@ -171,12 +193,21 @@ export class SettingsV2Component implements OnInit {
       });
 
     this.setSecondaryPanel();
-    this.load();
+    this.loadSettings();
   }
 
-  async load(): Promise<void> {
+  async loadSettings(): Promise<void> {
     // Initialize settings$
-    this.settingsService.loadSettings(this.session.getLoggedInUser().guid);
+    await this.settingsService.loadSettings(
+      this.session.getLoggedInUser().guid
+    );
+
+    // Initialize proSettings$
+    // TODOOJM handle admins
+    // if(this.session.isAdmin()){}
+    const remoteUser: string | null = null;
+    await this.proService.get(remoteUser);
+
     this.init = true;
   }
 
