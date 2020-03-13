@@ -181,7 +181,7 @@ m-helpdesk--dashboard {
   //padding: 80px 0;
   height: auto;
   @include m-theme() {
-    background-color: themed($m-grey-50);
+    background-color: themed($m-bgColor--primary);
   }
 
   @media screen and (max-width: 720px) {
