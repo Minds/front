@@ -7,7 +7,7 @@ m-settingsV2 {
     font-weight: 300;
     .m-settingsV2__mainMenu {
       flex: 0 1 269px;
-      @media screen and (max-width: $max-mobile) {
+      @media screen and (max-width: $layoutMax2ColWidth) {
         display: none;
         flex-grow: 1;
         &.showMainMenuOnMobile {
@@ -16,10 +16,10 @@ m-settingsV2 {
       }
     }
 
-    .m-settingsV2__secondaryPanel {
+    .m-settingsV2__secondaryPane {
       flex: 1 0 340px;
       max-width: 637px;
-      @media screen and (max-width: $max-mobile) {
+      @media screen and (max-width: $layoutMax2ColWidth) {
         display: none;
         &.showSecondaryMenuOnMobile {
           display: block;
@@ -35,13 +35,13 @@ m-settingsV2 {
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $layoutMax2ColWidth) {
       margin-top: 15px;
     }
     & > * {
       &:not(.m-settingsV2__headerWrapper) {
         margin: 0 71px;
-        @media screen and (max-width: $max-mobile) {
+        @media screen and (max-width: $layoutMax2ColWidth) {
           margin: 0 24px;
         }
       }
@@ -54,7 +54,7 @@ m-settingsV2 {
       line-height: 32px;
       font-weight: 400;
 
-      @media screen and (max-width: $max-mobile) {
+      @media screen and (max-width: $layoutMax2ColWidth) {
         flex-flow: column nowrap;
         margin: 0 24px;
       }
@@ -81,7 +81,7 @@ m-settingsV2 {
           display: none;
           margin-left: 5px;
 
-          @media screen and (max-width: $max-mobile) {
+          @media screen and (max-width: $layoutMax2ColWidth) {
             display: inline-flex;
           }
         }
@@ -89,7 +89,7 @@ m-settingsV2 {
           font-size: 24px;
           line-height: inherit;
           transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-          @media screen and (max-width: $max-mobile) {
+          @media screen and (max-width: $layoutMax2ColWidth) {
             font-size: 17px;
           }
         }
@@ -120,7 +120,7 @@ m-settingsV2 {
       @include m-theme() {
         color: themed($m-textColor--tertiary);
       }
-      @media screen and (max-width: $max-mobile) {
+      @media screen and (max-width: $layoutMax2ColWidth) {
         font-size: 15px;
         line-height: 20px;
       }

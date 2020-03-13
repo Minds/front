@@ -6,8 +6,10 @@ import { filter } from 'rxjs/operators';
 import { SettingsV2Service } from './settings-v2.service';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { ProService } from '../pro/pro.service';
+import { FeaturesService } from '../../services/features.service';
 
-/** Main component that determines what form/menu
+/**
+ * Main component that determines what form/menu(s)
  * should be displayed in the settings-v2 module
  */
 @Component({
@@ -16,10 +18,11 @@ import { ProService } from '../pro/pro.service';
 })
 export class SettingsV2Component implements OnInit {
   init: boolean = false;
-  secondaryPanelIsMenu: boolean = false;
+  secondaryPaneIsMenu: boolean = false;
   showMainMenuOnMobile: boolean = false;
   menuHeaderId: string = 'account';
   routeData: any;
+  newNavigation: boolean = false;
 
   mainMenus: NestedMenu[] = [
     {
@@ -168,8 +171,11 @@ export class SettingsV2Component implements OnInit {
     protected session: Session,
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
-    protected formToastService: FormToastService
-  ) {}
+    protected formToastService: FormToastService,
+    public featuresService: FeaturesService
+  ) {
+    this.newNavigation = this.featuresService.has('navigation');
+  }
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
@@ -189,10 +195,10 @@ export class SettingsV2Component implements OnInit {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(event => {
-        this.setSecondaryPanel();
+        this.setsecondaryPane();
       });
 
-    this.setSecondaryPanel();
+    this.setsecondaryPane();
     this.loadSettings();
   }
 
@@ -211,14 +217,14 @@ export class SettingsV2Component implements OnInit {
     this.init = true;
   }
 
-  setSecondaryPanel(): void {
-    this.secondaryPanelIsMenu = false;
+  setsecondaryPane(): void {
+    this.secondaryPaneIsMenu = false;
     let snapshot = this.route.snapshot;
     if (snapshot.firstChild && snapshot.firstChild.data['title']) {
       snapshot = snapshot.firstChild;
     } else {
       if (snapshot.data['isMenu']) {
-        this.secondaryPanelIsMenu = snapshot.data['isMenu'];
+        this.secondaryPaneIsMenu = snapshot.data['isMenu'];
       }
     }
     this.routeData = snapshot.data;

@@ -106,7 +106,7 @@ m-nestedMenu {
     justify-content: space-between;
     align-items: center;
     text-decoration: none;
-    font-weight: 300;
+    font-weight: 400;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     @include m-theme {
       color: themed($m-textColor--secondary);
