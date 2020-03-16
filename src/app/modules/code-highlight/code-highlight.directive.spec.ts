@@ -15,6 +15,7 @@ import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
       Some other text
       <pre><code class="language-javascript">console.log('foo');</code></pre>
       <pre><code class="language-php">echo 'hi';</code></pre>
+      <pre><div class="no-highlight">Should not highlight this</div></pre>
     </div>
   `,
 })
@@ -54,13 +55,17 @@ describe('CodeHighlightDirective', () => {
     });
 
     it('should highlight code blocks', () => {
-      const pre = directiveElement.queryAll(By.css(`pre`));
+      const code = directiveElement.queryAll(By.css('code'));
+      const noHighlight = directiveElement.query(By.css('div.no-highlight'));
 
       expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-        pre[0].nativeElement
+        code[0].nativeElement
       );
       expect(codeHighlightServiceMock.highlightBlock).toHaveBeenCalledWith(
-        pre[1].nativeElement
+        code[0].nativeElement
+      );
+      expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
+        noHighlight.nativeElement
       );
     });
   });
@@ -79,13 +84,13 @@ describe('CodeHighlightDirective', () => {
     });
 
     it("shouldn't highlight when feature is disabled", () => {
-      const pre = directiveElement.queryAll(By.css(`pre`));
+      const code = directiveElement.queryAll(By.css('code'));
 
       expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
-        pre[0].nativeElement
+        code[0].nativeElement
       );
       expect(codeHighlightServiceMock.highlightBlock).not.toHaveBeenCalledWith(
-        pre[1].nativeElement
+        code[1].nativeElement
       );
     });
   });

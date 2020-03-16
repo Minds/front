@@ -3,6 +3,22 @@ import { Directive, ElementRef, AfterViewInit } from '@angular/core';
 import { CodeHighlightService } from './code-highlight.service';
 import { FeaturesService } from '../../services/features.service';
 
+/**
+ * Directive that searches an HTMLElement's children for <pre><code> blocks to
+ * highlight using the CodeHighlightService.
+ *
+ * Does nothing if `code-highlight` feature is not enabled.
+ *
+ * @example
+ * <div m-code-highlight>
+ *  <pre><code class="language-js">console.log('hi');</code></pre>
+ * </div>
+ *
+ * // The inner <code> block will be passed to
+ * // CodeHighlightService.highlightBlocks
+ *
+ * @author Jim Toth <jim@meme.coach>
+ */
 @Directive({
   selector: '[m-code-highlight]',
 })
@@ -18,7 +34,9 @@ export class CodeHighlightDirective implements AfterViewInit {
       return;
     }
 
-    this.highlightBlocks(this.element.nativeElement.querySelectorAll('pre'));
+    this.highlightBlocks(
+      this.element.nativeElement.querySelectorAll('pre > code')
+    );
   }
 
   highlightBlocks(blocks) {
