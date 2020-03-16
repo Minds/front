@@ -39,7 +39,7 @@ export class SettingsComponent {
       return this.router.navigate(['/login']);
     }
 
-    if (this.featuresService.has('settings')) {
+    if (this.featuresService.has('navigation')) {
       this.router.navigate(['/settings/canary']);
     }
 

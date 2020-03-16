@@ -32,6 +32,13 @@ import { PopoverComponent } from './popover-validation/popover.component';
     Tutorial,
     PopoverComponent,
   ],
-  exports: [LoginForm, RegisterForm, FbRegisterForm, OnboardingForm, Tutorial],
+  exports: [
+    LoginForm,
+    RegisterForm,
+    FbRegisterForm,
+    OnboardingForm,
+    Tutorial,
+    PopoverComponent,
+  ],
 })
 export class MindsFormsModule {}
