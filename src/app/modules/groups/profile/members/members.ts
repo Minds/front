@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { GroupsService } from '../../groups-service';
+import { GroupsService } from '../../groups.service';
 
 import { MindsHttpClient } from '../../../../common/api/client.service';
 import { map } from 'rxjs/operators';

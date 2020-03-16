@@ -1,7 +1,7 @@
 <m-activity__ownerBlock *ngIf="service.displayOptions.showOwnerBlock">
   <ng-container class="m-activityOwnerBlock__right">
     <m-activity__metrics></m-activity__metrics>
-    <m-activity__menu></m-activity__menu>
+    <m-activity__menu (deleted)="delete()"></m-activity__menu>
   </ng-container>
 </m-activity__ownerBlock>
 

@@ -10,7 +10,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { interval, Subscription } from 'rxjs';
 
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
 import { RecentService } from '../../../services/ux/recent';
 import { Session } from '../../../services/session';

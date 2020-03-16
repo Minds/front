@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Client } from '../../../services/api/client';
-import { GroupsService } from '../../groups/groups-service';
+import { GroupsService } from '../../groups/groups.service';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
 

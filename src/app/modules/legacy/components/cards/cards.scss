@@ -53,7 +53,7 @@ minds-card-user,
     display: flex;
     text-decoration: none;
     @include m-theme() {
-      color: themed($m-bgColor--secondary);
+      color: themed($m-white-always);
     }
 
     img {

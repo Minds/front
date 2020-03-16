@@ -38,6 +38,7 @@ import { IfFeatureDirective } from '../../common/directives/if-feature.directive
 import { TopbarService } from '../../common/layout/topbar.service';
 import { MockService } from '../../utils/mock';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
+import { MarketingFooterComponent } from '../../common/components/marketing/footer.component';
 
 @Component({
   selector: 'minds-form-login',
@@ -73,6 +74,7 @@ describe('LoginComponent', () => {
         MindsFormRegisterMock,
         LoginComponent,
         IfFeatureDirective,
+        MarketingFooterComponent,
       ],
       imports: [
         RouterTestingModule,

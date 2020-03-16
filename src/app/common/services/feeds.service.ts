@@ -195,6 +195,17 @@ export class FeedsService {
     return this;
   }
 
+  deleteItem(obj: any, comparatorFn: (item, obj) => boolean): FeedsService {
+    const feed: any[] = this.rawFeed.getValue();
+    feed.forEach((item, index) => {
+      if (comparatorFn(item, obj)) {
+        feed.splice(index, 1);
+      }
+    });
+    this.rawFeed.next(feed);
+    return this;
+  }
+
   /**
    * To clear data.
    */

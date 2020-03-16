@@ -63,6 +63,13 @@
     <m-date__dropdowns
       (selectedDateChange)="selectedDateChange($event)"
     ></m-date__dropdowns>
+    <div
+      class="m-onboarding__error"
+      [style.visibility]="!!ageError ? 'visible' : 'hidden'"
+      i18n
+    >
+      You must be at least 13 years old
+    </div>
   </div>
 
   <div class="m-onboarding__actionButtons">

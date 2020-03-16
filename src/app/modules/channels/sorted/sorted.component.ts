@@ -205,4 +205,10 @@ export class ChannelSortedComponent implements OnInit {
     this.scheduledCount = response.count;
     this.detectChanges();
   }
+
+  delete(activity: any) {
+    this.feedsService.deleteItem(activity, (item, obj) => {
+      return item.guid === obj.guid;
+    });
+  }
 }

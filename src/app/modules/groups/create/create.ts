@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
 import { Session } from '../../../services/session';
 
