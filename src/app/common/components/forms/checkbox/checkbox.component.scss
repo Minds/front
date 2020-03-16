@@ -12,6 +12,10 @@ m-formInput__checkbox {
   }
   font-size: 13px;
 
+  .m-formInputCheckbox__visibleWrapper {
+    display: flex;
+    align-items: center;
+  }
   .m-formInputCheckbox__custom {
     display: inline-block;
     vertical-align: middle;

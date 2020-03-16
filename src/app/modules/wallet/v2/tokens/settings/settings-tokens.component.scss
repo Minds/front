@@ -36,6 +36,7 @@ m-walletSettings--tokens {
         }
       }
       p {
+        line-height: 19px;
         @include m-theme() {
           color: themed($m-textColor--primary);
         }

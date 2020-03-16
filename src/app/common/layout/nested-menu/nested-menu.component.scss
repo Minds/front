@@ -1,4 +1,5 @@
 m-nestedMenu {
+  display: block;
   box-sizing: border-box;
   .m-nestedMenu {
     display: block;
@@ -6,7 +7,8 @@ m-nestedMenu {
     line-height: 21px;
     font-weight: 300;
     min-height: 100vh;
-    // min-height: calc(100vh - 75px);
+    padding-bottom: 60px;
+    height: 100%;
 
     @include m-theme {
       border-right: 1px solid themed($m-borderColor--primary);
@@ -25,6 +27,7 @@ m-nestedMenu {
         line-height: 20px;
       }
     }
+
     & > * {
       box-sizing: border-box;
       width: 100%;
@@ -103,7 +106,7 @@ m-nestedMenu {
     justify-content: space-between;
     align-items: center;
     text-decoration: none;
-    font-weight: 300;
+    font-weight: 400;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     @include m-theme {
       color: themed($m-textColor--secondary);
