@@ -100,6 +100,7 @@ export class SettingsV2Component implements OnInit {
         ],
       },
     ],
+
     pro_canary: [
       {
         header: {
@@ -122,11 +123,11 @@ export class SettingsV2Component implements OnInit {
           id: 'pro-subscription',
         },
         items: [
-          { label: 'Cancel Pro Subscription', id: 'cancel-pro-subscription' },
+          { label: 'Cancel Pro Subscription', id: 'cancel' },
           {
             label: 'View Pro Channel',
             id: 'view-pro-channel',
-            route: '/TODOOJM',
+            route: '',
           },
         ],
       },
@@ -183,10 +184,6 @@ export class SettingsV2Component implements OnInit {
       return;
     }
 
-    // if (this.session.getLoggedInUser().pro) {
-    //   this.mainMenus[0].items.splice(1, 0, { label: 'Pro', id: 'pro' });
-    // }
-
     this.route.url.subscribe(url => {
       this.menuHeaderId = url[0].path;
     });
@@ -198,8 +195,19 @@ export class SettingsV2Component implements OnInit {
         this.setsecondaryPane();
       });
 
+    this.setProPreviewRoute();
     this.setsecondaryPane();
     this.loadSettings();
+  }
+
+  setProPreviewRoute() {
+    const proPreviewMenuItem = this.secondaryMenus.pro_canary
+      .find(item => item.header.id === 'pro-subscription')
+      .items.find(item => item.id === 'view-pro-channel');
+
+    const route = `/pro/${this.session.getLoggedInUser().name}`;
+
+    proPreviewMenuItem.route = route;
   }
 
   async loadSettings(): Promise<void> {

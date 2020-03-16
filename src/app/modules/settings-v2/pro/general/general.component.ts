@@ -48,7 +48,6 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
 
     this.form.valueChanges.subscribe(val => {
       this.formValsChanged = true;
-      console.log('valschanged', val);
     });
 
     this.proSettingsSubscription = this.proService.proSettings$.subscribe(

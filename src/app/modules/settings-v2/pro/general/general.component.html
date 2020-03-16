@@ -1,15 +1,20 @@
-<form
-  *ngIf="form"
-  [formGroup]="form"
-  class="m-formLayout--buttonOffsetRight m-formLayout--hasDescriptors"
->
+<div class="m-settingsV2__desc">
+  Customize your title and headline.
+  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+    >Upgrade to Pro</a
+  >
+</div>
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
         <label for="title" i18n>Page Title</label>
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n>The name of your pro site</ng-container>
+          <ng-container i18n
+            >The name of your pro site. This will be used in browser tab titles
+            and your SEO tags.</ng-container
+          >
         </m-tooltip>
       </div>
       <div class="m-form__row--input">
@@ -21,10 +26,7 @@
           class="form-control"
           [readonly]="inProgress || !init"
           data-minds="title"
-        /><m-formDescriptor
-          >This will be used in browser tab titles and your SEO
-          tags</m-formDescriptor
-        >
+        />
       </div>
     </div>
 
@@ -33,7 +35,10 @@
         <label for="headline" i18n>Headline</label>
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n>A short description about your site</ng-container>
+          <ng-container i18n
+            >A short description about your site. This will be used in your SEO
+            tags as well.</ng-container
+          >
         </m-tooltip>
       </div>
       <div class="m-form__row--input">
@@ -45,9 +50,6 @@
           data-minds="headline"
           [readonly]="inProgress || !init"
         ></textarea>
-        <m-formDescriptor
-          >This will be used in your SEO tags as well</m-formDescriptor
-        >
       </div>
     </div>
 
@@ -59,6 +61,13 @@
           i18n
           (click)="onEnableProThemeClick($event)"
           >Enable Pro theme
+          <m-tooltip>
+            <span m-tooltip--anchor>𝒊</span>
+            <ng-container i18n
+              >When enabled, your channel on minds.com will have your Pro site
+              theme applied</ng-container
+            >
+          </m-tooltip>
           <input
             type="checkbox"
             id="publish"
@@ -70,32 +79,8 @@
           />
           <span class="m-form__customInput__checkbox"></span>
         </label>
-        <m-tooltip>
-          <span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n
-            >When enabled, your channel on minds.com will have your Pro site
-            theme applied</ng-container
-          >
-        </m-tooltip>
       </div>
     </div>
-
-    <!-- <div class="m-form__field--text stretchedField">
-      <div class="m-form__row--label">
-        <label for="name" i18n>Display Name</label>
-      </div>
-      <div class="m-form__row--input">
-        <input
-          type="text"
-          id="name"
-          name="name"
-          formControlName="name"
-          class="form-control"
-          [readonly]="inProgress || !init"
-        />
-      </div>
-      <div class="m-form__row--validation"></div>
-    </div> -->
   </div>
   <div class="m-form__buttonsContainer">
     <m-shadowboxSubmitButton
@@ -103,7 +88,7 @@
       [saving]="inProgress"
       (click)="submit()"
     >
-      Save Settings
+      Save Personal Details
     </m-shadowboxSubmitButton>
   </div>
 </form>
