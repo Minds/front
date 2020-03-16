@@ -62,8 +62,41 @@ qa:e2e:
     paths:
       - .npm
       - cache/Cypress
+    except:
+      - /^production$/
   allow_failure: false
 
+qa:e2e:production:
+  image: cypress/browsers:chrome67
+  stage: qa
+  variables:
+    CYPRESS_INSTALL_BINARY: 3.4.1
+  script:
+    - npm ci
+    - >
+      if [ "$CI_BUILD_REF_NAME" == "master" ]; then
+        export E2E_DOMAIN=https://www.minds.com
+        export PRODUCTION=true
+      else
+        export E2E_DOMAIN=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+        export PRODUCTION=false
+      fi
+    - export CYPRESS_baseUrl=$E2E_DOMAIN
+    - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
+    - $(npm bin)/cypress run --browser chrome --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN,video=false --env captcha_bypass_key=$CYPRESS_bypass_key,production=$PRODUCTION
+  artifacts:
+    when: always
+    paths:
+      - cypress/screenshots
+      - cypress/videos
+  cache:
+    paths:
+      - .npm
+      - cache/Cypress
+    only:
+      - /^production$/
+  allow_failure: true
+  
 qa:manual:
   stage: qa
   script:
