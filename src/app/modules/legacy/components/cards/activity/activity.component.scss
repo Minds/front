@@ -106,8 +106,8 @@ minds-activity {
     max-width: 300px;
 
     @include m-theme() {
-      background-color: themed($m-white);
-      color: themed($m-grey-600);
+      background-color: themed($m-bgColor--secondary);
+      color: themed($m-textColor--secondary);
     }
 
     m--crypto-token-symbol {

@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
 import { Upload } from '../../services/api/upload';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class ProService {
   public readonly ratios = ['16:9', '16:10', '4:3', '1:1'];
+
+  proSettings: any = {};
+  proSettings$: BehaviorSubject<any> = new BehaviorSubject(this.proSettings);
 
   constructor(protected client: Client, protected uploadClient: Upload) {}
 
@@ -54,10 +58,16 @@ export class ProService {
       }
     }
 
+    this.proSettings = settings;
+    this.proSettings.is_active = isActive;
+    this.proSettings$.next(this.proSettings);
+    console.log('getPro', this.proSettings);
+
     return { isActive, settings };
   }
 
   async set(settings, remoteUser: string | null = null): Promise<boolean> {
+    console.log('setPro', settings);
     const endpoint = ['api/v2/pro/settings'];
 
     if (remoteUser) {
@@ -65,6 +75,10 @@ export class ProService {
     }
 
     await this.client.post(endpoint.join('/'), settings);
+
+    // refresh proSettings$ after changes are made
+    this.get(remoteUser);
+
     return true;
   }
 
@@ -102,6 +116,9 @@ export class ProService {
 
     if (!response || response.status !== 'success') {
       throw new Error(response.message || 'Invalid server response');
+    } else {
+      // refresh proSettings$ after changes are made
+      this.get(remoteUser);
     }
 
     return true;

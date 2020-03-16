@@ -7,8 +7,8 @@ m-pageLayout {
   min-height: 100%;
   padding: 56px 0 48px 0;
   @include m-theme() {
-    background-color: themed($m-white);
-    color: themed($m-grey-800);
+    background-color: themed($m-bgColor--primary);
+    color: themed($m-textColor--primary);
   }
   &.isForm {
     min-height: 0px;
@@ -38,7 +38,7 @@ m-sidebarMenu {
   width: 245px;
   padding-left: 20px;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 }
 .m-pageLayout__main {
@@ -46,8 +46,8 @@ m-sidebarMenu {
   margin-right: 24px;
 
   @include m-theme() {
-    background-color: themed($m-white);
-    color: themed($m-grey-800);
+    background-color: themed($m-bgColor--primary);
+    color: themed($m-textColor--primary);
   }
 }
 

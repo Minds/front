@@ -1,0 +1,42 @@
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--select stretchedField">
+      <div class="m-form__row--label">
+        <label for="language" i18n>Language</label>
+      </div>
+      <div class="m-form__row--input">
+        <select
+          name="language"
+          id="language"
+          formControlName="language"
+          class="form-control"
+        >
+          <option *ngFor="let language of languages" [value]="language.code">{{
+            language.name
+          }}</option>
+        </select>
+      </div>
+      <div class="m-form__row--validation"></div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Update Language
+    </m-shadowboxSubmitButton>
+  </div>
+</form>
+<div class="m-settingsV2__desc">
+  Bring Minds to the world! If you speak another language, help the community by
+  translating the Minds
+  <a target="_blank" href="https://poeditor.com/join/project/A45VLCwD0Y"
+    >Web App</a
+  >
+  and
+  <a target="_blank" href="https://poeditor.com/join/project/QhGWcF9w8T"
+    >Mobile App</a
+  >.
+</div>

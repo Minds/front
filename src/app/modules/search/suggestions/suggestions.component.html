@@ -7,16 +7,18 @@
 >
   <ng-container *ngIf="!q">
     <ng-container *ngIf="newNavigation; else oldSuggestions">
-      <span class="m-searchBarSuggestions__searchHistory" i18n>
-        Search History
-      </span>
-      <span
-        class="m-searchBarSuggestions__clearHistory"
-        (click)="clearHistory()"
-        i18n
-      >
-        Clear History
-      </span>
+      <div class="m-searchBar__toolbar">
+        <span class="m-searchBarSuggestions__searchHistory" i18n>
+          Search History
+        </span>
+        <span
+          class="m-searchBarSuggestions__clearHistory"
+          (click)="clearHistory()"
+          i18n
+        >
+          Clear History
+        </span>
+      </div>
 
       <ng-container *ngFor="let suggestion of recent">
         <a

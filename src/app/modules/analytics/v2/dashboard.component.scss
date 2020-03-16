@@ -11,7 +11,7 @@ m-analytics__dashboard {
   justify-content: center;
   align-items: center;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 }
 

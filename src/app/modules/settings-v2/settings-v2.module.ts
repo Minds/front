@@ -11,16 +11,38 @@ import { ReportModule } from '../report/report.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { WireModule } from '../wire/wire.module';
 
+import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
+
 import { SettingsV2Component } from './settings-v2.component';
 import { SettingsV2DisplayNameComponent } from './account/display-name/display-name.component';
 import { SettingsV2SessionsComponent } from './security/sessions/sessions.component';
 import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.component';
 import { SettingsV2EmailAddressComponent } from './account/email-address/email-address.component';
+import { SettingsV2DisplayLanguageComponent } from './account/display-language/display-language.component';
+import { SettingsV2PasswordComponent } from './account/password/password.component';
+import { SettingsV2EmailNotificationsComponent } from './account/email-notifications/email-notifications.component';
+import { SettingsV2NsfwContentComponent } from './account/nsfw-content/nsfw-content.component';
+import { SettingsV2ShareButtonsComponent } from './account/share-buttons/share-buttons.component';
+import { MindsFormsModule } from '../forms/forms.module';
+import { SettingsV2Service } from './settings-v2.service';
+import { SettingsModule } from '../settings/settings.module';
+import { SettingsV2PaymentMethodsComponent } from './billing/payment-methods/payment-methods.component';
+import { SettingsV2RecurringPaymentsComponent } from './billing/recurring-payments/recurring-payments.component';
+import { SettingsV2ReportedContentComponent } from './other/reported-content/reported-content.component';
+import { SettingsV2BlockedChannelsComponent } from './other/blocked-channels/blocked-channels.component';
+import { SettingsV2SubscriptionTiersComponent } from './other/subscription-tiers/subscription-tiers.component';
+import { SettingsV2PostPreviewComponent } from './other/post-preview/post-preview.component';
+import { SettingsV2DeactivateAccountComponent } from './other/deactivate-account/deactivate-account.component';
+import { SettingsV2DeleteAccountComponent } from './other/delete-account/delete-account.component';
+import { SettingsV2ToasterNotificationsComponent } from './account/toaster-notifications/toaster-notifications.component';
+import { WalletV2Module } from '../wallet/v2/wallet-v2.module';
+import { ProModule } from '../pro/pro.module';
+import { SettingsV2ProGeneralComponent } from './pro/general/general.component';
+import { SettingsV2ProThemeComponent } from './pro/theme/theme.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
-    path: 'settings/canary',
-    // component: SettingsV2Component,
+    path: '',
     data: {
       title: 'Settings',
       description: 'Configure your Minds settings',
@@ -33,13 +55,14 @@ const SETTINGS_V2_ROUTES: Routes = [
         component: SettingsV2Component,
         data: {
           isMenu: true,
-          title: 'Account',
+          title: 'Account Settings',
           description: 'Configure your general account settings.',
         },
         children: [
           {
             path: 'display-name',
             component: SettingsV2DisplayNameComponent,
+            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Display Name',
               description: 'Customize your display name.',
@@ -48,13 +71,105 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'email-address',
             component: SettingsV2EmailAddressComponent,
+            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Email Address',
               description:
                 'Change the email address where notifications are sent.',
             },
           },
-          // { path: '**', redirectTo: '' },
+          {
+            path: 'display-language',
+            component: SettingsV2DisplayLanguageComponent,
+            data: {
+              title: 'Display Language',
+              description: 'Change the web interface language.',
+            },
+          },
+          {
+            path: 'password',
+            component: SettingsV2PasswordComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Password',
+              description: 'Change account password.',
+            },
+          },
+
+          {
+            path: 'nsfw-content',
+            component: SettingsV2NsfwContentComponent,
+            data: {
+              title: 'NSFW Content',
+              description:
+                'Control how NSFW content is displayed in your newsfeed.',
+            },
+          },
+          {
+            path: 'share-buttons',
+            component: SettingsV2ShareButtonsComponent,
+            data: {
+              title: 'Share Buttons',
+              description: 'Control whether you see the share button overlay.',
+            },
+          },
+          {
+            path: 'email-notifications',
+            component: SettingsV2EmailNotificationsComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Email Notifications',
+              description:
+                'Control what email notifications you receive, and when.',
+            },
+          },
+          {
+            path: 'toaster-notifications',
+            component: SettingsV2ToasterNotificationsComponent,
+            data: {
+              title: 'Toaster Notifications',
+              description: 'Control whether you receive toaster notifications.',
+            },
+          },
+          { path: '**', redirectTo: 'account' },
+        ],
+      },
+      {
+        path: 'pro_canary',
+        component: SettingsV2Component,
+        data: {
+          isMenu: true,
+          title: 'Pro Settings',
+          description: 'Customize your Pro channel.',
+        },
+        children: [
+          {
+            path: 'general',
+            component: SettingsV2ProGeneralComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'General Settings',
+              description: 'Customize your title and headline.',
+            },
+          },
+          {
+            path: 'theme',
+            component: SettingsV2ProThemeComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Theme',
+              description: "Set up your site's color theme.",
+            },
+          },
+          // Upload custom logo and background images
+          // Set up your category filter hashtags
+          // Set up your site's footer links
+          // Customize your site domain
+          // Select the currency type you wish you be paid out in. Please note
+          //    payouts only occur after your
+          //    <a routerLink="/analytics/dashboard/earnings">earnings</a> are
+          //     equivalent to $100 or greater.
+          // Manage your subscription
         ],
       },
       {
@@ -62,13 +177,14 @@ const SETTINGS_V2_ROUTES: Routes = [
         component: SettingsV2Component,
         data: {
           isMenu: true,
-          title: 'Security',
+          title: 'Security Settings',
           description: 'Configure your account security settings.',
         },
         children: [
           {
             path: 'two-factor',
             component: SettingsV2TwoFactorComponent,
+            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Two-factor Authentication',
               description:
@@ -81,6 +197,104 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Sessions',
               description: 'Close all sessions with a single click.',
+            },
+          },
+        ],
+      },
+      {
+        path: 'billing',
+        component: SettingsV2Component,
+        data: {
+          isMenu: true,
+          title: 'Billing Settings',
+          description: 'Configure your account billing settings.',
+        },
+        children: [
+          {
+            path: 'payment-methods',
+            component: SettingsV2PaymentMethodsComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Payment Methods',
+              description:
+                'Manage credit cards associated with your Minds account.',
+            },
+          },
+          {
+            path: 'recurring-payments',
+            component: SettingsV2RecurringPaymentsComponent,
+            data: {
+              title: 'RecurringPayments',
+              description:
+                'Track recurring payments you make to support other channels.',
+            },
+          },
+        ],
+      },
+      {
+        path: 'other',
+        component: SettingsV2Component,
+        data: {
+          isMenu: true,
+          title: 'Other Settings',
+          description: 'Additional settings.',
+        },
+        children: [
+          {
+            path: 'reported-content',
+            component: SettingsV2ReportedContentComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Reported Content',
+              description:
+                'Oversee disciplinary measures taken on your posts and channel.',
+            },
+          },
+          {
+            path: 'blocked-channels',
+            component: SettingsV2BlockedChannelsComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Blocked Channels',
+              description:
+                'Block certain channels from appearing in your feed.',
+            },
+          },
+          {
+            path: 'subscription-tiers',
+            component: SettingsV2SubscriptionTiersComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Subscription Tiers',
+              description:
+                'Define incentives for users to support your channel.',
+            },
+          },
+          {
+            path: 'post-preview',
+            component: SettingsV2PostPreviewComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Post Preview',
+              description: 'Customize the appearance of your paywalled posts.',
+            },
+          },
+          {
+            path: 'deactivate-account',
+            component: SettingsV2DeactivateAccountComponent,
+            data: {
+              title: 'Deactivate Account',
+              description:
+                'Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.',
+            },
+          },
+          {
+            path: 'delete-account',
+            component: SettingsV2DeleteAccountComponent,
+            data: {
+              title: 'Delete Account',
+              description:
+                'Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable. Your username will be released back to the public.',
             },
           },
         ],
@@ -100,13 +314,16 @@ const SETTINGS_V2_ROUTES: Routes = [
     ReactiveFormsModule,
     CommonModule,
     CheckoutModule,
-    ModalsModule, // todoojm where is this used?
+    ModalsModule,
     LegacyModule,
     RouterModule.forChild(SETTINGS_V2_ROUTES),
     ReportModule,
     PaymentsModule,
     WireModule,
-    // SettingsModule,
+    MindsFormsModule,
+    SettingsModule,
+    WalletV2Module,
+    ProModule,
   ],
   declarations: [
     SettingsV2Component,
@@ -114,12 +331,24 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2SessionsComponent,
     SettingsV2TwoFactorComponent,
     SettingsV2EmailAddressComponent,
+    SettingsV2DisplayLanguageComponent,
+    SettingsV2PasswordComponent,
+    SettingsV2EmailNotificationsComponent,
+    SettingsV2NsfwContentComponent,
+    SettingsV2ShareButtonsComponent,
+    SettingsV2PaymentMethodsComponent,
+    SettingsV2RecurringPaymentsComponent,
+    SettingsV2ReportedContentComponent,
+    SettingsV2BlockedChannelsComponent,
+    SettingsV2SubscriptionTiersComponent,
+    SettingsV2PostPreviewComponent,
+    SettingsV2DeactivateAccountComponent,
+    SettingsV2DeleteAccountComponent,
+    SettingsV2ToasterNotificationsComponent,
+    SettingsV2ProGeneralComponent,
+    SettingsV2ProThemeComponent,
   ],
-  // providers: [SettingsService],
-  exports: [
-    SettingsV2Component,
-    // SettingsBillingSavedCardsComponent,
-    // SettingsBillingSubscriptionsComponent,
-  ],
+  providers: [SettingsV2Service],
+  exports: [SettingsV2Component],
 })
 export class SettingsV2Module {}

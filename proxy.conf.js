@@ -4,12 +4,7 @@ const enginePort = process.env['ENGINE_PORT'] || (engineSecure ? 443 : 80);
 
 const PROXY_CONFIG = [
   {
-    context: [
-      '/api',
-      '/fs',
-      '/icon',
-      '/carousel',
-    ],
+    context: ['/api', '/fs', '/icon', '/carousel'],
     target: {
       protocol: engineSecure ? 'https:' : 'http:',
       host: engineHost,
@@ -17,9 +12,21 @@ const PROXY_CONFIG = [
     },
     secure: false,
     changeOrigin: true,
+    cookieDomainRewrite: '',
+    onProxyRes: (proxyRes, req, res) => {
+      const sc = proxyRes.headers['set-cookie'];
+      if (Array.isArray(sc)) {
+        proxyRes.headers['set-cookie'] = sc.map(sc => {
+          return sc
+            .split(';')
+            .filter(v => v.trim().toLowerCase() !== 'secure')
+            .join('; ');
+        });
+      }
+    },
     withCredentials: true,
     logLevel: process.env['PROXY_LOG_LEVEL'] || 'info',
-  }
+  },
 ];
 
 module.exports = PROXY_CONFIG;
