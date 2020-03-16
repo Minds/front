@@ -2,9 +2,6 @@ m-onboarding__phoneverification {
   m-phoneInput {
     .m-phoneInput__countryList {
       top: 38px;
-      @include m-theme() {
-        box-shadow: none;
-      }
     }
     .m-phoneInput__input {
       padding-top: 0;

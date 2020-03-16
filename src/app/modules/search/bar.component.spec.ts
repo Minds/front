@@ -22,6 +22,7 @@ import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { RecentService } from '../../services/ux/recent';
 import { recentServiceMock } from '../../../tests/minds-recent-service-mock.spec';
+import { MockDirective } from '../../utils/mock';
 
 // Mocks
 
@@ -53,7 +54,11 @@ describe('SearchBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SearchBarSuggestionsMock, SearchBarComponent],
+      declarations: [
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        SearchBarSuggestionsMock,
+        SearchBarComponent,
+      ],
       imports: [
         NgCommonModule,
         RouterTestingModule,

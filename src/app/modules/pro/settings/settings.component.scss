@@ -1,7 +1,7 @@
 m-proSettings {
   display: block;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--primary);
   }
   form {
     margin: 0;

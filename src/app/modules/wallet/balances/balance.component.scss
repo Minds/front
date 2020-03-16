@@ -10,7 +10,7 @@ m-wallet--balance-tokens {
   padding: ($minds-padding * 2) $minds-padding;
   text-align: center;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   .m-wallet--balance--logo {

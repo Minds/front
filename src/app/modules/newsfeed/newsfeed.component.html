@@ -4,6 +4,7 @@
 
 <div
   class="m-newsfeed m-page"
+  [class.m-newsfeed--2019]="!newNavigation"
   [class.mdl-grid]="!newNavigation"
   [class.m-pageLayout__container]="newNavigation"
 >
@@ -149,7 +150,7 @@
     [class.mdl-cell]="!newNavigation"
     [class.mdl-cell--4-col]="!newNavigation"
     [class.m-pageLayout__pane--right]="newNavigation"
-    *ngIf="showRightSidebar"
+    *ngIf="showRightSidebar || newNavigation"
   >
     <ng-container *mIfFeature="'suggested-users'">
       <m-suggestions__sidebar></m-suggestions__sidebar>

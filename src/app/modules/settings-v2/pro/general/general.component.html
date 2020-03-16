@@ -1,0 +1,109 @@
+<form
+  *ngIf="form"
+  [formGroup]="form"
+  class="m-formLayout--buttonOffsetRight m-formLayout--hasDescriptors"
+>
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="title" i18n>Page Title</label>
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n>The name of your pro site</ng-container>
+        </m-tooltip>
+      </div>
+      <div class="m-form__row--input">
+        <input
+          type="text"
+          id="title"
+          name="title"
+          formControlName="title"
+          class="form-control"
+          [readonly]="inProgress || !init"
+          data-minds="title"
+        /><m-formDescriptor
+          >This will be used in browser tab titles and your SEO
+          tags</m-formDescriptor
+        >
+      </div>
+    </div>
+
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="headline" i18n>Headline</label>
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n>A short description about your site</ng-container>
+        </m-tooltip>
+      </div>
+      <div class="m-form__row--input">
+        <textarea
+          id="headline"
+          name="headline"
+          formControlName="headline"
+          class="form-control"
+          data-minds="headline"
+          [readonly]="inProgress || !init"
+        ></textarea>
+        <m-formDescriptor
+          >This will be used in your SEO tags as well</m-formDescriptor
+        >
+      </div>
+    </div>
+
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label
+          for="publish"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          (click)="onEnableProThemeClick($event)"
+          >Enable Pro theme
+          <input
+            type="checkbox"
+            id="publish"
+            name="publish"
+            formControlName="published"
+            class="form-control"
+            data-minds="publish"
+            [readonly]="inProgress || !init"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+        <m-tooltip>
+          <span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n
+            >When enabled, your channel on minds.com will have your Pro site
+            theme applied</ng-container
+          >
+        </m-tooltip>
+      </div>
+    </div>
+
+    <!-- <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="name" i18n>Display Name</label>
+      </div>
+      <div class="m-form__row--input">
+        <input
+          type="text"
+          id="name"
+          name="name"
+          formControlName="name"
+          class="form-control"
+          [readonly]="inProgress || !init"
+        />
+      </div>
+      <div class="m-form__row--validation"></div>
+    </div> -->
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Save Settings
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

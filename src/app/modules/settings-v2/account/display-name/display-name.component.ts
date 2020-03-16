@@ -3,76 +3,96 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  Output,
+  EventEmitter,
+  OnDestroy,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Client } from '../../../../services/api/client';
-import { FormToastService } from '../../../../common/services/form-toast.service';
 import { Session } from '../../../../services/session';
+import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
+import { Observable, Subscription } from 'rxjs';
+import { MindsUser } from '../../../../interfaces/entities';
+
+import { SettingsV2Service } from '../../settings-v2.service';
+
 @Component({
   selector: 'm-settingsV2__displayName',
   templateUrl: './display-name.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2DisplayNameComponent implements OnInit {
+export class SettingsV2DisplayNameComponent implements OnInit, OnDestroy {
+  @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
+  init: boolean = false;
   inProgress: boolean = false;
-  currentName: string = '';
+  user: MindsUser;
+  settingsSubscription: Subscription;
+  currentName: string;
   form;
-  error: string;
 
   constructor(
-    protected client: Client,
     protected cd: ChangeDetectorRef,
-    private formToastService: FormToastService,
-    private session: Session
+    private session: Session,
+    protected settingsService: SettingsV2Service,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
-    this.load();
-  }
-
-  async load() {
-    this.currentName = this.session.getLoggedInUser().name;
-
-    // this.inProgress = true;
-    // try {
-    //   this.client.get('api/v1/settings/' + this.guid).then((response: any) => {
-    //   // Get current name
-    //   // const { name } = <any>await this.client.get('api/v2/wallet/btc/address');
-    //   // if (name) {
-    //   // }
-    // } catch (e) {
-    //   console.error(e);
-    // }
-    // this.inProgress = false;
+    this.user = this.session.getLoggedInUser();
     this.form = new FormGroup({
-      displayName: new FormControl(this.currentName, {
+      name: new FormControl('', {
         validators: [Validators.required],
       }),
     });
+
+    this.settingsSubscription = this.settingsService.settings$.subscribe(
+      (settings: any) => {
+        this.currentName = settings.name;
+        this.name.setValue(settings.name);
+        this.detectChanges();
+      }
+    );
+
+    this.init = true;
     this.detectChanges();
   }
 
-  async update() {
-    if (this.form.invalid || this.inProgress) {
+  async submit() {
+    if (!this.canSubmit()) {
       return;
     }
     try {
       this.inProgress = true;
       this.detectChanges();
 
-      await this.client.post('api/v2/wallet/btc/address', {
-        address: this.displayName.value,
-      });
-      this.currentName = this.displayName.value;
-      this.formToastService.success('Save success');
+      const response: any = await this.settingsService.updateSettings(
+        this.user.guid,
+        this.form.value
+      );
+      if (response.status === 'success') {
+        this.user.name = this.name;
+        this.formSubmitted.emit({ formSubmitted: true });
+        this.form.reset();
+      }
     } catch (e) {
-      this.formToastService.error(e);
-      console.error(e);
+      this.formSubmitted.emit({ formSubmitted: false, error: e });
     } finally {
       this.inProgress = false;
-
       this.detectChanges();
     }
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.form.pristine || this.name.value === this.currentName) {
+      return true;
+    }
+
+    return this.dialogService.confirm('Discard changes?');
+  }
+
+  canSubmit(): boolean {
+    const valChanged = this.name.value !== this.currentName;
+    return !this.inProgress && this.form.valid && valChanged;
   }
 
   detectChanges() {
@@ -80,7 +100,13 @@ export class SettingsV2DisplayNameComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  get displayName() {
-    return this.form.get('displayName');
+  ngOnDestroy() {
+    if (this.settingsSubscription) {
+      this.settingsSubscription.unsubscribe();
+    }
+  }
+
+  get name() {
+    return this.form.get('name');
   }
 }

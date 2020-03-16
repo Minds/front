@@ -60,7 +60,7 @@
       }
       &.green {
         @include m-theme() {
-          background-color: rgba(themed($m-aqua), 0.8);
+          background-color: rgba(themed($m-aqua), 0.9);
         }
       }
       &.red {

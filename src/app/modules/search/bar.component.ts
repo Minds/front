@@ -21,6 +21,7 @@ import { RecentService } from '../../services/ux/recent';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   @Input() showCleanIcon: boolean = false;
+  @HostBinding('class.m-search__bar--active')
   active: boolean;
   suggestionsDisabled: boolean = false;
   q: string;

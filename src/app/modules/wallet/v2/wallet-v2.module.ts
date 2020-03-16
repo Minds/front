@@ -156,7 +156,7 @@ export const WALLET_V2_ROUTES: Routes = [
     WalletV2EthComponent,
     WalletV2BtcComponent,
   ],
-  exports: [WalletDashboardComponent],
+  exports: [WalletDashboardComponent, WalletPhoneVerificationComponent],
   providers: [
     {
       provide: Web3WalletService,

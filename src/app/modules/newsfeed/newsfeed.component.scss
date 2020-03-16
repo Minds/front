@@ -48,59 +48,61 @@ m-newsfeed {
     }
   }
 
-  .m-newsfeed--sidebar,
-  .m-newsfeed--boost-sidebar {
-    max-width: 270px;
+  &.m-newsfeed--2019 {
+    .m-newsfeed--sidebar,
+    .m-newsfeed--boost-sidebar {
+      max-width: 270px;
 
-    m-ads-boost {
-      minds-card {
-        minds-card-group.mdl-card {
-          .m-groups-card-stats {
-            width: 154px;
+      m-ads-boost {
+        minds-card {
+          minds-card-group.mdl-card {
+            .m-groups-card-stats {
+              width: 154px;
+            }
           }
+        }
+      }
+
+      .m-btn--with-icon {
+        padding: 8px 12px;
+
+        i {
+          display: none;
         }
       }
     }
 
-    .m-btn--with-icon {
-      padding: 8px 12px;
+    .m-newsfeed--feed {
+      max-width: 680px;
+      min-width: 0; // Avoid flex issues
+    }
 
-      i {
-        display: none;
+    @media screen and (min-width: 1200px) and (max-width: 1280px) {
+      //max-width:1120px; //1200 - 80 (sidebar)
+      .m-newsfeed--sidebar,
+      .m-newsfeed--boost-sidebar {
+        //max-width: 265px;
+      }
+      .m-newsfeed--feed {
+        // margin: 8px 16px;
+        //max-width: 525px;
       }
     }
-  }
 
-  .m-newsfeed--feed {
-    max-width: 680px;
-    min-width: 0; // Avoid flex issues
-  }
+    @media screen and (max-width: 1100px) {
+      & {
+        max-width: 900px;
+      }
+      .m-newsfeed--feed {
+        max-width: initial;
+      }
+    }
 
-  @media screen and (min-width: 1200px) and (max-width: 1280px) {
-    //max-width:1120px; //1200 - 80 (sidebar)
-    .m-newsfeed--sidebar,
-    .m-newsfeed--boost-sidebar {
-      //max-width: 265px;
-    }
-    .m-newsfeed--feed {
-      margin: 8px 16px;
-      //max-width: 525px;
-    }
-  }
-
-  @media screen and (max-width: 1100px) {
-    & {
-      max-width: 900px;
-    }
-    .m-newsfeed--feed {
-      max-width: initial;
-    }
-  }
-
-  @media screen and (max-width: 850px) {
-    .m-newsfeed--sidebar,
-    .m-newsfeed--boost-sidebar {
-      display: none;
+    @media screen and (max-width: 850px) {
+      .m-newsfeed--sidebar,
+      .m-newsfeed--boost-sidebar {
+        display: none;
+      }
     }
   }
 }
@@ -199,6 +201,12 @@ m-newsfeed {
 .m-theme__2020 .m-newsfeed {
   [class*='m-pageLayout__pane'] {
     padding: $minds-padding * 2;
+    @media screen and (max-width: $max-mobile) {
+      padding: 0;
+    }
+  }
+  .m-pageLayout__pane--right {
+    padding-right: 0;
   }
   .m-newsfeed__sidebar {
     max-width: initial;

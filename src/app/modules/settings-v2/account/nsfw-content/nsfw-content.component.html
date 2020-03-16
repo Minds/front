@@ -1,0 +1,37 @@
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--checkbox stretchedField">
+      <div class="m-form__row--input">
+        <div class="m-form__field--checkbox">
+          <div class="m-form__row--input">
+            <label
+              for="mature"
+              class="m-form__customInputWrapper__checkbox"
+              i18n
+              >Always show NSFW content (18+)
+              <input
+                type="checkbox"
+                id="mature"
+                name="mature"
+                formControlName="mature"
+                class="form-control"
+                data-minds="mature"
+                [readonly]="inProgress || !init"
+              />
+              <span class="m-form__customInput__checkbox"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Update NSFW Preference
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

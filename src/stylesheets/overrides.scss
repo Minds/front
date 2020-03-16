@@ -78,15 +78,15 @@ textarea:-internal-autofill-selected,
 select:-internal-autofill-previewed,
 select:-internal-autofill-selected {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
     color: rgba(themed($m-black), 0.87);
   }
 }
 
 .mdl-data-table {
   @include m-theme() {
-    background-color: themed($m-white);
-    border: 1px solid rgba(themed($m-black), 0.12);
+    background-color: themed($m-bgColor--secondary);
+    border: 1px solid rgba(themed($m-borderColor--tertiary), 0.12);
   }
 }
 
@@ -481,7 +481,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
 .mdl-data-table {
   @include m-theme() {
     border: 1px solid rgba(themed($m-black), 0.12);
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 }
 

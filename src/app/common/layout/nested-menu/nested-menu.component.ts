@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export interface NestedMenuItem {
   label: string;
   id: string;
+  route?: string;
 }
 
 export interface NestedMenu {
@@ -14,6 +15,7 @@ export interface NestedMenu {
 /**
  * Menu list that can be used in multiple "nested" horizontal panes.
  * Each item in the list routes to the relative url of the item.id
+ * (unless it has an item.route)
  */
 @Component({
   selector: 'm-nestedMenu',
