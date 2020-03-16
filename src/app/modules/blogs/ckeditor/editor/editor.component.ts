@@ -14,6 +14,8 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { AttachmentService } from '../../../../services/attachment';
 import { SiteService } from '../../../../common/services/site.service';
+import { ThemeService } from '../../../../common/services/theme.service';
+import { BehaviorSubject } from 'rxjs';
 
 declare var require: any;
 
@@ -40,10 +42,12 @@ export class BlogEditorComponent {
   constructor(
     @Inject(PLATFORM_ID) protected platformId: Object,
     private attachment: AttachmentService,
-    private site: SiteService
+    private site: SiteService,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit() {
+    this.themeService.emitThemePreference();
     // Render on browser side.
     if (isPlatformBrowser(this.platformId)) {
       // Must be required here for client-side loading.
@@ -54,6 +58,7 @@ export class BlogEditorComponent {
           const response = this.attachment.upload(await file);
           return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
         },
+        isDark$: this.themeService.isDark$,
       };
     }
   }
