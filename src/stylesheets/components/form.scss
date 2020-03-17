@@ -174,7 +174,6 @@
       }
     }
   }
-
   [class*='m-form__row'] {
     display: flex;
     flex-flow: row wrap;
@@ -219,7 +218,6 @@
       }
     }
   }
-
   m-tooltip {
     .m-tooltip > span {
       @include m-theme() {
