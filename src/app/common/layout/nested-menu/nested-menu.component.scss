@@ -13,8 +13,10 @@ m-nestedMenu {
     @include m-theme {
       border-right: 1px solid themed($m-borderColor--primary);
     }
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $layoutMax2ColWidth) {
       width: 100%;
+    }
+    @media screen and (max-width: $max-mobile) {
       @include m-theme {
         border-right: none;
       }
@@ -45,7 +47,7 @@ m-nestedMenu {
     font-weight: 400;
     padding: 17px 18px;
 
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $layoutMax2ColWidth) {
       padding: 19px 24px 22px 24px;
     }
 
@@ -57,7 +59,7 @@ m-nestedMenu {
       display: none;
 
       transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      @media screen and (max-width: $max-mobile) {
+      @media screen and (max-width: $layoutMax2ColWidth) {
         display: inline-block;
       }
       a {
@@ -92,7 +94,7 @@ m-nestedMenu {
       @include m-theme() {
         color: themed($m-textColor--primary);
       }
-      @media screen and (max-width: $max-mobile) {
+      @media screen and (max-width: $layoutMax2ColWidth) {
         font-size: 24px;
         line-height: 32px;
       }
@@ -131,7 +133,7 @@ m-nestedMenu {
       }
     }
 
-    @media screen and (max-width: $max-mobile) {
+    @media screen and (max-width: $layoutMax2ColWidth) {
       padding: 14px 24px;
     }
   }

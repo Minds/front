@@ -1,15 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { NestedMenu } from '../../common/layout/nested-menu/nested-menu.component';
 import { Session } from '../../services/session';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import {
+  Router,
+  ActivatedRoute,
+  NavigationEnd,
+  ParamMap,
+} from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { SettingsV2Service } from './settings-v2.service';
 import { FormToastService } from '../../common/services/form-toast.service';
 import { ProService } from '../pro/pro.service';
 import { FeaturesService } from '../../services/features.service';
+import { Subscription } from 'rxjs';
 
 /**
- * Main component that determines what form/menu(s)
+ * Determines what form/menu(s)
  * should be displayed in the settings-v2 module
  */
 @Component({
@@ -23,6 +29,9 @@ export class SettingsV2Component implements OnInit {
   menuHeaderId: string = 'account';
   routeData: any;
   newNavigation: boolean = false;
+  user: string | null = null;
+
+  protected paramMap$: Subscription;
 
   mainMenus: NestedMenu[] = [
     {
@@ -32,7 +41,7 @@ export class SettingsV2Component implements OnInit {
       },
       items: [
         { label: 'Account', id: 'account' },
-        { label: 'Pro', id: 'pro_canary' },
+        { label: 'Pro', id: 'pro_canary' }, // :user param added later
         { label: 'Security', id: 'security' },
         { label: 'Billing', id: 'billing' },
         { label: 'Other', id: 'other' },
@@ -104,8 +113,8 @@ export class SettingsV2Component implements OnInit {
     pro_canary: [
       {
         header: {
-          label: 'General Pro Settings',
-          id: 'pro',
+          label: 'Pro Settings',
+          id: 'pro_canary',
         },
         items: [
           { label: 'General', id: 'general' },
@@ -186,28 +195,42 @@ export class SettingsV2Component implements OnInit {
 
     this.route.url.subscribe(url => {
       this.menuHeaderId = url[0].path;
+      if (this.menuHeaderId === 'pro_canary') {
+        if (this.session.isAdmin()) {
+          this.user =
+            this.route.snapshot.params.user ||
+            this.session.getLoggedInUser().name;
+        } else {
+          this.user = this.session.getLoggedInUser().name;
+        }
+        this.setProRoutes();
+      }
     });
 
     // Get the title, description and whether it's a menu
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(event => {
-        this.setsecondaryPane();
+        this.setSecondaryPane();
       });
 
-    this.setProPreviewRoute();
-    this.setsecondaryPane();
+    this.setProRoutes();
+    this.setSecondaryPane();
     this.loadSettings();
   }
 
-  setProPreviewRoute() {
+  setProRoutes() {
+    const proMainMenuItem = this.mainMenus[0].items.find(
+      item => item.label === 'Pro'
+    );
+
+    proMainMenuItem.id = `pro_canary/${this.user}`;
+
     const proPreviewMenuItem = this.secondaryMenus.pro_canary
       .find(item => item.header.id === 'pro-subscription')
       .items.find(item => item.id === 'view-pro-channel');
 
-    const route = `/pro/${this.session.getLoggedInUser().name}`;
-
-    proPreviewMenuItem.route = route;
+    proPreviewMenuItem.route = `/pro/${this.user}`;
   }
 
   async loadSettings(): Promise<void> {
@@ -217,15 +240,16 @@ export class SettingsV2Component implements OnInit {
     );
 
     // Initialize proSettings$
-    // TODOOJM handle admins
-    // if(this.session.isAdmin()){}
-    const remoteUser: string | null = null;
-    await this.proService.get(remoteUser);
+    if (this.session.isAdmin()) {
+      await this.proService.get(this.user);
+    } else {
+      await this.proService.get();
+    }
 
     this.init = true;
   }
 
-  setsecondaryPane(): void {
+  setSecondaryPane(): void {
     this.secondaryPaneIsMenu = false;
     let snapshot = this.route.snapshot;
     if (snapshot.firstChild && snapshot.firstChild.data['title']) {
@@ -238,7 +262,8 @@ export class SettingsV2Component implements OnInit {
     this.routeData = snapshot.data;
   }
 
-  /** Subscribe to output events from components
+  /**
+   * Subscribe to output events from components
    * activated from within the router outlet
    */
   onActivate(elementRef): void {

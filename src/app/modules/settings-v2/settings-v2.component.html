@@ -1,5 +1,4 @@
-<!-- <div class="m-settingsV2"> -->
-<div class="m-settingsV2 m-page m-pageLayout__container">
+<div class="m-settingsV2 m-page m-pageLayout__container" *ngIf="init">
   <m-nestedMenu
     class="m-settingsV2__mainMenu m-pageLayout__pane--right"
     [ngClass]="{ showMainMenuOnMobile: showMainMenuOnMobile }"
@@ -7,7 +6,6 @@
     (itemSelected)="showMainMenuOnMobile = false"
   ></m-nestedMenu>
   <div
-    *ngIf="init"
     class="m-settingsV2__secondaryPane m-pageLayout__pane--main"
     [ngClass]="{ showSecondaryMenuOnMobile: !showMainMenuOnMobile }"
   >

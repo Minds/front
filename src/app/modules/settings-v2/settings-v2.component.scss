@@ -2,6 +2,20 @@ m-settingsV2 {
   grid-area: content / span 2;
   min-width: 0;
 
+  m-nestedMenu {
+    &.m-pageLayout__pane--right {
+      @include m-theme {
+        border-left: none;
+      }
+    }
+  }
+
+  m-draggableList {
+    @include m-theme {
+      box-shadow: none;
+    }
+  }
+
   .m-settingsV2 {
     display: flex;
     font-weight: 300;

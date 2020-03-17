@@ -1,6 +1,97 @@
-<!-- <div class="m-settingsV2__desc">
-  Upload custom logo and background images
+<div class="m-settingsV2__desc">
+  Upload custom logo and background images.
   <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
     >Upgrade to Pro</a
   >
-</div> -->
+</div>
+<div *ngIf="init" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--asset">
+      <div class="m-form__row--label">
+        <label for="logo" i18n>Logo</label>
+        <m-tooltip icon="help"
+          ><ng-container i18n
+            >This will be displayed on the top left of your site</ng-container
+          ></m-tooltip
+        >
+      </div>
+
+      <div class="m-form__row--input">
+        <label
+          for="logo"
+          class="m-form__filePreview--logo"
+          [ngStyle]="{
+            backgroundColor: settings.plain_background_color
+          }"
+        >
+          <input
+            class="form-control"
+            type="file"
+            id="logo"
+            name="logo"
+            accept="image/*"
+            (change)="onAssetFileSelect('logo', logoField.files)"
+            #logoField
+            data-minds="logo"
+          />
+
+          <img
+            *ngIf="getPreviewAssetSrc('logo')"
+            [src]="getPreviewAssetSrc('logo')"
+          />
+
+          <span class="m-form__filePreviewOverlay">
+            <i class="material-icons">cloud_upload</i>
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <div class="m-form__field--asset">
+      <div class="m-form__row--label">
+        <label for="background" i18n>Background Image</label>
+        <m-tooltip icon="help"
+          ><ng-container i18n
+            >This will be displayed as the background of your site</ng-container
+          ></m-tooltip
+        >
+      </div>
+
+      <div class="m-form__row--input">
+        <label for="background" class="m-form__filePreview--background">
+          <input
+            class="form-control"
+            type="file"
+            id="background"
+            name="background"
+            accept="image/*"
+            (change)="onAssetFileSelect('background', backgroundField.files)"
+            #backgroundField
+            data-minds="background"
+          />
+          <img
+            *ngIf="getPreviewAssetSrc('background')"
+            [src]="getPreviewAssetSrc('background')"
+          />
+          <span
+            class="m-form__filePreviewOverlay"
+            [ngClass]="{
+              'm-form__filePreviewOverlay--show': showFilePreviewOverlay()
+            }"
+          >
+            <i class="material-icons">cloud_upload</i>
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Save Assets
+    </m-shadowboxSubmitButton>
+  </div>
+</div>

@@ -141,7 +141,7 @@ const SETTINGS_V2_ROUTES: Routes = [
         ],
       },
       {
-        path: 'pro_canary',
+        path: 'pro_canary/:user',
         component: SettingsV2Component,
         data: {
           isMenu: true,
@@ -201,7 +201,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
           {
             path: 'payouts',
-            component: SettingsV2ProThemeComponent,
+            component: SettingsV2ProPayoutsComponent,
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Payouts',

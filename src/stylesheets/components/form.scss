@@ -374,6 +374,7 @@
   }
 
   input:not(.m-phoneInput__input),
+  input:not(.m-draggableList__cell),
   .m-phoneInput__wrapper,
   textarea,
   select {

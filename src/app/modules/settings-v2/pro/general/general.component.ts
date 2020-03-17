@@ -12,7 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { ProService } from '../../../pro/pro.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'm-settingsV2Pro__general',
@@ -25,16 +25,17 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   proSettingsSubscription: Subscription;
   isActive: boolean = false;
+  user: string | null;
 
   form;
-  formValsChanged: boolean = false;
 
   constructor(
     protected cd: ChangeDetectorRef,
     private session: Session,
     protected proService: ProService,
     private dialogService: DialogService,
-    protected router: Router
+    protected router: Router,
+    protected route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -46,13 +47,19 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
       published: new FormControl(''),
     });
 
-    this.form.valueChanges.subscribe(val => {
-      this.formValsChanged = true;
+    this.route.parent.params.subscribe(params => {
+      if (this.session.isAdmin()) {
+        this.user = params.user || null;
+      }
     });
 
     this.proSettingsSubscription = this.proService.proSettings$.subscribe(
       (settings: any) => {
         this.isActive = settings.is_active;
+        if (!this.isActive) {
+          this.published.disable();
+        }
+
         this.title.setValue(settings.title);
         this.headline.setValue(settings.headline);
         this.published.setValue(settings.published);
@@ -72,7 +79,10 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
       this.inProgress = true;
       this.detectChanges();
 
-      const response: any = await this.proService.set(this.form.value);
+      const response: any = await this.proService.set(
+        this.form.value,
+        this.user
+      );
       if (response.status === 'success') {
         this.formSubmitted.emit({ formSubmitted: true });
         this.form.markAsPristine();
@@ -86,7 +96,7 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.form.pristine || !this.formValsChanged) {
+    if (this.form.pristine) {
       return true;
     }
 
@@ -94,7 +104,7 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
   }
 
   canSubmit(): boolean {
-    return !this.inProgress && this.form.valid && this.formValsChanged;
+    return !this.inProgress && this.form.valid && !this.form.pristine;
   }
 
   onEnableProThemeClick(e: MouseEvent): void {

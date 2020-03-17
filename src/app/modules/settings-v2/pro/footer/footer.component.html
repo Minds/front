@@ -1,6 +1,98 @@
-<!-- <div class="m-settingsV2__desc">
-  Set up your site's footer links
+<div class="m-settingsV2__desc">
+  Set up your site's footer links.
   <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
     >Upgrade to Pro</a
   >
-</div> -->
+</div>
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer containsDragDrop" formArrayName="footer">
+    <div class="m-form__field--grid" formArrayName="footer_links">
+      <div class="m-form__row--label">
+        <label i18n>Links</label>
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n
+            >You can post external links below</ng-container
+          > </m-tooltip
+        ><button
+          type="button"
+          (click)="addBlankFooterLink()"
+          data-minds="addFooterLink"
+          i18n
+        >
+          Add
+        </button>
+      </div>
+      <div class="m-form__row--input" *ngIf="footer_links.value.length > -1">
+        <m-draggableList
+          [headers]="['Label', 'Url']"
+          [data]="footer_links.value"
+          [id]="'title'"
+          (emptyListHeaderRowClicked)="addBlankFooterLink()"
+          (arrayChanged)="setFooterLinks($event)"
+          #footerDraggable
+        >
+          <ng-template let-link="item" let-i="i">
+            <ng-container [formGroupName]="i">
+              <input
+                class="m-draggableList__cell form-control"
+                type="text"
+                [id]="'footer_link-title-' + i"
+                [name]="'footer_link[' + i + '][title]'"
+                formControlName="title"
+                autofocus
+                [attr.data-minds]="'footerLink__title--' + i"
+                (focusin)="footerDraggable.onFocusIn($event)"
+                (focusout)="footerDraggable.onFocusOut($event)"
+                (mouseover)="footerDraggable.onFocusIn($event)"
+                (mouseout)="footerDraggable.onFocusOut($event)"
+              />
+
+              <input
+                class="m-draggableList__cell form-control"
+                type="text"
+                [id]="'footer_link-href-' + i"
+                [name]="'footer_link[' + i + '][href]'"
+                formControlName="href"
+                [attr.data-minds]="'footerLink__href--' + i"
+                (focusin)="footerDraggable.onFocusIn($event)"
+                (focusout)="footerDraggable.onFocusOut($event)"
+                (mouseover)="footerDraggable.onFocusIn($event)"
+                (mouseout)="footerDraggable.onFocusOut($event)"
+              />
+            </ng-container>
+          </ng-template>
+        </m-draggableList>
+      </div>
+    </div>
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="footer_text" i18n>Text</label
+        ><m-tooltip icon="help"
+          ><ng-container i18n
+            >This text will be displayed at the bottom of the page</ng-container
+          ></m-tooltip
+        >
+      </div>
+      <div class="m-form__row--input">
+        <input
+          type="text"
+          id="footer_text"
+          name="footer_text"
+          formControlName="footer_text"
+          class="form-control"
+          #footer_text
+        />
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Save Footer
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

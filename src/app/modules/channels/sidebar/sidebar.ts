@@ -208,7 +208,13 @@ export class ChannelSidebar implements OnInit {
   }
 
   get proSettingsRouterLink() {
-    const route: any[] = ['/pro/' + this.user.username + '/settings'];
+    let route: any[];
+    if (this.featuresService.has('navigation')) {
+      route = ['settings/canary/pro_canary/' + this.user.username];
+    } else {
+      route = ['/pro/' + this.user.username + '/settings'];
+    }
+
     return route;
   }
 }

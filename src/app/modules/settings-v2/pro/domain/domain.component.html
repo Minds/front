@@ -1,6 +1,77 @@
-<!-- <div class="m-settingsV2__desc">
-  Customize your site domain
+<div class="m-settingsV2__desc">
+  Customize your site domain.
   <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
     >Upgrade to Pro</a
   >
-</div> -->
+</div>
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--text stretchedField hasValidationRow">
+      <div class="m-form__row--label">
+        <label for="domain" i18n>Domain</label>
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n
+            ><ng-container i18n *ngIf="isActive; else previewModeDomainNote">
+              Currently only subdomains are supported. Custom domains are coming
+              soon. If you wish to use a custom domain please email
+              info@minds.com.
+            </ng-container>
+            <ng-template #previewModeDomainNote i18n
+              >You can control your domain once you purchase Pro.</ng-template
+            ></ng-container
+          >
+        </m-tooltip>
+      </div>
+      <div class="m-form__row--input">
+        <input
+          class="m-form__input form-control"
+          type="text"
+          id="domain"
+          name="domain"
+          formControlName="domain"
+        />
+      </div>
+      <div class="m-form__row--validation">
+        <p *ngIf="domain.hasError('invalidDomain')">
+          Domain not available
+        </p>
+        <p *ngIf="domain.hasError('required')">
+          Domain is required
+        </p>
+      </div>
+    </div>
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label for="custom_head" i18n>Custom &lt;head&gt; Code</label
+        ><m-tooltip
+          ><span m-tooltip--anchor>𝒊</span
+          ><ng-container i18n
+            >Ad blocks or other JS head codes can go here. Please contact a
+            Minds admin or email info@minds.com to customize this
+            field.</ng-container
+          ></m-tooltip
+        >
+      </div>
+      <div class="m-form__row--input">
+        <textarea
+          class="m-form__codeTextarea"
+          id="custom_head"
+          name="custom_head"
+          formControlName="custom_head"
+          [readOnly]="!isAdmin"
+          class="form-control"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Save Domain
+    </m-shadowboxSubmitButton>
+  </div>
+</form>
