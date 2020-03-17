@@ -16,6 +16,7 @@ import { AttachmentService } from '../../../../services/attachment';
 import { SiteService } from '../../../../common/services/site.service';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { BehaviorSubject } from 'rxjs';
+import { Client } from '../../../../services/api';
 
 declare var require: any;
 
@@ -43,7 +44,8 @@ export class BlogEditorComponent {
     @Inject(PLATFORM_ID) protected platformId: Object,
     private attachment: AttachmentService,
     private site: SiteService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private client: Client
   ) {}
 
   ngOnInit() {
@@ -57,6 +59,14 @@ export class BlogEditorComponent {
         uploadHandler: async file => {
           const response = this.attachment.upload(await file);
           return `${this.site.baseUrl}fs/v1/thumbnail/${await response}/xlarge`;
+        },
+        mediaEmbedHandler: async match => {
+          const url = match[0];
+          const preview = await this.client.get('api/v1/newsfeed/preview', {
+            url,
+          });
+          const html = preview['html'];
+          return html;
         },
         isDark$: this.themeService.isDark$,
       };
