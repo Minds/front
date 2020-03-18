@@ -7,18 +7,12 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormArray,
-  FormBuilder,
-} from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { ProService } from '../../../pro/pro.service';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'm-settingsV2Pro__hashtags',
@@ -32,6 +26,9 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
   proSettingsSubscription: Subscription;
   protected paramMap$: Subscription;
   user: string | null = null;
+
+  currentTags = [];
+  formValsChanged: boolean = false;
 
   form;
 
@@ -49,13 +46,21 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form = new FormGroup({
-      // footer: this.fb.group({
-      //   title: [""],
-      //   links: this.fb.array([])
-      // })
-      // footer_text: new FormControl([''])
-      // footer_links: new FormArray([]),
-      hashtags: new FormArray([]),
+      tag_list: new FormArray([]),
+    });
+
+    /**
+     * Manually compare the form values before + after changes
+     * are made, to determine whether the form is saveable
+     * and also whether to display a 'discard changes?' popup
+     */
+    this.form.valueChanges.subscribe(() => {
+      const nonBlankTags = this.tag_list.value.filter(item => {
+        return item.label || item.tag;
+      });
+
+      this.formValsChanged =
+        JSON.stringify(this.currentTags) !== JSON.stringify(nonBlankTags);
     });
 
     this.route.parent.params.subscribe(params => {
@@ -68,8 +73,6 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
       (settings: any) => {
         this.isActive = settings.is_active;
         this.setTags(settings.tag_list);
-        // this.footer_text.setValue(settings.footer_text);
-        // this.setFooterLinks(settings.footer_links);
 
         this.detectChanges();
       }
@@ -108,8 +111,8 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
   }
 
   addTag(label, tag) {
-    const hashtags = <FormArray>this.form.controls.hashtags;
-    hashtags.push(
+    const tag_list = <FormArray>this.tag_list;
+    tag_list.push(
       this.fb.group({
         label: [label],
         tag: [tag],
@@ -118,17 +121,16 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
   }
 
   setTags(tags: Array<{ label: string; tag: string }>) {
-    (<FormArray>this.form.controls.hashtags).clear();
+    (<FormArray>this.tag_list).clear();
     this.detectChanges();
     for (const tag of tags) {
       this.addTag(tag.label, tag.tag);
     }
-    this.form.markAsDirty();
     this.detectChanges();
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.form.pristine) {
+    if (!this.formValsChanged) {
       return true;
     }
 
@@ -136,7 +138,7 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
   }
 
   canSubmit(): boolean {
-    return !this.inProgress && this.form.valid && !this.form.pristine;
+    return !this.inProgress && this.form.valid && this.formValsChanged;
   }
 
   detectChanges() {
@@ -150,13 +152,7 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
     }
   }
 
-  get hashtags() {
-    return this.form.get('hashtags');
+  get tag_list() {
+    return this.form.get('tag_list');
   }
-  // get footer_links() {
-  //   return this.form.get('footer_links');
-  // }
-  // get footer_text() {
-  //   return this.form.get('footer_text');
-  // }
 }

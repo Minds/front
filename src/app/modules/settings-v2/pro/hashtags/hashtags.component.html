@@ -5,11 +5,8 @@
   >
 </div>
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
-  <div
-    class="m-form__fieldsContainer containsDragDrop"
-    formArrayName="hashtags"
-  >
-    <div class="m-form__field--grid">
+  <div class="m-form__fieldsContainer containsDragDrop">
+    <div class="m-form__field--grid" formArrayName="tag_list">
       <div class="m-form__row--label">
         <label i18n>Hashtags</label>
         <m-tooltip
@@ -27,10 +24,10 @@
           Add
         </button>
       </div>
-      <div class="m-form__row--input" *ngIf="form.value.hashtags.length > -1">
+      <div class="m-form__row--input" *ngIf="form.value.tag_list.length > -1">
         <m-draggableList
           [headers]="['Label', '#Hashtag']"
-          [data]="form.value.hashtags"
+          [data]="form.value.tag_list"
           [id]="'tag'"
           (emptyListHeaderRowClicked)="addBlankTag()"
           (arrayChanged)="setTags($event)"

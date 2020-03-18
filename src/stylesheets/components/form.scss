@@ -208,13 +208,15 @@
       }
     }
     @media screen and (max-width: 1000px) {
-      label,
-      input,
-      textarea,
-      m-formDescriptor {
-        flex: 1 1 100%;
-        min-width: 100%;
-        max-width: 100%;
+      .stretchedField {
+        label,
+        input,
+        textarea,
+        m-formDescriptor {
+          flex: 1 1 100%;
+          min-width: 100%;
+          max-width: 100%;
+        }
       }
     }
   }
@@ -259,6 +261,7 @@
       flex: 1 1 auto;
     }
     input,
+    textarea,
     select:not(.m-dateDropdowns__select) {
       flex: 1 1 100%;
     }
@@ -361,18 +364,9 @@
     &:not(:read-only):not(:-moz-read-only) {
       cursor: default;
     }
-    // TODOOJM
-    // &:not(.m-draggableList__cell) {
-    //   &.ng-invalid.form-control {
-    //     @include m-theme() {
-    //       border-color: themed($m-alert) !important;
-    //     }
-    //   }
-    // }
   }
 
-  input:not(.m-phoneInput__input),
-  input:not(.m-draggableList__cell),
+  input:not(.m-phoneInput__input):not(.m-draggableList__cell),
   .m-phoneInput__wrapper,
   textarea,
   select {
@@ -492,7 +486,7 @@
         @include m-theme() {
           color: themed($m-textColor--primary);
           border: 1px solid themed($m-borderColor--primary);
-          background-color: themed($m-bgColor--secondary);
+          background-color: rgba(themed($m-black), 0);
         }
         &:hover {
           transform: scale(1.04);
@@ -577,23 +571,23 @@
       }
     }
   }
-  m-formDescriptor {
-    box-sizing: border-box;
-    flex: 1 0 160px;
-    min-width: 160px;
-    .m-formDescriptor {
-      margin-left: 33px;
-      padding-left: 14px;
-      font-size: 15px;
-      line-height: 20px;
-    }
-    @media screen and (max-width: 1000px) {
-      .m-formDescriptor {
-        margin: 16px 0 0 0;
-        font-size: 14px;
-      }
-    }
-  }
+  // m-formDescriptor {
+  //   box-sizing: border-box;
+  //   flex: 1 0 160px;
+  //   min-width: 160px;
+  //   .m-formDescriptor {
+  //     margin-left: 33px;
+  //     padding-left: 14px;
+  //     font-size: 15px;
+  //     line-height: 20px;
+  //   }
+  //   @media screen and (max-width: 1000px) {
+  //     .m-formDescriptor {
+  //       margin: 16px 0 0 0;
+  //       font-size: 14px;
+  //     }
+  //   }
+  // }
   .m-form__colorPreview {
     cursor: pointer;
     height: 40px;

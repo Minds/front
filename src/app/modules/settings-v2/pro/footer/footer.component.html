@@ -5,7 +5,7 @@
   >
 </div>
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
-  <div class="m-form__fieldsContainer containsDragDrop" formArrayName="footer">
+  <div class="m-form__fieldsContainer containsDragDrop">
     <div class="m-form__field--grid" formArrayName="footer_links">
       <div class="m-form__row--label">
         <label i18n>Links</label>
@@ -67,12 +67,13 @@
     </div>
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
-        <label for="footer_text" i18n>Text</label
-        ><m-tooltip icon="help"
-          ><ng-container i18n
+        <label for="footer_text" i18n>Text</label>
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n
             >This text will be displayed at the bottom of the page</ng-container
-          ></m-tooltip
-        >
+          >
+        </m-tooltip>
       </div>
       <div class="m-form__row--input">
         <input
