@@ -104,7 +104,7 @@ context('Groups', () => {
   })
 
   it('should be able to toggle conversations', () => {
-    cy.visit('/groups/profile/1075117317781721095/feed');
+    cy.contains(groupId).click();
 
     cy.get('minds-groups-settings-button > button').click();
     cy.contains('Disable Conversation').click();
