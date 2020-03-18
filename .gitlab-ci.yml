@@ -34,12 +34,11 @@ lint:
 ############
 # QA Stage #
 ############
-
-qa:e2e:
+.cypress_tests: &cypress_tests
   image: cypress/browsers:chrome67
   stage: qa
   variables:
-    CYPRESS_INSTALL_BINARY: 3.4.1
+    CYPRESS_INSTALL_BINARY: 3.6.1
   script:
     - npm ci
     - >
@@ -62,7 +61,18 @@ qa:e2e:
     paths:
       - .npm
       - cache/Cypress
-  allow_failure: true #manual inspection in case of timeouts
+
+qa:sandbox:
+  allow_failure: false
+  except:
+    - /^master$/
+  <<: *cypress_tests
+
+qa:production:
+  allow_failure: true
+  only:
+    - /^master$/
+  <<: *cypress_tests
 
 qa:manual:
   stage: qa
