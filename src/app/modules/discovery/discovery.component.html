@@ -1,8 +1,12 @@
 <div class="m-pageLayout__container">
-  <div class="m-pageLayout__pane--main" style="position: relative;">
+  <div
+    class="m-pageLayout__pane--main"
+    m-pageLayout__pane="main"
+    style="position: relative;"
+  >
     <router-outlet></router-outlet>
   </div>
-  <div class="m-discovery__sidebar m-pageLayout__pane--right">
+  <div class="m-discovery__sidebar" m-pageLayout__pane="right">
     <m-suggestions__sidebar></m-suggestions__sidebar>
   </div>
 </div>

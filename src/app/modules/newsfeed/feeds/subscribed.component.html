@@ -14,43 +14,63 @@
 ></minds-newsfeed-poster>
 
 <div class="minds-list">
-  <minds-activity
-    *ngFor="let preActivity of prepended"
-    [object]="preActivity"
-    [boostToggle]="preActivity.boostToggle"
-    (deleted)="delete(preActivity)"
-    [showRatingToggle]="true"
-    class="mdl-card m-border item"
-    [attr.minds-data-activity-guid]="preActivity.guid"
-  ></minds-activity>
+  <ng-container *ngFor="let preActivity of prepended">
+    <ng-container *mIfFeature="'navigation'; else legacyActivity">
+      <m-activity
+        [entity]="preActivity"
+        [displayOptions]="{
+          showOnlyCommentsInput: true
+        }"
+      ></m-activity>
+    </ng-container>
+    <ng-template #legacyActivity>
+      <minds-activity
+        [object]="preActivity"
+        [boostToggle]="preActivity.boostToggle"
+        (deleted)="delete(preActivity)"
+        [showRatingToggle]="true"
+        class="mdl-card m-border item"
+        [attr.minds-data-activity-guid]="preActivity.guid"
+      ></minds-activity>
+    </ng-template>
 
-  <ng-container *mIfBrowser>
-    <m-newsfeed--boost-rotator
-      interval="3"
-      *ngIf="showBoostRotator"
-    ></m-newsfeed--boost-rotator>
+    <ng-container *mIfBrowser>
+      <m-newsfeed--boost-rotator
+        interval="3"
+        *ngIf="showBoostRotator"
+      ></m-newsfeed--boost-rotator>
+    </ng-container>
   </ng-container>
 
   <ng-container
     *ngFor="let activity$ of feedsService.feed | async; let i = index"
   >
-    <ng-container *mIfFeature="'es-feeds'">
-      <m-featured-content
-        *ngIf="(i > 0 && i % 5 === 0) || i === 2"
-        [slot]="i + 1"
-      ></m-featured-content>
-    </ng-container>
-
-    <minds-activity
-      *ngIf="activity$ | async as activity"
-      class="mdl-card m-border item"
-      [object]="activity"
-      [boostToggle]="activity.boostToggle"
-      (deleted)="delete($event)"
-      [showRatingToggle]="true"
+    <m-featured-content
+      *ngIf="(i > 0 && i % 5 === 0) || i === 2"
       [slot]="i + 1"
-      [attr.data-minds-activity-guid]="activity.guid"
-    ></minds-activity>
+    ></m-featured-content>
+
+    <ng-container *mIfFeature="'navigation'; else legacyActivity">
+      <m-activity
+        *ngIf="activity$ | async as activity"
+        [entity]="activity"
+        [displayOptions]="{
+          showOnlyCommentsInput: true
+        }"
+      ></m-activity>
+    </ng-container>
+    <ng-template #legacyActivity>
+      <minds-activity
+        *ngIf="activity$ | async as activity"
+        class="mdl-card m-border item"
+        [object]="activity"
+        [boostToggle]="activity.boostToggle"
+        (deleted)="delete($event)"
+        [showRatingToggle]="true"
+        [slot]="i + 1"
+        [attr.data-minds-activity-guid]="activity.guid"
+      ></minds-activity>
+    </ng-template>
   </ng-container>
 
   <infinite-scroll
