@@ -23,6 +23,7 @@ import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { RecentService } from '../../services/ux/recent';
 import { recentServiceMock } from '../../../tests/minds-recent-service-mock.spec';
 import { MockDirective } from '../../utils/mock';
+import { SharedModule } from '../../common/shared.module';
 
 // Mocks
 
@@ -64,6 +65,7 @@ describe('SearchBarComponent', () => {
         RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
+        SharedModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
