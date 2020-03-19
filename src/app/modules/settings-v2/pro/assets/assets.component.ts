@@ -85,8 +85,6 @@ export class SettingsV2ProAssetsComponent implements OnInit, OnDestroy {
       this.inProgress = true;
       this.detectChanges();
 
-      /////////////////////////////////////////////
-
       const { logo, background, ...settings } = this.settings;
 
       const uploads: Promise<any>[] = [];
@@ -104,35 +102,16 @@ export class SettingsV2ProAssetsComponent implements OnInit, OnDestroy {
       }
 
       await Promise.all(uploads);
-      /////////////////////////////////////////////
 
-      const response: any = await this.proService.set(
-        this.form.value,
-        this.user
-      );
-      if (response.status === 'success') {
-        this.formSubmitted.emit({ formSubmitted: true });
-        this.form.markAsPristine();
-      }
+      this.formSubmitted.emit({ formSubmitted: true });
+      this.form.markAsPristine();
+      this.assetUploaded = false;
     } catch (e) {
       this.formSubmitted.emit({ formSubmitted: false, error: e });
     } finally {
       this.inProgress = false;
       this.detectChanges();
     }
-  }
-
-  onAssetFileSelect(type: string, files: FileList | null) {
-    if (!files || !files.item(0)) {
-      this.settings[type] = null;
-      this.detectChanges();
-      return;
-    }
-
-    this.settings[type] = files.item(0);
-    this.bgImageSelected = true;
-    this.form.markAsDirty();
-    this.detectChanges();
   }
 
   protected async uploadAsset(
@@ -150,6 +129,19 @@ export class SettingsV2ProAssetsComponent implements OnInit, OnDestroy {
         console.warn(`Browser prevented ${type} field resetting`);
       }
     }
+  }
+
+  onAssetFileSelect(type: string, files: FileList | null) {
+    if (!files || !files.item(0)) {
+      this.settings[type] = null;
+      this.detectChanges();
+      return;
+    }
+
+    this.settings[type] = files.item(0);
+    this.bgImageSelected = true;
+    this.form.markAsDirty();
+    this.detectChanges();
   }
 
   getPreviewAssetSrc(type: string): string | SafeUrl {

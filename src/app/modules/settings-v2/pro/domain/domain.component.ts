@@ -97,10 +97,9 @@ export class SettingsV2ProDomainComponent implements OnInit, OnDestroy {
         this.form.value,
         this.user
       );
-      if (response.status === 'success') {
-        this.formSubmitted.emit({ formSubmitted: true });
-        this.form.markAsPristine();
-      }
+
+      this.formSubmitted.emit({ formSubmitted: true });
+      this.form.markAsPristine();
     } catch (e) {
       this.formSubmitted.emit({ formSubmitted: false, error: e });
     } finally {

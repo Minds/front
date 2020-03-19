@@ -24,7 +24,7 @@ m-settingsV2 {
       @media screen and (max-width: $layoutMax2ColWidth) {
         display: none;
         flex-grow: 1;
-        &.showMainMenuOnMobile {
+        &.onMainNav {
           display: block;
         }
       }
@@ -35,7 +35,7 @@ m-settingsV2 {
       max-width: 637px;
       @media screen and (max-width: $layoutMax2ColWidth) {
         display: none;
-        &.showSecondaryMenuOnMobile {
+        &.onSecondaryNav {
           display: block;
         }
       }
@@ -153,7 +153,8 @@ m-settingsV2 {
     .m-formWrapper .m-form__fieldsContainer {
       input,
       select,
-      textarea {
+      textarea,
+      label.m-form__colorPreview {
         @include m-theme() {
           box-shadow: none;
         }
@@ -161,12 +162,14 @@ m-settingsV2 {
     }
 
     m-settingsV2__password {
-      .m-form__field--text {
-        &:first-child {
-          margin-bottom: 48px;
-        }
-        &:nth-child(2) {
-          margin-bottom: 2px;
+      .m-formWrapper {
+        .m-form__field--text {
+          // &:first-child {
+          //   margin-bottom: 48px;
+          // }
+          &:nth-child(2) {
+            margin-bottom: 2px;
+          }
         }
       }
     }
@@ -197,6 +200,30 @@ m-settingsV2 {
     m-settingsV2__emailNotifications {
       .m-form__field--checkbox:not(:last-child) {
         margin-bottom: 10px;
+      }
+    }
+
+    // m-form__filePreview
+    .m-form__filePreview--logo {
+      padding: 16px;
+      > img {
+        max-width: 100%;
+        max-height: 100px;
+        object-fit: contain;
+      }
+    }
+
+    .m-form__filePreview--background {
+      width: 480px;
+      height: 270px;
+
+      @include m-theme() {
+        background: rgba(themed($m-black-always), 0.3);
+      }
+      > img {
+        width: 480px;
+        height: 270px;
+        object-fit: cover;
       }
     }
 

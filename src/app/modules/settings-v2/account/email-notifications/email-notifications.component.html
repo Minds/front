@@ -17,7 +17,7 @@
             name="unread-notifications"
             class="form-control"
             data-minds="unread-notifications"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.when.unread_notifications"
           />
@@ -38,7 +38,7 @@
             name="wire-received"
             class="form-control"
             data-minds="wire-received"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.when.wire_received"
           />
@@ -59,7 +59,7 @@
             name="boost-completed"
             class="form-control"
             data-minds="boost-completed"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.when.boost_completed"
           />
@@ -78,7 +78,7 @@
             name="top-posts"
             class="form-control"
             data-minds="top-posts"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [ngModel]="!!notifications.with.top_posts"
             (ngModelChange)="onTopPostsCheckboxChange($event)"
@@ -100,7 +100,7 @@
             name="channel-improvement-tips"
             class="form-control"
             data-minds="channel-improvement-tips"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.with.channel_improvement_tips"
           />
@@ -121,7 +121,7 @@
             name="missed-since-login"
             class="form-control"
             data-minds="missed-since-login"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.with.posts_missed_since_login"
           />
@@ -142,7 +142,7 @@
             name="new_channels"
             class="form-control"
             data-minds="new_channels"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.with.new_channels"
           />
@@ -165,7 +165,7 @@
             name="minds_news"
             class="form-control"
             data-minds="unread-notifications"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.global.unread_notifications"
           />
@@ -186,7 +186,7 @@
             name="minds-tips"
             class="form-control"
             data-minds="minds-tips"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.global.minds_tips"
           />
@@ -207,7 +207,7 @@
             name="exclusive-promotions"
             class="form-control"
             data-minds="exclusive-promotions"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.global.exclusive_promotions"
           />

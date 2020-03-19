@@ -25,11 +25,11 @@ import { Subscription } from 'rxjs';
 export class SettingsV2Component implements OnInit {
   init: boolean = false;
   secondaryPaneIsMenu: boolean = false;
-  showMainMenuOnMobile: boolean = false;
   menuHeaderId: string = 'account';
   routeData: any;
   newNavigation: boolean = false;
   user: string | null = null;
+  onMainNav: boolean = false;
 
   protected paramMap$: Subscription;
 
@@ -192,16 +192,21 @@ export class SettingsV2Component implements OnInit {
       this.router.navigate(['/login'], { replaceUrl: true });
       return;
     }
+    this.user = this.session.getLoggedInUser().username;
+
+    if (this.route.snapshot.url.length === 0) {
+      this.router.navigateByUrl('/settings/canary/account?ref=main');
+    }
+
+    this.route.queryParamMap.subscribe(params => {
+      this.onMainNav = params.get('ref') === 'main' ? true : false;
+    });
 
     this.route.url.subscribe(url => {
       this.menuHeaderId = url[0].path;
       if (this.menuHeaderId === 'pro_canary') {
-        if (this.session.isAdmin()) {
-          this.user =
-            this.route.snapshot.params.user ||
-            this.session.getLoggedInUser().name;
-        } else {
-          this.user = this.session.getLoggedInUser().name;
+        if (this.session.isAdmin() && this.route.snapshot.params.user) {
+          this.user = this.route.snapshot.params.user;
         }
         this.setProRoutes();
       }
@@ -278,6 +283,19 @@ export class SettingsV2Component implements OnInit {
     }
   }
 
+  mainMenuItemSelected(): void {
+    this.onMainNav = false;
+  }
+
+  // Clicking the back button on a secondary menu
+  // brings you back to the top level menu
+  secondaryMenuClickedBack(): void {
+    this.onMainNav = true;
+    this.router.navigate(['/settings/canary']);
+  }
+
+  // Clicking the back button on a form brings you back
+  // to the relevant secondary menu
   goBack(): void {
     this.router.navigate(['../'], { relativeTo: this.route.firstChild });
   }

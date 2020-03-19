@@ -55,7 +55,7 @@ const SETTINGS_V2_ROUTES: Routes = [
       ogImage: '/assets/photos/network.jpg',
     },
     children: [
-      { path: '', redirectTo: 'account', pathMatch: 'full' },
+      { path: '', component: SettingsV2Component },
       {
         path: 'account',
         component: SettingsV2Component,
@@ -88,7 +88,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             path: 'display-language',
             component: SettingsV2DisplayLanguageComponent,
             data: {
-              title: 'Display Language',
+              title: 'Display Language Settings',
               description: 'Change the web interface language.',
             },
           },
@@ -346,7 +346,7 @@ const SETTINGS_V2_ROUTES: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'account',
+        redirectTo: '',
       },
     ],
   },

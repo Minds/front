@@ -51,16 +51,19 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
 
     /**
      * Manually compare the form values before + after changes
-     * are made, to determine whether the form is saveable
+     * are made to determine whether the form is saveable
      * and also whether to display a 'discard changes?' popup
      */
     this.form.valueChanges.subscribe(() => {
-      const nonBlankTags = this.tag_list.value.filter(item => {
-        return item.label || item.tag;
-      });
+      if (this.init) {
+        // Disregard empty tags when evaluating changes
+        const nonBlankTags = this.tag_list.value.filter(item => {
+          return item.label || item.tag;
+        });
 
-      this.formValsChanged =
-        JSON.stringify(this.currentTags) !== JSON.stringify(nonBlankTags);
+        this.formValsChanged =
+          JSON.stringify(this.currentTags) !== JSON.stringify(nonBlankTags);
+      }
     });
 
     this.route.parent.params.subscribe(params => {
@@ -72,6 +75,7 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
     this.proSettingsSubscription = this.proService.proSettings$.subscribe(
       (settings: any) => {
         this.isActive = settings.is_active;
+        this.currentTags = settings.tag_list;
         this.setTags(settings.tag_list);
 
         this.detectChanges();
@@ -94,10 +98,8 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
         this.form.value,
         this.user
       );
-      if (response.status === 'success') {
-        this.formSubmitted.emit({ formSubmitted: true });
-        this.form.markAsPristine();
-      }
+      this.formSubmitted.emit({ formSubmitted: true });
+      this.form.markAsPristine();
     } catch (e) {
       this.formSubmitted.emit({ formSubmitted: false, error: e });
     } finally {
@@ -110,12 +112,12 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
     this.addTag('', '');
   }
 
-  addTag(label, tag) {
+  addTag(tag, label) {
     const tag_list = <FormArray>this.tag_list;
     tag_list.push(
       this.fb.group({
-        label: [label],
         tag: [tag],
+        label: [label],
       })
     );
   }
@@ -124,7 +126,7 @@ export class SettingsV2ProHashtagsComponent implements OnInit, OnDestroy {
     (<FormArray>this.tag_list).clear();
     this.detectChanges();
     for (const tag of tags) {
-      this.addTag(tag.label, tag.tag);
+      this.addTag(tag.tag, tag.label);
     }
     this.detectChanges();
   }

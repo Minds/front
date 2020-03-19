@@ -57,17 +57,19 @@ export class SettingsV2ProFooterComponent implements OnInit, OnDestroy {
      * and also whether to display a 'discard changes?' popup
      */
     this.form.valueChanges.subscribe(() => {
-      const nonBlankLinks = this.footer_links.value.filter(item => {
-        return item.title || item.href;
-      });
+      if (this.init) {
+        const nonBlankLinks = this.footer_links.value.filter(item => {
+          return item.title || item.href;
+        });
 
-      const linksChanged =
-        JSON.stringify(this.currentFooterLinks) !==
-        JSON.stringify(nonBlankLinks);
+        const linksChanged =
+          JSON.stringify(this.currentFooterLinks) !==
+          JSON.stringify(nonBlankLinks);
 
-      const textChanged = this.footer_text.value !== this.currentFooterText;
+        const textChanged = this.footer_text.value !== this.currentFooterText;
 
-      this.formValsChanged = textChanged || linksChanged;
+        this.formValsChanged = textChanged || linksChanged;
+      }
     });
 
     this.route.parent.params.subscribe(params => {
@@ -105,10 +107,8 @@ export class SettingsV2ProFooterComponent implements OnInit, OnDestroy {
         this.form.value,
         this.user
       );
-      if (response.status === 'success') {
-        this.formSubmitted.emit({ formSubmitted: true });
-        this.form.markAsPristine();
-      }
+      this.formSubmitted.emit({ formSubmitted: true });
+      this.form.markAsPristine();
     } catch (e) {
       this.formSubmitted.emit({ formSubmitted: false, error: e });
     } finally {
