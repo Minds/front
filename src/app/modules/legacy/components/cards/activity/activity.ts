@@ -1,3 +1,10 @@
+/**
+ * Core activity class
+ *
+ * IMPORTANT - Be sure to duplicate all functions used by the template
+ * into the remind component, as it shares the template.
+ * If applicable use a blank no-op function in the remind.
+ */
 import {
   Component,
   ChangeDetectionStrategy,
@@ -579,6 +586,10 @@ export class Activity implements OnInit {
     }
   }
 
+  /**
+   * Called on rich-embed click - mirrored in remind component.
+   * @param e { Event } - $event.
+   */
   onRichEmbedClick(e: Event): void {
     if (
       this.activity.perma_url &&

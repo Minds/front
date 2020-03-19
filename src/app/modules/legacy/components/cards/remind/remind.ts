@@ -1,3 +1,9 @@
+/**
+ * Core remind class
+ *
+ * IMPORTANT - Be sure to to mirror functions to the activity component.
+ * If the function body is in activity and it is applicable, use a blank no-op function.
+ */
 import {
   Component,
   ChangeDetectionStrategy,
@@ -20,6 +26,7 @@ import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { RedirectService } from '../../../../../common/services/redirect.service';
 
 @Component({
   moduleId: module.id,
@@ -66,7 +73,8 @@ export class Remind {
     private overlayModal: OverlayModalService,
     private router: Router,
     protected featuresService: FeaturesService,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private redirectService: RedirectService
   ) {
     this.hideTabs = true;
     this.cdnUrl = configs.get('cdn_url');
@@ -208,6 +216,22 @@ export class Remind {
       }
       this.openModal();
     }
+  }
+
+  /**
+   * Called on rich-embed click - mirrored in activity component.
+   * @param e { Event } - $event.
+   */
+  onRichEmbedClick(e: Event): void {
+    if (
+      this.activity.perma_url &&
+      this.activity.perma_url.indexOf(this.configs.get('site_url')) === 0
+    ) {
+      this.redirectService.redirect(this.activity.perma_url);
+      return; // Don't open modal for minds links
+    }
+
+    this.openModal();
   }
 
   openModal() {
