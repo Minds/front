@@ -218,8 +218,6 @@ export class NewsfeedSingleComponent {
   }
 
   get showLegacyActivity(): boolean {
-    return (
-      this.editing || !this.featuresService.has('activity-v2--single-page')
-    );
+    return this.editing || !this.featuresService.has('navigation');
   }
 }

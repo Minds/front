@@ -4,7 +4,7 @@ import { first } from 'rxjs/operators';
 import { Client } from '../../services/api';
 import { BlockListService } from './block-list.service';
 
-type EntityObservable = BehaviorSubject<Object>;
+export type EntityObservable = BehaviorSubject<Object>;
 type EntityObservables = Map<string, EntityObservable>;
 
 @Injectable()

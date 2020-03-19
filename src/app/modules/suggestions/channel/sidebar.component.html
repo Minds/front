@@ -1,17 +1,27 @@
 <div class="m-suggestions__sidebar">
   <h3 class="m-newsfeedSidebar__header">Suggested channels</h3>
-  <span *ngIf="error && !inProgress" class="m-suggestionsSidebar__empty">
-    {{ error }}
+  <span
+    *ngIf="(error$ | async) && !(inProgress$ | async)"
+    class="m-suggestionsSidebar__empty"
+  >
+    {{ error | async }}
   </span>
   <span
-    *ngIf="!error && !inProgress && !suggestions.length"
+    *ngIf="
+      !(error$ | async) &&
+      !(inProgress$ | async) &&
+      !(suggestions$ | async).length
+    "
     class="m-suggestionsSidebar__empty"
   >
     You have no suggestions at this time
   </span>
-  <ul class="m-suggestionsSidebar__list m-border" *ngIf="suggestions.length">
+  <ul
+    class="m-suggestionsSidebar__list m-border"
+    *ngIf="(suggestions$ | async).length"
+  >
     <li
-      *ngFor="let suggestion of suggestions"
+      *ngFor="let suggestion of suggestions$ | async"
       class="m-suggestionsSidebarList__item"
     >
       <a [routerLink]="['/', suggestion.entity.username]">
@@ -43,6 +53,6 @@
   <div
     class="mdl-spinner mdl-js-spinner is-active"
     [mdl]
-    [hidden]="!inProgress"
+    [hidden]="!(inProgress$ | async)"
   ></div>
 </div>

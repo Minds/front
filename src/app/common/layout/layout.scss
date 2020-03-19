@@ -46,6 +46,7 @@ $layoutRightFullWidth: 310px;
   padding: 0 $minds-padding * 2;
   min-width: $layoutMin1ColWidth;
   max-width: $layoutMax3ColWidth - $layoutTotalPadding;
+  min-height: 100%;
   box-sizing: content-box; // 1172px (incl. 16px padding * 2)
 
   .m-pageLayout__container {
@@ -88,6 +89,7 @@ $layoutRightFullWidth: 310px;
   max-width: $layoutMainFullWidth + $layoutRightFullWidth;
   min-width: $layoutMainFullWidth;
   width: 100%;
+  min-height: 100%;
 
   .m-pageLayout__pane--main {
     width: $layoutMainFullWidth;
@@ -130,5 +132,24 @@ $layoutRightFullWidth: 310px;
     width: auto;
     display: none;
     border-left: 0;
+  }
+}
+
+// Move this!
+.m-goBack {
+  a {
+    text-decoration: none;
+    padding: 20px 40px 0;
+    display: block;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+  i,
+  span {
+    vertical-align: middle;
+  }
+  i {
+    padding-right: 8px;
   }
 }

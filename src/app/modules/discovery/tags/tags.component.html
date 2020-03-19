@@ -1,0 +1,55 @@
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a
+      routerLink="../overview"
+      routerLinkActive="m-tabs__tab--selected"
+      [queryParams]="{ reload: false }"
+      >Just for you</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a routerLink="./" routerLinkActive="m-tabs__tab--selected"
+      >Discover by tags</a
+    >
+  </div>
+</div>
+
+<m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
+
+<section class="m-discoveryTags__section">
+  <h3 class="m-discoveryTags__sectionHeader">Your tags</h3>
+  <ul class="m-discoveryTags__list m-discoveryTags__list--user">
+    <li class="m-discoveryTagsList__item" *ngFor="let tag of tags$ | async">
+      <a
+        routerLink="/discovery/search"
+        [queryParams]="{ q: '#' + tag.value, f: 'top' }"
+      >
+        <span>#{{ tag.value }}</span>
+        <div class="m-layout__spacer"></div>
+        <i class="material-icons">chevron_right</i>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<section class="m-discoveryTags__section">
+  <h3 class="m-discoveryTags__sectionHeader">Trending</h3>
+  <ul class="m-discoveryTags__list m-discoveryTags__list--trending">
+    <li class="m-discoveryTagsList__item" *ngFor="let tag of trending$ | async">
+      <a
+        routerLink="/discovery/search"
+        [queryParams]="{ q: '#' + tag.value, f: 'top' }"
+      >
+        <div>
+          <span>#{{ tag.value }}</span>
+          <br />
+          <span class="m-discoveryTagsListItem__volume"
+            >{{ tag.posts_count }} posts - {{ tag.votes_count }} votes</span
+          >
+        </div>
+        <div class="m-layout__spacer"></div>
+        <i class="material-icons">chevron_right</i></a
+      >
+    </li>
+  </ul>
+</section>

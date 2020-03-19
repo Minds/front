@@ -2,7 +2,7 @@
   border: 0;
   cursor: pointer;
   @include m-theme() {
-    background-color: themed($m-bgColor--primary);
+    background-color: themed($m-bgColor--secondary);
   }
 
   i {
