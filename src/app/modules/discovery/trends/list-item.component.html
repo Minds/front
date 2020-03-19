@@ -1,0 +1,20 @@
+<a
+  [routerLink]="
+    trend.guid ? '/discovery/trend/' + trend.guid : '/discovery/search'
+  "
+  [queryParams]="{ q: !trend.guid ? '#' + trend.hashtag : null, f: 'top' }"
+>
+  <ng-container *ngIf="trend.title">
+    <div>
+      <h4>{{ trend.title }}</h4>
+      <span>{{ trend.volume }} discussing</span>
+    </div>
+    <img [src]="trend.entity.thumbnail_src" />
+  </ng-container>
+  <ng-container *ngIf="!trend.title">
+    <div>
+      <h4>#{{ trend.hashtag }}</h4>
+      <span>{{ trend.volume }} posts</span>
+    </div>
+  </ng-container>
+</a>

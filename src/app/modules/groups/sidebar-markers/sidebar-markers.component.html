@@ -1,6 +1,13 @@
+<h5 i18n *ngIf="leftSidebar" class="m-groupSidebarMarkers__header">
+  Groups
+</h5>
+
 <ul class="m-groupSidebarMarkers__list m-scroll__thin" #list>
   <li style="display:flex">
-    <a [routerLink]="['/groups/create']">
+    <a
+      class="m-groupSidebarMarkersList__item m-groupSidebarMarkersList__item--newGroup"
+      [routerLink]="['/groups/create']"
+    >
       <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
         <i class="material-icons" m-tooltip--anchor>add</i>
         <span i18n="@@M__COMMON__NEW_GROUP">New group</span>
@@ -9,11 +16,47 @@
           New group
         </ng-container>
       </m-tooltip>
+      <span
+        class="m-groupSidebarMarkersListItem__label"
+        i18n="@@M__COMMON__NEW_GROUP"
+        *ngIf="showLabels"
+      >
+        New group
+      </span>
+    </a>
+  </li>
+
+  <li *ngIf="!inProgress && groups && groups.length > 0">
+    <a
+      class="m-groupSidebarMarkersList__item  m-groupSidebarMarkersList__item--discoverGroups"
+      [routerLink]="[
+        '/newsfeed/global/top',
+        { period: '12h', type: 'groups', all: 1 }
+      ]"
+    >
+      <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
+        <i class="material-icons" m-tooltip--anchor>people</i>
+        <span i18n="@@M__COMMON__DISCOVER_GROUPS">Discover Groups</span>
+
+        <ng-container i18n="@@M__COMMON__DISCOVER_GROUPS">
+          Discover Groups
+        </ng-container>
+      </m-tooltip>
+      <span
+        class="m-groupSidebarMarkersListItem__label"
+        i18n="@@M__COMMON__DISCOVER_GROUPS"
+        *ngIf="showLabels"
+      >
+        Discover Groups
+      </span>
     </a>
   </li>
 
   <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker">
-    <a [routerLink]="['/groups/profile', group.guid]">
+    <a
+      class="m-groupSidebarMarkersList__item"
+      [routerLink]="['/groups/profile', group.guid]"
+    >
       <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
         <img
           [class.m-pulsating--small]="group.hasGathering$ | async"
@@ -26,6 +69,9 @@
           {{ group.name }}
         </ng-container>
       </m-tooltip>
+      <span class="m-groupSidebarMarkersListItem__label" *ngIf="showLabels">
+        {{ group.name }}
+      </span>
     </a>
   </li>
 
@@ -39,29 +85,19 @@
         />
         <span>Noname</span>
 
-        <ng-container>
+        <ng-container
+          i18n="@@M__COMMON__JOIN_SOME_GROUPS_TO_POPULATE_THIS_SIDEBAR"
+        >
           Join some groups to populate this sidebar
         </ng-container>
       </m-tooltip>
-    </a>
-  </li>
-
-  <li *ngIf="!inProgress && groups && groups.length > 0">
-    <a
-      [routerLink]="[
-        '/newsfeed/global/top',
-        { period: '12h', type: 'groups', all: 1 }
-      ]"
-    >
-      <!-- todo: TEST IT -->
-      <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
-        <i class="material-icons" m-tooltip--anchor>people</i>
-        <span>Find a Group</span>
-
-        <ng-container>
-          Find a Group
-        </ng-container>
-      </m-tooltip>
+      <span
+        class="m-groupSidebarMarkersListItem__label"
+        i18n="@@M__COMMON__JOIN_SOME_GROUPS_TO_POPULATE_THIS_SIDEBAR"
+        *ngIf="showLabels"
+      >
+        Join some groups to populate this sidebar
+      </span>
     </a>
   </li>
 

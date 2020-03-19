@@ -5,12 +5,15 @@ import {
   ChangeDetectionStrategy,
   Output,
   EventEmitter,
+  Input,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { RichEmbedService } from '../../../services/rich-embed';
 import { MediaProxyService } from '../../../common/services/media-proxy.service';
 import { FeaturesService } from '../../../services/features.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 @Component({
   moduleId: module.id,
@@ -25,7 +28,7 @@ export class MindsRichEmbed {
   preview: any = {};
   maxheight: number = 320;
   inlineEmbed: any = null;
-  embeddedInline: boolean = false;
+  @Input() embeddedInline: boolean = false;
   cropImage: boolean = false;
   modalRequestSubscribed: boolean = false;
   @Output() mediaModalRequested: EventEmitter<any> = new EventEmitter();
@@ -36,7 +39,9 @@ export class MindsRichEmbed {
     private service: RichEmbedService,
     private cd: ChangeDetectorRef,
     protected featureService: FeaturesService,
-    private mediaProxy: MediaProxyService
+    private mediaProxy: MediaProxyService,
+    private configs: ConfigsService,
+    private overlayModal: OverlayModalService
   ) {}
 
   set _src(value: any) {
@@ -73,7 +78,7 @@ export class MindsRichEmbed {
     // Inline Embedding
     let inlineEmbed = this.parseInlineEmbed(this.inlineEmbed);
 
-    if (this.mediaSource === 'youtube') {
+    if (this.mediaSource === 'youtube' || this.mediaSource === 'minds') {
       this.modalRequestSubscribed =
         this.mediaModalRequested.observers.length > 0;
     }
@@ -94,7 +99,11 @@ export class MindsRichEmbed {
 
     this.inlineEmbed = inlineEmbed;
 
-    if (this.modalRequestSubscribed && this.mediaSource === 'youtube') {
+    if (
+      this.overlayModal.canOpenInModal() &&
+      this.modalRequestSubscribed &&
+      this.mediaSource === 'youtube'
+    ) {
       if (this.inlineEmbed && this.inlineEmbed.htmlProvisioner) {
         this.inlineEmbed.htmlProvisioner().then(html => {
           this.inlineEmbed.html = html;
@@ -109,8 +118,8 @@ export class MindsRichEmbed {
   action($event) {
     if (
       this.modalRequestSubscribed &&
-      this.featureService.has('media-modal') &&
-      this.mediaSource === 'youtube'
+      (this.mediaSource === 'youtube' || this.mediaSource === 'minds') &&
+      this.overlayModal.canOpenInModal()
     ) {
       $event.preventDefault();
       $event.stopPropagation();
@@ -149,6 +158,10 @@ export class MindsRichEmbed {
     }
 
     this.lastInlineEmbedParsed = url;
+
+    // Minds blog
+    const siteUrl = this.configs.get('site_url');
+    if (url.indexOf(siteUrl) === 0) this.mediaSource = 'minds';
 
     // YouTube
     let youtube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/i;
@@ -265,7 +278,10 @@ export class MindsRichEmbed {
 
   hasInlineContentLoaded() {
     return (
-      !this.modalRequestSubscribed && this.inlineEmbed && this.inlineEmbed.html
+      this.embeddedInline &&
+      this.inlineEmbed &&
+      this.inlineEmbed.html &&
+      (!this.modalRequestSubscribed || !this.overlayModal.canOpenInModal())
     );
   }
 

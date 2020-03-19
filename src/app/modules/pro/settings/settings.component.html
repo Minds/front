@@ -531,7 +531,12 @@
                             *ngIf="getPreviewAssetSrc('background')"
                             [src]="getPreviewAssetSrc('background')"
                           />
-                          <span class="m-proSettings__filePreviewOverlay">
+                          <span
+                            class="m-proSettings__filePreviewOverlay"
+                            [ngClass]="{
+                              'm-proSettings__filePreviewOverlay--show': showFilePreviewOverlay()
+                            }"
+                          >
                             <i class="material-icons">cloud_upload</i>
                           </span>
                         </label>
@@ -932,33 +937,19 @@
                 [disabled]="
                   !form.valid || form.pristine || saveStatus === 'saving'
                 "
-                [saveStatus]="saveStatus"
+                [saving]="saveStatus === 'saving' ? true : false"
               >
-                <ng-container [ngSwitch]="saveStatus">
-                  <ng-template ngSwitchCase="saving">
-                    <div class="m-shadowboxSubmitButton__status--saving">
-                      <span></span>
-                      <span></span>
-                      <span></span>
-                    </div>
-                  </ng-template>
-                  <ng-template ngSwitchDefault>
-                    <div class="m-shadowboxSubmitButton__status--unsaved">
-                      Save
-                      {{
-                        activeTab === 'general'
-                          ? 'Personal Details'
-                          : (activeTab | titlecase)
-                      }}
-                    </div>
-                  </ng-template>
-                </ng-container>
+                Save
+                {{
+                  activeTab === 'general'
+                    ? 'Personal Details'
+                    : (activeTab | titlecase)
+                }}
               </m-shadowboxSubmitButton>
             </div>
           </form>
         </ng-container>
       </div>
     </m-shadowboxLayout>
-    <m-formToast></m-formToast>
   </ng-container>
 </m-pageLayout>

@@ -12,116 +12,22 @@ import {
 
 import { MindsHttpClient } from '../../../common/api/client.service';
 import fakeData from './fake-data';
+import { Response, UserState } from '../../../interfaces/dashboard';
 
-export interface Category {
-  id: string;
-  label: string;
-  metrics?: string[]; // TODO: remove this
-  permissions?: string[];
-}
-
-export interface Response {
-  status: string;
-  dashboard: Dashboard;
-}
-
-export interface Dashboard {
-  category: string;
-  description?: string;
-  timespan: string;
-  timespans: Timespan[];
-  metric: string;
-  metrics: Metric[];
-  filter: string[];
-  filters: Filter[];
-}
-
-export interface Filter {
-  id: string;
-  label: string;
-  options: Option[];
-  description: string;
-  expanded?: boolean;
-}
-
-export interface Option {
-  id: string;
-  label: string;
-  available?: boolean;
-  selected?: boolean;
-  description?: string;
-  interval?: string;
-  comparison_interval?: number;
-  from_ts_ms?: number;
-  from_ts_iso?: string;
-}
-
-export interface Metric {
-  id: string;
-  label: string;
-  permissions?: string[];
-  summary?: Summary;
-  unit?: string;
-  description?: string;
-  visualisation: Visualisation | null;
-}
-
-export interface Summary {
-  current_value: number;
-  comparison_value: number;
-  comparison_interval: number;
-  comparison_positive_inclination: boolean;
-}
-
-export interface Visualisation {
-  type: string;
-  segments?: Buckets[];
-  buckets?: Bucket[];
-  columns?: Array<any>;
-}
-
-export interface Buckets {
-  buckets: Bucket[];
-}
-export interface Bucket {
-  key: number | string;
-  date?: string;
-  value?: number;
-  values?: {};
-}
-
-export interface Timespan {
-  id: string;
-  label: string;
-  interval: string;
-  comparison_interval: number;
-  from_ts_ms: number;
-  from_ts_iso: string;
-  selected: boolean;
-}
-
-export interface UserState {
-  category: string;
-  description?: string;
-  timespan: string;
-  timespans: Timespan[];
-  metric: string;
-  metrics: Metric[];
-  filter?: string[];
-  filters?: Filter[];
-}
-
+// Populate state with fakeData because BehaviorSubject requires a starting value
 let _state: UserState = fakeData[0];
 
+// Compare objs
 const deepDiff = (prev, curr) => JSON.stringify(prev) === JSON.stringify(curr);
 
 @Injectable()
 export class AnalyticsDashboardService {
+  // Initialize the BehaviorSubject with fakeData
   private store = new BehaviorSubject<UserState>(_state);
   private state$ = this.store.asObservable();
 
   // Make all the different variables within the UserState observables
-  // that are emitted only when something inside changes
+  // Emit the observable when something inside changes
   category$ = this.state$.pipe(
     map(state => state.category),
     distinctUntilChanged(deepDiff)
@@ -167,6 +73,7 @@ export class AnalyticsDashboardService {
   }
 
   loadFromRemote() {
+    // whenever an observable emits a value, emit the last emitted value from each of the other observables
     combineLatest([this.category$, this.timespan$, this.metric$, this.filter$])
       .pipe(
         distinctUntilChanged(deepDiff),
@@ -176,7 +83,6 @@ export class AnalyticsDashboardService {
         }),
         tap(() => this.loading$.next(true)),
         switchMap(([category, timespan, metric, filter]) => {
-          // console.log(category, timespan, metric, filter);
           try {
             const response = this.getDashboardResponse(
               category,
@@ -234,7 +140,6 @@ export class AnalyticsDashboardService {
   //       distinctUntilChanged()
   //     )
   //     .subscribe(value => this.updateSearchCriteria(value));
-
   //   return channelSearch;
   // }
 
@@ -273,17 +178,14 @@ export class AnalyticsDashboardService {
     } else {
       filter.push(selectedFilterStr);
     }
-    // console.log('update filter called: ' + selectedFilterStr);
-    // console.log(filter);
 
     this.updateState({ ..._state, filter });
   }
 
-  //   // ------- Private Methods ------------------------
+  // ------- Private Methods ------------------------
 
   /** Update internal state cache and emit from store... */
   private updateState(state: UserState) {
-    // console.log('update state called');
     this.store.next((_state = state));
   }
 

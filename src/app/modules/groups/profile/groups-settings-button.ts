@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
@@ -73,6 +73,29 @@ import { Session } from '../../../services/session';
         (click)="togglePublic(false)"
       >
         Make closed
+      </li>
+
+      <li
+        class="mdl-menu__item"
+        *ngIf="
+          (group['is:owner'] || group['is:moderator']) &&
+          group.conversationDisabled
+        "
+        (click)="toggleConversation(true); showMenu = false"
+        i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__ENABLE_CONVERSATION"
+      >
+        Enable Conversation
+      </li>
+      <li
+        class="mdl-menu__item"
+        *ngIf="
+          (group['is:owner'] || group['is:moderator']) &&
+          !group.conversationDisabled
+        "
+        (click)="toggleConversation(false); showMenu = false"
+        i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DISABLE_CONVERSATION"
+      >
+        Disable Conversation
       </li>
 
       <!-- Member functions -->
@@ -172,8 +195,8 @@ import { Session } from '../../../services/session';
       <div class="m-button-feature-modal">
         <select [(ngModel)]="category">
           <option value="not-selected" i18n="@@M__COMMON__SELECT_A_CATEGORY"
-            >-- SELECT A CATEGORY --</option
-          >
+            >-- SELECT A CATEGORY --
+          </option>
           <option *ngFor="let category of categories" [value]="category.id">{{
             category.label
           }}</option>
@@ -291,6 +314,15 @@ export class GroupsSettingsButton {
 
   report() {
     this.overlayService.create(ReportCreatorComponent, this.group).present();
+  }
+
+  async toggleConversation(enabled: boolean) {
+    try {
+      this.group.conversationDisabled = !enabled;
+      await this.service.toggleConversation(this.group.guid, enabled);
+    } catch (e) {
+      this.group.conversationDisabled = enabled;
+    }
   }
 
   /**

@@ -12,6 +12,10 @@ m-formInput__checkbox {
   }
   font-size: 13px;
 
+  .m-formInputCheckbox__visibleWrapper {
+    display: flex;
+    align-items: center;
+  }
   .m-formInputCheckbox__custom {
     display: inline-block;
     vertical-align: middle;
@@ -34,8 +38,8 @@ m-formInput__checkbox {
       -ms-transform: rotate(45deg);
       transform: rotate(45deg);
 
-      left: 7px;
-      top: 2px;
+      left: 8px;
+      top: 3px;
       width: 5px;
       height: 12px;
 
@@ -55,14 +59,16 @@ m-formInput__checkbox {
     height: 0;
     width: 0;
 
-    &:checked ~ .m-formInputCheckbox__custom {
-      @include m-theme() {
-        background-color: themed($m-blue);
-        border-color: themed($m-blue);
-      }
+    &:checked ~ .m-formInputCheckbox__visibleWrapper {
+      .m-formInputCheckbox__custom {
+        @include m-theme() {
+          background-color: themed($m-blue);
+          border-color: themed($m-blue);
+        }
 
-      &:after {
-        display: block;
+        &:after {
+          display: block;
+        }
       }
     }
   }

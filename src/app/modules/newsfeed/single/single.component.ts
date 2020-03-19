@@ -30,6 +30,8 @@ export class NewsfeedSingleComponent {
   paramsSubscription: Subscription;
   queryParamsSubscription: Subscription;
   focusedCommentGuid: string = '';
+  editing = false;
+  fixedHeight = false;
 
   constructor(
     public router: Router,
@@ -67,10 +69,22 @@ export class NewsfeedSingleComponent {
         this.load(params['guid']);
       }
     });
+
+    this.queryParamsSubscription = this.route.queryParamMap.subscribe(
+      params => {
+        if (params.has('editing')) {
+          this.editing = !!params.get('editing');
+        }
+        if (params.has('fixedHeight')) {
+          this.fixedHeight = params.get('fixedHeight') === '1';
+        }
+      }
+    );
   }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
+    this.queryParamsSubscription.unsubscribe();
   }
 
   /**
@@ -97,14 +111,18 @@ export class NewsfeedSingleComponent {
           case 'image':
           case 'video':
           case 'album':
-            this.router.navigate(['/media', this.activity.guid], {
-              replaceUrl: true,
-            });
+            if (!this.featuresService.has('activity-v2--single-page')) {
+              this.router.navigate(['/media', this.activity.guid], {
+                replaceUrl: true,
+              });
+            }
             break;
           case 'blog':
-            this.router.navigate(['/blog/view', this.activity.guid], {
-              replaceUrl: true,
-            });
+            if (!this.featuresService.has('activity-v2--single-page')) {
+              this.router.navigate(['/blog/view', this.activity.guid], {
+                replaceUrl: true,
+              });
+            }
             break;
         }
 
@@ -197,5 +215,9 @@ export class NewsfeedSingleComponent {
 
   delete(activity) {
     this.router.navigate(['/newsfeed']);
+  }
+
+  get showLegacyActivity(): boolean {
+    return this.editing || !this.featuresService.has('navigation');
   }
 }

@@ -6,7 +6,8 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AnalyticsDashboardService, Filter } from '../../dashboard.service';
+import { AnalyticsDashboardService } from '../../dashboard.service';
+import { Filter } from '../../../../../interfaces/dashboard';
 
 @Component({
   selector: 'm-analytics__filters',

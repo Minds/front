@@ -21,8 +21,6 @@ import { Minds } from './app.component';
 import { MINDS_PROVIDERS } from './services/providers';
 
 import { CommonModule } from './common/common.module';
-import { MonetizationModule } from './modules/monetization/monetization.module';
-import { WalletModule } from './modules/wallet/wallet.module';
 import { CheckoutModule } from './modules/checkout/checkout.module';
 import { PlusModule } from './modules/plus/plus.module';
 import { I18nModule } from './modules/i18n/i18n.module';
@@ -73,6 +71,8 @@ import { OnboardingV2Module } from './modules/onboarding-v2/onboarding.module';
 import { ConfigsService } from './common/services/configs.service';
 import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
+import { LayoutModule } from './modules/layout/layout.module';
+import { SharedModule } from './common/shared.module';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -92,16 +92,15 @@ export class SentryErrorHandler implements ErrorHandler {
     BrowserTransferStateModule,
     CookieModule.forRoot(),
     // TransferHttpCacheModule,
-    //BrowserAnimationsModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
     CaptchaModule,
+    LayoutModule,
     CommonModule,
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
-    WalletModule,
     //CheckoutModule,
-    MonetizationModule,
     PlusModule,
     AdsModule,
     BoostModule,
@@ -140,6 +139,7 @@ export class SentryErrorHandler implements ErrorHandler {
     CanaryModule,
     ChannelsModule,
     UpgradesModule,
+    SharedModule,
 
     //last due to :username route
     AppRoutingModule,
@@ -148,7 +148,6 @@ export class SentryErrorHandler implements ErrorHandler {
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },
     MINDS_PROVIDERS,
-    ConfigsService,
     {
       provide: APP_INITIALIZER,
       useFactory: configs => () => configs.loadFromRemote(),

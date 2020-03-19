@@ -23,6 +23,8 @@ import { sessionMock } from '../../../tests/session-mock.spec';
 
 import { ExcerptPipe } from '../../common/pipes/excerpt';
 import { ConfigsService } from '../../common/services/configs.service';
+import { FriendlyDateDiffPipe } from '../../common/pipes/friendlydatediff';
+import { TimeDiffService } from '../../services/timediff.service';
 
 describe('NotificationComponent', () => {
   let comp: NotificationComponent;
@@ -32,6 +34,7 @@ describe('NotificationComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         MaterialMock,
+        FriendlyDateDiffPipe,
         NotificationComponent,
         TokenPipe,
         ExcerptPipe,
@@ -40,6 +43,7 @@ describe('NotificationComponent', () => {
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        { provide: TimeDiffService, useValue: MockService(TimeDiffService) },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -375,31 +379,6 @@ describe('NotificationComponent', () => {
     expect(comp.notification).not.toBeNull();
     const notification = fixture.debugElement.query(By.css('span.pseudo-link'));
     expect(notification.nativeElement.innerHTML).toBe('Title');
-  });
-
-  it('Should load the notification channel_monetized', () => {
-    comp.notification = {
-      type: 'notification',
-      guid: '843204301747658770',
-      notification_view: 'channel_monetized',
-      entityObj: {
-        type: 'activity',
-        title: 'Title',
-      },
-      fromObj: {
-        name: 'name',
-      },
-      params: {
-        time_created: 2222,
-        bid: 10,
-      },
-    };
-    fixture.detectChanges();
-    expect(comp.notification).not.toBeNull();
-    const notification = fixture.debugElement.query(By.css('p'));
-    expect(notification.nativeElement.innerHTML).toContain(
-      '<!---->Your channel is now monetized. Congratulations!'
-    );
   });
 
   it('Should load the notification payout_accepted', () => {

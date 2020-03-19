@@ -10,6 +10,7 @@ import { HashtagsSelectorModalComponent } from '../../modules/hashtags/hashtag-s
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.component';
 import { MetaService } from '../../common/services/meta.service';
+import { FeaturesService } from '../../services/features.service';
 
 @Component({
   selector: 'm-settings',
@@ -29,12 +30,17 @@ export class SettingsComponent {
     public router: Router,
     public route: ActivatedRoute,
     public metaService: MetaService,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    protected featuresService: FeaturesService
   ) {}
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
       return this.router.navigate(['/login']);
+    }
+
+    if (this.featuresService.has('navigation')) {
+      this.router.navigate(['/settings/canary']);
     }
 
     this.metaService

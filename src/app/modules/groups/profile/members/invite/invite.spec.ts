@@ -15,7 +15,7 @@ import { Session } from '../../../../../services/session';
 import { clientMock } from '../../../../../../tests/client-mock.spec';
 import { Client } from '../../../../../services/api/client';
 import { MockDirective, MockService } from '../../../../../utils/mock';
-import { GroupsService } from '../../../groups-service';
+import { GroupsService } from '../../../groups.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 
 const user = {

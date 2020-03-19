@@ -32,6 +32,7 @@ import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
 import { MindsVideoPlayerComponent } from '../../../../media/components/video-player/player.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { RedirectService } from '../../../../../common/services/redirect.service';
 
 @Component({
   selector: 'minds-activity',
@@ -46,7 +47,6 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
     'canDelete',
     'showRatingToggle',
   ],
-  outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
   providers: [
     ClientMetaService,
     ActivityAnalyticsOnViewService,
@@ -90,14 +90,15 @@ export class Activity implements OnInit {
   element: any;
   visible: boolean = false;
 
-  editing: boolean = false;
+  @Input() editing: boolean = false;
   @Input() hideTabs: boolean;
 
-  @Output() _delete: EventEmitter<any> = new EventEmitter();
-  commentsOpened: EventEmitter<any> = new EventEmitter();
+  @Output() deleted: EventEmitter<any> = new EventEmitter();
+  @Output() commentsOpened: EventEmitter<any> = new EventEmitter();
   @Input() focusedCommentGuid: string;
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
+  @Output()
   onViewed: EventEmitter<{ activity; visible }> = new EventEmitter<{
     activity;
     visible;
@@ -181,7 +182,8 @@ export class Activity implements OnInit {
     protected activityService: ActivityService,
     @SkipSelf() injector: Injector,
     elementRef: ElementRef,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    private redirectService: RedirectService
   ) {
     this.clientMetaService.inherit(injector);
 
@@ -293,7 +295,7 @@ export class Activity implements OnInit {
           $event.inProgress.emit(false);
           $event.completed.emit(0);
         }
-        this._delete.next(this.activity);
+        this.deleted.emit(this.activity);
       })
       .catch(e => {
         if ($event.inProgress) {
@@ -575,6 +577,18 @@ export class Activity implements OnInit {
       }
       this.openModal();
     }
+  }
+
+  onRichEmbedClick(e: Event): void {
+    if (
+      this.activity.perma_url &&
+      this.activity.perma_url.indexOf(this.configs.get('site_url')) === 0
+    ) {
+      this.redirectService.redirect(this.activity.perma_url);
+      return; // Don't open modal for minds links
+    }
+
+    this.openModal();
   }
 
   openModal() {

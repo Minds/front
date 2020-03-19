@@ -2,26 +2,38 @@ import {
   Component,
   ElementRef,
   HostBinding,
+  HostListener,
   Input,
+  OnDestroy,
+  OnInit,
   ViewChild,
 } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import {
+  Router,
+  NavigationEnd,
+  ActivatedRoute,
+  ParamMap,
+  ActivationEnd,
+} from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ContextService } from '../../services/context.service';
 import { Session } from '../../services/session';
 import { FeaturesService } from '../../services/features.service';
+import { RecentService } from '../../services/ux/recent';
+import { filter } from 'rxjs/operators';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-search--bar',
-  host: {
-    '(keyup)': 'keyup($event)',
-  },
   templateUrl: 'bar.component.html',
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnInit, OnDestroy {
+  @Input() showCleanIcon: boolean = false;
+
   active: boolean;
   suggestionsDisabled: boolean = false;
   q: string;
+  filter: string;
   id: string;
   routerSubscription: Subscription;
   hasSearchContext: boolean = false;
@@ -33,37 +45,52 @@ export class SearchBarComponent {
   @Input()
   defaultSizes: boolean = true;
 
+  @HostBinding('class.m-search__bar--active')
+  get showBorders(): boolean {
+    return !!this.q || this.active || this.hasRightPane;
+  }
+
+  pageLayoutRightPaneSubscription: Subscription;
+  hasRightPane = false;
+
   constructor(
     public router: Router,
+    private route: ActivatedRoute,
+    public session: Session,
     private context: ContextService,
     private featureService: FeaturesService,
-    public session: Session
+    private recentService: RecentService,
+    private pageLayoutService: PageLayoutService
   ) {}
 
   ngOnInit() {
+    this.pageLayoutRightPaneSubscription = this.pageLayoutService.hasRightPane$.subscribe(
+      (hasRightPane: boolean) => {
+        setTimeout(() => {
+          this.hasRightPane = hasRightPane;
+        });
+      }
+    );
     this.listen();
   }
 
   ngOnDestroy() {
+    this.pageLayoutRightPaneSubscription.unsubscribe();
     this.unListen();
   }
 
   listen() {
-    this.routerSubscription = this.router.events.subscribe(
-      (navigationEvent: NavigationEnd) => {
+    this.routerSubscription = this.router.events
+      .pipe(filter(event => event instanceof ActivationEnd))
+      .subscribe((event: ActivationEnd) => {
         try {
-          if (navigationEvent instanceof NavigationEnd) {
-            if (!navigationEvent.urlAfterRedirects) {
-              return;
-            }
-
-            this.handleUrl(navigationEvent.urlAfterRedirects);
-          }
+          const params = event.snapshot.queryParamMap;
+          this.q = params.has('q') ? params.get('q') : '';
+          this.filter = params.has('f') ? params.get('f') : 'top';
         } catch (e) {
           console.error('Minds: router hook(SearchBar)', e);
         }
-      }
-    );
+      });
   }
 
   unListen() {
@@ -82,7 +109,7 @@ export class SearchBarComponent {
       this.suggestionsDisabled = true;
       setTimeout(() => this.getActiveSearchContext(fragments), 5);
     } else {
-      this.q = '';
+      // this.q = '';
       this.id = '';
       this.hasSearchContext = false;
       this.suggestionsDisabled = false;
@@ -98,22 +125,21 @@ export class SearchBarComponent {
   }
 
   search() {
-    const qs: { q; ref; id? } = { q: this.q, ref: 'top' };
-
-    if (this.id) {
-      qs.id = this.id;
-    }
-
-    if (this.featureService.has('top-feeds')) {
+    if (this.featureService.has('navigation')) {
+      this.router.navigate(['/discovery/search'], {
+        queryParams: { q: this.q, f: this.filter },
+      });
+    } else {
       this.router.navigate([
         '/newsfeed/global/top',
         { query: this.q, period: '30d' },
       ]);
-    } else {
-      this.router.navigate(['search', qs]);
     }
+
+    this.recentService.store('recent:text', this.q);
   }
 
+  @HostListener('keyup', ['$event'])
   keyup(e) {
     if (e.keyCode === 13 && this.session.isLoggedIn()) {
       this.search();
@@ -131,6 +157,10 @@ export class SearchBarComponent {
     if (this.searchInput.nativeElement) {
       this.searchInput.nativeElement.blur();
     }
+  }
+
+  clean() {
+    this.q = '';
   }
 
   protected getActiveSearchContext(fragments: string[]) {

@@ -1,0 +1,99 @@
+<ng-template #searchBar>
+  <div class="m-v3Topbar__searchBox">
+    <ng-content select="[search]"></ng-content>
+  </div>
+</ng-template>
+
+<div
+  class="m-v3Topbar__top"
+  [class.m-v3Topbar__marketingPages]="marketingPages"
+  [class.m-v3Topbar__noBackground]="!showBackground"
+  [class.m-v3Topbar__loggedOut]="!getCurrentUser()"
+  [style.visibility]="showTopbar ? 'visible' : 'hidden'"
+>
+  <div class="m-v3TopbarTop__inner m-pageLayout__container">
+    <div
+      class="m-v3Topbar__leftColumn m-pageLayout__pane--left"
+      [class.m-v3Topbar__leftColumn__rightAlign]="!getCurrentUser()"
+    >
+      <nav class="m-v3Topbar__nav">
+        <a
+          class="m-v3TopbarNav__item m-v3TopbarNav__item--logo"
+          routerLink="/"
+          title="Home"
+          i18n-title
+        >
+          <img
+            [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
+            (touchstart)="touchStart()"
+            (mouseenter)="mouseEnter()"
+            (mouseleave)="mouseLeave()"
+          />
+        </a>
+
+        <div
+          class="m-v3TopbarNav__item m-v3TopbarNav__item--hamburger"
+          (click)="toggleSidebarNav()"
+        >
+          <i class="material-icons">menu</i>
+        </div>
+      </nav>
+    </div>
+
+    <div
+      class="m-pageLayout__pane--main"
+      style="display:flex; flex-direction: row;"
+    >
+      <div class="m-v3Topbar__spacer" *ngIf="isMobile"></div>
+      <div
+        class="m-v3Topbar__middleColumn"
+        *ngIf="!isMobile && getCurrentUser()"
+      >
+        <ng-container *ngTemplateOutlet="searchBar"></ng-container>
+      </div>
+
+      <div class="m-v3Topbar__spacer"></div>
+
+      <div class="m-v3Topbar__rightColumn">
+        <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
+          <div class="m-v3TopbarContainer__loginWrapper">
+            <a
+              class="m-v3TopbarLoginWrapper__login"
+              routerLink="/login"
+              title="Login"
+              i18n-title
+            >
+              Login
+            </a>
+
+            <a
+              class="m-v3TopbarLoginWrapper__joinMindsNow"
+              routerLink="/register"
+              title="Join Minds Now"
+              i18n-title
+            >
+              Join Minds Now
+            </a>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="isMobile && getCurrentUser()">
+          <ng-container *ngTemplateOutlet="searchBar"></ng-container>
+        </ng-container>
+
+        <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
+          <div class="m-v3Topbar__spacer" *ngIf="!isMobile"></div>
+          <!-- edit -->
+          <ng-content select="[icons]"></ng-content>
+          <m-usermenu__v3
+            [useAvatar]="true"
+            [showFooterLinks]="true"
+          ></m-usermenu__v3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="m-v3Topbar__notificationsToaster">
+  <ng-template dynamic-host></ng-template>
+</div>

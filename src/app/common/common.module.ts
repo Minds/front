@@ -4,7 +4,7 @@ import {
   isPlatformServer,
   Location,
 } from '@angular/common';
-import { RouterModule, Router, Routes } from '@angular/router';
+import { RouterModule, Router, Routes, ActivatedRoute } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MINDS_PIPES } from './pipes/pipes';
@@ -103,7 +103,6 @@ import { FeedsService } from './services/feeds.service';
 import { EntitiesService } from './services/entities.service';
 import { BlockListService } from './services/block-list.service';
 import { SettingsService } from '../modules/settings/settings.service';
-import { ThemeService } from './services/theme.service';
 import { HorizontalInfiniteScroll } from './components/infinite-scroll/horizontal-infinite-scroll.component';
 import { ReferralsLinksComponent } from '../modules/wallet/tokens/referrals/links/links.component';
 import { PosterDateSelectorComponent } from './components/poster-date-selector/selector.component';
@@ -128,12 +127,12 @@ import { ShadowboxSubmitButtonComponent } from './components/shadowbox-submit-bu
 import { FormDescriptorComponent } from './components/form-descriptor/form-descriptor.component';
 import { FormToastComponent } from './components/form-toast/form-toast.component';
 import { SsoService } from './services/sso.service';
+import { ShadowboxHeaderTabsComponent } from './components/shadowbox-header-tabs/shadowbox-header-tabs.component';
+import { TimespanFilterComponent } from './components/timespan-filter/timespan-filter.component';
 import { PagesService } from './services/pages.service';
-import { V2TopbarService } from './layout/v2-topbar/v2-topbar.service';
 import { DateDropdownsComponent } from './components/date-dropdowns/date-dropdowns.component';
 import { SidebarMarkersService } from './layout/sidebar/markers.service';
 import { EmailConfirmationComponent } from './components/email-confirmation/email-confirmation.component';
-import { ConfigsService } from './services/configs.service';
 import { CookieService } from './services/cookie.service';
 import { MetaService } from './services/meta.service';
 import { Title, Meta } from '@angular/platform-browser';
@@ -141,9 +140,23 @@ import { MediaProxyService } from './services/media-proxy.service';
 import { HorizontalFeedService } from './services/horizontal-feed.service';
 import { FormInputCheckboxComponent } from './components/forms/checkbox/checkbox.component';
 import { AttachmentPasteDirective } from './directives/paste/attachment-paste.directive';
+import { PhoneInputV2Component } from './components/phone-input-v2/phone-input-v2.component';
+import { PhoneInputCountryV2Component } from './components/phone-input-v2/country.component';
 import { TagsService } from './services/tags.service';
 import { ExplicitOverlayComponent } from './components/explicit-overlay/overlay.component';
 import { RedirectService } from './services/redirect.service';
+import { V3TopbarComponent } from './layout/v3-topbar/v3-topbar.component';
+import { SidebarNavigationService } from './layout/sidebar/navigation.service';
+import { TopbarService } from './layout/topbar.service';
+import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
+import { NestedMenuComponent } from './layout/nested-menu/nested-menu.component';
+import { StackableModalComponent } from './components/stackable-modal/stackable-modal.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
+import { PageLayoutService } from './layout/page-layout.service';
+import {
+  PageLayoutPaneDirective,
+  PageLayoutContainerDirective,
+} from './layout/page-layout.directive';
 
 const routes: Routes = [
   {
@@ -174,7 +187,9 @@ const routes: Routes = [
 
     // V2 Layout
     V2TopbarComponent,
+    V3TopbarComponent,
     UserMenuComponent,
+    UserMenuV3Component,
 
     //
 
@@ -266,10 +281,20 @@ const routes: Routes = [
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    ShadowboxHeaderTabsComponent,
+    TimespanFilterComponent,
+    EmailConfirmationComponent,
     EmailConfirmationComponent,
     DateDropdownsComponent,
+    PhoneInputV2Component,
+    PhoneInputCountryV2Component,
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
+    NestedMenuComponent,
+    StackableModalComponent,
+    LoadingSpinnerComponent,
+    PageLayoutPaneDirective,
+    PageLayoutContainerDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -281,6 +306,10 @@ const routes: Routes = [
     // V2 Layout
     V2TopbarComponent,
     UserMenuComponent,
+
+    // V3 Layout
+    V3TopbarComponent,
+    UserMenuV3Component,
 
     //
 
@@ -369,10 +398,22 @@ const routes: Routes = [
     FormDescriptorComponent,
     FormToastComponent,
     ShadowboxSubmitButtonComponent,
+    ShadowboxHeaderComponent,
+    ShadowboxHeaderTabsComponent,
+    TimespanFilterComponent,
+    EmailConfirmationComponent,
     EmailConfirmationComponent,
     DateDropdownsComponent,
+    PhoneInputV2Component,
+    PhoneInputCountryV2Component,
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
+    NestedMenuComponent,
+    MarketingFooterComponent,
+    StackableModalComponent,
+    LoadingSpinnerComponent,
+    PageLayoutPaneDirective,
+    PageLayoutContainerDirective,
   ],
   providers: [
     SiteService,
@@ -380,6 +421,7 @@ const routes: Routes = [
     AttachmentService,
     CookieService,
     PagesService,
+    AttachmentService,
     {
       provide: UpdateMarkersService,
       useFactory: (_http, _session, _sockets) => {
@@ -431,7 +473,8 @@ const routes: Routes = [
     },
     MetaService,
     MediaProxyService,
-    V2TopbarService,
+    SidebarNavigationService,
+    TopbarService,
     {
       provide: SidebarMarkersService,
       useFactory: SidebarMarkersService._,

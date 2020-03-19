@@ -39,6 +39,7 @@
       <m-newsfeed__entity
         *ngFor="let entity of feedsService.feed | async; let i = index"
         [entity]="entity | async"
+        (deleted)="delete($event)"
         [slot]="i + 1"
       ></m-newsfeed__entity>
     </ng-template>

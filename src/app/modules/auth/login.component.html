@@ -1,20 +1,23 @@
-<div class="m-grid" *mIfFeature="'register_pages-december-2019'; else oldLogin">
-  <div
-    class="m-grid__column-8 m-grid__column__skip-3 m-grid__column-10--tablet m-grid__column__skip-2--tablet m-grid__column-12--mobile m-grid__column__skip-1--mobile"
-  >
-    <div class="m-login__wrapper">
-      <minds-form-login
-        [showBigButton]="true"
-        [showInlineErrors]="true"
-        [showLabels]="true"
-        [showTitle]="true"
-        (done)="loggedin()"
-        (doneRegistered)="registered()"
-      >
-      </minds-form-login>
+<ng-container *mIfFeature="'register_pages-december-2019'; else oldLogin">
+  <div class="m-grid">
+    <div
+      class="m-grid__column-8 m-grid__column__skip-3 m-grid__column-10--tablet m-grid__column__skip-2--tablet m-grid__column-12--mobile m-grid__column__skip-1--mobile"
+    >
+      <div class="m-login__wrapper">
+        <minds-form-login
+          [showBigButton]="true"
+          [showInlineErrors]="true"
+          [showLabels]="true"
+          [showTitle]="true"
+          (done)="loggedin()"
+          (doneRegistered)="registered()"
+        >
+        </minds-form-login>
+      </div>
     </div>
   </div>
-</div>
+  <m-marketing__footer></m-marketing__footer>
+</ng-container>
 
 <ng-template #oldLogin>
   <div class="m-login">

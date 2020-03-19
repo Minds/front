@@ -24,12 +24,12 @@ import { CanDeactivateGuardService } from './can-deactivate-guard';
 import { OverlayModalService } from './ux/overlay-modal';
 import { LoginReferrerService } from './login-referrer.service';
 import { ScrollToTopService } from './scroll-to-top.service';
-import { GroupsService } from '../modules/groups/groups-service';
+import { GroupsService } from '../modules/groups/groups.service';
 
 import { GoogleChartsLoader } from './third-party/google-charts-loader';
 import { RecentService } from './ux/recent';
 import { ContextService } from './context.service';
-import { FeaturesService } from './features.service';
+
 import { BlockchainService } from '../modules/blockchain/blockchain.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
@@ -185,14 +185,9 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [Router, Storage, Client],
   },
   {
-    provide: FeaturesService,
-    useFactory: FeaturesService._,
-    deps: [Session, Router, ConfigsService],
-  },
-  {
     provide: BlockchainService,
     useFactory: BlockchainService._,
-    deps: [Client],
+    deps: [Client, Session],
   },
   {
     provide: TimeDiffService,
@@ -217,11 +212,7 @@ export const MINDS_PROVIDERS: any[] = [
     provide: InMemoryStorageService,
     useFactory: InMemoryStorageService._,
   },
-  {
-    provide: ThemeService,
-    useFactory: ThemeService._,
-    deps: [RendererFactory2, Client, Session, Storage],
-  },
+  ThemeService,
   DiagnosticsService,
   AuthService,
   FormToastService,

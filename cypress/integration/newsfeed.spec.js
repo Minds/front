@@ -111,7 +111,7 @@ context('Newsfeed', () => {
     cy.location('pathname', { timeout: 20000 }).should('contains', 'media');
   };
 
-  it('should post an activity picking hashtags from the dropdown', () => {
+  it('should post an activity typing in a hashtag into the dropdown', () => {
     newActivityContent('This is a post');
 
     // click on hashtags dropdown
@@ -137,25 +137,11 @@ context('Newsfeed', () => {
     );
 
     postActivityAndAwaitResponse(200);
-
-    cy.get('.mdl-card__supporting-text.message.m-mature-message > span')
-      .first()
-      .contains('This is a post #art #hashtag');
-
-    cy.get('.minds-list > minds-activity:first-child .message a:first-child')
-      .contains('#art')
-      .should(
-        'have.attr',
-        'href',
-        '/newsfeed/global/top;hashtag=art;period=24h'
-      );
-    cy.get('.minds-list > minds-activity:first-child .message a:last-child')
-      .contains('#hashtag')
-      .should(
-        'have.attr',
-        'href',
-        '/newsfeed/global/top;hashtag=hashtag;period=24h'
-      );
+    
+    cy.get('.minds-list')
+      .within(($list) => {
+        cy.contains('This is a post #art #hashtag');
+      });
 
     deleteActivityFromNewsfeed();
   });
@@ -525,7 +511,7 @@ context('Newsfeed', () => {
     deleteActivityFromNewsfeed();
   });
 
-  it('should show a rich embed post from youtube in a modal', () => {
+  it.skip('should show a rich embed post from youtube in a modal', () => {
     const content = generateRandomId() + " ",
       url = 'https://www.youtube.com/watch?v=jNQXAC9IVRw';
 
@@ -555,7 +541,7 @@ context('Newsfeed', () => {
       });
   });
 
-  it('should not open vimeo in a modal', () => {
+  it.skip('should not open vimeo in a modal', () => {
     const content = generateRandomId() + " ",
       url = 'https://vimeo.com/8733915';
 
@@ -635,9 +621,9 @@ context('Newsfeed', () => {
       });
   });
 
-  it('should not open spotify in a modal', () => {
+  it('should not open giphy in a modal', () => {
     const content = generateRandomId() + " ",
-      url = 'http://giphygifs.s3.amazonaws.com/media/IzVquL965ib4s/giphy.gif';
+      url = 'https://giphy.com/gifs/test-gw3IWyGkC0rsazTi';
 
     // set up post.
     newActivityContent(content);

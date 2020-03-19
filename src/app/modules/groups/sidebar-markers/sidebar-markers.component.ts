@@ -1,28 +1,33 @@
 import {
-  Component,
-  ComponentFactoryResolver,
-  ViewChild,
   ChangeDetectorRef,
+  Component,
+  DoCheck,
+  HostBinding,
   HostListener,
-  OnInit,
-  OnDestroy,
   Inject,
+  Input,
+  OnDestroy,
+  OnInit,
   PLATFORM_ID,
+  ViewChild,
 } from '@angular/core';
-import { interval, timer } from 'rxjs';
-import { startWith, map, tap, throttle } from 'rxjs/operators';
+import { interval } from 'rxjs';
+import { map, startWith, throttle } from 'rxjs/operators';
 
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { isPlatformBrowser } from '@angular/common';
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
 @Component({
   selector: 'm-group--sidebar-markers',
   templateUrl: 'sidebar-markers.component.html',
 })
-export class GroupsSidebarMarkersComponent implements OnInit, OnDestroy {
+export class GroupsSidebarMarkersComponent
+  implements OnInit, DoCheck, OnDestroy {
+  @Input() showLabels: boolean = false;
+  layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
   inProgress: boolean = false;
   $updateMarker;
   markers = [];
@@ -32,6 +37,9 @@ export class GroupsSidebarMarkersComponent implements OnInit, OnDestroy {
   tooltipsAnchor: string = 'right';
 
   @ViewChild('list', { static: true }) list;
+
+  @HostBinding('class.m-groupSidebarMarkers__leftSidebar')
+  leftSidebar: boolean = false;
 
   constructor(
     private client: Client,
@@ -45,12 +53,20 @@ export class GroupsSidebarMarkersComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.onResize();
     if (isPlatformBrowser(this.platformId)) {
-      await this.load(true);
-      this.listenForMarkers();
-      this.listenForMembershipUpdates();
+      this.initialize();
+
+      this.session.getLoggedInUser(user => {
+        this.initialize();
+      });
     } else {
       this.inProgress = true; // Server side should start in loading spinner state
     }
+  }
+
+  async initialize() {
+    await this.load(true);
+    this.listenForMarkers();
+    this.listenForMembershipUpdates();
   }
 
   /**
@@ -115,7 +131,9 @@ export class GroupsSidebarMarkersComponent implements OnInit, OnDestroy {
   }
 
   async load(refresh: boolean = false) {
-    if (this.inProgress) return false;
+    if (this.inProgress || !this.session.getLoggedInUser()) {
+      return false;
+    }
     this.inProgress = true;
     try {
       const response: any = await this.client.get('api/v1/groups/member', {
@@ -149,5 +167,13 @@ export class GroupsSidebarMarkersComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize') onResize() {
     this.tooltipsAnchor = window.innerWidth <= 992 ? 'top' : 'right';
+
+    if (window.innerWidth > 1000) {
+      this.layoutMode = 'desktop';
+    } else if (window.innerWidth > 480 && window.innerWidth <= 1000) {
+      this.layoutMode = 'tablet';
+    } else {
+      this.layoutMode = 'phone';
+    }
   }
 }

@@ -3,7 +3,7 @@ import {
   OnInit,
   Input,
   Output,
-  ChangeDetectionStrategy,
+  // ChangeDetectionStrategy,
   EventEmitter,
 } from '@angular/core';
 
@@ -13,12 +13,13 @@ import { Filter, Option } from '../../../interfaces/dashboard';
 @Component({
   selector: 'm-dropdownSelector',
   templateUrl: './dropdown-selector.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DropdownSelectorComponent implements OnInit {
   @Input() filter: Filter;
   @Input() dropUp: boolean = false;
   @Input() showLabel: boolean = true;
+  @Input() inlineLabel = false;
   @Output() selectionMade: EventEmitter<any> = new EventEmitter();
 
   expanded = false;

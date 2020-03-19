@@ -81,6 +81,12 @@ const settingsRoutes: Routes = [
   exports: [
     SettingsBillingSavedCardsComponent,
     SettingsBillingSubscriptionsComponent,
+    SettingsTwoFactorComponent,
+    SettingsSubscriptionsComponent,
+    SettingsReportedContentComponent,
+    SettingsWireComponent,
+    SettingsBlockedChannelsComponent,
+    SettingsTiersComponent,
   ],
 })
 export class SettingsModule {}

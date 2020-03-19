@@ -222,7 +222,7 @@
       </span>
     </div>
     <minds-rich-embed
-      (mediaModalRequested)="openModal()"
+      (mediaModalRequested)="onRichEmbedClick($event)"
       [src]="activity"
       [maxheight]="480"
     >

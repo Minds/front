@@ -2,6 +2,7 @@
 
 minds-comments,
 m-comments__tree,
+m-comments__entityOutlet,
 .m-comment-wrapper {
   //margin-top: 50px;
   width: 100%;
@@ -44,7 +45,7 @@ m-comments__tree,
     }
 
     .minds-body {
-      margin-left: $minds-margin;
+      // margin-left: $minds-margin;
       font-size: 12px;
       max-width: 100%;
       max-width: calc(100% - 60px);
@@ -231,12 +232,14 @@ m-comments__tree,
 
       minds-textarea {
         font-family: inherit;
-        font-size: 12px;
+        font-size: 14px;
+        line-height: 22px;
         width: 0;
         min-width: 0;
         flex: 1;
         margin-bottom: $minds-padding;
-        border-radius: 25px;
+        // border-radius: 2px; - change when new comments design in
+        border-radius: 26px;
 
         .m-editor {
           //min-height: 26px;
@@ -252,9 +255,9 @@ m-comments__tree,
   .minds-editable-container textarea {
     width: 100%;
     padding: $minds-padding ($minds-padding + 88px) $minds-padding
-      $minds-padding;
+      $minds-padding * 2;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--secondary);
     }
   }
 
@@ -291,6 +294,7 @@ m-comments__tree,
 
       i {
         cursor: pointer;
+        color: #9b9b9b;
       }
 
       &.m-button-disabled {

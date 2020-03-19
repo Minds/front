@@ -10,7 +10,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 import { interval, Subscription } from 'rxjs';
 
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
 import { RecentService } from '../../../services/ux/recent';
 import { Session } from '../../../services/session';
@@ -27,7 +27,9 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { CookieService } from '../../../common/services/cookie.service';
+import { FeaturesService } from '../../../services/features.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { SiteService } from '../../../common/services/site.service';
 
 @Component({
   selector: 'm-groups--profile',
@@ -69,12 +71,14 @@ export class GroupsProfile {
   private updateMarkersSubscription;
 
   private lastWidth: number;
+  readonly hasNewNavigation: boolean;
 
   constructor(
     public session: Session,
     public service: GroupsService,
     public route: ActivatedRoute,
     private router: Router,
+    private site: SiteService,
     public metaService: MetaService,
     private sockets: SocketsService,
     private context: ContextService,
@@ -85,8 +89,10 @@ export class GroupsProfile {
     private updateMarkers: UpdateMarkersService,
     configs: ConfigsService,
     private cookieService: CookieService,
+    featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
+    this.hasNewNavigation = featuresService.has('navigation');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
@@ -466,7 +472,9 @@ export class GroupsProfile {
     this.metaService
       .setTitle(this.group.name)
       .setDescription(this.group.briefdescription)
-      .setOgImage(this.group.banner_src);
+      .setOgImage(
+        `${this.site.baseUrl}fs/v1/banners/${this.group.guid}/0/${this.group.banner}`
+      );
   }
 
   detectChanges() {

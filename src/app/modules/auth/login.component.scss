@@ -5,8 +5,9 @@ m-login {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  grid-area: content / span 2;
 
-  &:not(.m-login__newDesign) {
+  &:not(.m-login--newDesign) {
     @include m-theme() {
       background-color: themed($m-white);
     }
@@ -35,8 +36,12 @@ m-login {
     }
   }
 
-  &.m-login__newDesign {
+  &.m-login--newDesign {
     margin-top: -52px;
+
+    &.m-login--newNavigation {
+      margin-top: -75px;
+    }
 
     &.m-login__iosFallback {
       .m-grid {
@@ -217,7 +222,6 @@ m-login {
         &.m-login__joinTheConversation {
           font-size: 14px;
           line-height: 20px;
-          font-weight: 500;
         }
       }
 

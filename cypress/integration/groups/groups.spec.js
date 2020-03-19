@@ -35,8 +35,9 @@ context('Groups', () => {
 
     // click on hashtags dropdown
     cy.get('m-hashtags-selector .m-dropdown--label-container').click();
-    // select #ART
-    cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div > span').contains('art').click();
+    // select #ART TODO: Set tags on sandboxes
+    // cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div > span').contains('art').click();
+
     // type in another hashtag manually
     cy.get('m-hashtags-selector m-form-tags-input input').type('hashtag{enter}').click();
     // click away
@@ -46,7 +47,7 @@ context('Groups', () => {
     cy.route("POST", "**/api/v1/groups/group/*/banner*").as("postBanner");
 
     // get current groups count of sidebar
-    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
+    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => {
       cy.wait('@postGroup').then((xhr) => {
         expect(xhr.status).to.equal(200);
         expect(xhr.response.body.status).to.equal('success');
@@ -102,6 +103,20 @@ context('Groups', () => {
     });
   })
 
+  it('should be able to toggle conversations', () => {
+    cy.contains(groupId).click();
+
+    cy.get('minds-groups-settings-button > button').click();
+    cy.contains('Disable Conversation').click();
+
+    cy.get('.m-groupGrid__right').should('not.exist');
+
+    cy.get('minds-groups-settings-button > button').click();
+    cy.contains('Enable Conversation').click();
+
+    cy.get('.m-groupGrid__right').should('exist');
+  });
+
   it('should post an activity inside the group and record the view when scrolling', () => {
     cy.contains(groupId).click();
 
@@ -131,13 +146,13 @@ context('Groups', () => {
   });
 
   it('should navigate to discovery when Find a Group clicked', () => {
-    cy.contains('Find a Group').click()
+    cy.contains('Discover Groups').click()
     cy.location('pathname')
-      .should('eq', '/newsfeed/global/top%3Bperiod%3D12h%3Btype%3Dgroups%3Ball%3D1');
+      .should('eq', '/newsfeed/global/top;period=12h;type=groups;all=1');
   });
 
   it('should delete a group', () => {
-    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => { 
+    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => {
       // cy.get(`m-group--sidebar-markers li:nth-child(${size - 2})`).click();
       cy.contains(groupId).click();
       // cleanup

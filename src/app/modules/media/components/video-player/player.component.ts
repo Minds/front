@@ -1,7 +1,7 @@
 import {
   Component,
   OnDestroy,
-  OnInit,
+  OnChanges,
   Input,
   ViewChild,
   Output,
@@ -26,7 +26,7 @@ import { Observable, BehaviorSubject, Subscription } from 'rxjs';
   providers: [VideoPlayerService],
 })
 export class MindsVideoPlayerComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+  implements OnChanges, OnDestroy, AfterViewInit {
   /**
    * MH: dislike having to emit an event to open modal, but this is
    * the quickest work around for now
@@ -78,18 +78,20 @@ export class MindsVideoPlayerComponent
     ],
   };
 
+  onReadySubscription: Subscription = this.service.onReady$.subscribe(() => {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  });
+
   constructor(
     private service: VideoPlayerService,
     private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnInit(): void {
+  ngOnChanges(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.service.load().then(() => {
-        this.cd.markForCheck();
-        this.cd.detectChanges();
-      });
+      this.service.load();
     }
   }
 
@@ -105,6 +107,7 @@ export class MindsVideoPlayerComponent
     if (this.autoplaySubscription) {
       this.autoplaySubscription.unsubscribe();
     }
+    this.onReadySubscription.unsubscribe();
   }
 
   @Input('guid')

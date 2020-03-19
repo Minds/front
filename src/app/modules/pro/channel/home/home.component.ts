@@ -6,9 +6,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { NavItems, ProChannelService } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { MetaService } from '../../../../common/services/meta.service';
 
 @Component({
   selector: 'm-pro--channel-home',
@@ -17,8 +18,6 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 })
 export class ProChannelHomeComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
-
-  featuredContent: Array<any> = [];
 
   categories: Array<{
     tag: { tag: string; label: string };
@@ -31,48 +30,17 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected channelService: ProChannelService,
     protected modalService: OverlayModalService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    protected metaService: MetaService
   ) {}
 
   ngOnInit() {
-    this.load();
     this.setMenuNavItems();
+    this.updateMeta();
   }
 
   ngOnDestroy() {
     this.channelService.destroyMenuNavItems();
-  }
-
-  async load() {
-    const MAX_FEATURED_CONTENT = 17; // 1 + (8 * 2)
-
-    this.inProgress = true;
-    this.featuredContent = [];
-    this.categories = [];
-    this.moreData = true;
-
-    this.detectChanges();
-
-    try {
-      this.featuredContent = await this.channelService.getFeaturedContent();
-      this.detectChanges();
-
-      const { content } = await this.channelService.getContent({
-        limit: MAX_FEATURED_CONTENT,
-      });
-      this.featuredContent = this.featuredContent
-        .concat(content)
-        .slice(0, MAX_FEATURED_CONTENT);
-      this.detectChanges();
-
-      this.categories = await this.channelService.getAllCategoriesContent();
-      this.detectChanges();
-    } catch (e) {
-      this.moreData = false;
-    }
-
-    this.inProgress = false;
-    this.detectChanges();
   }
 
   setMenuNavItems() {
@@ -120,5 +88,16 @@ export class ProChannelHomeComponent implements OnInit, OnDestroy {
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  /**
+   * Updates metatags of channel.
+   */
+  private updateMeta(): void {
+    const proSettings = this.channelService.currentChannel.pro_settings;
+    this.metaService
+      .setTitle(proSettings.title)
+      .setDescription(proSettings.headline)
+      .setOgImage(proSettings.logo_image);
   }
 }

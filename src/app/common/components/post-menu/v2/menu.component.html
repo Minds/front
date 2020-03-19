@@ -1,0 +1,203 @@
+<div class="m-dropdown--v2">
+  <button class="m-postMenu__button" (click)="onButtonClick($event)">
+    <i class="material-icons">more_vert</i>
+  </button>
+
+  <ul class="m-dropdown__list" [hidden]="!(isOpened$ | async)">
+    <li
+      class="m-dropdownList__item"
+      *ngIf="options.indexOf('view') !== -1"
+      (click)="onSelectedOption('view')"
+      i18n="@@M__ACTION__VIEW"
+    >
+      View
+    </li>
+    <li
+      class="m-dropdownList__item"
+      *ngIf="
+        (options.indexOf('edit') !== -1 &&
+          entity.owner_guid == session.getLoggedInUser().guid) ||
+        session.isAdmin()
+      "
+      (click)="onSelectedOption('edit')"
+      i18n="@@M__ACTION__EDIT"
+    >
+      Edit Post
+    </li>
+    <li
+      class="m-dropdownList__item"
+      *ngIf="options.indexOf('share') !== -1"
+      (click)="onSelectedOption('share')"
+      i18n="@@M__ACTION__SHARE"
+    >
+      Share
+    </li>
+    <li
+      class="m-dropdownList__item"
+      *ngIf="options.indexOf('translate') !== -1 && isTranslatable"
+      (click)="onSelectedOption('translate')"
+      i18n="@@M__ACTION__TRANSLATE"
+    >
+      Translate
+    </li>
+
+    <!-- SUBSCRIBE -->
+    <ng-container *ngIf="options.indexOf('subscribe') !== -1">
+      <li
+        class="m-dropdownList__item"
+        *ngIf="service.showSubscribe$ | async"
+        (click)="onSelectedOption('subscribe')"
+        i18n="@@M__ACTION__SUBSCRIBE"
+      >
+        Subscribe
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="service.showUnSubscribe$ | async"
+        (click)="onSelectedOption('unsubscribe')"
+        i18n="@@COMMON__POST_MENU__UNSUBSCRIBE"
+      >
+        Unsubscribe
+      </li>
+    </ng-container>
+
+    <span class="m-dropdownMenu__divider"></span>
+
+    <!-- NOTIFICATIONS -->
+    <ng-container *ngIf="options.indexOf('follow') !== -1">
+      <li
+        class="m-dropdownList__item"
+        *ngIf="(service.isFollowing$ | async) === null"
+        disabled
+        i18n="@@COMMON__POST_MENU__FOLLOW_NOTIFICATIONS"
+      >
+        Follow post
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="(service.isFollowing$ | async) === true"
+        (click)="onSelectedOption('unfollow')"
+        i18n="@@COMMON__POST_MENU__UNFOLLOW_NOTIFICATIONS"
+      >
+        Un-follow post
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="(service.isFollowing$ | async) === false"
+        (click)="onSelectedOption('follow')"
+        i18n="@@COMMON__POST_MENU__FOLLOW_NOTIFICATIONS"
+      >
+        Follow post
+      </li>
+    </ng-container>
+
+    <!-- BLOCK -->
+    <ng-container
+      *ngIf="
+        options.indexOf('block') !== -1 &&
+        entity.ownerObj.guid != session.getLoggedInUser().guid
+      "
+    >
+      <li
+        class="m-dropdownList__item"
+        *ngIf="(service.isBlocked$ | async) === null"
+        disabled
+        i18n="@@COMMON__POST_MENU__BLOCK_AND_UNBLOCK"
+      >
+        Block/Unblock
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="(service.isBlocked$ | async) === false"
+        (click)="onSelectedOption('block')"
+        i18n="@@COMMON__POST_MENU__BLOCK"
+      >
+        Block user
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="(service.isBlocked$ | async) === true"
+        (click)="onSelectedOption('unblock')"
+        i18n="@@COMMON__POST_MENU__UNBLOCK"
+      >
+        Unblock user
+      </li>
+    </ng-container>
+
+    <!-- ALLOW COMMENTS -->
+    <ng-container
+      *ngIf="
+        featuresService.has('allow-comments-toggle') &&
+        options.indexOf('allow-comments') !== -1 &&
+        entity.ownerObj.guid == session.getLoggedInUser().guid
+      "
+    >
+      <li
+        class="m-dropdownList__item"
+        *ngIf="!entity.allow_comments"
+        (click)="onSelectedOption('allow-comments')"
+        i18n="@@COMMON__POST_MENU__ALLOW_COMMENTS"
+      >
+        Allow Comments
+      </li>
+      <li
+        class="m-dropdownList__item"
+        *ngIf="entity.allow_comments"
+        (click)="onSelectedOption('disable-comments')"
+        i18n="@@COMMON__POST_MENU__DISABLE_COMMENTS"
+      >
+        Disable Comments
+      </li>
+    </ng-container>
+
+    <!-- ADMIN EDIT FLAGS -->
+    <ng-container *ngIf="options.indexOf('set-explicit') !== -1 && canEdit">
+      <li class="m-dropdownList__item m-postMenu__item--nsfw">
+        <m-nsfw-selector
+          service="editing"
+          [selected]="entity.nsfw"
+          (selectedChange)="onNSFWSelected($event)"
+        >
+        </m-nsfw-selector>
+      </li>
+    </ng-container>
+
+    <!-- INJECTED POST ACTIONS -->
+    <div (click)="isOpened$.next(false)">
+      <ng-content select="[post-menu]"></ng-content>
+    </div>
+
+    <!-- DELETE -->
+    <li
+      class="m-dropdownList__item m-dropdownList__item--destructive"
+      *ngIf="
+        (options.indexOf('delete') !== -1 &&
+          entity.owner_guid == session.getLoggedInUser().guid) ||
+        session.isAdmin() ||
+        canDelete
+      "
+      (click)="onSelectedOption('delete')"
+      i18n="@@M__ACTION__DELETE"
+    >
+      Delete Post
+    </li>
+    <!-- REPORT -->
+    <li
+      class="m-dropdownList__item m-dropdownList__item--destructive"
+      *ngIf="
+        options.indexOf('report') !== -1 &&
+        entity.owner_guid != session.getLoggedInUser().guid
+      "
+      (click)="onSelectedOption('report')"
+      i18n="Report as notify something@@M__ACTION__REPORT"
+    >
+      Report Post
+    </li>
+  </ul>
+</div>
+
+<div
+  class="m-bgOverlay--v2"
+  (click)="isOpened$.next(false)"
+  [hidden]="!(isOpened$ | async)"
+></div>

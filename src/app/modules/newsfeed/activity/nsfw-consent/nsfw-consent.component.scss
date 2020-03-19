@@ -1,0 +1,57 @@
+m-activity__nsfwConsent {
+  display: block;
+  width: 100%;
+
+  text-align: center;
+
+  .m-activityNsfwConsent__icon {
+    font-size: 62px;
+    margin: 25px 0;
+
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+
+  h2 {
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 600;
+    padding: 0;
+    margin: 0 0 $minds-margin 0;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  h3 {
+    font-size: 16px;
+    line-height: 20px;
+    padding: 0;
+    margin: 0;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+
+  .m-activityNsfwConsent__button {
+    margin: 38px 0;
+    padding: $minds-padding;
+    font-size: 16px;
+    border-radius: $m-borderRadius;
+    cursor: pointer;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      color: themed($m-textColor--primary);
+      border-color: themed($m-borderColor--primary);
+    }
+  }
+}
+.m-activity--fixedHeight {
+  m-activity__nsfwConsent {
+    flex: 1;
+    // overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+}

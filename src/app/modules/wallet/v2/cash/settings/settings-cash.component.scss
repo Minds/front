@@ -1,0 +1,54 @@
+// additional shared styles located in dashboard.component.scss
+m-walletSettings--cash {
+  .m-walletSettingsView--hasAccount__detailsWrapper {
+    max-width: 460px;
+    margin: 38px 0 59px 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+  }
+  .m-walletSettingsView--hasAccount__bankWrapper {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    flex: 3 0 auto;
+    margin-bottom: 10px;
+    span {
+      margin-right: 8px;
+    }
+  }
+  .m-walletSettingsView--hasAccount__linksContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    flex: 1 0 auto;
+    max-width: 146px;
+    a:last-child {
+      margin-left: 28px;
+    }
+    a {
+      cursor: default;
+    }
+    span {
+      cursor: pointer;
+    }
+  }
+
+  .m-tooltip--bubble {
+    right: 12px;
+  }
+
+  ////////////////////////////////////////////
+  // FORMS ///////////////////////////////////
+  ////////////////////////////////////////////
+  [class*='m-walletForm__field'] {
+    margin-bottom: 19px;
+  }
+
+  .m-walletForm__field--checkbox {
+    margin-top: 100px;
+    @media screen and (max-width: $max-mobile) {
+      margin-top: 40px;
+    }
+  }
+}
