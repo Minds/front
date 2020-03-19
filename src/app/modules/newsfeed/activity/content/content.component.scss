@@ -59,14 +59,14 @@ m-activity__content {
 .m-activityContent__message,
 .m-activityContent__mediaDescription {
   @include m-theme() {
-    color: themed($m-textColor--primary);
+    color: themed($m-textColor--secondary);
   }
 
   a {
     text-decoration: none;
     font-weight: 600;
     @include m-theme() {
-      color: themed($m-textColor--primary);
+      color: themed($m-textColor--secondary);
     }
 
     &:hover {

@@ -151,6 +151,7 @@ import { TopbarService } from './layout/topbar.service';
 import { UserMenuV3Component } from './layout/v3-topbar/user-menu/user-menu.component';
 import { NestedMenuComponent } from './layout/nested-menu/nested-menu.component';
 import { StackableModalComponent } from './components/stackable-modal/stackable-modal.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 const routes: Routes = [
   {
@@ -286,6 +287,7 @@ const routes: Routes = [
     ExplicitOverlayComponent,
     NestedMenuComponent,
     StackableModalComponent,
+    LoadingSpinnerComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -402,6 +404,7 @@ const routes: Routes = [
     NestedMenuComponent,
     MarketingFooterComponent,
     StackableModalComponent,
+    LoadingSpinnerComponent,
   ],
   providers: [
     SiteService,

@@ -8,12 +8,19 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import {
+  Router,
+  NavigationEnd,
+  ActivatedRoute,
+  ParamMap,
+  ActivationEnd,
+} from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ContextService } from '../../services/context.service';
 import { Session } from '../../services/session';
 import { FeaturesService } from '../../services/features.service';
 import { RecentService } from '../../services/ux/recent';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'm-search--bar',
@@ -21,10 +28,11 @@ import { RecentService } from '../../services/ux/recent';
 })
 export class SearchBarComponent implements OnInit, OnDestroy {
   @Input() showCleanIcon: boolean = false;
-  @HostBinding('class.m-search__bar--active')
+
   active: boolean;
   suggestionsDisabled: boolean = false;
   q: string;
+  filter: string;
   id: string;
   routerSubscription: Subscription;
   hasSearchContext: boolean = false;
@@ -36,8 +44,14 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   @Input()
   defaultSizes: boolean = true;
 
+  @HostBinding('class.m-search__bar--active')
+  get showBorders(): boolean {
+    return !!this.q || this.active || true;
+  }
+
   constructor(
     public router: Router,
+    private route: ActivatedRoute,
     public session: Session,
     private context: ContextService,
     private featureService: FeaturesService,
@@ -53,21 +67,17 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   listen() {
-    this.routerSubscription = this.router.events.subscribe(
-      (navigationEvent: NavigationEnd) => {
+    this.routerSubscription = this.router.events
+      .pipe(filter(event => event instanceof ActivationEnd))
+      .subscribe((event: ActivationEnd) => {
         try {
-          if (navigationEvent instanceof NavigationEnd) {
-            if (!navigationEvent.urlAfterRedirects) {
-              return;
-            }
-
-            this.handleUrl(navigationEvent.urlAfterRedirects);
-          }
+          const params = event.snapshot.queryParamMap;
+          this.q = params.has('q') ? params.get('q') : '';
+          this.filter = params.has('f') ? params.get('f') : 'top';
         } catch (e) {
           console.error('Minds: router hook(SearchBar)', e);
         }
-      }
-    );
+      });
   }
 
   unListen() {
@@ -86,7 +96,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       this.suggestionsDisabled = true;
       setTimeout(() => this.getActiveSearchContext(fragments), 5);
     } else {
-      this.q = '';
+      // this.q = '';
       this.id = '';
       this.hasSearchContext = false;
       this.suggestionsDisabled = false;
@@ -102,19 +112,15 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   }
 
   search() {
-    const qs: { q; ref; id? } = { q: this.q, ref: 'top' };
-
-    if (this.id) {
-      qs.id = this.id;
-    }
-
-    if (this.featureService.has('top-feeds')) {
+    if (this.featureService.has('navigation')) {
+      this.router.navigate(['/discovery/search'], {
+        queryParams: { q: this.q, f: this.filter },
+      });
+    } else {
       this.router.navigate([
         '/newsfeed/global/top',
         { query: this.q, period: '30d' },
       ]);
-    } else {
-      this.router.navigate(['search', qs]);
     }
 
     this.recentService.store('recent:text', this.q);
