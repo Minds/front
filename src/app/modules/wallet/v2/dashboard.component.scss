@@ -201,62 +201,6 @@ m-walletDashboard {
       margin: 22px 24px 25px 24px;
     }
   }
-  ////////////////////////////////////////////
-  // VIEW TABS ///////////////////////////////
-  ////////////////////////////////////////////
-  .m-tabs__container {
-    box-sizing: border-box;
-    display: flex;
-    flex-flow: row nowrap;
-    margin: 0 40px;
-    list-style: none;
-    @include m-theme() {
-      border-bottom: 1px solid themed($m-borderColor--primary);
-    }
-    @media screen and (max-width: $min-tablet) {
-      margin-left: 24px;
-      margin-right: 24px;
-    }
-    @media screen and (max-width: $max-mobile) {
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
-  .m-tabs__tab > a {
-    cursor: pointer;
-    padding: 13px 20px;
-    margin-right: 0 26px;
-    box-sizing: border-box;
-    display: block;
-    font-size: 15px;
-    font-weight: 300;
-    line-height: 20px;
-    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    list-style: none;
-
-    @include m-theme() {
-      color: themed($m-textColor--tertiary);
-      border-bottom: 3px solid transparent;
-    }
-    &.selected {
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-        border-bottom: 3px solid themed($m-blue);
-      }
-    }
-    &:hover {
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-      }
-    }
-    @media screen and (max-width: $max-mobile) {
-      padding: 10px 9px;
-      margin: 0px 3px;
-      &:first-child {
-        margin-left: 16px;
-      }
-    }
-  }
 
   ////////////////////////////////////////////
   // VIEWS ///////////////////////////////////
