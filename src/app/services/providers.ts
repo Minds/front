@@ -29,7 +29,7 @@ import { GroupsService } from '../modules/groups/groups.service';
 import { GoogleChartsLoader } from './third-party/google-charts-loader';
 import { RecentService } from './ux/recent';
 import { ContextService } from './context.service';
-import { FeaturesService } from './features.service';
+
 import { BlockchainService } from '../modules/blockchain/blockchain.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
@@ -183,11 +183,6 @@ export const MINDS_PROVIDERS: any[] = [
     provide: ContextService,
     useFactory: ContextService._,
     deps: [Router, Storage, Client],
-  },
-  {
-    provide: FeaturesService,
-    useFactory: FeaturesService._,
-    deps: [Session, Router, ConfigsService],
   },
   {
     provide: BlockchainService,

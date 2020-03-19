@@ -21,6 +21,7 @@ import { Session } from '../../services/session';
 import { FeaturesService } from '../../services/features.service';
 import { RecentService } from '../../services/ux/recent';
 import { filter } from 'rxjs/operators';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-search--bar',
@@ -46,8 +47,11 @@ export class SearchBarComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.m-search__bar--active')
   get showBorders(): boolean {
-    return !!this.q || this.active || true;
+    return !!this.q || this.active || this.hasRightPane;
   }
+
+  pageLayoutRightPaneSubscription: Subscription;
+  hasRightPane = false;
 
   constructor(
     public router: Router,
@@ -55,14 +59,23 @@ export class SearchBarComponent implements OnInit, OnDestroy {
     public session: Session,
     private context: ContextService,
     private featureService: FeaturesService,
-    private recentService: RecentService
+    private recentService: RecentService,
+    private pageLayoutService: PageLayoutService
   ) {}
 
   ngOnInit() {
+    this.pageLayoutRightPaneSubscription = this.pageLayoutService.hasRightPane$.subscribe(
+      (hasRightPane: boolean) => {
+        setTimeout(() => {
+          this.hasRightPane = hasRightPane;
+        });
+      }
+    );
     this.listen();
   }
 
   ngOnDestroy() {
+    this.pageLayoutRightPaneSubscription.unsubscribe();
     this.unListen();
   }
 
