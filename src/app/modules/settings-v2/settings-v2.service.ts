@@ -25,7 +25,6 @@ export class SettingsV2Service {
 
       return channel;
     } catch (e) {
-      console.log('load error');
       console.error(e);
       return e;
     }
@@ -41,8 +40,6 @@ export class SettingsV2Service {
       this.loadSettings(guid);
       return response;
     } catch (e) {
-      console.log('update error');
-
       console.error(e);
       return e;
     }

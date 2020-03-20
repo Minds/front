@@ -203,12 +203,14 @@ export class SettingsV2Component implements OnInit {
     });
 
     this.route.url.subscribe(url => {
-      this.menuHeaderId = url[0].path;
-      if (this.menuHeaderId === 'pro_canary') {
-        if (this.session.isAdmin() && this.route.snapshot.params.user) {
-          this.user = this.route.snapshot.params.user;
+      if (url[0]) {
+        this.menuHeaderId = url[0].path;
+        if (this.menuHeaderId === 'pro_canary') {
+          if (this.session.isAdmin() && this.route.snapshot.params.user) {
+            this.user = this.route.snapshot.params.user;
+          }
+          this.setProRoutes();
         }
-        this.setProRoutes();
       }
     });
 

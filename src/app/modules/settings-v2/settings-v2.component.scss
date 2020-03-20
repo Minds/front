@@ -31,7 +31,7 @@ m-settingsV2 {
     }
 
     .m-settingsV2__secondaryPane {
-      flex: 1 0 340px;
+      flex: 1 1 340px;
       max-width: 637px;
       @media screen and (max-width: $layoutMax2ColWidth) {
         display: none;

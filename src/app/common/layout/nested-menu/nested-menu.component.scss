@@ -7,7 +7,7 @@ m-nestedMenu {
     line-height: 21px;
     font-weight: 300;
     min-height: 100vh;
-    padding-bottom: 60px;
+    // padding-bottom: 60px;
     height: 100%;
 
     @include m-theme {
@@ -28,6 +28,9 @@ m-nestedMenu {
       .m-nestedMenu__headerWrapper {
         line-height: 20px;
       }
+    }
+    &:last-child {
+      padding-bottom: 60px;
     }
 
     & > * {

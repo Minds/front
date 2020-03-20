@@ -139,8 +139,8 @@ export class SettingsV2PasswordComponent implements OnInit {
     this.popover.hide();
   }
 
-  onPopoverChange($event) {
-    this.newPasswordValid = $event.valid;
+  onPopoverChange(valid: boolean) {
+    this.newPasswordValid = valid ? true : false;
     this.detectChanges();
   }
 
