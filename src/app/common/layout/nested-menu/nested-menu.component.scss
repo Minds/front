@@ -138,7 +138,7 @@ m-nestedMenu {
 
     @media screen and (max-width: $layoutMax2ColWidth) {
       padding: 14px 24px;
-      .m-nestedMenu__itemWrapper--active {
+      &.m-nestedMenu__itemWrapper--active {
         &.disableActiveClass {
           @include m-theme {
             color: themed($m-textColor--secondary);
