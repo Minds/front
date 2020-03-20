@@ -7,43 +7,60 @@
 
 import generateRandomId from "../../support/utilities";
 
-// Issue to re-enable https://gitlab.com/minds/front/issues/1846
-context.skip('Wire Creator', () => {
+context('Wire', () => {
 
   const receiver = {
     username: generateRandomId(),
     password: generateRandomId()+'F!',
   }
-  const sendAmount = 5000;
+  const sendAmount = "0.001";
+  const amountInput = '[data-cy=data-minds-wire-amount-input]';
+
   const wireButton = 'm-wire-channel > div > button';
-  const sendButton = '.m-wire--creator-section--last > div > button';
+  const sendButton = '[data-cy=data-minds-wire-send-button]';
   const modal = 'm-overlay-modal > div.m-overlay-modal';
 
   before(() => {
     cy.newUser(receiver.username, receiver.password);
     cy.logout();
-    
   });
 
   beforeEach(()=> {
+    cy.server();
+    cy.route('POST', '**/api/v2/wire/*').as('wirePost');
+    cy.route('GET', '**/api/v2/blockchain/wallet/balance*').as('balanceGet');
     cy.preserveCookies();
     cy.login(true);
   });
 
   afterEach(() => {
-    // cy.login(true, receiver.username, receiver.password);
+    cy.logout();
+    cy.login(true, receiver.username, receiver.password);
     cy.visit(`/${Cypress.env().username}`);
 
     // Click profile wire button
-    cy.get(wireButton).click();
-    cy.wait(2000);
+    cy.get(wireButton)
+      .click()
+      .wait('@balanceGet').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal("success");
+      });
 
+    cy.get(amountInput)
+      .clear()
+      .type(sendAmount);
+  
     // Click send button
-    cy.get(sendButton).click();
-    cy.wait(5000);
+    cy.get(sendButton)
+      .click()
+      .wait('@wirePost').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal("success");
+      });
     
     //Make sure modal is hidden after 5 seconds.
     cy.get(modal).should('be.hidden');
+    cy.deleteUser(receiver.username, receiver.password);
   });
 
   it('should allow a user to send a wire to another user', () => {
@@ -51,13 +68,25 @@ context.skip('Wire Creator', () => {
     cy.visit(`/${receiver.username}`);
 
     // Click profile wire button
-    cy.get(wireButton).click();
-    cy.wait(2000);
+    cy.get(wireButton)
+      .click()
+      .wait('@balanceGet').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal("success");
+      });
 
+    cy.get(amountInput)
+      .clear()
+      .type(sendAmount);
     // Click send button
-    cy.get(sendButton).click();
-    cy.wait(5000);
     
+    cy.get(sendButton)
+      .click()
+      .wait('@wirePost').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal("success");
+      });
+
     //Make sure modal is hidden after 5 seconds.
     cy.get(modal).should('be.hidden');
   });
