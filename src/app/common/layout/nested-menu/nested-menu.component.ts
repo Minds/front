@@ -44,6 +44,7 @@ export class NestedMenuComponent {
    * @param itemId
    */
   getRouterLink(itemId: string): string {
+    // TODOOJM find another fix because this is too glitchy w/ reload
     if (!this.parentRoute) {
       return this.isNested ? itemId : `../${itemId}`;
     }

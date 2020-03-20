@@ -37,18 +37,22 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
 
   ngOnInit() {
     this.load(true);
+    // Hydrate the channel entities from blocked guids
     this.channels = this.blockListService.blocked.pipe(
       tap(() => {
         this.inProgress = true;
         this.moreData = false; // Support pagination in the future
+        this.detectChanges();
       }),
       filter(list => list.length > 0),
       switchMap(async guids => {
         const response: any = await this.entitiesService.fetch(guids);
+
         return response.entities;
       }),
       tap(blocked => {
         this.inProgress = false;
+        this.detectChanges();
       })
     );
   }
@@ -108,13 +112,9 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
 
   //     await this.client.put(`api/v1/block/${guid}`, {});
   //     await this.blockListService.add(guid);
-  //     this.formToastService.success(channel.username + ' has been blocked');
   //   } catch (e) {
   //     channel._unblocked = true;
   //     console.error(e);
-  //     this.formToastService.error(
-  //       'An error occured while attempting to block ' + channel.username
-  //     );
   //   }
   //   channel._saving = false;
   //   this.detectChanges();

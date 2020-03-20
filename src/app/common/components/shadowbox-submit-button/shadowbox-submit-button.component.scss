@@ -37,14 +37,14 @@
   }
   &.grey {
     @include m-theme() {
-      background-color: themed($m-grey-100);
+      background-color: themed($m-bgColor--tertiary);
       color: themed($m-textColor--secondary);
     }
     .m-shadowboxSubmitButton__status--saving {
       text-align: center;
       span {
         @include m-theme() {
-          background-color: themed($m-grey-500);
+          background-color: themed($m-textColor--secondary);
         }
       }
     }
@@ -70,7 +70,7 @@
       }
       &.grey {
         @include m-theme() {
-          background-color: rgba(themed($m-grey-100), 0.7);
+          background-color: rgba(themed($m-bgColor--tertiary), 0.7);
         }
       }
     }
@@ -95,7 +95,7 @@
       }
       &.grey {
         @include m-theme() {
-          background-color: themed($m-grey-100);
+          background-color: themed($m-bgColor--tertiary);
         }
       }
     }

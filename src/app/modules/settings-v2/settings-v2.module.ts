@@ -55,7 +55,6 @@ const SETTINGS_V2_ROUTES: Routes = [
       ogImage: '/assets/photos/network.jpg',
     },
     children: [
-      { path: '', component: SettingsV2Component },
       {
         path: 'account',
         component: SettingsV2Component,
@@ -301,8 +300,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Blocked Channels',
-              description:
-                'Manage channels that have been blocked from appearing in your feed.',
+              description: 'Block channels from appearing in your feed.',
             },
           },
           {
@@ -344,6 +342,7 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
         ],
       },
+      { path: '', component: SettingsV2Component },
       {
         path: '**',
         redirectTo: '',
