@@ -10,19 +10,20 @@
     (click)="openWireModal(reward)"
   >
     <td [class.m-border]="editing">
-      <label *ngIf="editing">Threshold</label>
+      <label *ngIf="editing"
+        >Minimum {{ type === 'tokens' ? 'Token' : 'Cash' }} Payment
+        <m-tooltip icon="help" i18n="@@WIRE__CHANNEL__REWARDS_PAYMENT_TOOLTIP">
+          Minimum payment from supporters to receive the reward.
+        </m-tooltip>
+      </label>
       <div class="m-wire-channel--reward-amount">
         <span *ngIf="!editing && type == 'money'"
           >{{ reward.amount || 0 | currency: 'USD':true:'1.0-0' }}+</span
         >
-        <span *ngIf="!editing && type == 'points'"
-          >{{ reward.amount || 0 | number }}+</span
-        >
-
         <ng-container *ngIf="!editing && type == 'tokens'">
           <span i18n="@@WIRE__CHANNEL__TABLE__AMOUNT_OR_OVER_LABEL"
-            >{{ reward.amount || 0 | number: '1.0-4' }} Tokens or Over</span
-          >
+            >{{ reward.amount || 0 | number: '1.0-4' }}+ Tokens
+          </span>
         </ng-container>
 
         <ng-container *ngIf="editing && type == 'money'">$</ng-container>
@@ -34,11 +35,6 @@
           [placeholder]="getAmountPlaceholder()"
           class="m-input"
         />
-        <ng-container *ngIf="type == 'points'" i18n="@@M__COMMON__POINTS_SUFFIX"
-          >points</ng-container
-        >
-        <span *ngIf="editing && type == 'tokens'">Tokens or Over</span>
-
         <div class="m-wire-channel--reward-send-wire" *ngIf="!editing">
           <i class="ion-icon ion-flash"></i>
         </div>
@@ -47,7 +43,16 @@
       <div class="m-wire-channel--reward-description">
         <p *ngIf="!editing">{{ reward.description }}</p>
         <ng-container *ngIf="editing">
-          <label>Description</label>
+          <label
+            >Description
+            <m-tooltip
+              icon="help"
+              i18n-placeholder="@@WIRE__CHANNEL__REWARD_DESCRIPTION_PLACEHOLDER"
+            >
+              About your offerings. Describe what your supporters will receive.
+            </m-tooltip>
+          </label>
+
           <textarea
             *ngIf="editing"
             [ngModel]="reward.description"
@@ -66,7 +71,7 @@
 
 <div
   class="m-wire-channel--rewards--add-tier"
-  *ngIf="session.getLoggedInUser().guid == channel.guid"
+  *ngIf="session.getLoggedInUser().guid == channel.guid && editing"
 >
   <a (click)="addTier()" class="m-btn m-btn--action m-btn--slim">
     <i class="material-icons">playlist_add</i>

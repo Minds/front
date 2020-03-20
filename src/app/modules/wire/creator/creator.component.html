@@ -74,6 +74,7 @@
           (blur)="amountEditorBlur()"
           (keydown.enter)="amountEditorBlur()"
           (keydown.esc)="amountEditorBlur()"
+          data-cy="data-minds-wire-amount-input"
           #amountEditor
         />
 
@@ -426,6 +427,7 @@
         [disabled]="!canSubmit() || inProgress || success || criticalError"
         (click)="submit()"
         i18n="@@WIRE__CREATOR__SEND_ACTION"
+        data-cy="data-minds-wire-send-button"
       >
         SEND
       </button>
