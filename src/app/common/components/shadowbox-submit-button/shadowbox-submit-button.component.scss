@@ -70,7 +70,7 @@
       }
       &.grey {
         @include m-theme() {
-          background-color: rgba(themed($m-grey-50), 0.7);
+          background-color: rgba(themed($m-grey-100), 0.7);
         }
       }
     }

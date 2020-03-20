@@ -302,7 +302,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Blocked Channels',
               description:
-                'Block certain channels from appearing in your feed.',
+                'Manage channels that have been blocked from appearing in your feed.',
             },
           },
           {
