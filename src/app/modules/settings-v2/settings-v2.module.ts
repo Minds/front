@@ -287,7 +287,6 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'reported-content',
             component: SettingsV2ReportedContentComponent,
-            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Reported Content',
               description:
@@ -297,7 +296,6 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'blocked-channels',
             component: SettingsV2BlockedChannelsComponent,
-            canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Blocked Channels',
               description: 'Block channels from appearing in your feed.',

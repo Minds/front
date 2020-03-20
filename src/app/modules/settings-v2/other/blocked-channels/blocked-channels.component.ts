@@ -19,6 +19,7 @@ import { FormToastService } from '../../../../common/services/form-toast.service
 export class SettingsV2BlockedChannelsComponent implements OnInit {
   blockedGuids: any[] = [];
   channels;
+  hasList: boolean = true;
 
   offset: number = 0;
 
@@ -60,6 +61,10 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
   async load(refresh: boolean = false) {
     if (this.inProgress) return;
     this.blockListService.fetch(); // Get latest
+    if (this.blockListService.blocked.value.length === 0) {
+      this.hasList = false;
+      this.detectChanges();
+    }
   }
 
   loadMore() {
@@ -87,6 +92,7 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
       await this.client.delete(`api/v1/block/${guid}`, {});
       await this.blockListService.remove(guid);
       this.formToastService.success(channel.username + ' has been unblocked');
+      this.load(false);
     } catch (e) {
       channel._unblocked = void 0;
       console.error(e);
@@ -95,6 +101,7 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
       );
     }
     channel._saving = false;
+
     this.detectChanges();
   }
 

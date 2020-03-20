@@ -17,6 +17,7 @@
     .m-shadowboxSubmitButton__status--saving {
       span {
         @include m-theme() {
+          // Color of the animated circles
           background-color: themed($m-white);
         }
       }
