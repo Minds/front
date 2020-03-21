@@ -118,7 +118,7 @@ describe('NewsfeedSingleComponent', () => {
     sessionMock.user.admin = false;
     sessionMock.user.hide_share_buttons = false;
     featuresServiceMock.mock('sync-feeds', false);
-    featuresServiceMock.mock('activity-v2--single-page', true);
+    featuresServiceMock.mock('navigation', true);
 
     fixture.detectChanges();
 
@@ -171,7 +171,9 @@ describe('NewsfeedSingleComponent', () => {
   });
 
   it('it should show a spam notice if the activity was marked as spam', () => {
-    comp.activity.spam = true;
+    comp.activity = {
+      spam: true,
+    };
 
     fixture.detectChanges();
 
@@ -186,7 +188,9 @@ describe('NewsfeedSingleComponent', () => {
   });
 
   it('it should not show the appeal text if the user is an admin', () => {
-    comp.activity.spam = true;
+    comp.activity = {
+      spam: true,
+    };
     sessionMock.user.admin = true;
 
     fixture.detectChanges();
