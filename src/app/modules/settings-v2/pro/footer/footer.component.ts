@@ -7,7 +7,7 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
@@ -15,19 +15,25 @@ import { ProService } from '../../../pro/pro.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'm-settingsV2Pro__general',
-  templateUrl: './general.component.html',
+  selector: 'm-settingsV2Pro__footer',
+  templateUrl: './footer.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
+export class SettingsV2ProFooterComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
   proSettingsSubscription: Subscription;
-  isActive: boolean = false;
-  user: string | null;
+  protected paramMap$: Subscription;
+  user: string | null = null;
+  currentFooterText = '';
+
+  currentFooterLinks = [];
+  formValsChanged: boolean = false;
 
   form;
+
+  isActive: boolean = false;
 
   constructor(
     protected cd: ChangeDetectorRef,
@@ -35,16 +41,35 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     protected proService: ProService,
     private dialogService: DialogService,
     protected router: Router,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
     this.form = new FormGroup({
-      title: new FormControl('', {
-        validators: [Validators.required],
-      }),
-      headline: new FormControl(''),
-      published: new FormControl(''),
+      footer_text: new FormControl(['']),
+      footer_links: new FormArray([]),
+    });
+
+    /**
+     * Manually compare the form values before + after changes
+     * are made, to determine whether the form is saveable
+     * and also whether to display a 'discard changes?' popup
+     */
+    this.form.valueChanges.subscribe(() => {
+      if (this.init) {
+        const nonBlankLinks = this.footer_links.value.filter(item => {
+          return item.title || item.href;
+        });
+
+        const linksChanged =
+          JSON.stringify(this.currentFooterLinks) !==
+          JSON.stringify(nonBlankLinks);
+
+        const textChanged = this.footer_text.value !== this.currentFooterText;
+
+        this.formValsChanged = textChanged || linksChanged;
+      }
     });
 
     this.route.parent.params.subscribe(params => {
@@ -56,13 +81,12 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     this.proSettingsSubscription = this.proService.proSettings$.subscribe(
       (settings: any) => {
         this.isActive = settings.is_active;
-        if (!this.isActive) {
-          this.published.disable();
-        }
 
-        this.title.setValue(settings.title);
-        this.headline.setValue(settings.headline);
-        this.published.setValue(settings.published);
+        this.currentFooterText = settings.footer_text;
+        this.currentFooterLinks = settings.footer_links;
+
+        this.footer_text.setValue(settings.footer_text);
+        this.setFooterLinks(settings.footer_links);
         this.detectChanges();
       }
     );
@@ -93,8 +117,31 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     }
   }
 
+  addBlankFooterLink() {
+    this.addFooterLink('', '');
+  }
+
+  addFooterLink(title, href) {
+    const links = <FormArray>this.footer_links;
+    links.push(
+      this.fb.group({
+        title: [title],
+        href: [href],
+      })
+    );
+  }
+
+  setFooterLinks(links: Array<{ title: string; href: string }>) {
+    (<FormArray>this.footer_links).clear();
+    this.detectChanges();
+    for (const link of links) {
+      this.addFooterLink(link.title, link.href);
+    }
+    this.detectChanges();
+  }
+
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.canSubmit()) {
+    if (!this.formValsChanged) {
       return true;
     }
 
@@ -102,13 +149,7 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
   }
 
   canSubmit(): boolean {
-    return !this.inProgress && this.form.valid && !this.form.pristine;
-  }
-
-  onEnableProThemeClick(e: MouseEvent): void {
-    if (!this.isActive) {
-      this.router.navigate(['/pro']);
-    }
+    return !this.inProgress && this.form.valid && this.formValsChanged;
   }
 
   detectChanges() {
@@ -122,15 +163,10 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     }
   }
 
-  get title() {
-    return this.form.get('title');
+  get footer_links() {
+    return this.form.get('footer_links');
   }
-
-  get headline() {
-    return this.form.get('headline');
-  }
-
-  get published() {
-    return this.form.get('published');
+  get footer_text() {
+    return this.form.get('footer_text');
   }
 }

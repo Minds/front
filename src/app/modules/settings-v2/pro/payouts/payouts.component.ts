@@ -12,22 +12,24 @@ import { Observable, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { ProService } from '../../../pro/pro.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
-  selector: 'm-settingsV2Pro__general',
-  templateUrl: './general.component.html',
+  selector: 'm-settingsV2Pro__payouts',
+  templateUrl: './payouts.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
+export class SettingsV2ProPayoutsComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
   proSettingsSubscription: Subscription;
-  isActive: boolean = false;
-  user: string | null;
+  protected paramMap$: Subscription;
+  user: string | null = null;
 
   form;
+
+  isActive: boolean = false;
 
   constructor(
     protected cd: ChangeDetectorRef,
@@ -40,11 +42,7 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form = new FormGroup({
-      title: new FormControl('', {
-        validators: [Validators.required],
-      }),
-      headline: new FormControl(''),
-      published: new FormControl(''),
+      payout_method: new FormControl('usd'),
     });
 
     this.route.parent.params.subscribe(params => {
@@ -56,13 +54,7 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     this.proSettingsSubscription = this.proService.proSettings$.subscribe(
       (settings: any) => {
         this.isActive = settings.is_active;
-        if (!this.isActive) {
-          this.published.disable();
-        }
-
-        this.title.setValue(settings.title);
-        this.headline.setValue(settings.headline);
-        this.published.setValue(settings.published);
+        this.payout_method.setValue(settings.payout_method);
         this.detectChanges();
       }
     );
@@ -93,22 +85,16 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     }
   }
 
-  canDeactivate(): Observable<boolean> | boolean {
-    if (!this.canSubmit()) {
-      return true;
-    }
+  // canDeactivate(): Observable<boolean> | boolean {
+  //   if (this.form.pristine) {
+  //     return true;
+  //   }
 
-    return this.dialogService.confirm('Discard changes?');
-  }
+  //   return this.dialogService.confirm('Discard changes?');
+  // }
 
   canSubmit(): boolean {
     return !this.inProgress && this.form.valid && !this.form.pristine;
-  }
-
-  onEnableProThemeClick(e: MouseEvent): void {
-    if (!this.isActive) {
-      this.router.navigate(['/pro']);
-    }
   }
 
   detectChanges() {
@@ -122,15 +108,7 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     }
   }
 
-  get title() {
-    return this.form.get('title');
-  }
-
-  get headline() {
-    return this.form.get('headline');
-  }
-
-  get published() {
-    return this.form.get('published');
+  get payout_method() {
+    return this.form.get('payout_method');
   }
 }
