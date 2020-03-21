@@ -365,8 +365,6 @@
                 m-read-more
                 *ngIf="
                   this.contentType !== 'blog' &&
-                  this.contentType !== 'video' &&
-                  this.contentType !== 'rich-embed' &&
                   (this.entity.title ||
                     this.entity.message ||
                     this.entity.description)
@@ -377,8 +375,10 @@
                   class="m-mature-text-toggle"
                   (click)="toggleMatureVisibility()"
                   *ngIf="
-                    attachment.shouldBeBlurred(entity) ||
-                    attachment.isForcefullyShown(entity)
+                    (attachment.shouldBeBlurred(entity) ||
+                      attachment.isForcefullyShown(entity)) &&
+                    this.contentType !== 'video' &&
+                    this.contentType !== 'rich-embed'
                   "
                   [ngClass]="{
                     'mdl-color-text--red-500': attachment.isForcefullyShown(
