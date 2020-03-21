@@ -1,8 +1,8 @@
 .m-commentsEntityOutlet__expand {
-  font-weight: 600;
-  padding: 0 20px;
+  font-weight: 400;
+  padding: 0 20px 6px;
   @include m-theme() {
-    color: themed($m-textColor--tertiary);
+    color: themed($m-blue);
   }
   cursor: pointer;
 }

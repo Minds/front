@@ -96,7 +96,7 @@ export class ActivityContentComponent {
   }
 
   get isRichEmbed(): boolean {
-    return !!this.entity.perma_url;
+    return !!this.entity.perma_url && !this.isVideo && !this.isImage;
   }
 
   get mediaDescription(): string {

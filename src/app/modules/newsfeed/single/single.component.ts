@@ -95,9 +95,7 @@ export class NewsfeedSingleComponent {
 
     this.inProgress = true;
 
-    const fetchSingleGuid = this.featuresService.has('sync-feeds')
-      ? this.loadFromFeedsService(guid)
-      : this.loadLegacy(guid);
+    const fetchSingleGuid = this.loadFromFeedsService(guid);
 
     fetchSingleGuid.subscribe(
       (activity: any) => {
@@ -111,14 +109,14 @@ export class NewsfeedSingleComponent {
           case 'image':
           case 'video':
           case 'album':
-            if (!this.featuresService.has('activity-v2--single-page')) {
+            if (!this.featuresService.has('navigation')) {
               this.router.navigate(['/media', this.activity.guid], {
                 replaceUrl: true,
               });
             }
             break;
           case 'blog':
-            if (!this.featuresService.has('activity-v2--single-page')) {
+            if (!this.featuresService.has('navigation')) {
               this.router.navigate(['/blog/view', this.activity.guid], {
                 replaceUrl: true,
               });
