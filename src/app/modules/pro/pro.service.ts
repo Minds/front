@@ -61,13 +61,11 @@ export class ProService {
     this.proSettings = settings;
     this.proSettings.is_active = isActive;
     this.proSettings$.next(this.proSettings);
-    console.log('getPro', this.proSettings);
 
     return { isActive, settings };
   }
 
   async set(settings, remoteUser: string | null = null): Promise<boolean> {
-    console.log('setPro', settings);
     const endpoint = ['api/v2/pro/settings'];
 
     if (remoteUser) {

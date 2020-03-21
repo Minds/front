@@ -7,27 +7,38 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
+import { Observable, Subscription, Subject } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
 import { ProService } from '../../../pro/pro.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
-  selector: 'm-settingsV2Pro__general',
-  templateUrl: './general.component.html',
+  selector: 'm-settingsV2Pro__domain',
+  templateUrl: './domain.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
+export class SettingsV2ProDomainComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
   proSettingsSubscription: Subscription;
-  isActive: boolean = false;
-  user: string | null;
+  protected paramMap$: Subscription;
+  user: string | null = null;
 
   form;
+  isDomainValid: boolean | null = null;
+  error: string = '';
+  domainValidationSubject: Subject<any> = new Subject<any>();
+
+  isActive: boolean = false;
 
   constructor(
     protected cd: ChangeDetectorRef,
@@ -35,16 +46,18 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     protected proService: ProService,
     private dialogService: DialogService,
     protected router: Router,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected formToastService: FormToastService
   ) {}
 
   ngOnInit() {
     this.form = new FormGroup({
-      title: new FormControl('', {
-        validators: [Validators.required],
-      }),
-      headline: new FormControl(''),
-      published: new FormControl(''),
+      domain: new FormControl(
+        '',
+        [Validators.required],
+        [this.validateDomain.bind(this)]
+      ),
+      custom_head: new FormControl(''),
     });
 
     this.route.parent.params.subscribe(params => {
@@ -56,13 +69,14 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     this.proSettingsSubscription = this.proService.proSettings$.subscribe(
       (settings: any) => {
         this.isActive = settings.is_active;
-        if (!this.isActive) {
-          this.published.disable();
-        }
 
-        this.title.setValue(settings.title);
-        this.headline.setValue(settings.headline);
-        this.published.setValue(settings.published);
+        if (!this.isActive) {
+          // Non-actives have no domain control
+          this.domain.setValidators([]);
+          this.domain.disable();
+        }
+        this.domain.setValue(settings.domain);
+        this.custom_head.setValue(settings.custom_head);
         this.detectChanges();
       }
     );
@@ -83,6 +97,7 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
         this.form.value,
         this.user
       );
+
       this.formSubmitted.emit({ formSubmitted: true });
       this.form.markAsPristine();
     } catch (e) {
@@ -93,8 +108,32 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     }
   }
 
+  async validateDomain(control: AbstractControl) {
+    this.isDomainValid = null;
+    this.detectChanges();
+
+    try {
+      const { isValid } = await this.proService.domainCheck(
+        control.value,
+        this.user
+      );
+
+      this.isDomainValid = isValid;
+    } catch (e) {
+      this.isDomainValid = null;
+      this.error = (e && e.message) || 'Error checking domain';
+      this.formToastService.error(this.error);
+    }
+
+    if (!this.isDomainValid) {
+      return {
+        invalidDomain: true,
+      };
+    }
+  }
+
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.canSubmit()) {
+    if (this.form.pristine) {
       return true;
     }
 
@@ -103,12 +142,6 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
 
   canSubmit(): boolean {
     return !this.inProgress && this.form.valid && !this.form.pristine;
-  }
-
-  onEnableProThemeClick(e: MouseEvent): void {
-    if (!this.isActive) {
-      this.router.navigate(['/pro']);
-    }
   }
 
   detectChanges() {
@@ -122,15 +155,10 @@ export class SettingsV2ProGeneralComponent implements OnInit, OnDestroy {
     }
   }
 
-  get title() {
-    return this.form.get('title');
+  get domain() {
+    return this.form.get('domain');
   }
-
-  get headline() {
-    return this.form.get('headline');
-  }
-
-  get published() {
-    return this.form.get('published');
+  get custom_head() {
+    return this.form.get('custom_head');
   }
 }

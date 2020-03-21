@@ -1,1 +1,267 @@
-<p>theme works!</p>
+<div class="m-settingsV2__desc">
+  Set up your site's color theme.
+  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+    >Upgrade to Pro</a
+  >
+</div>
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--color hasValidationRow">
+      <div class="m-form__row--label">
+        <label for="text_color" i18n>Text Color</label>
+        <m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n>The color of text on your Pro site</ng-container>
+        </m-tooltip>
+      </div>
+      <div
+        class="m-form__row--input"
+        [ngClass]="{
+          invalid: text_color.invalid
+        }"
+      >
+        <input
+          type="text"
+          id="text_color"
+          name="text_color"
+          formControlName="text_color"
+          #textColor
+          data-minds="textColor"
+          [pattern]="hexPattern"
+          class="form-control"
+          required
+          (ngModelChange)="updateColorPicker('text_color', textColor.value)"
+        />
+        <label
+          for="text_color_picker"
+          class="m-form__colorPreview"
+          [ngStyle]="{
+            backgroundColor: textColorPicker.value
+          }"
+          ><input
+            class="form-control"
+            type="color"
+            id="text_color_picker"
+            data-minds="textColorPicker"
+            formControlName="text_color_picker"
+            #textColorPicker
+            (ngModelChange)="
+              updateColorText('text_color', textColorPicker.value)
+            "
+        /></label>
+      </div>
+      <div class="m-form__row--validation">
+        <p *ngIf="text_color.hasError('pattern')">
+          Invalid hex code
+        </p>
+        <p *ngIf="text_color.hasError('required')">
+          Text color is required
+        </p>
+      </div>
+    </div>
+
+    <div class="m-form__field--color hasValidationRow">
+      <div class="m-form__row--label">
+        <label for="primary_color" i18n>Accent Color</label
+        ><m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n
+            >Links will become this color when you hover over them</ng-container
+          >
+        </m-tooltip>
+      </div>
+      <div
+        class="m-form__row--input"
+        [ngClass]="{
+          invalid: primary_color.invalid
+        }"
+      >
+        <input
+          type="text"
+          id="primary_color"
+          name="primary_color"
+          #primaryColor
+          data-minds="primaryColor"
+          formControlName="primary_color"
+          [pattern]="hexPattern"
+          class="form-control"
+          required
+          (ngModelChange)="
+            updateColorPicker('primary_color', primaryColor.value)
+          "
+        />
+        <label
+          for="primary_color_picker"
+          class="m-form__colorPreview"
+          [ngStyle]="{
+            backgroundColor: primaryColorPicker.value
+          }"
+          ><input
+            class="form-control"
+            type="color"
+            id="primary_color_picker"
+            name="primary_color_picker"
+            formControlName="primary_color_picker"
+            #primaryColorPicker
+            data-minds="primaryColorPicker"
+            (ngModelChange)="
+              updateColorText('primary_color', primaryColorPicker.value)
+            "
+        /></label>
+      </div>
+      <div class="m-form__row--validation">
+        <p *ngIf="primary_color.hasError('pattern')">
+          Invalid hex code
+        </p>
+        <p *ngIf="primary_color.hasError('required')">
+          Link color is required
+        </p>
+      </div>
+    </div>
+
+    <div class="m-form__field--color hasValidationRow">
+      <div class="m-form__row--label">
+        <label for="plain_background_color" i18n> Background Color </label
+        ><m-tooltip
+          ><span m-tooltip--anchor>𝒊</span>
+          <ng-container i18n
+            >The background color of some elements on your site</ng-container
+          >
+        </m-tooltip>
+      </div>
+      <div
+        class="m-form__row--input"
+        [ngClass]="{
+          invalid: plain_background_color.invalid
+        }"
+      >
+        <input
+          type="text"
+          id="plain_background_color"
+          name="plain_background_color"
+          #plainBgColor
+          data-minds="plainBgColor"
+          formControlName="plain_background_color"
+          [pattern]="hexPattern"
+          class="form-control"
+          required
+          (ngModelChange)="
+            updateColorPicker('plain_background_color', plainBgColor.value)
+          "
+        />
+
+        <label
+          for="plain_background_color_picker"
+          class="m-form__colorPreview"
+          [ngStyle]="{
+            backgroundColor: plainBgColorPicker.value
+          }"
+          ><input
+            class="form-control"
+            type="color"
+            id="plain_background_color_picker"
+            name="plain_background_color_picker"
+            formControlName="plain_background_color_picker"
+            #plainBgColorPicker
+            data-minds="plainBgColorPicker"
+            (ngModelChange)="
+              updateColorText(
+                'plain_background_color',
+                plainBgColorPicker.value
+              )
+            "
+        /></label>
+      </div>
+      <div class="m-form__row--validation">
+        <p *ngIf="plain_background_color.hasError('pattern')">
+          Invalid hex code
+        </p>
+        <p *ngIf="plain_background_color.hasError('required')">
+          Background color is required
+        </p>
+      </div>
+    </div>
+
+    <div class="m-form__field--radio">
+      <div class="m-form__row--label">
+        <label i18n> Color Schema </label>
+      </div>
+      <div class="m-form__row--input">
+        <label
+          for="scheme_light"
+          class="m-form__customInputWrapper__radio"
+          i18n
+          data-minds="schemeLight"
+          >Light
+          <input
+            type="radio"
+            id="scheme_light"
+            name="scheme"
+            value="light"
+            formControlName="scheme"
+            class="form-control"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+        <label
+          for="scheme_dark"
+          class="m-form__customInputWrapper__radio"
+          i18n
+          data-minds="schemeDark"
+          >Dark
+          <input
+            type="radio"
+            id="scheme_dark"
+            name="scheme"
+            value="dark"
+            formControlName="scheme"
+            class="form-control"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="m-form__field--radio">
+      <div class="m-form__row--label">
+        <label i18n
+          >Tiles Aspect Ratio
+          <m-tooltip
+            ><span m-tooltip--anchor>𝒊</span>
+            <ng-container i18n
+              >The width-to-height ratio of tiles on your site</ng-container
+            >
+          </m-tooltip></label
+        >
+      </div>
+      <div class="m-form__row--input">
+        <ng-container *ngFor="let ratio of ratios">
+          <label
+            [for]="'tile_ratio_' + ratio"
+            class="m-form__customInputWrapper__radio"
+            >{{ ratio }}
+            <input
+              type="radio"
+              [id]="'tile_ratio_' + ratio"
+              name="tile_ratio"
+              [value]="ratio"
+              formControlName="tile_ratio"
+              class="form-control"
+              data-minds="'tileRatio_' + ratio"
+            />
+            <span class="m-form__customInput__radio"></span>
+          </label>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Save Theme
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

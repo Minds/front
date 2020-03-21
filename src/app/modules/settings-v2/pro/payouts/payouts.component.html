@@ -1,0 +1,83 @@
+<div class="m-settingsV2__desc">
+  Select the currency type you wish you be paid out in. Please note payouts only
+  occur after your
+  <a routerLink="/analytics/dashboard/earnings">earnings</a> are equivalent to
+  $100 or greater.
+  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+    >Upgrade to Pro</a
+  >
+</div>
+
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--radio">
+      <div class="m-form__row--label">
+        <label i18n>Payout Currency</label>
+      </div>
+      <div class="m-form__row--input">
+        <label for="method_usd" class="m-form__customInputWrapper__radio" i18n
+          >USD
+          <input
+            type="radio"
+            value="usd"
+            id="method_usd"
+            name="payout_method"
+            formControlName="payout_method"
+            class="form-control"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+        <label
+          for="method_tokens"
+          class="m-form__customInputWrapper__radio"
+          i18n
+          >Minds Tokens
+          <input
+            type="radio"
+            value="tokens"
+            name="payout_method"
+            id="method_tokens"
+            formControlName="payout_method"
+            class="form-control"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+
+        <label for="method_eth" class="m-form__customInputWrapper__radio" i18n
+          >Ether
+          <input
+            type="radio"
+            value="eth"
+            name="payout_method"
+            id="method_eth"
+            formControlName="payout_method"
+            class="form-control"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+
+        <label for="method_btc" class="m-form__customInputWrapper__radio" i18n
+          >Bitcoin
+          <input
+            type="radio"
+            value="btc"
+            name="payout_method"
+            id="method_btc"
+            formControlName="payout_method"
+            class="form-control"
+          />
+          <span class="m-form__customInput__radio"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Save Payout Currency
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

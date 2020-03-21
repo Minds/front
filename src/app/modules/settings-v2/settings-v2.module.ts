@@ -39,6 +39,12 @@ import { WalletV2Module } from '../wallet/v2/wallet-v2.module';
 import { ProModule } from '../pro/pro.module';
 import { SettingsV2ProGeneralComponent } from './pro/general/general.component';
 import { SettingsV2ProThemeComponent } from './pro/theme/theme.component';
+import { SettingsV2ProAssetsComponent } from './pro/assets/assets.component';
+import { SettingsV2ProHashtagsComponent } from './pro/hashtags/hashtags.component';
+import { SettingsV2ProFooterComponent } from './pro/footer/footer.component';
+import { SettingsV2ProDomainComponent } from './pro/domain/domain.component';
+import { SettingsV2ProPayoutsComponent } from './pro/payouts/payouts.component';
+import { SettingsV2ProCancelComponent } from './pro/cancel/cancel.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -49,7 +55,7 @@ const SETTINGS_V2_ROUTES: Routes = [
       ogImage: '/assets/photos/network.jpg',
     },
     children: [
-      { path: '', redirectTo: 'account', pathMatch: 'full' },
+      { path: '', component: SettingsV2Component },
       {
         path: 'account',
         component: SettingsV2Component,
@@ -82,7 +88,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             path: 'display-language',
             component: SettingsV2DisplayLanguageComponent,
             data: {
-              title: 'Display Language',
+              title: 'Display Language Settings',
               description: 'Change the web interface language.',
             },
           },
@@ -135,7 +141,7 @@ const SETTINGS_V2_ROUTES: Routes = [
         ],
       },
       {
-        path: 'pro_canary',
+        path: 'pro_canary/:user',
         component: SettingsV2Component,
         data: {
           isMenu: true,
@@ -143,13 +149,14 @@ const SETTINGS_V2_ROUTES: Routes = [
           description: 'Customize your Pro channel.',
         },
         children: [
+          // CAUTION: adding a description to the data in pro settings
+          // will also add the description under the page header
           {
             path: 'general',
             component: SettingsV2ProGeneralComponent,
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'General Settings',
-              description: 'Customize your title and headline.',
             },
           },
           {
@@ -158,18 +165,56 @@ const SETTINGS_V2_ROUTES: Routes = [
             canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Theme',
-              description: "Set up your site's color theme.",
             },
           },
-          // Upload custom logo and background images
-          // Set up your category filter hashtags
-          // Set up your site's footer links
-          // Customize your site domain
-          // Select the currency type you wish you be paid out in. Please note
-          //    payouts only occur after your
-          //    <a routerLink="/analytics/dashboard/earnings">earnings</a> are
-          //     equivalent to $100 or greater.
-          // Manage your subscription
+          {
+            path: 'assets',
+            component: SettingsV2ProAssetsComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Assets',
+            },
+          },
+          {
+            path: 'hashtags',
+            component: SettingsV2ProHashtagsComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Hashtags',
+            },
+          },
+          {
+            path: 'footer',
+            component: SettingsV2ProFooterComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Footer',
+            },
+          },
+          {
+            path: 'domain',
+            component: SettingsV2ProDomainComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Domain',
+            },
+          },
+          {
+            path: 'payouts',
+            component: SettingsV2ProPayoutsComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Payouts',
+            },
+          },
+          {
+            path: 'cancel',
+            component: SettingsV2ProCancelComponent,
+            canDeactivate: [CanDeactivateGuardService],
+            data: {
+              title: 'Cancel Pro Subscription',
+            },
+          },
         ],
       },
       {
@@ -224,7 +269,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             path: 'recurring-payments',
             component: SettingsV2RecurringPaymentsComponent,
             data: {
-              title: 'RecurringPayments',
+              title: 'Recurring Payments',
               description:
                 'Track recurring payments you make to support other channels.',
             },
@@ -299,10 +344,10 @@ const SETTINGS_V2_ROUTES: Routes = [
           },
         ],
       },
-      // {
-      //   path: '**',
-      //   redirectTo: '',
-      // },
+      {
+        path: '**',
+        redirectTo: '',
+      },
     ],
   },
 ];
@@ -347,6 +392,12 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2ToasterNotificationsComponent,
     SettingsV2ProGeneralComponent,
     SettingsV2ProThemeComponent,
+    SettingsV2ProAssetsComponent,
+    SettingsV2ProHashtagsComponent,
+    SettingsV2ProFooterComponent,
+    SettingsV2ProDomainComponent,
+    SettingsV2ProPayoutsComponent,
+    SettingsV2ProCancelComponent,
   ],
   providers: [SettingsV2Service],
   exports: [SettingsV2Component],
