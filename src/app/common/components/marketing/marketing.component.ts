@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { MetaService } from '../../services/meta.service';
 import { TopbarService } from '../../layout/topbar.service';
+import { PageLayoutService } from '../../layout/page-layout.service';
 
 @Component({
   selector: 'm-marketing',
@@ -20,13 +21,16 @@ export class MarketingComponent implements OnInit, OnDestroy {
 
   constructor(
     protected metaService: MetaService,
-    private navigationService: TopbarService
+    private navigationService: TopbarService,
+    private pageLayoutService: PageLayoutService
   ) {}
 
   ngOnInit() {
     if (this.pageTitle) {
       this.metaService.setTitle(this.pageTitle);
     }
+
+    this.pageLayoutService.useFullWidth();
 
     this.navigationService.toggleMarketingPages(
       true,

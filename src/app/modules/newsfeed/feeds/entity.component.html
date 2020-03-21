@@ -11,7 +11,7 @@
       [entity]="entity"
       [displayOptions]="displayOptions"
       (deleted)="delete($event)"
-      *ngIf="displayOptions.v2 === true; else v1"
+      *mIfFeature="'navigation'; else v1"
     >
     </m-activity>
     <ng-template #v1>

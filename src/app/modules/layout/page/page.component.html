@@ -18,13 +18,20 @@
 
   <ng-container *mIfFeature="'navigation'; else oldLayout">
     <div
-      class="m-pageLayout__container"
+      [class.m-pageLayout__container]="
+        !(pageLayoutService.isFullWidth$ | async)
+      "
       [class.m-pageLayout__container--noSidebar]="!isSidebarVisible"
     >
       <m-sidebar--navigation
-        class="m-pageLayout__pane--left"
+        m-pageLayout__pane="left"
+        [hidden]="pageLayoutService.isFullWidth$ | async"
       ></m-sidebar--navigation>
-      <div class="m-pageLayout__pane--main">
+      <div
+        [m-pageLayout__pane]="
+          (pageLayoutService.isFullWidth$ | async) ? null : 'main'
+        "
+      >
         <router-outlet></router-outlet>
       </div>
     </div>

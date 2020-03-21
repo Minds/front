@@ -6,16 +6,17 @@
 
 <div
   class="m-v3Topbar__top"
-  [class.m-v3Topbar__marketingPages]="marketingPages"
-  [class.m-v3Topbar__noBackground]="!showBackground"
-  [class.m-v3Topbar__loggedOut]="!getCurrentUser()"
+  [class.m-v3Topbar__top--noBorder]="
+    !(pageLayoutService.hasTopbarBorder$ | async)
+  "
+  [class.m-v3Topbar__top--noBackground]="
+    !(pageLayoutService.hasTopbarBackground$ | async)
+  "
+  [class.m-v3Topbar__top--loggedOut]="!getCurrentUser()"
   [style.visibility]="showTopbar ? 'visible' : 'hidden'"
 >
   <div class="m-v3TopbarTop__inner m-pageLayout__container">
-    <div
-      class="m-v3Topbar__leftColumn m-pageLayout__pane--left"
-      [class.m-v3Topbar__leftColumn__rightAlign]="!getCurrentUser()"
-    >
+    <div class="m-v3Topbar__leftColumn m-pageLayout__pane--left">
       <nav class="m-v3Topbar__nav">
         <a
           class="m-v3TopbarNav__item m-v3TopbarNav__item--logo"

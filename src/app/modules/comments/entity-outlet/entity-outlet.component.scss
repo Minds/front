@@ -1,14 +1,9 @@
 .m-commentsEntityOutlet__expand {
-  padding: $minds-padding $minds-padding $minds-padding * 2;
-  font-size: 13px;
-  line-height: 18px;
-  text-align: center;
-  width: 100%;
+  font-weight: 400;
+  padding: 0 20px 6px;
   @include m-theme() {
     color: themed($m-blue);
   }
-  text-transform: uppercase;
-  letter-spacing: 1px;
   cursor: pointer;
 }
 
