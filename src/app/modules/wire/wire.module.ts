@@ -28,6 +28,8 @@ import { WireSubscriptionTiersComponent } from './channel/tiers.component';
 import { WirePaymentsCreatorComponent } from './creator/payments/payments.creator.component';
 import { WirePaymentHandlersService } from './wire-payment-handlers.service';
 import { PayMarketingComponent } from './marketing/marketing.component';
+import { WireV2SubscriptionTiersComponent } from './channel/v2/tiers/tiers.component';
+import { WireV2ChannelTableComponent } from './channel/v2/table/table.component';
 
 const wireRoutes: Routes = [
   { path: 'wire', redirectTo: 'pay' },
@@ -72,6 +74,8 @@ const wireRoutes: Routes = [
     PayMarketingComponent,
     WireConsoleOverviewComponent,
     WireSubscriptionTiersComponent,
+    WireV2SubscriptionTiersComponent,
+    WireV2ChannelTableComponent,
   ],
   providers: [WireService, WirePaymentHandlersService],
   exports: [
@@ -88,6 +92,7 @@ const wireRoutes: Routes = [
     WireConsoleOverviewComponent,
     WireCreatorComponent,
     WireSubscriptionTiersComponent,
+    WireV2SubscriptionTiersComponent,
   ],
   entryComponents: [
     WireCreatorComponent,

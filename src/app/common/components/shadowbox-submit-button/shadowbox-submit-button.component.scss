@@ -151,8 +151,16 @@ button {
   }
 }
 .m-shadowboxSubmitButton__status--unsaved {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 15px;
   line-height: 20px;
+
+  i {
+    margin-right: 12px;
+    font-size: 22px;
+  }
 }
 
 @media screen and (max-width: $max-mobile) {

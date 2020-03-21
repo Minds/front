@@ -304,11 +304,11 @@ const SETTINGS_V2_ROUTES: Routes = [
           {
             path: 'subscription-tiers',
             component: SettingsV2SubscriptionTiersComponent,
-            canDeactivate: [CanDeactivateGuardService],
+            // canDeactivate: [CanDeactivateGuardService],
             data: {
               title: 'Subscription Tiers',
               description:
-                'Define incentives for users to support your channel.',
+                "Define incentives for users to support your channel. These tiers will be displayed on your channel's sidebar and wire screen.",
             },
           },
           {

@@ -63,21 +63,9 @@ m-settingsV2__blockedChannels {
   }
 
   .m-settingsV2BlockedChannel__username {
-    // flex-grow: 1;
     width: 100%;
     max-width: 280px;
     overflow: hidden;
     text-overflow: ellipsis;
-  }
-  .m-settingsV2BlockedChannel__actions {
-    .m-shadowboxSubmitButton__status--unsaved {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      i {
-        margin-right: 12px;
-        font-size: 22px;
-      }
-    }
   }
 }
