@@ -26,7 +26,7 @@ test:
 lint:
   stage: test
   script:
-    - npm i -g prettier
+    - npm i -g prettier@"^1.19.1"
     - prettier --check "src/**/*.ts"
     - prettier --check "src/**/*.scss"
     - prettier --check "src/**/*.html"
