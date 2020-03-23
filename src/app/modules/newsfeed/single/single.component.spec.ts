@@ -41,9 +41,11 @@ class MindsActivityMock {
   @Input() commentsToggle: boolean;
   @Input() showRatingToggle: boolean;
   @Input() editing: boolean;
+  @Input() allowAutoplayOnScroll: boolean;
+  @Input() autoplayVideo: boolean;
 }
 
-let routerMock = new (function() {
+const routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate').and.stub();
 })();
 
@@ -63,7 +65,12 @@ describe('NewsfeedSingleComponent', () => {
         }),
         MockComponent({
           selector: 'm-activity',
-          inputs: ['entity', 'displayOptions'],
+          inputs: [
+            'entity',
+            'displayOptions',
+            'allowAutoplayOnScroll',
+            'autoplayVideo',
+          ],
         }),
       ],
       imports: [RouterTestingModule, ReactiveFormsModule],

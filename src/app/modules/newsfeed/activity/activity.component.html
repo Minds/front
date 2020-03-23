@@ -7,6 +7,8 @@
 
 <m-activity__content
   *ngIf="service.shouldShowContent$ | async"
+  [allowAutoplayOnScroll]="allowAutoplayOnScroll"
+  [autoplayVideo]="autoplayVideo"
 ></m-activity__content>
 
 <m-activity__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">

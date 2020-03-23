@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '../../../../common/common.module';
 import { MindsVideoPlayerComponent } from '../video-player/player.component';
 import { PlyrModule } from 'ngx-plyr';
+import { VideoAutoplayService } from './services/video-autoplay.service';
 
 @NgModule({
   imports: [
@@ -17,5 +18,6 @@ import { PlyrModule } from 'ngx-plyr';
   ],
   declarations: [MindsVideoPlayerComponent],
   exports: [MindsVideoPlayerComponent],
+  providers: [VideoAutoplayService],
 })
 export class VideoModule {}

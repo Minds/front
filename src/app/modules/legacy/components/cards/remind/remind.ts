@@ -51,6 +51,8 @@ export class Remind {
   menuOptions: any = [];
   canDelete: boolean = false;
   videoDimensions: Array<any> = null;
+  @Input() allowAutoplayOnScroll: boolean = false;
+  @Input() autoplayVideo: boolean = false;
 
   @Output('matureVisibilityChange') onMatureVisibilityChange: EventEmitter<
     any

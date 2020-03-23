@@ -301,8 +301,10 @@
     <m-videoPlayer
       [guid]="activity.entity_guid"
       [shouldPlayInModal]="true"
-      [autoplay]="false"
+      [autoplay]="autoplayVideo"
+      [allowAutoplayOnScroll]="allowAutoplayOnScroll"
       (mediaModalRequested)="openModal()"
+      #player
     ></m-videoPlayer>
   </div>
 
@@ -371,6 +373,8 @@
         [boosted]="activity.boosted"
         (matureVisibilityChange)="onRemindMatureVisibilityChange()"
         (videoMetadataLoaded)="setVideoDimensions($event)"
+        [allowAutoplayOnScroll]="allowAutoplayOnScroll"
+        [autoplayVideo]="autoplayVideo"
       ></minds-remind>
     </ng-container>
     <ng-template #blockedRemindTemplate>

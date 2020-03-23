@@ -44,6 +44,8 @@
         [slot]="1"
         class="mdl-card mdl-shadow--2dp item"
         [attr.data-minds-activity-guid]="activity.guid"
+        [allowAutoplayOnScroll]="false"
+        [autoplayVideo]="true"
       >
       </minds-activity>
     </div>
@@ -59,6 +61,8 @@
           fixedHeight: fixedHeight,
           showOnlyCommentsInput: fixedHeight
         }"
+        [allowAutoplayOnScroll]="false"
+        [autoplayVideo]="true"
       ></m-activity>
     </div>
   </div>

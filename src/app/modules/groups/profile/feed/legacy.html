@@ -40,6 +40,7 @@
       [slot]="i + 1"
       class="mdl-card item"
       [attr.data-minds-activity-guid]="activity.guid"
+      [allowAutoplayOnScroll]="true"
     >
     </minds-activity>
 
@@ -51,6 +52,7 @@
       (deleted)="delete(a)"
       [slot]="i + (pinned?.length || 0) + 1"
       [attr.data-minds-activity-guid]="a.guid"
+      [allowAutoplayOnScroll]="true"
     >
       <!-- Menu Actions -->
       <li
