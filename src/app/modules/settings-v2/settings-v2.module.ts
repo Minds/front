@@ -45,6 +45,7 @@ import { SettingsV2ProFooterComponent } from './pro/footer/footer.component';
 import { SettingsV2ProDomainComponent } from './pro/domain/domain.component';
 import { SettingsV2ProPayoutsComponent } from './pro/payouts/payouts.component';
 import { SettingsV2ProCancelComponent } from './pro/cancel/cancel.component';
+import { StrikesComponent } from '../report/strikes/strikes.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -284,6 +285,15 @@ const SETTINGS_V2_ROUTES: Routes = [
           description: 'Additional settings.',
         },
         children: [
+          {
+            path: 'reported-content/strikes',
+            component: StrikesComponent,
+            data: {
+              title: 'Strikes',
+              description:
+                'Strikes are imposed for violations against the terms of service. Following 3 strikes, channels are banned or marked NSFW',
+            },
+          },
           {
             path: 'reported-content',
             component: SettingsV2ReportedContentComponent,
