@@ -1,21 +1,55 @@
-export const LICENSES: Array<any> = [
-  { value: 'all-rights-reserved', text: 'All rights reserved' },
-  { value: 'attribution-cc', text: 'Attribution CC BY' },
-  { value: 'attribution-sharealike-cc', text: 'Attribution-ShareAlike BY-SA' },
-  { value: 'attribution-noderivs-cc', text: 'Attribution-NoDerivs CC BY-ND' },
+export interface LicensesEntry {
+  value: string;
+  text: string;
+  selectable?: boolean;
+}
+
+export const LICENSES: Array<LicensesEntry> = [
+  // Content licenses.
+
+  {
+    value: 'all-rights-reserved',
+    text: 'All rights reserved',
+    selectable: true,
+  },
+  {
+    value: 'attribution-cc',
+    text: 'Creative Commons Attribution',
+    selectable: true,
+  },
+  {
+    value: 'attribution-sharealike-cc',
+    text: 'Attribution-ShareAlike BY-SA',
+    selectable: true,
+  },
+  {
+    value: 'attribution-noderivs-cc',
+    text: 'Attribution-NoDerivs CC BY-ND',
+    selectable: true,
+  },
   {
     value: 'attribution-noncommercial-cc',
     text: 'Attribution-NonCommerical CC BY-NC',
+    selectable: true,
   },
   {
     value: 'attribution-noncommercial-sharealike-cc',
-    text: 'Attribution-NonCommerical-ShareAlike CC BY-NC-SA',
+    text: 'Attribution-NonCommerical-ShareAlike',
+    selectable: true,
   },
   {
     value: 'attribution-noncommercial-noderivs-cc',
-    text: 'Attribution-NonCommerical-NoDerivs CC BY-NC-ND',
+    text: 'Attribution-NonCommerical-NoDerivs',
+    selectable: true,
   },
-  { value: 'publicdomaincco', text: 'Public Domain CCO "No Rights Reserved' },
+  {
+    value: 'publicdomaincco',
+    text: 'Public Domain CCO "No Rights Reserved',
+    selectable: true,
+  },
+
+  // Software licenses. Used by ancient content.
+
   { value: 'gnuv3', text: 'GNU v3 General Public License' },
   { value: 'gnuv1.3', text: 'GNU v1.3 Free Documentation License' },
   { value: 'gnu-lgpl', text: 'GNU Lesser General Public License' },

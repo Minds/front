@@ -1,0 +1,7 @@
+<div class="m-composerModal__windowControls">
+  <a class="m-composerModalWindowControls__close" (click)="onDismissIntent()">
+    <m-icon iconId="close"></m-icon>
+  </a>
+</div>
+
+<m-composer__base (onPost)="onPost($event)" #baseComponent></m-composer__base>

@@ -62,6 +62,8 @@ import { SiteService } from '../../../../../common/services/site.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { TagsPipeMock } from '../../../../../mocks/pipes/tagsPipe.mock';
 import { RedirectService } from '../../../../../common/services/redirect.service';
+import { ModalService } from '../../../../composer/components/modal/modal.service';
+import { ComposerService } from '../../../../composer/services/composer.service';
 
 /* tslint:disable */
 // START MOCKS
@@ -424,6 +426,10 @@ describe('Activity', () => {
   );
 
   beforeEach(async(() => {
+    TestBed.overrideProvider(ComposerService, {
+      useValue: MockService(ComposerService),
+    });
+
     TestBed.configureTestingModule({
       declarations: [
         TagsPipeMock,
@@ -517,6 +523,10 @@ describe('Activity', () => {
           useValue: MockService(ConfigsService),
         },
         RedirectService,
+        {
+          provide: ModalService,
+          useValue: MockService(ModalService),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents(); // compile template and css

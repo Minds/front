@@ -1,0 +1,16 @@
+<m-composer__base
+  *ngIf="embedded; else popupComposer"
+  (onPost)="onPostEmitter.emit($event)"
+  #embeddedBaseComposer
+></m-composer__base>
+<ng-template #popupComposer>
+  <div class="m-composer__trigger" (click)="onTriggerClick($event)">
+    <m-composer__base
+      class="m-composer__triggerPreview m-composer__base--placeholder"
+      [class.m-composer__triggerPreview--hidden]="modalOpen"
+      #popOutBaseComposer
+    ></m-composer__base>
+
+    <div class="m-composer__triggerOverlay"></div>
+  </div>
+</ng-template>

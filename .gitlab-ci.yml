@@ -26,7 +26,7 @@ test:
 lint:
   stage: test
   script:
-    - npm i -g prettier
+    - npm i -g prettier@"^1.19.1"
     - prettier --check "src/**/*.ts"
     - prettier --check "src/**/*.scss"
     - prettier --check "src/**/*.html"
@@ -35,7 +35,7 @@ lint:
 # QA Stage #
 ############
 .cypress_tests: &cypress_tests
-  image: cypress/browsers:chrome67
+  image: cypress/browsers:node10.16.0-chrome77
   stage: qa
   variables:
     CYPRESS_INSTALL_BINARY: 3.6.1

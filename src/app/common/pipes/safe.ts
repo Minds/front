@@ -13,3 +13,16 @@ export class SafePipe {
     return this.sanitizer.bypassSecurityTrustHtml(value);
   }
 }
+
+@Pipe({
+  name: 'safeStyle',
+})
+export class SafeStylePipe {
+  constructor(private sanitizer: DomSanitizer) {}
+
+  transform(value: string) {
+    if (!value) return value;
+
+    return this.sanitizer.bypassSecurityTrustStyle(value);
+  }
+}

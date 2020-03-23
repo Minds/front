@@ -1,0 +1,85 @@
+.m-composer__toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 35px 37px 0;
+  border-top: 1px solid;
+  user-select: none;
+  font-size: 15px;
+  font-weight: 400;
+
+  @media screen and (max-width: $max-mobile) {
+    font-size: 16px;
+  }
+
+  @include m-theme() {
+    border-color: themed($m-borderColor--primary);
+  }
+
+  .m-composerToolbar__item,
+  .m-composerToolbar__action {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0;
+    cursor: pointer;
+    font-weight: inherit;
+
+    &.m-composerToolbar__item--active {
+      @include m-theme() {
+        color: themed($m-btn--primary);
+      }
+    }
+
+    &.m-composerToolbar__item--disabled {
+      opacity: 0.65;
+      cursor: initial;
+      pointer-events: none;
+    }
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-composerToolbar__item {
+    margin-right: 25px;
+
+    @media screen and (max-width: $max-mobile) {
+      margin-right: 40px;
+    }
+
+    @media screen and (max-width: 400px) {
+      margin-right: 0;
+    }
+  }
+
+  .m-composerToolbar__action {
+    align-items: stretch;
+    padding: 0;
+  }
+
+  .m-composerToolbar__itemSpacer {
+    flex: 1;
+
+    @media screen and (max-width: 400px) {
+      flex: initial;
+    }
+  }
+
+  .m-composerToolbarItem__icon + .m-composerToolbarItem__label {
+    display: inline-block;
+    margin-left: 10px;
+
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
+
+  &.m-composer__toolbar--narrow
+    .m-composerToolbarItem__icon
+    + .m-composerToolbarItem__label {
+    display: none;
+  }
+}

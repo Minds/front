@@ -33,6 +33,8 @@ import isMobile from '../../../../../helpers/is-mobile';
 import { MindsVideoPlayerComponent } from '../../../../media/components/video-player/player.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { RedirectService } from '../../../../../common/services/redirect.service';
+import { ComposerService } from '../../../../composer/services/composer.service';
+import { ModalService } from '../../../../composer/components/modal/modal.service';
 
 @Component({
   selector: 'minds-activity',
@@ -51,6 +53,8 @@ import { RedirectService } from '../../../../../common/services/redirect.service
     ClientMetaService,
     ActivityAnalyticsOnViewService,
     ActivityService,
+    ComposerService,
+    ModalService,
   ],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -183,7 +187,10 @@ export class Activity implements OnInit {
     @SkipSelf() injector: Injector,
     elementRef: ElementRef,
     private configs: ConfigsService,
-    private redirectService: RedirectService
+    private redirectService: RedirectService,
+    protected composer: ComposerService,
+    protected composerModal: ModalService,
+    protected selfInjector: Injector
   ) {
     this.clientMetaService.inherit(injector);
 
@@ -420,7 +427,22 @@ export class Activity implements OnInit {
         this.router.navigate(['/newsfeed', this.activity.guid]);
         break;
       case 'edit':
-        this.editing = true;
+        if (this.featuresService.has('activity-composer')) {
+          this.composer.load(this.activity);
+
+          this.composerModal
+            .setInjector(this.selfInjector)
+            .present()
+            .toPromise()
+            .then(activity => {
+              if (activity) {
+                this.activity = activity;
+                this.detectChanges();
+              }
+            });
+        } else {
+          this.editing = true;
+        }
         break;
       case 'delete':
         this.delete();
@@ -515,8 +537,11 @@ export class Activity implements OnInit {
     return activity && activity.pending && activity.pending !== '0';
   }
 
-  isScheduled(time_created) {
-    return time_created && time_created * 1000 > Date.now();
+  isScheduled(time_created, deviation = 5000) {
+    // Scheduled when time_created is more than 5 (default) seconds in the
+    // future, to account minimal client computer deviation.
+
+    return time_created && time_created * 1000 > Date.now() + deviation;
   }
 
   toggleMatureVisibility() {

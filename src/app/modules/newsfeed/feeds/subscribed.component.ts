@@ -29,6 +29,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { isPlatformServer } from '@angular/common';
+import { ComposerComponent } from '../../composer/composer.component';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
@@ -60,7 +61,9 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   reloadFeedSubscription: Subscription;
   routerSubscription: Subscription;
 
-  @ViewChild('poster', { static: true }) private poster: PosterComponent;
+  @ViewChild('poster', { static: false }) private poster: PosterComponent;
+
+  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
 
   constructor(
     public client: Client,
@@ -264,7 +267,7 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     });
   }
 
-  canDeactivate() {
+  protected v1CanDeactivate(): boolean {
     if (!this.poster || !this.poster.attachment) return true;
     const progress = this.poster.attachment.getUploadProgress();
     if (progress > 0 && progress < 100) {
@@ -272,5 +275,14 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     }
 
     return true;
+  }
+
+  canDeactivate(): boolean | Promise<boolean> {
+    if (this.composer) {
+      return this.composer.canDeactivate();
+    }
+
+    // Check v1 Poster component
+    return this.v1CanDeactivate();
   }
 }

@@ -20,6 +20,7 @@ import {
   ACTIVITY_FIXED_HEIGHT_RATIO,
 } from './activity.service';
 import { Subscription } from 'rxjs';
+import { ComposerService } from '../../composer/services/composer.service';
 
 @Component({
   selector: 'm-activity',
@@ -28,6 +29,7 @@ import { Subscription } from 'rxjs';
   providers: [
     ActivityService,
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
+    ComposerService,
   ],
   host: {
     class: 'm-border',

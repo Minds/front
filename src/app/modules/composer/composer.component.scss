@@ -1,0 +1,77 @@
+m-composer {
+  position: relative;
+  display: block;
+  margin-bottom: 16px;
+  padding: 29px 0 34px;
+  border-radius: 5px;
+  box-sizing: border-box;
+
+  @include m-theme() {
+    background: themed($m-bgColor--secondary);
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    border-radius: 0;
+  }
+}
+
+.m-composer__trigger {
+  display: block;
+  position: relative;
+  cursor: pointer;
+
+  .m-composer__triggerPreview {
+    pointer-events: none;
+
+    &.m-composer__triggerPreview--hidden {
+      > * {
+        opacity: 0.15;
+      }
+    }
+  }
+
+  .m-composer__triggerOverlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 10;
+  }
+}
+
+// Modal wrapper options
+
+.m-composer__modalWrapper {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .m-overlay-modal--backdrop {
+    z-index: 0;
+  }
+
+  .m-overlay-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: static;
+    padding: 0;
+    margin: 0 auto;
+    transform: none !important;
+    overflow: initial;
+    width: auto;
+    height: auto;
+    max-width: initial;
+    max-height: initial;
+    min-height: 100%;
+    background: none !important;
+
+    .m-overlay-modal--close {
+      display: none;
+    }
+  }
+}

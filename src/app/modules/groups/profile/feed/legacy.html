@@ -1,12 +1,21 @@
 <ng-container *ngIf="group">
-  <minds-newsfeed-poster
-    #poster
-    (load)="prepend($event)"
-    [containerGuid]="group.guid"
-    [accessId]="group.guid"
-    *ngIf="filter == 'activity' && group['is:member']"
-  >
-  </minds-newsfeed-poster>
+  <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+    <m-composer
+      *ngIf="filter == 'activity' && group['is:member']"
+      (onPost)="prepend($event)"
+      [containerGuid]="group.guid"
+      #composer
+    ></m-composer>
+  </ng-container>
+  <ng-template #v1NewsfeedPoster>
+    <minds-newsfeed-poster
+      (load)="prepend($event)"
+      [containerGuid]="group.guid"
+      *ngIf="filter == 'activity' && group['is:member']"
+      #poster
+    >
+    </minds-newsfeed-poster>
+  </ng-template>
 
   <div
     class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
