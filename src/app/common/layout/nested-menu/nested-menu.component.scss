@@ -140,24 +140,15 @@ m-nestedMenu {
       padding: 14px 24px;
       &.m-nestedMenu__itemWrapper--active {
         &.disableActiveClass {
-          @include m-theme {
-            color: themed($m-textColor--secondary);
-            background-color: rgba(themed($m-black), 0);
-          }
-          i {
+          &:not(:hover) {
             @include m-theme {
-              color: themed($m-textColor--tertiary);
+              color: themed($m-textColor--secondary);
+              background-color: rgba(themed($m-black), 0);
             }
-          }
-        }
-        &:hover:not(.disableActiveClass) {
-          @include m-theme() {
-            color: themed($m-textColor--primary);
-            background-color: themed($m-borderColor--primary);
-          }
-          i {
-            @include m-theme {
-              color: themed($m-textColor--primary);
+            i {
+              @include m-theme {
+                color: themed($m-textColor--tertiary);
+              }
             }
           }
         }

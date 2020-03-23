@@ -7,7 +7,7 @@ import {
   EventEmitter,
   OnDestroy,
 } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
@@ -16,11 +16,11 @@ import { MindsUser } from '../../../../interfaces/entities';
 import { SettingsV2Service } from '../../settings-v2.service';
 
 @Component({
-  selector: 'm-settingsV2__shareButtons',
-  templateUrl: './share-buttons.component.html',
+  selector: 'm-settingsV2__autoplayVideos',
+  templateUrl: './autoplay-videos.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2ShareButtonsComponent implements OnInit, OnDestroy {
+export class SettingsV2AutoplayVideosComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
@@ -37,12 +37,12 @@ export class SettingsV2ShareButtonsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
     this.form = new FormGroup({
-      showButtons: new FormControl(''),
+      autoplay_videos: new FormControl(''),
     });
 
     this.settingsSubscription = this.settingsService.settings$.subscribe(
       (settings: any) => {
-        this.showButtons.setValue(!settings.hide_share_buttons);
+        this.autoplay_videos.setValue(settings.autoplay_videos);
         this.detectChanges();
       }
     );
@@ -59,13 +59,9 @@ export class SettingsV2ShareButtonsComponent implements OnInit, OnDestroy {
       this.inProgress = true;
       this.detectChanges();
 
-      const formValue = {
-        hide_share_buttons: !this.showButtons.value,
-      };
-
       const response: any = await this.settingsService.updateSettings(
         this.user.guid,
-        formValue
+        this.form.value
       );
       if (response.status === 'success') {
         this.formSubmitted.emit({ formSubmitted: true });
@@ -94,7 +90,7 @@ export class SettingsV2ShareButtonsComponent implements OnInit, OnDestroy {
     }
   }
 
-  get showButtons() {
-    return this.form.get('showButtons');
+  get autoplay_videos() {
+    return this.form.get('autoplay_videos');
   }
 }

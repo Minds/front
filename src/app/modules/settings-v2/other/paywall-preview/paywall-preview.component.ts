@@ -14,11 +14,11 @@ import {
 import { ConfigsService } from '../../../../common/services/configs.service';
 
 @Component({
-  selector: 'm-settingsV2__postPreview',
-  templateUrl: './post-preview.component.html',
+  selector: 'm-settingsV2__paywallPreview',
+  templateUrl: './paywall-preview.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
 })
-export class SettingsV2PostPreviewComponent implements OnInit {
+export class SettingsV2PaywallPreviewComponent implements OnInit {
   inProgress: boolean = false;
   backgroundFile: HTMLInputElement;
 

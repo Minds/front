@@ -62,6 +62,7 @@ export class SettingsV2Component implements OnInit {
           { label: 'Password', id: 'password' },
           { label: 'NSFW Content', id: 'nsfw-content' },
           { label: 'Share Buttons', id: 'share-buttons' },
+          { label: 'Autoplay Videos', id: 'autoplay-videos' },
         ],
       },
       {
@@ -159,7 +160,7 @@ export class SettingsV2Component implements OnInit {
         },
         items: [
           { label: 'Subscription Tier Management', id: 'subscription-tiers' },
-          { label: 'Post Preview', id: 'post-preview' },
+          { label: 'Paywall Preview', id: 'paywall-preview' },
         ],
       },
       {
