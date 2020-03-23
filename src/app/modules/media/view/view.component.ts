@@ -21,6 +21,7 @@ import { AnalyticsService } from '../../../services/analytics';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-media--view',
@@ -79,7 +80,8 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     private clientMetaService: ClientMetaService,
     private metaService: MetaService,
     configs: ConfigsService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    private featuresService: FeaturesService
   ) {
     this.clientMetaService
       .inherit(injector)
@@ -114,6 +116,10 @@ export class MediaViewComponent implements OnInit, OnDestroy {
   }
 
   load(refresh: boolean = false) {
+    if (this.featuresService.has('navigation')) {
+      this.router.navigate(['/newsfeed', this.guid]);
+    }
+
     if (refresh) {
       this.entity = {};
       this.detectChanges();

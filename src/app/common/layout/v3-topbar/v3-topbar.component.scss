@@ -57,40 +57,23 @@
     //padding-right: 20px;
   }
 
-  &.m-v3Topbar__noBackground {
+  &.m-v3Topbar__top--noBackground {
     @include m-theme() {
       background-color: transparent;
       border-bottom: none;
     }
   }
 
-  &.m-v3Topbar__marketingPages {
-    flex-direction: row;
-
+  &.m-v3Topbar__top--noBorder {
     @include m-theme() {
       border: none;
     }
 
-    .m-grid {
-      > * {
-        border: none !important;
+    .m-pageLayout__pane--left {
+      @include m-theme() {
+        border-right: 0;
       }
     }
-
-    //.m-v2-topbar {
-    //  padding: 15px 0 15px;
-    //  max-width: 1084px;
-    //  margin: 0 auto;
-    //
-    //  @media screen and (max-width: 1168px) {
-    //    margin: 0 25px;
-    //  }
-    //
-    //  .m-v2-topbarNavItem__Logo {
-    //    margin: 0;
-    //    padding: 0;
-    //  }
-    //}
 
     .m-v3TopbarContainer__loginWrapper > a {
       @include m-theme() {
@@ -101,7 +84,7 @@
     }
   }
 
-  &.m-v3Topbar__loggedOut {
+  &.m-v3Topbar__top--loggedOut {
     .m-grid > * {
       border: none !important;
     }

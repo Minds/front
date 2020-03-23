@@ -18,6 +18,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { SidebarNavigationService } from '../sidebar/navigation.service';
 import { TopbarService } from '../topbar.service';
 import { NavigationEnd, Router } from '@angular/router';
+import { PageLayoutService } from '../page-layout.service';
 
 @Component({
   selector: 'm-v3topbar',
@@ -35,8 +36,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   componentInstance: NotificationsToasterComponent;
 
   showTopbar: boolean = true;
-  forceBackground: boolean = true;
-  showBackground: boolean = true;
   marketingPages: boolean = false;
 
   isMobile: boolean = false;
@@ -54,7 +53,8 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     protected componentFactoryResolver: ComponentFactoryResolver,
     protected topbarService: TopbarService,
     protected router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    public pageLayoutService: PageLayoutService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
 
@@ -66,9 +66,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadComponent();
     this.session.isLoggedIn(() => this.detectChanges());
-
-    this.topbarService.setContainer(this);
-
     this.listen();
   }
 
@@ -144,27 +141,6 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
     } else {
       return !this.isMobile;
     }
-  }
-
-  /**
-   * Marketing pages set this to true in order to change how the topbar looks
-   * @param value
-   * @param forceBackground
-   */
-  toggleMarketingPages(value: boolean, forceBackground: boolean = true) {
-    this.marketingPages = value;
-    this.forceBackground = forceBackground;
-    this.onScroll();
-    this.detectChanges();
-  }
-
-  @HostListener('window:scroll')
-  onScroll() {
-    this.showBackground = this.forceBackground
-      ? true
-      : this.marketingPages
-      ? window.document.body.scrollTop > 52
-      : true;
   }
 
   toggleVisibility(visible: boolean) {

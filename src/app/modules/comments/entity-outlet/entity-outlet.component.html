@@ -6,6 +6,14 @@
 </m-comments__tree>
 
 <ng-container *ngIf="showOnlyPoster">
+  <div
+    class="m-commentsEntityOutlet__expand"
+    *ngIf="count > 0"
+    (click)="openFullComments()"
+  >
+    View {{ count }} comment{{ count > 1 ? 's' : '' }}
+  </div>
+
   <m-comment__poster
     *ngIf="legacyActivityService.allowComment$ | async"
     [guid]="guid"
@@ -36,13 +44,5 @@
         (onReply)="reply($event.comment)"
       ></m-comment>
     </ng-container>
-  </div>
-
-  <div
-    class="m-commentsEntityOutlet__expand"
-    *ngIf="count > 0"
-    (click)="openFullComments()"
-  >
-    Show all comments ({{ count }})
   </div>
 </ng-container>

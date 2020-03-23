@@ -6,7 +6,13 @@
 >
   <ng-container *ngIf="trend.title">
     <div>
-      <h4>{{ trend.title }}</h4>
+      <h4>
+        {{
+          trend.title.length <= 200
+            ? trend.title
+            : trend.title.substr(0, 200) + '...'
+        }}
+      </h4>
       <span>{{ trend.volume }} discussing</span>
     </div>
     <img [src]="trend.entity.thumbnail_src" />

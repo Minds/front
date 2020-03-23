@@ -1,15 +1,15 @@
 import {
-  Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  EventEmitter,
+  Component,
   ElementRef,
-  Input,
-  Output,
-  ViewChild,
-  OnInit,
-  SkipSelf,
+  EventEmitter,
   Injector,
+  Input,
+  OnInit,
+  Output,
+  SkipSelf,
+  ViewChild,
 } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
@@ -78,6 +78,17 @@ export class Activity implements OnInit {
   @Input() slot: number = -1;
 
   visibilityEvents: boolean = true;
+
+  /**
+   * Whether or not we allow autoplay on scroll
+   */
+  @Input() allowAutoplayOnScroll: boolean = false;
+
+  /**
+   * Whether or not autoplay is allowed (this is used for single entity view, media modal and media view)
+   */
+  @Input() autoplayVideo: boolean = false;
+
   @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
     this.visibilityEvents = visibilityEvents;
 
@@ -159,7 +170,14 @@ export class Activity implements OnInit {
     }
   }
 
-  @ViewChild('player', { static: false }) player: MindsVideoPlayerComponent;
+  player: MindsVideoPlayerComponent;
+
+  @ViewChild('player', { static: false }) set _player(
+    player: MindsVideoPlayerComponent
+  ) {
+    this.player = player;
+  }
+
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   protected time_created: any;
@@ -181,7 +199,7 @@ export class Activity implements OnInit {
     public suggestions: AutocompleteSuggestionsService,
     protected activityService: ActivityService,
     @SkipSelf() injector: Injector,
-    elementRef: ElementRef,
+    private elementRef: ElementRef,
     private configs: ConfigsService,
     private redirectService: RedirectService
   ) {
@@ -256,7 +274,7 @@ export class Activity implements OnInit {
   }
 
   getOwnerIconTime() {
-    let session = this.session.getLoggedInUser();
+    const session = this.session.getLoggedInUser();
     if (session && session.guid === this.activity.ownerObj.guid) {
       return session.icontime;
     } else {

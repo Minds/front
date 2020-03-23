@@ -55,6 +55,7 @@ describe('NewsfeedTopComponent', () => {
             'showRatingToggle',
             'boost',
             'showBoostMenuOptions',
+            'allowAutoplayOnScroll',
           ],
           outputs: ['delete'],
         }),

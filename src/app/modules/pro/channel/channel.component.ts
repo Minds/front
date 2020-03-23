@@ -27,6 +27,7 @@ import { SiteService } from '../../../common/services/site.service';
 import { ScrollService } from '../../../services/ux/scroll';
 import { captureEvent } from '@sentry/core';
 import { isPlatformServer } from '@angular/common';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
   providers: [ProChannelService, OverlayModalService, SignupModalService],
@@ -162,7 +163,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected sessionStorage: SessionsStorageService,
     protected site: SiteService,
     protected injector: Injector,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    protected pageLayoutService: PageLayoutService
   ) {}
 
   ngOnInit() {
@@ -172,6 +174,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.listen();
     this.onResize();
+    this.pageLayoutService.useFullWidth();
   }
 
   ngAfterViewInit() {

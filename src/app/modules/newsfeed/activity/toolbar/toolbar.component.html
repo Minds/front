@@ -5,6 +5,7 @@
 <minds-button-comment
   [object]="entity"
   (click)="toggleComments()"
+  *ngIf="!service.displayOptions.showComments"
 ></minds-button-comment>
 
 <ng-container *ngIf="session.getLoggedInUser().guid != entity.ownerObj.guid">
