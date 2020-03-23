@@ -1,0 +1,40 @@
+// This component is provided with the minimum styles as it's
+// the parent component's responsibility
+
+m-hashtags__typeaheadInput {
+  display: inline-block;
+  position: relative;
+
+  .m-hashtagsTypeaheadInput__input {
+    appearance: none;
+    min-width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .m-hashtagsTypeaheadInput__list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 15;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+  }
+
+  .m-hashtagsTypeaheadInputList__mruHeader {
+    a {
+      color: inherit !important;
+      font-weight: inherit;
+      cursor: pointer;
+    }
+  }
+
+  .m-hashtagsTypeaheadInputList__item {
+    cursor: pointer;
+  }
+}

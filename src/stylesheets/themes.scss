@@ -95,12 +95,14 @@ $themes: (
     m-bgColor--primary: #fafafa,
     m-bgColor--secondary: #ffffff,
     m-bgColor--tertiary: #e3e4e9,
+    m-bgColor--quaternary: #e3e4e9,
     m-borderColor--primary: #dce2e4,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #ececec,
     m-alert: #e03c20,
     m-link: #1b85d6,
-    m-btn--primary: #1b85d6,
+    m-btn--primary: #5dbac0,
+    m-btn--primaryText: #ffffff,
     // legacy colors
       m-grey-950: $grey-950,
     m-grey-900: $grey-900,
@@ -163,12 +165,14 @@ $themes: (
     m-bgColor--primary: #252e31,
     m-bgColor--secondary: #202527,
     m-bgColor--tertiary: #404e53,
+    m-bgColor--quaternary: #323c3f,
     m-borderColor--primary: #404a4e,
     m-borderColor--secondary: #979797,
     m-borderColor--tertiary: #202527,
     m-alert: #e03c20,
     m-link: #1b85d6,
-    m-btn--primary: #1b85d6,
+    m-btn--primary: #5dbac0,
+    m-btn--primaryText: #ffffff,
     // legacy colors
       m-grey-950: lighten($grey-50, $percent),
     m-grey-900: lighten($grey-100, $percent),
@@ -293,13 +297,22 @@ $m-textColor--tertiary: 'm-textColor--tertiary';
 $m-bgColor--primary: 'm-bgColor--primary';
 $m-bgColor--secondary: 'm-bgColor--secondary';
 $m-bgColor--tertiary: 'm-bgColor--tertiary';
+$m-bgColor--quaternary: 'm-bgColor--quaternary';
 $m-borderColor--primary: 'm-borderColor--primary';
 $m-borderColor--secondary: 'm-borderColor--secondary';
 $m-borderColor--tertiary: 'm-borderColor--tertiary';
 $m-alert: 'm-alert';
 $m-link: 'm-link';
 $m-btn--primary: 'm-btn--primary';
+$m-btn--primaryText: 'm-btn--primaryText';
 
 $m-borderRadius: 2px;
 $m-boxShadowBlur: 10px;
 $m-boxShadowOffset: 2px;
+
+// Helpers
+
+@function checkmark-image($color) {
+  $urlEncodedColor: str-replace('' + $color, '#', '%23'); // `#` signs are bad
+  @return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" fill="#{$urlEncodedColor}"/></svg>';
+}

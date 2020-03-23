@@ -224,6 +224,18 @@ Cypress.Commands.add('uploadFile', (selector, fileName, type = '') => {
   });
 });
 
+const composer = {
+  trigger: 'm-composer .m-composer__trigger',
+  messageTextArea: 'm-composer__modal > m-composer__base [data-cy="composer-textarea"]',
+  postButton: 'm-composer__modal > m-composer__base [data-cy="post-button"] [data-cy="button-default-action"]',
+};
+
+Cypress.Commands.add('openComposer', () => {
+  cy.get(composer.trigger)
+    .should('be.visible')
+    .click();
+});
+
 /**
  * Creates a new post. Must be logged in.
  * @param { string } message - The message to be posted
@@ -231,9 +243,10 @@ Cypress.Commands.add('uploadFile', (selector, fileName, type = '') => {
  */
 Cypress.Commands.add('post', message => {
   cy.server();
-  cy.route('POST', '**/v1/newsfeed**').as('postActivity');
-  cy.get(poster.textArea).type(message);
-  cy.get(poster.postButton).click();
+  cy.route('POST', '**/v2/newsfeed**').as('postActivity');
+  cy.openComposer();
+  cy.get(composer.messageTextArea).clear().type(message);
+  cy.get(composer.postButton).click();
   cy.wait('@postActivity').then(xhr => {
     expect(xhr.status).to.equal(200);
     expect(xhr.response.body.status).to.deep.equal('success');

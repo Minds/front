@@ -1,0 +1,10 @@
+<div
+  class="m-composer__progress"
+  [class.m-composer__progress--active]="active"
+  [class.m-composer__progress--indeterminate]="indeterminate"
+>
+  <div
+    class="m-composerProgress__fill"
+    [ngStyle]="{ width: currentProgressWidth }"
+  ></div>
+</div>

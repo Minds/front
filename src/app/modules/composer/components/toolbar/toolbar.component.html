@@ -1,0 +1,98 @@
+<div
+  class="m-composer__toolbar"
+  [class.m-composer__toolbar--narrow]="narrow"
+  #toolbarWrapper
+>
+  <m-file-upload
+    [wrapperClass]="[
+      'm-composerToolbar__item',
+      (attachment$ | async) ? 'm-composerToolbar__item--active' : ''
+    ]"
+    [hidden]="!canEditMetadata"
+    [disabled]="!!(attachment$ | async) || (isPosting$ | async)"
+    (onSelect)="onAttachmentSelect($event)"
+    accept="image/*,video/*"
+    data-cy="upload-button"
+    #fileUploadComponent
+  >
+    <m-icon
+      class="m-composerToolbarItem__icon"
+      from="ion"
+      iconId="image"
+    ></m-icon>
+    <span class="m-composerToolbarItem__label" i18n>Upload</span>
+  </m-file-upload>
+
+  <a
+    class="m-composerToolbar__item"
+    [class.m-composerToolbar__item--active]="(nsfw$ | async)?.length"
+    [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+    (click)="onNsfwClick($event)"
+    data-cy="nsfw-button"
+  >
+    <m-icon class="m-composerToolbarItem__icon" iconId="explicit"></m-icon>
+    <span class="m-composerToolbarItem__label" i18n>NSFW</span>
+  </a>
+
+  <a
+    class="m-composerToolbar__item"
+    [class.m-composerToolbar__item--active]="monetization$ | async"
+    [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+    (click)="onMonetizeClick($event)"
+    data-cy="monetize-button"
+  >
+    <m-icon
+      class="m-composerToolbarItem__icon"
+      from="assets-file"
+      iconId="assets/icons/wire.svg"
+      [sizeFactor]="25"
+    ></m-icon>
+    <span class="m-composerToolbarItem__label" i18n>Monetize</span>
+  </a>
+
+  <a
+    class="m-composerToolbar__item"
+    [class.m-composerToolbar__item--active]="(tags$ | async)?.length"
+    [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+    (click)="onTagsClick($event)"
+    data-cy="tags-button"
+  >
+    <m-icon
+      class="m-composerToolbarItem__icon"
+      from="text"
+      iconId="#"
+      [sizeFactor]="25"
+    ></m-icon>
+    <span class="m-composerToolbarItem__label" i18n>Tags</span>
+  </a>
+
+  <span class="m-composerToolbar__itemSpacer"></span>
+
+  <m-button
+    class="m-composerToolbar__action"
+    [disabled]="
+      (inProgress$ | async) || (isPosting$ | async) || !(canPost$ | async)
+    "
+    [dropdown]="postButtonDropdown"
+    (onAction)="onPost($event)"
+    data-cy="post-button"
+  >
+    <ng-container *ngIf="!(isEditing$ | async); else isEditingButtonText" i18n
+      >Post</ng-container
+    >
+    <ng-template #isEditingButtonText
+      ><ng-container i18n>Save</ng-container></ng-template
+    >
+  </m-button>
+</div>
+
+<ng-template #postButtonDropdown>
+  <ul>
+    <li (click)="onSchedulerClick()">
+      <span class="m-dropdownMenu__item">
+        <m-icon iconId="alarm"></m-icon>
+        <span i18n>Schedule Post</span>
+      </span>
+    </li>
+  </ul>
+</ng-template>

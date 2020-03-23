@@ -7,11 +7,21 @@
     >Have 200 free views on us. Hit post to be boosted.</ng-container
   >
 </div>
-<minds-newsfeed-poster
-  (load)="prepend($event)"
-  [message]="message"
-  #poster
-></minds-newsfeed-poster>
+
+<ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+  <m-composer
+    (onPost)="prepend($event)"
+    [activity]="message ? { message: message } : undefined"
+    #composer
+  ></m-composer>
+</ng-container>
+<ng-template #v1NewsfeedPoster>
+  <minds-newsfeed-poster
+    (load)="prepend($event)"
+    [message]="message"
+    #poster
+  ></minds-newsfeed-poster>
+</ng-template>
 
 <div class="minds-list">
   <ng-container *ngFor="let preActivity of prepended">

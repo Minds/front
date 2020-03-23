@@ -1,0 +1,58 @@
+<div class="m-composerPopup__body m-composer__monetize">
+  <div class="m-composerPopup__content">
+    <h3 class="m-composerPopup__title" i18n>Monetize</h3>
+
+    <p class="m-composerPopup__text" i18n>
+      Monetize post by making it available to your users who support your
+      channel.
+    </p>
+
+    <div class="m-composerPopup__field m-composerPopupField--1">
+      <span class="m-composerPopup__label" i18n>Paywall status</span>
+
+      <label
+        class="m-composerPopup__trigger"
+        [for]="inputId + '-enablePaywall'"
+      >
+        <input
+          type="checkbox"
+          [id]="inputId + '-enablePaywall'"
+          [(ngModel)]="state.enabled"
+          data-cy="monetize-enable-paywall"
+        />
+        <span i18n>Enable Paywall</span>
+      </label>
+    </div>
+
+    <div
+      *ngIf="state.enabled"
+      class="m-composerPopup__field m-composerPopupField--2"
+    >
+      <label [for]="inputId + '-amount'">
+        <ng-container i18n>Min Tokens per month</ng-container>
+        <m-tooltip icon="info" i18n>
+          TBD
+        </m-tooltip>
+      </label>
+
+      <input
+        [id]="inputId + '-amount'"
+        type="number"
+        [(ngModel)]="state.amount"
+        data-cy="monetize-paywall-amount"
+      />
+    </div>
+  </div>
+
+  <div class="m-composerPopup__action">
+    <m-button
+      class="m-composerPopup__save"
+      [disabled]="state.enabled && state.amount <= 0"
+      (onAction)="save()"
+      data-cy="monetize-save-button"
+      i18n
+    >
+      Save
+    </m-button>
+  </div>
+</div>

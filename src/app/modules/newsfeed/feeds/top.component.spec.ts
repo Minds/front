@@ -34,6 +34,9 @@ import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { newsfeedServiceMock } from '../../../mocks/modules/newsfeed/services/newsfeed-service.mock';
+import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { FeaturesService } from '../../../services/features.service';
 
 describe('NewsfeedTopComponent', () => {
   let comp: NewsfeedTopComponent;
@@ -42,6 +45,7 @@ describe('NewsfeedTopComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
+        IfFeatureDirective,
         MaterialMock,
         MockComponent({
           selector: 'm-newsfeed--boost-rotator',
@@ -69,6 +73,10 @@ describe('NewsfeedTopComponent', () => {
           outputs: ['tagsChange', 'tagsAdded', 'tagsRemoved'],
         }),
         MockComponent({
+          selector: 'm-composer',
+          inputs: ['containerGuid', 'accessId', 'activity'],
+        }),
+        MockComponent({
           selector: 'minds-newsfeed-poster',
           inputs: ['containerGuid', 'accessId', 'message'],
         }),
@@ -90,6 +98,7 @@ describe('NewsfeedTopComponent', () => {
         { provide: SettingsService, useValue: settingsServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: NewsfeedService, useValue: newsfeedServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
       ],
     }).compileComponents();
   }));
@@ -101,6 +110,8 @@ describe('NewsfeedTopComponent', () => {
     fixture = TestBed.createComponent(NewsfeedTopComponent);
 
     comp = fixture.componentInstance;
+
+    featuresServiceMock.mock('activity-composer', true);
 
     clientMock.response = {};
     clientMock.response['api/v2/entities/suggested/activities'] = {

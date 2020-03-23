@@ -1,0 +1,11 @@
+<span [ngClass]="triggerCssClasses" (click)="open($event)" #triggerElement>
+  <ng-content></ng-content>
+</span>
+
+<ng-container *ngIf="isOpen">
+  <div [ngClass]="menuCssClasses" (click)="close()" #menuWrapperElement>
+    <ng-container *ngTemplateOutlet="menu"></ng-container>
+  </div>
+
+  <m-overlay (onClick)="close($event)"></m-overlay>
+</ng-container>
