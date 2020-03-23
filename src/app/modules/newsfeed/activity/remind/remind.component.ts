@@ -1,20 +1,5 @@
-import {
-  Component,
-  HostListener,
-  ViewChild,
-  Input,
-  ElementRef,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
-
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivityService, ActivityEntity } from '../activity.service';
-import { ConfigsService } from '../../../../common/services/configs.service';
-import { Session } from '../../../../services/session';
-import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
-import { MediaModalComponent } from '../../../media/modal/modal.component';
-import { first } from 'rxjs/operators';
+import { Component, Input } from '@angular/core';
+import { ActivityEntity, ActivityService } from '../activity.service';
 
 @Component({
   selector: 'm-activity__remind',
@@ -25,5 +10,16 @@ export class ActivityRemindComponent {
   @Input('entity') set entity(entity: ActivityEntity) {
     this.service.setEntity(entity.remind_object);
   }
+
+  /**
+   * Whether or not we allow autoplay on scroll
+   */
+  @Input() allowAutoplayOnScroll: boolean = false;
+
+  /**
+   * Whether or not autoplay is allowed (this is used for single entity view, media modal and media view)
+   */
+  @Input() autoplayVideo: boolean = false;
+
   constructor(public service: ActivityService) {}
 }

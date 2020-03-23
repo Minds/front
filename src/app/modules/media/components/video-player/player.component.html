@@ -22,6 +22,10 @@
       (plyrEnterFullScreen)="fullScreenChange.next($event)"
       (plyrExitFullScreen)="fullScreenChange.next($event)"
       (plyrLoadedMetadata)="emitDimensions($event)"
+      (click)="onClick()"
+      (plyrPlaying)="onPlay()"
+      (plyrReady)="onReady()"
+      (plyrVolumeChange)="onVolumeChange()"
     >
     </plyr>
   </div>
@@ -35,7 +39,8 @@
     <i
       class="material-icons minds-video-play-icon"
       (click)="onPlaceholderClick($event)"
-      >play_circle_outline</i
     >
+      play_circle_outline
+    </i>
   </div>
 </ng-template>
