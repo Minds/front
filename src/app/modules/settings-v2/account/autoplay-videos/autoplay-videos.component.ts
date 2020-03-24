@@ -30,7 +30,7 @@ export class SettingsV2AutoplayVideosComponent implements OnInit, OnDestroy {
 
   constructor(
     protected cd: ChangeDetectorRef,
-    private session: Session,
+    protected session: Session,
     protected settingsService: SettingsV2Service
   ) {}
 
