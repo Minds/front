@@ -29,22 +29,6 @@ export class SettingsV2PaymentMethodsComponent {
     this.inProgress = true;
     this.cards = [];
 
-    // TODOJM remove
-    this.cards = [
-      {
-        id: '1',
-        card_brand: 'visa',
-        card_expires: '10/2021',
-        card_last4: '1111',
-      },
-      {
-        id: '4',
-        card_brand: 'mastercard',
-        card_expires: '2/2020',
-        card_last4: '4444',
-      },
-    ];
-
     return this.client
       .get(`api/v2/payments/stripe/paymentmethods`)
       .then(({ paymentmethods }) => {
