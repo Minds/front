@@ -11,35 +11,6 @@
 
   <div class="m-settings--billing-subscriptions--subscription">
     <ul>
-      <!-- TODOOJM REMOVE -->
-      <li
-        class="m-settings--billing-subscriptions--subscription-item ng-star-inserted"
-      >
-        <span
-          ><m-tooltip icon="info"
-            ><div class="m-tooltip">
-              <!----><i class="material-icons ng-star-inserted">info</i
-              ><!---->
-              <div class="m-tooltip--bubble" hidden="">
-                <span>Last billing: Mar 15, 2020</span><br /><span
-                  >Next billing: Apr 15, 2020</span
-                >
-              </div>
-            </div></m-tooltip
-          ></span
-        ><span
-          class="m-settings--billing-subscriptions--subscription-item-plan-id"
-          >wire</span
-        ><!----><!----><!----><span class="ng-star-inserted"
-          ><i style="text-style:normal">@</i>lilyisadog</span
-        ><!----><!----><span
-          class="m-settings--billing-subscriptions--subscription-item-amount"
-          ><!----><!---->1 Tokens<!----><!----></span
-        ><span
-          class="m-settings--billing-subscriptions--subscription-item-select"
-          >Cancel</span
-        >
-      </li>
       <li
         *ngFor="let subscription of subscriptions; let i = index"
         class="m-settings--billing-subscriptions--subscription-item"
