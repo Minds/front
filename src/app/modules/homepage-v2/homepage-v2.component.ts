@@ -78,7 +78,7 @@ export class HomepageV2Component implements OnInit {
   }
 
   registered() {
-    if (this.featuresService.has('onboarding-december-2019')) {
+    if (this.featuresService.has('ux-2020')) {
       if (this.onboardingService.shouldShow()) {
         this.router.navigate(['/onboarding']);
         return;

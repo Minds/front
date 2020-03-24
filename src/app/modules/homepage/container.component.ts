@@ -12,6 +12,6 @@ export class HomepageContainerComponent {
   newHomepage: boolean = false;
 
   constructor(private featuresService: FeaturesService) {
-    this.newHomepage = featuresService.has('homepage-december-2019');
+    this.newHomepage = featuresService.has('ux-2020');
   }
 }
