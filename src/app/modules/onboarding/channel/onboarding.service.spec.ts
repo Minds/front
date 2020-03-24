@@ -10,7 +10,7 @@ describe('ChannelOnboardingService', () => {
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    featuresServiceMock.mock('onboarding-december-2019', false);
+    featuresServiceMock.mock('ux-2020', false);
     service = new ChannelOnboardingService(
       clientMock,
       sessionMock,
