@@ -202,7 +202,7 @@ m-newsfeed {
   [class*='m-pageLayout__pane'] {
     padding: 20px 40px;
     @media screen and (max-width: $max-mobile) {
-      padding: 0;
+      padding: 20px 0;
     }
   }
   .m-pageLayout__pane--main {
