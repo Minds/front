@@ -86,7 +86,10 @@
       </div>
     </li>
   </ul>
-  <div *ngIf="!subscriptions" class="m-settingsV2__desc m-settingsV2__notice">
-    <span>You haven't blocked any channels.</span>
+  <div
+    *ngIf="!subscriptions.length"
+    class="m-settingsV2__desc m-settingsV2__notice"
+  >
+    <span>You haven't set up any recurring payments.</span>
   </div>
 </div>
