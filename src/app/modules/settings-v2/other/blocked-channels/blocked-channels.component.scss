@@ -1,13 +1,6 @@
 m-settingsV2__blockedChannels {
   display: block;
-  div.m-settingsV2__blockedChannelsNotice {
-    span {
-      font-weight: 400;
-      @include m-theme() {
-        color: themed($m-textColor--secondary);
-      }
-    }
-  }
+
   .m-settingsV2BlockedChannel {
     display: flex;
     flex-flow: row nowrap;

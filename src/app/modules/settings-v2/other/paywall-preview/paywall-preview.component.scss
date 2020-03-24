@@ -1,5 +1,4 @@
 m-wire--lock-screen {
-  // margin-top: 13px;
   .m-wire--lock-screen--button {
     @include m-theme() {
       background-color: themed($m-bgColor--secondary);

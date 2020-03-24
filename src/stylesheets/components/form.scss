@@ -126,7 +126,7 @@
   }
 
   .m-form__fieldGroupWrapper {
-    &:not(first-child) {
+    &:not(:first-child) {
       margin-top: 60px;
     }
   }
