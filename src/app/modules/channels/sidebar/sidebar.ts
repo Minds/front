@@ -78,7 +78,7 @@ export class ChannelSidebar implements OnInit {
   shouldShowOnboardingProgress() {
     return (
       isPlatformBrowser(this.platformId) &&
-      !this.featuresService.has('onboarding-december-2019') &&
+      !this.featuresService.has('ux-2020') &&
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().guid === this.user.guid &&
       !this.cookieService.get('onboarding_hide') &&
