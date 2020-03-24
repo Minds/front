@@ -1,4 +1,4 @@
-<div class="m-settingsV2 m-page m-pageLayout__container" *ngIf="init">
+<div class="m-settingsV2 m-page m-pageLayout__container">
   <m-nestedMenu
     class="m-settingsV2__mainMenu m-pageLayout__pane--right"
     [ngClass]="{ onMainNav: onMainNav }"
@@ -34,7 +34,7 @@
           <div class="m-settingsV2__desc" *ngIf="routeData?.description">
             {{ routeData?.description }}
           </div>
-          <div class="m-formWrapper">
+          <div class="m-formWrapper" [hidden]="!init">
             <router-outlet (activate)="onActivate($event)"></router-outlet>
           </div>
         </div>
