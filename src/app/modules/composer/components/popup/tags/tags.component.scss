@@ -1,0 +1,120 @@
+.m-composer__tags {
+  .m-composerPopup__title {
+    margin: 0 0 12px;
+  }
+
+  .m-composerPopup__text {
+    margin: 0 0 28px;
+  }
+
+  .m-composerTags__trending {
+    margin: 0 0 6px; // Trending items have 20px bottom margin
+  }
+
+  label:not(.m-composerPopup__trigger),
+  .m-composerPopup__label {
+    margin: 0 0 9px;
+  }
+
+  .m-composerTags__tagInput {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+    margin: 0 0 29px;
+
+    m-hashtags__typeaheadInput {
+      flex: 1;
+      margin: 0 14px 0 0;
+    }
+
+    .m-hashtagsTypeaheadInput__list {
+      border: 1px solid;
+      border-radius: 0 0 2px 2px;
+      font-size: inherit;
+      line-height: inherit;
+      top: calc(100% - 1px);
+
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary);
+        color: themed($m-textColor--secondary);
+        background: themed($m-bgColor--secondary);
+      }
+
+      @include m-on-theme(light) {
+        box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+      }
+
+      @include m-on-theme(dark) {
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+      }
+
+      .m-hashtagsTypeaheadInputList__mruHeader {
+        display: flex;
+        flex-direction: row;
+        padding: 20px 20px 9px;
+        font-size: 14px;
+        line-height: 19px;
+        align-items: center;
+        justify-content: space-between;
+        color: red;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      .m-hashtagsTypeaheadInputList__item {
+        font-size: 16px;
+        line-height: 21px;
+        padding: 10px 20px 9px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+
+          &:hover {
+            background-color: themed($m-bgColor--quaternary);
+          }
+        }
+      }
+    }
+  }
+
+  .m-composerTags__list {
+    list-style: none;
+    margin: 0 0 32px; // <li> have extra 20 bottom margin
+    padding: 0;
+
+    .m-composerTags__item {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 0 15px 20px 0;
+      padding: 5px 8px 6px 15px;
+      border: 1px solid;
+      border-radius: 17px;
+      font-size: 17px;
+      line-height: 23px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      @include m-theme() {
+        color: themed($m-borderColor--primary);
+        border-color: themed($m-textColor--secondary);
+        background: themed($m-textColor--secondary);
+      }
+
+      .m-composerTagsItem__remove {
+        padding: 3px;
+        cursor: pointer;
+
+        @include m-theme() {
+          color: transparentize(themed($m-borderColor--primary), 0.15);
+        }
+      }
+    }
+  }
+}

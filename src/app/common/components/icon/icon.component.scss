@@ -1,0 +1,28 @@
+m-icon {
+  display: inline-block;
+
+  i.material-icons,
+  i.ion-icon {
+    color: inherit;
+    font-size: 1em;
+    line-height: 1;
+  }
+
+  .m-icon__text {
+    color: inherit;
+    font-family: Roboto, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 1em;
+    line-height: 1;
+  }
+
+  .m-icon__assetsFile {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    background-color: currentColor;
+    mask-size: contain;
+    mask-position: center;
+    mask-repeat: no-repeat;
+  }
+}

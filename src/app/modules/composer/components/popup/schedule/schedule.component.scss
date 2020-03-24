@@ -1,0 +1,165 @@
+.m-composer__schedule {
+  .m-composerSchedule__layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column;
+    }
+  }
+
+  .m-composerPopup__title {
+    margin: 0 0 24px;
+  }
+
+  .m-composerSchedule__calendar {
+    width: 255px;
+
+    .m-calendar__monthSelector {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 0 0 29px;
+    }
+
+    .m-calendarMonthSelector__displayName {
+      flex: 1;
+      font-size: 16px;
+      line-height: 21px;
+      font-weight: bold;
+      letter-spacing: 0.63px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-calendarMonthSelector__nav {
+      font-size: 16px;
+      margin-left: 20px;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      &.m-calendarMonthSelectorNav--disabled {
+        opacity: 0.25;
+        cursor: initial;
+      }
+    }
+
+    .m-calendarGrid__columnHeader {
+      padding-bottom: 14px; // Dates have a surrounding padding of 8px
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 19px;
+
+      @include m-theme() {
+        color: rgba(themed($m-textColor--secondary), 0.5);
+      }
+    }
+
+    .m-calendarGrid__date {
+      padding: 8px 0;
+      font-size: 15px;
+      line-height: 1;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      > a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 1.25em;
+        position: relative;
+        z-index: 0;
+        color: inherit !important;
+        font: inherit !important;
+      }
+
+      &.m-calendarGridDate--offset {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      &.m-calendarGridDate--disabled {
+        opacity: 0.25;
+        cursor: initial;
+      }
+
+      &.m-calendarGridDate--selected {
+        @include m-theme() {
+          color: themed($m-btn--primaryText);
+        }
+
+        a::after {
+          content: '';
+          display: block;
+          width: 38px;
+          height: 38px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: -1;
+          border-radius: 50%;
+
+          @include m-theme() {
+            background: themed($m-btn--primary);
+          }
+        }
+      }
+    }
+  }
+
+  .m-composerSchedule__form {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      margin: 32px 0 0;
+    }
+
+    .m-composerPopup__field {
+      margin: 0 0 20px 0;
+
+      @media screen and (min-width: $max-mobile + 1) {
+        // Desktop
+        &:last-child {
+          margin: 0;
+        }
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        max-width: calc(50% - 9px);
+      }
+
+      label:not(.m-composerPopup__trigger),
+      .m-composerPopup__label {
+        margin: 0 0 10px;
+        font-size: 15px;
+        line-height: 20px;
+      }
+
+      input[type='text'],
+      input[type='number'],
+      input[type='password'],
+      input[type='email'] {
+        width: 167px;
+      }
+    }
+  }
+}

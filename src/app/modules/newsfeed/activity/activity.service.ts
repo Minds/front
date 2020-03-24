@@ -35,6 +35,7 @@ export type ActivityEntity = {
   nsfw: Array<number>;
   paywall: boolean;
   impressions: number;
+  boostToggle: boolean;
 };
 
 // Constants of blocks

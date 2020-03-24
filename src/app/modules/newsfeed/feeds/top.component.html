@@ -1,5 +1,10 @@
 <div class="minds-list">
-  <minds-newsfeed-poster (load)="prepend($event)"></minds-newsfeed-poster>
+  <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+    <m-composer (onPost)="prepend($event)"></m-composer>
+  </ng-container>
+  <ng-template #v1NewsfeedPoster>
+    <minds-newsfeed-poster (load)="prepend($event)"></minds-newsfeed-poster>
+  </ng-template>
 
   <minds-activity
     *ngFor="let activity of newsfeed; let i = index"
