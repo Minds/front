@@ -27,7 +27,7 @@
   <!-- Sidebar -->
   <div
     class="m-groupGrid__left"
-    [class.m-pageLayout__pane--main]="hasNewNavigation"
+    [m-pageLayout__pane]="showRight ? 'main' : null"
     *mIfBrowser
   >
     <m-videochat></m-videochat>
@@ -340,8 +340,9 @@
 
     <div
       class="m-groupGrid__right"
-      [class.m-pageLayout__pane--main]="hasNewNavigation"
+      [m-pageLayout__pane]="hasNewNavigation ? 'right' : null"
       [hidden]="!showRight"
+      *ngIf="!hasNewNavigation || showRight"
     >
       <!-- Conversation filter -->
       <minds-groups-profile-conversation [group]="group" *mIfBrowser>
