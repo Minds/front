@@ -3,7 +3,7 @@ m-composer__modal {
   display: block;
   width: 100%;
   max-width: 584px;
-  padding: 29px 0 34px;
+  margin: 29px 0 34px;
   border-radius: 5px;
   box-sizing: border-box;
 
@@ -17,7 +17,7 @@ m-composer__modal {
     flex-direction: column;
     justify-content: space-between;
     border-radius: 0;
-    padding: 0 0 34px;
+    margin: 0;
   }
 
   m-composer__base {
@@ -36,6 +36,7 @@ m-composer__modal {
       .m-composer__base,
       .m-composer__base.m-composer__base--withPreview {
         height: auto;
+        padding-top: 0;
       }
     }
   }

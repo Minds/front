@@ -134,7 +134,10 @@
     m-pageLayout__pane="main"
     [ngClass]="{ 'm-newsfeed--logged-out': !session.getLoggedInUser() }"
   >
-    <div class="mdl-card m-newsfeed__CompactHashtagSelector">
+    <div
+      class="mdl-card m-newsfeed__CompactHashtagSelector"
+      *mIfFeature="'!navigation'"
+    >
       <m-hashtags--sidebar-selector
         [compact]="true"
         [disabled]="!isSorted"

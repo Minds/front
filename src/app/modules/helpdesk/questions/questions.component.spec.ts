@@ -16,6 +16,7 @@ import { MockComponent, MockService } from '../../../utils/mock';
 import { SafePipe } from '../../../common/pipes/safe';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 describe('QuestionsComponent', () => {
   let comp: QuestionsComponent;
@@ -56,6 +57,7 @@ describe('QuestionsComponent', () => {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
+        PageLayoutService,
       ],
     }).compileComponents();
   }));

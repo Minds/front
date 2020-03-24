@@ -104,6 +104,11 @@
         @include m-theme() {
           border-right: 1px solid themed($m-borderColor--primary);
         }
+        @media screen and(max-width: $max-mobile) {
+          @include m-theme() {
+            border-right: 0;
+          }
+        }
       }
 
       > .mdl-textfield {
@@ -359,6 +364,9 @@
 
   > * {
     margin-left: 20px;
+  }
+  > :first-child() {
+    margin-left: 0;
   }
 }
 

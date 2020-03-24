@@ -10,6 +10,8 @@ m-composer__base {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease 0s !important;
+  padding: 36px 0;
+  box-sizing: border-box;
 
   &.m-composer__base--withPreview {
     height: 669px;
@@ -65,14 +67,29 @@ m-composer__base {
 
 .m-composer__base--placeholder {
   .m-composer__base {
-    height: 240px;
+    height: 152px;
+    display: block; // Do not use flex when minimized
+    padding: 0;
 
     &.m-composer__base--withPreview {
-      height: 621px;
+      height: 680px;
     }
 
     m-composer__titleBar {
       display: none;
+    }
+
+    m-composer__textArea .m-composer__textArea textarea {
+      min-height: 0;
+    }
+
+    .m-composer__toolbar {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    &:not(.m-composer__base--withPreview) .m-composer__toolbar {
+      border: 0;
     }
 
     .m-composer__preview {
