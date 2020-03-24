@@ -1,11 +1,8 @@
 <div class="m-settingsV2__desc">
   Control whether videos in your feed play automatically.
-  <ng-container *ngIf="!session.getLoggedInUser().plus"
+  <ng-container *ngIf="!isPlus"
     ><br /><br />This feature is only available to Plus users.
-    <a
-      class="m-form__upgradeLink"
-      routerLink="/plus"
-      *ngIf="!session.getLoggedInUser().plus"
+    <a class="m-form__upgradeLink" routerLink="/plus" *ngIf="!isPlus"
       >Upgrade to Plus</a
     ></ng-container
   >
@@ -17,7 +14,7 @@
         <label
           for="video_autoplay"
           class="m-form__customInputWrapper__checkbox"
-          [ngClass]="{ readonly: !session.getLoggedInUser().plus }"
+          [ngClass]="{ readonly: !isPlus }"
           i18n
           >Enable video autoplay
           <input
@@ -27,7 +24,7 @@
             formControlName="video_autoplay"
             class="form-control"
             data-minds="video_autoplay"
-            [readonly]="inProgress || !init || !session.getLoggedInUser().plus"
+            [readonly]="inProgress || !init || !isPlus"
           />
           <span class="m-form__customInput__checkbox"></span>
         </label>
