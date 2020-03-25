@@ -126,7 +126,7 @@
         (click)="message.showTs = !message.showTs"
       >
         <img
-          [src]="minds.cdn_url + 'icon/' + message.owner.guid + '/small'"
+          [src]="cdnUrl + 'icon/' + message.owner.guid + '/small'"
           *ngIf="message.owner.guid == session.getLoggedInUser().guid"
           [routerLink]="['/', message.owner.username]"
         />
@@ -156,7 +156,7 @@
           >
         </div>
         <img
-          [src]="minds.cdn_url + 'icon/' + message.owner.guid + '/small'"
+          [src]="cdnUrl + 'icon/' + message.owner.guid + '/small'"
           *ngIf="message.owner.guid != session.getLoggedInUser().guid"
           [routerLink]="['/', message.owner.username]"
         />

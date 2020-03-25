@@ -4,6 +4,8 @@
  */
 import generateRandomId from '../support/utilities';
 
+// Skipped as it currently requires email confirmation to message
+// https://gitlab.com/minds/front/-/issues/2660
 context('Messenger', () => {
   const targetUser = 'minds';
   const messagePassword = 'Passw0rd!';
@@ -52,6 +54,7 @@ context('Messenger', () => {
 
   after(() => {
     cy.deleteUser(testUsername, testPassword);
+    cy.clearCookies({log: true})
   });
 
   it('should allow a new user to set a password and send a message', () => {

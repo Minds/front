@@ -3,7 +3,7 @@ minds-card {
   position: relative;
 
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   .m-mindsCard__overlay {

@@ -13,6 +13,12 @@ import { ExperimentsService } from './experiments.service';
 import { Client } from '../../common/api/client.service';
 import { clientMock } from '../../../tests/client-mock.spec';
 import { Storage } from '../../services/storage';
+import {
+  CookieOptionsProvider,
+  COOKIE_OPTIONS,
+  CookieService,
+  CookieModule,
+} from '@gorniv/ngx-universal';
 
 @Component({
   template: `
@@ -33,10 +39,13 @@ describe('Directive: ExperimentDirective', () => {
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
+      imports: [CookieModule],
       providers: [
         ExperimentsService,
         { provide: Client, useValue: clientMock },
         Storage,
+        CookieService,
+        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
       ],
       declarations: [ExperimentDirective, ExperimentsTestComponent],
     }).compileComponents();

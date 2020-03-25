@@ -16,12 +16,9 @@ import { of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Storage } from '../../services/storage';
 import { storageMock } from '../../../tests/storage-mock.spec';
-import { MindsTitle } from '../../services/ux/title';
 import { Navigation } from '../../services/navigation';
 import { navigationMock } from '../../../tests/navigation-service-mock.spec';
-import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock.spec';
 import { MockComponent, MockDirective } from '../../utils/mock';
-
 import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { NewsfeedService } from './services/newsfeed.service';
@@ -32,6 +29,8 @@ import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
 import { newsfeedHashtagSelectorServiceMock } from '../../../tests/newsfeed-hashtag-selector-service-mock.spec';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { PagesService } from '../../common/services/pages.service';
+import { pagesServiceMock } from '../../mocks/services/pages-mock.spec';
 
 describe('NewsfeedComponent', () => {
   let comp: NewsfeedComponent;
@@ -96,7 +95,6 @@ describe('NewsfeedComponent', () => {
           },
         },
         { provide: Storage, useValue: storageMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: Navigation, useValue: navigationMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: NewsfeedService, useValue: newsfeedServiceMock },
@@ -105,6 +103,7 @@ describe('NewsfeedComponent', () => {
           useValue: newsfeedHashtagSelectorServiceMock,
         },
         { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: PagesService, useValue: pagesServiceMock },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents(); // compile template and css
@@ -122,6 +121,8 @@ describe('NewsfeedComponent', () => {
     clientMock.response = {};
     featuresServiceMock.mock('top-feeds', false);
     featuresServiceMock.mock('suggested-users', false);
+    featuresServiceMock.mock('pro', false);
+    featuresServiceMock.mock('navigation', false);
 
     sessionMock.user.admin = false;
     sessionMock.loggedIn = true;
@@ -140,67 +141,6 @@ describe('NewsfeedComponent', () => {
 
   afterEach(() => {
     jasmine.clock().uninstall();
-  });
-
-  it('should have Top, Subscribed and BoostFeed sections in the toolbar', () => {
-    const top = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(1) > span'
-      )
-    );
-    const topTooltip = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(1) > m-tooltip'
-      )
-    );
-
-    const subscribed = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(2) > span'
-      )
-    );
-    const subscribedTooltip = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(2) > m-tooltip'
-      )
-    );
-
-    const boostfeed = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(3) > span'
-      )
-    );
-    const boostfeedTooltip = fixture.debugElement.query(
-      By.css(
-        '.m-topbar--navigation .m-topbar--navigation--item:nth-child(3) > m-tooltip'
-      )
-    );
-
-    expect(top).not.toBeNull();
-    expect(top.nativeElement.textContent).toContain('Top');
-    expect(topTooltip.nativeElement.textContent).toContain(
-      'Top displays your top suggested content on Minds based on hashtags'
-    );
-
-    expect(subscribed).not.toBeNull();
-    expect(subscribed.nativeElement.textContent).toContain('Subscriptions');
-    expect(subscribedTooltip.nativeElement.textContent).toContain(
-      'Your Newsfeed contains posts from channels that you are subscribed to, as well as boosted posts from the wider network'
-    );
-
-    expect(boostfeed).not.toBeNull();
-    expect(boostfeed.nativeElement.textContent).toContain('BoostFeed');
-    expect(boostfeedTooltip.nativeElement.textContent).toContain(
-      'The Boostfeed only shows boosted posts from the wider network. To Boost your content, click the Boost icon on the topbar'
-    );
-  });
-
-  it('should have an m-newsfeed--dropdown', () => {
-    expect(
-      fixture.debugElement.query(
-        By.css('.m-topbar--navigation m-newsfeed--dropdown')
-      )
-    ).not.toBeNull();
   });
 
   it('should have a User card in the sidebar', () => {
@@ -334,6 +274,6 @@ describe('NewsfeedComponent', () => {
       By.css('.m-newsfeed-footer .copyright')
     );
     expect(copyright).not.toBeNull();
-    expect(copyright.nativeElement.textContent).toContain('© Minds 2019');
+    expect(copyright.nativeElement.textContent).toContain('© Minds 2020');
   });
 });

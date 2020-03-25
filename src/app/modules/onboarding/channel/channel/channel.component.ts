@@ -62,7 +62,6 @@ export class ChannelSetupOnboardingComponent {
 
   @Input() pendingItems: Array<string>;
 
-  minds = window.Minds;
   user: MindsUser;
 
   @ViewChild('displayNameInput', { static: true }) displayNameInput: ElementRef;
@@ -133,11 +132,8 @@ export class ChannelSetupOnboardingComponent {
   }
 
   updateUser(prop: string, value: any) {
-    let minds = Object.assign({}, window.Minds);
-
-    minds.user[prop] = value;
-
-    window.Minds = minds;
-    this.session.userEmitter.next(window.Minds.user);
+    let user = Object.assign({}, this.session.getLoggedInUser());
+    user[prop] = value;
+    this.session.userEmitter.next(user);
   }
 }

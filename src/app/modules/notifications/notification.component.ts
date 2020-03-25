@@ -1,24 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Session } from '../../services/session';
-import {
-  Reason,
-  rejectionReasons,
-} from '../../controllers/admin/boosts/rejection-reasons';
+import { Reason, rejectionReasons } from '../boost/rejection-reasons';
+import { ConfigsService } from '../../common/services/configs.service';
+import { TimeDiffService } from '../../services/timediff.service';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-notification',
-  inputs: ['_notification: notification'],
   templateUrl: 'notification.component.html',
 })
 export class NotificationComponent {
+  readonly cdnUrl: string;
   notification: any;
-  minds = window.Minds;
 
-  constructor(public session: Session) {}
+  notificationAge$: Observable<number>;
 
+  @Input() showElapsedTime: boolean = false;
+
+  @Input('notification')
   set _notification(value: any) {
     this.notification = value;
+
+    if (this.showElapsedTime) {
+      this.notificationAge$ = this.timeDiffService.source.pipe(
+        map(secondsElapsed => {
+          return (this.notification.time_created - secondsElapsed) * 1000;
+        })
+      );
+    }
+  }
+
+  constructor(
+    public session: Session,
+    private timeDiffService: TimeDiffService,
+    private configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   openMessengerWindow(event) {

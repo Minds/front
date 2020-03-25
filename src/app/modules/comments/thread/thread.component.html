@@ -42,6 +42,7 @@
   <p
     class="m-comments--start-conversation-label"
     *ngIf="
+      isLoggedIn &&
       !inProgress &&
       !error &&
       comments?.length === 0 &&
@@ -112,6 +113,29 @@
   </div>
 </div>
 
+<span
+  *ngIf="sockets.error$ | async"
+  class="m-commentsThread__connectionLost"
+  i18n="@@MINDS__COMMENTS__SOCKET_DISCONNECTED"
+>
+  Could not load live comments<br />
+  <a
+    *ngIf="!inProgress"
+    (click)="retry()"
+    class="m-commentsThread__connectionLost--retry"
+    i18n="@@MINDS__COMMENTS__SOCKET_RETRY"
+  >
+    Click to retry
+  </a>
+  <span
+    [hidden]="!inProgress"
+    class="m-commentsThread__connectionLost--loading"
+    i18n="@@MINDS__COMMENTS__SOCKET_LOADING"
+  >
+    Loading...
+  </span>
+</span>
+
 <m-comment__poster
   *ngIf="activityService.allowComment$ | async"
   [guid]="guid"
@@ -119,6 +143,7 @@
   [entity]="entity"
   [currentIndex]="comments.length - 1"
   [conversation]="conversation"
+  [level]="level"
   (posted)="onPosted($event)"
   (optimisticPost)="onOptimisticPost($event)"
 >

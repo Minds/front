@@ -9,7 +9,6 @@ import { FaqModule } from '../faq/faq.module';
 import { PaymentsModule } from '../payments/payments.module';
 
 import { WireCreatorComponent } from './creator/creator.component';
-import { WirePaymentsCreatorComponent } from './payments-creator/creator.component';
 import { WireButtonComponent } from './button/button.component';
 import { WireChannelComponent } from './channel/channel.component';
 import { WireChannelTableComponent } from './channel/table/table.component';
@@ -22,14 +21,25 @@ import { WireConsoleSupporterComponent } from './console/supporter/supporter.com
 import { WireConsoleSettingsComponent } from './console/settings/settings.component';
 import { WireLockScreenComponent } from './lock-screen/wire-lock-screen.component';
 import { WireService } from './wire.service';
-import { WireMarketingComponent } from './marketing.component';
 import { WireConsoleOverviewComponent } from './console/overview/overview.component';
 import { WireConsoleRewardsInputsComponent } from './console/rewards-table/inputs/wire-console-rewards-inputs.component';
 import { WireConsoleRewardsComponent } from './console/rewards-table/rewards.component';
 import { WireSubscriptionTiersComponent } from './channel/tiers.component';
+import { WirePaymentsCreatorComponent } from './creator/payments/payments.creator.component';
+import { WirePaymentHandlersService } from './wire-payment-handlers.service';
+import { PayMarketingComponent } from './marketing/marketing.component';
 
 const wireRoutes: Routes = [
-  { path: 'wire', component: WireMarketingComponent },
+  { path: 'wire', redirectTo: 'pay' },
+  {
+    path: 'pay',
+    component: PayMarketingComponent,
+    data: {
+      title: 'Minds Pay (Wire)',
+      description: 'Send and receive payments in USD, BTC, ETH and Tokens',
+      ogImage: '/assets/product-pages/pay/pay-1.jpg',
+    },
+  },
 ];
 
 @NgModule({
@@ -59,11 +69,11 @@ const wireRoutes: Routes = [
     WireConsoleLedgerComponent,
     WireConsoleSupporterComponent,
     WireConsoleSettingsComponent,
-    WireMarketingComponent,
+    PayMarketingComponent,
     WireConsoleOverviewComponent,
     WireSubscriptionTiersComponent,
   ],
-  providers: [WireService],
+  providers: [WireService, WirePaymentHandlersService],
   exports: [
     WireLockScreenComponent,
     WireButtonComponent,
@@ -76,12 +86,12 @@ const wireRoutes: Routes = [
     WireConsoleRewardsComponent,
     WireConsoleSettingsComponent,
     WireConsoleOverviewComponent,
+    WireCreatorComponent,
     WireSubscriptionTiersComponent,
   ],
   entryComponents: [
     WireCreatorComponent,
     WireConsoleComponent,
-    WireMarketingComponent,
     WirePaymentsCreatorComponent,
     WireLockScreenComponent,
     WireConsoleRewardsInputsComponent,

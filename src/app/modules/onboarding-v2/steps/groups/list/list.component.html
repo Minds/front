@@ -1,0 +1,43 @@
+<div class="m-onboarding__groupList">
+  <span *ngIf="error && !inProgress" class="m-groupList__empty">
+    {{ error }}
+  </span>
+  <span
+    *ngIf="!error && !inProgress && !entities.length"
+    class="m-groupList__empty"
+  >
+    You have no suggestions at this time
+  </span>
+  <ul class="m-groupList__list" *ngIf="entities.length">
+    <li
+      class="m-groupList__item"
+      *ngFor="let entity of entities; let i = index"
+    >
+      <a [routerLink]="['/groups/profile', entity.guid]" target="_blank">
+        <div
+          class="m-groupListItem__avatar"
+          [style.background-image]="
+            'url(' + cdnUrl + '/icon/' + entity.guid + ')'
+          "
+        ></div>
+        <div class="m-groupListItem__body">
+          <div [title]="entity.name">
+            <h4>{{ entity.name }}</h4>
+            <span i18n>{{ entity['members:count'] | abbr }} members</span>
+          </div>
+        </div>
+        <div class="m-layout__spacer"></div>
+
+        <minds-groups-join-button
+          [group]="entity"
+          [iconsOnly]="true"
+        ></minds-groups-join-button>
+      </a>
+    </li>
+  </ul>
+  <div
+    class="mdl-spinner mdl-js-spinner is-active"
+    [mdl]
+    [hidden]="!inProgress"
+  ></div>
+</div>

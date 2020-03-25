@@ -56,10 +56,10 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
       id: '30d',
       label: '30d',
     },
-    /*{
+    {
       id: '1y',
-      label: '1y'
-    },*/
+      label: '1y',
+    },
   ];
 
   customTypes: Array<{ id; label; icon? }> = [
@@ -128,6 +128,8 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   expandedCustomTypeDropdown: boolean = true;
 
+  protected lastUsedPeriod: string;
+
   protected lastWidth: number;
 
   protected resizeSubscription: Subscription;
@@ -144,6 +146,10 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
     this.resizeSubscription = this.resizeSubject
       .pipe(debounceTime(1000 / 30))
       .subscribe(() => this.onResize());
+
+    if (this.period) {
+      this.lastUsedPeriod = this.period;
+    }
   }
 
   ngAfterViewInit() {
@@ -187,7 +193,9 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setAlgorithm(id: string) {
-    if (!this.algorithms.find(algorithm => id === algorithm.id)) {
+    const algorithm = this.algorithms.find(algorithm => id === algorithm.id);
+
+    if (!algorithm) {
       console.error('Unknown algorithm');
       return false;
     }
@@ -197,6 +205,11 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.algorithm = id;
+
+    if (this.lastUsedPeriod && !algorithm.noPeriod) {
+      this.period = this.lastUsedPeriod;
+    }
+
     this.emit();
 
     return true;
@@ -239,6 +252,7 @@ export class SortSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     this.period = id;
+    this.lastUsedPeriod = this.period;
     this.emit();
 
     return true;

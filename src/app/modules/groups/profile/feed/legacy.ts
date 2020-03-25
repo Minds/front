@@ -1,12 +1,13 @@
 import { Component, ViewChild } from '@angular/core';
 
-import { GroupsService } from '../../groups-service';
+import { GroupsService } from '../../groups.service';
 
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { PosterComponent } from '../../../newsfeed/poster/poster.component';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { ComposerComponent } from '../../../composer/composer.component';
 
 interface MindsGroupResponse {
   group: MindsGroup;
@@ -44,6 +45,8 @@ export class GroupsProfileLegacyFeed {
   paramsSubscription: Subscription;
 
   @ViewChild('poster', { static: false }) private poster: PosterComponent;
+
+  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
 
   constructor(
     public session: Session,
@@ -280,13 +283,22 @@ export class GroupsProfileLegacyFeed {
     }
   }
 
-  canDeactivate() {
+  protected v1CanDeactivate(): boolean {
     if (!this.poster || !this.poster.attachment) return true;
     const progress = this.poster.attachment.getUploadProgress();
     if (progress > 0 && progress < 100) {
       return confirm('Your file is still uploading. Are you sure?');
     }
     return true;
+  }
+
+  canDeactivate(): boolean | Promise<boolean> {
+    if (this.composer) {
+      return this.composer.canDeactivate();
+    }
+
+    // Check v1 Poster component
+    return this.v1CanDeactivate();
   }
 
   // kick & ban

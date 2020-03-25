@@ -24,7 +24,7 @@
       <li>
         <img
           class="metamask"
-          [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'"
+          [src]="cdnAssetsUrl + 'assets/ext/metamask.png'"
         />
         <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_TITLE">
           MetaMask
@@ -167,7 +167,7 @@
         <ng-container *ngIf="display === Views.UseExternal">
           <img
             class="metamask"
-            [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'"
+            [src]="cdnAssetsUrl + 'assets/ext/metamask.png'"
           />
           <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_TITLE">
             MetaMask
@@ -181,7 +181,9 @@
 
             <ng-container *ngIf="downloadingMetamask">
               <b
-                i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_NOTE_RELOAD"
+                i18n="
+                   @@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_NOTE_RELOAD
+                "
               >
                 Note: After installing and setting up MetaMask you might need to
                 reload Minds.
@@ -196,7 +198,10 @@
             <button
               class="m-btn m-btn--slim m-btn--action"
               (click)="downloadMetamask()"
-              i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__DOWNLOAD_METAMASK_ACTION"
+              i18n="
+                 @@WALLET__TOKENS__ONBOARDING__ONCHAIN__DOWNLOAD_METAMASK_ACTION
+
+              "
             >
               Download MetaMask
             </button>
@@ -215,7 +220,10 @@
 
               <ng-template
                 #noProvidedAddress
-                i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_LOCKED_LEGEND"
+                i18n="
+                   @@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_LOCKED_LEGEND
+
+                "
               >
                 MetaMask is either locked or connected to another network.
               </ng-template>
@@ -235,7 +243,7 @@
   <div class="m-token--onboarding--column m-layout--column">
     <div class="m-token--onboarding--video m-border">
       <m-token--onboarding--video
-        [src]="minds.cdn_assets_url + 'assets/tutorials/onchain.480.mp4'"
+        [src]="cdnAssetsUrl + 'assets/tutorials/onchain.480.mp4'"
       >
       </m-token--onboarding--video>
     </div>

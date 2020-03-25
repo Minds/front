@@ -1,6 +1,6 @@
 .m-mindsList__tools {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
   display: flex;
   position: relative;
@@ -29,4 +29,10 @@
   .m-channel--sorted__SortSelector {
     margin-left: auto;
   }
+}
+
+m-channel--sorted m-activity {
+  max-width: 500px;
+  margin: auto;
+  margin-bottom: 20px;
 }

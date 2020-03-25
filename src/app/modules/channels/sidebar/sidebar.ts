@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  Inject,
+  PLATFORM_ID,
+  OnInit,
+} from '@angular/core';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { MindsUser } from '../../../interfaces/entities';
@@ -8,6 +15,9 @@ import { Storage } from '../../../services/storage';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReferralsLinksComponent } from '../../wallet/tokens/referrals/links/links.component';
 import { FeaturesService } from '../../../services/features.service';
+import { isPlatformBrowser, isPlatformServer } from '@angular/common';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { CookieService } from '../../../common/services/cookie.service';
 
 @Component({
   moduleId: module.id,
@@ -15,8 +25,7 @@ import { FeaturesService } from '../../../services/features.service';
   inputs: ['user', 'editing'],
   templateUrl: 'sidebar.html',
 })
-export class ChannelSidebar {
-  minds = window.Minds;
+export class ChannelSidebar implements OnInit {
   filter: any = 'feed';
   isLocked: boolean = false;
   editing: boolean = false;
@@ -37,9 +46,11 @@ export class ChannelSidebar {
     public upload: Upload,
     public session: Session,
     public onboardingService: ChannelOnboardingService,
-    protected storage: Storage,
+    protected cookieService: CookieService,
     private overlayModal: OverlayModalService,
-    public featuresService: FeaturesService
+    public featuresService: FeaturesService,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private configs: ConfigsService
   ) {
     if (onboardingService && onboardingService.onClose) {
       onboardingService.onClose.subscribe(progress => {
@@ -54,6 +65,7 @@ export class ChannelSidebar {
   }
 
   checkProgress() {
+    if (isPlatformServer(this.platformId)) return;
     this.onboardingService.checkProgress().then(() => {
       this.onboardingProgress = this.onboardingService.completedPercentage;
     });
@@ -65,16 +77,18 @@ export class ChannelSidebar {
 
   shouldShowOnboardingProgress() {
     return (
+      isPlatformBrowser(this.platformId) &&
+      !this.featuresService.has('ux-2020') &&
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().guid === this.user.guid &&
-      !this.storage.get('onboarding_hide') &&
+      !this.cookieService.get('onboarding_hide') &&
       this.onboardingProgress !== -1 &&
       this.onboardingProgress !== 100
     );
   }
 
   hideOnboardingForcefully() {
-    this.storage.set('onboarding_hide', '1');
+    this.cookieService.put('onboarding_hide', '1');
   }
 
   isOwner() {
@@ -87,7 +101,7 @@ export class ChannelSidebar {
     }
 
     this.changeEditing.next(!this.editing);
-    this.minds.user.name = this.user.name; //no need to refresh for other pages to update.
+    this.session.getLoggedInUser().name = this.user.name; //no need to refresh for other pages to update.
   }
 
   upload_avatar(file) {
@@ -95,8 +109,7 @@ export class ChannelSidebar {
     this.upload
       .post('api/v1/channel/avatar', [file], { filekey: 'file' })
       .then((response: any) => {
-        self.user.icontime = Date.now();
-        if (window.Minds.user) window.Minds.user.icontime = Date.now();
+        this.user.icontime = Date.now();
       });
   }
 
@@ -119,10 +132,9 @@ export class ChannelSidebar {
       this.user.city = row.address.city;
     }
     if (row.address.town) this.user.city = row.address.town;
-    if (window.Minds) window.Minds.user.city = this.user.city;
     this.client.post('api/v1/channel/info', {
       coordinates: row.lat + ',' + row.lon,
-      city: window.Minds.user.city,
+      city: this.user.city,
     });
   }
 
@@ -158,5 +170,51 @@ export class ChannelSidebar {
         }
       )
       .present();
+  }
+
+  async proAdminToggle() {
+    const value = !this.user.pro;
+    const method = value ? 'put' : 'delete';
+
+    this.user.pro = value;
+
+    try {
+      const response = (await this.client[method](
+        `api/v2/admin/pro/${this.user.guid}`
+      )) as any;
+
+      if (!response || response.status !== 'success') {
+        throw new Error('Invalid server response');
+      }
+    } catch (e) {
+      console.error(e);
+      this.user.pro = !value;
+    }
+  }
+
+  get showBecomeProButton() {
+    const isOwner =
+      this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().guid == this.user.guid;
+    return isOwner && !this.user.pro;
+  }
+
+  get showProSettings() {
+    const isOwner =
+      this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().guid == this.user.guid;
+    const isAdmin = this.configs.get('Admin');
+    return (isOwner || isAdmin) && this.user.pro;
+  }
+
+  get proSettingsRouterLink() {
+    let route: any[];
+    if (this.featuresService.has('navigation')) {
+      route = ['settings/canary/pro_canary/' + this.user.username];
+    } else {
+      route = ['/pro/' + this.user.username + '/settings'];
+    }
+
+    return route;
   }
 }

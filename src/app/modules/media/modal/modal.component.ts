@@ -1,34 +1,48 @@
 import {
   Component,
-  OnInit,
-  OnDestroy,
-  Input,
   HostListener,
+  Injector,
+  Input,
+  OnDestroy,
+  OnInit,
+  SkipSelf,
   ViewChild,
+  ComponentRef,
 } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router, Event, NavigationStart } from '@angular/router';
+import { Event, NavigationStart, Router } from '@angular/router';
 import {
-  trigger,
+  animate,
   state,
   style,
-  animate,
   transition,
+  trigger,
 } from '@angular/animations';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { AnalyticsService } from '../../../services/analytics';
-import { MindsVideoComponent } from '../components/video/video.component';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { ActivityService } from '../../../common/services/activity.service';
+import { SiteService } from '../../../common/services/site.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { FeaturesService } from '../../../services/features.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { HorizontalFeedService } from '../../../common/services/horizontal-feed.service';
+import { ShareModalComponent } from '../../modals/share/share';
+import { AttachmentService } from '../../../services/attachment';
+import { DynamicModalSettings } from '../../../common/components/stackable-modal/stackable-modal.component';
+
+export type MediaModalParams = {
+  entity: any;
+};
 
 @Component({
   selector: 'm-media--modal',
   templateUrl: 'modal.component.html',
   animations: [
     // Fade media in after load
-    trigger('slowFadeAnimation', [
+    trigger('slowFade', [
       state(
         'in',
         style({
@@ -41,10 +55,11 @@ import { ActivityService } from '../../../common/services/activity.service';
           opacity: 0,
         })
       ),
-      transition('in <=> out', [animate('600ms')]),
+      transition('out => in', [animate('600ms')]),
+      transition('in => out', [animate('0ms')]),
     ]),
     // Fade overlay in/out
-    trigger('fastFadeAnimation', [
+    trigger('fastFade', [
       transition(':enter', [
         style({ opacity: 0 }),
         animate('300ms', style({ opacity: 1 })),
@@ -52,11 +67,13 @@ import { ActivityService } from '../../../common/services/activity.service';
       transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
     ]),
   ],
-  providers: [ActivityService],
+  providers: [ActivityService, ClientMetaService],
 })
 export class MediaModalComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnUrl: string;
+
   entity: any = {};
+  originalEntity: any = null;
   isLoading: boolean = true;
   navigatedAway: boolean = false;
   fullscreenHovering: boolean = false; // Used for fullscreen button transformation
@@ -95,105 +112,122 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   overlayVisible: boolean = false;
   tabletOverlayTimeout: any = null;
 
+  pagerVisible: boolean = false;
+  pagerTimeout: any = null;
+
+  stackableModalSettings: DynamicModalSettings;
+
   routerSubscription: Subscription;
 
-  @Input('entity') set data(entity) {
-    this.entity = entity;
+  modalPager = {
+    hasPrev: false,
+    hasNext: false,
+  };
+  canToggleMatureVideoOverlay: boolean = true;
+
+  protected modalPager$: Subscription;
+
+  protected asyncEntity$: Subscription;
+
+  @Input('entity') set data(params: MediaModalParams) {
+    this.clearAsyncEntity();
+    this.setEntity(params.entity);
+
+    if (this.features.has('modal-pager')) {
+      this.horizontalFeed.setBaseEntity(params.entity);
+    }
   }
 
-  // Used to make sure video progress bar seeker / hover works
-  @ViewChild(MindsVideoComponent, { static: false })
-  videoComponent: MindsVideoComponent;
+  videoDirectSrc = [];
+
+  videoTorrentSrc = [];
 
   constructor(
     public session: Session,
     public analyticsService: AnalyticsService,
     private overlayModal: OverlayModalService,
     private router: Router,
-    private location: Location
-  ) {}
+    private location: Location,
+    private site: SiteService,
+    private clientMetaService: ClientMetaService,
+    private featureService: FeaturesService,
+    @SkipSelf() injector: Injector,
+    configs: ConfigsService,
+    private horizontalFeed: HorizontalFeedService,
+    private features: FeaturesService,
+    public attachment: AttachmentService
+  ) {
+    this.clientMetaService
+      .inherit(injector)
+      .setSource('single')
+      .setMedium('modal');
+
+    this.cdnUrl = configs.get('cdn_url');
+  }
+
+  updateSources() {
+    this.videoDirectSrc = [
+      {
+        res: '720',
+        uri:
+          'api/v1/media/' + this.entity.entity_guid + '/play?s=modal&res=720',
+        type: 'video/mp4',
+      },
+      {
+        res: '360',
+        uri: 'api/v1/media/' + this.entity.entity_guid + '/play/?s=modal',
+        type: 'video/mp4',
+      },
+    ];
+
+    this.videoTorrentSrc = [
+      { res: '720', key: this.entity.entity_guid + '/720.mp4' },
+      { res: '360', key: this.entity.entity_guid + '/360.mp4' },
+    ];
+
+    if (this.entity.custom_data.full_hd) {
+      this.videoDirectSrc.unshift({
+        res: '1080',
+        uri:
+          'api/v1/media/' +
+          this.entity.entity_guid +
+          '/play/' +
+          Date.now() +
+          '?s=modal&res=1080',
+        type: 'video/mp4',
+      });
+
+      this.videoTorrentSrc.unshift({
+        res: '1080',
+        key: this.entity.entity_guid + '/1080.mp4',
+      });
+    }
+  }
 
   ngOnInit() {
     // Prevent dismissal of modal when it's just been opened
     this.isOpenTimeout = setTimeout(() => (this.isOpen = true), 20);
 
-    switch (this.entity.type) {
-      case 'activity':
-        this.title =
-          this.entity.message ||
-          this.entity.title ||
-          `${this.entity.ownerObj.name}'s post`;
-        this.entity.guid = this.entity.entity_guid || this.entity.guid;
-        this.thumbnail = this.entity.thumbnails.xlarge;
-        switch (this.entity.custom_type) {
-          case 'video':
-            this.contentType = 'video';
-            break;
-          case 'batch':
-            this.contentType = 'image';
-        }
-        break;
-      case 'object':
-        switch (this.entity.subtype) {
-          case 'video':
-            this.contentType = 'video';
-            this.title = this.entity.title;
-            break;
-          case 'image':
-            this.contentType = 'image';
-            // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.guid}/xlarge`;
-            this.thumbnail = this.entity.thumbnail;
-            break;
-          case 'blog':
-            this.contentType = 'blog';
-            this.title = this.entity.title;
-            this.entity.guid = this.entity.guid;
-            this.entity.entity_guid = this.entity.guid;
-        }
-        break;
-      case 'comment':
-        this.contentType =
-          this.entity.custom_type === 'video' ? 'video' : 'image';
-        this.title =
-          this.entity.message ||
-          this.entity.title ||
-          this.entity.description ||
-          `${this.entity.ownerObj.name}'s post`;
-        this.entity.guid = this.entity.attachment_guid;
-        this.entity.entity_guid = this.entity.attachment_guid;
-        // this.thumbnail = `${this.minds.cdn_url}fs/v1/thumbnail/${this.entity.attachment_guid}/xlarge`;
-        this.thumbnail = this.entity.thumbnails.xlarge;
-        break;
+    // -- Initialize Horizontal Feed service context
+
+    if (this.features.has('modal-pager')) {
+      this.modalPager$ = this.horizontalFeed
+        .onChange()
+        .subscribe(async change => {
+          this.modalPager = {
+            hasNext: await this.horizontalFeed.hasNext(),
+            hasPrev: await this.horizontalFeed.hasPrev(),
+          };
+        });
+
+      this.horizontalFeed.setContext('container');
     }
 
-    if (this.contentType !== 'blog') {
-      this.pageUrl = `/media/${this.entity.entity_guid}`;
-    } else {
-      this.pageUrl = this.entity.route
-        ? `/${this.entity.route}`
-        : `/blog/view${this.entity.guid}`;
-    }
+    // -- Load entity
 
-    this.boosted = this.entity.boosted || this.entity.p2p_boosted || false;
+    this.load();
 
-    const session = this.session.getLoggedInUser();
-    if (session && session.guid === this.entity.ownerObj.guid) {
-      this.ownerIconTime = session.icontime;
-    } else {
-      this.ownerIconTime = this.entity.ownerObj.icontime;
-    }
-
-    this.isTablet =
-      isMobileOrTablet() && Math.min(screen.width, screen.height) >= 768;
-
-    this.analyticsService.send('pageview', {
-      url: `${this.pageUrl}?ismodal=true`,
-    });
-
-    // * LOCATION & ROUTING * -----------------------------------------------------------------------------------
-    // Change the url to point to media page so user can easily share link
-    // (but don't actually redirect)
-    this.location.replaceState(this.pageUrl);
+    // -- EVENTS
 
     // When user clicks a link from inside the modal
     this.routerSubscription = this.router.events.subscribe((event: Event) => {
@@ -211,21 +245,189 @@ export class MediaModalComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
 
-    // * DIMENSION CALCULATIONS * ---------------------------------------------------------------------
+  setEntity(entity: any) {
+    if (!entity) {
+      return;
+    }
 
+    this.originalEntity = entity;
+    this.entity = entity && JSON.parse(JSON.stringify(entity)); // deep clone
+  }
+
+  clearAsyncEntity() {
+    if (this.asyncEntity$) {
+      this.asyncEntity$.unsubscribe();
+      this.asyncEntity$ = void 0;
+    }
+  }
+
+  setAsyncEntity(
+    asyncEntity: BehaviorSubject<any>,
+    extraEntityProperties: Object = {}
+  ) {
+    this.clearAsyncEntity();
+
+    this.asyncEntity$ = asyncEntity.subscribe(rawEntity => {
+      if (rawEntity) {
+        const entity = {
+          ...rawEntity,
+          ...extraEntityProperties,
+        };
+
+        this.setEntity(entity);
+        this.load();
+      }
+    });
+  }
+
+  load() {
+    switch (this.entity.type) {
+      case 'activity':
+        this.title = this.entity.title || `${this.entity.ownerObj.name}'s post`;
+        this.entity.guid = this.entity.entity_guid || this.entity.guid;
+        this.thumbnail = this.entity.thumbnails
+          ? this.entity.thumbnails.xlarge
+          : null;
+
+        switch (this.entity.custom_type) {
+          case 'video':
+            this.contentType = 'video';
+            this.entity.width = this.entity.custom_data.dimensions
+              ? this.entity.custom_data.dimensions.width
+              : 1280;
+            this.entity.height = this.entity.custom_data.dimensions
+              ? this.entity.custom_data.dimensions.height
+              : 720;
+            this.entity.thumbnail_src = this.entity.custom_data.thumbnail_src;
+            this.updateSources();
+            break;
+          case 'batch':
+            this.contentType = 'image';
+            this.entity.width = this.entity.custom_data[0].width;
+            this.entity.height = this.entity.custom_data[0].height;
+            break;
+          default:
+            if (
+              this.entity.perma_url &&
+              this.entity.title &&
+              !this.entity.entity_guid
+            ) {
+              this.contentType = 'rich-embed';
+              this.entity.width = this.entity.custom_data.dimensions
+                ? this.entity.custom_data.dimensions.width
+                : 1280;
+              this.entity.height = this.entity.custom_data.dimensions
+                ? this.entity.custom_data.dimensions.height
+                : 720;
+              this.entity.thumbnail_src = this.entity.custom_data.thumbnail_src;
+              break;
+            } else {
+              // Modal not implemented, redirect.
+              this.router.navigate([
+                this.entity.route
+                  ? `/${this.entity.route}`
+                  : `/blog/view/${this.entity.guid}`,
+              ]);
+              // Close modal.
+              this.clickedBackdrop(null);
+            }
+        }
+
+        break;
+      case 'object':
+        switch (this.entity.subtype) {
+          case 'video':
+            this.contentType = 'video';
+            this.title = this.entity.title;
+            this.entity.entity_guid = this.entity.guid;
+            this.entity.custom_data = {
+              full_hd: this.entity.flags ? !!this.entity.flags.full_hd : false,
+            };
+            this.updateSources();
+            break;
+          case 'image':
+            this.contentType = 'image';
+            this.thumbnail = this.entity.thumbnail;
+            this.title = this.entity.title;
+            this.entity.entity_guid = this.entity.guid;
+            break;
+          case 'blog':
+            this.contentType = 'blog';
+            this.entity.entity_guid = this.entity.guid;
+        }
+        break;
+      case 'comment':
+        this.contentType =
+          this.entity.custom_type === 'video' ? 'video' : 'image';
+        this.title =
+          this.entity.title ||
+          this.entity.message ||
+          this.entity.description ||
+          `${this.entity.ownerObj.name}'s post`;
+        this.entity.guid = this.entity.attachment_guid;
+        this.entity.entity_guid = this.entity.attachment_guid;
+        this.thumbnail = this.entity.thumbnails.xlarge;
+        break;
+    }
+
+    if (this.contentType === 'rich-embed') {
+      this.pageUrl = `/newsfeed/${this.entity.guid}`;
+    } else if (this.contentType === 'blog') {
+      this.pageUrl = `${
+        !this.site.isProDomain ? `/${this.entity.ownerObj.username}` : ''
+      }/blog/${this.entity.slug}-${this.entity.guid}`;
+    } else {
+      this.pageUrl = `/media/${this.entity.entity_guid}`;
+    }
+
+    this.boosted = this.entity.boosted || this.entity.p2p_boosted || false;
+
+    // Set ownerIconTime
+    const session = this.session.getLoggedInUser();
+    if (session && session.guid === this.entity.ownerObj.guid) {
+      this.ownerIconTime = session.icontime;
+    } else {
+      this.ownerIconTime = this.entity.ownerObj.icontime;
+    }
+
+    this.isTablet =
+      isMobileOrTablet() && Math.min(screen.width, screen.height) >= 768;
+
+    let url = `${this.pageUrl}?ismodal=true`;
+
+    if (this.site.isProDomain) {
+      url = `/pro/${this.site.pro.user_guid}${url}`;
+    }
+
+    this.clientMetaService.recordView(this.entity);
+    this.analyticsService.send('pageview', {
+      url,
+    });
+
+    // * LOCATION & ROUTING * -----------------------------------------------------------------------------------
+    // Change the url to point to media page so user can easily share link
+    // (but don't actually redirect)
+    this.location.replaceState(this.pageUrl);
+
+    // Set Dimensions based on entity
+    this.setEntityDimensions();
+  }
+
+  // * DIMENSION CALCULATIONS * ---------------------------------------------------------------------
+
+  setEntityDimensions() {
     switch (this.contentType) {
       case 'video':
-        this.entityWidth = this.entity.custom_data.dimensions.width;
-        this.entityHeight = this.entity.custom_data.dimensions.height;
-        break;
       case 'image':
-        this.entityWidth = this.entity.custom_data[0].width;
-        this.entityHeight = this.entity.custom_data[0].height;
+        this.entityWidth = this.entity.width;
+        this.entityHeight = this.entity.height;
         break;
       case 'blog':
-        this.entityWidth = window.innerWidth;
-        this.entityHeight = window.innerHeight;
+        this.entityWidth = window.innerWidth * 0.6;
+        this.entityHeight = window.innerHeight * 0.6;
+        break;
     }
 
     this.aspectRatio = this.entityWidth / this.entityHeight;
@@ -243,11 +445,11 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       if (this.contentType === 'blog') {
         this.mediaHeight = Math.max(
           this.minStageHeight,
-          window.innerHeight - this.padding * 2
+          window.innerHeight * 0.9 - this.padding * 2
         );
         this.mediaWidth = Math.max(
           this.minStageWidth,
-          window.innerWidth - this.contentWidth - this.padding * 2
+          window.innerWidth * 0.9 - this.contentWidth - this.padding * 2
         );
         this.stageHeight = this.mediaHeight;
         this.stageWidth = this.mediaWidth;
@@ -345,6 +547,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       this.mediaHeight = this.stageHeight;
     }
 
+    // Scale width according to aspect ratio
     this.mediaWidth = this.scaleWidth();
   }
 
@@ -389,8 +592,18 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   scaleHeight() {
     return Math.round(this.mediaWidth / this.aspectRatio);
   }
+
   scaleWidth() {
     return Math.round(this.mediaHeight * this.aspectRatio);
+  }
+
+  onDimensions($event) {
+    if ($event.width && $event.height) {
+      this.entity.width = $event.width;
+      this.entity.height = $event.height;
+
+      this.setEntityDimensions();
+    }
   }
 
   // * FULLSCREEN * --------------------------------------------------------------------------------
@@ -452,13 +665,65 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     this.isFullscreen = false;
   }
 
+  // * KEYBOARD SHORTCUTS * --------------------------------------------------------------------------
+
+  @HostListener('window:keydown', ['$event']) onWindowKeyDown(
+    $event: KeyboardEvent
+  ) {
+    if (!$event || !$event.target) {
+      return true;
+    }
+
+    const tagName = (
+      ($event.target as HTMLElement).tagName || ''
+    ).toLowerCase();
+    const isContentEditable =
+      ($event.target as HTMLElement).contentEditable === 'true';
+
+    if (
+      tagName === 'input' ||
+      tagName === 'textarea' ||
+      isContentEditable ||
+      ($event.key !== 'ArrowLeft' &&
+        $event.key !== 'ArrowRight' &&
+        $event.key !== 'Escape')
+    ) {
+      return true;
+    }
+
+    $event.stopPropagation();
+    $event.preventDefault();
+
+    switch ($event.key) {
+      case 'ArrowLeft':
+        if (this.hasModalPager()) {
+          this.goToPrev();
+        }
+        break;
+      case 'ArrowRight':
+        if (this.hasModalPager()) {
+          this.goToNext();
+        }
+        break;
+      case 'Escape':
+        if (this.isOpen) {
+          this.overlayModal.dismiss();
+        }
+        break;
+    }
+
+    return true;
+  }
+
   // * MODAL DISMISSAL * --------------------------------------------------------------------------
 
   // Dismiss modal when backdrop is clicked and modal is open
   @HostListener('document:click', ['$event'])
   clickedBackdrop($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
+    if ($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+    }
     if (this.isOpen) {
       this.overlayModal.dismiss();
     }
@@ -474,22 +739,17 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   // Show overlay and video controls
   onMouseEnterStage() {
     this.overlayVisible = true;
-
-    if (this.contentType === 'video') {
-      // Make sure progress bar seeker is updating when video controls are visible
-      this.videoComponent.stageHover = true;
-      this.videoComponent.onMouseEnter();
+    this.pagerVisible = true;
+    if (this.pagerTimeout) {
+      clearTimeout(this.pagerTimeout);
     }
   }
 
   onMouseLeaveStage() {
     this.overlayVisible = false;
-
-    if (this.contentType === 'video') {
-      // Stop updating progress bar seeker when controls aren't visible
-      this.videoComponent.stageHover = false;
-      this.videoComponent.onMouseLeave();
-    }
+    this.pagerTimeout = setTimeout(() => {
+      this.pagerVisible = false;
+    }, 2000);
   }
 
   // * TABLETS ONLY: SHOW OVERLAY & VIDEO CONTROLS * -------------------------------------------
@@ -507,6 +767,52 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     }, 3000);
   }
 
+  // * PAGER * --------------------------------------------------------------------------
+
+  hasModalPager() {
+    return this.features.has('modal-pager');
+  }
+
+  async goToNext(): Promise<void> {
+    if (!this.modalPager.hasNext) {
+      return;
+    }
+
+    this.isLoading = true;
+
+    const modalSourceUrl = this.entity.modal_source_url || '';
+    const response = await this.horizontalFeed.next();
+
+    if (response && response.entity) {
+      this.setAsyncEntity(response.entity, {
+        modal_source_url: modalSourceUrl,
+      });
+      this.canToggleMatureVideoOverlay = true;
+    } else {
+      this.isLoading = false;
+    }
+  }
+
+  async goToPrev(): Promise<void> {
+    if (!this.modalPager.hasPrev) {
+      return;
+    }
+
+    this.isLoading = true;
+
+    const modalSourceUrl = this.entity.modal_source_url || '';
+    const response = await this.horizontalFeed.prev();
+
+    if (response && response.entity) {
+      this.setAsyncEntity(response.entity, {
+        modal_source_url: modalSourceUrl,
+      });
+      this.canToggleMatureVideoOverlay = true;
+    } else {
+      this.isLoading = false;
+    }
+  }
+
   // * UTILITY * --------------------------------------------------------------------------
 
   isLoaded() {
@@ -517,9 +823,45 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  openShareModal(): void {
+    const componentClass = ShareModalComponent,
+      data = this.site.baseUrl + this.pageUrl.substr(1),
+      opts = { class: 'm-overlayModal__share' };
+
+    this.stackableModalSettings = {
+      componentClass: componentClass,
+      data: data,
+      opts: opts,
+    };
+  }
+
+  toggleMatureVisibility() {
+    if (this.contentType !== 'video' && this.contentType !== 'rich-embed') {
+      this.entity.mature_visibility = !this.entity.mature_visibility;
+    } else {
+      // Don't allow to toggle overlay back on if it was
+      // removed before it was opened in the media modal
+      if (this.attachment.isForcefullyShown(this.entity)) {
+        this.canToggleMatureVideoOverlay = false;
+      }
+      // Toggle-ability of video player overlay is disabled
+      // after one toggle so that users can access video controls
+      if (this.canToggleMatureVideoOverlay) {
+        this.entity.mature_visibility = !this.entity.mature_visibility;
+        this.canToggleMatureVideoOverlay = false;
+      }
+    }
+  }
+
   ngOnDestroy() {
+    this.clearAsyncEntity();
+
     if (this.routerSubscription) {
       this.routerSubscription.unsubscribe();
+    }
+
+    if (this.modalPager$) {
+      this.modalPager$.unsubscribe();
     }
 
     if (this.isOpenTimeout) {
@@ -528,6 +870,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     if (this.tabletOverlayTimeout) {
       clearTimeout(this.tabletOverlayTimeout);
+    }
+
+    if (this.pagerTimeout) {
+      clearTimeout(this.pagerTimeout);
     }
 
     // If the modal was closed without a redirect, replace media page url

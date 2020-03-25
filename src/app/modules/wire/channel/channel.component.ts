@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -16,8 +16,10 @@ import { SignupModalService } from '../../modals/signup/service';
   selector: 'm-wire-channel',
   templateUrl: 'channel.component.html',
 })
-export class WireChannelComponent {
+export class WireChannelComponent implements OnInit {
   rewards: WireRewardsStruc;
+
+  @Input() channelV2Design: boolean = false;
 
   @Input('rewards') set _rewards(rewards: WireRewardsStruc) {
     if (rewards) {
@@ -27,9 +29,10 @@ export class WireChannelComponent {
     }
   }
 
-  @Output('rewardsChange') rewardsChangeEmitter: EventEmitter<
+  @Output('rewardsChange')
+  rewardsChangeEmitter: EventEmitter<WireRewardsStruc> = new EventEmitter<
     WireRewardsStruc
-  > = new EventEmitter<WireRewardsStruc>();
+  >();
 
   @Input() channel: any;
 
@@ -133,10 +136,10 @@ export class WireChannelComponent {
     if (!type) {
       return (
         isOwner ||
-        (this.rewards.description ||
-          (this.rewards.rewards.points && this.rewards.rewards.points.length) ||
-          (this.rewards.rewards.money && this.rewards.rewards.money.length) ||
-          (this.rewards.rewards.tokens && this.rewards.rewards.tokens.length))
+        this.rewards.description ||
+        (this.rewards.rewards.points && this.rewards.rewards.points.length) ||
+        (this.rewards.rewards.money && this.rewards.rewards.money.length) ||
+        (this.rewards.rewards.tokens && this.rewards.rewards.tokens.length)
       );
     }
 
@@ -150,6 +153,12 @@ export class WireChannelComponent {
       (isOwner ||
         (this.rewards.rewards[type] && this.rewards.rewards[type].length))
     );
+  }
+
+  shouldShowTitle() {
+    return this.channelV2Design
+      ? this.session.getLoggedInUser().guid === this.channel.guid
+      : true;
   }
 
   getCurrentTypeLabel() {

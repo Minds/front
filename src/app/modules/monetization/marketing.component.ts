@@ -5,6 +5,8 @@ import {
 } from '@angular/core';
 
 import { Client } from '../../common/api/client.service';
+import { ConfigsService } from '../../common/services/configs.service';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'm-monetization--marketing',
@@ -12,13 +14,21 @@ import { Client } from '../../common/api/client.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MonetizationMarketingComponent {
-  minds: Minds = window.Minds;
-  user = window.Minds.user;
+  readonly cdnAssetsUrl: string;
+  user;
   showOnboardingForm: boolean = false;
 
-  constructor(private client: Client, private cd: ChangeDetectorRef) {}
+  constructor(
+    private client: Client,
+    private cd: ChangeDetectorRef,
+    configs: ConfigsService,
+    private session: Session
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
+    this.user = this.session.getLoggedInUser();
     if (this.user) this.load();
   }
 

@@ -7,6 +7,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { JitsiConfig, VideoChatService } from './videochat.service';
+import { Session } from '../../services/session';
+import { ConfigsService } from '../../common/services/configs.service';
 
 declare const JitsiMeetExternalAPI: any;
 
@@ -15,7 +17,6 @@ declare const JitsiMeetExternalAPI: any;
   templateUrl: './videochat.component.html',
 })
 export class VideoChatComponent implements OnInit {
-  minds = window.Minds;
   isActive$;
   isFullWidth$;
 
@@ -26,6 +27,8 @@ export class VideoChatComponent implements OnInit {
 
   constructor(
     private service: VideoChatService,
+    private session: Session,
+    private mindsConfigs: ConfigsService,
     private cd: ChangeDetectorRef
   ) {}
 
@@ -39,12 +42,15 @@ export class VideoChatComponent implements OnInit {
           this.isActive = false;
         }
         this.cd.markForCheck();
-        this.cd.detectChanges();
+        if (!this.cd['destroyed']) {
+          this.cd.detectChanges();
+        }
       }
     );
   }
 
   ngOnDestroy() {
+    this.cd.detach();
     this.service.deactivate();
     this.isActive$.unsubscribe();
   }
@@ -59,7 +65,9 @@ export class VideoChatComponent implements OnInit {
       roomName: this.configs.roomName,
       width: '100%',
       parentNode: this.meet.nativeElement,
-      avatarUrl: `${this.minds.cdn_url}icon/${this.minds.user.guid}/large/${this.minds.user.icontime}`,
+      avatarUrl: `${this.mindsConfigs.get('cdn_url')}icon/${
+        this.session.getLoggedInUser().guid
+      }/large/${this.session.getLoggedInUser().icontime}`,
       interfaceConfigOverwrite: {
         // filmStripOnly: true,
         DEFAULT_REMOTE_DISPLAY_NAME: this.configs.username,
@@ -96,7 +104,9 @@ export class VideoChatComponent implements OnInit {
     );
     api.executeCommand(
       'avatarUrl',
-      `${this.minds.cdn_url}icon/${this.minds.user.guid}/large/${this.minds.user.icontime}`
+      `${this.mindsConfigs.get('cdn_url')}icon/${
+        this.session.getLoggedInUser().guid
+      }/large/${this.session.getLoggedInUser().icontime}`
     );
 
     api.on('videoConferenceLeft', () => {

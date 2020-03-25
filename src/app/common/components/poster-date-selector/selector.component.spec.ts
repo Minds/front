@@ -6,7 +6,6 @@ import {
   tick,
 } from '@angular/core/testing';
 import { PosterDateSelectorComponent } from './selector.component';
-import { MaterialDateTimePickerDirective } from '../../directives/material/datetimepicker.directive';
 import { FormsModule } from '@angular/forms';
 import { MockComponent } from '../../../utils/mock';
 
@@ -18,11 +17,17 @@ describe('PosterDateSelectorComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         PosterDateSelectorComponent,
-        MaterialDateTimePickerDirective,
         MockComponent({
-          selector: 'm-tooltip',
+          selector: 'm-date-selector',
           template: '<ng-content></ng-content>',
-          inputs: ['icon'],
+          inputs: [
+            'date',
+            'hideInput',
+            'tooltipIcon',
+            'tooltipText',
+            'i18n',
+            'calendarType',
+          ],
         }),
       ],
       imports: [FormsModule],

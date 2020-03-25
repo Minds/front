@@ -1,13 +1,21 @@
-context('Channel image upload', () => {
+/**
+ * Skipping until sandbox behaves consistently as currently when posting,
+ * on the sandboxes it does not show your latest image after you have posted it.
+ * The below code should be functioning correctly once this is resolved.
+ */ 
+context.skip('Channel image upload', () => {
   before(() => {
     cy.getCookie('minds_sess')
     .then((sessionCookie) => {
       if (sessionCookie === null) {
-       return cy.login(true);
+        return cy.login(true);
       }
     });
-  });
 
+    cy.visit('/newsfeed/subscriptions')
+      .location('pathname')
+      .should('eq', '/newsfeed/subscriptions');
+  });
   beforeEach(()=> {
     cy.preserveCookies();
     cy.server();

@@ -1,0 +1,229 @@
+<div *ngIf="!init" class="m-settingsV2__spinner">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+<div *ngIf="init" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-settingsV2__subheader">Email me when</div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label
+          for="unread-notifications"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >I have unread notifications
+          <input
+            type="checkbox"
+            id="unread-notifications"
+            name="unread-notifications"
+            class="form-control"
+            data-minds="unread-notifications"
+            [readonly]="inProgress"
+            (click)="change()"
+            [(ngModel)]="notifications.when.unread_notifications"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label
+          for="wire-received"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >I receive a wire
+          <input
+            type="checkbox"
+            id="wire-received"
+            name="wire-received"
+            class="form-control"
+            data-minds="wire-received"
+            [readonly]="inProgress"
+            (click)="change()"
+            [(ngModel)]="notifications.when.wire_received"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label
+          for="boost-completed"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >My boost has been completed
+          <input
+            type="checkbox"
+            id="boost-completed"
+            name="boost-completed"
+            class="form-control"
+            data-minds="boost-completed"
+            [readonly]="inProgress"
+            (click)="change()"
+            [(ngModel)]="notifications.when.boost_completed"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+    <div class="m-settingsV2__subheader">Email me with</div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label for="top-posts" class="m-form__customInputWrapper__checkbox" i18n
+          >Top posts from my network
+          <input
+            type="checkbox"
+            id="top-posts"
+            name="top-posts"
+            class="form-control"
+            data-minds="top-posts"
+            [readonly]="inProgress"
+            (click)="change()"
+            [ngModel]="!!notifications.with.top_posts"
+            (ngModelChange)="onTopPostsCheckboxChange($event)"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label
+          for="channel-improvement-tips"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >Tips on how to improve my channel
+          <input
+            type="checkbox"
+            id="channel-improvement-tips"
+            name="channel-improvement-tips"
+            class="form-control"
+            data-minds="channel-improvement-tips"
+            [readonly]="inProgress"
+            (click)="change()"
+            [(ngModel)]="notifications.with.channel_improvement_tips"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label
+          for="missed-since-login"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >Things I've missed since my last login
+          <input
+            type="checkbox"
+            id="missed-since-login"
+            name="missed-since-login"
+            class="form-control"
+            data-minds="missed-since-login"
+            [readonly]="inProgress"
+            (click)="change()"
+            [(ngModel)]="notifications.with.posts_missed_since_login"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label
+          for="new_channels"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >New channels to subscribe to
+          <input
+            type="checkbox"
+            id="new_channels"
+            name="new_channels"
+            class="form-control"
+            data-minds="new_channels"
+            [readonly]="inProgress"
+            (click)="change()"
+            [(ngModel)]="notifications.with.new_channels"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="m-settingsV2__subheader">Keep me updated with</div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label
+          for="minds_news"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >News about new Minds products and features
+          <input
+            type="checkbox"
+            id="minds_news"
+            name="minds_news"
+            class="form-control"
+            data-minds="unread-notifications"
+            [readonly]="inProgress"
+            (click)="change()"
+            [(ngModel)]="notifications.global.unread_notifications"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label
+          for="minds-tips"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >Tips on how to use Minds
+          <input
+            type="checkbox"
+            id="minds-tips"
+            name="minds-tips"
+            class="form-control"
+            data-minds="minds-tips"
+            [readonly]="inProgress"
+            (click)="change()"
+            [(ngModel)]="notifications.global.minds_tips"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+    <div class="m-form__field--checkbox">
+      <div class="m-form__row--input">
+        <label
+          for="exclusive-promotions"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >Exclusive promotions
+          <input
+            type="checkbox"
+            id="exclusive-promotions"
+            name="exclusive-promotions"
+            class="form-control"
+            data-minds="exclusive-promotions"
+            [readonly]="inProgress"
+            (click)="change()"
+            [(ngModel)]="notifications.global.exclusive_promotions"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Update Preferences
+    </m-shadowboxSubmitButton>
+  </div>
+</div>

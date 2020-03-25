@@ -38,6 +38,12 @@ export class ChannelSubscriptions {
           return;
         }
 
+        if (response['load-next']) {
+          this.offset = response['load-next'];
+        } else {
+          this.moreData = false;
+        }
+
         this.users = this.users.concat(response.users);
 
         this.offset = response['load-next'];

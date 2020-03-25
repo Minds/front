@@ -8,6 +8,13 @@
 
   @media screen and (max-width: $min-tablet) {
     padding-left: 0;
+    flex-wrap: wrap;
+  }
+
+  &.m-topbar--navigation__centered {
+    max-width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
   }
 
   &:not(.m-topbar--navigation--text-only) .m-topbar--navigation--item span {

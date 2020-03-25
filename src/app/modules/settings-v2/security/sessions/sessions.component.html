@@ -1,0 +1,17 @@
+<div class="m-formLayout--buttonLeft">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--checkbox stretchedField">
+      <div class="m-form__row--label">
+        <label i18n
+          >You currently have {{ openSessions }} open {openSessions, plural, =1
+          {session} other {sessions}}.</label
+        >
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton color="red" (click)="closeAllSessions()">
+      Close all sessions
+    </m-shadowboxSubmitButton>
+  </div>
+</div>

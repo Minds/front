@@ -14,11 +14,8 @@ import { Session } from '../../../../../../services/session';
 })
 export class AlbumCard {
   entity: any;
-  minds: {};
 
-  constructor(public session: Session, public client: Client) {
-    this.minds = window.Minds;
-  }
+  constructor(public session: Session, public client: Client) {}
 
   set object(value: any) {
     this.entity = value;

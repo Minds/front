@@ -1,4 +1,18 @@
+<div *ngIf="eligible === false">
+  <p>
+    Due to Stripe's
+    <a href="https://stripe.com/restricted-businesses" target="_blank">
+      Terms of Use</a
+    >, this feature is currently unavailable for any channel determined to be
+    not safe for work (NSFW). If you are impacted by Stripe's terms and still
+    wish to monetize your channel, please consider onboarding to receive
+    payments in <a (click)="openBtc()">Bitcoin</a>,
+    <a routerLink="/wallet/tokens/addresses">Ether</a> or
+    <a routerLink="/wallet/tokens/addresses">Minds Tokens</a>.
+  </p>
+</div>
 <form
+  *ngIf="eligible === true"
   (submit)="submit()"
   [formGroup]="form"
   #f="ngForm"
@@ -94,7 +108,7 @@
       />
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col" *ngIf="isCountry(['CA', 'HK', 'SG'])">
+    <div class="mdl-cell mdl-cell--6-col" *ngIf="isCountry(['HK', 'SG'])">
       <label>
         <ng-container i18n="@@MONETIZATION__ONBOARDING__PERSONAL_ID_LABEL"
           >Personal ID</ng-container
@@ -177,15 +191,14 @@
         formControlName="state"
         type="text"
         placeholder="State or province"
-        i18n-placeholder="@@MONETIZATION__ONBOARDING__STATE_PROVINCE_PLACEHOLDER"
+        i18n-placeholder="
+           @@MONETIZATION__ONBOARDING__STATE_PROVINCE_PLACEHOLDER
+        "
         class="m-input"
       />
     </div>
 
-    <div
-      class="mdl-cell mdl-cell--6-col"
-      *ngIf="!isCountry(['HK', 'IE', 'JP'])"
-    >
+    <div class="mdl-cell mdl-cell--6-col" *ngIf="!isCountry(['HK', 'JP'])">
       <label i18n="@@MONETIZATION__ONBOARDING__ZIP_CODE_LABEL"
         >Zip (Postal) Code</label
       >
@@ -198,15 +211,9 @@
       />
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col" *ngIf="isCountry(['JP'])">
+    <div class="mdl-cell mdl-cell--6-col">
       <label i18n="@@MONETIZATION__ONBOARDING__PHONE_LABEL">Phone Number</label>
-      <input
-        formControlName="phoneNumber"
-        type="tel"
-        placeholder="eg. 123-456789"
-        i18n-placeholder="@@MONETIZATION__ONBOARDING__PHONE_PLACEHOLDER"
-        class="m-input"
-      />
+      <m-phone-input formControlName="phoneNumber"></m-phone-input>
     </div>
   </div>
 

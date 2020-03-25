@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, PLATFORM_ID } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
@@ -6,7 +6,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
 import { Session } from '../../services/session';
-import { MindsTitle } from '../../services/ux/title';
 
 import { CommonModule } from '../../common/common.module';
 
@@ -17,6 +16,8 @@ import { NotificationsComponent } from './notifications.component';
 
 import { NotificationService } from './notification.service';
 import { NotificationsToasterComponent } from './toaster.component';
+import { SiteService } from '../../common/services/site.service';
+import { MetaService } from '../../common/services/meta.service';
 
 @NgModule({
   imports: [
@@ -38,7 +39,14 @@ import { NotificationsToasterComponent } from './toaster.component';
     {
       provide: NotificationService,
       useFactory: NotificationService._,
-      deps: [Session, Client, SocketsService, MindsTitle],
+      deps: [
+        Session,
+        Client,
+        SocketsService,
+        MetaService,
+        PLATFORM_ID,
+        SiteService,
+      ],
     },
   ],
   exports: [

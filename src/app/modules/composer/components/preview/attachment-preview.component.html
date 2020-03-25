@@ -1,0 +1,24 @@
+<ng-container *ngIf="attachmentPreviewResource?.sourceType === 'image'">
+  <img
+    class="m-composerPreview__image"
+    alt="Uploaded image"
+    i18n-alt
+    [src]="getUrl(attachmentPreviewResource)"
+    (load)="fitForImage(image)"
+    #image
+  />
+</ng-container>
+
+<ng-container *ngIf="attachmentPreviewResource?.sourceType === 'video'">
+  <video
+    muted
+    title="Uploaded video"
+    class="m-composerPreview__video"
+    (loadedmetadata)="fitForVideo(video)"
+    #video
+  >
+    <source [src]="getUrl(attachmentPreviewResource)" />
+  </video>
+</ng-container>
+
+<ng-content></ng-content>

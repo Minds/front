@@ -1,0 +1,304 @@
+<div class="mf-jumpAnchor" #topAnchor></div>
+
+<m-marketing
+  class="m-nodes__marketing"
+  pageTitle="Minds Rewards"
+  i18n-pageTitle
+>
+  <div class="m-marketing__main m-marketing__section--style-2">
+    <div class="m-grid m-marketing__wrapper">
+      <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
+        <h1 i18n>
+          Minds Rewards
+        </h1>
+
+        <h2 ngPreserveWhitespaces i18n>
+          Earn tokens for your
+          <em>contributions to the network</em>
+        </h2>
+
+        <p class="m-marketing__description" i18n>
+          Each day you will receive a contribution score for your activity on
+          the network.
+        </p>
+
+        <p class="m-marketing__description" i18n>
+          This score determines your share of the daily rewards pool and results
+          in a payout of Minds Tokens, which can be used to support other
+          channels or boost your content for more reach.
+        </p>
+
+        <div class="">
+          <button
+            class="mf-button mf-button--alt"
+            (click)="action(); $event.preventDefault()"
+            i18n
+          >
+            Join Rewards
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
+      >
+        <span>
+          <img
+            [src]="cdnAssetsUrl + 'assets/product-pages/rewards/rewards-1.jpg'"
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <ng-container slot="2">
+    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
+
+    <!-- Section 2 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Engagement</h2>
+
+          <p class="m-marketing__description" i18n>
+            We reward you for the amount of unique engagement received on your
+            content. In order to prevent fraud, you can only receive credit once
+            per engagement type per day from verified channels.
+          </p>
+
+          <ul class="m-marketing__points">
+            <li i18n>
+              Votes =
+              <em
+                >{contributionValues.votes, plural, =1
+                {{{contributionValues.votes}} point} other
+                {{{contributionValues.votes}} points}}</em
+              >
+            </li>
+
+            <li i18n>
+              Comments =
+              <em
+                >{contributionValues.comments, plural, =1
+                {{{contributionValues.comments}} point} other
+                {{{contributionValues.comments}} points}}</em
+              >
+            </li>
+
+            <li i18n>
+              Subscribers =
+              <em
+                >{contributionValues.subscribers, plural, =1
+                {{{contributionValues.subscribers}} point} other
+                {{{contributionValues.subscribers}} points}}</em
+              >
+            </li>
+
+            <li i18n>
+              Reminds =
+              <em
+                >{contributionValues.reminds, plural, =1
+                {{{contributionValues.reminds}} point} other
+                {{{contributionValues.reminds}} points}}</em
+              >
+            </li>
+          </ul>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="
+                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-2.jpg'
+              "
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="
+                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-2-ux.png'
+              "
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Referrals</h2>
+
+          <p class="m-marketing__description" i18n>
+            You deserve credit for the people you bring to the Minds network. We
+            reward you with 50 points for every new user that signs up through
+            your referral code and joins our Rewards program.
+          </p>
+
+          <ul class="m-marketing__points">
+            <li i18n>
+              Referrals =
+              <em
+                >{contributionValues.referrals, plural, =1
+                {{{contributionValues.referrals}} point} other
+                {{{contributionValues.referrals}} points}}</em
+              >
+            </li>
+          </ul>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="
+                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-3.jpg'
+              "
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="
+                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-3-ux.png'
+              "
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Development</h2>
+
+          <p class="m-marketing__description" i18n>
+            All of our development is publicly available on Gitlab. Any
+            contribution you make to the code will be manually reviewed in order
+            to determine appropriate payouts in Minds Tokens, Bitcoin, Ether or
+            USD.
+          </p>
+
+          <div class="m-marketing__actionButtons">
+            <a
+              class="mf-button mf-button--smaller mf-button--hollow-mono"
+              href="https://gitlab.com/minds"
+              target="_blank"
+              i18n
+            >
+              View Sourcecode
+            </a>
+          </div>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="
+                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-4.jpg'
+              "
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="
+                cdnAssetsUrl + 'assets/product-pages/rewards/rewards-4-ux.png'
+              "
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final section -->
+
+    <div class="m-marketing__section m-marketing__section--tail">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Other Rewards</h2>
+        </div>
+      </div>
+
+      <div class="m-grid m-marketing__wrapper m-marketingSectionTail__table">
+        <div
+          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>OnChain Transactions</h3>
+
+          <p class="m-marketing__description" i18n>
+            Earn
+            <em
+              >{contributionValues.onchain_tx, plural, =1
+              {{{contributionValues.onchain_tx}} point} other
+              {{{contributionValues.onchain_tx}} points}}</em
+            >
+            every time you perform an OnChain transaction with your Minds
+            Tokens.
+          </p>
+        </div>
+
+        <div
+          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Jury Duty</h3>
+
+          <p class="m-marketing__description" i18n>
+            Earn
+            <em
+              >{contributionValues.jury_duty, plural, =1
+              {{{contributionValues.jury_duty}} point} other
+              {{{contributionValues.jury_duty}} points}}</em
+            >
+            every time you participate in our Jury system to review appeals on
+            content moderation decisions.
+          </p>
+        </div>
+
+        <div
+          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Hourly Check-ins</h3>
+
+          <p class="m-marketing__description" i18n>
+            Earn
+            <em
+              >{contributionValues.checkin, plural, =1
+              {{{contributionValues.checkin}} point} other
+              {{{contributionValues.checkin}} points}}</em
+            >
+            every hour that you check in to the app and perform an action, such
+            as voting or commenting.
+          </p>
+        </div>
+      </div>
+
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
+        >
+          <button class="mf-button mf-button--alt" (click)="scrollToTop()" i18n>
+            Join Rewards
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</m-marketing>

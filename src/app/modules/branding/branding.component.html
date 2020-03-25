@@ -8,12 +8,18 @@
 
   <div class="m-marketing--contents m-layout--row m-layout--wrap">
     <div class="m-layout--cell">
-      <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" download />
+      <img
+        [src]="configs.get('cdn_assets_url') + 'assets/logos/logo.svg'"
+        download
+      />
       <label i18n="@@BRANDING__FULL_LOGO_LABEL">Full Logo</label>
     </div>
 
     <div class="m-layout--cell">
-      <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'" download />
+      <img
+        [src]="configs.get('cdn_assets_url') + 'assets/logos/bulb.svg'"
+        download
+      />
       <label i18n="@@BRANDING__BULB_LABEL">Bulb</label>
     </div>
   </div>

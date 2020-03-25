@@ -1,10 +1,15 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Injectable, Inject, APP_INITIALIZER } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { MonetizationOverviewModule } from '../monetization/monetization.overview.module';
+import {
+  MONETIZATION_REVENUE_COMPONENTS,
+  RevenueConsoleComponent,
+  RevenueOptionsComponent,
+} from '../monetization/monetization.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { AdsModule } from '../ads/ads.module';
 import { WireModule } from '../wire/wire.module';
@@ -22,7 +27,6 @@ import { WalletToggleComponent } from './toggle.component';
 import { WalletFlyoutComponent } from './flyout/flyout.component';
 import { WalletTokensComponent } from './tokens/tokens.component';
 import { WalletPointsComponent } from './points/points.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { WalletTokenSettingsComponent } from './tokens/settings/settings.component';
 import { WalletTokenTransactionsComponent } from './tokens/transactions/transactions.component';
 import { WalletTokenContributionsComponent } from './tokens/contributions/contributions.component';
@@ -45,47 +49,103 @@ import { WalletTokenContributionsOverviewComponent } from './tokens/contribution
 import { WalletTokenContributionsChartComponent } from './tokens/contributions/chart.component';
 import { WalletToken101Component } from './tokens/101/101.component';
 import { ModalsModule } from '../modals/modals.module';
-import { WalletTokenTestnetComponent } from './tokens/testnet/testnet.component';
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
 import { WalletUSDBalanceComponent } from './usd/balance.component';
+import { WalletV2Module } from './v2/wallet-v2.module';
+import { WALLET_V2_ROUTES } from '../wallet/v2/wallet-v2.module';
+import { FeaturesService } from '../../services/features.service';
+import { ConfigsService } from '../../common/services/configs.service';
+import { WalletDashboardComponent } from './v2/dashboard.component';
+import { BlockchainConsoleComponent } from '../blockchain/console/console.component';
+import { ChartV2Module } from '../analytics/components/chart-v2/chart-v2.module';
 
-const walletRoutes: Routes = [
+export const WALLET_ROUTES: Routes = [
   {
-    path: 'wallet',
+    path: '',
     component: WalletComponent,
+    data: {
+      title: 'Wallet',
+      description: 'Manage all of your transactions and earnings on Minds',
+      ogImage: '/assets/photos/graph.jpg',
+    },
     children: [
       { path: '', redirectTo: 'tokens', pathMatch: 'full' },
       { path: 'overview', redirectTo: 'tokens', pathMatch: 'full' },
       { path: '101', redirectTo: 'tokens/101', pathMatch: 'full' },
-      // { path: 'overview', component: WalletOverviewComponent },
-      // { path: 'points', component: WalletPointsComponent },
-      // { path: 'points/purchase', component: WalletPurchaseComponent },
       {
         path: 'tokens',
         component: WalletTokensComponent,
+        data: {
+          title: 'Tokens',
+          description: 'Keep track of your tokens',
+          ogImage: '/assets/photos/graph.jpg',
+        },
         children: [
           { path: '', redirectTo: 'contributions', pathMatch: 'full' },
           {
             path: 'transactions/:contract',
             component: WalletTokenTransactionsComponent,
           },
-          { path: 'transactions', component: WalletTokenTransactionsComponent },
-          { path: 'withdraw', component: WalletTokenWithdrawComponent },
+          {
+            path: 'transactions',
+            component: WalletTokenTransactionsComponent,
+            data: {
+              title: 'Transactions Ledger',
+            },
+          },
+          {
+            path: 'withdraw',
+            component: WalletTokenWithdrawComponent,
+            data: {
+              title: 'Withdraw',
+            },
+          },
           { path: 'contributions/join', component: WalletTokenJoinComponent },
           {
             path: 'contributions',
             component: WalletTokenContributionsComponent,
+            data: {
+              title: 'Contributions',
+            },
           },
-          { path: 'addresses', component: WalletTokenAddressesComponent },
-          { path: '101', component: WalletToken101Component },
-          { path: 'testnet', component: WalletTokenTestnetComponent },
-          { path: 'referrals', component: ReferralsComponent },
+          {
+            path: 'addresses',
+            component: WalletTokenAddressesComponent,
+            data: {
+              title: 'Token / ETH Addresses',
+            },
+          },
+          {
+            path: '101',
+            component: WalletToken101Component,
+            data: {
+              title: 'Token 101',
+              description: 'Everything you need to know about Minds Tokens',
+              ogImage: 'assets/photos/canyon.jpg',
+            },
+          },
+          {
+            path: 'referrals',
+            component: ReferralsComponent,
+            data: {
+              title: 'Referrals',
+            },
+          },
+          {
+            path: '**',
+            redirectTo: 'contributions',
+          },
         ],
       },
       {
         path: 'usd',
         component: WalletUSDComponent,
+        data: {
+          title: 'USD',
+          description: 'Keep track of your USD transactions',
+          ogImage: '/assets/photos/graph.jpg',
+        },
         children: [
           { path: '', redirectTo: 'transactions', pathMatch: 'full' },
           { path: 'transactions', component: WalletUSDTransactionsComponent },
@@ -93,6 +153,14 @@ const walletRoutes: Routes = [
           { path: 'payouts', component: WalletUSDPayoutsComponent },
           { path: 'settings', component: WalletUSDSettingsComponent },
           { path: 'onboarding', component: WalletUSDOnboardingComponent },
+        ],
+      },
+      {
+        path: 'crypto',
+        component: WalletComponent,
+        children: [
+          { path: '', redirectTo: 'overview', pathMatch: 'full' },
+          { path: 'overview', component: BlockchainConsoleComponent },
         ],
       },
       { path: 'wire', component: WalletWireComponent },
@@ -104,13 +172,13 @@ const walletRoutes: Routes = [
 @NgModule({
   imports: [
     NgCommonModule,
-    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
     CheckoutModule,
     MonetizationOverviewModule,
-    RouterModule.forChild(walletRoutes),
+    RouterModule,
+    RouterModule.forChild([...WALLET_ROUTES, ...WALLET_V2_ROUTES]),
     AdsModule,
     WireModule,
     BlockchainModule,
@@ -118,6 +186,8 @@ const walletRoutes: Routes = [
     PlusModule,
     ModalsModule,
     ReferralsModule,
+    WalletV2Module,
+    ChartV2Module,
   ],
   declarations: [
     WalletComponent,
@@ -151,8 +221,8 @@ const walletRoutes: Routes = [
     WalletTokenContributionsOverviewComponent,
     WalletTokenContributionsChartComponent,
     WalletToken101Component,
-    WalletTokenTestnetComponent,
     WalletUSDBalanceComponent,
+    ...MONETIZATION_REVENUE_COMPONENTS,
   ],
   exports: [
     WalletComponent,
@@ -166,7 +236,31 @@ const walletRoutes: Routes = [
     WalletBalanceUSDComponent,
     WalletBalanceTokensComponent,
     WalletUSDBalanceComponent,
+    ...MONETIZATION_REVENUE_COMPONENTS,
   ],
-  entryComponents: [WalletComponent, WalletUSDTermsComponent],
+  entryComponents: [
+    WalletComponent,
+    WalletUSDTermsComponent,
+    WalletTokensComponent,
+    WalletTokenTransactionsComponent,
+    WalletTokenWithdrawComponent,
+    WalletTokenJoinComponent,
+    WalletTokenContributionsComponent,
+    WalletTokenAddressesComponent,
+    WalletToken101Component,
+    ReferralsComponent,
+    WalletUSDComponent,
+    WalletUSDTransactionsComponent,
+    WalletUSDEarningsComponent,
+    WalletUSDPayoutsComponent,
+    WalletUSDSettingsComponent,
+    WalletUSDOnboardingComponent,
+    WalletWireComponent,
+    WalletOverviewComponent,
+    WalletDashboardComponent,
+    BlockchainConsoleComponent,
+    RevenueConsoleComponent,
+    RevenueOptionsComponent,
+  ],
 })
 export class WalletModule {}

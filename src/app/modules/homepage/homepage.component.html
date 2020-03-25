@@ -2,13 +2,13 @@
   <div class="m-homepage--hero--video">
     <video autoplay muted loop *ngIf="!videoError; else fallback">
       <source
-        [src]="minds.cdn_assets_url + 'assets/videos/what-1/what-1.mp4'"
+        [src]="cdnAssetsUrl + 'assets/videos/what-1/what-1.mp4'"
         type="video/mp4"
         (error)="onSourceError()"
       />
     </video>
     <ng-template #fallback>
-      <img [src]="minds.cdn_assets_url + 'assets/photos/cover.png'" />
+      <img [src]="cdnAssetsUrl + 'assets/photos/cover.png'" />
     </ng-template>
   </div>
 
@@ -49,19 +49,19 @@
 
 <div class="mdl-grid mdl-grid--no-spacing m-homepage--footer">
   <section class="mdl-cell mdl-cell--12-col m-footer">
-    <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" />
+    <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
     <ul class="m-footer-nav m-footer-nav-inline">
       <li
         *ngFor="let page of navigation.getItems('footer')"
         class="m-footer-nav-item "
       >
         <a
-          *ngIf="page.path && page.path.indexOf('p/') > -1"
+          *ngIf="pagesService.isInternalLink(page.path)"
           [routerLink]="[page.path]"
           >{{ page.title }}</a
         >
         <a
-          *ngIf="page.path.indexOf('p/') < 0"
+          *ngIf="!pagesService.isInternalLink(page.path)"
           [href]="page.path"
           target="_blank"
           >{{ page.title }}</a
@@ -69,7 +69,7 @@
       </li>
     </ul>
     <span class="copyright" i18n="@@M__COMMON__COPYRIGHT_YEAR"
-      >&#169; Minds {{ '2019' }}</span
+      >&#169; Minds {{ '2020' }}</span
     >
   </section>
 </div>

@@ -1,13 +1,13 @@
 <div class="m-notice--message">
   <ng-container *ngIf="cookiesEnabled"
-    >Minds uses cookies to ensure you get the best experience. By continuing to
-    use Minds you agree to our privacy policy or you can
-    <a (click)="toggleCookies(false)">opt-out</a>.</ng-container
+    >{{ siteTitle }} uses cookies to ensure you get the best experience. By
+    continuing to use {{ siteTitle }} you agree to Minds privacy policy or you
+    can <a (click)="toggleCookies(false)">opt-out</a>.</ng-container
   >
 
   <ng-container *ngIf="!cookiesEnabled"
-    >You have disabled cookies from Minds which limits your experience. Consider
-    opting back in.</ng-container
+    >You have disabled cookies from {{ siteTitle }} which limits your
+    experience. Consider opting back in.</ng-container
   >
 </div>
 <ng-container *ngIf="cookiesEnabled">

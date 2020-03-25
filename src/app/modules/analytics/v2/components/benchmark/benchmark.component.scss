@@ -1,0 +1,40 @@
+.m-analytics__benchmarkValueWrapper > div {
+  display: inline-block;
+}
+.m-analytics__benchmarkLabelWrapper {
+  padding-bottom: 12px;
+  min-width: 190px;
+  & > div {
+    display: inline-block;
+  }
+}
+
+.m-analytics__benchmarkLabel {
+  font-size: 18px;
+  @include m-theme() {
+    color: themed($m-grey-300);
+  }
+}
+
+.m-analytics__benchmarkValue {
+  font-size: 24px;
+  @include m-theme() {
+    color: themed($m-grey-800);
+  }
+}
+
+.m-analytics__benchmarkUnit {
+  font-size: 15px;
+  padding-left: 6px;
+}
+
+.m-analytics__benchmarkContainer {
+  &.noChart {
+    .m-analytics__benchmarkValue {
+      font-size: 42px;
+    }
+    .m-analytics__benchmarkLabelWrapper {
+      padding-bottom: 18px;
+    }
+  }
+}

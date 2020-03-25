@@ -4,7 +4,6 @@ import { Client, Upload } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-form-city-finder',
   outputs: ['done'],
   templateUrl: 'city-finder.component.html',
@@ -41,14 +40,16 @@ export class CityFinderComponent {
 
   setCity(row: any) {
     this.cities = [];
-    if (row.address.city) window.Minds.user.city = row.address.city;
-    if (row.address.town) window.Minds.user.city = row.address.town;
-    this.city = window.Minds.user.city;
+    if (row.address.city)
+      this.session.getLoggedInUser().city = row.address.city;
+    if (row.address.town)
+      this.session.getLoggedInUser().city = row.address.town;
+    this.city = this.session.getLoggedInUser().city;
     this.inProgress = true;
     this.client
       .post('api/v1/channel/info', {
         coordinates: row.lat + ',' + row.lon,
-        city: window.Minds.user.city,
+        city: this.session.getLoggedInUser().city,
       })
       .then((response: any) => {
         this.inProgress = false;

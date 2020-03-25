@@ -1,5 +1,7 @@
-<div class="mdl-textfield mdl-js-textfield">
-  <i class="material-icons" (click)="setFocus()">search</i>
+<div class="mdl-textfield mdl-js-textfield" [mdl]>
+  <i class="material-icons m-searchBar__searchIcon" (click)="setFocus()"
+    >search</i
+  >
 
   <!--<span class="m-search-bar--context" *ngIf="hasSearchContext"
     (click)="setFocus()"
@@ -17,9 +19,17 @@
     type="text"
     id="search"
     autocomplete="off"
+    placeholder="Search Minds"
     #searchInput
   />
   <label class="mdl-textfield__label" for="search"></label>
+  <i
+    class="material-icons m-searchBar__cleanIcon"
+    (click)="clean()"
+    *ngIf="showCleanIcon && q"
+  >
+    close
+  </i>
 
   <m-search--bar-suggestions
     (click)="unsetFocus()"

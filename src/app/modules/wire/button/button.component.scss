@@ -6,7 +6,6 @@
   */
   padding: 3px;
   height: auto;
-  line-height: 18px;
   cursor: pointer;
   @include m-theme() {
     color: themed($m-blue);
@@ -21,6 +20,7 @@
   > .ion-icon {
     //  transform: scale(1.6);
     font-size: 18px;
+    vertical-align: middle;
   }
 
   span {

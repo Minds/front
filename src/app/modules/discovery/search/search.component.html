@@ -1,0 +1,125 @@
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a
+      routerLink="./"
+      routerLinkActive="m-tabs__tab--selected"
+      [queryParams]="{ q: q, f: 'top' }"
+      >Top</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
+      routerLink="./"
+      routerLinkActive="m-tabs__tab--selected"
+      [queryParams]="{ q: q, f: 'latest' }"
+      >Latest</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
+      routerLink="./"
+      routerLinkActive="m-tabs__tab--selected"
+      [queryParams]="{ q: q, f: 'channels' }"
+      >Channels</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
+      routerLink="./"
+      routerLinkActive="m-tabs__tab--selected"
+      [queryParams]="{ q: q, f: 'groups' }"
+      >Groups</a
+    >
+  </div>
+</div>
+
+<div class="m-goBack">
+  <a routerLink="../" [queryParams]="{ reload: false }">
+    <i class="material-icons">arrow_back</i><span>Back</span>
+  </a>
+</div>
+
+<div class="m-discoverySearch__feed">
+  <div
+    *ngFor="let entity$ of entities$ | async"
+    class="m-discoverySearchFeed__item"
+    [class.m-discoverySearchFeed__item--user]="entity$.value.type === 'user'"
+    [class.m-discoverySearchFeed__item--group]="entity$.value.type === 'group'"
+  >
+    <ng-container [ngSwitch]="entity$.value.type">
+      <ng-template ngSwitchCase="user">
+        <a [routerLink]="['/', entity$.value.username]">
+          <div
+            class="m-discoverySearchFeedItem__avatar"
+            [style.background-image]="
+              'url(' + cdnUrl + '/icon/' + entity$.value.guid + ')'
+            "
+          ></div>
+          <div class="m-discoverySearchFeedItem__body">
+            <h4>
+              {{ entity$.value.name }} (<u>@</u>{{ entity$.value.username }})
+            </h4>
+            <span
+              >{{ entity$.value.subscribers_count | number }} subscribers</span
+            >
+            <p>
+              {{
+                entity$.value.briefdescription.length > 140
+                  ? (entity$.value.briefdescription | slice: 0:140) + '..'
+                  : entity$.value.briefdescription
+              }}
+            </p>
+          </div>
+          <div class="m-discoverySearchFeedItem__actions">
+            <minds-button-subscribe
+              [user]="entity$.value"
+            ></minds-button-subscribe>
+          </div>
+        </a>
+      </ng-template>
+      <ng-template ngSwitchCase="group">
+        <a [routerLink]="['/groups/profile/', entity$.value.guid]">
+          <div
+            class="m-discoverySearchFeedItem__avatar"
+            [style.background-image]="
+              'url(' +
+              cdnUrl +
+              'fs/v1/avatars/' +
+              entity$.value.guid +
+              '/' +
+              entity$.value.icontime +
+              ')'
+            "
+          ></div>
+          <div class="m-discoverySearchFeedItem__body">
+            <h4>{{ entity$.value.name }}</h4>
+            <span>{{ entity$.value['members:count'] | number }} members</span>
+            <p *ngIf="entity$.value.briefdescription">
+              {{
+                entity$.value.briefdescription.length > 140
+                  ? (entity$.value.briefdescription | slice: 0:140) + '..'
+                  : entity$.value.briefdescription
+              }}
+            </p>
+          </div>
+          <div class="m-discoverySearchFeedItem__actions">
+            <i class="material-icons">chevron_right</i>
+          </div>
+        </a>
+      </ng-template>
+      <ng-template ngSwitchDefault>
+        <m-activity
+          [entity]="entity$.value"
+          [displayOptions]="{ showOnlyCommentsInput: false }"
+        ></m-activity>
+      </ng-template>
+    </ng-container>
+  </div>
+  <infinite-scroll
+    distance="25%"
+    (load)="loadMore()"
+    [moreData]="hasMoreData$ | async"
+    [inProgress]="inProgress$ | async"
+  >
+  </infinite-scroll>
+</div>

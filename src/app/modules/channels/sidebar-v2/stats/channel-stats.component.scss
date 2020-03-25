@@ -1,0 +1,31 @@
+m-channelstats {
+  .m-channelStats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 7px 0;
+
+    a {
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      height: 60px;
+
+      @include m-theme() {
+        color: themed($m-black);
+      }
+
+      span {
+        line-height: 30px;
+
+        &.m-channelStats__title {
+          font-size: 13px;
+        }
+
+        &.m-channelStats__count {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}

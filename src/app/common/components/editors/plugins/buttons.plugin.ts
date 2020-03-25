@@ -443,7 +443,9 @@ export class ButtonsPlugin {
     const $input = this.$element.querySelector('.medium-media-buttons');
 
     if ($input) {
-      $input.parentNode.removeChild($input);
+      try {
+        $input.parentNode.removeChild($input);
+      } catch (e) {}
     }
   }
 

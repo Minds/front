@@ -15,6 +15,6 @@ export default function isMobileOrTablet() {
       )
     )
       check = true;
-  })(navigator.userAgent || navigator.vendor);
+  })(navigator.userAgent || navigator.vendor || '');
   return check;
 }

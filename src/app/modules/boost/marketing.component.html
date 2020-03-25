@@ -1,122 +1,207 @@
-<div class="m-marketing">
-  <div class="m-marketing--hero">
-    <div class="m-marketing--hero--video">
-      <img [src]="minds.cdn_assets_url + 'assets/photos/rocket.jpg'" />
-    </div>
+<div class="mf-jumpAnchor" #topAnchor></div>
 
-    <div class="m-marketing--hero--inner">
-      <div class="m-marketing--hero--overlay"></div>
+<m-marketing class="m-boost__marketing" pageTitle="Boost" i18n-pageTitle>
+  <div class="m-marketing__main m-marketing__section--style-2">
+    <div class="m-grid m-marketing__wrapper">
+      <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
+        <h1 i18n>
+          Boost
+        </h1>
 
-      <div class="m-marketing--hero--slogans">
-        <h1 i18n="@@BOOST__MKT__BOOST_TITLE">Boost</h1>
-        <h3 i18n="@@BOOST__MKT__PROMOTE_YOUR_CHANNEL_SUBTITLE">
-          Promote your channel and content. Expand your reach.
-        </h3>
+        <h2 ngPreserveWhitespaces i18n>
+          Expand your reach and gain
+          <em>thousands of views</em>
+        </h2>
+
+        <p class="m-marketing__description" i18n>
+          Use Minds Tokens to gain more views on your content from other active
+          channels on the network. Reach new audiences and grow your channels to
+          the next level.
+        </p>
+
+        <div class="">
+          <button
+            class="mf-button mf-button--alt"
+            (click)="action(); $event.preventDefault()"
+            i18n
+          >
+            Create Boost
+          </button>
+        </div>
       </div>
 
-      <div class="m-marketing--hero--actions">
-        <div class="m-marketing--hero--action-button" *ngIf="user">
-          <a
-            class="mdl-button mdl-button--colored mdl-color--green mdl-color-text--white"
-            routerLink="/boost/console/newsfeed/create"
-            i18n="@@BOOST__MKT__CREATE_A_BOOST_ACTION"
-          >
-            Create a boost
-          </a>
+      <div
+        class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
+      >
+        <span>
+          <img
+            [src]="cdnAssetsUrl + 'assets/product-pages/boost/boost-1.jpg'"
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <ng-container slot="2">
+    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
+
+    <!-- Section 2 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>1 token = 1,000 views</h2>
+
+          <p class="m-marketing__description" i18n>
+            Expand your reach and access new audiences. You can exchange one
+            Minds Token for 1,000 boosted views across the network.
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            Promote your content, group or channel directly in the newsfeed or
+            sidebar of other active Minds channels.
+          </p>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/boost/boost-2.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/boost/boost-2-ux.png'"
+            />
+          </span>
         </div>
       </div>
     </div>
-  </div>
 
-  <div class="m-marketing--contents m-layout--row">
-    <div
-      class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone"
-    >
-      <i class="material-icons">create</i>
-      <h2 i18n="@@BOOST__MKT__CREATE_TITLE">Create</h2>
-      <span i18n="@@BOOST__MKT__CREATE_SUBTITLE_POST"
-        >Post your best videos, images, blogs or statuses to your channel.</span
-      >
-    </div>
+    <!-- Section 3 -->
 
-    <div
-      class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone"
-    >
-      <i class="material-icons">trending_up</i>
-      <h2 i18n="@@BOOST__MKT__BOOST_TITLE">Boost</h2>
-      <span i18n="@@BOOST__MKT__BOOST_SUBTITLE_TARGET"
-        >Target your audience. Select how many views you want.</span
-      >
-    </div>
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Boost Campaigns</h2>
 
-    <div
-      class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone"
-    >
-      <i class="material-icons">refresh</i>
-      <h2 i18n="@@BOOST__MKT__GROW_TITLE">Grow</h2>
-      <span i18n="@@BOOST__MKT__GROW_SUBTITLE_GAIN"
-        >Gain subscribers. Receive engagement. Increase your contribution.</span
-      >
-    </div>
-  </div>
+          <p class="m-marketing__description" i18n>
+            Automate your content promotion by using a Boost Campaign. Set your
+            own budget, choose the length of time to promote the content and
+            decide what audience you would like to target. Then we will handle
+            the rest!
+          </p>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/boost/boost-3.jpg'"
+            />
 
-  <div class="m-marketing--statement">
-    <h2 i18n="@@BOOST__MKT__NO_RESTRICTIVE_ALGORITHMS">
-      No restrictive algorithms. Grow your audience. <br />
-      Go viral.
-    </h2>
-  </div>
-
-  <div class="m-marketing--contents m-layout--row">
-    <div
-      class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone"
-    >
-      <i class="material-icons">home</i>
-      <h2 i18n="@@BOOST__MKT__NEWSFEED_TITLE">Newsfeed</h2>
-      <span i18n="@@BOOST__MKT__NEWSFEED_DESC"
-        >Promote your content in the newsfeeds of the full network</span
-      >
-    </div>
-
-    <div
-      class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone"
-    >
-      <i class="material-icons">dashboard</i>
-      <h2 i18n="@@BOOST__MKT__SIDEBAR_TITLE">Sidebar</h2>
-      <span i18n="@@BOOST__MKT__SIDEBAR_DESC"
-        >Promote your channel, group, or media into the sidebars of the full
-        network.</span
-      >
-    </div>
-
-    <div
-      class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--6-col-phone"
-    >
-      <i class="material-icons">people</i>
-      <h2 i18n="@@BOOST__MKT__OFFERS_TITLE">Offers</h2>
-      <span i18n="@@BOOST__MKT__OFFERS_DESC"
-        >Send offers to other channels and target their audience.</span
-      >
-    </div>
-  </div>
-
-  <div class="m-marketing--hero">
-    <div class="m-marketing--hero--video">
-      <img [src]="minds.cdn_assets_url + 'assets/photos/lizard.jpg'" />
-    </div>
-    <div class="m-marketing--hero--inner">
-      <div class="m-marketing--hero--overlay"></div>
-      <div class="m-marketing--hero--slogans">
-        <h2 i18n="@@BOOST__MKT__GIVE_YOURSELF_TITLE">
-          Give yourself the best chance to earn.
-        </h2>
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/boost/boost-3-ux.png'"
+            />
+          </span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="m-marketing--faq">
-    <m-faq category="boost"></m-faq>
-  </div>
+    <!-- Section 4 -->
 
-  <m-footer></m-footer>
-</div>
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Boost Offers</h2>
+
+          <p class="m-marketing__description" i18n>
+            Cut out the middle man and send an offer directly to another channel
+            in exchange for sharing your content, group or channel on their feed
+            to their audience.
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            We want you to have the option to handle your advertising
+            relationships directly, without any risk of someone getting in the
+            way.
+          </p>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/boost/boost-4.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/boost/boost-4-ux.png'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final section -->
+
+    <div class="m-marketing__section m-marketing__section--tail">
+      <div class="m-grid m-marketing__wrapper" *ngIf="false">
+        <!-- !!! UNCOMMENT ME -->
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Other Boost features</h2>
+        </div>
+      </div>
+
+      <div
+        class="m-grid m-marketing__wrapper m-marketingSectionTail__table"
+        *ngIf="false"
+      >
+        <!-- !!! UNCOMMENT ME -->
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Track your results</h3>
+
+          <p class="m-marketing__description" i18n>
+            <!-- TBD -->
+          </p>
+        </div>
+
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Filter your boosts</h3>
+
+          <p class="m-marketing__description" i18n>
+            <!-- TBD -->
+          </p>
+        </div>
+      </div>
+
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
+        >
+          <button class="mf-button mf-button--alt" (click)="scrollToTop()" i18n>
+            Create Boost
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</m-marketing>

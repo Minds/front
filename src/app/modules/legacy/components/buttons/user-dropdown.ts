@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
@@ -115,7 +115,7 @@ import { BlockListService } from '../../../../common/services/block-list.service
         <m-nsfw-selector
           service="editing"
           [selected]="user.nsfw_lock"
-          (selected)="setNSFWLock($event)"
+          (selectedChange)="setNSFWLock($event)"
         >
         </m-nsfw-selector>
       </li>
@@ -245,58 +245,61 @@ export class UserDropdownButton {
     this.client.post('api/v2/admin/reindex', { guid: this.user.guid });
   }
 
-  block() {
-    var self = this;
+  async block() {
     this.user.blocked = true;
-    this.client
-      .put('api/v1/block/' + this.user.guid, {})
-      .then((response: any) => {
-        self.user.blocked = true;
-        this.blockListService.add(`${this.user.guid}`);
-      })
-      .catch(e => {
-        self.user.blocked = false;
-      });
+
+    try {
+      await this.client.put('api/v1/block/' + this.user.guid, {});
+      this.user.blocked = true;
+      this.blockListService.add(`${this.user.guid}`);
+    } catch (e) {
+      this.user.blocked = false;
+    }
+
+    this.userChanged.emit(this.user);
     this.showMenu = false;
   }
 
-  unBlock() {
-    var self = this;
+  async unBlock() {
     this.user.blocked = false;
-    this.client
-      .delete('api/v1/block/' + this.user.guid, {})
-      .then((response: any) => {
-        self.user.blocked = false;
-        this.blockListService.remove(`${this.user.guid}`);
-      })
-      .catch(e => {
-        self.user.blocked = true;
-      });
+    try {
+      await this.client.delete('api/v1/block/' + this.user.guid, {});
+      this.user.blocked = false;
+      this.blockListService.remove(`${this.user.guid}`);
+    } catch (e) {
+      this.user.blocked = true;
+    }
+
+    this.userChanged.emit(this.user);
     this.showMenu = false;
   }
 
-  subscribe() {
+  async subscribe() {
     this.user.subscribed = true;
-    this.client
-      .post('api/v1/subscribe/' + this.user.guid, {})
-      .then((response: any) => {
-        this.user.subscribed = true;
-      })
-      .catch(e => {
-        this.user.subscribed = false;
-      });
+
+    try {
+      await this.client.post('api/v1/subscribe/' + this.user.guid, {});
+      this.user.subscribed = true;
+    } catch (e) {
+      this.user.subscribed = false;
+    }
+
+    this.userChanged.emit(this.user);
+    this.showMenu = false;
   }
 
-  unSubscribe() {
+  async unSubscribe() {
     this.user.subscribed = false;
-    this.client
-      .delete('api/v1/subscribe/' + this.user.guid, {})
-      .then((response: any) => {
-        this.user.subscribed = false;
-      })
-      .catch(e => {
-        this.user.subscribed = true;
-      });
+
+    try {
+      await this.client.delete('api/v1/subscribe/' + this.user.guid, {});
+      this.user.subscribed = false;
+    } catch (e) {
+      this.user.subscribed = true;
+    }
+
+    this.userChanged.emit(this.user);
+    this.showMenu = false;
   }
 
   ban() {
@@ -306,45 +309,48 @@ export class UserDropdownButton {
     this.banToggle = false;
   }
 
-  unBan() {
+  async unBan() {
     this.user.banned = 'no';
-    this.client
-      .delete(`api/v1/admin/ban/${this.user.guid}`, {})
-      .then(() => {
-        this.user.banned = 'no';
-      })
-      .catch(e => {
-        this.user.banned = 'yes';
-      });
+    try {
+      await this.client.delete(`api/v1/admin/ban/${this.user.guid}`, {});
+      this.user.banned = 'no';
+    } catch (e) {
+      this.user.banned = 'yes';
+    }
 
+    this.userChanged.emit(this.user);
     this.showMenu = false;
   }
 
-  banMonetization() {
+  async banMonetization() {
     this.user.ban_monetization = 'yes';
-    this.client
-      .put(`api/v1/admin/monetization/ban/${this.user.guid}`, {})
-      .then(() => {
-        this.user.ban_monetization = 'yes';
-      })
-      .catch(e => {
-        this.user.ban_monetization = 'no';
-      });
+    try {
+      await this.client.put(
+        `api/v1/admin/monetization/ban/${this.user.guid}`,
+        {}
+      );
+      this.user.ban_monetization = 'yes';
+    } catch (e) {
+      this.user.ban_monetization = 'no';
+    }
 
+    this.userChanged.emit(this.user);
     this.banMonetizationToggle = false;
   }
 
-  unBanMonetization() {
+  async unBanMonetization() {
     this.user.ban_monetization = 'no';
-    this.client
-      .delete(`api/v1/admin/monetization/ban/${this.user.guid}`, {})
-      .then(() => {
-        this.user.ban_monetization = 'no';
-      })
-      .catch(e => {
-        this.user.ban_monetization = 'yes';
-      });
+    try {
+      await this.client.delete(
+        `api/v1/admin/monetization/ban/${this.user.guid}`,
+        {}
+      );
+      this.user.ban_monetization = 'no';
+    } catch (e) {
+      this.user.ban_monetization = 'yes';
+    }
 
+    this.userChanged.emit(this.user);
     this.showMenu = false;
   }
 
@@ -355,10 +361,9 @@ export class UserDropdownButton {
       return;
     }
     this.showMenu = true;
-    var self = this;
 
     this.client.get('api/v1/block/' + this.user.guid).then((response: any) => {
-      self.user.blocked = response.blocked;
+      this.user.blocked = response.blocked;
     });
 
     if (this.session.isAdmin()) {
@@ -366,7 +371,7 @@ export class UserDropdownButton {
         .get(`api/v1/admin/monetization/ban/${this.user.guid}`)
         .then((response: any) => {
           if (typeof response.banned !== 'undefined') {
-            self.user.ban_monetization = response.banned ? 'yes' : 'no';
+            this.user.ban_monetization = response.banned ? 'yes' : 'no';
           }
         });
     }
@@ -388,6 +393,8 @@ export class UserDropdownButton {
     } catch (e) {
       this.user['spam'] = !value ? 1 : 0;
     }
+
+    this.userChanged.emit(this.user);
   }
 
   async setExplicit(value: boolean) {
@@ -399,12 +406,15 @@ export class UserDropdownButton {
     } catch (e) {
       this.user.is_mature = !value;
     }
+
+    this.userChanged.emit(this.user);
   }
 
   async setNSFWLock(reasons: Array<{ label; value; selected }>) {
     const nsfw = reasons.map(reason => reason.value);
     this.client.post(`api/v2/admin/nsfw/${this.user.guid}`, { nsfw });
     this.user.nsfw = nsfw;
+    this.userChanged.emit(this.user);
   }
 
   async setRating(rating: number) {
@@ -413,6 +423,7 @@ export class UserDropdownButton {
       {}
     );
     this.user.rating = rating;
+    this.userChanged.emit(this.user);
   }
 
   viewLedger() {

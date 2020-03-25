@@ -4,10 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
+import { MetaService } from '../../common/services/meta.service';
+import { PagesService } from '../../common/services/pages.service';
 
 @Component({
+  selector: 'm-pages',
   moduleId: module.id,
   templateUrl: 'pages.html',
 })
@@ -26,14 +28,14 @@ export class Pages {
   paramsSubscription: Subscription;
 
   constructor(
-    public titleService: MindsTitle,
+    public metaService: MetaService,
     public client: Client,
     public navigation: NavigationService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public pagesService: PagesService
   ) {}
 
   ngOnInit() {
-    this.titleService.setTitle('...');
     this.setUpMenu();
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -55,12 +57,21 @@ export class Pages {
       this.path = response.path;
       this.header = response.header;
       this.headerTop = response.headerTop;
-      this.titleService.setTitle(this.title);
+      this.updateMeta();
       this.bodyElement.nativeElement.innerHTML = this.body;
     });
   }
 
   setUpMenu() {
     this.pages = this.navigation.getItems('footer');
+  }
+
+  private updateMeta(): void {
+    const description =
+      this.body.length > 140 ? this.body.substr(0, 140) + '...' : this.body;
+    this.metaService
+      .setTitle(this.title)
+      .setDescription(description)
+      .setOgImage(`/fs/v1/pages/${this.path}`);
   }
 }

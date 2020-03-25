@@ -9,7 +9,7 @@
   height: calc(100% - 52px);
 
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   @media screen and(max-width: $min-desktop) {

@@ -6,7 +6,9 @@ context('Discovery', () => {
         return cy.login(true);
       }
     });
-    cy.visit('/newsfeed/global/top');
+    cy.visit('/newsfeed/global/top')
+      .location('pathname')
+      .should('eq', '/newsfeed/global/top');
   });
   
   beforeEach(()=> {
@@ -114,18 +116,47 @@ context('Discovery', () => {
     cy.get("m-topbar--navigation--options ul > m-nsfw-selector ul > li:contains('Other')").click();
   });  
 
-  it('should allow the user to filter by a single hashtag', () => {
+  it('should allow the user to turn off single hashtag filter and view all posts', () => {
     cy.visit('/newsfeed/global/top');
     cy.get('m-hashtagssidebarselector__item')
       .first()
       .click();
   });
-
-  it('should allow the user to turn off single hashtag filter and view all posts', () => {
+  
+  it.skip('should allow the user to toggle a single hashtag and then toggle back to the initial feed', () => {
     cy.visit('/newsfeed/global/top');
-    cy.get('m-hashtagssidebarselector__item')
-      .first()
-      .find('.m-hashtagsSidebarSelectorList__visibility > i')
-      .click();
-  })
+
+    // get first label value
+    cy.get('.m-hashtagsSidebarSelectorList__label').first().invoke('text').then((text) => {
+      // repeat twice to capture full cycle.
+      Cypress._.times(2, (i) => {
+
+        // split hashtag off of label text
+        let label = text.split('#')[1];
+
+        // click switch 
+        toggleFirstVisibilitySwitch();
+        
+        // check location name has updated
+        cy.location('pathname')
+          .should('eq', `/newsfeed/global/top;period=12h;hashtag=${label}`);
+
+        // click switch 
+        toggleFirstVisibilitySwitch();
+        
+        // check location name has updated
+        cy.location('pathname')
+          .should('eq', `/newsfeed/global/top;period=12h`);
+      });
+    });
+  });
+
+  // click first visibility switch 
+  const toggleFirstVisibilitySwitch = () => {
+      cy.get('m-hashtagssidebarselector__item')
+        .first()
+        .find('.m-hashtagsSidebarSelectorList__visibility > i')
+        .click();
+  }
+
 })

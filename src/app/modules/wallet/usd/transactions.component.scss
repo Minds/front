@@ -2,7 +2,7 @@
   width: 100%;
 
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   > tr:first-of-type() {

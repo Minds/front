@@ -1,0 +1,40 @@
+@import './grid-values';
+@import '../../stylesheets/defaults';
+
+.m-grid {
+  display: grid;
+  grid-template-columns: repeat($m-grid-cols, 1fr);
+  grid-column-gap: $m-grid-gap;
+  grid-row-gap: 0;
+
+  @for $i from 1 through $m-grid-cols {
+    .m-grid__column-#{$i} {
+      grid-column: auto / span $i;
+    }
+    .m-grid__column__skip-#{$i} {
+      grid-column-start: $i !important;
+    }
+  }
+
+  @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+    @for $i from 1 through $m-grid-cols {
+      .m-grid__column-#{$i}--tablet {
+        grid-column: auto / span $i;
+      }
+      .m-grid__column__skip-#{$i}--tablet {
+        grid-column-start: $i !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: $m-grid-max-mobile) {
+    @for $i from 1 through $m-grid-cols {
+      .m-grid__column-#{$i}--mobile {
+        grid-column: auto / span $i;
+      }
+      .m-grid__column__skip-#{$i}--mobile {
+        grid-column-start: $i !important;
+      }
+    }
+  }
+}

@@ -43,8 +43,8 @@ export class ChannelBadgesComponent {
       return true;
     } else if (
       !this.user.is_admin &&
-      (this.session.isAdmin() &&
-        this.user.guid !== this.session.getLoggedInUser().guid)
+      this.session.isAdmin() &&
+      this.user.guid !== this.session.getLoggedInUser().guid
     ) {
       return true;
     }

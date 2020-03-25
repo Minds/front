@@ -9,7 +9,7 @@
     [ngClass]="{ 'm-inline-embed': hasInlineContentLoaded() }"
     (click)="action($event)"
     target="_blank"
-    rel="noopener noreferrer"
+    rel="noopener nofollow ugc"
     *ngIf="src.thumbnail_src || inlineEmbed"
   >
     <div
@@ -55,7 +55,7 @@
     [href]="src.perma_url"
     target="_blank"
     rel="noopener noreferrer"
-    class="meta mdl-color-text--blue-grey-900"
+    class="meta"
     [ngClass]="{ 'm-rich-embed-has-thumbnail': src.thumbnail_src, 'm-rich-embed--title--no-padding': hasInlineContentLoaded() }"
   >
     <h2
@@ -65,7 +65,7 @@
       {{src.title | excerpt}}
     </h2>
     <p class="m-blurb" *ngIf="src.blurb">{{src.blurb | excerpt: '300'}}</p>
-    <p class="m-url mdl-color-text--blue-grey-400">
+    <p class="m-url">
       {{src.perma_url | domain}}
     </p>
   </a>
@@ -74,10 +74,7 @@
   <a class="thumbnail" *ngIf="preview.thumbnail">
     <img src="{{preview.thumbnail}}" />
   </a>
-  <a
-    class="meta mdl-color-text--blue-grey-900"
-    [ngClass]="{ 'm-has-thumbnail': preview.thumbnail }"
-  >
+  <a class="meta" [ngClass]="{ 'm-has-thumbnail': preview.thumbnail }">
     <h2 class="m-rich-embed--title mdl-card__title-text">
       {{preview.title | excerpt}}
     </h2>

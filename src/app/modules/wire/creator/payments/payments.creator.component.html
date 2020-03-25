@@ -1,0 +1,169 @@
+<div class="m-wire--creator">
+  <div class="m-wire--creator--header">
+    <h2>{{ owner.name }}</h2>
+  </div>
+
+  <section class="m-wire--creator-section-row">
+    <!-- Amount -->
+    <section class="m-wire--creator-section">
+      <!-- Amount -->
+      <h3 class="m-wire--creator-section-title--small">
+        You're paying
+      </h3>
+
+      <div
+        class="m-wire--creator-wide-input m-wire--creator--amount"
+        [class.m-wire--creator-wide-input--reading]="!editingAmount"
+      >
+        <div class="m-wire--creator-wide-input--fixedAmount">
+          {{ wire.amount }}
+        </div>
+
+        <div
+          class="m-wire--creator-wide-input--label"
+          (click)="amountEditorFocus()"
+        >
+          <span
+            i18n="tokens input|@@M__COMMON__TOKENS_INPUT"
+            *ngIf="
+              wire.payloadType === 'onchain' || wire.payloadType === 'offchain'
+            "
+            >Tokens</span
+          >
+          <span
+            i18n="tokens input|@@M__COMMON__TOKENS_INPUT"
+            *ngIf="wire.payloadType === 'usd'"
+            >USD</span
+          >
+          <span
+            i18n="tokens input|@@M__COMMON__TOKENS_INPUT"
+            *ngIf="wire.payloadType === 'eth'"
+            >ETH</span
+          >
+          <span
+            i18n="tokens input|@@M__COMMON__TOKENS_INPUT"
+            *ngIf="wire.payloadType === 'btc'"
+            >BTC</span
+          >
+          <span
+            i18n="tokens input|@@M__COMMON__TOKENS_INPUT"
+            *ngIf="wire.payloadType === 'erc20'"
+            >ERC-20</span
+          >
+          <ul *ngIf="false">
+            <li>USD</li>
+            <li>ETH</li>
+            <li>ERC-20</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="m-wire--creator-wide-input--cost" hidden>
+        <span class="m-wire--creator-wide-input--cost-label-value">
+          <span class="m-wire--creator-wide-input--cost-label">Cost</span>
+
+          <span class="m-wire--creator-wide-input--cost-value">
+            <span *ngIf="tokenRate">{{
+              getTokenAmountRate(wire.amount) | currency: 'USD':'symbol-narrow'
+            }}</span>
+            <span *ngIf="!tokenRate">&hellip;</span>
+          </span>
+        </span>
+
+        <span
+          class="m-wire--creator-wide-input--cost-currency"
+          i18n="@@M__COMMON__USD_LABEL"
+        >
+          USD
+        </span>
+      </div>
+
+      <div class="m-wire--creator--recurring" *ngIf="canRecur && false">
+        <label
+          class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+          for="wire-recurring-1"
+          [mdlSwitch]
+          [toggled]="wire.recurring"
+        >
+          <input
+            type="checkbox"
+            id="wire-recurring-1"
+            class="mdl-checkbox__input"
+            [ngModel]="wire.recurring"
+            (ngModelChange)="toggleRecurring()"
+          />
+
+          <span
+            class="mdl-checkbox__label"
+            i18n="@@WIRE__CREATOR__REPEAT_TRANSACTION_MONTHLY"
+            >Repeat this transaction monthly.</span
+          >
+        </label>
+      </div>
+    </section>
+
+    <!-- Payment Method -->
+    <section class="m-wire--creator-section m-wire--creator-payment-section">
+      <!-- Credit card selector -->
+      <ng-container *ngIf="wire.payloadType === 'usd'">
+        <h3 class="m-wire--creator-section-title--small">Select or add card</h3>
+        <m-payments__selectCard
+          *ngIf="wire.payloadType === 'usd'"
+          (selected)="setUsdPaymentMethod($event)"
+        >
+        </m-payments__selectCard>
+      </ng-container>
+
+      <div
+        class="m-wireCreator__tokenMethod"
+        *ngIf="
+          wire.payloadType === 'onchain' || wire.payloadType === 'offchain'
+        "
+      >
+        <h3 class="m-wire--creator-section-title--small">Select a wallet</h3>
+        <div class="m-selector">
+          <select
+            [ngModel]="wire.payloadType"
+            (ngModelChange)="setPayloadType($event)"
+          >
+            <option value="onchain">Onchain / Web3 (Metamask)</option>
+            <option value="offchain">Offchain</option>
+          </select>
+        </div>
+      </div>
+    </section>
+  </section>
+
+  <!-- Submit -->
+  <section
+    class="m-wire--creator-section m-wire--creator-section--last"
+    (mouseenter)="showErrors()"
+  >
+    <div class="m-wire--creator--submit">
+      <button
+        class="m-wire--creator-button m-btn m-btn--action m-btn--slim"
+        [disabled]="!canSubmit() || inProgress || success || criticalError"
+        (click)="submit()"
+        i18n="@@WIRE__CREATOR__SEND_ACTION"
+      >
+        SEND
+      </button>
+
+      <div
+        *ngIf="inProgress"
+        class="m-wire--creator--submit-label mdl-spinner mdl-js-spinner is-active"
+        [mdl]
+      ></div>
+
+      <div *ngIf="!inProgress && success" class="m-wire--creator--submit-label">
+        <i class="material-icons">check</i>
+        <span i18n="@@WIRE__CREATOR__WIRED_NOTICE">Wired!</span>
+      </div>
+
+      <div *ngIf="!inProgress && !!error" class="m-wire--creator--submit-error">
+        <i class="material-icons">close</i>
+        <span>{{ error }}</span>
+      </div>
+    </div>
+  </section>
+</div>

@@ -46,7 +46,7 @@ export class NewsfeedBoostService {
         boost_rating: this.rating,
       })
       .catch(e => {
-        window.Minds.user.mature = !active;
+        this.session.getLoggedInUser().mature = !active;
 
         this.explicitChanged.emit(!active);
       });

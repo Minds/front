@@ -15,9 +15,7 @@ import { WireModule } from '../wire/wire.module';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 import { VideoModule } from './components/video/video.module';
 
-import { MediaVideosListComponent } from './videos/list.component';
 import { MediaVideosTileComponent } from './videos/tile.component';
-import { MediaImagesListComponent } from './images/list.component';
 import { MediaImagesTileComponent } from './images/tile.component';
 import { MediaViewComponent } from './view/view.component';
 import { MediaEditComponent } from './edit/edit.component';
@@ -31,10 +29,18 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
 import { BlogModule } from '../blogs/blog.module';
 
 const routes: Routes = [
-  { path: 'media/videos/:filter', component: MediaVideosListComponent },
-  { path: 'media/videos', redirectTo: '/media/videos/top', pathMatch: 'full' },
-  { path: 'media/images/:filter', component: MediaImagesListComponent },
-  { path: 'media/images', redirectTo: '/media/images/top', pathMatch: 'full' },
+  { path: 'media/videos/:filter', redirectTo: '/newsfeed/global/top' },
+  {
+    path: 'media/videos',
+    redirectTo: '/newsfeed/global/top',
+    pathMatch: 'full',
+  },
+  { path: 'media/images/:filter', redirectTo: '/newsfeed/global/top' },
+  {
+    path: 'media/images',
+    redirectTo: '/newsfeed/global/top',
+    pathMatch: 'full',
+  },
 
   { path: 'media/edit/:guid', component: MediaEditComponent },
   { path: 'media/:container/:guid', component: MediaViewComponent },
@@ -64,9 +70,7 @@ const routes: Routes = [
     BlogModule,
   ],
   declarations: [
-    MediaVideosListComponent,
     MediaVideosTileComponent,
-    MediaImagesListComponent,
     MediaImagesTileComponent,
     MediaEditComponent,
     MediaViewComponent,
@@ -77,8 +81,6 @@ const routes: Routes = [
     MediaModalComponent,
   ],
   entryComponents: [
-    MediaVideosListComponent,
-    MediaImagesListComponent,
     MediaEditComponent,
     MediaViewComponent,
     MediaModalComponent,

@@ -5,7 +5,7 @@
   <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
     <a [routerLink]="['/', comment.ownerObj.username]">
       <img
-        src="{{ minds.cdn_url }}icon/{{ comment.ownerObj.guid }}/small/{{
+        src="{{ cdnUrl }}icon/{{ comment.ownerObj.guid }}/small/{{
           comment.ownerObj.icontime
         }}"
         class="mdl-shadow--2dp"
@@ -174,30 +174,12 @@
             </span>
           </div>
 
-          <m-video
-            width="100%"
-            height="300px"
-            controls="true"
-            muted="false"
-            [poster]="comment.custom_data.thumbnail_src"
-            [autoplay]="false"
-            [src]="[
-              {
-                res: '360',
-                uri: 'api/v1/media/' + comment.custom_data.guid + '/play',
-                type: 'video/mp4'
-              }
-            ]"
+          <m-videoPlayer
             [guid]="comment.custom_data.guid"
-            [playCount]="comment['play:count']"
-            [torrent]="[
-              { res: '360', key: comment.custom_data.guid + '/360.mp4' }
-            ]"
             [shouldPlayInModal]="true"
-            (videoMetadataLoaded)="setVideoDimensions($event)"
+            [autoplay]="false"
             (mediaModalRequested)="openModal()"
-          >
-          </m-video>
+          ></m-videoPlayer>
         </div>
 
         <!-- Custom type:: batch -->
@@ -230,7 +212,7 @@
               [src]="comment.custom_data[0].src"
               (error)="
                 comment.custom_data[0].src =
-                  minds.cdn_assets_url + 'assets/logos/medium.png'
+                  cdnAssetsUrl + 'assets/logos/medium.png'
               "
               *ngIf="comment.custom_data"
               class="mdl-shadow--2dp"
@@ -244,7 +226,7 @@
             [src]="comment.custom_data[0].src"
             (error)="
               comment.custom_data[0].src =
-                minds.cdn_assets_url + 'assets/logos/medium.png'
+                cdnAssetsUrl + 'assets/logos/medium.png'
             "
           />
         </div>

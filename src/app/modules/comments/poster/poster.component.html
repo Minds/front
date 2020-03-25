@@ -1,7 +1,10 @@
-<div class="m-comment m-comment--poster minds-block" *ngIf="!readonly">
+<div
+  class="m-comment m-comment--poster minds-block"
+  *ngIf="!readonly && isLoggedIn"
+>
   <div class="minds-avatar">
     <a [routerLink]="['/', session.getLoggedInUser().username]">
-      <img [src]="getAvatar()" class="mdl-shadow--2dp" />
+      <img [src]="getAvatar()" class="m-border" />
     </a>
   </div>
 
@@ -29,13 +32,15 @@
             (keyup)="getPostPreview(content)"
             (keypress)="keypress($event)"
             [placeholder]="
-              conversation ? 'Enter your message' : 'Enter your comment'
+              conversation ? 'Enter your message' : 'Write your comment'
             "
+            (filePaste)="uploadAttachment($event)"
             mTextInputAutocomplete
             [findChoices]="suggestions.findSuggestions"
             [getChoiceLabel]="suggestions.getChoiceLabel"
             [itemTemplate]="itemTemplate"
             [triggerCharacters]="['#', '@']"
+            tabindex="0"
           ></minds-textarea>
         </m-text-input--autocomplete-container>
       </form>
@@ -57,13 +62,13 @@
           class="attachment-button"
           [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
         >
-          <i class="material-icons">attachment</i>
+          <i class="material-icons">image</i>
           <input
             type="file"
             id="file"
             #file
             name="attachment"
-            (change)="uploadAttachment(file, $event)"
+            (change)="uploadFile(file, $event)"
           />
         </div>
 
@@ -73,6 +78,7 @@
           (click)="attachment.toggleMature()"
           title="Mature content"
           i18n-title="@@M__COMMON__MATURE_CONTENT"
+          *ngIf="content.length || attachment.hasFile()"
         >
           <i class="material-icons">explicit</i>
         </a>
@@ -81,6 +87,7 @@
           class="m-post-button"
           (click)="post($event)"
           [ngClass]="{ 'm-button-disabled': !postEnabled() }"
+          *ngIf="content.length || attachment.hasFile()"
         >
           <i class="material-icons">send</i>
         </a>
@@ -145,4 +152,19 @@
       </div>
     </div>
   </div>
+</div>
+
+<div
+  class="m-comments--start-conversation-label"
+  *ngIf="!isLoggedIn && level < 1"
+>
+  <a (click)="showLoginModal(); $event.preventDefault()">
+    <ng-container *ngIf="!conversation; else loggedOutConversationMessage" i18n>
+      <b>Log in</b> to comment
+    </ng-container>
+
+    <ng-template #loggedOutConversationMessage>
+      <ng-container i18n> <b>Log in</b> to send a message </ng-container>
+    </ng-template>
+  </a>
 </div>

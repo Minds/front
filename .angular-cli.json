@@ -7,17 +7,14 @@
     {
       "root": "src",
       "outDir": "dist",
-      "assets": [
-        "assets",
-        "favicon.ico"
-      ],
+      "assets": ["assets", "favicon.ico"],
       "index": "index.php",
       "main": "main.ts",
       "polyfills": "polyfills.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
-      "prefix": "app",
+      "prefix": "m",
       "styles": [
         "../node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
         "../node_modules/material-design-icons/iconfont/material-icons.css",

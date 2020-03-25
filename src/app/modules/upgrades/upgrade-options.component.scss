@@ -1,0 +1,197 @@
+@import '../../foundation/grid-values';
+
+m-upgrades__upgradeOptions {
+  display: block;
+}
+
+.m-upgrades__upgradeOptions {
+  position: relative; /* required for deco */
+  z-index: 0; /* required for deco */
+
+  .m-upgradesUpgradeOptions__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      display: block;
+      margin: 0 40px 40px;
+    }
+
+    h2 {
+      font-size: 32px;
+      font-weight: 900;
+      line-height: 43px;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        font-size: 24px;
+        margin: 0 0 20px;
+      }
+    }
+
+    .m-upgradesUpgradeOptionsHeader__toggleContainer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .m-upgradesUpgradeOptionsHeader__toggle {
+        display: inline-flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: stretch;
+        margin-right: 50px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  .m-upgradesUpgradeOptions__plans {
+    position: relative; /* required for deco, no z-indexes HERE! */
+    display: grid;
+    grid-auto-flow: column;
+    grid-column-gap: 65px;
+    grid-row-gap: 0;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(5, auto);
+    padding: 40px 60px 60px;
+
+    @include m-theme() {
+      background-color: lighten(themed($m-grey-50), 5%);
+    }
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      display: block;
+      margin: 0 20px;
+      padding: 40px;
+
+      .m-upgradesUpgradeOptionsPlan__row.m-upgradesUpgradeOptionsPlan__row--first {
+        margin-top: 40px;
+
+        &:first-child {
+          margin-top: 0;
+        }
+      }
+    }
+
+    // Deco
+
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      width: 393px;
+      height: 193px;
+      top: 0;
+      left: 0;
+      transform: translate(-20px, -20px);
+      background: url('<%= APP_CDN %>/assets/marketing/deco_1.svg');
+      z-index: -1;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        max-width: 90vw;
+      }
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 388px;
+      height: 388px;
+      background: url('<%= APP_CDN %>/assets/marketing/deco_2.svg');
+      z-index: -1;
+      transform: translate(102px, 102px);
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        display: none;
+      }
+    }
+
+    //
+
+    h3 {
+      font-size: 28px;
+      font-weight: 900;
+      line-height: 37px;
+      padding: 0 0 2px;
+      margin: 0;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 21px;
+      margin: 0 0 31px;
+
+      &.m-upgradesUpgradeOptionsPlan__targetAudience {
+        @include m-theme() {
+          color: themed($m-green);
+        }
+      }
+
+      &.m-upgradesUpgradeOptionsPlan__description {
+        @include m-theme() {
+          color: themed($m-grey-600);
+        }
+      }
+    }
+
+    ul {
+      padding: 0 12px;
+      margin: 0 0 16px;
+
+      li {
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+    }
+
+    .m-upgradesUpgradeOptionsPlan__moreInfo {
+      font-size: 14px;
+      line-height: 19px;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+
+    .m-upgradesUpgradeOptionsPlan__pricing {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 24px;
+      margin-bottom: 0;
+
+      @include m-theme() {
+        color: themed($m-grey-600);
+      }
+
+      span {
+        font-size: 24px;
+
+        @include m-theme() {
+          color: themed($m-black);
+        }
+      }
+    }
+
+    .m-upgradesUpgradeOptionsPlan__offer {
+      font-size: 14px;
+      text-decoration: line-through;
+      margin-bottom: 0;
+
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
+
+    .m-upgradesUpgradeOptionsPlan__action {
+      margin-top: 25px;
+    }
+  }
+}

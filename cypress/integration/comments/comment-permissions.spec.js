@@ -1,5 +1,5 @@
-
-context('Comment Permissions', () => {
+// skipped until feat release
+context.skip('Comment Permissions', () => {
 
   const postMenu = 'minds-activity:first > div > m-post-menu';
   const deletePostOption = "m-post-menu > ul > li:visible:contains('Delete')";

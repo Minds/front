@@ -9,13 +9,22 @@ minds-notification.mdl-card {
   display: flex;
   flex-direction: row;
 
+  &:not(.mdl-shadow--2dp) {
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
   .avatar {
     display: flex;
     flex-direction: column;
 
     img {
       border-radius: 50%;
-      max-height: 50px;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
     }
   }
 
@@ -46,6 +55,9 @@ minds-notification.mdl-card {
 }
 
 minds-notifications {
+  grid-area: content/span 2;
+  min-width: 0;
+
   .m-notifications--load-new {
     text-transform: uppercase;
     font-family: 'Roboto', Helvetica, sans-serif;
@@ -108,25 +120,53 @@ minds-notifications {
 }
 
 m-notifications--topbar-toggle {
+  &.m-notificationsTopbarToggle--newNav {
+    .m-notifications--topbar-toggle--icon {
+      font-size: 15px;
+
+      display: flex;
+      align-items: center;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-notifications--topbar-toggle--icon--active i {
+      margin-right: 6px;
+
+      &::after {
+        @include m-theme() {
+          background-color: themed($m-alert);
+        }
+      }
+    }
+  }
+
   i {
     cursor: pointer;
   }
+
   .counter {
     cursor: default;
   }
 
   .m-notifications--topbar-toggle--icon--active {
-    &::after {
-      border-radius: 50%;
-      display: block;
-      height: 8px;
-      width: 8px;
-      content: '';
-      position: absolute;
-      top: -2px;
-      right: 2px;
-      @include m-theme() {
-        background-color: themed($m-blue);
+    i {
+      position: relative;
+
+      &::after {
+        border-radius: 50%;
+        display: block;
+        height: 8px;
+        width: 8px;
+        content: '';
+        position: absolute;
+        top: -2px;
+        right: 2px;
+        @include m-theme() {
+          background-color: themed($m-blue);
+        }
       }
     }
   }

@@ -8,6 +8,7 @@ import { tap, filter, switchMap } from 'rxjs/operators';
 import { BlockListService } from '../../../common/services/block-list.service';
 import { EntitiesService } from '../../../common/services/entities.service';
 import { Client } from '../../../services/api/client';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-settings__blockedChannels',
@@ -23,13 +24,12 @@ export class SettingsBlockedChannelsComponent implements OnInit {
   moreData: boolean = true;
   inProgress: boolean = false;
 
-  minds = window.Minds;
-
   constructor(
     protected blockListService: BlockListService,
     protected entitiesService: EntitiesService,
     protected client: Client,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    private configs: ConfigsService
   ) {}
 
   ngOnInit() {
@@ -60,7 +60,9 @@ export class SettingsBlockedChannelsComponent implements OnInit {
   }
 
   getChannelIcon(channel) {
-    return `${this.minds.cdn_url}icon/${channel.guid}/medium/${channel.icontime}`;
+    return `${this.configs.get('cdn_url')}icon/${channel.guid}/medium/${
+      channel.icontime
+    }`;
   }
 
   async block(channel) {

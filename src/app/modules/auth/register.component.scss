@@ -1,337 +1,633 @@
 @import 'defaults';
 
-.m-register--hero {
+m-register {
+  display: block;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
   position: relative;
+  grid-area: content / span 2;
 
-  background-image: url('<%= APP_CDN %>/assets/videos/what-1/what-1.jpg');
-  background-size: cover;
-  background-position: center center;
+  &.m-register--newDesign {
+    margin-top: -52px;
 
-  .m-register--hero--inner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding: 100px 52px;
-    margin: auto;
-    max-width: 1280px;
-
-    @media screen and (max-width: 1000px) {
-      padding: 120px 16px;
-      flex-wrap: wrap;
-    }
-    @media screen and (max-width: $max-mobile) {
-      padding: 62px 12px;
-    }
-  }
-
-  .m-register--hero--video {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-
-    video {
-      position: absolute;
-      bottom: 0;
-      min-width: 100%;
-      min-height: 100%;
-    }
-  }
-
-  .m-register--hero--overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    @include m-theme() {
-      background-color: rgba(themed($m-black), 0.4);
-    }
-  }
-
-  .m-register--hero--slogans {
-    flex: 2;
-    h1,
-    h3,
-    h4 {
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      margin: 0;
-      @include m-theme() {
-        color: themed($m-white);
-      }
+    &.m-register--newNavigation {
+      margin-top: -75px;
     }
 
-    h1 {
-      font-size: 110px;
-      font-weight: 800;
-      letter-spacing: 1.25px;
-      line-height: 1;
+    &.m-register__iosFallback {
+      .m-grid {
+        .m-register__wrapper {
+          filter: none;
+          box-shadow: -1px 0px 8px rgba(50, 50, 0, 0.5);
 
-      @media screen and (max-width: 720px) {
-        font-size: 42px;
-      }
-    }
-
-    h3 {
-      font-size: 26px;
-      font-weight: 400;
-      letter-spacing: 0.25px;
-      line-height: 1.25;
-      margin-top: 16px;
-      padding-right: 70px;
-
-      @media screen and (max-width: 720px) {
-        padding-right: 8px;
-        font-size: 16px;
-      }
-    }
-    z-index: 2;
-  }
-
-  .m-register--signup {
-    flex: 1;
-    margin-left: 16px;
-
-    @media screen and (max-width: 1000px) {
-      flex-basis: 100%;
-      margin-left: 0;
-    }
-    minds-form-register {
-      .mdl-card {
-        background: transparent;
-        padding: 0;
-      }
-      .mdl-card__title {
-        display: none;
-      }
-      .m-login-box input {
-        border: 0;
-        border-radius: 3px;
-        font-weight: 600;
-        -webkit-font-smoothing: antialiased;
-        text-rendering: optimizeLegibility;
-        font-family: Roboto;
-        letter-spacing: 1px;
-        @include m-theme() {
-          background: rgba(themed($m-white), 0.9);
-          color: themed($m-grey-800);
-          border: 1px solid rgba(themed($m-white), 0.25);
+          minds-form-register {
+            clip-path: none;
+          }
         }
-        &::placeholder {
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 50%;
+      left: 30%;
+      clip-path: polygon(55% 0, 100% 0, 100% 11%, 18% 87%);
+
+      @include m-theme() {
+        background: themed($m-amber-medium);
+      }
+
+      //@media screen and (max-width: $max-mobile) {
+      //  right: 0;
+      //  bottom: -3vw;
+      //  clip-path: polygon(83% 0%, 100% 0, 116% 22%, 30% 43%);
+      //}
+    }
+
+    @media screen and (max-width: $m-grid-max-mobile) {
+      margin: -52px 0 50px;
+      padding: 0 26px;
+
+      &::before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        clip-path: polygon(55% 0, 100% 0, 100% 30%, 18% 87%);
+      }
+    }
+
+    .m-grid {
+      position: relative;
+      padding: 15vh 0 0;
+
+      @media screen and (max-width: $m-grid-max-mobile) {
+        padding: 10vh 0 0;
+      }
+
+      & > * {
+        margin: 0 auto;
+      }
+    }
+
+    .m-register__wrapper {
+      display: block;
+      max-width: 692px;
+      filter: drop-shadow(-1px 0px 8px rgba(50, 50, 0, 0.5));
+    }
+
+    minds-form-register {
+      padding: 86px 67px 150px;
+      display: block;
+      background-color: #fcfcfc;
+
+      @media screen and (max-width: $m-grid-max-mobile) {
+        clip-path: polygon(0 2%, 100% 0, 100% 100%, 0 99%);
+        padding: 55px 26px 47px;
+
+        h3,
+        .m-register__alreadyAUser {
+          text-align: center;
+        }
+
+        .mdl-card__actions {
+          margin-top: 35px;
+
+          label.mdl-checkbox {
+            margin-bottom: 50px;
+          }
+        }
+      }
+
+      clip-path: polygon(0 2%, 100% 0, 100% 97%, 0 95%);
+
+      h3 {
+        font-size: 36px;
+        line-height: 36px;
+        font-weight: bold;
+        margin-bottom: 4px;
+
+        @include m-theme() {
+          color: themed($m-grey-800);
+        }
+      }
+
+      .m-register__alreadyAUser {
+        display: block;
+        font-size: 14px;
+        line-height: 19px;
+        margin-bottom: 30px;
+        font-weight: 400;
+        color: #9b9b9b;
+
+        a {
+          font-weight: 400;
+          @include m-theme() {
+            color: themed($m-blue);
+          }
+        }
+      }
+
+      .mdl-cell {
+        margin: 0;
+        padding-bottom: 6px;
+      }
+
+      form {
+        background: transparent !important;
+
+        .mdl-card__supporting-text {
+          overflow: visible;
+        }
+
+        .mdl-cell {
+          width: 100%;
+        }
+
+        .m-registerForm__confirmPassword {
+          margin-top: 19px;
+        }
+
+        input:not([type='checkbox']) {
+          padding: 10px 15px;
+          height: 37px;
+          font-weight: normal;
+
           @include m-theme() {
             color: themed($m-grey-800);
           }
-        }
-      }
-      .m-login-box .mdl-checkbox__box-outline {
-        @include m-theme() {
-          border-color: themed($m-white);
-        }
-      }
-      .m-btn--action {
-        margin-right: 16px;
-        @include m-theme() {
-          color: themed($m-white) !important;
-          border: 1px solid themed($m-white);
-        }
-      }
-      .mdl-card__actions {
-        flex-direction: row-reverse;
-        padding-left: 8px;
 
-        .m-register-tac {
-          padding-right: 16px;
-          font-family: Roboto;
-          @include m-theme() {
-            color: rgba(themed($m-white), 0.8);
-          }
-          a {
+          &:active,
+          &:focus {
+            outline: none;
             @include m-theme() {
-              color: themed($m-white);
+              border: 1px solid themed($m-blue);
+            }
+          }
+
+          &.ng-invalid.ng-touched:not(.ng-pristine) {
+            outline: none;
+            @include m-theme() {
+              border: 1px solid themed($m-red);
             }
           }
         }
       }
-      .password-help {
-        padding: 12px;
-        border-radius: 4px;
-        font-weight: 300;
+
+      span,
+      label {
+        font-size: 14px;
+        line-height: 19px;
+      }
+
+      label:not(.mdl-checkbox) {
+        display: inline-block;
+        margin-bottom: 10px;
+
         @include m-theme() {
-          color: themed($m-white);
-          background-color: themed($m-black);
+          color: themed($m-grey-300);
         }
       }
-      .m-register-btn {
-        font-family: Roboto;
-        letter-spacing: 1.25px;
-        background: transparent;
-        font-size: 12px;
-        box-shadow: none !important;
-        @include m-theme() {
-          border: 1px solid themed($m-grey-50);
+
+      label.mdl-checkbox {
+        display: flex;
+        align-items: center;
+        padding-top: 0;
+        margin-bottom: 0;
+      }
+
+      .mdl-card__actions {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 55px;
+        padding: 0;
+
+        & > *:not(button) {
+          color: #4a4a4a !important;
         }
+
+        a,
+        a:hover,
+        a:visited {
+          font-weight: 400;
+          @include m-theme() {
+            color: themed($m-blue);
+          }
+        }
+
+        button {
+          align-self: flex-end;
+          @include m-theme() {
+            background-color: themed($m-aqua);
+          }
+        }
+      }
+
+      .mdl-checkbox {
+        &.is-checked {
+          .mdl-checkbox__tick-outline {
+            @include m-theme() {
+              background-color: themed($m-blue);
+            }
+          }
+
+          .mdl-checkbox__box-outline {
+            @include m-theme() {
+              border: 1px solid themed($m-blue);
+            }
+          }
+        }
+
+        .mdl-checkbox__box-outline {
+          @include m-theme() {
+            border: 1px solid themed($m-grey-100);
+          }
+        }
+      }
+
+      @media screen and(max-width: 1250px) {
+        label.mdl-checkbox {
+          margin-bottom: 20px;
+        }
+        .mdl-card__actions {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      .m-register__error,
+      .m-register__formError {
+        font-size: 14px;
+        line-height: 19px;
+        height: 19px;
+
+        @include m-theme() {
+          color: themed($m-red) !important;
+        }
+      }
+
+      .m-register__formError {
+        margin-top: 20px;
+      }
+
+      .m-register__error {
+        margin-top: 3px;
+        text-align: right;
       }
     }
-    z-index: 2;
   }
 
-  @media (max-width: $max-mobile) {
-    .m-register--grid {
-      .m-register--titles {
+  &:not(.m-register--newDesign) {
+    .m-register--hero {
+      position: relative;
+
+      background-image: url('<%= APP_CDN %>/assets/videos/what-1/what-1.jpg');
+      background-size: cover;
+      background-position: center center;
+
+      .m-register--hero--inner {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 100px 52px;
+        margin: auto;
+        max-width: 1280px;
+
+        @media screen and (max-width: 1000px) {
+          padding: 120px 16px;
+          flex-wrap: wrap;
+        }
+        @media screen and (max-width: $max-mobile) {
+          padding: 62px 12px;
+        }
+      }
+
+      .m-register--hero--video {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+
+        video {
+          position: absolute;
+          bottom: 0;
+          min-width: 100%;
+          min-height: 100%;
+        }
+      }
+
+      .m-register--hero--overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        @include m-theme() {
+          background-color: rgba(themed($m-black), 0.4);
+        }
+      }
+
+      .m-register--hero--slogans {
+        flex: 2;
+
+        h1,
+        h3,
+        h4 {
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: antialiased;
+          margin: 0;
+          @include m-theme() {
+            color: themed($m-white);
+          }
+        }
+
         h1 {
-          font-size: 32px;
-          line-height: 32px;
-          //font-weight: 200;
-          //margin:16px;
-          padding: 0;
-          padding: 0 $minds-padding * 2;
+          font-size: 110px;
+          font-weight: 800;
+          letter-spacing: 1.25px;
+          line-height: 1;
+
+          @media screen and (max-width: 720px) {
+            font-size: 42px;
+          }
         }
+
         h3 {
-          font-size: 16px;
-          //font-weight: 200;
-          line-height: 16px;
-          padding: 16px 16px 0;
+          font-size: 26px;
+          font-weight: 400;
+          letter-spacing: 0.25px;
+          line-height: 1.25;
+          margin-top: 16px;
+          padding-right: 70px;
+
+          @media screen and (max-width: 720px) {
+            padding-right: 8px;
+            font-size: 16px;
+          }
+        }
+
+        z-index: 2;
+      }
+
+      .m-register--signup {
+        flex: 1;
+        margin-left: 16px;
+
+        @media screen and (max-width: 1000px) {
+          flex-basis: 100%;
+          margin-left: 0;
+        }
+
+        minds-form-register {
+          .mdl-card {
+            background: transparent;
+            padding: 0;
+          }
+
+          .mdl-card__title {
+            display: none;
+          }
+
+          .m-login-box input {
+            border: 0;
+            border-radius: 3px;
+            font-weight: 600;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+            font-family: Roboto;
+            letter-spacing: 1px;
+            @include m-theme() {
+              background: rgba(themed($m-white), 0.9);
+              color: themed($m-grey-800);
+              border: 1px solid rgba(themed($m-white), 0.25);
+            }
+
+            &::placeholder {
+              @include m-theme() {
+                color: themed($m-grey-800);
+              }
+            }
+          }
+
+          .m-login-box .mdl-checkbox__box-outline {
+            @include m-theme() {
+              border-color: themed($m-white);
+            }
+          }
+
+          .m-btn--action {
+            margin-right: 16px;
+            @include m-theme() {
+              color: themed($m-white) !important;
+              border: 1px solid themed($m-white);
+            }
+          }
+
+          .mdl-card__actions {
+            flex-direction: row-reverse;
+            padding-left: 8px;
+
+            .m-register-tac {
+              padding-right: 16px;
+              font-family: Roboto;
+              @include m-theme() {
+                color: rgba(themed($m-white), 0.8);
+              }
+
+              a {
+                @include m-theme() {
+                  color: themed($m-white);
+                }
+              }
+            }
+          }
+
+          .password-help {
+            padding: 12px;
+            border-radius: 4px;
+            font-weight: 300;
+            @include m-theme() {
+              color: themed($m-white);
+              background-color: themed($m-black);
+            }
+          }
+
+          .m-register-btn {
+            font-family: Roboto;
+            letter-spacing: 1.25px;
+            background: transparent;
+            font-size: 12px;
+            box-shadow: none !important;
+            @include m-theme() {
+              border: 1px solid themed($m-grey-50);
+            }
+          }
+        }
+
+        z-index: 2;
+      }
+
+      @media (max-width: $max-mobile) {
+        .m-register--grid {
+          .m-register--titles {
+            h1 {
+              font-size: 32px;
+              line-height: 32px;
+              //font-weight: 200;
+              //margin:16px;
+              padding: 0;
+              padding: 0 $minds-padding * 2;
+            }
+
+            h3 {
+              font-size: 16px;
+              //font-weight: 200;
+              line-height: 16px;
+              padding: 16px 16px 0;
+            }
+          }
         }
       }
     }
+
+    .m-register--section {
+      height: 300px;
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      font-weight: 100;
+      font-size: 41px;
+
+      display: block;
+      text-align: center;
+      padding: 80px 0;
+      height: auto;
+
+      @include m-theme() {
+        background-color: themed($m-white);
+      }
+
+      @media screen and (max-width: 720px) {
+        padding: 16px 0;
+      }
+
+      h1 {
+        font-size: 72px;
+        font-weight: 600;
+        font-weight: 800;
+        letter-spacing: 0.25px;
+        margin-left: 8px;
+        margin-right: 8px;
+        @include m-theme() {
+          color: themed($m-grey-800);
+        }
+
+        @media screen and (max-width: 720px) {
+          font-size: 28px;
+        }
+      }
+
+      h2 {
+        font-size: 56px;
+        line-height: 1;
+        font-weight: 600;
+        letter-spacing: 1.25px;
+        @include m-theme() {
+          color: themed($m-grey-800);
+        }
+
+        @media screen and (max-width: 720px) {
+          font-size: 22px;
+        }
+
+        &.m-hompeage--wide-letters {
+          letter-spacing: 4px;
+        }
+      }
+
+      h4 {
+        font-weight: 400;
+        font-size: 32px;
+        letter-spacing: 4px;
+
+        @media screen and (max-width: 1250px) {
+          font-size: 24px;
+        }
+
+        .m-break--8spaces {
+          padding-left: 60px;
+        }
+      }
+
+      h5 {
+        font-size: 12px;
+        letter-spacing: 0.75px;
+        line-height: 1;
+        margin: 0;
+        margin-top: -18px;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        text-transform: uppercase;
+        @include m-theme() {
+          color: themed($m-grey-200);
+        }
+
+        @media screen and (max-width: 720px) {
+          margin-top: 0;
+        }
+      }
+    }
+
+    .m-register--section--with-video {
+      position: relative;
+      overflow: hidden;
+      padding-bottom: 0;
+
+      .m-register--section--video--overlay {
+        position: absolute;
+        z-index: 1;
+        width: 100%;
+      }
+    }
+
+    .m-register--section--video {
+      overflow: hidden;
+      min-width: 100%;
+      min-height: 100%;
+      position: relative;
+
+      video {
+        min-width: 100%;
+        min-height: 100%;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        position: absolute;
+      }
+    }
   }
-}
 
-m-register {
-  .m-register--section {
-    height: 300px;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    font-weight: 100;
-    font-size: 41px;
-
-    display: block;
-    text-align: center;
-    padding: 80px 0;
-    height: auto;
-
+  .m-footer {
+    padding: 28px;
+    min-height: 150px;
+    position: relative;
     @include m-theme() {
       background-color: themed($m-white);
     }
 
-    @media screen and (max-width: 720px) {
+    .copyright {
+      display: block;
       padding: 16px 0;
-    }
-
-    h1 {
-      font-size: 72px;
-      font-weight: 600;
-      font-weight: 800;
-      letter-spacing: 0.25px;
-      margin-left: 8px;
-      margin-right: 8px;
-      @include m-theme() {
-        color: themed($m-grey-800);
-      }
-
-      @media screen and (max-width: 720px) {
-        font-size: 28px;
-      }
-    }
-
-    h2 {
-      font-size: 56px;
-      line-height: 1;
-      font-weight: 600;
-      letter-spacing: 1.25px;
-      @include m-theme() {
-        color: themed($m-grey-800);
-      }
-
-      @media screen and (max-width: 720px) {
-        font-size: 22px;
-      }
-
-      &.m-hompeage--wide-letters {
-        letter-spacing: 4px;
-      }
-    }
-
-    h4 {
-      font-weight: 400;
-      font-size: 32px;
-      letter-spacing: 4px;
-
-      @media screen and (max-width: 1250px) {
-        font-size: 24px;
-      }
-      .m-break--8spaces {
-        padding-left: 60px;
-      }
-    }
-
-    h5 {
-      font-size: 12px;
-      letter-spacing: 0.75px;
-      line-height: 1;
-      margin: 0;
-      margin-top: -18px;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      text-transform: uppercase;
-      @include m-theme() {
-        color: themed($m-grey-200);
-      }
-
-      @media screen and (max-width: 720px) {
-        margin-top: 0;
-      }
-    }
-  }
-
-  .m-register--section--with-video {
-    position: relative;
-    overflow: hidden;
-    padding-bottom: 0;
-
-    .m-register--section--video--overlay {
-      position: absolute;
-      z-index: 1;
       width: 100%;
+      text-align: center;
+      font-size: 11px;
+      font-weight: bold;
     }
-  }
-
-  .m-register--section--video {
-    overflow: hidden;
-    min-width: 100%;
-    min-height: 100%;
-    position: relative;
-
-    video {
-      min-width: 100%;
-      min-height: 100%;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      position: absolute;
-    }
-  }
-}
-
-.m-footer {
-  padding: 28px;
-  min-height: 150px;
-  position: relative;
-  @include m-theme() {
-    background-color: themed($m-white);
-  }
-
-  .copyright {
-    display: block;
-    padding: 16px 0;
-    width: 100%;
-    text-align: center;
-    font-size: 11px;
-    font-weight: bold;
   }
 }

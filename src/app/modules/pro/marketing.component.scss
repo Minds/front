@@ -1,0 +1,23 @@
+m-pro__marketing {
+  grid-area: content / span 2;
+
+  .m-pro__marketing {
+    .m-marketing--hero--slogans ul {
+      font-size: 20px;
+      padding: 0 0 0 16px;
+      margin: 32px 0;
+
+      @include m-theme() {
+        color: themed($m-white);
+      }
+
+      li {
+        margin-bottom: 8px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+}

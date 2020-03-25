@@ -12,15 +12,19 @@
       }"
       [routerLink]="['/newsfeed', entity.guid]"
     >
-      <img [src]="getThumbnailSrc(entity$ | async)" />
+      <img
+        [src]="getThumbnailSrc(entity$ | async)"
+        (click)="clickedImage(entity, $event)"
+      />
       <i
         *ngIf="attachment.shouldBeBlurred(entity)"
         class="material-icons mature-icon"
-        >explicit</i
       >
-      <i *ngIf="isUnlisted(entity)" class="material-icons unlisted-icon"
-        >visibility_off</i
-      >
+        explicit
+      </i>
+      <i *ngIf="isUnlisted(entity)" class="material-icons unlisted-icon">
+        visibility_off
+      </i>
     </a>
   </ng-container>
 </div>

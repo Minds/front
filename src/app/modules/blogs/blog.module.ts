@@ -29,6 +29,9 @@ const routes: Routes = [
     path: 'blog/edit/:guid',
     component: BlogEdit,
     canDeactivate: [CanDeactivateGuardService],
+    data: {
+      title: 'Edit Blog',
+    },
   },
   { path: 'blog/:filter', component: BlogListComponent },
   { path: 'blog', redirectTo: '/blog/top', pathMatch: 'full' },

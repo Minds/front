@@ -1,0 +1,50 @@
+.m-composer__progress {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: transparent;
+
+  &.m-composer__progress--active,
+  &.m-composer__progress--indeterminate {
+    @include m-theme() {
+      background-color: themed($m-borderColor--primary);
+    }
+
+    .m-composerProgress__fill {
+      width: 0;
+      height: 100%;
+
+      @include m-theme() {
+        background-color: themed($m-btn--primary);
+      }
+    }
+  }
+
+  &.m-composer__progress--indeterminate {
+    display: flex;
+    transform: translateZ(0); // 3D
+
+    .m-composerProgress__fill {
+      width: 100%;
+      animation: m-composer__progress--runningProgress 2s
+        cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      transform: translateZ(0); // 3D
+      will-change: transform, margin-left, margin-right;
+    }
+  }
+}
+
+@keyframes m-composer__progress--runningProgress {
+  0% {
+    margin-left: 0;
+    margin-right: 100%;
+  }
+  50% {
+    margin-left: 25%;
+    margin-right: 0;
+  }
+  100% {
+    margin-left: 100%;
+    margin-right: 0;
+  }
+}

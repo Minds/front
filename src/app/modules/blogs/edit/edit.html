@@ -28,7 +28,7 @@
       <div class="minds-avatar" [hovercard]="session.getLoggedInUser().guid">
         <a [routerLink]="['/', session.getLoggedInUser().username]">
           <img
-            src="{{minds.cdn_url}}icon/{{session.getLoggedInUser().guid}}/small/{{session.getLoggedInUser().icontime}}"
+            src="{{cdnUrl}}icon/{{session.getLoggedInUser().guid}}/small/{{session.getLoggedInUser().icontime}}"
             class="mdl-shadow--2dp"
           />
         </a>
@@ -103,6 +103,13 @@
       >
         Error: You must upload a banner
       </h1>
+      <h1
+        class="m-blog--edit--error"
+        i18n="@@M__COMMON__ERROR_GATEWAY_TIMEOUT"
+        *ngSwitchCase="'error:gateway-timeout'"
+      >
+        Error: Gateway Time-out
+      </h1>
       <h1 class="m-blog--edit--error" *ngSwitchDefault>
         Error: {{error}}
       </h1>
@@ -147,23 +154,14 @@
         <option *ngFor="let a of access" [value]="a.value">{{a.text}}</option>
       </select>
     </div>
-    <div class="m-mature-info">
-      <a
-        class="mdl-color-text--blue-grey-300 m-capture-mature"
-        (click)="blog.mature = blog.mature ? 0 : 1; checkMonetized()"
-      >
-        <i
-          class="material-icons"
-          [ngClass]="{ 'mdl-color-text--red-500': blog.mature }"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
-        >
-        <span [ngClass]="{ 'mdl-color-text--red-500': blog.mature }"
-          >{{ blog.mature ? 'Mature content' : 'Anyone' }}</span
-        >
-      </a>
-    </div>
+
+    <m-nsfw-selector
+      service="editing"
+      (selectedChange)="onNSFWSelections($event)"
+      [selected]="editing && blog.nsfw != [] ? blog.nsfw : []"
+    >
+    </m-nsfw-selector>
+
     <m-wire-threshold-input
       [(threshold)]="blog.wire_threshold"
       [(enabled)]="blog.paywall"

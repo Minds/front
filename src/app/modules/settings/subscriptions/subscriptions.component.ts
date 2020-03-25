@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { Client } from '../../../services/api';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -8,16 +9,15 @@ import { Client } from '../../../services/api';
   templateUrl: 'subscriptions.component.html',
 })
 export class SettingsSubscriptionsComponent {
+  readonly cdnUrl: string;
   subscriptions: any[] = [];
 
   inProgress: boolean = false;
   moreData: boolean = true;
   offset: string = '';
 
-  minds: any;
-
-  constructor(private client: Client) {
-    this.minds = window.Minds;
+  constructor(private client: Client, configs: ConfigsService) {
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   ngOnInit() {

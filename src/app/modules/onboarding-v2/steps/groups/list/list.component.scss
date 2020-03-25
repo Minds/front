@@ -1,0 +1,153 @@
+m-onboarding__groupList {
+  display: block;
+  width: 100%;
+
+  .m-onboarding__groupList {
+    display: flex;
+    position: relative;
+
+    h3 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 0 8px;
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+
+    .mdl-spinner {
+      margin: 0 auto;
+    }
+  }
+
+  .m-groupList__empty {
+    padding: 8px;
+    font-size: 14px;
+    line-height: 19px;
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+  }
+
+  .m-groupList__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 100%;
+    max-height: 245px;
+    overflow-y: auto;
+  }
+
+  .m-groupList__item {
+    display: flex;
+    width: 100%;
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+
+    &:nth-child(4) {
+      & ~ :last-child {
+        position: relative;
+        z-index: 1;
+      }
+
+      & ~ :nth-last-child(2):after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0) 0%,
+          #fff 100%
+        );
+        height: 65px;
+      }
+    }
+
+    a {
+      display: flex;
+      flex-grow: 1;
+      text-decoration: none;
+      padding: 8px 8px;
+    }
+
+    .m-groupListItem__avatar {
+      width: 49px;
+      height: 49px;
+      border-radius: 50%;
+      background-size: cover;
+      display: inline-block;
+      margin-right: 8px;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    .m-groupListItem__body {
+      display: inline-flex;
+      vertical-align: middle;
+      align-items: center;
+      flex-direction: row;
+      max-width: calc(100% - 36px);
+      width: 20px;
+      flex-grow: 1;
+
+      h4 {
+        height: 21px;
+        width: 100%;
+        color: #636363;
+        font-family: Roboto;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 21px;
+        margin: 0;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      > div {
+        width: 100%;
+      }
+
+      > div > span {
+        overflow: hidden;
+        position: relative;
+        display: block;
+
+        height: 19px;
+        color: #9b9b9b;
+        font-family: Roboto;
+        font-size: 14px;
+        line-height: 19px;
+      }
+
+      > i {
+        font-size: 13px;
+        margin-right: 8px;
+      }
+
+      .m-btn {
+        height: 30px;
+        font-size: 10px;
+        letter-spacing: 1px;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+
+        i {
+          display: block;
+          font-size: 16px;
+          padding: 0;
+          margin: 0;
+        }
+
+        span {
+          display: none;
+        }
+      }
+    }
+  }
+}

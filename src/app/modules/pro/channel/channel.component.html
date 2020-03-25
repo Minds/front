@@ -1,0 +1,131 @@
+<div class="m-pro__channel">
+  <ng-container *ngIf="channel">
+    <div class="m-proChannel__topbar">
+      <ng-container
+        *ngIf="!channel.pro_settings.has_custom_logo; else customLogo"
+      >
+        <minds-avatar
+          [object]="channel"
+          [routerLink]="homeRouterLink"
+        ></minds-avatar>
+      </ng-container>
+      <ng-template #customLogo>
+        <img
+          class="m-proChannelTopbar__logo"
+          [src]="channel.pro_settings.logo_image"
+          [routerLink]="homeRouterLink"
+        />
+      </ng-template>
+
+      <div class="m-proChannelTopbar__searchBox">
+        <m-pro__searchBox
+          [(query)]="query"
+          (onSearch)="search()"
+          (onClearSearch)="clearSearch()"
+        ></m-pro__searchBox>
+      </div>
+
+      <ng-container *ngIf="!collapseNavItems">
+        <a
+          class="m-proChannelTopbar__navItem"
+          [routerLink]="feedRouterLink"
+          routerLinkActive="active"
+          i18n
+        >
+          Feed
+        </a>
+
+        <a
+          class="m-proChannelTopbar__navItem"
+          [routerLink]="videosRouterLink"
+          routerLinkActive="active"
+          i18n
+        >
+          Videos
+        </a>
+
+        <a
+          class="m-proChannelTopbar__navItem"
+          [routerLink]="imagesRouterLink"
+          routerLinkActive="active"
+          i18n
+        >
+          Images
+        </a>
+
+        <a
+          class="m-proChannelTopbar__navItem"
+          [routerLink]="articlesRouterLink"
+          routerLinkActive="active"
+          i18n
+        >
+          Articles
+        </a>
+
+        <a
+          class="m-proChannelTopbar__navItem"
+          [routerLink]="groupsRouterLink"
+          routerLinkActive="active"
+          i18n
+        >
+          Groups
+        </a>
+
+        <ng-container
+          *ngIf="currentUser?.guid != channel.guid; else ownerNavLinks"
+        >
+          <a class="m-proChannelTopbar__navItem" (click)="wire()" i18n>Wire</a>
+
+          <m-pro__subscribeButton></m-pro__subscribeButton>
+        </ng-container>
+        <ng-template #ownerNavLinks>
+          <a
+            *ngIf="isProDomain"
+            class="m-proChannelTopbar__navItem"
+            [href]="proSettingsHref"
+            target="root_minds"
+            i18n
+          >
+            Settings
+          </a>
+
+          <a
+            *ngIf="!isProDomain"
+            class="m-proChannelTopbar__navItem"
+            [routerLink]="proSettingsLink"
+            i18n
+          >
+            Settings
+          </a>
+        </ng-template>
+      </ng-container>
+
+      <m-pro__hamburger-menu
+        [(query)]="query"
+        (onSearch)="search()"
+        (onClearSearch)="clearSearch()"
+      ></m-pro__hamburger-menu>
+    </div>
+
+    <div class="m-proChannel__body">
+      <router-outlet></router-outlet>
+    </div>
+
+    <div class="m-proChannel__footer">
+      <m-pro--channel-footer></m-pro--channel-footer>
+    </div>
+  </ng-container>
+
+  <div class="m-proChannel__body" *ngIf="error">
+    <div class="m-proChannel__error">
+      {{ error }}
+    </div>
+  </div>
+</div>
+
+<m-modal-signup
+  *ngIf="!session.getLoggedInUser()"
+  [open]="false"
+></m-modal-signup>
+
+<m-overlay-modal #overlayModal></m-overlay-modal>

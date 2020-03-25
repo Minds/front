@@ -1,0 +1,175 @@
+@import '../../../../foundation/grid-values';
+
+.m-marketing__main,
+.m-marketing__section {
+  &.m-marketing__section--style-5 {
+    margin-bottom: 100px;
+
+    @media screen and (max-width: $m-grid-max-mobile) {
+      margin-bottom: 80px;
+    }
+
+    .m-marketing__wrapper {
+      position: relative;
+      z-index: 0;
+      padding: 80px 0 80px;
+
+      @media screen and (max-width: $m-grid-max-mobile) {
+        padding: 0;
+      }
+    }
+
+    .m-marketing__body {
+      position: relative;
+      padding: 95px 0 0;
+
+      @media screen and (max-width: $m-grid-max-mobile) {
+        padding: 0 30px 0;
+      }
+
+      h2 {
+        @include m-on-theme(dark) {
+          color: #ffffff;
+        }
+
+        @media screen and (max-width: $m-grid-max-mobile) {
+          font-size: 28px;
+          line-height: 32px;
+          margin: 0 0 17px;
+          text-align: center;
+        }
+      }
+    }
+
+    p.m-marketing__description {
+      margin-bottom: 42px;
+
+      @media screen and(min-width: $min-tablet) {
+        padding-right: 200px;
+      }
+
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+
+      @include m-on-theme(dark) {
+        color: #ffffff;
+      }
+
+      @media screen and (max-width: $m-grid-max-mobile) {
+        padding-right: 0;
+        margin-bottom: 30px;
+        font-size: 16px;
+        line-height: 23px;
+        text-align: center;
+      }
+    }
+
+    ul.m-marketing__points {
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+
+      @include m-on-theme(dark) {
+        color: #ffffff;
+      }
+
+      > li em {
+        font-style: normal;
+
+        @include m-theme() {
+          color: themed($m-black);
+        }
+
+        @include m-on-theme(dark) {
+          color: #ffffff;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .m-marketing__image {
+      position: relative;
+      z-index: 0;
+      grid-column-start: 1;
+      grid-row: 1;
+
+      img.m-marketing__image--1 {
+        object-fit: cover;
+        width: 438px;
+        height: 518px;
+        clip-path: polygon(0% 1%, 0% 100%, 100% 96%, 100% 0%);
+
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+          width: 100%;
+        }
+
+        @media screen and (max-width: $m-grid-max-mobile) {
+          width: 100vw;
+          height: 100vw;
+          clip-path: polygon(0% 1%, 0% 100%, 100% 97%, 100% 0%);
+        }
+      }
+
+      img.m-marketing__image--2 {
+        object-fit: contain;
+        width: 358px;
+        height: 191px;
+        position: absolute;
+        right: 0;
+        bottom: 35px;
+        transform: translate(15px, 0);
+
+        @media screen and (min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+          width: 100%;
+        }
+
+        @media screen and (max-width: $m-grid-max-mobile) {
+          right: auto;
+          left: 50%;
+          bottom: 0;
+          transform: translate(-50%, 50%);
+          width: 85vw;
+          height: 45.35vw;
+        }
+      }
+
+      span {
+        display: inline-block;
+        position: relative;
+        width: 100%;
+
+        @media screen and (max-width: $m-grid-max-mobile) {
+          margin-bottom: calc(
+            20vw + 40px
+          ); // A little bit less than half UX image + normal margin
+
+          &.m-marketing__image--noUxSample {
+            margin-bottom: 40px;
+          }
+        }
+
+        // Deco
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 191px;
+          height: 191px;
+          transform: translate(-60px, -58px);
+          background: url('<%= APP_CDN %>/assets/marketing/deco_3.svg')
+            no-repeat;
+          z-index: -1;
+
+          @media screen and (max-width: $m-grid-max-mobile) {
+            content: initial;
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}

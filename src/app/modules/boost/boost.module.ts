@@ -58,7 +58,15 @@ const boostRoutes: Routes = [
       },
     ],
   },
-  { path: 'boost', component: BoostMarketingComponent },
+  {
+    path: 'boost',
+    component: BoostMarketingComponent,
+    data: {
+      title: 'Boost',
+      description: 'Expand your reach and gain thousands of views',
+      ogImage: '/assets/product-pages/boost/boost-1.jpg',
+    },
+  },
 ];
 
 @NgModule({
@@ -99,10 +107,6 @@ const boostRoutes: Routes = [
     BoostConsoleCard,
     BoostConsoleBooster,
   ],
-  entryComponents: [
-    BoostCreatorComponent,
-    BoostConsoleComponent,
-    BoostMarketingComponent,
-  ],
+  entryComponents: [BoostCreatorComponent, BoostConsoleComponent],
 })
 export class BoostModule {}

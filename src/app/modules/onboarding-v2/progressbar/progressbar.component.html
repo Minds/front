@@ -1,0 +1,24 @@
+<div
+  class="m-onboarding__progressbar"
+  [class.m-onboarding__progressbar--desktop]="!isMobile()"
+>
+  <ng-container *ngIf="!isMobile(); else mobileBlock">
+    <div
+      class="m-onboardingProgressbar__item"
+      [class.m-onboardingProgressbar__item--selected]="step.selected"
+      *ngFor="let step of steps; let i = index"
+    >
+      <span class="m-onboardingProgressbarItem__number">{{ i + 1 }}</span>
+      <span class="m-onboardingProgressbar__stepName">{{ step.name }}</span>
+      <div class="m-onboardingProgressbarItem__selector"></div>
+    </div>
+  </ng-container>
+  <ng-template #mobileBlock>
+    <h2 class="m-onboardingProgressbar__stepName">
+      {{ steps[getSelectedIndex()].name }}
+    </h2>
+    <span class="m-onboardingProgressbar_item--mobile">
+      Step {{ getSelectedIndex() + 1 }} of {{ steps.length }}
+    </span>
+  </ng-template>
+</div>

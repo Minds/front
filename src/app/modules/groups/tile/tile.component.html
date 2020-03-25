@@ -8,7 +8,7 @@
       [ngStyle]="{
         'background-image':
           'url(' +
-          minds.cdn_url +
+          cdnUrl +
           'fs/v1/banners/' +
           entity.guid +
           '/fat/' +
@@ -26,7 +26,7 @@
     <div class="avatar">
       <img
         [class.m-pulsating--big]="entity.hasGathering$ | async"
-        src="{{ minds.cdn_url }}fs/v1/avatars/{{ entity.guid }}/large"
+        src="{{ cdnUrl }}fs/v1/avatars/{{ entity.guid }}/large"
       />
     </div>
     <div class="body">

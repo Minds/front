@@ -3,6 +3,8 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import * as BN from 'bn.js';
 
@@ -10,20 +12,21 @@ import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
+import { ConfigsService } from '../../../../common/services/configs.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-wallet--balance-tokens',
   templateUrl: 'balance.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletBalanceTokensComponent implements OnInit {
+  readonly cdnAssetsUrl: string;
   inProgress: boolean = false;
   balance: number = 0;
   testnetBalance: number = 0;
   ethBalance: string = '0';
   addresses: Array<any> = [];
-  minds = window.Minds;
   isLocal: boolean = false;
 
   constructor(
@@ -31,11 +34,15 @@ export class WalletBalanceTokensComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     protected web3Wallet: Web3WalletService,
     protected tokenContract: TokenContractService,
-    public session: Session
-  ) {}
+    public session: Session,
+    configs: ConfigsService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
-    this.load();
+    if (isPlatformBrowser(this.platformId)) this.load();
   }
 
   async load() {

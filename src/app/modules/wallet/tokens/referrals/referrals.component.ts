@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MindsTitle } from '../../../../services/ux/title';
 import { Session } from '../../../../services/session';
 
 @Component({
@@ -10,7 +9,6 @@ import { Session } from '../../../../services/session';
 export class ReferralsComponent implements OnInit {
   constructor(
     public session: Session,
-    public title: MindsTitle,
     public route: ActivatedRoute,
     public router: Router
   ) {}
@@ -19,7 +17,5 @@ export class ReferralsComponent implements OnInit {
     if (!this.session.isLoggedIn()) {
       return this.router.navigate(['/login']);
     }
-
-    this.title.setTitle('Referrals');
   }
 }

@@ -2,22 +2,27 @@
   [open]="open"
   (closed)="onClose($event)"
   *ngIf="!session.isLoggedIn() || display != 'initial'"
+  (click)="$event.stopPropagation()"
 >
   <div
     class="mdl-card__title"
     [hidden]="display == 'onboarding' || display == 'categories'"
   >
-    <img
-      src="{{ minds.cdn_assets_url }}assets/logos/logo.svg"
-      (click)="close()"
-    />
+    <img [src]="logo" (click)="close()" />
   </div>
 
   <!-- Initial Display -->
   <div *ngIf="display == 'initial'">
     <div class="m-signup-modal-feature-text mdl-card__supporting-text">
-      We are an open source platform for Internet freedom. Get paid in crypto
-      for your contributions to the community.
+      <ng-container *ngIf="description; else defaultDescription">
+        {{description}}
+      </ng-container>
+      <ng-template #defaultDescription>
+        <ng-container i18n>
+          We are an open source platform for Internet freedom. Get paid in
+          crypto for your contributions to the community.
+        </ng-container>
+      </ng-template>
     </div>
 
     <div class="mdl-card__supporting-text m-signup-buttons">
@@ -77,11 +82,6 @@
     (canceled)="close()"
     *ngIf="display == 'fb-complete'"
   ></minds-form-fb-register>
-  <!-- Categories selector -->
-  <minds-onboarding-categories-selector
-    (done)="done('categories')"
-    *ngIf="display == 'categories'"
-  ></minds-onboarding-categories-selector>
   <!-- Tutorial Display -->
   <minds-tutorial *ngIf="display == 'tutorial'"></minds-tutorial>
 </m-modal>

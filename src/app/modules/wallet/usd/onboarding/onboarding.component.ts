@@ -13,6 +13,8 @@ import { Client } from '../../../../services/api';
 import { requiredFor, optionalFor } from './onboarding.validators';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { WalletUSDTermsComponent } from '../terms.component';
+import { Session } from '../../../../services/session';
+import { BTCSettingsComponent } from '../../../payments/btc/settings.component';
 
 @Component({
   selector: 'm-walletUsd__onboarding',
@@ -22,8 +24,8 @@ export class WalletUSDOnboardingComponent implements OnInit {
   form: FormGroup;
   inProgress: boolean = false;
   restrictAsVerified: boolean = false;
+  eligible: boolean;
 
-  minds = window.Minds;
   merchant: any;
   error: string;
 
@@ -36,7 +38,8 @@ export class WalletUSDOnboardingComponent implements OnInit {
     private client: Client,
     private cd: ChangeDetectorRef,
     private router: Router,
-    protected overlayModal: OverlayModalService
+    protected overlayModal: OverlayModalService,
+    private session: Session
   ) {}
 
   ngOnInit() {
@@ -54,8 +57,8 @@ export class WalletUSDOnboardingComponent implements OnInit {
       street: ['', optionalFor(['JP'])],
       city: ['', optionalFor(['JP', 'SG'])],
       state: ['', requiredFor(['AU', 'CA', 'IE', 'US'])],
-      postCode: ['', optionalFor(['HK', 'IE', 'JP'])],
-      phoneNumber: ['', requiredFor(['JP'])],
+      postCode: ['', optionalFor(['HK', 'JP'])],
+      phoneNumber: ['', Validators.required],
       stripeAgree: ['', Validators.required],
     });
 
@@ -68,6 +71,12 @@ export class WalletUSDOnboardingComponent implements OnInit {
       }
 
       this.form.patchValue(this.merchant);
+    }
+
+    if (this.session.getLoggedInUser().nsfw.length > 0) {
+      this.eligible = false;
+    } else {
+      this.eligible = true;
     }
 
     this.disableRestrictedFields();
@@ -115,10 +124,11 @@ export class WalletUSDOnboardingComponent implements OnInit {
       );
       this.inProgress = false;
 
-      if (!this.minds.user.programs) this.minds.user.programs = [];
-      this.minds.user.programs.push('affiliate');
+      if (!this.session.getLoggedInUser().programs)
+        this.session.getLoggedInUser().programs = [];
+      this.session.getLoggedInUser().programs.push('affiliate');
 
-      this.minds.user.merchant = {
+      this.session.getLoggedInUser().merchant = {
         id: response.account.id,
         service: 'stripe',
       };
@@ -178,6 +188,10 @@ export class WalletUSDOnboardingComponent implements OnInit {
 
   showTerms() {
     this.overlayModal.create(WalletUSDTermsComponent).present();
+  }
+
+  openBtc() {
+    this.overlayModal.create(BTCSettingsComponent, {}).present();
   }
 
   detectChanges() {

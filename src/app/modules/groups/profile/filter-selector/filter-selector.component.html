@@ -4,14 +4,20 @@
       class="m-groups--filter-selector-item"
       [class.m-groups--filter-selector-active]="filter == 'activity'"
       [routerLink]="['/groups/profile', group.guid, 'feed']"
-      i18n="group activities selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION"
+      i18n="
+         group activities
+        selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION
+      "
       >Feed</a
     >
     <a
       class="m-groups--filter-selector-item"
       [class.m-groups--filter-selector-active]="filter == 'image'"
       [routerLink]="['/groups/profile', group.guid, 'feed', 'image']"
-      i18n="group activities selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION"
+      i18n="
+         group activities
+        selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION
+      "
       >Images</a
     >
 

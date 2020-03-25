@@ -42,7 +42,9 @@
         *ngIf="!payoutRequestInProgress && isPayoutInProgress()"
       >
         <ng-container
-          i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__PAYOUT_UNDER_REVIEW_LABEL"
+          i18n="
+             @@MONETIZATION__AD_SHARING__ANALYTICS__PAYOUT_UNDER_REVIEW_LABEL
+          "
           >Your payment request for
           {{ payouts.amount | currency: 'USD':true }} is currently under review
           by Minds staff. Once reviewed, it will be transferred to the bank

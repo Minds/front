@@ -1,0 +1,19 @@
+// This component is provided with the minimum styles as it's
+// the parent component's responsibility
+
+m-calendar {
+  display: block;
+  user-select: none;
+
+  .m-calendar__grid > table {
+    width: 100%;
+
+    td {
+      text-align: center;
+
+      &.m-calendarGrid__date a {
+        color: inherit !important;
+      }
+    }
+  }
+}

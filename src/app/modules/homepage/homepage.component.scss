@@ -3,8 +3,12 @@
 .m-homepage--hero {
   position: relative;
 
-  //background-image: url(/assets/photos/circles.png);
   background-image: url('<%= APP_CDN %>/assets/videos/what-1/what-1.jpg');
+
+  @media screen and (max-width: $max-mobile) {
+    background-image: url('<%= APP_CDN %>/assets/videos/what-1/what-1-mobile.jpg');
+  }
+
   background-size: cover;
   background-position: center center;
 
@@ -132,7 +136,7 @@
       .mdl-card__title {
         display: none;
       }
-      .m-login-box input {
+      .m-login-box input:not([type='checkbox']) {
         border: 0;
         border-radius: 3px;
         font-weight: 600;

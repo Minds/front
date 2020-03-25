@@ -71,30 +71,11 @@
         <option *ngFor="let a of access" [value]="a.value">{{ a.text }}</option>
       </select>
     </div>
-    <div class="m-mature-info">
-      <a
-        class="mdl-color-text--blue-grey-300 m-capture-mature"
-        (click)="entity.mature = entity.mature ? 0 : 1"
-      >
-        <i
-          class="material-icons"
-          [ngClass]="{ 'mdl-color-text--red-500': entity.mature }"
-          title="Mature content"
-          i18n-title="@@M__COMMON__MATURE_CONTENT"
-          >explicit</i
-        >
-
-        <span [ngClass]="{ 'mdl-color-text--red-500': entity.mature }">
-          <ng-container *ngIf="entity.mature" i18n="@@M__COMMON__MATURE_CONTENT"
-            >Mature Content</ng-container
-          >
-          <ng-container
-            *ngIf="!entity.mature"
-            i18n="@@MINDS__MEDIA__ANYONE_LABEL"
-            >Anyone</ng-container
-          >
-        </span>
-      </a>
-    </div>
+    <m-nsfw-selector
+      service="editing"
+      (selectedChange)="onNSFWSelections($event)"
+      [selected]="entity.nsfw"
+    >
+    </m-nsfw-selector>
   </div>
 </form>

@@ -1,0 +1,16 @@
+<div class="m-pro__unsubscribeModal">
+  <div class="m-ProUnsubscribeModal__body">
+    <span>
+      Do you wish to unsubscribe from <strong>{{ channelName }}</strong
+      >?</span
+    >
+  </div>
+  <div class="m-ProUnsubscribeModal__response">
+    <span (click)="close()">Cancel</span>
+    <span
+      class="m-ProUnsubscribeModalResponse__unsubscribe"
+      (click)="unsubscribe()"
+      >Unsubscribe</span
+    >
+  </div>
+</div>

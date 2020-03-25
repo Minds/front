@@ -1,5 +1,10 @@
 <div class="minds-list">
-  <minds-newsfeed-poster></minds-newsfeed-poster>
+  <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+    <m-composer></m-composer>
+  </ng-container>
+  <ng-template #v1NewsfeedPoster>
+    <minds-newsfeed-poster></minds-newsfeed-poster>
+  </ng-template>
 
   <div class="m-feeds-sorted__query">
     <span>Showing Boosts</span>
@@ -14,7 +19,7 @@
       [boostToggle]="activity.boostToggle"
       [boost]="boostFeed"
       [showBoostMenuOptions]="boostFeed"
-      (delete)="delete(activity)"
+      (deleted)="delete($event)"
       [slot]="i + 1"
       class="mdl-card m-border item"
       [attr.data-minds-activity-guid]="activity.guid"

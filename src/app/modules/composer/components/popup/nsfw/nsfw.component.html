@@ -1,0 +1,37 @@
+<div class="m-composerPopup__body m-composer__nsfw">
+  <div class="m-composerPopup__content">
+    <h3 class="m-composerPopup__title" i18n>NSFW</h3>
+
+    <p class="m-composerPopup__text" i18n>
+      If this post contains content that is NSFW (Not Safe for Work) it is your
+      responsibility to tag it accordingly. Failing to do so will violate our
+      terms of use.
+    </p>
+
+    <ul class="m-composerNsfw__list" data-cy="nsfw-list">
+      <li
+        *ngFor="let reason of nsfwReasons"
+        class="m-composerNsfw__item"
+        [class.m-composerNsfw__item--active]="state.includes(reason.value)"
+        (click)="toggle(reason.value)"
+      >
+        {{ reason.label }}
+      </li>
+    </ul>
+
+    <p class="m-composerPopup__smallNote" i18n>
+      See <a href="#">guidelines</a> for further information.
+    </p>
+  </div>
+
+  <div class="m-composerPopup__action">
+    <m-button
+      class="m-composerPopup__save"
+      (onAction)="save()"
+      data-cy="nsfw-save-button"
+      i18n
+    >
+      Save
+    </m-button>
+  </div>
+</div>

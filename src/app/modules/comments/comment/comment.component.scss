@@ -22,6 +22,13 @@
   @include m-theme() {
     background-color: rgba(themed($m-grey-50), 0.7);
   }
+
+  .m-mature-text-toggle {
+    i {
+      vertical-align: middle;
+      padding-right: 8px;
+    }
+  }
 }
 
 .m-commentBubble__username {
@@ -119,7 +126,7 @@
     .minds-counter {
       font-size: 12px;
       line-height: 16px;
-      vertical-align: top;
+      vertical-align: middle;
     }
   }
 }
@@ -146,10 +153,12 @@
 }
 
 .m-comment .minds-avatar {
-  margin-top: 0;
+  margin-top: 2px;
 
   img {
     width: 36px;
+    height: 36px;
+    object-fit: cover;
   }
 }
 
@@ -229,6 +238,7 @@
 
       img {
         width: 20px;
+        height: 20px;
       }
     }
   }
@@ -259,5 +269,11 @@
     width: calc(100% - 100px);
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+}
+
+.m-redButton {
+  @include m-theme() {
+    color: themed($m-red);
   }
 }

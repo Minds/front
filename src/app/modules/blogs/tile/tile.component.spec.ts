@@ -11,6 +11,8 @@ import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { AttachmentService } from '../../../services/attachment';
 import { attachmentServiceMock } from '../../../../tests/attachment-service-mock.spec';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { MockService } from '../../../utils/mock';
 
 describe('BlogTileComponent', () => {
   let comp: BlogTileComponent;
@@ -28,6 +30,7 @@ describe('BlogTileComponent', () => {
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: AttachmentService, useValue: attachmentServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents();
   }));

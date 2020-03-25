@@ -17,7 +17,7 @@
     padding: 16px;
     margin-bottom: 8px;
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--secondary);
     }
 
     .m-token--ledger--reward-amount {
@@ -133,7 +133,7 @@
   margin-bottom: 8px;
   flex-wrap: wrap;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   @media screen and (max-width: $min-tablet) {
@@ -152,6 +152,11 @@
 
   .m-token--ledger--date-selectors {
     display: flex;
+    flex-wrap: wrap;
+    @media screen and (max-width: $min-tablet) {
+      flex-direction: column;
+      align-items: flex-end;
+    }
   }
 
   .m-token--ledger-filters--check {

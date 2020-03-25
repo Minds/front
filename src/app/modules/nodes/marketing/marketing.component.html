@@ -1,148 +1,201 @@
-<div class="m-marketing m-nodes--marketing">
-  <div class="m-marketing--hero">
-    <div class="m-marketing--hero--video">
-      <img
-        [src]="
-          minds.cdn_assets_url +
-          'assets/marketing/international-space-station-1776401_1920.jpg'
-        "
-      />
-    </div>
+<div class="mf-jumpAnchor" #topAnchor></div>
 
-    <div class="m-marketing--hero--inner">
-      <div class="m-marketing--hero--overlay"></div>
+<m-marketing class="m-nodes__marketing" pageTitle="Nodes" i18n-pageTitle>
+  <div class="m-marketing__main m-marketing__section--style-2">
+    <div class="m-grid m-marketing__wrapper">
+      <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
+        <h1 i18n>
+          Minds Nodes
+        </h1>
 
-      <div class="m-marketing--hero--slogans">
-        <h1 i18n="@@M__nodes__MKT__MINDS_TOKEN_TITLE">Nodes</h1>
-        <h3 i18n="@@M__nodes__MKT__MINDS_TOKEN_SUBTITLE">
-          Launch your own white-labeled social network and mobile app.
-        </h3>
+        <h2 ngPreserveWhitespaces i18n>
+          Launch your own <em>social networking app</em>
+        </h2>
+
+        <p class="m-marketing__description" i18n>
+          Start your own white-labeled social networking app for web and mobile
+          by leveraging Minds’ open source code base.
+        </p>
+
+        <div class="">
+          <button
+            class="mf-button mf-button--alt"
+            (click)="action(); $event.preventDefault()"
+            i18n
+          >
+            Contact us for details
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
+      >
+        <span>
+          <img
+            [src]="cdnAssetsUrl + 'assets/product-pages/nodes/nodes-1.jpg'"
+          />
+        </span>
       </div>
     </div>
   </div>
 
-  <section
-    class="m-marketing--section mdl-color--white"
-    style="padding-bottom: 0;"
-  >
-    <h1 class="" i18n="@@MINDS__HOME__HOMEPAGE__ECONOMY_TITLE">
-      A Social Hub for your Business
-    </h1>
+  <ng-container slot="2">
+    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
 
-    <div
-      class="m-marketing--section--subsection m-marketing--section--subsection--first"
-    >
-      <div class="m-marketing--section--subsection-container">
+    <!-- Section 2 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
         <div
-          class="m-marketing--section--subsection-left m-marketing--section--subsection-text"
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2>A stack full of features branded your way.</h2>
-          <p>
-            Harness all the features of Minds with your own label.
+          <h2 i18n>A platform branded your own way</h2>
+
+          <p class="m-marketing__description" i18n>
+            Harness all of the features of Minds.com with your own design, brand
+            name, domain and style. Set your own policies, develop your own
+            network and contribute to the greater Minds open source project.
           </p>
         </div>
         <div
-          class="m-marketing--section--subsection-right m-marketing--section--subsection-image"
-          style="text-align: center"
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
         >
-          <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.jpg'" />
+          <span class="m-marketing__image--noUxSample">
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/nodes/nodes-2.jpg'"
+            />
+          </span>
         </div>
       </div>
     </div>
 
-    <div class="m-marketing--section--subsection mdl-color--grey-50">
-      <div class="m-marketing--section--subsection-container">
+    <!-- Section 3 -->
+
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
         <div
-          class="m-marketing--section--subsection-left m-marketing--section--subsection-image"
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <img [src]="minds.cdn_assets_url + 'assets/screenshots/post.png'" />
+          <h2 i18n>A full stack of features</h2>
+
+          <p class="m-marketing__description" i18n>
+            The platform includes a wide variety of features, such as analytics,
+            wallet, encrypted messaging, newsfeed, content hosting, blog
+            editing, groups, hashtags, search, payments, advertising and more.
+          </p>
         </div>
         <div
-          class="m-marketing--section--subsection-right m-marketing--section--subsection-text"
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
         >
-          <h2>For your enterprise.</h2>
-          <p>
-            A private social intranet provides a secure space to improve
-            communications and increase productivity of employees, students or
-            memberships.
-          </p>
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/nodes/nodes-3.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/nodes/nodes-3-ux.png'"
+            />
+          </span>
         </div>
       </div>
     </div>
 
-    <div class="m-marketing--section--subsection">
-      <div class="m-marketing--section--subsection-container">
+    <!-- Section 4 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
         <div
-          class="m-marketing--section--subsection-left m-marketing--section--subsection-text"
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2>For your community.</h2>
-          <p>
-            Stop outsourcing your social media presence and losing your reach.
-            Regain direct access to your audience and offer rewards for
-            activity.
+          <h2 i18n>Sync across all devices</h2>
+
+          <p class="m-marketing__description" i18n>
+            The Minds platform is built for all platforms, including Android,
+            iOS and major web browsers such as Firefox, Chrome, Safari and
+            Brave.
           </p>
         </div>
         <div
-          class="m-marketing--section--subsection-right m-marketing--section--subsection-image"
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
         >
-          <img [src]="minds.cdn_assets_url + 'assets/marketing/nodes.png'" />
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/product-pages/nodes/nodes-4.jpg'"
+            />
+
+            <img
+              class="m-marketing__image--2"
+              [src]="cdnAssetsUrl + 'assets/product-pages/nodes/nodes-4-ux.png'"
+            />
+          </span>
         </div>
       </div>
     </div>
 
-    <div
-      class="m-marketing--section--subsection m-marketing--section--subsection--alt"
-    >
-      <div class="m-marketing--section--subsection-container">
+    <!-- Final section -->
+
+    <div class="m-marketing__section m-marketing__section--tail">
+      <div class="m-grid m-marketing__wrapper">
         <div
-          class="m-marketing--section--subsection-left m-marketing--section--subsection-image"
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body"
         >
-          <img
-            [src]="minds.cdn_assets_url + 'assets/marketing/world-icon.png'"
-          />
+          <h2 i18n>Other Nodes features</h2>
         </div>
+      </div>
+
+      <div class="m-grid m-marketing__wrapper m-marketingSectionTail__table">
         <div
-          class="m-marketing--section--subsection-right m-marketing--section--subsection-text"
+          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
         >
-          <h2>Teams anywhere.</h2>
-          <p>
-            Media & news companies, universities and institutions, tech
-            startupos, non-profits, workgroups and project teams can all launch
-            custom networks.
+          <h3 i18n>Supports many use cases</h3>
+
+          <p class="m-marketing__description" i18n>
+            Social networking is an essential tool for communicating inside your
+            own company or reaching people outside.
+          </p>
+        </div>
+
+        <div
+          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>For your community</h3>
+
+          <p class="m-marketing__description" i18n>
+            Stop outsourcing your social media presence and losing all of your
+            reach. Regain direct access to your audience.
+          </p>
+        </div>
+
+        <div
+          class="m-grid__column-4 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h3 i18n>Open source contribution</h3>
+
+          <p class="m-marketing__description" i18n>
+            All of your work will contribute to the greater
+            <a href="https://gitlab.com/minds" target="_blank"
+              >Minds open source project</a
+            >
+            of building free and open source social networking technology for
+            the world.
           </p>
         </div>
       </div>
-    </div>
 
-    <div class="m-marketing--section--subsection">
-      <div class="m-marketing--section--subsection-container">
+      <div class="m-grid m-marketing__wrapper">
         <div
-          class="m-marketing--section--subsection-left m-marketing--section--subsection-text"
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
         >
-          <h2>Sync across devices.</h2>
-          <p>
-            Robust applications for web, Android and iOS
-          </p>
-        </div>
-        <div
-          class="m-marketing--section--subsection-right m-marketing--section--subsection-image"
-        >
-          <img
-            [src]="minds.cdn_assets_url + 'assets/screenshots/devices.jpg'"
-          />
+          <button class="mf-button mf-button--alt" (click)="scrollToTop()" i18n>
+            Contact us for details
+          </button>
         </div>
       </div>
     </div>
-  </section>
-
-  <div
-    class="m-marketing--section m-marketing--section-margin m-nodes--marketing--contact-us"
-  >
-    <p>
-      Contact us at <a href="mailto:info@minds.com">info@minds.com</a> for a
-      quote to launch your own node.
-    </p>
-  </div>
-</div>
-
-<m-footer></m-footer>
+  </ng-container>
+</m-marketing>

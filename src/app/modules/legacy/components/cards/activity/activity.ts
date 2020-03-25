@@ -1,14 +1,15 @@
 import {
-  Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  EventEmitter,
+  Component,
   ElementRef,
-  Input,
-  ViewChild,
-  OnInit,
-  SkipSelf,
+  EventEmitter,
   Injector,
+  Input,
+  OnInit,
+  Output,
+  SkipSelf,
+  ViewChild,
 } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
@@ -19,7 +20,6 @@ import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
 import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
-import { MindsVideoComponent } from '../../../../media/components/video/video.component';
 import { EntitiesService } from '../../../../../common/services/entities.service';
 import { Router } from '@angular/router';
 import { BlockListService } from '../../../../../common/services/block-list.service';
@@ -30,9 +30,13 @@ import { AutocompleteSuggestionsService } from '../../../../suggestions/services
 import { ActivityService } from '../../../../../common/services/activity.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import isMobile from '../../../../../helpers/is-mobile';
+import { MindsVideoPlayerComponent } from '../../../../media/components/video-player/player.component';
+import { ConfigsService } from '../../../../../common/services/configs.service';
+import { RedirectService } from '../../../../../common/services/redirect.service';
+import { ComposerService } from '../../../../composer/services/composer.service';
+import { ModalService } from '../../../../composer/components/modal/modal.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-activity',
   host: {
     class: 'mdl-card m-border',
@@ -45,17 +49,20 @@ import isMobile from '../../../../../helpers/is-mobile';
     'canDelete',
     'showRatingToggle',
   ],
-  outputs: ['_delete: delete', 'commentsOpened', 'onViewed'],
   providers: [
     ClientMetaService,
     ActivityAnalyticsOnViewService,
     ActivityService,
+    ComposerService,
+    ModalService,
   ],
   templateUrl: 'activity.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Activity implements OnInit {
-  minds = window.Minds;
+  readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
 
   activity: any;
   boosted: boolean = false;
@@ -67,12 +74,25 @@ export class Activity implements OnInit {
   showBoostOptions: boolean = false;
   allowComments = true;
   @Input() boost: boolean = false;
+  @Input() disableBoosting: boolean = false;
+  @Input() disableReminding: boolean = false;
   @Input('boost-toggle')
   @Input()
   showBoostMenuOptions: boolean = false;
   @Input() slot: number = -1;
 
   visibilityEvents: boolean = true;
+
+  /**
+   * Whether or not we allow autoplay on scroll
+   */
+  @Input() allowAutoplayOnScroll: boolean = false;
+
+  /**
+   * Whether or not autoplay is allowed (this is used for single entity view, media modal and media view)
+   */
+  @Input() autoplayVideo: boolean = false;
+
   @Input('visibilityEvents') set _visibilityEvents(visibilityEvents: boolean) {
     this.visibilityEvents = visibilityEvents;
 
@@ -85,14 +105,15 @@ export class Activity implements OnInit {
   element: any;
   visible: boolean = false;
 
-  editing: boolean = false;
+  @Input() editing: boolean = false;
   @Input() hideTabs: boolean;
 
-  _delete: EventEmitter<any> = new EventEmitter();
-  commentsOpened: EventEmitter<any> = new EventEmitter();
+  @Output() deleted: EventEmitter<any> = new EventEmitter();
+  @Output() commentsOpened: EventEmitter<any> = new EventEmitter();
   @Input() focusedCommentGuid: string;
 
   childEventsEmitter: EventEmitter<any> = new EventEmitter();
+  @Output()
   onViewed: EventEmitter<{ activity; visible }> = new EventEmitter<{
     activity;
     visible;
@@ -153,7 +174,14 @@ export class Activity implements OnInit {
     }
   }
 
-  @ViewChild('player', { static: false }) player: MindsVideoComponent;
+  player: MindsVideoPlayerComponent;
+
+  @ViewChild('player', { static: false }) set _player(
+    player: MindsVideoPlayerComponent
+  ) {
+    this.player = player;
+  }
+
   @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
 
   protected time_created: any;
@@ -175,7 +203,12 @@ export class Activity implements OnInit {
     public suggestions: AutocompleteSuggestionsService,
     protected activityService: ActivityService,
     @SkipSelf() injector: Injector,
-    elementRef: ElementRef
+    private elementRef: ElementRef,
+    private configs: ConfigsService,
+    private redirectService: RedirectService,
+    protected composer: ComposerService,
+    protected composerModal: ModalService,
+    protected selfInjector: Injector
   ) {
     this.clientMetaService.inherit(injector);
 
@@ -194,6 +227,10 @@ export class Activity implements OnInit {
 
         this.onViewed.emit({ activity: activity, visible: true });
       });
+
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
   }
 
   ngOnInit() {
@@ -205,7 +242,7 @@ export class Activity implements OnInit {
   set object(value: any) {
     if (!value) return;
     this.activity = value;
-    this.activity.url = window.Minds.site_url + 'newsfeed/' + value.guid;
+    this.activity.url = this.siteUrl + 'newsfeed/' + value.guid;
 
     this.activityAnalyticsOnViewService.setEntity(this.activity);
 
@@ -215,8 +252,8 @@ export class Activity implements OnInit {
       this.activity.custom_data[0].src
     ) {
       this.activity.custom_data[0].src = this.activity.custom_data[0].src.replace(
-        this.minds.site_url,
-        this.minds.cdn_url
+        this.configs.get('site_url'),
+        this.configs.get('cdn_url')
       );
     }
 
@@ -239,10 +276,12 @@ export class Activity implements OnInit {
       this.activity.time_created || Math.floor(Date.now() / 1000);
 
     this.allowComments = this.activity.allow_comments;
+
+    this.activityAnalyticsOnViewService.checkVisibility(); // perform check
   }
 
   getOwnerIconTime() {
-    let session = this.session.getLoggedInUser();
+    const session = this.session.getLoggedInUser();
     if (session && session.guid === this.activity.ownerObj.guid) {
       return session.icontime;
     } else {
@@ -281,7 +320,7 @@ export class Activity implements OnInit {
           $event.inProgress.emit(false);
           $event.completed.emit(0);
         }
-        this._delete.next(this.activity);
+        this.deleted.emit(this.activity);
       })
       .catch(e => {
         if ($event.inProgress) {
@@ -406,7 +445,22 @@ export class Activity implements OnInit {
         this.router.navigate(['/newsfeed', this.activity.guid]);
         break;
       case 'edit':
-        this.editing = true;
+        if (this.featuresService.has('activity-composer')) {
+          this.composer.load(this.activity);
+
+          this.composerModal
+            .setInjector(this.selfInjector)
+            .present()
+            .toPromise()
+            .then(activity => {
+              if (activity) {
+                this.activity = activity;
+                this.detectChanges();
+              }
+            });
+        } else {
+          this.editing = true;
+        }
         break;
       case 'delete':
         this.delete();
@@ -501,8 +555,11 @@ export class Activity implements OnInit {
     return activity && activity.pending && activity.pending !== '0';
   }
 
-  isScheduled(time_created) {
-    return time_created && time_created * 1000 > Date.now();
+  isScheduled(time_created, deviation = 5000) {
+    // Scheduled when time_created is more than 5 (default) seconds in the
+    // future, to account minimal client computer deviation.
+
+    return time_created && time_created * 1000 > Date.now() + deviation;
   }
 
   toggleMatureVisibility() {
@@ -565,13 +622,29 @@ export class Activity implements OnInit {
     }
   }
 
+  onRichEmbedClick(e: Event): void {
+    if (
+      this.activity.perma_url &&
+      this.activity.perma_url.indexOf(this.configs.get('site_url')) === 0
+    ) {
+      this.redirectService.redirect(this.activity.perma_url);
+      return; // Don't open modal for minds links
+    }
+
+    this.openModal();
+  }
+
   openModal() {
     this.activity.modal_source_url = this.router.url;
 
     this.overlayModal
-      .create(MediaModalComponent, this.activity, {
-        class: 'm-overlayModal--media',
-      })
+      .create(
+        MediaModalComponent,
+        { entity: this.activity },
+        {
+          class: 'm-overlayModal--media',
+        }
+      )
       .present();
   }
 
@@ -598,5 +671,27 @@ export class Activity implements OnInit {
     return this.activity.time_created > Math.floor(Date.now() / 1000)
       ? true
       : false;
+  }
+
+  /**
+   * Determined whether boost button should be shown.
+   * @returns { boolean } true if boost button should be shown.
+   */
+  showBoostButton(): boolean {
+    return (
+      this.session.getLoggedInUser().guid == this.activity.owner_guid &&
+      !this.isScheduled(this.activity.time_created) &&
+      !this.disableBoosting
+    );
+  }
+
+  /**
+   * Determined whether remind button should be shown.
+   * @returns { boolean } true if remind button should be shown.
+   */
+  showRemindButton(): boolean {
+    return (
+      !this.isScheduled(this.activity.time_created) && !this.disableReminding
+    );
   }
 }

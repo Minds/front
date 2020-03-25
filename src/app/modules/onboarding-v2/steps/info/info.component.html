@@ -1,0 +1,83 @@
+<div class="m-onboarding__controls">
+  <div class="m-onboarding__control">
+    <m-onboarding__phoneverification
+      [tooltipAnchor]="tooltipAnchor"
+      #phoneVerification
+    >
+    </m-onboarding__phoneverification>
+  </div>
+
+  <div class="m-onboarding__control">
+    <div class="m-onboardingControl__label">
+      <label data-minds="location" i18n>Location</label>
+
+      <m-tooltip [anchor]="tooltipAnchor">
+        <span m-tooltip--anchor>𝒊</span>
+        <ng-container i18n>
+          Please enter your city to help us connect you with channels in your
+          area. We do not track your exact location.
+        </ng-container>
+      </m-tooltip>
+
+      <span i18n>Optional</span>
+    </div>
+
+    <div class="m-onboarding__input m-onboarding__location">
+      <input
+        type="text"
+        data-minds="locationInput"
+        [ngModel]="location"
+        (ngModelChange)="locationChange($event)"
+        (keyup)="findCity(location)"
+      />
+      <div class="m-onboarding__error" *ngIf="locationError">
+        {{ locationError }}
+      </div>
+
+      <ul class="m-onboarding__cities" *ngIf="cities.length > 0">
+        <li
+          (click)="setCity(c)"
+          *ngFor="let c of cities"
+          [hidden]="!(c.address.town || c.address.city)"
+        >
+          {{ c.address.town }}{{ c.address.city }}, {{ c.address.state }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="m-onboarding__control m-onboardingControl__dateOfBirth">
+    <div class="m-onboardingControl__label">
+      <label data-minds="dateOfBirth" i18n>Date of Birth</label>
+      <span i18n>Optional</span>
+
+      <m-tooltip [anchor]="tooltipAnchor">
+        <span m-tooltip--anchor>𝒊</span>
+        <ng-container i18n>
+          Please enter your birth date to confirm your age and help us improve
+          our recommendations.
+        </ng-container>
+      </m-tooltip>
+    </div>
+
+    <m-date__dropdowns
+      (selectedDateChange)="selectedDateChange($event)"
+    ></m-date__dropdowns>
+    <div
+      class="m-onboarding__error"
+      [style.visibility]="!!ageError ? 'visible' : 'hidden'"
+      i18n
+    >
+      You must be at least 13 years old
+    </div>
+  </div>
+
+  <div class="m-onboarding__actionButtons">
+    <button class="mf-button mf-button--hollow" (click)="skip()" i18n>
+      Skip
+    </button>
+    <button class="mf-button mf-button--alt" (click)="continue()" i18n>
+      Continue
+    </button>
+  </div>
+</div>

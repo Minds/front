@@ -23,8 +23,6 @@ type CurrencyType = 'offchain' | 'usd' | 'onchain' | 'creditcard';
   templateUrl: 'payment-methods.component.html',
 })
 export class BoostCreatorPaymentMethodsComponent {
-  minds: Minds = window.Minds;
-
   @Input() boost;
   @Output() boostChanged: EventEmitter<any> = new EventEmitter();
 

@@ -1,0 +1,20 @@
+<div class="m-grid">
+  <div
+    class="m-grid__column-8 m-grid__column__skip-3 m-grid__column-8--tablet m-grid__column__skip-3--tablet m-grid__column-10--mobile m-grid__column__skip-2--mobile"
+  >
+    <div class="m-onboarding__wrapper">
+      <div class="m-onboarding__form">
+        <ng-container *ngIf="showTitle">
+          <h2>
+            Profile Setup
+          </h2>
+
+          <m-onboarding__progressbar
+            [steps]="steps"
+          ></m-onboarding__progressbar>
+        </ng-container>
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

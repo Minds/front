@@ -3,10 +3,9 @@ import {
   ChangeDetectorRef,
   Component,
 } from '@angular/core';
-import { MindsTitle } from '../../../services/ux/title';
 import { Session } from '../../../services/session';
 import { MobileService } from '../mobile.service';
-import { first } from 'lodash';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-mobile--marketing',
@@ -14,7 +13,7 @@ import { first } from 'lodash';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MobileMarketingComponent {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   user;
 
   releases: any[] = [];
@@ -25,14 +24,15 @@ export class MobileMarketingComponent {
   };
 
   constructor(
-    protected title: MindsTitle,
     protected session: Session,
     protected service: MobileService,
-    protected cd: ChangeDetectorRef
-  ) {}
+    protected cd: ChangeDetectorRef,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
-    this.title.setTitle('Mobile');
     this.user = this.session.getLoggedInUser();
     this.load();
   }
@@ -46,9 +46,9 @@ export class MobileMarketingComponent {
       this.detectChanges();
 
       this.releases = await this.service.getReleases();
-      this.latestRelease = await first(
-        this.releases.filter(rel => rel.latest && !rel.unstable)
-      );
+      this.latestRelease = this.releases.filter(
+        rel => rel.latest && !rel.unstable
+      )[0];
     } catch (e) {
       console.error(e);
       this.error = e.message || 'Unknown error';

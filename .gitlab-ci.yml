@@ -1,7 +1,4 @@
-image: markharding/minds-front-base
-
-services:
-  - docker:dind
+image: minds/ci-front:latest
 
 stages:
   - test
@@ -9,7 +6,7 @@ stages:
   - prepare
   - review
   - deploy:staging
-  - test:e2e
+  - qa
   - deploy:canary
   - deploy:production
   - cleanup
@@ -20,7 +17,7 @@ variables:
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
 
 test:
-  image: circleci/node:8-browsers
+  image: circleci/node:13-browsers
   stage: test
   script:
     - npm ci
@@ -29,27 +26,32 @@ test:
 lint:
   stage: test
   script:
-    - npm i -g prettier
+    - npm i -g prettier@"^1.19.1"
     - prettier --check "src/**/*.ts"
     - prettier --check "src/**/*.scss"
     - prettier --check "src/**/*.html"
 
-e2e:chrome:
-  image: cypress/browsers:chrome67
-  stage: test:e2e
+############
+# QA Stage #
+############
+.cypress_tests: &cypress_tests
+  image: cypress/browsers:node10.16.0-chrome77
+  stage: qa
   variables:
-    CYPRESS_INSTALL_BINARY: 3.4.1
+    CYPRESS_INSTALL_BINARY: 3.6.1
   script:
     - npm ci
     - >
       if [ "$CI_BUILD_REF_NAME" == "master" ]; then
         export E2E_DOMAIN=https://www.minds.com
+        export PRODUCTION=true
       else
         export E2E_DOMAIN=https://$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN
+        export PRODUCTION=false
       fi
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
-    - $(npm bin)/cypress run --browser chrome --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN
+    - $(npm bin)/cypress run --browser chrome --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN,video=false --env captcha_bypass_key=$CYPRESS_bypass_key,production=$PRODUCTION
   artifacts:
     when: always
     paths:
@@ -59,7 +61,31 @@ e2e:chrome:
     paths:
       - .npm
       - cache/Cypress
-  allow_failure: true #manual inspection in case of timeouts
+
+qa:sandbox:
+  allow_failure: false
+  except:
+    - /^master$/
+  <<: *cypress_tests
+
+qa:production:
+  allow_failure: true
+  only:
+    - /^master$/
+  <<: *cypress_tests
+
+qa:manual:
+  stage: qa
+  script:
+    - echo "Manually approved"
+  when: manual
+  only:
+    refs:
+      - master
+      - epic/SSR
+      - production
+      - test/gitlab-ci
+  allow_failure: false
 
 ###############
 # Build Stage #
@@ -72,8 +98,10 @@ build:review:
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
-    - gulp build.sass && gulp build.sass ##weird build needs to be run twice for now
+    - gulp build.sass --deploy-url=/en && gulp build.sass --deploy-url=/en ##weird build needs to be run twice for now
     - sh build/base-locale.sh dist
+    - ng run minds:server:production
+    - npm run compile:server
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
@@ -81,6 +109,8 @@ build:review:
   except:
     refs:
       - master
+      - epic/SSR
+      - production
       - test/gitlab-ci
 
 build:production:en:
@@ -92,13 +122,19 @@ build:production:en:
     - npm run postinstall
     - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
     - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
+    - ng run minds:server:production
+    - npm run compile:server
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
       - dist/en
+      - dist/server.js
+      - dist/server
   only:
     refs:
       - master
+      - epic/SSR
+      - production
       - test/gitlab-ci
 
 build:production:i18n:
@@ -117,6 +153,8 @@ build:production:i18n:
   only:
     refs:
       - master
+      - epic/SSR
+      - production
       - test/gitlab-ci
 
 #################
@@ -137,15 +175,19 @@ build:production:i18n:
 prepare:review:
   stage: prepare
   image: minds/ci:latest
+  services:
+    - docker:dind
   script:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-    - docker build -t $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID -f containers/front-init/Dockerfile dist/.
-    - docker push $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID
+    - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
+    - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
   dependencies:
     - build:review
   except:
     refs:
       - master
+      - epic/SSR
+      - production
       - test/gitlab-ci
 
 prepare:review:sentry:
@@ -155,6 +197,8 @@ prepare:review:sentry:
   except:
     refs:
       - master
+      - epic/SSR
+      - production
       - test/gitlab-ci
   dependencies:
     - build:review
@@ -162,13 +206,19 @@ prepare:review:sentry:
 prepare:production:
   stage: prepare
   image: minds/ci:latest
+  services:
+    - docker:dind
   script:
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-    - docker build -t $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID -f containers/front-init/Dockerfile dist/.
-    - docker push $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID
+    - docker build -t $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID -f containers/server/Dockerfile dist/.
+    - docker push $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
+    - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $CI_REGISTRY_IMAGE/server:latest
+    - docker push $CI_REGISTRY_IMAGE/server:latest
   only:
     refs:
       - master
+      - epic/SSR
+      - production
       - test/gitlab-ci
   dependencies:
     - build:production:en
@@ -181,6 +231,8 @@ prepare:production:sentry:
   only:
     refs:
       - master
+      - epic/SSR
+      - production
       - test/gitlab-ci
   dependencies:
     - build:production:en
@@ -204,6 +256,8 @@ prepare:production:sentry:
   except:
     refs:
       - master
+      - epic/SSR
+      - production
       - test/gitlab-ci
 
 review:start:
@@ -211,12 +265,12 @@ review:start:
   image: minds/helm-eks:latest
   script:
     - aws eks update-kubeconfig --name=sandbox
-    - git clone --branch=sandbox-wip https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
+    - git clone --branch=master https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/helm-charts.git
     - "helm upgrade \
       --install \
       --reuse-values \
-      --set frontInit.image.repository=$CI_REGISTRY_IMAGE/front-init \
-      --set-string frontInit.image.tag=$CI_PIPELINE_ID \
+      --set front.image.repository=$CI_REGISTRY_IMAGE/server \
+      --set-string front.image.tag=$CI_PIPELINE_ID \
       --set domain=$CI_BUILD_REF_SLUG.$KUBE_INGRESS_BASE_DOMAIN \
       --set elasticsearch.clusterName=$CI_BUILD_REF_SLUG--elasticsearch \
       --wait \
@@ -231,6 +285,8 @@ review:start:
   except:
     refs:
       - master
+      - epic/SSR
+      - production
       - test/gitlab-ci
 
 review:stop:
@@ -244,14 +300,16 @@ review:stop:
 
 .deploy: &deploy
   image: minds/ci:latest
+  services:
+    - docker:dind
   script:
     ## Sync assets with CDN
-    - aws s3 sync dist $S3_REPOSITORY_URL
+    - aws s3 sync dist $S3_REPOSITORY_URL --cache-control max-age=31536000
     - $(aws ecr get-login --no-include-email --region us-east-1)
-    ## Update docker front-init container
+    ## Update docker server container
     - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-    - docker pull $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID
-    - docker tag $CI_REGISTRY_IMAGE/front-init:$CI_PIPELINE_ID $ECR_REPOSITORY_URL:$IMAGE_LABEL
+    - docker pull $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID
+    - docker tag $CI_REGISTRY_IMAGE/server:$CI_PIPELINE_ID $ECR_REPOSITORY_URL:$IMAGE_LABEL
     - docker push $ECR_REPOSITORY_URL:$IMAGE_LABEL
     ## Deploy the new container in rolling restart
     - aws ecs update-service --service=$ECS_SERVICE --force-new-deployment --region us-east-1 --cluster=$ECS_CLUSTER
@@ -260,10 +318,6 @@ review:stop:
   dependencies:
     - build:production:en
     - build:production:i18n
-  only:
-    refs:
-      - master
-      - test/gitlab-ci
 
 staging:fpm:
   <<: *deploy
@@ -274,6 +328,28 @@ staging:fpm:
   environment:
     name: staging
     url: https://www.minds.com # requires staging cookie
+  only:
+    refs:
+      - master
+      - epic/SSR
+      - test/gitlab-ci
+
+review:preprod:
+  <<: *deploy
+  stage: review
+  when: manual
+  allow_failure: true
+  variables:
+    IMAGE_LABEL: 'preprod'
+    ECS_SERVICE: $ECS_APP_PREPROD_SERVICE
+  environment:
+    name: preprod
+    url: https://www.minds.com # requires preprod cookie
+  # dependencies:
+  #   - build:review
+  # except:
+  #   refs:
+  #     - master
 
 deploy:canary:
   <<: *deploy
@@ -286,6 +362,11 @@ deploy:canary:
     url: https://www.minds.com/?canary=1 # requires canary cookie
   when: manual
   allow_failure: false # prevents auto deploy to full production
+  only:
+    refs:
+      - master
+      - epic/SSR
+      - test/gitlab-ci
 
 deploy:production:
   <<: *deploy
@@ -298,6 +379,11 @@ deploy:production:
     url: https://www.minds.com
   when: delayed
   start_in: 12 hours # reduce? can always be deployed manually earlier too
+  only:
+    refs:
+      - master
+      - epic/SSR
+      - test/gitlab-ci
 
 #################
 # Cleanup stage #
@@ -310,4 +396,6 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
+      - epic/SSR
+      - production
       - test/gitlab-ci

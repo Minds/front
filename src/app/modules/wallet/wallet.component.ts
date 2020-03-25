@@ -5,11 +5,11 @@ import { Subscription } from 'rxjs';
 
 import { Storage } from '../../services/storage';
 import { Client } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 
 import { WalletService } from '../../services/wallet';
 import { BlockchainService } from '../blockchain/blockchain.service';
+import { MetaService } from '../../common/services/meta.service';
 
 @Component({
   moduleId: module.id,
@@ -23,7 +23,7 @@ export class WalletComponent {
     private session: Session,
     public storage: Storage,
     private router: Router,
-    private title: MindsTitle
+    private metaService: MetaService
   ) {
     this.disablePointsAnimation = !!this.storage.get('disablePointsAnimation');
   }
@@ -34,7 +34,7 @@ export class WalletComponent {
       return;
     }
 
-    this.title.setTitle('Wallet');
+    this.metaService.setTitle('Wallet').setDescription('Minds Wallet');
   }
 
   // Animations

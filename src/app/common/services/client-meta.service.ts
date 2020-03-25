@@ -1,7 +1,8 @@
-import { Injectable, Injector } from '@angular/core';
-import { Location } from '@angular/common';
+import { Injectable, Injector, Inject, PLATFORM_ID } from '@angular/core';
+import { Location, isPlatformServer } from '@angular/common';
 import hashCode from '../../helpers/hash-code';
 import { Session } from '../../services/session';
+import { Client } from '../../services/api';
 
 let uniqId = 0;
 
@@ -23,7 +24,12 @@ export class ClientMetaService {
 
   protected inherited: boolean = false;
 
-  constructor(protected location: Location, protected session: Session) {
+  constructor(
+    protected location: Location,
+    protected session: Session,
+    protected client: Client,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
     this.id = ++uniqId;
 
     this.timestamp = Date.now();
@@ -144,6 +150,13 @@ export class ClientMetaService {
       delta: this.buildDelta(),
       ...overrides,
     };
+  }
+
+  async recordView(entity) {
+    if (isPlatformServer(this.platformId)) return; // Browser will record too.
+    await this.client.post('api/v2/analytics/views/entity/' + entity.guid, {
+      client_meta: this.build(),
+    });
   }
 
   protected checkInheritance() {

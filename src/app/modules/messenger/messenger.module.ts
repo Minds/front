@@ -16,6 +16,7 @@ import { MessengerConversationDockpanes } from './dockpanes/dockpanes.component'
 import { MessengerUserlist } from './userlist/userlist.component';
 import { MessengerSetupChat } from './setup/setup.component';
 import { MessengerOnboardingSetupComponent } from './onboarding/setup.component';
+import { MessengerConversationBuilderService } from './dockpanes/conversation-builder.service';
 
 import { Client } from '../../common/api/client.service';
 import { MessengerConversationDockpanesService } from './dockpanes/dockpanes.service';
@@ -56,16 +57,9 @@ import { Session } from '../../services/session';
     MessengerOnboardingSetupComponent,
   ],
   providers: [
-    {
-      provide: MessengerConversationDockpanesService,
-      useFactory: MessengerConversationDockpanesService._,
-      deps: [Session],
-    },
-    {
-      provide: MessengerEncryptionService,
-      useFactory: MessengerEncryptionService._,
-      deps: [Client, Storage],
-    },
+    MessengerConversationDockpanesService,
+    MessengerEncryptionService,
+    MessengerConversationBuilderService,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

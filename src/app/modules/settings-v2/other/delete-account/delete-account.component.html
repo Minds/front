@@ -1,0 +1,24 @@
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonLeft">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--checkbox stretchedField">
+      <div class="m-form__row--input">
+        <m-formInput__checkbox
+          formControlName="understood"
+          class="form-control"
+        >
+          I understand and wish to continue.
+        </m-formInput__checkbox>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      color="red"
+      (click)="submit()"
+    >
+      Delete Account
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

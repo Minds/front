@@ -1,18 +1,19 @@
-import { Cookie } from '../cookie';
+import { CookieService } from '../../common/services/cookie.service';
 import { HttpClient } from '@angular/common/http';
+import { EventEmitter } from '@angular/core';
 
 /**
  * API Class
  */
 export class Upload {
   base: string = '/';
-  cookie: Cookie = new Cookie();
+  onError: EventEmitter<any> = new EventEmitter<any>();
 
-  static _(http: HttpClient) {
-    return new Upload(http);
+  static _(http: HttpClient, cookie: CookieService) {
+    return new Upload(http, cookie);
   }
 
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient, private cookie: CookieService) {}
 
   /**
    * Return a POST request
@@ -26,6 +27,7 @@ export class Upload {
     },
     xhr: XMLHttpRequest = null
   ) {
+    const self = this;
     const formData = new FormData();
     if (!data.filekey) {
       data.filekey = 'file';
@@ -62,7 +64,15 @@ export class Upload {
           progress(100);
           resolve(JSON.parse(this.response));
         } else {
-          reject(this.response);
+          self.onError.next({
+            error: { ...JSON.parse(this.response) },
+            status: this.status,
+          });
+          if (this.status === 504) {
+            reject('error:gateway-timeout');
+          } else {
+            reject(JSON.parse(this.response));
+          }
         }
       };
       xhr.onreadystatechange = function() {

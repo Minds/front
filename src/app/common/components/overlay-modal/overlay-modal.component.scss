@@ -122,7 +122,8 @@
   }
 }
 
-body.m-overlay-modal--shown {
+.m-overlay-modal--shown,
+.m-overlay-modal--shown--no-scroll {
   overflow: hidden;
 }
 
@@ -135,5 +136,15 @@ body.m-overlay-modal--shown {
   z-index: 9999998;
   @include m-theme() {
     background-color: rgba(themed($m-black-always), 0.5);
+  }
+}
+
+.m-overlay-modal.m-overlayModal--media {
+  .m-overlay-modal--close {
+    .m-overlay-modal--escHint {
+      font-weight: 400;
+      display: block;
+      opacity: 0;
+    }
   }
 }

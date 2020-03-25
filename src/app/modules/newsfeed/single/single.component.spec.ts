@@ -11,7 +11,7 @@ import { NewsfeedSingleComponent } from './single.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Client } from '../../../services/api/client';
-import { By } from '@angular/platform-browser';
+import { By, Meta } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
@@ -20,12 +20,16 @@ import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { Upload } from '../../../services/api/upload';
 import { ContextService } from '../../../services/context.service';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
-import { of } from 'rxjs';
+import { of, BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { EntitiesService } from '../../../common/services/entities.service';
-import { MockService } from '../../../utils/mock';
+import { MockService, MockComponent } from '../../../utils/mock';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { SocialIcons } from '../../legacy/components/social-icons/social-icons';
+import { ActivityComponent } from '../activity/activity.component';
 
 @Component({
   selector: 'minds-activity',
@@ -36,9 +40,12 @@ class MindsActivityMock {
   @Input() object: any;
   @Input() commentsToggle: boolean;
   @Input() showRatingToggle: boolean;
+  @Input() editing: boolean;
+  @Input() allowAutoplayOnScroll: boolean;
+  @Input() autoplayVideo: boolean;
 }
 
-let routerMock = new (function() {
+const routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate').and.stub();
 })();
 
@@ -48,7 +55,24 @@ describe('NewsfeedSingleComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MaterialMock, MindsActivityMock, NewsfeedSingleComponent],
+      declarations: [
+        MaterialMock,
+        MindsActivityMock,
+        NewsfeedSingleComponent,
+        MockComponent({
+          selector: 'm-social-icons',
+          inputs: ['url', 'title', 'embed'],
+        }),
+        MockComponent({
+          selector: 'm-activity',
+          inputs: [
+            'entity',
+            'displayOptions',
+            'allowAutoplayOnScroll',
+            'autoplayVideo',
+          ],
+        }),
+      ],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
@@ -62,11 +86,13 @@ describe('NewsfeedSingleComponent', () => {
             snapshot: {
               queryParamMap: convertToParamMap({}),
             },
+            queryParamMap: new BehaviorSubject(convertToParamMap({})),
           },
         },
-        { provide: Router, useValue: routerMock },
+        { provide: MetaService, useValue: MockService(MetaService) },
         { provide: EntitiesService, useValue: MockService(EntitiesService) },
         { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents();
   }));
@@ -97,7 +123,9 @@ describe('NewsfeedSingleComponent', () => {
     };
 
     sessionMock.user.admin = false;
+    sessionMock.user.hide_share_buttons = false;
     featuresServiceMock.mock('sync-feeds', false);
+    featuresServiceMock.mock('navigation', true);
 
     fixture.detectChanges();
 
@@ -142,15 +170,17 @@ describe('NewsfeedSingleComponent', () => {
     expect(span.nativeElement.textContent).toContain('Please try again later');
   });
 
-  it('it should show the activity', () => {
+  xit('it should show the activity', () => {
     fixture.detectChanges();
     expect(
-      fixture.debugElement.query(By.css('.minds-list minds-activity'))
+      fixture.debugElement.query(By.css('.minds-list m-activity'))
     ).not.toBeNull();
   });
 
   it('it should show a spam notice if the activity was marked as spam', () => {
-    comp.activity.spam = true;
+    comp.activity = {
+      spam: true,
+    };
 
     fixture.detectChanges();
 
@@ -165,7 +195,9 @@ describe('NewsfeedSingleComponent', () => {
   });
 
   it('it should not show the appeal text if the user is an admin', () => {
-    comp.activity.spam = true;
+    comp.activity = {
+      spam: true,
+    };
     sessionMock.user.admin = true;
 
     fixture.detectChanges();
@@ -178,5 +210,18 @@ describe('NewsfeedSingleComponent', () => {
     expect(spamNotice.nativeElement.textContent).not.toContain(
       'If you wish to appeal, please contact us at info@minds.com.'
     );
+  });
+
+  it('should have an instance of m-social-icons if the owner has it enabled', () => {
+    let socialIcons = fixture.debugElement.query(By.css('m-social-icons'));
+
+    expect(socialIcons).not.toBeNull();
+
+    sessionMock.user.hide_share_buttons = true;
+
+    fixture.detectChanges();
+
+    socialIcons = fixture.debugElement.query(By.css('m-social-icons'));
+    expect(socialIcons).toBeNull();
   });
 });

@@ -1,0 +1,71 @@
+m-toggle {
+  position: relative;
+  display: inline-block;
+  width: 27px;
+  height: 19px;
+  margin: 0 0.35em;
+  cursor: pointer;
+
+  &.disabled {
+    .m-toggle__switch {
+      .m-toggle__switch--left,
+      .m-toggle__switch--right {
+        @include m-theme() {
+          background: themed($m-grey-800);
+        }
+      }
+    }
+  }
+
+  .m-toggle__track {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 10px;
+    z-index: 1;
+    transform: translateY(-50%);
+    border-radius: 6px;
+
+    @include m-theme() {
+      background: themed($m-grey-100);
+    }
+  }
+
+  .m-toggle__switch {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 19px;
+    height: 19px;
+    z-index: 2;
+    transform: translateX(-50%);
+    border-radius: 50%;
+
+    @include m-theme() {
+      background: themed($m-grey-100);
+      box-shadow: 1px 1px 1px -1px rgba(themed($m-black), 0.3);
+    }
+
+    &.m-toggle__switch--left,
+    &.m-toggle__switch--right {
+      transform: none;
+
+      @include m-theme() {
+        background: themed($m-blue);
+      }
+    }
+
+    &.m-toggle__switch--left {
+      left: 0;
+      right: auto;
+    }
+
+    &.m-toggle__switch--right {
+      right: 0;
+      left: auto;
+    }
+  }
+}

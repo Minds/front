@@ -9,7 +9,7 @@
   <div class="avatar" [hovercard]="activity.ownerObj.guid">
     <a [routerLink]="['/', activity.ownerObj.username]">
       <img
-        [src]="minds.cdn_url + 'icon/' + activity.ownerObj.guid + '/medium/' + getOwnerIconTime()"
+        [src]="cdnUrl + 'icon/' + activity.ownerObj.guid + '/medium/' + getOwnerIconTime()"
         class="mdl-shadow--2dp"
       />
     </a>
@@ -21,6 +21,7 @@
         >{{activity.ownerObj.name}}</strong
       >
       <m-channel--badges
+        data-nosnippet
         class="m-channel--badges-activity"
         [user]="activity.ownerObj"
         badges="[ 'admin', 'verified' ]"
@@ -126,6 +127,7 @@
   </div>
 
   <m-translate
+    *mIfBrowser
     [open]="translateToggle"
     [entity]="activity"
     [translateEvent]="translateEvent"
@@ -171,7 +173,7 @@
         service="editing"
         [selected]="activity.nsfw"
         [locked]="activity.ownerObj.nsfw_lock"
-        (selected)="onNSWFSelections($event)"
+        (selectedChange)="onNSWFSelections($event)"
       >
       </m-nsfw-selector>
     </ng-container>
@@ -219,14 +221,35 @@
         <span i18n="@@M__COMMON__CONFIRM_18">Click to confirm you are 18+</span>
       </span>
     </div>
-    <minds-rich-embed [src]="activity" [maxheight]="480"></minds-rich-embed>
+    <minds-rich-embed
+      (mediaModalRequested)="onRichEmbedClick($event)"
+      [src]="activity"
+      [maxheight]="480"
+    >
+    </minds-rich-embed>
   </div>
 
   <div
     class="mdl-card__supporting-text message"
     [hidden]="!activity.title || activity.perma_url || editing"
-    [innerHtml]="activity.title | tags"
-  ></div>
+  >
+    <a
+      class="m-mature-text-toggle"
+      (click)="toggleMatureVisibility()"
+      *ngIf="!activity.message && (attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity))"
+      [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }"
+    >
+      <i class="material-icons m-material-icons-inline">explicit</i>
+    </a>
+
+    <span
+      class="m-mature-message-content"
+      [innerHtml]="activity.title | tags"
+      [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
+      (click)="activity.mature && !activity.mature_visibility ? toggleMatureVisibility(): null"
+    >
+    </span>
+  </div>
   <!-- Translation -->
   <div
     *ngIf="translate && translate.translation && translate.translation.translated && translate.translation.title"
@@ -291,22 +314,14 @@
       </span>
     </div>
 
-    <m-video
-      width="100%"
-      height="300px"
-      [muted]="false"
-      [poster]="activity.custom_data.thumbnail_src"
-      [src]="[{ 'res': '360', 'uri': 'api/v1/media/' + activity.custom_data.guid + '/play', 'type': 'video/mp4' }]"
-      [guid]="activity.custom_data.guid"
-      [playCount]="activity['play:count']"
-      [torrent]="[{ res: '360', key: activity.custom_data.guid + '/360.mp4' }]"
+    <m-videoPlayer
+      [guid]="activity.entity_guid"
       [shouldPlayInModal]="true"
-      (videoMetadataLoaded)="setVideoDimensions($event)"
+      [autoplay]="autoplayVideo"
+      [allowAutoplayOnScroll]="allowAutoplayOnScroll"
       (mediaModalRequested)="openModal()"
       #player
-    >
-      <video-ads [player]="player" *ngIf="activity.monetized"></video-ads>
-    </m-video>
+    ></m-videoPlayer>
   </div>
 
   <!-- Images -->
@@ -356,7 +371,7 @@
       <img
         [src]="activity.custom_data[0].src"
         style="width:100%"
-        (error)="activity.custom_data[0].src = minds.cdn_assets_url + 'assets/logos/placeholder-bulb.jpg'"
+        (error)="activity.custom_data[0].src = cdnAssetsUrl + 'assets/logos/placeholder-bulb.jpg'"
         *ngIf="activity.custom_data"
         (click)="clickedImage()"
         #batchImage
@@ -374,6 +389,8 @@
         [boosted]="activity.boosted"
         (matureVisibilityChange)="onRemindMatureVisibilityChange()"
         (videoMetadataLoaded)="setVideoDimensions($event)"
+        [allowAutoplayOnScroll]="allowAutoplayOnScroll"
+        [autoplayVideo]="autoplayVideo"
       ></minds-remind>
     </ng-container>
     <ng-template #blockedRemindTemplate>
@@ -404,7 +421,7 @@
   ></m-wire-button>
   <button
     class="m-btn m-btn--action m-btn--slim minds-boost-button"
-    *ngIf="session.getLoggedInUser().guid == activity.owner_guid"
+    *ngIf="showBoostButton()"
     id="boost-actions"
     (click)="showBoost()"
   >
@@ -414,7 +431,10 @@
     [object]="activity"
     (click)="openComments()"
   ></minds-button-comment>
-  <minds-button-remind [object]="activity"></minds-button-remind>
+  <minds-button-remind
+    *ngIf="showRemindButton()"
+    [object]="activity"
+  ></minds-button-remind>
 </div>
 
 <!-- Activity metrics -->
@@ -436,12 +456,14 @@
   </div>
 </div>
 
-<m-comments__tree
-  *ngIf="commentsToggle"
-  [entity]="activity"
-  [canDelete]="canDelete"
->
-</m-comments__tree>
+<ng-container *mIfBrowser>
+  <m-comments__tree
+    *ngIf="commentsToggle"
+    [entity]="activity"
+    [canDelete]="canDelete"
+  >
+  </m-comments__tree>
+</ng-container>
 
 <div
   class="m-activity--boost-notice mdl-card__supporting-text mdl-color--blue-grey-50"
@@ -513,7 +535,7 @@
 <!-- Pending block -->
 <div
   class="mdl-card__supporting-text m-activity--pending"
-  *ngIf="isScheduled(activity.time_created)"
+  *ngIf="isScheduled(activity.time_created, 30000)"
 >
   This activity is scheduled to be shown on {{activity.time_created * 1000 |
   date:'medium'}}.

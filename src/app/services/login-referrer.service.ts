@@ -41,7 +41,9 @@ export class LoginReferrerService {
   }
 
   unlisten(): this {
-    this._routerListener.unsubscribe();
+    if (this._routerListener) {
+      this._routerListener.unsubscribe();
+    }
 
     return this;
   }

@@ -10,6 +10,7 @@ import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { ChannelOnboardingService } from './onboarding.service';
 import { Modal } from '../../../common/components/modal/modal.component';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-channel--onboarding',
@@ -21,7 +22,7 @@ import { Modal } from '../../../common/components/modal/modal.component';
       class="m-channel--onboarding"
     >
       <div class="m-channelOnboarding__logo">
-        <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'" />
+        <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
       </div>
       <ng-template dynamic-host></ng-template>
 
@@ -54,7 +55,7 @@ import { Modal } from '../../../common/components/modal/modal.component';
   `,
 })
 export class ChannelOnboardingComponent {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   @ViewChild(DynamicHostDirective, { static: true }) host;
 
@@ -68,8 +69,11 @@ export class ChannelOnboardingComponent {
     protected session: Session,
     protected router: Router,
     public service: ChannelOnboardingService,
-    private _componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.closeSubscription = this.service.onClose.subscribe(() => {

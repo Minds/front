@@ -1,58 +1,45 @@
 import { Component } from '@angular/core';
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { ChannelSuggestionsService } from './channel-suggestions.service';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'm-suggestions__sidebar',
   templateUrl: 'sidebar.component.html',
 })
 export class SuggestionsSidebar {
-  minds = window.Minds;
-  suggestions: Array<any> = [];
-  lastOffset = 0;
-  inProgress: boolean = false;
-  error: string;
+  readonly cdnUrl: string;
+  suggestions$: BehaviorSubject<Array<any>> = this.service.suggestions$;
+  limit = 5;
+  inProgress$: Observable<boolean> = this.service.inProgress$;
+  error$: Observable<string> = this.service.error$;
 
-  constructor(private client: Client, private storage: Storage) {}
-
-  async ngOnInit() {
-    this.load();
+  constructor(
+    private client: Client,
+    private storage: Storage,
+    private service: ChannelSuggestionsService,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
   }
 
-  async load() {
-    this.error = null;
-    this.inProgress = true;
-    let limit: number = 5;
-
-    if (this.suggestions.length) limit = 1;
-
-    // Subscribe can not rely on next batch, so load further batch
-    this.lastOffset = this.suggestions.length ? this.lastOffset + 11 : 0;
-
-    try {
-      const response: any = await this.client.get('api/v2/suggestions/user', {
-        limit,
-        offset: this.lastOffset,
+  async ngOnInit() {
+    if (this.suggestions$.getValue().length === 0) {
+      this.service.load({
+        limit: this.limit,
+        refresh: true,
       });
-      for (let suggestion of response.suggestions) {
-        const removed = this.storage.get(
-          `user:suggestion:${suggestion.entity_guid}:removed`
-        );
-        if (!removed) {
-          this.suggestions.push(suggestion);
-        }
-      }
-    } catch (err) {
-      this.error = err.message;
-    } finally {
-      this.inProgress = false;
     }
   }
 
   async pass(suggestion, e) {
     e.preventDefault();
     e.stopPropagation();
-    this.suggestions.splice(this.suggestions.indexOf(suggestion), 1);
+    const suggestions = this.suggestions$.getValue();
+    suggestions.splice(suggestions.indexOf(suggestion), 1);
+    this.suggestions$.next(suggestions);
     this.storage.set(
       `user:suggestion:${suggestion.entity_guid}:removed`,
       suggestion.entity_guid
@@ -60,16 +47,18 @@ export class SuggestionsSidebar {
     await this.client.put(`api/v2/suggestions/pass/${suggestion.entity_guid}`);
 
     // load more
-    this.load();
+    this.service.load({ limit: 1, refresh: false });
   }
 
   remove(suggestion) {
-    this.suggestions.splice(this.suggestions.indexOf(suggestion), 1);
+    const suggestions = this.suggestions$.getValue();
+    suggestions.splice(suggestions.indexOf(suggestion), 1);
+    this.suggestions$.next(suggestions);
     this.storage.set(
       `user:suggestion:${suggestion.entity_guid}:removed`,
       suggestion.entity_guid
     );
     // load more
-    this.load();
+    this.service.load({ limit: 1, refresh: false });
   }
 }

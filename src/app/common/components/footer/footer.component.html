@@ -3,16 +3,16 @@
     <ul class="m-footer-nav m-footer-nav-inline">
       <li
         *ngFor="let page of navigation.getItems('footer')"
-        class="m-footer-nav-item "
+        class="m-footer-nav-item"
       >
         <a
-          *ngIf="page.path && page.path.indexOf('p/') === 0"
+          *ngIf="pagesService.isInternalLink(page.path)"
           [routerLink]="['/' + page.path]"
           class="mdl-color-text--blue-grey-100"
           >{{ page.title }}</a
         >
         <a
-          *ngIf="page.path.indexOf('p/') !== 0"
+          *ngIf="!pagesService.isInternalLink(page.path)"
           [href]="page.path"
           target="_blank"
           class="mdl-color-text--blue-grey-100"
@@ -21,7 +21,7 @@
       </li>
     </ul>
     <span class="copyright" i18n="@@M__COMMON__COPYRIGHT_YEAR"
-      >&#169; Minds {{ '2019' }}</span
+      >&#169; Minds {{ '2020' }}</span
     >
   </section>
 </div>

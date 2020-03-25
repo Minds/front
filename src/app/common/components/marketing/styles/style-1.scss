@@ -1,0 +1,179 @@
+@import '../../../../foundation/grid-values';
+
+.m-marketing__main,
+.m-marketing__section {
+  &.m-marketing__section--style-1 {
+    @include m-theme() {
+      background: linear-gradient(
+        180deg,
+        themed($m-white) 0%,
+        themed($m-marketing-bg-gradient-start) 100%
+      );
+    }
+
+    .m-marketing__wrapper {
+      position: relative;
+      z-index: 0;
+      padding: 95px 0 85px;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        padding: 30px 0;
+        margin: 0 20px;
+      }
+    }
+
+    .m-marketing__body {
+      position: relative;
+
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 383px;
+        height: 388px;
+        transform: translate(-290px, 97px);
+        background: url('<%= APP_CDN %>/assets/marketing/deco_2.svg') no-repeat;
+        z-index: -1;
+        opacity: 0.6;
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          transform: translate(170px, -180px);
+          left: auto;
+          right: 0;
+        }
+      }
+    }
+
+    h2,
+    .m-marketing__subtitle {
+      @media screen and (max-width: $m-grid-min-vp) {
+        padding: 0 30px;
+      }
+    }
+
+    p.m-marketing__description {
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        padding: 0 30px;
+      }
+    }
+
+    ul.m-marketing__points {
+      @media screen and (max-width: $m-grid-min-vp) {
+        padding: 0 30px;
+      }
+    }
+
+    .m-marketing__image {
+      position: relative;
+      align-self: center;
+      z-index: 0;
+
+      span {
+        display: block;
+        position: relative;
+        width: 528px;
+        height: 415px;
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          width: 313px;
+          height: 237px;
+          margin: 0 auto;
+        }
+
+        // Deco
+
+        &::before {
+          content: '';
+          display: block;
+          position: absolute;
+          width: 393px;
+          height: 193px;
+          top: 0;
+          left: 0;
+          transform: translate(61px, 179px);
+          background: url('<%= APP_CDN %>/assets/marketing/deco_1.svg')
+            no-repeat;
+          z-index: -1;
+
+          @media screen and (max-width: $m-grid-min-vp) {
+            top: 0;
+            left: 0;
+            width: 377px;
+            height: 193px;
+            transform: translate(-32px, 18px);
+            background-size: cover;
+          }
+        }
+
+        &::after {
+          content: '';
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 383px;
+          height: 383px;
+          transform: translate(178px, -95px);
+          background: url('<%= APP_CDN %>/assets/marketing/deco_2.svg')
+            no-repeat;
+          z-index: -1;
+
+          @media screen and (max-width: $m-grid-min-vp) {
+            content: initial;
+            display: none;
+          }
+        }
+      }
+
+      img {
+        position: absolute;
+        object-fit: cover;
+      }
+
+      .m-marketing__image--1 {
+        top: 0;
+        left: 90px;
+        width: 327px;
+        height: 327px;
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          top: 0;
+          left: 0;
+          width: 190px;
+          height: 190px;
+        }
+      }
+
+      .m-marketing__image--2 {
+        top: 295px;
+        left: 0;
+        width: 181px;
+        height: 120px;
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          display: none;
+        }
+      }
+
+      .m-marketing__image--3 {
+        top: 163px;
+        left: 358px;
+        width: 170px;
+        height: 198px;
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          top: 65px;
+          left: 165px;
+          width: 148px;
+          height: 172px;
+        }
+      }
+    }
+  }
+}

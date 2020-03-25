@@ -1,11 +1,16 @@
 <div class="m-revenue--options m-border">
-  <div class="m-revenue--options-requirements" *ngIf="account.requirement">
+  <div
+    class="m-revenue--options-requirements"
+    *ngIf="account && account.requirement"
+  >
     <h3>Account Requirements</h3>
     <p>
       You are required to complete the following action in order to receive
       payouts:
       <ng-container
-        *ngIf="account.requirement === 'individual.verification.document'"
+        *ngIf="
+          account.requirement.indexOf('individual.verification.document') > -1
+        "
       >
         <b (click)="file.click()">Upload Photo ID</b>
         <br />
@@ -18,7 +23,30 @@
           type="file"
           #file
           name="file"
-          (change)="uploadRequirement(file)"
+          (change)="uploadDocument(file, 'document')"
+          accept="image/*"
+          style="display: none;"
+        />
+      </ng-container>
+      <ng-container
+        *ngIf="
+          account.requirement.indexOf(
+            'individual.verification.additional_document'
+          ) > -1
+        "
+      >
+        <b (click)="file.click()">Upload a document with proof of address</b>
+        <br />
+        <br />
+        <button (click)="file.click()" class="m-btn m-btn--action m-btn--slim">
+          <ng-container *ngIf="!editing">Select & Upload</ng-container>
+          <ng-container *ngIf="editing">Uploading...</ng-container>
+        </button>
+        <input
+          type="file"
+          #file
+          name="file"
+          (change)="uploadDocument(file, 'additional_document')"
           accept="image/*"
           style="display: none;"
         />
@@ -35,6 +63,48 @@
         <button (click)="acceptTos()" class="m-btn m-btn--action m-btn--slim">
           <ng-container *ngIf="!editing">Accept Terms</ng-container>
           <ng-container *ngIf="editing">Accepting...</ng-container>
+        </button>
+      </ng-container>
+      <ng-container
+        *ngIf="account.requirement.indexOf('individual.phone') > -1"
+      >
+        <b>Provide a phone number</b>
+        <br />
+        <m-phone-input #phone></m-phone-input>
+        <br />
+        <button
+          (click)="updateField('phone', phone.value)"
+          class="m-btn m-btn--action m-btn--slim"
+        >
+          <ng-container *ngIf="!editing">Save</ng-container>
+          <ng-container *ngIf="editing">Saving...</ng-container>
+        </button>
+      </ng-container>
+      <ng-container
+        *ngIf="account.requirement.indexOf('external_account') > -1"
+      >
+        <b>Complete the payout method step below</b>
+      </ng-container>
+      <ng-container
+        *ngIf="account.requirement.indexOf('individual.id_number') > -1"
+      >
+        <b
+          >Provide your Personal ID / Social Security Number (SSN) / National
+          Insurance Number</b
+        >
+        <br />
+        <input
+          class="m-input m-revenueOptions__input"
+          #personalId
+          placeholder="Personal Id"
+        />
+        <br />
+        <button
+          (click)="updateField('id_number', personalId.value)"
+          class="m-btn m-btn--action m-btn--slim"
+        >
+          <ng-container *ngIf="!editing">Save</ng-container>
+          <ng-container *ngIf="editing">Saving...</ng-container>
         </button>
       </ng-container>
     </p>
@@ -88,12 +158,14 @@
         *ngIf="!editing; else editingCaption"
         i18n="@@MONETIZATION__REVENUE__OPTIONS__NO_BANK_DETAILS_LABEL"
       >
-        You haven't setup your bank account yet. In order to receive payouts you
-        will need to link your bank account.
+        You haven't setup your bank account yet. In order to receive payments
+        and payouts you will need to link your bank account.
       </p>
       <ng-template #editingCaption>
         <p
-          i18n="@@MONETIZATION__REVENUE__OPTIONS__ENTER_BANK_DETAILS_BELOW_LABEL"
+          i18n="
+             @@MONETIZATION__REVENUE__OPTIONS__ENTER_BANK_DETAILS_BELOW_LABEL
+          "
         >
           Enter your new bank account details below.
         </p>
@@ -125,7 +197,11 @@
 
           <div class="mdl-cell mdl-cell--12-col">
             <label
-              i18n="@@MONETIZATION__REVENUE__OPTIONS__ROUTING_NUMBER_SORT_CODE_LABEL"
+              i18n="
+
+                @@MONETIZATION__REVENUE__OPTIONS__ROUTING_NUMBER_SORT_CODE_LABEL
+
+              "
               >Routing Number / Sort Code</label
             >
             <input formControlName="routingNumber" type="text" />

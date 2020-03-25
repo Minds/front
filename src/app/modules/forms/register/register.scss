@@ -9,14 +9,28 @@ minds-form-register {
     padding-left: 4px;
   }
 
+  .m-registerForm__password {
+    position: relative;
+  }
+
   .mdl-card__actions {
     display: flex;
     padding-left: $minds-padding * 2;
     align-items: center;
   }
 
-  .m-register-tac {
-    font-size: 11px;
+  .m-register__checkboxes {
+    width: 100%;
+    m-formInput__checkbox {
+      margin-bottom: $minds-margin / 2;
+      font-size: 11px;
+
+      a {
+        @include m-theme() {
+          color: themed($m-grey-400);
+        }
+      }
+    }
   }
 
   //this is exactly the same as modal.scss
@@ -89,5 +103,9 @@ minds-form-register {
 
   .mdl-checkbox {
     padding-top: 5px;
+  }
+
+  input.m-input--hide-placeholder::placeholder {
+    color: transparent;
   }
 }

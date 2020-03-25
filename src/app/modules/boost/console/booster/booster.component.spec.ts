@@ -18,7 +18,6 @@ import { BehaviorSubject } from 'rxjs';
 describe('BoostConsoleBooster', () => {
   let comp: BoostConsoleBooster;
   let fixture: ComponentFixture<BoostConsoleBooster>;
-  window.Minds.user = { guid: 123 };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({

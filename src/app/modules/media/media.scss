@@ -392,7 +392,7 @@ m-media--grid {
       }
     }
 
-    > *:not(m-post-menu) {
+    > *:not(m-post-menu):not(m-wire-button) {
       vertical-align: middle;
       margin-left: 0.35em;
 
@@ -483,8 +483,13 @@ m-media--grid {
     }
   }
 
-  .m-wire-button > .ion-icon {
-    transform: scale(1.2);
+  .m-wire-button {
+    padding: 3px 6px;
+
+    & > .ion-icon {
+      margin-right: 4px;
+      transform: scale(1.2);
+    }
   }
 
   .m-media-content--extra {

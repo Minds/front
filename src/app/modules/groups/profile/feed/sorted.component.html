@@ -1,22 +1,41 @@
-<minds-newsfeed-poster
-  *ngIf="isMember()"
-  (load)="prepend($event)"
-  [containerGuid]="group.guid"
-  [accessId]="group.guid"
-  #poster
-></minds-newsfeed-poster>
+<ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+  <m-composer
+    *ngIf="isMember()"
+    (onPost)="prepend($event)"
+    [containerGuid]="group.guid"
+    #composer
+  ></m-composer>
+</ng-container>
+<ng-template #v1NewsfeedPoster>
+  <minds-newsfeed-poster
+    *ngIf="isMember()"
+    (load)="prepend($event)"
+    [containerGuid]="group.guid"
+    #poster
+  ></minds-newsfeed-poster>
+</ng-template>
 
 <div class="minds-list">
   <div>
-    <m-sort-selector
-      class="m-group--sorted__SortSelector m-border"
-      [allowedAlgorithms]="false"
-      [allowedPeriods]="false"
-      [allowedCustomTypes]="['activities', 'images', 'videos']"
-      [customType]="type"
-      (onChange)="setFilter($event.customType)"
-    ></m-sort-selector>
-
+    <div class="m-mindsList__tools m-border">
+      <div
+        *ngIf="isMember()"
+        class="m-mindsListTools__scheduled"
+        (click)="toggleScheduled()"
+        [class.selected]="viewScheduled"
+      >
+        <m-tooltip icon="date_range"> See Scheduled Activities </m-tooltip>
+        <span>scheduled: {{ scheduledCount }}</span>
+      </div>
+      <m-sort-selector
+        class="m-group--sorted__SortSelector"
+        [allowedAlgorithms]="false"
+        [allowedPeriods]="false"
+        [allowedCustomTypes]="['activities', 'images', 'videos']"
+        [customType]="type"
+        (onChange)="setFilter($event.customType)"
+      ></m-sort-selector>
+    </div>
     <ng-container
       *ngIf="
         isActivityFeed() &&
@@ -50,9 +69,12 @@
           class="mdl-card item"
           [object]="entity | async"
           [canDelete]="group['is:owner'] || group['is:moderator']"
-          (delete)="delete(entity)"
+          (deleted)="delete($event)"
           [slot]="i + 1"
           [attr.data-minds-activity-guid]="entity.guid"
+          [disableBoosting]="group['membership'] === 0"
+          [disableReminding]="group['membership'] === 0"
+          [allowAutoplayOnScroll]="true"
         >
           <!-- Menu Actions -->
 

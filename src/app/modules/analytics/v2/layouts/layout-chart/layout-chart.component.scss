@@ -1,0 +1,9 @@
+.m-shadowboxLayout__body {
+  &.isTable {
+    width: 100%;
+    min-width: 420px;
+  }
+}
+.m-analytics__spinnerContainer {
+  min-height: 331px;
+}

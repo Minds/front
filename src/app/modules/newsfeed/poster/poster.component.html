@@ -30,6 +30,8 @@
           [getChoiceLabel]="suggestions.getChoiceLabel"
           [itemTemplate]="itemTemplate"
           [triggerCharacters]="['#', '@']"
+          m-attachment-paste
+          (filePaste)="uploadAttachment($event)"
         ></textarea>
       </m-text-input--autocomplete-container>
 
@@ -55,12 +57,15 @@
             id="attachment-input-poster"
             #file
             name="attachment"
-            (change)="uploadAttachment(file, $event)"
+            (change)="uploadFile(file, $event)"
           />
         </label>
 
         <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
-          <m-nsfw-selector (selected)="onNSWFSelections($event)">
+          <m-nsfw-selector
+            #nsfwSelector
+            (selectedChange)="onNSWFSelections($event)"
+          >
           </m-nsfw-selector>
         </ng-container>
 

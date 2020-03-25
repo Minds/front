@@ -1,0 +1,38 @@
+<img
+  [src]="cdnAssetsUrl + 'assets/waving-hand.png'"
+  class="m-notice__wavingEmoji"
+  [class.m-notice__wavingEmoji--mobile]="isMobile()"
+/>
+
+<h1
+  class="m-onboarding__noticeTitle m-onboarding__mobileTitle"
+  *ngIf="isMobile()"
+  i18n
+>
+  Welcome
+</h1>
+
+<h1 class="m-onboarding__noticeTitle" *ngIf="!isMobile()" i18n>
+  Welcome to the Minds Community
+</h1>
+<h2
+  class="m-onboarding__noticeTitle"
+  [class.m-onboarding__mobileTitle]="isMobile()"
+>
+  @{{ user.username }}
+</h2>
+
+<p class="m-onboarding__description" i18n>
+  Your privacy is our priority. You are free to provide as much or as little
+  information as you wish for better recommendations and to connect with people
+  in your local area.
+</p>
+
+<div class="m-onboarding__actionButtons">
+  <button class="mf-button mf-button--alt" (click)="continue()">
+    <span i18n>Let's Get Setup</span>
+  </button>
+  <a (click)="skip()" i18n>
+    No thanks, I'll do it later
+  </a>
+</div>

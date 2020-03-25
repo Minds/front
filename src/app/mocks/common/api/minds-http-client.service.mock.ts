@@ -14,7 +14,8 @@ export let mindsHttpClientMock = new (function() {
       }
       if (
         !res ||
-        ((res.status && res.status === 'error') || res.status === 'failed')
+        (res.status && res.status === 'error') ||
+        res.status === 'failed'
       )
         observer.error(res);
 

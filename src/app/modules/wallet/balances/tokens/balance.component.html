@@ -53,7 +53,11 @@
           <m-tooltip
             icon="help"
             *ngIf="address.label == 'OnChain & Receiver'"
-            i18n="@@WALLET__BALANCES__TOKENS__ADDRESS_LABEL_TOOLTIP_ONCHAIN_AND_RECEIVER"
+            i18n="
+
+              @@WALLET__BALANCES__TOKENS__ADDRESS_LABEL_TOOLTIP_ONCHAIN_AND_RECEIVER
+
+            "
           >
             This is your currently active Web3/Metamask wallet and is also
             configured to receive Boost & Wires via the blockchain.
@@ -135,7 +139,7 @@
     <p>Setup Your OnChain Address to buy send and receive crypto</p>
     <img
       class="m-wallet--balance--metamask-logo"
-      [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'"
+      [src]="cdnAssetsUrl + 'assets/ext/metamask.png'"
     />
     <a href="https://metamask.io/" target="_blank">
       <button class="m-btn m-btn--slim m-btn--action">Download Metamask</button>

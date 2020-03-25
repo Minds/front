@@ -1,5 +1,6 @@
+// Cannot test until env behaves consistently else, 
+// the test will frequently error when it cant see a boost.
 context.skip('Boost Impressions', () => {
-  
   before(() => {
     cy.getCookie('minds_sess')
     .then((sessionCookie) => {
@@ -27,9 +28,6 @@ context.skip('Boost Impressions', () => {
     cy.reload();
   })
 
-  // Cannot test until env behaves consistently.
-  // See: https://gitlab.com/minds/front/issues/1912
-  
   it('should register views on scroll', () => {
     //smooth scroll
     cy.scrollTo('0', '1%', { duration: 100 });

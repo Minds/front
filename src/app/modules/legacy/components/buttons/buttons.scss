@@ -38,6 +38,28 @@ minds-button-user-dropdown,
 }
 
 minds-button-subscribe {
+  &.m-subscribeButton--iconsOnly {
+    & > div {
+      height: 34px;
+      width: 34px;
+      border: 1px solid #ececec;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      & > i {
+        color: #a3a3a3;
+      }
+
+      &.m-subscribeButton__subscribed {
+        & > i {
+          color: #5dbac0;
+        }
+      }
+    }
+  }
+
   button.m-btn--subscribe {
     white-space: nowrap;
   }
@@ -100,6 +122,7 @@ minds-button-remind {
 .minds-counter:before {
   //content:'( ';
 }
+
 .minds-counter {
   font-family: 'Roboto', 'Helvetica', sans-serif;
   display: inline-block;
@@ -109,6 +132,7 @@ minds-button-remind {
   padding: 0 8px;
   white-space: nowrap;
 }
+
 .minds-counter:after {
   //content:' )';
 }
@@ -124,12 +148,25 @@ minds-button-remind {
   cursor: default;
 }
 
+.m-bgOverlay--v2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  cursor: default;
+  // pointer-events: none;
+}
+
 minds-button-comment a,
 minds-button-remind a {
   @include m-theme() {
     color: themed($m-blue-grey-500);
   }
 }
+
 minds-button-comment > a,
 minds-button-remind > a {
   &:hover {

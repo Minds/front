@@ -22,7 +22,7 @@
   ></div>
 </div>
 <div class="m-error-splash" *ngIf="error && !user">
-  <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" />
+  <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
   <h3 class="mdl-color-text--red-300">{{ error }}</h3>
   <span
     class="mdl-color-text--blue-grey-300"
@@ -154,4 +154,8 @@
   </section>
 </div>
 
-<m-channel--explicit-overlay [channel]="user"></m-channel--explicit-overlay>
+<m-explicit-overlay
+  [entity]="user"
+  message="This channel contains content that is NSFW"
+  i18n-message
+></m-explicit-overlay>

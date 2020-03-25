@@ -20,6 +20,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { sessionMock } from '../../../tests/session-mock.spec';
 import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
+import { RecentService } from '../../services/ux/recent';
+import { recentServiceMock } from '../../../tests/minds-recent-service-mock.spec';
+import { MockDirective } from '../../utils/mock';
+import { SharedModule } from '../../common/shared.module';
 
 // Mocks
 
@@ -51,17 +55,23 @@ describe('SearchBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SearchBarSuggestionsMock, SearchBarComponent],
+      declarations: [
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        SearchBarSuggestionsMock,
+        SearchBarComponent,
+      ],
       imports: [
         NgCommonModule,
         RouterTestingModule,
         FormsModule,
         ReactiveFormsModule,
+        SharedModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: ContextService, useValue: contextServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: RecentService, useValue: recentServiceMock },
       ],
     }).compileComponents();
   }));
@@ -75,6 +85,7 @@ describe('SearchBarComponent', () => {
     comp = fixture.componentInstance;
 
     featuresServiceMock.mock('top-feeds', false);
+    featuresServiceMock.mock('navigation', false);
 
     fixture.detectChanges();
 
@@ -111,39 +122,6 @@ describe('SearchBarComponent', () => {
     expect(comp.suggestionsDisabled).toBe(false);
   }));
 
-  it('should handle the current /search url', fakeAsync(() => {
-    comp.handleUrl('/search;q=test');
-    _tickWaitFor(100);
-
-    expect(comp.q).toBe('test');
-    expect(comp.id).toBeFalsy();
-    expect(comp.hasSearchContext).toBeTruthy();
-    expect(comp.searchContext).toBe('');
-    expect(comp.suggestionsDisabled).toBe(true);
-  }));
-
-  it('should handle the current /search url with type', fakeAsync(() => {
-    comp.handleUrl('/search;q=test;type=karmatest');
-    _tickWaitFor(100);
-
-    expect(comp.q).toBe('test');
-    expect(comp.id).toBeFalsy();
-    expect(comp.hasSearchContext).toBeTruthy();
-    expect(comp.searchContext).toBe('karmatest');
-    expect(comp.suggestionsDisabled).toBe(true);
-  }));
-
-  it('should handle the current /search url with type and container id', fakeAsync(() => {
-    comp.handleUrl('/search;q=test;id=5000');
-    _tickWaitFor(100);
-
-    expect(comp.q).toBe('test');
-    expect(comp.id).toBe('5000');
-    expect(comp.hasSearchContext).toBeTruthy();
-    expect(comp.searchContext).toBe('5000');
-    expect(comp.suggestionsDisabled).toBe(true);
-  }));
-
   it('should set active when focus is called', () => {
     comp.active = false;
     comp.focus();
@@ -167,8 +145,8 @@ describe('SearchBarComponent', () => {
     tick();
 
     expect(comp.router.navigate).toHaveBeenCalledWith([
-      'search',
-      { q: 'test', ref: 'top' },
+      '/newsfeed/global/top',
+      { query: 'test', period: '30d' },
     ]);
   }));
 
@@ -181,8 +159,8 @@ describe('SearchBarComponent', () => {
     tick();
 
     expect(comp.router.navigate).toHaveBeenCalledWith([
-      'search',
-      { q: 'test', ref: 'top', id: '5000' },
+      '/newsfeed/global/top',
+      { query: 'test', period: '30d' },
     ]);
   }));
 

@@ -56,7 +56,9 @@ minds-newsfeed-single {
 
     img {
       border-radius: 50%;
-      max-height: 50px;
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
     }
   }
 

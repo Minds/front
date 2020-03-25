@@ -1,0 +1,22 @@
+<div class="m-walletDashboardBalance__wrapper">
+  <m-walletBalance--cash
+    class="m-shadowboxLayout__body"
+  ></m-walletBalance--cash>
+</div>
+
+<div class="m-tabs__container">
+  <li class="m-tabs__tab">
+    <a routerLink="transactions" routerLinkActive="selected">
+      Transactions
+    </a>
+  </li>
+  <li class="m-tabs__tab">
+    <a routerLink="settings" routerLinkActive="selected">
+      Settings
+    </a>
+  </li>
+</div>
+
+<div class="m-walletDashboardViews__viewsContainer">
+  <router-outlet></router-outlet>
+</div>

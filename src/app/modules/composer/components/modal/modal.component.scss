@@ -1,0 +1,80 @@
+m-composer__modal {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 584px;
+  margin: 29px 0 34px;
+  border-radius: 5px;
+  box-sizing: border-box;
+
+  @include m-theme() {
+    background: themed($m-bgColor--secondary);
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 0;
+    margin: 0;
+  }
+
+  m-composer__base {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    > * {
+      flex: 1;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      max-height: 710px;
+      min-height: 431px;
+
+      .m-composer__base,
+      .m-composer__base.m-composer__base--withPreview {
+        height: auto;
+        padding-top: 0;
+      }
+    }
+  }
+}
+
+.m-composerModal__windowControls {
+  @media screen and (max-width: $max-mobile) {
+    display: flex;
+    flex-direction: row-reverse;
+    padding: 29px 16px 24px 24px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  @media screen and (min-width: $max-mobile + 1) {
+    // NOTE: Non-mobile viewport. Be careful!
+
+    display: block;
+    position: absolute;
+    top: -48px;
+    right: -48px;
+
+    @include m-theme() {
+      color: themed($m-white-always);
+    }
+
+    @media screen and (max-height: 870px) {
+      top: 0;
+    }
+  }
+
+  .m-composerModalWindowControls__close {
+    display: inline-block;
+    padding: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    color: inherit;
+  }
+}

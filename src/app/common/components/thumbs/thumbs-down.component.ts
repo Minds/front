@@ -15,11 +15,18 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
   inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <a (click)="thumb()" [ngClass]="{ selected: has() }">
+    <a
+      (click)="thumb()"
+      [ngClass]="{ selected: has() }"
+      data-cy="data-minds-thumbs-down-button"
+    >
       <i class="material-icons">thumb_down</i>
-      <span class="minds-counter" *ngIf="object['thumbs:down:count'] > 0">{{
-        object['thumbs:down:count'] | number
-      }}</span>
+      <span
+        class="minds-counter"
+        *ngIf="object['thumbs:down:count'] > 0"
+        data-cy="data-minds-thumbs-down-counter"
+        >{{ object['thumbs:down:count'] | number }}</span
+      >
     </a>
   `,
   styles: [

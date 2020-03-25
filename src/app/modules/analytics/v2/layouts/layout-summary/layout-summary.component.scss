@@ -1,0 +1,102 @@
+// -----------------------------------------
+// LAYOUT
+// -----------------------------------------
+m-analytics__layout--summary {
+  display: block;
+}
+.m-analyticsSummary__tilesContainer {
+  display: flex;
+  flex-flow: row wrap;
+  padding-top: 18px;
+}
+.m-analyticsSummary__tile {
+  height: 160px;
+  box-sizing: border-box;
+  min-width: 200px;
+  padding-right: 20px;
+  margin-bottom: 20px;
+  flex: 0 1 33%;
+
+  &.noChart {
+    .m-analyticsSummary__benchmarkValue {
+      font-size: 42px;
+    }
+    .m-analyticsSummary__benchmarkLabelWrapper {
+      padding-bottom: 30px;
+      // 18px when emoji is removed
+    }
+  }
+}
+
+// -----------------------------------------
+// BOOST BACKLOG
+// -----------------------------------------
+.m-analyticsSummary__boostBacklogWrapper {
+  margin-top: 36px;
+  .m-analyticsSummary__boostBacklogTitle {
+    font-size: 18px;
+    padding-bottom: 18px;
+  }
+  .m-analytics__benchmarkUnit {
+    padding-left: 2px;
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
+  }
+}
+.m-analyticsSummary__boostRowsContainer {
+  display: flex;
+  flex-flow: row wrap;
+  @include m-theme() {
+    border: 1px solid rgba(themed($m-grey-50), 0.5);
+  }
+}
+.m-analyticsSummary__boostRow {
+  display: flex;
+  flex-flow: row wrap;
+  flex: 1 0 auto;
+}
+.m-analyticsSummary__boostType {
+  padding: 30px;
+  flex: 1 0 50%;
+  box-sizing: border-box;
+  @include m-theme() {
+    border: 1px solid rgba(themed($m-grey-50), 0.5);
+  }
+}
+
+// ------------------------------------------
+// MOBILE & TABLET
+// -----------------------------------------
+@media screen and (max-width: 1022px) {
+  .m-analyticsSummary__tile {
+    flex-basis: 50%;
+  }
+}
+@media screen and (max-width: $min-tablet) {
+  m-analytics__layout--summary {
+    padding: 0 24px 48px 24px;
+  }
+  .m-analyticsSummary__tile {
+    flex-basis: 33%;
+  }
+}
+
+@media screen and (max-width: 648px) {
+  .m-analyticsSummary__tile {
+    flex-basis: 50%;
+  }
+}
+@media screen and (max-width: 448px) {
+  .m-analyticsSummary__tile {
+    flex-basis: 100%;
+  }
+  .m-analyticsSummary__boostBacklogWrapper {
+    .m-analyticsSummary__boostRow {
+      flex-basis: 100%;
+    }
+    .m-analyticsSummary__boostType {
+      flex-basis: 100%;
+    }
+  }
+}

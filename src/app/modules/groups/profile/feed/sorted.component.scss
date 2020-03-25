@@ -1,9 +1,5 @@
-.m-group--sorted__SortSelector {
-  @include m-theme() {
-    background-color: themed($m-white);
+.m-mindsList__tools {
+  .m-group--sorted__SortSelector {
+    margin-left: auto;
   }
-
-  position: relative;
-  padding: 8px;
-  margin-bottom: 16px;
 }

@@ -319,7 +319,9 @@ minds-activity-preview {
       margin-right: 12px;
     }
     .avatar img {
-      max-height: 24px;
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
     }
     .body {
       margin-left: 12px;
@@ -376,7 +378,7 @@ minds-activity-preview {
     }
     .mdl-card__menu {
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--secondary);
       }
     }
     minds-card-comment:hover {

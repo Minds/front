@@ -1,0 +1,17 @@
+<div class="m-proChannelList__content">
+  <m-feedGrid
+    [maxColumns]="3"
+    [entities]="entities$ | async"
+    (deleted)="onActivityDelete($event)"
+  >
+  </m-feedGrid>
+
+  <infinite-scroll
+    *ngIf="canAutoScroll"
+    distance="25%"
+    (load)="loadMore()"
+    [moreData]="feedsService.hasMore | async"
+    [inProgress]="feedsService.inProgress | async"
+  >
+  </infinite-scroll>
+</div>

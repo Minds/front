@@ -1,12 +1,21 @@
 <ng-container *ngIf="group">
-  <minds-newsfeed-poster
-    #poster
-    (load)="prepend($event)"
-    [containerGuid]="group.guid"
-    [accessId]="group.guid"
-    *ngIf="filter == 'activity' && group['is:member']"
-  >
-  </minds-newsfeed-poster>
+  <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+    <m-composer
+      *ngIf="filter == 'activity' && group['is:member']"
+      (onPost)="prepend($event)"
+      [containerGuid]="group.guid"
+      #composer
+    ></m-composer>
+  </ng-container>
+  <ng-template #v1NewsfeedPoster>
+    <minds-newsfeed-poster
+      (load)="prepend($event)"
+      [containerGuid]="group.guid"
+      *ngIf="filter == 'activity' && group['is:member']"
+      #poster
+    >
+    </minds-newsfeed-poster>
+  </ng-template>
 
   <div
     class="mdl-shadow--4dp mdl-color--blue-grey-50 mdl-color-text--blue-grey-500 m-newsfeed-message"
@@ -35,11 +44,12 @@
       *ngFor="let activity of pinned; let i = index"
       [object]="activity"
       [canDelete]="group['is:owner'] || group['is:moderator']"
-      (delete)="delete(activity)"
+      (deleted)="delete($event)"
       [showRatingToggle]="true"
       [slot]="i + 1"
       class="mdl-card item"
       [attr.data-minds-activity-guid]="activity.guid"
+      [allowAutoplayOnScroll]="true"
     >
     </minds-activity>
 
@@ -48,9 +58,10 @@
       class="mdl-card item"
       [object]="a"
       [canDelete]="group['is:owner'] || group['is:moderator']"
-      (delete)="delete(a)"
+      (deleted)="delete(a)"
       [slot]="i + (pinned?.length || 0) + 1"
       [attr.data-minds-activity-guid]="a.guid"
+      [allowAutoplayOnScroll]="true"
     >
       <!-- Menu Actions -->
       <li

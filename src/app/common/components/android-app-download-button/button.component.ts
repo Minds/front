@@ -13,7 +13,5 @@ import { Router } from '@angular/router';
   `,
 })
 export class AndroidAppDownloadComponent {
-  minds = window.Minds;
-
   constructor(private router: Router) {}
 }

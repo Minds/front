@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { Navigation as NavigationService } from '../../services/navigation';
 import { Session } from '../../services/session';
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { LoginReferrerService } from '../../services/login-referrer.service';
+import {
+  GlobalScrollService,
+  ScrollSubscription,
+} from '../../services/ux/global-scroll.service';
+import { ConfigsService } from '../../common/services/configs.service';
+import { PagesService } from '../../common/services/pages.service';
 
 @Component({
   selector: 'm-homepage',
@@ -20,11 +26,13 @@ export class HomepageComponent {
     2: [],
     3: [],
   };
+  loadedStream: boolean = false;
+  scroll$: [ScrollSubscription, Subscription];
   offset: string = '';
   inProgress: boolean = false;
   videoError: boolean = false;
 
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   flags = {
     canPlayInlineVideos: true,
@@ -32,23 +40,35 @@ export class HomepageComponent {
 
   constructor(
     public client: Client,
-    public title: MindsTitle,
     public router: Router,
     public navigation: NavigationService,
     private loginReferrer: LoginReferrerService,
-    public session: Session
+    public session: Session,
+    private scroll: GlobalScrollService,
+    configs: ConfigsService,
+    public pagesService: PagesService
   ) {
-    this.title.setTitle('Minds Social Network', false);
-    this.loadStream();
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
 
+    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
+      this.flags.canPlayInlineVideos = false;
+    }
+  }
+
+  ngOnInit() {
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
     }
 
-    if (/iP(hone|od)/.test(window.navigator.userAgent)) {
-      this.flags.canPlayInlineVideos = false;
-    }
+    this.scroll$ = this.scroll.listen(
+      document,
+      (subscription, e) => {
+        this.loadStream(true);
+        this.scroll$[1].unsubscribe();
+      },
+      100
+    );
   }
 
   loadStream(refresh: boolean = false) {

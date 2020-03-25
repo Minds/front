@@ -32,7 +32,11 @@
         <b i18n="@@TAGS_SELECTOR__SELECT_UP_TO_5_HASHTAGS"
           >Select up to 5 hashtags.</b
         >
-        <m-form-tags-input [tags]="tags" (tagsChange)="setTags($event)">
+        <m-form-tags-input
+          *mIfBrowser
+          [tags]="tags"
+          (tagsChange)="setTags($event)"
+        >
         </m-form-tags-input>
       </li>
     </ul>

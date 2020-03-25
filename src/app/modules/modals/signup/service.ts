@@ -1,8 +1,10 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ScrollService } from '../../../services/ux/scroll';
+import { CookieService } from '../../../common/services/cookie.service';
 import { Subscription } from 'rxjs';
 
+@Injectable()
 export class SignupModalService {
   defaultSubtitle: string =
     'Signup to comment, upload, vote and earn 100+ free views on your content daily.';
@@ -15,13 +17,13 @@ export class SignupModalService {
 
   routerSubscription: Subscription;
 
-  static _(router: Router, scroll: ScrollService) {
-    return new SignupModalService(router, scroll);
-  }
-
-  constructor(private router: Router, public scroll: ScrollService) {
+  constructor(
+    private router: Router,
+    public scroll: ScrollService,
+    private cookieService: CookieService
+  ) {
     // console.log('modal service constructed');
-    this.initOnScroll();
+    // this.initOnScroll();
   }
 
   open(): SignupModalService {
@@ -79,7 +81,7 @@ export class SignupModalService {
                 if (this.scroll_listener) return;
                 this.scroll_listener = this.scroll.listen(e => {
                   if (this.scroll.view.scrollTop > 100) {
-                    if (window.localStorage.getItem('hideSignupModal'))
+                    if (this.cookieService.get('hide-signup-modal'))
                       this.close();
                     else this.open();
                     this.scroll.unListen(this.scroll_listener);

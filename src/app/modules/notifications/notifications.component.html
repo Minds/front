@@ -1,4 +1,4 @@
-<div class="mdl-tabs__tab-bar">
+<div class="mdl-tabs__tab-bar" *ngIf="showTabs">
   <a
     (click)="changeFilter('all')"
     class="mdl-tabs__tab"
@@ -102,10 +102,10 @@
 
 <div
   class="m-notifications--load-new mdl-color--blue-grey-50"
-  *ngIf="minds.notifications_count > 0"
+  *ngIf="notificationService.count > 0"
 >
   <a *ngIf="!inProgress" (click)="load(true)">
-    <span> {{ minds.notifications_count }} </span>
+    <span> {{ notificationService.count }} </span>
     <span i18n="@@NOTIFICATIONS__NOTIFICATIONS__LOAD_NEW_BUTTON"
       >New Notifications</span
     >
@@ -118,14 +118,17 @@
 </div>
 <div
   class="mdl-grid notifications-grid"
+  [class.m-notificationsGrid__noScroll]="!showInfiniteScroll"
   #notificationGrid
   style="max-width:600px"
 >
   <div class="mdl-cell mdl-cell--12-col">
     <minds-notification
       *ngFor="let notification of notifications"
-      class="mdl-card mdl-shadow--2dp item"
+      class="mdl-card item"
+      [class.mdl-shadow--2dp]="showShadows"
       [notification]="notification"
+      [showElapsedTime]="showElapsedTime"
     ></minds-notification>
 
     <infinite-scroll
@@ -134,7 +137,7 @@
       [moreData]="moreData"
       [scrollSource]="useOwnScrollSource ? notificationGrid : null"
       [inProgress]="inProgress"
-      *ngIf="visible"
+      *ngIf="visible && showInfiniteScroll"
     >
     </infinite-scroll>
   </div>

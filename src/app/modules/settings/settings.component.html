@@ -75,15 +75,6 @@
 
         <a
           class="m-page--sidebar--navigation--item"
-          routerLink="/settings/p2pmedia"
-          routerLinkActive="m-page--sidebar--navigation--item-active"
-        >
-          <i class="material-icons">ondemand_video</i>
-          <span i18n="@@SETTINGS__NAVIGATION__P2PMEDIA_NAV">P2P Media</span>
-        </a>
-
-        <a
-          class="m-page--sidebar--navigation--item"
           routerLink="/settings/reported-content"
           routerLinkActive="m-page--sidebar--navigation--item-active"
         >
@@ -108,6 +99,16 @@
           <i class="material-icons">label</i>
           <span i18n="@@M__ACTION__SUGGESTED_HASHTAGS">Suggested Hashtags</span>
         </a> -->
+
+        <a
+          class="m-page--sidebar--navigation--item"
+          [routerLink]="[
+            '/pro/' + session.getLoggedInUser().username + '/settings'
+          ]"
+        >
+          <i class="material-icons">business_center</i>
+          <span i18n>Pro Settings</span>
+        </a>
 
         <a
           class="m-page--sidebar--navigation--item"

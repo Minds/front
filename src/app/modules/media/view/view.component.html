@@ -23,7 +23,7 @@
 </div>
 
 <div class="m-error-splash" *ngIf="error && !inProgress">
-  <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" />
+  <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
   <h3 class="mdl-color-text--red-300">{{ error }}</h3>
   <span
     class="mdl-color-text--blue-grey-300"
@@ -115,14 +115,16 @@
             <div
               class="m-media-content--info mdl-cell mdl-cell--4-col mdl-cell--6-col-phone"
             >
-              <div
+              <!-- <div
                 class="m-media-content--play-count"
-                *ngIf="entity['play:count'] || entity['play:count'] === 0"
+                *ngIf="
+                  (false && entity['play:count']) || entity['play:count'] === 0
+                "
               >
                 <span i18n="@@MINDS__MEDIA__PLAYS_COUNTER"
                   >{{ entity['play:count'] | number }} plays</span
                 >
-              </div>
+              </div> -->
 
               <div
                 class="m-media-content--play-count"
@@ -179,7 +181,7 @@
               <a [routerLink]="['/', entity.ownerObj.username]">
                 <img
                   [src]="
-                    minds.cdn_url +
+                    cdnUrl +
                     'icon/' +
                     entity.ownerObj.guid +
                     '/small/' +
@@ -204,7 +206,9 @@
             </div>
 
             <minds-button-boost
-              *ngIf="entity.subtype != 'album'"
+              *ngIf="
+                entity.subtype != 'album' && !isScheduled(entity.time_created)
+              "
               class="m-media-content--button-boost"
               [object]="entity"
             ></minds-button-boost>
@@ -252,6 +256,7 @@
 
             <m-post-menu
               [entity]="entity"
+              [user]="entity.ownerObj"
               [canDelete]="
                 entity.ownerObj.guid == session.getLoggedInUser().guid ||
                 entity.canEdit ||
@@ -267,8 +272,6 @@
             class="mdl-cell mdl-cell--12-col m-media--description"
             *ngIf="entity.description"
             [innerHtml]="entity.description | safe"
-            [hidden]="!descriptionContainer.innerText.trim('')"
-            #descriptionContainer
           ></div>
         </div>
 
@@ -317,6 +320,18 @@
     <!--<m-ads-boost limit="4"></m-ads-boost>-->
   </div>
 </div>
+
+<m-social-icons
+  [url]="siteUrl + 'media/' + entity.guid"
+  [title]="entity.title || ''"
+  [embed]="entity"
+  *ngIf="
+    entity &&
+    !attachment.shouldBeBlurred(entity) &&
+    !session.getLoggedInUser().hide_share_buttons
+  "
+>
+</m-social-icons>
 
 <m-modal-confirm
   *ngIf="deleteToggle"

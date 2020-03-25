@@ -6,7 +6,7 @@
   grid-gap: 0;
   grid-auto-rows: minmax(100px, auto);
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   @media screen and (max-width: 1105px) {

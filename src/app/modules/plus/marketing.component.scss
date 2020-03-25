@@ -1,140 +1,48 @@
-.m-plus--marketing-header {
-  background: url('<%= APP_CDN %>/assets/photos/fractal.jpg');
-  width: 100%;
-  text-align: center;
-  display: flex;
-  align-content: center;
-  flex-direction: column;
-  padding: 224px 36px;
-  box-sizing: border-box;
-  position: relative;
+@import '../../foundation/grid-values';
 
-  @media only screen and (max-width: 400px) {
-    padding: 110px 0;
-  }
+m-plus__marketing {
+  grid-area: content / span 2;
 
-  h1,
-  h3 {
-    font-family: 'Roboto', Helvetica, sans-serif;
+  .m-plus__marketing {
+    .m-plusMarketing__verify {
+      margin-top: 50px;
 
-    @include m-theme() {
-      color: themed($m-white);
-      text-shadow: 0 0 3px themed($m-grey-900);
-    }
-
-    @media only screen and (max-width: 400px) {
-      margin: 0;
-    }
-    z-index: 1;
-  }
-
-  h1 {
-    word-spacing: 25px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-
-    @media only screen and (max-width: 400px) {
-      font-size: 30px;
-    }
-  }
-  h3 {
-    letter-spacing: 2px;
-    word-spacing: 3px;
-    font-weight: 300;
-
-    @media only screen and (max-width: 400px) {
-      font-size: 14px;
-    }
-  }
-
-  .m-plus--marketing-action-button {
-    button {
-      letter-spacing: 3px;
-      font-size: 18px;
-      line-height: 35px;
-      height: 53px;
-      padding: 0 24px;
-      font-weight: 300;
-      font-family: 'Roboto', Helvetica, sans-serif;
       @include m-theme() {
-        color: themed($m-white);
+        color: themed($m-black);
+      }
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        margin-top: 30px;
+        text-align: center;
+      }
+
+      > * {
+        vertical-align: middle;
+        color: inherit;
+      }
+
+      > i.material-icons {
+        margin-right: 0.35em;
+
+        &.m-plusMarketingVerify__verifiedIcon {
+          @include m-theme() {
+            color: themed($m-blue);
+          }
+        }
+
+        &.m-plusMarketingVerify__unverifiedIcon {
+          opacity: 0.2;
+        }
+      }
+
+      > a {
+        border-bottom: 1px solid;
+        cursor: pointer;
+
+        @include m-theme() {
+          border-color: themed($m-grey-400);
+        }
       }
     }
-    z-index: 2;
   }
-
-  .m-plus--overlay {
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    @include m-theme() {
-      background-color: rgba(themed($m-black), 0.5);
-    }
-  }
-}
-
-.m-plus--marketing-contents {
-  max-width: 990px;
-  padding: 64px 0 !important;
-
-  justify-content: center;
-
-  .mdl-cell {
-    padding: 32px 16px;
-    text-align: center;
-
-    i {
-      font-size: 64px;
-    }
-    h2 {
-      padding: 0;
-      margin: 24px 0;
-      text-transform: uppercase;
-      font-family: 'Roboto', Helvetica, sans-serif;
-      font-weight: 300;
-      letter-spacing: 2px;
-      font-size: 30px;
-    }
-    span {
-      font-family: 'Roboto', Helvetica, sans-serif;
-      letter-spacing: 1px;
-    }
-  }
-}
-
-.m-plus--marketing m-plus--onboarding {
-  margin: -115px auto 0;
-  display: block;
-  position: relative;
-  max-width: 990px;
-
-  form {
-    padding: 16px;
-  }
-}
-
-.m-plus--marketing-faq {
-  max-width: 900px;
-  margin: auto;
-  padding: 16px;
-}
-
-.m-plus--marketing m-plus--terms {
-  max-width: 600px;
-  margin: 16px auto;
-  display: block;
-  padding: 16px;
-  max-height: 600px;
-  overflow: scroll;
-  @include m-theme() {
-    background-color: themed($m-white);
-  }
-}
-
-.m-marketing--action-button button {
-  margin: 5px;
 }

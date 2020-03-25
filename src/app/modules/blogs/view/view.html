@@ -38,7 +38,7 @@
 </header>
 
 <div
-  class="mdl-grid m-blog-container blogs-grid mdl-color--white"
+  class="mdl-grid m-blog-container blogs-grid"
   style="max-width:740px"
   *ngIf="blog.guid"
 >
@@ -60,15 +60,13 @@
       <div class="minds-avatar" [hovercard]="blog.ownerObj.guid">
         <a [routerLink]="['/', blog.ownerObj.username]">
           <img
-            src="{{minds.cdn_url}}icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
+            src="{{cdnUrl}}icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
             class="mdl-shadow--2dp"
           />
         </a>
       </div>
       <div class="minds-body">
-        <a
-          [routerLink]="['/', blog.ownerObj.username]"
-          class="mdl-color-text--blue-grey-500"
+        <a [routerLink]="['/', blog.ownerObj.username]"
           >{{blog.ownerObj.name}}</a
         >
         <span *ngIf="blog.time_published || blog.time_created"
@@ -77,7 +75,7 @@
         >
       </div>
     </div>
-    <div class="mdl-cell mdl-cell--7-col m-actions-block">
+    <div class="mdl-cell mdl-cell--7-col m-actions-block" *ngIf="showActions">
       <div class="mdl-layout-spacer"></div>
       <m-post-menu
         [entity]="blog"
@@ -135,7 +133,7 @@
     </div>
     <minds-button-boost
       [object]="blog"
-      *ngIf="session.isLoggedIn()"
+      *ngIf="session.isLoggedIn() && !isScheduled(blog.time_created)"
     ></minds-button-boost>
   </div>
 </div>
@@ -146,9 +144,22 @@
   #lockScreen
 ></m-wire--lock-screen>
 
-<div class="mdl-grid blogs-grid" style="max-width:660px" *ngIf="blog.guid">
-  <m-comments__tree [entity]="blog"> </m-comments__tree>
-</div>
+<ng-container *mIfBrowser>
+  <div
+    class="mdl-grid blogs-grid"
+    style="max-width:660px"
+    *ngIf="showComments && blog.guid"
+  >
+    <m-comments__tree [entity]="blog"> </m-comments__tree>
+  </div>
+</ng-container>
+
+<m-social-icons
+  [url]="blog.perma_url"
+  [title]="blog.title"
+  *ngIf="!session.getLoggedInUser().hide_share_buttons"
+>
+</m-social-icons>
 
 <m-modal-confirm
   *ngIf="deleteToggle"

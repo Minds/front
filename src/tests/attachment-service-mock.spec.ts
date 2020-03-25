@@ -14,6 +14,7 @@ export let attachmentServiceMock = new (function() {
   this.meta = {};
   this.preview = '';
   this.blur = false;
+  this.nsfw = [];
 
   this.load = jasmine.createSpy('load').and.stub();
 
@@ -37,9 +38,11 @@ export let attachmentServiceMock = new (function() {
   this.setMature = jasmine.createSpy('setMature').and.callFake(mature => {
     this.mature = mature;
   });
-
   this.isMature = jasmine.createSpy('isMature').and.callFake(() => {
     return !!this.mature;
+  });
+  this.setNSFW = jasmine.createSpy('setNSFW').and.callFake(nsfw => {
+    return nsfw;
   });
   this.toggleMature = jasmine.createSpy('toggleMature').and.callFake(() => {
     this.mature = !!this.mature ? 0 : 1;

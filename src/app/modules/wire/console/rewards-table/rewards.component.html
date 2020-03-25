@@ -10,19 +10,19 @@
   <ng-container *ngIf="rewards">
     <m-wire-console--rewards--inputs
       type="money"
-      [channel]="minds.user"
+      [channel]="user"
       [rewards]="rewards.rewards.money"
       (rewardsChange)="onRewardsChange($event, 'money')"
     ></m-wire-console--rewards--inputs>
     <m-wire-console--rewards--inputs
       type="points"
-      [channel]="minds.user"
+      [channel]="user"
       [rewards]="rewards.rewards.points"
       (rewardsChange)="onRewardsChange($event, 'points')"
     ></m-wire-console--rewards--inputs>
     <m-wire-console--rewards--inputs
       type="tokens"
-      [channel]="minds.user"
+      [channel]="user"
       [rewards]="rewards.rewards.tokens"
       (rewardsChange)="onRewardsChange($event, 'tokens')"
     ></m-wire-console--rewards--inputs>

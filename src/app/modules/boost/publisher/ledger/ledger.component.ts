@@ -10,8 +10,6 @@ import { BoostConsoleFilter } from '../../console/console.component';
 export class BoostPublisherLedgerComponent {
   _filter: BoostConsoleFilter;
 
-  minds: Minds = window.Minds;
-
   startDate: string;
   endDate: string;
   inProgress: boolean = false;

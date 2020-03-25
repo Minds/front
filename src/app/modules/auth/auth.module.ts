@@ -17,11 +17,29 @@ import { RegisterComponent } from './register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: { title: 'Login', description: 'Login to Minds or create a channel' },
+  },
   { path: 'logout/all', component: LogoutComponent },
   { path: 'logout', component: LogoutComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
+  {
+    path: 'register',
+    component: RegisterComponent,
+    data: {
+      title: 'Register',
+      description: 'Create a channel on Minds',
+    },
+  },
+  {
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
+    data: {
+      title: 'Forgot Password',
+      description: 'Reset your password on Minds',
+    },
+  },
 ];
 
 @NgModule({
@@ -41,6 +59,7 @@ const routes: Routes = [
     RegisterComponent,
     ForgotPasswordComponent,
   ],
+  exports: [ForgotPasswordComponent],
   entryComponents: [
     LoginComponent,
     LogoutComponent,

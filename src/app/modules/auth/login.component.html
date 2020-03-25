@@ -1,18 +1,43 @@
-<div class="m-login">
-  <div>
-    <h3 i18n="@@MINDS__HOME__LOGIN__LOGIN">Login to Minds</h3>
-    <minds-form-login
-      (done)="loggedin()"
-      (doneRegistered)="registered()"
-    ></minds-form-login>
+<ng-container *mIfFeature="'ux-2020'; else oldLogin">
+  <div class="m-grid">
+    <div
+      class="m-grid__column-8 m-grid__column__skip-3 m-grid__column-10--tablet m-grid__column__skip-2--tablet m-grid__column-12--mobile m-grid__column__skip-1--mobile"
+    >
+      <div class="m-login__wrapper">
+        <minds-form-login
+          [showBigButton]="true"
+          [showInlineErrors]="true"
+          [showLabels]="true"
+          [showTitle]="true"
+          (done)="loggedin()"
+          (doneRegistered)="registered()"
+        >
+        </minds-form-login>
+      </div>
+    </div>
   </div>
+  <m-marketing__footer></m-marketing__footer>
+</ng-container>
 
-  <div>
-    <h3 i18n="@@M__COMMON__START_A_CHANNEL">Not on Minds? Start a channel</h3>
-    <minds-form-register
-      [referrer]="referrer"
-      (done)="registered()"
-      parentId="/login"
-    ></minds-form-register>
+<ng-template #oldLogin>
+  <div class="m-login">
+    <div>
+      <h3 i18n="@@MINDS__HOME__LOGIN__LOGIN">Login to Minds</h3>
+      <minds-form-login
+        (done)="loggedin()"
+        (doneRegistered)="registered()"
+      ></minds-form-login>
+    </div>
+
+    <div>
+      <h3 i18n="@@M__COMMON__START_A_CHANNEL_MINDS_REF">
+        Not on Minds? Start a Minds channel
+      </h3>
+      <minds-form-register
+        [referrer]="referrer"
+        (done)="registered()"
+        parentId="/login"
+      ></minds-form-register>
+    </div>
   </div>
-</div>
+</ng-template>

@@ -1,5 +1,116 @@
 @import 'defaults';
 
+m-group--sidebar-markers {
+  &.m-groupSidebarMarkers__leftSidebar {
+    h5.m-groupSidebarMarkers__header {
+      font-size: 11px;
+      line-height: 30px;
+      letter-spacing: 1.83px;
+      text-transform: uppercase;
+      @include m-theme() {
+        color: rgba(themed($m-black), 0.3);
+      }
+      @media screen and (max-width: $layoutMax3ColWidth) {
+        display: none;
+      }
+    }
+
+    .m-groupSidebarMarkers__list {
+      margin: 0;
+      padding: 0;
+      width: auto !important;
+      height: auto !important;
+      max-width: unset;
+      min-height: unset;
+      box-shadow: unset !important;
+      display: block !important;
+      overflow: unset !important;
+
+      & > li {
+        width: auto;
+        height: auto;
+        border: unset !important;
+        position: relative;
+
+        a {
+          display: inline-flex;
+          flex-direction: row;
+          padding: 8px 16px 8px 0;
+          line-height: 30px;
+          box-sizing: border-box;
+          width: 100%;
+          justify-content: center;
+
+          @media screen and (max-width: $layoutMax3ColWidth) {
+            padding: 8px 0;
+          }
+
+          &.m-groupSidebarMarkersList__item--newGroup,
+          &.m-groupSidebarMarkersList__item--discoverGroups {
+            @include m-theme() {
+              color: themed($m-grey-200);
+            }
+
+            i.material-icons {
+              @include m-theme() {
+                color: themed($m-grey-500);
+              }
+            }
+          }
+
+          .m-groupSidebarMarkersListItem__label {
+            display: inline-block;
+            flex: 1;
+            font-size: 14px;
+            font-weight: normal;
+            margin-left: 24px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow-x: hidden;
+
+            @include m-theme() {
+              color: themed($m-textColor--secondary);
+            }
+
+            @media screen and (max-width: $layoutMax3ColWidth) {
+              display: none;
+            }
+          }
+
+          m-tooltip {
+            vertical-align: middle;
+            // margin-right: 21px;
+
+            img {
+              width: 27px;
+              height: 27px;
+            }
+
+            i.material-icons {
+              font-size: 20px;
+              width: 27px;
+              height: 27px;
+            }
+          }
+        }
+      }
+
+      infinite-scroll {
+        padding: 2px 0 !important;
+        width: 48px !important;
+
+        .m-infinite-scroll-manual {
+          font-size: 10px;
+          padding: 2px;
+          background-color: transparent !important;
+          transform: rotate(0) !important;
+          text-align: left;
+        }
+      }
+    }
+  }
+}
+
 .m-groupSidebarMarkers__list {
   display: block;
   margin: auto;
@@ -101,6 +212,8 @@
       border-radius: 50%;
       @include m-theme() {
         border: 1px solid themed($m-grey-50);
+        // Account for misalignment caused by 1px border.
+        transform: translateX(-1px);
       }
     }
 

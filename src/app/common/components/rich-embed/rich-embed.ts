@@ -3,11 +3,17 @@ import {
   ElementRef,
   ChangeDetectorRef,
   ChangeDetectionStrategy,
+  Output,
+  EventEmitter,
+  Input,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { RichEmbedService } from '../../../services/rich-embed';
-import mediaProxyUrl from '../../../helpers/media-proxy-url';
+import { MediaProxyService } from '../../../common/services/media-proxy.service';
+import { FeaturesService } from '../../../services/features.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
 
 @Component({
   moduleId: module.id,
@@ -17,18 +23,25 @@ import mediaProxyUrl from '../../../helpers/media-proxy-url';
 })
 export class MindsRichEmbed {
   type: string = '';
+  mediaSource: string = '';
   src: any = {};
   preview: any = {};
   maxheight: number = 320;
   inlineEmbed: any = null;
-  embeddedInline: boolean = false;
+  @Input() embeddedInline: boolean = false;
   cropImage: boolean = false;
+  modalRequestSubscribed: boolean = false;
+  @Output() mediaModalRequested: EventEmitter<any> = new EventEmitter();
   private lastInlineEmbedParsed: string;
 
   constructor(
     private sanitizer: DomSanitizer,
     private service: RichEmbedService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    protected featureService: FeaturesService,
+    private mediaProxy: MediaProxyService,
+    private configs: ConfigsService,
+    private overlayModal: OverlayModalService
   ) {}
 
   set _src(value: any) {
@@ -40,7 +53,7 @@ export class MindsRichEmbed {
     this.type = 'src';
 
     if (this.src.thumbnail_src) {
-      this.src.thumbnail_src = mediaProxyUrl(this.src.thumbnail_src);
+      this.src.thumbnail_src = this.mediaProxy.proxy(this.src.thumbnail_src);
     }
 
     this.init();
@@ -55,7 +68,7 @@ export class MindsRichEmbed {
     this.type = 'preview';
 
     if (this.preview.thumbnail) {
-      this.preview.thumbnail = mediaProxyUrl(this.preview.thumbnail);
+      this.preview.thumbnail = this.mediaProxy.proxy(this.preview.thumbnail);
     }
 
     this.init();
@@ -64,6 +77,11 @@ export class MindsRichEmbed {
   init() {
     // Inline Embedding
     let inlineEmbed = this.parseInlineEmbed(this.inlineEmbed);
+
+    if (this.mediaSource === 'youtube' || this.mediaSource === 'minds') {
+      this.modalRequestSubscribed =
+        this.mediaModalRequested.observers.length > 0;
+    }
 
     if (
       inlineEmbed &&
@@ -80,9 +98,35 @@ export class MindsRichEmbed {
     }
 
     this.inlineEmbed = inlineEmbed;
+
+    if (
+      this.overlayModal.canOpenInModal() &&
+      this.modalRequestSubscribed &&
+      this.mediaSource === 'youtube'
+    ) {
+      if (this.inlineEmbed && this.inlineEmbed.htmlProvisioner) {
+        this.inlineEmbed.htmlProvisioner().then(html => {
+          this.inlineEmbed.html = html;
+          this.detectChanges();
+        });
+
+        // @todo: catch any error here and forcefully window.open to destination
+      }
+    }
   }
 
   action($event) {
+    if (
+      this.modalRequestSubscribed &&
+      (this.mediaSource === 'youtube' || this.mediaSource === 'minds') &&
+      this.overlayModal.canOpenInModal()
+    ) {
+      $event.preventDefault();
+      $event.stopPropagation();
+      this.mediaModalRequested.emit();
+      return;
+    }
+
     if (this.inlineEmbed && !this.embeddedInline) {
       $event.preventDefault();
       $event.stopPropagation();
@@ -115,17 +159,22 @@ export class MindsRichEmbed {
 
     this.lastInlineEmbedParsed = url;
 
+    // Minds blog
+    const siteUrl = this.configs.get('site_url');
+    if (url.indexOf(siteUrl) === 0) this.mediaSource = 'minds';
+
     // YouTube
     let youtube = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/i;
 
     if ((matches = youtube.exec(url)) !== null) {
       if (matches[1]) {
+        this.mediaSource = 'youtube';
         return {
           id: `video-youtube-${matches[1]}`,
           className:
             'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-youtube',
           html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
-          src="https://www.youtube.com/embed/${matches[1]}?controls=2&modestbranding=1&origin=${origin}&rel=0"
+          src="https://www.youtube.com/embed/${matches[1]}?controls=1&modestbranding=1&origin=${origin}&rel=0"
           frameborder="0"
           allowfullscreen></iframe>`),
           playable: true,
@@ -138,12 +187,13 @@ export class MindsRichEmbed {
 
     if ((matches = vimeo.exec(url)) !== null) {
       if (matches[1]) {
+        this.mediaSource = 'vimeo';
         return {
           id: `video-vimeo-${matches[1]}`,
           className:
             'm-rich-embed-video m-rich-embed-video-iframe m-rich-embed-video-vimeo',
           html: this.sanitizer.bypassSecurityTrustHtml(`<iframe
-          src="https://player.vimeo.com/video/${matches[1]}?autoplay=1&title=0&byline=0&portrait=0"
+          src="https://player.vimeo.com/video/${matches[1]}?title=0&byline=0&portrait=0"
           frameborder="0"
           webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>`),
           playable: true,
@@ -156,6 +206,7 @@ export class MindsRichEmbed {
 
     if ((matches = soundcloud.exec(url)) !== null) {
       if (matches[1]) {
+        this.mediaSource = 'soundcloud';
         return {
           id: `audio-soundcloud-${matches[1]}`,
           className:
@@ -183,6 +234,7 @@ export class MindsRichEmbed {
 
     if ((matches = spotify.exec(url)) !== null) {
       if (matches[1]) {
+        this.mediaSource = 'spotify';
         return {
           id: `audio-spotify-${matches[1]}`,
           className:
@@ -207,7 +259,7 @@ export class MindsRichEmbed {
         if (!id) {
           return null;
         }
-
+        this.mediaSource = 'giphy';
         return {
           id: `image-giphy-${matches[1]}`,
           className:
@@ -225,7 +277,12 @@ export class MindsRichEmbed {
   }
 
   hasInlineContentLoaded() {
-    return this.embeddedInline && this.inlineEmbed && this.inlineEmbed.html;
+    return (
+      this.embeddedInline &&
+      this.inlineEmbed &&
+      this.inlineEmbed.html &&
+      (!this.modalRequestSubscribed || !this.overlayModal.canOpenInModal())
+    );
   }
 
   detectChanges() {

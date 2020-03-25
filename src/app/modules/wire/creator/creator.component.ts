@@ -4,18 +4,22 @@ import {
   ViewChild,
   ElementRef,
   ChangeDetectorRef,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
+import { Storage } from '../../../services/storage';
 import { WireService } from '../wire.service';
 import { Web3WalletService } from '../../blockchain/web3-wallet.service';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { TokenContractService } from '../../blockchain/contracts/token-contract.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { Router } from '@angular/router';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 export type PayloadType =
   | 'onchain'
@@ -34,24 +38,25 @@ export interface WireStruc {
   payloadType: PayloadType | null;
   guid: any;
   recurring: boolean;
+  recurringInterval?: 'once' | 'monthly' | 'yearly' | null;
   payload: any;
 }
 
 @Component({
-  moduleId: module.id,
   providers: [CurrencyPipe],
   selector: 'm-wire--creator',
   templateUrl: 'creator.component.html',
 })
 export class WireCreatorComponent {
-  minds = window.Minds;
+  readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
 
   wire: WireStruc = {
     amount: 1,
     payloadType: 'onchain',
     guid: null,
     recurring: true,
-
+    recurringInterval: 'monthly',
     // Payment
     payload: null,
   };
@@ -87,6 +92,8 @@ export class WireCreatorComponent {
 
   protected submitted: boolean;
 
+  @Input() inModal: boolean = true;
+
   @Input('object') set data(object) {
     this.wire.guid = object ? object.guid : null;
 
@@ -110,6 +117,8 @@ export class WireCreatorComponent {
   }
 
   _opts: any;
+
+  @Input('opts')
   set opts(opts: any) {
     this._opts = opts;
     this.setDefaults();
@@ -135,8 +144,13 @@ export class WireCreatorComponent {
     private currency: CurrencyPipe,
     private web3Wallet: Web3WalletService,
     private tokenContract: TokenContractService,
-    private router: Router
-  ) {}
+    private router: Router,
+    public storage: Storage,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.load().then(() => {
@@ -239,8 +253,9 @@ export class WireCreatorComponent {
 
   setDefaults() {
     this.wire.amount = 1;
-    this.wire.recurring = true;
-    let payloadType = localStorage.getItem('preferred-payment-method');
+    this.wire.recurring =
+      this.storage.get('preferred-recurring-wire-state') === '1';
+    let payloadType = this.storage.get('preferred-payment-method');
     if (['onchain', 'offchain'].indexOf(payloadType) === -1) {
       payloadType = 'offchain';
     }
@@ -408,6 +423,10 @@ export class WireCreatorComponent {
    */
   toggleRecurring() {
     this.wire.recurring = !this.wire.recurring;
+    this.storage.set(
+      'preferred-recurring-wire-state',
+      this.wire.recurring ? '1' : '0'
+    );
     this.showErrors();
   }
 
@@ -561,9 +580,11 @@ export class WireCreatorComponent {
           this._opts.onComplete(this.wire);
         }
 
-        setTimeout(() => {
-          this.overlayModal.dismiss();
-        }, 2500);
+        if (this.inModal) {
+          setTimeout(() => {
+            this.overlayModal.dismiss();
+          }, 2500);
+        }
       }
     } catch (e) {
       this.error = (e && e.message) || 'Sorry, something went wrong';

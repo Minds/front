@@ -1,6 +1,7 @@
 import { BlockchainService } from './blockchain.service';
 import { fakeAsync } from '@angular/core/testing';
 import { clientMock } from '../../../tests/client-mock.spec';
+import { sessionMock } from '../../../tests/session-mock.spec';
 
 describe('BlockchainService', () => {
   let service: BlockchainService;
@@ -8,9 +9,8 @@ describe('BlockchainService', () => {
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    service = new BlockchainService(clientMock);
+    service = new BlockchainService(clientMock, sessionMock);
     clientMock.response = {};
-    window.Minds = <any>{ user: { eth_wallet: null }, context: 'minds' };
   });
 
   afterEach(() => {

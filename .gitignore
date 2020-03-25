@@ -39,3 +39,4 @@ cypress/videos
 !/.gitlab
 !/.githooks
 !/.prettierrc
+!.gitattributes

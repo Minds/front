@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api';
 
@@ -9,17 +8,13 @@ import { Client } from '../../services/api';
   templateUrl: 'page.component.html',
 })
 export class CanaryPageComponent {
-  minds = window.Minds;
   user;
 
   constructor(
-    private title: MindsTitle,
     private session: Session,
     private client: Client,
     private router: Router
-  ) {
-    this.title.setTitle('Canary - Experiments');
-  }
+  ) {}
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();
@@ -36,11 +31,14 @@ export class CanaryPageComponent {
     if (!this.user) return this.router.navigate(['/login']);
 
     this.user.canary = true;
-    this.client.put('api/v2/canary');
+    await this.client.put('api/v2/canary');
+    window.location.reload();
   }
 
-  turnOff() {
+  async turnOff() {
     this.user.canary = false;
-    this.client.delete('api/v2/canary');
+    await this.client.delete('api/v2/canary');
+
+    window.location.reload();
   }
 }

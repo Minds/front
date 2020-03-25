@@ -1,14 +1,27 @@
 @import 'defaults';
 @import 'fonts';
+@import '~ng-pick-datetime/assets/style/picker.min.css';
 
-body.m-theme__light {
+body.m-theme__light,
+body .m-theme--wrapper.m-theme--wrapper__light {
   color: rgba(0, 0, 0, 0.87);
   background-color: #fff;
 }
 
-body.m-theme__dark {
+body.m-theme__dark,
+body .m-theme--wrapper.m-theme--wrapper__dark {
   color: rgba(255, 255, 255, 0.87);
   background-color: #080808;
+}
+
+// 2020 theme overrides
+body.m-theme__light.m-theme__2020,
+body.m-theme__2020 .m-theme--wrapper.m-theme--wrapper__light {
+  background-color: map-get(map-get($themes, 'light'), 'm-bgColor--primary');
+}
+body.m-theme__dark.m-theme__2020,
+body.m-theme__2020 .m-theme--wrapper.m-theme--wrapper__dark {
+  background-color: map-get(map-get($themes, 'dark'), 'm-bgColor--primary');
 }
 
 h1,
@@ -34,7 +47,7 @@ p {
 .m-border {
   border-radius: 6px;
   @include m-theme() {
-    border: 1px solid themed($m-grey-50);
+    border: 1px solid themed($m-borderColor--tertiary);
   }
 }
 
