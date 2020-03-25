@@ -2,6 +2,25 @@ m-analytics__dashboard {
   display: block;
   position: relative;
   width: 100%;
+  m-tooltip {
+    .m-tooltip {
+      margin-left: 4px;
+      i {
+        font-size: 12px;
+        @include m-theme() {
+          color: rgba(themed($m-grey-300), 0.7);
+        }
+      }
+      .m-tooltip--bubble {
+        z-index: 99;
+        font-size: 11px;
+        @include m-theme() {
+          color: themed($m-white);
+          background-color: themed($m-blue);
+        }
+      }
+    }
+  }
 }
 
 .m-analytics__spinnerContainer {

@@ -11,6 +11,23 @@ m-walletDashboard {
 
   m-tooltip {
     vertical-align: middle;
+    .m-tooltip {
+      margin-left: 4px;
+      i {
+        font-size: 12px;
+        @include m-theme() {
+          color: rgba(themed($m-grey-300), 0.7);
+        }
+      }
+      .m-tooltip--bubble {
+        z-index: 99;
+        font-size: 11px;
+        @include m-theme() {
+          color: themed($m-white);
+          background-color: themed($m-blue);
+        }
+      }
+    }
   }
 
   .m-wallet__spinner {
