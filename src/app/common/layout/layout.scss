@@ -67,6 +67,11 @@ $layoutRightFullWidth: 310px;
     width: auto;
     padding-right: $minds-padding;
   }
+  @media screen and (max-width: $layoutMin2ColWidth) {
+    m-body & {
+      padding: 0;
+    }
+  }
 }
 
 [class*='m-pageLayout__pane'] {

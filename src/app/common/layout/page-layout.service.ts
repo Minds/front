@@ -28,6 +28,10 @@ export class PageLayoutService {
     setTimeout(() => this.isFullWidth$.next(true));
   }
 
+  cancelFullWidth(): void {
+    setTimeout(() => this.isFullWidth$.next(false));
+  }
+
   useTopbarBorder(): void {
     setTimeout(() => this.hasTopbarBorder$.next(true));
   }

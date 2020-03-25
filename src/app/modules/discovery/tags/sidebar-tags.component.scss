@@ -1,0 +1,48 @@
+m-discovery__sidebarTags {
+  display: contents;
+}
+
+.m-discovery__sidebarTags {
+  padding: 20px;
+  position: relative;
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 4px;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+  }
+
+  h2 {
+    font-size: 18px;
+    line-height: 24px;
+    margin: 0 0 20px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .m-discoveryTrends__trend {
+    @include m-theme() {
+      border-bottom: 0;
+    }
+    a {
+      padding: 10px 0;
+      .m-discoveryTrendListItem__supportingText--below {
+        margin-top: 0;
+      }
+    }
+  }
+
+  .m-discoverySidebarTags__seeMore {
+    text-align: right;
+    width: 100%;
+    display: block;
+    cursor: pointer;
+  }
+}

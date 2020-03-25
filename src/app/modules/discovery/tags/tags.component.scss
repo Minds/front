@@ -1,49 +1,38 @@
-.m-discoveryTags__section {
-  padding: 20px 40px;
+// padding: 20px 40px;
+
+.m-discoveryTags__sectionHeader {
+  padding: 40px 40px 20px;
+  display: flex;
+  flex-direction: row;
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+
   h3 {
-    font-size: 14px;
-    line-height: 18px;
+    font-size: 24px;
+    line-height: 32px;
     padding: 0;
     margin: 0;
-    text-transform: uppercase;
+    text-transform: capitalize;
+    flex: 1;
 
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  m-tooltip {
+    align-self: center;
+    width: 32px;
+    text-align: center;
+    i {
+      font-size: 16px;
     }
   }
 }
+
 .m-discoveryTags__list {
   list-style: none;
   padding: 0;
   margin: 0;
-
-  .m-discoveryTagsList__item {
-    a {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      padding: 8px 0;
-      text-decoration: none;
-      @include m-theme() {
-        color: themed($m-textColor--primary);
-      }
-    }
-
-    * {
-      vertical-align: middle;
-    }
-
-    i {
-      @include m-theme() {
-        color: themed($m-textColor--tertiary);
-      }
-    }
-  }
-
-  .m-discoveryTagsListItem__volume {
-    font-size: 11px;
-    @include m-theme() {
-      color: themed($m-textColor--secondary);
-    }
-  }
 }

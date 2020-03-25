@@ -13,14 +13,23 @@
             : trend.title.substr(0, 200) + '...'
         }}
       </h4>
-      <span>{{ trend.volume }} discussing</span>
+      <div class="m-discoveryTrendListItem__supportingText--below">
+        <span>{{ trend.volume }} channels discussing</span>
+        <span>{{ trend.entity.time_created | friendlytime }}</span>
+      </div>
     </div>
     <img [src]="trend.entity.thumbnail_src" />
   </ng-container>
   <ng-container *ngIf="!trend.title">
     <div>
+      <div class="m-discoveryTrendListItem__supportingText--above">
+        <span>Trending {{ trend.period }}h</span>
+        <span>{{ trend.volume }} posts</span>
+      </div>
       <h4>#{{ trend.hashtag }}</h4>
-      <span>{{ trend.volume }} posts</span>
     </div>
+    <i class="m-discoveryTrendListItem__chevron material-icons">
+      chevron_right
+    </i>
   </ng-container>
 </a>
