@@ -104,7 +104,7 @@
         @include m-theme() {
           border-right: 1px solid themed($m-borderColor--primary);
         }
-        @media screen and(max-width: $max-mobile) {
+        @media screen and(max-width: $layoutMax2ColFixedWidth) {
           @include m-theme() {
             border-right: 0;
           }
@@ -131,6 +131,10 @@
           position: relative;
           margin: 0;
           font-size: 24px;
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
         }
 
         input {
@@ -367,6 +371,12 @@
   }
   > :first-child() {
     margin-left: 0;
+  }
+
+  svg {
+    @include m-theme() {
+      fill: themed($m-textColor--secondary);
+    }
   }
 }
 

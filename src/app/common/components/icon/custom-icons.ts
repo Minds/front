@@ -18,4 +18,14 @@ export const CUSTOM_ICONS = {
         </g>
     </svg>
     `,
+  composer: `
+    <svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
+            <g id="09-Discovery-Concept-Search-Results---free-text-[posts]" transform="translate(-1146.000000, -31.000000)" fill-rule="nonzero">
+                <g id="iconfinder_35_Compose_106210-Copy-2" transform="translate(1146.000000, 31.000000)">
+                    <path d="M16.875,18 L1.125,18 C0.50371875,18 0,17.4968438 0,16.875 L0,1.125 C0,0.50315625 0.50371875,0 1.125,0 L12.375,0 L10.125,2.25 L2.25,2.25 L2.25,15.75 L15.75,15.75 L15.75,7.875 L18,5.625 L18,16.875 C18,17.4968438 17.4962813,18 16.875,18 Z M4.5,13.5 L4.5,10.125 L14.625,0 L15.75,0 L18,2.25 L18,3.375 L7.875,13.5 L4.5,13.5 Z M9.5625,9.5625 L15.75,3.375 L14.625,2.25 L8.4375,8.4375 L9.5625,9.5625 Z M6.75,10.125 L5.625,11.25 L5.625,12.375 L6.75,12.375 L7.875,11.25 L6.75,10.125 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </svg>`,
 };
