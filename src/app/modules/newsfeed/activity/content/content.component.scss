@@ -69,7 +69,7 @@ m-activity__content {
     text-decoration: none;
     // font-weight: 600;
     @include m-theme() {
-      color: themed($m-textColor--secondary);
+      color: themed($m-blue);
     }
 
     &:hover {
