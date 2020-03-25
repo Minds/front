@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ConfigsService } from '../../services/configs.service';
+import { CUSTOM_ICONS } from './custom-icons';
 
 export type IconSource = 'md' | 'ion' | 'assets-file' | 'text';
 
@@ -74,5 +75,9 @@ export class IconComponent {
       '-webkit-mask-image': maskImage,
       'mask-image': maskImage,
     };
+  }
+
+  getCustomSvg(): string {
+    return CUSTOM_ICONS[this.iconId];
   }
 }

@@ -11,6 +11,13 @@
     iconId
   }}</span>
   <span
+    *ngSwitchCase="'custom'"
+    class="m-icon__custom"
+    [ngStyle]="sizeCss"
+    [innerHTML]="getCustomSvg() | safe"
+  >
+  </span>
+  <span
     *ngSwitchCase="'assets-file'"
     class="m-icon__assetsFile"
     [ngStyle]="maskAndSizeCss"
