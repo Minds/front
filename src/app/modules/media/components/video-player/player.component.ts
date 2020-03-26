@@ -15,11 +15,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { PLAYER_ANIMATIONS } from './player.animations';
-import { VideoPlayerService } from './player.service';
+import { VideoPlayerService, VideoSource } from './player.service';
 import Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { VideoAutoplayService } from '../video/services/video-autoplay.service';
 
@@ -158,7 +158,12 @@ export class MindsVideoPlayerComponent
 
   @Input('guid')
   set guid(guid: string) {
+    const oldGuid = this.service.guid;
     this.service.setGuid(guid);
+
+    if (isPlatformBrowser(this.platformId) && oldGuid !== guid) {
+      this.service.load();
+    }
   }
 
   @Input('isModal')
@@ -171,12 +176,8 @@ export class MindsVideoPlayerComponent
     this.service.setShouldPlayInModal(shouldPlayInModal);
   }
 
-  get poster(): string {
-    return this.service.poster;
-  }
-
-  get sources(): Plyr.Source[] {
-    return this.service.sources;
+  get sources$(): BehaviorSubject<VideoSource> {
+    return this.service.sources$;
   }
 
   get status(): string {
