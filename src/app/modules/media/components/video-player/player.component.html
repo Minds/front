@@ -14,9 +14,9 @@
   <div class="m-videoPlayer__screen">
     <plyr
       style="display: block; width: 100%; height: 100%;"
-      [plyrPoster]="poster"
+      [plyrPoster]="service.poster$ | async"
       [plyrPlaysInline]="true"
-      [plyrSources]="sources"
+      [plyrSources]="sources$ | async"
       [plyrOptions]="options"
       (plyrPlay)="onPlayed($event)"
       (plyrEnterFullScreen)="fullScreenChange.next($event)"
@@ -34,7 +34,7 @@
 <ng-template #placeholder>
   <div
     class="m-videoPlayer__placeholder"
-    [style.background-image]="'url(' + poster + ')'"
+    [style.background-image]="'url(' + (service.poster$ | async) + ')'"
   >
     <i
       class="material-icons minds-video-play-icon"
