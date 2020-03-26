@@ -13,7 +13,11 @@ import { BlockListService } from '../../../../common/services/block-list.service
   inputs: ['user'],
   outputs: ['userChanged'],
   template: `
-    <button class="material-icons" (click)="toggleMenu($event)">
+    <button
+      class="material-icons"
+      (click)="toggleMenu($event)"
+      data-cy="data-minds-user-dropdown"
+    >
       more_vert
     </button>
 
@@ -23,6 +27,7 @@ import { BlockListService } from '../../../../common/services/block-list.service
         [hidden]="user.blocked"
         (click)="block()"
         i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BLOCK"
+        data-cy="data-minds-user-dropdown-block"
       >
         Block @{{ user.username }}
       </li>
