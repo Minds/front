@@ -34,7 +34,7 @@
         class="m-activityOwnerBlockPermalink__text--timestamp"
         [title]="entity.time_created * 1000 | date: 'medium'"
       >
-        {{ friendlyTime }}
+        {{ entity.time_created * 1000 | friendlydatediff }}
       </span>
       <span
         *ngIf="
