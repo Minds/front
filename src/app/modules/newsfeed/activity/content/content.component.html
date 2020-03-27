@@ -43,7 +43,8 @@
   <m-videoPlayer
     [guid]="videoGuid"
     [shouldPlayInModal]="true"
-    [autoplay]="false"
+    [autoplay]="autoplayVideo"
+    [allowAutoplayOnScroll]="allowAutoplayOnScroll"
     (mediaModalRequested)="onModalRequested($event)"
     [style.height]="videoHeight"
   ></m-videoPlayer>
@@ -102,6 +103,8 @@
     [style.width]="remindWidth"
     [style.height]="remindHeight"
     [style.max-height]="remindHeight"
+    [allowAutoplayOnScroll]="allowAutoplayOnScroll"
+    [autoplayVideo]="autoplayVideo"
   >
   </m-activity__remind>
 </div>

@@ -285,10 +285,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   load() {
     switch (this.entity.type) {
       case 'activity':
-        this.title =
-          this.entity.message ||
-          this.entity.title ||
-          `${this.entity.ownerObj.name}'s post`;
+        this.title = this.entity.title || `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.entity_guid || this.entity.guid;
         this.thumbnail = this.entity.thumbnails
           ? this.entity.thumbnails.xlarge
@@ -365,8 +362,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
         this.contentType =
           this.entity.custom_type === 'video' ? 'video' : 'image';
         this.title =
-          this.entity.message ||
           this.entity.title ||
+          this.entity.message ||
           this.entity.description ||
           `${this.entity.ownerObj.name}'s post`;
         this.entity.guid = this.entity.attachment_guid;

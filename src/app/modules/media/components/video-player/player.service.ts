@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Client } from '../../../../services/api';
 import isMobile from '../../../../helpers/is-mobile';
+import { Session } from '../../../../services/session';
 
 export type VideoSource = {
   id: string;
@@ -11,16 +12,21 @@ export type VideoSource = {
 };
 
 @Injectable()
-export class VideoPlayerService {
+export class VideoPlayerService implements OnDestroy {
   /**
    * @var string
    */
   guid: string;
 
   /**
-   * @var VideoSource[]
+   * @var BehaviorSubject<VideoSource>
    */
-  sources: VideoSource[];
+  sources$: BehaviorSubject<VideoSource> = new BehaviorSubject<VideoSource>({
+    id: null,
+    type: null,
+    size: 0,
+    src: null,
+  });
 
   /**
    * @var string
@@ -29,9 +35,9 @@ export class VideoPlayerService {
 
   /**
    * A poster is thumbnail
-   * @var string
+   * @var BehaviorSubject<string>
    */
-  poster: string;
+  poster$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   /**
    * False would be inline
@@ -50,7 +56,13 @@ export class VideoPlayerService {
    */
   onReady$: Subject<void> = new Subject();
 
-  constructor(private client: Client) {}
+  constructor(private client: Client, private session: Session) {}
+
+  ngOnDestroy(): void {
+    if (this.poster$) {
+      this.poster$.unsubscribe();
+    }
+  }
 
   /**
    * Set the guid that we are interacting with
@@ -84,8 +96,8 @@ export class VideoPlayerService {
   async load(): Promise<void> {
     try {
       let response = await this.client.get('api/v2/media/video/' + this.guid);
-      this.sources = (<any>response).sources;
-      this.poster = (<any>response).poster;
+      this.sources$.next((<any>response).sources);
+      this.poster$.next((<any>response).poster);
       this.status = (<any>response).transcode_status;
       this.onReady$.next();
       this.onReady$.complete();
@@ -107,7 +119,10 @@ export class VideoPlayerService {
    * @return boolean
    */
   isPlayable(): boolean {
+    const user = this.session.getLoggedInUser();
+
     return (
+      (user.plus && !user.disable_autoplay_videos) ||
       this.isModal || // Always playable in modal
       !this.shouldPlayInModal || // Equivalent of asking to play inline
       (this.canPlayInModal() && !this.isModal)

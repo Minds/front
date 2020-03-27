@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-helpdesk--dashboard',
@@ -25,12 +26,14 @@ export class HelpdeskDashboardComponent implements OnInit {
     public router: Router,
     public client: Client,
     public session: Session,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private pageLayoutService: PageLayoutService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   async ngOnInit() {
+    this.pageLayoutService.useFullWidth();
     await this.loadPopular();
   }
 

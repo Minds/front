@@ -4,6 +4,7 @@ import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-helpdesk--questions',
@@ -20,7 +21,8 @@ export class QuestionsComponent implements OnInit {
     public router: Router,
     private route: ActivatedRoute,
     private metaService: MetaService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private pageLayoutService: PageLayoutService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -29,6 +31,7 @@ export class QuestionsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.load(params['uuid']);
     });
+    this.pageLayoutService.useFullWidth();
   }
 
   async load(uuid: string) {

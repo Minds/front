@@ -21,6 +21,7 @@ import { of } from 'rxjs';
 import { DebugElement } from '@angular/core';
 import { MockComponent, MockService } from '../../../utils/mock';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 describe('HelpdeskDashboardComponent', () => {
   let comp: HelpdeskDashboardComponent;
@@ -57,6 +58,7 @@ describe('HelpdeskDashboardComponent', () => {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
+        PageLayoutService,
       ],
     }).compileComponents();
   }));

@@ -1,0 +1,92 @@
+.m-discovery__sidebar {
+  padding: 20px;
+}
+
+.m-discovery__trends {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  @include m-theme() {
+    border-top: 6px solid themed($m-borderColor--primary);
+  }
+}
+
+.m-discoveryTrends__trend {
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+  a {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 40px;
+    text-decoration: none;
+    > div {
+      flex: 1;
+    }
+  }
+  h4 {
+    padding: 0;
+    margin: 0;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  .m-discoveryTrendListItem__supportingText--above {
+    margin-bottom: $minds-margin / 2;
+  }
+  .m-discoveryTrendListItem__supportingText--below {
+    margin-top: $minds-margin;
+  }
+  span {
+    margin-right: 4px;
+    font-weight: 400;
+    &::after {
+      content: '·';
+      margin-left: 4px;
+      font-weight: 800;
+    }
+    &:last-of-type()::after {
+      display: none;
+    }
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+  }
+
+  img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-left: 20px;
+  }
+
+  &.m-discoveryTrends__trend--hero {
+    a {
+      padding: 0;
+      flex-direction: column-reverse;
+      > div {
+        padding: 20px 40px;
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+        }
+      }
+    }
+    img {
+      width: 100%;
+      height: 300px;
+      margin-left: 0;
+    }
+  }
+
+  .m-discoveryTrendListItem__chevron {
+    align-self: center;
+    font-size: 32px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

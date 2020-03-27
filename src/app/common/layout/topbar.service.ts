@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class TopbarService {
-  private container: V2TopbarComponent | V3TopbarComponent;
+  private container: V2TopbarComponent;
 
   private useV3Topbar: boolean;
 
@@ -17,7 +17,7 @@ export class TopbarService {
     this.useV3Topbar = this.featuresService.has('navigation');
   }
 
-  setContainer(container: V2TopbarComponent | V3TopbarComponent) {
+  setContainer(container: V2TopbarComponent) {
     this.container = container;
 
     return this;
@@ -30,7 +30,6 @@ export class TopbarService {
   ): void {
     if (this.container) {
       if (this.useV3Topbar) {
-        this.container.toggleMarketingPages(value, forceBackground);
       } else {
         this.container.toggleMarketingPages(
           value,

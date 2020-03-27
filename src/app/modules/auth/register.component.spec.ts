@@ -54,7 +54,7 @@ describe('RegisterComponent', () => {
     fixture = TestBed.createComponent(RegisterComponent);
 
     comp = fixture.componentInstance;
-    featuresServiceMock.mock('register_pages-december-2019', false);
+    featuresServiceMock.mock('ux-2020', false);
 
     comp.flags.canPlayInlineVideos = true;
 

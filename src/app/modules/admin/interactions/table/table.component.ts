@@ -44,7 +44,7 @@ import { Client } from '../../../../services/api/client';
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InteractionsTableComponent implements OnInit, OnChanges {
+export class InteractionsTableComponent implements OnInit {
   @Input() metric: { title: string; metric: string };
   timeout;
 
@@ -76,13 +76,6 @@ export class InteractionsTableComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.getLeaderboard();
-    this.init = true;
-  }
-
-  ngOnChanges() {
-    if (this.init) {
-      this.getLeaderboard();
-    }
   }
 
   async getLeaderboard() {

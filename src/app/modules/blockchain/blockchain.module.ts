@@ -62,7 +62,6 @@ const cryptoRoutes: Routes = [
     BlockchainPurchaseComponent,
   ],
   providers: [
-    TransactionOverlayService,
     {
       provide: LocalWalletService,
       useFactory: LocalWalletService._,

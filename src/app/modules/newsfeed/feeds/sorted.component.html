@@ -4,7 +4,12 @@
     class="m-feeds-sorted__SearchBox"
   ></m-search--bar>
 
-  <minds-newsfeed-poster (load)="prepend($event)"></minds-newsfeed-poster>
+  <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+    <m-composer (onPost)="prepend($event)"></m-composer>
+  </ng-container>
+  <ng-template #v1NewsfeedPoster>
+    <minds-newsfeed-poster (load)="prepend($event)"></minds-newsfeed-poster>
+  </ng-template>
 
   <div class="m-feeds-sorted__query" *ngIf="query">
     <span
@@ -54,6 +59,7 @@
         <m-newsfeed__entity
           [entity]="entity"
           [slot]="i + 1"
+          [allowAutoplayOnScroll]="true"
         ></m-newsfeed__entity>
       </ng-container>
     </ng-container>

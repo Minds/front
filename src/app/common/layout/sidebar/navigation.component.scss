@@ -142,12 +142,18 @@ m-sidebar--navigation {
   line-height: 44px;
   @include m-theme() {
     color: themed($m-textColor--secondary);
+    svg {
+      fill: themed($m-textColor--secondary);
+    }
   }
 
   &.m-sidebarNavigation__item--active,
   &:hover {
     @include m-theme() {
       color: themed($m-textColor--primary);
+      svg {
+        fill: themed($m-textColor--primary);
+      }
     }
   }
 
@@ -183,8 +189,10 @@ m-sidebar--navigation {
 
     i.material-icons,
     i.m-icon--hashtag,
+    svg,
     img {
       height: 23px;
+      width: 24px;
     }
   }
 

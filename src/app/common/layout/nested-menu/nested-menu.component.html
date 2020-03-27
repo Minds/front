@@ -17,14 +17,16 @@
       <ng-container *ngIf="!item.route; else redirect">
         <a
           class="m-nestedMenu__itemWrapper"
+          [ngClass]="{ disableActiveClass: disableActiveClass }"
           (click)="itemClicked(menu.header.id, item.id)"
-          [routerLink]="isNested ? item.id : ['../' + item.id]"
+          [routerLink]="getRouterLink(item.id)"
           routerLinkActive="m-nestedMenu__itemWrapper--active"
         >
           <span>{{ item.label }}</span>
           <i class="material-icons">chevron_right</i>
         </a>
       </ng-container>
+
       <ng-template #redirect>
         <a
           class="m-nestedMenu__itemWrapper"

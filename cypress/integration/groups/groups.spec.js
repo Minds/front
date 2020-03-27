@@ -104,7 +104,7 @@ context('Groups', () => {
   })
 
   it('should be able to toggle conversations', () => {
-    cy.visit('/groups/profile/1075117317781721095/feed');
+    cy.contains(groupId).click();
 
     cy.get('minds-groups-settings-button > button').click();
     cy.contains('Disable Conversation').click();
@@ -123,9 +123,7 @@ context('Groups', () => {
     cy.server();
     cy.route("POST", "**/api/v2/analytics/views/activity/*").as("view");
 
-    cy.get('minds-newsfeed-poster textarea').type('This is a post');
-
-    cy.get('.m-posterActionBar__PostButton').click();
+    cy.post('This is a post');
 
     // the activity should show that it was posted in this group
     cy.get('.minds-list minds-activity .body a:nth-child(2)').contains(`(${groupId} edit)`);
@@ -133,9 +131,7 @@ context('Groups', () => {
     cy.get('.minds-list minds-activity .m-mature-message-content').contains('This is a post');
 
     // create the post
-    cy.get('minds-newsfeed-poster textarea').type('This is a post that will record a view');
-
-    cy.get('.m-posterActionBar__PostButton').click();
+    cy.post('This is a post that will record a view');
 
     cy.scrollTo(0, '20px');
 

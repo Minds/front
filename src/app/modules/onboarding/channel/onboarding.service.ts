@@ -49,10 +49,7 @@ export class ChannelOnboardingService {
   }
 
   async checkProgress() {
-    if (
-      !this.session.isLoggedIn() ||
-      this.featuresService.has('onboarding-december-2019')
-    ) {
+    if (!this.session.isLoggedIn() || this.featuresService.has('ux-2020')) {
       return;
     }
     try {
@@ -68,10 +65,7 @@ export class ChannelOnboardingService {
   }
 
   async showModal(force: boolean = false) {
-    if (
-      !this.session.isLoggedIn() ||
-      this.featuresService.has('onboarding-december-2019')
-    ) {
+    if (!this.session.isLoggedIn() || this.featuresService.has('ux-2020')) {
       return false;
     }
     if (!force) {

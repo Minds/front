@@ -4,6 +4,7 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   ElementRef,
+  HostBinding,
   Injector,
   ViewChild,
 } from '@angular/core';
@@ -31,6 +32,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 export class OverlayModalComponent implements AfterViewInit {
   hidden: boolean = true;
   class: string = '';
+  wrapperClass: string = '';
   root: HTMLElement;
   isMediaModal: boolean = false;
 
@@ -60,13 +62,14 @@ export class OverlayModalComponent implements AfterViewInit {
     this.dismiss();
 
     opts = {
-      ...{
-        class: '',
-      },
+      class: '',
+      wrapperClass: '',
+      inputValues: {},
       ...opts,
     };
 
     this.class = opts.class;
+    this.wrapperClass = opts.wrapperClass || '';
 
     this.isMediaModal =
       this.class.indexOf('m-overlayModal--media') > -1 ? true : false;
@@ -89,6 +92,18 @@ export class OverlayModalComponent implements AfterViewInit {
     );
     this.componentInstance = this.componentRef.instance;
     this.componentInstance.parent = this.modalElement.nativeElement;
+
+    for (const inputKey in opts.inputValues) {
+      if (opts.inputValues.hasOwnProperty(inputKey)) {
+        if (!this.componentInstance.hasOwnProperty(inputKey)) {
+          throw new Error(
+            `${inputKey} does not exist in ${this.componentInstance}`
+          );
+        }
+
+        this.componentInstance[inputKey] = opts.inputValues[inputKey];
+      }
+    }
   }
 
   setRoot(root: HTMLElement) {
@@ -143,9 +158,17 @@ export class OverlayModalComponent implements AfterViewInit {
       return;
     }
 
+    try {
+      this.service._didDismiss();
+    } catch (e) {
+      console.warn('Error on callback while dismissing modal', e);
+    }
+
     this.componentRef.destroy();
     this.host.viewContainerRef.clear();
+  }
 
-    this.service._didDismiss();
+  @HostBinding('class') get wrapperComponentCssClass() {
+    return this.wrapperClass || '';
   }
 }

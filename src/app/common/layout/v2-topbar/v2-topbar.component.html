@@ -85,9 +85,7 @@
         </div>
       </ng-container>
       <ng-template #loggedOutRightContainer>
-        <ng-container
-          *mIfFeature="'register_pages-december-2019'; else singleButton"
-        >
+        <ng-container *mIfFeature="'ux-2020'; else singleButton">
           <ng-container *ngIf="!onAuthPages">
             <div class="m-v2-topbar__Container__LoginWrapper">
               <a

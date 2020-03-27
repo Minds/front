@@ -16,10 +16,6 @@
   }
 }
 
-.m-pageLayout__pane--main {
-  height: 100%;
-}
-
 .m-v3Topbar__middleColumn {
   width: $layoutMainFullWidth;
 }
@@ -51,7 +47,7 @@
   }
 
   @include m-theme() {
-    background-color: themed($m-bgColor--primary);
+    background-color: themed($m-bgColor--secondary);
     border-bottom: 1px solid themed($m-borderColor--primary);
   }
 
@@ -61,40 +57,23 @@
     //padding-right: 20px;
   }
 
-  &.m-v3Topbar__noBackground {
+  &.m-v3Topbar__top--noBackground {
     @include m-theme() {
       background-color: transparent;
       border-bottom: none;
     }
   }
 
-  &.m-v3Topbar__marketingPages {
-    flex-direction: row;
-
+  &.m-v3Topbar__top--noBorder {
     @include m-theme() {
       border: none;
     }
 
-    .m-grid {
-      > * {
-        border: none !important;
+    .m-pageLayout__pane--left {
+      @include m-theme() {
+        border-right: 0;
       }
     }
-
-    //.m-v2-topbar {
-    //  padding: 15px 0 15px;
-    //  max-width: 1084px;
-    //  margin: 0 auto;
-    //
-    //  @media screen and (max-width: 1168px) {
-    //    margin: 0 25px;
-    //  }
-    //
-    //  .m-v2-topbarNavItem__Logo {
-    //    margin: 0;
-    //    padding: 0;
-    //  }
-    //}
 
     .m-v3TopbarContainer__loginWrapper > a {
       @include m-theme() {
@@ -105,7 +84,7 @@
     }
   }
 
-  &.m-v3Topbar__loggedOut {
+  &.m-v3Topbar__top--loggedOut {
     .m-grid > * {
       border: none !important;
     }
@@ -125,13 +104,18 @@
         @include m-theme() {
           border-right: 1px solid themed($m-borderColor--primary);
         }
+        @media screen and(max-width: $layoutMax2ColFixedWidth) {
+          @include m-theme() {
+            border-right: 0;
+          }
+        }
       }
 
       > .mdl-textfield {
         display: inline-flex;
         flex-direction: row;
         align-items: center;
-        padding: 0 24px;
+        padding: 0 40px;
         height: 100%;
 
         @media screen and(max-width: $m-grid-max-mobile) {
@@ -147,6 +131,10 @@
           position: relative;
           margin: 0;
           font-size: 24px;
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
         }
 
         input {
@@ -380,6 +368,15 @@
 
   > * {
     margin-left: 20px;
+  }
+  > :first-child() {
+    margin-left: 0;
+  }
+
+  svg {
+    @include m-theme() {
+      fill: themed($m-textColor--secondary);
+    }
   }
 }
 

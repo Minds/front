@@ -39,7 +39,7 @@ m-activity__ownerBlock {
 }
 
 .m-activityOwnerBlock__displayName {
-  display: block;
+  display: flex;
   font-size: 16px;
 
   @include m-theme() {

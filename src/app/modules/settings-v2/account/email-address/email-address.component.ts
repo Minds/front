@@ -45,7 +45,7 @@ export class SettingsV2EmailAddressComponent implements OnInit, OnDestroy {
     this.form = new FormGroup({
       email: new FormControl('', {
         validators: [Validators.required, Validators.email],
-        updateOn: 'blur',
+        // updateOn: 'blur',
       }),
     });
 

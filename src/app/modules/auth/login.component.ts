@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.flags.canPlayInlineVideos = false;
     }
 
-    this.newDesign = this.featuresService.has('register_pages-december-2019');
+    this.newDesign = this.featuresService.has('ux-2020');
     this.newNavigation = this.featuresService.has('navigation');
 
     if (this.newDesign) {

@@ -1,8 +1,17 @@
-<minds-newsfeed-poster
-  *ngIf="isOwner()"
-  (load)="prepend($event)"
-  #poster
-></minds-newsfeed-poster>
+<ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+  <m-composer
+    *ngIf="isOwner()"
+    (onPost)="prepend($event)"
+    #composer
+  ></m-composer>
+</ng-container>
+<ng-template #v1NewsfeedPoster>
+  <minds-newsfeed-poster
+    *ngIf="isOwner()"
+    (load)="prepend($event)"
+    #poster
+  ></minds-newsfeed-poster>
+</ng-template>
 
 <div class="minds-list">
   <div>
@@ -41,6 +50,7 @@
         [entity]="entity | async"
         (deleted)="delete($event)"
         [slot]="i + 1"
+        [allowAutoplayOnScroll]="true"
       ></m-newsfeed__entity>
     </ng-template>
 

@@ -26,7 +26,7 @@ test:
 lint:
   stage: test
   script:
-    - npm i -g prettier
+    - npm i -g prettier@"^1.19.1"
     - prettier --check "src/**/*.ts"
     - prettier --check "src/**/*.scss"
     - prettier --check "src/**/*.html"
@@ -34,12 +34,11 @@ lint:
 ############
 # QA Stage #
 ############
-
-qa:e2e:
-  image: cypress/browsers:chrome67
+.cypress_tests: &cypress_tests
+  image: cypress/browsers:node10.16.0-chrome77
   stage: qa
   variables:
-    CYPRESS_INSTALL_BINARY: 3.4.1
+    CYPRESS_INSTALL_BINARY: 3.6.1
   script:
     - npm ci
     - >
@@ -62,7 +61,18 @@ qa:e2e:
     paths:
       - .npm
       - cache/Cypress
-  allow_failure: true #manual inspection in case of timeouts
+
+qa:sandbox:
+  allow_failure: false
+  except:
+    - /^master$/
+  <<: *cypress_tests
+
+qa:production:
+  allow_failure: true
+  only:
+    - /^master$/
+  <<: *cypress_tests
 
 qa:manual:
   stage: qa

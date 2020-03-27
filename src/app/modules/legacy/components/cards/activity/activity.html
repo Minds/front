@@ -232,8 +232,24 @@
   <div
     class="mdl-card__supporting-text message"
     [hidden]="!activity.title || activity.perma_url || editing"
-    [innerHtml]="activity.title | tags"
-  ></div>
+  >
+    <a
+      class="m-mature-text-toggle"
+      (click)="toggleMatureVisibility()"
+      *ngIf="!activity.message && (attachment.shouldBeBlurred(activity) || attachment.isForcefullyShown(activity))"
+      [ngClass]="{ 'mdl-color-text--red-500': attachment.isForcefullyShown(activity) }"
+    >
+      <i class="material-icons m-material-icons-inline">explicit</i>
+    </a>
+
+    <span
+      class="m-mature-message-content"
+      [innerHtml]="activity.title | tags"
+      [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
+      (click)="activity.mature && !activity.mature_visibility ? toggleMatureVisibility(): null"
+    >
+    </span>
+  </div>
   <!-- Translation -->
   <div
     *ngIf="translate && translate.translation && translate.translation.translated && translate.translation.title"
@@ -301,8 +317,10 @@
     <m-videoPlayer
       [guid]="activity.entity_guid"
       [shouldPlayInModal]="true"
-      [autoplay]="false"
+      [autoplay]="autoplayVideo"
+      [allowAutoplayOnScroll]="allowAutoplayOnScroll"
       (mediaModalRequested)="openModal()"
+      #player
     ></m-videoPlayer>
   </div>
 
@@ -371,6 +389,8 @@
         [boosted]="activity.boosted"
         (matureVisibilityChange)="onRemindMatureVisibilityChange()"
         (videoMetadataLoaded)="setVideoDimensions($event)"
+        [allowAutoplayOnScroll]="allowAutoplayOnScroll"
+        [autoplayVideo]="autoplayVideo"
       ></minds-remind>
     </ng-container>
     <ng-template #blockedRemindTemplate>
@@ -515,7 +535,7 @@
 <!-- Pending block -->
 <div
   class="mdl-card__supporting-text m-activity--pending"
-  *ngIf="isScheduled(activity.time_created)"
+  *ngIf="isScheduled(activity.time_created, 30000)"
 >
   This activity is scheduled to be shown on {{activity.time_created * 1000 |
   date:'medium'}}.

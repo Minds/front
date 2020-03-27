@@ -39,10 +39,6 @@ export class ActivityOwnerBlockComponent implements OnInit, OnDestroy {
     return this.entity && !!this.entity.remind_object;
   }
 
-  get friendlyTime(): string {
-    return moment(this.entity.time_created * 1000).fromNow();
-  }
-
   get owner(): MindsUser {
     return this.entity.ownerObj;
   }

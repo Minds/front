@@ -73,6 +73,7 @@ import { ConfigsService } from './common/services/configs.service';
 import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
+import { SharedModule } from './common/shared.module';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -140,6 +141,7 @@ export class SentryErrorHandler implements ErrorHandler {
     ChannelsModule,
     UpgradesModule,
     CodeHighlightModule,
+    SharedModule,
 
     //last due to :username route
     AppRoutingModule,
@@ -148,7 +150,6 @@ export class SentryErrorHandler implements ErrorHandler {
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },
     MINDS_PROVIDERS,
-    ConfigsService,
     {
       provide: APP_INITIALIZER,
       useFactory: configs => () => configs.loadFromRemote(),

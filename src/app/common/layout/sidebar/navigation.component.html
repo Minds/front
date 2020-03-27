@@ -21,6 +21,7 @@
         <a
           class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
           [routerLink]="['/' + user.username]"
+          [routerLinkActive]="'m-sidebarNavigation__item--active'"
           (click)="toggle()"
         >
           <img
@@ -38,7 +39,6 @@
           class="m-sidebarNavigation__item"
           [routerLink]="['/newsfeed/subscriptions']"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          [routerLinkActiveOptions]="{ exact: true }"
           (click)="toggle()"
         >
           <m-tooltip
@@ -60,9 +60,8 @@
       <li>
         <a
           class="m-sidebarNavigation__item"
-          [routerLink]="['/newsfeed/global/top']"
+          routerLink="/discovery"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          [routerLinkActiveOptions]="{ exact: true }"
           (click)="toggle()"
         >
           <m-tooltip
@@ -89,12 +88,12 @@
           (click)="toggle()"
         >
           <m-tooltip
-            iconSrc="assets/icons/wire.svg"
             i18n="@@COMMON__WALLET"
             [enabled]="layoutMode === 'tablet'"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
+            <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
             Wallet
           </m-tooltip>
 
@@ -129,7 +128,7 @@
       <li>
         <a
           class="m-sidebarNavigation__item"
-          [routerLink]="['/settings']"
+          [routerLink]="['/settings/canary']"
           [routerLinkActive]="'m-sidebarNavigation__item--active'"
           (click)="toggle()"
         >

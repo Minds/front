@@ -1,0 +1,38 @@
+// padding: 20px 40px;
+
+.m-discoveryTags__sectionHeader {
+  padding: 40px 40px 20px;
+  display: flex;
+  flex-direction: row;
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+
+  h3 {
+    font-size: 24px;
+    line-height: 32px;
+    padding: 0;
+    margin: 0;
+    text-transform: capitalize;
+    flex: 1;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  m-tooltip {
+    align-self: center;
+    width: 32px;
+    text-align: center;
+    i {
+      font-size: 16px;
+    }
+  }
+}
+
+.m-discoveryTags__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

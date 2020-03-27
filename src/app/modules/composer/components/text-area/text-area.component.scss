@@ -1,0 +1,95 @@
+m-composer__textArea {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  .m-composer__textArea {
+    flex: 1;
+  }
+
+  textarea {
+    display: block;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    box-sizing: border-box;
+    padding: 0 36px;
+    margin: 0;
+    border: none;
+    resize: none;
+    background: none transparent !important;
+    appearance: none;
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 21px;
+    min-height: 100px;
+
+    &:focus {
+      outline: none;
+    }
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+
+      &::placeholder {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  .m-composerTextarea__title {
+    padding: 0 36px 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 28px;
+
+    > input {
+      flex: 1;
+      margin-right: 10px;
+      padding: 0;
+      appearance: none;
+      background: none transparent !important;
+      border: none;
+      font-size: 24px;
+      width: 100%;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+
+        &::placeholder {
+          color: themed($m-textColor--secondary);
+        }
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .m-composerTextareaTitle__toggle {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: stretch;
+      cursor: pointer;
+      font-size: 17px;
+      line-height: 23px;
+      user-select: none;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      > m-icon {
+        opacity: 0.55;
+      }
+
+      > span {
+        margin-left: 10px;
+        font-weight: 300;
+      }
+    }
+  }
+}

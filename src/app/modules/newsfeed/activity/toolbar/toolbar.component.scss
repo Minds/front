@@ -20,7 +20,7 @@ m-activity__toolbar {
       i.material-icons {
         font-size: 18px;
         @include m-theme() {
-          color: themed($m-grey-500);
+          color: themed($m-textColor--secondary);
         }
       }
 

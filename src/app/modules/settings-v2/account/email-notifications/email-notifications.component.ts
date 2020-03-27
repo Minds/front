@@ -56,7 +56,6 @@ export class SettingsV2EmailNotificationsComponent implements OnInit {
     this.detectChanges();
 
     const response: any = await this.client.get('api/v2/settings/emails');
-    console.log('LOAD emailnotif', response.notifications[4]);
     response.notifications.forEach((item, index, list) => {
       let value = item.value;
       if (item.value === '1') {
@@ -77,7 +76,6 @@ export class SettingsV2EmailNotificationsComponent implements OnInit {
     }
     this.inProgress = true;
     this.detectChanges();
-    console.log('submit', this.notifications.when);
 
     this.client
       .post('api/v2/settings/emails', {

@@ -1,0 +1,35 @@
+.m-hashtags__trending {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  > * {
+    margin: 0 25px 20px 0;
+    font-size: 15px;
+    line-height: 20px;
+
+    &.m-hashtagsTrending__decoration {
+      margin: 0 17px 20px 0;
+
+      img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+      }
+    }
+
+    a {
+      font-weight: inherit;
+      cursor: pointer;
+
+      @include m-theme() {
+        color: themed($m-link);
+      }
+    }
+  }
+}
