@@ -21,6 +21,11 @@ import { Country } from './country';
 import { CountryCode } from './countries';
 import * as moment from 'moment';
 
+export type CountrySelectedEvent = {
+  number: Country;
+  emit: boolean;
+};
+
 @Component({
   selector: 'm-phoneInput__country',
   templateUrl: 'country.component.html',
@@ -31,7 +36,9 @@ export class PhoneInputCountryV2Component
   @Input() initCountryCode: string;
   @Input() allowedCountries: string[];
   @Output() toggledDropdown: EventEmitter<any> = new EventEmitter();
-  @Output() countrySelected: EventEmitter<any> = new EventEmitter();
+  @Output() countrySelected: EventEmitter<
+    CountrySelectedEvent
+  > = new EventEmitter<CountrySelectedEvent>();
 
   @ViewChild('input', { static: false }) input: ElementRef;
   @ViewChild('dropdown', { static: true }) dropdown: ElementRef;
@@ -60,18 +67,18 @@ export class PhoneInputCountryV2Component
       this.setInitCountry();
     }
 
-    this.onCountrySelect(this.selectedCountryIndex);
+    this.onCountrySelect(this.selectedCountryIndex, false);
   }
 
   ngAfterViewInit() {
     this.countryEls = this.countryElsList.toArray();
   }
 
-  public onCountrySelect(i: number): void {
+  public onCountrySelect(i: number, emit: boolean = true): void {
     this.focusedCountryIndex = i;
     this.selectedCountryIndex = i;
     this.selectedCountry = this.countries[i];
-    this.countrySelected.next(this.selectedCountry);
+    this.countrySelected.next({ number: this.selectedCountry, emit: emit });
     if (this.showDropdown) {
       this.closeDropdown();
     }
@@ -91,6 +98,7 @@ export class PhoneInputCountryV2Component
       }, 1);
     }
   }
+
   closeDropdown() {
     this.toggledDropdown.emit({ showDropdown: false });
   }

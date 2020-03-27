@@ -7,7 +7,10 @@
     </m-onboarding__phoneverification>
   </div>
 
-  <div class="m-onboarding__control">
+  <div
+    class="m-onboarding__control m-onboardingControl__location"
+    style="padding-top: 0;"
+  >
     <div class="m-onboardingControl__label">
       <label data-minds="location" i18n>Location</label>
 
@@ -30,7 +33,10 @@
         (ngModelChange)="locationChange($event)"
         (keyup)="findCity(location)"
       />
-      <div class="m-onboarding__error" *ngIf="locationError">
+      <div
+        class="m-onboarding__error"
+        [style.visibility]="locationError ? 'visible' : 'hidden'"
+      >
         {{ locationError }}
       </div>
 
@@ -76,7 +82,12 @@
     <button class="mf-button mf-button--hollow" (click)="skip()" i18n>
       Skip
     </button>
-    <button class="mf-button mf-button--alt" (click)="continue()" i18n>
+    <button
+      class="mf-button mf-button--alt"
+      [disabled]="!canContinue()"
+      (click)="continue()"
+      i18n
+    >
       Continue
     </button>
   </div>
