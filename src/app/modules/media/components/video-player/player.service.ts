@@ -122,7 +122,7 @@ export class VideoPlayerService implements OnDestroy {
     const user = this.session.getLoggedInUser();
 
     return (
-      (user.plus && !user.disable_autoplay_videos) ||
+      //(user.plus && !user.disable_autoplay_videos) ||
       this.isModal || // Always playable in modal
       !this.shouldPlayInModal || // Equivalent of asking to play inline
       (this.canPlayInModal() && !this.isModal)
