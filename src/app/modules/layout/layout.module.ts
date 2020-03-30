@@ -13,6 +13,7 @@ import { BlockchainModule } from '../blockchain/blockchain.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { MessengerModule } from '../messenger/messenger.module';
 import { RouterModule } from '@angular/router';
+import { ComposerModule } from '../composer/composer.module';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { RouterModule } from '@angular/router';
     BlockchainModule,
     LegacyModule,
     MessengerModule,
+    ComposerModule,
   ],
   exports: [TopbarWrapperComponent, PageComponent],
   declarations: [TopbarWrapperComponent, PageComponent],
