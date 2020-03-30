@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 
 import { ActivityService, ActivityEntity } from '../activity.service';
 import { Session } from '../../../../services/session';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-activity__toolbar',
@@ -13,7 +14,11 @@ export class ActivityToolbarComponent {
 
   entity: ActivityEntity;
 
-  constructor(public service: ActivityService, public session: Session) {}
+  constructor(
+    public service: ActivityService,
+    public session: Session,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.entitySubscription = this.service.entity$.subscribe(
@@ -28,6 +33,10 @@ export class ActivityToolbarComponent {
   }
 
   toggleComments(): void {
+    if (this.service.displayOptions.fixedHeight) {
+      this.router.navigate([`/newsfeed/${this.entity.guid}`]);
+      return;
+    }
     this.service.displayOptions.showComments = !this.service.displayOptions
       .showComments;
     this.service.displayOptions.showOnlyCommentsInput = false;
