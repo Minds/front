@@ -36,3 +36,9 @@
   padding: 0;
   margin: 0;
 }
+
+.m-discoveryTags__list--user {
+  .m-discoveryTrends__trend a > div {
+    align-self: center;
+  }
+}

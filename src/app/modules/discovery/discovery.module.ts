@@ -14,7 +14,6 @@ import { DiscoveryTagsComponent } from './tags/tags.component';
 import { DiscoveryTrendsService } from './trends/trends.service';
 import { LegacyModule } from '../legacy/legacy.module';
 import { GroupsModule } from '../groups/groups.module';
-import { DiscoverySidebarTagsComponent } from './tags/sidebar-tags.component';
 import { DiscoverySharedModule } from './discovery-shared.module';
 
 @NgModule({
