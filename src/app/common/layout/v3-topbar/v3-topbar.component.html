@@ -83,12 +83,6 @@
 
         <div class="m-v3Topbar__userMenu" *ngIf="getCurrentUser()">
           <div class="m-v3Topbar__spacer" *ngIf="!isMobile"></div>
-          <span class="m-v3TopbaUserMenu__item">
-            <m-tooltip>
-              <m-icon from="custom" iconId="composer" m-tooltip--icon></m-icon>
-              Speak your minds...
-            </m-tooltip>
-          </span>
           <!-- edit -->
           <ng-content select="[icons]"></ng-content>
           <m-usermenu__v3
