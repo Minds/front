@@ -180,6 +180,10 @@ minds-topbar {
   height: $minds-padding * 2;
   width: $minds-padding * 2;
 }
+.m-spacer {
+  height: 20px; // Make this a constant
+  width: 20px;
+}
 
 .minds-block {
   display: flex;

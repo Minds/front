@@ -64,7 +64,7 @@
       line-height: 18px;
       font-weight: 600;
       @include m-theme() {
-        color: themed($m-grey-800);
+        color: themed($m-textColor--secondary);
       }
     }
     > div {
@@ -82,7 +82,7 @@
       padding-right: 8px;
       font-weight: 400;
       @include m-theme() {
-        color: themed($m-grey-400);
+        color: themed($m-textColor--tertiary);
       }
     }
     > i {
@@ -105,6 +105,25 @@
       span {
         display: none;
       }
+    }
+  }
+}
+
+m-sidebarWidget {
+  .m-suggestionsSidebar__list {
+    @include m-theme() {
+      border: 0;
+    }
+  }
+  .m-suggestionsSidebarList__item {
+    @include m-theme() {
+      border-bottom: 0;
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+      padding: 8px 0;
     }
   }
 }

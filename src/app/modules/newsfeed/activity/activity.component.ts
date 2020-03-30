@@ -38,6 +38,7 @@ import { ComposerService } from '../../composer/services/composer.service';
 export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() set entity(entity) {
     this.service.setEntity(entity);
+    this.isBoost = entity.boosted;
   }
 
   @Input() set displayOptions(options) {
@@ -55,6 +56,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() autoplayVideo: boolean = false;
 
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
+
+  @HostBinding('class.m-activity--boost')
+  isBoost = false;
 
   @HostBinding('class.m-activity--fixedHeight')
   isFixedHeight: boolean;
@@ -95,6 +99,10 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @HostListener('window:resize')
+  onResize(): void {
+    this.calculateHeight();
+  }
+
   calculateHeight(): void {
     if (!this.service.displayOptions.fixedHeight) return;
     const height =

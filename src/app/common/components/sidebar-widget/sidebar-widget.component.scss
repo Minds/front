@@ -1,0 +1,48 @@
+$sidebarSpacing: 20px;
+m-sidebarWidget {
+  display: block;
+}
+
+.m-sidebarWidget {
+  position: relative;
+  box-sizing: border-box;
+  padding: 0;
+  padding-bottom: $sidebarSpacing;
+  border-radius: 4px;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+    border: 1px solid themed($m-borderColor--tertiary);
+  }
+}
+
+.m-sidebarWidget__title {
+  font-size: 18px;
+  line-height: 24px;
+  padding: $sidebarSpacing;
+  padding-bottom: $sidebarSpacing / 2;
+  margin: 0;
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+  }
+}
+
+.m-sidebarWidget__body {
+  padding: 0 $sidebarSpacing;
+  &.m-sidebarWidget__body--noPadding {
+    padding: 0;
+  }
+}
+
+.m-sidebarWidget__seeMore {
+  padding: 0 $sidebarSpacing;
+  text-align: right;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  @include m-theme() {
+    color: themed($m-textColor--tertiary);
+  }
+}

@@ -26,3 +26,9 @@ m-activity {
   display: flex;
   flex-direction: column;
 }
+
+.m-activity--boost {
+  @include m-theme() {
+    border-color: themed($m-blue);
+  }
+}

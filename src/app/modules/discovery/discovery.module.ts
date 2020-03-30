@@ -15,6 +15,7 @@ import { DiscoveryTrendsService } from './trends/trends.service';
 import { LegacyModule } from '../legacy/legacy.module';
 import { GroupsModule } from '../groups/groups.module';
 import { DiscoverySidebarTagsComponent } from './tags/sidebar-tags.component';
+import { DiscoverySharedModule } from './discovery-shared.module';
 
 @NgModule({
   imports: [
@@ -49,8 +50,9 @@ import { DiscoverySidebarTagsComponent } from './tags/sidebar-tags.component';
     ActivityModule,
     LegacyModule, // For subscribe button
     // GroupsModule,
+    DiscoverySharedModule,
   ],
-  providers: [DiscoveryTrendsService, DiscoveryTagsService],
+  providers: [DiscoveryTrendsService],
   declarations: [
     DiscoveryComponent,
     DiscoveryTrendsComponent,
@@ -58,7 +60,6 @@ import { DiscoverySidebarTagsComponent } from './tags/sidebar-tags.component';
     DiscoveryTrendComponent,
     DiscoverySearchComponent,
     DiscoveryTagsComponent,
-    DiscoverySidebarTagsComponent,
   ],
   exports: [DiscoveryComponent],
   entryComponents: [DiscoveryComponent],

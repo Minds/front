@@ -166,6 +166,7 @@ import {
   PageLayoutContainerDirective,
 } from './layout/page-layout.directive';
 import { FriendlyTimePipe } from './pipes/friendlytime.pipe';
+import { SidebarWidgetComponent } from './components/sidebar-widget/sidebar-widget.component';
 
 const routes: Routes = [
   {
@@ -311,6 +312,7 @@ const routes: Routes = [
     PageLayoutPaneDirective,
     PageLayoutContainerDirective,
     FriendlyTimePipe,
+    SidebarWidgetComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -437,6 +439,7 @@ const routes: Routes = [
     PageLayoutPaneDirective,
     PageLayoutContainerDirective,
     FriendlyTimePipe,
+    SidebarWidgetComponent,
   ],
   providers: [
     SiteService,
