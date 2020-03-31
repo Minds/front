@@ -19,11 +19,18 @@
 <section class="m-discoveryTags__section">
   <div class="m-discoveryTags__sectionHeader">
     <h3>Your Tags</h3>
-    <m-tooltip icon="settings" (click)="openTagSettings()">
+    <m-tooltip
+      icon="settings"
+      (click)="openTagSettings()"
+      data-cy="discover-by-tags-settings-button"
+    >
       Manage Tags
     </m-tooltip>
   </div>
-  <ul class="m-discoveryTags__list m-discoveryTags__list--user">
+  <ul
+    class="m-discoveryTags__list m-discoveryTags__list--user"
+    data-cy="discovery-tags-section--user"
+  >
     <li class="m-discoveryTrends__trend" *ngFor="let tag of tags$ | async">
       <a
         routerLink="/discovery/search"

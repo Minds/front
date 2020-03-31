@@ -14,14 +14,16 @@ export class DiscoveryTagSettingsComponent {
   inProgress$: Observable<boolean> = this.service.inProgress$;
   saving$: Observable<boolean> = this.service.saving$;
   onDismissIntent: () => void = noOp;
+  onSaveIntent: (tags: DiscoveryTag[]) => void = noOp;
 
   /**
    * Modal options
    *
    * @param onDismissIntent
    */
-  set opts({ onDismissIntent }) {
+  set opts({ onSave, onDismissIntent }) {
     this.onDismissIntent = onDismissIntent || noOp;
+    this.onSaveIntent = onSave || noOp;
   }
 
   constructor(private service: DiscoveryTagsService) {}
@@ -33,6 +35,7 @@ export class DiscoveryTagSettingsComponent {
   async onSave(e: Event): Promise<void> {
     await this.service.saveTags();
     this.onDismissIntent();
+    this.onSaveIntent(this.service.tags$.value);
   }
 
   onKeypress(input: HTMLInputElement, e: KeyboardEvent): void {

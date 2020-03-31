@@ -24,6 +24,9 @@ export class DiscoveryTagsService {
       return other;
     })
   );
+  // Add/Remove tracker
+  remove$: BehaviorSubject<DiscoveryTag[]> = new BehaviorSubject([]);
+
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -34,6 +37,7 @@ export class DiscoveryTagsService {
     if (refresh) {
       this.tags$.next([]);
       this.trending$.next(null);
+      this.remove$.next([]);
     }
     const response: any = await this.client.get('api/v3/discovery/tags');
     this.inProgress$.next(false);
@@ -55,13 +59,19 @@ export class DiscoveryTagsService {
     selected.splice(pos, 1);
 
     this.tags$.next(selected);
+    this.remove$.next([...this.remove$.value, tag]);
   }
 
   async saveTags(): Promise<boolean> {
     this.saving$.next(true);
     try {
       await this.client.post('api/v3/discovery/tags', {
-        tags: this.tags$.value.map(tag => tag.value),
+        selected: this.tags$.value.map(tag => tag.value),
+        deselected: this.remove$.value
+          .filter(
+            tag => this.tags$.value.findIndex(i => i.value === tag.value) === -1
+          )
+          .map(tag => tag.value),
       });
       return true;
     } catch (err) {

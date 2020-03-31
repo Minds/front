@@ -28,8 +28,8 @@ export class DiscoveryTagsComponent {
       .create(DiscoveryTagSettingsComponent, null, {
         wrapperClass: 'm-modalV2__wrapper',
         injector: this.injector,
+        onSave: tags => this.service.tags$.next(tags),
         onDismissIntent: () => {
-          console.log('disable');
           this.overlayModal.dismiss();
         },
       })
