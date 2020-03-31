@@ -475,7 +475,8 @@
     padding: 10px 20px;
 
     @include m-theme() {
-      color: themed($m-textColor--primary);
+      color: themed($m-textColor--primary) !important;
+      background-color: themed($m-bgColor--secondary) !important;
     }
     &::placeholder {
       @include m-theme() {

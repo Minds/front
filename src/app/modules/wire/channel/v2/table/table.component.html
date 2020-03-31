@@ -28,7 +28,6 @@
 
   <!-- EDITING ------------------------------>
   <ng-container *ngIf="editing">
-    <!-- <div class="m-form__fieldGroupWrapper"> -->
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
         <label for="reward.amount" i18n
@@ -69,7 +68,6 @@
           [ngModel]="reward.description"
           (ngModelChange)="setDescription(i, $event)"
           class="form-control"
-          [autoGrow]
           placeholder="Describe the reward"
           i18n-placeholder="@@WIRE__CHANNEL__TABLE__REWARD_PLACEHOLDER"
         >
@@ -77,7 +75,6 @@
       </div>
     </div>
     <div class="m-form_fieldGroupSpacer" *ngIf="!last"><hr /></div>
-    <!-- </div> -->
   </ng-container>
 </div>
 <m-shadowboxSubmitButton
