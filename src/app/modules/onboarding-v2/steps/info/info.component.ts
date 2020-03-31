@@ -92,6 +92,9 @@ export class InfoStepComponent {
   }
 
   async updateDateOfBirth() {
+    if (!this.dateOfBirthChanged) {
+      return true;
+    }
     this.dateOfBirthError = null;
 
     try {
@@ -120,7 +123,7 @@ export class InfoStepComponent {
     this.date = date;
     this.dateOfBirthChanged = true;
 
-    this.validateDate();
+    this.validate();
   }
 
   cancel() {
@@ -145,8 +148,41 @@ export class InfoStepComponent {
     this.tooltipAnchor = window.innerWidth <= 480 ? 'top' : 'left';
   }
 
-  private validateDate(): boolean {
-    if (moment().diff(moment(this.date), 'years') < 13) {
+  canContinue() {
+    return this.validatePhone() && this.isDateValid();
+  }
+
+  private validatePhone(): boolean {
+    if (this.phoneVerification) {
+      if (this.phoneVerification.confirmed) {
+        return true;
+      }
+      // if we're confirming the phone or the phone input is dirty
+      if (
+        this.phoneVerification.confirming ||
+        (this.phoneVerification.input && this.phoneVerification.input.dirty)
+      ) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  private isDateValid() {
+    return this.dateOfBirthChanged
+      ? moment().diff(moment(this.date), 'years') >= 13
+      : true;
+  }
+
+  private validate(): boolean {
+    if (
+      !this.phoneVerification.confirmed &&
+      this.phoneVerification.input.dirty
+    ) {
+      this.phoneVerification.error = 'verify:phonenumber';
+      return false;
+    }
+    if (!this.isDateValid()) {
       this.ageError = true;
       return false;
     }
@@ -156,8 +192,8 @@ export class InfoStepComponent {
   }
 
   private saveData() {
-    if (!this.validateDate()) {
-      return false;
+    if (!this.validate()) {
+      return;
     }
     return this.updateLocation() && this.updateDateOfBirth();
   }

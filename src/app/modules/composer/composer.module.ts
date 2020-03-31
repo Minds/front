@@ -22,6 +22,7 @@ import { MonetizeComponent } from './components/popup/monetize/monetize.componen
 import { TagsComponent } from './components/popup/tags/tags.component';
 import { ScheduleComponent } from './components/popup/schedule/schedule.component';
 import { TextAreaComponent } from './components/text-area/text-area.component';
+import { ComposerTopbarButtonComponent } from './topbar-button/topbar-button.component';
 
 /**
  * Exported components
@@ -33,6 +34,7 @@ const COMPONENTS = [
   MonetizeComponent,
   TagsComponent,
   ScheduleComponent,
+  ComposerTopbarButtonComponent,
 ];
 
 /**

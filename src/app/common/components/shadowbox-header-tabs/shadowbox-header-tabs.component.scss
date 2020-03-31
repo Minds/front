@@ -15,8 +15,15 @@
   }
   &.active {
     @include m-theme() {
-      background-color: rgba(themed($m-grey-100), 0.2);
+      background-color: rgba(themed($m-bgColor--tertiary), 0.3);
       border-bottom: 8px solid themed($m-blue);
+    }
+  }
+  &:hover:not(.active) {
+    transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      background-color: rgba(themed($m-bgColor--tertiary), 0.3);
+      border-bottom: 8px solid rgba(0, 0, 0, 0);
     }
   }
   &:first-child {
@@ -26,20 +33,31 @@
     margin-right: 40px;
   }
 
-  &:hover:not(.active) {
-    transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-    @include m-theme() {
-      background-color: rgba(themed($m-grey-100), 0.2);
-      border-bottom: 8px solid rgba(0, 0, 0, 0);
-    }
-  }
   .m-shadowboxHeaderTab__label {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
   m-tooltip {
     vertical-align: middle;
+    .m-tooltip {
+      margin-left: 4px;
+      i {
+        font-size: 12px;
+        @include m-theme() {
+          color: rgba(themed($m-grey-300), 0.7);
+        }
+      }
+      .m-tooltip--bubble {
+        z-index: 99;
+        font-size: 11px;
+        @include m-theme() {
+          color: themed($m-white);
+          background-color: themed($m-blue);
+        }
+      }
+    }
   }
   .m-shadowboxHeaderTab__value {
     font-size: 17px;

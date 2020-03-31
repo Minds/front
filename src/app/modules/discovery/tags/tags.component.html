@@ -17,39 +17,50 @@
 <m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
 
 <section class="m-discoveryTags__section">
-  <h3 class="m-discoveryTags__sectionHeader">Your tags</h3>
+  <div class="m-discoveryTags__sectionHeader">
+    <h3>Your Tags</h3>
+    <m-tooltip icon="settings">
+      Manage Tags
+    </m-tooltip>
+  </div>
   <ul class="m-discoveryTags__list m-discoveryTags__list--user">
-    <li class="m-discoveryTagsList__item" *ngFor="let tag of tags$ | async">
+    <li class="m-discoveryTrends__trend" *ngFor="let tag of tags$ | async">
       <a
         routerLink="/discovery/search"
         [queryParams]="{ q: '#' + tag.value, f: 'top' }"
       >
-        <span>#{{ tag.value }}</span>
-        <div class="m-layout__spacer"></div>
-        <i class="material-icons">chevron_right</i>
+        <div>
+          <h4>#{{ tag.value }}</h4>
+        </div>
+        <i class="m-discoveryTrendListItem__chevron material-icons">
+          chevron_right
+        </i>
       </a>
     </li>
   </ul>
 </section>
 
 <section class="m-discoveryTags__section">
-  <h3 class="m-discoveryTags__sectionHeader">Trending</h3>
+  <div class="m-discoveryTags__sectionHeader">
+    <h3>Trending Tags</h3>
+  </div>
   <ul class="m-discoveryTags__list m-discoveryTags__list--trending">
-    <li class="m-discoveryTagsList__item" *ngFor="let tag of trending$ | async">
+    <li class="m-discoveryTrends__trend" *ngFor="let tag of trending$ | async">
       <a
         routerLink="/discovery/search"
         [queryParams]="{ q: '#' + tag.value, f: 'top' }"
       >
         <div>
-          <span>#{{ tag.value }}</span>
-          <br />
-          <span class="m-discoveryTagsListItem__volume"
-            >{{ tag.posts_count }} posts - {{ tag.votes_count }} votes</span
-          >
+          <h4>#{{ tag.value }}</h4>
+          <div class="m-discoveryTrendListItem__supportingText--below">
+            <span>{{ tag.posts_count }} posts</span>
+            <span>{{ tag.votes_count }} votes</span>
+          </div>
         </div>
-        <div class="m-layout__spacer"></div>
-        <i class="material-icons">chevron_right</i></a
-      >
+        <i class="m-discoveryTrendListItem__chevron material-icons">
+          chevron_right
+        </i>
+      </a>
     </li>
   </ul>
 </section>

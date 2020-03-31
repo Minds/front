@@ -1,0 +1,29 @@
+<div class="m-discovery__sidebarTags">
+  <h2>Trending Tags</h2>
+
+  <ul>
+    <li
+      *ngFor="let tag of trending$ | async | slice: 0:limit"
+      class="m-discoveryTrends__trend"
+    >
+      <a
+        routerLink="/discovery/search"
+        [queryParams]="{ q: '#' + tag.value, f: 'top' }"
+      >
+        <div>
+          <h4>#{{ tag.value }}</h4>
+          <div class="m-discoveryTrendListItem__supportingText--below">
+            <span>{{ tag.posts_count }} posts</span>
+          </div>
+        </div>
+      </a>
+    </li>
+  </ul>
+
+  <a
+    class="m-discoverySidebarTags__seeMore"
+    (click)="seeMore()"
+    *ngIf="limit === 5 && !(inProgress$ | async)"
+    >See more</a
+  >
+</div>

@@ -39,8 +39,6 @@
   </a>
 </div>
 
-<m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
-
 <div class="m-discoverySearch__feed">
   <div
     *ngFor="let entity$ of entities$ | async"
@@ -117,4 +115,11 @@
       </ng-template>
     </ng-container>
   </div>
+  <infinite-scroll
+    distance="25%"
+    (load)="loadMore()"
+    [moreData]="hasMoreData$ | async"
+    [inProgress]="inProgress$ | async"
+  >
+  </infinite-scroll>
 </div>

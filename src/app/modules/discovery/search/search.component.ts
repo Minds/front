@@ -13,6 +13,7 @@ export class DiscoverySearchComponent {
   filter: 'top' | 'latest';
   entities$ = this.service.entities$;
   inProgress$ = this.service.inProgress$;
+  hasMoreData$ = this.service.hasMoreData$;
   readonly cdnUrl: string;
 
   constructor(
@@ -29,5 +30,9 @@ export class DiscoverySearchComponent {
       this.filter = <'top' | 'latest'>params.get('f');
       this.service.search(this.q, { filter: this.filter });
     });
+  }
+
+  loadMore() {
+    this.service.loadMore();
   }
 }

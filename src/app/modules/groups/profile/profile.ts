@@ -30,6 +30,7 @@ import { CookieService } from '../../../common/services/cookie.service';
 import { FeaturesService } from '../../../services/features.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { SiteService } from '../../../common/services/site.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-groups--profile',
@@ -90,7 +91,8 @@ export class GroupsProfile {
     configs: ConfigsService,
     private cookieService: CookieService,
     featuresService: FeaturesService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private pageLayoutService: PageLayoutService
   ) {
     this.hasNewNavigation = featuresService.has('navigation');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -152,7 +154,14 @@ export class GroupsProfile {
       }, 120 * 1000);
 
     this.videoChatActiveSubscription = this.videochat.activate$.subscribe(
-      next => window.scrollTo(0, 0)
+      next => {
+        if (!next) {
+          this.pageLayoutService.cancelFullWidth();
+        } else {
+          this.pageLayoutService.useFullWidth();
+        }
+        window.scrollTo(0, 0);
+      }
     );
   }
 

@@ -165,6 +165,7 @@ import {
   PageLayoutPaneDirective,
   PageLayoutContainerDirective,
 } from './layout/page-layout.directive';
+import { FriendlyTimePipe } from './pipes/friendlytime.pipe';
 
 const routes: Routes = [
   {
@@ -309,6 +310,7 @@ const routes: Routes = [
     LoadingSpinnerComponent,
     PageLayoutPaneDirective,
     PageLayoutContainerDirective,
+    FriendlyTimePipe,
   ],
   exports: [
     MINDS_PIPES,
@@ -434,6 +436,7 @@ const routes: Routes = [
     LoadingSpinnerComponent,
     PageLayoutPaneDirective,
     PageLayoutContainerDirective,
+    FriendlyTimePipe,
   ],
   providers: [
     SiteService,

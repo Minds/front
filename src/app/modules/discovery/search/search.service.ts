@@ -6,6 +6,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
 export class DiscoverySearchService {
   entities$ = this.feedsService.feed;
   inProgress$ = this.feedsService.inProgress;
+  hasMoreData$ = this.feedsService.hasMore;
 
   constructor(private feedsService: FeedsService) {}
 
@@ -18,5 +19,9 @@ export class DiscoverySearchService {
         algorithm: opts.filter,
       })
       .fetch();
+  }
+
+  loadMore(): void {
+    this.feedsService.loadMore();
   }
 }

@@ -119,8 +119,6 @@ export class VideoAutoplayService implements OnDestroy {
         // .play() and .mute() will get called when plyr emits the 'ready' event
         player.setAutoplaying(true);
         this.currentlyPlaying = player;
-      } else {
-        console.warn('player is not defined');
       }
     }
   }

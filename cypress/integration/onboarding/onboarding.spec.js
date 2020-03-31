@@ -107,24 +107,19 @@ context('Onboarding', () => {
     // should have a Mobile Phone Number input
     cy.get('.m-onboarding__controls .m-onboarding__control label').contains('Mobile Phone Number');
 
-    // open country dropdown
-    cy.get('.m-phoneInput__selectedFlag').click();
-    // click on UK
-    cy.contains('Argentina').click();
-    // Uk should be selected
-    cy.get('.m-phoneInput__selectedFlag').contains('+54');
-
-    // add the number
-    cy.get('#phone').type('012345678');
-
     // should have a Location input
     cy.get('.m-onboarding__controls > .m-onboarding__control label[data-minds=location]').contains('Location');
-    // cy.get('.m-onboarding__controls > .m-onboarding__control input[data-minds=locationInput]').type('London');
-    // cy.get('ul.m-onboarding__cities > li:first-child').click();
-
 
     // should have Date of Birth inputs
     cy.get('.m-onboarding__controls > .m-onboarding__control label[data-minds=dateOfBirth]').contains('Date of Birth');
+
+    // every input should be optional, so we should be able to click on "Continue"
+
+    cy.get('button.mf-button--alt').contains('Continue').click({force: true});
+    cy.visit('/onboarding/info');
+
+    // cy.get('.m-onboarding__controls > .m-onboarding__control input[data-minds=locationInput]').type('London');
+    // cy.get('ul.m-onboarding__cities > li:first-child').click();
 
     // open month selection and pick February
     cy.get('.m-onboarding__controls > .m-onboarding__control select[data-minds=monthDropdown]').select('February');

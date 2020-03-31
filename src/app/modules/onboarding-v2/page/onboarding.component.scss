@@ -298,8 +298,12 @@ m-onboarding {
           display: flex;
           flex-direction: column;
 
-          &:not(:first-child) {
+          &:not(:first-child):not(.m-onboardingControl__location) {
             padding-top: 20px;
+          }
+
+          &.m-onboardingControl__location {
+            padding-top: 0;
           }
 
           &.m-onboarding__avatar {

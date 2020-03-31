@@ -12,10 +12,12 @@ export class DiscoveryTagsService {
 
   constructor(private client: Client) {}
 
-  async loadTags() {
+  async loadTags(refresh = false) {
     this.inProgress$.next(true);
-    this.tags$.next([]);
-    this.trending$.next(null);
+    if (refresh) {
+      this.tags$.next([]);
+      this.trending$.next(null);
+    }
     const response: any = await this.client.get('api/v3/discovery/tags');
     this.inProgress$.next(false);
     this.tags$.next(response.tags);

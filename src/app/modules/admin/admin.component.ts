@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Client, Upload } from '../../services/api';
 import { Session } from '../../services/session';
 import { ActivityService } from '../../common/services/activity.service';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'minds-admin',
@@ -18,7 +19,8 @@ export class AdminComponent {
   constructor(
     public session: Session,
     private route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    private pageLayoutService: PageLayoutService
   ) {}
 
   ngOnInit() {
@@ -30,7 +32,10 @@ export class AdminComponent {
       if (params['filter']) {
         this.filter = params['filter'];
       }
+      this.pageLayoutService.useFullWidth();
     });
+
+    this.pageLayoutService.useFullWidth();
   }
 
   ngOnDestroy() {
