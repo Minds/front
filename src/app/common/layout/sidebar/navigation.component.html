@@ -16,14 +16,13 @@
       <i class="material-icons" (click)="toggle()">close</i>
     </div>
 
-    <ul>
-      <li *ngIf="user">
-        <a
-          class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
-          [routerLink]="['/' + user.username]"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          (click)="toggle()"
-        >
+    <ul class="m-sidebarNavigation__list">
+      <li
+        *ngIf="user"
+        class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a [routerLink]="['/' + user.username]" (click)="toggle()">
           <img
             [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
             alt=""
@@ -34,13 +33,11 @@
         </a>
       </li>
 
-      <li>
-        <a
-          class="m-sidebarNavigation__item"
-          [routerLink]="['/newsfeed/subscriptions']"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          (click)="toggle()"
-        >
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a [routerLink]="['/newsfeed/subscriptions']" (click)="toggle()">
           <m-tooltip
             icon="home"
             i18n="@@COMMON__NEWSFEED"
@@ -57,13 +54,11 @@
         </a>
       </li>
 
-      <li>
-        <a
-          class="m-sidebarNavigation__item"
-          routerLink="/discovery"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          (click)="toggle()"
-        >
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a routerLink="/discovery" (click)="toggle()">
           <m-tooltip
             i18n="@@COMMON__DISCOVER"
             [enabled]="layoutMode === 'tablet'"
@@ -80,13 +75,11 @@
         </a>
       </li>
 
-      <li>
-        <a
-          class="m-sidebarNavigation__item"
-          [routerLink]="['/wallet/canary']"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          (click)="toggle()"
-        >
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a [routerLink]="['/wallet/canary']" (click)="toggle()">
           <m-tooltip
             i18n="@@COMMON__WALLET"
             [enabled]="layoutMode === 'tablet'"
@@ -103,13 +96,11 @@
         </a>
       </li>
 
-      <li>
-        <a
-          class="m-sidebarNavigation__item"
-          [routerLink]="['/analytics']"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          (click)="toggle()"
-        >
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a routerLink="/analytics" (click)="toggle()">
           <m-tooltip
             icon="insert_chart"
             i18n="@@COMMON__ANALYTICS"
@@ -123,6 +114,33 @@
             Analytics
           </span>
         </a>
+
+        <ul class="m-sidebarNavigation__subnav" m-sidebarNavigation__subnav>
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          >
+            <a routerLink="/analytics/dashboard/traffic">Traffic</a>
+          </li>
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          >
+            <a routerLink="/analytics/dashboard/engagement">Engagement</a>
+          </li>
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          >
+            <a routerLink="/analytics/dashboard/earnings">Earnings</a>
+          </li>
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          >
+            <a routerLink="/analytics/dashboard/trending">Trending</a>
+          </li>
+        </ul>
       </li>
 
       <li>
