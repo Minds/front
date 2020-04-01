@@ -1,10 +1,5 @@
-<ng-container *mIfFeature="'es-feeds'; else legacyFeed">
-  <m-group-profile-feed__sorted
-    *ngIf="group"
-    [group]="group"
-    [type]="type"
-  ></m-group-profile-feed__sorted>
-</ng-container>
-<ng-template #legacyFeed>
-  <minds-groups-profile-feed></minds-groups-profile-feed>
-</ng-template>
+<m-group-profile-feed__sorted
+  *ngIf="group"
+  [group]="group"
+  [type]="type"
+></m-group-profile-feed__sorted>
