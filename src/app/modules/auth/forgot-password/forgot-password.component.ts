@@ -74,16 +74,9 @@ export class ForgotPasswordComponent {
     this.code = code;
   }
 
-  validatePassword(password) {
-    if (/@/.test(password.value)) {
-      this.error = '@ is not allowed';
-    } else {
-      this.error = null;
-    }
-  }
-
   reset(password) {
-    if (!this.error) {
+    if (!this.inProgress) {
+      this.inProgress = true;
       this.client
         .post('api/v1/forgotpassword/reset', {
           password: password.value,
@@ -91,10 +84,12 @@ export class ForgotPasswordComponent {
           username: this.username,
         })
         .then((response: any) => {
+          this.inProgress = false;
           this.session.login(response.user);
           this.router.navigate(['/newsfeed']);
         })
         .catch(e => {
+          this.inProgress = false;
           this.error = e.message;
         });
     }
