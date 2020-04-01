@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Self } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
@@ -27,7 +27,7 @@ export class DiscoveryFeedsService {
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
-    private feedsService: FeedsService,
+    @Self() private feedsService: FeedsService,
     public nsfwService: NSFWSelectorConsumerService
   ) {
     this.nsfwService.build();

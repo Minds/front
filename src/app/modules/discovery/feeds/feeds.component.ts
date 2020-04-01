@@ -3,11 +3,12 @@ import { ActivatedRoute, ParamMap, UrlSegment } from '@angular/router';
 import { DiscoveryFeedsService } from './feeds.service';
 import { Subscription, combineLatest } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { FeedsService } from '../../../common/services/feeds.service';
 
 @Component({
   selector: 'm-discovery__feeds',
   templateUrl: './feeds.component.html',
-  providers: [DiscoveryFeedsService],
+  providers: [DiscoveryFeedsService, FeedsService],
 })
 export class DiscoveryFeedsComponent {
   filter: string;

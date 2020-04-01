@@ -2,13 +2,15 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { DiscoveryFeedsService } from '../feeds/feeds.service';
+import { FeedsService } from '../../../common/services/feeds.service';
+
 import { combineLatest, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'm-discovery__search',
   templateUrl: './search.component.html',
-  providers: [DiscoveryFeedsService],
+  providers: [DiscoveryFeedsService, FeedsService],
 })
 export class DiscoverySearchComponent {
   q: string;
