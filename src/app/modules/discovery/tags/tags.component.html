@@ -50,7 +50,7 @@
     >
       <a routerLink="/discovery/feeds/preferred"
         ><div>
-          <h4>See feed</h4>
+          <h4>See your feed</h4>
         </div>
         <i class="m-discoveryTrendListItem__chevron material-icons">
           chevron_right
@@ -86,9 +86,9 @@
       class="m-discoveryTrends__trend m-discoverTrends__trend--feedLink"
       *ngIf="(trending$ | async).length"
     >
-      <a routerLink="/discovery/feeds/preferred"
+      <a routerLink="/discovery/feeds/trending"
         ><div>
-          <h4>See feed</h4>
+          <h4>See trending feed</h4>
         </div>
         <i class="m-discoveryTrendListItem__chevron material-icons">
           chevron_right
