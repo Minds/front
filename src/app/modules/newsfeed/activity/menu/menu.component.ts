@@ -39,6 +39,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
         this.entity = entity;
+        this.entity.url = this.service.buildCanonicalUrl(this.entity, true);
       }
     );
   }
