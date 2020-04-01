@@ -67,7 +67,8 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
       } else {
         return [
           'edit',
-          'translate',
+          'pin',
+          //'translate',
           'share',
           'follow',
           'feature',

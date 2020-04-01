@@ -32,3 +32,28 @@ m-activity {
     border-color: themed($m-blue);
   }
 }
+
+.m-activity__flag {
+  padding: 4px 8px;
+  border-radius: 26px;
+  margin-left: 10px;
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row;
+  cursor: default;
+
+  > i,
+  > span {
+    line-height: 16px;
+  }
+
+  &:has(& > span) i {
+    margin-right: 5px;
+  }
+
+  @include m-theme() {
+    border: 1px solid themed($m-borderColor--primary);
+    background-color: themed($m-bgColor--tertiary);
+    color: themed($m-textColor--secondary);
+  }
+}

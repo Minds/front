@@ -1,5 +1,11 @@
 <ng-container *ngIf="(entity$ | async).boosted; else viewsCount">
-  Boosted
+  <span
+    class="m-activity__flag m-activity__flag--boosted"
+    data-cy="m-activity__boostedFlag"
+  >
+    <i class="material-icons">trending_up</i>
+    <span>Boosted</span>
+  </span>
 </ng-container>
 
 <ng-template #viewsCount>

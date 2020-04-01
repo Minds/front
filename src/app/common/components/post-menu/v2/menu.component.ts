@@ -15,6 +15,7 @@ import { BehaviorSubject } from 'rxjs';
 type Option =
   | 'edit'
   | 'view'
+  | 'pin'
   | 'translate'
   | 'share'
   | 'follow'
@@ -81,6 +82,9 @@ export class PostMenuV2Component implements OnInit {
         break;
       case 'share':
         this.service.openShareModal();
+        break;
+      case 'pin':
+        await this.service.togglePinned();
         break;
       case 'translate':
         break;

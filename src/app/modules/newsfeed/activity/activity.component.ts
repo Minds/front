@@ -18,8 +18,9 @@ import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../.
 import {
   ActivityService,
   ACTIVITY_FIXED_HEIGHT_RATIO,
+  ActivityEntity,
 } from './activity.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
 
 @Component({
@@ -36,6 +37,8 @@ import { ComposerService } from '../../composer/services/composer.service';
   },
 })
 export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
+  entity$: Observable<ActivityEntity> = this.service.entity$;
+
   @Input() set entity(entity) {
     this.service.setEntity(entity);
     this.isBoost = entity.boosted;
