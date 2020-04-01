@@ -42,3 +42,12 @@
     align-self: center;
   }
 }
+
+.m-discoverTrends__trend--feedLink a {
+  align-items: center;
+  h3 {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

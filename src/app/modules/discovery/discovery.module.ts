@@ -15,6 +15,9 @@ import { DiscoveryTrendsService } from './trends/trends.service';
 import { LegacyModule } from '../legacy/legacy.module';
 import { GroupsModule } from '../groups/groups.module';
 import { DiscoverySharedModule } from './discovery-shared.module';
+import { DiscoveryFeedsComponent } from './feeds/feeds.component';
+import { DiscoveryFeedItemComponent } from './feeds/feed-item.component';
+import { DiscoveryFeedsSettingsButtonComponent } from './feeds/settings-button.component';
 
 @NgModule({
   imports: [
@@ -40,6 +43,20 @@ import { DiscoverySharedModule } from './discovery-shared.module';
             path: 'tags',
             component: DiscoveryTagsComponent,
           },
+          {
+            path: 'feeds',
+            children: [
+              { path: '', redirectTo: 'preferred' },
+              {
+                path: 'preferred',
+                component: DiscoveryFeedsComponent,
+              },
+              {
+                path: 'trending',
+                component: DiscoveryFeedsComponent,
+              },
+            ],
+          },
         ],
       },
     ]),
@@ -59,6 +76,9 @@ import { DiscoverySharedModule } from './discovery-shared.module';
     DiscoveryTrendComponent,
     DiscoverySearchComponent,
     DiscoveryTagsComponent,
+    DiscoveryFeedsComponent,
+    DiscoveryFeedItemComponent,
+    DiscoveryFeedsSettingsButtonComponent,
   ],
   exports: [DiscoveryComponent],
   entryComponents: [DiscoveryComponent],

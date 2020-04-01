@@ -44,6 +44,19 @@
         </i>
       </a>
     </li>
+    <li
+      class="m-discoveryTrends__trend m-discoverTrends__trend--feedLink"
+      *ngIf="(tags$ | async).length"
+    >
+      <a routerLink="/discovery/feeds/preferred"
+        ><div>
+          <h4>See feed</h4>
+        </div>
+        <i class="m-discoveryTrendListItem__chevron material-icons">
+          chevron_right
+        </i></a
+      >
+    </li>
   </ul>
 </section>
 
@@ -68,6 +81,19 @@
           chevron_right
         </i>
       </a>
+    </li>
+    <li
+      class="m-discoveryTrends__trend m-discoverTrends__trend--feedLink"
+      *ngIf="(trending$ | async).length"
+    >
+      <a routerLink="/discovery/feeds/preferred"
+        ><div>
+          <h4>See feed</h4>
+        </div>
+        <i class="m-discoveryTrendListItem__chevron material-icons">
+          chevron_right
+        </i></a
+      >
     </li>
   </ul>
 </section>
