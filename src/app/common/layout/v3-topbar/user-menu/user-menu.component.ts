@@ -28,7 +28,7 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
   themeSubscription: Subscription;
 
   footerLinks: { label: string; routerLink?: string[]; href?: string }[] = [
-    { label: 'Canary Mode', routerLink: ['/canrry'] },
+    { label: 'Canary Mode', routerLink: ['/canary'] },
     { label: 'Content Policy', routerLink: ['/content-policy'] },
     { label: 'Mobile App', routerLink: ['/mobile'] },
     { label: 'Store', href: 'https://www.teespring.com/stores/minds' },
