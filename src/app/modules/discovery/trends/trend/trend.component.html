@@ -7,8 +7,8 @@
 <m-loadingSpinner [inProgress]="!(entity$ | async)"> </m-loadingSpinner>
 
 <div class="m-discoverySearchFeed__item" *ngIf="entity$ | async">
-  <m-activity
+  <m-discovery__feedItem
     [entity]="entity$ | async"
-    [displayOptions]="{ showComments: true, showOnlyCommentsInput: false }"
-  ></m-activity>
+    [openComments]="true"
+  ></m-discovery__feedItem>
 </div>
