@@ -143,6 +143,8 @@ context('Discovery -> Discover by tags', () => {
       cy.get(
         `[data-cy="discovery-settings-section--selected"] > ul > li`
       ).should('have.length', tags.length + 1);
+
+      cy.reload();
     });
   });
 });
