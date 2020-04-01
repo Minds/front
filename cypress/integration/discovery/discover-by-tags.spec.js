@@ -88,7 +88,7 @@ context('Discovery -> Discover by tags', () => {
       // Original list should have the same count too
       cy.get(`[data-cy="discovery-tags-section--user"] > li`).should(
         'have.length',
-        tags.length + 1
+        tags.length + 1 + 1 // (extra +1 is due to see you feed link)
       );
     });
   });
@@ -123,7 +123,7 @@ context('Discovery -> Discover by tags', () => {
       // Original list should have the same count too
       cy.get(`[data-cy="discovery-tags-section--user"] > li`).should(
         'have.length',
-        tags.length - 1
+        tags.length // No -1 due to See your tags link
       );
     });
   });
