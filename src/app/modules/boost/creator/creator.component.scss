@@ -384,16 +384,11 @@
     }
   }
 
-  .m-boost--creator-section-submit--network {
-    @media screen and (min-width: 780px) {
-      margin-top: -72px;
-    }
-  }
-
   .m-boost--creator--submit {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 40px;
 
     .m-boost--creator-button {
       font-size: 14px;
