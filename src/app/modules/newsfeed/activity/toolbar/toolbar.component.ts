@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { ActivityService, ActivityEntity } from '../activity.service';
 import { Session } from '../../../../services/session';
 import { Router } from '@angular/router';
+import { BoostCreatorComponent } from '../../../boost/creator/creator.component';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-activity__toolbar',
@@ -17,7 +19,8 @@ export class ActivityToolbarComponent {
   constructor(
     public service: ActivityService,
     public session: Session,
-    private router: Router
+    private router: Router,
+    private overlayModalService: OverlayModalService
   ) {}
 
   ngOnInit() {
@@ -40,5 +43,11 @@ export class ActivityToolbarComponent {
     this.service.displayOptions.showComments = !this.service.displayOptions
       .showComments;
     this.service.displayOptions.showOnlyCommentsInput = false;
+  }
+
+  openBoostModal(e: MouseEvent): void {
+    this.overlayModalService
+      .create(BoostCreatorComponent, this.entity)
+      .present();
   }
 }
