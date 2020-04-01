@@ -23,12 +23,17 @@
           routerLink="/"
           title="Home"
           i18n-title
+          (touchstart)="touchStart()"
+          (mouseenter)="mouseEnter()"
+          (mouseleave)="mouseLeave()"
         >
           <img
             [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
-            (touchstart)="touchStart()"
-            (mouseenter)="mouseEnter()"
-            (mouseleave)="mouseLeave()"
+            class="m-v3Topbar__logo--bulb"
+          />
+          <img
+            [src]="cdnAssetsUrl + 'assets/logos/logo.svg'"
+            class="m-v3Topbar__logo--full"
           />
         </a>
 
