@@ -74,8 +74,8 @@
       class="m-dropdownList__item m-userMenuDropdown__item"
       (click)="closeMenu()"
     >
-      <a target="_blank" href="https://www.teespring.com/stores/minds">
-        <span i18n>Store</span>
+      <a target="_blank" routerLink="/boost/console">
+        <span i18n>Boost Console</span>
       </a>
     </li>
 
@@ -128,25 +128,18 @@
       *ngIf="showFooterLinks"
     >
       <ng-container
-        *ngFor="let page of navigation.getItems('footer'); let i = index"
+        *ngFor="let link of footerLinks.slice(0, maxFooterLinks); let i = index"
       >
-        <a
-          *ngIf="page.path && page.path.indexOf('p/') > -1"
-          [routerLink]="['/' + page.path]"
-        >
-          {{ page.title }}
+        <a *ngIf="link.routerLink" [routerLink]="link.routerLink">
+          {{ link.label }}
         </a>
-        <a
-          *ngIf="page.path.indexOf('p/') < 0"
-          [href]="page.path"
-          target="_blank"
-        >
-          {{ page.title }}
+        <a *ngIf="link.href" [href]="link.href" target="_blank">
+          {{ link.label }}
         </a>
         <span> · </span>
       </ng-container>
-      <a [routerLink]="['/p']" i18n>
-        More
+      <a (click)="toggleFooterLinks()" i18n>
+        {{ maxFooterLinks === 5 ? 'More' : 'Less' }}
       </a>
     </li>
   </ul>
