@@ -44,7 +44,7 @@ export class SettingsV2AutoplayVideosComponent implements OnInit, OnDestroy {
     this.isPlus = this.session.getLoggedInUser().plus;
     this.settingsSubscription = this.settingsService.settings$.subscribe(
       (settings: any) => {
-        this.autoplay_videos.setValue(settings.autoplay_videos);
+        this.autoplay_videos.setValue(!settings.disable_autoplay_videos);
         this.detectChanges();
       }
     );
@@ -61,9 +61,12 @@ export class SettingsV2AutoplayVideosComponent implements OnInit, OnDestroy {
       this.inProgress = true;
       this.detectChanges();
 
+      const formValue = {
+        disable_autoplay_videos: !this.autoplay_videos.value,
+      };
       const response: any = await this.settingsService.updateSettings(
         this.user.guid,
-        this.form.value
+        formValue
       );
       if (response.status === 'success') {
         this.formSubmitted.emit({ formSubmitted: true });
