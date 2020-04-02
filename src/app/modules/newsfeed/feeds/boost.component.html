@@ -23,7 +23,7 @@
         [allowAutoplayOnScroll]="true"
       ></m-activity>
     </ng-container>
-    <template #legacyActivity>
+    <ng-template #legacyActivity>
       <minds-activity
         *ngIf="activity$ | async as activity"
         [object]="activity"
@@ -36,7 +36,7 @@
         [attr.data-minds-activity-guid]="activity.guid"
       >
       </minds-activity>
-    </template>
+    </ng-template>
   </ng-container>
   <infinite-scroll
     distance="25%"
