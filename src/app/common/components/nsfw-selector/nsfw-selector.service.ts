@@ -37,13 +37,17 @@ export class NSFWSelectorService {
     return this;
   }
 
-  toggle(reason) {
+  toggle(reason): void {
     if (reason.locked) {
       return;
     }
     for (let r of this.reasons) {
       if (r.value === reason.value) r.selected = !r.selected;
     }
+    this.saveToCookie();
+  }
+
+  saveToCookie(): void {
     this.cookieService.put(
       `nsfw:${this.cacheKey}`,
       JSON.stringify(this.reasons.filter(r => r.selected).map(r => r.value))

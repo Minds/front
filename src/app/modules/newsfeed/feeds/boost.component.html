@@ -13,18 +13,30 @@
   <ng-container
     *ngFor="let activity$ of feedsService.feed | async; let i = index"
   >
-    <minds-activity
-      *ngIf="activity$ | async as activity"
-      [object]="activity"
-      [boostToggle]="activity.boostToggle"
-      [boost]="boostFeed"
-      [showBoostMenuOptions]="boostFeed"
-      (deleted)="delete($event)"
-      [slot]="i + 1"
-      class="mdl-card m-border item"
-      [attr.data-minds-activity-guid]="activity.guid"
-    >
-    </minds-activity>
+    <ng-container *mIfFeature="'navigation'; else legacyActivity">
+      <m-activity
+        *ngIf="activity$ | async as activity"
+        [entity]="activity"
+        [displayOptions]="{
+          showOnlyCommentsInput: true
+        }"
+        [allowAutoplayOnScroll]="true"
+      ></m-activity>
+    </ng-container>
+    <template #legacyActivity>
+      <minds-activity
+        *ngIf="activity$ | async as activity"
+        [object]="activity"
+        [boostToggle]="activity.boostToggle"
+        [boost]="boostFeed"
+        [showBoostMenuOptions]="boostFeed"
+        (deleted)="delete($event)"
+        [slot]="i + 1"
+        class="mdl-card m-border item"
+        [attr.data-minds-activity-guid]="activity.guid"
+      >
+      </minds-activity>
+    </template>
   </ng-container>
   <infinite-scroll
     distance="25%"

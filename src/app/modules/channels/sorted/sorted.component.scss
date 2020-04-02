@@ -31,8 +31,15 @@
   }
 }
 
-m-channel--sorted m-activity {
-  max-width: 500px;
-  margin: auto;
-  margin-bottom: 20px;
+m-channel--sorted {
+  display: block;
+  padding: 0 40px;
+
+  @media screen and (max-width: $layoutMin2ColWidth) {
+    padding: 0;
+  }
+
+  m-activity {
+    margin-bottom: 20px;
+  }
 }

@@ -6,6 +6,8 @@ import {
   QueryList,
   SkipSelf,
   ViewChildren,
+  HostBinding,
+  ViewChild,
 } from '@angular/core';
 import { first } from 'rxjs/operators';
 
@@ -23,6 +25,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { BoostedContentService } from '../../../common/services/boosted-content.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { ACTIVITY_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
 
 @Component({
   moduleId: module.id,
@@ -57,10 +60,16 @@ export class NewsfeedBoostRotatorComponent {
   ratingMenuToggle: boolean = false;
   plus: boolean = false;
   disabled: boolean = false;
+  useNewNavigation = false;
+
+  height: number;
 
   subscriptions: Array<any>;
 
   @ViewChildren('activities') activities: QueryList<Activity>;
+
+  @ViewChild('rotatorEl', { static: false })
+  rotatorEl: ElementRef;
 
   constructor(
     public session: Session,
@@ -95,6 +104,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   ngOnInit() {
+    this.useNewNavigation = this.featuresService.has('navigation');
     this.rating = this.session.getLoggedInUser().boost_rating;
     this.plus = this.session.getLoggedInUser().plus;
     this.disabled = !this.service.isBoostEnabled();
@@ -118,6 +128,10 @@ export class NewsfeedBoostRotatorComponent {
       //   this.recordImpression(this.currentPosition, true);
       // }
     });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => this.calculateHeight()); // will only run for new nav
   }
 
   load() {
@@ -291,5 +305,16 @@ export class NewsfeedBoostRotatorComponent {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+  }
+
+  calculateHeight(): void {
+    if (!this.featuresService.has('navigation') || !this.rotatorEl) return;
+    this.height =
+      this.rotatorEl.nativeElement.clientWidth / ACTIVITY_FIXED_HEIGHT_RATIO;
+    console.log(
+      'boost rotator',
+      this.rotatorEl.nativeElement.clientWidth,
+      this.height
+    );
   }
 }

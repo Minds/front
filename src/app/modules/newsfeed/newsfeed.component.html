@@ -156,15 +156,19 @@
     m-pageLayout__pane="right"
     *ngIf="showRightSidebar || newNavigation"
   >
-    <ng-container *mIfFeature="'suggested-users'">
-      <m-suggestions__sidebar></m-suggestions__sidebar>
-    </ng-container>
+    <m-suggestions__sidebar></m-suggestions__sidebar>
 
     <ng-container *mIfFeature="'navigation'">
-      <ng-container *ngTemplateOutlet="hashtagSelector"></ng-container>
+      <div class="m-spacer"></div>
+      <m-discovery__sidebarTags></m-discovery__sidebarTags>
     </ng-container>
 
+    <div class="m-spacer"></div>
+
     <m-notices__sidebar></m-notices__sidebar>
+
+    <div class="m-spacer"></div>
+
     <m-ads-boost
       limit="8"
       *ngIf="
@@ -174,7 +178,7 @@
         )
       "
     ></m-ads-boost>
-    <div class="minds-spacer minds-spacer-2x"></div>
+    <div class="m-spacer"></div>
   </div>
 </div>
 

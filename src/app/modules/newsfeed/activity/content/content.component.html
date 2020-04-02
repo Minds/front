@@ -5,7 +5,7 @@
   [class.m-activityContent__message--remind]="entity.remind_object"
   [class.m-activityContent__message--isTextOnly]="isTextOnly"
   [class.m-activityContent__message--short]="message.length <= 300"
-  [maxHeightAllowed]="isTextOnly ? maxFixedHeightContent : 320"
+  [maxHeightAllowed]="isTextOnly ? maxFixedHeightContent : maxMessageHeight"
   *ngIf="message"
 >
   <span [innerHtml]="message | tags"></span>
@@ -95,10 +95,12 @@
 
 <div
   class="m-activityContent__remind"
+  [class.m-activityContent__remind--hasMessage]="!!message"
   #remindContainerEl
   *ngIf="service.isRemind$ | async"
 >
   <m-activity__remind
+    [parentService]="service"
     [entity]="service.entity$ | async"
     [style.width]="remindWidth"
     [style.height]="remindHeight"

@@ -67,4 +67,20 @@ m-activity__toolbar {
       }
     }
   }
+
+  .m-boostButton {
+    width: auto;
+    height: auto;
+    min-width: unset;
+
+    font-weight: 500;
+    padding: 0;
+
+    &,
+    &:hover {
+      @include m-theme() {
+        border: 0;
+      }
+    }
+  }
 }

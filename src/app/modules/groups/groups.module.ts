@@ -39,6 +39,7 @@ import { GroupsProfileReviewComponent } from './profile/review/review.component'
 import { GroupsKickModalComponent } from './kick-modal/kick-modal.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { ComposerModule } from '../composer/composer.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 
 const routes: Routes = [
   {
@@ -83,6 +84,7 @@ const routes: Routes = [
     VideoChatModule,
     NewsfeedModule,
     ComposerModule,
+    ActivityModule,
   ],
   declarations: [
     GroupsListComponent,

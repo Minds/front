@@ -51,6 +51,10 @@ export class ActivityContentComponent
   mediaDescriptionEl: ElementRef;
 
   maxFixedHeightContent: number = 750 * ACTIVITY_FIXED_HEIGHT_RATIO;
+  get maxMessageHeight(): number {
+    return this.service.displayOptions.fixedHeight ? 130 : 320; // This is actually remind
+  }
+
   activityHeight: number;
   remindWidth: number;
   remindHeight: number;
@@ -148,11 +152,12 @@ export class ActivityContentComponent
   }
 
   get imageHeight(): string {
-    if (this.entity.custom_type !== 'batch') return 'auto';
+    if (this.service.displayOptions.fixedHeight) return null;
+    if (this.entity.custom_type !== 'batch') return null;
     const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
     const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
 
-    if (!originalHeight || !originalWidth) return 'auto';
+    if (!originalHeight || !originalWidth) return null;
 
     const ratio = originalHeight / originalWidth;
 

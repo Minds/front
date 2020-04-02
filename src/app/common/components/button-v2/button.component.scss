@@ -3,7 +3,7 @@ m-button {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  border-radius: 2px;
+  border-radius: 26px;
 
   @include m-theme() {
     // TODO: Avoid cascade-hell :(

@@ -107,7 +107,9 @@
   }
 
   &:last-of-type {
-    border-bottom: 0;
+    @include m-theme() {
+      border-bottom: 0;
+    }
   }
 
   .m-noticesSidebarListItem__body {
@@ -179,5 +181,21 @@
   box-sizing: border-box;
   @include m-theme() {
     color: themed($m-grey-200);
+  }
+}
+
+m-sidebarWidget {
+  .m-noticesSidebar__list {
+    border-radius: 0;
+    @include m-theme() {
+      border: 0;
+    }
+  }
+  .m-notices__notice {
+    padding-left: 17px;
+    padding-right: 20px;
+  }
+  .m-noticesNotice__cta {
+    margin-right: 20px;
   }
 }

@@ -94,7 +94,7 @@ describe('ForgotPasswordComponent', () => {
 
   it('should have a prompt to enter your username', () => {
     const prompt = fixture.debugElement.query(
-      By.css('.m-forgot-password--step-1 .mdl-card__supporting-text')
+      By.css('.m-forgot-password--step-1')
     );
     expect(prompt).not.toBeNull();
     expect(prompt.nativeElement.textContent).toContain(
@@ -138,7 +138,7 @@ describe('ForgotPasswordComponent', () => {
     fixture.detectChanges();
 
     const prompt = fixture.debugElement.query(
-      By.css('.m-forgot-password--step-2 .mdl-card__supporting-text')
+      By.css('.m-forgot-password--step-2')
     );
     expect(prompt).not.toBeNull();
     expect(prompt.nativeElement.textContent).toContain(
@@ -154,11 +154,11 @@ describe('ForgotPasswordComponent', () => {
     fixture.detectChanges();
 
     const prompt = fixture.debugElement.query(
-      By.css('.m-forgot-password--step-3 .mdl-card__supporting-text')
+      By.css('.m-forgot-password--step-3')
     );
     expect(prompt).not.toBeNull();
     expect(prompt.nativeElement.textContent).toContain(
-      'Please enter your new password'
+      'Enter Your New Password'
     );
 
     const input1 = getPassword1Input();
