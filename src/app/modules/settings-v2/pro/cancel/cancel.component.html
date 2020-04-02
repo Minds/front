@@ -1,0 +1,19 @@
+<div class="m-settingsV2__desc">
+  Manage your subscription.
+  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+    >Upgrade to Pro</a
+  >
+</div>
+<div *ngIf="init" class="m-formLayout--buttonLeft">
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="inProgress || !isActive"
+      [saving]="inProgress"
+      color="red"
+      (click)="cancelSubscription()"
+      i18n
+    >
+      Cancel Subscription
+    </m-shadowboxSubmitButton>
+  </div>
+</div>

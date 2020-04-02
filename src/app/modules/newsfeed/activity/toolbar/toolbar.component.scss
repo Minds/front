@@ -20,7 +20,7 @@ m-activity__toolbar {
       i.material-icons {
         font-size: 18px;
         @include m-theme() {
-          color: themed($m-grey-500);
+          color: themed($m-textColor--secondary);
         }
       }
 
@@ -64,6 +64,22 @@ m-activity__toolbar {
       }
       span {
         display: none;
+      }
+    }
+  }
+
+  .m-boostButton {
+    width: auto;
+    height: auto;
+    min-width: unset;
+
+    font-weight: 500;
+    padding: 0;
+
+    &,
+    &:hover {
+      @include m-theme() {
+        border: 0;
       }
     }
   }

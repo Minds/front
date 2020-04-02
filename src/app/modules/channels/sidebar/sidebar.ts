@@ -78,7 +78,7 @@ export class ChannelSidebar implements OnInit {
   shouldShowOnboardingProgress() {
     return (
       isPlatformBrowser(this.platformId) &&
-      !this.featuresService.has('onboarding-december-2019') &&
+      !this.featuresService.has('ux-2020') &&
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().guid === this.user.guid &&
       !this.cookieService.get('onboarding_hide') &&
@@ -208,7 +208,13 @@ export class ChannelSidebar implements OnInit {
   }
 
   get proSettingsRouterLink() {
-    const route: any[] = ['/pro/' + this.user.username + '/settings'];
+    let route: any[];
+    if (this.featuresService.has('navigation')) {
+      route = ['/settings/canary/pro_canary/' + this.user.username];
+    } else {
+      route = ['/pro/' + this.user.username + '/settings'];
+    }
+
     return route;
   }
 }

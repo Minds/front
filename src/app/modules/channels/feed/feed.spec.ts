@@ -18,7 +18,6 @@ import { By } from '@angular/platform-browser';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { PosterComponent } from '../../../modules/newsfeed/poster/poster.component';
 import { WireChannelComponent } from '../../../modules/wire/channel/channel.component';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
 import { FormsModule } from '@angular/forms';
@@ -32,6 +31,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ChannelMode } from '../../../interfaces/entities';
+import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 
 describe('ChannelFeed', () => {
   let comp: ChannelFeedComponent;
@@ -40,9 +40,14 @@ describe('ChannelFeed', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
+        IfFeatureDirective,
         MaterialMock,
         MaterialSwitchMock,
         ChannelFeedComponent,
+        MockComponent({
+          selector: 'm-composer',
+          inputs: ['containerGuid', 'activity'],
+        }),
         MockComponent({
           selector: 'minds-newsfeed-poster',
           inputs: ['containerGuid', 'accessId', 'message'],
@@ -56,7 +61,7 @@ describe('ChannelFeed', () => {
         }),
         MockComponent({
           selector: 'minds-activity',
-          inputs: ['object', 'boostToggle'],
+          inputs: ['object', 'boostToggle', 'allowAutoplayOnScroll'],
         }),
         MockComponent({
           selector: 'infinite-scroll',
@@ -100,6 +105,7 @@ describe('ChannelFeed', () => {
       { guid: 'aaaa' },
     ];
     comp.openWireModal = false;
+    featuresServiceMock.mock('activity-composer', true);
     fixture.detectChanges();
 
     clientMock.response[`api/v1/newsfeed/personal/1000`] = {
@@ -127,21 +133,21 @@ describe('ChannelFeed', () => {
     jasmine.clock().uninstall();
   });
 
-  it('poster should be on top if owner', () => {
+  it('composer should be on top if owner', () => {
     comp.user.guid = '1000';
     fixture.detectChanges();
-    const poster = fixture.debugElement.query(By.css('minds-newsfeed-poster'));
+    const composer = fixture.debugElement.query(By.css('m-composer'));
     const activities = fixture.debugElement.queryAll(By.css('minds-activity'));
     expect(activities.length).toBe(0);
-    expect(poster).not.toBeNull();
+    expect(composer).not.toBeNull();
   });
 
-  it('poster shouldnt be on top if not owner', () => {
+  it('composer shouldnt be on top if not owner', () => {
     comp.user.guid = '10010';
-    const poster = fixture.debugElement.query(By.css('minds-newsfeed-poster'));
+    const composer = fixture.debugElement.query(By.css('m-composer'));
     const activities = fixture.debugElement.queryAll(By.css('minds-activity'));
     expect(activities.length).toBe(0);
-    expect(poster).toBeNull();
+    expect(composer).toBeNull();
   });
 
   it('should render the activities when refresh, removing the existent ones', fakeAsync(() => {

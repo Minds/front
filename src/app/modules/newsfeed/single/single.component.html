@@ -1,4 +1,7 @@
-<div class="mdl-grid" style="max-width:900px; justify-content: center;">
+<div
+  [class.m-pageLayout__container]="!showLegacyActivity"
+  [class.m-newsfeed__single--legacy]="showLegacyActivity"
+>
   <div class="m-loader" *ngIf="inProgress">
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
@@ -14,8 +17,8 @@
   </div>
 
   <div
-    class="mdl-cell mdl-cell--8-col"
-    style="max-width: 500px; padding-bottom: 37px;"
+    [class.m-pageLayout__pane--main]="!showLegacyActivity"
+    style="padding-bottom: 37px;"
   >
     <div class="m--spam-notice mdl-shadow--2dp" *ngIf="activity?.spam">
       <ng-container i18n="@@MINDS__NEWSFEED__SINGLE__FLAGGED_AS_SPAM"
@@ -41,20 +44,31 @@
         [slot]="1"
         class="mdl-card mdl-shadow--2dp item"
         [attr.data-minds-activity-guid]="activity.guid"
+        [allowAutoplayOnScroll]="false"
+        [autoplayVideo]="true"
       >
       </minds-activity>
     </div>
 
-    <div class="minds-list" *ngIf="activity && !showLegacyActivity">
+    <div
+      class="minds-list"
+      style="padding: 20px 40px;"
+      *ngIf="activity && !showLegacyActivity"
+    >
       <m-activity
         [entity]="activity"
         [displayOptions]="{
           fixedHeight: fixedHeight,
-          showOnlyCommentsInput: fixedHeight
+          showOnlyCommentsInput: false,
+          showComments: !fixedHeight
         }"
+        [allowAutoplayOnScroll]="false"
+        [autoplayVideo]="true"
       ></m-activity>
     </div>
   </div>
+
+  <div *ngIf="!showLegacyActivity" m-pageLayout__pane="right"></div>
 </div>
 
 <m-social-icons

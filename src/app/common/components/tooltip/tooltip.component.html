@@ -3,6 +3,7 @@
     icon
   }}</i>
   <img *ngIf="iconSrc && !icon" [src]="cdnAssetsUrl + iconSrc" />
+  <ng-content select="[m-tooltip--icon]"></ng-content>
   <ng-content select="[m-tooltip--anchor]"></ng-content>
 
   <div

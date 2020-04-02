@@ -1,0 +1,44 @@
+<div class="m-composer__textArea">
+  <div class="m-composerTextarea__title" *ngIf="attachment$ | async">
+    <input
+      type="text"
+      placeholder="Title"
+      i18n-placeholder
+      [ngModel]="(title$ | async) || ''"
+      [hidden]="(title$ | async) === null"
+      [disabled]="isPosting$ | async"
+      (ngModelChange)="onTitleChange($event)"
+      data-cy="composer-activity-title"
+      #titleInput
+    />
+
+    <div
+      class="m-composerTextareaTitle__toggle"
+      (click)="toggleTitle()"
+      [hidden]="isPosting$ | async"
+      data-cy="composer-activity-title"
+    >
+      <m-icon
+        [iconId]="
+          (title$ | async) === null
+            ? 'add_circle_outline'
+            : 'remove_circle_outline'
+        "
+        sizeFactor="20"
+      ></m-icon>
+      <span i18n>Title</span>
+    </div>
+  </div>
+
+  <textarea
+    class="m-composerTextarea__message"
+    placeholder="Speak your mind..."
+    i18n-placeholder
+    [id]="inputId"
+    [ngModel]="message$ | async"
+    [disabled]="isPosting$ | async"
+    (ngModelChange)="onMessageChange($event)"
+    data-cy="composer-textarea"
+    #messageInput
+  ></textarea>
+</div>

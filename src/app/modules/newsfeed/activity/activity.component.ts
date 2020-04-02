@@ -18,8 +18,10 @@ import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../.
 import {
   ActivityService,
   ACTIVITY_FIXED_HEIGHT_RATIO,
+  ActivityEntity,
 } from './activity.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
+import { ComposerService } from '../../composer/services/composer.service';
 
 @Component({
   selector: 'm-activity',
@@ -28,21 +30,38 @@ import { Subscription } from 'rxjs';
   providers: [
     ActivityService,
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
+    ComposerService,
   ],
   host: {
     class: 'm-border',
   },
 })
 export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
+  entity$: Observable<ActivityEntity> = this.service.entity$;
+
   @Input() set entity(entity) {
     this.service.setEntity(entity);
+    this.isBoost = entity.boosted;
   }
 
   @Input() set displayOptions(options) {
     this.service.setDisplayOptions(options);
   }
 
+  /**
+   * Whether or not we allow autoplay on scroll
+   */
+  @Input() allowAutoplayOnScroll: boolean = false;
+
+  /**
+   * Whether or not autoplay is allowed (this is used for single entity view, media modal and media view)
+   */
+  @Input() autoplayVideo: boolean = false;
+
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
+
+  @HostBinding('class.m-activity--boost')
+  isBoost = false;
 
   @HostBinding('class.m-activity--fixedHeight')
   isFixedHeight: boolean;
@@ -83,6 +102,10 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   @HostListener('window:resize')
+  onResize(): void {
+    this.calculateHeight();
+  }
+
   calculateHeight(): void {
     if (!this.service.displayOptions.fixedHeight) return;
     const height =

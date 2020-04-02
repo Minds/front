@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Injector,
   OnDestroy,
   OnInit,
   Output,
@@ -10,6 +11,9 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ActivityService, ActivityEntity } from '../activity.service';
 import { Client } from '../../../../services/api/client';
+import { ComposerService } from '../../../composer/services/composer.service';
+import { ModalService } from '../../../composer/components/modal/modal.service';
+import { FeaturesService } from '../../../../services/features.service';
 
 @Component({
   selector: 'm-activity__menu',
@@ -24,13 +28,18 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
   constructor(
     public service: ActivityService,
     public client: Client,
-    private router: Router
+    private router: Router,
+    private features: FeaturesService,
+    private composer: ComposerService,
+    private composerModal: ModalService,
+    private injector: Injector
   ) {}
 
   ngOnInit() {
     this.entitySubscription = this.service.entity$.subscribe(
       (entity: ActivityEntity) => {
         this.entity = entity;
+        this.entity.url = this.service.buildCanonicalUrl(this.entity, true);
       }
     );
   }
@@ -58,7 +67,8 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
       } else {
         return [
           'edit',
-          'translate',
+          'pin',
+          //'translate',
           'share',
           'follow',
           'feature',
@@ -89,10 +99,24 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
   async onOptionSelected(option) {
     switch (option) {
       case 'edit':
-        // Load old post in editing mode
-        this.router.navigate([`/newsfeed/${this.entity.guid}`], {
-          queryParams: { editing: 1 },
-        });
+        if (this.features.has('activity-composer')) {
+          this.composer.load(this.entity);
+
+          this.composerModal
+            .setInjector(this.injector)
+            .present()
+            .toPromise()
+            .then(activity => {
+              if (activity) {
+                this.service.setEntity(activity);
+              }
+            });
+        } else {
+          // Load old post in editing mode
+          this.router.navigate([`/newsfeed/${this.entity.guid}`], {
+            queryParams: { editing: 1 },
+          });
+        }
         break;
       case 'delete':
         try {

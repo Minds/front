@@ -60,14 +60,14 @@ m-newsfeed {
               width: 154px;
             }
           }
-        }
-      }
 
-      .m-btn--with-icon {
-        padding: 8px 12px;
+          .m-btn--with-icon {
+            padding: 8px 12px;
 
-        i {
-          display: none;
+            i {
+              display: none;
+            }
+          }
         }
       }
     }
@@ -200,15 +200,22 @@ m-newsfeed {
 
 .m-theme__2020 .m-newsfeed {
   [class*='m-pageLayout__pane'] {
-    padding: $minds-padding * 2;
+    padding: 20px 40px;
     @media screen and (max-width: $max-mobile) {
-      padding: 0;
+      padding: 20px 0;
     }
+  }
+  .m-pageLayout__pane--main {
+    // padding: 40px;
   }
   .m-pageLayout__pane--right {
     padding-right: 0;
   }
   .m-newsfeed__sidebar {
     max-width: initial;
+  }
+
+  m-activity {
+    margin-bottom: 20px;
   }
 }

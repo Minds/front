@@ -1,18 +1,18 @@
 .m-shadowboxSubmitButton {
-  min-width: 220px;
+  //min-width: 220px;
   position: relative;
   cursor: pointer;
   padding: 10px 20px;
 
-  min-height: 43px;
+  min-height: 42px;
   border: 0;
   transition: all 0.2s ease;
-  border-radius: 2px;
+  border-radius: 26px;
   outline: 0;
   &.green {
     @include m-theme() {
       background-color: themed($m-aqua);
-      color: themed($m-white);
+      color: themed($m-white-always);
     }
     .m-shadowboxSubmitButton__status--saving {
       span {
@@ -44,7 +44,7 @@
       text-align: center;
       span {
         @include m-theme() {
-          background-color: themed($m-grey-500);
+          background-color: themed($m-white-always);
         }
       }
     }
@@ -150,8 +150,10 @@ button {
   }
 }
 .m-shadowboxSubmitButton__status--unsaved {
-  font-size: 15px;
-  line-height: 20px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 400;
+  vertical-align: middle;
 }
 
 @media screen and (max-width: $max-mobile) {

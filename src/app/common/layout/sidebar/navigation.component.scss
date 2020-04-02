@@ -105,12 +105,8 @@ m-sidebar--navigation {
       }
     }
 
-    ul {
+    .m-sidebarNavigation__list {
       padding: 0 35px 0;
-
-      .m-sidebarNavigation__item {
-        margin: 4px 0;
-      }
 
       // &.m-groupSidebarMarkers__list {
       //   padding: 0 35px 35px !important;
@@ -120,9 +116,17 @@ m-sidebar--navigation {
     h5 {
       padding: 0 35px;
     }
+
+    .m-sidebarNavigation__item--active .m-sidebarNavigation__subnav {
+      display: block;
+      position: relative;
+      @include m-theme() {
+        border-right: 1px solid themed($m-borderColor--primary);
+      }
+    }
   }
 
-  ul {
+  .m-sidebarNavigation__list {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -130,35 +134,43 @@ m-sidebar--navigation {
 }
 
 .m-sidebarNavigation__item {
-  display: flex;
-  //flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  font-family: 'Roboto', Helvetica, sans-serif;
-  padding: 4px 0;
-  font-weight: bold;
+  a {
+    display: flex;
+    //flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    padding: 4px 0;
+    font-weight: bold;
 
-  font-size: 17px;
-  line-height: 44px;
-  @include m-theme() {
-    color: themed($m-textColor--secondary);
-  }
-
-  &.m-sidebarNavigation__item--active,
-  &:hover {
+    font-size: 17px;
+    line-height: 44px;
     @include m-theme() {
-      color: themed($m-textColor--primary);
+      color: themed($m-textColor--secondary);
+      svg {
+        fill: themed($m-textColor--secondary);
+      }
+    }
+
+    @media screen and (max-width: $layoutMax3ColWidth) {
+      padding: 12px 0;
+      text-align: center;
+      justify-content: center;
+
+      .m-sidebarNavigation--slide & {
+        text-align: initial;
+        justify-content: initial;
+      }
     }
   }
 
-  @media screen and (max-width: $layoutMax3ColWidth) {
-    padding: 12px 0;
-    text-align: center;
-    justify-content: center;
-
-    .m-sidebarNavigation--slide & {
-      text-align: initial;
-      justify-content: initial;
+  &.m-sidebarNavigation__item--active > a,
+  &:hover > a {
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      svg {
+        fill: themed($m-textColor--primary);
+      }
     }
   }
 
@@ -183,8 +195,10 @@ m-sidebar--navigation {
 
     i.material-icons,
     i.m-icon--hashtag,
+    svg,
     img {
       height: 23px;
+      width: 24px;
     }
   }
 
@@ -210,6 +224,76 @@ m-sidebar--navigation {
       .m-sidebarNavigation--slide & {
         display: block;
       }
+      .m-sidebarNavigation__subnav {
+        display: none;
+      }
     }
   }
 }
+
+.m-sidebarNavigation__subnav {
+  display: none;
+  // position: relative;
+  list-style: none;
+  padding: 10px 0;
+  // margin: 4px 20px;
+  // padding: 20px;
+  @include m-theme() {
+    background: themed($m-bgColor--secondary);
+    border: 1px solid themed($m-borderColor--primary);
+    border-right: 0;
+  }
+
+  &::before {
+    position: absolute;
+
+    width: 14px;
+    height: 14px;
+    display: block;
+    content: '';
+    top: -8px;
+    left: 48px;
+    transform: rotate(45deg);
+    @include m-theme() {
+      background: themed($m-bgColor--secondary);
+      border-top: 1px solid themed($m-borderColor--primary);
+      border-left: 1px solid themed($m-borderColor--primary);
+    }
+  }
+
+  .m-sidebarNavigation__item--active & {
+    @media screen and (min-width: $layoutMax3ColWidth) {
+      display: block;
+      position: relative;
+    }
+  }
+
+  .m-sidebarNavigation__item a {
+    padding-left: 48px;
+    line-height: 32px;
+  }
+}
+
+//.m-sidebarNavigation__item:not(.m-sidebarNavigation__item--active) {
+.m-sidebarNavigation__subnav--popover {
+  display: block;
+  position: fixed;
+
+  @include m-theme() {
+    border-right: 1px solid themed($m-borderColor--primary);
+  }
+
+  &::before {
+    top: 20px;
+    left: -8px;
+    transform: rotate(-45deg);
+  }
+
+  .m-sidebarNavigation__item a {
+    padding-left: 40px;
+    padding-right: 40px;
+    text-align: left;
+    justify-content: left;
+  }
+}
+//}

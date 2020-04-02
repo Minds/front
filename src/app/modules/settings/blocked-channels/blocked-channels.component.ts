@@ -4,7 +4,8 @@ import {
   Component,
   OnInit,
 } from '@angular/core';
-import { tap, filter, switchMap } from 'rxjs/operators';
+import { tap, filter, switchMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { BlockListService } from '../../../common/services/block-list.service';
 import { EntitiesService } from '../../../common/services/entities.service';
 import { Client } from '../../../services/api/client';
@@ -35,17 +36,24 @@ export class SettingsBlockedChannelsComponent implements OnInit {
   ngOnInit() {
     this.load(true);
     this.channels = this.blockListService.blocked.pipe(
-      tap(() => {
+      tap(list => {
         this.inProgress = true;
         this.moreData = false; // Support pagination in the future
+
+        if (list.length < 1) {
+          throw new Error('No more channels');
+        }
       }),
-      filter(list => list.length > 0),
       switchMap(async guids => {
         const response: any = await this.entitiesService.fetch(guids);
         return response.entities;
       }),
       tap(blocked => {
         this.inProgress = false;
+      }),
+      catchError(e => {
+        this.inProgress = false;
+        return of(null);
       })
     );
   }

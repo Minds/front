@@ -58,7 +58,7 @@ url="http://localhost"
 username="minds_cypress_tests"
 pro_username="minds_pro_cypress_tests"
 pro_password=""
-captcha_bypass_key="testing"
+shared_key="testing"
 env=""
 _video=false
 while [[ $# -gt 0 ]]
@@ -121,5 +121,5 @@ init_args $@
 while [[ $PWD != '/' && ${PWD##*/} != 'front' ]]; do cd ..; done
 
 #run cypress with args.
-echo $(npm bin)/cypress open --config baseUrl=$url,video=$_video --env username=$username,password=$password,pro_username=$pro_username,pro_password=$pro_password,captcha_bypass_key=$captcha_bypass_key$env $POSITIONAL
-$(npm bin)/cypress open --config baseUrl=$url,video=$_video --env username=$username,password=$password,pro_username=$pro_username,pro_password=$pro_password,captcha_bypass_key=$captcha_bypass_key$env $POSITIONAL 
+echo $(npm bin)/cypress open --config baseUrl=$url,video=$_video --env username=$username,password=$password,pro_username=$pro_username,pro_password=$pro_password,shared_key=$shared_key$env $POSITIONAL
+$(npm bin)/cypress open --config baseUrl=$url,video=$_video --env username=$username,password=$password,pro_username=$pro_username,pro_password=$pro_password,shared_key=$shared_key$env $POSITIONAL 

@@ -52,5 +52,6 @@ import { ActivityRemindComponent } from './remind/remind.component';
   ],
   providers: [],
   exports: [ActivityComponent],
+  entryComponents: [ActivityComponent],
 })
 export class ActivityModule {}

@@ -1,0 +1,39 @@
+<div class="m-hashtags__typeaheadInput">
+  <input
+    type="text"
+    class="m-hashtagsTypeaheadInput__input"
+    [id]="inputId"
+    [disabled]="disabled"
+    [ngModel]="tag"
+    (ngModelChange)="setTag($event)"
+    [placeholder]="placeholder"
+    (keydown.enter)="triggerAction(true)"
+    (focus)="showDropdown()"
+  />
+
+  <ul
+    *ngIf="suggestions$ | async as suggestions"
+    class="m-hashtagsTypeaheadInput__list"
+    [hidden]="
+      disabled ||
+      !isDropdownShown ||
+      suggestions.length === 0 ||
+      (typeaheadInProgress$ | async)
+    "
+  >
+    <li
+      *ngIf="!isShowingSuggestions"
+      class="m-hashtagsTypeaheadInputList__mruHeader"
+    >
+      <span i18n>Recent Tags</span>
+      <a (click)="clearMRU()" i18n>Clear History</a>
+    </li>
+    <li
+      class="m-hashtagsTypeaheadInputList__item"
+      *ngFor="let suggestion of suggestions"
+      (click)="useSuggestion(suggestion)"
+    >
+      <span>#{{ suggestion }}</span>
+    </li>
+  </ul>
+</div>

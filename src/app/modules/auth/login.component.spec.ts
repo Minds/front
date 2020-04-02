@@ -107,7 +107,7 @@ describe('LoginComponent', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
 
-    featuresServiceMock.mock('register_pages-december-2019', false);
+    featuresServiceMock.mock('ux-2020', false);
     featuresServiceMock.mock('navigation', false);
 
     fixture = TestBed.createComponent(LoginComponent);

@@ -71,7 +71,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.newDesign = this.featuresService.has('register_pages-december-2019');
+    this.newDesign = this.featuresService.has('ux-2020');
     this.newNavigation = this.featuresService.has('navigation');
 
     if (this.newDesign) {
@@ -112,7 +112,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     }
 
-    if (this.featuresService.has('onboarding-december-2019')) {
+    if (this.featuresService.has('ux-2020')) {
       if (this.onboardingService.shouldShow()) {
         this.router.navigate(['/onboarding']);
         return;

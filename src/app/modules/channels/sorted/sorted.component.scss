@@ -30,3 +30,16 @@
     margin-left: auto;
   }
 }
+
+m-channel--sorted {
+  display: block;
+  padding: 0 40px;
+
+  @media screen and (max-width: $layoutMin2ColWidth) {
+    padding: 0;
+  }
+
+  m-activity {
+    margin-bottom: 20px;
+  }
+}

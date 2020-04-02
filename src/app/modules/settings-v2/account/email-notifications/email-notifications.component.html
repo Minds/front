@@ -6,21 +6,6 @@
     <div class="m-settingsV2__subheader">Email me when</div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <!-- TODOOJM double check these are all going to the right places -->
-        <!-- <input
-          type="checkbox"
-          id="unread-notifications"
-          name="unread-notifications"
-          (click)="change()"
-          [(ngModel)]="notifications.when.unread_notifications"
-        />
-
-        <label for="unread-notifications">
-          <ng-container i18n="@@MINDS__SETTINGS__UNREAD_NOTIFICATIONS_LABEL">
-            I have unread notifications
-          </ng-container>
-        </label> -->
-
         <label
           for="unread-notifications"
           class="m-form__customInputWrapper__checkbox"
@@ -32,7 +17,7 @@
             name="unread-notifications"
             class="form-control"
             data-minds="unread-notifications"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.when.unread_notifications"
           />
@@ -42,19 +27,6 @@
     </div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <!-- <input
-          type="checkbox"
-          id="wire-received"
-          name="wire-received"
-          (click)="change()"
-          [(ngModel)]="notifications.when.wire_received"
-        />
-
-        <label for="wire-received">
-          <ng-container i18n="@@MINDS__SETTINGS__WIRE_RECEIVED_LABEL">
-            I receive a wire
-          </ng-container>
-        </label> -->
         <label
           for="wire-received"
           class="m-form__customInputWrapper__checkbox"
@@ -66,7 +38,7 @@
             name="wire-received"
             class="form-control"
             data-minds="wire-received"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.when.wire_received"
           />
@@ -76,19 +48,6 @@
     </div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <!-- <input
-          type="checkbox"
-          id="boost-completed"
-          name="boost-completed"
-          (click)="change()"
-          [(ngModel)]="notifications.when.boost_completed"
-        />
-
-        <label for="boost-completed">
-          <ng-container i18n="@@MINDS__SETTINGS__BOOST_COMPLETED_LABEL">
-            My boost has been completed
-          </ng-container>
-        </label> -->
         <label
           for="boost-completed"
           class="m-form__customInputWrapper__checkbox"
@@ -100,7 +59,7 @@
             name="boost-completed"
             class="form-control"
             data-minds="boost-completed"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.when.boost_completed"
           />
@@ -111,19 +70,6 @@
     <div class="m-settingsV2__subheader">Email me with</div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <!-- <input
-          type="checkbox"
-          id="top-posts"
-          name="top-posts"
-          (click)="change()"
-          [ngModel]="!!notifications.with.top_posts"
-          (ngModelChange)="onTopPostsCheckboxChange($event)"
-        />
-        <label for="top-posts">
-          <ng-container i18n="@@MINDS__SETTINGS__TOP_POSTS_LABEL">
-            Top posts from my network
-          </ng-container>
-        </label> -->
         <label for="top-posts" class="m-form__customInputWrapper__checkbox" i18n
           >Top posts from my network
           <input
@@ -132,7 +78,7 @@
             name="top-posts"
             class="form-control"
             data-minds="top-posts"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [ngModel]="!!notifications.with.top_posts"
             (ngModelChange)="onTopPostsCheckboxChange($event)"
@@ -143,19 +89,6 @@
     </div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <!-- <input
-          type="checkbox"
-          id="channel-improvement-tips"
-          name="channel-improvement-tips"
-          (click)="change()"
-          [(ngModel)]="notifications.with.channel_improvement_tips"
-        />
-
-        <label for="channel-improvement-tips">
-          <ng-container i18n="@@MINDS__SETTINGS__TIPS_IMPROVE_CHANNEL_LABEL">
-            Tips on how to improve my channel
-          </ng-container>
-        </label> -->
         <label
           for="channel-improvement-tips"
           class="m-form__customInputWrapper__checkbox"
@@ -167,7 +100,7 @@
             name="channel-improvement-tips"
             class="form-control"
             data-minds="channel-improvement-tips"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.with.channel_improvement_tips"
           />
@@ -177,23 +110,8 @@
     </div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <!-- <input
-          type="checkbox"
-          id="missed-since-login"
-          name="missed-since-login"
-          (click)="change()"
-          [(ngModel)]="notifications.with.posts_missed_since_login"
-        />
-
-        <label for="missed-since-login">
-          <ng-container
-            i18n="@@MINDS__SETTINGS__SINCE_MISSED_SINCE_LAST_LOGIN_LABEL"
-          >
-            Things I've missed since my last login
-          </ng-container>
-        </label> -->
         <label
-          for="unread-notifications"
+          for="missed-since-login"
           class="m-form__customInputWrapper__checkbox"
           i18n
           >Things I've missed since my last login
@@ -203,9 +121,9 @@
             name="missed-since-login"
             class="form-control"
             data-minds="missed-since-login"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
-            [(ngModel)]="notifications.with.posts_missed - since - login"
+            [(ngModel)]="notifications.with.posts_missed_since_login"
           />
           <span class="m-form__customInput__checkbox"></span>
         </label>
@@ -213,19 +131,6 @@
     </div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <!-- <input
-          type="checkbox"
-          id="new-channels"
-          name="new-channels"
-          (click)="change()"
-          [(ngModel)]="notifications.with.new_channels"
-        />
-
-        <label for="new-channels">
-          <ng-container i18n="@@MINDS__SETTINGS__NEW_CHANNELS_LABEL">
-            New channels to subscribe to
-          </ng-container>
-        </label> -->
         <label
           for="new_channels"
           class="m-form__customInputWrapper__checkbox"
@@ -237,7 +142,7 @@
             name="new_channels"
             class="form-control"
             data-minds="new_channels"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.with.new_channels"
           />
@@ -249,19 +154,6 @@
     <div class="m-settingsV2__subheader">Keep me updated with</div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <!-- <input
-          type="checkbox"
-          id="minds-news"
-          name="minds-news"
-          (click)="change()"
-          [(ngModel)]="notifications.global.minds_news"
-        />
-
-        <label for="minds-news">
-          <ng-container i18n="@@MINDS__SETTINGS__MINDS_NEWS_LABEL">
-            News about new Minds products and features
-          </ng-container>
-        </label> -->
         <label
           for="minds_news"
           class="m-form__customInputWrapper__checkbox"
@@ -273,7 +165,7 @@
             name="minds_news"
             class="form-control"
             data-minds="unread-notifications"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.global.unread_notifications"
           />
@@ -283,20 +175,6 @@
     </div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <!-- <input
-          type="checkbox"
-          id="minds-tips"
-          name="minds-tips"
-          (click)="change()"
-          [(ngModel)]="notifications.global.minds_tips"
-        />
-        <label for="minds-tips">
-          <ng-container
-            i18n="@@MINDS__SETTINGS__TIPS_ON_HOW_TO_USE_MINDS_LABEL"
-          >
-            Tips on how to use Minds
-          </ng-container>
-        </label> -->
         <label
           for="minds-tips"
           class="m-form__customInputWrapper__checkbox"
@@ -308,7 +186,7 @@
             name="minds-tips"
             class="form-control"
             data-minds="minds-tips"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.global.minds_tips"
           />
@@ -318,19 +196,6 @@
     </div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
-        <!-- <input
-          type="checkbox"
-          id="exclusive-promotions"
-          name="exclusive-promotions"
-          (click)="change()"
-          [(ngModel)]="notifications.global.exclusive_promotions"
-        />
-
-        <label for="exclusive-promotions">
-          <ng-container i18n="@@MINDS__SETTINGS__EXCLUSIVE_PROMOTIONS_LABEL">
-            Exclusive promotions
-          </ng-container>
-        </label> -->
         <label
           for="exclusive-promotions"
           class="m-form__customInputWrapper__checkbox"
@@ -342,7 +207,7 @@
             name="exclusive-promotions"
             class="form-control"
             data-minds="exclusive-promotions"
-            [readonly]="inProgress || !init"
+            [readonly]="inProgress"
             (click)="change()"
             [(ngModel)]="notifications.global.exclusive_promotions"
           />

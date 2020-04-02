@@ -63,7 +63,9 @@ export function MockService(obj: any, config: any = null) {
     key => props.indexOf(key) === -1
   );
 
-  for (const prop of props) {
+  const has = (config && config.has) || [];
+
+  for (const prop of [...props, ...has]) {
     const property = {
       get: () => false,
       set: () => {},
@@ -76,6 +78,7 @@ export function MockService(obj: any, config: any = null) {
         property.set = config.props[prop].set;
       }
     }
+    spies[prop] = null; // Initialize
     Object.defineProperty(spies, prop, property);
   }
 
@@ -84,7 +87,12 @@ export function MockService(obj: any, config: any = null) {
     if (config && config[key]) {
       value = config[key];
     }
-    spies[key] = jasmine.createSpy(key).and.returnValue(value);
+
+    if (typeof value === 'function') {
+      spies[key] = jasmine.createSpy(key).and.callFake(value);
+    } else {
+      spies[key] = jasmine.createSpy(key).and.returnValue(value);
+    }
   }
 
   return new Proxy(

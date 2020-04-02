@@ -4,6 +4,8 @@ import { FeaturesService } from '../../../services/features.service';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
 import { ChannelOnboardingService } from '../../onboarding/channel/onboarding.service';
 import { SiteService } from '../../../common/services/site.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-page',
@@ -21,7 +23,9 @@ export class PageComponent implements OnInit {
     public featuresService: FeaturesService,
     private navigationService: SidebarNavigationService,
     private onboardingService: ChannelOnboardingService,
-    private site: SiteService
+    private site: SiteService,
+    public pageLayoutService: PageLayoutService,
+    private router: Router
   ) {}
 
   ngOnInit() {

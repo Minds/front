@@ -1,0 +1,63 @@
+<div class="m-composerPopup__body m-composer__tags">
+  <div class="m-composerPopup__content">
+    <h3 class="m-composerPopup__title" i18n>Tag</h3>
+
+    <p class="m-composerPopup__text" i18n>
+      Tagging your post will make your content more easily discoverable. Add up
+      to five.
+    </p>
+
+    <div class="m-composerTags__trending">
+      <m-hashtags__trending
+        (onAction)="addIntent($event)"
+      ></m-hashtags__trending>
+    </div>
+
+    <div class="m-composerPopup__field">
+      <label [for]="inputId + '-tags'" i18n>Tag</label>
+
+      <div class=" m-composerTags__tagInput">
+        <m-hashtags__typeaheadInput
+          placeholder="Enter tag"
+          historyKey="composer"
+          [inputId]="inputId + '-tags'"
+          [disabled]="state.length >= maxTags"
+          [maxEntries]="5"
+          (onAction)="addIntent($event)"
+          #hashtagsTypeaheadInput
+        ></m-hashtags__typeaheadInput>
+
+        <button
+          [disabled]="state.length >= maxTags"
+          (click)="hashtagsTypeaheadInput.triggerAction()"
+          i18n
+        >
+          Add
+        </button>
+      </div>
+    </div>
+
+    <ul class="m-composerTags__list" data-cy="nsfw-list">
+      <li *ngFor="let tag of state" class="m-composerTags__item">
+        <span>#{{ tag }}</span>
+        <m-icon
+          class="m-composerTagsItem__remove"
+          iconId="close"
+          [sizeFactor]="-20"
+          (click)="remove(tag)"
+        ></m-icon>
+      </li>
+    </ul>
+  </div>
+
+  <div class="m-composerPopup__action">
+    <m-button
+      class="m-composerPopup__save"
+      (onAction)="save()"
+      data-cy="tags-save-button"
+      i18n
+    >
+      Save Tags
+    </m-button>
+  </div>
+</div>

@@ -1,33 +1,46 @@
-import { Component, HostListener, ViewChild, ElementRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Subscription, timer } from 'rxjs';
 
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import {
-  ActivityService,
-  ActivityEntity,
-  ACTIVITY_FIXED_HEIGHT_RATIO,
-  ACTIVITY_FIXED_HEIGHT_HEIGHT,
-  ACTIVITY_OWNERBLOCK_HEIGHT,
-  ACTIVITY_FIXED_HEIGHT_WIDTH,
-  ACTIVITY_COMMENTS_POSTER_HEIGHT,
-  ACTIVITY_TOOLBAR_HEIGHT,
   ACTIVITY_COMMENTS_MORE_HEIGHT,
+  ACTIVITY_COMMENTS_POSTER_HEIGHT,
   ACTIVITY_CONTENT_PADDING,
+  ACTIVITY_FIXED_HEIGHT_HEIGHT,
+  ACTIVITY_FIXED_HEIGHT_RATIO,
+  ACTIVITY_OWNERBLOCK_HEIGHT,
+  ACTIVITY_TOOLBAR_HEIGHT,
+  ActivityEntity,
+  ActivityService,
 } from '../activity.service';
-import { ConfigsService } from '../../../../common/services/configs.service';
-import { Session } from '../../../../services/session';
-import { MindsUser, MindsGroup } from '../../../../interfaces/entities';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../media/modal/modal.component';
-import { ActivityRemindComponent } from '../remind/remind.component';
-import { delay } from 'q';
-import isMobile from '../../../../helpers/is-mobile';
 
 @Component({
   selector: 'm-activity__content',
   templateUrl: 'content.component.html',
 })
-export class ActivityContentComponent {
+export class ActivityContentComponent
+  implements OnInit, AfterViewInit, OnDestroy {
+  /**
+   * Whether or not we allow autoplay on scroll
+   */
+  @Input() allowAutoplayOnScroll: boolean = false;
+
+  /**
+   * Whether or not autoplay is allowed (this is used for single entity view, media modal and media view)
+   */
+  @Input() autoplayVideo: boolean = false;
+
   @ViewChild('mediaEl', { static: false, read: ElementRef })
   mediaEl: ElementRef;
 
@@ -38,6 +51,10 @@ export class ActivityContentComponent {
   mediaDescriptionEl: ElementRef;
 
   maxFixedHeightContent: number = 750 * ACTIVITY_FIXED_HEIGHT_RATIO;
+  get maxMessageHeight(): number {
+    return this.service.displayOptions.fixedHeight ? 130 : 320; // This is actually remind
+  }
+
   activityHeight: number;
   remindWidth: number;
   remindHeight: number;
@@ -96,7 +113,7 @@ export class ActivityContentComponent {
   }
 
   get isRichEmbed(): boolean {
-    return !!this.entity.perma_url;
+    return !!this.entity.perma_url && !this.isVideo && !this.isImage;
   }
 
   get mediaDescription(): string {
@@ -135,11 +152,12 @@ export class ActivityContentComponent {
   }
 
   get imageHeight(): string {
-    if (this.entity.custom_type !== 'batch') return 'auto';
+    if (this.service.displayOptions.fixedHeight) return null;
+    if (this.entity.custom_type !== 'batch') return null;
     const originalHeight = parseInt(this.entity.custom_data[0].height || 0);
     const originalWidth = parseInt(this.entity.custom_data[0].width || 0);
 
-    if (!originalHeight || !originalWidth) return 'auto';
+    if (!originalHeight || !originalWidth) return null;
 
     const ratio = originalHeight / originalWidth;
 
@@ -200,7 +218,7 @@ export class ActivityContentComponent {
 
     this.calculateFixedContentHeight();
 
-    let maxFixedHeightContent = this.maxFixedHeightContent;
+    const maxFixedHeightContent = this.maxFixedHeightContent;
 
     this.remindHeight = maxFixedHeightContent - messageHeight;
 

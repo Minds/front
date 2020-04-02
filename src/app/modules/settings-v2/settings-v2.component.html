@@ -1,22 +1,23 @@
-<!-- <div class="m-settingsV2"> -->
 <div class="m-settingsV2 m-page m-pageLayout__container">
   <m-nestedMenu
     class="m-settingsV2__mainMenu m-pageLayout__pane--right"
-    [ngClass]="{ showMainMenuOnMobile: showMainMenuOnMobile }"
+    [ngClass]="{ onMainNav: onMainNav }"
+    [disableActiveClass]="onMainNav"
     [menus]="mainMenus"
-    (itemSelected)="showMainMenuOnMobile = false"
+    parentRoute="/settings/canary"
+    (itemSelected)="mainMenuItemSelected()"
   ></m-nestedMenu>
+
   <div
-    *ngIf="init"
     class="m-settingsV2__secondaryPane m-pageLayout__pane--main"
-    [ngClass]="{ showSecondaryMenuOnMobile: !showMainMenuOnMobile }"
+    [ngClass]="{ onSecondaryNav: !onMainNav }"
   >
     <m-nestedMenu
       *ngIf="secondaryPaneIsMenu"
       class="m-settingsV2__secondaryMenuView"
       isNested="true"
       [menus]="secondaryMenus[menuHeaderId]"
-      (clickedBack)="showMainMenuOnMobile = true"
+      (clickedBack)="secondaryMenuClickedBack()"
     ></m-nestedMenu>
 
     <ng-container *ngIf="!secondaryPaneIsMenu">
@@ -30,12 +31,15 @@
           <div class="m-settingsV2__headerLabel">{{ routeData.title }}</div>
         </div>
         <div class="m-settingsV2__viewWrapper">
-          <div class="m-settingsV2__desc">{{ routeData?.description }}</div>
-          <div class="m-formWrapper">
+          <div class="m-settingsV2__desc" *ngIf="routeData?.description">
+            {{ routeData?.description }}
+          </div>
+          <div class="m-formWrapper" [hidden]="!init">
             <router-outlet (activate)="onActivate($event)"></router-outlet>
           </div>
         </div>
       </div>
     </ng-container>
+    <!-- <div class="m-settingsV2__secondarySpacer"></div> -->
   </div>
 </div>

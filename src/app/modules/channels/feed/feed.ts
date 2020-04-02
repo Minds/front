@@ -20,6 +20,7 @@ import { PosterComponent } from '../../../modules/newsfeed/poster/poster.compone
 import { WireChannelComponent } from '../../../modules/wire/channel/channel.component';
 import { debounceTime } from 'rxjs/operators';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { ComposerComponent } from '../../composer/composer.component';
 
 @Component({
   moduleId: module.id,
@@ -45,6 +46,9 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
 
   @ViewChild('poster', { static: false }) private poster: PosterComponent;
+
+  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
+
   @ViewChild('wire', { static: false }) private wire: WireChannelComponent;
 
   protected loadFeedObservable: Subject<any> = new Subject();
@@ -170,7 +174,7 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     this.feed.unshift(activity);
   }
 
-  canDeactivate() {
+  protected v1CanDeactivate(): boolean {
     if (!this.poster || !this.poster.attachment) return true;
     const progress = this.poster.attachment.getUploadProgress();
     if (progress > 0 && progress < 100) {
@@ -178,5 +182,14 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     }
 
     return true;
+  }
+
+  canDeactivate(): boolean | Promise<boolean> {
+    if (this.composer) {
+      return this.composer.canDeactivate();
+    }
+
+    // Check v1 Poster component
+    return this.v1CanDeactivate();
   }
 }

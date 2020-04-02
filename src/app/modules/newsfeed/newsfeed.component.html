@@ -7,6 +7,7 @@
   [class.m-newsfeed--2019]="!newNavigation"
   [class.mdl-grid]="!newNavigation"
   [class.m-pageLayout__container]="newNavigation"
+  m-pageLayout__container
 >
   <div
     class="mdl-cell mdl-cell--4-col m-newsfeed--sidebar m-newsfeed__sidebar"
@@ -130,10 +131,13 @@
     class="m-newsfeed--feed"
     [class.mdl-cell]="!newNavigation"
     [class.mdl-cell--8-col]="!newNavigation"
-    [class.m-pageLayout__pane--main]="newNavigation"
+    m-pageLayout__pane="main"
     [ngClass]="{ 'm-newsfeed--logged-out': !session.getLoggedInUser() }"
   >
-    <div class="mdl-card m-newsfeed__CompactHashtagSelector">
+    <div
+      class="mdl-card m-newsfeed__CompactHashtagSelector"
+      *mIfFeature="'!navigation'"
+    >
       <m-hashtags--sidebar-selector
         [compact]="true"
         [disabled]="!isSorted"
@@ -149,18 +153,22 @@
     class="m-newsfeed--boost-sidebar m-newsfeed__sidebar"
     [class.mdl-cell]="!newNavigation"
     [class.mdl-cell--4-col]="!newNavigation"
-    [class.m-pageLayout__pane--right]="newNavigation"
+    m-pageLayout__pane="right"
     *ngIf="showRightSidebar || newNavigation"
   >
-    <ng-container *mIfFeature="'suggested-users'">
-      <m-suggestions__sidebar></m-suggestions__sidebar>
-    </ng-container>
+    <m-suggestions__sidebar></m-suggestions__sidebar>
 
     <ng-container *mIfFeature="'navigation'">
-      <ng-container *ngTemplateOutlet="hashtagSelector"></ng-container>
+      <div class="m-spacer"></div>
+      <m-discovery__sidebarTags></m-discovery__sidebarTags>
     </ng-container>
 
+    <div class="m-spacer"></div>
+
     <m-notices__sidebar></m-notices__sidebar>
+
+    <div class="m-spacer"></div>
+
     <m-ads-boost
       limit="8"
       *ngIf="
@@ -170,7 +178,7 @@
         )
       "
     ></m-ads-boost>
-    <div class="minds-spacer minds-spacer-2x"></div>
+    <div class="m-spacer"></div>
   </div>
 </div>
 

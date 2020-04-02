@@ -85,7 +85,7 @@ export class ActivityPreview {
     return false;
   }
 
-  isScheduled(time_created) {
+  isScheduled(time_created, deviation = 5000) {
     return false;
   }
 

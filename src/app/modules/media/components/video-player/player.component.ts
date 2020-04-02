@@ -1,32 +1,36 @@
 import {
-  Component,
-  OnDestroy,
-  OnChanges,
-  Input,
-  ViewChild,
-  Output,
-  EventEmitter,
-  ChangeDetectorRef,
-  Inject,
-  PLATFORM_ID,
   AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  forwardRef,
+  Inject,
+  Input,
+  OnChanges,
+  OnDestroy,
+  Output,
+  PLATFORM_ID,
+  SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { PLAYER_ANIMATIONS } from './player.animations';
 import { VideoPlayerService, VideoSource } from './player.service';
-import isMobile from '../../../../helpers/is-mobile';
 import Plyr from 'plyr';
 import { PlyrComponent } from 'ngx-plyr';
 import { isPlatformBrowser } from '@angular/common';
-import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { Session } from '../../../../services/session';
+import { VideoAutoplayService } from '../video/services/video-autoplay.service';
 
 @Component({
   selector: 'm-videoPlayer',
   templateUrl: 'player.component.html',
   animations: PLAYER_ANIMATIONS,
-  providers: [VideoPlayerService],
+  providers: [VideoPlayerService, Session],
 })
 export class MindsVideoPlayerComponent
-  implements OnChanges, OnDestroy, AfterViewInit {
+  implements OnChanges, OnDestroy, AfterViewInit, OnChanges {
   /**
    * MH: dislike having to emit an event to open modal, but this is
    * the quickest work around for now
@@ -44,21 +48,32 @@ export class MindsVideoPlayerComponent
   @Output() dimensions: EventEmitter<any> = new EventEmitter<any>();
 
   /**
+   * Setting this to true makes the video autoplay
+   */
+  @Input() autoplay: boolean = false;
+
+  @Input() allowAutoplayOnScroll: boolean = false;
+
+  /**
+   * See setAutoplay method
+   */
+  autoplayChanged: boolean = false;
+  newAutoplayValue: boolean = false;
+
+  /**
+   * This is set by VideoAutoplayService
+   */
+  autoplaying: boolean = false;
+  /**
    * This is the video player component
    */
-  @ViewChild(PlyrComponent, { static: false }) player: PlyrComponent;
+  player: PlyrComponent;
 
-  /**
-   * BehaviorSubject holding autoplay value
-   */
-  autoplaySubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-    false
-  );
-
-  /**
-   * Subscription to autoplaySubject
-   */
-  autoplaySubscription: Subscription;
+  @ViewChild(PlyrComponent, { static: false }) set _player(
+    player: PlyrComponent
+  ) {
+    this.player = player;
+  }
 
   /**
    * Options for Plyr to use
@@ -83,41 +98,72 @@ export class MindsVideoPlayerComponent
     this.cd.detectChanges();
   });
 
+  setAutoplaying(value: boolean): void {
+    this.autoplaying = value;
+
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
+  setAutoplay(value: boolean): void {
+    // if the player doesn't exist yet, make it so this is called again by onReady()
+    if (!this.player || !this.player.player) {
+      this.newAutoplayValue = value;
+      this.autoplayChanged = true;
+    } else {
+      this.autoplayChanged = false;
+
+      // if we're about to autoplay, first mute so we avoid errors
+      if (value) {
+        this.mute();
+      }
+      // change the actual option in the next cycle, after the video has been muted
+      setTimeout(() => {
+        this.options = { ...this.options, autoplay: value };
+      });
+    }
+  }
+
   constructor(
+    public elementRef: ElementRef,
     private service: VideoPlayerService,
+    private session: Session,
+    @Inject(forwardRef(() => VideoAutoplayService))
+    private autoplayService: VideoAutoplayService,
     private cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
-  ngOnChanges(): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if (isPlatformBrowser(this.platformId)) {
       this.service.load();
+    }
+
+    if (changes.autoplay) {
+      this.setAutoplay(changes.autoplay.currentValue);
     }
   }
 
   ngAfterViewInit() {
-    this.autoplaySubscription = this.autoplaySubject.subscribe(
-      (val: boolean) => {
-        this.options.autoplay = val;
-      }
-    );
+    this.setAutoplay(this.autoplay);
+
+    if (this.allowAutoplayOnScroll) {
+      this.autoplayService.registerPlayer(this);
+    }
   }
 
   ngOnDestroy(): void {
-    if (this.autoplaySubscription) {
-      this.autoplaySubscription.unsubscribe();
-    }
     this.onReadySubscription.unsubscribe();
   }
 
   @Input('guid')
   set guid(guid: string) {
+    const oldGuid = this.service.guid;
     this.service.setGuid(guid);
-  }
 
-  @Input('autoplay')
-  set autoplay(autoplay: boolean) {
-    this.autoplaySubject.next(autoplay);
+    if (isPlatformBrowser(this.platformId) && oldGuid !== guid) {
+      this.service.load();
+    }
   }
 
   @Input('isModal')
@@ -130,12 +176,8 @@ export class MindsVideoPlayerComponent
     this.service.setShouldPlayInModal(shouldPlayInModal);
   }
 
-  get poster(): string {
-    return this.service.poster;
-  }
-
-  get sources(): Plyr.Source[] {
-    return this.service.sources;
+  get sources$(): BehaviorSubject<VideoSource> {
+    return this.service.sources$;
   }
 
   get status(): string {
@@ -151,7 +193,10 @@ export class MindsVideoPlayerComponent
    * @return boolean
    */
   isPlayable(): boolean {
-    return isPlatformBrowser(this.platformId) && this.service.isPlayable();
+    return (
+      (isPlatformBrowser(this.platformId) && this.autoplay) ||
+      (this.service.isPlayable() && this.autoplaying) // autoplaying comes from the scroll, and autoplay is for single entity views
+    );
   }
 
   /**
@@ -173,6 +218,38 @@ export class MindsVideoPlayerComponent
     console.error('Placeholder was clicked but we have no action to take');
   }
 
+  unmute(): void {
+    if (this.player) {
+      this.player.player.muted = false;
+    }
+  }
+
+  mute(): void {
+    if (this.player) {
+      this.player.player.muted = true;
+    }
+  }
+
+  isMuted(): boolean {
+    return this.player ? this.player.player.muted : false;
+  }
+
+  play(): void {
+    if (this.player) {
+      this.player.player.play();
+    }
+  }
+
+  isPlaying(): boolean {
+    return this.player ? this.player.player.playing : false;
+  }
+
+  stop(): void {
+    if (this.player) {
+      this.player.player.stop();
+    }
+  }
+
   /**
    * Pause the player, if there is one
    * @return void
@@ -180,7 +257,6 @@ export class MindsVideoPlayerComponent
   pause(): void {
     if (this.player) {
       this.player.player.pause();
-      return;
     }
   }
 
@@ -203,6 +279,41 @@ export class MindsVideoPlayerComponent
       });
     } catch (e) {
       console.info('Error emitting dimensions', e);
+    }
+  }
+
+  onClick(): void {
+    if ((this.autoplay || this.autoplaying) && this.isMuted()) {
+      this.autoplayService.muted = false;
+      this.unmute();
+      this.play();
+    }
+  }
+
+  onReady() {
+    // if autoplay changed, the player probably wasn't defined yet, so we need to call this method again
+    if (this.autoplayChanged) {
+      this.setAutoplay(this.newAutoplayValue);
+    }
+    if (this.autoplaying) {
+      if (this.autoplayService.muted) {
+        this.mute();
+      } else {
+        this.unmute();
+      }
+      this.play();
+    }
+  }
+
+  onVolumeChange() {
+    if (this.autoplay || this.autoplaying) {
+      this.autoplayService.muted = this.player.player.muted;
+    }
+  }
+
+  onPlay(): void {
+    if (!this.autoplaying) {
+      this.autoplayService.userPlay(this);
     }
   }
 }

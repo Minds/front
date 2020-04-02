@@ -22,6 +22,7 @@ export class PostMenuService {
   isBlocked$: BehaviorSubject<boolean> = new BehaviorSubject(null);
   showSubscribe$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   showUnSubscribe$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isPinned$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     public session: Session,
@@ -35,6 +36,8 @@ export class PostMenuService {
 
   setEntity(entity): PostMenuService {
     this.entity = entity;
+
+    this.isPinned$.next(this.entity.pinned);
     return this;
   }
 
@@ -215,5 +218,29 @@ export class PostMenuService {
 
   openReportModal(): void {
     this.overlayModal.create(ReportCreatorComponent, this.entity).present();
+  }
+
+  /**
+   * Toggles the pinned state
+   * @return void
+   */
+  async togglePinned(): Promise<void> {
+    if (this.session.getLoggedInUser().guid != this.entity.owner_guid) {
+      return;
+    }
+
+    this.entity.pinned = !this.entity.pinned;
+    this.isPinned$.next(this.entity.pinned);
+    const url: string = `api/v2/newsfeed/pin/${this.entity.guid}`;
+    try {
+      if (this.entity.pinned) {
+        await this.client.post(url);
+      } else {
+        await this.client.delete(url);
+      }
+    } catch (e) {
+      this.entity.pinned = !this.entity.pinned;
+      this.isPinned$.next(this.entity.pinned);
+    }
   }
 }

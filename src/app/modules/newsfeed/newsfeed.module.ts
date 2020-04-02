@@ -36,6 +36,8 @@ import { SearchModule } from '../search/search.module';
 import { NewsfeedTilesComponent } from './feeds/tiles.component';
 import { ActivityModule } from './activity/activity.module';
 import { FeedGridComponent } from './feed-grid/feed-grid.component';
+import { ComposerModule } from '../composer/composer.module';
+import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 
 const routes: Routes = [
   {
@@ -91,6 +93,8 @@ const routes: Routes = [
     SearchModule,
     ReferralsModule,
     ActivityModule,
+    ComposerModule,
+    DiscoverySharedModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,
