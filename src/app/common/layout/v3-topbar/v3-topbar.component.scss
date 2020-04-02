@@ -104,7 +104,7 @@
         @include m-theme() {
           border-right: 1px solid themed($m-borderColor--primary);
         }
-        @media screen and(max-width: $layoutMax2ColFixedWidth) {
+        @media screen and(max-width: $layoutMin3ColWidth) {
           @include m-theme() {
             border-right: 0;
           }
