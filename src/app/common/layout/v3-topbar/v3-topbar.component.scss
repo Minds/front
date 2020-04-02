@@ -306,8 +306,19 @@
       display: none;
     }
 
-    img {
+    .m-v3Topbar__logo--bulb {
       height: 36px;
+      //display: none;
+      @media screen and (min-width: $layoutMax3ColWidth) {
+        display: none;
+      }
+    }
+
+    .m-v3Topbar__logo--full {
+      height: 42px;
+      @media screen and (max-width: $layoutMax3ColWidth) {
+        display: none;
+      }
     }
   }
 

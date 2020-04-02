@@ -49,7 +49,7 @@ export class ModalService {
             ModalComponent,
             null,
             {
-              wrapperClass: 'm-composer__modalWrapper',
+              wrapperClass: 'm-modalV2__wrapper',
               onPost: response => {
                 subscriber.next(response);
                 this.dismiss();

@@ -1,5 +1,4 @@
-<div class="m-suggestions__sidebar">
-  <h3 class="m-newsfeedSidebar__header">Suggested channels</h3>
+<ng-template #suggestionsBody>
   <span
     *ngIf="(error$ | async) && !(inProgress$ | async)"
     class="m-suggestionsSidebar__empty"
@@ -55,4 +54,21 @@
     [mdl]
     [hidden]="!(inProgress$ | async)"
   ></div>
-</div>
+</ng-template>
+
+<!-- Outlets -->
+
+<ng-container *mIfFeature="'navigation'; else legacyNavigation">
+  <m-sidebarWidget title="Suggested Channels">
+    <div class="m-sidebarWidget__body">
+      <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
+    </div>
+  </m-sidebarWidget>
+</ng-container>
+
+<ng-template #legacyNavigation>
+  <div class="m-suggestions__sidebar">
+    <h3 class="m-newsfeedSidebar__header">Suggested channels</h3>
+    <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
+  </div>
+</ng-template>

@@ -23,6 +23,10 @@
   height: 32px;
   margin-right: 8px;
 
+  &:not(.m-groupMemberPreviews__member--count) {
+    flex-shrink: 0;
+  }
+
   &.m-groupMemberPreviews__member--count {
     width: auto;
     font-weight: 500;

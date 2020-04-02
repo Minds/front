@@ -42,15 +42,6 @@ describe('Composer Modal', () => {
     }
   });
 
-  it('should render a close button', () => {
-    fixture.detectChanges();
-
-    const closeButton = fixture.debugElement.query(
-      By.css('a.m-composerModalWindowControls__close')
-    );
-    expect(closeButton).not.toBeNull();
-  });
-
   it('should render a base composer', () => {
     fixture.detectChanges();
 

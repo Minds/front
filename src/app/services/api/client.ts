@@ -114,7 +114,6 @@ export class Client {
    * Return a POST request
    */
   post(endpoint: string, data: Object = {}, options: Object = {}) {
-    console.log(`POST: ${endpoint}`);
     return new Promise((resolve, reject) => {
       this.http
         .post(
@@ -266,12 +265,13 @@ export class Client {
   /**
    * Build the options
    */
-  private buildOptions(options: Object, withCredentials: boolean = false) {
+  private buildOptions(options: any, withCredentials: boolean = false) {
     const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN') || '';
 
     const headers = {
       'X-XSRF-TOKEN': XSRF_TOKEN,
       'X-VERSION': environment.version,
+      'Content-Type': 'application/json',
     };
 
     const builtOptions = {

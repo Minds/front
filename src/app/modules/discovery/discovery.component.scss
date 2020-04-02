@@ -1,5 +1,10 @@
 .m-discovery__sidebar {
-  padding: 20px;
+  padding: 20px 40px;
+  padding-right: 0;
+
+  m-sidebarWidget {
+    margin-bottom: 20px;
+  }
 }
 
 .m-discovery__trends {

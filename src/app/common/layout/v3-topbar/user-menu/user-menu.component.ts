@@ -10,6 +10,7 @@ import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { Subscription } from 'rxjs';
 import { Navigation as NavigationService } from '../../../../services/navigation';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'm-usermenu__v3',
@@ -25,6 +26,19 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
   minds = window.Minds;
   isDark: boolean = false;
   themeSubscription: Subscription;
+
+  footerLinks: { label: string; routerLink?: string[]; href?: string }[] = [
+    { label: 'Canary Mode', routerLink: ['/canary'] },
+    { label: 'Content Policy', routerLink: ['/content-policy'] },
+    { label: 'Mobile App', routerLink: ['/mobile'] },
+    { label: 'Store', href: 'https://www.teespring.com/stores/minds' },
+    { label: 'Jobs', routerLink: ['/jobs'] },
+    { label: 'Status', href: 'https://status.minds.com/' },
+    { label: 'Terms', routerLink: ['/p/terms'] },
+    { label: 'Privacy', routerLink: ['/p/privacy'] },
+    { label: 'Contact', routerLink: ['/p/contact'] },
+  ];
+  maxFooterLinks = 5;
 
   constructor(
     public navigation: NavigationService,
@@ -63,6 +77,14 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
 
   toggleTheme() {
     this.themeService.toggleUserThemePreference();
+  }
+
+  toggleFooterLinks() {
+    if (this.maxFooterLinks === 5) {
+      this.maxFooterLinks = Infinity;
+    } else {
+      this.maxFooterLinks = 5;
+    }
   }
 
   ngOnDestroy() {

@@ -9,6 +9,7 @@ import { ActivityEntity, ActivityService } from '../activity.service';
 export class ActivityRemindComponent {
   @Input('entity') set entity(entity: ActivityEntity) {
     this.service.setEntity(entity.remind_object);
+    this.service.isNsfwConsented$.next(true); // Parent entity should have done this
   }
 
   /**
@@ -21,5 +22,11 @@ export class ActivityRemindComponent {
    */
   @Input() autoplayVideo: boolean = false;
 
+  @Input() parentService: ActivityService;
+
   constructor(public service: ActivityService) {}
+
+  ngOnInit() {
+    this.service.displayOptions = this.parentService.displayOptions;
+  }
 }
