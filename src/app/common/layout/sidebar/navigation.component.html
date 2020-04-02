@@ -143,13 +143,11 @@
         </ul>
       </li>
 
-      <li>
-        <a
-          class="m-sidebarNavigation__item"
-          [routerLink]="[settingsLink]"
-          [routerLinkActive]="'m-sidebarNavigation__item--active'"
-          (click)="toggle()"
-        >
+      <li
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        class="m-sidebarNavigation__item"
+      >
+        <a [routerLink]="[settingsLink]" (click)="toggle()">
           <m-tooltip
             icon="more_horiz"
             i18n="@@COMMON__SETTINGS"
