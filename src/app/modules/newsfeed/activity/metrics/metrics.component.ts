@@ -9,6 +9,7 @@ import { map } from 'rxjs/operators';
   templateUrl: 'metrics.component.html',
 })
 export class ActivityMetricsComponent {
+  entity$: Observable<ActivityEntity> = this.service.entity$;
   views$: Observable<number> = this.service.entity$.pipe(
     map((entity: ActivityEntity) => {
       return entity.impressions;

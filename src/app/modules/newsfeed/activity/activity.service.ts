@@ -36,6 +36,7 @@ export type ActivityEntity = {
   paywall: boolean;
   impressions: number;
   boostToggle: boolean;
+  url?: string;
 };
 
 // Constants of blocks
@@ -46,7 +47,7 @@ export const ACTIVITY_COMMENTS_MORE_HEIGHT = 42;
 export const ACTIVITY_CONTENT_PADDING = 16;
 
 // Constants of fixed heights
-export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 750;
+export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600;
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
@@ -54,6 +55,8 @@ export const ACTIVITY_FIXED_HEIGHT_RATIO =
 
 @Injectable()
 export class ActivityService {
+  readonly siteUrl: string;
+
   entity$ = new BehaviorSubject(null);
 
   /**
@@ -62,8 +65,7 @@ export class ActivityService {
   canonicalUrl$: Observable<string> = this.entity$.pipe(
     map((entity: ActivityEntity) => {
       if (!entity) return '';
-      const guid = entity.entity_guid || entity.guid;
-      return `/newsfeed/${guid}`;
+      return this.buildCanonicalUrl(entity, false);
     })
   );
 
@@ -148,7 +150,9 @@ export class ActivityService {
     fixedHeight: false,
   };
 
-  constructor(private configs: ConfigsService) {}
+  constructor(private configs: ConfigsService) {
+    this.siteUrl = configs.get('site_url');
+  }
 
   /**
    * Emits new entity
@@ -169,6 +173,12 @@ export class ActivityService {
   setDisplayOptions(options: Object = {}): ActivityService {
     this.displayOptions = Object.assign(this.displayOptions, options);
     return this;
+  }
+
+  buildCanonicalUrl(entity: ActivityEntity, full: boolean): string {
+    const guid = entity.entity_guid || entity.guid;
+    const prefix = full ? this.siteUrl : '/';
+    return `${prefix}newsfeed/${guid}`;
   }
 
   private patchForeignEntity(entity): ActivityEntity {

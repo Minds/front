@@ -14,7 +14,10 @@ import { DiscoveryTagsComponent } from './tags/tags.component';
 import { DiscoveryTrendsService } from './trends/trends.service';
 import { LegacyModule } from '../legacy/legacy.module';
 import { GroupsModule } from '../groups/groups.module';
-import { DiscoverySidebarTagsComponent } from './tags/sidebar-tags.component';
+import { DiscoverySharedModule } from './discovery-shared.module';
+import { DiscoveryFeedsComponent } from './feeds/feeds.component';
+import { DiscoveryFeedItemComponent } from './feeds/feed-item.component';
+import { DiscoveryFeedsSettingsButtonComponent } from './feeds/settings-button.component';
 
 @NgModule({
   imports: [
@@ -40,6 +43,20 @@ import { DiscoverySidebarTagsComponent } from './tags/sidebar-tags.component';
             path: 'tags',
             component: DiscoveryTagsComponent,
           },
+          {
+            path: 'feeds',
+            children: [
+              { path: '', redirectTo: 'preferred' },
+              {
+                path: 'preferred',
+                component: DiscoveryFeedsComponent,
+              },
+              {
+                path: 'trending',
+                component: DiscoveryFeedsComponent,
+              },
+            ],
+          },
         ],
       },
     ]),
@@ -49,8 +66,9 @@ import { DiscoverySidebarTagsComponent } from './tags/sidebar-tags.component';
     ActivityModule,
     LegacyModule, // For subscribe button
     // GroupsModule,
+    DiscoverySharedModule,
   ],
-  providers: [DiscoveryTrendsService, DiscoveryTagsService],
+  providers: [DiscoveryTrendsService],
   declarations: [
     DiscoveryComponent,
     DiscoveryTrendsComponent,
@@ -58,7 +76,9 @@ import { DiscoverySidebarTagsComponent } from './tags/sidebar-tags.component';
     DiscoveryTrendComponent,
     DiscoverySearchComponent,
     DiscoveryTagsComponent,
-    DiscoverySidebarTagsComponent,
+    DiscoveryFeedsComponent,
+    DiscoveryFeedItemComponent,
+    DiscoveryFeedsSettingsButtonComponent,
   ],
   exports: [DiscoveryComponent],
   entryComponents: [DiscoveryComponent],

@@ -36,3 +36,18 @@
   padding: 0;
   margin: 0;
 }
+
+.m-discoveryTags__list--user {
+  .m-discoveryTrends__trend a > div {
+    align-self: center;
+  }
+}
+
+.m-discoverTrends__trend--feedLink a {
+  align-items: center;
+  h3 {
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}
