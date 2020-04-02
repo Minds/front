@@ -1,16 +1,22 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from "@angular/core";
-import { tap, filter, switchMap } from 'rxjs/operators';
-import { BlockListService } from "../../../common/services/block-list.service";
-import { EntitiesService } from "../../../common/services/entities.service";
-import { Client } from "../../../services/api/client";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
+import { tap, filter, switchMap, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { BlockListService } from '../../../common/services/block-list.service';
+import { EntitiesService } from '../../../common/services/entities.service';
+import { Client } from '../../../services/api/client';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-settings__blockedChannels',
   templateUrl: 'blocked-channels.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SettingsBlockedChannelsComponent implements OnInit {
-
   blockedGuids: any[] = [];
   channels;
 
@@ -19,37 +25,41 @@ export class SettingsBlockedChannelsComponent implements OnInit {
   moreData: boolean = true;
   inProgress: boolean = false;
 
-  minds = window.Minds;
-
   constructor(
     protected blockListService: BlockListService,
     protected entitiesService: EntitiesService,
     protected client: Client,
     protected cd: ChangeDetectorRef,
-  ) {
-  }
+    private configs: ConfigsService
+  ) {}
 
   ngOnInit() {
     this.load(true);
     this.channels = this.blockListService.blocked.pipe(
-      tap(() => {
+      tap(list => {
         this.inProgress = true;
         this.moreData = false; // Support pagination in the future
+
+        if (list.length < 1) {
+          throw new Error('No more channels');
+        }
       }),
-      filter(list => list.length > 0),
       switchMap(async guids => {
         const response: any = await this.entitiesService.fetch(guids);
         return response.entities;
       }),
-      tap((blocked) => {
+      tap(blocked => {
         this.inProgress = false;
+      }),
+      catchError(e => {
+        this.inProgress = false;
+        return of(null);
       })
     );
   }
 
   async load(refresh: boolean = false) {
-    if (this.inProgress)
-      return;
+    if (this.inProgress) return;
     this.blockListService.fetch(); // Get latest
   }
 
@@ -58,7 +68,9 @@ export class SettingsBlockedChannelsComponent implements OnInit {
   }
 
   getChannelIcon(channel) {
-    return `${this.minds.cdn_url}icon/${channel.guid}/medium/${channel.icontime}`;
+    return `${this.configs.get('cdn_url')}icon/${channel.guid}/medium/${
+      channel.icontime
+    }`;
   }
 
   async block(channel) {

@@ -1,35 +1,54 @@
-<a class="mdl-card__title minds-video-thumbnail"
-	style="height:200px; background-position: center center; background-size:cover;"
-	[ngStyle]="{'background': 'url(' + entity.thumbnail_src + ') center center / cover'}"
+<a
+  class="mdl-card__title minds-video-thumbnail"
+  style="height:200px; background-position: center center; background-size:cover;"
+  [ngStyle]="{'background': 'url(' + entity.thumbnail_src + ') center center / cover'}"
   [routerLink]="['/media', entity.guid]"
   target="_blank"
-	[ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(entity) }"
-	>
+  [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(entity) }"
+>
 </a>
-<span class="m-mature-thumbnail-overlay"
-	style="height: 200px;"
+<span
+  class="m-mature-thumbnail-overlay"
+  style="height: 200px;"
   *ngIf="attachment.shouldBeBlurred(entity)"
-><i class="material-icons">explicit</i></span>
+>
+  <i class="material-icons">explicit</i>
+</span>
 
 <!-- Owner block -->
-<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block" *ngIf="entity.ownerObj && entity.ownerObj.username">
+<div
+  class="mdl-card__supporting-text mdl-color-text--grey-600 m-title-block"
+  *ngIf="entity.ownerObj && entity.ownerObj.username"
+>
+  <a
+    [routerLink]="['/media', entity.guid]"
+    target="_blank"
+    class="mdl-color-text--blue-grey-700"
+  >
+    <strong>{{ entity.title }}</strong>
+  </a>
 
-		<a [routerLink]="['/media', entity.guid]" target="_blank" class="mdl-color-text--blue-grey-700">
-			<strong>{{ entity.title }}</strong>
-		</a>
-
-		<div class="m-inline-owner-block">
-			<a [routerLink]="['/', entity.ownerObj.username]" target="_blank" class="mdl-color-text--blue-grey-300">
-				<img src="/icon/{{entity.ownerObj.guid}}/small/{{entity.ownerObj.icontime}}" class="mdl-shadow--2dp"/>
-				{{entity.ownerObj.username}}
-			</a>
-			<span>{{ entity.time_created * 1000 | date:'mediumDate' }}</span>
-		</div>
-
+  <div class="m-inline-owner-block">
+    <a
+      [routerLink]="['/', entity.ownerObj.username]"
+      target="_blank"
+      class="mdl-color-text--blue-grey-300"
+    >
+      <img
+        src="/icon/{{entity.ownerObj.guid}}/small/{{entity.ownerObj.icontime}}"
+        class="mdl-shadow--2dp"
+      />
+      {{entity.ownerObj.username}}
+    </a>
+    <span>{{ entity.time_created * 1000 | date:'mediumDate' }}</span>
+  </div>
 </div>
 
 <div class="mdl-card__supporting-text m-action-tabs">
-	<minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
-	<minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
-	<minds-button-comment [object]="entity" [routerLink]="['/media', entity.guid]"></minds-button-comment>
+  <minds-button-thumbs-up [object]="entity"></minds-button-thumbs-up>
+  <minds-button-thumbs-down [object]="entity"></minds-button-thumbs-down>
+  <minds-button-comment
+    [object]="entity"
+    [routerLink]="['/media', entity.guid]"
+  ></minds-button-comment>
 </div>

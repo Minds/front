@@ -1,4 +1,4 @@
-@import "defaults";
+@import 'defaults';
 
 m-cookies-notice {
   box-sizing: border-box;
@@ -15,7 +15,7 @@ m-cookies-notice {
 
   padding: $minds-padding * 2 $minds-padding * 2;
   border-radius: 3px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-700);
     background-color: themed($m-white);
     border: 1px solid themed($m-grey-100);
@@ -30,7 +30,7 @@ m-cookies-notice {
 
   .m-notice--message {
     a {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue-light);
       }
     }
@@ -39,10 +39,9 @@ m-cookies-notice {
   .m-btn.m-btn--slim {
     white-space: nowrap;
     margin-left: 8px;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white) !important;
       border: 1px solid themed($m-grey-100);
     }
   }
-
 }

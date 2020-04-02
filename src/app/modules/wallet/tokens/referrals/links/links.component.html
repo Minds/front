@@ -1,111 +1,158 @@
-<div class="m-referrals-links">
-  <div class="m-referrals-links__copyableLinks">
-    <h3 class="m-referrals-links__modalShow"
-      i18n="@@M_REFERRALS__LINKS_MODAL_HEADER" >
-        Earn tokens for referring your friends
+<div class="m-referralsLinks">
+  <div class="m-referralsLinks__copyableLinks">
+    <h3
+      class="m-referralsLinks__modalShow"
+      i18n="@@M_REFERRALS__LINKS_MODAL_HEADER"
+    >
+      Earn tokens for referring your friends
     </h3>
-    <p class="m-referrals-links__modalHide"
-      i18n="@@M_REFERRALS__LINKS_REGISTER_URL_DESC">
-        Send this link to your friends to earn tokens for referrals
+    <p
+      class="m-referralsLinks__modalHide"
+      i18n="@@M_REFERRALS__LINKS_REGISTER_URL_DESC"
+    >
+      Send this link to your friends to earn tokens for referrals
     </p>
 
-    <div class="m-referrals-links__copyableLink m-border" [class.focused]="registerUrlFocused"
+    <div
+      class="m-referralsLinks__copyableLink m-border"
+      [class.focused]="registerUrlFocused"
       (click)="applyFocus(registerUrlEl, 'registerUrl')"
     >
-      <input class="m-referrals-links__copyableLinkText"
+      <input
+        class="m-referralsLinks__copyableLinkText"
         [class.recentlyCopied]="registerUrlRecentlyCopied"
-        readonly tabindex="-1"
-        (focus)="registerUrlFocused"
+        readonly
+        tabindex="-1"
+        (focus)="(registerUrlFocused)"
         (focusout)="registerUrlFocused = false"
-        value="{{registerUrl}}" #registerUrlEl>
-      <div (click)="copyToClipboard(registerUrlEl, 'registerUrl')" class="m-referrals-links__copyableLinkButton">
-        <div *ngIf="!registerUrlRecentlyCopied" i18n="@@M_REFERRALS__LINKS_COPY_ACTION">Copy</div>
-        <div *ngIf="registerUrlRecentlyCopied" i18n="@@M_REFERRALS__LINKS_COPY_STATE">Copied</div>
+        value="{{ registerUrl }}"
+        #registerUrlEl
+      />
+      <div
+        (click)="copyToClipboard(registerUrlEl, 'registerUrl')"
+        class="m-referralsLinks__copyableLinkButton"
+      >
+        <div
+          *ngIf="!registerUrlRecentlyCopied"
+          i18n="@@M_REFERRALS__LINKS_COPY_ACTION"
+        >
+          Copy
+        </div>
+        <div
+          *ngIf="registerUrlRecentlyCopied"
+          i18n="@@M_REFERRALS__LINKS_COPY_STATE"
+        >
+          Copied
+        </div>
       </div>
     </div>
 
-    <p i18n="@@M_REFERRALS__LINKS_REFERRER_PARAM_DESC">You can also get referrals by adding this code to the end of any Minds link you share</p>
-    <div class="m-referrals-links__copyableLink m-border" [class.focused]="referrerParamFocused"
+    <p i18n="@@M_REFERRALS__LINKS_REFERRER_PARAM_DESC">
+      You can also get referrals by adding this code to the end of any Minds
+      link you share
+    </p>
+    <div
+      class="m-referralsLinks__copyableLink m-border"
+      [class.focused]="referrerParamFocused"
       (click)="applyFocus(referrerParamEl, 'referrerParam')"
     >
-      <input class="m-referrals-links__copyableLinkText"
+      <input
+        class="m-referralsLinks__copyableLinkText"
         [class.recentlyCopied]="referrerParamRecentlyCopied"
-        readonly tabindex="-1"
-        (focus)="referrerParamFocused"
+        readonly
+        tabindex="-1"
+        (focus)="(referrerParamFocused)"
         (focusout)="referrerParamFocused = false"
-        value="{{referrerParam}}" #referrerParamEl>
-      <div (click)="copyToClipboard(referrerParamEl, 'referrerParam')" class="m-referrals-links__copyableLinkButton">
-        <div i18n="@@M_REFERRALS__LINKS_COPY_ACTION" *ngIf="!referrerParamRecentlyCopied">Copy</div>
-        <div i18n="@@M_REFERRALS__LINKS_COPY_STATE" *ngIf="referrerParamRecentlyCopied">Copied</div>
+        value="{{ referrerParam }}"
+        #referrerParamEl
+      />
+      <div
+        (click)="copyToClipboard(referrerParamEl, 'referrerParam')"
+        class="m-referralsLinks__copyableLinkButton"
+      >
+        <div
+          i18n="@@M_REFERRALS__LINKS_COPY_ACTION"
+          *ngIf="!referrerParamRecentlyCopied"
+        >
+          Copy
+        </div>
+        <div
+          i18n="@@M_REFERRALS__LINKS_COPY_STATE"
+          *ngIf="referrerParamRecentlyCopied"
+        >
+          Copied
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="m-referrals-links__share">
+  <div class="m-referralsLinks__share">
     <h4 i18n="@@M_REFERRALS__SHARE_HEADER">More ways to share</h4>
-    <div class="m-referrals-links__shareButtons">
-      <button i18n-title="@@M_REFERRALS__SHARE_BUTTON_TWITTER" title="Twitter"
-        class="m-referrals-links__shareButton m-referrals-links__shareButton--twitter"
+    <div class="m-referralsLinks__shareButtons">
+      <button
+        i18n-title="@@M_REFERRALS__SHARE_BUTTON_TWITTER"
+        title="Twitter"
+        class="m-referralsLinks__shareButton m-referralsLinks__shareButton--twitter"
         (click)="openTwitter()"
       >
-        <svg viewBox="0 0 24 24">
-          <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z" fill-rule="evenodd"></path>
-        </svg>
+        <img [src]="cdnAssetsUrl + 'assets/icons/twitter.svg'" />
       </button>
 
-      <button i18n-title="@@M_REFERRALS__SHARE_BUTTON_FACEBOOK" title="Facebook"
-        class="m-referrals-links__shareButton m-referrals-links__shareButton--facebook"
+      <button
+        i18n-title="@@M_REFERRALS__SHARE_BUTTON_FACEBOOK"
+        title="Facebook"
+        class="m-referralsLinks__shareButton m-referralsLinks__shareButton--facebook"
         (click)="openFacebook()"
       >
-        <svg viewBox="0 0 32 32">
-          <path d="m8 14.41v-4.17c0-.42.35-.81.77-.81h2.52v-2.08c0-4.84 2.48-7.31 7.42-7.35 1.65 0 3.22.21 4.69.64.46.14.63.42.6.88l-.56 4.06c-.04.18-.14.35-.32.53-.21.11-.42.18-.63.14-.88-.25-1.78-.35-2.8-.35-1.4 0-1.61.28-1.61 1.73v1.8h4.52c.42 0 .81.42.81.88l-.35 4.17c0 .42-.35.71-.77.71h-4.21v16c0 .42-.35.81-.77.81h-5.21c-.42 0-.8-.39-.8-.81v-16h-2.52a.78.78 0 0 1 -.78-.77" fill-rule="evenodd"></path>
-        </svg>
+        <img [src]="cdnAssetsUrl + 'assets/icons/facebook.svg'" />
       </button>
 
-      <button i18n-title="@@M_REFERRALS__SHARE_BUTTON_MESSENGER" title="Messenger"
-        class="m-referrals-links__shareButton m-referrals-links__shareButton--messenger"
+      <button
+        i18n-title="@@M_REFERRALS__SHARE_BUTTON_MESSENGER"
+        title="Messenger"
+        class="m-referralsLinks__shareButton m-referralsLinks__shareButton--messenger"
         *ngIf="isMobileOrTablet()"
         (click)="openMessenger()"
       >
-        <svg viewBox="0 0 32 32">
-          <path d="m17.59 19.95-4.07-4.35-7.95 4.35 8.74-9.28 4.17 4.35 7.85-4.35zm-1.59-19.95c-8.84 0-16 6.63-16 14.82 0 4.66 2.33 8.82 5.96 11.54v5.64l5.45-2.99a17.24 17.24 0 0 0 4.59.62c8.84 0 16-6.63 16-14.82 0-8.18-7.16-14.81-16-14.80z" fill-rule="evenodd"></path>
-        </svg>
+        <img [src]="cdnAssetsUrl + 'assets/icons/messenger.svg'" />
       </button>
 
-      <button i18n-title="@@M_REFERRALS__SHARE_BUTTON_Whatsapp" title="Whatsapp"
-        class="m-referrals-links__shareButton m-referrals-links__shareButton--whatsapp"
+      <button
+        i18n-title="@@M_REFERRALS__SHARE_BUTTON_Whatsapp"
+        title="Whatsapp"
+        class="m-referralsLinks__shareButton m-referralsLinks__shareButton--whatsapp"
         *ngIf="isMobileOrTablet()"
         (click)="openWhatsapp()"
       >
-        <svg viewBox="0 0 32 32">
-          <path d="m23.37 21.18c-.31.87-1.8 1.66-2.52 1.77-.65.1-1.46.14-2.35-.15a21.13 21.13 0 0 1 -2.13-.78c-3.74-1.61-6.19-5.36-6.38-5.61s-1.52-2.01-1.52-3.84.97-2.73 1.31-3.1.75-.46 1-.46.5 0 .71.01c.23.01.54-.09.84.64.31.75 1.06 2.57 1.15 2.76.09.18.16.4.03.65-.12.25-.19.4-.37.62-.19.22-.39.48-.56.65-.19.19-.38.39-.16.76s.97 1.59 2.08 2.58c1.43 1.26 2.63 1.66 3 1.84.37.19.59.16.81-.09s.93-1.09 1.18-1.46.5-.31.84-.19 2.18 1.02 2.55 1.21.62.28.72.43c.09.16.09.9-.22 1.77m3.26-15.82a14.88 14.88 0 0 0 -10.57-4.36c-8.23 0-14.94 6.67-14.94 14.87a14.78 14.78 0 0 0 1.99 7.43l-2.12 7.7 7.92-2.07a14.98 14.98 0 0 0 7.14 1.81h.01c8.23 0 14.93-6.67 14.94-14.87a14.74 14.74 0 0 0 -4.37-10.53" fill-rule="evenodd"></path>
-        </svg>
+        <img [src]="cdnAssetsUrl + 'assets/icons/whatsapp.svg'" />
       </button>
 
-      <button i18n-title="@@M_REFERRALS__SHARE_BUTTON_SMS" title="SMS"
-        class="m-referrals-links__shareButton m-referrals-links__shareButton--sms"
+      <button
+        i18n-title="@@M_REFERRALS__SHARE_BUTTON_SMS"
+        title="SMS"
+        class="m-referralsLinks__shareButton m-referralsLinks__shareButton--sms"
         *ngIf="isMobile()"
         (click)="openSMS()"
       >
-        <svg viewBox="0 0 32 32">
-          <path d="m23.5 16.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m-7.5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m-7.5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m7.5-14.5c-8.82 0-16 5.94-16 13.32 0 2.9 1.12 5.64 3.14 7.92l-.43 6.23a.5.5 0 0 0 .69.5l6.08-2.51c1.99.78 4.21 1.19 6.52 1.19 8.82 0 16-5.94 16-13.32s-7.18-13.33-16-13.32" fill-rule="evenodd"></path>
-        </svg>
+        <img [src]="cdnAssetsUrl + 'assets/icons/sms.svg'" />
       </button>
 
-      <button i18n-title="@@M_REFERRALS__SHARE_BUTTON_EMAIL" title="Email"
-        class="m-referrals-links__shareButton m-referrals-links__shareButton--email"
-        (click)= "openEmail()"
+      <button
+        i18n-title="@@M_REFERRALS__SHARE_BUTTON_EMAIL"
+        title="Email"
+        class="m-referralsLinks__shareButton m-referralsLinks__shareButton--email"
+        (click)="openEmail()"
       >
-        <svg viewBox="0 0 32 32">
-          <path d="m17.42 18.99c.14-.12.86-.76 2.08-1.86l10.43 8.66h-27.76l10.35-8.67c1.24 1.1 1.98 1.74 2.12 1.85.83.65 1.93.63 2.78.02m11.89-10.67-4.83 4.34c-1.51 1.35-2.8 2.51-3.86 3.46l10.35 8.6c.01.01.01.02.02.03v-17.81c0-.04-.02-.07-.02-.11a3.73 3.73 0 0 0 -.08.07zm-25.19-.7a5347.74 5347.74 0 0 0 4.69 4.19c3.94 3.52 6.51 5.79 6.75 5.97a.76.76 0 0 0 .92.03c.21-.18 2.82-2.52 7.01-6.28l4.82-4.33 1.35-1.21h-27.37l.29.26zm3.66 5.28a4436.65 4436.65 0 0 1 -4.66-4.16c-.56-.5-1.07-.96-1.53-1.37l-.57-.51c0 .03-.01.05-.01.07v17.89l10.38-8.7c-1-.89-2.2-1.95-3.61-3.20" fill-rule="evenodd"></path>
-        </svg>
+        <img [src]="cdnAssetsUrl + 'assets/icons/email.svg'" />
       </button>
     </div>
   </div>
-  <div class="m-referrals-links__modalShow m-referrals-links__modalButton">
+  <div class="m-referralsLinks__modalShow m-referralsLinks__modalButton">
     <a [routerLink]="['/wallet/tokens/referrals']" (click)="closeModal()">
       <button class="m-btn m-btn--slim m-btn--action">
-        <span i18n-title="@@M_REFERRALS__LINKS_CONSOLE_BUTTON">Go to Referrals Console</span>
+        <span i18n-title="@@M_REFERRALS__LINKS_CONSOLE_BUTTON"
+          >Go to Referrals Console</span
+        >
       </button>
     </a>
   </div>

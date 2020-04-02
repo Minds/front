@@ -1,27 +1,25 @@
-import { 
+import {
   Component,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   ViewChild,
-  ElementRef, 
+  ElementRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../common/api/client.service';
-import { MindsTitle } from '../../../services/ux/title';
 import { REASONS as REASONS_LIST } from '../../../services/list-options';
 import { Session } from '../../../services/session';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-reports__marketing',
   templateUrl: 'marketing.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class ReportsMarketingComponent {
-
-  user = window.Minds.user;
-  minds = window.Minds;
+  user;
+  readonly cdnAssetsUrl: string;
   stats = {
     reported: 0,
     reportedPct: 0,
@@ -39,10 +37,11 @@ export class ReportsMarketingComponent {
     private client: Client,
     private cd: ChangeDetectorRef,
     private router: Router,
-    private title: MindsTitle,
     public session: Session,
+    configs: ConfigsService
   ) {
-    title.setTitle('Community Moderation');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.user = this.session.getLoggedInUser();
   }
 
   ngOnInit() {
@@ -59,5 +58,4 @@ export class ReportsMarketingComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

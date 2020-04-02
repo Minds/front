@@ -1,20 +1,25 @@
-import { Component, EventEmitter, Input, Output, ChangeDetectorRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-paywall',
   templateUrl: 'paywall.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class PayWall {
-
-  minds = (<any>window).Minds;
+  readonly cdnUrl: string;
 
   inProgress: boolean = false;
   error: string;
@@ -23,11 +28,17 @@ export class PayWall {
   nonce: string = '';
   showSignupModal: boolean = false;
 
-  @Output('entityChange') update: EventEmitter<any> = new EventEmitter;
+  @Output('entityChange') update: EventEmitter<any> = new EventEmitter();
 
   @Input() entity;
 
-  constructor(public session: Session, public client: Client, public cd: ChangeDetectorRef) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    public cd: ChangeDetectorRef,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   checkout() {
@@ -40,7 +51,8 @@ export class PayWall {
     this.inProgress = true;
     this.detectChanges();
 
-    this.client.get('api/v1/payments/plans/exclusive/' + this.entity.guid)
+    this.client
+      .get('api/v1/payments/plans/exclusive/' + this.entity.guid)
       .then((response: any) => {
         this.inProgress = false;
         if (response.subscribed) {
@@ -64,13 +76,19 @@ export class PayWall {
     this.inProgress = true;
     this.detectChanges();
     console.log('nonce: ' + nonce);
-    this.client.post('api/v1/payments/plans/subscribe/' + this.entity.owner_guid + '/exclusive', {
-      nonce: nonce
-    })
-      .then((response) => setTimeout(() => this.checkout(), 0))
+    this.client
+      .post(
+        'api/v1/payments/plans/subscribe/' +
+          this.entity.owner_guid +
+          '/exclusive',
+        {
+          nonce: nonce,
+        }
+      )
+      .then(response => setTimeout(() => this.checkout(), 0))
       .catch(e => {
         this.inProgress = false;
-        this.error = 'Sorry, we couldn\'t complete the transaction.';
+        this.error = "Sorry, we couldn't complete the transaction.";
         this.detectChanges();
       });
   }
@@ -79,5 +97,4 @@ export class PayWall {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

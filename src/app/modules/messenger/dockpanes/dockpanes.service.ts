@@ -1,22 +1,26 @@
 import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
+import { Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { MindsUser } from '../../../interfaces/entities';
 
 export class MessengerConversationDockpanesService {
-
   conversations: Array<any> = [];
 
-  static _(session: Session) {
-    return new MessengerConversationDockpanesService(new Storage(), session);
-  }
+  constructor(
+    public storage: Storage,
+    public session: Session,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.session.getLoggedInUser(user => this.onLogOut(user));
 
-  constructor(public storage: Storage, public session: Session) {
-    this.session.getLoggedInUser((user) => this.onLogOut(user));
+    if (isPlatformBrowser(platformId)) {
+      this.loadFromCache();
 
-    this.loadFromCache();
-
-    setInterval(() => {
-      this.syncFromCache();
-    }, 1000);
+      setInterval(() => {
+        this.syncFromCache();
+      }, 1000);
+    }
   }
 
   open(conversation) {
@@ -60,9 +64,12 @@ export class MessengerConversationDockpanesService {
 
   private syncFromCache() {
     // Only sync closed conversations
-    let savedConversations = JSON.parse(this.storage.get('messenger-dockpanes')),
+    let savedConversations = JSON.parse(
+        this.storage.get('messenger-dockpanes')
+      ),
       conversations = this.conversations,
-      savedConversationGuids = [], closedConversations = [];
+      savedConversationGuids = [],
+      closedConversations = [];
 
     if (!savedConversations) {
       return;
@@ -85,8 +92,7 @@ export class MessengerConversationDockpanesService {
 
   private loadFromCache() {
     let conversations = JSON.parse(this.storage.get('messenger-dockpanes'));
-    if (conversations)
-      this.conversations = conversations;
+    if (conversations) this.conversations = conversations;
   }
 
   private saveToCache() {
@@ -102,5 +108,4 @@ export class MessengerConversationDockpanesService {
       this.conversations = [];
     }
   }
-
 }

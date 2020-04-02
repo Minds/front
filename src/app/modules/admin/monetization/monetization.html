@@ -1,0 +1,67 @@
+<div class="mdl-grid m-admin-reports" style="max-width:600px">
+  <div class="mdl-cell mdl-cell--12-col">
+    <div
+      class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"
+      [hidden]="entities.length > 0 || !inProgress"
+    ></div>
+
+    <div
+      class="mdl-card__supporting-text m-no-reports"
+      [hidden]="inProgress || moreData || entities.length > 0"
+    >
+      <ng-container i18n="@@MINDS__ADMIN__MONETIZATION__EMPTY"
+        >Nothing is monetized.</ng-container
+      >
+    </div>
+
+    <div
+      class="mdl-card mdl-shadow--4dp m-report"
+      *ngFor="let entity of entities; let i = index"
+    >
+      <minds-card-video
+        [object]="entity"
+        class="mdl-card"
+        *ngIf="entity.subtype == 'video'"
+      ></minds-card-video>
+      <minds-card-image
+        [object]="entity"
+        class="mdl-card"
+        *ngIf="entity.subtype == 'image'"
+      ></minds-card-image>
+      <minds-card-blog
+        [object]="entity"
+        class="mdl-card"
+        *ngIf="entity.subtype == 'blog'"
+      ></minds-card-blog>
+      <minds-card-user
+        [object]="entity"
+        class="mdl-card"
+        *ngIf="entity.type == 'user'"
+      ></minds-card-user>
+      <minds-activity
+        [object]="entity"
+        class="mdl-card"
+        *ngIf="entity.type == 'activity'"
+        [attr.data-minds-activity-guid]="entity.guid"
+      ></minds-activity>
+
+      <div class="mdl-card__supporting-text m-action-buttons">
+        <button
+          class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--red"
+          (click)="deMonetize(entity, i)"
+          i18n="@@MINDS__ADMIN__MONETIZATION__DEMONETIZE"
+        >
+          De-Monetize
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress"
+  >
+  </infinite-scroll>
+</div>

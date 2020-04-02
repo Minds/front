@@ -1,19 +1,25 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { WireCreatorComponent } from '../creator/creator.component';
 import { SignupModalService } from '../../modals/signup/service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-wire--lock-screen',
   templateUrl: 'wire-lock-screen.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class WireLockScreenComponent {
-
   @Input() entity: any;
   @Output('entityChange') update: EventEmitter<any> = new EventEmitter<any>();
 
@@ -27,8 +33,9 @@ export class WireLockScreenComponent {
     private client: Client,
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
-    private modal: SignupModalService
-  ) { }
+    private modal: SignupModalService,
+    private configs: ConfigsService
+  ) {}
 
   unlock() {
     if (this.preview) {
@@ -45,7 +52,8 @@ export class WireLockScreenComponent {
     this.inProgress = true;
     this.detectChanges();
 
-    this.client.get('api/v1/wire/threshold/' + this.entity.guid)
+    this.client
+      .get('api/v1/wire/threshold/' + this.entity.guid)
       .then((response: any) => {
         if (response.hasOwnProperty('activity')) {
           this.update.next(response.activity);
@@ -71,10 +79,11 @@ export class WireLockScreenComponent {
       return;
     }
 
-    this.overlayModal.create(WireCreatorComponent, this.entity, {
-      onComplete: () => this.wireSubmitted(),
-      default: this.entity.wire_threshold
-    })
+    this.overlayModal
+      .create(WireCreatorComponent, this.entity, {
+        onComplete: () => this.wireSubmitted(),
+        default: this.entity.wire_threshold,
+      })
       .present();
   }
 
@@ -97,16 +106,20 @@ export class WireLockScreenComponent {
     }
 
     if (
-      !this.entity.ownerObj
-      || !this.entity.ownerObj.merchant
-      || !this.entity.ownerObj.merchant.exclusive
-      || !this.entity.ownerObj.merchant.exclusive.background
+      !this.entity.ownerObj ||
+      !this.entity.ownerObj.merchant ||
+      !this.entity.ownerObj.merchant.exclusive ||
+      !this.entity.ownerObj.merchant.exclusive.background
     ) {
       return null;
     }
 
-    let image = window.Minds.cdn_url + 'fs/v1/paywall/preview/' + this.entity.ownerObj.guid + '/'
-      + this.entity.ownerObj.merchant.exclusive.background;
+    let image =
+      this.configs.get('cdn_assets_url') +
+      'fs/v1/paywall/preview/' +
+      this.entity.ownerObj.guid +
+      '/' +
+      this.entity.ownerObj.merchant.exclusive.background;
 
     return `url(${image})`;
   }

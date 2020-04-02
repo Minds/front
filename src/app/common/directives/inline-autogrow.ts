@@ -1,10 +1,16 @@
-import { Directive, EventEmitter, ElementRef, Input, HostBinding, HostListener } from '@angular/core';
+import {
+  Directive,
+  EventEmitter,
+  ElementRef,
+  Input,
+  HostBinding,
+  HostListener,
+} from '@angular/core';
 
 @Directive({
-  selector: '[inlineAutoGrow]'
+  selector: '[inlineAutoGrow]',
 })
 export class InlineAutoGrow {
-
   _element: HTMLInputElement;
   timeout: any;
 

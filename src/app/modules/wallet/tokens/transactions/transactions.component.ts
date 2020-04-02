@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client } from '../../../../services/api/client';
@@ -9,14 +15,12 @@ import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
   moduleId: module.id,
   selector: 'm-wallet-token--transactions',
   templateUrl: 'transactions.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class WalletTokenTransactionsComponent {
-
   startDate: string;
   endDate: string;
-  addresses: Array<{label: string, address?: string, selected: boolean}> = [];
+  addresses: Array<{ label: string; address?: string; selected: boolean }> = [];
   inProgress: boolean = false;
   transactions: any[] = [];
   offset: string;
@@ -47,10 +51,8 @@ export class WalletTokenTransactionsComponent {
     protected cd: ChangeDetectorRef,
     protected router: Router,
     protected route: ActivatedRoute,
-    protected session: Session,
-  ) {
-
-  }
+    protected session: Session
+  ) {}
 
   async ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe(async params => {
@@ -91,13 +93,13 @@ export class WalletTokenTransactionsComponent {
         {
           address: receiverAddress,
           label: 'Receiver',
-          selected: false
+          selected: false,
         },
         {
           label: 'OffChain',
           address: 'offchain',
-          selected: false
-        }
+          selected: false,
+        },
       ];
 
       try {
@@ -108,7 +110,10 @@ export class WalletTokenTransactionsComponent {
           return;
         }
 
-        if (this.addresses[0].address.toLowerCase() == onchainAddress.toLowerCase()) {
+        if (
+          this.addresses[0].address.toLowerCase() ==
+          onchainAddress.toLowerCase()
+        ) {
           this.addresses[0].label = 'OnChain & Receiver';
           this.inProgress = false;
           this.detectChanges();
@@ -116,9 +121,9 @@ export class WalletTokenTransactionsComponent {
         }
 
         this.addresses.unshift({
-          'label': "OnChain",
-          'address': onchainAddress,
-          'selected': false
+          label: 'OnChain',
+          address: onchainAddress,
+          selected: false,
         });
         this.inProgress = false;
         this.detectChanges();
@@ -156,21 +161,23 @@ export class WalletTokenTransactionsComponent {
       let opts: any = {
         from: Math.floor(+startDate / 1000),
         to: Math.floor(+endDate / 1000),
-        offset: this.offset
+        offset: this.offset,
       };
 
       if (this.selectedAddress) {
         opts.address = this.selectedAddress;
       }
 
-      if (this.selectedContract)
-        opts.contract = this.selectedContract;
+      if (this.selectedContract) opts.contract = this.selectedContract;
 
       if (this.remote && this.remoteUser) {
         opts.remote = this.remoteUser;
       }
 
-      let response: any = await this.client.get(`api/v2/blockchain/transactions/ledger`, opts);
+      let response: any = await this.client.get(
+        `api/v2/blockchain/transactions/ledger`,
+        opts
+      );
 
       if (refresh) {
         this.transactions = [];
@@ -243,7 +250,7 @@ export class WalletTokenTransactionsComponent {
   }
 
   toggleAddress(address) {
-    this.addresses.forEach((item) => {
+    this.addresses.forEach(item => {
       item.selected = false;
     });
     if (address) {
@@ -256,39 +263,48 @@ export class WalletTokenTransactionsComponent {
 
   getSelf(transaction) {
     if (this.remote) {
-      const isSender = transaction.sender.username.toLowerCase() == this.remoteUser.toLowerCase(),
+      const isSender =
+          transaction.sender.username.toLowerCase() ==
+          this.remoteUser.toLowerCase(),
         user = isSender ? transaction.sender : transaction.receiver;
 
       return {
         avatar: `/icon/${user.guid}/medium/${user.icontime}`,
         username: user.username,
-      }
+      };
     } else {
       const user = this.session.getLoggedInUser();
 
       return {
         avatar: `/icon/${user.guid}/medium/${user.icontime}`,
         username: user.username,
-      }
+      };
     }
   }
 
   getOther(transaction) {
-    const selfUsername = this.remote ? this.remoteUser : this.session.getLoggedInUser().username,
-      isSender = transaction.sender.username.toLowerCase() != selfUsername.toLowerCase(),
+    const selfUsername = this.remote
+        ? this.remoteUser
+        : this.session.getLoggedInUser().username,
+      isSender =
+        transaction.sender.username.toLowerCase() != selfUsername.toLowerCase(),
       user = isSender ? transaction.sender : transaction.receiver;
 
     return {
       avatar: `/icon/${user.guid}/medium/${user.icontime}`,
       username: user.username,
       isSender,
-    }
+    };
   }
 
   isP2p(transaction) {
     const contractName = this.getNormalizedContractName(transaction.contract);
 
-    if (contractName === 'wire' ||contractName == 'offchain wire' || contractName === 'boost') {
+    if (
+      contractName === 'wire' ||
+      contractName == 'offchain wire' ||
+      contractName === 'boost'
+    ) {
       return !!transaction.sender && !!transaction.receiver;
     }
   }
@@ -296,7 +312,7 @@ export class WalletTokenTransactionsComponent {
   getNormalizedContractName(contractName) {
     if (contractName.indexOf('offchain:') > -1) {
       const name = contractName.substr(9);
-      return name === 'wire' ? 'offchain wire': name;
+      return name === 'wire' ? 'offchain wire' : name;
     }
     return contractName;
   }

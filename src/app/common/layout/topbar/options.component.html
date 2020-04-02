@@ -5,18 +5,50 @@
 
   <ul class="m-dropdown--list">
     <ng-container *mIfFeature="'!top-feeds'">
-      <li class="m-dropdown--list--item" (click)="toggleRating($event)" *ngIf="options.indexOf('rating') > -1">
+      <li
+        class="m-dropdown--list--item"
+        (click)="toggleRating($event)"
+        *ngIf="options.indexOf('rating') > -1"
+      >
         <span style="text-transform: capitalize">Open</span>
-        <m-tooltip icon="help" i18n="@@MINDS__TOPBAR__TOP__OPEN_TRENDING_ITEM_TOOLTIP">
-          Open may contain controversial content. By selecting Open, you acknowledge that you are willing to see controversial content.
+        <m-tooltip
+          icon="help"
+          i18n="@@MINDS__TOPBAR__TOP__OPEN_TRENDING_ITEM_TOOLTIP"
+        >
+          Open may contain controversial content. By selecting Open, you
+          acknowledge that you are willing to see controversial content.
         </m-tooltip>
         <div class="m-layout--spacer"></div>
         <span class="m-dropdown--spacer"></span>
-        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [mdlSwitch] [toggled]="true" *ngIf="rating == 2">
-          <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="rating" (click)="toggleRating($event)">
+        <label
+          class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
+          for="switch-1"
+          [mdlSwitch]
+          [toggled]="true"
+          *ngIf="rating == 2"
+        >
+          <input
+            type="checkbox"
+            id="switch-1"
+            class="mdl-switch__input"
+            [ngModel]="rating"
+            (click)="toggleRating($event)"
+          />
         </label>
-        <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1" [mdlSwitch] [toggled]="false" *ngIf="rating != 2">
-          <input type="checkbox" id="switch-1" class="mdl-switch__input" [ngModel]="rating" (click)="toggleRating($event)">
+        <label
+          class="mdl-switch mdl-js-switch mdl-js-ripple-effect"
+          for="switch-1"
+          [mdlSwitch]
+          [toggled]="false"
+          *ngIf="rating != 2"
+        >
+          <input
+            type="checkbox"
+            id="switch-1"
+            class="mdl-switch__input"
+            [ngModel]="rating"
+            (click)="toggleRating($event)"
+          />
         </label>
       </li>
     </ng-container>

@@ -1,16 +1,17 @@
-.tabs .m-wire-button{
-  transform: scale(0.8) translateY(-4px);
+.tabs .m-wire-button {
+  //  transform: scale(0.8) translateY(-4px);
+  margin: -3px 0;
 }
 .m-pin-button {
   overflow: visible;
-  
+
   .m-tooltip--bubble {
-    width:100px;
+    width: 100px;
   }
 }
 
 .m-pin-button[disabled]:hover {
-  @include m-theme(){
+  @include m-theme() {
     background-color: transparent;
   }
 }
@@ -19,15 +20,22 @@ minds-activity {
   .m-owner-block--remind {
     padding-bottom: 8px !important;
   }
-  .m-activity--image, .m-activity--video {
+  .m-activity--image,
+  .m-activity--video {
     margin-bottom: 8px;
   }
 
   .m-activity--video {
-    m-video {
-      @include m-theme(){
+    m-videoPlayer {
+      @include m-theme() {
         background-color: themed($m-black-always);
       }
+    }
+  }
+
+  .m-activity--image-link {
+    &:hover {
+      cursor: pointer;
     }
   }
 
@@ -52,82 +60,81 @@ minds-activity {
       }
     }
   }
-  m-nsfw-selector {
+  m-nsfw-selector,
+  m-poster-date-selector {
     display: inline-block;
     border-radius: 24px;
     padding: 3px 16px;
-    @include m-theme(){
+    @include m-theme() {
       border: 1px solid themed($m-grey-100);
     }
 
     .m-nsfwSelector__label {
       > * {
-       vertical-align: middle;
-     }
-     > span {
-       font-size: 13px;
-       padding-left: 4px;
-     }
-   }
+        vertical-align: middle;
+      }
+      > span {
+        font-size: 13px;
+        padding-left: 4px;
+      }
+    }
   }
 }
 
-.m-activity--metrics{
-
+.m-activity--metrics {
   position: absolute;
   bottom: -10px;
   right: -5px;
 
-  &.m-activity--metrics-wire{
+  &.m-activity--metrics-wire {
     width: 100%;
     display: flex;
     right: auto;
   }
 
-  .m-activity--metrics-inner{
+  .m-activity--metrics-inner {
     padding-left: 8px;
     margin: auto;
 
-    padding: 3px 0 3px 8px;
+    padding: 2px 0 2px 8px;
     font-size: 14px;
-    line-height: 9px;
+    line-height: 8px;
     border-radius: 3px;
     vertical-align: middle;
-    //text-align: center;
     display: flex;
     justify-content: space-around;
     max-width: 300px;
-    //box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.07), 0 4px 2px -2px rgba(0, 0, 0, 0.1), 0 1px 5px 0 rgba(0, 0, 0, 0.07);
 
-    @include m-theme(){
-      background-color: themed($m-white);
-      color: themed($m-grey-600);
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      color: themed($m-textColor--secondary);
     }
 
     m--crypto-token-symbol {
       .m--crypto-token-symbol--stroke {
-        @include m-theme(){
+        @include m-theme() {
           stroke: themed($m-grey-600);
         }
       }
 
       .m--crypto-token-symbol--fill {
-        @include m-theme(){
+        @include m-theme() {
           fill: themed($m-grey-600);
         }
       }
     }
   }
 
-  .m-activity--metrics-metric{
-    font-size: 10px;
+  .m-activity--metrics-metric {
+    font-size: 9px;
     display: inline-block;
     vertical-align: middle;
 
     > * {
       vertical-align: middle;
     }
-    i, m--crypto-token-symbol {
+    i,
+    m--crypto-token-symbol {
       font-size: 12px;
     }
     span {
@@ -148,7 +155,7 @@ minds-groups-profile-feed .m-pin-button {
   line-height: 1.5;
   text-align: center;
 
-  @include m-theme(){
+  @include m-theme() {
     background-color: rgba(themed($m-grey-50), 0.7);
   }
 

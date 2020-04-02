@@ -1,78 +1,144 @@
-<div class="mdl-tabs__tab-bar">
-  <a (click)="changeFilter('all')" class="mdl-tabs__tab"
+<div class="mdl-tabs__tab-bar" *ngIf="showTabs">
+  <a
+    (click)="changeFilter('all')"
+    class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'all' || !_filter }"
   >
-    <m-tooltip icon="notifications" i18n="@@NOTIFICATIONS__NOTIFICATIONS__ALL_FILTER">All</m-tooltip>
-    <span class="m-full-label" i18n="@@NOTIFICATIONS__NOTIFICATIONS__ALL_FILTER">All</span>
+    <m-tooltip
+      icon="notifications"
+      i18n="@@NOTIFICATIONS__NOTIFICATIONS__ALL_FILTER"
+      >All</m-tooltip
+    >
+    <span class="m-full-label" i18n="@@NOTIFICATIONS__NOTIFICATIONS__ALL_FILTER"
+      >All</span
+    >
   </a>
-  <a (click)="changeFilter('tags')" class="mdl-tabs__tab"
+  <a
+    (click)="changeFilter('tags')"
+    class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'tags' }"
   >
-    <m-tooltip icon="face" i18n="@@NOTIFICATIONS__NOTIFICATIONS__TAGS_FILTER">Tags</m-tooltip>
-    <span class="m-full-label" i18n="@@NOTIFICATIONS__NOTIFICATIONS__TAGS_FILTER">Tags</span>
+    <m-tooltip icon="face" i18n="@@NOTIFICATIONS__NOTIFICATIONS__TAGS_FILTER"
+      >Tags</m-tooltip
+    >
+    <span
+      class="m-full-label"
+      i18n="@@NOTIFICATIONS__NOTIFICATIONS__TAGS_FILTER"
+      >Tags</span
+    >
   </a>
-  <a (click)="changeFilter('comments')" class="mdl-tabs__tab"
+  <a
+    (click)="changeFilter('comments')"
+    class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'comments' }"
   >
-    <m-tooltip icon="chat_bubble" i18n="@@NOTIFICATIONS__NOTIFICATIONS__COMMENTS_FILTER">Comments</m-tooltip>
-    <span class="m-full-label" i18n="@@NOTIFICATIONS__NOTIFICATIONS__COMMENTS_FILTER">Comments</span>
+    <m-tooltip
+      icon="chat_bubble"
+      i18n="@@NOTIFICATIONS__NOTIFICATIONS__COMMENTS_FILTER"
+      >Comments</m-tooltip
+    >
+    <span
+      class="m-full-label"
+      i18n="@@NOTIFICATIONS__NOTIFICATIONS__COMMENTS_FILTER"
+      >Comments</span
+    >
   </a>
-  <a (click)="changeFilter('groups')" class="mdl-tabs__tab"
+  <a
+    (click)="changeFilter('groups')"
+    class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'groups' }"
     *ngIf="false"
   >
-    <m-tooltip icon="group_work" i18n="@@M__FEATURE__GROUP__PLURAL">Groups</m-tooltip>
+    <m-tooltip icon="group_work" i18n="@@M__FEATURE__GROUP__PLURAL"
+      >Groups</m-tooltip
+    >
     <span class="m-full-label" i18n="@@M__FEATURE__GROUP__PLURAL">Groups</span>
   </a>
-  <a (click)="changeFilter('subscriptions')" class="mdl-tabs__tab"
+  <a
+    (click)="changeFilter('subscriptions')"
+    class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'subscriptions' }"
   >
-    <m-tooltip icon="people" i18n="@@M__COMMON__SUBSCRIPTIONS">Subscriptions</m-tooltip>
-    <span class="m-full-label" i18n="@@M__COMMON__SUBSCRIPTIONS">Subscriptions</span>
+    <m-tooltip icon="people" i18n="@@M__COMMON__SUBSCRIPTIONS"
+      >Subscriptions</m-tooltip
+    >
+    <span class="m-full-label" i18n="@@M__COMMON__SUBSCRIPTIONS"
+      >Subscriptions</span
+    >
   </a>
-  <a (click)="changeFilter('votes')" class="mdl-tabs__tab"
+  <a
+    (click)="changeFilter('votes')"
+    class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'votes' }"
   >
-    <m-tooltip icon="thumbs_up_down" i18n="@@NOTIFICATIONS__NOTIFICATIONS__VOTES_FILTER">Votes</m-tooltip>
-    <span class="m-full-label" i18n="@@NOTIFICATIONS__NOTIFICATIONS__VOTES_FILTER">Votes</span>
+    <m-tooltip
+      icon="thumbs_up_down"
+      i18n="@@NOTIFICATIONS__NOTIFICATIONS__VOTES_FILTER"
+      >Votes</m-tooltip
+    >
+    <span
+      class="m-full-label"
+      i18n="@@NOTIFICATIONS__NOTIFICATIONS__VOTES_FILTER"
+      >Votes</span
+    >
   </a>
-  <a (click)="changeFilter('reminds')" class="mdl-tabs__tab"
+  <a
+    (click)="changeFilter('reminds')"
+    class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': _filter == 'reminds' }"
   >
-    <m-tooltip icon="repeat" i18n="@@NOTIFICATIONS__NOTIFICATIONS__REMINDS_FILTER">Reminds</m-tooltip>
-    <span class="m-full-label" i18n="@@NOTIFICATIONS__NOTIFICATIONS__REMINDS_FILTER">Reminds</span>
-  </a>
-</div>
-
-<div class="m-notifications--load-new mdl-color--blue-grey-50" *ngIf="minds.notifications_count > 0">
-  <a *ngIf="!inProgress" (click)="load(true)"> 
-    <span> {{minds.notifications_count}} </span> 
-    <span i18n="@@NOTIFICATIONS__NOTIFICATIONS__LOAD_NEW_BUTTON">New Notifications</span>  
-  </a>
-  <a *ngIf="inProgress"> 
-    <span i18n="@@NOTIFICATIONS__NOTIFICATIONS__LOADING">Loading Notifications...</span>  
-  </a>
-</div>
-<div class="mdl-grid notifications-grid" #notificationGrid style="max-width:600px">
-
-  <div class="mdl-cell mdl-cell--12-col">
-
-  <minds-notification
-    *ngFor="let notification of notifications"
-    class="mdl-card mdl-shadow--2dp item"
-    [notification]="notification"
-  ></minds-notification>
-
-  <infinite-scroll
-    distance="25%"
-    (load)="load()"
-    [moreData]="moreData"
-    [scrollSource]="useOwnScrollSource ? notificationGrid : null"
-    [inProgress]="inProgress"
-    *ngIf="visible"
+    <m-tooltip
+      icon="repeat"
+      i18n="@@NOTIFICATIONS__NOTIFICATIONS__REMINDS_FILTER"
+      >Reminds</m-tooltip
     >
-  </infinite-scroll>
+    <span
+      class="m-full-label"
+      i18n="@@NOTIFICATIONS__NOTIFICATIONS__REMINDS_FILTER"
+      >Reminds</span
+    >
+  </a>
+</div>
 
+<div
+  class="m-notifications--load-new mdl-color--blue-grey-50"
+  *ngIf="notificationService.count > 0"
+>
+  <a *ngIf="!inProgress" (click)="load(true)">
+    <span> {{ notificationService.count }} </span>
+    <span i18n="@@NOTIFICATIONS__NOTIFICATIONS__LOAD_NEW_BUTTON"
+      >New Notifications</span
+    >
+  </a>
+  <a *ngIf="inProgress">
+    <span i18n="@@NOTIFICATIONS__NOTIFICATIONS__LOADING"
+      >Loading Notifications...</span
+    >
+  </a>
+</div>
+<div
+  class="mdl-grid notifications-grid"
+  [class.m-notificationsGrid__noScroll]="!showInfiniteScroll"
+  #notificationGrid
+  style="max-width:600px"
+>
+  <div class="mdl-cell mdl-cell--12-col">
+    <minds-notification
+      *ngFor="let notification of notifications"
+      class="mdl-card item"
+      [class.mdl-shadow--2dp]="showShadows"
+      [notification]="notification"
+      [showElapsedTime]="showElapsedTime"
+    ></minds-notification>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [scrollSource]="useOwnScrollSource ? notificationGrid : null"
+      [inProgress]="inProgress"
+      *ngIf="visible && showInfiniteScroll"
+    >
+    </infinite-scroll>
   </div>
-
 </div>

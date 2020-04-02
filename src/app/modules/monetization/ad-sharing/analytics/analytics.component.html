@@ -1,80 +1,163 @@
 <div class="m-ad-sharing-analytics-component">
   <div class="m-monetization-other" *ngIf="username">
-    <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__USERNAME_TITLE">Ads information for @{{username}}</ng-container>
+    <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__USERNAME_TITLE"
+      >Ads information for @{{ username }}</ng-container
+    >
   </div>
 
-  <div class="mdl-grid m-monetization-cta-wrapper" *ngIf="!username && isMerchant && false">
-    <div class="mdl-cell mdl-cell--9-col m-monetization-cta m-monetization-cta--left">
-        <span class="m-note" *ngIf="!payoutRequestInProgress && !isPayoutInProgress() && canPayout()">
-          <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__REQUEST_PAYMENT_LABEL">Clicking the <i>Request Payment</i> button will send {{ payouts.amount | currency:'USD':true }} for review by the Minds staff. Once reviewed, it will be transferred to the bank account specified in Merchant settings. This process may take up to 72 hours.</ng-container>
-        </span>
-        <span class="m-note" *ngIf="!payoutRequestInProgress && !isPayoutInProgress() && !canPayout()">
-          <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__NO_PAYOUT_LABEL">You don't have enough available revenue in order to request a payment.</ng-container>
-        </span>
-        <span class="m-note" *ngIf="!payoutRequestInProgress && isPayoutInProgress()">
-          <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__PAYOUT_UNDER_REVIEW_LABEL">Your payment request for {{ payouts.amount | currency:'USD':true }} is currently under review by Minds staff. Once reviewed, it will be transferred to the bank account specified in Merchant settings. This process may take up to 72 hours.</ng-container>
-        </span>
+  <div
+    class="mdl-grid m-monetization-cta-wrapper"
+    *ngIf="!username && isMerchant && false"
+  >
+    <div
+      class="mdl-cell mdl-cell--9-col m-monetization-cta m-monetization-cta--left"
+    >
+      <span
+        class="m-note"
+        *ngIf="!payoutRequestInProgress && !isPayoutInProgress() && canPayout()"
+      >
+        <ng-container
+          i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__REQUEST_PAYMENT_LABEL"
+          >Clicking the <i>Request Payment</i> button will send
+          {{ payouts.amount | currency: 'USD':true }} for review by the Minds
+          staff. Once reviewed, it will be transferred to the bank account
+          specified in Merchant settings. This process may take up to 72
+          hours.</ng-container
+        >
+      </span>
+      <span
+        class="m-note"
+        *ngIf="
+          !payoutRequestInProgress && !isPayoutInProgress() && !canPayout()
+        "
+      >
+        <ng-container
+          i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__NO_PAYOUT_LABEL"
+          >You don't have enough available revenue in order to request a
+          payment.</ng-container
+        >
+      </span>
+      <span
+        class="m-note"
+        *ngIf="!payoutRequestInProgress && isPayoutInProgress()"
+      >
+        <ng-container
+          i18n="
+             @@MONETIZATION__AD_SHARING__ANALYTICS__PAYOUT_UNDER_REVIEW_LABEL
+          "
+          >Your payment request for
+          {{ payouts.amount | currency: 'USD':true }} is currently under review
+          by Minds staff. Once reviewed, it will be transferred to the bank
+          account specified in Merchant settings. This process may take up to 72
+          hours.</ng-container
+        >
+      </span>
     </div>
 
-    <div class="mdl-cell mdl-cell--3-col m-monetization-cta m-monetization-cta--right" *ngIf="false">
-      <button class="mdl-button mdl-js-button"
-        [ngClass]="{ 'mdl-button--raised mdl-button--colored': !payoutRequestInProgress }"
+    <div
+      class="mdl-cell mdl-cell--3-col m-monetization-cta m-monetization-cta--right"
+      *ngIf="false"
+    >
+      <button
+        class="mdl-button mdl-js-button"
+        [ngClass]="{
+          'mdl-button--raised mdl-button--colored': !payoutRequestInProgress
+        }"
         (click)="payout()"
         [disabled]="overviewInProgress || !canPayout()"
       >
-        <span *ngIf="!payoutRequestInProgress && !isPayoutInProgress()" i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__REQUEST_PAYOUT_ACTION">Request</span>
-        <span *ngIf="!payoutRequestInProgress && isPayoutInProgress()" i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__PENDING_PAYOUT_BUTTON">Pending</span>
-        <span *ngIf="payoutRequestInProgress"
-          class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl]
+        <span
+          *ngIf="!payoutRequestInProgress && !isPayoutInProgress()"
+          i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__REQUEST_PAYOUT_ACTION"
+          >Request</span
+        >
+        <span
+          *ngIf="!payoutRequestInProgress && isPayoutInProgress()"
+          i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__PENDING_PAYOUT_BUTTON"
+          >Pending</span
+        >
+        <span
+          *ngIf="payoutRequestInProgress"
+          class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"
+          [mdl]
         ></span>
       </button>
     </div>
   </div>
 
-  <div class="m-monetization--overview mdl-grid mdl-color--blue-grey-800 mdl-shadow--4dp">
-
-      <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
-        <div class="mdl-card" (click)="loadList(0, true)">
-          <h2 i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__TODAY_CARD_TITLE">Today</h2>
-          <div class="m-value">
-            {{ overview.today | currency:'USD':true }}
-          </div>
+  <div
+    class="m-monetization--overview mdl-grid mdl-color--blue-grey-800 mdl-shadow--4dp"
+  >
+    <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
+      <div class="mdl-card" (click)="loadList(0, true)">
+        <h2 i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__TODAY_CARD_TITLE">
+          Today
+        </h2>
+        <div class="m-value">
+          {{ overview.today | currency: 'USD':true }}
         </div>
       </div>
+    </div>
 
-      <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
-        <div class="mdl-card" (click)="loadList(7, true)">
-          <h2 i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__LAST_7_DAYS_CARD_TITLE">Last 7 days</h2>
-          <div class="m-value">
-            {{ overview.last7 | currency:'USD':true }}
-          </div>
+    <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
+      <div class="mdl-card" (click)="loadList(7, true)">
+        <h2
+          i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__LAST_7_DAYS_CARD_TITLE"
+        >
+          Last 7 days
+        </h2>
+        <div class="m-value">
+          {{ overview.last7 | currency: 'USD':true }}
         </div>
       </div>
+    </div>
 
-      <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
-        <div class="mdl-card" (click)="loadList(28, true)">
-          <h2 i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__LAST_28_DAYS_CARD_TITLE">Last 28 days</h2>
-          <div class="m-value">
-            {{ overview.last28 | currency:'USD':true }}
-          </div>
+    <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
+      <div class="mdl-card" (click)="loadList(28, true)">
+        <h2
+          i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__LAST_28_DAYS_CARD_TITLE"
+        >
+          Last 28 days
+        </h2>
+        <div class="m-value">
+          {{ overview.last28 | currency: 'USD':true }}
         </div>
       </div>
+    </div>
 
-      <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
-        <div (click)="loadList(overview.balanceDays, true)">
-          <h2 id="payouts-card-title" *ngIf="!isPayoutInProgress()" i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__BALANCE_CARD_TITLE">Balance</h2>
-          <h2 id="payouts-card-title" *ngIf="isPayoutInProgress()" i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__IN_REVIEW_CARD_TITLE">In Review</h2>
-          <div for="payouts-card-title"
-            *ngIf="payouts.dates.start && payouts.dates.end"
-            class="m-monetization--overview-period-tip" [mdl]>
-            <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__DATE_RANGE_CARD_TITLE">{{ payouts.dates.start * 1000 | date:'mediumDate' }} to {{ payouts.dates.end * 1000 | date:'mediumDate' }}</ng-container>
-          </div>
-          <div class="m-value">
-            {{ payouts.amount | currency:'USD':true }}
-          </div>
+    <div class="mdl-cell mdl-cell--3-col m-monetization--overview-period">
+      <div (click)="loadList(overview.balanceDays, true)">
+        <h2
+          id="payouts-card-title"
+          *ngIf="!isPayoutInProgress()"
+          i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__BALANCE_CARD_TITLE"
+        >
+          Balance
+        </h2>
+        <h2
+          id="payouts-card-title"
+          *ngIf="isPayoutInProgress()"
+          i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__IN_REVIEW_CARD_TITLE"
+        >
+          In Review
+        </h2>
+        <div
+          for="payouts-card-title"
+          *ngIf="payouts.dates.start && payouts.dates.end"
+          class="m-monetization--overview-period-tip"
+          [mdl]
+        >
+          <ng-container
+            i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__DATE_RANGE_CARD_TITLE"
+            >{{ payouts.dates.start * 1000 | date: 'mediumDate' }} to
+            {{ payouts.dates.end * 1000 | date: 'mediumDate' }}</ng-container
+          >
+        </div>
+        <div class="m-value">
+          {{ payouts.amount | currency: 'USD':true }}
         </div>
       </div>
-
+    </div>
   </div>
 
   <div class="m-monetization--other" *ngIf="overviewInProgress">
@@ -82,13 +165,24 @@
   </div>
 
   <div class="m-monetization--other" *ngIf="loaded && !hasBreakdown()">
-    <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__DETAILS_NOT_AVAILABLE">Details are not yet available. Please, try again tomorrow.</ng-container>
+    <ng-container
+      i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__DETAILS_NOT_AVAILABLE"
+      >Details are not yet available. Please, try again tomorrow.</ng-container
+    >
   </div>
 
   <div class="m-monetization--other" *ngIf="listLoaded">
-    <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__ADS_REVENUE_TITLE">Ads revenue</ng-container>
+    <ng-container
+      i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__ADS_REVENUE_TITLE"
+      >Ads revenue</ng-container
+    >
     <span *ngIf="hasBreakdown()">
-      <ng-container i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__DATE_RANGE_FROM_TITLE">from {{ breakdown.dates.start * 1000 | date:'mediumDate' }} to {{ breakdown.dates.end * 1000 | date:'mediumDate' }} - {{breakdown.period}} days</ng-container>
+      <ng-container
+        i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__DATE_RANGE_FROM_TITLE"
+        >from {{ breakdown.dates.start * 1000 | date: 'mediumDate' }} to
+        {{ breakdown.dates.end * 1000 | date: 'mediumDate' }} -
+        {{ breakdown.period }} days</ng-container
+      >
     </span>
   </div>
 
@@ -97,22 +191,36 @@
       <table class="mdl-data-table mdl-js-data-table" [mdl]>
         <thead>
           <tr>
-            <th class="mdl-data-table__cell--non-numeric m-data-title" i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__TITLE_COLUMN">Title</th>
-            <th i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__VIEWS_COLUMN">Views</th>
-            <th i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__RPM_COLUMN">RPM</th>
-            <th i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__REVENUE_COLUMN">Revenue</th>
+            <th
+              class="mdl-data-table__cell--non-numeric m-data-title"
+              i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__TITLE_COLUMN"
+            >
+              Title
+            </th>
+            <th i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__VIEWS_COLUMN">
+              Views
+            </th>
+            <th i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__RPM_COLUMN">
+              RPM
+            </th>
+            <th i18n="@@MONETIZATION__AD_SHARING__ANALYTICS__REVENUE_COLUMN">
+              Revenue
+            </th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of items">
             <td class="mdl-data-table__cell--non-numeric">
-              <a [routerLink]="['/newsfeed/', item.entity.guid]" target="_blank">
+              <a
+                [routerLink]="['/newsfeed/', item.entity.guid]"
+                target="_blank"
+              >
                 {{ item.entity.title }}
               </a>
             </td>
             <td>{{ item.views | number }}</td>
-            <td>{{ item.rpm | currency:'USD':true }}</td>
-            <td>{{ item.revenue | currency:'USD':true }}</td>
+            <td>{{ item.rpm | currency: 'USD':true }}</td>
+            <td>{{ item.revenue | currency: 'USD':true }}</td>
           </tr>
         </tbody>
       </table>
@@ -122,7 +230,8 @@
       distance="25%"
       (load)="loadList(breakdown.period, false)"
       [moreData]="moreData"
-      [inProgress]="inProgress">
+      [inProgress]="inProgress"
+    >
     </infinite-scroll>
   </div>
 </div>

@@ -10,7 +10,12 @@ const routes: Routes = [
   {
     path: 'canary',
     component: CanaryPageComponent,
-  }
+    data: {
+      title: 'Canary',
+      description: 'Receive the latest Minds features before everyone else',
+      ogImage: '/assets/photos/canary.jpg',
+    },
+  },
 ];
 
 @NgModule({
@@ -21,16 +26,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    CanaryPageComponent
-  ],
-  exports: [
-    CanaryPageComponent
-  ],
-  entryComponents: [
-    CanaryPageComponent,
-  ]
+  declarations: [CanaryPageComponent],
+  exports: [CanaryPageComponent],
+  entryComponents: [CanaryPageComponent],
 })
-
-export class CanaryModule {
-}
+export class CanaryModule {}

@@ -1,46 +1,57 @@
 import { Injectable, isDevMode } from '@angular/core';
 import { Session } from './session';
 import { Router } from '@angular/router';
+import { ConfigsService } from '../common/services/configs.service';
+import { Subscription, Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 
 @Injectable()
 export class FeaturesService {
-  protected _features: any;
-  protected _warnedCache: {[key: string]: number} = {};
+  protected _warnedCache: { [key: string]: number } = {};
+  private features = {};
 
-  constructor(private session: Session, private router: Router) {
-    this._features = window.Minds.features || {};
-  }
+  constructor(
+    private session: Session,
+    private router: Router,
+    private configs: ConfigsService
+  ) {}
 
-  has(feature: string) {
+  has(feature: string): boolean {
+    const features = this.configs.get('features');
+
+    if (!features) return false;
+
     if (!feature) {
-      throw new Error('Invalid feature ID')
+      throw new Error('Invalid feature ID');
     }
     if (feature.indexOf('!') === 0) {
       // Inverted check. Useful for *mIfFeature
       return !this.has(feature.substring(1));
     }
 
-    if (typeof this._features[feature] === 'undefined') {
+    if (typeof features[feature] === 'undefined') {
       if (isDevMode() && !this._hasWarned(feature)) {
-        console.warn(`[FeaturedService] Feature '${feature}' is not declared. Assuming true.`);
         this._warnedCache[feature] = Date.now();
       }
 
+      return false;
+    }
+
+    if (features[feature] === 'admin' && this.session.isAdmin()) {
       return true;
     }
 
-    if (this._features[feature] === 'admin' && this.session.isAdmin()) {
+    if (
+      features[feature] === 'canary' &&
+      this.session.getLoggedInUser().canary
+    ) {
       return true;
     }
 
-    if (this._features[feature] === 'canary' && this.session.getLoggedInUser().canary) {
-      return true;
-    }
-
-    return this._features[feature] === true;
+    return features[feature] === true;
   }
 
-  check(feature: string, { redirectTo }: { redirectTo?: any[] } = {}) {
+  async check(feature: string, { redirectTo }: { redirectTo?: any[] } = {}) {
     if (feature.indexOf('!') === 0) {
       throw new Error('Cannot negate feature when using check()');
     }
@@ -60,10 +71,10 @@ export class FeaturesService {
     }
 
     // Once every 5s
-    return (this._warnedCache[feature] + 5000) < Date.now()
+    return this._warnedCache[feature] + 5000 < Date.now();
   }
 
-  static _(session: Session, router: Router) {
-    return new FeaturesService(session, router);
+  static _(session: Session, router: Router, configs: ConfigsService) {
+    return new FeaturesService(session, router, configs);
   }
 }

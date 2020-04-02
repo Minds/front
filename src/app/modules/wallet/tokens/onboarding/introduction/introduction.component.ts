@@ -1,19 +1,25 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Output, EventEmitter } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-token--onboarding--introduction',
   templateUrl: 'introduction.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TokenIntroductionOnboardingComponent {
-
+  readonly cdnAssetsUrl: string;
   inProgress: boolean = false;
   error: string;
-  minds = window.Minds;
 
   @Output() next: EventEmitter<any> = new EventEmitter();
 
@@ -22,13 +28,13 @@ export class TokenIntroductionOnboardingComponent {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected router: Router,
-  ) { 
-
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   detectChange() {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

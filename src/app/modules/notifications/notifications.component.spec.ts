@@ -1,5 +1,11 @@
 ///<reference path="../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
 import { Client } from '../../services/api/client';
@@ -9,69 +15,73 @@ import { notificationServiceMock } from '../../../tests/notification-service-moc
 import { MaterialMock } from '../../../tests/material-mock.spec';
 import { NotificationsComponent } from './notifications.component';
 
-import { MindsTitle } from '../../services/ux/title';
 import { NotificationService } from './notification.service';
 import { Session } from '../../services/session';
-import { Mock, MockComponent } from '../../utils/mock';
+import { Mock, MockComponent, MockService } from '../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { sessionMock } from '../../../tests/session-mock.spec';
+import { ConfigsService } from '../../common/services/configs.service';
+import { TimeDiffService } from '../../services/timediff.service';
+import { FriendlyDateDiffPipe } from '../../common/pipes/friendlydatediff';
 
 describe('NotificationsComponent', () => {
-
   let comp: NotificationsComponent;
   let fixture: ComponentFixture<NotificationsComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
-        MaterialMock, 
+        MaterialMock,
         NotificationsComponent,
-        MockComponent({ 
+        MockComponent({
           selector: 'minds-notification',
-          inputs: [ 'notification' ]
+          inputs: ['notification', 'showElapsedTime'],
         }),
         MockComponent({
           selector: 'infinite-scroll',
-          inputs: [ 'inProgress', 'moreData', 'inProgress', 'scrollSource' ],
+          inputs: ['inProgress', 'moreData', 'inProgress', 'scrollSource'],
         }),
         MockComponent({
           selector: 'm-tooltip',
-        })
+        }),
       ],
       imports: [RouterTestingModule],
       providers: [
-        { 
-          provide: MindsTitle, 
-          useValue: {
-            setTitle: function() {}
-          }
-        },
         { provide: NotificationService, useValue: notificationServiceMock },
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
-      ]
-    })
-      .compileComponents();  // compile template and css
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+      ],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
-
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(NotificationsComponent);
     clientMock.response = {};
 
-    window.Minds.notifications_count = 10;
     clientMock.response[`api/v1/notifications/all`] = {
-      'status': 'success',
-      'notifications' : [
-        {"type":"notification","guid":"843204301747658770","notification_view":"group_activity"},
-        {"type":"notification","guid":"843204301747658770","notification_view":"group_activity"},
-        {"type":"notification","guid":"843204301747658770","notification_view":"group_activity"}
-      ]
+      status: 'success',
+      notifications: [
+        {
+          type: 'notification',
+          guid: '843204301747658770',
+          notification_view: 'group_activity',
+        },
+        {
+          type: 'notification',
+          guid: '843204301747658770',
+          notification_view: 'group_activity',
+        },
+        {
+          type: 'notification',
+          guid: '843204301747658770',
+          notification_view: 'group_activity',
+        },
+      ],
     };
     comp = fixture.componentInstance;
 
@@ -93,7 +103,9 @@ describe('NotificationsComponent', () => {
   it('Should load 3 elements', () => {
     fixture.detectChanges();
     expect(comp.notifications.length).toBe(3);
-    const notifications = fixture.debugElement.queryAll(By.css('minds-notification'));
+    const notifications = fixture.debugElement.queryAll(
+      By.css('minds-notification')
+    );
     expect(notifications.length).toBe(3);
   });
 
@@ -111,9 +123,11 @@ describe('NotificationsComponent', () => {
   });
 
   it('infinite load on click', () => {
-    window.Minds.notifications_count = 10;
+    comp.notificationService.count = 1;
     fixture.detectChanges();
-    const notifications = fixture.debugElement.query(By.css('.m-notifications--load-new a'));
+    const notifications = fixture.debugElement.query(
+      By.css('.m-notifications--load-new a')
+    );
     notifications.nativeElement.click();
     fixture.detectChanges();
 
@@ -125,8 +139,9 @@ describe('NotificationsComponent', () => {
     fixture.detectChanges();
     const call = clientMock.get.calls.mostRecent();
     expect(call.args[0]).toBe('api/v1/notifications/all');
-    const notifications = fixture.debugElement.queryAll(By.css('minds-notification'));
+    const notifications = fixture.debugElement.queryAll(
+      By.css('minds-notification')
+    );
     expect(notifications.length).toBe(3);
   });
-
 });

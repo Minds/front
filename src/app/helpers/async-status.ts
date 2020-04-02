@@ -1,7 +1,6 @@
-import { BehaviorSubject, Subscription } from "rxjs";
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 export default class AsyncStatus {
-
   protected ready: boolean = false;
   protected subject$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -11,7 +10,7 @@ export default class AsyncStatus {
 
   done(): this {
     if (this.ready) {
-      throw new Error('Already done');
+      //      throw new Error('Already done');
     }
 
     this.ready = true;
@@ -33,13 +32,16 @@ export default class AsyncStatus {
     return new Promise(resolve => {
       let subscription: Subscription;
 
-      subscription = this.subject$
-        .subscribe(() => {
-          if (this.isReady()) {
-            subscription.unsubscribe();
-            resolve(null);
-          }
-        });
+      subscription = this.subject$.subscribe(() => {
+        if (this.isReady()) {
+          subscription.unsubscribe();
+          resolve(null);
+        }
+      });
     });
+  }
+
+  static _() {
+    return new AsyncStatus();
   }
 }

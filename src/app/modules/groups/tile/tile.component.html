@@ -1,36 +1,61 @@
-<div class="m-groups--tile m-border" [class.m-groupTile--hasUpdates]="hasMarker">
-    
+<div
+  class="m-groups--tile m-border"
+  [class.m-groupTile--hasUpdates]="hasMarker"
+>
   <div class="m-groups--tile-banner">
-    <div class="m-groups--tile-banner-img"
-        [ngStyle]="{'background-image': 'url(' + minds.cdn_url + 'fs/v1/banners/' + entity.guid + '/fat/' + entity.icontime + ')'}"
-      >
-    </div>
+    <div
+      class="m-groups--tile-banner-img"
+      [ngStyle]="{
+        'background-image':
+          'url(' +
+          cdnUrl +
+          'fs/v1/banners/' +
+          entity.guid +
+          '/fat/' +
+          entity.icontime +
+          ')'
+      }"
+    ></div>
     <div class="minds-banner-overlay"></div>
   </div>
-  
-  <a [routerLink]="['/groups/profile', entity.guid]"  class="m-groups--tile-block">
+
+  <a
+    [routerLink]="['/groups/profile', entity.guid]"
+    class="m-groups--tile-block"
+  >
     <div class="avatar">
       <img
         [class.m-pulsating--big]="entity.hasGathering$ | async"
-        src="{{minds.cdn_url}}fs/v1/avatars/{{entity.guid}}/large"
+        src="{{ cdnUrl }}fs/v1/avatars/{{ entity.guid }}/large"
       />
     </div>
     <div class="body">
-      <h3>{{entity.name}}</h3>
-      <span i18n="@@GROUPS__TILE__MEMBERS_COUNT"><b>{{entity['members:count'] | number}}</b> members</span>
+      <h3>{{ entity.name }}</h3>
+      <span i18n="@@GROUPS__TILE__MEMBERS_COUNT"
+        ><b>{{ entity['members:count'] | number }}</b> members</span
+      >
     </div>
   </a>
-  
+
   <div class="m-groups--tile-buttons">
-    <minds-groups-join-button *ngIf="!entity['is:member']; else isMember" [group]="entity"></minds-groups-join-button>
-    
+    <minds-groups-join-button
+      *ngIf="!entity['is:member']; else isMember"
+      [group]="entity"
+    ></minds-groups-join-button>
+
     <ng-template #isMember>
-      <button class="m-btn m-btn--action" [routerLink]="['/groups/profile', entity.guid]" i18n="@@GROUPS__TILE__OPEN_ACTION">
+      <button
+        class="m-btn m-btn--action"
+        [routerLink]="['/groups/profile', entity.guid]"
+        i18n="@@GROUPS__TILE__OPEN_ACTION"
+      >
         Open
       </button>
     </ng-template>
 
-    <m-safe-toggle *ngIf="session.isAdmin()" [(entity)]="entity"></m-safe-toggle>
+    <m-safe-toggle
+      *ngIf="session.isAdmin()"
+      [(entity)]="entity"
+    ></m-safe-toggle>
   </div>
-  
 </div>

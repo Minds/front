@@ -1,7 +1,12 @@
-export class EmbedService {
+import { Injectable } from '@angular/core';
+import { ConfigsService } from '../common/services/configs.service';
 
-  static _() {
-    return new EmbedService();
+@Injectable()
+export class EmbedService {
+  readonly siteUrl: string;
+
+  constructor(configs: ConfigsService) {
+    this.siteUrl = configs.get('site_url');
   }
 
   getIframeFromObject(object: any) {
@@ -30,11 +35,12 @@ export class EmbedService {
     let width = opts.width || 640,
       height = opts.height || 320;
 
-    return `<iframe src="${this.getUrl(guid)}" width="${width}" height="${height}" frameborder="0" allowfullscreen="1"></iframe>`;
+    return `<iframe src="${this.getUrl(
+      guid
+    )}" width="${width}" height="${height}" frameborder="0" allowfullscreen="1"></iframe>`;
   }
 
   getUrl(guid: string) {
-    return `${window.Minds.site_url}api/v1/embed/${guid}`;
+    return `${this.siteUrl}api/v1/embed/${guid}`;
   }
-
 }

@@ -3,7 +3,9 @@
     <ng-container *ngIf="!isLoading; else loading">
       <ng-container *ngIf="currency == 'points'">
         <i class="material-icons mdl-color-text--white">account_balance</i>
-        <h2 i18n="@@M__COMMON__POINTS_WITH_VALUE">{{ wallet.points | number }} points</h2>
+        <h2 i18n="@@M__COMMON__POINTS_WITH_VALUE">
+          {{ wallet.points | number }} points
+        </h2>
       </ng-container>
 
       <ng-container *ngIf="currency == 'tokens'">

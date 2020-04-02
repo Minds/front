@@ -8,6 +8,8 @@ import {
   Output,
   Renderer,
   ViewChild,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
@@ -17,18 +19,18 @@ import { AttachmentService } from '../../../services/attachment';
 import { Textarea } from '../../../common/components/editors/textarea.component';
 import { SocketsService } from '../../../services/sockets';
 import { CommentsService } from '../comments.service';
-import { BlockListService } from "../../../common/services/block-list.service";
+import { BlockListService } from '../../../common/services/block-list.service';
+import { ActivityService } from '../../../common/services/activity.service';
+import { Subscription } from 'rxjs';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'm-comments__thread',
   templateUrl: 'thread.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ CommentsService ],
+  providers: [CommentsService],
 })
-
-export class CommentsThreadComponent {
-
-  minds;
+export class CommentsThreadComponent implements OnInit {
   @Input() parent;
   @Input() entity;
   @Input() entityGuid;
@@ -39,9 +41,11 @@ export class CommentsThreadComponent {
   @Input() limit: number = 12;
   @Input() level = 0;
   @Output() scrollToBottom: EventEmitter<boolean> = new EventEmitter(true);
-  @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(true);
+  @Output() scrollToCurrentPosition: EventEmitter<boolean> = new EventEmitter(
+    true
+  );
 
-  @Input() scrollable: boolean = false;  
+  @Input() scrollable: boolean = false;
   @ViewChild('scrollArea', { static: true }) scrollView: ElementRef;
   commentsScrollEmitter: EventEmitter<any> = new EventEmitter();
   autoloadBlocked: boolean = false;
@@ -58,19 +62,18 @@ export class CommentsThreadComponent {
 
   socketRoomName: string;
   socketSubscriptions: any = {
-    comment: null
+    comment: null,
   };
-  
+
   constructor(
     public session: Session,
     private commentsService: CommentsService,
     public sockets: SocketsService,
     private renderer: Renderer,
     protected blockListService: BlockListService,
-    private cd: ChangeDetectorRef
-  ) {
-    this.minds = window.Minds;
-  }
+    private cd: ChangeDetectorRef,
+    public activityService: ActivityService
+  ) {}
 
   ngOnInit() {
     this.load(true);
@@ -97,21 +100,30 @@ export class CommentsThreadComponent {
     this.inProgress = true;
     this.detectChanges();
 
-    const descending: boolean = (direction === 'desc');
-    const parent_path = this.parent.child_path || "0:0:0"; 
+    const descending: boolean = direction === 'desc';
+    const parent_path = this.parent.child_path || '0:0:0';
 
     let el = this.scrollView.nativeElement;
     const previousScrollHeightMinusTop = el.scrollHeight - el.scrollTop;
 
-    let response: any = (<{ comments, 'load-next', 'load-previous', socketRoomName }>await this.commentsService.get({
-       entity_guid: this.guid,
-       parent_path,
-       level: this.level,
-       limit: 12,
-       loadNext: descending ? null : this.loadNext,
-       loadPrevious: descending ? this.loadPrevious : null,
-       descending,
-    }));
+    let response: any = null;
+    try {
+      response = <{ comments; 'load-next'; 'load-previous'; socketRoomName }>(
+        await this.commentsService.get({
+          entity_guid: this.guid,
+          parent_path,
+          level: this.level,
+          limit: 12,
+          loadNext: descending ? null : this.loadNext,
+          loadPrevious: descending ? this.loadPrevious : null,
+          descending,
+        })
+      );
+    } catch (e) {}
+
+    if (!response || !response.comments) {
+      return;
+    }
 
     let comments = response.comments;
 
@@ -121,10 +133,8 @@ export class CommentsThreadComponent {
       this.comments = this.comments.concat(comments);
     }
 
-    if (this.moreNext)
-      this.loadNext = response['load-next'];
-    if (this.morePrevious)
-      this.loadPrevious = response['load-previous'];
+    if (this.moreNext) this.loadNext = response['load-next'];
+    if (this.morePrevious) this.loadPrevious = response['load-previous'];
 
     this.moreNext = !!this.loadNext;
     this.morePrevious = !!this.loadPrevious;
@@ -143,7 +153,7 @@ export class CommentsThreadComponent {
     }
 
     this.inProgress = false;
-    this.detectChanges(); 
+    this.detectChanges();
   }
 
   async loadBlockedUsers() {
@@ -161,8 +171,7 @@ export class CommentsThreadComponent {
   }
 
   getComments() {
-    return this.comments
-      .filter(comment => !this.isOwnerBlocked(comment));
+    return this.comments.filter(comment => !this.isOwnerBlocked(comment));
   }
 
   isThreadBlocked() {
@@ -183,45 +192,56 @@ export class CommentsThreadComponent {
   }
 
   listen() {
-    this.socketSubscriptions.comment = this.sockets.subscribe('comment', async (entity_guid, owner_guid, guid) => {
-      if (entity_guid !== this.guid) {
-        return;
-      }
+    this.socketSubscriptions.comment = this.sockets.subscribe(
+      'comment',
+      async (entity_guid, owner_guid, guid) => {
+        if (entity_guid !== this.guid) {
+          return;
+        }
 
-      if (this.session.isLoggedIn() && owner_guid === this.session.getLoggedInUser().guid) {
-        return;
-      }
+        if (
+          this.session.isLoggedIn() &&
+          owner_guid === this.session.getLoggedInUser().guid
+        ) {
+          return;
+        }
 
-      const parent_path = this.parent.child_path || "0:0:0";
+        const parent_path = this.parent.child_path || '0:0:0';
 
-      let scrolledToBottom = this.scrollView.nativeElement.scrollTop + this.scrollView.nativeElement.clientHeight >= this.scrollView.nativeElement.scrollHeight;
+        const scrolledToBottom =
+          this.scrollView.nativeElement.scrollTop +
+            this.scrollView.nativeElement.clientHeight >=
+          this.scrollView.nativeElement.scrollHeight;
 
-      try {
-        let comment: any = await this.commentsService.single({
+        try {
+          let comment: any = await this.commentsService.single({
             entity_guid: this.guid,
             guid: guid,
             parent_path: parent_path,
-        });
+          });
 
-        // if the list is scrolled to the bottom
-        let scrolledToBottom = this.scrollView.nativeElement.scrollTop + this.scrollView.nativeElement.clientHeight >= this.scrollView.nativeElement.scrollHeight;
+          // if the list is scrolled to the bottom
+          let scrolledToBottom =
+            this.scrollView.nativeElement.scrollTop +
+              this.scrollView.nativeElement.clientHeight >=
+            this.scrollView.nativeElement.scrollHeight;
 
-        if (comment) {
-          await this.loadBlockedUsers();
-          this.comments.push(comment);
-        }
+          if (comment) {
+            await this.loadBlockedUsers();
+            this.comments.push(comment);
+          }
 
-        this.detectChanges();
+          this.detectChanges();
 
-        if (scrolledToBottom) {
-          this.commentsScrollEmitter.emit('bottom');
-          this.scrollToBottom.next(true);
-        }
+          if (scrolledToBottom) {
+            this.commentsScrollEmitter.emit('bottom');
+            this.scrollToBottom.next(true);
+          }
+        } catch (err) {}
+      }
+    );
 
-      } catch (err) { };
-    });
-
-    this.sockets.subscribe('reply', (guid) => {
+    this.sockets.subscribe('reply', guid => {
       for (let i = 0; i < this.comments.length; i++) {
         if (this.comments[i]._guid == guid) {
           this.comments[i].replies_count++;
@@ -231,38 +251,55 @@ export class CommentsThreadComponent {
     });
 
     this.sockets.subscribe('vote', (guid, owner_guid, direction) => {
-      if (this.session.isLoggedIn() && owner_guid === this.session.getLoggedInUser().guid) {
+      if (
+        this.session.isLoggedIn() &&
+        owner_guid === this.session.getLoggedInUser().guid
+      ) {
         return;
       }
       let key = 'thumbs:' + direction + ':count';
       for (let i = 0; i < this.comments.length; i++) {
-         if (this.comments[i]._guid == guid) {
-           this.comments[i][key]++;
-           this.detectChanges();
-         }
-       }
-       //this.comments = this.comments.slice(0);
-       this.detectChanges();
-     });
+        if (this.comments[i]._guid == guid) {
+          this.comments[i][key]++;
+          this.detectChanges();
+        }
+      }
+      //this.comments = this.comments.slice(0);
+      this.detectChanges();
+    });
 
-     this.sockets.subscribe('vote:cancel', (guid, owner_guid, direction) => {
-       if (this.session.isLoggedIn() && owner_guid === this.session.getLoggedInUser().guid) {
-         return;
-       }
-       let key = 'thumbs:' + direction + ':count';
-       for (let i = 0; i < this.comments.length; i++) {
-         if (this.comments[i]._guid == guid) {
-           this.comments[i][key]--;
-           this.detectChanges();
-         }
-       }
-     });
+    this.sockets.subscribe('vote:cancel', (guid, owner_guid, direction) => {
+      if (
+        this.session.isLoggedIn() &&
+        owner_guid === this.session.getLoggedInUser().guid
+      ) {
+        return;
+      }
+      let key = 'thumbs:' + direction + ':count';
+      for (let i = 0; i < this.comments.length; i++) {
+        if (this.comments[i]._guid == guid) {
+          this.comments[i][key]--;
+          this.detectChanges();
+        }
+      }
+    });
   }
 
   joinSocketRoom() {
     if (this.socketRoomName) {
       this.sockets.join(this.socketRoomName);
     }
+  }
+
+  /**
+   * Retries connection to sockets manually.
+   */
+  retry() {
+    this.inProgress = true;
+    this.listen();
+    setTimeout(() => {
+      this.inProgress = false;
+    }, 2000);
   }
 
   onOptimisticPost(comment) {
@@ -273,8 +310,6 @@ export class CommentsThreadComponent {
   }
 
   onPosted({ comment, index }) {
-    console.log('onPosted called');
-    console.log(comment, index);
     this.comments[index] = comment;
     this.detectChanges();
   }
@@ -295,8 +330,20 @@ export class CommentsThreadComponent {
     return true;
   }
 
-  ngOnChanges(changes) {
-  //  console.log('[comment:list]: on changes', changes);
+  get isLoggedIn() {
+    return this.session.isLoggedIn();
   }
 
+  ngOnChanges(changes) {
+    // console.log('[comment:thread]: on changes', changes);
+
+    // reload on entity change.
+    if (
+      changes.entity &&
+      changes.entity.previousValue &&
+      changes.entity.previousValue.guid !== changes.entity.currentValue.guid
+    ) {
+      this.load(true);
+    }
+  }
 }

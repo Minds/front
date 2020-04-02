@@ -1,7 +1,6 @@
 .m-group--conversation {
   max-width: 1600px;
 
-
   .m-group--sidebar {
     @media screen and (max-width: $min-tablet) {
       margin: 0 auto;
@@ -13,7 +12,6 @@
   .mdl-cell--8-col {
     flex: 1;
   }
-
 }
 
 minds-groups-profile-conversation {
@@ -30,7 +28,8 @@ minds-groups-profile-conversation {
     width: 100%;
   }
 
-  .m-group__chat, .m-group__chat > m-comments__thread {
+  .m-group__chat,
+  .m-group__chat > m-comments__thread {
     height: 100%;
     height: calc(100vh - 45px);
     position: relative;
@@ -40,11 +39,12 @@ minds-groups-profile-conversation {
     flex-direction: column;
     box-sizing: border-box;
     padding-bottom: 24px;
-    @include m-theme(){
-      background-color: themed($m-white);
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
     }
 
-    .minds-comments-container, .m-comments__thread {
+    .minds-comments-container,
+    .m-comments__thread {
       overflow-y: auto;
       max-height: none;
       flex: 1;
@@ -57,7 +57,8 @@ minds-groups-profile-conversation {
       }
 
       .m-comment-attachment .item-image {
-        img, minds-video {
+        img,
+        minds-video {
           max-width: 50%;
         }
       }
@@ -72,7 +73,7 @@ minds-groups-profile-conversation {
         display: block;
       }
 
-      .m-comment-attachment .m-rich-embed{
+      .m-comment-attachment .m-rich-embed {
         max-width: 63%;
         .m-blurb {
           display: block;
@@ -103,10 +104,16 @@ minds-groups-profile-conversation {
 
   .minds-comment.minds-comment-post {
     //position: fixed;
-   // bottom: 0;
+    // bottom: 0;
     //width: 612px;
   }
   .mdl-card__actions {
-  //  top: 9px !important;
+    //  top: 9px !important;
+  }
+}
+
+.m-theme__2020 {
+  minds-groups-profile-conversation {
+    top: 75px;
   }
 }

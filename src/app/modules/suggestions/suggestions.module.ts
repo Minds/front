@@ -6,8 +6,9 @@ import { LegacyModule } from '../legacy/legacy.module';
 
 import { CommonModule } from '../../common/common.module';
 import { SuggestionsSidebar } from './channel/sidebar.component';
-import { GroupSuggestionsSidebarComponent } from "./groups/sidebar.component";
-import { AutocompleteSuggestionsService } from "./services/autocomplete-suggestions.service";
+import { GroupSuggestionsSidebarComponent } from './groups/sidebar.component';
+import { AutocompleteSuggestionsService } from './services/autocomplete-suggestions.service';
+import { ChannelSuggestionsService } from './channel/channel-suggestions.service';
 
 @NgModule({
   imports: [
@@ -18,18 +19,8 @@ import { AutocompleteSuggestionsService } from "./services/autocomplete-suggesti
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    SuggestionsSidebar,
-    GroupSuggestionsSidebarComponent,
-  ],
-  exports: [
-    SuggestionsSidebar,
-    GroupSuggestionsSidebarComponent,
-  ],
-  providers: [
-    AutocompleteSuggestionsService,
-  ]
+  declarations: [SuggestionsSidebar, GroupSuggestionsSidebarComponent],
+  exports: [SuggestionsSidebar, GroupSuggestionsSidebarComponent],
+  providers: [AutocompleteSuggestionsService, ChannelSuggestionsService],
 })
-export class SuggestionsModule {
-}
-
+export class SuggestionsModule {}

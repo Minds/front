@@ -1,9 +1,15 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from "@angular/core";
-import { GroupsService } from "../../groups-service";
-import { Session } from "../../../../services/session";
-import { Router } from "@angular/router";
-import { Client } from "../../../../services/api/client";
-import { Subscription } from "rxjs";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+} from '@angular/core';
+import { GroupsService } from '../../groups.service';
+import { Session } from '../../../../services/session';
+import { Router } from '@angular/router';
+import { Client } from '../../../../services/api/client';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-groups-profile__review',
@@ -30,9 +36,8 @@ export class GroupsProfileReviewComponent implements OnInit {
     protected session: Session,
     protected router: Router,
     protected client: Client,
-    protected cd: ChangeDetectorRef,
-  ) {
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
     this.initialized = true;
@@ -68,7 +73,10 @@ export class GroupsProfileReviewComponent implements OnInit {
         offset: this.offset,
       };
 
-      const response: any = await this.client.get(`api/v1/groups/review/${this.group.guid}`, params);
+      const response: any = await this.client.get(
+        `api/v1/groups/review/${this.group.guid}`,
+        params
+      );
 
       if (typeof response['adminqueue:count'] !== 'undefined') {
         this.group['adminqueue:count'] = response['adminqueue:count'];
@@ -122,7 +130,9 @@ export class GroupsProfileReviewComponent implements OnInit {
     this.entities.splice(index, 1);
 
     try {
-      await this.client.put(`api/v1/groups/review/${this.group.guid}/${activity.guid}`);
+      await this.client.put(
+        `api/v1/groups/review/${this.group.guid}/${activity.guid}`
+      );
 
       this.group['adminqueue:count'] = this.group['adminqueue:count'] - 1;
     } catch (e) {
@@ -138,7 +148,9 @@ export class GroupsProfileReviewComponent implements OnInit {
     this.entities.splice(index, 1);
 
     try {
-      await this.client.delete(`api/v1/groups/review/${this.group.guid}/${activity.guid}`);
+      await this.client.delete(
+        `api/v1/groups/review/${this.group.guid}/${activity.guid}`
+      );
 
       this.group['adminqueue:count'] = this.group['adminqueue:count'] - 1;
     } catch (e) {

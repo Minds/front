@@ -1,13 +1,13 @@
-import { Injectable, Injector } from "@angular/core";
-import { Location } from "@angular/common";
-import hashCode from "../../helpers/hash-code";
-import { Session } from "../../services/session";
+import { Injectable, Injector, Inject, PLATFORM_ID } from '@angular/core';
+import { Location, isPlatformServer } from '@angular/common';
+import hashCode from '../../helpers/hash-code';
+import { Session } from '../../services/session';
+import { Client } from '../../services/api';
 
 let uniqId = 0;
 
 @Injectable()
 export class ClientMetaService {
-
   protected source: string;
 
   protected timestamp: number;
@@ -27,19 +27,28 @@ export class ClientMetaService {
   constructor(
     protected location: Location,
     protected session: Session,
+    protected client: Client,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.id = ++uniqId;
 
     this.timestamp = Date.now();
-    this.salt = (Math.random()).toString(36).replace(/[^a-z]+/g, '');
+    this.salt = Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, '');
   }
 
   inherit(injector: Injector) {
-    const parentClientMeta: ClientMetaService = injector.get(ClientMetaService, null);
+    const parentClientMeta: ClientMetaService = injector.get(
+      ClientMetaService,
+      null
+    );
 
     if (parentClientMeta) {
       if (parentClientMeta.getId() === this.id) {
-        throw new Error('[ClientMetaService] Cannot inherit client meta from itself. Did you forget to add to @Component({ providers }) or the @SkipSelf() decorator on Injector?')
+        throw new Error(
+          '[ClientMetaService] Cannot inherit client meta from itself. Did you forget to add to @Component({ providers }) or the @SkipSelf() decorator on Injector?'
+        );
       }
 
       this.source = parentClientMeta.getSource();
@@ -63,7 +72,9 @@ export class ClientMetaService {
 
     this.source = source;
     this.timestamp = Date.now();
-    this.salt = (Math.random()).toString(36).replace(/[^a-z]+/g, '');
+    this.salt = Math.random()
+      .toString(36)
+      .replace(/[^a-z]+/g, '');
     return this;
   }
 
@@ -118,7 +129,16 @@ export class ClientMetaService {
     return hashCode(tokenParts.join(':'), 5);
   }
 
-  build(overrides: { source?, medium?, page_token?, campaign?, delta?, position? } = {}) {
+  build(
+    overrides: {
+      source?;
+      medium?;
+      page_token?;
+      campaign?;
+      delta?;
+      position?;
+    } = {}
+  ) {
     this.checkInheritance();
 
     return {
@@ -128,13 +148,22 @@ export class ClientMetaService {
       page_token: this.buildPageToken(),
       campaign: this.campaign,
       delta: this.buildDelta(),
-      ...overrides
+      ...overrides,
     };
+  }
+
+  async recordView(entity) {
+    if (isPlatformServer(this.platformId)) return; // Browser will record too.
+    await this.client.post('api/v2/analytics/views/entity/' + entity.guid, {
+      client_meta: this.build(),
+    });
   }
 
   protected checkInheritance() {
     if (!this.inherited) {
-      console.warn('[ClientMetaService] This instance did not call inherit() before doing any operations.');
+      console.warn(
+        '[ClientMetaService] This instance did not call inherit() before doing any operations.'
+      );
     }
   }
 }

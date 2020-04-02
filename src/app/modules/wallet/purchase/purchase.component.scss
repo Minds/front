@@ -1,25 +1,25 @@
-.m-purchase-points--coupon{
+.m-purchase-points--coupon {
   position: relative;
   padding: 0 16px 16px;
 
-  label{
+  label {
     font-family: 'Roboto', Helvetica, sans-serif;
     text-transform: uppercase;
     vertical-align: middle;
     letter-spacing: 0.5px;
   }
-  m-tooltip{
+  m-tooltip {
     vertical-align: middle;
   }
-  input{
+  input {
     padding: 8px 10px;
     border-radius: 3px;
     margin-left: 10px;
     font-size: 16px;
     vertical-align: middle;
     letter-spacing: 1px;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-100);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
     }
   }
 }

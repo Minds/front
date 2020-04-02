@@ -1,6 +1,6 @@
 m-categories--selected {
   display: flex;
-  margin-top:20px;
+  margin-top: 20px;
 
   .m-categories--selected--categories {
     //flex-grow: 1;
@@ -13,7 +13,7 @@ m-categories--selected {
       border-radius: 5px;
       box-sizing: border-box;
       margin: 0 1px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-black);
         background-color: rgba(themed($m-black), 0.15);
       }

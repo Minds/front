@@ -5,16 +5,20 @@ import { AttachmentService } from '../../../services/attachment';
 
 @Component({
   selector: 'm-channel--modules',
-  inputs: ['type', '_owner: owner', '_container: container', 'limit', 'linksTo'],
+  inputs: [
+    'type',
+    '_owner: owner',
+    '_container: container',
+    'limit',
+    'linksTo',
+  ],
   host: {
-    'class': 'mdl-card m-border',
-    '[hidden]': 'items.length == 0'
+    class: 'mdl-card m-border',
+    '[hidden]': 'items.length == 0',
   },
-  templateUrl: 'modules.component.html'
+  templateUrl: 'modules.component.html',
 })
-
 export class ChannelModulesComponent {
-
   items: Array<any> = [];
   type: string = 'all';
   owner: any;
@@ -59,17 +63,16 @@ export class ChannelModulesComponent {
         break;
     }
 
-    this.client.get(endpoint, { limit: this.limit })
+    this.client
+      .get(endpoint, { limit: this.limit })
       .then((response: any) => {
         let items = response.entities || response.blogs;
-        if (!(items))
-          return false;
+        if (!items) return false;
         this.items = items;
         this.inProgress = false;
       })
-      .catch(function (e) {
+      .catch(function(e) {
         this.inProgress = false;
       });
   }
-
 }

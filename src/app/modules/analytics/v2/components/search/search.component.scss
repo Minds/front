@@ -1,0 +1,186 @@
+@import 'defaults';
+
+m-analytics__search {
+  display: none;
+  width: 200px;
+
+  .mdl-textfield {
+    width: 100%;
+    .material-icons {
+      position: absolute;
+      margin: 6px;
+      font-size: 20px;
+    }
+    input {
+      @include m-theme() {
+        background-color: themed($m-white);
+        border: 1px solid rgba(themed($m-black), 0.12);
+      }
+      &::placeholder {
+        @include m-theme() {
+          color: themed($m-grey-200);
+          font-weight: 400;
+          letter-spacing: normal;
+        }
+      }
+    }
+    input,
+    label {
+      padding: $minds-padding $minds-padding $minds-padding $minds-padding * 4;
+      box-sizing: border-box;
+    }
+  }
+
+  .mdl-textfield .mdl-textfield__input {
+    height: 32px;
+    border-radius: 18px;
+
+    //text-indent: 22px;
+
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    //line-height: 38px;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  //   @media screen and (min-width: 769px) {
+  //     .mdl-textfield.m-search-bar--has-context {
+  //       display: flex;
+
+  //       .m-search-bar--context {
+  //         display: block;
+  //         flex-grow: 1;
+  //         align-self: center;
+
+  //         max-width: 25em;
+  //         height: 32px;
+  //         border-radius: 3px;
+  //         padding: 0 0 0 32px;
+
+  //         font-family: Roboto, sans-serif;
+  //         font-size: 12px;
+  //         letter-spacing: 1.25px;
+  //         //line-height: 38px;
+  //         white-space: nowrap;
+  //         text-transform: uppercase;
+  //         border-right: none;
+  //         box-sizing: border-box;
+
+  //         text-rendering: optimizeLegibility;
+  //         -webkit-font-smoothing: antialiased;
+  //         @include m-theme() {
+  //           border: 1px solid rgba(themed($m-black), 0.12);
+  //           color: rgba(themed($m-grey-800), 0.5);
+  //         }
+  //       }
+
+  //       .mdl-textfield__input {
+  //         padding: 0 $minds-padding;
+  //         //border-left: none;
+  //         box-sizing: border-box;
+
+  //         appearance: none;
+  //         @include m-theme() {
+  //           border: 1px solid rgba(themed($m-black), 0.12);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  // Search
+
+  // m-search {
+  //   display: block;
+  //   min-height: 100vh;
+  //   padding-top: 42px;
+
+  //   .m-toolbar {
+  //     position: fixed;
+  //     top: 0;
+  //     position: fixed;
+  //     top: 50px;
+  //     width: 100%;
+  //     z-index: 500;
+  //     @include m-theme() {
+  //       background-color: rgba(themed($m-grey-50), 0.8);
+  //     }
+  //   }
+
+  //   .m-topbar--navigation--more {
+  //     position: relative;
+  //     cursor: pointer;
+
+  //     .minds-dropdown-menu {
+  //       width: auto;
+  //       max-width: 300px;
+
+  //       .mdl-menu__item {
+  //         display: flex;
+  //         align-items: center;
+  //         overflow: visible;
+  //         font-size: 12px;
+
+  //         .m-dropdown--spacer {
+  //           flex: 1;
+  //         }
+
+  //         > label.mdl-switch {
+  //           width: 36px;
+  //         }
+
+  //         .m-tooltip i {
+  //           font-size: 16px;
+  //           margin: 0 8px;
+  //           @include m-theme() {
+  //             color: themed($m-grey-400);
+  //           }
+  //         }
+  //       }
+  //     }
+
+  //     @media screen and (max-width: $max-mobile) {
+  //       flex: 1;
+  //     }
+  //   }
+  // }
+
+  // Search Lists
+
+  // .m-search--list {
+  //   max-width: 1280px;
+  //   padding: $minds-padding * 2;
+  //   margin: auto;
+
+  //   .m-search--list-section {
+  //     margin-bottom: $minds-padding * 3;
+
+  //     &:last-child {
+  //       margin-bottom: 0;
+  //     }
+  //   }
+
+  //   .m-search--list-title {
+  //     margin: 0;
+  //     padding: 0 $minds-padding * 2;
+  //     font-size: 14px;
+  //     font-weight: 600;
+  //     line-height: 1.25;
+  //     letter-spacing: 2px;
+  //     text-transform: uppercase;
+  //     @include m-theme() {
+  //       color: rgba(themed($m-black), 0.6);
+  //     }
+  //   }
+
+  //   .m-search--list-entities {
+  //     minds-card {
+  //       background: transparent;
+  //     }
+  //   }
+  // }
+}

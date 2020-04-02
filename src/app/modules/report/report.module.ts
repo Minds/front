@@ -30,9 +30,24 @@ import { ModerationAppealComponent } from './console/appeal.component';
     CommentsModule,
     RouterModule.forChild([
       //{ path: 'moderation',  redirectTo: '/content-policy' },
-      { path: 'content-policy', component: ReportsMarketingComponent },
-      { path: 'moderation/juryduty/:jury', component: JuryDutySessionComponent, },
-      { path: 'settings/reported-content/strikes', component: StrikesComponent, },
+      {
+        path: 'content-policy',
+        component: ReportsMarketingComponent,
+        data: {
+          title: 'The Jury System',
+          description:
+            'The goal of Minds is to have fair, transparent and ethical moderation practices',
+          ogImage: '/assets/photos/canyon.jpg',
+        },
+      },
+      {
+        path: 'moderation/juryduty/:jury',
+        component: JuryDutySessionComponent,
+      },
+      {
+        path: 'settings/reported-content/strikes',
+        component: StrikesComponent,
+      },
       { path: 'moderation/banned', component: BannedComponent },
     ]),
     TokenOnboardingModule,
@@ -49,10 +64,7 @@ import { ModerationAppealComponent } from './console/appeal.component';
     BannedComponent,
     ModerationAppealComponent,
   ],
-  exports: [
-    ReportConsoleComponent,
-    JuryDutySessionSummonsComponent,
-  ],
+  exports: [ReportConsoleComponent, JuryDutySessionSummonsComponent],
   entryComponents: [
     ReportCreatorComponent,
     ReportsMarketingComponent,
@@ -61,11 +73,6 @@ import { ModerationAppealComponent } from './console/appeal.component';
     StrikesComponent,
     BannedComponent,
   ],
-  providers: [
-    JurySessionService,
-    BannedService,
-  ]
+  providers: [JurySessionService, BannedService],
 })
-
-export class ReportModule {
-}
+export class ReportModule {}

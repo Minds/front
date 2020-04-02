@@ -1,12 +1,17 @@
 .m-token--onboarding {
-
+  @media screen and (max-width: $max-mobile) {
+    h2 {
+      line-height: 30px;
+      font-size: 20px;
+    }
+  }
   .m-token--onboarding--slide {
     padding: 24px;
     display: flex;
     flex-direction: row;
     margin-bottom: 16px;
-    @include m-theme(){
-      background-color: themed($m-white);
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
     }
 
     h2 {
@@ -15,7 +20,7 @@
       margin-bottom: 16px;
       font-weight: bold;
       line-height: 42px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
     }
@@ -25,6 +30,9 @@
       line-height: 20px;
       margin: 8px 0 16px;
       padding: 0;
+      @media screen and (max-width: $max-mobile) {
+        font-size: 12px;
+      }
 
       &.m-token--onboarding--subtext-note {
         font-size: 12px;
@@ -67,7 +75,7 @@
       i {
         font-size: 52px;
         line-height: 1;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-700);
         }
       }
@@ -85,11 +93,10 @@
         margin-bottom: 0;
         font-size: 12px;
         line-height: 14px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-400);
         }
       }
-
     }
 
     @media screen and (max-width: 1120px) {
@@ -109,7 +116,5 @@
         width: 100%;
       }
     }
-
   }
-
 }

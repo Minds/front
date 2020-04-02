@@ -23,7 +23,7 @@ m-boost-console {
 
           label {
             font-size: 14px;
-            @include m-theme(){
+            @include m-theme() {
               color: themed($m-white);
             }
           }
@@ -51,12 +51,12 @@ m-boost-console {
         justify-content: flex-end;
         margin: 0px 30px;
         display: flex;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
         div {
           border: none;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white);
             background-color: rgba(themed($m-white), 0.1);
           }
@@ -64,7 +64,7 @@ m-boost-console {
         input {
           font-size: 25px;
           width: 250px;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white);
           }
         }
@@ -92,7 +92,7 @@ m-boost-console {
           font-size: 14px;
           font-weight: normal;
           text-transform: uppercase;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-blue-light);
           }
           m-tooltip {
@@ -100,10 +100,9 @@ m-boost-console {
               font-size: 16px;
               opacity: 0.5;
               cursor: pointer;
-              @include m-theme(){
+              @include m-theme() {
                 color: themed($m-white);
               }
-
             }
           }
         }
@@ -145,7 +144,6 @@ m-boost-console {
           }
         }
       }
-
     }
 
     .m-boost-console--tab-bar {
@@ -168,7 +166,7 @@ m-boost-console {
         text-transform: uppercase;
         text-decoration: none;
         font-weight: 400;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }

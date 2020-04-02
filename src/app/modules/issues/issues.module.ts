@@ -8,15 +8,15 @@ const routes: Routes = [
   {
     path: 'issues/report',
     component: ReportComponent,
-  }
+    data: {
+      title: 'Found a bug?',
+      description: 'Report issues with Minds.com',
+    },
+  },
 ];
 
 @NgModule({
   declarations: [ReportComponent],
-  imports: [
-    RouterModule.forChild(routes),
-    NgCommonModule,
-    CommonModule,
-  ]
+  imports: [RouterModule.forChild(routes), NgCommonModule, CommonModule],
 })
-export class IssuesModule { }
+export class IssuesModule {}

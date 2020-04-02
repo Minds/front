@@ -1,27 +1,44 @@
-<div class="m-hashtags-selector" [class.m-hashtags-selector--align-left]="alignLeft">
-
+<div
+  class="m-hashtags-selector"
+  [class.m-hashtags-selector--align-left]="alignLeft"
+>
   <m-dropdown class="m-topbar--navigation--options" #dropdown>
     <label
       [ngClass]="buttonClass"
       class="m-hashtags-selector--toggle"
       [class.m-hashtags-selector--toggle-enabled]="enabled"
     >
-      <span i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS" *ngIf="labelPosition === 'left'">Hashtags</span>
+      <span
+        i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS"
+        *ngIf="labelPosition === 'left'"
+        >Hashtags</span
+      >
       <m-tooltip>
-        <i m-tooltip--anchor class="fa fa-fw fa-hashtag m-hashtags-selector__Icon"></i>
+        <i
+          m-tooltip--anchor
+          class="fa fa-fw fa-hashtag m-hashtags-selector__Icon"
+        ></i>
         <ng-container i18n="@@M__FEATURE__WIRE">Add tags</ng-container>
       </m-tooltip>
-      <span i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS" *ngIf="labelPosition === 'right'">Hashtags</span>
+      <span
+        i18n="@@Select hashtag dropdown@@M__FEATURE__HASHTAGS"
+        *ngIf="labelPosition === 'right'"
+        >Hashtags</span
+      >
     </label>
 
     <ul class="m-dropdown--list">
-
       <li class="m-dropdown--list--item m-dropdown--list--tags">
-        <b i18n="@@TAGS_SELECTOR__SELECT_UP_TO_5_HASHTAGS">Select up to 5 hashtags.</b>
-        <m-form-tags-input [tags]="tags" (tagsChange)="setTags($event)">
+        <b i18n="@@TAGS_SELECTOR__SELECT_UP_TO_5_HASHTAGS"
+          >Select up to 5 hashtags.</b
+        >
+        <m-form-tags-input
+          *mIfBrowser
+          [tags]="tags"
+          (tagsChange)="setTags($event)"
+        >
         </m-form-tags-input>
       </li>
     </ul>
   </m-dropdown>
-
 </div>

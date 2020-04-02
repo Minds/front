@@ -7,7 +7,8 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
-  ViewChild
+  ViewChild,
+  Injector,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { EmbedImage } from './plugins/embed-image.plugin';
@@ -15,26 +16,27 @@ import { EmbedVideo } from './plugins/embed-video.plugin';
 import { MediumEditor } from 'medium-editor';
 import { ButtonsPlugin } from './plugins/buttons.plugin';
 import { AttachmentService } from '../../../services/attachment';
+import { ConfigsService } from '../../services/configs.service';
 
 export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => InlineEditorComponent),
-  multi: true
+  multi: true,
 };
 
 @Component({
   moduleId: module.id,
   selector: 'm-inline-editor',
   template: `
-  <div #host></div>
+    <div #host></div>
   `,
   host: {
-    'change': 'propagateChange($event.target.value)'
+    change: 'propagateChange($event.target.value)',
   },
-  providers: [MEDIUM_EDITOR_VALUE_ACCESSOR]
+  providers: [MEDIUM_EDITOR_VALUE_ACCESSOR],
 })
-
-export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDestroy, OnChanges {
+export class InlineEditorComponent
+  implements ControlValueAccessor, OnInit, OnDestroy, OnChanges {
   @Input() placeholder: string;
   el: ElementRef;
   editor: MediumEditor;
@@ -47,54 +49,65 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDe
 
   private buttons = new ButtonsPlugin({
     addons: {
-      'images': `<i class="material-icons">photo_camera</i>`,
-      'videos': `<i class="material-icons">play_arrow</i>`
+      images: `<i class="material-icons">photo_camera</i>`,
+      videos: `<i class="material-icons">play_arrow</i>`,
     },
     placeholder: 'Paste your link and then press Enter',
-    uploadFunction: this.attachment.upload.bind(this.attachment)
+    uploadFunction: this.attachment.upload.bind(this.attachment),
   });
-  private images = new EmbedImage({
-    buttonText: `<i class=\"material-icons\">photo_camera</i>`,
-    placeholder: 'Type caption for image (optional)'
+  private images = new EmbedImage(
+    {
+      buttonText: `<i class=\"material-icons\">photo_camera</i>`,
+      placeholder: 'Type caption for image (optional)',
+    },
+    this.injector.get(ConfigsService)
+  );
+  private videos = new EmbedVideo({
+    buttonText: `<i class="material-icons">play_arrow</i>`,
   });
-  private videos = new EmbedVideo({ buttonText: `<i class="material-icons">play_arrow</i>` });
 
-  propagateChange = (_: any) => {
-  };
+  propagateChange = (_: any) => {};
 
   private first: boolean = true;
 
-  constructor(el: ElementRef, private cd: ChangeDetectorRef, private attachment: AttachmentService) {
+  constructor(
+    el: ElementRef,
+    private cd: ChangeDetectorRef,
+    private attachment: AttachmentService,
+    private injector: Injector
+  ) {
     this.el = el;
   }
 
   ngOnInit() {
     let options = {
-      'toolbar': {
-        'buttons': [
+      toolbar: {
+        buttons: [
           {
             name: 'bold',
-            contentDefault: '<i class="material-icons">format_bold</i>'
+            contentDefault: '<i class="material-icons">format_bold</i>',
           },
           {
             name: 'italic',
-            contentDefault: '<i class="material-icons">format_italic</i>'
+            contentDefault: '<i class="material-icons">format_italic</i>',
           },
           {
             name: 'underline',
-            contentDefault: '<i class="material-icons">format_underlined</i>'
+            contentDefault: '<i class="material-icons">format_underlined</i>',
           },
           {
             name: 'strikethrough',
-            contentDefault: '<i class="material-icons">strikethrough_s</i>'
+            contentDefault: '<i class="material-icons">strikethrough_s</i>',
           },
           {
             name: 'h2',
-            contentDefault: '<b class="m-inline-editor--toolbar-text">H</b><sup>2</sup>'
+            contentDefault:
+              '<b class="m-inline-editor--toolbar-text">H</b><sup>2</sup>',
           },
           {
             name: 'h3',
-            contentDefault: '<b class="m-inline-editor--toolbar-text">H</b><sup>3</sup>'
+            contentDefault:
+              '<b class="m-inline-editor--toolbar-text">H</b><sup>3</sup>',
           },
           {
             name: 'removeFormat',
@@ -102,43 +115,44 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDe
           },
           {
             name: 'justifyLeft',
-            contentDefault: '<i class="material-icons">format_align_left</i>'
+            contentDefault: '<i class="material-icons">format_align_left</i>',
           },
           {
             name: 'justifyCenter',
-            contentDefault: '<i class="material-icons">format_align_center</i>'
+            contentDefault: '<i class="material-icons">format_align_center</i>',
           },
           {
             name: 'justifyRight',
-            contentDefault: '<i class="material-icons">format_align_right</i>'
+            contentDefault: '<i class="material-icons">format_align_right</i>',
           },
           {
             name: 'anchor',
-            contentDefault: '<i class="material-icons">insert_link</i>'
+            contentDefault: '<i class="material-icons">insert_link</i>',
           },
           {
             name: 'justifyFull',
-            contentDefault: '<i class="material-icons">format_align_justify</i>'
+            contentDefault:
+              '<i class="material-icons">format_align_justify</i>',
           },
           {
             name: 'quote',
-            contentDefault: '<i class="material-icons">format_quote</i>'
-          }
-        ]
+            contentDefault: '<i class="material-icons">format_quote</i>',
+          },
+        ],
       },
       extensions: {
-        'buttonsPlugin': this.buttons,
-        'embedImage': this.images,
-        'embedVideo': this.videos
-      }
+        buttonsPlugin: this.buttons,
+        embedImage: this.images,
+        embedVideo: this.videos,
+      },
     };
 
     if (this.placeholder) {
       Object.assign(options, {
-        'placeholder': {
+        placeholder: {
           text: this.placeholder,
-          hidOnClick: true
-        }
+          hidOnClick: true,
+        },
       });
     }
 
@@ -178,9 +192,10 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDe
         this.editor.setContent(value);
       }
       if (this.first) {
-        const p = this.el.nativeElement.querySelector('.medium-editor-element p'); 
-        if(p) 
-          p.click();
+        const p = this.el.nativeElement.querySelector(
+          '.medium-editor-element p'
+        );
+        if (p) p.click();
         this.first = false;
       }
     }
@@ -190,6 +205,5 @@ export class InlineEditorComponent implements ControlValueAccessor, OnInit, OnDe
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any) {
-  }
+  registerOnTouched(fn: any) {}
 }

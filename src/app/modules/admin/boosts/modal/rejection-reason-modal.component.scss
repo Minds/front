@@ -1,0 +1,43 @@
+m--rejection-reason-modal {
+  m-modal {
+    @include m-theme() {
+      color: themed($m-blue-grey-700);
+    }
+
+    h5.m-modal-reasons--title {
+      padding: 0 16px 16px;
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-grey-50);
+      }
+    }
+    .m-modal-reasons--reasons {
+      list-style-type: none;
+      .m-modal-reasons--reasons--reason {
+        font-size: 14px;
+        padding: 16px;
+        min-height: 20px;
+        cursor: pointer;
+        @include m-theme() {
+          border-bottom: 1px solid themed($m-grey-50);
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-white);
+          }
+        }
+      }
+    }
+    .m-modal-confirm-buttons {
+      padding: 16px;
+      @include m-theme() {
+        color: themed($m-white);
+      }
+      button {
+        @include m-theme() {
+          color: themed($m-blue-grey-700);
+        }
+      }
+    }
+  }
+}

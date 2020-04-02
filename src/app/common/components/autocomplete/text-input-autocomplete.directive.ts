@@ -9,13 +9,13 @@ import {
   Input,
   OnDestroy,
   Output,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { TextInputAutocompleteMenuComponent } from './text-input-autocomplete-menu.component';
 import { Subject } from 'rxjs';
 import getCaretCoordinates from 'textarea-caret';
-import { getContentEditableCaretCoordinates } from "../../../helpers/contenteditable-caret";
+import { getContentEditableCaretCoordinates } from '../../../helpers/contenteditable-caret';
 
 export interface ChoiceSelectedEvent {
   choice: any;
@@ -27,7 +27,7 @@ export interface ChoiceSelectedEvent {
 
 @Directive({
   selector:
-    'minds-textarea[mTextInputAutocomplete],textarea[mTextInputAutocomplete],input[type="text"][mTextInputAutocomplete]'
+    'minds-textarea[mTextInputAutocomplete],textarea[mTextInputAutocomplete],input[type="text"][mTextInputAutocomplete]',
 })
 export class TextInputAutocompleteDirective implements OnDestroy {
   triggerCharacter: string;
@@ -77,15 +77,16 @@ export class TextInputAutocompleteDirective implements OnDestroy {
    * A function that formats the selected choice once selected.
    */
   @Input()
-  getChoiceLabel: (choice: any, triggerCharacter?: any) => string = choice => choice;
+  getChoiceLabel: (choice: any, triggerCharacter?: any) => string = choice =>
+    choice;
 
   /* tslint:disable member-ordering */
   private menu:
     | {
-    component: ComponentRef<TextInputAutocompleteMenuComponent>;
-    triggerCharacterPosition: number;
-    lastCaretPosition?: number;
-  }
+        component: ComponentRef<TextInputAutocompleteMenuComponent>;
+        triggerCharacterPosition: number;
+        lastCaretPosition?: number;
+      }
     | undefined;
 
   private menuHidden$ = new Subject();
@@ -95,8 +96,7 @@ export class TextInputAutocompleteDirective implements OnDestroy {
     private viewContainerRef: ViewContainerRef,
     private injector: Injector,
     private elm: ElementRef
-  ) {
-  }
+  ) {}
 
   @HostListener('keypress', ['$event.key'])
   onKeypress(key: string) {
@@ -158,12 +158,17 @@ export class TextInputAutocompleteDirective implements OnDestroy {
   @HostListener('blur')
   onBlur() {
     if (this.menu) {
-      this.menu.lastCaretPosition = this.getTriggerCharPosition(this.elm.nativeElement);
+      this.menu.lastCaretPosition = this.getTriggerCharPosition(
+        this.elm.nativeElement
+      );
     }
   }
 
   private getTriggerCharPosition(element) {
-    if (element instanceof HTMLTextAreaElement || element instanceof HTMLInputElement) {
+    if (
+      element instanceof HTMLTextAreaElement ||
+      element instanceof HTMLInputElement
+    ) {
       return this.elm.nativeElement.selectionStart;
     } else {
       return getContentEditableCaretCoordinates(element).start;
@@ -172,30 +177,36 @@ export class TextInputAutocompleteDirective implements OnDestroy {
 
   private showMenu() {
     if (!this.menu) {
-      const menuFactory = this.componentFactoryResolver.resolveComponentFactory<TextInputAutocompleteMenuComponent>(this.menuComponent);
+      const menuFactory = this.componentFactoryResolver.resolveComponentFactory<
+        TextInputAutocompleteMenuComponent
+      >(this.menuComponent);
       this.menu = {
         component: this.viewContainerRef.createComponent(
           menuFactory,
           0,
           this.injector
         ),
-        triggerCharacterPosition: this.getTriggerCharPosition(this.elm.nativeElement)
+        triggerCharacterPosition: this.getTriggerCharPosition(
+          this.elm.nativeElement
+        ),
       };
       const lineHeight = +getComputedStyle(
         this.elm.nativeElement
       ).lineHeight!.replace(/px$/, '');
 
-      const { top, left } = this.elm.nativeElement instanceof HTMLTextAreaElement ?
-        <any>getCaretCoordinates(
-          this.elm.nativeElement,
-          this.elm.nativeElement.selectionStart
-        ) :
-        getContentEditableCaretCoordinates(this.elm.nativeElement)
-      ;
+      const { top, left } =
+        this.elm.nativeElement instanceof HTMLTextAreaElement
+          ? <any>(
+              getCaretCoordinates(
+                this.elm.nativeElement,
+                this.elm.nativeElement.selectionStart
+              )
+            )
+          : getContentEditableCaretCoordinates(this.elm.nativeElement);
       this.menu.component.instance.itemTemplate = this.itemTemplate;
       this.menu.component.instance.position = {
         top: top + lineHeight,
-        left
+        left,
       };
       this.menu.component.changeDetectorRef.detectChanges();
       this.menu.component.instance.selectChoice
@@ -238,7 +249,10 @@ export class TextInputAutocompleteDirective implements OnDestroy {
           this.hideMenu();
           const setCursorAt = (start + label).length;
 
-          if (element instanceof HTMLTextAreaElement || element instanceof HTMLInputElement) {
+          if (
+            element instanceof HTMLTextAreaElement ||
+            element instanceof HTMLInputElement
+          ) {
             element.setSelectionRange(setCursorAt, setCursorAt);
           } else {
             const range = document.createRange();
@@ -257,8 +271,8 @@ export class TextInputAutocompleteDirective implements OnDestroy {
             choice,
             insertedAt: {
               start: startIndex,
-              end: startIndex + label.length
-            }
+              end: startIndex + label.length,
+            },
           });
         });
       this.menuShown.emit();

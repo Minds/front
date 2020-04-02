@@ -1,0 +1,39 @@
+<div class="m-firehose m-page mdl-grid">
+  <div
+    class="m-firehose__moderatorAction m-firehose__moderatorAction--leftButton mdl-color--white m-border mdl-cell mdl-cell--1-col"
+    (click)="reject()"
+    tabindex="0"
+  >
+    <i class="material-icons">highlight_off</i>
+  </div>
+  <div class="mdl-cell mdl-cell--10-col">
+    <div class="m-firehose__sort-container m-border">
+      <m-sort-selector
+        [algorithm]="algorithm"
+        [period]="period"
+        [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
+        (onChange)="setSort($event.algorithm, $event.period, $event.customType)"
+      ></m-sort-selector>
+    </div>
+    <minds-activity
+      *ngIf="entity"
+      [object]="entity"
+      class="mdl-card m-border item"
+      [attr.data-minds-activity-guid]="entity.guid"
+    ></minds-activity>
+  </div>
+  <div
+    class="m-firehose__moderatorAction m-firehose__moderatorAction--rightButton mdl-color--white m-border mdl-cell mdl-cell--1-col"
+    (click)="accept()"
+    tabindex="1"
+  >
+    <i class="material-icons">check_circle</i>
+  </div>
+  <ng-container *ngIf="inProgress">
+    <div class="m-firehose__spinner mdl-cell mdl-cell--12-col">
+      <div
+        class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"
+      ></div>
+    </div>
+  </ng-container>
+</div>

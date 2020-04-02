@@ -7,26 +7,27 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  SkipSelf, Injector
-} from "@angular/core";
-import { FeedsService } from "../../../common/services/feeds.service";
-import { Session } from "../../../services/session";
-import { PosterComponent } from "../../newsfeed/poster/poster.component";
-import { SortedService } from "./sorted.service";
-import { ClientMetaService } from "../../../common/services/client-meta.service";
+  SkipSelf,
+  Injector,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { FeedsService } from '../../../common/services/feeds.service';
+import { Session } from '../../../services/session';
+import { PosterComponent } from '../../newsfeed/poster/poster.component';
+import { SortedService } from './sorted.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { Client } from '../../../services/api';
+import { ComposerComponent } from '../../composer/composer.component';
 
 @Component({
   selector: 'm-channel--sorted',
-  providers: [
-    SortedService,
-    ClientMetaService,
-    FeedsService,
-  ],
+  providers: [SortedService, ClientMetaService, FeedsService],
   templateUrl: 'sorted.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChannelSortedComponent implements OnInit {
-
   channel: any;
   @Input('channel') set _channel(channel: any) {
     if (channel === this.channel) {
@@ -40,7 +41,7 @@ export class ChannelSortedComponent implements OnInit {
     }
   }
 
-  type: string = 'activities'
+  type: string = 'activities';
   @Input('type') set _type(type: string) {
     if (type === this.type) {
       return;
@@ -64,7 +65,13 @@ export class ChannelSortedComponent implements OnInit {
 
   initialized: boolean = false;
 
+  viewScheduled: boolean = false;
+
   @ViewChild('poster', { static: false }) protected poster: PosterComponent;
+
+  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
+
+  scheduledCount: number = 0;
 
   constructor(
     public feedsService: FeedsService,
@@ -73,6 +80,8 @@ export class ChannelSortedComponent implements OnInit {
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector,
     protected cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    public client: Client
   ) {
     this.clientMetaService
       .inherit(injector)
@@ -96,13 +105,20 @@ export class ChannelSortedComponent implements OnInit {
 
     this.detectChanges();
 
+    let endpoint = 'api/v2/feeds/container';
+    if (this.viewScheduled) {
+      endpoint = 'api/v2/feeds/scheduled';
+    }
+
     try {
+      const limit = isPlatformBrowser(this.platformId) ? 12 : 2;
 
       this.feedsService
-        .setEndpoint(`api/v2/feeds/container/${this.channel.guid}/${this.type}`)
-        .setLimit(12)
+        .setEndpoint(`${endpoint}/${this.channel.guid}/${this.type}`)
+        .setLimit(limit)
         .fetch();
 
+      this.getScheduledCount();
     } catch (e) {
       console.error('ChannelsSortedComponent.load', e);
     }
@@ -111,9 +127,10 @@ export class ChannelSortedComponent implements OnInit {
   }
 
   loadNext() {
-    if (this.feedsService.canFetchMore
-      && !this.feedsService.inProgress.getValue()
-      && this.feedsService.offset.getValue()
+    if (
+      this.feedsService.canFetchMore &&
+      !this.feedsService.inProgress.getValue() &&
+      this.feedsService.offset.getValue()
     ) {
       this.feedsService.fetch(); // load the next 150 in the background
     }
@@ -125,8 +142,10 @@ export class ChannelSortedComponent implements OnInit {
   }
 
   isOwner() {
-    return this.session.isLoggedIn() &&
-      this.session.getLoggedInUser().guid == this.channel.guid;
+    return (
+      this.session.isLoggedIn() &&
+      this.session.getLoggedInUser().guid == this.channel.guid
+    );
   }
 
   isActivityFeed() {
@@ -138,24 +157,28 @@ export class ChannelSortedComponent implements OnInit {
       return;
     }
 
+    if (activity.time_created > Date.now() / 1000) {
+      this.scheduledCount += 1;
+    }
+
     this.entities.unshift(activity);
 
     let feedItem = {
       entity: activity,
       urn: activity.urn,
-      guid: activity.guid
+      guid: activity.guid,
     };
 
     // Todo: Move to FeedsService
     this.feedsService.rawFeed.next([
-      ... [ feedItem ],
-      ... this.feedsService.rawFeed.getValue()
+      ...[feedItem],
+      ...this.feedsService.rawFeed.getValue(),
     ]);
 
     this.detectChanges();
   }
 
-  canDeactivate() {
+  protected v1CanDeactivate(): boolean {
     if (!this.poster || !this.poster.attachment) {
       return true;
     }
@@ -169,8 +192,35 @@ export class ChannelSortedComponent implements OnInit {
     return true;
   }
 
+  canDeactivate(): boolean | Promise<boolean> {
+    if (this.composer) {
+      return this.composer.canDeactivate();
+    }
+
+    // Check v1 Poster component
+    return this.v1CanDeactivate();
+  }
+
   detectChanges() {
     this.cd.markForCheck();
     this.cd.detectChanges();
+  }
+
+  toggleScheduled() {
+    this.viewScheduled = !this.viewScheduled;
+    this.load(true);
+  }
+
+  async getScheduledCount() {
+    const url = `api/v2/feeds/scheduled/${this.channel.guid}/count`;
+    const response: any = await this.client.get(url);
+    this.scheduledCount = response.count;
+    this.detectChanges();
+  }
+
+  delete(activity: any) {
+    this.feedsService.deleteItem(activity, (item, obj) => {
+      return item.guid === obj.guid;
+    });
   }
 }

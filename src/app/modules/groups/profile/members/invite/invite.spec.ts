@@ -1,4 +1,10 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
 import { GroupsProfileMembersInvite } from './invite';
@@ -9,7 +15,8 @@ import { Session } from '../../../../../services/session';
 import { clientMock } from '../../../../../../tests/client-mock.spec';
 import { Client } from '../../../../../services/api/client';
 import { MockDirective, MockService } from '../../../../../utils/mock';
-import { GroupsService } from '../../../groups-service';
+import { GroupsService } from '../../../groups.service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 const user = {
   guid: '1000',
@@ -20,9 +27,9 @@ const user = {
   boost_rating: 1,
 };
 let sessionConfig = {
-  'isAdmin': user.admin,
-  'isLoggedIn': true,
-  'getLoggedInUser': user,
+  isAdmin: user.admin,
+  isLoggedIn: true,
+  getLoggedInUser: user,
 };
 
 let sessionMock: any = MockService(Session, sessionConfig);
@@ -30,7 +37,6 @@ let sessionMock: any = MockService(Session, sessionConfig);
 let groupsServiceMock: any = MockService(GroupsService, sessionConfig);
 
 describe('GroupsProfileMembersInvite', () => {
-
   let comp: GroupsProfileMembersInvite;
   let fixture: ComponentFixture<GroupsProfileMembersInvite>;
 
@@ -39,32 +45,34 @@ describe('GroupsProfileMembersInvite', () => {
   }
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
-        GroupsProfileMembersInvite
+        GroupsProfileMembersInvite,
       ],
       imports: [RouterTestingModule, FormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-        { provide: GroupsService, useValue: groupsServiceMock }
-      ]
-    })
-      .compileComponents();
+        { provide: GroupsService, useValue: groupsServiceMock },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService, {
+            configs: { cdnUrl: 'http://dev.minds.io/' },
+          }),
+        },
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     fixture = TestBed.createComponent(GroupsProfileMembersInvite);
 
     comp = fixture.componentInstance;
 
     comp.group = {
-      guid: 123
+      guid: 123,
     };
-
-    window.Minds.cdn_url = 'http://dev.minds.io/';
 
     clientMock.response = {};
 
@@ -89,17 +97,27 @@ describe('GroupsProfileMembersInvite', () => {
   });
 
   it('should have a title saying Invite to <<group name>>', () => {
-    expect(fixture.debugElement.query(By.css('h2')).nativeElement.textContent).toContain('Invite to test group');
+    expect(
+      fixture.debugElement.query(By.css('h2')).nativeElement.textContent
+    ).toContain('Invite to test group');
   });
 
   it('should have a brief explanation', () => {
-    const instructions = fixture.debugElement.queryAll(By.css('.m-groupMemberInvite__instructions > li'));
+    const instructions = fixture.debugElement.queryAll(
+      By.css('.m-groupMemberInvite__instructions > li')
+    );
 
     expect(instructions.length).toBe(3);
 
-    expect(instructions[0].nativeElement.textContent).toContain('You can only invite users who are your subscribers');
-    expect(instructions[1].nativeElement.textContent).toContain('They will receive a notification to confirm they want to be a member of this group');
-    expect(instructions[2].nativeElement.textContent).toContain('If the user was banned from the group, inviting them will lift the ban');
+    expect(instructions[0].nativeElement.textContent).toContain(
+      'You can only invite users who are your subscribers'
+    );
+    expect(instructions[1].nativeElement.textContent).toContain(
+      'They will receive a notification to confirm they want to be a member of this group'
+    );
+    expect(instructions[2].nativeElement.textContent).toContain(
+      'If the user was banned from the group, inviting them will lift the ban'
+    );
   });
 
   it('should have a search input', () => {
@@ -110,9 +128,21 @@ describe('GroupsProfileMembersInvite', () => {
     clientMock.response['api/v2/search/suggest/user'] = {
       status: 'success',
       entities: [
-        { guid: '1', icontime: '1', username: 'test1', impressions: 1000, subscribers_count: 10 },
-        { guid: '2', icontime: '2', username: 'test2', impressions: 2000, subscribers_count: 20 },
-      ]
+        {
+          guid: '1',
+          icontime: '1',
+          username: 'test1',
+          impressions: 1000,
+          subscribers_count: 10,
+        },
+        {
+          guid: '2',
+          icontime: '2',
+          username: 'test2',
+          impressions: 2000,
+          subscribers_count: 20,
+        },
+      ],
     };
 
     const input = getSearchInput();
@@ -126,27 +156,58 @@ describe('GroupsProfileMembersInvite', () => {
     fixture.detectChanges();
 
     expect(comp.users).toEqual([
-      { guid: '1', icontime: '1', username: 'test1', impressions: 1000, subscribers_count: 10 },
-      { guid: '2', icontime: '2', username: 'test2', impressions: 2000, subscribers_count: 20 },
+      {
+        guid: '1',
+        icontime: '1',
+        username: 'test1',
+        impressions: 1000,
+        subscribers_count: 10,
+      },
+      {
+        guid: '2',
+        icontime: '2',
+        username: 'test2',
+        impressions: 2000,
+        subscribers_count: 20,
+      },
     ]);
 
     expect(clientMock.get).toHaveBeenCalled();
-    expect(clientMock.get.calls.mostRecent().args[0]).toBe('api/v2/search/suggest/user');
+    expect(clientMock.get.calls.mostRecent().args[0]).toBe(
+      'api/v2/search/suggest/user'
+    );
   }));
 
   it('should have a list of users', () => {
     comp.users = [
-      { guid: '1', icontime: '1', username: 'test1', impressions: 1000, subscribers_count: 10 },
-      { guid: '2', icontime: '2', username: 'test2', impressions: 2000, subscribers_count: 20 },
+      {
+        guid: '1',
+        icontime: '1',
+        username: 'test1',
+        impressions: 1000,
+        subscribers_count: 10,
+      },
+      {
+        guid: '2',
+        icontime: '2',
+        username: 'test2',
+        impressions: 2000,
+        subscribers_count: 20,
+      },
     ];
 
     fixture.detectChanges();
 
     const img = fixture.debugElement.query(By.css('.m-search-inline-item img'));
     expect(img).not.toBeNull();
-    expect(img.nativeElement.src).toContain('http://dev.minds.io/icon/1/small/1');
+    expect(img.nativeElement.src).toContain(
+      //'http://dev.minds.io/icon/1/small/1'
+      '/icon/1/small/1'
+    );
 
-    const body = fixture.debugElement.query(By.css('.m-search-inline-item .m-body'));
+    const body = fixture.debugElement.query(
+      By.css('.m-search-inline-item .m-body')
+    );
     expect(body).not.toBeNull();
     expect(body.nativeElement.children[0].textContent).toContain('test1');
   });

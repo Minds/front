@@ -1,16 +1,22 @@
-import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { TreeNode } from '../../tree/tree-node.model';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
-type Category = { id: string, label: string };
+type Category = { id: string; label: string };
 
 @Component({
-  moduleId: module.id,
   selector: 'm-categories--selector',
-  templateUrl: 'selector.component.html'
+  templateUrl: 'selector.component.html',
 })
-
 export class CategoriesSelectorComponent {
-
   selected: Array<any> = [];
   categories: Array<Category> = [];
   menuOpened: boolean = false;
@@ -18,10 +24,12 @@ export class CategoriesSelectorComponent {
   @ViewChild('input', { read: ElementRef, static: true }) input: ElementRef;
   @ViewChild('list', { read: ElementRef, static: true }) list: ElementRef;
 
-  @Output('selected') onSelected: EventEmitter<Array<Category>> = new EventEmitter<Array<Category>>();
+  @Output('selected') onSelected: EventEmitter<
+    Array<Category>
+  > = new EventEmitter<Array<Category>>();
 
-  constructor() {
-    this.categories = window.Minds.categories;
+  constructor(configs: ConfigsService) {
+    this.categories = configs.get('categories');
   }
 
   search(value: string) {
@@ -30,8 +38,8 @@ export class CategoriesSelectorComponent {
   }
 
   select(item: TreeNode) {
-    const index: number = this.selected.findIndex((selected) => {
-      return selected === item.original
+    const index: number = this.selected.findIndex(selected => {
+      return selected === item.original;
     });
     if (index === -1) {
       this.selected.push(item.original);
@@ -48,9 +56,9 @@ export class CategoriesSelectorComponent {
     const listRect: ClientRect = this.list.nativeElement.getBoundingClientRect();
     this.list.nativeElement.style.minWidth = inputRect.width + 'px';
 
-    this.list.nativeElement.style.height = Math.max(window.innerHeight - listRect.top - 100, 100) + 'px';
+    this.list.nativeElement.style.height =
+      Math.max(window.innerHeight - listRect.top - 100, 100) + 'px';
   }
-
 
   @HostListener('blur')
   closeMenu() {

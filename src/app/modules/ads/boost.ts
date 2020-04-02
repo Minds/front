@@ -1,10 +1,17 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Client } from '../../services/api';
 
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { Subscription } from 'rxjs';
 import { SettingsService } from '../settings/settings.service';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'm-ads-boost',
@@ -18,12 +25,10 @@ import { SettingsService } from '../settings/settings.service';
     </div>
   `,
   host: {
-    'class': 'm-ad-block m-ad-block-boosts'
-  }
+    class: 'm-ad-block m-ad-block-boosts',
+  },
 })
-
 export class BoostAds implements OnInit, OnDestroy {
-
   handler: string = 'content';
   limit: number = 2;
   offset: string = '';
@@ -32,14 +37,21 @@ export class BoostAds implements OnInit, OnDestroy {
 
   ratingSubscription: Subscription;
 
-  constructor(public client: Client, public session: Session, private storage: Storage, private settingsService: SettingsService) {
-  }
+  constructor(
+    public client: Client,
+    public session: Session,
+    private storage: Storage,
+    private settingsService: SettingsService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {
     this.rating = this.session.getLoggedInUser().boost_rating;
-    this.ratingSubscription = this.settingsService.ratingChanged.subscribe((rating) => {
-      this.onRatingChanged(rating);
-    });
+    this.ratingSubscription = this.settingsService.ratingChanged.subscribe(
+      rating => {
+        this.onRatingChanged(rating);
+      }
+    );
     this.fetch();
   }
 
@@ -48,13 +60,15 @@ export class BoostAds implements OnInit, OnDestroy {
   }
 
   fetch() {
+    if (isPlatformServer(this.platformId)) return;
     if (this.storage.get('boost:offset:sidebar'))
       this.offset = this.storage.get('boost:offset:sidebar');
-    this.client.get('api/v1/boost/fetch/' + this.handler, {
-      limit: this.limit,
-      offset: this.offset,
-      rating: this.rating
-    })
+    this.client
+      .get('api/v1/boost/fetch/' + this.handler, {
+        limit: this.limit,
+        offset: this.offset,
+        rating: this.rating,
+      })
       .then((response: any) => {
         if (!response.boosts) {
           return;
@@ -72,5 +86,4 @@ export class BoostAds implements OnInit, OnDestroy {
     this.offset = '';
     this.fetch();
   }
-
 }

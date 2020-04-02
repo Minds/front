@@ -1,4 +1,10 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { SettingsGeneralComponent } from './general.component';
@@ -17,27 +23,32 @@ import { ThirdPartyNetworksService } from '../../../services/third-party-network
 import { Observable } from 'rxjs';
 import { of } from 'rxjs/internal/observable/of';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MockDirective } from '../../../utils/mock';
+import { MockDirective, MockService } from '../../../utils/mock';
+import { ConfigsService } from '../../../common/services/configs.service';
 
-let routerMock = new function() {
+let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');
-};
+})();
 
 describe('SettingsGeneralComponent', () => {
-
   let comp: SettingsGeneralComponent;
   let fixture: ComponentFixture<SettingsGeneralComponent>;
 
   function getSaveButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-settings--action > button.m-btn.m-btn--slim.m-btn--action'));
+    return fixture.debugElement.query(
+      By.css('.m-settings--action > button.m-btn.m-btn--slim.m-btn--action')
+    );
   }
 
   function getSavedButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-settings--action > button.m-btn.m-btn--slim:not(.m-btn--action)'));
+    return fixture.debugElement.query(
+      By.css(
+        '.m-settings--action > button.m-btn.m-btn--slim:not(.m-btn--action)'
+      )
+    );
   }
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MaterialMock,
@@ -45,28 +56,36 @@ describe('SettingsGeneralComponent', () => {
         SettingsGeneralComponent,
         MockDirective({
           selector: '[mIfFeature]',
-          inputs: [ 'mIfFeature' ],
+          inputs: ['mIfFeature'],
         }),
         MockDirective({
           selector: '[mIfFeatureElse]',
-          inputs: [ 'mIfFeatureElse' ],
+          inputs: ['mIfFeatureElse'],
         }),
       ],
-      imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        CommonModule,
+        FormsModule,
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-        { provide: ThirdPartyNetworksService, useValue: thirdPartyNetworksServiceMock },
-        { provide: ActivatedRoute, useValue: { params: of({ 'guid': '1000' }) } },
+        {
+          provide: ThirdPartyNetworksService,
+          useValue: thirdPartyNetworksServiceMock,
+        },
+        { provide: ActivatedRoute, useValue: { params: of({ guid: '1000' }) } },
         { provide: Router, useValue: routerMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
-      schemas: [ NO_ERRORS_SCHEMA ],
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().install();
 
@@ -86,28 +105,15 @@ describe('SettingsGeneralComponent', () => {
         selectedCategories: ['art', 'comedy'],
         open_sessions: 1,
       },
-      thirdpartynetworks: []
+      thirdpartynetworks: [],
     };
-
-    window.Minds.user = {
-      "guid": "1000",
-      "type": "user",
-      "signup_method": false,
-    };
-
-    window.Minds.categories = {
-      art: 'Art',
-      animals: 'Animals'
-    };
-
 
     fixture.detectChanges();
 
     if (fixture.isStable()) {
       done();
     } else {
-      fixture.whenStable()
-        .then(() => done());
+      fixture.whenStable().then(() => done());
     }
   });
 
@@ -116,7 +122,9 @@ describe('SettingsGeneralComponent', () => {
   });
 
   it('should have an action bar', () => {
-    expect(fixture.debugElement.query(By.css('.m-settings--action'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-settings--action'))
+    ).not.toBeNull();
   });
 
   it('should have a save button in the action bar', () => {
@@ -143,14 +151,18 @@ describe('SettingsGeneralComponent', () => {
     comp.error = 'error';
     fixture.detectChanges();
 
-    const error = fixture.debugElement.query(By.css('.m-settings--action > .minds-error'));
+    const error = fixture.debugElement.query(
+      By.css('.m-settings--action > .minds-error')
+    );
 
     expect(error).not.toBeNull();
     expect(error.nativeElement.textContent).toContain(comp.error);
   });
 
   it('should display a progress bar in the action bar', () => {
-    const spinner = fixture.debugElement.query(By.css('.m-settings--action > .mdl-spinner'));
+    const spinner = fixture.debugElement.query(
+      By.css('.m-settings--action > .mdl-spinner')
+    );
     expect(spinner).not.toBeNull();
 
     expect(spinner.nativeElement.hidden).toBeTruthy();
@@ -162,7 +174,9 @@ describe('SettingsGeneralComponent', () => {
   });
 
   it('should have a display name section', () => {
-    expect(fixture.debugElement.query(By.css('.m-settings--name'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-settings--name'))
+    ).not.toBeNull();
 
     const h4 = fixture.debugElement.query(By.css('.m-settings--name > h4'));
     expect(h4).not.toBeNull();
@@ -189,40 +203,66 @@ describe('SettingsGeneralComponent', () => {
   });
 
   it('should have a password section', () => {
-    expect(fixture.debugElement.query(By.css('.m-settings--password'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-settings--password'))
+    ).not.toBeNull();
 
     const h4 = fixture.debugElement.query(By.css('.m-settings--password > h4'));
     expect(h4).not.toBeNull();
     expect(h4.nativeElement.textContent).toContain('Account Password');
 
-    const currentPassword = fixture.debugElement.query(By.css('.m-settings--password input#password'));
+    const currentPassword = fixture.debugElement.query(
+      By.css('.m-settings--password input#password')
+    );
     expect(currentPassword).not.toBeNull();
 
-    const currentPasswordLabel = fixture.debugElement.query(By.css('.m-settings--password label[for=password]'));
+    const currentPasswordLabel = fixture.debugElement.query(
+      By.css('.m-settings--password label[for=password]')
+    );
     expect(currentPasswordLabel).not.toBeNull();
-    expect(currentPasswordLabel.nativeElement.textContent).toContain('Current password');
+    expect(currentPasswordLabel.nativeElement.textContent).toContain(
+      'Current password'
+    );
 
-    const newPassword = fixture.debugElement.query(By.css('.m-settings--password input#password1'));
+    const newPassword = fixture.debugElement.query(
+      By.css('.m-settings--password input#password1')
+    );
     expect(newPassword).not.toBeNull();
 
-    const newPasswordLabel = fixture.debugElement.query(By.css('.m-settings--password label[for=password1]'));
+    const newPasswordLabel = fixture.debugElement.query(
+      By.css('.m-settings--password label[for=password1]')
+    );
     expect(newPasswordLabel).not.toBeNull();
-    expect(newPasswordLabel.nativeElement.textContent).toContain('Your new password');
+    expect(newPasswordLabel.nativeElement.textContent).toContain(
+      'Your new password'
+    );
 
-    const repeatPassword = fixture.debugElement.query(By.css('.m-settings--password input#password2'));
+    const repeatPassword = fixture.debugElement.query(
+      By.css('.m-settings--password input#password2')
+    );
     expect(repeatPassword).not.toBeNull();
 
-    const repeatPasswordLabel = fixture.debugElement.query(By.css('.m-settings--password label[for=password2]'));
+    const repeatPasswordLabel = fixture.debugElement.query(
+      By.css('.m-settings--password label[for=password2]')
+    );
     expect(repeatPasswordLabel).not.toBeNull();
-    expect(repeatPasswordLabel.nativeElement.textContent).toContain('Your new password again');
+    expect(repeatPasswordLabel.nativeElement.textContent).toContain(
+      'Your new password again'
+    );
   });
 
   it('should change the password when the input changes', fakeAsync(() => {
     spyOn(comp, 'change').and.callThrough();
 
-    const currentPassword = fixture.debugElement.query(By.css('.m-settings--password input#password'));
-    const newPassword = fixture.debugElement.query(By.css('.m-settings--password input#password1'));
-    const repeatPassword = fixture.debugElement.query(By.css('.m-settings--password input#password2'));
+    const currentPassword = fixture.debugElement.query(
+      By.css('.m-settings--password input#password')
+    );
+    const newPassword = fixture.debugElement.query(
+      By.css('.m-settings--password input#password1')
+    );
+    const repeatPassword = fixture.debugElement.query(
+      By.css('.m-settings--password input#password2')
+    );
 
     expect(newPassword.nativeElement.disabled).toBeTruthy();
     expect(repeatPassword.nativeElement.disabled).toBeTruthy();
@@ -256,23 +296,33 @@ describe('SettingsGeneralComponent', () => {
   }));
 
   xit('should have a mature content section', () => {
-    expect(fixture.debugElement.query(By.css('.m-settings--mature'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-settings--mature'))
+    ).not.toBeNull();
 
     const h4 = fixture.debugElement.query(By.css('.m-settings--mature > h4'));
     expect(h4).not.toBeNull();
     expect(h4.nativeElement.textContent).toContain('Mature Content');
 
-    const input = fixture.debugElement.query(By.css('.m-settings--mature input'));
+    const input = fixture.debugElement.query(
+      By.css('.m-settings--mature input')
+    );
     expect(input).not.toBeNull();
 
-    const label = fixture.debugElement.query(By.css('.m-settings--mature label'));
+    const label = fixture.debugElement.query(
+      By.css('.m-settings--mature label')
+    );
     expect(label).not.toBeNull();
-    expect(label.nativeElement.textContent).toContain('Always show mature content (18+)');
+    expect(label.nativeElement.textContent).toContain(
+      'Always show mature content (18+)'
+    );
   });
 
   xit('should change the mature  property when the input changes', () => {
     spyOn(comp, 'change').and.callThrough();
-    const input = fixture.debugElement.query(By.css('.m-settings--mature input'));
+    const input = fixture.debugElement.query(
+      By.css('.m-settings--mature input')
+    );
     expect(input).not.toBeNull();
 
     expect(input.nativeElement.checked).toBeFalsy();
@@ -285,29 +335,42 @@ describe('SettingsGeneralComponent', () => {
   });
 
   it('should have a sessions section', () => {
-    expect(fixture.debugElement.query(By.css('.m-settings--close-all-sessions'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.m-settings--close-all-sessions'))
+    ).not.toBeNull();
 
-    const h4 = fixture.debugElement.query(By.css('.m-settings--close-all-sessions > h4'));
+    const h4 = fixture.debugElement.query(
+      By.css('.m-settings--close-all-sessions > h4')
+    );
     expect(h4).not.toBeNull();
     expect(h4.nativeElement.textContent).toContain('Sessions');
 
-    const p = fixture.debugElement.query(By.css('.m-settings--close-all-sessions > p'));
+    const p = fixture.debugElement.query(
+      By.css('.m-settings--close-all-sessions > p')
+    );
     expect(p).not.toBeNull();
-    expect(p.nativeElement.textContent).toContain('You currently have 1 opened session');
+    expect(p.nativeElement.textContent).toContain(
+      'You currently have 1 opened session'
+    );
 
-    const button = fixture.debugElement.query(By.css('.m-settings--close-all-sessions button'));
+    const button = fixture.debugElement.query(
+      By.css('.m-settings--close-all-sessions button')
+    );
     expect(button).not.toBeNull();
     expect(button.nativeElement.textContent).toContain('Close All Sessions');
   });
 
   it('should close all sessions', () => {
     spyOn(comp, 'closeAllSessions').and.callThrough();
-    const button = fixture.debugElement.query(By.css('.m-settings--close-all-sessions button'));
+    const button = fixture.debugElement.query(
+      By.css('.m-settings--close-all-sessions button')
+    );
     button.nativeElement.click();
     expect(comp.closeAllSessions).toHaveBeenCalled();
 
     expect(routerMock.navigate).toHaveBeenCalled();
-    expect(routerMock.navigate.calls.mostRecent().args[0]).toEqual(['/logout/all']);
+    expect(routerMock.navigate.calls.mostRecent().args[0]).toEqual([
+      '/logout/all',
+    ]);
   });
-
 });

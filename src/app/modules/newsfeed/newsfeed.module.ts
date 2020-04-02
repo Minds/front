@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule as NgFormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule as NgFormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
 import { LegacyModule } from '../legacy/legacy.module';
@@ -28,13 +31,18 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
 import { NewsfeedTagsComponent } from './feeds/tags/tags.component';
 import { NewsfeedSortedComponent } from './feeds/sorted.component';
 import { NewsfeedEntityComponent } from './feeds/entity.component';
-import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
-import { SearchModule } from "../search/search.module";
+import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
+import { SearchModule } from '../search/search.module';
 import { NewsfeedTilesComponent } from './feeds/tiles.component';
+import { ActivityModule } from './activity/activity.module';
+import { FeedGridComponent } from './feed-grid/feed-grid.component';
+import { ComposerModule } from '../composer/composer.module';
+import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 
 const routes: Routes = [
   {
-    path: 'newsfeed', component: NewsfeedComponent,
+    path: 'newsfeed',
+    component: NewsfeedComponent,
     children: [
       { path: '', redirectTo: 'subscriptions', pathMatch: 'full' },
       { path: 'suggested', component: NewsfeedTopComponent },
@@ -42,8 +50,24 @@ const routes: Routes = [
       { path: 'global', redirectTo: 'global/top', pathMatch: 'full' },
       { path: 'global/:algorithm', component: NewsfeedSortedComponent },
       { path: 'subscribed', redirectTo: 'subscriptions', pathMatch: 'full' },
-      { path: 'subscriptions', component: NewsfeedSubscribedComponent, canDeactivate: [CanDeactivateGuardService] },
-      { path: 'boost', component: NewsfeedBoostComponent, canDeactivate: [CanDeactivateGuardService] },
+      {
+        path: 'subscriptions',
+        component: NewsfeedSubscribedComponent,
+        canDeactivate: [CanDeactivateGuardService],
+        data: {
+          title: 'Newsfeed',
+          description: 'Posts from channels your subscribe to',
+        },
+      },
+      {
+        path: 'boost',
+        component: NewsfeedBoostComponent,
+        canDeactivate: [CanDeactivateGuardService],
+        data: {
+          title: 'Boost Feed',
+          description: 'Posts that have been boosted on the network',
+        },
+      },
       { path: 'tag/:tag', component: NewsfeedTagsComponent },
     ],
   },
@@ -68,6 +92,9 @@ const routes: Routes = [
     NoticesModule,
     SearchModule,
     ReferralsModule,
+    ActivityModule,
+    ComposerModule,
+    DiscoverySharedModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,
@@ -81,6 +108,7 @@ const routes: Routes = [
     NewsfeedSortedComponent,
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
+    FeedGridComponent,
   ],
   providers: [
     NewsfeedService,
@@ -92,12 +120,9 @@ const routes: Routes = [
     NewsfeedBoostRotatorComponent,
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
-  ],
-  entryComponents: [
     NewsfeedComponent,
-    NewsfeedSingleComponent,
-  ]
+    FeedGridComponent,
+  ],
+  entryComponents: [NewsfeedComponent, NewsfeedSingleComponent],
 })
-
-export class NewsfeedModule {
-}
+export class NewsfeedModule {}

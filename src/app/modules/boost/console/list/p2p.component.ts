@@ -8,10 +8,9 @@ import { Router } from '@angular/router';
   moduleId: module.id,
   providers: [BoostService],
   selector: 'm-boost-console-p2p',
-  templateUrl: 'p2p.component.html'
+  templateUrl: 'p2p.component.html',
 })
 export class BoostConsoleP2PListComponent {
-
   initialized: boolean = false;
   inProgress: boolean = false;
 
@@ -22,7 +21,7 @@ export class BoostConsoleP2PListComponent {
 
   error: string = '';
 
-  constructor(public service: BoostService, public router: Router) { }
+  constructor(public service: BoostService, public router: Router) {}
 
   @Input('filter') set _filter(filter: BoostConsoleFilter) {
     if (filter !== 'inbox' && filter !== 'outbox') {
@@ -53,9 +52,10 @@ export class BoostConsoleP2PListComponent {
       this.moreData = true;
     }
 
-    this.service.load('peer', this.filter, {
-      offset: this.offset
-    })
+    this.service
+      .load('peer', this.filter, {
+        offset: this.offset,
+      })
       .then(({ boosts, loadNext }) => {
         this.inProgress = false;
 

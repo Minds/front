@@ -1,31 +1,30 @@
-@import "defaults";
+@import 'defaults';
 
-minds-form-onboarding{
-
+minds-form-onboarding {
   max-height: 100vh;
   overflow: scroll;
 
-  .mdl-grid{
-    align-items:center;
-    padding-top:38px;
+  .mdl-grid {
+    align-items: center;
+    padding-top: 38px;
   }
 
-  .mdl-card__actions{
-      text-align:center;
+  .mdl-card__actions {
+    text-align: center;
   }
 
-  minds-avatar{
+  minds-avatar {
     margin: auto;
     display: block;
     width: 200px;
   }
 
-  .m-onboarding-banner{
-    position:relative;
-    img{
-      width:100%;
+  .m-onboarding-banner {
+    position: relative;
+    img {
+      width: 100%;
     }
-    input[type=file]{
+    input[type='file'] {
       opacity: 0;
       position: absolute;
       left: 0;
@@ -36,23 +35,21 @@ minds-form-onboarding{
     }
   }
 
-
-  .m-onboarding-gender{
-    font-size:11px;
+  .m-onboarding-gender {
+    font-size: 11px;
   }
 
-  label{
+  label {
     font-weight: bold;
     text-transform: uppercase;
   }
 
-  input{
+  input {
     padding: 8px;
     width: 100%;
   }
 
-  input[type=radio]{
-    width:auto;
+  input[type='radio'] {
+    width: auto;
   }
-
 }

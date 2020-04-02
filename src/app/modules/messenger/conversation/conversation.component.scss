@@ -1,15 +1,17 @@
 @import 'defaults.scss';
 
-.m-messenger--conversation{
+.m-messenger--conversation {
   border-radius: 3px 3px 0 0;
-  @include m-theme(){
-    box-shadow: 0 2px 4px 0 rgba(themed($m-black), .15), 0 1px 0px -2px rgba(themed($m-black), .15), 0 1px 5px 0 rgba(themed($m-black), .15);
+  @include m-theme() {
+    box-shadow: 0 2px 4px 0 rgba(themed($m-black), 0.15),
+      0 1px 0px -2px rgba(themed($m-black), 0.15),
+      0 1px 5px 0 rgba(themed($m-black), 0.15);
   }
 
-  .m-messenger--conversation-messages{
-    max-height:240px;
-    overflow:scroll;
-    overflow-x:hidden;
+  .m-messenger--conversation-messages {
+    max-height: 240px;
+    overflow: scroll;
+    overflow-x: hidden;
 
     &.m-messenger--ribbon-open {
       min-height: 29px;
@@ -22,37 +24,36 @@
       font-size: 12px;
       margin: $minds-margin/2 $minds-margin;
       font-weight: 400;
-      max-width:160px;
+      max-width: 160px;
       box-sizing: border-box;
       line-height: 14px;
-      text-align:left;
+      text-align: left;
       word-wrap: break-word;
-      cursor:pointer;
+      cursor: pointer;
       white-space: pre-line;
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-grey-50);
       }
     }
-    .m-messenger--conversation-messages-message{
-      text-align:right;
+    .m-messenger--conversation-messages-message {
+      text-align: right;
 
-      img{
+      img {
         border-radius: 50%;
         width: 18px;
         margin-right: $minds-margin;
-        cursor:pointer;
+        cursor: pointer;
       }
 
-      &.odd{
-        text-align:left;
-        .m-messenger--conversation-message-bubble{
-          //color:#FFF !important;
-          @include m-theme(){
+      &.odd {
+        text-align: left;
+        .m-messenger--conversation-message-bubble {
+          @include m-theme() {
             background-color: themed($m-blue-grey-100) !important;
           }
         }
-        img{
-          margin-right:0;
+        img {
+          margin-right: 0;
           margin-left: $minds-margin;
         }
       }
@@ -61,19 +62,19 @@
         opacity: 0.6;
       }
 
-      .m-messenger--conversations-ts{
+      .m-messenger--conversations-ts {
         display: block;
         font-size: 8px;
         padding: 0px 40px;
       }
     }
 
-    .m-messenger--conversation-messages-notice{
+    .m-messenger--conversation-messages-notice {
       text-align: center;
       margin: $minds-padding 0;
       font-size: 0.7em;
 
-      >span {
+      > span {
         display: inline-block;
         padding: 0 $minds-padding;
       }
@@ -90,20 +91,19 @@
 
       button:not([disabled]) {
         &:hover {
-          @include m-theme(){
+          @include m-theme() {
             background-color: themed($m-blue-grey-700);
           }
         }
-
       }
     }
   }
-  .m-messenger--conversation-composer{
+  .m-messenger--conversation-composer {
     position: relative;
     bottom: 0;
-    max-width:100%;
+    max-width: 100%;
 
-    textarea{
+    textarea {
       outline: none;
       -webkit-appearance: none;
       border: 0;
@@ -115,15 +115,15 @@
       line-height: 1em;
       font-family: minds_emoji, 'Roboto', Helvetica, sans-serif;
     }
-    i{
+    i {
       width: 24px;
       font-size: 18px;
       vertical-align: middle;
-      cursor:pointer;
-      overflow:hidden;
+      cursor: pointer;
+      overflow: hidden;
 
       &:hover {
-        @include m-theme{
+        @include m-theme {
           color: themed($m-blue-grey-800) !important;
         }
       }

@@ -1,9 +1,12 @@
 <div class="m-search--list">
   <div class="m-search--list-section" *ngIf="entities?.user?.length">
-    <h3 class="m-search--list-title" i18n="@@M__FEATURE__CHANNEL__PLURAL">Channels</h3>
+    <h3 class="m-search--list-title" i18n="@@M__FEATURE__CHANNEL__PLURAL">
+      Channels
+    </h3>
 
     <div class="mdl-grid m-search--list-entities">
-      <minds-card *ngFor="let entity of entities.user"
+      <minds-card
+        *ngFor="let entity of entities.user"
         class="mdl-cell mdl-cell--4-col"
         hostClass="mdl-card mdl-color--white m-border m-search--entity"
         [object]="entity"
@@ -12,10 +15,13 @@
   </div>
 
   <div class="m-search--list-section" *ngIf="entities?.group?.length">
-    <h3 class="m-search--list-title" i18n="@@M__FEATURE__GROUP__PLURAL">Groups</h3>
+    <h3 class="m-search--list-title" i18n="@@M__FEATURE__GROUP__PLURAL">
+      Groups
+    </h3>
 
     <div class="mdl-grid m-search--list-entities">
-      <minds-card *ngFor="let entity of entities.group"
+      <minds-card
+        *ngFor="let entity of entities.group"
         class="mdl-cell mdl-cell--4-col"
         hostClass="mdl-card mdl-color--white m-border m-search--entity"
         [object]="entity"
@@ -23,11 +29,17 @@
     </div>
   </div>
 
-  <div class="m-search--list-section" *ngIf="entities && entities['object:video']?.length">
-    <h3 class="m-search--list-title" i18n="@@M__FEATURE__VIDEO_PLURAL">Videos</h3>
+  <div
+    class="m-search--list-section"
+    *ngIf="entities && entities['object:video']?.length"
+  >
+    <h3 class="m-search--list-title" i18n="@@M__FEATURE__VIDEO_PLURAL">
+      Videos
+    </h3>
 
     <div class="mdl-grid m-search--list-entities">
-      <minds-card *ngFor="let entity of entities['object:video']"
+      <minds-card
+        *ngFor="let entity of entities['object:video']"
         class="mdl-cell mdl-cell--3-col"
         hostClass="mdl-card mdl-color--white m-border m-search--entity"
         [object]="entity"
@@ -35,11 +47,17 @@
     </div>
   </div>
 
-  <div class="m-search--list-section" *ngIf="entities && entities['object:image']?.length">
-    <h3 class="m-search--list-title" i18n="@@M__FEATURE__IMAGE_PLURAL">Images</h3>
+  <div
+    class="m-search--list-section"
+    *ngIf="entities && entities['object:image']?.length"
+  >
+    <h3 class="m-search--list-title" i18n="@@M__FEATURE__IMAGE_PLURAL">
+      Images
+    </h3>
 
     <div class="mdl-grid m-search--list-entities">
-      <minds-card *ngFor="let entity of entities['object:image']"
+      <minds-card
+        *ngFor="let entity of entities['object:image']"
         class="mdl-cell mdl-cell--3-col"
         hostClass="mdl-card mdl-color--white m-border m-search--entity"
         [object]="entity"
@@ -47,11 +65,15 @@
     </div>
   </div>
 
-  <div class="m-search--list-section" *ngIf="entities && entities['object:blog']?.length">
+  <div
+    class="m-search--list-section"
+    *ngIf="entities && entities['object:blog']?.length"
+  >
     <h3 class="m-search--list-title" i18n="@@M__FEATURE__BLOG_PLURAL">Blogs</h3>
 
     <div class="mdl-grid m-search--list-entities">
-      <minds-card *ngFor="let entity of entities['object:blog']"
+      <minds-card
+        *ngFor="let entity of entities['object:blog']"
         class="mdl-cell mdl-cell--4-col"
         hostClass="mdl-card mdl-color--white m-border m-search--entity"
         [object]="entity"
@@ -63,7 +85,8 @@
     <h3 class="m-search--list-title" i18n="@@M__FEATURE__POST_PLURAL">Posts</h3>
 
     <div class="mdl-grid m-search--list-entities">
-      <minds-card *ngFor="let entity of entities.activity"
+      <minds-card
+        *ngFor="let entity of entities.activity"
         class="mdl-cell mdl-cell--8-col"
         hostClass="mdl-card mdl-color--white m-border m-search--entity"
         [object]="entity"

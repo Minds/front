@@ -1,0 +1,221 @@
+<div class="mf-jumpAnchor" #topAnchor></div>
+
+<m-marketing
+  class="m-homepage"
+  [showBottombar]="false"
+  [forceBackground]="false"
+  [class.m-homepage__formExperiment]="!!registerForm"
+>
+  <div class="m-marketing__main m-marketing__section--style-2">
+    <div class="m-grid m-marketing__wrapper">
+      <div
+        class="m-grid__column-7 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__body"
+      >
+        <h1 class="m-homepage__title" i18n>
+          Minds <span class="m-homepage__yellowLine"></span>
+        </h1>
+
+        <h2 ngPreserveWhitespaces i18n>
+          {{ headline }}
+        </h2>
+
+        <p class="m-marketing__description" i18n>
+          {{ description }}
+        </p>
+
+        <button
+          class="mf-button mf-button--alt m-homepage__joinButton m-homepage__joinButton--first"
+          (click)="navigate()"
+          *mExperiment="'Homepage121119'; bucket: 'base'"
+          i18n
+        >
+          Join Minds Now
+        </button>
+
+        <div class="m-homepage__appButtons">
+          <a [href]="siteUrl + 'mobile'" target="_blank">
+            <img [src]="cdnAssetsUrl + 'assets/homepage/android.png'" />
+          </a>
+          <a
+            href="https://itunes.apple.com/app/minds-com/id961771928"
+            target="_blank"
+          >
+            <img [src]="cdnAssetsUrl + 'assets/homepage/app-store.png'" />
+          </a>
+        </div>
+
+        <ng-container *ngIf="isMobile()">
+          <button
+            class="mf-button mf-button--alt m-homepage__joinButton"
+            (click)="navigate()"
+            *mExperiment="'Homepage121119'; bucket: 'base'"
+            i18n
+          >
+            Join Minds Now
+          </button>
+        </ng-container>
+      </div>
+
+      <div
+        class="m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__image"
+        *mExperiment="'Homepage121119'; bucket: 'base'"
+      >
+        <span class="m-homepage__cellphone">
+          <img [src]="cdnAssetsUrl + 'assets/homepage/homepage-1.png'" />
+        </span>
+      </div>
+
+      <div
+        class="m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile m-homepage__registerForm"
+        *mExperiment="'Homepage121119'; bucket: 'form'"
+      >
+        <minds-form-register
+          [showTitle]="true"
+          [showBigButton]="true"
+          [showPromotions]="false"
+          [showLabels]="true"
+          [showInlineErrors]="true"
+          (done)="registered()"
+          #registerForm
+        >
+        </minds-form-register>
+      </div>
+    </div>
+  </div>
+
+  <ng-container slot="2">
+    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
+
+    <!-- Section 2 -->
+
+    <div class="m-marketing__section m-homepage__quotation">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-10--mobile m-grid__column-10--tablet m-grid__column__skip-2--tablet m-grid__column__skip-2--mobile m-marketing__body"
+        >
+          <div class="m-marketing__quotation">
+            <h3>“Minds is the anti-Facebook that pays you for your time.”</h3>
+            <h4>— Wired</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="m-marketing__section m-marketing__section--style-5">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>How does it work?</h2>
+
+          <p class="m-marketing__description" i18n>
+            Post videos, blogs, images and statuses. Message and video chat
+            securely with groups or directly with friends. Discover great
+            content through trending feeds and hashtags.
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            Earn tokens for your daily contributions and use them to upgrade
+            your channel, boost your content for more reach and support other
+            creators.
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            You can also receive direct payments in USD, Bitcoin and Ether from
+            your fans or <a routerLink="/upgrades">upgrade</a> your account to
+            launch your own website and get paid for the traffic you drive.
+          </p>
+
+          <div class="m-marketing__actionButtons">
+            <a
+              class="m-marketing__link"
+              [href]="cdnAssetsUrl + 'assets/documents/Whitepaper-v0.5.pdf'"
+              target="_blank"
+              i18n
+            >
+              Download Whitepaper
+            </a>
+          </div>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-5--tablet m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/homepage/homepage-2.png'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Our principles</h2>
+
+          <ol class="m-marketing__description">
+            <li>
+              Our
+              <a href="https://gitlab.com/minds" target="_blank">code</a> and
+              algorithms are free and open source for maximum transparency and
+              accountability.
+            </li>
+            <li>
+              Our <a routerLink="/content-policy">content policy</a> is based on
+              the First Amendment and governed by a community jury in order to
+              minimize bias and censorship.
+            </li>
+            <li>
+              You can only
+              <a href="https://change.minds.com/" target="_blank"
+                >change someone's mind</a
+              >
+              if you provide them with a platform to speak it.
+            </li>
+          </ol>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="cdnAssetsUrl + 'assets/homepage/homepage-3.jpeg'"
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final section -->
+
+    <div
+      class="m-marketing__section m-marketing__section--tail"
+      *mExperiment="'Homepage121119'; bucket: 'base'"
+    >
+      <div class="m-grid m-marketing__wrapper">
+        <div class="m-grid__column-12 m-marketing__body">
+          <h3 class="m-marketingTitle__centered" i18n>
+            Take back control of your social media
+          </h3>
+
+          <div class="m-marketing__actionButtons">
+            <button
+              class="mf-button mf-button--alt m-homepage__joinButton"
+              (click)="navigate()"
+              i18n
+            >
+              Join Minds Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</m-marketing>

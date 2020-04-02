@@ -1,57 +1,75 @@
 <section class="m-homepage--hero">
-
   <div class="m-homepage--hero--video">
     <video autoplay muted loop *ngIf="!videoError; else fallback">
-      <source [src]="minds.cdn_assets_url + 'assets/videos/what-1/what-1.mp4'" type="video/mp4" (error)="onSourceError()">
+      <source
+        [src]="cdnAssetsUrl + 'assets/videos/what-1/what-1.mp4'"
+        type="video/mp4"
+        (error)="onSourceError()"
+      />
     </video>
     <ng-template #fallback>
-      <img [src]="minds.cdn_assets_url + 'assets/photos/cover.png'">
+      <img [src]="cdnAssetsUrl + 'assets/photos/cover.png'" />
     </ng-template>
   </div>
 
   <div class="m-homepage--hero--inner">
-
     <div class="m-homepage--hero--overlay"></div>
 
     <div class="m-homepage--hero--slogans">
       <h1 i18n="@@M__SOCIAL_NETWORK_SLOGAN">Where minds gather</h1>
       <h3 i18n="@@MINDS__HOME__HOMEPAGE__LAUNCH_CTA">
-        The leading open source social network for Internet freedom.
-        Earn crypto and free promotion for your contributions.
+        The leading open source social network for Internet freedom. Earn crypto
+        and free promotion for your contributions.
       </h3>
     </div>
 
     <div class="m-homepage--signup" [hidden]="session.isLoggedIn()">
-      <minds-form-register (done)="registered()"></minds-form-register>
+      <minds-form-register
+        (done)="registered()"
+        parentId="/"
+      ></minds-form-register>
 
       <div class="m-homepage--app-buttons">
         <div class="m-homepage--app-buttons__iosBanner">
-          <a href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6">
+          <a
+            href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6"
+          >
             <img
               src="https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"
-              alt="iOS App"/>
+              alt="iOS App"
+            />
           </a>
         </div>
 
         <m-androidApp__download></m-androidApp__download>
       </div>
     </div>
-
   </div>
-
 </section>
 
 <div class="mdl-grid mdl-grid--no-spacing m-homepage--footer">
-
-    <section class="mdl-cell mdl-cell--12-col m-footer">
-      <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" />
-      <ul class="m-footer-nav m-footer-nav-inline">
-        <li *ngFor="let page of navigation.getItems('footer')" class="m-footer-nav-item ">
-          <a *ngIf="page.path && page.path.indexOf('p/') > -1" [routerLink]="[page.path]">{{page.title}}</a>
-          <a *ngIf="page.path.indexOf('p/') < 0" [href]="page.path" target="_blank">{{page.title}}</a>
-        </li>
-      </ul>
-      <span class="copyright" i18n="@@M__COMMON__COPYRIGHT_YEAR">&#169; Minds {{'2019'}}</span>
-    </section>
-
+  <section class="mdl-cell mdl-cell--12-col m-footer">
+    <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
+    <ul class="m-footer-nav m-footer-nav-inline">
+      <li
+        *ngFor="let page of navigation.getItems('footer')"
+        class="m-footer-nav-item "
+      >
+        <a
+          *ngIf="pagesService.isInternalLink(page.path)"
+          [routerLink]="[page.path]"
+          >{{ page.title }}</a
+        >
+        <a
+          *ngIf="!pagesService.isInternalLink(page.path)"
+          [href]="page.path"
+          target="_blank"
+          >{{ page.title }}</a
+        >
+      </li>
+    </ul>
+    <span class="copyright" i18n="@@M__COMMON__COPYRIGHT_YEAR"
+      >&#169; Minds {{ '2020' }}</span
+    >
+  </section>
 </div>

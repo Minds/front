@@ -1,43 +1,74 @@
 <div class="m-marketing m-reports__marketing">
-
   <div class="m-marketing__hero">
-
     <div class="m-marketingHero__inner">
       <div class="m-marketingHero__overlay"></div>
 
       <div class="m-marketingHero__slogans">
         <h1 i18n="@@PLUS__MKT__PLUS_TITLE">Content Policy</h1>
         <h3 i18n="@@PLUS__MKT__PLUS_DESC">
-          The goal of Minds is to have fair, transparent and ethical moderation practices.
+          The goal of Minds is to have fair, transparent and ethical moderation
+          practices.
         </h3>
-      
-        <button class="m-btn m-btn--slim" (click)="startJuryDuty()" *ngIf="session.isAdmin()">
-          Start Admin Review 
+
+        <button
+          class="m-btn m-btn--slim"
+          (click)="startJuryDuty()"
+          *ngIf="session.isAdmin()"
+        >
+          Start Admin Review
         </button>
       </div>
-    
+
       <div class="m-marketingHero__actions">
         <i class="material-icons">gavel</i>
       </div>
     </div>
   </div>
-  
+
   <div class="m-marketing__contents m-reportMarketing__section">
     <p>
-      To ensure that decisions are made as democratically as possible, we developed a Jury System based on the <a href="https://santaclaraprinciples.org/" target="_blank">Santa Clara Principles</a> to review appeals. The jury consists of 12 unique, active users whose objective is to vote on appeals. If 75% or more agree with the appeal, the administrative action is overturned. For more information about the jury system, <a href="https://www.minds.com/minds/blog/power-to-the-people-the-minds-jury-system-975486713993859072" target="_blank">read our blog</a>.
+      To ensure that decisions are made as democratically as possible, we
+      developed a Jury System based on the
+      <a href="https://santaclaraprinciples.org/" target="_blank"
+        >Santa Clara Principles</a
+      >
+      to review appeals. A Jury consists of 12 randomly selected unique active
+      Minds users who are not subscribed to the user under review. Each juror
+      selected is provided with the option to participate, pass or opt-out of
+      the Jury pool entirely. If 75% or more of the Jury members vote to accept
+      the appeal of a strike, the administrative action is overturned.
+    </p>
+    <p>
+      If less than 75% of the Jury members vote accept the appeal, the
+      administrative action is upheld. The decision of the Jury will be final.
+      For more information about the jury system,
+      <a
+        href="https://www.minds.com/minds/blog/power-to-the-people-the-minds-jury-system-975486713993859072"
+        target="_blank"
+        >read our blog</a
+      >.
     </p>
 
     <p>The current content moderation system functions as follows:</p>
 
-    <img src="{{ minds.cdn_assets_url }}assets/screenshots/flow.png" style="max-width: 90%;"/>
+    <img
+      src="{{ cdnAssetsUrl }}assets/screenshots/flow.png"
+      style="max-width: 90%;"
+    />
 
     <h4>Strike Offense</h4>
     <p>
-      Users will receive a strike for certain violations of the Content Policy. Users will be notified about the strike, which term was violated, and which piece of content was in violation. All strikes can be appealed to a Minds Jury. Individual strikes will expire after 90 days.
+      Users will receive a strike for certain violations of the Content Policy.
+      Users will be notified about the strike, which term was violated, and
+      which piece of content was in violation. All strikes can be appealed to a
+      Minds Jury. Individual strikes will expire after 90 days.
     </p>
 
     <p>The following violations will result in a strike:</p>
-    <p>Untagged NSFW Post (three strikes required for each individual NSFW category)</p>
+    <p>
+      Untagged NSFW Post (three strikes required for each individual NSFW
+      category)
+    </p>
     <ul>
       <li>Strike 1 = Warning</li>
       <li>Strike 2 = 2nd Warning</li>
@@ -51,14 +82,46 @@
       <li>Strike 3 = Ban</li>
     </ul>
 
-    <p>Spam may result in an immediate ban if determined to be malicious or by use of a bot.</p>
+    <p>
+      NSFW (not safe for work) is defined as content containing nudity,
+      pornography, profanity, violence, gore, or sensitive commentary on race,
+      religion, or gender. In general terms, it is defined as content which a
+      reasonable viewer may not want to be seen accessing, in a public setting,
+      such as in a workplace. These tags can be applied to individual content or
+      any group or channel. The full channel will not be marked with a NSFW
+      category until it has received 3 strikes in a single NSFW category.
+    </p>
+
+    <p>
+      Spam on Minds is generally defined as repeated, unwanted, and/or
+      unsolicited actions, automated or manual, that negatively affect Minds
+      users, groups, and/or Minds itself. Spam also includes content that is
+      designed to further unlawful acts (such as phishing) or mislead recipients
+      as to the source of the material (such as spoofing). Spam may result in an
+      immediate ban if determined to be malicious or by use of a bot.
+    </p>
+
+    <p>
+      Spam may result in an immediate ban if determined to be malicious or by
+      use of a bot.
+    </p>
 
     <h4>Immediate Ban Offense</h4>
 
-    <p>Users will be immediately banned for certain violations of the Content Policy. Users will be notified about the ban and which term was violated, but they will not be able to see the content that was in violation as it will have to be removed from Minds. Appeals on immediate bans will be reviewed by the Minds admins and not a jury due to the nature of the content.</p>
+    <p>
+      Users will be immediately banned for certain violations of the Content
+      Policy. Users will be notified about the ban and which term was violated,
+      but they will not be able to see the content that was in violation as it
+      will have to be removed from Minds. Appeals on immediate bans will be
+      reviewed by the Minds admins and not a jury due to the nature of the
+      content.
+    </p>
 
     <ul>
-      <li>Illegal (terrorism, paedophilia, extortion, fraud, revenge porn, sex trafficking)</li>
+      <li>
+        Illegal (terrorism, paedophilia, extortion, fraud, revenge porn, sex
+        trafficking)
+      </li>
       <li>Personal and confidential information (doxxing)</li>
       <li>Malware</li>
       <li>Token manipulation</li>
@@ -67,7 +130,12 @@
     </ul>
 
     <h4>Boost Policy</h4>
-    <p>Boost is the advertising network on Minds.  Users may exchange Minds Tokens to “Boost” their content and receive views from the network. Users may not Boost any content that is in violation of our Content Policy. Additionally, users may not Boost content that: </p>
+    <p>
+      Boost is the advertising network on Minds. Users may exchange Minds Tokens
+      to “Boost” their content and receive views from the network. Users may not
+      Boost any content that is in violation of our Content Policy.
+      Additionally, users may not Boost content that:
+    </p>
 
     <ul>
       <li>Appeals on a moderation decision</li>
@@ -80,7 +148,9 @@
     </ul>
 
     <p>
-      If you would like to appeal a Boost rejection, you may do so by emailing info@minds.com with the post in question and the reasons for why you believe it should be accepted.
+      If you would like to appeal a Boost rejection, you may do so by emailing
+      info@minds.com with the post in question and the reasons for why you
+      believe it should be accepted.
     </p>
   </div>
 
@@ -88,7 +158,7 @@
     <h4>Last 30 days</h4>
     <div class="m-layout__row">
       <div class="m-layout__cell">
-        <b>{{ stats.actioned | number  }}</b>
+        <b>{{ stats.actioned | number }}</b>
         <span>Actions Taken by Minds</span>
       </div>
       <div class="m-layout__cell">
@@ -101,7 +171,6 @@
       </div>
     </div>
   </div>
-
 </div>
 
 <m-footer></m-footer>

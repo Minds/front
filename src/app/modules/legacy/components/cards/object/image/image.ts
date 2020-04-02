@@ -8,22 +8,20 @@ import { AttachmentService } from '../../../../../../services/attachment';
   moduleId: module.id,
   selector: 'minds-card-image',
   host: {
-    'class': 'mdl-card mdl-shadow--2dp'
+    class: 'mdl-card mdl-shadow--2dp',
   },
   templateUrl: 'image.html',
 })
-
 export class ImageCard {
-
   entity: any;
-  minds: {};
 
   @Input('object') set object(value: any) {
     this.entity = value;
   }
 
-  constructor(public session: Session, public client: Client, public attachment: AttachmentService) {
-    this.minds = window.Minds;
-  }
-
+  constructor(
+    public session: Session,
+    public client: Client,
+    public attachment: AttachmentService
+  ) {}
 }

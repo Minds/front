@@ -1,0 +1,186 @@
+.m-overlayModal__share {
+  overflow-y: visible;
+  @include m-theme() {
+    color: themed($m-grey-800);
+  }
+
+  h3 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 32px 26px 0;
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
+
+  .m-share__copyableLinkContainer {
+    .m-share__copyableLink {
+      max-width: 450px;
+      margin: 0 16px 8px 0;
+      border-radius: 18px;
+      display: flex;
+      justify-content: space-between;
+
+      &.focused {
+        @include m-theme() {
+          border-color: themed($m-blue);
+        }
+      }
+
+      .m-share__copyableLinkText {
+        width: 95%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: left !important;
+        font-size: 18px;
+        border: none;
+        padding: 8px 0 8px 8px;
+        margin: 1px 0 1px 4px;
+        opacity: 1;
+        transition: opacity 0.15s ease;
+        -webkit-transition: opacity 0.15s ease;
+
+        @include m-theme() {
+          background-color: transparent;
+          color: rgba(themed($m-black), 0.87);
+        }
+
+        &::selection {
+          background-color: #b3d4fc;
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        &.m-share__copyableLinkText--flashing {
+          opacity: 0.5;
+        }
+      }
+
+      .m-share__copyableLinkButton {
+        cursor: pointer;
+        padding: 9px 14px 10px 8px;
+        @include m-theme() {
+          color: themed($m-blue);
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .m-share__referrerParamCheckboxContainer {
+    margin-left: 4px;
+    label > span {
+      font-size: 14px;
+      @include m-theme() {
+        color: themed($m-grey-600);
+      }
+    }
+
+    m-tooltip {
+      i {
+        font-size: 14px;
+        @include m-theme() {
+          color: themed($m-grey-200);
+        }
+        &.m-share__newWindowIcon {
+          @include m-theme() {
+            color: themed($m-blue-grey-300);
+          }
+        }
+      }
+      .m-tooltip--bubble {
+        a {
+          text-decoration: none;
+          font-weight: 400;
+          @include m-theme() {
+            color: themed($m-blue-grey-300);
+          }
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .m-share__buttonsContainer {
+    margin-top: 24px;
+
+    .m-share__buttons {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      padding-left: $minds-padding;
+
+      button {
+        cursor: pointer;
+        border-radius: 50%;
+        height: 32px;
+        width: 32px;
+        border: none;
+        margin: 12px 18px 12px 0;
+        position: relative;
+        padding-top: 1px;
+
+        &:hover {
+          @include m-theme() {
+            box-shadow: inset 0 0 16px 16px rgba(themed($m-black-always), 0.2);
+          }
+        }
+
+        &:active {
+          @include m-theme() {
+            box-shadow: inset 0 0 16px 16px rgba(themed($m-black-always), 0.05);
+          }
+        }
+
+        &:focus {
+          outline: none;
+        }
+
+        img {
+          position: absolute;
+          top: calc(50% - 9px);
+          left: calc(50% - 9px);
+        }
+      }
+    }
+
+    .m-share__button--twitter {
+      @include m-theme() {
+        background-color: themed($m-twitter);
+      }
+    }
+
+    .m-share__button--messenger {
+      @include m-theme() {
+        background-color: themed($m-messenger);
+      }
+    }
+
+    .m-share__button--facebook {
+      @include m-theme() {
+        background-color: themed($m-facebook);
+      }
+    }
+
+    .m-share__button--whatsapp {
+      @include m-theme() {
+        background-color: themed($m-whatsapp);
+      }
+    }
+
+    .m-share__button--sms,
+    .m-share__button--email {
+      @include m-theme() {
+        background-color: themed($m-blue-grey-500);
+      }
+    }
+  }
+}

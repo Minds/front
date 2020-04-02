@@ -1,4 +1,12 @@
-import { Component, ElementRef, ChangeDetectorRef, EventEmitter, Renderer, ViewChild, Injector } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ChangeDetectorRef,
+  EventEmitter,
+  Renderer,
+  ViewChild,
+  Injector,
+} from '@angular/core';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
@@ -9,23 +17,20 @@ import { MessengerEncryptionService } from '../encryption/encryption.service';
 
 import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.service';
 import { MessengerSounds } from '../sounds/service';
-import { BlockListService } from "../../../common/services/block-list.service";
+import { BlockListService } from '../../../common/services/block-list.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-messenger--conversation',
   host: {
     '(window:focus)': 'onFocus($event)',
-    '(window:blur)': 'onBlur($event)'
+    '(window:blur)': 'onBlur($event)',
   },
   inputs: ['conversation'],
-  templateUrl: 'conversation.component.html'
+  templateUrl: 'conversation.component.html',
 })
-
 export class MessengerConversation {
-  minds: Minds = window.Minds;
-
-  sounds = new MessengerSounds();
+  readonly cdnUrl: string;
 
   tabId: string;
 
@@ -52,7 +57,7 @@ export class MessengerConversation {
     connect: null,
     disconnect: null,
     block: null,
-    unblock: null
+    unblock: null,
   };
 
   focused: boolean = true;
@@ -75,8 +80,10 @@ export class MessengerConversation {
     public encryption: MessengerEncryptionService,
     public dockpanes: MessengerConversationDockpanesService,
     protected blockListService: BlockListService,
+    configs: ConfigsService
   ) {
     this.buildTabId();
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   ngOnInit() {
@@ -99,18 +106,20 @@ export class MessengerConversation {
   }
 
   load(opts: any = {}) {
-
-    opts = (<any>Object).assign({
-      limit: 12,
-    }, opts);
+    opts = (<any>Object).assign(
+      {
+        limit: 12,
+      },
+      opts
+    );
 
     let scrollView = opts.container;
     delete opts.container;
 
-    if (!opts.finish)
-      this.inProgress = true;
+    if (!opts.finish) this.inProgress = true;
 
-    this.client.get('api/v2/messenger/conversations/' + this.conversation.guid, opts)
+    this.client
+      .get('api/v2/messenger/conversations/' + this.conversation.guid, opts)
       .then((response: any) => {
         this.inProgress = false;
         if (!response.messages) {
@@ -130,7 +139,8 @@ export class MessengerConversation {
           this.offset = response['load-previous'];
 
           this.cd.detectChanges();
-          scrollView.scrollTop = scrollTop + scrollView.scrollHeight - scrollHeight;
+          scrollView.scrollTop =
+            scrollTop + scrollView.scrollHeight - scrollHeight;
         } else {
           this.messages = response.messages;
           this.offset = response['load-previous'];
@@ -152,67 +162,75 @@ export class MessengerConversation {
 
   listen() {
     if (this.conversation.socketRoomName) {
-
       this.sockets.join(this.conversation.socketRoomName);
 
-      this.socketSubscriptions.pushConversationMessage = this.sockets.subscribe('pushConversationMessage', (guid, message) => {
-        if (guid !== this.conversation.guid)
-          return;
+      this.socketSubscriptions.pushConversationMessage = this.sockets.subscribe(
+        'pushConversationMessage',
+        (guid, message) => {
+          if (guid !== this.conversation.guid) return;
 
-        let fromSelf = false;
+          let fromSelf = false;
 
-        if (this.session.getLoggedInUser().guid === message.ownerObj.guid) {
-          if (this.tabId === message.tabId) {
-            return;
+          if (this.session.getLoggedInUser().guid === message.ownerObj.guid) {
+            if (this.tabId === message.tabId) {
+              return;
+            }
+
+            fromSelf = true;
           }
 
-          fromSelf = true;
+          this.load({ limit: 1, finish: message.guid });
+
+          if (!fromSelf) {
+            this.invalid = false;
+
+            if (!this.focused && document.title.indexOf('\u2022') === -1)
+              document.title = '\u2022 ' + document.title;
+
+            // this.sounds.play('new');
+          }
         }
+      );
 
-        this.load({ limit: 1, finish: message.guid });
+      this.socketSubscriptions.clearConversation = this.sockets.subscribe(
+        'clearConversation',
+        (guid, actor) => {
+          if (guid !== this.conversation.guid) return;
 
-        if (!fromSelf) {
+          this.messages = [];
+          this.chatNotice = `${actor.name} cleared chat history`;
           this.invalid = false;
-
-          if (!this.focused && document.title.indexOf('\u2022') === -1)
-            document.title = '\u2022 ' + document.title;
-
-          this.sounds.play('new');
         }
-      });
+      );
 
-      this.socketSubscriptions.clearConversation = this.sockets.subscribe('clearConversation', (guid, actor) => {
-        if (guid !== this.conversation.guid)
-          return;
-
-        this.messages = [];
-        this.chatNotice = `${actor.name} cleared chat history`;
-        this.invalid = false;
-
-      });
-
-      this.socketSubscriptions.block = this.sockets.subscribe('block', (guid) => {
-        if (!this.hasParticipant(guid))
-          return;
+      this.socketSubscriptions.block = this.sockets.subscribe('block', guid => {
+        if (!this.hasParticipant(guid)) return;
 
         this.blocked = true;
       });
 
-      this.socketSubscriptions.unblock = this.sockets.subscribe('unblock', (guid) => {
-        if (!this.hasParticipant(guid))
-          return;
+      this.socketSubscriptions.unblock = this.sockets.subscribe(
+        'unblock',
+        guid => {
+          if (!this.hasParticipant(guid)) return;
 
-        this.blocked = false;
-      });
+          this.blocked = false;
+        }
+      );
 
-      this.socketSubscriptions.connect = this.sockets.subscribe('connect', () => {
-        this.live = true;
-      });
+      this.socketSubscriptions.connect = this.sockets.subscribe(
+        'connect',
+        () => {
+          this.live = true;
+        }
+      );
 
-      this.socketSubscriptions.disconnect = this.sockets.subscribe('disconnect', () => {
-        this.live = false;
-      });
-
+      this.socketSubscriptions.disconnect = this.sockets.subscribe(
+        'disconnect',
+        () => {
+          this.live = false;
+        }
+      );
     }
   }
 
@@ -231,23 +249,30 @@ export class MessengerConversation {
   send(e) {
     e.preventDefault();
 
-    if (this.blocked || !this.message
-      || this.message.split(/\r\n|\r|\n/).length >= 10) { //not more than 10 return characters.
+    if (
+      this.blocked ||
+      !this.message ||
+      this.message.split(/\r\n|\r|\n/).length >= 10
+    ) {
+      //not more than 10 return characters.
       return;
     }
 
-    let newLength = this.messages.push({ // Optimistic
-      optimisticGuess: true,
-      owner: this.session.getLoggedInUser(),
-      message: this.message,
-      time_created: Math.floor(Date.now() / 1000)
-    }), currentIndex = newLength - 1;
+    let newLength = this.messages.push({
+        // Optimistic
+        optimisticGuess: true,
+        owner: this.session.getLoggedInUser(),
+        message: this.message,
+        time_created: Math.floor(Date.now() / 1000),
+      }),
+      currentIndex = newLength - 1;
 
-    this.client.post('api/v2/messenger/conversations/' + this.conversation.guid, {
-      message: this.message,
-      encrypt: true,
-      tabId: this.tabId
-    })
+    this.client
+      .post('api/v2/messenger/conversations/' + this.conversation.guid, {
+        message: this.message,
+        encrypt: true,
+        tabId: this.tabId,
+      })
       .then((response: any) => {
         if (response.message) {
           this.messages[currentIndex] = response.message;
@@ -268,7 +293,11 @@ export class MessengerConversation {
   }
 
   deleteHistory() {
-    if (!confirm('All messages will be deleted for all parties. You cannot UNDO this action. Are you sure?')) {
+    if (
+      !confirm(
+        'All messages will be deleted for all parties. You cannot UNDO this action. Are you sure?'
+      )
+    ) {
       // TODO: Maybe a non-process-blocking popup?
       return;
     }
@@ -276,7 +305,8 @@ export class MessengerConversation {
     this.messages = []; // Optimistic
     this.blockingActionInProgress = true;
 
-    this.client.delete('api/v2/messenger/conversations/' + this.conversation.guid, {})
+    this.client
+      .delete('api/v2/messenger/conversations/' + this.conversation.guid, {})
       .then((response: any) => {
         this.blockingActionInProgress = false;
       })
@@ -292,7 +322,9 @@ export class MessengerConversation {
     }
 
     if (!this.blocked) {
-      if (!confirm('This action will block all parties site-wide. Are you sure?')) {
+      if (
+        !confirm('This action will block all parties site-wide. Are you sure?')
+      ) {
         // TODO: Maybe a non-process-blocking popup?
         return;
       }
@@ -331,7 +363,9 @@ export class MessengerConversation {
 
     this.invited = true;
     this.invitable.forEach(participant => {
-      this.client.put(`api/v2/messenger/conversations/invite/${participant.guid}`);
+      this.client.put(
+        `api/v2/messenger/conversations/invite/${participant.guid}`
+      );
     });
   }
 

@@ -1,0 +1,8 @@
+.m-formDescriptor {
+  font-size: 15px;
+  line-height: 20px;
+  @include m-theme() {
+    color: themed($m-blue);
+    border-left: 2px solid themed($m-blue);
+  }
+}

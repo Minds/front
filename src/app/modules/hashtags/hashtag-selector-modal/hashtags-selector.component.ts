@@ -3,21 +3,19 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Session } from '../../../services/session';
 import { TopbarHashtagsService } from '../service/topbar.service';
-import { Subject } from "rxjs";
-import { debounceTime } from "rxjs/operators";
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 type Hashtag = {
-  value: string, selected: boolean
+  value: string;
+  selected: boolean;
 };
 
 @Component({
-  moduleId: module.id,
   selector: 'm-hashtags-selector-modal',
-  templateUrl: 'hashtags-selector.component.html'
+  templateUrl: 'hashtags-selector.component.html',
 })
 export class HashtagsSelectorModalComponent {
-
-  minds = window.Minds;
   inProgress: boolean = false;
   hashtags: Array<Hashtag> = [];
   error: string = '';
@@ -38,9 +36,8 @@ export class HashtagsSelectorModalComponent {
     public session: Session,
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
-    private service: TopbarHashtagsService,
-  ) {
-  }
+    private service: TopbarHashtagsService
+  ) {}
 
   ngOnInit() {
     this.load(true);

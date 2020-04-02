@@ -1,44 +1,78 @@
 <div class="m--blockchain--transaction-overlay">
-
   <div class="m--blockchain--transaction-overlay--content">
     <ng-container *ngIf="comp !== COMP_SETUP_METAMASK">
-      <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" class="m--blockchain--transaction-overlay--logo" />
-      <h2 class="m--blockchain--transaction-overlay--title" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__COMPLETE_YOUR_TX" *ngIf="comp !== COMP_SETUP_METAMASK">
+      <img
+        [src]="cdnAssetsUrl + 'assets/logos/logo.svg'"
+        class="m--blockchain--transaction-overlay--logo"
+      />
+      <h2
+        class="m--blockchain--transaction-overlay--title"
+        i18n="@@M__BLOCKCHAIN__TX_OVERLAY__COMPLETE_YOUR_TX"
+        *ngIf="comp !== COMP_SETUP_METAMASK"
+      >
         Complete your OnChain transaction
       </h2>
 
-      <p class="m--blockchain--transaction-overlay--note" *ngIf="comp === COMP_METAMASK" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__COMPLETE_USING_METAMASK">
+      <p
+        class="m--blockchain--transaction-overlay--note"
+        *ngIf="comp === COMP_METAMASK"
+        i18n="@@M__BLOCKCHAIN__TX_OVERLAY__COMPLETE_USING_METAMASK"
+      >
         Please open your Metamask client to complete the transaction.
       </p>
 
-      <p class="m--blockchain--transaction-overlay--note" *ngIf="comp !== COMP_UNLOCK && !!message" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__YOURE_APPROVING_MESSAGE">
-      You are approving a {{ message }}
+      <p
+        class="m--blockchain--transaction-overlay--note"
+        *ngIf="comp !== COMP_UNLOCK && !!message"
+        i18n="@@M__BLOCKCHAIN__TX_OVERLAY__YOURE_APPROVING_MESSAGE"
+      >
+        You are approving a {{ message }}
       </p>
     </ng-container>
 
     <ng-container *ngIf="comp === COMP_SETUP_METAMASK">
-      <m-get-metamask (actioned)="handleMetamaskAction($event)"></m-get-metamask>
+      <m-get-metamask
+        (actioned)="handleMetamaskAction($event)"
+      ></m-get-metamask>
     </ng-container>
 
     <ng-container *ngIf="comp === COMP_UNLOCK">
-      <p class="m--blockchain--transaction-overlay--note" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__ENTER_PKEY_OR_DROP_CSV">
-        Please enter your private key below in order to unlock your account. You can also drag and drop a CSV file into this window.
+      <p
+        class="m--blockchain--transaction-overlay--note"
+        i18n="@@M__BLOCKCHAIN__TX_OVERLAY__ENTER_PKEY_OR_DROP_CSV"
+      >
+        Please enter your private key below in order to unlock your account. You
+        can also drag and drop a CSV file into this window.
       </p>
-      <p class="m--blockchain--transaction-overlay--note" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__CREATE_WALLET_AND_LEARN_ABOUT_TOKENS">
-        Don't have an address/private key? Checkout <a routerLink="/wallet" target="_blank">minds.com/wallet</a> to create a wallet and learn how to get Minds tokens.
+      <p
+        class="m--blockchain--transaction-overlay--note"
+        i18n="@@M__BLOCKCHAIN__TX_OVERLAY__CREATE_WALLET_AND_LEARN_ABOUT_TOKENS"
+      >
+        Don't have an address/private key? Checkout
+        <a routerLink="/wallet" target="_blank">minds.com/wallet</a> to create a
+        wallet and learn how to get Minds tokens.
       </p>
     </ng-container>
 
     <ng-container *ngIf="comp === COMP_UNLOCK">
       <!-- UNLOCK -->
-      <div class="m--blockchain--transaction-overlay--info" [hidden]="!droppingKeyFile" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__DROP_KEYFILE_BELOW">
+      <div
+        class="m--blockchain--transaction-overlay--info"
+        [hidden]="!droppingKeyFile"
+        i18n="@@M__BLOCKCHAIN__TX_OVERLAY__DROP_KEYFILE_BELOW"
+      >
         Drop key file below to auto-fill the field.
       </div>
 
       <div class="m--blockchain--transaction-overlay--field">
-        <span class="m--blockchain--transaction-overlay--field-label" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__PRIVATE_KEY">Private Key</span>
+        <span
+          class="m--blockchain--transaction-overlay--field-label"
+          i18n="@@M__BLOCKCHAIN__TX_OVERLAY__PRIVATE_KEY"
+          >Private Key</span
+        >
 
-        <input class="m--blockchain--transaction-overlay--field-input-lg"
+        <input
+          class="m--blockchain--transaction-overlay--field-input-lg"
           [class.m--blockchain--transaction-overlay--dropping]="droppingKeyFile"
           type="text"
           [(ngModel)]="data.unlock.privateKey"
@@ -50,27 +84,35 @@
       </div>
 
       <div class="m--blockchain--transaction-overlay--field">
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect m--blockchain--transaction-overlay--checkbox-label" for="tx-overlay-secure-mode-1" [mdlSwitch] [toggled]="data.unlock.secureMode">
+        <label
+          class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect m--blockchain--transaction-overlay--checkbox-label"
+          for="tx-overlay-secure-mode-1"
+          [mdlSwitch]
+          [toggled]="data.unlock.secureMode"
+        >
           <input
-            type="checkbox" id="tx-overlay-secure-mode-1" class="mdl-checkbox__input"
+            type="checkbox"
+            id="tx-overlay-secure-mode-1"
+            class="mdl-checkbox__input"
             [ngModel]="data.unlock.secureMode"
             (ngModelChange)="data.unlock.secureMode = !data.unlock.secureMode"
           />
 
-          <span class="mdl-checkbox__label" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__REMEMBER_PKEY_FOR_1_MIN">Remember this private key for 1 minute only.</span>
+          <span
+            class="mdl-checkbox__label"
+            i18n="@@M__BLOCKCHAIN__TX_OVERLAY__REMEMBER_PKEY_FOR_1_MIN"
+            >Remember this private key for 1 minute only.</span
+          >
         </label>
       </div>
 
       <div class="m--blockchain--transaction-overlay--field">
-
-        <button class="m-btn"
-          (click)="cancel()"
-          i18n="@@M__ACTION__CANCEL"
-        >
+        <button class="m-btn" (click)="cancel()" i18n="@@M__ACTION__CANCEL">
           Cancel
         </button>
 
-        <button class="m-btn m-btn--action"
+        <button
+          class="m-btn m-btn--action"
           (click)="unlock()"
           [disabled]="!validateUnlock()"
           i18n="@@MM__ACTION__COMPLETE"
@@ -79,7 +121,11 @@
         </button>
       </div>
 
-      <div class="m--blockchain--transaction-overlay--warning" [hidden]="data.unlock.secureMode" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__WARNING_REMEMBER_KEY_FOREVER">
+      <div
+        class="m--blockchain--transaction-overlay--warning"
+        [hidden]="data.unlock.secureMode"
+        i18n="@@M__BLOCKCHAIN__TX_OVERLAY__WARNING_REMEMBER_KEY_FOREVER"
+      >
         Warning: Remembering the private key for the rest of the session can be
         insecure and might lead to your ETH being stolen.
       </div>
@@ -90,33 +136,41 @@
       <!-- LOCAL -->
       <div class="mdl-grid mdl-grid--no-spacing">
         <div class="mdl-cell mdl-cell--8-col">
-
           <div class="m--blockchain--transaction-overlay--field">
-            <span class="m--blockchain--transaction-overlay--field-label" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__GAS_PRICE">Gas Price</span>
+            <span
+              class="m--blockchain--transaction-overlay--field-label"
+              i18n="@@M__BLOCKCHAIN__TX_OVERLAY__GAS_PRICE"
+              >Gas Price</span
+            >
 
-            <input class="m--blockchain--transaction-overlay--field-input"
+            <input
+              class="m--blockchain--transaction-overlay--field-input"
               type="number"
               [(ngModel)]="data.tx.gasPrice"
             />
           </div>
 
           <div class="m--blockchain--transaction-overlay--field">
-            <span class="m--blockchain--transaction-overlay--field-label" i18n="@@M__BLOCKCHAIN__TX_OVERLAY__GAS">Gas</span>
+            <span
+              class="m--blockchain--transaction-overlay--field-label"
+              i18n="@@M__BLOCKCHAIN__TX_OVERLAY__GAS"
+              >Gas</span
+            >
 
-            <input class="m--blockchain--transaction-overlay--field-input"
+            <input
+              class="m--blockchain--transaction-overlay--field-input"
               type="number"
               [(ngModel)]="data.tx.gas"
             />
           </div>
 
           <div class="m--blockchain--transaction-overlay--field">
-            <button class="m-btn"
-              (click)="cancel()"
-            >
+            <button class="m-btn" (click)="cancel()">
               Cancel
             </button>
 
-            <button class="m-btn m-btn--action"
+            <button
+              class="m-btn m-btn--action"
               (click)="approve()"
               [disabled]="!validateTxObject()"
             >
@@ -127,26 +181,34 @@
 
         <div class="mdl-cell mdl-cell--4-col">
           <div class="m--blockchain--transaction-overlay--balance">
-            <div class="m--blockchain--transaction-overlay--balance--subtext">Current balance:</div>
-            <div class="m--blockchain--transaction-overlay--balance--amount">
-              <span class="mdl-color-text--green">{{balance}}</span> MINDS
+            <div class="m--blockchain--transaction-overlay--balance--subtext">
+              Current balance:
             </div>
             <div class="m--blockchain--transaction-overlay--balance--amount">
-              <span class="mdl-color-text--green">{{ethBalance}}</span> ETH
+              <span class="mdl-color-text--green">{{ balance }}</span> MINDS
+            </div>
+            <div class="m--blockchain--transaction-overlay--balance--amount">
+              <span class="mdl-color-text--green">{{ ethBalance }}</span> ETH
             </div>
           </div>
-          <a class="m--blockchain--transaction-overlay--coloured-button" href="{{minds.site_url}}token" target="_blank">
+          <a
+            class="m--blockchain--transaction-overlay--coloured-button"
+            href="{{ siteUrl }}token"
+            target="_blank"
+          >
             <span>Buy Tokens</span>
           </a>
 
-          <a class="m--blockchain--transaction-overlay--coloured-button" href="https://www.coinbase.com/join/52df5349061ce251f2000066" target="_blank">
+          <a
+            class="m--blockchain--transaction-overlay--coloured-button"
+            href="https://www.coinbase.com/join/52df5349061ce251f2000066"
+            target="_blank"
+          >
             <span>Buy ETH</span>
           </a>
-
         </div>
       </div>
       <!-- LOCAL -->
     </ng-container>
-
   </div>
 </div>

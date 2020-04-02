@@ -1,35 +1,33 @@
-@import "defaults";
+@import 'defaults';
 
-.m-third-party-networks-facebook-card{
-  .m-block{
-    padding:8px;
+.m-third-party-networks-facebook-card {
+  .m-block {
+    padding: 8px;
   }
   a {
-    text-decoration:none;
+    text-decoration: none;
   }
 }
 
-.m-third-party-networks-facebook-button{
-
+.m-third-party-networks-facebook-button {
   a {
-    text-decoration:none;
+    text-decoration: none;
   }
 
-  background-color: #3067a3 !important;
-  padding:8px;
-  font-weight:bold;
-  cursor:pointer;
-  @include m-theme(){
+  padding: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  @include m-theme() {
     color: themed($m-white);
+    background-color: themed($m-facebook) !important;
   }
 }
 
-.m-third-party-networks-facebook-pages-list{
-
+.m-third-party-networks-facebook-pages-list {
   > div {
-    padding:8px;
-    font-weight:bold;
-    cursor:pointer;
+    padding: 8px;
+    font-weight: bold;
+    cursor: pointer;
   }
 }
 
@@ -43,7 +41,7 @@ minds-third-party-networks-selector {
     padding: $minds-padding / 2;
     position: relative;
     margin-right: 8px;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-50);
     }
 
@@ -59,7 +57,7 @@ minds-third-party-networks-selector {
       right: -8px;
       top: 50%;
       transform: rotate(360deg) translateY(-50%);
-      @include m-theme(){
+      @include m-theme() {
         border-color: transparent transparent transparent themed($m-grey-50);
       }
     }

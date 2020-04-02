@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'minds-card-group',
-  template: ''
+  template: '',
 })
 export class GroupsCardMock {
   @Input() group;

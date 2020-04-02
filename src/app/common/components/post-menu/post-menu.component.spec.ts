@@ -1,6 +1,12 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component, EventEmitter, Input, Output, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 
 import { Session } from '../../../services/session';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -15,15 +21,18 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { FormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BlockListService } from '../../services/block-list.service';
+import { ActivityService } from '../../services/activity.service';
+import { FeaturesService } from '../../../services/features.service';
+import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
 import { storageMock } from '../../../../tests/storage-mock.spec';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 /* tslint:disable */
 
 /* Mock section */
 
-
 @Component({
   selector: 'm-modal-share',
-  template: ''
+  template: '',
 })
 class ModalShareMock {
   @Input() open;
@@ -34,7 +43,7 @@ class ModalShareMock {
 
 @Component({
   selector: 'm-modal',
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
 })
 class MindsModalMock {
   @Input() open: any;
@@ -43,9 +52,8 @@ class MindsModalMock {
 
 @Component({
   selector: 'm-modal-report',
-  template: ''
+  template: '',
 })
-
 class ModalReportMock {
   @Input() open;
   @Input() object;
@@ -54,7 +62,7 @@ class ModalReportMock {
 
 @Component({
   selector: 'm-modal-confirm',
-  template: ''
+  template: '',
 })
 class ModalConfirmMock {
   @Input() open;
@@ -64,65 +72,74 @@ class ModalConfirmMock {
   @Output() actioned: EventEmitter<any> = new EventEmitter<any>();
 }
 
-let scrollServiceMock = new function () {
+let scrollServiceMock = new (function() {
   this.initOnScroll = jasmine.createSpy('initOnScroll').and.stub();
   this.open = jasmine.createSpy('open').and.stub();
   this.close = jasmine.createSpy('close').and.stub();
-};
+})();
 
 /* ENd of mock section */
 describe('PostMenuComponent', () => {
-
   let comp: PostMenuComponent;
   let fixture: ComponentFixture<PostMenuComponent>;
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MindsModalMock,
         ModalShareMock,
         ModalConfirmMock,
         ModalReportMock,
-        PostMenuComponent
+        PostMenuComponent,
       ], // declare the test component
-      imports: [
-        RouterTestingModule,
-        NgCommonModule,
-        FormsModule
-      ],
+      imports: [RouterTestingModule, NgCommonModule, FormsModule],
       providers: [
         { provide: SignupModalService, useValue: scrollServiceMock },
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        { provide: ActivityService, useValue: activityServiceMock },
+        { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: Storage, useValue: storageMock },
-        { provide: BlockListService, useFactory: () => {
+        {
+          provide: BlockListService,
+          useFactory: () => {
             return BlockListService._(clientMock, sessionMock, storageMock);
-          }
-        }
+          },
+        },
       ],
-      schemas: [
-        NO_ERRORS_SCHEMA,
-      ],
-    })
-      .compileComponents();  // compile template and css
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
   beforeEach(() => {
+    featuresServiceMock.mock('allow-comments-toggle', true);
     fixture = TestBed.createComponent(PostMenuComponent);
 
     comp = fixture.componentInstance;
-    comp.options = ["edit", "translate", "share", "follow", "unfollow", "feature", "unfeature", "delete", "report", "block"];
+    comp.options = [
+      'edit',
+      'translate',
+      'share',
+      'follow',
+      'unfollow',
+      'feature',
+      'unfeature',
+      'delete',
+      'report',
+      'block',
+    ];
     comp.entity = {};
     // comp.opened = true;
     comp.entity.ownerObj = { guid: '1' };
-     comp.cardMenuHandler();
+    comp.cardMenuHandler();
     fixture.detectChanges();
   });
 
   it('should have dropdown', () => {
-    expect(fixture.debugElement.query(By.css('.minds-dropdown-menu'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.minds-dropdown-menu'))
+    ).not.toBeNull();
   });
 
   it('should check if owner is blocked when opening dropdown', () => {
@@ -138,6 +155,29 @@ describe('PostMenuComponent', () => {
   it('should delete to owner when unblocking', () => {
     comp.unBlock();
     fixture.detectChanges();
-    expect(clientMock.delete.calls.mostRecent().args[0]).toEqual('api/v1/block/1');
+    expect(clientMock.delete.calls.mostRecent().args[0]).toEqual(
+      'api/v1/block/1'
+    );
+  });
+
+  it('should allow comments', () => {
+    spyOn(comp.optionSelected, 'emit');
+    comp.allowComments(true);
+    expect(activityServiceMock.toggleAllowComments).toHaveBeenCalledWith(
+      comp.entity,
+      true
+    );
+    expect(comp.entity.allow_comments).toEqual(true);
+  });
+
+  it('should disable comments', () => {
+    spyOn(comp.optionSelected, 'emit');
+
+    comp.allowComments(false);
+    expect(activityServiceMock.toggleAllowComments).toHaveBeenCalledWith(
+      comp.entity,
+      false
+    );
+    expect(comp.entity.allow_comments).toEqual(false);
   });
 });

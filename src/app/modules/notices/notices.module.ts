@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, PLATFORM_ID } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { CommonModule as NgCommonModule } from '@angular/common';
@@ -18,19 +18,16 @@ import { NoticesService } from './notices.service';
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    NoticesSidebarComponent,
-  ],
-  exports: [
-    NoticesSidebarComponent,
-  ],
+  declarations: [NoticesSidebarComponent],
+  exports: [NoticesSidebarComponent],
   providers: [
     {
       provide: NoticesService,
-      useFactory: (_http) => { return new NoticesService(_http); },
-      deps: [ HttpClient ],
+      useFactory: (_http, platformId) => {
+        return new NoticesService(_http, platformId);
+      },
+      deps: [HttpClient, PLATFORM_ID],
     },
-  ], 
+  ],
 })
-export class NoticesModule {
-}
+export class NoticesModule {}

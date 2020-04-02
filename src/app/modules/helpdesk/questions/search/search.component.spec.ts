@@ -13,68 +13,62 @@ import { clientMock } from '../../../../../tests/client-mock.spec';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MockComponent } from '../../../../utils/mock';
-import { SafePipe } from "../../../../common/pipes/safe";
+import { SafePipe } from '../../../../common/pipes/safe';
 
 describe('SearchQuestionsComponent', () => {
-
   let comp: SearchQuestionsComponent;
   let fixture: ComponentFixture<SearchQuestionsComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
-      declarations: [
-        SafePipe,
-        SearchQuestionsComponent,
-      ],
+      declarations: [SafePipe, SearchQuestionsComponent],
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
         CommonModule,
-        FormsModule
+        FormsModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
 
     clientMock.response = {};
     clientMock.response['api/v2/helpdesk/questions/top'] = {
-      'status': 'success',
+      status: 'success',
       questions: [
         {
           uuid: 'uuid1',
-          'question': 'is this a test?',
-          'answer': 'yep',
-          category_uuid: 'category_uuid'
+          question: 'is this a test?',
+          answer: 'yep',
+          category_uuid: 'category_uuid',
         },
         {
           uuid: 'uuid2',
           question: 'is this a test?',
           answer: 'yep',
-          category_uuid: 'category_uuid'
+          category_uuid: 'category_uuid',
         },
         {
           uuid: 'uuid2',
           question: 'is this a test?',
           answer: 'yep',
-          category_uuid: 'category_uuid'
+          category_uuid: 'category_uuid',
         },
-      ]
+      ],
     };
 
     clientMock.response['api/v2/helpdesk/categories/category/category_uuid'] = {
-      'status': 'success',
+      status: 'success',
       category: {
         uuid: 'category_uuid',
         title: 'category',
-      }
+      },
     };
 
     fixture = TestBed.createComponent(SearchQuestionsComponent);
@@ -86,12 +80,10 @@ describe('SearchQuestionsComponent', () => {
     if (fixture.isStable()) {
       done();
     } else {
-      fixture.whenStable()
-        .then(() => {
-          fixture.detectChanges();
-          done();
-        });
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
     }
   });
-
 });

@@ -1,26 +1,26 @@
 .m-canary__page {
-
   .m-marketing--hero {
     padding: 24px 0 !important;
-    background-image: url(/assets/photos/canary.jpg);
+    background-image: url('<%=APP_CDN%>/assets/photos/canary.jpg');
     background-position: center right;
     background-size: cover;
-    
+
     .m-marketing--hero--slogans {
-      h1, h3 {
-        @include m-theme(){
+      h1,
+      h3 {
+        @include m-theme() {
           color: themed($m-white-always);
         }
       }
     }
-    
   }
 
   .m-marketing--hero--video img {
     width: 100%;
   }
 
-  .m-marketing--section--subsection--first .m-marketing--section--subsection-container {
+  .m-marketing--section--subsection--first
+    .m-marketing--section--subsection-container {
     padding-top: 32px !important;
   }
 
@@ -48,19 +48,18 @@
     li {
       font-size: 16px;
       line-height: 2.5;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }
   }
-
 }
 
 .m-canaryPage__buttons {
   padding: 16px 0;
 
   .m-btn {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white-always);
       border-color: rgba(themed($m-white-always), 0.7);
     }

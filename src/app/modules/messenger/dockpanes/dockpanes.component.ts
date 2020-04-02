@@ -9,19 +9,12 @@ import { MessengerConversationDockpanesService } from './dockpanes.service';
 @Component({
   moduleId: module.id,
   selector: 'm-messenger--conversation-dockpanes',
-  templateUrl: 'dockpanes.component.html'
+  templateUrl: 'dockpanes.component.html',
 })
-
 export class MessengerConversationDockpanes {
-
   conversations: Array<any> = this.dockpanes.conversations;
 
-  constructor(
-    public dockpanes: MessengerConversationDockpanesService,
-  ) {
-
-  }
-
+  constructor(public dockpanes: MessengerConversationDockpanesService) {}
 }
 
 export { MessengerConversationDockpanesService } from './dockpanes.service';

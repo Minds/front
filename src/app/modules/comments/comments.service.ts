@@ -6,19 +6,17 @@ import { Client } from '../../services/api';
 
 @Injectable()
 export class CommentsService {
-
   queryParamsSubscription$: Subscription;
   entityGuid: string;
   focusedUrn: string;
   comments: Array<any> = [];
 
-  constructor(
-    private route: ActivatedRoute,
-    private client: Client,
-  ) {
-    this.queryParamsSubscription$ = this.route.queryParamMap.subscribe(params => {
-      this.focusedUrn = params.get('focusedCommentUrn');
-    });
+  constructor(private route: ActivatedRoute, private client: Client) {
+    this.queryParamsSubscription$ = this.route.queryParamMap.subscribe(
+      params => {
+        this.focusedUrn = params.get('focusedCommentUrn');
+      }
+    );
   }
 
   async fetch(opts) {
@@ -27,46 +25,67 @@ export class CommentsService {
     return await this.client.get(uri, opts);
   }
 
-  async get(opts: { entity_guid, parent_path, level, limit, loadNext, loadPrevious, descending }) {
-    let focusedUrnObject = this.focusedUrn ? this.decodeUrn(this.focusedUrn) : null;
+  async get(opts: {
+    entity_guid;
+    parent_path;
+    level;
+    limit;
+    loadNext;
+    loadPrevious;
+    descending;
+  }) {
+    let focusedUrnObject = this.focusedUrn
+      ? this.decodeUrn(this.focusedUrn)
+      : null;
     if (this.focusedUrn) {
       if (opts.entity_guid != focusedUrnObject.entity_guid)
-         this.focusedUrn = null; //wrong comment thread to focus on
-      if (opts.loadNext || opts.loadPrevious)
-        this.focusedUrn = null; //can not focus and have pagination
+        this.focusedUrn = null; //wrong comment thread to focus on
+      if (opts.loadNext || opts.loadPrevious) this.focusedUrn = null; //can not focus and have pagination
       if (this.focusedUrn && opts.parent_path === '0:0:0') {
         opts.loadNext = focusedUrnObject.parent_guid_l1;
       }
-      if (this.focusedUrn && opts.parent_path === `${focusedUrnObject.parent_guid_l1}:0:0`) {
+      if (
+        this.focusedUrn &&
+        opts.parent_path === `${focusedUrnObject.parent_guid_l1}:0:0`
+      ) {
         opts.loadNext = focusedUrnObject.parent_guid_l2;
       }
-      if (this.focusedUrn && opts.parent_path === `${focusedUrnObject.parent_guid_l1}:${focusedUrnObject.parent_guid_l2}:0`) {
+      if (
+        this.focusedUrn &&
+        opts.parent_path ===
+          `${focusedUrnObject.parent_guid_l1}:${focusedUrnObject.parent_guid_l2}:0`
+      ) {
         opts.loadNext = focusedUrnObject.guid;
       }
     }
 
-    let response: any = (<{ comments, 'load-next', 'load-previous' }>await this.fetch({
-      entity_guid: opts.entity_guid,
-      parent_path: opts.parent_path,
-      focused_urn: this.focusedUrn,
-      limit: opts.limit,
-      'load-previous': opts.loadPrevious || null,
-      'load-next': opts.loadNext || null,
-    }));
+    let response: any = <{ comments; 'load-next'; 'load-previous' }>(
+      await this.fetch({
+        entity_guid: opts.entity_guid,
+        parent_path: opts.parent_path,
+        focused_urn: this.focusedUrn,
+        limit: opts.limit,
+        'load-previous': opts.loadPrevious || null,
+        'load-next': opts.loadNext || null,
+      })
+    );
 
     if (this.focusedUrn && focusedUrnObject) {
       for (let comment of response.comments) {
         switch (opts.level) {
           case 0:
-            comment.show_replies = (comment.child_path === `${focusedUrnObject.parent_guid_l1}:0:0`);
+            comment.show_replies =
+              comment.child_path === `${focusedUrnObject.parent_guid_l1}:0:0`;
             break;
           case 1:
-            comment.show_replies = comment.child_path === `${focusedUrnObject.parent_guid_l1}:${focusedUrnObject.parent_guid_l2}:0`;
+            comment.show_replies =
+              comment.child_path ===
+              `${focusedUrnObject.parent_guid_l1}:${focusedUrnObject.parent_guid_l2}:0`;
             break;
           default:
             console.log('Level out of scope', opts.level);
         }
-        comment.focused = (comment._guid === focusedUrnObject.guid);
+        comment.focused = comment._guid === focusedUrnObject.guid;
       }
     }
 
@@ -76,11 +95,14 @@ export class CommentsService {
   }
 
   async single({ entity_guid, guid, parent_path }) {
-    let response: any = await this.client.get(`api/v2/comments/${entity_guid}/${guid}/${parent_path}`, {
-      limit: 1,
-      reversed: false,
-      descending: true,
-    });
+    let response: any = await this.client.get(
+      `api/v2/comments/${entity_guid}/${guid}/${parent_path}`,
+      {
+        limit: 1,
+        reversed: false,
+        descending: true,
+      }
+    );
 
     if (!response.comments || response.comments.length === 0) {
       return null;
@@ -107,5 +129,4 @@ export class CommentsService {
 
     return obj;
   }
-
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-androidApp__download',
@@ -10,14 +10,8 @@ import { Router } from "@angular/router";
         Android App
       </h2>
     </a>
-  `
+  `,
 })
-
 export class AndroidAppDownloadComponent {
-  minds = window.Minds;
-
-  constructor(private router: Router) {
-
-  }
-  
+  constructor(private router: Router) {}
 }

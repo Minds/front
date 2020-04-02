@@ -1,7 +1,7 @@
-@import "defaults";
+@import 'defaults';
 
 .m-embed-video {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-black-always);
   }
 
@@ -37,8 +37,8 @@
     padding: $minds-padding;
     font-family: monospace;
     font-size: 12px;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-100);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
     }
   }
 }

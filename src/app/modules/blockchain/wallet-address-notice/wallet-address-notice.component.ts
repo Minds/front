@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { Web3WalletService } from '../web3-wallet.service';
@@ -8,7 +16,7 @@ import { BlockchainService } from '../blockchain.service';
   moduleId: module.id,
   selector: 'm-blockchain--wallet-address-notice',
   templateUrl: 'wallet-address-notice.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlockchainWalletAddressNoticeComponent implements OnInit {
   address: string;
@@ -17,13 +25,12 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
     protected web3Wallet: Web3WalletService,
     protected blockchain: BlockchainService,
     protected router: Router,
-    protected cd: ChangeDetectorRef
-  ) {
-
-  }
+    protected cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {}
 
   ngOnInit() {
-    this.load();
+    if (isPlatformBrowser(this.platformId)) this.load();
   }
 
   async load() {
@@ -31,11 +38,12 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
 
     let wallet = await this.web3Wallet.getCurrentWallet();
 
-    if (wallet && !await this.blockchain.getWallet()) {
+    if (wallet && !(await this.blockchain.getWallet())) {
       this.address = wallet;
       this.detectChanges();
     } else {
-      setTimeout(() => this.load(), 10000); // check every 10 seconds if there's a wallet detected
+      if (isPlatformBrowser(this.platformId))
+        setTimeout(() => this.load(), 10000); // check every 10 seconds if there's a wallet detected
     }
   }
 

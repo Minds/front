@@ -1,18 +1,34 @@
-<div class="m-channel-bio-field m-channel-social-profiles mdl-color-text--blue-grey-600" [hidden]="editing || !socialProfiles || socialProfiles.length == 0">
-  <span *ngFor="let profile of socialProfiles" class="m-channel-social-profile" [ngClass]="[ 'm-channel-social-profile-' + profile.key ]">
-    <a *ngIf="profile.key && profile.value"
+<div
+  class="m-channel-bio-field m-channel-social-profiles mdl-color-text--blue-grey-600"
+  [hidden]="editing || !socialProfiles || socialProfiles.length == 0"
+>
+  <span
+    *ngFor="let profile of socialProfiles"
+    class="m-channel-social-profile"
+    [ngClass]="[ 'm-channel-social-profile-' + profile.key ]"
+  >
+    <a
+      *ngIf="profile.key && profile.value"
       [href]="getSocialProfileURL(profile.value)"
-      rel="noopener noreferrer"
+      rel="noopener nofollow ugc"
       target="_blank"
-    ><i [ngClass]="[ getSocialProfileIconClass(profile) ]"></i></a>
+      ><i [ngClass]="[ getSocialProfileIconClass(profile) ]"></i
+    ></a>
   </span>
 </div>
 
-<div class="m-channel-bio-editor m-channel-social-profiles-editor" *ngIf="editing">
-  <div *ngFor="let profile of socialProfiles; let i = index" class="m-channel-bio-input m-channel-social-profile-input">
-    <input type="text" 
-      [(ngModel)]="socialProfiles[i].value" 
-      (ngModelChange)="url = $event; matchSocialProfile(i);" 
+<div
+  class="m-channel-bio-editor m-channel-social-profiles-editor"
+  *ngIf="editing"
+>
+  <div
+    *ngFor="let profile of socialProfiles; let i = index"
+    class="m-channel-bio-input m-channel-social-profile-input"
+  >
+    <input
+      type="text"
+      [(ngModel)]="socialProfiles[i].value"
+      (ngModelChange)="url = $event; matchSocialProfile(i);"
       placeholder="Social media profile URL"
       i18n-placeholder="@@MINDS__CHANNELS__SOCIAL_PROFILES__URL_PLACEHOLDER"
     />
@@ -24,9 +40,14 @@
   </div>
 
   <div class="m-channel-bio-input m-channel-social-profile-input">
-    <a (click)="newEmptySocialProfile()" class="m-social-profile-add mdl-color-text--blue-grey-500">
+    <a
+      (click)="newEmptySocialProfile()"
+      class="m-social-profile-add mdl-color-text--blue-grey-500"
+    >
       <i class="material-icons m-material-icons-inline-text">playlist_add</i>
-      <ng-container i18n="@@MINDS__CHANNELS__SOCIAL_PROFILES__ADD">Add Social Profile</ng-container>
+      <ng-container i18n="@@MINDS__CHANNELS__SOCIAL_PROFILES__ADD"
+        >Add Social Profile</ng-container
+      >
     </a>
   </div>
 </div>

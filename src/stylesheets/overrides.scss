@@ -1,11 +1,10 @@
-@import "defaults";
+@import 'defaults';
 /**
  * Override the basic layout
  */
-.material-icons{
+.material-icons {
   text-rendering: optimizeLegibility;
   text-transform: none !important;
-
 
   &.m-material-icons-inline {
     vertical-align: bottom;
@@ -20,1060 +19,1224 @@
   }
 }
 
-.mdl-progress{
-  width:100%;
+.mdl-progress {
+  width: 100%;
 }
-.mdl-js-progress{
-  &.failed{
-    .progressbar{
-      @include m-theme(){
+.mdl-js-progress {
+  &.failed {
+    .progressbar {
+      @include m-theme() {
         background-color: themed($m-red) !important;
       }
     }
   }
-  &.complete{
-    .progressbar{
-      @include m-theme(){
+  &.complete {
+    .progressbar {
+      @include m-theme() {
         background-color: themed($m-green) !important;
       }
     }
   }
 }
 
-.mdl-card{
-
-  z-index:initial;
-  @include m-theme(){
-    background-color: themed($m-white);
+.mdl-card {
+  z-index: initial;
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
   }
-  .mdl-card__supporting-text{
+  .mdl-card__supporting-text {
     -webkit-font-smoothing: antialiased;
   }
 
-  &:not(.mdl-cell){
-    width:auto;
-    min-height:0;
+  &:not(.mdl-cell) {
+    width: auto;
+    min-height: 0;
   }
 }
 
-a{
-  @include m-theme(){
+a {
+  @include m-theme() {
     color: themed($m-blue-grey-700);
   }
 }
 
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-img{
+img {
   text-indent: -9999px;
 }
 
-
-input,input:-internal-autofill-previewed, input:-internal-autofill-selected, textarea:-internal-autofill-previewed, textarea:-internal-autofill-selected, select:-internal-autofill-previewed, select:-internal-autofill-selected {
-  @include m-theme(){
-    background-color: themed($m-white);
+input,
+input:-internal-autofill-previewed,
+input:-internal-autofill-selected,
+textarea:-internal-autofill-previewed,
+textarea:-internal-autofill-selected,
+select:-internal-autofill-previewed,
+select:-internal-autofill-selected {
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
     color: rgba(themed($m-black), 0.87);
   }
 }
 
 .mdl-data-table {
-  @include m-theme(){
-    background-color: themed($m-white);
-    border: 1px solid rgba(themed($m-black),.12);
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+    border: 1px solid rgba(themed($m-borderColor--tertiary), 0.12);
   }
 }
 
 .mdl-data-table tbody tr.is-selected {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-50);
   }
 }
 
 .mdl-data-table tbody tr:hover {
-  @include m-theme(){
+  @include m-theme() {
     background-color: rgba(themed($m-white), 0.9);
   }
 }
 
 .mdl-data-table td {
-    @include m-theme(){
-       border-top: 1px solid rgba(themed($m-black), 0.12);
-       border-bottom: 1px solid rgba(themed($m-black), 0.12);
-    }
+  @include m-theme() {
+    border-top: 1px solid rgba(themed($m-black), 0.12);
+    border-bottom: 1px solid rgba(themed($m-black), 0.12);
+  }
 }
 
 .mdl-data-table th {
-  @include m-theme(){
+  @include m-theme() {
     color: rgba(themed($m-black), 0.54);
   }
 }
 
-.mdl-data-table th.mdl-data-table__header--sorted-ascending,.mdl-data-table th.mdl-data-table__header--sorted-descending {
-  @include m-theme(){
+.mdl-data-table th.mdl-data-table__header--sorted-ascending,
+.mdl-data-table th.mdl-data-table__header--sorted-descending {
+  @include m-theme() {
     color: rgba(themed($m-black), 0.87);
   }
 }
 
-.mdl-data-table th.mdl-data-table__header--sorted-ascending:hover:before,.mdl-data-table th.mdl-data-table__header--sorted-descending:hover:before {
-  @include m-theme(){
+.mdl-data-table th.mdl-data-table__header--sorted-ascending:hover:before,
+.mdl-data-table th.mdl-data-table__header--sorted-descending:hover:before {
+  @include m-theme() {
     color: rgba(themed($m-black), 0.26);
   }
 }
 
-
 hr {
-  @include m-theme(){
+  @include m-theme() {
     border-top: 1px solid themed($m-grey-100);
   }
 }
 
 .mdl-button {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-black);
   }
 }
 
 .mdl-button:hover {
-  @include m-theme(){
-    background-color: rgba(themed($m-grey-300),.2);
+  @include m-theme() {
+    background-color: rgba(themed($m-grey-300), 0.2);
   }
 }
 
 .mdl-button:focus:not(:active) {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.12);
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.12);
   }
 }
 
 .mdl-button:active {
-  @include m-theme(){
-    background-color: rgba(themed($m-grey-300),.4);
+  @include m-theme() {
+    background-color: rgba(themed($m-grey-300), 0.4);
   }
 }
 
 .mdl-button.mdl-button--colored {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-button.mdl-button--colored:focus:not(:active) {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.12);
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.12);
   }
 }
 
 .mdl-button--raised {
-  @include m-theme(){
-    background-color: rgba(themed($m-grey-300),.2);
-    box-shadow: 0 2px 2px 0 rgba(themed($m-black),.14),0 3px 1px -2px rgba(themed($m-black),.2),0 1px 5px 0 rgba(themed($m-black),.12);
+  @include m-theme() {
+    background-color: rgba(themed($m-grey-300), 0.2);
+    box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.14),
+      0 3px 1px -2px rgba(themed($m-black), 0.2),
+      0 1px 5px 0 rgba(themed($m-black), 0.12);
   }
 }
 
 .mdl-button--raised:active {
-  @include m-theme(){
-    box-shadow: 0 4px 5px 0 rgba(themed($m-black),.14),0 1px 10px 0 rgba(themed($m-black),.12),0 2px 4px -1px rgba(themed($m-black),.2);
-    background-color: rgba(themed($m-grey-300),.4);
+  @include m-theme() {
+    box-shadow: 0 4px 5px 0 rgba(themed($m-black), 0.14),
+      0 1px 10px 0 rgba(themed($m-black), 0.12),
+      0 2px 4px -1px rgba(themed($m-black), 0.2);
+    background-color: rgba(themed($m-grey-300), 0.4);
   }
 }
 
 .mdl-button--raised:focus:not(:active) {
-  @include m-theme(){
-    box-shadow: 0 0 8px rgba(themed($m-black),.18),0 8px 16px rgba(themed($m-black),.36);
-    background-color: rgba(themed($m-grey-300),.4);
+  @include m-theme() {
+    box-shadow: 0 0 8px rgba(themed($m-black), 0.18),
+      0 8px 16px rgba(themed($m-black), 0.36);
+    background-color: rgba(themed($m-grey-300), 0.4);
   }
 }
 
 .mdl-button--raised.mdl-button--colored {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
     color: themed($m-white);
   }
 }
 
 .mdl-button--raised.mdl-button--colored:hover {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-button--raised.mdl-button--colored:active {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-button--raised.mdl-button--colored:focus:not(:active) {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-button--raised.mdl-button--colored .mdl-ripple {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 }
 
 .mdl-button--fab {
-  @include m-theme(){
-    background-color: rgba(themed($m-grey-300),.2);
-    box-shadow: 0 1px 1.5px 0 rgba(themed($m-black),.12),0 1px 1px 0 rgba(themed($m-black),.24);
+  @include m-theme() {
+    background-color: rgba(themed($m-grey-300), 0.2);
+    box-shadow: 0 1px 1.5px 0 rgba(themed($m-black), 0.12),
+      0 1px 1px 0 rgba(themed($m-black), 0.24);
   }
 }
 
 .mdl-button--fab .mdl-button__ripple-container {
-  @include m-theme(){
-    -webkit-mask-image: -webkit-radial-gradient(circle,themed($m-white),themed($m-black));
+  @include m-theme() {
+    -webkit-mask-image: -webkit-radial-gradient(
+      circle,
+      themed($m-white),
+      themed($m-black)
+    );
   }
 }
 
 .mdl-button--fab:active {
-  @include m-theme(){
-    box-shadow: 0 4px 5px 0 rgba(themed($m-black),.14),0 1px 10px 0 rgba(themed($m-black),.12),0 2px 4px -1px rgba(themed($m-black),.2);
-    background-color: rgba(themed($m-grey-300),.4);
+  @include m-theme() {
+    box-shadow: 0 4px 5px 0 rgba(themed($m-black), 0.14),
+      0 1px 10px 0 rgba(themed($m-black), 0.12),
+      0 2px 4px -1px rgba(themed($m-black), 0.2);
+    background-color: rgba(themed($m-grey-300), 0.4);
   }
 }
 
 .mdl-button--fab:focus:not(:active) {
-  @include m-theme(){
-    box-shadow: 0 0 8px rgba(themed($m-black),.18),0 8px 16px rgba(themed($m-black),.36);
-    background-color: rgba(themed($m-grey-300),.4);
+  @include m-theme() {
+    box-shadow: 0 0 8px rgba(themed($m-black), 0.18),
+      0 8px 16px rgba(themed($m-black), 0.36);
+    background-color: rgba(themed($m-grey-300), 0.4);
   }
 }
 
 .mdl-button--fab.mdl-button--colored {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-amber);
     color: themed($m-grey-800);
   }
 }
 
 .mdl-button--fab.mdl-button--colored:hover {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-amber);
   }
 }
 
 .mdl-button--fab.mdl-button--colored:focus:not(:active) {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-amber);
   }
 }
 
 .mdl-button--fab.mdl-button--colored:active {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-amber);
   }
 }
 
 .mdl-button--fab.mdl-button--colored .mdl-ripple {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-800);
   }
 }
 
 .mdl-button--icon .mdl-button__ripple-container {
-  @include m-theme(){
-    -webkit-mask-image: -webkit-radial-gradient(circle,themed($m-white),themed($m-black));
+  @include m-theme() {
+    -webkit-mask-image: -webkit-radial-gradient(
+      circle,
+      themed($m-white),
+      themed($m-black)
+    );
   }
 }
 
-
 .mdl-button--primary.mdl-button--primary {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-button--primary.mdl-button--primary .mdl-ripple {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 }
 
-.mdl-button--primary.mdl-button--primary.mdl-button--raised,.mdl-button--primary.mdl-button--primary.mdl-button--fab {
-  @include m-theme(){
+.mdl-button--primary.mdl-button--primary.mdl-button--raised,
+.mdl-button--primary.mdl-button--primary.mdl-button--fab {
+  @include m-theme() {
     color: themed($m-white);
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-button--accent.mdl-button--accent {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-amber);
   }
 }
 
 .mdl-button--accent.mdl-button--accent .mdl-ripple {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-800);
   }
 }
 
-.mdl-button--accent.mdl-button--accent.mdl-button--raised,.mdl-button--accent.mdl-button--accent.mdl-button--fab {
-  @include m-theme(){
+.mdl-button--accent.mdl-button--accent.mdl-button--raised,
+.mdl-button--accent.mdl-button--accent.mdl-button--fab {
+  @include m-theme() {
     color: themed($m-grey-800);
     background-color: themed($m-amber);
   }
 }
 
-.mdl-button[disabled][disabled],.mdl-button.mdl-button--disabled.mdl-button--disabled {
-  @include m-theme(){
-    color: rgba(themed($m-black),.26);
+.mdl-button[disabled][disabled],
+.mdl-button.mdl-button--disabled.mdl-button--disabled {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.26);
   }
 }
 
-.mdl-button--fab[disabled][disabled],.mdl-button--fab.mdl-button--disabled.mdl-button--disabled {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.12);
-    color: rgba(themed($m-black),.26);
+.mdl-button--fab[disabled][disabled],
+.mdl-button--fab.mdl-button--disabled.mdl-button--disabled {
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.12);
+    color: rgba(themed($m-black), 0.26);
   }
 }
 
-.mdl-button--raised[disabled][disabled],.mdl-button--raised.mdl-button--disabled.mdl-button--disabled {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.12);
-    color: rgba(themed($m-black),.26);
+.mdl-button--raised[disabled][disabled],
+.mdl-button--raised.mdl-button--disabled.mdl-button--disabled {
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.12);
+    color: rgba(themed($m-black), 0.26);
   }
 }
 
-.mdl-button--colored[disabled][disabled],.mdl-button--colored.mdl-button--disabled.mdl-button--disabled {
-  @include m-theme(){
-    color: rgba(themed($m-black),.26);
+.mdl-button--colored[disabled][disabled],
+.mdl-button--colored.mdl-button--disabled.mdl-button--disabled {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.26);
   }
 }
-
 
 .mdl-card__media {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-amber);
   }
 }
 
 .mdl-card__title {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-black);
   }
 }
 
 .mdl-card__title.mdl-card--border {
-  @include m-theme(){
-    border-bottom: 1px solid rgba(themed($m-black),.1);
+  @include m-theme() {
+    border-bottom: 1px solid rgba(themed($m-black), 0.1);
   }
 }
 
-
 .mdl-card__subtitle-text {
-  @include m-theme(){
-    color: rgba(themed($m-black),.54);
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.54);
   }
 }
 
 .mdl-card__supporting-text {
-  @include m-theme(){
-    color: rgba(themed($m-black),.54);
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.54);
   }
 }
 
 .mdl-card__supporting-text.mdl-card--border {
-  @include m-theme(){
-    border-bottom: 1px solid rgba(themed($m-black),.1)
+  @include m-theme() {
+    border-bottom: 1px solid rgba(themed($m-black), 0.1);
   }
 }
 
-
 .mdl-checkbox__box-outline {
-  @include m-theme(){
-    border: 2px solid rgba(themed($m-black),.54);
+  @include m-theme() {
+    border: 2px solid rgba(themed($m-black), 0.54);
   }
 }
 
 .mdl-checkbox.is-checked .mdl-checkbox__box-outline {
-  @include m-theme(){
+  @include m-theme() {
     border: 2px solid themed($m-blue-grey-500);
   }
 }
 
-fieldset[disabled] .mdl-checkbox .mdl-checkbox__box-outline,.mdl-checkbox.is-disabled .mdl-checkbox__box-outline {
-  @include m-theme(){
-    border: 2px solid rgba(themed($m-black),.26);
+fieldset[disabled] .mdl-checkbox .mdl-checkbox__box-outline,
+.mdl-checkbox.is-disabled .mdl-checkbox__box-outline {
+  @include m-theme() {
+    border: 2px solid rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-checkbox.is-focused .mdl-checkbox__focus-helper {
-  @include m-theme(){
-    box-shadow: 0 0 0 8px rgba(themed($m-black),.1);
-    background-color: rgba(themed($m-black),.1)
+  @include m-theme() {
+    box-shadow: 0 0 0 8px rgba(themed($m-black), 0.1);
+    background-color: rgba(themed($m-black), 0.1);
   }
 }
 
 .mdl-checkbox.is-focused.is-checked .mdl-checkbox__focus-helper {
-  @include m-theme(){
-    box-shadow: 0 0 0 8px rgba(themed($m-blue-grey-500),.26);
-    background-color: rgba(themed($m-blue-grey-500),.26)
+  @include m-theme() {
+    box-shadow: 0 0 0 8px rgba(themed($m-blue-grey-500), 0.26);
+    background-color: rgba(themed($m-blue-grey-500), 0.26);
   }
 }
 
-
 .mdl-checkbox.is-checked .mdl-checkbox__tick-outline {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
-fieldset[disabled] .mdl-checkbox.is-checked .mdl-checkbox__tick-outline,.mdl-checkbox.is-checked.is-disabled .mdl-checkbox__tick-outline {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.26);
+fieldset[disabled] .mdl-checkbox.is-checked .mdl-checkbox__tick-outline,
+.mdl-checkbox.is-checked.is-disabled .mdl-checkbox__tick-outline {
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.26);
   }
 }
 
-
-fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,.mdl-checkbox.is-disabled .mdl-checkbox__label {
-  @include m-theme(){
-    color: rgba(themed($m-black),.26);
+fieldset[disabled] .mdl-checkbox .mdl-checkbox__label,
+.mdl-checkbox.is-disabled .mdl-checkbox__label {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-checkbox__ripple-container {
-  @include m-theme(){
-    -webkit-mask-image: -webkit-radial-gradient(circle,themed($m-white),themed($m-black));
+  @include m-theme() {
+    -webkit-mask-image: -webkit-radial-gradient(
+      circle,
+      themed($m-white),
+      themed($m-black)
+    );
   }
 }
 
 .mdl-checkbox__ripple-container .mdl-ripple {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 .mdl-data-table {
-  @include m-theme(){
-    border: 1px solid rgba(themed($m-black),.12);
-    background-color: themed($m-white);
+  @include m-theme() {
+    border: 1px solid rgba(themed($m-black), 0.12);
+    background-color: themed($m-bgColor--secondary);
   }
 }
 
 .mdl-data-table tbody tr.is-selected {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-50);
   }
 }
 
 .mdl-data-table tbody tr:hover {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-50);
   }
 }
 
 .mdl-data-table td {
-  @include m-theme(){
-    border-top: 1px solid rgba(themed($m-black),.12);
-    border-bottom: 1px solid rgba(themed($m-black),.12);
+  @include m-theme() {
+    border-top: 1px solid rgba(themed($m-black), 0.12);
+    border-bottom: 1px solid rgba(themed($m-black), 0.12);
   }
 }
 
 .mdl-data-table th {
-  @include m-theme(){
-    color: rgba(themed($m-black),.54);
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.54);
   }
 }
 
-.mdl-data-table th.mdl-data-table__header--sorted-ascending,.mdl-data-table th.mdl-data-table__header--sorted-descending {
-  @include m-theme(){
-    color: rgba(themed($m-black),.87);
+.mdl-data-table th.mdl-data-table__header--sorted-ascending,
+.mdl-data-table th.mdl-data-table__header--sorted-descending {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.87);
   }
 }
 
-.mdl-data-table th.mdl-data-table__header--sorted-ascending:hover:before,.mdl-data-table th.mdl-data-table__header--sorted-descending:hover:before {
-  @include m-theme(){
-    color: rgba(themed($m-black),.26);
+.mdl-data-table th.mdl-data-table__header--sorted-ascending:hover:before,
+.mdl-data-table th.mdl-data-table__header--sorted-descending:hover:before {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-logo {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white);
   }
 }
 
 .mdl-list__item {
-  @include m-theme(){
-    color: rgba(themed($m-black),.87);
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.87);
   }
 }
 
-.mdl-list__item .mdl-list__item-secondary-content .mdl-list__item-secondary-info {
-  @include m-theme(){
-    color: rgba(themed($m-black),.54);
+.mdl-list__item
+  .mdl-list__item-secondary-content
+  .mdl-list__item-secondary-info {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.54);
   }
 }
 
-.mdl-list__item-icon,.mdl-list__item-icon.material-icons {
-  @include m-theme(){
+.mdl-list__item-icon,
+.mdl-list__item-icon.material-icons {
+  @include m-theme() {
     color: themed($m-grey-500);
   }
 }
 
-.mdl-list__item-avatar,.mdl-list__item-avatar.material-icons {
-  @include m-theme(){
+.mdl-list__item-avatar,
+.mdl-list__item-avatar.material-icons {
+  @include m-theme() {
     background-color: themed($m-grey-500);
     color: themed($m-white);
   }
 }
 
-
-.mdl-list__item--two-line .mdl-list__item-primary-content .mdl-list__item-sub-title {
-  @include m-theme(){
-    color: rgba(themed($m-black),.54);
+.mdl-list__item--two-line
+  .mdl-list__item-primary-content
+  .mdl-list__item-sub-title {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.54);
   }
 }
-
 
 .mdl-list__item--three-line .mdl-list__item-text-body {
-  @include m-theme(){
-    color: rgba(themed($m-black),.54);
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.54);
   }
 }
 
-
-.mdl-menu__outline { @include m-theme(){
+.mdl-menu__outline {
+  @include m-theme() {
     background-color: themed($m-white);
-    box-shadow: 0 2px 2px 0 rgba(themed($m-black),.14),0 3px 1px -2px rgba(themed($m-black),.2),0 1px 5px 0 rgba(themed($m-black),.12);
+    box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.14),
+      0 3px 1px -2px rgba(themed($m-black), 0.2),
+      0 1px 5px 0 rgba(themed($m-black), 0.12);
   }
 }
-
 
 .mdl-menu__item {
-  @include m-theme(){
-    color: rgba(themed($m-black),.87);
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.87);
     outline-color: themed($m-grey-200);
   }
 }
 
 .mdl-menu__item--full-bleed-divider {
-  @include m-theme(){
-    border-bottom: 1px solid rgba(themed($m-black),.12);
+  @include m-theme() {
+    border-bottom: 1px solid rgba(themed($m-black), 0.12);
   }
 }
 
-.mdl-menu__item[disabled],.mdl-menu__item[data-mdl-disabled] {
-  @include m-theme(){
+.mdl-menu__item[disabled],
+.mdl-menu__item[data-mdl-disabled] {
+  @include m-theme() {
     color: themed($m-grey-200);
   }
 }
 
 .mdl-menu__item:hover {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-50);
   }
 }
 
 .mdl-menu__item:focus {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-50);
   }
 }
 
 .mdl-menu__item:active {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-50);
   }
 }
 
-.mdl-progress>.progressbar {
-  @include m-theme(){
+.mdl-progress > .progressbar {
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
-.mdl-progress>.bufferbar {
-  @include m-theme(){
-    background-image: linear-gradient(to right,rgba(themed($m-white),.7),rgba(themed($m-white),.7)),linear-gradient(to right,themed($m-blue-grey-500),themed($m-blue-grey-500));
+.mdl-progress > .bufferbar {
+  @include m-theme() {
+    background-image: linear-gradient(
+        to right,
+        rgba(themed($m-white), 0.7),
+        rgba(themed($m-white), 0.7)
+      ),
+      linear-gradient(
+        to right,
+        themed($m-blue-grey-500),
+        themed($m-blue-grey-500)
+      );
   }
 }
 
-
 @supports (-webkit-appearance: none) {
-  .mdl-progress:not(.mdl-progress--indeterminate):not(.mdl-progress--indeterminate)>.auxbar,.mdl-progress:not(.mdl-progress__indeterminate):not(.mdl-progress__indeterminate)>.auxbar {
-    @include m-theme(){
-        background-image:linear-gradient(to right,rgba(themed($m-white),.7),rgba(themed($m-white),.7)),linear-gradient(to right,themed($m-blue-grey-500),themed($m-blue-grey-500));
+  .mdl-progress:not(.mdl-progress--indeterminate):not(.mdl-progress--indeterminate)
+    > .auxbar,
+  .mdl-progress:not(.mdl-progress__indeterminate):not(.mdl-progress__indeterminate)
+    > .auxbar {
+    @include m-theme() {
+      background-image: linear-gradient(
+          to right,
+          rgba(themed($m-white), 0.7),
+          rgba(themed($m-white), 0.7)
+        ),
+        linear-gradient(
+          to right,
+          themed($m-blue-grey-500),
+          themed($m-blue-grey-500)
+        );
     }
   }
 }
 
-.mdl-progress:not(.mdl-progress--indeterminate)>.auxbar,.mdl-progress:not(.mdl-progress__indeterminate)>.auxbar {
-  @include m-theme(){
-    background-image: linear-gradient(to right,rgba(themed($m-white),.9),rgba(themed($m-white),.9)),linear-gradient(to right,themed($m-blue-grey-500),themed($m-blue-grey-500));
+.mdl-progress:not(.mdl-progress--indeterminate) > .auxbar,
+.mdl-progress:not(.mdl-progress__indeterminate) > .auxbar {
+  @include m-theme() {
+    background-image: linear-gradient(
+        to right,
+        rgba(themed($m-white), 0.9),
+        rgba(themed($m-white), 0.9)
+      ),
+      linear-gradient(
+        to right,
+        themed($m-blue-grey-500),
+        themed($m-blue-grey-500)
+      );
   }
 }
 
-
-.mdl-progress.mdl-progress--indeterminate>.bar1,.mdl-progress.mdl-progress__indeterminate>.bar1,.mdl-progress.mdl-progress--indeterminate>.bar3,.mdl-progress.mdl-progress__indeterminate>.bar3 {
-  @include m-theme(){
+.mdl-progress.mdl-progress--indeterminate > .bar1,
+.mdl-progress.mdl-progress__indeterminate > .bar1,
+.mdl-progress.mdl-progress--indeterminate > .bar3,
+.mdl-progress.mdl-progress__indeterminate > .bar3 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
-
   }
 }
 
 .mdl-radio__outer-circle {
-  @include m-theme(){
-    border: 2px solid rgba(themed($m-black),.54);
+  @include m-theme() {
+    border: 2px solid rgba(themed($m-black), 0.54);
   }
 }
 
 .mdl-radio.is-checked .mdl-radio__outer-circle {
-  @include m-theme(){
+  @include m-theme() {
     border: 2px solid themed($m-blue-grey-500);
   }
 }
 
-.mdl-radio__outer-circle fieldset[disabled] .mdl-radio,.mdl-radio.is-disabled .mdl-radio__outer-circle {
-  @include m-theme(){
-    border: 2px solid rgba(themed($m-black),.26);
+.mdl-radio__outer-circle fieldset[disabled] .mdl-radio,
+.mdl-radio.is-disabled .mdl-radio__outer-circle {
+  @include m-theme() {
+    border: 2px solid rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-radio__inner-circle {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
-
-fieldset[disabled] .mdl-radio .mdl-radio__inner-circle,.mdl-radio.is-disabled .mdl-radio__inner-circle {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.26);
+fieldset[disabled] .mdl-radio .mdl-radio__inner-circle,
+.mdl-radio.is-disabled .mdl-radio__inner-circle {
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-radio.is-focused .mdl-radio__inner-circle {
-  @include m-theme(){
-    box-shadow: 0 0 0 10px rgba(themed($m-black),.1);
+  @include m-theme() {
+    box-shadow: 0 0 0 10px rgba(themed($m-black), 0.1);
   }
 }
 
-fieldset[disabled] .mdl-radio .mdl-radio__label,.mdl-radio.is-disabled .mdl-radio__label {
-  @include m-theme(){
-    color: rgba(themed($m-black),.26);
+fieldset[disabled] .mdl-radio .mdl-radio__label,
+.mdl-radio.is-disabled .mdl-radio__label {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-radio__ripple-container {
-  @include m-theme(){
-    -webkit-mask-image: -webkit-radial-gradient(circle,themed($m-white),themed($m-black))
+  @include m-theme() {
+    -webkit-mask-image: -webkit-radial-gradient(
+      circle,
+      themed($m-white),
+      themed($m-black)
+    );
   }
 }
 
 .mdl-radio__ripple-container .mdl-ripple {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-blue-grey-500);
   }
 }
 
-
 .mdl-slider.is-upgraded::-ms-fill-lower {
-  @include m-theme(){
-    background: linear-gradient(to right,transparent,transparent 16px,themed($m-blue-grey-500)16px,themed($m-blue-grey-500)0);
+  @include m-theme() {
+    background: linear-gradient(
+      to right,
+      transparent,
+      transparent 16px,
+      themed($m-blue-grey-500) 16px,
+      themed($m-blue-grey-500) 0
+    );
   }
 }
 
 .mdl-slider.is-upgraded::-ms-fill-upper {
-  @include m-theme(){
-    background: linear-gradient(to left,transparent,transparent 16px,rgba(themed($m-black),.26)16px,rgba(themed($m-black),.26)0);
+  @include m-theme() {
+    background: linear-gradient(
+      to left,
+      transparent,
+      transparent 16px,
+      rgba(themed($m-black), 0.26) 16px,
+      rgba(themed($m-black), 0.26) 0
+    );
   }
 }
 
 .mdl-slider.is-upgraded::-webkit-slider-thumb {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded::-moz-range-thumb {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded:focus:not(:active)::-webkit-slider-thumb {
-  @include m-theme(){
-    box-shadow: 0 0 0 10px rgba(themed($m-blue-grey-500),.26);
+  @include m-theme() {
+    box-shadow: 0 0 0 10px rgba(themed($m-blue-grey-500), 0.26);
   }
 }
 
 .mdl-slider.is-upgraded:focus:not(:active)::-moz-range-thumb {
-  @include m-theme(){
-    box-shadow: 0 0 0 10px rgba(themed($m-blue-grey-500),.26);
+  @include m-theme() {
+    box-shadow: 0 0 0 10px rgba(themed($m-blue-grey-500), 0.26);
   }
 }
 
 .mdl-slider.is-upgraded:active::-webkit-slider-thumb {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
-.mdl-slider.is-upgraded:active::-moz-range-thumb { @include m-theme(){
+.mdl-slider.is-upgraded:active::-moz-range-thumb {
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded::-ms-thumb {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded:focus:not(:active)::-ms-thumb {
-  @include m-theme(){
-    background: radial-gradient(circle closest-side,themed($m-blue-grey-500)0%,themed($m-blue-grey-500)37.5%,rgba(themed($m-blue-grey-500),.26)37.5%,rgba(themed($m-blue-grey-500),.26)100%);
+  @include m-theme() {
+    background: radial-gradient(
+      circle closest-side,
+      themed($m-blue-grey-500) 0%,
+      themed($m-blue-grey-500) 37.5%,
+      rgba(themed($m-blue-grey-500), 0.26) 37.5%,
+      rgba(themed($m-blue-grey-500), 0.26) 100%
+    );
   }
 }
 
 .mdl-slider.is-upgraded:active::-ms-thumb {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-slider.is-upgraded.is-lowest-value::-webkit-slider-thumb {
-  @include m-theme(){
-    border: 2px solid rgba(themed($m-black),.26);
+  @include m-theme() {
+    border: 2px solid rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-slider.is-upgraded.is-lowest-value::-moz-range-thumb {
-  @include m-theme(){
-    border: 2px solid rgba(themed($m-black),.26);
+  @include m-theme() {
+    border: 2px solid rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-slider.is-upgraded.is-lowest-value:focus:not(:active)::-webkit-slider-thumb {
-  @include m-theme(){
-    box-shadow: 0 0 0 10px rgba(themed($m-black),.12);
-    background-color: rgba(themed($m-black),.12);
+  @include m-theme() {
+    box-shadow: 0 0 0 10px rgba(themed($m-black), 0.12);
+    background-color: rgba(themed($m-black), 0.12);
   }
 }
 
 .mdl-slider.is-upgraded.is-lowest-value:focus:not(:active)::-moz-range-thumb {
-  @include m-theme(){
-    box-shadow: 0 0 0 10px rgba(themed($m-black),.12);
-    background-color: rgba(themed($m-black),.12);
+  @include m-theme() {
+    box-shadow: 0 0 0 10px rgba(themed($m-black), 0.12);
+    background-color: rgba(themed($m-black), 0.12);
   }
 }
 
 .mdl-slider.is-upgraded.is-lowest-value:active::-webkit-slider-thumb {
-  @include m-theme(){
-    border: 1.6px solid rgba(themed($m-black),.26);
+  @include m-theme() {
+    border: 1.6px solid rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-slider.is-upgraded.is-lowest-value:active::-moz-range-thumb {
-  @include m-theme(){
-    border: 1.5px solid rgba(themed($m-black),.26);
+  @include m-theme() {
+    border: 1.5px solid rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-slider.is-upgraded.is-lowest-value::-ms-thumb {
-  @include m-theme(){
-    background: radial-gradient(circle closest-side,transparent 0%,transparent 66.67%,rgba(themed($m-black),.26)66.67%,rgba(themed($m-black),.26)100%);
+  @include m-theme() {
+    background: radial-gradient(
+      circle closest-side,
+      transparent 0%,
+      transparent 66.67%,
+      rgba(themed($m-black), 0.26) 66.67%,
+      rgba(themed($m-black), 0.26) 100%
+    );
   }
 }
 
 .mdl-slider.is-upgraded.is-lowest-value:focus:not(:active)::-ms-thumb {
-  @include m-theme(){
-    background: radial-gradient(circle closest-side,rgba(themed($m-black),.12)0%,rgba(themed($m-black),.12)25%,rgba(themed($m-black),.26)25%,rgba(themed($m-black),.26)37.5%,rgba(themed($m-black),.12)37.5%,rgba(themed($m-black),.12)100%);
+  @include m-theme() {
+    background: radial-gradient(
+      circle closest-side,
+      rgba(themed($m-black), 0.12) 0%,
+      rgba(themed($m-black), 0.12) 25%,
+      rgba(themed($m-black), 0.26) 25%,
+      rgba(themed($m-black), 0.26) 37.5%,
+      rgba(themed($m-black), 0.12) 37.5%,
+      rgba(themed($m-black), 0.12) 100%
+    );
   }
 }
 
 .mdl-slider.is-upgraded.is-lowest-value:active::-ms-thumb {
-  @include m-theme(){
-    background: radial-gradient(circle closest-side,transparent 0%,transparent 77.78%,rgba(themed($m-black),.26)77.78%,rgba(themed($m-black),.26)100%);
+  @include m-theme() {
+    background: radial-gradient(
+      circle closest-side,
+      transparent 0%,
+      transparent 77.78%,
+      rgba(themed($m-black), 0.26) 77.78%,
+      rgba(themed($m-black), 0.26) 100%
+    );
   }
 }
 
-.mdl-slider.is-upgraded:disabled:focus::-webkit-slider-thumb,.mdl-slider.is-upgraded:disabled:active::-webkit-slider-thumb,.mdl-slider.is-upgraded:disabled::-webkit-slider-thumb {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.26);
+.mdl-slider.is-upgraded:disabled:focus::-webkit-slider-thumb,
+.mdl-slider.is-upgraded:disabled:active::-webkit-slider-thumb,
+.mdl-slider.is-upgraded:disabled::-webkit-slider-thumb {
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.26);
   }
 }
 
-.mdl-slider.is-upgraded:disabled:focus::-moz-range-thumb,.mdl-slider.is-upgraded:disabled:active::-moz-range-thumb,.mdl-slider.is-upgraded:disabled::-moz-range-thumb { @include m-theme(){
-    background-color: rgba(themed($m-black),.26);
+.mdl-slider.is-upgraded:disabled:focus::-moz-range-thumb,
+.mdl-slider.is-upgraded:disabled:active::-moz-range-thumb,
+.mdl-slider.is-upgraded:disabled::-moz-range-thumb {
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.26);
   }
 }
 
-.mdl-slider.is-upgraded:disabled+.mdl-slider__background-flex>.mdl-slider__background-lower {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.26);
+.mdl-slider.is-upgraded:disabled
+  + .mdl-slider__background-flex
+  > .mdl-slider__background-lower {
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.26);
   }
 }
 
-.mdl-slider.is-upgraded.is-lowest-value:disabled:focus::-webkit-slider-thumb,.mdl-slider.is-upgraded.is-lowest-value:disabled:active::-webkit-slider-thumb,.mdl-slider.is-upgraded.is-lowest-value:disabled::-webkit-slider-thumb {
-  @include m-theme(){
-    border: 3px solid rgba(themed($m-black),.26);
+.mdl-slider.is-upgraded.is-lowest-value:disabled:focus::-webkit-slider-thumb,
+.mdl-slider.is-upgraded.is-lowest-value:disabled:active::-webkit-slider-thumb,
+.mdl-slider.is-upgraded.is-lowest-value:disabled::-webkit-slider-thumb {
+  @include m-theme() {
+    border: 3px solid rgba(themed($m-black), 0.26);
   }
 }
 
-.mdl-slider.is-upgraded.is-lowest-value:disabled:focus::-moz-range-thumb,.mdl-slider.is-upgraded.is-lowest-value:disabled:active::-moz-range-thumb,.mdl-slider.is-upgraded.is-lowest-value:disabled::-moz-range-thumb {
-  @include m-theme(){
-    border: 3px solid rgba(themed($m-black),.26);
+.mdl-slider.is-upgraded.is-lowest-value:disabled:focus::-moz-range-thumb,
+.mdl-slider.is-upgraded.is-lowest-value:disabled:active::-moz-range-thumb,
+.mdl-slider.is-upgraded.is-lowest-value:disabled::-moz-range-thumb {
+  @include m-theme() {
+    border: 3px solid rgba(themed($m-black), 0.26);
   }
 }
 
-.mdl-slider.is-upgraded:disabled:focus::-ms-thumb,.mdl-slider.is-upgraded:disabled:active::-ms-thumb,.mdl-slider.is-upgraded:disabled::-ms-thumb { @include m-theme(){
-    background-color: rgba(themed($m-black),.26);
+.mdl-slider.is-upgraded:disabled:focus::-ms-thumb,
+.mdl-slider.is-upgraded:disabled:active::-ms-thumb,
+.mdl-slider.is-upgraded:disabled::-ms-thumb {
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.26);
   }
 }
 
-.mdl-slider.is-upgraded.is-lowest-value:disabled:focus::-ms-thumb,.mdl-slider.is-upgraded.is-lowest-value:disabled:active::-ms-thumb,.mdl-slider.is-upgraded.is-lowest-value:disabled::-ms-thumb {
-  @include m-theme(){
-    background: radial-gradient(circle closest-side,transparent 0%,transparent 50%,rgba(themed($m-black),.26)50%,rgba(themed($m-black),.26)100%);
+.mdl-slider.is-upgraded.is-lowest-value:disabled:focus::-ms-thumb,
+.mdl-slider.is-upgraded.is-lowest-value:disabled:active::-ms-thumb,
+.mdl-slider.is-upgraded.is-lowest-value:disabled::-ms-thumb {
+  @include m-theme() {
+    background: radial-gradient(
+      circle closest-side,
+      transparent 0%,
+      transparent 50%,
+      rgba(themed($m-black), 0.26) 50%,
+      rgba(themed($m-black), 0.26) 100%
+    );
   }
 }
 
 .mdl-slider.is-upgraded:disabled::-ms-fill-lower {
-  @include m-theme(){
-     background: linear-gradient(to right,transparent,transparent 25px,rgba(themed($m-black),.26)25px,rgba(themed($m-black),.26)0);
+  @include m-theme() {
+    background: linear-gradient(
+      to right,
+      transparent,
+      transparent 25px,
+      rgba(themed($m-black), 0.26) 25px,
+      rgba(themed($m-black), 0.26) 0
+    );
   }
 }
 
 .mdl-slider__background-lower {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-slider__background-upper {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.26);
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-switch__track {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.26);
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-switch.is-checked .mdl-switch__track {
-  @include m-theme(){
-    background-color: rgba(themed($m-blue-grey-500),.5);
+  @include m-theme() {
+    background-color: rgba(themed($m-blue-grey-500), 0.5);
   }
 }
 
-.mdl-switch__track fieldset[disabled] .mdl-switch,.mdl-switch.is-disabled .mdl-switch__track {
-  @include m-theme(){
-    background-color: rgba(themed($m-black),.12);
+.mdl-switch__track fieldset[disabled] .mdl-switch,
+.mdl-switch.is-disabled .mdl-switch__track {
+  @include m-theme() {
+    background-color: rgba(themed($m-black), 0.12);
   }
 }
 
 .mdl-switch__thumb {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-50);
-    box-shadow: 0 2px 2px 0 rgba(themed($m-black),.14),0 3px 1px -2px rgba(themed($m-black),.2),0 1px 5px 0 rgba(themed($m-black),.12);
+    box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.14),
+      0 3px 1px -2px rgba(themed($m-black), 0.2),
+      0 1px 5px 0 rgba(themed($m-black), 0.12);
   }
 }
 
 .mdl-switch.is-checked .mdl-switch__thumb {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
-    box-shadow: 0 3px 4px 0 rgba(themed($m-black),.14),0 3px 3px -2px rgba(themed($m-black),.2),0 1px 8px 0 rgba(themed($m-black),.12);
+    box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14),
+      0 3px 3px -2px rgba(themed($m-black), 0.2),
+      0 1px 8px 0 rgba(themed($m-black), 0.12);
   }
 }
 
-.mdl-switch__thumb fieldset[disabled] .mdl-switch,.mdl-switch.is-disabled .mdl-switch__thumb {
-  @include m-theme(){
+.mdl-switch__thumb fieldset[disabled] .mdl-switch,
+.mdl-switch.is-disabled .mdl-switch__thumb {
+  @include m-theme() {
     background-color: themed($m-grey-200);
   }
 }
 
 .mdl-switch.is-focused .mdl-switch__focus-helper {
-  @include m-theme(){
-    box-shadow: 0 0 0 20px rgba(themed($m-black),.1);
-    background-color: rgba(themed($m-black),.1)
+  @include m-theme() {
+    box-shadow: 0 0 0 20px rgba(themed($m-black), 0.1);
+    background-color: rgba(themed($m-black), 0.1);
   }
 }
 
 .mdl-switch.is-focused.is-checked .mdl-switch__focus-helper {
-  @include m-theme(){
-    box-shadow: 0 0 0 20px rgba(themed($m-blue-grey-500),.26);
-    background-color: rgba(themed($m-blue-grey-500),.26);
+  @include m-theme() {
+    box-shadow: 0 0 0 20px rgba(themed($m-blue-grey-500), 0.26);
+    background-color: rgba(themed($m-blue-grey-500), 0.26);
   }
 }
 
-.mdl-switch__label fieldset[disabled] .mdl-switch,.mdl-switch.is-disabled .mdl-switch__label {
-  @include m-theme(){
+.mdl-switch__label fieldset[disabled] .mdl-switch,
+.mdl-switch.is-disabled .mdl-switch__label {
+  @include m-theme() {
     color: themed($m-grey-200);
   }
 }
 
 .mdl-switch__ripple-container {
-  @include m-theme(){
-    -webkit-mask-image: -webkit-radial-gradient(circle,themed($m-white),themed($m-black));
+  @include m-theme() {
+    -webkit-mask-image: -webkit-radial-gradient(
+      circle,
+      themed($m-white),
+      themed($m-black)
+    );
   }
 }
 
 .mdl-switch__ripple-container .mdl-ripple {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-tabs__tab-bar {
-  @include m-theme(){
+  @include m-theme() {
     border-bottom: 1px solid themed($m-grey-50);
   }
 }
 
 .mdl-tabs__tab {
-  @include m-theme(){
-    color: rgba(themed($m-black),.54);
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.54);
   }
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
-  @include m-theme(){
-    color: rgba(themed($m-black),.87);
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.87);
   }
 }
 
 .mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-tabs__tab .mdl-tabs__ripple-container .mdl-ripple {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-textfield__input {
-  @include m-theme(){
-    border-bottom: 1px solid rgba(themed($m-black),.12);
+  @include m-theme() {
+    border-bottom: 1px solid rgba(themed($m-black), 0.12);
   }
 }
 
 .mdl-textfield.is-invalid .mdl-textfield__input {
-  @include m-theme(){
+  @include m-theme() {
     border-color: themed($m-red);
   }
 }
 
-fieldset[disabled] .mdl-textfield .mdl-textfield__input,.mdl-textfield.is-disabled .mdl-textfield__input {
-  @include m-theme(){
-    border-bottom: 1px dotted rgba(themed($m-black),.12);
-    color: rgba(themed($m-black),.26);
+fieldset[disabled] .mdl-textfield .mdl-textfield__input,
+.mdl-textfield.is-disabled .mdl-textfield__input {
+  @include m-theme() {
+    border-bottom: 1px dotted rgba(themed($m-black), 0.12);
+    color: rgba(themed($m-black), 0.26);
   }
 }
 
 .mdl-textfield__label {
-  @include m-theme(){
+  @include m-theme() {
     bottom: 0;
-    color: rgba(themed($m-black),.26);
+    color: rgba(themed($m-black), 0.26);
   }
 }
 
-fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabled.is-disabled .mdl-textfield__label {
-  @include m-theme(){
-    color: rgba(themed($m-black),.26);
+fieldset[disabled] .mdl-textfield .mdl-textfield__label,
+.mdl-textfield.is-disabled.is-disabled .mdl-textfield__label {
+  @include m-theme() {
+    color: rgba(themed($m-black), 0.26);
   }
 }
 
-.mdl-textfield--floating-label.is-focused .mdl-textfield__label,.mdl-textfield--floating-label.is-dirty .mdl-textfield__label,.mdl-textfield--floating-label.has-placeholder .mdl-textfield__label {
-  @include m-theme(){
+.mdl-textfield--floating-label.is-focused .mdl-textfield__label,
+.mdl-textfield--floating-label.is-dirty .mdl-textfield__label,
+.mdl-textfield--floating-label.has-placeholder .mdl-textfield__label {
+  @include m-theme() {
     color: themed($m-blue-grey-500);
   }
 }
 
-
 .mdl-textfield__label:after {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-grey-500);
   }
 }
 
 .mdl-textfield--floating-label.is-invalid .mdl-textfield__label,
 .mdl-textfield.is-invalid .mdl-textfield__label:after,
-.mdl-textfield__error  {
-  @include m-theme(){
+.mdl-textfield__error {
+  @include m-theme() {
     background-color: themed($m-red);
   }
 }
 
 .mdl-tooltip {
-  @include m-theme(){
-    background-color: rgba(themed($m-grey-600),.9);
+  @include m-theme() {
+    background-color: rgba(themed($m-grey-600), 0.9);
     color: themed($m-white);
   }
 }
 
 .mdl-shadow--2dp {
-  @include m-theme(){
-    box-shadow: 0 2px 2px 0 rgba(themed($m-black), .07), 0 3px 1px -2px rgba(themed($m-black), .1), 0 1px 5px 0 rgba(themed($m-black), .07);
+  @include m-theme() {
+    box-shadow: 0 2px 2px 0 rgba(themed($m-black), 0.07),
+      0 3px 1px -2px rgba(themed($m-black), 0.1),
+      0 1px 5px 0 rgba(themed($m-black), 0.07);
   }
 }
 
 .mdl-shadow--3dp {
-  @include m-theme(){
-    box-shadow: 0 3px 4px 0 rgba(themed($m-black),.14),0 3px 3px -2px rgba(themed($m-black),.2),0 1px 8px 0 rgba(themed($m-black),.12);
+  @include m-theme() {
+    box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14),
+      0 3px 3px -2px rgba(themed($m-black), 0.2),
+      0 1px 8px 0 rgba(themed($m-black), 0.12);
   }
 }
 
 .mdl-shadow--4dp {
-  @include m-theme(){
-    box-shadow: 0 4px 4px 0 rgba(themed($m-black), .07), 0 3px 1px -2px rgba(themed($m-black), .1), 0 1px 5px 0 rgba(themed($m-black), .07);
+  @include m-theme() {
+    box-shadow: 0 4px 4px 0 rgba(themed($m-black), 0.07),
+      0 3px 1px -2px rgba(themed($m-black), 0.1),
+      0 1px 5px 0 rgba(themed($m-black), 0.07);
   }
 }
 
 .mdl-shadow--6dp {
-  @include m-theme(){
-    box-shadow: 0 6px 10px 0 rgba(themed($m-black),.14),0 1px 18px 0 rgba(themed($m-black),.12),0 3px 5px -1px rgba(themed($m-black),.2);
+  @include m-theme() {
+    box-shadow: 0 6px 10px 0 rgba(themed($m-black), 0.14),
+      0 1px 18px 0 rgba(themed($m-black), 0.12),
+      0 3px 5px -1px rgba(themed($m-black), 0.2);
   }
 }
 
 .mdl-shadow--8dp {
-  @include m-theme(){
-    box-shadow: 0 8px 10px 1px rgba(themed($m-black),.14),0 3px 14px 2px rgba(themed($m-black),.12),0 5px 5px -3px rgba(themed($m-black),.2);
+  @include m-theme() {
+    box-shadow: 0 8px 10px 1px rgba(themed($m-black), 0.14),
+      0 3px 14px 2px rgba(themed($m-black), 0.12),
+      0 5px 5px -3px rgba(themed($m-black), 0.2);
   }
 }
 
 .mdl-shadow--16dp {
-  @include m-theme(){
-    box-shadow: 0 16px 24px 2px rgba(themed($m-black),.14),0 6px 30px 5px rgba(themed($m-black),.12),0 8px 10px -5px rgba(themed($m-black),.2);
+  @include m-theme() {
+    box-shadow: 0 16px 24px 2px rgba(themed($m-black), 0.14),
+      0 6px 30px 5px rgba(themed($m-black), 0.12),
+      0 8px 10px -5px rgba(themed($m-black), 0.2);
   }
 }
 
 .mdl-shadow--24dp {
-  @include m-theme(){
-    box-shadow: 0 9px 46px 8px rgba(themed($m-black),.14),0 11px 15px -7px rgba(themed($m-black),.12),0 24px 38px 3px rgba(0,0,0,.2);
+  @include m-theme() {
+    box-shadow: 0 9px 46px 8px rgba(themed($m-black), 0.14),
+      0 11px 15px -7px rgba(themed($m-black), 0.12),
+      0 24px 38px 3px rgba(0, 0, 0, 0.2);
   }
 }
 
-
-
-
 //////////////////////////////////////////////
 .mdl-color-text--white {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white) !important;
   }
 }
 .mdl-color--white {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white) !important;
   }
 }
@@ -1082,23 +1245,22 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color-text--red-100,
 .mdl-color-text--red-200,
 .mdl-color-text--red-300 {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-red-light) !important;
   }
 }
 .mdl-color-text--red,
 .mdl-color-text--red-400,
 .mdl-color-text--red-500,
-.mdl-color-text--red-600,
- {
-  @include m-theme(){
+.mdl-color-text--red-600 {
+  @include m-theme() {
     color: themed($m-red) !important;
   }
 }
 .mdl-color-text--red-700,
 .mdl-color-text--red-800,
 .mdl-color-text--red-900 {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-red-dark) !important;
   }
 }
@@ -1107,23 +1269,22 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color--red-100,
 .mdl-color--red-200,
 .mdl-color--red-300 {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-red-light) !important;
   }
 }
 .mdl-color--red,
 .mdl-color--red-400,
 .mdl-color--red-500,
-.mdl-color--red-600,
- {
-  @include m-theme(){
+.mdl-color--red-600 {
+  @include m-theme() {
     background-color: themed($m-red) !important;
   }
 }
 .mdl-color--red-700,
 .mdl-color--red-800,
 .mdl-color--red-900 {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-red-dark) !important;
   }
 }
@@ -1132,23 +1293,22 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color-text--amber-100,
 .mdl-color-text--amber-200,
 .mdl-color-text--amber-300 {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-amber-light) !important;
   }
 }
 .mdl-color-text--amber,
 .mdl-color-text--amber-400,
 .mdl-color-text--amber-500,
-.mdl-color-text--amber-600,
- {
-  @include m-theme(){
+.mdl-color-text--amber-600 {
+  @include m-theme() {
     color: themed($m-amber) !important;
   }
 }
 .mdl-color-text--amber-700,
 .mdl-color-text--amber-800,
 .mdl-color-text--amber-900 {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-amber-dark) !important;
   }
 }
@@ -1157,23 +1317,22 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color--amber-100,
 .mdl-color--amber-200,
 .mdl-color--amber-300 {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-amber-light) !important;
   }
 }
 .mdl-color--amber,
 .mdl-color--amber-400,
 .mdl-color--amber-500,
-.mdl-color--amber-600,
- {
-  @include m-theme(){
+.mdl-color--amber-600 {
+  @include m-theme() {
     background-color: themed($m-amber) !important;
   }
 }
 .mdl-color--amber-700,
 .mdl-color--amber-800,
 .mdl-color--amber-900 {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-amber-dark) !important;
   }
 }
@@ -1182,23 +1341,22 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color-text--green-100,
 .mdl-color-text--green-200,
 .mdl-color-text--green-300 {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-green-light) !important;
   }
 }
 .mdl-color-text--green,
 .mdl-color-text--green-400,
 .mdl-color-text--green-500,
-.mdl-color-text--green-600,
- {
-  @include m-theme(){
+.mdl-color-text--green-600 {
+  @include m-theme() {
     color: themed($m-green) !important;
   }
 }
 .mdl-color-text--green-700,
 .mdl-color-text--green-800,
 .mdl-color-text--green-900 {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-green-dark) !important;
   }
 }
@@ -1207,23 +1365,22 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color--green-100,
 .mdl-color--green-200,
 .mdl-color--green-300 {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-green-light) !important;
   }
 }
 .mdl-color--green,
 .mdl-color--green-400,
 .mdl-color--green-500,
-.mdl-color--green-600,
- {
-  @include m-theme(){
+.mdl-color--green-600 {
+  @include m-theme() {
     background-color: themed($m-green) !important;
   }
 }
 .mdl-color--green-700,
 .mdl-color--green-800,
 .mdl-color--green-900 {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-green-dark) !important;
   }
 }
@@ -1232,23 +1389,22 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color-text--blue-100,
 .mdl-color-text--blue-200,
 .mdl-color-text--blue-300 {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-blue-light) !important;
   }
 }
 .mdl-color-text--blue,
 .mdl-color-text--blue-400,
 .mdl-color-text--blue-500,
-.mdl-color-text--blue-600,
- {
-  @include m-theme(){
+.mdl-color-text--blue-600 {
+  @include m-theme() {
     color: themed($m-blue) !important;
   }
 }
 .mdl-color-text--blue-700,
 .mdl-color-text--blue-800,
 .mdl-color-text--blue-900 {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-blue-dark) !important;
   }
 }
@@ -1257,249 +1413,209 @@ fieldset[disabled] .mdl-textfield .mdl-textfield__label,.mdl-textfield.is-disabl
 .mdl-color--blue-100,
 .mdl-color--blue-200,
 .mdl-color--blue-300 {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-light) !important;
   }
 }
 .mdl-color--blue,
 .mdl-color--blue-400,
 .mdl-color--blue-500,
-.mdl-color--blue-600,
- {
-  @include m-theme(){
+.mdl-color--blue-600 {
+  @include m-theme() {
     background-color: themed($m-blue) !important;
   }
 }
 .mdl-color--blue-700,
 .mdl-color--blue-800,
 .mdl-color--blue-900 {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-blue-dark) !important;
   }
 }
 //////////////////////////////////////////////
 
-
 .mdl-color-text--grey-50,
 .mdl-color-text--grey-100,
 .mdl-color-text--grey-200,
-.mdl-color-text--grey-300
- {
-  @include m-theme(){
+.mdl-color-text--grey-300 {
+  @include m-theme() {
     color: themed($m-grey-50) !important;
   }
 }
 
-.mdl-color-text--grey-400
- {
-  @include m-theme(){
+.mdl-color-text--grey-400 {
+  @include m-theme() {
     color: themed($m-grey-200) !important;
   }
 }
 .mdl-color-text--grey,
-.mdl-color-text--grey-500
- {
-  @include m-theme(){
+.mdl-color-text--grey-500 {
+  @include m-theme() {
     color: themed($m-grey-300) !important;
   }
 }
-.mdl-color-text--grey-600
- {
-  @include m-theme(){
+.mdl-color-text--grey-600 {
+  @include m-theme() {
     color: themed($m-grey-500) !important;
   }
 }
-.mdl-color-text--grey-700
- {
-  @include m-theme(){
+.mdl-color-text--grey-700 {
+  @include m-theme() {
     color: themed($m-grey-600) !important;
   }
 }
-.mdl-color-text--grey-800
- {
-  @include m-theme(){
+.mdl-color-text--grey-800 {
+  @include m-theme() {
     color: themed($m-grey-800) !important;
   }
 }
-.mdl-color-text--grey-900
- {
-  @include m-theme(){
+.mdl-color-text--grey-900 {
+  @include m-theme() {
     color: themed($m-grey-950) !important;
   }
 }
 
-
 .mdl-color--grey-50,
 .mdl-color--grey-100,
 .mdl-color--grey-200,
-.mdl-color--grey-300
- {
-  @include m-theme(){
+.mdl-color--grey-300 {
+  @include m-theme() {
     background-color: themed($m-grey-50) !important;
   }
 }
 
-.mdl-color--grey-400
- {
-  @include m-theme(){
+.mdl-color--grey-400 {
+  @include m-theme() {
     background-color: themed($m-grey-200) !important;
   }
 }
 .mdl-color--grey,
-.mdl-color--grey-500
- {
-  @include m-theme(){
+.mdl-color--grey-500 {
+  @include m-theme() {
     background-color: themed($m-grey-300) !important;
   }
 }
-.mdl-color--grey-600
- {
-  @include m-theme(){
+.mdl-color--grey-600 {
+  @include m-theme() {
     background-color: themed($m-grey-500) !important;
   }
 }
-.mdl-color--grey-700
- {
-  @include m-theme(){
+.mdl-color--grey-700 {
+  @include m-theme() {
     background-color: themed($m-grey-600) !important;
   }
 }
-.mdl-color--grey-800
- {
-  @include m-theme(){
+.mdl-color--grey-800 {
+  @include m-theme() {
     background-color: themed($m-grey-800) !important;
   }
 }
-.mdl-color--grey-900
- {
-  @include m-theme(){
+.mdl-color--grey-900 {
+  @include m-theme() {
     background-color: themed($m-grey-950) !important;
   }
 }
 
-
-
-.mdl-color-text--blue-grey-50
- {
-  @include m-theme(){
+.mdl-color-text--blue-grey-50 {
+  @include m-theme() {
     color: themed($m-blue-grey-50) !important;
   }
 }
-.mdl-color-text--blue-grey-100
- {
-  @include m-theme(){
+.mdl-color-text--blue-grey-100 {
+  @include m-theme() {
     color: themed($m-blue-grey-100) !important;
   }
 }
-.mdl-color-text--blue-grey-200
- {
-  @include m-theme(){
+.mdl-color-text--blue-grey-200 {
+  @include m-theme() {
     color: themed($m-blue-grey-200) !important;
   }
 }
-.mdl-color-text--blue-grey-300
- {
-  @include m-theme(){
+.mdl-color-text--blue-grey-300 {
+  @include m-theme() {
     color: themed($m-blue-grey-300) !important;
   }
 }
-.mdl-color-text--blue-grey-400
- {
-  @include m-theme(){
+.mdl-color-text--blue-grey-400 {
+  @include m-theme() {
     color: themed($m-blue-grey-400) !important;
   }
 }
 .mdl-color-text--blue-grey,
-.mdl-color-text--blue-grey-500
- {
-  @include m-theme(){
+.mdl-color-text--blue-grey-500 {
+  @include m-theme() {
     color: themed($m-blue-grey-500) !important;
   }
 }
-.mdl-color-text--blue-grey-600
- {
-  @include m-theme(){
+.mdl-color-text--blue-grey-600 {
+  @include m-theme() {
     color: themed($m-blue-grey-600) !important;
   }
 }
-.mdl-color-text--blue-grey-700
- {
-  @include m-theme(){
+.mdl-color-text--blue-grey-700 {
+  @include m-theme() {
     color: themed($m-blue-grey-700) !important;
   }
 }
-.mdl-color-text--blue-grey-800
- {
-  @include m-theme(){
+.mdl-color-text--blue-grey-800 {
+  @include m-theme() {
     color: themed($m-blue-grey-800) !important;
   }
 }
-.mdl-color-text--blue-grey-900
- {
-  @include m-theme(){
+.mdl-color-text--blue-grey-900 {
+  @include m-theme() {
     color: themed($m-blue-grey-900) !important;
   }
 }
 
-
-.mdl-color--blue-grey-50
- {
-  @include m-theme(){
+.mdl-color--blue-grey-50 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-50) !important;
   }
 }
-.mdl-color--blue-grey-100
- {
-  @include m-theme(){
+.mdl-color--blue-grey-100 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-100) !important;
   }
 }
-.mdl-color--blue-grey-200
- {
-  @include m-theme(){
+.mdl-color--blue-grey-200 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-200) !important;
   }
 }
-.mdl-color--blue-grey-300
- {
-  @include m-theme(){
+.mdl-color--blue-grey-300 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-300) !important;
   }
 }
-.mdl-color--blue-grey-400
- {
-  @include m-theme(){
+.mdl-color--blue-grey-400 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-400) !important;
   }
 }
 .mdl-color--blue-grey,
-.mdl-color--blue-grey-500
- {
-  @include m-theme(){
+.mdl-color--blue-grey-500 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-500) !important;
   }
 }
-.mdl-color--blue-grey-600
- {
-  @include m-theme(){
+.mdl-color--blue-grey-600 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-600) !important;
   }
 }
-.mdl-color--blue-grey-700
- {
-  @include m-theme(){
+.mdl-color--blue-grey-700 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-700) !important;
   }
 }
-.mdl-color--blue-grey-800
- {
-  @include m-theme(){
+.mdl-color--blue-grey-800 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-800) !important;
   }
 }
-.mdl-color--blue-grey-900
- {
-  @include m-theme(){
+.mdl-color--blue-grey-900 {
+  @include m-theme() {
     background-color: themed($m-blue-grey-900) !important;
   }
 }

@@ -1,12 +1,12 @@
-export let recentServiceMock = new function () {
+export let recentServiceMock = new (function() {
   this.storage = {
     data: [],
-    get: (key) => {
+    get: key => {
       return this.storage.data[key];
     },
     set: (key, value) => {
       this.storage.data[key] = value;
-    }
+    },
   };
 
   // static reference
@@ -20,4 +20,4 @@ export let recentServiceMock = new function () {
   // private methods
   this.read = jasmine.createSpy('read').and.stub();
   this.write = jasmine.createSpy('write').and.stub();
-}
+})();

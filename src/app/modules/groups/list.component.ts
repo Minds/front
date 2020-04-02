@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 import { MindsGroupListResponse } from '../../interfaces/responses';
 import { ContextService } from '../../services/context.service';
@@ -13,11 +12,9 @@ import { OverlayModalService } from '../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-groups--list',
-  templateUrl: 'list.component.html'
+  templateUrl: 'list.component.html',
 })
-
 export class GroupsListComponent {
-
   minds;
 
   moreData: boolean = true;
@@ -34,17 +31,13 @@ export class GroupsListComponent {
     public client: Client,
     public route: ActivatedRoute,
     public router: Router,
-    public title: MindsTitle,
     private context: ContextService,
     public session: Session,
-    private overlayModal: OverlayModalService,
-  ) {
-  }
+    private overlayModal: OverlayModalService
+  ) {}
 
   ngOnInit() {
-    this.title.setTitle('Groups');
     this.context.set('group');
-    this.minds = window.Minds;
     this.detectWidth();
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -78,9 +71,7 @@ export class GroupsListComponent {
   }
 
   load(refresh: boolean = false) {
-
-    if (this.inProgress)
-      return;
+    if (this.inProgress) return;
 
     if (refresh) {
       this.offset = '';
@@ -96,8 +87,7 @@ export class GroupsListComponent {
           this.router.navigate(['/login']);
         }
         endpoint = `api/v2/entities/suggested/groups`;
-        if (this.all)
-          endpoint += '/all';
+        if (this.all) endpoint += '/all';
         key = 'entities';
         break;
       case 'suggested':
@@ -107,32 +97,29 @@ export class GroupsListComponent {
       default:
         endpoint = `api/v1/groups/${this.filter}`;
         key = 'groups';
-        if (this.all)
-          this.router.navigate(['/groups/top']);
+        if (this.all) this.router.navigate(['/groups/top']);
         break;
     }
 
     this.inProgress = true;
-    this.client.get(endpoint, {
-      limit: 12,
-      offset: this.offset,
-      rating: this.rating
-    })
+    this.client
+      .get(endpoint, {
+        limit: 12,
+        offset: this.offset,
+        rating: this.rating,
+      })
       .then((response: MindsGroupListResponse) => {
-
         if (!response[key] || response[key].length === 0) {
           this.moreData = false;
           this.inProgress = false;
-          if (this.filter == 'top')
-            this.openHashtagsSelector();
+          if (this.filter == 'top') this.openHashtagsSelector();
           return false;
         }
 
         if (refresh) {
           this.entities = response[key];
         } else {
-          if (this.offset)
-            response[key].shift();
+          if (this.offset) response[key].shift();
 
           this.entities.push(...response[key]);
         }
@@ -143,7 +130,7 @@ export class GroupsListComponent {
         }
         this.inProgress = false;
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
       });
   }
@@ -168,14 +155,20 @@ export class GroupsListComponent {
   }
 
   openHashtagsSelector() {
-    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
-      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
-      onSelected: () => {
-        this.load(true); //refresh list
-      },
-    }).present();
+    this.overlayModal
+      .create(
+        HashtagsSelectorModalComponent,
+        {},
+        {
+          class:
+            'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+          onSelected: () => {
+            this.load(true); //refresh list
+          },
+        }
+      )
+      .present();
   }
-
 }
 
 export { GroupsProfile } from './profile/profile';

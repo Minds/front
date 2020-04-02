@@ -1,7 +1,12 @@
 ///<reference path="../../../../../node_modules/@types/jasmine/index.d.ts"/>
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { Component, Input, DebugElement } from '@angular/core';
-
 
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -28,68 +33,60 @@ import { InfiniteScrollMock } from '../../../../tests/infinite-scroll-mock.spec'
 import { MockComponent } from '../../../utils/mock';
 
 describe('ChannelSupporters', () => {
-
   let comp: ChannelSupporters;
   let fixture: ComponentFixture<ChannelSupporters>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
-        MaterialMock, 
-        MaterialSwitchMock, 
-        AbbrPipe, 
+        MaterialMock,
+        MaterialSwitchMock,
+        AbbrPipe,
         ChannelSupporters,
         MockComponent({
           selector: 'minds-card',
-          inputs: [ 'object'],
+          inputs: ['object'],
         }),
         MockComponent({
           selector: 'minds-card-user',
-          inputs: [ 'object'],
+          inputs: ['object'],
         }),
         MockComponent({
           selector: 'infinite-scroll',
-          inputs: [ 'inProgress', 'moreData', 'inProgress' ],
-        }), 
-      ], 
-      imports: [
-        FormsModule,
-        RouterTestingModule,
-        NgCommonModule
+          inputs: ['inProgress', 'moreData', 'inProgress'],
+        }),
       ],
+      imports: [FormsModule, RouterTestingModule, NgCommonModule],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: AttachmentService, useValue: attachmentServiceMock },
         { provide: Session, useValue: InfiniteScrollMock },
-      ]
-    })
-      .compileComponents();  // compile template and css
+      ],
+    }).compileComponents(); // compile template and css
   }));
 
-  beforeEach((done) => {
-
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(ChannelSupporters);
     clientMock.response = {};
     comp = fixture.componentInstance;
-    comp.channel = { 
-      guid: 'guid', 
-      name: 'name', 
-      username: 'username', 
-      icontime: 11111, 
-      subscribers_count:182, 
-      impressions:18200, 
-      pinned_posts: ['a', 'b', 'c']
+    comp.channel = {
+      guid: 'guid',
+      name: 'name',
+      username: 'username',
+      icontime: 11111,
+      subscribers_count: 182,
+      impressions: 18200,
+      pinned_posts: ['a', 'b', 'c'],
     };
 
     clientMock.response[`api/v1/payments/subscribers/guid/exclusive`] = {
-      'status': 'success',
-      'subscribers' : [{},{},{}]
+      status: 'success',
+      subscribers: [{}, {}, {}],
     };
-    
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -110,7 +107,8 @@ describe('ChannelSupporters', () => {
     fixture.detectChanges();
     tick();
     expect(comp.users.length).toBe(3);
-    expect(clientMock.get.calls.mostRecent().args[0]).toEqual('api/v1/payments/subscribers/guid/exclusive');
+    expect(clientMock.get.calls.mostRecent().args[0]).toEqual(
+      'api/v1/payments/subscribers/guid/exclusive'
+    );
   }));
-
 });

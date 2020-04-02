@@ -1,4 +1,10 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api/client';
 import { Tag } from '../types/tag';
@@ -8,12 +14,18 @@ import { TopbarHashtagsService } from '../service/topbar.service';
   selector: 'm-form-tags-input',
   outputs: ['change: tagsChange'],
   template: `
-    <div class="m-form-tags-input-tags-tag"
+    <div
+      class="m-form-tags-input-tags-tag"
       *ngFor="let tag of tags; let i = index"
-      (click)="toggleTag(tag)">
-      <span>#{{tag.value}}</span>
+      (click)="toggleTag(tag)"
+    >
+      <span>#{{ tag.value }}</span>
       <div class="m-layout--spacer"></div>
-      <i class="material-icons selected m-form-tags-input-tags--check" [class.selected]="tag.selected">check</i>
+      <i
+        class="material-icons selected m-form-tags-input-tags--check"
+        [class.selected]="tag.selected"
+        >check</i
+      >
     </div>
 
     <div class="m-form-tags-input-tags-tag custom">
@@ -25,13 +37,11 @@ import { TopbarHashtagsService } from '../service/topbar.service';
         (keydown)="keyUp($event)"
         (blur)="blur($event)"
         placeholder="Enter a hashtag..."
-      >
+      />
     </div>
-  `
+  `,
 })
-
 export class TagsInput implements OnInit {
-
   error: string = '';
   inProgress: boolean = false;
 
@@ -45,9 +55,8 @@ export class TagsInput implements OnInit {
     public client: Client,
     public session: Session,
     private element: ElementRef,
-    private service: TopbarHashtagsService,
-  ) {
-  }
+    private service: TopbarHashtagsService
+  ) {}
 
   async ngOnInit() {
     await this.getTopHashtags();
@@ -62,7 +71,7 @@ export class TagsInput implements OnInit {
 
   merge(tags) {
     for (let tag of tags) {
-      let i = this.tags.findIndex((item) => item.value === tag.value);
+      let i = this.tags.findIndex(item => item.value === tag.value);
       if (i > -1) {
         tag.selected = true;
         this.tags[i] = tag;
@@ -73,7 +82,6 @@ export class TagsInput implements OnInit {
   }
 
   keyUp(e) {
-
     switch (e.keyCode) {
       case 32: //space
       case 9: //tab
@@ -126,16 +134,17 @@ export class TagsInput implements OnInit {
   }
 
   focus() {
-    const input = this.element.nativeElement.querySelector('input[name=input-tags]');
-    if (input)
-      input.focus();
+    const input = this.element.nativeElement.querySelector(
+      'input[name=input-tags]'
+    );
+    if (input) input.focus();
   }
 
   push() {
     let input = this.input;
 
     // sanitize tag
-    input = this.service.cleanupHashtag(input)
+    input = this.service.cleanupHashtag(input);
 
     if (!input) {
       return;
@@ -152,7 +161,9 @@ export class TagsInput implements OnInit {
   async getTopHashtags() {
     try {
       let tags = [];
-      const response: any = await this.client.get('api/v2/hashtags/suggested/user');
+      const response: any = await this.client.get(
+        'api/v2/hashtags/suggested/user'
+      );
 
       for (let tag of response.tags) {
         tags.push({ value: tag.value, selected: false });
@@ -163,5 +174,4 @@ export class TagsInput implements OnInit {
       console.error(e);
     }
   }
-
 }

@@ -9,9 +9,8 @@ import { Component, Input } from '@angular/core';
         <m-suggestions__sidebar></m-suggestions__sidebar>
       </div>
     </div>
-  `
+  `,
 })
-
 export class SubscriptionsOnboardingComponent {
   static items = ['suggested_channels'];
   static canSkip: boolean = true;

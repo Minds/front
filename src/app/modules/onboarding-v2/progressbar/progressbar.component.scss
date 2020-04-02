@@ -1,0 +1,95 @@
+@import 'defaults';
+@import 'themes';
+
+m-onboarding__progressbar {
+  .m-onboarding__progressbar {
+    display: flex;
+    position: relative;
+    z-index: 1;
+
+    @media screen and(max-width: 740px) {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &.m-onboarding__progressbar--desktop::after {
+      display: block;
+      content: '';
+      position: absolute;
+      bottom: 8px;
+      width: calc(100% + 140px);
+      margin-left: -70px;
+      height: 1px;
+      background-color: #dbdbdb;
+      z-index: 1;
+
+      @media screen and (min-width: 741px) and (max-width: $m-grid-max-tablet) {
+        width: calc(100% + 40px);
+        margin-left: -20px;
+      }
+    }
+
+    h2.m-onboardingProgressbar__stepName {
+      font-size: 28px;
+      line-height: 37px;
+      color: #4a4a4a;
+      text-align: center;
+      margin-bottom: 7px;
+      padding: 0;
+    }
+
+    .m-onboardingProgressbar_item--mobile {
+      display: block;
+      text-align: center;
+      font-size: 16px;
+      line-height: 21px;
+    }
+
+    .m-onboardingProgressbar__item {
+      &:first-child {
+        margin-left: 0;
+      }
+
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 50px;
+      max-width: 122px;
+      margin: 0 20px;
+      text-transform: uppercase;
+
+      .m-onboardingProgressbarItem__number {
+        font-size: 13px;
+        line-height: 18px;
+      }
+
+      span.m-onboardingProgressbar__stepName {
+        font-size: 13px;
+        letter-spacing: 1.5px;
+      }
+
+      .m-onboardingProgressbarItem__selector {
+        width: 18px;
+        height: 18px;
+        margin-top: 10px;
+
+        border-radius: 100%;
+        background-color: #d5d5d5;
+        z-index: 2;
+      }
+
+      &.m-onboardingProgressbar__item--selected {
+        span:nth-child(2) {
+          color: #4a4a4a;
+        }
+
+        .m-onboardingProgressbarItem__selector {
+          @include m-theme() {
+            background-color: themed($m-aqua);
+          }
+        }
+      }
+    }
+  }
+}

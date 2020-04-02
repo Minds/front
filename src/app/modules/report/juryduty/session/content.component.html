@@ -1,53 +1,53 @@
 <div class="m-juryDutySession__content m-border">
+  <ng-container *ngIf="!decided; else whenDecided">
+    <h3>
+      <b *ngIf="report.is_appeal">Action taken: </b>
+      <span>Should be</span>
+      <b> {{ getAction(report) }} </b>
+      <span>for</span>
+      <b> {{ getReasonString(report) }} </b>
+    </h3>
 
-    <ng-container *ngIf="!decided; else whenDecided">
-        <h3>
-            <b *ngIf="report.is_appeal">Action taken: </b>
-            <span>Should be</span>
-            <b> {{ getAction(report) }} </b>
-            <span>for</span>
-            <b> {{ getReasonString(report) }} </b>
-        </h3>
+    <div
+      class="m-juryDutySessionContent__appealNote"
+      *ngIf="report.appeal_note"
+    >
+      <b>Appeal note:</b>
+      <p>{{ report.appeal_note }}</p>
+    </div>
 
-        <div class="m-juryDutySessionContent__appealNote" *ngIf="report.appeal_note">
-            <b>Appeal note:</b>
-            <p>{{report.appeal_note}}</p>
-        </div>
-
-        <ng-container *ngIf="report.entity; else noEntity">
-            <minds-card *ngIf="report.entity"
-                class=""
-                [object]="report.entity"
-                [flags]="{hideToolbar: true}"
-                hostClass="mdl-card m-border"
-            ></minds-card>
-        </ng-container>
-        <ng-template #noEntity>
-          <p>The post could not be loaded. Please overturn the report</p>
-        </ng-template>
-
-        <div class="m-juryDutySessionContent__options">
-            <button
-                class="m-btn m-btn--slim"
-                (click)="uphold()"
-            >
-              <ng-container *ngIf="report.is_appeal; else upholdLabel">Reject Appeal</ng-container>
-              <ng-template #upholdLabel>Uphold Report</ng-template>
-            </button>
-            <button
-                class="m-btn m-btn--slim"
-                (click)="overturn()"
-            >
-              <ng-container *ngIf="report.is_appeal; else overturnLabel">Accept Appeal</ng-container>
-              <ng-template #overturnLabel>Overturn Report</ng-template>
-            </button>
-        </div>
+    <ng-container *ngIf="report.entity; else noEntity">
+      <minds-card
+        *ngIf="report.entity"
+        class=""
+        [object]="report.entity"
+        [flags]="{ hideToolbar: true }"
+        hostClass="mdl-card m-border"
+      ></minds-card>
     </ng-container>
-
-    <ng-template #whenDecided>
-        <p>
-            Thanks for casting your vote.
-        </p>
+    <ng-template #noEntity>
+      <p>The post could not be loaded. Please overturn the report</p>
     </ng-template>
 
+    <div class="m-juryDutySessionContent__options">
+      <button class="m-btn m-btn--slim" (click)="uphold()">
+        <ng-container *ngIf="report.is_appeal; else upholdLabel"
+          >Reject Appeal</ng-container
+        >
+        <ng-template #upholdLabel>Uphold Report</ng-template>
+      </button>
+      <button class="m-btn m-btn--slim" (click)="overturn()">
+        <ng-container *ngIf="report.is_appeal; else overturnLabel"
+          >Accept Appeal</ng-container
+        >
+        <ng-template #overturnLabel>Overturn Report</ng-template>
+      </button>
+    </div>
+  </ng-container>
+
+  <ng-template #whenDecided>
+    <p>
+      Thanks for casting your vote.
+    </p>
+  </ng-template>
 </div>

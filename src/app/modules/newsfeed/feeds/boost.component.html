@@ -1,10 +1,48 @@
 <div class="minds-list">
-  <m-newsfeed--boost-rotator interval="12" *ngIf="showBoostRotator"></m-newsfeed--boost-rotator>
-  <minds-activity *ngFor="let activity of newsfeed; let i = index" [object]="activity" [boostToggle]="activity.boostToggle" [boost]="boostFeed" [showBoostMenuOptions]="boostFeed" (delete)="delete(activity)" [slot]="i + 1" class="mdl-card m-border item"></minds-activity>
+  <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+    <m-composer></m-composer>
+  </ng-container>
+  <ng-template #v1NewsfeedPoster>
+    <minds-newsfeed-poster></minds-newsfeed-poster>
+  </ng-template>
+
+  <div class="m-feeds-sorted__query">
+    <span>Showing Boosts</span>
+  </div>
+
+  <ng-container
+    *ngFor="let activity$ of feedsService.feed | async; let i = index"
+  >
+    <ng-container *mIfFeature="'navigation'; else legacyActivity">
+      <m-activity
+        *ngIf="activity$ | async as activity"
+        [entity]="activity"
+        [displayOptions]="{
+          showOnlyCommentsInput: true
+        }"
+        [allowAutoplayOnScroll]="true"
+      ></m-activity>
+    </ng-container>
+    <template #legacyActivity>
+      <minds-activity
+        *ngIf="activity$ | async as activity"
+        [object]="activity"
+        [boostToggle]="activity.boostToggle"
+        [boost]="boostFeed"
+        [showBoostMenuOptions]="boostFeed"
+        (deleted)="delete($event)"
+        [slot]="i + 1"
+        class="mdl-card m-border item"
+        [attr.data-minds-activity-guid]="activity.guid"
+      >
+      </minds-activity>
+    </template>
+  </ng-container>
   <infinite-scroll
-      distance="25%"
-      (load)="load()"
-      [moreData]="moreData"
-      [inProgress]="inProgress">
+    distance="25%"
+    (load)="loadNext()"
+    [moreData]="feedsService.hasMore | async"
+    [inProgress]="feedsService.inProgress | async"
+  >
   </infinite-scroll>
 </div>

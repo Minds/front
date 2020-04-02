@@ -1,6 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { DynamicHostDirective } from '../../common/directives/dynamic-host.directive';
 import { NotificationService } from './notification.service';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'm-notifications--toaster',
@@ -14,18 +22,19 @@ import { NotificationService } from './notification.service';
       ></minds-notification>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationsToasterComponent implements OnInit {
   notifications: Array<any> = [];
 
-  @ViewChild(DynamicHostDirective, { static: false }) host: DynamicHostDirective;
+  @ViewChild(DynamicHostDirective, { static: false })
+  host: DynamicHostDirective;
 
   constructor(
     public notification: NotificationService,
-    protected cd: ChangeDetectorRef
-  ) {
-  }
+    protected cd: ChangeDetectorRef,
+    private session: Session
+  ) {}
 
   ngOnInit() {
     this.listenForNotifications();
@@ -33,7 +42,7 @@ export class NotificationsToasterComponent implements OnInit {
 
   listenForNotifications() {
     this.notification.onReceive.subscribe((notification: any) => {
-      if(this.isToasterDisabled()) return;
+      if (this.isToasterDisabled()) return;
 
       this.notifications.unshift(notification);
       this.detectChanges();
@@ -66,6 +75,9 @@ export class NotificationsToasterComponent implements OnInit {
   }
 
   isToasterDisabled() {
-    return window.Minds.user && !window.Minds.user.toaster_notifications;
+    return (
+      this.session.getLoggedInUser() &&
+      !this.session.getLoggedInUser().toaster_notifications
+    );
   }
 }

@@ -1,83 +1,85 @@
-@import "defaults";
+@import 'defaults';
 
-
-minds-card-user{
+minds-card-user {
   min-height: 142px !important;
   .minds-tabs a {
     overflow: visible;
   }
-  .m-usercard-bio{
-    display:none;
+  .m-usercard-bio {
+    display: none;
   }
-  .avatar img{
-    border-radius:50%;
+  .avatar img {
+    border-radius: 50%;
     width: 100px;
     height: 100px;
   }
 }
 
-minds-card-user, .minds-banner-card{
-
-  display:block !important;
-  .m-card--user--banner{
+minds-card-user,
+.minds-banner-card {
+  display: block !important;
+  .m-card--user--banner {
     width: 100%;
     height: 84px;
     overflow: hidden;
-    position:relative;
+    position: relative;
 
     .m-card--user--banner--img {
       width: 100%;
       height: 100%;
       background: none no-repeat center center transparent;
       background-size: cover;
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-grey-800);
       }
     }
 
-    .minds-banner-overlay{
+    .minds-banner-overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      @include m-theme(){
-        background: linear-gradient(transparent, rgba(themed($m-black),0.4));
+      @include m-theme() {
+        background: linear-gradient(transparent, rgba(themed($m-black), 0.4));
       }
     }
   }
 
-  .minds-usercard-block{
+  .minds-usercard-block {
     margin-top: -72px;
-    padding-bottom:0;
-    position:relative;
-    display:flex;
+    padding-bottom: 0;
+    position: relative;
+    display: flex;
     text-decoration: none;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white-always);
     }
 
     img {
-      @include m-theme(){
+      @include m-theme() {
         border: 1px solid themed($m-grey-50);
       }
     }
 
-    .body{
-      flex:1;
-      margin: $minds-margin*2;
+    .body {
+      flex: 1;
+      margin: $minds-margin * 2;
       max-width: calc(100% - #{100px + ($minds-padding * 3)});
 
-      h3{
+      h3 {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         font-size: 16px;
         line-height: 18px;
-        padding: 0;
+        padding: 0 0 0 1px;
         margin: 0;
-        @include m-theme(){
-          text-shadow: -1px -1px 0 themed($m-black-always), 1px -1px 0 themed($m-black-always), -1px 1px 0 themed($m-black-always), 1px 1px 0 themed($m-black-always);
+        @include m-theme() {
+          text-shadow: -1px -1px 0 themed($m-black-always),
+            1px -1px 0 themed($m-black-always),
+            -1px 1px 0 themed($m-black-always),
+            1px 1px 0 themed($m-black-always);
         }
       }
       span {
@@ -85,38 +87,43 @@ minds-card-user, .minds-banner-card{
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        @include m-theme(){
-          text-shadow: -1px -1px 0 themed($m-black-always), 1px -1px 0 themed($m-black-always), -1px 1px 0 themed($m-black-always), 1px 1px 0 themed($m-black-always);
+        padding: 0 0 0 1px;
+        @include m-theme() {
+          text-shadow: -1px -1px 0 themed($m-black-always),
+            1px -1px 0 themed($m-black-always),
+            -1px 1px 0 themed($m-black-always),
+            1px 1px 0 themed($m-black-always);
         }
       }
-      button{
-        margin-top:$minds-margin;
-        width:100%;
+      button {
+        margin-top: $minds-margin;
+        width: 100%;
       }
     }
   }
 
-  minds-button-subscribe, minds-button-boost{
+  minds-button-subscribe,
+  minds-button-boost {
     position: absolute;
     margin: -38px 0 0 130px;
     //z-index:999;
   }
 
-  minds-button-feature{
+  minds-button-feature {
     position: absolute;
     top: 8px;
     right: 8px;
     button {
-      padding:0;
+      padding: 0;
     }
   }
 
-  .minds-tabs{
+  .minds-tabs {
     flex: 1;
     align-items: flex-start;
     -webkit-align-items: -webkit-flex-start;
     justify-content: flex-start;
-    border:0;
+    border: 0;
 
     a {
       padding: 0 $minds-padding;
@@ -126,13 +133,12 @@ minds-card-user, .minds-banner-card{
       span {
         width: 100%;
         display: block;
-        font-size:11px;
+        font-size: 11px;
         height: 11px;
         vertical-align: middle;
         line-height: 36px;
       }
     }
-
   }
 
   .minds-usercard-buttons {
@@ -150,7 +156,8 @@ minds-card-user, .minds-banner-card{
   }
 }
 
-minds-card-image, minds-card-video {
+minds-card-image,
+minds-card-video {
   position: relative;
   overflow: hidden;
 
@@ -159,14 +166,14 @@ minds-card-image, minds-card-video {
   }
 
   .minds-video-thumbnail {
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black-always), 0.9);
     }
   }
 }
 
-.mdl-card{
-  .m-owner-block{
+.mdl-card {
+  .m-owner-block {
     padding: 16px;
     display: flex;
     position: absolute;
@@ -174,10 +181,10 @@ minds-card-image, minds-card-video {
     width: 100%;
     left: 0;
     box-sizing: border-box;
-    .body{
+    .body {
       margin-top: 0;
       max-width: 95%;
-      a{
+      a {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -209,7 +216,7 @@ minds-card-image, minds-card-video {
           padding-right: 8px;
         }
 
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-400);
         }
 
@@ -221,16 +228,16 @@ minds-card-image, minds-card-video {
   }
 }
 
-minds-card-album{
-  min-height:260px !important;
+minds-card-album {
+  min-height: 260px !important;
 
   .minds-media-albums-card {
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-900);
     }
   }
 
-  .minds-album-tiles{
+  .minds-album-tiles {
     margin: -16px;
     height: 200px;
     overflow: hidden;
@@ -240,95 +247,98 @@ minds-card-album{
     align-items: stretch;
     -webkit-align-items: stretch;
 
-    > a{
+    > a {
       flex: auto;
       width: 30%;
 
-    img{
-      max-height: 100%;
-      max-width: 100%;
+      img {
+        max-height: 100%;
+        max-width: 100%;
       }
     }
   }
 
-  .minds-album-tiles.tiles-1 > a{
-      width:100%;
+  .minds-album-tiles.tiles-1 > a {
+    width: 100%;
   }
-  .minds-album-tiles.tiles-2 > a{
-    width:50%;
-    img{
-      max-height:150%;
-      max-width:150%;
+  .minds-album-tiles.tiles-2 > a {
+    width: 50%;
+    img {
+      max-height: 150%;
+      max-width: 150%;
     }
   }
-  .minds-album-tiles.tiles-3 >a{
-    width:33%;
+  .minds-album-tiles.tiles-3 > a {
+    width: 33%;
   }
-
 }
 
-minds-activity.mdl-card, minds-activity, minds-activity-preview{
-  width:auto;
-  min-height:0;
-  margin-bottom:16px;
-  border-radius:6px;
-  overflow:visible;
+minds-activity.mdl-card,
+minds-activity,
+minds-activity-preview {
+  width: auto;
+  min-height: 0;
+  margin-bottom: 16px;
+  border-radius: 6px;
+  overflow: visible;
 
-  .mdl-card__supporting-text{
-    width:100%;
+  .mdl-card__supporting-text {
+    width: 100%;
     box-sizing: border-box;
     font-family: 'Roboto', Helvetica, sans-serif;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
-    @include m-theme(){
-      color: rgba(themed($m-black),0.8);
+    @include m-theme() {
+      color: rgba(themed($m-black), 0.8);
     }
 
-    a{
+    a {
       text-decoration: none;
     }
   }
-  .mdl-card__supporting-text.message{
+  .mdl-card__supporting-text.message {
     white-space: pre-line;
     word-wrap: break-word;
     padding-top: 0;
     word-break: break-word;
   }
 
-  textarea.mdl-card__supporting-text.message{
+  textarea.mdl-card__supporting-text.message {
     white-space: pre-wrap;
   }
 
-  .m-owner-block{
+  .m-owner-block {
     position: relative;
   }
 
-  .m-owner-block--remind{
+  .m-owner-block--remind {
     overflow: visible;
-    
-    i{
+
+    i {
       font-size: 18px;
       margin-right: 12px;
     }
-    .avatar img{
-      max-height:24px;
+    .avatar img {
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
     }
-    .body{
-      margin-left:12px;
+    .body {
+      margin-left: 12px;
       a {
-        font-size:12px;
-        letter-spacing:1px;
+        font-size: 12px;
+        letter-spacing: 1px;
       }
     }
   }
 
-  .m-activity--message-remind{
-    padding-top:0;
+  .m-activity--message-remind {
+    padding-top: 0;
     padding-bottom: 8px;
   }
 
-  .m-translate-button i{
-    font-size:18px;
+  .m-translate-button i {
+    font-size: 18px;
   }
 
   .m-edited-text {
@@ -353,27 +363,27 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     }
   }
 
-  minds-comments{
-    margin-top:0;
+  minds-comments {
+    margin-top: 0;
 
     .m-translation-label {
       font-size: 1em;
     }
     .m-comment-carrot.m-comment-carrot-collapsed {
-        display:none;
+      display: none;
 
-        @media screen and (max-width: $max-mobile) {
-          display: inline-block;
-        }
-    }
-    .mdl-card__menu{
-      @include m-theme(){
-        background-color: themed($m-white);
+      @media screen and (max-width: $max-mobile) {
+        display: inline-block;
       }
     }
-    minds-card-comment:hover{
-      .m-comment-carrot{
-          display:inline-block;
+    .mdl-card__menu {
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+      }
+    }
+    minds-card-comment:hover {
+      .m-comment-carrot {
+        display: inline-block;
       }
     }
     .minds-block .minds-body a {
@@ -391,11 +401,9 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
       //  text-transform: uppercase;
       //}
     }
-
   }
 
-  .minds-more{
-
+  .minds-more {
     i {
       font-size: 30px;
       transform: translate(-16px, -12px);
@@ -406,43 +414,42 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   /**
    * Rich embeds
    */
-  .m-rich-embed{
-
-    a{
-      width:100%;
+  .m-rich-embed {
+    a {
+      width: 100%;
     }
     img {
-      width:100%;
+      width: 100%;
     }
 
-    .meta{
-      padding: $minds-padding*2 $minds-padding*2 0;
-      display:block;
+    .meta {
+      padding: $minds-padding * 2 $minds-padding * 2 0;
+      display: block;
       text-decoration: none;
       width: calc(100% - 32px);
 
-      p{
-         font-size:13px;
-         text-overflow: ellipsis;
-         text-rendering: auto;
-         white-space: pre-wrap;
-         overflow: hidden;
-         max-height: 48px;
-         margin:8px 0;
-         padding: 0;
-         line-height: 1.25;
+      p {
+        font-size: 13px;
+        text-overflow: ellipsis;
+        text-rendering: auto;
+        white-space: pre-wrap;
+        overflow: hidden;
+        max-height: 48px;
+        margin: 8px 0;
+        padding: 0;
+        line-height: 1.25;
       }
-      p.m-url{
-        white-space:nowrap;
-        max-width:240px;
+      p.m-url {
+        white-space: nowrap;
+        max-width: 240px;
       }
     }
   }
 
-  .item-image-video{
-    video{
-      width:100%;
-      height:auto;
+  .item-image-video {
+    video {
+      width: 100%;
+      height: auto;
     }
   }
 
@@ -454,7 +461,7 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     }
   }
 
-  .is-boosted{
+  .is-boosted {
     display: inline-block;
     width: auto;
     font-size: 11px;
@@ -462,11 +469,11 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     padding-right: 8px;
     line-height: 1;
     vertical-align: middle;
-    @include m-theme(){
-      color:themed($m-grey-400);
+    @include m-theme() {
+      color: themed($m-grey-400);
     }
 
-    i{
+    i {
       font-size: 18px;
       position: relative;
       vertical-align: middle;
@@ -476,23 +483,23 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
         margin-right: 4px;
       }
     }
-    a{
-      font-weight:bold;
+    a {
+      font-weight: bold;
       vertical-align: middle;
-      @include m-theme(){
-        color:themed($m-grey-400);
+      @include m-theme() {
+        color: themed($m-grey-400);
       }
     }
   }
 
   .is-boosted.is-onchain {
-    @include m-theme(){
-      color:themed($m-blue);
+    @include m-theme() {
+      color: themed($m-blue);
     }
 
     a {
-      @include m-theme(){
-        color:themed($m-blue);
+      @include m-theme() {
+        color: themed($m-blue);
       }
     }
   }
@@ -500,14 +507,14 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
   /**
    * Remind
    */
-  minds-remind{
-    margin:0;
-    width:auto;
-    min-height:0;
+  minds-remind {
+    margin: 0;
+    width: auto;
+    min-height: 0;
     overflow: visible;
 
-    .m-owner-block{
-      padding-top:0;
+    .m-owner-block {
+      padding-top: 0;
     }
   }
 
@@ -515,98 +522,98 @@ minds-activity.mdl-card, minds-activity, minds-activity-preview{
     padding: $minds-padding ($minds-padding * 2);
     font-size: 12px;
     font-weight: 400;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-warn-fg);
       background-color: themed($m-warn-bg);
     }
   }
-
 }
 
 /**
  * Action tabs
  */
-.tabs, .m-action-tabs{
-  padding: $minds-padding*1.5 $minds-padding*2 $minds-padding*1.5;
-  display:flex;
-  box-sizing:border-box;
-  width:100%;
+.tabs,
+.m-action-tabs {
+  padding: $minds-padding * 1.5 $minds-padding * 2 $minds-padding * 1.5;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
 
-  &.m-action-tabs-hoverover{
-    visibility:0;
-    :hover{
-      visibility:1;
+  &.m-action-tabs-hoverover {
+    visibility: 0;
+    :hover {
+      visibility: 1;
     }
   }
 
-  &.m-action-tabs-fixed{
-    position:absolute;
-    left:0;
-    bottom:0;
+  &.m-action-tabs-fixed {
+    position: absolute;
+    left: 0;
+    bottom: 0;
   }
 
   > * {
-    display:flex;
-    flex-direction:column;
+    display: flex;
+    flex-direction: column;
     //flex:auto;
     flex: 1;
 
-    text-align:center;
-    cursor:pointer;
+    text-align: center;
+    cursor: pointer;
   }
-  > template, script{
-    display:none;
+  > template,
+  script {
+    display: none;
   }
-  > a.minds-boost-button{
-    max-width:40px;
+  > a.minds-boost-button {
+    max-width: 40px;
   }
-  .selected{
-    @include m-theme(){
+  .selected {
+    @include m-theme() {
       color: themed($m-blue) !important;
     }
-    
+
     &:hover {
-      @include m-theme(){
-        color: rgba(themed($m-blue-dark),0.9) !important;
+      @include m-theme() {
+        color: rgba(themed($m-blue-dark), 0.9) !important;
       }
     }
   }
-  i{
+  i {
     vertical-align: middle;
-    font-size:22px;
+    font-size: 22px;
   }
-
 }
 
-.minds-add-card{
+.minds-add-card {
   padding: 32px 16px;
   text-align: center;
   text-decoration: none;
   i {
-    font-size:90px !important;
+    font-size: 90px !important;
   }
-  h3{
+  h3 {
     text-transform: uppercase;
-    font-weight:400;
-    font-size:24px;
+    font-weight: 400;
+    font-size: 24px;
   }
 }
 
-.minds-editable-container{
+.minds-editable-container {
   box-sizing: border-box;
   padding: $minds-padding;
   text-align: right;
-  width:100%;
+  width: 100%;
 
-  textarea{
-    padding:$minds-padding;
+  textarea {
+    padding: $minds-padding;
     color: inherit;
-    @include m-theme(){
-      border:1px solid themed($m-grey-100);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
     }
   }
 
-  button{
+  button {
     margin: $minds-margin;
   }
 }

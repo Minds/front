@@ -1,12 +1,18 @@
-import { Component, Injector, OnDestroy, OnInit, SkipSelf } from "@angular/core";
-import { GroupsService } from "../../groups-service";
-import { Subscription } from "rxjs";
-import { ActivatedRoute } from "@angular/router";
-import { ClientMetaService } from "../../../../common/services/client-meta.service";
+import {
+  Component,
+  Injector,
+  OnDestroy,
+  OnInit,
+  SkipSelf,
+} from '@angular/core';
+import { GroupsService } from '../../groups.service';
+import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { ClientMetaService } from '../../../../common/services/client-meta.service';
 
 @Component({
   selector: 'm-group-profile__feed',
-  providers: [ ClientMetaService ],
+  providers: [ClientMetaService],
   templateUrl: 'feed.component.html',
 })
 export class GroupProfileFeedComponent implements OnInit, OnDestroy {
@@ -20,7 +26,7 @@ export class GroupProfileFeedComponent implements OnInit, OnDestroy {
     protected service: GroupsService,
     protected route: ActivatedRoute,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
+    @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)

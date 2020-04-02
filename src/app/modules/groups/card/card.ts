@@ -2,17 +2,15 @@ import { Component, Inject } from '@angular/core';
 
 import { Client } from '../../../services/api';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'minds-card-group',
   inputs: ['group'],
-  templateUrl: 'card.html'
+  templateUrl: 'card.html',
 })
-
 export class GroupsCard {
-
-  minds;
+  readonly cdnUrl: string;
   group;
   $updateMarker;
   hasMarker: boolean = false;
@@ -20,25 +18,23 @@ export class GroupsCard {
   constructor(
     public client: Client,
     private updateMarkers: UpdateMarkersService,
+    configs: ConfigsService
   ) {
-    this.minds = window.Minds;
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   ngOnInit() {
     this.$updateMarker = this.updateMarkers.markers.subscribe(markers => {
-      if (!markers)
-        return;
-      this.hasMarker = markers
-        .filter(marker => 
-          (marker.read_timestamp < marker.updated_timestamp)
-          && (marker.entity_guid == this.group.guid)
-        )
-        .length;
+      if (!markers) return;
+      this.hasMarker = markers.filter(
+        marker =>
+          marker.read_timestamp < marker.updated_timestamp &&
+          marker.entity_guid == this.group.guid
+      ).length;
     });
   }
 
   ngOnDestroy() {
-    this.$updateMarker.unsubscribe()
+    this.$updateMarker.unsubscribe();
   }
-
 }

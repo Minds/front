@@ -12,18 +12,17 @@ import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { MockComponent } from '../../../utils/mock';
-import { SafePipe } from "../../../common/pipes/safe";
-import { MindsTitle } from '../../../services/ux/title';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
+import { MockComponent, MockService } from '../../../utils/mock';
+import { SafePipe } from '../../../common/pipes/safe';
+import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 describe('QuestionsComponent', () => {
-
   let comp: QuestionsComponent;
   let fixture: ComponentFixture<QuestionsComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         SafePipe,
@@ -33,41 +32,48 @@ describe('QuestionsComponent', () => {
         }),
         MockComponent({
           selector: 'm-helpdesk--questions--related',
-          inputs: [ 'question' ]
+          inputs: ['question'],
         }),
         MockComponent({
           selector: 'm-helpdesk--questions--suggested',
-          inputs: [ 'type', 'question' ]
+          inputs: ['type', 'question'],
         }),
       ],
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
         CommonModule,
-        FormsModule
+        FormsModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
+        { provide: MetaService, useValue: MockService(MetaService) },
         { provide: Client, useValue: clientMock },
-        { provide: ActivatedRoute, useValue: { params: of({ uuid: 'uuid1' }) } }
-      ]
-    })
-      .compileComponents();
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({ uuid: 'uuid1' }) },
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+        PageLayoutService,
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
 
     clientMock.response = {};
 
     clientMock.response['api/v2/helpdesk/questions/question/uuid1'] = {
-      'status': 'success',
+      status: 'success',
       question: {
         uuid: 'uuid1',
         question: 'is this a test?',
         answer: 'yep',
-        category_uuid: 'category_uuid'
+        category_uuid: 'category_uuid',
       },
     };
 
@@ -80,49 +86,66 @@ describe('QuestionsComponent', () => {
     if (fixture.isStable()) {
       done();
     } else {
-      fixture.whenStable()
-        .then(() => {
-          fixture.detectChanges();
-          done();
-        });
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
     }
   });
 
   it("should have a 'Go Back' button", () => {
-    const button = fixture.debugElement.query(By.css('.m-helpdeskQuestions__goBack'));
+    const button = fixture.debugElement.query(
+      By.css('.m-helpdeskQuestions__goBack')
+    );
 
     expect(button).not.toBeNull();
     expect(button.nativeElement.textContent).toContain('Back to Help Desk');
   });
 
-  it("should have a Help & Support group link", () => {
-    const button = fixture.debugElement.query(By.css('.m-helpdeskQuestions__bigItem--help-and-support'));
+  it('should have a Help & Support group link', () => {
+    const button = fixture.debugElement.query(
+      By.css('.m-helpdeskQuestions__bigItem--help-and-support')
+    );
 
     expect(button).not.toBeNull();
 
-    const title = fixture.debugElement.query(By.css('.m-helpdeskQuestions__bigItem--help-and-support .m-helpdeskQuestionsBigItem__title'));
+    const title = fixture.debugElement.query(
+      By.css(
+        '.m-helpdeskQuestions__bigItem--help-and-support .m-helpdeskQuestionsBigItem__title'
+      )
+    );
     expect(title).not.toBeNull();
     expect(title.nativeElement.textContent).toContain('Help & Support Group');
 
-    const subtext = fixture.debugElement.query(By.css('.m-helpdeskQuestions__bigItem--help-and-support .m-helpdeskQuestionsBigItem__subtext'));
+    const subtext = fixture.debugElement.query(
+      By.css(
+        '.m-helpdeskQuestions__bigItem--help-and-support .m-helpdeskQuestionsBigItem__subtext'
+      )
+    );
     expect(subtext).not.toBeNull();
-    expect(subtext.nativeElement.textContent).toContain('Get help from the wider Minds community');
+    expect(subtext.nativeElement.textContent).toContain(
+      'Get help from the wider Minds community'
+    );
   });
 
-  it("should have a main page section with the question, answer and the upvote and downvote buttons", () => {
-    const question = fixture.debugElement.query(By.css('.m-page--main > .m-helpdeskQuestions__question'));
+  it('should have a main page section with the question, answer and the upvote and downvote buttons', () => {
+    const question = fixture.debugElement.query(
+      By.css('.m-page--main > .m-helpdeskQuestions__question')
+    );
 
     expect(question).not.toBeNull();
     expect(question.nativeElement.textContent).toContain('is this a test?');
 
-    const answer = fixture.debugElement.query(By.css('.m-page--main .m-helpdeskQuestions__answer'));
+    const answer = fixture.debugElement.query(
+      By.css('.m-page--main .m-helpdeskQuestions__answer')
+    );
 
     expect(answer).not.toBeNull();
     expect(answer.nativeElement.textContent).toContain('yep');
 
-    const voteButtons = fixture.debugElement.queryAll(By.css('.m-helpdeskQuestions__feedback > div'));
+    const voteButtons = fixture.debugElement.queryAll(
+      By.css('.m-helpdeskQuestions__feedback > div')
+    );
     expect(voteButtons.length).toBe(2);
-
   });
-
 });

@@ -6,8 +6,8 @@ import { Subscription } from 'rxjs';
 import { Session } from './session';
 
 type NavigateOptions = {
-  extraParams?: string,
-  defaultUrl?: string
+  extraParams?: string;
+  defaultUrl?: string;
 };
 
 @Injectable()
@@ -22,7 +22,7 @@ export class LoginReferrerService {
     return new LoginReferrerService(session, router);
   }
 
-  constructor(private session: Session, private router: Router) { }
+  constructor(private session: Session, private router: Router) {}
 
   listen(): this {
     this._routerListener = this.router.events.subscribe((event: Event) => {
@@ -41,7 +41,9 @@ export class LoginReferrerService {
   }
 
   unlisten(): this {
-    this._routerListener.unsubscribe();
+    if (this._routerListener) {
+      this._routerListener.unsubscribe();
+    }
 
     return this;
   }
@@ -61,7 +63,8 @@ export class LoginReferrerService {
   }
 
   navigate(options: NavigateOptions = {}): Promise<boolean> {
-    let url = this.url || options.defaultUrl || LoginReferrerService.DEFAULT_URL;
+    let url =
+      this.url || options.defaultUrl || LoginReferrerService.DEFAULT_URL;
 
     if (options.extraParams) {
       url += `${~url.indexOf('?') ? '&' : '?'}${options.extraParams}`;

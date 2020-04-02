@@ -5,22 +5,24 @@ import {
   Input,
   Output,
   HostListener,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { HashtagsSelectorModalComponent } from '../hashtag-selector-modal/hashtags-selector.component';
 import { TopbarHashtagsService } from '../service/topbar.service';
 import { DropdownComponent } from '../../../common/components/dropdown/dropdown.component';
-import { Tag } from "../types/tag";
+import { Tag } from '../types/tag';
 
 @Component({
   selector: 'm-hashtags--topbar-selector',
-  templateUrl: 'topbar-selector.component.html'
+  templateUrl: 'topbar-selector.component.html',
 })
 export class HashtagsTopbarSelectorComponent implements OnInit {
   @Input() enabled: boolean = true;
-  @Output() selectionChange: EventEmitter<string | null> = new EventEmitter<string | null>();
+  @Output() selectionChange: EventEmitter<string | null> = new EventEmitter<
+    string | null
+  >();
 
   hashtags: Tag[] = [];
   selectedHashtag: string | null = null;
@@ -31,9 +33,8 @@ export class HashtagsTopbarSelectorComponent implements OnInit {
 
   constructor(
     public overlayModal: OverlayModalService,
-    public topbarHashtagsService: TopbarHashtagsService,
-  ) {
-  }
+    public topbarHashtagsService: TopbarHashtagsService
+  ) {}
 
   @Input('selected') set _selected(hashtag: string) {
     if (this.selectedHashtag === hashtag) {
@@ -51,7 +52,7 @@ export class HashtagsTopbarSelectorComponent implements OnInit {
   async load() {
     try {
       this.hashtags = await this.topbarHashtagsService.load(5, {
-        defaults: true
+        defaults: true,
       });
     } catch (e) {
       console.error(e);
@@ -89,9 +90,15 @@ export class HashtagsTopbarSelectorComponent implements OnInit {
       this.dropdown.toggle();
     }
 
-    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
-      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large'
-    })
+    this.overlayModal
+      .create(
+        HashtagsSelectorModalComponent,
+        {},
+        {
+          class:
+            'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+        }
+      )
       .onDidDismiss(() => setTimeout(() => this.load()))
       .present();
   }

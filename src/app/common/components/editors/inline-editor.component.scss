@@ -1,10 +1,10 @@
 m-inline-editor {
-
   .material-icons.file-upload::before {
     content: 'file_upload';
   }
 
-  .medium-editor-element, .medium-insert-link-input {
+  .medium-editor-element,
+  .medium-insert-link-input {
     outline: none;
   }
 
@@ -22,23 +22,21 @@ m-inline-editor {
       display: flex;
       align-items: center;
       justify-content: center;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-white), 0.8);
       }
     }
 
     .medium-insert-image-active {
-      @include m-theme(){
-         border: 2px solid themed($m-blue);
+      @include m-theme() {
+        border: 2px solid themed($m-blue);
       }
-
     }
     .m-blog--image-caption {
       min-width: 100px;
       min-height: 1.58em;
     }
   }
-
 }
 
 @-webkit-keyframes medium-editor-image-loading {
@@ -70,7 +68,7 @@ m-inline-editor {
     transform: matrix(0.97, 0, 0, 1, 0, 12);
   }
   20% {
-    opacity: .7;
+    opacity: 0.7;
     -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
     transform: matrix(0.99, 0, 0, 1, 0, 2);
   }
@@ -92,7 +90,7 @@ m-inline-editor {
     transform: matrix(0.97, 0, 0, 1, 0, 12);
   }
   20% {
-    opacity: .7;
+    opacity: 0.7;
     -webkit-transform: matrix(0.99, 0, 0, 1, 0, 2);
     transform: matrix(0.99, 0, 0, 1, 0, 2);
   }
@@ -108,7 +106,7 @@ m-inline-editor {
 }
 
 .medium-editor-anchor-preview {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
   font-size: 16px;
   left: 0;
   line-height: 1.4;
@@ -125,7 +123,7 @@ m-inline-editor {
 .medium-editor-anchor-preview a {
   display: inline-block;
   margin: 5px 5px 10px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white);
   }
 }
@@ -135,7 +133,7 @@ m-inline-editor {
 }
 
 .medium-editor-dragover {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-100);
   }
 }
@@ -147,7 +145,7 @@ m-inline-editor {
   display: inline-block;
   height: 40px;
   width: 40px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-900);
   }
 }
@@ -180,7 +178,8 @@ m-inline-editor {
   margin: inherit;
 }
 
-.medium-toolbar-arrow-under:after, .medium-toolbar-arrow-over:before {
+.medium-toolbar-arrow-under:after,
+.medium-toolbar-arrow-over:before {
   border-style: solid;
   content: '';
   display: block;
@@ -201,7 +200,7 @@ m-inline-editor {
 }
 
 .medium-editor-toolbar {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
   font-size: 16px;
   left: 0;
   position: absolute;
@@ -223,7 +222,7 @@ m-inline-editor {
 }
 
 .medium-editor-toolbar li button {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
   box-sizing: border-box;
   cursor: pointer;
   display: block;
@@ -243,7 +242,7 @@ m-inline-editor {
 }
 
 .medium-editor-toolbar li .medium-editor-action-pre {
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   font-size: 12px;
   font-weight: 100;
   padding: 15px 0;
@@ -281,7 +280,7 @@ m-inline-editor {
 
 .medium-editor-toolbar-form input,
 .medium-editor-toolbar-form a {
-  font-family: "Roboto", Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', Helvetica, Arial, sans-serif;
 }
 
 .medium-editor-toolbar-form .medium-editor-toolbar-form-row {
@@ -326,7 +325,7 @@ m-inline-editor {
 
 .medium-editor-toolbar-actions:after {
   clear: both;
-  content: "";
+  content: '';
   display: table;
 }
 
@@ -367,21 +366,21 @@ m-inline-editor {
 // THEME!
 .medium-toolbar-arrow-under:after {
   top: 50px;
-  @include m-theme(){
-     border-color: themed($m-grey-950) transparent transparent transparent;
+  @include m-theme() {
+    border-color: themed($m-grey-950) transparent transparent transparent;
   }
 }
 
 .medium-toolbar-arrow-over:before {
-  @include m-theme(){
-     border-color: transparent transparent themed($m-grey-950) transparent;
+  @include m-theme() {
+    border-color: transparent transparent themed($m-grey-950) transparent;
   }
   top: -8px;
 }
 
 .medium-editor-toolbar {
   border-radius: 3px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: rgba(themed($m-black), 0.99);
   }
 }
@@ -391,16 +390,16 @@ m-inline-editor {
   border: 0;
   height: 50px;
   min-width: 50px;
-  -webkit-transition: background-color .2s ease-in;
-  transition: background-color .2s ease-in;
-  @include m-theme(){
+  -webkit-transition: background-color 0.2s ease-in;
+  transition: background-color 0.2s ease-in;
+  @include m-theme() {
     color: themed($m-white);
-    border-right: 1px solid rgba(themed($m-black), 0.5);;
+    border-right: 1px solid rgba(themed($m-black), 0.5);
   }
 }
 
 .medium-editor-toolbar li button:hover {
-  @include m-theme(){
+  @include m-theme() {
     background-color: rgba(themed($m-white), 0.2);
   }
 }
@@ -416,14 +415,14 @@ m-inline-editor {
 }
 
 .medium-editor-toolbar li .medium-editor-button-active {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-blue);
   }
 }
 
 .medium-editor-toolbar-form {
   border-radius: 5px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white);
     background-color: rgba(themed($m-black), 0.99);
   }
@@ -433,28 +432,28 @@ m-inline-editor {
   box-sizing: border-box;
   border-radius: 5px;
   height: 50px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white);
     background-color: rgba(themed($m-black), 0.99);
   }
 }
 
 .medium-editor-toolbar-form a {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white);
   }
 }
 
 .medium-editor-toolbar-anchor-preview {
   border-radius: 5px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white);
     background-color: rgba(themed($m-black), 0.99);
   }
 }
 
 .medium-editor-placeholder:after {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-200);
   }
 }
@@ -477,8 +476,11 @@ m-inline-editor {
     outline: 0 solid transparent;
   }
 
-  .clearfix:before, &:before, .clearfix:after, &:after {
-    content: " ";
+  .clearfix:before,
+  &:before,
+  .clearfix:after,
+  &:after {
+    content: ' ';
     display: table;
     clear: both;
   }
@@ -510,7 +512,7 @@ m-inline-editor {
       padding: 0;
       font-family: Arial;
       margin: 0 10px 0 0;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-200);
         background-color: themed($m-white);
         border: 1px solid themed($m-grey-100);
@@ -522,7 +524,7 @@ m-inline-editor {
       font-family: 'Roboto', Helvetica, sans-serif;
       padding: 8px;
       flex-grow: 1;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-400);
         border: 1px solid themed($m-grey-50);
       }
@@ -532,7 +534,7 @@ m-inline-editor {
   .medium-insert-buttons {
     position: absolute;
     font-size: 0.9em;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-200);
     }
     button {
@@ -546,7 +548,7 @@ m-inline-editor {
       text-align: center;
       padding: 0;
       font-family: Arial;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-200);
         background-color: themed($m-white);
         border: 1px solid themed($m-grey-100);

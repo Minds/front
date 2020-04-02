@@ -1,6 +1,6 @@
-m-topbar--hashtags, m-topbar--hashtags m-dropdown {
+m-topbar--hashtags,
+m-topbar--hashtags m-dropdown {
   .m-topbar--hashtags {
-
     display: inline-flex;
     flex-direction: row;
     align-items: center;
@@ -10,7 +10,7 @@ m-topbar--hashtags, m-topbar--hashtags m-dropdown {
     text-decoration: none;
     font-family: 'Roboto', Helvetica, sans-serif;
     cursor: pointer;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-950);
     }
   }
@@ -35,13 +35,13 @@ m-topbar--hashtags, m-topbar--hashtags m-dropdown {
     }
 
     &.m-topbar--hashtags--hashtag--selected {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue);
       }
     }
 
     &.m-topbar--hashtags--hashtag--disabled {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }

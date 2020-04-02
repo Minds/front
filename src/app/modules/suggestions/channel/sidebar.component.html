@@ -1,26 +1,46 @@
-<div class="m-suggestions__sidebar">
-  <h3 class="m-newsfeedSidebar__header">Suggested channels</h3>
-  <span *ngIf="error && !inProgress" class="m-suggestionsSidebar__empty">
-    {{error}}
+<ng-template #suggestionsBody>
+  <span
+    *ngIf="(error$ | async) && !(inProgress$ | async)"
+    class="m-suggestionsSidebar__empty"
+  >
+    {{ error | async }}
   </span>
-  <span *ngIf="!error && !inProgress && !suggestions.length" class="m-suggestionsSidebar__empty">
+  <span
+    *ngIf="
+      !(error$ | async) &&
+      !(inProgress$ | async) &&
+      !(suggestions$ | async).length
+    "
+    class="m-suggestionsSidebar__empty"
+  >
     You have no suggestions at this time
   </span>
-  <ul class="m-suggestionsSidebar__list m-border" *ngIf="suggestions.length">
-    <li *ngFor="let suggestion of suggestions" class="m-suggestionsSidebarList__item">
+  <ul
+    class="m-suggestionsSidebar__list m-border"
+    *ngIf="(suggestions$ | async).length"
+  >
+    <li
+      *ngFor="let suggestion of suggestions$ | async"
+      class="m-suggestionsSidebarList__item"
+    >
       <a [routerLink]="['/', suggestion.entity.username]">
         <div
           class="m-suggestionsSidebarListItem__avatar"
-          [style.background-image]="'url(' + minds.cdn_url + '/icon/' + suggestion.entity.guid + ')'"
-          >
-        </div>
+          [style.background-image]="
+            'url(' + cdnUrl + 'icon/' + suggestion.entity.guid + ')'
+          "
+        ></div>
         <div class="m-suggestionsSidebarListItem__body">
           <div [title]="suggestion.entity.briefdescription">
             <h4>{{ suggestion.entity.username }}</h4>
             <span>{{ suggestion.entity.briefdescription }}</span>
           </div>
           <div class="m-layout__spacer"></div>
-          <i class="material-icons m-suggestionsSidebarListItem__passBtn" (click)="pass(suggestion, $event)">close</i>
+          <i
+            class="material-icons m-suggestionsSidebarListItem__passBtn"
+            (click)="pass(suggestion, $event)"
+            >close</i
+          >
           <minds-button-subscribe
             [user]="suggestion.entity"
             (subscribed)="remove(suggestion)"
@@ -29,5 +49,26 @@
       </a>
     </li>
   </ul>
-  <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="!inProgress"></div>
-</div>
+  <div
+    class="mdl-spinner mdl-js-spinner is-active"
+    [mdl]
+    [hidden]="!(inProgress$ | async)"
+  ></div>
+</ng-template>
+
+<!-- Outlets -->
+
+<ng-container *mIfFeature="'navigation'; else legacyNavigation">
+  <m-sidebarWidget title="Suggested Channels">
+    <div class="m-sidebarWidget__body">
+      <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
+    </div>
+  </m-sidebarWidget>
+</ng-container>
+
+<ng-template #legacyNavigation>
+  <div class="m-suggestions__sidebar">
+    <h3 class="m-newsfeedSidebar__header">Suggested channels</h3>
+    <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
+  </div>
+</ng-template>

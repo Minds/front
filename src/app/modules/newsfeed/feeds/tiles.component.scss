@@ -11,7 +11,9 @@ m-newsfeed__tiles {
   margin: auto;
 
   &.m-newsfeed__tiles--has-elements {
-    background: #ffffff;
+    @include m-theme() {
+      background: themed($m-white);
+    }
     padding: 8px;
   }
 
@@ -24,7 +26,10 @@ m-newsfeed__tiles {
     margin: 4px;
     overflow: hidden;
     transform-style: preserve-3d;
-    background-color: rgba(0, 0, 0, 0.65);
+
+    @include m-theme() {
+      background-color: rgba(themed($m-black), 0.65);
+    }
 
     &.m-newsfeed-tiles__Tile--is-mature > img {
       filter: blur(5px) grayscale(100%);
@@ -45,9 +50,11 @@ m-newsfeed__tiles {
       position: absolute;
       bottom: 4px;
       right: 4px;
-      color: #fff;
-      text-shadow: 1px 1px rgba(0, 0, 0, .35);
       pointer-events: none;
+      @include m-theme() {
+        color: themed($m-white);
+        text-shadow: 1px 1px rgba(themed($m-black), 0.35);
+      }
     }
 
     i.material-icons.mature-icon {
@@ -57,7 +64,9 @@ m-newsfeed__tiles {
       left: 50%;
       transform: translate(-50%, -50%);
       font-size: 3em;
-      color: #fff;
+      @include m-theme() {
+        color: themed($m-white);
+      }
     }
   }
 }

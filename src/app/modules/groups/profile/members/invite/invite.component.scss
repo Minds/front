@@ -1,6 +1,6 @@
 .m-groupMemberInvite {
   padding: 16px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 }

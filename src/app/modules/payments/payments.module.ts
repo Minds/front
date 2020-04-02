@@ -8,22 +8,31 @@ import { ModalsModule } from '../modals/modals.module';
 
 import { PayWall } from './paywall/paywall.component';
 import { PaywallCancelButton } from './paywall/paywall-cancel.component';
+import { PaymentsNewCard } from './new-card/new-card.component';
+import { PaymentsSelectCard } from './select-card/select-card.component';
+import { BTCService } from './btc/btc.service';
+import { BTCComponent } from './btc/btc.component';
+import { BTCSettingsComponent } from './btc/settings.component';
 
 @NgModule({
   imports: [
     NgCommonModule,
+    FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     CheckoutModule,
-    ModalsModule
+    ModalsModule,
   ],
   declarations: [
     PayWall,
     PaywallCancelButton,
+    PaymentsNewCard,
+    PaymentsSelectCard,
+    BTCComponent,
+    BTCSettingsComponent,
   ],
-  exports: [
-    PayWall,
-    PaywallCancelButton,
-  ]
+  exports: [PayWall, PaywallCancelButton, PaymentsNewCard, PaymentsSelectCard],
+  providers: [BTCService],
+  entryComponents: [PaymentsNewCard, BTCComponent, BTCSettingsComponent],
 })
-export class PaymentsModule {
-}
+export class PaymentsModule {}

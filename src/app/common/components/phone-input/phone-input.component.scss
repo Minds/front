@@ -1,13 +1,29 @@
 /**
  * Credit to ngx-int-tel-input
  */
- m-phone-input {
+m-phone-input {
   position: relative;
   display: inline-flex;
+  margin-bottom: $minds-padding;
+  @media (max-width: $max-mobile) {
+    width: 100%;
+    input {
+      width: 100%;
+    }
+  }
+
+  span {
+    font-weight: 300;
+  }
 
   .m-phone-input--wrapper {
+    display: flex;
+    @media (min-width: $max-mobile) {
+      flex-flow: row wrap;
+      justify-content: flex-end;
+    }
     margin-bottom: $minds-padding;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
     * {
@@ -21,7 +37,9 @@
   .v-hide {
     visibility: hidden;
   }
-  input, input[type=text], input[type=tel] {
+  input,
+  input[type='text'],
+  input[type='tel'] {
     position: relative;
     //padding: 8px;
     margin: 0;
@@ -56,13 +74,14 @@
     cursor: pointer;
     border-top-left-radius: 6px;
     border-bottom-left-radius: 6px;
-    @include m-theme(){
+    outline: 0;
+    @include m-theme() {
       background-color: themed($m-white);
     }
 
     .m-phone-input--dial-code {
       margin-left: 5px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-300);
       }
     }
@@ -70,16 +89,15 @@
       margin: 0 5px;
       border-left: 4px solid transparent;
       border-right: 4px solid transparent;
-      @include m-theme(){
-         border-top: 6px solid themed($m-grey-700);
+      @include m-theme() {
+        border-top: 6px solid themed($m-grey-300);
       }
     }
     .m-phone-input--arrow.up {
       border-top: none;
-      @include m-theme(){
-         border-bottom: 6px solid themed($m-grey-700);
+      @include m-theme() {
+        border-bottom: 6px solid themed($m-grey-300);
       }
-
     }
   }
 
@@ -95,7 +113,7 @@
     white-space: nowrap;
     max-height: 200px;
     overflow-y: scroll;
-    @include m-theme(){
+    @include m-theme() {
       box-shadow: 1px 1px 4px rgba(themed($m-black), 0.2);
       background-color: themed($m-white);
       border: 1px solid themed($m-grey-100);
@@ -113,12 +131,12 @@
       cursor: pointer;
       padding: 8;
       .m-phone-input--dial-code {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-300);
         }
       }
       .m-phone-input--highlight {
-        @include m-theme(){
+        @include m-theme() {
           background-color: rgba(themed($m-black), 0.05);
         }
       }
@@ -137,21 +155,23 @@
     margin-bottom: 5px;
     background-color: transparent;
     margin-top: 0;
-    @include m-theme(){
-       border-bottom: 1px solid themed($m-grey-100);
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-grey-100);
     }
   }
   &.country:not(:last-child) {
-    @include m-theme(){
-       border-bottom: 1px solid themed($m-grey-50);
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-grey-50);
     }
   }
 
-
-  .m-phone-input--country-list .m-phone-input--flag-box, .m-phone-input--country-list .m-phone-input--country-name, .m-phone-input--country-list .m-phone-input--dial-code {
+  .m-phone-input--country-list .m-phone-input--flag-box,
+  .m-phone-input--country-list .m-phone-input--country-name,
+  .m-phone-input--country-list .m-phone-input--dial-code {
     vertical-align: middle;
   }
-  .m-phone-input--country-list .m-phone-input--flag-box, .m-phone-input--country-list .m-phone-input--country-name {
+  .m-phone-input--country-list .m-phone-input--flag-box,
+  .m-phone-input--country-list .m-phone-input--country-name {
     margin-right: 6px;
   }
 
@@ -176,7 +196,12 @@
   .m-phone-input--flag.va {
     width: 15px;
   }
-  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2 / 1),
+    only screen and (min-device-pixel-ratio: 2),
+    only screen and (min-resolution: 192dpi),
+    only screen and (min-resolution: 2dppx) {
     .m-phone-input--flag {
       background-size: 5630px 15px;
     }
@@ -1213,22 +1238,26 @@
   .m-phone-input--flag {
     width: 20px;
     height: 15px;
-    background-image: url("<%= APP_CDN %>/assets/flags/flags.png");
+    background-image: url('<%= APP_CDN %>/assets/flags/flags.png');
     background-repeat: no-repeat;
     background-position: 20px 0;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-100);
       box-shadow: 0px 0px 1px 0px themed($m-grey-400);
     }
   }
-  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2),
+    only screen and (min--moz-device-pixel-ratio: 2),
+    only screen and (-o-min-device-pixel-ratio: 2 / 1),
+    only screen and (min-device-pixel-ratio: 2),
+    only screen and (min-resolution: 192dpi),
+    only screen and (min-resolution: 2dppx) {
     .m-phone-input--flag {
-      background-image: url("<%= APP_CDN %>/assets/flags/flags@2x.png");
+      background-image: url('<%= APP_CDN %>/assets/flags/flags@2x.png');
     }
   }
 
   .m-phone-input--flag.np {
     background-color: transparent;
   }
-
 }

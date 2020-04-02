@@ -1,17 +1,15 @@
-import { Directive, Inject, ElementRef }  from '@angular/core';
+import { Directive, Inject, ElementRef } from '@angular/core';
 
 @Directive({
   selector: '[tags]',
-  inputs: ['tags']
+  inputs: ['tags'],
 })
-
 export class TagsLinks {
-
-  element : any;
-  rendered : boolean = false;
+  element: any;
+  rendered: boolean = false;
   tags: any;
 
-  constructor(@Inject(ElementRef) _element : ElementRef) {
+  constructor(@Inject(ElementRef) _element: ElementRef) {
     this.element = _element.nativeElement;
     setTimeout(() => {
       this.render();
@@ -40,5 +38,4 @@ export class TagsLinks {
     // this.element.innerHTML = value;
     // this.element.className += " rendered";
   }
-
 }

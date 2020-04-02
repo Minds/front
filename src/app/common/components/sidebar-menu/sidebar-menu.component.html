@@ -1,0 +1,70 @@
+<div class="m-sidebarMenu__topbar">
+  <i class="material-icons" (click)="mobileMenuExpanded = true">menu</i>
+  <div class="m-sidebarMenu__topbarHeader">
+    {{ menu.header.label }}
+  </div>
+</div>
+<div
+  class="m-sidebarMenu__overlay"
+  [ngClass]="{ mobileMenuExpanded: mobileMenuExpanded }"
+  (click)="mobileMenuExpanded = false"
+></div>
+<div
+  class="m-sidebarMenu__sidebar"
+  [ngClass]="{ mobileMenuExpanded: mobileMenuExpanded }"
+>
+  <a class="m-sidebarMenu__userWrapper" [routerLink]="['/', user.username]">
+    <img
+      class="m-sidebarMenu__userAvatar"
+      [src]="cdnUrl + 'icon/' + user.guid + '/medium/' + user.icontime"
+    />
+    <div class="m-sidebarMenu__userDetails">
+      <div class="m-sidebarMenu__userDetails__name">{{ user.name }}</div>
+      <div class="m-sidebarMenu__userDetails__username">
+        @{{ user.username }}
+      </div>
+      <!-- TODO: get subscriberCount and remove username -->
+      <!-- <div class="m-sidebarMenu__userDetails__subscribers">
+          {{ user.subscribers_count | abbr }} subscribers
+        </div> -->
+    </div>
+  </a>
+  <div
+    class="m-sidebarMenu__menuContainer expanded"
+    *ngIf="menu.header.permissionGranted"
+  >
+    <div class="m-sidebarMenu__header">
+      <h3>{{ menu.header.label }}</h3>
+    </div>
+
+    <nav
+      class="m-sidebarMenu__linksContainer"
+      *ngIf="menu.links"
+      data-minds="sidebarMenuLinks"
+    >
+      <div class="m-sidebarMenu__link" *ngFor="let link of menu.links">
+        <ng-container *ngIf="link.permissionGranted">
+          <ng-container *ngIf="!link.newWindow">
+            <a
+              (click)="mobileMenuExpanded = false"
+              [routerLink]="link.path ? '/' + link.path : '../' + link.id"
+              routerLinkActive="selected"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
+              <span>{{ link.label }}</span></a
+            >
+          </ng-container>
+          <ng-container *ngIf="link.newWindow"
+            ><a
+              [routerLink]="link.path ? ['/' + link.path] : ['../' + link.id]"
+              target="_blank"
+              class="newWindow"
+              ><i class="material-icons">launch</i>
+              <span>{{ link.label }}</span></a
+            ></ng-container
+          ></ng-container
+        >
+      </div>
+    </nav>
+  </div>
+</div>

@@ -1,5 +1,12 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from "@angular/core";
-import { GroupsService } from "../groups-service";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
+import { GroupsService } from '../groups.service';
 
 @Component({
   selector: 'm-groups__kick-modal',
@@ -27,9 +34,8 @@ export class GroupsKickModalComponent {
 
   constructor(
     protected service: GroupsService,
-    protected cd: ChangeDetectorRef,
-  ){
-  }
+    protected cd: ChangeDetectorRef
+  ) {}
 
   async kick(ban: boolean = false) {
     if (!this.user) {

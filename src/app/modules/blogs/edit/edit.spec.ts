@@ -6,31 +6,43 @@ import { Client } from '../../../services/api/client';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ChangeDetectorRef, Component, Directive, EventEmitter, forwardRef, Input, Output, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  Directive,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Hovercard } from '../../../common/directives/hovercard';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { Upload } from '../../../services/api/upload';
-import { MindsTitle } from '../../../services/ux/title';
 import { HovercardService } from '../../../services/hovercard';
 import { hovercardServiceMock } from '../../../mocks/services/hovercard-mock.spec';
 import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { MockComponent } from '../../../utils/mock';
-import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
-import { inMemoryStorageServiceMock } from "../../../../tests/in-memory-storage-service-mock.spec";
+import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
+import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
+import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-service-mock.spec';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'minds-banner',
-  inputs: ['_object: object', '_src: src', '_top: top', 'overlay', '_editMode: editMode', '_done: done'],
+  inputs: [
+    '_object: object',
+    '_src: src',
+    '_top: top',
+    'overlay',
+    '_editMode: editMode',
+    '_done: done',
+  ],
   outputs: ['added'],
-  template: ``
+  template: ``,
 })
-
 class MindsBannerMock {
-
-  minds: Minds = window.Minds;
   object;
   editing: boolean = false;
   src: string = '';
@@ -42,10 +54,15 @@ class MindsBannerMock {
   overlay: any; // @todo: ??
 
   set _object(value: any) {
-    if (!value)
-      return;
+    if (!value) return;
     this.object = value;
-    this.src = '/fs/v1/banners/' + this.object.guid + '/' + this.top + '/' + this.object.banner;
+    this.src =
+      '/fs/v1/banners/' +
+      this.object.guid +
+      '/' +
+      this.top +
+      '/' +
+      this.object.banner;
   }
 
   set _src(value: any) {
@@ -53,8 +70,7 @@ class MindsBannerMock {
   }
 
   set _top(value: number) {
-    if (!value)
-      return;
+    if (!value) return;
     this.top = value;
   }
 
@@ -62,22 +78,18 @@ class MindsBannerMock {
     this.editing = value;
   }
 
-  add(e) {
-  }
+  add(e) {}
 
-  cancel() {
-  }
+  cancel() {}
 
   /**
    * An upstream done event, which triggers the export process. Usually called from carousels
    */
   set _done(value: boolean) {
-    if (value)
-      this.done();
+    if (value) this.done();
   }
 
-  done() {
-  }
+  done() {}
 
   onClick(e) {
     e.target.parentNode.parentNode.getElementsByTagName('input')[0].click();
@@ -86,78 +98,70 @@ class MindsBannerMock {
 
 @Directive({
   selector: '[mdl]',
-  inputs: ['mdl']
+  inputs: ['mdl'],
 })
 export class MDLMock {}
 
 @Component({
   selector: 'minds-textarea',
   template: ``,
-  exportAs: 'Textarea'
+  exportAs: 'Textarea',
 })
-
 class TextareaMock {
-
   @Input('mModel') model: string = '';
   @Output('mModelChange') update: EventEmitter<any> = new EventEmitter();
 
   @Input('disabled') disabled: boolean = false;
   @Input('placeholder') placeholder: string = '';
 
+  focus() {}
 
-  focus() {
-  }
+  blur() {}
 
-  blur() {
-  }
+  change() {}
 
-  change() {
-  }
-
-  paste(e: any) {
-  }
+  paste(e: any) {}
 }
 
 @Component({
   selector: 'm-wire-threshold-input',
-  template: ''
+  template: '',
 })
 class WireThresholdInputComponentMock {
   threshold: any;
 
   @Input('threshold')
-  set _threshold(threshold: any) {
-  }
+  set _threshold(threshold: any) {}
 
   @Input('disabled') disabled: boolean = false;
   @Input('enabled') enabled: boolean = false;
 
-  @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<any> = new EventEmitter<any>();
+  @Output('thresholdChange') thresholdChangeEmitter: EventEmitter<
+    any
+  > = new EventEmitter<any>();
 
-  toggle() {
-  }
+  toggle() {}
 
-  setType(type: any) {
-  }
+  setType(type: any) {}
 }
 
 export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => InlineEditorComponentMock),
-  multi: true
+  multi: true,
 };
 
 @Component({
   moduleId: module.id,
   selector: 'm-inline-editor',
   template: `
-    <div #host></div>`,
+    <div #host></div>
+  `,
   host: {
-    'change': 'propagateChange($event.target.value)'
+    change: 'propagateChange($event.target.value)',
   },
-  providers: [MEDIUM_EDITOR_VALUE_ACCESSOR]
+  providers: [MEDIUM_EDITOR_VALUE_ACCESSOR],
 })
-
 class InlineEditorComponentMock {
   @Input() options: any;
   @Input() placeholder: string;
@@ -169,21 +173,22 @@ class InlineEditorComponentMock {
     this.ngOnChanges('');
   }
 
-  propagateChange = (_: any) => {
-  };
+  propagateChange = (_: any) => {};
 
-  constructor(private cd: ChangeDetectorRef) {
-  }
+  constructor(private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.options = (typeof this.options === 'string') ? JSON.parse(this.options)
-      : (typeof this.options === 'object') ? this.options: {};
+    this.options =
+      typeof this.options === 'string'
+        ? JSON.parse(this.options)
+        : typeof this.options === 'object'
+        ? this.options
+        : {};
     if (this.placeholder && this.placeholder !== '') {
       Object.assign(this.options, {
-        placeholder: { text: this.placeholder }
+        placeholder: { text: this.placeholder },
       });
     }
-
   }
 
   prepareForSave(): Promise<any> {
@@ -208,18 +213,14 @@ class InlineEditorComponentMock {
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any) {
-  }
+  registerOnTouched(fn: any) {}
 }
 
-
 describe('BlogEdit', () => {
-
   let comp: BlogEdit;
   let fixture: ComponentFixture<BlogEdit>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         Hovercard,
@@ -237,28 +238,43 @@ describe('BlogEdit', () => {
           inputs: ['tags', 'alignLeft'],
           outputs: ['tagsChange', 'tagsAdded', 'tagsRemoved'],
         }),
+        MockComponent({
+          selector: 'm-poster-date-selector',
+          inputs: ['date', 'dateFormat'],
+          outputs: ['dateChange'],
+        }),
+        MockComponent({
+          selector: 'm-nsfw-selector',
+          outputs: ['selectedChanged'],
+          inputs: ['selected'],
+        }),
+        MockDirective({
+          selector: '[mIfFeature]',
+          inputs: ['mIfFeature'],
+        }),
         BlogEdit,
-        MDLMock
+        MDLMock,
       ], // declare the test component
-      imports: [
-        RouterTestingModule,
-        NgCommonModule,
-        FormsModule
-      ],
+      imports: [RouterTestingModule, NgCommonModule, FormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: HovercardService, useValue: hovercardServiceMock },
-        { provide: InMemoryStorageService, useValue: inMemoryStorageServiceMock },
-      ]
-    })
-      .compileComponents();  // compile template and css
+        {
+          provide: InMemoryStorageService,
+          useValue: inMemoryStorageServiceMock,
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+      ],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -272,28 +288,7 @@ describe('BlogEdit', () => {
     clientMock.response = [];
 
     clientMock.response[`api/v1/admin/boosts/newsfeed`] = {
-      'status': 'success',
-
-    };
-
-    window.Minds.categories = {
-      'art': 'Art',
-      'animals': 'Animals',
-      'music': 'Music',
-      'science': 'Science',
-      'technology': 'Technology',
-      'gaming': 'Gaming',
-      'nature': 'Nature',
-      'news': 'News',
-      'politics': 'Politics',
-      'comedy': 'Comedy',
-      'film': 'Film ',
-      'education': 'Education',
-      'sports': 'Sports',
-      'food': 'Food',
-      'modeling': 'Modeling',
-      'spirituality': 'Spirituality ',
-      'health': 'Health'
+      status: 'success',
     };
 
     fixture.detectChanges();
@@ -316,7 +311,11 @@ describe('BlogEdit', () => {
   });
 
   it('should have an instance of m-inline-editor used for the description', () => {
-    expect(fixture.debugElement.query(By.css('.minds-blog-descriptions > m-inline-editor'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(
+        By.css('.minds-blog-descriptions > m-inline-editor')
+      )
+    ).not.toBeNull();
   });
 
   /*it('should have a list of categories', () => {
@@ -337,14 +336,18 @@ describe('BlogEdit', () => {
   });*/
 
   it('should have a save draft button', () => {
-    const draft = fixture.debugElement.query(By.css('.m-button.m-button--draft'));
+    const draft = fixture.debugElement.query(
+      By.css('.m-button.m-button--draft')
+    );
     expect(draft).not.toBeNull();
     expect(draft.nativeElement.innerText).toContain('Save draft');
   });
 
   it('clicking on save draft button should call save()', () => {
-    spyOn(comp,'save').and.stub();
-    const draft = fixture.debugElement.query(By.css('.m-button.m-button--draft'));
+    spyOn(comp, 'save').and.stub();
+    const draft = fixture.debugElement.query(
+      By.css('.m-button.m-button--draft')
+    );
     draft.nativeElement.click();
     fixture.detectChanges();
 
@@ -354,14 +357,18 @@ describe('BlogEdit', () => {
   });
 
   it('should have a publish button', () => {
-    const publish = fixture.debugElement.query(By.css('.m-button.m-button--submit'));
+    const publish = fixture.debugElement.query(
+      By.css('.m-button.m-button--submit')
+    );
     expect(publish).not.toBeNull();
     expect(publish.nativeElement.innerText).toContain('Publish');
   });
 
   it('clicking on publish button should set blog.published to 1 and then call publish()', () => {
-    spyOn(comp,'save').and.stub();
-    const publish = fixture.debugElement.query(By.css('.m-button.m-button--submit'));
+    spyOn(comp, 'save').and.stub();
+    const publish = fixture.debugElement.query(
+      By.css('.m-button.m-button--submit')
+    );
     publish.nativeElement.click();
     fixture.detectChanges();
 
@@ -370,18 +377,22 @@ describe('BlogEdit', () => {
   });
 
   it('should have a m-wire-threshold-input', () => {
-    const threshold = fixture.debugElement.query(By.css('m-wire-threshold-input'));
+    const threshold = fixture.debugElement.query(
+      By.css('m-wire-threshold-input')
+    );
     expect(threshold).not.toBeNull();
     expect(threshold.nativeElement.disabled).toBeFalsy();
   });
 
   it('should know if a banner already exists', () => {
     expect(comp.existingBanner).toBeFalsy();
-  })
+  });
 
   it('should not allow initial submission without a banner', () => {
-      const publish = fixture.debugElement.query(By.css('.m-button.m-button--submit'));
-      publish.nativeElement.click();
-      expect(comp.existingBanner).toBeFalsy();
-  })
+    const publish = fixture.debugElement.query(
+      By.css('.m-button.m-button--submit')
+    );
+    publish.nativeElement.click();
+    expect(comp.existingBanner).toBeFalsy();
+  });
 });

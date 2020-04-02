@@ -1,0 +1,72 @@
+m-date__dropdowns {
+  display: flex;
+  justify-content: space-between;
+
+  .m-dateDropdowns__selectWrapper {
+    position: relative;
+    overflow: hidden;
+    min-width: 80px;
+    max-width: 90px;
+    border-radius: 3px;
+    margin: 0 10px 0 0;
+
+    @include m-theme() {
+      background-color: themed($m-white);
+      box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.1);
+    }
+
+    &::after {
+      content: '\25bc';
+      font-size: 10px;
+      padding: 10px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      text-align: center;
+      pointer-events: none;
+
+      @include m-theme() {
+        color: themed($m-grey-200);
+      }
+    }
+
+    // month
+    &:nth-child(1) {
+      min-width: 120px;
+    }
+
+    // day
+    &:nth-child(2) {
+      min-width: 59px;
+    }
+
+    // year
+    &:nth-child(3) {
+      min-width: 77px;
+    }
+  }
+
+  select {
+    display: inline-block;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 8px 10px;
+    height: 36px;
+    width: 100%;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-size: 16px;
+    line-height: 21px;
+    border-radius: 2px;
+
+    appearance: none;
+
+    @include m-theme() {
+      color: themed($m-grey-800);
+      background-color: themed($m-white);
+      border: 1px solid #e2e2e2;
+    }
+  }
+}

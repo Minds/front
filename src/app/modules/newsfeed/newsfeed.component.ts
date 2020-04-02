@@ -1,28 +1,33 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { Client, Upload } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
 import { Navigation as NavigationService } from '../../services/navigation';
-import { MindsActivityObject } from '../../interfaces/entities';
 import { Session } from '../../services/session';
 import { Storage } from '../../services/storage';
 import { ContextService } from '../../services/context.service';
 import { PosterComponent } from './poster/poster.component';
 import { NewsfeedService } from './services/newsfeed.service';
-import { SideBarSelectorChange } from "../hashtags/sidebar-selector/sidebar-selector.component";
-import { NewsfeedHashtagSelectorService } from "./services/newsfeed-hashtag-selector.service";
+import { SideBarSelectorChange } from '../hashtags/sidebar-selector/sidebar-selector.component';
+import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
 import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.component';
+import { PagesService } from '../../common/services/pages.service';
+import { FeaturesService } from '../../services/features.service';
 
 @Component({
   selector: 'm-newsfeed',
-  templateUrl: 'newsfeed.component.html'
+  templateUrl: 'newsfeed.component.html',
 })
-
-export class NewsfeedComponent {
+export class NewsfeedComponent implements OnInit, OnDestroy {
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
   offset: string = '';
@@ -31,7 +36,6 @@ export class NewsfeedComponent {
   moreData: boolean = true;
   showRightSidebar: boolean = true;
   preventHashtagOverflow: boolean = false;
-  minds;
 
   message: string = '';
   newUserPromo: boolean = false;
@@ -59,6 +63,8 @@ export class NewsfeedComponent {
 
   all: boolean;
 
+  newNavigation: boolean = false;
+
   @ViewChild('poster', { static: false }) private poster: PosterComponent;
 
   constructor(
@@ -68,27 +74,28 @@ export class NewsfeedComponent {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
+    public featuresService: FeaturesService,
+    public pagesService: PagesService,
     protected storage: Storage,
     protected overlayModal: OverlayModalService,
     protected context: ContextService,
     protected newsfeedService: NewsfeedService,
-    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService,
+    protected newsfeedHashtagSelectorService: NewsfeedHashtagSelectorService
   ) {
-
+    this.newNavigation = this.featuresService.has('navigation');
     this.urlSubscription = this.route.url.subscribe(() => {
       this.tag = null;
 
-      const path: string = route.snapshot.firstChild && route.snapshot.firstChild.routeConfig.path;
-      const params: any = (route.snapshot.firstChild && route.snapshot.firstChild.params) || {};
+      const path: string =
+        route.snapshot.firstChild && route.snapshot.firstChild.routeConfig.path;
+      const params: any =
+        (route.snapshot.firstChild && route.snapshot.firstChild.params) || {};
 
       if (path === 'boost') {
-        this.title.setTitle('Boost Newsfeed');
         this.boostFeed = true;
       } else if (path === 'tag/:tag') {
         this.tag = route.snapshot.firstChild.url[1].path;
       } else {
-        this.title.setTitle('Newsfeed');
       }
 
       this.subscribed = path === 'subscribed';
@@ -101,15 +108,13 @@ export class NewsfeedComponent {
 
     const showPlusButton = localStorage.getItem('newsfeed:hide-plus-button');
     if (showPlusButton != null) {
-      this.showPlusButton = false
+      this.showPlusButton = false;
     }
   }
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']); //force login
-    } else {
-      this.minds = window.Minds;
     }
 
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -133,8 +138,7 @@ export class NewsfeedComponent {
 
   ngOnDestroy() {
     clearInterval(this.pollingTimer);
-    if (this.paramsSubscription) 
-      this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
   }
 
   reloadTopFeed(all: boolean = false) {
@@ -149,7 +153,10 @@ export class NewsfeedComponent {
     if (!this.isSorted && !this.legacySorting) {
       switch (filter.type) {
         case 'single':
-          await this.router.navigate(['/newsfeed/global/hot', { hashtag: filter.value }]);
+          await this.router.navigate([
+            '/newsfeed/global/hot',
+            { hashtag: filter.value },
+          ]);
           break;
 
         case 'preferred':
@@ -182,8 +189,7 @@ export class NewsfeedComponent {
   }
 
   canDeactivate() {
-    if (!this.poster || !this.poster.attachment)
-      return true;
+    if (!this.poster || !this.poster.attachment) return true;
     const progress = this.poster.attachment.getUploadProgress();
     if (progress > 0 && progress < 100) {
       return confirm('Your file is still uploading. Are you sure?');
@@ -193,9 +199,14 @@ export class NewsfeedComponent {
   }
 
   openReferralsModal() {
-    this.overlayModal.create(ReferralsLinksComponent, {}, {
-      class: 'm-overlay-modal--referrals-links m-overlay-modal--medium'
-    }).present();
+    this.overlayModal
+      .create(
+        ReferralsLinksComponent,
+        {},
+        {
+          class: 'm-overlay-modal--referrals-links m-overlay-modal--medium',
+        }
+      )
+      .present();
   }
 }
-

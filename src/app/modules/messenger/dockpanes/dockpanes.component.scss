@@ -1,45 +1,44 @@
 @import 'defaults.scss';
 
-.m-messenger--dockpane{
+.m-messenger--dockpane {
   margin: 0 $minds-margin;
   width: 228px;
 
-  .m-messenger--dockpane-container{
-    display:none;
+  .m-messenger--dockpane-container {
+    display: none;
   }
 
-  &.m-messenger--dockpane-open{
-    .m-messenger--dockpane-container{
+  &.m-messenger--dockpane-open {
+    .m-messenger--dockpane-container {
       display: block;
       width: 100%;
       //height: 99px;
       display: block;
       position: relative;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-white), 1);
       }
-
     }
-    .m-messenger--dockpane-tab{
-      @include m-theme(){
-         border-bottom: 1px solid themed($m-grey-50);
+    .m-messenger--dockpane-tab {
+      @include m-theme() {
+        border-bottom: 1px solid themed($m-grey-50);
       }
     }
   }
 
-  .m-messenger--dockpane-tab{
+  .m-messenger--dockpane-tab {
     font-family: 'Roboto', Helvetica, sans-serif;
     border-radius: 3px 3px 0 0;
     height: 28px;
     width: 100%;
     display: block;
     cursor: pointer;
-    @include m-theme(){
-      background-color: themed($m-white);
-      color: themed($m-grey-800);
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      color: themed($m-textColor--primary);
     }
 
-    .m-messenger--dockpane-tab-title{
+    .m-messenger--dockpane-tab-title {
       padding: 5px 12px;
       display: inline-block;
 
@@ -57,40 +56,39 @@
         text-transform: uppercase;
         letter-spacing: 1px;
         font-size: 11px;
-        font-weight:bold;
+        font-weight: bold;
       }
     }
 
-    .m-messenger--dockpane-tab-actions{
+    .m-messenger--dockpane-tab-actions {
       text-align: right;
       vertical-align: middle;
       float: right;
       padding-right: $minds-padding;
 
-      > i{
+      > i {
         font-size: 14px;
         padding: 8px 2px;
         line-height: 12px;
         border-radius: 0 3px 0 0;
 
-        &:hover{
-          @include m-theme(){
+        &:hover {
+          @include m-theme() {
             color: themed($m-grey-500) !important;
           }
         }
       }
     }
 
-    > i{
+    > i {
       float: right;
       margin: 6px 8px;
       font-size: 16px;
       font-weight: bold;
     }
-
   } //[end] .m-messenger--dockpane-tab
 
-  .m-messenger--dockpane-tab-ribbon{
+  .m-messenger--dockpane-tab-ribbon {
     position: relative;
     box-sizing: border-box;
     width: 100%;
@@ -99,18 +97,18 @@
     text-align: left;
     vertical-align: middle;
     padding: 0 $minds-padding;
-    z-index:1;
+    z-index: 1;
 
     display: flex;
     flex-direction: row;
     align-items: center;
 
-    @include m-theme(){
-      background-color: themed($m-white);
-      border-bottom: 1px solid themed($m-grey-50);
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      border-bottom: 1px solid themed($m-borderColor--tertiary);
     }
 
-    .m-messenger--dockpane-tab-icon{
+    .m-messenger--dockpane-tab-icon {
       text-align: center;
       text-transform: uppercase;
       font-size: 8px;
@@ -118,18 +116,18 @@
       padding-bottom: 8px;
       cursor: pointer;
 
-      &:hover{
-        @include m-theme(){
+      &:hover {
+        @include m-theme() {
           color: themed($m-blue-grey-500) !important;
         }
         > i {
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-blue-grey-500) !important;
           }
         }
       }
 
-      > i{
+      > i {
         width: 100%;
         font-size: 16px;
         padding: 8px 2px;
@@ -151,7 +149,7 @@
     margin-right: 5px;
   }
 
-  .m-conversation-online{
+  .m-conversation-online {
     width: 8px;
     height: 8px;
     border-radius: 50%;
@@ -159,31 +157,29 @@
     flex-shrink: 0;
     position: absolute;
     right: 0;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-blue);
     }
   }
 
-  .m-conversation-new{
+  .m-conversation-new {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     justify-self: flex-end;
     flex-shrink: 0;
     position: absolute;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-green);
     }
   }
-
 }
 
-
-m-messenger--dockpane{
+m-messenger--dockpane {
   position: absolute;
   bottom: 0;
 
-  @media screen and (max-width:420px){
+  @media screen and (max-width: 420px) {
     position: relative;
     right: 0 !important;
   }

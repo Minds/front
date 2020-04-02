@@ -1,24 +1,41 @@
-<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-wire-console--rewards">
-  <p *ngIf="rewards && rewards.description"
+<div
+  class="mdl-card__supporting-text mdl-color-text--grey-600 m-wire-console--rewards"
+>
+  <p
+    *ngIf="rewards && rewards.description"
     class="m-wire-channel--description"
     [innerText]="rewards.description"
   ></p>
 
   <ng-container *ngIf="rewards">
-    <m-wire-console--rewards--inputs type="money" [channel]="minds.user" [rewards]="rewards.rewards.money" (rewardsChange)="onRewardsChange($event, 'money')"></m-wire-console--rewards--inputs>
-    <m-wire-console--rewards--inputs type="points" [channel]="minds.user" [rewards]="rewards.rewards.points" (rewardsChange)="onRewardsChange($event, 'points')"></m-wire-console--rewards--inputs>
-    <m-wire-console--rewards--inputs type="tokens" [channel]="minds.user" [rewards]="rewards.rewards.tokens" (rewardsChange)="onRewardsChange($event, 'tokens')"></m-wire-console--rewards--inputs>
+    <m-wire-console--rewards--inputs
+      type="money"
+      [channel]="user"
+      [rewards]="rewards.rewards.money"
+      (rewardsChange)="onRewardsChange($event, 'money')"
+    ></m-wire-console--rewards--inputs>
+    <m-wire-console--rewards--inputs
+      type="points"
+      [channel]="user"
+      [rewards]="rewards.rewards.points"
+      (rewardsChange)="onRewardsChange($event, 'points')"
+    ></m-wire-console--rewards--inputs>
+    <m-wire-console--rewards--inputs
+      type="tokens"
+      [channel]="user"
+      [rewards]="rewards.rewards.tokens"
+      (rewardsChange)="onRewardsChange($event, 'tokens')"
+    ></m-wire-console--rewards--inputs>
   </ng-container>
 
-  <button class="mdl-button mdl-button--colored"
+  <button
+    class="mdl-button mdl-button--colored"
     [hidden]="rewardsSaved"
     (click)="saveRewards()"
   >
     <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
   </button>
-  <button class="mdl-button mdl-button--colored"
-    [hidden]="!rewardsSaved"
-  >
+  <button class="mdl-button mdl-button--colored" [hidden]="!rewardsSaved">
     <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
   </button>
 </div>

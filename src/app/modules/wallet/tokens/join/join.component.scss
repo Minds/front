@@ -1,6 +1,6 @@
-.m-token-join{
+.m-token-join {
   padding: 16px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -39,7 +39,7 @@
     margin: 16px 0;
     border-radius: 3px;
     text-transform: capitalize;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red) !important;
     }
   }

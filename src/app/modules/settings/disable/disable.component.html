@@ -1,21 +1,39 @@
 <div class="m-settings--section m-border">
   <h4 i18n="@@MINDS__SETTINGS__DISABLE_CHANNEL">Disable Channel</h4>
 
-  <p>Disabling your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.</p>
+  <p>
+    Disabling your account will make your profile invisible. You will also not
+    receive emails or notifications. Your username will be reserved in case you
+    return to Minds.
+  </p>
 
   <div class="mdl-card__supporting-text">
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="disable()">
-     <ng-container i18n="@@MINDS__SETTINGS__DISABLE_CONFIRM">I'm sure - Disable</ng-container>
+    <button
+      class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red"
+      (click)="disable()"
+    >
+      <ng-container i18n="@@MINDS__SETTINGS__DISABLE_CONFIRM"
+        >I'm sure - Disable</ng-container
+      >
     </button>
   </div>
 </div>
 
 <div class="m-settings--section m-border">
   <h4 i18n="@@MINDS__SETTINGS__DELETE_CHANNEL">Delete Channel</h4>
-  <p>Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable.  Your username will be released back to the public. </p>
+  <p>
+    Warning: This is not reversible and will result in permanent loss of your
+    channel and all of your data. Your channel will not be recoverable. Your
+    username will be released back to the public.
+  </p>
   <div class="mdl-card__supporting-text">
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red" (click)="delete()">
-      <ng-container i18n="@@MINDS__SETTINGS__DELETE_CONFIRM">I'm sure - Delete</ng-container>
+    <button
+      class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red"
+      (click)="delete()"
+    >
+      <ng-container i18n="@@MINDS__SETTINGS__DELETE_CONFIRM"
+        >I'm sure - Delete</ng-container
+      >
     </button>
   </div>
 </div>

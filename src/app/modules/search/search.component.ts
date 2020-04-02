@@ -4,17 +4,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
 import { Storage } from '../../services/storage';
 import { Session } from '../../services/session';
 
 export type HybridSearchEntities = {
-  user: any[],
-  group: any[],
-  'object:video': any[],
-  'object:image': any[],
-  'object:blog': any[],
-  activity: any[],
+  user: any[];
+  group: any[];
+  'object:video': any[];
+  'object:image': any[];
+  'object:blog': any[];
+  activity: any[];
 };
 
 @Component({
@@ -22,11 +21,10 @@ export type HybridSearchEntities = {
   selector: 'm-search',
   templateUrl: 'search.component.html',
   host: {
-    '(window:click)': 'onWindowClick($event)'
-  }
+    '(window:click)': 'onWindowClick($event)',
+  },
 })
 export class SearchComponent {
-
   q: string = '';
   type: string = '';
   container: string = '';
@@ -52,9 +50,8 @@ export class SearchComponent {
     public client: Client,
     public route: ActivatedRoute,
     private router: Router,
-    public title: MindsTitle,
     private storage: Storage,
-    private session: Session,
+    private session: Session
   ) {
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']);
@@ -88,13 +85,10 @@ export class SearchComponent {
 
       this.search();
     });
-
-    this.title.setTitle('Search');
   }
 
   ngOnDestroy() {
-    if (this.paramsSubscription)
-      this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
   }
 
   /**
@@ -123,7 +117,7 @@ export class SearchComponent {
         container: this.container || '',
         limit: 12,
         rating: this.rating,
-        offset: this.offset
+        offset: this.offset,
       };
 
       if (searchType == 'hybrid') {
@@ -155,7 +149,7 @@ export class SearchComponent {
       }
 
       if (searchType == 'hybrid') {
-        this.hybridEntitiesPush(response.entities)
+        this.hybridEntitiesPush(response.entities);
       } else {
         this.entities.push(...(response.entities || []));
       }
@@ -165,7 +159,8 @@ export class SearchComponent {
       } else {
         this.moreData = false;
       }
-    } catch (e) { } finally {
+    } catch (e) {
+    } finally {
       this.inProgress = false;
     }
   }
@@ -210,10 +205,13 @@ export class SearchComponent {
   }
 
   saveOptions() {
-    this.storage.set('search:options', JSON.stringify({
-      mature: this.mature,
-      paywall: this.paywall
-    }));
+    this.storage.set(
+      'search:options',
+      JSON.stringify({
+        mature: this.mature,
+        paywall: this.paywall,
+      })
+    );
   }
 
   hasRef(ref: string) {
@@ -240,9 +238,9 @@ export class SearchComponent {
       'object:video': [],
       'object:image': [],
       'object:blog': [],
-      activity: []
-    }
-  };
+      activity: [],
+    };
+  }
 
   protected hybridEntitiesPush(entities: HybridSearchEntities) {
     if (!entities) {

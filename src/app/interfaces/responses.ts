@@ -1,9 +1,9 @@
 import { MindsUser, MindsGroup } from './entities';
 
 /*
-* Minds response object
-*/
-export interface MindsResponse { }
+ * Minds response object
+ */
+export interface MindsResponse {}
 
 export interface MindsChannelResponse extends MindsResponse {
   status: string;
@@ -17,11 +17,10 @@ export interface MindsBlogResponse extends MindsResponse {
 
 export interface MindsBlogListResponse extends MindsResponse {
   blogs: Array<any>;
-  entities: Array<any>
+  entities: Array<any>;
   'load-next': string;
   pageToken?: boolean;
 }
-
 
 export interface MindsUserConversationResponse extends MindsResponse {
   publickeys: any;

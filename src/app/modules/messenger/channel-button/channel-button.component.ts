@@ -1,47 +1,34 @@
-import { Component, ElementRef, ChangeDetectorRef, EventEmitter, Injector } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ChangeDetectorRef,
+  EventEmitter,
+  Injector,
+} from '@angular/core';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
-
 import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.service';
+import { MessengerConversationBuilderService } from '../dockpanes/conversation-builder.service';
+import { MindsUser } from '../../../interfaces/entities';
 
 @Component({
   selector: 'm-messenger--channel-button',
   templateUrl: 'channel-button.component.html',
-  inputs: ['user']
+  inputs: ['user'],
 })
-
 export class MessengerChannelButton {
-
-  minds: Minds = window.Minds;
-
-  user: any;
+  user: MindsUser;
 
   constructor(
     public session: Session,
     public client: Client,
     public dockpanes: MessengerConversationDockpanesService,
-  ) {
-  }
+    public conversationBuilder: MessengerConversationBuilderService
+  ) {}
 
   chat() {
-    let conversation = this.buildConversation();
-    this.dockpanes.open(conversation);
+    this.dockpanes.open(this.conversationBuilder.buildConversation(this.user));
   }
-
-  private buildConversation() {
-    return {
-      guid: this.permutate(),
-      participants: [this.user],
-      open: true
-    };
-  }
-
-  private permutate() {
-    let participants = [this.user.guid, this.session.getLoggedInUser().guid];
-    participants.sort((a, b) => a < b ? -1 : 1);
-    return participants.join(':');
-  }
-
 }

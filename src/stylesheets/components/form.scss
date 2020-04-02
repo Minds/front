@@ -1,5 +1,691 @@
 @import 'themes';
-.m-h1-input{
+@import 'defaults';
+
+// See settings-v2 for template usage examples
+.m-formWrapper {
+  ////////////////////////////////////////////
+  // LAYOUTS /////////////////////////////////
+  ////////////////////////////////////////////
+  // The form input and submit button
+  // are on a single line
+  .m-formLayout--buttonInline {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+    align-items: center;
+
+    m-shadowboxSubmitButton {
+      margin-top: 8px;
+      margin: 8px 0 0 18px;
+      .m-shadowboxSubmitButton {
+        min-height: 42px;
+        width: 100%;
+      }
+    }
+  }
+
+  .m-formLayout--buttonLeft,
+  .m-formLayout--buttonRight {
+    .m-form__fieldsContainer {
+      margin-bottom: 38px;
+    }
+
+    .m-form__buttonsContainer {
+      margin-top: 25px;
+      margin-bottom: 57px;
+    }
+
+    .stretchedField {
+      .m-form__row--input {
+        flex-flow: row nowrap;
+      }
+
+      .m-form__row--validation {
+        justify-content: flex-end;
+        align-self: unset;
+      }
+    }
+    @media screen and (max-width: $max-mobile) {
+      .m-form__row--label m-tooltip {
+        .m-tooltip--bubble {
+          right: 12px;
+        }
+      }
+    }
+  }
+
+  .m-formLayout--buttonRight {
+    .m-form__buttonsContainer {
+      justify-content: flex-end;
+    }
+  }
+
+  .m-formLayout--buttonLeft {
+    .m-form__buttonsContainer {
+      justify-content: flex-start;
+    }
+  }
+
+  ////////////////////////////////////////////
+  // FORM ////////////////////////////////////
+  ////////////////////////////////////////////
+  form {
+    margin: 0;
+    padding: 0;
+    .stretchedField {
+      .m-form__row--label m-tooltip {
+        .m-tooltip--bubble {
+          right: 12px;
+        }
+      }
+    }
+  }
+
+  .m-form__fieldsContainer {
+    flex: 1 1 auto;
+  }
+
+  .m-form__fieldGroupSpacer {
+    width: 100%;
+    height: 48px;
+  }
+
+  ////////////////////////////////////////////
+  // FIELDS  /////////////////////////////////
+  // Field types include:  ///////////////////
+  // text, checkbox, radio, color, ///////////
+  // grid ( used for dragDrop) ///////////////
+  ////////////////////////////////////////////
+  [class*='m-form__field--'] {
+    display: flex;
+    flex-flow: column nowrap;
+    position: relative;
+    margin-bottom: 28px;
+    font-size: 15px;
+    line-height: 20px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    &.hasValidationRow {
+      &:not(:last-child) {
+        margin-bottom: 2px;
+      }
+    }
+    // Stretched fields are as wide as possible
+    // and their tooltips are right-aligned
+    &.stretchedField {
+      .m-form__row--label {
+        m-tooltip {
+          margin-left: -12px;
+        }
+      }
+      .m-form__row--input {
+        flex-flow: row nowrap;
+      }
+      .m-form__row--validation {
+        align-self: flex-end;
+      }
+      label,
+      .m-form__row--validation {
+        flex: 1 1 auto;
+      }
+      input,
+      textarea,
+      select:not(.m-dateDropdowns__select) {
+        flex: 1 1 100%;
+      }
+      // todojm
+      @media screen and (max-width: 1000px) {
+        label,
+        input,
+        textarea {
+          flex: 1 1 100%;
+          min-width: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+  ////////////////////////////////////////////
+  // FIELD -- TEXT  //////////////////////////
+  // Includes textarea as well ///////////////
+  ////////////////////////////////////////////
+  input[type='text'],
+  input[type='number'],
+  input[type='password'] {
+    max-height: 42px;
+    cursor: text;
+  }
+
+  textarea {
+    appearance: none;
+    height: 6em;
+    resize: none;
+    width: 100%;
+    cursor: text;
+
+    &.m-form__codeTextarea {
+      cursor: default;
+      font-family: monospace;
+      font-weight: 300;
+      height: 12em;
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+  }
+  ////////////////////////////////////////////
+  // FIELD -- SELECT /////////////////////////
+  ////////////////////////////////////////////
+  .m-form__field--select {
+    .m-form__row--input {
+      position: relative;
+      overflow: hidden;
+      &::after {
+        content: '\25bc';
+        font-size: 10px;
+        position: absolute;
+        right: 18px;
+        top: 12px;
+        text-align: center;
+        pointer-events: none;
+
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+      }
+    }
+  }
+  select {
+    cursor: pointer;
+    box-sizing: border-box;
+    padding: 0 32px 0 20px;
+    height: 42px;
+    min-height: 42px;
+    appearance: none;
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+  }
+
+  ////////////////////////////////////////////
+  // FIELD -- CHECKBOX  //////////////////////
+  ////////////////////////////////////////////
+  .m-form__field--checkbox {
+    align-items: center;
+    flex-flow: row wrap;
+    m-formInput__checkbox {
+      .m-formInput__checkbox {
+        span,
+        label {
+          font-size: 14px;
+          line-height: 19px;
+        }
+      }
+    }
+  }
+  input[type='checkbox'] {
+    cursor: pointer;
+  }
+  ////////////////////////////////////////////
+  // FIELD -- RADIO  /////////////////////////
+  ////////////////////////////////////////////
+  .m-form__field--radio {
+    align-items: center;
+    flex-flow: row wrap;
+    .m-form__row--label {
+      margin-bottom: 21px;
+    }
+    .m-form__row--input {
+      width: 100%;
+    }
+  }
+  input[type='radio'] {
+    margin: 0 24px 12px 0;
+    cursor: pointer;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+  ////////////////////////////////////////////
+  // FIELD -- GRID  //////////////////////////
+  ////////////////////////////////////////////
+  .m-form__field--grid {
+    .m-form__row--label {
+      button {
+        cursor: pointer;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 300;
+        border-radius: 2px;
+        padding: 4px 12px;
+        transition: all 0.3s ease;
+        margin-left: auto;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+          border: 1px solid themed($m-borderColor--primary);
+          background-color: rgba(themed($m-black), 0);
+        }
+        &:hover {
+          transform: scale(1.04);
+          @include m-theme() {
+            box-shadow: 0 3px 2px -5px rgba(themed($m-black), 0.1),
+              0 2px 2px 0 rgba(themed($m-black), 0.04),
+              0 1px 4px 0 rgba(themed($m-black), 0.05);
+          }
+        }
+        &:active {
+          transform: scale(0.98);
+          @include m-theme() {
+            box-shadow: 0 3px 1px -6px rgba(themed($m-black), 0.12),
+              0 0px 1px 0 rgba(themed($m-black), 0.07),
+              0 1px 2px 0 rgba(themed($m-black), 0.08);
+          }
+        }
+
+        &:disabled,
+        &[disabled] {
+          cursor: default;
+          @include m-theme() {
+            color: themed($m-textColor--tertiary);
+          }
+          &:hover {
+            @include m-theme() {
+              border-color: themed($m-borderColor--primary);
+            }
+          }
+        }
+      }
+    }
+  }
+  ////////////////////////////////////////////
+  // FIELD -- ASSET //////////////////////////
+  ////////////////////////////////////////////
+  [class*='m-form__filePreview'] {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 0;
+    @include m-theme() {
+      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+    }
+
+    &[class*='Overlay'] {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      @include m-theme() {
+        background: rgba(themed($m-black-always), 0.4);
+      }
+      &:hover {
+        opacity: 1;
+      }
+      &.m-form__filePreviewOverlay--show {
+        opacity: 0.6;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    > i.material-icons {
+      font-size: 3em;
+      @include m-theme() {
+        color: themed($m-white-always);
+      }
+    }
+  }
+  input[type='file'] {
+    position: absolute;
+    -webkit-appearance: none;
+    width: 0.1px;
+    height: 0.1px;
+    z-index: -1;
+    opacity: 0.01;
+    top: -1px;
+    left: -1px;
+  }
+  ////////////////////////////////////////////
+  // FIELD -- COLOR  /////////////////////////
+  ////////////////////////////////////////////
+  .m-form__field--color {
+    .m-form__row--input {
+      input {
+        width: 120px;
+        box-sizing: border-box;
+      }
+    }
+  }
+  .m-form__colorPreview {
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    margin-left: 15px;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+    @include m-theme() {
+      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    input {
+      visibility: hidden;
+    }
+  }
+  ////////////////////////////////////////////
+  // ROWS  ///////////////////////////////////
+  // Most fields will have these rows: ///////
+  // label, input, validation (optional) /////
+  ////////////////////////////////////////////
+  [class*='m-form__row'] {
+    display: flex;
+    flex-flow: row wrap;
+    box-sizing: border-box;
+  }
+  ////////////////////////////////////////////
+  // ROW -- LABEL  ///////////////////////////
+  ////////////////////////////////////////////
+  .m-form__row--label {
+    font-size: 15px;
+    line-height: 20px;
+    margin: 0 0 12px 0;
+    align-items: center;
+    flex-flow: row nowrap;
+    position: relative;
+    font-weight: 300;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  ////////////////////////////////////////////
+  // ROW -- INPUT  ///////////////////////////
+  ////////////////////////////////////////////
+  .m-form__row--input {
+    &.invalid {
+      input,
+      select,
+      textarea,
+      .m-phoneInput__wrapper {
+        @include m-theme() {
+          border-color: themed($m-alert) !important;
+        }
+      }
+    }
+  }
+
+  input,
+  textarea,
+  select {
+    outline: 0;
+    &:not(:read-only):not(:-moz-read-only) {
+      cursor: default;
+    }
+  }
+
+  input:not(.m-phoneInput__input):not(.m-draggableList__cell),
+  .m-phoneInput__wrapper,
+  textarea,
+  select {
+    border-radius: 2px;
+    @include m-theme() {
+      box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+    &:focus {
+      &:not(:read-only) {
+        @include m-theme() {
+          border-color: themed($m-blue);
+        }
+      }
+    }
+  }
+
+  input[type='text'],
+  input[type='password'],
+  input[type='number'],
+  textarea,
+  select {
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 300;
+    width: 0;
+    min-width: 0;
+    padding: 10px 20px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  ////////////////////////////////////////////
+  // ROW -- VALIDATION  //////////////////////
+  ////////////////////////////////////////////
+  .m-form__row--validation {
+    margin-top: 3px;
+    min-height: 22px;
+    @include m-theme() {
+      color: themed($m-alert);
+    }
+    p {
+      font-size: 14px;
+      line-height: 19px;
+      margin: 0;
+      font-weight: 300;
+      @include m-theme() {
+        color: themed($m-alert);
+      }
+    }
+  }
+
+  ////////////////////////////////////////////
+  // CUSTOM INPUTS  //////////////////////////
+  // a.k.a. checkboxes & radios //////////////
+  ////////////////////////////////////////////
+  [class*='m-form__customInputWrapper'] {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    &[class*='__radio'] {
+      margin: 0 24px 12px 0;
+      padding-left: 30px;
+    }
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+      &:checked ~ [class*='m-form__customInput'] {
+        &[class*='__checkbox'] {
+          @include m-theme() {
+            background-color: themed($m-blue);
+          }
+        }
+        &:after {
+          display: block;
+        }
+      }
+    }
+    [class*='m-form__customInput'] {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      transition: all 0.3s ease;
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+        border: 1px solid themed($m-borderColor--primary);
+      }
+      &[class*='__checkbox'] {
+        border-radius: 2px;
+        @include m-theme() {
+          background-color: themed($m-bgColor--secondary);
+        }
+        &:after {
+          left: 7px;
+          top: 2px;
+          width: 5px;
+          height: 12px;
+          @include m-theme() {
+            border: 1px solid themed($m-white);
+            border-top: none;
+            border-left: none;
+          }
+        }
+      }
+      &[class*='__radio'] {
+        border-radius: 50%;
+        @include m-theme() {
+          background-color: themed($m-grey-50);
+        }
+        &:after {
+          border-radius: 50%;
+          left: 3px;
+          top: 3px;
+          width: 0px;
+          height: 0px;
+          @include m-theme() {
+            border: 7px solid themed($m-blue);
+          }
+        }
+      }
+
+      &:after {
+        content: '';
+        position: absolute;
+        display: none;
+
+        -webkit-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  ////////////////////////////////////////////
+  // BUTTONS  ////////////////////////////////
+  ////////////////////////////////////////////
+  .m-form__buttonsContainer {
+    display: flex;
+    flex-flow: row wrap-reverse;
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+    }
+    m-shadowboxSubmitButton {
+      margin: 8px 0 0 18px;
+      &:first-child {
+        margin-left: 0px;
+      }
+
+      @media screen and (max-width: $max-mobile) {
+        width: 100%;
+        margin: 8px 0 0 0;
+        .m-shadowboxSubmitButton {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  ////////////////////////////////////////////
+  // TOOLTIPS ////////////////////////////////
+  ////////////////////////////////////////////
+  m-tooltip {
+    margin-left: 10px;
+    .m-tooltip {
+      margin: 0;
+      > span {
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+      }
+    }
+    .m-tooltip--bubble {
+      bottom: 18px;
+      margin-left: 12px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      @include m-theme() {
+        background-color: themed($m-blue);
+        color: themed($m-white);
+      }
+    }
+  }
+  ////////////////////////////////////////////
+  // OVERRIDES  //////////////////////////////
+  ////////////////////////////////////////////
+
+  m-phoneInput {
+    margin-bottom: 0;
+    .m-phoneInput__wrapper {
+      width: 100%;
+      min-width: 240px;
+    }
+    .m-phoneInput__dialCode {
+      font-weight: 300;
+    }
+    .m-phoneInput__input {
+      font-size: 15px;
+      line-height: 20px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  m-date__dropdowns {
+    .m-dateDropdowns__selectWrapper {
+      &:nth-child(1) {
+        min-width: 136px;
+        @media screen and (max-width: $max-mobile) {
+          min-width: 126px;
+        }
+      }
+      &:nth-child(2) {
+        min-width: 69px;
+        @media screen and (max-width: $max-mobile) {
+          min-width: 59px;
+        }
+      }
+      &:nth-child(3) {
+        min-width: 94px;
+        @media screen and (max-width: $max-mobile) {
+          min-width: 84px;
+        }
+      }
+      &::after {
+        margin: 3px 2px 0 0;
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+      }
+    }
+  }
+}
+// End .m-formWrapper
+
+////////////////////////////////////////////
+// LEGACY //////////////////////////////////
+////////////////////////////////////////////
+.m-h1-input {
   font-size: 56px;
   border: 0;
   background: none;
@@ -7,21 +693,21 @@
   font-weight: 400;
 }
 
-.m-input{
+.m-input {
   background: none;
   font-weight: 400;
   padding: 12px;
   font-size: 14px;
   width: 100%;
-  @include m-theme(){
-     border: 1px solid themed($m-grey-50);
-     background-color: themed($m-white) !important;
-     color: rgba(themed($m-black), 0.87) !important;
+  @include m-theme() {
+    border: 1px solid themed($m-grey-50);
+    background-color: themed($m-bgColor--primary) !important;
+    color: rgba(themed($m-textColor--primary), 0.87) !important;
   }
 }
 
-
-.m-form-select, select.m-form-select{
+.m-form-select,
+select.m-form-select {
   width: auto;
   flex: 1;
   padding: 8px;
@@ -32,6 +718,6 @@
 }
 
 // No step spinners on ffox
-input[type="number"] {
+input[type='number'] {
   appearance: textfield;
 }

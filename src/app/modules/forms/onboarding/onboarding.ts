@@ -4,16 +4,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Client, Upload } from '../../../services/api';
 import { Session } from '../../../services/session';
 
-
 @Component({
   moduleId: module.id,
   selector: 'minds-form-onboarding',
   outputs: ['done'],
-  templateUrl: 'onboarding.html'
+  templateUrl: 'onboarding.html',
 })
-
 export class OnboardingForm {
-
   error: string = '';
   inProgress: boolean = false;
   referrer: string;
@@ -24,7 +21,12 @@ export class OnboardingForm {
 
   done: EventEmitter<any> = new EventEmitter();
 
-  constructor(public session: Session, public client: Client, public upload: Upload, fb: FormBuilder) {
+  constructor(
+    public session: Session,
+    public client: Client,
+    public upload: Upload,
+    fb: FormBuilder
+  ) {
     this.form = fb.group({
       briefdescription: [''],
       dob: [''],
@@ -33,14 +35,14 @@ export class OnboardingForm {
   }
 
   submit(e) {
-
     e.preventDefault();
     this.inProgress = true;
 
     let info = this.form.value;
     info.gender = this.gender;
 
-    this.client.post('api/v1/channel/info', info)
+    this.client
+      .post('api/v1/channel/info', info)
       .then((data: any) => {
         // TODO: [emi/sprint/bison] Find a way to reset controls. Old implementation throws Exception;
 
@@ -48,7 +50,7 @@ export class OnboardingForm {
 
         this.done.next(data.user);
       })
-      .catch((e) => {
+      .catch(e => {
         console.log(e);
         this.inProgress = false;
 
@@ -58,9 +60,10 @@ export class OnboardingForm {
 
   addAvatar(file) {
     console.log(file);
-    this.upload.post('api/v1/channel/avatar', [file], { filekey: 'file' })
+    this.upload
+      .post('api/v1/channel/avatar', [file], { filekey: 'file' })
       .then((response: any) => {
-        window.Minds.user.icontime = Date.now();
+        this.session.getLoggedInUser().icontime = Date.now();
       });
   }
 
@@ -70,11 +73,13 @@ export class OnboardingForm {
 
     var reader = new FileReader();
     reader.onloadend = () => {
-      this.banner = typeof reader.result === 'string' ? reader.result : reader.result.toString();
+      this.banner =
+        typeof reader.result === 'string'
+          ? reader.result
+          : reader.result.toString();
     };
     reader.readAsDataURL(file);
 
     this.upload.post('api/v1/channel/carousel', [file], { top: 0 });
   }
-
 }

@@ -1,0 +1,249 @@
+<div class="mdl-tabs__tab-bar">
+  <a
+    [routerLink]="['/admin/boosts/newsfeed']"
+    class="mdl-tabs__tab"
+    [ngClass]="{'is-active': type == 'newsfeed'}"
+    i18n="@@MINDS__ADMIN__BOOSTS__NEWSFEED_TAB"
+    >Newsfeed ({{newsfeed_count}})</a
+  >
+  <a
+    [routerLink]="['/admin/boosts/content']"
+    class="mdl-tabs__tab"
+    [ngClass]="{'is-active': type == 'content'}"
+    i18n="@@MINDS__ADMIN__BOOSTS__CONTENT_TAB"
+    >Content ({{content_count}})</a
+  >
+</div>
+
+<div
+  class="mdl-grid mdl-card mdl-shadow--4dp m-admin-boosts-statistics"
+  *ngIf="statistics"
+>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3 i18n="@@MINDS__ADMIN__BOOSTS__IN_REVIEW_STATS">In Review</h3>
+    <span class="m-value">{{ statistics.reviewQueue | number }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3 i18n="@@MINDS__ADMIN__BOOSTS__BACKLOG_STATS">Backlog (all)</h3>
+    <span class="m-value">{{ statistics.backlog | number }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3 i18n="@@MINDS__ADMIN__BOOSTS__BACKLOG_PRIORITY_STATS">
+      Backlog (priority)
+    </h3>
+    <span class="m-value">{{ statistics.priorityBacklog | number }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3 i18n="@@MINDS__ADMIN__BOOSTS__IMPRESSIONS_STATS">
+      Impressions (backlog)
+    </h3>
+    <span class="m-value">{{ statistics.impressions | number }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3 i18n="@@MINDS__ADMIN__BOOSTS__AVG_IMPRESSIONS_STATS">
+      Avg. Impressions (backlog)
+    </h3>
+    <span class="m-value">{{ statistics.avgImpressions | number }}</span>
+  </div>
+  <div class="mdl-cell mdl-cell--4-col m-admin-boost-stat">
+    <h3 i18n="@@MINDS__ADMIN__BOOSTS__AVG_APPROVAL_TIME_STATS">
+      Avg. Approval Time
+    </h3>
+    <span class="m-value">{{ _duration(statistics.avgApprovalTime) }}</span>
+  </div>
+  <div
+    class="mdl-cell mdl-cell--12-col m-admin-boost-stat-note"
+    i18n="@@MINDS__ADMIN__BOOSTS__LAST_UPDATED_STATS"
+  >
+    Updated {{ statistics.timestamp * 1000 | date:'medium' }}
+  </div>
+</div>
+
+<div class="mdl-grid minds-boosts m-admin-boosts-container">
+  <!-- Daily active users -->
+  <div class="mdl-cell mdl-cell--12-col">
+    <div
+      class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"
+      [hidden]="boosts.length > 0 || !inProgress"
+    ></div>
+
+    <div class="mdl-card__supporting-text" [hidden]="inProgress || moreData">
+      <ng-container i18n="@@MINDS__ADMIN__BOOSTS__NO_MORE_BOOSTS"
+        >There are no more boosts to approve</ng-container
+      >
+    </div>
+
+    <div
+      class="mdl-card mdl-shadow--4dp boost"
+      *ngFor="let boost of boosts; let i = index"
+    >
+      <!-- Supports multiple type.. we should implemenet a reusable component in the future -->
+      <minds-card-video
+        [object]="boost.entity"
+        class="mdl-card mdl-shadow--8dp"
+        *ngIf="boost.entity.subtype == 'video'"
+      ></minds-card-video>
+      <minds-card-image
+        [object]="boost.entity"
+        class="mdl-card mdl-shadow--8dp"
+        *ngIf="boost.entity.subtype == 'image'"
+      ></minds-card-image>
+      <minds-card-blog
+        [object]="boost.entity"
+        class="mdl-card mdl-shadow--8dp"
+        *ngIf="boost.entity.subtype == 'blog'"
+      ></minds-card-blog>
+      <minds-card-user
+        [object]="boost.entity"
+        class="mdl-card mdl-shadow--8dp"
+        *ngIf="boost.entity.type == 'user'"
+      ></minds-card-user>
+      <minds-activity
+        [object]="boost.entity"
+        class="mdl-card mdl-shadow--8dp"
+        *ngIf="boost.entity.type == 'activity'"
+        [attr.data-minds-activity-guid]="boost.entity.guid"
+      ></minds-activity>
+      <minds-card-group
+        [group]="boost.entity"
+        class="mdl-card mdl-shadow--8dp"
+        *ngIf="boost.entity.type == 'group'"
+      ></minds-card-group>
+
+      <div
+        class="mdl-card__supporting-text quality-slider"
+        *ngIf="boost.state == 'created'"
+      >
+        <ng-container i18n="@@MINDS__ADMIN__BOOSTS__QUALITY_SLIDER_LABEL"
+          >Quality:
+        </ng-container>
+        <div class="m--inputs">
+          <input
+            type="range"
+            class="mdl-slider mdl-js-slider"
+            [(ngModel)]="boost.quality"
+            min="0"
+            max="100"
+            step="5"
+            [mdlSlider]
+          />
+          <input
+            type="number"
+            min="0"
+            max="100"
+            step="5"
+            [(ngModel)]="boost.quality"
+          />
+        </div>
+      </div>
+
+      <div
+        class="m-previously-rejected-notice"
+        *ngIf="boost.entity.boost_rejection_reason && boost.entity.boost_rejection_reason != -1"
+      >
+        <i class="material-icons">warning</i>
+        <ng-container i18n="@@MINDS__ADMIN__BOOSTS__PREVIOUSLY_REJECTED_LABEL"
+          >Previously rejected: {{
+          findReason(boost.entity.boost_rejection_reason)?.label
+          }}</ng-container
+        >
+      </div>
+
+      <span class="mdl-card__supporting-text impressions">
+        <span *ngIf="boost.impressions" i18n="@@M__COMMON__VIEWS_WITH_COUNT"
+          >{{ boost.impressions | number }} views</span
+        >
+        |
+        <span
+          *ngIf="boost.bid_type == 'points'"
+          i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_POINTS_LABEL"
+          >Bid: {{ boost.bid | number }} points</span
+        >
+        <span
+          *ngIf="boost.bid_type == 'usd'"
+          i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_USD_LABEL"
+          >Bid: {{ boost.bid / 100 | currency:'USD':true }} USD
+        </span>
+        <span
+          *ngIf="boost.bid_type == 'tokens'"
+          i18n="@@MINDS__ADMIN__BOOSTS__BOOST_BID_TOKENS_LABEL"
+          >Bid: {{ boost.bid | token: 18 | number:'1.0-4' }} Tokens</span
+        >
+        |
+        <span>Created: {{ boost['@created'] | date:'medium' }}</span>
+      </span>
+
+      <div
+        class="mdl-card__supporting-text action-buttons"
+        *ngIf="boost.state != 'created'"
+        i18n="@@MINDS__ADMIN__BOOSTS__NOT_REVIEW_STATE"
+      >
+        This boost is in {{ boost.state }} state.
+      </div>
+
+      <div
+        class="mdl-card__supporting-text action-buttons"
+        *ngIf="boost.transaction_id && boost.transaction_id.indexOf('0x') === 0"
+      >
+        <a
+          href="https://etherscan.com/tx/{{boost.transaction_id}}"
+          target="_blank"
+          >Etherscan: {{boost.transaction_id}}</a
+        >
+      </div>
+
+      <div
+        class="mdl-card__supporting-text action-buttons"
+        *ngIf="boost.state == 'created'"
+      >
+        <button
+          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--accept-button m-admin-button--green"
+          (click)="accept(boost, false)"
+          i18n="@@M__ACTION__ACCEPT"
+        >
+          Accept
+        </button>
+        <button
+          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--open-button m-admin-button--green-dark"
+          (click)="accept(boost, true)"
+          i18n="safe boost|Open as a safe boost@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_OPEN"
+        >
+          Open
+        </button>
+        <button
+          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--e-tag-button-accept m-admin-button--green-dark"
+          (click)="accept(boost, true, { mature: 1 })"
+          i18n="Open as an explicit boost@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_OPEN_EXPLICIT"
+        >
+          Open (E-tag)
+        </button>
+        <button
+          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--reject-button m-admin-button--red"
+          (click)="openReasonsModal(boost)"
+          i18n="@@M__ACTION__REJECT"
+        >
+          Reject
+        </button>
+        <button
+          class="mdl-button mdl-button--raised mdl-button--colored m-admin-boosts--e-tag-button m-admin-button--red"
+          (click)="eTag(boost)"
+          i18n="E-tag as mark as explicit@@MINDS__ADMIN__BOOSTS__BOOST_ACTION_EXPLICIT"
+        >
+          E-tag
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<m--rejection-reason-modal
+  #reasonModal
+  *ngIf="reasonModalOpened"
+  [boost]="selectedBoost"
+  [closeAfterAction]="true"
+  (closed)="reasonModalOpened = false"
+  (actioned)="reject($event)"
+  yesButton="Reject Boost"
+  i18n-yesButton="@@MINDS__ADMIN__BOOSTS__BOOST_MODAL__YES_BUTTON"
+  noButton="Cancel"
+  i18n-noButton="@@M__ACTION__CANCEL"
+></m--rejection-reason-modal>

@@ -1,26 +1,28 @@
 <ul
-    *ngIf="choices?.length > 0"
-    #dropdownMenu
-    class="dropdown-menu"
-    [style.top.px]="position?.top"
-    [style.left.px]="position?.left">
-    <li
-        *ngFor="let choice of choices; trackBy:trackById"
-        [class.active]="activeChoice === choice"
+  *ngIf="choices?.length > 0"
+  #dropdownMenu
+  class="dropdown-menu"
+  [style.top.px]="position?.top"
+  [style.left.px]="position?.left"
+>
+  <li
+    *ngFor="let choice of choices; trackBy: trackById"
+    [class.active]="activeChoice === choice"
+  >
+    <ng-container
+      [ngTemplateOutlet]="itemTemplate"
+      [ngTemplateOutletContext]="{ choice: choice, selectChoice: selectChoice }"
     >
-        <ng-container
-            [ngTemplateOutlet]="itemTemplate"
-            [ngTemplateOutletContext]="{choice: choice, selectChoice: selectChoice}"
-        >
-        </ng-container>
-    </li>
+    </ng-container>
+  </li>
 </ul>
 
-<ng-template #defaultItemTemplate let-choice="choice" let-selectChoice="selectChoice">
-    <a
-        href="javascript:;"
-        (click)="selectChoice.next(choice)"
-    >
-        {{ choice }}
-    </a>
+<ng-template
+  #defaultItemTemplate
+  let-choice="choice"
+  let-selectChoice="selectChoice"
+>
+  <a href="javascript:;" (click)="selectChoice.next(choice)">
+    {{ choice }}
+  </a>
 </ng-template>

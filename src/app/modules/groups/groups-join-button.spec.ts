@@ -10,12 +10,12 @@ import { clientMock } from '../../../tests/client-mock.spec';
 import { uploadMock } from '../../../tests/upload-mock.spec';
 
 import { GroupsJoinButton } from './groups-join-button';
-import { GroupsService } from './groups-service';
+import { GroupsService } from './groups.service';
 import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
-import { RouterTestingModule } from "@angular/router/testing";
-import { LoginReferrerService } from "../../services/login-referrer.service";
-import { loginReferrerServiceMock } from "../../mocks/services/login-referrer-service-mock.spec";
+import { RouterTestingModule } from '@angular/router/testing';
+import { LoginReferrerService } from '../../services/login-referrer.service';
+import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
 
 describe('GroupsJoinButton', () => {
   let fixture: ComponentFixture<GroupsJoinButton>;
@@ -24,14 +24,17 @@ describe('GroupsJoinButton', () => {
   /** Helpers */
 
   function setGroup(props: any) {
-    comp._group = Object.assign({
-      guid: 1000,
-      'is:banned': false,
-      'is:awaiting': false,
-      'is:invited': false,
-      'is:member': false,
-      membership: 2
-    }, props);
+    comp._group = Object.assign(
+      {
+        guid: 1000,
+        'is:banned': false,
+        'is:awaiting': false,
+        'is:invited': false,
+        'is:member': false,
+        membership: 2,
+      },
+      props
+    );
   }
 
   function getJoinButtons(): DebugElement[] {
@@ -54,18 +57,13 @@ describe('GroupsJoinButton', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        SignupOnActionModalMock,
-        GroupsJoinButton
-      ],
-      imports: [
-        RouterTestingModule
-      ],
+      declarations: [SignupOnActionModalMock, GroupsJoinButton],
+      imports: [RouterTestingModule],
       providers: [
         { provide: Session, useValue: sessionMock },
-        { provide: GroupsService, deps: [ clientMock, uploadMock ] },
+        { provide: GroupsService, deps: [clientMock, uploadMock] },
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
-      ]
+      ],
     }).compileComponents();
   }));
 
@@ -82,7 +80,7 @@ describe('GroupsJoinButton', () => {
       'is:banned': false,
       'is:awaiting': false,
       'is:invited': false,
-      'is:member': false
+      'is:member': false,
     });
     fixture.detectChanges();
 
@@ -94,7 +92,7 @@ describe('GroupsJoinButton', () => {
       'is:banned': true,
       'is:awaiting': false,
       'is:invited': false,
-      'is:member': false
+      'is:member': false,
     });
     fixture.detectChanges();
 
@@ -106,7 +104,7 @@ describe('GroupsJoinButton', () => {
       'is:banned': false,
       'is:awaiting': false,
       'is:invited': true,
-      'is:member': false
+      'is:member': false,
     });
     fixture.detectChanges();
 
@@ -118,7 +116,7 @@ describe('GroupsJoinButton', () => {
       'is:banned': false,
       'is:awaiting': false,
       'is:invited': false,
-      'is:member': true
+      'is:member': true,
     });
     fixture.detectChanges();
 
@@ -130,7 +128,7 @@ describe('GroupsJoinButton', () => {
       'is:banned': false,
       'is:awaiting': true,
       'is:invited': false,
-      'is:member': false
+      'is:member': false,
     });
     fixture.detectChanges();
 

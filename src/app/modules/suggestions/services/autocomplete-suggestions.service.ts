@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Client } from "../../../services/api/client";
-import autobind from "../../../helpers/autobind";
+import { Client } from '../../../services/api/client';
+import autobind from '../../../helpers/autobind';
 
 @Injectable()
 export class AutocompleteSuggestionsService {
-
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   @autobind()
   async findSuggestions(searchText: string, triggerCharacter: string) {
-    if (searchText == '')
-      return;
+    if (searchText == '') return;
 
     let url = 'api/v2/search/suggest';
 
@@ -23,15 +20,18 @@ export class AutocompleteSuggestionsService {
     let result;
     switch (triggerCharacter) {
       case '#':
-        result = response.tags.filter(item => item.toLowerCase().includes(searchText.toLowerCase()));
+        result = response.tags.filter(item =>
+          item.toLowerCase().includes(searchText.toLowerCase())
+        );
         break;
       case '@':
-        result = response.entities
-          .filter(item => item.username.toLowerCase().includes(searchText.toLowerCase()));
+        result = response.entities.filter(item =>
+          item.username.toLowerCase().includes(searchText.toLowerCase())
+        );
         break;
     }
 
-    return result.slice(0,5);
+    return result.slice(0, 5);
   }
 
   getChoiceLabel(choice: any, triggerCharacter: string) {

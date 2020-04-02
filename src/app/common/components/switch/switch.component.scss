@@ -29,8 +29,8 @@ m-switch {
     height: 10px;
     border-radius: 8px;
     transition: border-color 0.15s ease-out;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-100);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
     }
 
     .m-switch__thumb {
@@ -43,20 +43,20 @@ m-switch {
       top: 50%;
       left: calc(50% - 2px); // exact center
       transition: transform 0.15s ease-out, background 0.15s ease-out;
-      @include m-theme(){
-         background-color: themed($m-grey-100);
+      @include m-theme() {
+        background-color: themed($m-grey-100);
       }
     }
   }
 
   .m-switch--enabled.m-switch--toggled .m-switch__track {
-    @include m-theme(){
-       border-color: themed($m-blue);
+    @include m-theme() {
+      border-color: themed($m-blue);
     }
 
     .m-switch__thumb {
-      @include m-theme(){
-         background-color: themed($m-blue);
+      @include m-theme() {
+        background-color: themed($m-blue);
       }
     }
   }
@@ -80,7 +80,8 @@ m-switch {
   }
 
   .m-switch--enabled {
-    .m-switch__track, .m-switch__label {
+    .m-switch__track,
+    .m-switch__label {
       cursor: pointer;
     }
   }

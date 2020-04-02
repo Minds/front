@@ -1,31 +1,39 @@
-@import "defaults";
+@import 'defaults';
 
-minds-notification.mdl-card{
-  width:100%;
-  min-height:0;
-  padding:$minds-padding * 2;
-  margin-bottom:$minds-margin*2;
+minds-notification.mdl-card {
+  width: 100%;
+  min-height: 0;
+  padding: $minds-padding * 2;
+  margin-bottom: $minds-margin * 2;
 
   display: flex;
   flex-direction: row;
 
-  .avatar{
-    display: flex;
-    flex-direction: column;
-
-    img{
-      border-radius: 50%;
-      max-height:50px;
+  &:not(.mdl-shadow--2dp) {
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      border-bottom: 1px solid themed($m-borderColor--primary);
     }
   }
 
-  .body{
-    padding:0 $minds-padding*2;
+  .avatar {
+    display: flex;
+    flex-direction: column;
 
+    img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+    }
+  }
 
-    a{
+  .body {
+    padding: 0 $minds-padding * 2;
+
+    a {
       text-decoration: none;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-900);
       }
     }
@@ -35,18 +43,21 @@ minds-notification.mdl-card{
       vertical-align: baseline;
     }
 
-    p{
-      padding:0;
-      margin:0;
+    p {
+      padding: 0;
+      margin: 0;
     }
 
-    .ts{
-      font-size:11px;
+    .ts {
+      font-size: 11px;
     }
   }
 }
 
 minds-notifications {
+  grid-area: content/span 2;
+  min-width: 0;
+
   .m-notifications--load-new {
     text-transform: uppercase;
     font-family: 'Roboto', Helvetica, sans-serif;
@@ -65,7 +76,6 @@ minds-notifications {
   }
 
   .mdl-tabs__tab {
-
     overflow: visible;
     flex: 1;
 
@@ -73,7 +83,8 @@ minds-notifications {
       display: inline-block;
     }
 
-    .m-icon, .material-icons {
+    .m-icon,
+    .material-icons {
       line-height: 2em;
       margin-left: 0.35em;
       vertical-align: middle;
@@ -103,27 +114,59 @@ minds-notifications {
     }
   }
 
-  .notifications-grid{
+  .notifications-grid {
     // Styles for notifications page list
   }
 }
 
-m-notifications--topbar-toggle{
-  i { cursor: pointer }
-  .counter { cursor: default }
+m-notifications--topbar-toggle {
+  &.m-notificationsTopbarToggle--newNav {
+    .m-notifications--topbar-toggle--icon {
+      font-size: 15px;
+
+      display: flex;
+      align-items: center;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-notifications--topbar-toggle--icon--active i {
+      margin-right: 6px;
+
+      &::after {
+        @include m-theme() {
+          background-color: themed($m-alert);
+        }
+      }
+    }
+  }
+
+  i {
+    cursor: pointer;
+  }
+
+  .counter {
+    cursor: default;
+  }
 
   .m-notifications--topbar-toggle--icon--active {
-    &::after {
-      border-radius: 50%;
-      display: block;
-      height: 8px;
-      width: 8px;
-      content: "";
-      position: absolute;
-      top: -2px;
-      right: 2px;
-      @include m-theme(){
-        background-color: themed($m-blue);
+    i {
+      position: relative;
+
+      &::after {
+        border-radius: 50%;
+        display: block;
+        height: 8px;
+        width: 8px;
+        content: '';
+        position: absolute;
+        top: -2px;
+        right: 2px;
+        @include m-theme() {
+          background-color: themed($m-blue);
+        }
       }
     }
   }
@@ -138,7 +181,9 @@ m-notifications--topbar-toggle{
   }
 }
 
-.m-v2-topbar__UserMenu m-notifications--topbar-toggle .m-notifications--topbar-toggle--icon--active::after {
+.m-v2-topbar__UserMenu
+  m-notifications--topbar-toggle
+  .m-notifications--topbar-toggle--icon--active::after {
   top: -12px;
   right: 0px;
 }

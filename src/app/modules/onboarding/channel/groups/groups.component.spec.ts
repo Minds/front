@@ -1,42 +1,36 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { GroupsOnboardingComponent } from "./groups.component";
-import { MockComponent } from "../../../../utils/mock";
-import { Client } from "../../../../services/api/client";
-import { clientMock } from "../../../../../tests/client-mock.spec";
-import { Upload } from "../../../../services/api/upload";
-import { uploadMock } from "../../../../../tests/upload-mock.spec";
-import { Session } from "../../../../services/session";
-import { sessionMock } from "../../../../../tests/session-mock.spec";
-import { By } from "@angular/platform-browser";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { GroupsOnboardingComponent } from './groups.component';
+import { MockComponent } from '../../../../utils/mock';
+import { Client } from '../../../../services/api/client';
+import { clientMock } from '../../../../../tests/client-mock.spec';
+import { Upload } from '../../../../services/api/upload';
+import { uploadMock } from '../../../../../tests/upload-mock.spec';
+import { Session } from '../../../../services/session';
+import { sessionMock } from '../../../../../tests/session-mock.spec';
+import { By } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('GroupsOnboardingComponent', () => {
-
   let comp: GroupsOnboardingComponent;
   let fixture: ComponentFixture<GroupsOnboardingComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-      ],
+      imports: [FormsModule, ReactiveFormsModule],
       declarations: [
         MockComponent({
           selector: 'm-suggestions__sidebarGroups',
           inputs: [],
-          outputs: []
+          outputs: [],
         }),
-        GroupsOnboardingComponent
+        GroupsOnboardingComponent,
       ],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Session, useValue: sessionMock },
-      ]
-    })
-        .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -44,15 +38,6 @@ describe('GroupsOnboardingComponent', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(GroupsOnboardingComponent);
-
-    window.Minds = <any>{
-      user: {
-        guid: 1,
-        name: 'test',
-        briefdescription: '',
-        opted_in_hashtags: 1
-      }
-    };
 
     clientMock.response = {};
 
@@ -65,11 +50,14 @@ describe('GroupsOnboardingComponent', () => {
   });
 
   it('should have a title', () => {
-    expect(fixture.debugElement.query(By.css('h2')).nativeElement.textContent).toBe('Join some popular groups');
+    expect(
+      fixture.debugElement.query(By.css('h2')).nativeElement.textContent
+    ).toBe('Join some popular groups');
   });
 
   it('should have an instance of m-suggestions__sidebarGroups', () => {
-    expect(fixture.debugElement.query(By.css('m-suggestions__sidebarGroups'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('m-suggestions__sidebarGroups'))
+    ).not.toBeNull();
   });
-
 });

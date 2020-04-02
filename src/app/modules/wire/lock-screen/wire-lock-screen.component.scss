@@ -1,5 +1,5 @@
-m-wire--lock-screen{
-  display:block;
+m-wire--lock-screen {
+  display: block;
   position: relative;
 }
 .m-wire--lock-screen {
@@ -8,11 +8,11 @@ m-wire--lock-screen{
   align-items: center;
   letter-spacing: 2px;
   padding: 10px 10px 20px 10px;
-  background-image: url("<%= APP_CDN %>/assets/photos/andromeda-galaxy.jpg");
+  background-image: url('<%= APP_CDN %>/assets/photos/andromeda-galaxy.jpg');
   background-size: cover;
   text-align: center;
   position: relative;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white);
   }
 
@@ -33,7 +33,7 @@ m-wire--lock-screen{
     width: 100%;
     height: 100%;
     z-index: 0;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black), 0.4);
     }
   }
@@ -45,36 +45,41 @@ m-wire--lock-screen{
   }
 
   .m-wire--lock-screen--message {
-      text-align: center;
-      text-transform: uppercase;
-      max-width: 60%;
-      font-weight: 400;
-      font-family: 'Roboto', Helvetica, sans-serif;
-      letter-spacing: 2px;
-      font-size: 11px;
-      line-height: 20px;
+    text-align: center;
+    text-transform: uppercase;
+    max-width: 60%;
+    font-weight: 400;
+    font-family: 'Roboto', Helvetica, sans-serif;
+    letter-spacing: 2px;
+    font-size: 11px;
+    line-height: 20px;
   }
-
 }
 
 .m-wire--lock-screen--transaction-made-notice {
   padding: 16px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-red);
   }
 }
 
-.m-wire--lock-screen--button{
+.m-wire--lock-screen--button {
   padding: 16px;
   display: flex;
   flex-direction: row;
   align-items: center;
 
-  .m-wire--lock-screen-introduction{
+  .m-wire--lock-screen-introduction {
     flex: 1;
+
+    & > p {
+      @include m-theme() {
+        color: themed($m-grey-800) !important;
+      }
+    }
   }
 
-  button{
+  button {
     display: inline-block;
     vertical-align: middle;
     position: relative;
@@ -86,28 +91,27 @@ m-wire--lock-screen{
       letter-spacing: 1.5px;
     }
 
-    i{
+    i {
       padding-right: $minds-padding;
     }
 
     .m-spinner {
       display: inline-block;
       vertical-align: middle;
-      transform: scale(0.5);;
+      transform: scale(0.5);
     }
   }
 
-  p{
-    padding:8px 0;
-    display:inline-block;
-    margin-bottom:0;
+  p {
+    padding: 8px 0;
+    display: inline-block;
+    margin-bottom: 0;
 
-    b{
+    b {
       font-size: 26px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-400);
       }
     }
   }
-
 }

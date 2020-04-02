@@ -1,4 +1,4 @@
-.m-token-contributions--ledger{
+.m-token-contributions--ledger {
   table {
     width: 100%;
 
@@ -14,8 +14,8 @@
   justify-content: flex-end;
   padding: 8px;
   margin-bottom: 8px;
-  @include m-theme(){
-    background-color: themed($m-white);
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
   }
 
   m-date-selector {
@@ -30,16 +30,15 @@
 
 .m-token-contributions--ledger-category-detail {
   text-transform: capitalize;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white);
     background-color: themed($m-grey-600);
   }
-
 }
 
 .m-token-contribution--selected {
   font-weight: bold;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white);
     background-color: themed($m-grey-800);
   }

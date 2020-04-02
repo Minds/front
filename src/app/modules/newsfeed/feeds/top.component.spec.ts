@@ -1,4 +1,9 @@
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+} from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -14,8 +19,6 @@ import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { navigationMock } from '../../../../tests/navigation-service-mock.spec';
 import { Upload } from '../../../services/api/upload';
 import { Navigation } from '../../../services/navigation';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { MindsTitle } from '../../../services/ux/title';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
@@ -31,25 +34,34 @@ import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { newsfeedServiceMock } from '../../../mocks/modules/newsfeed/services/newsfeed-service.mock';
+import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { FeaturesService } from '../../../services/features.service';
 
 describe('NewsfeedTopComponent', () => {
-
   let comp: NewsfeedTopComponent;
   let fixture: ComponentFixture<NewsfeedTopComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
+        IfFeatureDirective,
         MaterialMock,
         MockComponent({
           selector: 'm-newsfeed--boost-rotator',
-          inputs: ['interval', 'channel']
+          inputs: ['interval', 'channel'],
         }),
         MockComponent({
           selector: 'minds-activity',
-          inputs: ['object', 'boostToggle', 'showRatingToggle', 'boost', 'showBoostMenuOptions'],
-          outputs: ['delete']
+          inputs: [
+            'object',
+            'boostToggle',
+            'showRatingToggle',
+            'boost',
+            'showBoostMenuOptions',
+            'allowAutoplayOnScroll',
+          ],
+          outputs: ['delete'],
         }),
         MockComponent({
           selector: 'infinite-scroll',
@@ -61,16 +73,24 @@ describe('NewsfeedTopComponent', () => {
           outputs: ['tagsChange', 'tagsAdded', 'tagsRemoved'],
         }),
         MockComponent({
-          selector: 'minds-newsfeed-poster',
-          inputs: [ 'containerGuid', 'accessId', 'message' ],
+          selector: 'm-composer',
+          inputs: ['containerGuid', 'accessId', 'activity'],
         }),
-        NewsfeedTopComponent
+        MockComponent({
+          selector: 'minds-newsfeed-poster',
+          inputs: ['containerGuid', 'accessId', 'message'],
+        }),
+        NewsfeedTopComponent,
       ],
-      imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        CommonModule,
+        FormsModule,
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: Navigation, useValue: navigationMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Storage, useValue: storageMock },
@@ -78,50 +98,44 @@ describe('NewsfeedTopComponent', () => {
         { provide: SettingsService, useValue: settingsServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: NewsfeedService, useValue: newsfeedServiceMock },
-      ]
-    })
-      .compileComponents();
+        { provide: FeaturesService, useValue: featuresServiceMock },
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().install();
 
     fixture = TestBed.createComponent(NewsfeedTopComponent);
 
-    window.Minds = <any>{
-      user: {
-        guid: 1,
-        name: 'test',
-        opted_in_hashtags: 1
-      }
-    };
-
     comp = fixture.componentInstance;
+
+    featuresServiceMock.mock('activity-composer', true);
 
     clientMock.response = {};
     clientMock.response['api/v2/entities/suggested/activities'] = {
       status: 'success',
       entities: [
         {
-          'guid': '1',
-          'type': 'activity',
-          'time_created': '1525457795',
-          'time_updated': '1525457795',
-          'title': '',
-          'message': 'test',
-          'boosted': true,
-          'boosted_guid': '1'
+          guid: '1',
+          type: 'activity',
+          time_created: '1525457795',
+          time_updated: '1525457795',
+          title: '',
+          message: 'test',
+          boosted: true,
+          boosted_guid: '1',
         },
         {
-          'guid': '2',
-          'type': 'activity',
-          'message': 'test2',
-          'boosted': true,
-          'boosted_guid': 2
-        }
+          guid: '2',
+          type: 'activity',
+          message: 'test2',
+          boosted: true,
+          boosted_guid: 2,
+        },
       ],
-      'load-next': ''
+      'load-next': '',
     };
 
     sessionMock.user.boost_rating = 1;
@@ -131,11 +145,10 @@ describe('NewsfeedTopComponent', () => {
     if (fixture.isStable()) {
       done();
     } else {
-      fixture.whenStable()
-        .then(() => {
-          fixture.detectChanges();
-          done()
-        });
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
     }
   });
 
@@ -170,5 +183,4 @@ describe('NewsfeedTopComponent', () => {
     expect(call.args[1]).toEqual({ limit: 12, offset: '', rating: 2 });
     expect(call.args[2]).toEqual({ cache: true });
   }));
-
 });

@@ -1,6 +1,13 @@
 <div class="m-wallet--flyout-wrapper mdl-card mdl-shadow--3dp">
-  <div class="m-wallet--flyout-announcement" *ngIf="address && showAnnouncement" (click)="setUpCryptoWallet()">
-    <span i18n="@@WALLET__FLYOUT__SETUP_WALLET_NOTICE">Hey, do you want to setup your Token wallet using <b>{{ address }}</b>?</span>
+  <div
+    class="m-wallet--flyout-announcement"
+    *ngIf="address && showAnnouncement"
+    (click)="setUpCryptoWallet()"
+  >
+    <span i18n="@@WALLET__FLYOUT__SETUP_WALLET_NOTICE"
+      >Hey, do you want to setup your Token wallet using <b>{{ address }}</b
+      >?</span
+    >
     <div class="m-wallet--flyout-announcement--close" (click)="closeMessage()">
       <i class="material-icons">close</i>
     </div>
@@ -25,7 +32,9 @@
 
     <div class="m-wallet--flyout-coin mdl-cell mdl-cell--4-col">
       <!--<m--crypto-token-symbol class="m--crypto-token-symbol--thin"></m--crypto-token-symbol>-->
-      <span *ngIf="balance.tokens > -1">{{ balance.tokens | token: 18 | number }}</span>
+      <span *ngIf="balance.tokens > -1">{{
+        balance.tokens | token: 18 | number
+      }}</span>
       <span *ngIf="balance.tokens < 0">...</span>
       <div class="m-wallet--flyout-label">
         <label i18n="@@WALLET__FLYOUT_COIN__TOKENS_LABEL">Tokens</label>
@@ -47,8 +56,15 @@
       </div>
     </div>-->
   </div>
-  <div class="m-wallet--flyout--bottom-container mdl-color--blue-grey-50 mdl-color-text--blue-grey-200">
-    <a [routerLink]="['/wallet']" (click)="close()" i18n="@@WALLET__FLYOUT__GO_TO_WALLET"> Go to
-      Wallet </a>
+  <div
+    class="m-wallet--flyout--bottom-container mdl-color--blue-grey-50 mdl-color-text--blue-grey-200"
+  >
+    <a
+      [routerLink]="['/wallet']"
+      (click)="close()"
+      i18n="@@WALLET__FLYOUT__GO_TO_WALLET"
+    >
+      Go to Wallet
+    </a>
   </div>
 </div>

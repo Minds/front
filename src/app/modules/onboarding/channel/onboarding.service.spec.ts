@@ -1,27 +1,31 @@
-import { ChannelOnboardingService } from "./onboarding.service";
-import { clientMock } from "../../../../tests/client-mock.spec";
-import { fakeAsync } from "@angular/core/testing";
-import { sessionMock } from "../../../../tests/session-mock.spec";
+import { ChannelOnboardingService } from './onboarding.service';
+import { clientMock } from '../../../../tests/client-mock.spec';
+import { fakeAsync } from '@angular/core/testing';
+import { sessionMock } from '../../../../tests/session-mock.spec';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 
 describe('ChannelOnboardingService', () => {
-
   let service: ChannelOnboardingService;
 
   beforeEach(() => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
-    service = new ChannelOnboardingService(clientMock, sessionMock);
+    featuresServiceMock.mock('ux-2020', false);
+    service = new ChannelOnboardingService(
+      clientMock,
+      sessionMock,
+      featuresServiceMock
+    );
     clientMock.response = {};
 
     const url = 'api/v2/onboarding/progress';
     clientMock.response[url] = {
       status: 'success',
-      'show_onboarding': true,
-      'all_items': ['item1', 'item2'],
-      'completed_items': ['item1'],
-      'creator_frequency': 'sometimes'
+      show_onboarding: true,
+      all_items: ['item1', 'item2'],
+      completed_items: ['item1'],
+      creator_frequency: 'sometimes',
     };
-
   });
 
   afterEach(() => {
@@ -33,7 +37,6 @@ describe('ChannelOnboardingService', () => {
   });
 
   it('should check progress', fakeAsync(() => {
-
     service.checkProgress();
     jasmine.clock().tick(10);
 
@@ -47,27 +50,26 @@ describe('ChannelOnboardingService', () => {
     expect(await service.showModal()).toBeFalsy();
   }));
 
-  it("it should return that the modal needs to open if you force it", fakeAsync(async () => {
+  it('it should return that the modal needs to open if you force it', fakeAsync(async () => {
     localStorage.setItem('already_onboarded', '1');
 
     expect(await service.showModal(true)).toBeTruthy();
   }));
 
-  it("it should go to the previous slide and emit an event", fakeAsync(async () => {
+  it('it should go to the previous slide and emit an event', fakeAsync(async () => {
     service.currentSlide = 1;
     spyOn(service.onSlideChanged, 'emit').and.stub();
     service.previous();
     expect(service.currentSlide).toBe(0);
     expect(service.onSlideChanged.emit).toHaveBeenCalled();
-
   }));
 
-  it("it should go to the next slide and emit an event", fakeAsync(async () => {
+  it('it should go to the next slide and emit an event', fakeAsync(async () => {
     service.next();
     expect(service.currentSlide).toBe(1);
   }));
 
-  it("it should reset the service", () => {
+  it('it should reset the service', () => {
     service.reset();
 
     expect(service.completedPercentage).toEqual(-1);
@@ -77,5 +79,4 @@ describe('ChannelOnboardingService', () => {
     expect(service.currentSlide).toEqual(0);
     expect(service.completed).toEqual(false);
   });
-
 });

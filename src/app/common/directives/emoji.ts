@@ -3,14 +3,14 @@ import { AnchorPosition } from '../../services/ux/anchor-position';
 
 @Directive({
   selector: '[emoji]',
-  outputs: [ 'emoji' ],
+  outputs: ['emoji'],
   exportAs: 'emoji',
   host: {
-    '(click)': 'toggle()'
-  }
+    '(click)': 'toggle()',
+  },
 })
 export class Emoji {
-  emoji: EventEmitter<any>  = new EventEmitter();
+  emoji: EventEmitter<any> = new EventEmitter();
   shown: boolean = false;
   style: any = {};
   private _element: any;
@@ -28,7 +28,7 @@ export class Emoji {
   }
 
   open() {
-    let position = AnchorPosition.getFixed(this._element, [ 'right', 'top' ]);
+    let position = AnchorPosition.getFixed(this._element, ['right', 'top']);
 
     if (!position) {
       return;
@@ -39,7 +39,7 @@ export class Emoji {
       top: position.top,
       right: position.right,
       bottom: position.bottom,
-      left: position.left
+      left: position.left,
     };
   }
 

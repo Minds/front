@@ -9,10 +9,10 @@ import { LoginForm } from './login/login';
 import { RegisterForm } from './register/register';
 import { FbRegisterForm } from './fb-register/fb-register';
 import { OnboardingForm } from './onboarding/onboarding';
-import { OnboardingCategoriesSelector } from './categories-selector/categories-selector';
 import { Tutorial } from './tutorial/tutorial';
 import { CaptchaModule } from '../captcha/captcha.module';
 import { ExperimentsModule } from '../experiments/experiments.module';
+import { PopoverComponent } from './popover-validation/popover.component';
 
 @NgModule({
   imports: [
@@ -29,17 +29,16 @@ import { ExperimentsModule } from '../experiments/experiments.module';
     RegisterForm,
     FbRegisterForm,
     OnboardingForm,
-    OnboardingCategoriesSelector,
-    Tutorial
+    Tutorial,
+    PopoverComponent,
   ],
   exports: [
     LoginForm,
     RegisterForm,
     FbRegisterForm,
     OnboardingForm,
-    OnboardingCategoriesSelector,
-    Tutorial
-  ]
+    Tutorial,
+    PopoverComponent,
+  ],
 })
-export class MindsFormsModule {
-}
+export class MindsFormsModule {}

@@ -1,61 +1,108 @@
-<div *ngIf="open" class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
+<div
+  *ngIf="open"
+  class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
+>
   <i class="material-icons m-material-icons-inline">public</i>
-    <ng-container i18n="@@TRANSLATE__TO_LABEL">Translate to:</ng-container>
-    <div class="m-translate-select">
-      <select class="m-translate-select-control"
-        (change)="select($event.target.value)"
-        [disabled]="languagesInProgress"
+  <ng-container i18n="@@TRANSLATE__TO_LABEL">Translate to:</ng-container>
+  <div class="m-translate-select">
+    <select
+      class="m-translate-select-control"
+      (change)="select($event.target.value)"
+      [disabled]="languagesInProgress"
+    >
+      <option value="" selected i18n="@@TRANSLATE__LANGUAGE_PLACEHOLDER"
+        >Language&hellip;</option
       >
-        <option value="" selected i18n="@@TRANSLATE__LANGUAGE_PLACEHOLDER">Language&hellip;</option>
 
-        <optgroup label="Preferred Languages" i18n-label="@@TRANSLATE__PREFERRED_LANGUAGES_LABEL" *ngIf="preferredLanguages.length > 0">
-          <option *ngFor="let language of preferredLanguages"
-            [value]="language.language"
-          >
-            {{ language.name }} ({{ language.language }})
-          </option>
-        </optgroup>
+      <optgroup
+        label="Preferred Languages"
+        i18n-label="@@TRANSLATE__PREFERRED_LANGUAGES_LABEL"
+        *ngIf="preferredLanguages.length > 0"
+      >
+        <option
+          *ngFor="let language of preferredLanguages"
+          [value]="language.language"
+        >
+          {{ language.name }} ({{ language.language }})
+        </option>
+      </optgroup>
 
-        <optgroup label="{{ preferredLanguages.length > 0 ? 'Other' : 'All Languages' }}">
-          <option *ngFor="let language of languages"
-            [value]="language.language"
-          >
-            {{ language.name }} ({{ language.language }})
-          </option>
-        </optgroup>
-      </select>
-    </div>
+      <optgroup
+        label="{{ preferredLanguages.length > 0 ? 'Other' : 'All Languages' }}"
+      >
+        <option *ngFor="let language of languages" [value]="language.language">
+          {{ language.name }} ({{ language.language }})
+        </option>
+      </optgroup>
+    </select>
+  </div>
 </div>
 
-<div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label" *ngIf="translationInProgress">
+<div
+  class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
+  *ngIf="translationInProgress"
+>
   <i class="material-icons m-material-icons-inline">public</i>
-  <ng-container i18n="@@TRANSLATE__TRANSLATING_LABEL">Translating</ng-container><span *ngIf="translation.target" i18n="Translation target@@TRANSLATE__TRANSLATING_TO_PART"> to <b>{{ translation.target }}</b></span>&hellip;
+  <ng-container i18n="@@TRANSLATE__TRANSLATING_LABEL">Translating</ng-container
+  ><span
+    *ngIf="translation.target"
+    i18n="Translation target@@TRANSLATE__TRANSLATING_TO_PART"
+  >
+    to <b>{{ translation.target }}</b></span
+  >&hellip;
 </div>
 
 <div *ngIf="translation.translated" class="m-translation-wrapper">
   <div class="mdl-card__supporting-text message" *ngIf="translation.message">
-      <span [innerHtml]="translation.message | tags" ></span>
+    <span [innerHtml]="translation.message | tags"></span>
   </div>
 
-  <div class="mdl-card__supporting-text message" *ngIf="translation.description">
-      <span [innerHtml]="translation.description | tags" ></span>
+  <div
+    class="mdl-card__supporting-text message"
+    *ngIf="translation.description"
+  >
+    <span [innerHtml]="translation.description | tags"></span>
   </div>
 
   <div class="mdl-card__supporting-text message" *ngIf="translation.body">
-      <span [innerHtml]="translation.body | tags" ></span>
+    <span [innerHtml]="translation.body | tags"></span>
   </div>
 
-  <div class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label">
+  <div
+    class="mdl-card__supporting-text mdl-color-text--grey-600 m-translation-label"
+  >
     <i class="material-icons m-material-icons-inline">public</i>
-    <ng-container i18n="@@TRANSLATE__TRANSLATED_LABEL">Translated</ng-container><span *ngIf="translation.source" i18n="Translation source@@TRANSLATE__TRANSLATED_FROM_PART"> from <b>{{ translation.source }}</b></span>.
-    <a (click)="hideTranslation()" i18n="@@TRANSLATE__HIDE_TRANSLATION_ACTION">Hide translation</a>
+    <ng-container i18n="@@TRANSLATE__TRANSLATED_LABEL">Translated</ng-container
+    ><span
+      *ngIf="translation.source"
+      i18n="Translation source@@TRANSLATE__TRANSLATED_FROM_PART"
+    >
+      from <b>{{ translation.source }}</b></span
+    >.
+    <a (click)="hideTranslation()" i18n="@@TRANSLATE__HIDE_TRANSLATION_ACTION"
+      >Hide translation</a
+    >
     |
-    <a (click)="changeDefaultLanguage()" i18n="@@TRANSLATE__CHANGE_LANGUAGE_ACTION">Change language</a>
+    <a
+      (click)="changeDefaultLanguage()"
+      i18n="@@TRANSLATE__CHANGE_LANGUAGE_ACTION"
+      >Change language</a
+    >
   </div>
 </div>
 
-<div class="mdl-card__supporting-text mdl-color-text--red-900 m-translation-label" *ngIf="!translationInProgress && translation.error">
+<div
+  class="mdl-card__supporting-text mdl-color-text--red-900 m-translation-label"
+  *ngIf="!translationInProgress && translation.error"
+>
   <i class="material-icons m-material-icons-inline">warning</i>
-  <ng-container i18n="@@TRANSLATE__ERROR_TRANSLATING_LABEL">There was an error when translating this content.</ng-container>
-  <a class="mdl-color-text--red-900" (click)="translation.error = false" i18n="@@TRANSLATE__DISMISS_ACTION">Dismiss</a>
+  <ng-container i18n="@@TRANSLATE__ERROR_TRANSLATING_LABEL"
+    >There was an error when translating this content.</ng-container
+  >
+  <a
+    class="mdl-color-text--red-900"
+    (click)="translation.error = false"
+    i18n="@@TRANSLATE__DISMISS_ACTION"
+    >Dismiss</a
+  >
 </div>

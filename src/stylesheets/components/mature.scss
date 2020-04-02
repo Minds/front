@@ -1,4 +1,4 @@
-@import "defaults";
+@import 'defaults';
 
 .m-mature-text {
   filter: blur(0.5em);
@@ -43,7 +43,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 4em;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white);
     }
   }
@@ -68,7 +68,7 @@
     text-align: center;
     z-index: 250;
     cursor: pointer;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-700);
     }
 
@@ -78,13 +78,8 @@
       position: relative;
       top: 50%;
       transform: translateY(-50%);
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
-      }
-
-      m-blog-view & {
-        top: 3em;
-        transform: none;
       }
 
       > span {
@@ -92,7 +87,7 @@
         font-size: 0.85em;
 
         &:before {
-          content:"\a";
+          content: '\a';
           white-space: pre;
         }
       }
@@ -108,7 +103,7 @@
         font-size: 0.65em;
 
         &:before {
-          content:"\a";
+          content: '\a';
           white-space: pre;
         }
       }
@@ -141,7 +136,7 @@
     text-align: center;
     z-index: 250;
     cursor: pointer;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-white), 0.65);
     }
 
@@ -149,7 +144,7 @@
       display: block;
       text-align: center;
       position: relative;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-red);
       }
 

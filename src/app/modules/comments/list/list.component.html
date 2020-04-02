@@ -1,49 +1,73 @@
-<div class="minds-comments-container"
+<div
+  class="minds-comments-container"
   commentsScroll
   (previous)="autoloadPrevious()"
   [emitter]="commentsScrollEmitter"
   [enabled]="scrollable"
-  scrollLock [strictScrollLock]="false"
+  scrollLock
+  [strictScrollLock]="false"
   (overscroll)="overscrollHandler($event)"
   #scrollArea
 >
-  <div class="mdl-color-text--blue-grey-500 m-comments-load-more"
+  <div
+    class="mdl-color-text--blue-grey-500 m-comments-load-more"
     (click)="load()"
     [ngClass]="{ 'm-disabled': descendingInProgress }"
     *ngIf="moreDescendingData || !loaded"
   >
     <span *ngIf="descendingInProgress">
-      <i class="material-icons">autorenew</i> <ng-container i18n="@@MINDS__COMMENTS__LOADING_ELLIPSIS">Loading&hellip;</ng-container>
+      <i class="material-icons">autorenew</i>
+      <ng-container i18n="@@MINDS__COMMENTS__LOADING_ELLIPSIS"
+        >Loading&hellip;</ng-container
+      >
     </span>
     <span *ngIf="!descendingInProgress && !loaded">
       <i class="material-icons">update</i>
-      <ng-container *ngIf="!error"><ng-container i18n="@@MINDS__COMMENTS__LOAD_ACTION">Load</ng-container></ng-container>
-      <ng-container *ngIf="error"><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION">Try again</ng-container></ng-container>
+      <ng-container *ngIf="!error"
+        ><ng-container i18n="@@MINDS__COMMENTS__LOAD_ACTION"
+          >Load</ng-container
+        ></ng-container
+      >
+      <ng-container *ngIf="error"
+        ><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION"
+          >Try again</ng-container
+        ></ng-container
+      >
     </span>
     <span *ngIf="!descendingInProgress && loaded">
-      <i class="material-icons">update</i> <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION">Load earlier</ng-container>
+      <i class="material-icons">update</i>
+      <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION"
+        >Load earlier</ng-container
+      >
     </span>
-    
   </div>
 
-  <p class="m-comments--start-conversation-label"
-    *ngIf="!descendingInProgress
-      && !ascendingInProgress
-      && !error
-      && comments?.length === 0
-      && parent.type == 'activity'"
+  <p
+    class="m-comments--start-conversation-label"
+    *ngIf="
+      !descendingInProgress &&
+      !ascendingInProgress &&
+      !error &&
+      comments?.length === 0 &&
+      parent.type == 'activity' &&
+      activityService.allowComment$
+    "
     i18n="@@MINDS__COMMENTS__START_CONVERSATION"
-    >
+  >
     Start the conversation!
   </p>
 
-  <p class="m-comments--load-error-label" *ngIf="!descendingInProgress && !ascendingInProgress && !!error">
+  <p
+    class="m-comments--load-error-label"
+    *ngIf="!descendingInProgress && !ascendingInProgress && !!error"
+  >
     <i class="material-icons">warning</i>
     <span>{{ error }}</span>
   </p>
 
   <div class="m-layout--spacer"></div>
-  <minds-card-comment *ngFor="let comment of comments; let i = index"
+  <minds-card-comment
+    *ngFor="let comment of comments; let i = index"
     [object]="comment"
     [parent]="parent"
     [canEdit]="canEdit"
@@ -52,110 +76,165 @@
     (onReply)="reply($event.comment)"
   ></minds-card-comment>
 
-  <div class="mdl-color-text--blue-grey-500 m-comments-load-more"
-     (click)="load(false, false)"
-     [ngClass]="{ 'm-disabled': ascendingInProgress }"
-     *ngIf="moreAscendingData && focusedCommentGuid"
+  <div
+    class="mdl-color-text--blue-grey-500 m-comments-load-more"
+    (click)="load(false, false)"
+    [ngClass]="{ 'm-disabled': ascendingInProgress }"
+    *ngIf="moreAscendingData && focusedCommentGuid"
   >
     <span *ngIf="ascendingInProgress">
-      <i class="material-icons">autorenew</i> <ng-container i18n="@@MINDS__COMMENTS__LOADING_ELLIPSIS">Loading&hellip;</ng-container>
+      <i class="material-icons">autorenew</i>
+      <ng-container i18n="@@MINDS__COMMENTS__LOADING_ELLIPSIS"
+        >Loading&hellip;</ng-container
+      >
     </span>
     <span *ngIf="!ascendingInProgress && !loaded">
       <i class="material-icons">update</i>
-      <ng-container *ngIf="!error"><ng-container i18n="@@MINDS__COMMENTS__LOAD_ACTION">Load</ng-container></ng-container>
-      <ng-container *ngIf="error"><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION">Try again</ng-container></ng-container>
+      <ng-container *ngIf="!error"
+        ><ng-container i18n="@@MINDS__COMMENTS__LOAD_ACTION"
+          >Load</ng-container
+        ></ng-container
+      >
+      <ng-container *ngIf="error"
+        ><ng-container i18n="@@MINDS__COMMENTS__TRY_AGAIN_ACTION"
+          >Try again</ng-container
+        ></ng-container
+      >
     </span>
     <span *ngIf="!ascendingInProgress && loaded">
-      <i class="material-icons">update</i> <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION">Load later</ng-container>
+      <i class="material-icons">update</i>
+      <ng-container i18n="@@MINDS__COMMENTS__LOAD_EARLIER_ACTION"
+        >Load later</ng-container
+      >
     </span>
   </div>
-
 </div>
 
 <div class="m-comment m-comment--poster minds-block" *ngIf="!readonly">
+  <div class="minds-avatar">
+    <a [routerLink]="['/', session.getLoggedInUser().username]">
+      <img [src]="getAvatar()" class="mdl-shadow--2dp" />
+    </a>
+  </div>
 
-    <div class="minds-avatar">
-      <a [routerLink]="['/', session.getLoggedInUser().username]">
-        <img [src]="getAvatar()" class="mdl-shadow--2dp"/>
-      </a>
-    </div>
+  <div class="minds-body">
+    <div class="m-comments-composer">
+      <form (submit)="post($event)">
+        <minds-textarea
+          #message="Textarea"
+          [(mModel)]="content"
+          [disabled]="
+            (ascendingInProgress || descendingInProgress) &&
+            attachment.hasFile()
+          "
+          (click)="isLoggedIn()"
+          (keyup)="getPostPreview(content)"
+          (keypress)="keypress($event)"
+          [placeholder]="
+            conversation ? 'Enter your message' : 'Enter your comment'
+          "
+        ></minds-textarea>
+      </form>
 
-    <div class="minds-body">
+      <div
+        class="minds-comment-span mdl-color-text--red-500"
+        *ngIf="!canPost && triedToPost"
+      >
+        <ng-container i18n="@@M__COMMON__WAIT_UPLOAD"
+          >Please wait until the upload is complete.</ng-container
+        >
+      </div>
 
-        <div class="m-comments-composer">
-            <form (submit)="post($event)">
-                <minds-textarea
-                  #message="Textarea"
-                  [(mModel)]="content"
-                  [disabled]="(ascendingInProgress || descendingInProgress) && attachment.hasFile()"
-                  (click)="isLoggedIn()"
-                  (keyup)="getPostPreview(content)"
-                  (keypress)="keypress($event)"
-                  [placeholder]="conversation ? 'Enter your message' : 'Enter your comment'"
-                ></minds-textarea>
-            </form>
-
-            <div class="minds-comment-span mdl-color-text--red-500" *ngIf="!canPost && triedToPost">
-              <ng-container i18n="@@M__COMMON__WAIT_UPLOAD">Please wait until the upload is complete.</ng-container>
-            </div>
-
-            <div class="mdl-card__actions">
-              <!-- Attachements -->
-              <div class="attachment-button" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
-                <i class="material-icons">attachment</i>
-                <input type="file" id="file" #file name="attachment" (change)="uploadAttachment(file, $event)"/>
-              </div>
-
-              <a class="m-mature-button"
-              [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
-              (click)="attachment.toggleMature()"
-              title="Mature content"
-              i18n-title="@@M__COMMON__MATURE_CONTENT"
-              >
-                <i class="material-icons">explicit</i>
-              </a>
-
-              <a class="m-post-button"
-              (click)="post($event)"
-              [ngClass]="{ 'm-button-disabled': !postEnabled() }"
-              >
-                <i class="material-icons">send</i>
-              </a>
-            </div>
-
-            <!-- Rich embed preview -->
-            <div class="post-preview" *ngIf="attachment.isRich()">
-              <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="attachment.getMeta().title"></div>
-              <div class="m-rich-embed mdl-shadow--2dp cf" *ngIf="attachment.getMeta().title">
-                <minds-rich-embed
-                  [preview]="attachment.getMeta()"
-                ></minds-rich-embed>
-                <div class="attachment-preview-delete" (click)="resetPreview()">
-                  <i class="material-icons">delete</i>
-                </div>
-              </div>
-            </div>
-
-            <!-- Attachment preview -->
-            <div class="post-preview" *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"  (click)="removeAttachment(file)">
-              <div class="mdl-progress mdl-js-progress"
-                [mdlUpload]
-                [progress]="attachment.getUploadProgress()"
-                [hidden]="attachment.getUploadProgress() == 0"
-                [ngClass]="{ 'complete': attachment.getUploadProgress()  == 100 }"
-                ></div>
-              <div *ngIf="attachment.getMime() == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
-                  <i class="material-icons">videocam</i>
-              </div>
-              <img *ngIf="attachment.getMime() != 'video'" [src]="attachment.getPreview()" class="attachment-preview mdl-shadow--2dp"/>
-              <div class="attachment-preview-delete">
-                <i class="material-icons">delete</i>
-              </div>
-            </div>
+      <div class="mdl-card__actions">
+        <!-- Overflow -->
+        <div class="m-comments-composer--overflow"></div>
+        <!-- Attachements -->
+        <div
+          class="attachment-button"
+          [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
+        >
+          <i class="material-icons">attachment</i>
+          <input
+            type="file"
+            id="file"
+            #file
+            name="attachment"
+            (change)="uploadAttachment(file, $event)"
+          />
         </div>
 
-    </div>
+        <a
+          class="m-mature-button"
+          [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
+          (click)="attachment.toggleMature()"
+          title="Mature content"
+          i18n-title="@@M__COMMON__MATURE_CONTENT"
+        >
+          <i class="material-icons">explicit</i>
+        </a>
 
+        <a
+          class="m-post-button"
+          (click)="post($event)"
+          [ngClass]="{ 'm-button-disabled': !postEnabled() }"
+        >
+          <i class="material-icons">send</i>
+        </a>
+      </div>
+
+      <!-- Rich embed preview -->
+      <div class="post-preview" *ngIf="attachment.isRich()">
+        <div
+          class="mdl-spinner mdl-js-spinner is-active"
+          [mdl]
+          [hidden]="attachment.getMeta().title"
+        ></div>
+        <div
+          class="m-rich-embed mdl-shadow--2dp cf"
+          *ngIf="attachment.getMeta().title"
+        >
+          <minds-rich-embed [preview]="attachment.getMeta()"></minds-rich-embed>
+          <div class="attachment-preview-delete" (click)="resetPreview()">
+            <i class="material-icons">delete</i>
+          </div>
+        </div>
+      </div>
+
+      <!-- Attachment preview -->
+      <div
+        class="post-preview"
+        *ngIf="attachment.hasFile() || attachment.getUploadProgress() > 0"
+        (click)="removeAttachment(file)"
+      >
+        <div
+          class="mdl-progress mdl-js-progress"
+          [mdlUpload]
+          [progress]="attachment.getUploadProgress()"
+          [hidden]="attachment.getUploadProgress() == 0"
+          [ngClass]="{ complete: attachment.getUploadProgress() == 100 }"
+        ></div>
+        <div
+          *ngIf="attachment.getMime() == 'video'"
+          class="attachment-preview video-placeholder mdl-color--blue-grey-600"
+        >
+          <i class="material-icons">videocam</i>
+        </div>
+        <img
+          *ngIf="attachment.getMime() != 'video'"
+          [src]="attachment.getPreview()"
+          class="attachment-preview mdl-shadow--2dp"
+        />
+        <div class="attachment-preview-delete">
+          <i class="material-icons">delete</i>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<m-modal-signup-on-action [open]="showModal" (closed)="showModal = false" action="comment" [overrideOnboarding]="true"></m-modal-signup-on-action>
+<m-modal-signup-on-action
+  [open]="showModal"
+  (closed)="showModal = false"
+  action="comment"
+  [overrideOnboarding]="true"
+></m-modal-signup-on-action>

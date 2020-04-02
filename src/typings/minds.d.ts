@@ -25,7 +25,21 @@ interface Minds {
   blockchain?: any;
   sale?: boolean | string;
   last_tos_update: number;
-  tags: string[]
+  tags: string[];
+  pro?: any;
+  handlers?: { pro: string; plus: string };
+  upgrades?: {
+    pro: {
+      monthly: { tokens: number; usd: number };
+      yearly: { tokens: number; usd: number };
+    };
+    plus: {
+      monthly: { tokens: number; usd: number };
+      yearly: { tokens: number; usd: number };
+    };
+  };
+  contribution_values: { [key: string]: number };
+  from_email_confirmation?: boolean;
 }
 
 interface MindsNavigation {

@@ -7,7 +7,8 @@
   h2 {
     font-weight: 200;
   }
-  h3, h4 {
+  h3,
+  h4 {
     font-weight: 400;
   }
 
@@ -28,7 +29,6 @@
       text-transform: initial;
       margin-left: $minds-padding * 3;
     }
-
   }
 
   h4 {
@@ -43,8 +43,7 @@
     top: -0.15em;
   }
 
-
-  .m-wire--creator--header{
+  .m-wire--creator--header {
     position: relative;
     margin-bottom: 16px;
 
@@ -62,7 +61,7 @@
       .ion-icon {
         margin-right: $minds-padding;
         font-size: 36px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-blue);
         }
       }
@@ -88,6 +87,7 @@
         font-weight: 400;
         margin-bottom: 0;
         padding-left: $minds-margin * 2;
+        padding-right: $minds-padding * 3;
         line-height: 16px;
       }
     }
@@ -129,12 +129,13 @@
     margin-top: $minds-padding * 2;
   }
 
-   .m-wire--creator--amount {
-     display: flex;
-     align-items: center;
-   }
+  .m-wire--creator--amount {
+    display: flex;
+    align-items: center;
+  }
 
-  .m-wire--creator--amount, .m-wire--creator--target {
+  .m-wire--creator--amount,
+  .m-wire--creator--target {
     margin-top: 16px;
     letter-spacing: 2.5px;
     input {
@@ -153,7 +154,7 @@
       border-radius: $minds-padding / 2;
       margin: 0;
       margin-right: 8px;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.15);
       }
 
@@ -161,16 +162,21 @@
         outline: none;
       }
     }
+
+    .m-wire--creator-wide-input--fixedAmount {
+      margin-right: 0.35em;
+      font-weight: 700;
+    }
   }
 
   .m-wire--creator-selector {
-
     > li {
       flex-basis: 0;
       flex-grow: 1;
       cursor: pointer;
 
-      h4, span {
+      h4,
+      span {
         margin: 0;
         font-weight: 400;
       }
@@ -208,7 +214,12 @@
           display: inline-block;
         }
         > i {
-          font-size: 42px;
+          font-size: 52px;
+          display: block;
+          margin-left: -12px;
+        }
+        > img {
+          height: 52px;
           display: block;
         }
       }
@@ -219,7 +230,7 @@
         line-height: 1.1;
         -webkit-font-smoothing: antialiased;
         text-rendering: optimizeLegibility;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-200);
         }
       }
@@ -245,7 +256,7 @@
 
       .m-wire--creator-selector--selected-label {
         font-weight: 400;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-blue);
         }
       }
@@ -255,7 +266,7 @@
         letter-spacing: 1.5px;
         line-height: 1.3;
         max-width: 300px;
-        @include m-theme(){
+        @include m-theme() {
           color: rgba(themed($m-black), 0.75);
         }
       }
@@ -325,7 +336,7 @@
 
     .m-wire--creator-toggle--selected {
       font-weight: 500;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue);
       }
     }
@@ -346,7 +357,7 @@
     margin-top: $minds-padding * 1.5;
     overflow-y: auto;
     box-sizing: border-box;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black), 0.15);
     }
 
@@ -354,14 +365,14 @@
       bottom: 100%;
       left: 95%;
       border: solid transparent;
-      content: " ";
+      content: ' ';
       height: 0;
       width: 0;
       position: absolute;
       pointer-events: none;
       border-width: 8px;
       margin-left: -8px;
-      @include m-theme(){
+      @include m-theme() {
         border-color: rgba(themed($m-grey-600), 0);
         border-bottom-color: themed($m-white);
       }
@@ -373,9 +384,10 @@
       display: flex;
       justify-content: space-between;
 
-      &:hover, &.m-wire--creator-autocomplete--result-highlight {
+      &:hover,
+      &.m-wire--creator-autocomplete--result-highlight {
         font-weight: 500;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-black);
           background-color: themed($m-white);
         }
@@ -394,16 +406,16 @@
       appearance: none;
       padding: 8px 32px;
       background: none;
-      border-radius: 0;
+      //border-radius: 0;
       font-family: inherit;
       font-size: inherit;
       font-weight: inherit;
       text-transform: uppercase;
       cursor: pointer;
-      @include m-theme(){
-        border: 1px solid themed($m-grey-700);
-        color: themed($m-grey-700);
-      }
+      //@include m-theme(){
+      //  border: 1px solid themed($m-grey-700);
+      //  color: themed($m-grey-700);
+      //}
 
       &[disabled] {
         cursor: default;
@@ -416,7 +428,8 @@
       margin-left: $minds-padding;
       font-size: 16px;
 
-      > span, > i {
+      > span,
+      > i {
         vertical-align: middle;
       }
     }
@@ -424,7 +437,7 @@
     .m-wire--creator--submit-error {
       font-size: 12px;
       font-weight: 500;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-red);
       }
     }
@@ -436,7 +449,7 @@
     border-radius: 3px;
     max-width: 440px;
     padding: 0px;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black), 0.1);
     }
 
@@ -447,22 +460,22 @@
       max-width: initial;
     }
 
-    .mdl-card{
+    .mdl-card {
       background: transparent;
     }
 
-    .m-wire--creator-payment-attached{
+    .m-wire--creator-payment-attached {
       display: flex;
       flex-direction: column;
       justify-content: center;
       text-align: center;
       padding: 16px;
 
-      i{
+      i {
         font-size: 90px;
         cursor: default;
       }
-      span{
+      span {
         padding: 16px 0;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -474,7 +487,7 @@
       }
     }
 
-    .m-payments--saved-cards{
+    .m-payments--saved-cards {
       padding-bottom: $minds-padding;
 
       .m-payments-saved--title {
@@ -483,79 +496,78 @@
       }
     }
 
-    .m-payments--saved-card-item{
+    .m-payments--saved-card-item {
       padding: 4px 8px;
       margin: 8px 16px;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-white), 0.5);
         color: themed($m-grey-700);
       }
     }
 
-    input{
-
-
+    input {
       padding: 12px;
       border: 0;
       border-radius: 3px;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-white), 0.5);
         color: themed($m-grey-700);
       }
-      &::placeholder{
-        @include m-theme(){
+      &::placeholder {
+        @include m-theme() {
           color: themed($m-grey-400);
         }
       }
     }
-    select{
-      padding:12px;
+    select {
+      padding: 12px;
       border: 0;
       border-radius: 3px;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-white), 0.5);
         color: themed($m-grey-700);
       }
     }
     .mdl-textfield {
-       padding: 12px 0;
-       label {
+      padding: 12px 0;
+      label {
         padding: 0px 12px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-600);
         }
       }
     }
-    .is-focused, .is-dirty{
+    .is-focused,
+    .is-dirty {
       border: 0;
-      label{
+      label {
         border: 0;
         top: -8px;
         left: -8px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-700);
         }
-        &::after{
-          border:0;
-          background-color:transparent;
+        &::after {
+          border: 0;
+          background-color: transparent;
         }
       }
     }
     .minds-purchase-vendors {
       margin-bottom: ($minds-padding * 2) !important;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-700);
       }
     }
-    .m-purchase-card--highlight{
+    .m-purchase-card--highlight {
       font-weight: bold;
     }
-    .m-checkout--secure{
-      @include m-theme(){
+    .m-checkout--secure {
+      @include m-theme() {
         color: themed($m-grey-600);
       }
     }
-    button{
+    button {
       padding: 12px;
       -webkit-appearance: none;
       border: 0;
@@ -564,7 +576,7 @@
       letter-spacing: 1px;
       border-radius: 3px;
       cursor: pointer;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
         background-color: rgba(themed($m-black), 0.5);
       }
@@ -586,20 +598,20 @@
       padding: $minds-padding / 2;
       padding-left: $minds-padding * 2;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         font-weight: 400;
       }
     }
   }
 
   .mdl-checkbox {
-
     .mdl-checkbox__label {
       font-size: inherit;
     }
 
     .mdl-checkbox__box-outline {
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.15);
         border-color: rgba(themed($m-black), 0.15);
       }
@@ -607,13 +619,13 @@
 
     &.is-checked .mdl-checkbox__tick-outline {
       mask: none;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.15);
       }
     }
 
     .mdl-checkbox__ripple-container .mdl-ripple {
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.15);
       }
     }
@@ -652,13 +664,15 @@
     // &.m-wire--creator-selector--highlight {
     //   opacity: 1;
     // }
-    
-    &:not(.m-wire--creator-selector--highlight) .m-wire--creator-selector-type{
-        > i, h5 > span, 
-        .m-boost--creator-selector--hoverable,
-        .material-icons {
-          opacity: 0.5;
-        }
+
+    &:not(.m-wire--creator-selector--highlight) .m-wire--creator-selector-type {
+      > i,
+      h5 > span,
+      img,
+      .m-boost--creator-selector--hoverable,
+      .material-icons {
+        opacity: 0.5;
+      }
     }
 
     .m-wire--creator-selector--cta {
@@ -690,7 +704,8 @@
   cursor: pointer;
   user-select: none;
 
-  > span, > img {
+  > span,
+  > img {
     vertical-align: middle;
   }
 
@@ -726,7 +741,8 @@
     max-width: $min-tablet;
   }
 
-  .mdl-card, .mdl-card__supporting-text {
+  .mdl-card,
+  .mdl-card__supporting-text {
     background: transparent;
     color: inherit;
   }
@@ -737,12 +753,12 @@
   }
 
   .mdl-textfield__label {
-    @include m-theme(){
+    @include m-theme() {
       color: rgba(themed($m-black), 0.46);
     }
 
     &:after {
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-white);
       }
     }
@@ -751,16 +767,18 @@
   .mdl-textfield__input {
     font-family: inherit;
     font-weight: inherit;
-    @include m-theme(){
+    @include m-theme() {
       border-bottom: 1px solid rgba(themed($m-black), 0.32);
       color: themed($m-white);
     }
   }
 
   .mdl-textfield--floating-label {
-    &.is-focused, &.is-dirty, &.has-placeholder {
+    &.is-focused,
+    &.is-dirty,
+    &.has-placeholder {
       .mdl-textfield__label {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }
@@ -783,13 +801,13 @@
     appearance: none;
     background: transparent;
     border-radius: 0;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white);
       border: 1px solid themed($m-white);
     }
 
     &:focus {
-      @include m-theme(){
+      @include m-theme() {
         outline: 2px solid themed($m-white);
       }
     }
@@ -815,8 +833,9 @@
     user-select: none;
 
     .m-payments-saved--item {
-      &:hover, &:focus {
-        @include m-theme(){
+      &:hover,
+      &:focus {
+        @include m-theme() {
           background-color: themed($m-white);
           color: themed($m-black);
         }
@@ -827,22 +846,10 @@
 
 // Creator Rewards component
 
-.m-wire--creator-rewards {
-  display: block;
-  //border-left: 1px solid rgba(0, 0, 0, 0.2);
-  //padding: ($minds-padding * 3) 0 ($minds-padding * 3) 60px;
-  font-family: inherit;
-  font-weight: 200;
-  @include m-theme(){
+.m-wire--creator-rewards,
+.m-wireCreator__rewardSelector {
+  @include m-theme() {
     color: themed($m-grey-700);
-  }
-
-  @media screen and (max-width: $max-mobile) {
-    position: initial;
-    max-width: none;
-    border: none;
-    padding: 0 ($minds-padding * 2);
-    margin: ($minds-padding * 2) 0;
   }
 
   .m-wire--creator-rewards--title {
@@ -857,7 +864,7 @@
     font-weight: 400;
     letter-spacing: 0.5px;
     line-height: 1;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-500);
     }
 
@@ -866,14 +873,11 @@
     }
   }
 
-  .m-wire--creator-rewards--list {
+  m-wirecreator__rewards {
     //max-width: 360px;
-    display: flex;
-    flex-direction: row;
-    list-style: none;
     margin: 0;
     padding: 0;
-    @include m-theme(){
+    @include m-theme() {
       color: rgba(themed($m-black), 0.35);
     }
 
@@ -884,13 +888,13 @@
     }
 
     .m-wire--creator-rewards--above-threshold {
-      @include m-theme(){
+      @include m-theme() {
         color: rgba(themed($m-black), 0.6);
       }
     }
 
     .m-wire--creator-rewards--best-reward {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-900);
       }
     }
@@ -902,13 +906,19 @@
       letter-spacing: 2.5px;
     }
 
-    .m-wire--creator-rewards--description p {
-      font-family: 'Roboto', Helvetica, sans-serif;
-      padding: 0;
-      margin: 4px 0;
-      line-height: 1.1;
-      font-size: 12px;
-      font-weight: 400;
+    .m-wire--creator-rewards--description {
+      padding: $minds-padding;
+      > * {
+        display: inline;
+      }
+      p {
+        font-family: 'Roboto', Helvetica, sans-serif;
+        padding: 0;
+        margin: 4px 0;
+        line-height: 1.1;
+        font-size: 12px;
+        font-weight: 400;
+      }
     }
   }
 }
@@ -945,8 +955,8 @@
     border-radius: 4px;
     font-weight: bold;
     text-align: right;
-    @include m-theme(){
-      background-color: rgba(themed($m-black), 0.10);
+    @include m-theme() {
+      background-color: rgba(themed($m-black), 0.1);
     }
 
     > span {
@@ -958,8 +968,13 @@
     margin-left: 1em;
     font-weight: bold;
     letter-spacing: 0.5px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-300);
     }
   }
+}
+
+.m-wireCreator__rewardSelector {
+  margin-right: 64px;
+  margin-bottom: 16px;
 }

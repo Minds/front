@@ -1,17 +1,26 @@
-<div class="m-tooltip"
-  [class.m-tooltip--anchored]="!!anchor"
->
-  <i *ngIf="icon" class="material-icons" [ngClass]="iconClass">{{icon}}</i>
+<div class="m-tooltip" [class.m-tooltip--anchored]="!!anchor">
+  <i *ngIf="icon && !iconSrc" class="material-icons" [ngClass]="iconClass">{{
+    icon
+  }}</i>
+  <img *ngIf="iconSrc && !icon" [src]="cdnAssetsUrl + iconSrc" />
+  <ng-content select="[m-tooltip--icon]"></ng-content>
   <ng-content select="[m-tooltip--anchor]"></ng-content>
 
-  <div class="m-tooltip--bubble"
+  <div
+    class="m-tooltip--bubble"
     [class.m-tooltip--bubble--fixed]="useParentPosition"
     [style.top.px]="useParentPosition ? offsetTop : false"
     [style.right.px]="useParentPosition ? offsetRight : false"
     [style.left.px]="useParentPosition ? offsetLeft : false"
-    [class.m-tooltip--bubble--anchor-bottom]="!useParentPosition && anchor == 'bottom'"
-    [class.m-tooltip--bubble--anchor-left]="!useParentPosition && anchor == 'left'"
-    [class.m-tooltip--bubble--anchor-right]="!useParentPosition && anchor == 'right'"
+    [class.m-tooltip--bubble--anchor-bottom]="
+      !useParentPosition && anchor == 'bottom'
+    "
+    [class.m-tooltip--bubble--anchor-left]="
+      !useParentPosition && anchor == 'left'
+    "
+    [class.m-tooltip--bubble--anchor-right]="
+      !useParentPosition && anchor == 'right'
+    "
     [hidden]="hidden"
   >
     <ng-content></ng-content>

@@ -1,0 +1,34 @@
+<div class="m-walletDashboardBalance__wrapper">
+  <m-walletTokenOnboarding
+    *ngIf="!tokenOnboardingComplete"
+    [hasAddress]="hasOnchainAddress"
+    [phoneVerified]="phoneVerified"
+    (onboardingComplete)="onTokenOnboardingCompleted()"
+  ></m-walletTokenOnboarding>
+
+  <m-walletBalance--tokens
+    class="m-shadowboxLayout__body"
+  ></m-walletBalance--tokens>
+</div>
+
+<div class="m-tabs__container">
+  <li class="m-tabs__tab">
+    <a routerLink="overview" routerLinkActive="selected">
+      Overview
+    </a>
+  </li>
+  <li class="m-tabs__tab">
+    <a routerLink="transactions" routerLinkActive="selected">
+      Transactions
+    </a>
+  </li>
+  <li class="m-tabs__tab">
+    <a routerLink="settings" routerLinkActive="selected">
+      Settings
+    </a>
+  </li>
+</div>
+
+<div class="m-walletDashboardViews__viewsContainer">
+  <router-outlet></router-outlet>
+</div>

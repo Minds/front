@@ -1,46 +1,58 @@
-@import "defaults";
-
+@import 'defaults';
 
 m-search--bar {
-  width:200px;
+  width: 200px;
 
   .mdl-textfield {
-    width:100%;
-    .material-icons{
-      position:absolute;
-      margin:6px;
+    width: 100%;
+
+    .m-searchBar__searchIcon {
+      position: absolute;
+      margin: 6px;
       font-size: 20px;
     }
-    input{
-      @include m-theme(){
-        background-color: themed($m-white);
-        border: 1px solid rgba(themed($m-black),.12);
+
+    .m-searchBar__cleanIcon {
+      position: absolute;
+      margin: 6px;
+      font-size: 20px;
+      right: 0;
+      top: 20px;
+    }
+
+    input {
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+        border: 1px solid themed($m-borderColor--primary);
       }
     }
-    input, label{
-      padding:$minds-padding $minds-padding $minds-padding $minds-padding*4;
+
+    input,
+    label {
+      padding: $minds-padding $minds-padding $minds-padding $minds-padding * 4;
       box-sizing: border-box;
     }
   }
 
   &.m-search--bar--default-sizes {
-    @media screen and (max-width: 1080px){
+    @media screen and (max-width: 1080px) {
       width: 180px;
     }
 
-    @media screen and (max-width: $min-desktop){
-      width:45%;
+    @media screen and (max-width: $min-desktop) {
+      width: 45%;
     }
 
-    @media screen and (max-width: $min-tablet){
-      width:auto;
+    @media screen and (max-width: $min-tablet) {
+      width: auto;
       max-width: 30%;
 
-      input{
-        border:0 !important;
-        &:focus{
+      input {
+        border: 0 !important;
+
+        &:focus {
           width: 75vw;
-          @include m-theme(){
+          @include m-theme() {
             border: 1px solid rgba(themed($m-black), 0.12) !important;
           }
 
@@ -99,7 +111,7 @@ m-search--bar {
 
         text-rendering: optimizeLegibility;
         -webkit-font-smoothing: antialiased;
-        @include m-theme(){
+        @include m-theme() {
           border: 1px solid rgba(themed($m-black), 0.12);
           color: rgba(themed($m-grey-800), 0.5);
         }
@@ -111,7 +123,7 @@ m-search--bar {
         box-sizing: border-box;
 
         appearance: none;
-        @include m-theme(){
+        @include m-theme() {
           border: 1px solid rgba(themed($m-black), 0.12);
         }
       }
@@ -119,42 +131,96 @@ m-search--bar {
   }
 }
 
-m-search--bar-suggestions{
+m-search--bar-suggestions {
   display: block;
 
-  .m-search-bar-suggestions-list{
+  .m-search-bar-suggestions-list {
     padding: 0;
     margin: 0;
     position: absolute;
     z-index: 5000;
     box-sizing: border-box;
     width: 200%;
-    @include m-theme(){
-      background-color: themed($m-white);
-      border: 1px solid themed($m-grey-50);
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+      border: 1px solid themed($m-borderColor--primary);
     }
 
-    .m-search-bar-suggestions-suggestion{
-      cursor:pointer;
+    &.m-searchBar--newDesign {
+      padding: 12px 0;
+      min-height: 100px;
+
+      & > * {
+        padding-left: 40px !important;
+        padding-right: 24px !important;
+      }
+
+      .m-search-bar-suggestions-suggestion {
+        font-size: 16px;
+        line-height: 21px;
+
+        padding-top: 8px;
+        padding-bottom: 8px;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+          border: none;
+        }
+
+        // &:first-of-type {
+        //   padding-top: 20px;
+        // }
+      }
+    }
+
+    .m-searchBar__toolbar {
+      margin-top: 12px;
+    }
+
+    .m-searchBarSuggestions__searchHistory,
+    .m-searchBarSuggestions__clearHistory {
+      cursor: default;
+      font-size: 14px;
+      line-height: 21px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+
+    .m-searchBarSuggestions__clearHistory {
+      float: right;
+      cursor: pointer;
+    }
+
+    .m-search-bar-suggestions-suggestion {
+      cursor: pointer;
       padding: 4px;
-      display:block;
+      display: block;
       text-decoration: none;
       font-size: 14px;
       font-weight: 600;
       letter-spacing: 0.5px;
       -webkit-font-smoothing: antialiased;
       text-rendering: optimizeLegibility;
-      @include m-theme(){
+      @include m-theme() {
         border-bottom: 1px solid themed($m-grey-50);
         color: themed($m-grey-700);
       }
 
-      img{
+      &:hover {
+        @include m-theme() {
+          background-color: themed($m-bgColor--tertiary);
+        }
+      }
+
+      img {
         border-radius: 50%;
         margin: 0 8px 0 4px;
         width: 36px;
         height: 36px;
-        @include m-theme(){
+        @include m-theme() {
           background-color: themed($m-grey-800);
         }
       }
@@ -167,7 +233,7 @@ m-search--bar-suggestions{
     line-height: 26px;
     letter-spacing: 1.75px;
     font-weight: 500;
-    @include m-theme(){
+    @include m-theme() {
       color: rgba(themed($m-grey-800), 0.83);
     }
 
@@ -180,9 +246,9 @@ m-search--bar-suggestions{
     b {
       margin: 0 0.35em 0 8px;
       font-weight: 400;
-      font-size:9px;
+      font-size: 9px;
       text-transform: uppercase;
-      @include m-theme(){
+      @include m-theme() {
         color: rgba(themed($m-grey-800), 0.5);
       }
     }
@@ -194,8 +260,6 @@ m-search--bar-suggestions{
 m-search {
   display: block;
   min-height: 100vh;
-  //background-color: themed($m-white);
-  //background: rgba(252,252,252,1);
   padding-top: 42px;
 
   .m-toolbar {
@@ -205,13 +269,12 @@ m-search {
     top: 50px;
     width: 100%;
     z-index: 500;
-    @include m-theme(){
-      background-color: rgba(themed($m-grey-50),0.8);
+    @include m-theme() {
+      background-color: rgba(themed($m-grey-50), 0.8);
     }
   }
 
   .m-topbar--navigation--more {
-
     position: relative;
     cursor: pointer;
 
@@ -236,14 +299,14 @@ m-search {
         .m-tooltip i {
           font-size: 16px;
           margin: 0 8px;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-grey-400);
           }
         }
       }
     }
 
-    @media screen and (max-width: $max-mobile){
+    @media screen and (max-width: $max-mobile) {
       flex: 1;
     }
   }
@@ -272,10 +335,9 @@ m-search {
     line-height: 1.25;
     letter-spacing: 2px;
     text-transform: uppercase;
-    @include m-theme(){
-      color: rgba(themed($m-black),0.6);
+    @include m-theme() {
+      color: rgba(themed($m-black), 0.6);
     }
-
   }
 
   .m-search--list-entities {

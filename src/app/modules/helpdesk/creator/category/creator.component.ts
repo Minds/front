@@ -4,9 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'm-helpdesk--category-creator',
-  templateUrl: 'creator.component.html'
+  templateUrl: 'creator.component.html',
 })
-
 export class CategoryCreatorComponent implements OnInit {
   categories: Array<any> = [];
 
@@ -20,14 +19,13 @@ export class CategoryCreatorComponent implements OnInit {
   constructor(
     public client: Client,
     public router: Router,
-    public route: ActivatedRoute,
-  ) {
-  }
+    public route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     this.loadCategories();
 
-    this.route.params.subscribe((params) => {
+    this.route.params.subscribe(params => {
       if (params['uuid'] && params['uuid'] !== 'new') {
         this.load(params['uuid']);
       }
@@ -40,7 +38,10 @@ export class CategoryCreatorComponent implements OnInit {
 
   async loadCategories() {
     try {
-      const response: any = await this.client.get(`api/v2/helpdesk/categories`, { limit: 200, recursive: true });
+      const response: any = await this.client.get(
+        `api/v2/helpdesk/categories`,
+        { limit: 200, recursive: true }
+      );
       this.categories = this.categoriesToArray(response.categories);
     } catch (e) {
       console.error(e);
@@ -61,7 +62,10 @@ export class CategoryCreatorComponent implements OnInit {
     }
 
     // unique
-    return catArray.filter((item, index, array) => array.findIndex((value) => value.uuid === item.uuid) === index);
+    return catArray.filter(
+      (item, index, array) =>
+        array.findIndex(value => value.uuid === item.uuid) === index
+    );
   }
 
   private renderBranch(category) {
@@ -87,7 +91,9 @@ export class CategoryCreatorComponent implements OnInit {
 
   async load(uuid: string) {
     try {
-      const response: any = await this.client.get(`api/v2/helpdesk/categories/category/${uuid}`);
+      const response: any = await this.client.get(
+        `api/v2/helpdesk/categories/category/${uuid}`
+      );
 
       this.category = response.category;
     } catch (e) {
@@ -97,7 +103,7 @@ export class CategoryCreatorComponent implements OnInit {
 
   validate() {
     this.error = null;
-    
+
     if (!this.category.title) {
       this.error = 'You must provide a title';
     }
@@ -115,7 +121,9 @@ export class CategoryCreatorComponent implements OnInit {
     }
 
     try {
-      await this.client.post('api/v2/admin/helpdesk/categories', { ...this.category })
+      await this.client.post('api/v2/admin/helpdesk/categories', {
+        ...this.category,
+      });
 
       this.router.navigate(['/help']);
     } catch (e) {

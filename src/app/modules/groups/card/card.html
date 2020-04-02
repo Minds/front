@@ -1,32 +1,44 @@
-<div class="minds-banner-card mdl-card mdl-shadow--2dp m-group-card"
-    [class.m-groupCard--hasUpdates]="hasMarker"
-    >
-
+<div
+  class="minds-banner-card mdl-card mdl-shadow--2dp m-group-card"
+  [class.m-groupCard--hasUpdates]="hasMarker"
+>
   <div class="m-card--user--banner">
-    <div class="m-card--user--banner--img"
-      [ngStyle]="{'background-image': 'url(' + minds.cdn_url + 'fs/v1/banners/' + group.guid + ')'}"
+    <div
+      class="m-card--user--banner--img"
+      [ngStyle]="{'background-image': 'url(' + cdnUrl + 'fs/v1/banners/' + group.guid + ')'}"
     ></div>
     <div class="minds-banner-overlay"></div>
   </div>
 
-  <a [routerLink]="['/groups/profile', group.guid]" class="mdl-card__supporting-text minds-usercard-block">
+  <a
+    [routerLink]="['/groups/profile', group.guid]"
+    class="mdl-card__supporting-text minds-usercard-block"
+  >
     <div class="avatar">
-        <img src="{{minds.cdn_url}}fs/v1/avatars/{{group.guid}}/large" class="mdl-shadow--2dp"/>
+      <img
+        src="{{cdnUrl}}fs/v1/avatars/{{group.guid}}/large"
+        class="mdl-shadow--2dp"
+      />
     </div>
     <div class="body">
       <h3>{{group.name}}</h3>
     </div>
   </a>
 
-  <minds-groups-join-button *ngIf="!group['is:member']" [group]="group"></minds-groups-join-button>
+  <minds-groups-join-button
+    *ngIf="!group['is:member']"
+    [group]="group"
+  ></minds-groups-join-button>
 
   <div class="m-groups-card-stats" *ngIf="group['is:member']">
     <div class="minds-tabs mdl-tabs__tab-bar">
-    		<a class="mdl-tabs__tab mdl-color-text--blue-grey-500 2" [routerLink]="['/groups/profile', group.guid, 'members']">
-    			<span i18n="@@M__COMMON__MEMBERS">Members</span>
-    			<b>{{group['members:count'] | number}}</b>
-    		</a>
+      <a
+        class="mdl-tabs__tab mdl-color-text--blue-grey-500 2"
+        [routerLink]="['/groups/profile', group.guid, 'members']"
+      >
+        <span i18n="@@M__COMMON__MEMBERS">Members</span>
+        <b>{{group['members:count'] | number}}</b>
+      </a>
     </div>
   </div>
-
 </div>

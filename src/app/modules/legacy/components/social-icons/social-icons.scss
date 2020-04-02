@@ -1,50 +1,29 @@
 @import 'defaults.scss';
 
-.m-social-icons{
-  position:fixed;
+.m-social-icons {
+  position: fixed;
   display: flex;
   flex-direction: row;
   bottom: 0;
   left: calc(50% - 100px);
-  z-index:100;
+  z-index: 100;
 
-  @media screen and (max-width: $max-mobile){
+  @media screen and (max-width: $max-mobile) {
     flex-direction: row;
     top: auto;
     right: auto;
-    bottom: 0;
+    bottom: 50px;
     left: 50%;
     margin-left: -100px;
     align-items: center;
   }
 
-  .m-social-icons-icon-inline{
-    display:inline-block;
-    width:100%;
-    cursor:pointer;
-    @include m-theme(){
+  .m-social-icons-icon-inline {
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    @include m-theme() {
       fill: themed($m-white);
-    }
-  }
-  .m-social-icons-icon--facebook .m-social-icons-icon-inline{
-    background-color: #3067a3 !important;
-  }
-  .m-social-icons-icon--twitter .m-social-icons-icon-inline{
-    background-color: #03b3ee !important;
-  }
-  .m-social-icons-icon--email .m-social-icons-icon-inline{
-    @include m-theme(){
-      background-color: themed($m-grey-500);
-    }
-  }
-  .m-social-icons-icon--linkedin .m-social-icons-icon-inline{
-    background-color: #0071a1 !important;
-  }
-  .m-social-icons-icon--gplus .m-social-icons-icon-inline{
-    background-color: #e15440 !important;
-  }
-  .m-social-icons-icon--embed .m-social-icons-icon-inline{
-    @include m-theme(){
       background-color: themed($m-grey-500);
     }
   }

@@ -2,21 +2,15 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../../../common/api/client.service';
 
-
 @Component({
   selector: 'm-settings--billing-subscriptions',
-  templateUrl: 'subscriptions.component.html'
+  templateUrl: 'subscriptions.component.html',
 })
-
 export class SettingsBillingSubscriptionsComponent {
-
-  minds = window.Minds;
   inProgress: boolean = false;
   subscriptions: Array<any> = [];
 
-  constructor(private client: Client, private cd: ChangeDetectorRef) {
-
-  }
+  constructor(private client: Client, private cd: ChangeDetectorRef) {}
 
   ngOnInit() {
     this.loadList();
@@ -27,7 +21,8 @@ export class SettingsBillingSubscriptionsComponent {
     this.subscriptions = [];
     this.cd.detectChanges();
 
-    return this.client.get(`api/v1/payments/subscriptions`)
+    return this.client
+      .get(`api/v1/payments/subscriptions`)
       .then(({ subscriptions }) => {
         this.inProgress = false;
 
@@ -51,7 +46,8 @@ export class SettingsBillingSubscriptionsComponent {
     this.cd.detectChanges();
 
     let subscription = this.subscriptions[i];
-    this.client.delete(`api/v1/payments/subscriptions/${subscription.id}`)
+    this.client
+      .delete(`api/v1/payments/subscriptions/${subscription.id}`)
       .then(() => {
         this.subscriptions.splice(i, 1);
         this.inProgress = false;
@@ -68,5 +64,4 @@ export class SettingsBillingSubscriptionsComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

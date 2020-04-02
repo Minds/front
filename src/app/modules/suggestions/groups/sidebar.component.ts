@@ -1,25 +1,27 @@
 import { Component } from '@angular/core';
-import { Client } from "../../../services/api/client";
-import { GroupsService } from "../../groups/groups-service";
-import { Session } from "../../../services/session";
+import { Client } from '../../../services/api/client';
+import { GroupsService } from '../../groups/groups.service';
+import { Session } from '../../../services/session';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-suggestions__sidebarGroups',
-  templateUrl: 'sidebar.component.html'
+  templateUrl: 'sidebar.component.html',
 })
-
 export class GroupSuggestionsSidebarComponent {
-  minds = window.Minds;
+  readonly cdnUrl: string;
   lastOffset: number = 0;
 
   entities: Array<any> = [];
   inProgress: boolean = false;
 
   constructor(
-      private client: Client,
-      public session: Session,
-      public service: GroupsService,
+    private client: Client,
+    public session: Session,
+    public service: GroupsService,
+    configs: ConfigsService
   ) {
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   ngOnInit() {
@@ -29,17 +31,19 @@ export class GroupSuggestionsSidebarComponent {
   async load() {
     let limit = 5;
 
-    if (this.entities.length)
-      limit = 1;
+    if (this.entities.length) limit = 1;
 
     this.lastOffset = this.entities.length ? this.lastOffset + 11 : 0;
 
     this.inProgress = true;
     try {
-      const response: any = await this.client.get('api/v2/entities/suggested/groups/all', {
-        limit,
-        offset: this.lastOffset
-      });
+      const response: any = await this.client.get(
+        'api/v2/entities/suggested/groups/all',
+        {
+          limit,
+          offset: this.lastOffset,
+        }
+      );
 
       for (let entity of response.entities) {
         this.entities.push(entity);
@@ -60,8 +64,7 @@ export class GroupSuggestionsSidebarComponent {
    * Check if the group is closed
    */
   isPublic(group: any) {
-    if (group.membership !== 2)
-      return false;
+    if (group.membership !== 2) return false;
     return true;
   }
 
@@ -70,45 +73,47 @@ export class GroupSuggestionsSidebarComponent {
    */
   join(group: any) {
     this.inProgress = true;
-    this.service.join(group)
-        .then(() => {
-          this.inProgress = false;
-          if (this.isPublic(group)) {
-            group['is:member'] = true;
-            return;
-          }
-          group['is:awaiting'] = true;
-        })
-        .catch(e => {
-          let error = e.error;
-          switch (e.error) {
-            case 'You are banned from this group':
-              error = 'banned';
-              break;
-            case 'User is already a member':
-              error = 'already_a_member';
-              break;
-            default:
-              error = e.error;
-              break;
-          }
-          group['is:member'] = false;
-          group['is:awaiting'] = false;
-          this.inProgress = false;
-        });
+    this.service
+      .join(group)
+      .then(() => {
+        this.inProgress = false;
+        if (this.isPublic(group)) {
+          group['is:member'] = true;
+          return;
+        }
+        group['is:awaiting'] = true;
+      })
+      .catch(e => {
+        let error = e.error;
+        switch (e.error) {
+          case 'You are banned from this group':
+            error = 'banned';
+            break;
+          case 'User is already a member':
+            error = 'already_a_member';
+            break;
+          default:
+            error = e.error;
+            break;
+        }
+        group['is:member'] = false;
+        group['is:awaiting'] = false;
+        this.inProgress = false;
+      });
   }
 
   /**
    * Leave a group
    */
   leave(group) {
-    this.service.leave(group)
-        .then(() => {
-          group['is:member'] = false;
-        })
-        .catch(e => {
-          group['is:member'] = true;
-        });
+    this.service
+      .leave(group)
+      .then(() => {
+        group['is:member'] = false;
+      })
+      .catch(e => {
+        group['is:member'] = true;
+      });
   }
 
   /**
@@ -117,10 +122,8 @@ export class GroupSuggestionsSidebarComponent {
   cancelRequest(group: any) {
     group['is:awaiting'] = false;
 
-    this.service.cancelRequest(group)
-        .then((done: boolean) => {
-          group['is:awaiting'] = !done;
-        });
+    this.service.cancelRequest(group).then((done: boolean) => {
+      group['is:awaiting'] = !done;
+    });
   }
-
 }

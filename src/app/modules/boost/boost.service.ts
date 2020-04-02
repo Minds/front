@@ -6,21 +6,29 @@ import { BoostContractService } from '../blockchain/contracts/boost-contract.ser
 
 @Injectable()
 export class BoostService {
-
-  constructor(public session: Session, private client: Client, private boostContractService: BoostContractService) { }
+  constructor(
+    public session: Session,
+    private client: Client,
+    private boostContractService: BoostContractService
+  ) {}
 
   /**
    * Returns a promise with a collection of boosts.
    */
-  load(type: string, filter: string, { limit, offset }: { limit?: number, offset?: string } = {}): Promise<{ boosts, loadNext }> {
-    return this.client.get(`api/v2/boost/${type}/${filter}`, {
-      limit: limit || 12,
-      offset: offset || ''
-    })
+  load(
+    type: string,
+    filter: string,
+    { limit, offset }: { limit?: number; offset?: string } = {}
+  ): Promise<{ boosts; loadNext }> {
+    return this.client
+      .get(`api/v2/boost/${type}/${filter}`, {
+        limit: limit || 12,
+        offset: offset || '',
+      })
       .then(({ boosts, 'load-next': loadNext }) => {
         return {
           boosts: boosts && boosts.length ? boosts : [],
-          loadNext: loadNext || ''
+          loadNext: loadNext || '',
         };
       });
   }
@@ -56,7 +64,11 @@ export class BoostService {
    * Returns true if the boost can be accepted by the current user
    */
   canAccept(boost): boolean {
-    return boost.state === 'created' && this.getBoostType(boost) === 'p2p' && this.isIncoming(boost);
+    return (
+      boost.state === 'created' &&
+      this.getBoostType(boost) === 'p2p' &&
+      this.isIncoming(boost)
+    );
   }
 
   /**
@@ -90,7 +102,11 @@ export class BoostService {
    * Returns true if the boost can be rejected by the current user
    */
   canReject(boost): boolean {
-    return boost.state === 'created' && this.getBoostType(boost) === 'p2p' && this.isIncoming(boost);
+    return (
+      boost.state === 'created' &&
+      this.getBoostType(boost) === 'p2p' &&
+      this.isIncoming(boost)
+    );
   }
 
   /**
@@ -129,9 +145,10 @@ export class BoostService {
    * Returns true if the boost can be revoked by the current user
    */
   canRevoke(boost): boolean {
-    return boost.state === 'created' && (
-      (this.getBoostType(boost) === 'p2p' && !this.isIncoming(boost)) ||
-      (this.getBoostType(boost) !== 'p2p')
+    return (
+      boost.state === 'created' &&
+      ((this.getBoostType(boost) === 'p2p' && !this.isIncoming(boost)) ||
+        this.getBoostType(boost) !== 'p2p')
     );
   }
 
@@ -158,6 +175,5 @@ export class BoostService {
   /**
    * Returns true if the transactionid indicates that the transaction is onChain;
    */
-  isOnChain = (boost: any)  => boost.transactionId.startsWith('0x');
-
+  isOnChain = (boost: any) => boost.transactionId.startsWith('0x');
 }

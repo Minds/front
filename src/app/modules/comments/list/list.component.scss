@@ -1,13 +1,16 @@
-@import "defaults";
+@import 'defaults';
 
-minds-comments, m-comments__tree, .m-comment-wrapper {
+minds-comments,
+m-comments__tree,
+m-comments__entityOutlet,
+.m-comment-wrapper {
   //margin-top: 50px;
   width: 100%;
 
   .minds-comment {
     min-height: 0;
     margin: 0;
-    padding: $minds-padding $minds-padding*1.5;
+    padding: $minds-padding $minds-padding * 1.5;
     background-color: transparent;
     overflow: visible;
     //border-bottom:1px solid themed($m-grey-100);
@@ -42,7 +45,7 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
     }
 
     .minds-body {
-      margin-left: $minds-margin;
+      // margin-left: $minds-margin;
       font-size: 12px;
       max-width: 100%;
       max-width: calc(100% - 60px);
@@ -74,7 +77,6 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
             padding: 0;
           }
         }
-
       }
       a {
         text-decoration: none;
@@ -118,13 +120,12 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
   .m-comment-attachment,
   .m-comments-composer,
   .m-editable-attachment-container {
-
     background: transparent;
 
     .m-rich-embed {
       text-align: left;
       margin: 0 0 $minds-padding;
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-white);
         border: 1px solid themed($m-grey-100);
       }
@@ -231,12 +232,14 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
 
       minds-textarea {
         font-family: inherit;
-        font-size: 12px;
+        font-size: 14px;
+        line-height: 22px;
         width: 0;
         min-width: 0;
         flex: 1;
         margin-bottom: $minds-padding;
-        border-radius: 25px;
+        // border-radius: 2px; - change when new comments design in
+        border-radius: 26px;
 
         .m-editor {
           //min-height: 26px;
@@ -251,9 +254,10 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
   .m-comments-composer form minds-textarea,
   .minds-editable-container textarea {
     width: 100%;
-    padding: $minds-padding ($minds-padding + 88px) $minds-padding $minds-padding;
-    @include m-theme(){
-      background-color: themed($m-white);
+    padding: $minds-padding ($minds-padding + 88px) $minds-padding
+      $minds-padding * 2;
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
     }
   }
 
@@ -280,7 +284,8 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
     padding: 0;
     text-align: right;
 
-    .m-mature-button, .m-post-button {
+    .m-mature-button,
+    .m-post-button {
       display: inline-block;
       vertical-align: middle;
       position: relative;
@@ -289,6 +294,7 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
 
       i {
         cursor: pointer;
+        color: #9b9b9b;
       }
 
       &.m-button-disabled {
@@ -306,7 +312,7 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
       position: absolute;
       top: 7px;
       left: 6px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-400);
       }
     }
@@ -331,16 +337,14 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
         left: 0;
         cursor: pointer;
         opacity: 0;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-400);
         }
       }
       input::-webkit-file-upload-button {
         cursor: pointer;
       }
-
     }
-
   }
 
   .attachment-preview-delete {
@@ -382,7 +386,8 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
         right: auto;
       }
 
-      img, minds-video {
+      img,
+      minds-video {
         width: auto;
         max-width: 100%;
         max-height: $mcc-height - ($minds-padding * 2) - 50px;
@@ -403,8 +408,23 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
   font-size: 12px;
   text-align: center;
   margin: ($minds-padding * 2) 0;
-  @include m-theme(){
+
+  @include m-theme() {
     color: themed($m-grey-300);
+  }
+
+  a {
+    font-weight: inherit;
+    color: inherit;
+    cursor: pointer;
+
+    b {
+      font-weight: bold;
+
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
   }
 }
 
@@ -412,7 +432,7 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
   font-size: 12px;
   text-align: center;
   margin: ($minds-padding * 2) 0;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-red-dark);
   }
 
@@ -428,4 +448,5 @@ minds-comments, m-comments__tree, .m-comment-wrapper {
 .m-comment--poster .minds-body {
   overflow: visible;
   min-height: 50px;
+  max-width: calc(100% - 60px);
 }

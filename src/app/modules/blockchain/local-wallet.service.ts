@@ -49,8 +49,11 @@ export class LocalWalletService {
     }
 
     try {
-      const { privateKey, secureMode } = await this.transactionOverlay.waitForAccountUnlock(),
-      account = ethAccount.privateToAccount(privateKey).address;
+      const {
+          privateKey,
+          secureMode,
+        } = await this.transactionOverlay.waitForAccountUnlock(),
+        account = ethAccount.privateToAccount(privateKey).address;
 
       this.privateKey = privateKey;
       this.account = account;

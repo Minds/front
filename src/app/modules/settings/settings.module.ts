@@ -24,12 +24,13 @@ import { SettingsReportedContentComponent } from './reported-content/reported-co
 import { SettingsService } from './settings.service';
 import { SettingsWireComponent } from './wire/wire.component';
 import { WireModule } from '../wire/wire.module';
-import { SettingsP2PMediaComponent } from './p2pmedia/p2pmedia.component';
-import { SettingsBlockedChannelsComponent } from "./blocked-channels/blocked-channels.component";
+import { SettingsBlockedChannelsComponent } from './blocked-channels/blocked-channels.component';
+import { SettingsTiersComponent } from './tiers/tiers.component';
 
-
-const settingsRoutes : Routes = [
-  { path: 'settings', component: SettingsComponent,
+const settingsRoutes: Routes = [
+  {
+    path: 'settings',
+    component: SettingsComponent,
     children: [
       { path: '', redirectTo: 'general', pathMatch: 'full' },
       { path: 'general/:card', component: SettingsGeneralComponent },
@@ -38,12 +39,12 @@ const settingsRoutes : Routes = [
       { path: 'disable', component: SettingsDisableChannelComponent },
       { path: 'twoFactor', component: SettingsTwoFactorComponent },
       { path: 'emails', component: SettingsEmailsComponent },
-      { path: 'billing',  component: SettingsBillingComponent },
-      { path: 'reported-content',  component: SettingsReportedContentComponent },
-      { path: 'p2pmedia',  component: SettingsP2PMediaComponent },
+      { path: 'billing', component: SettingsBillingComponent },
+      { path: 'reported-content', component: SettingsReportedContentComponent },
       { path: 'blocked-channels', component: SettingsBlockedChannelsComponent },
-    ]
-  }
+      { path: 'tiers', component: SettingsTiersComponent },
+    ],
+  },
 ];
 
 @NgModule({
@@ -73,16 +74,19 @@ const settingsRoutes : Routes = [
     SettingsBillingSubscriptionsComponent,
     SettingsReportedContentComponent,
     SettingsWireComponent,
-    SettingsP2PMediaComponent,
     SettingsBlockedChannelsComponent,
+    SettingsTiersComponent,
   ],
-  providers: [
-    SettingsService,
-  ],
+  providers: [SettingsService],
   exports: [
     SettingsBillingSavedCardsComponent,
-    SettingsBillingSubscriptionsComponent
+    SettingsBillingSubscriptionsComponent,
+    SettingsTwoFactorComponent,
+    SettingsSubscriptionsComponent,
+    SettingsReportedContentComponent,
+    SettingsWireComponent,
+    SettingsBlockedChannelsComponent,
+    SettingsTiersComponent,
   ],
 })
-
 export class SettingsModule {}

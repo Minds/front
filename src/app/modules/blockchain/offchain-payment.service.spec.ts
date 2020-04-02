@@ -3,7 +3,6 @@ import { clientMock } from '../../../tests/client-mock.spec';
 import { fakeAsync } from '@angular/core/testing';
 
 describe('OffchainPaymentService', () => {
-
   let service: OffchainPaymentService;
 
   beforeEach(() => {
@@ -18,7 +17,7 @@ describe('OffchainPaymentService', () => {
   it('should create an offchain transaction', fakeAsync(async () => {
     const url = `api/v1/blockchain/transactions/spend`;
     clientMock.response[url] = {
-      txHash: '0x1234'
+      txHash: '0x1234',
     };
 
     let txHash = await service.create('boost', 10 ** 18);
@@ -27,9 +26,8 @@ describe('OffchainPaymentService', () => {
     expect(clientMock.post).toHaveBeenCalled();
     const args = clientMock.post.calls.mostRecent().args;
     expect(args[0]).toBe(url);
-    expect(args[1]).toEqual({type: 'boost', amount: 10 ** 18});
+    expect(args[1]).toEqual({ type: 'boost', amount: 10 ** 18 });
 
     expect(txHash).toBe('0x1234');
   }));
-
 });

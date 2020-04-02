@@ -4,21 +4,19 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 
 import { HashtagsSelectorModalComponent } from '../../modules/hashtags/hashtag-selector-modal/hashtags-selector.component';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { ReferralsLinksComponent } from '../wallet/tokens/referrals/links/links.component';
+import { MetaService } from '../../common/services/meta.service';
+import { FeaturesService } from '../../services/features.service';
 
 @Component({
   selector: 'm-settings',
-  templateUrl: 'settings.component.html'
+  templateUrl: 'settings.component.html',
 })
-
 export class SettingsComponent {
-
-  minds: Minds;
   user: any;
   filter: string;
   account_time_created: any;
@@ -31,22 +29,27 @@ export class SettingsComponent {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
+    public metaService: MetaService,
     private overlayModal: OverlayModalService,
-  ) {
-  }
+    protected featuresService: FeaturesService
+  ) {}
 
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
       return this.router.navigate(['/login']);
     }
-    this.minds = window.Minds;
 
-    this.title.setTitle('Settings');
+    // if (this.featuresService.has('navigation')) {
+    //   this.router.navigate(['/settings/canary']);
+    // }
+
+    this.metaService
+      .setTitle('Settings')
+      .setDescription('Configure your Minds settings');
 
     this.filter = 'general';
 
-    this.account_time_created = window.Minds.user.time_created;
+    this.account_time_created = this.session.getLoggedInUser().time_created;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['filter']) {
@@ -61,20 +64,31 @@ export class SettingsComponent {
   }
 
   ngOnDestroy() {
-    if (this.paramsSubscription)
-      this.paramsSubscription.unsubscribe();
+    if (this.paramsSubscription) this.paramsSubscription.unsubscribe();
   }
 
   openHashtagsSelector() {
-    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
-      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large' 
-    }).present();
+    this.overlayModal
+      .create(
+        HashtagsSelectorModalComponent,
+        {},
+        {
+          class:
+            'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+        }
+      )
+      .present();
   }
 
   openReferralsModal() {
-    this.overlayModal.create(ReferralsLinksComponent, {}, {
-      class: 'm-overlay-modal--referrals-links m-overlay-modal--medium'
-    }).present();
+    this.overlayModal
+      .create(
+        ReferralsLinksComponent,
+        {},
+        {
+          class: 'm-overlay-modal--referrals-links m-overlay-modal--medium',
+        }
+      )
+      .present();
   }
-
 }

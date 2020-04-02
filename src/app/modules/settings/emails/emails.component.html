@@ -1,48 +1,63 @@
 <div class="m-settings--section m-layout--row m-border">
-
   <div [hidden]="!inProgress">
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
-  <div class="minds-error mdl-color--red mdl-color-text--white" [hidden]="!error">{{error}}</div>
+  <div
+    class="minds-error mdl-color--red mdl-color-text--white"
+    [hidden]="!error"
+  >
+    {{ error }}
+  </div>
   <div class="m-layout--spacer"></div>
-  
 
-  <button class="m-settings--emails--save m-btn  m-btn--slim m-btn--action"
+  <button
+    class="m-settings--emails--save m-btn  m-btn--slim m-btn--action"
     [disabled]="!canSubmit()"
     [hidden]="saved"
     (click)="save()"
   >
     <ng-container i18n="@@M__ACTION__SAVE">Save</ng-container>
   </button>
-  <button class="m-settings--emails--save m-btn m-btn--slim"
-    [hidden]="!saved"
-  >
+  <button class="m-settings--emails--save m-btn m-btn--slim" [hidden]="!saved">
     <ng-container i18n="@@M__COMMON__SAVED">Saved</ng-container>
   </button>
 </div>
 
-<div class="m-settings--section m-settings--emails--when-campaign m-border" *ngIf="!loading">
+<div
+  class="m-settings--section m-settings--emails--when-campaign m-border"
+  *ngIf="!loading"
+>
   <h4 i18n="@@SETTINGS__EMAIL__EMAIL_ADDRESS_TITLE">Email address</h4>
 
   <ul class="m-settings--emails-campaigns">
     <li class="m-settings--emails-campaigns--campaign">
-      <input class="m-input"
+      <input
+        class="m-input"
         type="email"
         id="email"
         name="email"
         [(ngModel)]="email"
-        (keyup)="change()"
+        (keyup)="change(); changeEmail()"
       />
+    </li>
+
+    <li class="m-settings--emails-campaigns__note" *ngIf="emailChanged" i18n>
+      Note: If you change your email address, it will need to be confirmed
+      again.
     </li>
   </ul>
 </div>
 
-<div class="m-settings--section m-settings--emails--when-campaign m-border" *ngIf="!loading">
+<div
+  class="m-settings--section m-settings--emails--when-campaign m-border"
+  *ngIf="!loading"
+>
   <h4 i18n="@@SETTINGS__EMAIL__EMAIL_ME_WHEN_TITLE">Email me when</h4>
 
   <ul class="m-settings--emails-campaigns">
     <li class="m-settings--emails-campaigns--campaign">
-      <input type="checkbox"
+      <input
+        type="checkbox"
         id="unread-notifications"
         name="unread-notifications"
         (click)="change()"
@@ -56,7 +71,8 @@
       </label>
     </li>
     <li class="m-settings--emails-campaigns--campaign">
-      <input type="checkbox"
+      <input
+        type="checkbox"
         id="wire-received"
         name="wire-received"
         (click)="change()"
@@ -70,7 +86,8 @@
       </label>
     </li>
     <li class="m-settings--emails-campaigns--campaign">
-      <input type="checkbox"
+      <input
+        type="checkbox"
         id="boost-completed"
         name="boost-completed"
         (click)="change()"
@@ -86,13 +103,16 @@
   </ul>
 </div>
 
-<div class="m-settings--section m-settings--emails--with-campaign m-border" *ngIf="!loading">
-      
+<div
+  class="m-settings--section m-settings--emails--with-campaign m-border"
+  *ngIf="!loading"
+>
   <h4 i18n="@@SETTINGS__EMAIL__EMAIL_ME_WITH">Email me with</h4>
 
   <ul class="m-settings--emails-campaigns">
     <li class="m-settings--emails-campaigns--campaign">
-      <input type="checkbox"
+      <input
+        type="checkbox"
         id="top-posts"
         name="top-posts"
         (click)="change()"
@@ -105,14 +125,29 @@
         </ng-container>
       </label>
       <br />
-      <select id="top-posts-dropdown" name="top-posts" [disabled]="!notifications.with.top_posts" (click)="change()" [(ngModel)]="notifications.with.top_posts">
-        <option value="periodically" i18n="@@SETTINGS__EMAIL__PERIODICALLY_OPTION">Periodically</option>
-        <option value="daily" i18n="@@SETTINGS__EMAIL__DAILY_OPTION">Daily</option>
-        <option value="weekly" i18n="@@SETTINGS__EMAIL__WEEKLY_OPTION">Weekly</option>
+      <select
+        id="top-posts-dropdown"
+        name="top-posts"
+        [disabled]="!notifications.with.top_posts"
+        (click)="change()"
+        [(ngModel)]="notifications.with.top_posts"
+      >
+        <option
+          value="periodically"
+          i18n="@@SETTINGS__EMAIL__PERIODICALLY_OPTION"
+          >Periodically</option
+        >
+        <option value="daily" i18n="@@SETTINGS__EMAIL__DAILY_OPTION"
+          >Daily</option
+        >
+        <option value="weekly" i18n="@@SETTINGS__EMAIL__WEEKLY_OPTION"
+          >Weekly</option
+        >
       </select>
     </li>
     <li class="m-settings--emails-campaigns--campaign">
-      <input type="checkbox"
+      <input
+        type="checkbox"
         id="channel-improvement-tips"
         name="channel-improvement-tips"
         (click)="change()"
@@ -126,7 +161,8 @@
       </label>
     </li>
     <li class="m-settings--emails-campaigns--campaign">
-      <input type="checkbox"
+      <input
+        type="checkbox"
         id="missed-since-login"
         name="missed-since-login"
         (click)="change()"
@@ -134,13 +170,16 @@
       />
 
       <label for="missed-since-login">
-        <ng-container i18n="@@MINDS__SETTINGS__SINCE_MISSED_SINCE_LAST_LOGIN_LABEL">
+        <ng-container
+          i18n="@@MINDS__SETTINGS__SINCE_MISSED_SINCE_LAST_LOGIN_LABEL"
+        >
           Things I've missed since my last login
         </ng-container>
       </label>
     </li>
     <li class="m-settings--emails-campaigns--campaign">
-      <input type="checkbox"
+      <input
+        type="checkbox"
         id="new-channels"
         name="new-channels"
         (click)="change()"
@@ -154,17 +193,20 @@
       </label>
     </li>
   </ul>
-
 </div>
 
-
-<div class="m-settings--section m-settings--emails--global-campaign m-border" *ngIf="!loading">
-
-  <h4 i18n="@@SETTINGS__EMAIL__KEEP_ME_UPDATED_WITH_TITLE">Keep me updated with</h4>
+<div
+  class="m-settings--section m-settings--emails--global-campaign m-border"
+  *ngIf="!loading"
+>
+  <h4 i18n="@@SETTINGS__EMAIL__KEEP_ME_UPDATED_WITH_TITLE">
+    Keep me updated with
+  </h4>
 
   <ul class="m-settings--emails-campaigns">
     <li class="m-settings--emails-campaigns--campaign">
-      <input type="checkbox"
+      <input
+        type="checkbox"
         id="minds-news"
         name="minds-news"
         (click)="change()"
@@ -178,7 +220,8 @@
       </label>
     </li>
     <li class="m-settings--emails-campaigns--campaign">
-      <input type="checkbox"
+      <input
+        type="checkbox"
         id="minds-tips"
         name="minds-tips"
         (click)="change()"
@@ -192,7 +235,8 @@
       </label>
     </li>
     <li class="m-settings--emails-campaigns--campaign">
-      <input type="checkbox"
+      <input
+        type="checkbox"
         id="exclusive-promotions"
         name="exclusive-promotions"
         (click)="change()"
@@ -206,5 +250,4 @@
       </label>
     </li>
   </ul>
-
 </div>

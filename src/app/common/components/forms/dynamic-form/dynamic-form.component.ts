@@ -1,32 +1,46 @@
-import { Component, OnInit, Input, AfterViewChecked , OnChanges, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+  Input,
+  AfterViewChecked,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'm-dynamic-form',
   templateUrl: './dynamic-form.component.html',
-  styleUrls: ['./dynamic-form.component.scss']
+  styleUrls: ['./dynamic-form.component.scss'],
 })
-export class DynamicFormComponent implements OnInit, AfterViewChecked , OnChanges {
+export class DynamicFormComponent
+  implements OnInit, AfterViewChecked, OnChanges {
   @Input() fields;
   form: FormGroup;
   fieldDefinitions;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.updateFields();
   }
 
   private updateFields() {
-    this.fieldDefinitions =
-      Object.keys(this.fields)
-        .map(prop => {
-          return Object.assign({}, { key: prop} , this.fields[prop]);
-        });
+    this.fieldDefinitions = Object.keys(this.fields).map(prop => {
+      return Object.assign({}, { key: prop }, this.fields[prop]);
+    });
 
     const formGroup = {};
     for (const prop of Object.keys(this.fields)) {
-      formGroup[prop] = new FormControl(this.fields[prop].value || '', this.mapValidators(this.fields[prop].validation));
+      formGroup[prop] = new FormControl(
+        this.fields[prop].value || '',
+        this.mapValidators(this.fields[prop].validation)
+      );
     }
 
     this.form = new FormGroup(formGroup);

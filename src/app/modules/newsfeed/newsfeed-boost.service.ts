@@ -8,17 +8,16 @@ export class NewsfeedBoostService {
   enableChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
   pauseChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-
   enabled: boolean = true;
   paused: boolean = false;
 
   rating: number = 2; //default to Safe Mode Off
 
-  constructor(
-    private session: Session,
-    private client: Client
-  ) {
-    if (this.session.getLoggedInUser().plus && this.session.getLoggedInUser().disabled_boost) {
+  constructor(private session: Session, private client: Client) {
+    if (
+      this.session.getLoggedInUser().plus &&
+      this.session.getLoggedInUser().disabled_boost
+    ) {
       this.enabled = false;
     }
     this.paused = !session.getLoggedInUser().boost_autorotate;
@@ -41,14 +40,16 @@ export class NewsfeedBoostService {
 
     this.explicitChanged.emit(active);
 
-    this.client.post('api/v1/settings/' + this.session.getLoggedInUser().guid, {
-      mature: active,
-      boost_rating: this.rating
-    }).catch((e) => {
-      window.Minds.user.mature = !active;
+    this.client
+      .post('api/v1/settings/' + this.session.getLoggedInUser().guid, {
+        mature: active,
+        boost_rating: this.rating,
+      })
+      .catch(e => {
+        this.session.getLoggedInUser().mature = !active;
 
-      this.explicitChanged.emit(!active);
-    });
+        this.explicitChanged.emit(!active);
+      });
   }
 
   togglePause() {
@@ -64,13 +65,12 @@ export class NewsfeedBoostService {
 
     this.enableChanged.emit(this.enabled);
 
-    this.client.put('api/v1/plus/boost')
-      .catch(() => {
-        this.session.getLoggedInUser().disabled_boost = false;
-        this.enabled = true;
+    this.client.put('api/v1/plus/boost').catch(() => {
+      this.session.getLoggedInUser().disabled_boost = false;
+      this.enabled = true;
 
-        this.enableChanged.emit(this.enabled);
-      });
+      this.enableChanged.emit(this.enabled);
+    });
   }
 
   showBoost() {
@@ -79,12 +79,11 @@ export class NewsfeedBoostService {
 
     this.enableChanged.emit(this.enabled);
 
-    this.client.delete('api/v1/plus/boost')
-      .catch(() => {
-        this.session.getLoggedInUser().disabled_boost = true;
-        this.enabled = false;
+    this.client.delete('api/v1/plus/boost').catch(() => {
+      this.session.getLoggedInUser().disabled_boost = true;
+      this.enabled = false;
 
-        this.enableChanged.emit(this.enabled);
-      });
-    }
+      this.enableChanged.emit(this.enabled);
+    });
+  }
 }

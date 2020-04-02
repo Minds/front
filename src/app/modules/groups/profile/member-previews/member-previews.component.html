@@ -1,12 +1,18 @@
 <ul class="m-groupMemberPreviews__list">
-  <li class="m-groupMemberPreviews__member" [ngClass]="{'m-pulsating--small': member.inGathering }" *ngFor="let member of members">
+  <li
+    class="m-groupMemberPreviews__member"
+    [ngClass]="{ 'm-pulsating--small': member.inGathering }"
+    *ngFor="let member of members"
+  >
     <a [routerLink]="['/', member.username]">
-      <img [src]="minds.cdn_url + 'icon/' + member.guid + '/small'" />
+      <img [src]="cdnUrl + 'icon/' + member.guid + '/small'" />
     </a>
   </li>
   <li class="m-groupMemberPreviews__member--count" routerLink="members">
     <span *ngIf="count > 0">
-      +{{count | abbr:0 }} Member<ng-container *ngIf="count > 1">s</ng-container>
+      +{{ count | abbr: 0 }} Member<ng-container *ngIf="count > 1"
+        >s</ng-container
+      >
     </span>
     <span *ngIf="count <= 0">+ Members</span>
   </li>

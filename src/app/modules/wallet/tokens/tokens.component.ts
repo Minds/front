@@ -1,19 +1,28 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { BTCSettingsComponent } from '../../payments/btc/settings.component';
+
 @Component({
-  moduleId: module.id,
   selector: 'm-wallet--tokens',
-  templateUrl: 'tokens.component.html'
+  templateUrl: 'tokens.component.html',
 })
 export class WalletTokensComponent {
-
   showOnboarding: boolean = false;
-  minds = window.Minds;
 
-  constructor(route: ActivatedRoute) {
+  constructor(
+    route: ActivatedRoute,
+    private overlayModal: OverlayModalService
+  ) {
     route.url.subscribe(() => {
-      this.showOnboarding = route.snapshot.firstChild && route.snapshot.firstChild.routeConfig.path === 'transactions';
+      this.showOnboarding =
+        route.snapshot.firstChild &&
+        route.snapshot.firstChild.routeConfig.path === 'transactions';
     });
+  }
+
+  openBtcSettingsModal() {
+    this.overlayModal.create(BTCSettingsComponent, {}).present();
   }
 }

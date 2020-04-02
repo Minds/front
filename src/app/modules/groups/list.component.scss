@@ -1,9 +1,8 @@
-.m-groups--list{
+.m-groups--list {
   display: flex;
   flex-direction: row;
   flex-wrap: row;
   flex-flow: row wrap;
-  //background: #FFF;
   max-width: 1280px;
   margin: auto;
 
@@ -14,17 +13,17 @@
     //1:1 ration default (square)
     max-width: calc(25% - 16px);
 
-    @media screen and (max-width: 990px){
+    @media screen and (max-width: 990px) {
       flex-basis: calc(33% - 16px);
       max-width: calc(33% - 16px);
     }
 
-    @media screen and (max-width: 720px){
+    @media screen and (max-width: 720px) {
       flex-basis: calc(50% - 16px);
       max-width: calc(50% - 16px);
     }
 
-    @media screen and (max-width: 500px){
+    @media screen and (max-width: 500px) {
       flex-basis: calc(100% - 16px);
       max-width: calc(100% - 16px);
     }

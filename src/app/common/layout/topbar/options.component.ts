@@ -4,16 +4,16 @@ import { SettingsService } from '../../../modules/settings/settings.service';
 
 @Component({
   selector: 'm-topbar--navigation--options',
-  templateUrl: 'options.component.html'
+  templateUrl: 'options.component.html',
 })
-
 export class TopbarOptionsComponent {
-
   @Input() options: Array<string> = ['rating'];
-  @Output() change: EventEmitter<{ rating }> = new EventEmitter;
+  @Output() change: EventEmitter<{ rating }> = new EventEmitter();
 
-  constructor(public session: Session, public settingsService: SettingsService) {
-  }
+  constructor(
+    public session: Session,
+    public settingsService: SettingsService
+  ) {}
 
   get rating() {
     return this.session.getLoggedInUser().boost_rating;
@@ -32,5 +32,4 @@ export class TopbarOptionsComponent {
     this.change.next({ rating: this.rating });
     event.stopPropagation();
   }
-
 }

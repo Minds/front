@@ -1,12 +1,12 @@
-<div class="mdl-card__title m-channels--sorted-module__Title" [routerLink]="linksTo">
-  <h2 class="mdl-card__title-text">{{title}}</h2>
+<div
+  class="mdl-card__title m-channels--sorted-module__Title"
+  [routerLink]="linksTo"
+>
+  <h2 class="mdl-card__title-text">{{ title }}</h2>
 </div>
 
 <ng-container [ngSwitch]="type">
-  <div
-    *ngSwitchCase="'blogs'"
-    class="m-channels--sorted-module__BlogCards"
-  >
+  <div *ngSwitchCase="'blogs'" class="m-channels--sorted-module__BlogCards">
     <minds-card
       *ngFor="let entity of entities"
       class="mdl-card"
@@ -16,7 +16,7 @@
 
   <div
     *ngSwitchDefault
-    class="mdl-card__supporting-text m-channels--sorted-module__Tiles" 
+    class="mdl-card__supporting-text m-channels--sorted-module__Tiles"
   >
     <a
       *ngFor="let entity of entities"
@@ -27,7 +27,7 @@
         class="m-channels--sorted-module__TileImage"
         [ngStyle]="{ 'background-image': getThumbnailSrcCssUrl(entity) }"
       ></span>
-      
+
       <i class="material-icons">explicit</i>
     </a>
   </div>
@@ -39,6 +39,9 @@
   [hidden]="!inProgress"
 ></div>
 
-<a class="mdl-card__supporting-text mdl-color-text--grey-600" [routerLink]="linksTo">
+<a
+  class="mdl-card__supporting-text mdl-color-text--grey-600 m-channels--sorted-module__viewMore"
+  [routerLink]="linksTo"
+>
   <ng-container i18n>View More</ng-container>
 </a>

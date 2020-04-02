@@ -4,27 +4,25 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
-import { MindsTitle } from '../../../services/ux/title';
 import { Navigation as NavigationService } from '../../../services/navigation';
-import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { PosterComponent } from '../poster/poster.component';
+import { FeaturesService } from '../../../services/features.service';
+import { FeedsService } from '../../../common/services/feeds.service';
 
 @Component({
   selector: 'm-newsfeed--boost',
-  templateUrl: 'boost.component.html'
+  templateUrl: 'boost.component.html',
 })
-
 export class NewsfeedBoostComponent {
-
   newsfeed: Array<Object>;
   prepended: Array<any> = [];
   offset: string = '';
+  exclude: string[] = [];
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  minds;
 
   message: string = '';
 
@@ -40,18 +38,14 @@ export class NewsfeedBoostComponent {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private storage: Storage,
     private context: ContextService,
-    private session: Session,
-  ) {
-    this.title.setTitle('Boost Newsfeed');
-  }
+    protected featuresService: FeaturesService,
+    public feedsService: FeedsService
+  ) {}
 
   ngOnInit() {
-
-    this.load();
-    this.minds = window.Minds;
+    this.load(true);
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['ts']) {
@@ -70,39 +64,32 @@ export class NewsfeedBoostComponent {
     this.paramsSubscription.unsubscribe();
   }
 
-  load(refresh: boolean = false) {
-    if (this.inProgress)
-      return false;
+  async load(refresh: boolean = false) {
+    if (this.inProgress) return false;
 
     if (refresh) {
-      this.offset = '';
+      this.feedsService.clear();
     }
 
-    if (this.storage.get('boost:offset:boostfeed')) {
-      this.offset = this.storage.get('boost:offset:boostfeed');
-    }
-
-    this.inProgress = true;
-
-    this.client.get('api/v1/boost/fetch/newsfeed', { limit: 12, offset: this.offset }, { cache: true })
-      .then((data: any) => {
-        if (!data.boosts) {
-          this.moreData = false;
-          this.inProgress = false;
-          return false;
-        }
-        if (this.newsfeed && !refresh) {
-          this.newsfeed = this.newsfeed.concat(data.boosts);
-        } else {
-          this.newsfeed = data.boosts;
-        }
-        this.offset = data['load-next'];
-        this.storage.set('boost:offset:boostfeed', this.offset);
-        this.inProgress = false;
+    this.feedsService
+      .setEndpoint('api/v2/boost/feed')
+      .setParams({
+        boostfeed: true,
       })
-      .catch((e) => {
-        this.inProgress = false;
-      });
+      .setLimit(6)
+      .setOffset(0)
+      .fetch();
+  }
+
+  loadNext() {
+    if (
+      this.feedsService.canFetchMore &&
+      !this.feedsService.inProgress.getValue() &&
+      this.feedsService.offset.getValue()
+    ) {
+      this.feedsService.fetch(); // load the next 150 in the background
+    }
+    this.feedsService.loadMore();
   }
 
   delete(activity) {
@@ -119,8 +106,5 @@ export class NewsfeedBoostComponent {
         return;
       }
     }
-
   }
-
 }
-

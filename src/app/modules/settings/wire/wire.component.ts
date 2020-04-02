@@ -1,30 +1,35 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Session } from '../../../services/session';
 import { Client, Upload } from '../../../services/api';
-import { WireRewardsStruc, WireRewardsTiers, WireRewardsType } from '../../wire/interfaces/wire.interfaces';
+import {
+  WireRewardsStruc,
+  WireRewardsTiers,
+  WireRewardsType,
+} from '../../wire/interfaces/wire.interfaces';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-settings--wire',
   templateUrl: 'wire.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
 })
-
 export class SettingsWireComponent implements OnInit {
-
   inProgress: boolean = false;
   backgroundFile: HTMLInputElement;
 
   ts: number = Date.now();
-
-  user = window.Minds.user;
-  minds = window.Minds;
 
   error: string = '';
 
   exclusive: any = {
     intro: '',
     background: 0,
-    saved: false
+    saved: false,
   };
 
   rewards: WireRewardsStruc;
@@ -37,9 +42,10 @@ export class SettingsWireComponent implements OnInit {
     public session: Session,
     public client: Client,
     public upload: Upload,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private configs: ConfigsService
   ) {
-    this.rewards = this.minds.user.wire_rewards;
+    this.rewards = session.getLoggedInUser().wire_rewards;
   }
 
   ngOnInit() {
@@ -47,8 +53,8 @@ export class SettingsWireComponent implements OnInit {
   }
 
   setUp() {
-    if (this.user.merchant.exclusive) {
-      this.exclusive = this.user.merchant.exclusive;
+    if (this.session.getLoggedInUser().merchant.exclusive) {
+      this.exclusive = this.session.getLoggedInUser().merchant.exclusive;
     }
 
     this.updatePreviewEntity();
@@ -59,19 +65,23 @@ export class SettingsWireComponent implements OnInit {
       _preview: true,
       wire_threshold: {
         type: 'tokens',
-        min: 1
+        min: 1,
       },
       ownerObj: {
-        ...this.user,
+        ...this.session.getLoggedInUser(),
         merchant: {
           exclusive: {
             intro: this.exclusive.intro,
             _backgroundPreview:
-            this.preview.src ||
-            this.minds.cdn_url + 'fs/v1/paywall/preview/' + this.session.getLoggedInUser().guid + '/' + this.exclusive.background,
-          }
-        }
-      }
+              this.preview.src ||
+              this.configs.get('cdn_url') +
+                'fs/v1/paywall/preview/' +
+                this.session.getLoggedInUser().guid +
+                '/' +
+                this.exclusive.background,
+          },
+        },
+      },
     };
 
     this.exclusive.saved = false;
@@ -80,11 +90,14 @@ export class SettingsWireComponent implements OnInit {
   }
 
   updatePreview(input: HTMLInputElement) {
-    let file = input ? input.files[0]: null;
+    let file = input ? input.files[0] : null;
 
     var reader = new FileReader();
     reader.onloadend = () => {
-      input.src = typeof reader.result === 'string' ? reader.result : reader.result.toString();
+      input.src =
+        typeof reader.result === 'string'
+          ? reader.result
+          : reader.result.toString();
       this.backgroundFile = input;
 
       this.preview = { src: reader.result };
@@ -96,15 +109,14 @@ export class SettingsWireComponent implements OnInit {
   }
 
   uploadPreview(input: HTMLInputElement): Promise<boolean> {
-
-    let file = input ? input.files[0]: null;
+    let file = input ? input.files[0] : null;
 
     if (!file) {
       return Promise.resolve(true);
     }
 
-    return this.upload.post('api/v1/merchant/exclusive-preview', [file], {},
-      (progress) => {
+    return this.upload
+      .post('api/v1/merchant/exclusive-preview', [file], {}, progress => {
         console.log(progress);
       })
       .then((response: any) => {
@@ -114,7 +126,7 @@ export class SettingsWireComponent implements OnInit {
 
         return true;
       })
-      .catch((e) => {
+      .catch(e => {
         alert('Sorry, there was a problem. Try again.');
         input.value = null;
         this.detectChanges();
@@ -147,18 +159,18 @@ export class SettingsWireComponent implements OnInit {
     this.exclusive.saved = false;
     this.detectChanges();
 
-    return this.uploadPreview(this.backgroundFile)
-      .then(() => {
-        return this.client.post('api/v1/merchant/exclusive', this.exclusive)
-          .then(() => {
-            if (!this.minds.user.merchant) {
-              this.minds.user.merchant = {};
-            }
-            this.minds.user.merchant.exclusive = this.exclusive;
-            this.exclusive.saved = true;
-            this.detectChanges();
-          });
-      });
+    return this.uploadPreview(this.backgroundFile).then(() => {
+      return this.client
+        .post('api/v1/merchant/exclusive', this.exclusive)
+        .then(() => {
+          if (!this.session.getLoggedInUser().merchant) {
+            this.session.getLoggedInUser().merchant = {};
+          }
+          this.session.getLoggedInUser().merchant.exclusive = this.exclusive;
+          this.exclusive.saved = true;
+          this.detectChanges();
+        });
+    });
   }
 
   onRewardsChange(rewards: WireRewardsTiers, type: WireRewardsType) {
@@ -168,11 +180,14 @@ export class SettingsWireComponent implements OnInit {
   }
 
   saveRewards(): Promise<any> {
-    this.rewards.rewards.tokens = this._cleanAndSortRewards(this.rewards.rewards.tokens);
+    this.rewards.rewards.tokens = this._cleanAndSortRewards(
+      this.rewards.rewards.tokens
+    );
 
-    return this.client.post('api/v1/wire/rewards', {
-      rewards: this.rewards
-    })
+    return this.client
+      .post('api/v1/wire/rewards', {
+        rewards: this.rewards,
+      })
       .then(() => {
         this.rewardsSaved = true;
       });
@@ -185,8 +200,11 @@ export class SettingsWireComponent implements OnInit {
 
     return rewards
       .filter(reward => reward.amount || `${reward.description}`.trim())
-      .map(reward => ({ ...reward, amount: Math.abs(Math.floor(reward.amount || 0)) }))
-      .sort((a, b) => a.amount > b.amount ? 1: -1);
+      .map(reward => ({
+        ...reward,
+        amount: Math.abs(Math.floor(reward.amount || 0)),
+      }))
+      .sort((a, b) => (a.amount > b.amount ? 1 : -1));
   }
 
   detectChanges() {

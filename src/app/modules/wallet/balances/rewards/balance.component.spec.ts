@@ -1,6 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { WalletBalanceRewardsComponent } from './balance.component';
 import { TokenPipe } from '../../../../common/pipes/token.pipe';
 import { clientMock } from '../../../../../tests/client-mock.spec';
@@ -10,7 +16,6 @@ import { TokenContractService } from '../../../blockchain/contracts/token-contra
 import { By } from '@angular/platform-browser';
 
 describe('WalletBalanceRewardsComponent', () => {
-
   let comp: WalletBalanceRewardsComponent;
   let fixture: ComponentFixture<WalletBalanceRewardsComponent>;
 
@@ -19,21 +24,14 @@ describe('WalletBalanceRewardsComponent', () => {
   }
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
-      declarations: [
-        TokenPipe,
-        WalletBalanceRewardsComponent
-      ],
-      providers: [
-        { provide: Client, useValue: clientMock }
-      ]
-    })
-      .compileComponents();  // compile template and css
+      declarations: [TokenPipe, WalletBalanceRewardsComponent],
+      providers: [{ provide: Client, useValue: clientMock }],
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -42,8 +40,8 @@ describe('WalletBalanceRewardsComponent', () => {
     comp = fixture.componentInstance; // WalletBalanceTokensComponent test instance
     clientMock.response = {};
     clientMock.response[`api/v2/blockchain/rewards/balance`] = {
-      'status': 'success',
-      'balance': 301529,
+      status: 'success',
+      balance: 301529,
     };
     fixture.detectChanges();
 
@@ -63,5 +61,4 @@ describe('WalletBalanceRewardsComponent', () => {
   it('should have balance', () => {
     expect(getBalance()).not.toBeNull();
   });
-
 });

@@ -7,23 +7,17 @@ import { Session } from '../../../../../../services/session';
   moduleId: module.id,
   selector: 'minds-card-album',
   host: {
-    'class': 'mdl-card mdl-shadow--2dp'
+    class: 'mdl-card mdl-shadow--2dp',
   },
   inputs: ['object'],
-  templateUrl: 'album.html'
+  templateUrl: 'album.html',
 })
-
 export class AlbumCard {
-
   entity: any;
-  minds: {};
 
-  constructor(public session: Session, public client: Client) {
-    this.minds = window.Minds;
-  }
+  constructor(public session: Session, public client: Client) {}
 
   set object(value: any) {
     this.entity = value;
   }
-
 }

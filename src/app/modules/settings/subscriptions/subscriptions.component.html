@@ -1,19 +1,34 @@
 <div class="mdl-card">
   <div class="mdl-card__title">
-    <h2 class="mdl-card__title-text" i18n="@@MINDS__SETTINGS__PAID_SUBSCRIPTIONS_TITLE">Paid Subscriptions</h2>
+    <h2
+      class="mdl-card__title-text"
+      i18n="@@MINDS__SETTINGS__PAID_SUBSCRIPTIONS_TITLE"
+    >
+      Paid Subscriptions
+    </h2>
   </div>
 
   <div class="mdl-card__supporting-text m-settings-subscriptions-list">
-    <div class="mdl-card" *ngFor="let subscription of subscriptions; let i = index">
+    <div
+      class="mdl-card"
+      *ngFor="let subscription of subscriptions; let i = index"
+    >
       <div class="mdl-card__title">
         <div class="minds-avatar">
           <a [routerLink]="['/', subscription.username]">
-            <img src="{{minds.cdn_url}}icon/{{subscription.guid}}/small" class="mdl-shadow--2dp"/>
+            <img
+              src="{{ cdnUrl }}icon/{{ subscription.guid }}/small"
+              class="mdl-shadow--2dp"
+            />
           </a>
         </div>
         <div class="minds-body">
-          <a [routerLink]="['/', subscription.username]" class="mdl-color-text--blue-grey-500">{{subscription.name}}</a>
-          <span>@{{subscription.username}}</span>
+          <a
+            [routerLink]="['/', subscription.username]"
+            class="mdl-color-text--blue-grey-500"
+            >{{ subscription.name }}</a
+          >
+          <span>@{{ subscription.username }}</span>
         </div>
       </div>
 
@@ -29,7 +44,8 @@
       distance="25%"
       (load)="load()"
       [moreData]="moreData"
-      [inProgress]="inProgress">
+      [inProgress]="inProgress"
+    >
     </infinite-scroll>
   </div>
 </div>

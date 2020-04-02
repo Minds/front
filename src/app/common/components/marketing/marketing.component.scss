@@ -1,0 +1,58 @@
+@import '../../../foundation/grid-values';
+
+m-marketing {
+  display: block;
+  font-family: Roboto, sans-serif;
+  overflow-x: hidden;
+  min-width: 320px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  @include m-theme() {
+    background: themed($m-white);
+    color: themed($m-grey-800);
+  }
+
+  .m-marketing {
+    font-family: Roboto, sans-serif;
+    font-weight: 400;
+  }
+
+  .m-marketing__sep {
+    border-top: 1px solid;
+    height: 0;
+    width: 100%;
+    margin: 40px 0;
+
+    &.m-marketing__sep--dashed {
+      border-top-style: dashed;
+    }
+
+    &.m-marketing__sep--big {
+      margin: 60px 0;
+    }
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      margin: 20px 0;
+
+      &.m-marketing__sep--big {
+        margin: 30px 0;
+      }
+    }
+
+    @include m-theme() {
+      border-color: themed($m-grey-50);
+    }
+  }
+
+  .m-marketing__wrapper,
+  .m-marketing__extras > * > * {
+    max-width: 1084px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  .m-marketing__subText {
+    font-size: 11px;
+  }
+}

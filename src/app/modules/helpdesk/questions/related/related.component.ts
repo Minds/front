@@ -5,24 +5,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'm-helpdesk--questions--related',
-  templateUrl: 'related.component.html'
+  templateUrl: 'related.component.html',
 })
-
 export class RelatedQuestionsComponent implements OnInit {
-
   @Input() question;
   posts: any[] = [];
   inProgress: boolean = false;
-
-  minds: Minds = window.Minds;
 
   constructor(
     public client: Client,
     public session: Session,
     public router: Router,
     private route: ActivatedRoute
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     this.load();
@@ -32,10 +27,13 @@ export class RelatedQuestionsComponent implements OnInit {
     this.inProgress = true;
     this.posts = [];
     try {
-      const response: any = await this.client.get(`api/v2/helpdesk/relatedposts`, { 
-        limit: 8,
-        q: this.question.question,
-      });
+      const response: any = await this.client.get(
+        `api/v2/helpdesk/relatedposts`,
+        {
+          limit: 8,
+          q: this.question.question,
+        }
+      );
 
       this.posts = response.posts;
     } catch (e) {
@@ -44,5 +42,4 @@ export class RelatedQuestionsComponent implements OnInit {
       this.inProgress = false;
     }
   }
-
 }

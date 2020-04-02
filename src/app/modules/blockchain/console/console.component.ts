@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { BlockchainService } from '../blockchain.service';
@@ -8,7 +8,7 @@ import { Web3WalletService } from '../web3-wallet.service';
 @Component({
   moduleId: module.id,
   selector: 'm-blockchain--console',
-  templateUrl: 'console.component.html'
+  templateUrl: 'console.component.html',
 })
 export class BlockchainConsoleComponent implements OnInit {
   inProgress: boolean = false;
@@ -20,7 +20,7 @@ export class BlockchainConsoleComponent implements OnInit {
     private blockchain: BlockchainService,
     private route: ActivatedRoute,
     private web3Wallet: Web3WalletService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -49,7 +49,8 @@ export class BlockchainConsoleComponent implements OnInit {
         }
       }
     } catch (e) {
-      this.error = (e && e.message) || 'There was an issue getting your saved wallet info';
+      this.error =
+        (e && e.message) || 'There was an issue getting your saved wallet info';
     } finally {
       this.inProgress = false;
     }
@@ -62,7 +63,8 @@ export class BlockchainConsoleComponent implements OnInit {
     try {
       await this.blockchain.setWallet(this.form.value);
     } catch (e) {
-      this.error = (e && e.message) || 'There was an issue saving the wallet info';
+      this.error =
+        (e && e.message) || 'There was an issue saving the wallet info';
     } finally {
       this.inProgress = false;
     }

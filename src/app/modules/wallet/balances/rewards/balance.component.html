@@ -1,8 +1,8 @@
 <div class="m-wallet--balance m-border">
   <i class="material-icons mdl-color-text--white">stars</i>
-    
+
   <ng-container *ngIf="!inProgress; else loading">
-    <h2>{{ balance | token:18 | number }}</h2>
+    <h2>{{ balance | token: 18 | number }}</h2>
   </ng-container>
 
   <ng-template #loading>

@@ -1,65 +1,109 @@
-
-<div class="m-wire--lock-screen--transaction-made-notice" *ngIf="showSubmittedInfo" i18n="@@WIRE__LOCK_SCREEN__RECEIVED_TIMEOUT_LABEL">
-  We've received your transaction. Please try unlocking this post after it gets processed. We estimate it may take around 5 minutes.
+<div
+  class="m-wire--lock-screen--transaction-made-notice"
+  *ngIf="showSubmittedInfo"
+  i18n="@@WIRE__LOCK_SCREEN__RECEIVED_TIMEOUT_LABEL"
+>
+  We've received your transaction. Please try unlocking this post after it gets
+  processed. We estimate it may take around 5 minutes.
 </div>
 
 <div class="m-wire--lock-screen--button">
   <div class="m-wire--lock-screen-introduction">
-    <p class="mdl-color-text--grey-800" *ngIf="!isOwner()">
+    <p *ngIf="!isOwner()">
       <b>&ldquo;</b>
 
-      <ng-container *ngIf="entity.ownerObj?.merchant?.exclusive?.intro; else notHasIntro">
-        {{entity.ownerObj?.merchant?.exclusive?.intro}}
+      <ng-container
+        *ngIf="entity.ownerObj?.merchant?.exclusive?.intro; else notHasIntro"
+      >
+        {{ entity.ownerObj?.merchant?.exclusive?.intro }}
       </ng-container>
 
       <ng-template #notHasIntro>
-        <ng-container i18n="@@WIRE__LOCK_SCREEN__WIRE_ME_OVER_PART">Wire me over</ng-container>
+        <ng-container i18n="@@WIRE__LOCK_SCREEN__WIRE_ME_OVER_PART"
+          >Wire me over</ng-container
+        >
 
-        <ng-container *ngIf="entity?.wire_threshold?.type == 'money'" i18n="@@WIRE__LOCK_SCREEN__USD_PER_MONTH">
-          {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
+        <ng-container
+          *ngIf="entity?.wire_threshold?.type == 'money'"
+          i18n="@@WIRE__LOCK_SCREEN__USD_PER_MONTH"
+        >
+          {{ entity.wire_threshold.min | currency: 'USD':true:'1.0-0' }}/month
         </ng-container>
 
-        <ng-container *ngIf="entity?.wire_threshold?.type == 'points'" i18n="@@WIRE__LOCK_SCREEN__POINTS_PER_MONTH">
+        <ng-container
+          *ngIf="entity?.wire_threshold?.type == 'points'"
+          i18n="@@WIRE__LOCK_SCREEN__POINTS_PER_MONTH"
+        >
           {{ entity.wire_threshold.min | number }} points/month
         </ng-container>
 
-        <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH">
-          {{ entity.wire_threshold.min | number:'1.0-4' }} Tokens/month
+        <ng-container
+          *ngIf="entity?.wire_threshold?.type == 'tokens'"
+          i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH"
+        >
+          {{ entity.wire_threshold.min | number: '1.0-4' }} Tokens/month
         </ng-container>
 
-        <ng-container i18n="@@WIRE__LOCK_SCREEN__TO_SEE_TITLE_PART">to see this post.</ng-container>
+        <ng-container i18n="@@WIRE__LOCK_SCREEN__TO_SEE_TITLE_PART"
+          >to see this post.</ng-container
+        >
       </ng-template>
 
       <b>&rdquo;</b>
     </p>
-    <p class="mdl-color-text--grey-800" *ngIf="isOwner()">
-      <ng-container i18n="@@WIRE__LOCK_SCREEN__ONLY_SUPPORTERS_TITLE_PART">Only supporters who wire you over</ng-container>
+    <p *ngIf="isOwner()">
+      <ng-container i18n="@@WIRE__LOCK_SCREEN__ONLY_SUPPORTERS_TITLE_PART"
+        >Only supporters who wire you over</ng-container
+      >
 
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'money'" i18n="@@WIRE__LOCK_SCREEN__USD_PER_MONTH">
-        {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
+      <ng-container
+        *ngIf="entity?.wire_threshold?.type == 'money'"
+        i18n="@@WIRE__LOCK_SCREEN__USD_PER_MONTH"
+      >
+        {{ entity.wire_threshold.min | currency: 'USD':true:'1.0-0' }}/month
       </ng-container>
 
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'points'" i18n="@@WIRE__LOCK_SCREEN__POINTS_PER_MONTH">
+      <ng-container
+        *ngIf="entity?.wire_threshold?.type == 'points'"
+        i18n="@@WIRE__LOCK_SCREEN__POINTS_PER_MONTH"
+      >
         {{ entity.wire_threshold.min | number }} points/month
       </ng-container>
 
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH">
-        {{ entity.wire_threshold.min | number:'1.0-4' }} Tokens/month
+      <ng-container
+        *ngIf="entity?.wire_threshold?.type == 'tokens'"
+        i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH"
+      >
+        {{ entity.wire_threshold.min | number: '1.0-4' }} Tokens/month
       </ng-container>
 
-      <ng-container i18n="@@WIRE__LOCK_SCREEN__WILL_SEE_TITLE_PART">will see this post.</ng-container>
+      <ng-container i18n="@@WIRE__LOCK_SCREEN__WILL_SEE_TITLE_PART"
+        >will see this post.</ng-container
+      >
     </p>
   </div>
-  <button class="m-unlock-button mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white" (click)="unlock()">
+  <button
+    class="m-unlock-button mdl-button mdl-button--colored mdl-color--green-500 mdl-color-text--white"
+    (click)="unlock()"
+  >
     <i class="mdl-color-text--white ion-icon ion-flash"></i>
-    <span><ng-container i18n="@@WIRE__LOCK_SCREEN__UNLOCK_ACTION">Unlock</ng-container></span>
+    <span
+      ><ng-container i18n="@@WIRE__LOCK_SCREEN__UNLOCK_ACTION"
+        >Unlock</ng-container
+      ></span
+    >
     <div [hidden]="!inProgress" class="m-spinner">
-      <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl]></div>
+      <div
+        class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"
+        [mdl]
+      ></div>
     </div>
   </button>
 </div>
 
-<div class="m-wire--lock-screen" *ngIf="entity.wire_threshold"
+<div
+  class="m-wire--lock-screen"
+  *ngIf="entity.wire_threshold"
   [style.backgroundImage]="getBackground()"
 >
   <div class="m-wire--lock-screen-overlay"></div>
@@ -68,36 +112,59 @@
 
   <h2 class="m-wire--lock-screen-amount">
     <span>
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'money'" i18n="@@WIRE__LOCK_SCREEN__USD_PER_MONTH">
-        {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
+      <ng-container
+        *ngIf="entity?.wire_threshold?.type == 'money'"
+        i18n="@@WIRE__LOCK_SCREEN__USD_PER_MONTH"
+      >
+        {{ entity.wire_threshold.min | currency: 'USD':true:'1.0-0' }}/month
       </ng-container>
 
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'points'" i18n="@@WIRE__LOCK_SCREEN__POINTS_PER_MONTH">
+      <ng-container
+        *ngIf="entity?.wire_threshold?.type == 'points'"
+        i18n="@@WIRE__LOCK_SCREEN__POINTS_PER_MONTH"
+      >
         {{ entity.wire_threshold.min | number }} points/month
       </ng-container>
 
-      <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH">
-        {{ entity.wire_threshold.min | number:'1.0-4' }} Tokens/month
+      <ng-container
+        *ngIf="entity?.wire_threshold?.type == 'tokens'"
+        i18n="@@WIRE__LOCK_SCREEN__TOKENS_PER_MONTH"
+      >
+        {{ entity.wire_threshold.min | number: '1.0-4' }} Tokens/month
       </ng-container>
     </span>
   </h2>
 
   <h5 class="m-wire--lock-screen--message">
-    <ng-container i18n="@@WIRE__LOCK_SCREEN__CAN_ONLY_BE_SEEN_TITLE_PART">This post can only be seen by supporters who wire</ng-container>
+    <ng-container i18n="@@WIRE__LOCK_SCREEN__CAN_ONLY_BE_SEEN_TITLE_PART"
+      >This post can only be seen by supporters who wire</ng-container
+    >
 
-    <ng-container *ngIf="entity?.wire_threshold?.type == 'money'" i18n="@@WIRE__LOCK_SCREEN__OVER_USD_PER_MONTH">
-        over {{ entity.wire_threshold.min | currency:'USD':true:'1.0-0' }}/month
+    <ng-container
+      *ngIf="entity?.wire_threshold?.type == 'money'"
+      i18n="@@WIRE__LOCK_SCREEN__OVER_USD_PER_MONTH"
+    >
+      over {{ entity.wire_threshold.min | currency: 'USD':true:'1.0-0' }}/month
     </ng-container>
 
-    <ng-container *ngIf="entity?.wire_threshold?.type == 'points'" i18n="@@WIRE__LOCK_SCREEN__OVER_POINTS_PER_MONTH">
+    <ng-container
+      *ngIf="entity?.wire_threshold?.type == 'points'"
+      i18n="@@WIRE__LOCK_SCREEN__OVER_POINTS_PER_MONTH"
+    >
       over {{ entity.wire_threshold.min | number }} points/month
     </ng-container>
 
-    <ng-container *ngIf="entity?.wire_threshold?.type == 'tokens'" i18n="@@WIRE__LOCK_SCREEN__OVER_TOKENS_PER_MONTH">
+    <ng-container
+      *ngIf="entity?.wire_threshold?.type == 'tokens'"
+      i18n="@@WIRE__LOCK_SCREEN__OVER_TOKENS_PER_MONTH"
+    >
       over {{ entity.wire_threshold.min | number }} Tokens/month
     </ng-container>
 
-    <ng-container *ngIf="entity?.ownerObj?.username" i18n="@@WIRE__LOCK_SCREEN__TO_USERNAME_PART">
+    <ng-container
+      *ngIf="entity?.ownerObj?.username"
+      i18n="@@WIRE__LOCK_SCREEN__TO_USERNAME_PART"
+    >
       to @{{ entity.ownerObj.username }}
     </ng-container>
   </h5>

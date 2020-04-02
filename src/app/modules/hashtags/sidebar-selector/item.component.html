@@ -1,15 +1,21 @@
 <a
   class="m-hashtagsSidebarSelectorList__label"
-  [class.m-hashtagsSidebarSelectorList__label--visible]="!disabled && currentHashtag === hashtag.value"
+  [class.m-hashtagsSidebarSelectorList__label--visible]="
+    !disabled && currentHashtag === hashtag.value
+  "
   [title]="'#' + hashtag.value"
   (click)="hashtagVisibilityChange(hashtag)"
->#{{hashtag.value}}</a>
+  >#{{ hashtag.value }}</a
+>
 
 <a
   class="m-hashtagsSidebarSelectorList__visibility"
-  [class.m-hashtagsSidebarSelectorList__visibility--visible]="!disabled && currentHashtag === hashtag.value"
+  [class.m-hashtagsSidebarSelectorList__visibility--visible]="
+    !disabled && currentHashtag === hashtag.value
+  "
   (click)="hashtagVisibilityChange(hashtag)"
-><i class="material-icons" title="Focus">visibility</i></a>
+  ><i class="material-icons" title="Focus">visibility</i></a
+>
 
 <span class="m-hashtagsSidebarSelectorList__switch">
   <m-switch

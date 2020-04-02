@@ -11,24 +11,31 @@ import { MaterialSwitchMock } from '../../../../tests/material-switch-mock.spec'
 import { web3WalletServiceMock } from '../../../../tests/web3-wallet-service-mock.spec';
 import { Web3WalletService } from '../web3-wallet.service';
 import { GetMetamaskComponent } from '../metamask/getmetamask.component';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { MockService } from '../../../utils/mock';
 
 describe('TransactionOverlayComponent', () => {
-
   let comp: TransactionOverlayComponent;
   let fixture: ComponentFixture<TransactionOverlayComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
-      declarations: [MaterialSwitchMock, TransactionOverlayComponent, GetMetamaskComponent],
-      imports: [RouterTestingModule, FormsModule ],
+      declarations: [
+        MaterialSwitchMock,
+        TransactionOverlayComponent,
+        GetMetamaskComponent,
+      ],
+      imports: [RouterTestingModule, FormsModule],
       providers: [
-        { provide: TransactionOverlayService, useValue: transactionOverlayService },
+        {
+          provide: TransactionOverlayService,
+          useValue: transactionOverlayService,
+        },
         { provide: TokenContractService, useValue: TokenContractService },
-        { provide: Web3WalletService, useValue: web3WalletServiceMock }
-      ]
-    })
-      .compileComponents();
+        { provide: Web3WalletService, useValue: web3WalletServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -36,25 +43,31 @@ describe('TransactionOverlayComponent', () => {
 
     comp = fixture.componentInstance;
 
-    window.Minds.site_url = 'https://www.minds.com/';
-
     fixture.detectChanges();
   });
 
   it('should have a title', () => {
-    expect(fixture.debugElement.query(By.css('.m--blockchain--transaction-overlay--title'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(
+        By.css('.m--blockchain--transaction-overlay--title')
+      )
+    ).not.toBeNull();
   });
   it('note content on non-unlock modal should come from a variable', () => {
     comp.comp = comp.COMP_LOCAL;
     comp.message = 'Testing';
     comp.detectChanges(); // For some reason we have to call this as well
     fixture.detectChanges();
-    const note: DebugElement = fixture.debugElement.query(By.css('.m--blockchain--transaction-overlay--note'));
+    const note: DebugElement = fixture.debugElement.query(
+      By.css('.m--blockchain--transaction-overlay--note')
+    );
     expect(note.nativeElement.textContent.trim()).toContain('Testing');
   });
 
-  xit('should have a link that says \'Having Issues?\' that redirects to /coin page', () => {
-    const havingIssues: DebugElement = fixture.debugElement.query(By.css('.m--blockchain--transaction-overlay--help > a'));
+  xit("should have a link that says 'Having Issues?' that redirects to /coin page", () => {
+    const havingIssues: DebugElement = fixture.debugElement.query(
+      By.css('.m--blockchain--transaction-overlay--help > a')
+    );
     expect(havingIssues).not.toBeNull();
     expect(havingIssues.nativeElement.href).toMatch(/https?:\/\/.*\/token/);
   });
@@ -63,8 +76,11 @@ describe('TransactionOverlayComponent', () => {
     comp.comp = comp.COMP_SETUP_METAMASK;
     comp.detectChanges();
     fixture.detectChanges();
-    const note: DebugElement = fixture.debugElement.query(By.css('.m-get-metamask--title'));
-    expect(note.nativeElement.textContent.trim()).toContain('Setup Your OnChain Address to buy, send and receive crypto');
+    const note: DebugElement = fixture.debugElement.query(
+      By.css('.m-get-metamask--title')
+    );
+    expect(note.nativeElement.textContent.trim()).toContain(
+      'Setup Your OnChain Address to buy, send and receive crypto'
+    );
   });
-
 });

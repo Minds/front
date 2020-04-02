@@ -1,0 +1,40 @@
+.m-upgrades {
+  .m-upgrades__featuredIn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      font-size: 14px;
+
+      @include m-theme() {
+        color: themed($m-grey-200);
+      }
+
+      img {
+        width: 55px;
+        height: 55px;
+        object-fit: contain;
+      }
+
+      &.m-upgrades__featuredInItem--big {
+        img {
+          width: 96px;
+          height: 96px;
+        }
+      }
+    }
+  }
+
+  m-upgrades__upgradeOptions {
+    margin-bottom: 110px;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      margin-bottom: 40px;
+    }
+  }
+}

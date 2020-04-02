@@ -7,18 +7,8 @@ import { ThirdPartyNetworksSelector } from './selector';
 import { ThirdPartyNetworksFacebook } from './facebook';
 
 @NgModule({
-  imports: [
-    NgCommonModule,
-    CommonModule,
-  ],
-  declarations: [
-    ThirdPartyNetworksSelector,
-    ThirdPartyNetworksFacebook
-  ],
-  exports: [
-    ThirdPartyNetworksSelector,
-    ThirdPartyNetworksFacebook
-  ]
+  imports: [NgCommonModule, CommonModule],
+  declarations: [ThirdPartyNetworksSelector, ThirdPartyNetworksFacebook],
+  exports: [ThirdPartyNetworksSelector, ThirdPartyNetworksFacebook],
 })
-export class ThirdPartyNetworksModule {
-}
+export class ThirdPartyNetworksModule {}

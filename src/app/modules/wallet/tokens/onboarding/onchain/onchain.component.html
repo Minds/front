@@ -1,43 +1,79 @@
 <div class="m-token--onboarding--slide m-border">
   <div class="m-token--onboarding--column m-token--onboarding-setup-options">
-    <h2 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__SETUP_TITLE">Setup your OnChain address</h2>
+    <h2 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__SETUP_TITLE">
+      Setup your OnChain address
+    </h2>
 
-    <p class="m-token--onboarding--subtext" i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__ONCHAIN_DESC">
-      To receive OnChain payments from other channels (eg, from a Wire or a Boost), you will need to let us know which address to direct these tokens to.
+    <p
+      class="m-token--onboarding--subtext"
+      i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__ONCHAIN_DESC"
+    >
+      To receive OnChain payments from other channels (eg, from a Wire or a
+      Boost), you will need to let us know which address to direct these tokens
+      to.
     </p>
-    <p class="m-token--onboarding--subtext" i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__ADDRESS_DESC">
-      This address will be listed in your wallet as your Receiver Address and can be changed at any time.
+    <p
+      class="m-token--onboarding--subtext"
+      i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__ADDRESS_DESC"
+    >
+      This address will be listed in your wallet as your Receiver Address and
+      can be changed at any time.
     </p>
 
     <ul class="m-token--onboarding--onchain-selections" *ngIf="!display">
       <li>
-        <img class="metamask" [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'" />
-        <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_TITLE">MetaMask</h4>
-        <p i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_DESC">Minds recommends using MetaMask for the most seamless user experience.</p>
+        <img
+          class="metamask"
+          [src]="cdnAssetsUrl + 'assets/ext/metamask.png'"
+        />
+        <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_TITLE">
+          MetaMask
+        </h4>
+        <p i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_DESC">
+          Minds recommends using MetaMask for the most seamless user experience.
+        </p>
 
         <div class="m-token--onboarding--onchain-selections--buttons">
-          <button class="m-btn m-btn--slim m-btn--action"
+          <button
+            class="m-btn m-btn--slim m-btn--action"
             (click)="display = Views.UseExternal; useExternal()"
             i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__USE_METAMASK_ACTION"
-          >Use MetaMask</button>
+          >
+            Use MetaMask
+          </button>
         </div>
       </li>
 
       <li>
         <i class="material-icons">vpn_key</i>
-        <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__DONT_WANT_METAMASK_TITLE">Don't want to use MetaMask?</h4>
-        <p i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__NON_METAMASK_DESC">You can either create a new address here or let us know your existing address.</p>
+        <h4
+          i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__DONT_WANT_METAMASK_TITLE"
+        >
+          Don't want to use MetaMask?
+        </h4>
+        <p i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__NON_METAMASK_DESC">
+          You can either create a new address here or let us know your existing
+          address.
+        </p>
 
         <div class="m-token--onboarding--onchain-selections--buttons">
-          <button class="m-btn m-btn--slim m-btn--action"
+          <button
+            class="m-btn m-btn--slim m-btn--action"
             (click)="display = Views.CreateAddress; createAddress()"
             i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__CREATE_ADDRESS_ACTION"
-          >Create Address</button>
-          <span i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__OR_PARTIAL">or</span>
-          <button class="m-btn m-btn--slim m-btn--action"
+          >
+            Create Address
+          </button>
+          <span i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__OR_PARTIAL"
+            >or</span
+          >
+          <button
+            class="m-btn m-btn--slim m-btn--action"
             (click)="display = Views.ProvideAddress"
             i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__PROVIDE_ADDRESS_ACTION"
-          >Provide Address</button>
+          >
+            Provide Address
+          </button>
         </div>
       </li>
     </ul>
@@ -46,130 +82,195 @@
       <li>
         <ng-container *ngIf="display === Views.CreateAddress">
           <i class="material-icons">vpn_key</i>
-          <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__CREATE_ADDRESS_ACTION">Create Address</h4>
+          <h4
+            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__CREATE_ADDRESS_ACTION"
+          >
+            Create Address
+          </h4>
 
-          <p *ngIf="!generatedAccount" i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__GENERATING_DESC">
-            We're generating a new wallet address and its private key.
-            Ensure you download and safely store the private key file.
-            The address will be set as your Receiver Address.
+          <p
+            *ngIf="!generatedAccount"
+            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__GENERATING_DESC"
+          >
+            We're generating a new wallet address and its private key. Ensure
+            you download and safely store the private key file. The address will
+            be set as your Receiver Address.
           </p>
 
-          <p *ngIf="generatedAccount" i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__GENERATED_DESC">
-            The address <b>{{generatedAccount.address}}</b> was successfully
+          <p
+            *ngIf="generatedAccount"
+            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__GENERATED_DESC"
+          >
+            The address <b>{{ generatedAccount.address }}</b> was successfully
             saved as your Receiver Address. Clicking the button below will
-            download its private key. Ensure you safely store the private
-            key file.
+            download its private key. Ensure you safely store the private key
+            file.
           </p>
 
           <div class="m-token--onboarding--onchain-selections--buttons">
-            <button class="m-btn m-btn--slim m-btn--action"
+            <button
+              class="m-btn m-btn--slim m-btn--action"
               *ngIf="generatedAccount"
               [disabled]="inProgress"
               (click)="downloadPrivateKey()"
               i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__DOWNLOAD_ACTION"
-            >Download</button>
+            >
+              Download
+            </button>
 
-            <div *ngIf="inProgress" class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+            <div
+              *ngIf="inProgress"
+              class="mdl-spinner mdl-js-spinner is-active"
+              [mdl]
+            ></div>
           </div>
         </ng-container>
 
         <ng-container *ngIf="display === Views.ProvideAddress">
           <i class="material-icons">vpn_key</i>
-          <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__PROVIDE_ADDRESS_TITLE">Provide Address</h4>
+          <h4
+            i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__PROVIDE_ADDRESS_TITLE"
+          >
+            Provide Address
+          </h4>
           <p i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__PROVIDE_ADDRESS_DESC">
-            Enter your wallet address below to be stored as your
-            Receiver Wallet. Remember that in order to do transactions
-            you will need to have the private key for it.
+            Enter your wallet address below to be stored as your Receiver
+            Wallet. Remember that in order to do transactions you will need to
+            have the private key for it.
           </p>
 
           <div class="m-token--onboarding--onchain-selections--buttons">
-            <input type="text" class="m-token--onboarding--onchain-selections--buttons-input"
+            <input
+              type="text"
+              class="m-token--onboarding--onchain-selections--buttons-input"
               [readonly]="inProgress"
               [(ngModel)]="providedAddress"
             />
 
-            <button class="m-btn m-btn--slim m-btn--action"
+            <button
+              class="m-btn m-btn--slim m-btn--action"
               [disabled]="inProgress || !canProvideAddress()"
               (click)="provideAddress()"
               i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__SAVE_ACTION"
-            >Save</button>
+            >
+              Save
+            </button>
 
-            <div *ngIf="inProgress" class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+            <div
+              *ngIf="inProgress"
+              class="mdl-spinner mdl-js-spinner is-active"
+              [mdl]
+            ></div>
           </div>
         </ng-container>
 
         <ng-container *ngIf="display === Views.UseExternal">
-          <img class="metamask" [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'" />
-          <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_TITLE">MetaMask</h4>
+          <img
+            class="metamask"
+            [src]="cdnAssetsUrl + 'assets/ext/metamask.png'"
+          />
+          <h4 i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_TITLE">
+            MetaMask
+          </h4>
           <p>
-            <ng-container i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__ENSURE_RINKEBY">
+            <ng-container
+              i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__ENSURE_RINKEBY"
+            >
               Please ensure you select the <b>Main Ethereum Network</b>.
             </ng-container>
 
             <ng-container *ngIf="downloadingMetamask">
-              <b i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_NOTE_RELOAD">
-                Note: After installing and setting up MetaMask you might need
-                to reload Minds.
+              <b
+                i18n="
+                   @@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_NOTE_RELOAD
+                "
+              >
+                Note: After installing and setting up MetaMask you might need to
+                reload Minds.
               </b>
             </ng-container>
           </p>
 
-          <div class="m-token--onboarding--onchain-selections--buttons"
+          <div
+            class="m-token--onboarding--onchain-selections--buttons"
             *ngIf="!hasExternal"
           >
-            <button class="m-btn m-btn--slim m-btn--action"
+            <button
+              class="m-btn m-btn--slim m-btn--action"
               (click)="downloadMetamask()"
-              i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__DOWNLOAD_METAMASK_ACTION"
-            >Download MetaMask</button>
+              i18n="
+                 @@WALLET__TOKENS__ONBOARDING__ONCHAIN__DOWNLOAD_METAMASK_ACTION
+
+              "
+            >
+              Download MetaMask
+            </button>
           </div>
 
-          <div class="m-token--onboarding--onchain-selections--buttons"
+          <div
+            class="m-token--onboarding--onchain-selections--buttons"
             *ngIf="hasExternal"
           >
-            <span class="m-token--onboarding--onchain-selections--buttons-input">
+            <span
+              class="m-token--onboarding--onchain-selections--buttons-input"
+            >
               <ng-container *ngIf="providedAddress; else noProvidedAddress">
                 {{ providedAddress }}
               </ng-container>
 
-              <ng-template #noProvidedAddress i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_LOCKED_LEGEND">
+              <ng-template
+                #noProvidedAddress
+                i18n="
+                   @@WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_LOCKED_LEGEND
+
+                "
+              >
                 MetaMask is either locked or connected to another network.
               </ng-template>
             </span>
 
-            <div *ngIf="inProgress" class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+            <div
+              *ngIf="inProgress"
+              class="mdl-spinner mdl-js-spinner is-active"
+              [mdl]
+            ></div>
           </div>
         </ng-container>
       </li>
     </ul>
-
   </div>
 
   <div class="m-token--onboarding--column m-layout--column">
     <div class="m-token--onboarding--video m-border">
-      <m-token--onboarding--video 
-        [src]="minds.cdn_assets_url + 'assets/tutorials/onchain.480.mp4'">
+      <m-token--onboarding--video
+        [src]="cdnAssetsUrl + 'assets/tutorials/onchain.480.mp4'"
+      >
       </m-token--onboarding--video>
     </div>
 
     <div class="m-layout--spacer"></div>
-  
+
     <div class="m-layout--row">
       <div class="m-layout--spacer"></div>
 
-      <button *ngIf="!display && skippable === true"
+      <button
+        *ngIf="!display && skippable === true"
         class="m-btn m-btn--slim"
         (click)="next.next()"
         i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__SKIP_ACTION"
-      >Skip. I'm not interested</button>
+      >
+        Skip. I'm not interested
+      </button>
 
-      <button *ngIf="display && !generatedAccount"
+      <button
+        *ngIf="display && !generatedAccount"
         [disabled]="inProgress"
         class="m-btn m-btn--slim"
         (click)="display = null"
         i18n="@@WALLET__TOKENS__ONBOARDING__ONCHAIN__BACK_ACTION"
-      >Back</button>
+      >
+        Back
+      </button>
     </div>
   </div>
-
-
 </div>

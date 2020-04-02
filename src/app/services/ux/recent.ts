@@ -4,7 +4,7 @@ import { Storage } from '../storage';
 
 @Injectable()
 export class RecentService {
-  constructor(private storage: Storage) { }
+  constructor(private storage: Storage) {}
 
   store(key: string, entry: any, cleanupFn?: Function) {
     let data = this.read(key);
@@ -36,6 +36,12 @@ export class RecentService {
     return this;
   }
 
+  clear(key: string) {
+    this.delete(key);
+
+    return this;
+  }
+
   //
 
   private read(key: string): any[] {
@@ -44,6 +50,10 @@ export class RecentService {
 
   private write(key: string, data: any[]) {
     this.storage.set(`recent:${key}`, JSON.stringify(data));
+  }
+
+  private delete(key: string) {
+    this.storage.destroy(`recent:${key}`);
   }
 
   //

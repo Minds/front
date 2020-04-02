@@ -1,23 +1,21 @@
 import { Component, Input } from '@angular/core';
 
 import { BoostService } from '../../boost.service';
-import { Reason, rejectionReasons } from '../../../../controllers/admin/boosts/rejection-reasons';
+import { Reason, rejectionReasons } from '../../rejection-reasons';
 
 @Component({
   moduleId: module.id,
   providers: [BoostService],
   selector: 'm-boost-console-card',
-  templateUrl: 'card.component.html'
+  templateUrl: 'card.component.html',
 })
 export class BoostConsoleCard {
-
   boost: any;
   type: string;
 
   reasons: Array<Reason> = rejectionReasons;
 
-  constructor(public service: BoostService) {
-  }
+  constructor(public service: BoostService) {}
 
   @Input('boost')
   set _boost(boost: any) {
@@ -29,7 +27,9 @@ export class BoostConsoleCard {
     let agreed = true;
 
     if (this.boost.bidType === 'usd' && this.boost.postToFacebook) {
-      agreed = confirm(`I accept a 5% transaction fee and agree not to delete this content from Facebook`);
+      agreed = confirm(
+        `I accept a 5% transaction fee and agree not to delete this content from Facebook`
+      );
     } else if (this.boost.bidType === 'usd') {
       agreed = confirm(`I accept a 5% transaction fee`);
     } else if (this.boost.postToFacebook) {
@@ -72,5 +72,4 @@ export class BoostConsoleCard {
       return item.code == code;
     });
   }
-
 }

@@ -3,12 +3,12 @@ import { Material as MaterialService } from '../../../../services/ui';
 
 @Directive({
   selector: '[mdlRadio]',
-  inputs: ['mdlRadio', 'checked', 'mdlRadioValue']
+  inputs: ['mdlRadio', 'checked', 'mdlRadioValue'],
 })
 export class MaterialRadio {
-  mdlRadio:any;
+  mdlRadio: any;
   private element: any;
-  mdlRadioValue:any;
+  mdlRadioValue: any;
 
   constructor(_element: ElementRef) {
     this.element = _element.nativeElement;

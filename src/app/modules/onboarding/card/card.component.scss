@@ -1,43 +1,42 @@
-m-onboarding-card{
-
-  .mdl-card{
+m-onboarding-card {
+  .mdl-card {
     text-align: center;
     margin-bottom: 16px;
     padding: 75px 16px;
     cursor: pointer;
   }
 
-  h3, h5{
+  h3,
+  h5 {
     font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 300;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
   }
-  h3{
+  h3 {
     font-size: 46px;
     font-weight: 600;
   }
-  h5{
+  h5 {
     font-size: 14px;
     letter-spacing: 1px;
     margin: 0;
   }
 
-  i.material-icons{
+  i.material-icons {
     font-size: 56px;
     margin: 0 0 24px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
   }
 
-  i.m-onboarding-card--close{
+  i.m-onboarding-card--close {
     position: absolute;
     top: 0;
     right: 0;
     font-size: 26px;
     margin: 16px;
   }
-
 }

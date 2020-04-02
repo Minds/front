@@ -1,4 +1,9 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  ViewChild,
+} from '@angular/core';
 import { BlockchainConsoleComponent } from '../../../blockchain/console/console.component';
 import { DynamicHostDirective } from '../../../../common/directives/dynamic-host.directive';
 
@@ -6,25 +11,24 @@ import { DynamicHostDirective } from '../../../../common/directives/dynamic-host
   selector: 'm-wallet-token--settings',
   template: `
     <ng-template dynamic-host></ng-template>
-  `
+  `,
 })
-
 export class WalletTokenSettingsComponent implements AfterViewInit {
-
   @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
 
   componentRef;
   componentInstance: BlockchainConsoleComponent;
 
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver,) {
-  }
+  constructor(private _componentFactoryResolver: ComponentFactoryResolver) {}
 
   ngAfterViewInit() {
     this.loadComponent();
   }
 
   loadComponent() {
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(BlockchainConsoleComponent),
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+        BlockchainConsoleComponent
+      ),
       viewContainerRef = this.host.viewContainerRef;
 
     viewContainerRef.clear();

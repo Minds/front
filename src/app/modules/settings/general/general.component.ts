@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -6,16 +6,14 @@ import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api';
 import { ThirdPartyNetworksService } from '../../../services/third-party-networks';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
   selector: 'm-settings--general',
-  templateUrl: 'general.component.html'
+  templateUrl: 'general.component.html',
 })
-
-export class SettingsGeneralComponent {
-
-  minds: Minds;
+export class SettingsGeneralComponent implements OnInit, OnDestroy {
   settings: string;
 
   error: string = '';
@@ -29,15 +27,17 @@ export class SettingsGeneralComponent {
   mature: boolean = false;
   enabled_mails: boolean = true;
   toaster_notifications: boolean = true;
+  show_share_buttons: boolean = true;
+  autoplay_videos: boolean = true;
 
   password: string;
   password1: string;
   password2: string;
 
-  languages: Array<{code, name}> = [];
+  languages: Array<{ code; name }> = [];
   language: string = 'en';
 
-  categories: { id, label, selected }[];
+  categories: { id; label; selected }[];
   selectedCategories: string[] = [];
 
   paramsSubscription: Subscription;
@@ -50,31 +50,34 @@ export class SettingsGeneralComponent {
     public route: ActivatedRoute,
     public router: Router,
     public thirdpartynetworks: ThirdPartyNetworksService,
-  ) {
-    this.minds = window.Minds;
-    this.getCategories();
-  }
+    private configs: ConfigsService
+  ) {}
 
   ngOnInit() {
     this.languages = [];
-    for (let code in this.minds.languages) {
-      if (this.minds.languages.hasOwnProperty(code)) {
+    for (const code in this.configs.get('languages')) {
+      if (this.configs.get('languages').hasOwnProperty(code)) {
         this.languages.push({
           code,
-          name: this.minds.languages[code],
+          name: this.configs.get('languages')[code],
         });
       }
     }
 
     this.paramsSubscription = this.route.params.subscribe(params => {
-      if (params['guid'] && params['guid'] === this.session.getLoggedInUser().guid) {
+      if (
+        params['guid'] &&
+        params['guid'] === this.session.getLoggedInUser().guid
+      ) {
         this.load(true);
       } else {
         this.load(false);
       }
 
       if (params['card'] && params['card'] !== '') {
-        const el = this.element.nativeElement.querySelector('.m-settings--' + params['card']);
+        const el = this.element.nativeElement.querySelector(
+          '.m-settings--' + params['card']
+        );
         if (el) {
           window.scrollTo(0, el.offsetTop - 64); // 64 comes from the topbar's height
         }
@@ -92,37 +95,36 @@ export class SettingsGeneralComponent {
       this.name = user.name;
     }
 
-    this.client.get('api/v1/settings/' + this.guid)
-      .then((response: any) => {
-        console.log('LOAD', response.channel);
-        this.email = response.channel.email;
-        this.mature = !!parseInt(response.channel.mature, 10);
-        this.enabled_mails = !parseInt(response.channel.disabled_emails, 10);
-        this.language = response.channel.language || 'en';
-        this.selectedCategories = response.channel.categories || [];
-        this.openSessions = response.channel.open_sessions || 1;
-        this.toaster_notifications = response.channel.toaster_notifications;
+    this.client.get('api/v1/settings/' + this.guid).then((response: any) => {
+      console.log('LOAD', response.channel);
+      this.email = response.channel.email;
+      this.mature = !!parseInt(response.channel.mature, 10);
+      this.enabled_mails = !parseInt(response.channel.disabled_emails, 10);
+      this.language = response.channel.language || 'en';
+      this.selectedCategories = response.channel.categories || [];
+      this.openSessions = response.channel.open_sessions || 1;
+      this.toaster_notifications = response.channel.toaster_notifications;
+      this.show_share_buttons = !response.channel.hide_share_buttons;
+      this.autoplay_videos = !response.channel.disable_autoplay_videos;
 
-        this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
+      this.thirdpartynetworks.overrideStatus(response.thirdpartynetworks);
 
-        if (window.Minds.user) {
-          window.Minds.user.mature = this.mature;
-        }
-        if (this.selectedCategories.length > 0) {
-          this.selectedCategories.forEach((item, index, array) => {
-            const i: number = this.categories.findIndex(i => i.id === item);
-            if (i !== -1)
-              this.categories[i].selected = true;
-          });
-        }
-      });
+      if (this.selectedCategories.length > 0) {
+        this.selectedCategories.forEach((item, index, array) => {
+          const i: number = this.categories.findIndex(i => i.id === item);
+          if (i !== -1) this.categories[i].selected = true;
+        });
+      }
+    });
   }
 
   canSubmit() {
-    if (!this.changed)
-      return false;
+    if (!this.changed) return false;
 
-    if (this.password && !this.password1 || this.password && !this.password2)
+    if (
+      (this.password && !this.password1) ||
+      (this.password && !this.password2)
+    )
       return false;
 
     if (this.password1 && !this.password) {
@@ -146,12 +148,11 @@ export class SettingsGeneralComponent {
   }
 
   save() {
-    if (!this.canSubmit())
-      return;
+    if (!this.canSubmit()) return;
 
     this.inProgress = true;
-    this.client.post('api/v1/settings/' + this.guid,
-      {
+    this.client
+      .post('api/v1/settings/' + this.guid, {
         name: this.name,
         email: this.email,
         password: this.password,
@@ -160,7 +161,9 @@ export class SettingsGeneralComponent {
         disabled_emails: this.enabled_mails ? 0 : 1,
         language: this.language,
         categories: this.selectedCategories,
-        toaster_notifications: this.toaster_notifications
+        toaster_notifications: this.toaster_notifications,
+        hide_share_buttons: !this.show_share_buttons,
+        disable_autoplay_videos: !this.autoplay_videos,
       })
       .then((response: any) => {
         this.changed = false;
@@ -171,43 +174,42 @@ export class SettingsGeneralComponent {
         this.password1 = '';
         this.password2 = '';
 
-        if (window.Minds.user) {
-          window.Minds.user.mature = this.mature ? 1 : 0;
+        const user = this.session.getLoggedInUser();
 
-          if (window.Minds.user.name !== this.name) {
-            window.Minds.user.name = this.name;
-          }
+        user.mature = this.mature ? 1 : 0;
 
+        if (user.name !== this.name) {
+          user.name = this.name;
         }
 
-        if (this.language !== window.Minds['language']) {
-          window.location.reload(true);
+        if (this.language !== this.configs.get('language')) {
+          window.location.reload(true); // This is ok client side as server will never save?
         }
 
-        window.Minds.user.toaster_notifications = this.toaster_notifications;
+        user.toaster_notifications = this.toaster_notifications;
+        user.disable_autoplay_videos = !this.autoplay_videos;
 
         this.inProgress = false;
-      }).catch(e=> {
+      })
+      .catch(e => {
         this.inProgress = false;
         this.changed = false;
         this.error = e.message;
-      })
+      });
   }
 
   // Third Party Networks
 
   connectFb() {
-    this.thirdpartynetworks.connect('facebook')
-      .then(() => {
-        this.load();
-      });
+    this.thirdpartynetworks.connect('facebook').then(() => {
+      this.load();
+    });
   }
 
   connectTw() {
-    this.thirdpartynetworks.connect('twitter')
-      .then(() => {
-        this.load();
-      });
+    this.thirdpartynetworks.connect('twitter').then(() => {
+      this.load();
+    });
   }
 
   removeFbLogin() {
@@ -220,33 +222,6 @@ export class SettingsGeneralComponent {
 
   removeTw() {
     this.thirdpartynetworks.disconnect('twitter');
-  }
-
-  getCategories() {
-    this.categories = [];
-
-    for (let category in window.Minds.categories) {
-      this.categories.push({
-        id: category,
-        label: window.Minds.categories[category],
-        selected: false
-      });
-    }
-
-    this.categories.sort((a, b) => a.label > b.label ? 1 : -1);
-  }
-
-  onCategoryClick(category) {
-    category.selected = !category.selected;
-
-    if (category.selected) {
-      this.selectedCategories.push(category.id);
-    } else {
-      this.selectedCategories.splice(this.selectedCategories.indexOf(category.id), 1);
-    }
-
-    this.changed = true;
-    this.saved = false;
   }
 
   closeAllSessions() {

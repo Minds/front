@@ -8,7 +8,6 @@ export class TreeNode {
   original: any;
   parent: TreeNode;
 
-
   get isHidden() {
     return this.treeModel.isHidden(this);
   }
@@ -22,10 +21,17 @@ export class TreeNode {
   }
 
   get level() {
-    return this.parent ? this.parent.level + 1: 0;
+    return this.parent ? this.parent.level + 1 : 0;
   }
 
-  constructor(data: any, idField: string, labelField: string, childrenField: string, treeModel: TreeModel, parent: TreeNode = null) {
+  constructor(
+    data: any,
+    idField: string,
+    labelField: string,
+    childrenField: string,
+    treeModel: TreeModel,
+    parent: TreeNode = null
+  ) {
     this.original = data;
 
     this.id = data[idField] || '';
@@ -33,8 +39,15 @@ export class TreeNode {
 
     this.parent = parent;
 
-    (data[childrenField] || []).forEach((item) => {
-      const node = new TreeNode(item, idField, labelField, childrenField, treeModel, this);
+    (data[childrenField] || []).forEach(item => {
+      const node = new TreeNode(
+        item,
+        idField,
+        labelField,
+        childrenField,
+        treeModel,
+        this
+      );
       this.children.push(node);
     });
 
@@ -65,5 +78,4 @@ export class TreeNode {
 
     return this;
   }
-
 }

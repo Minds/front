@@ -1,26 +1,26 @@
-.minds-banner{
-  position:relative;
-  max-height:300px;
-  overflow:hidden;
+.minds-banner {
+  position: relative;
+  max-height: 300px;
+  overflow: hidden;
   height: 300px;
 
   &.m-banner--img-cover {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-800);
     }
   }
 
-  div.minds-banner-img{
-    width:100%;
+  div.minds-banner-img {
+    width: 100%;
     position: relative;
     height: inherit;
     background-position: 0, 0;
     background-size: cover;
     background-repeat: no-repeat;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-800);
     }
 
@@ -29,47 +29,50 @@
     }
   }
 
-  img.minds-banner-img{
-    width:100%;
-    min-width:100%;
+  img.minds-banner-img {
+    width: 100%;
+    min-width: 100%;
     position: relative;
     height: auto;
   }
 
-  @media screen and (max-width: $min-tablet){
-    &{
+  @media screen and (max-width: $min-tablet) {
+    & {
       max-height: 180px;
     }
-    .minds-banner-img{
+    .minds-banner-img {
       min-width: 100%;
       height: 100%;
-      background-position:0 0 !important;
+      background-position: 0 0 !important;
     }
   }
 
-  img{
-    width:100%;
-    min-width:2000px;
+  img {
+    width: 100%;
+    min-width: 2000px;
     position: relative;
   }
-  .minds-banner-overlay{
-    display:block;
-    position:absolute;
-    width:100%;
-    height:100%;
-    top:0;
-    left:0;
-    @include m-theme(){
-      background:linear-gradient(rgba(themed($m-black),0), rgba(themed($m-black),0.6));
+  .minds-banner-overlay {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    @include m-theme() {
+      background: linear-gradient(
+        rgba(themed($m-black), 0),
+        rgba(themed($m-black), 0.6)
+      );
     }
   }
 
-  &.minds-banner-editing{
-    img{
-      cursor:move;
+  &.minds-banner-editing {
+    img {
+      cursor: move;
     }
 
-    .overlay{
+    .overlay {
       position: absolute;
       top: 0;
       left: 0;
@@ -80,18 +83,18 @@
       text-align: center;
       padding-top: 116px;
       cursor: pointer;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
         background-color: rgba(themed($m-black), 0.3);
       }
 
-      i{
+      i {
         font-size: 62px;
         width: 100%;
       }
-      span{
+      span {
         font-weight: 200;
-        padding: $minds-padding*2;
+        padding: $minds-padding * 2;
         display: block;
       }
       em {
@@ -100,56 +103,55 @@
         opacity: 0.65;
       }
     }
-    .minds-banner-overlay{
-      height:60px;
-      bottom:0;
-      top:initial;
-      @include m-theme(){
+    .minds-banner-overlay {
+      height: 60px;
+      bottom: 0;
+      top: initial;
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.6);
       }
     }
-    .add-button{
-      display:none;
+    .add-button {
+      display: none;
     }
-    .save-bar{
+    .save-bar {
       position: absolute;
       width: 100%;
       bottom: 0;
       right: 0;
-      padding:$minds-padding $minds-padding*2;
+      padding: $minds-padding $minds-padding * 2;
       display: flex;
       align-items: flex-end;
       -webkit-align-item: flex-end;
       flex-direction: row;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.5);
       }
 
-      p{
+      p {
         margin: 0;
         padding: 4px 16px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }
-      .minds-button-edit{
-        padding:0 $minds-padding;
+      .minds-button-edit {
+        padding: 0 $minds-padding;
 
         & > button {
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-white);
           }
 
           &:hover {
-            @include m-theme(){
+            @include m-theme() {
               color: themed($m-white);
             }
           }
         }
       }
-
     }
-    input[type="file"]{
+    input[type='file'] {
       opacity: 0;
       position: absolute;
       top: 0;
@@ -161,17 +163,17 @@
   }
 }
 
-minds-banner-fat{
+minds-banner-fat {
   display: block;
   height: 100vh;
 
-  &.minds-banner-editing{
-    img{
-      cursor:pointer;
+  &.minds-banner-editing {
+    img {
+      cursor: pointer;
     }
   }
-  .minds-banner{
-    height:auto;
+  .minds-banner {
+    height: auto;
     max-height: none;
   }
 }

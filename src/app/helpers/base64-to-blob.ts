@@ -7,5 +7,5 @@ export default function base64ToBlob(encodedString: string): Blob {
     byteArray[i] = byteString.charCodeAt(i);
   }
 
-  return new Blob([ arrayBuffer ]);
+  return new Blob([arrayBuffer]);
 }

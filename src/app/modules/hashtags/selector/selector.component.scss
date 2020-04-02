@@ -2,7 +2,8 @@ minds-newsfeed-poster > .mdl-card {
   overflow: visible;
 }
 
-m-hashtags-selector, .m-hashtags-selector {
+m-hashtags-selector,
+.m-hashtags-selector {
   display: inline-block;
 }
 
@@ -11,7 +12,7 @@ m-hashtags-selector, .m-hashtags-selector {
 
   .m-hashtags-selector--toggle {
     &.m-hashtags-selector--toggle-enabled {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue);
       }
     }
@@ -59,7 +60,7 @@ m-hashtags-selector, .m-hashtags-selector {
         padding: 0;
         border: 0;
         flex-grow: 1;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-700);
         }
 
@@ -72,10 +73,10 @@ m-hashtags-selector, .m-hashtags-selector {
           padding: 4px 0;
           border-radius: 0;
           text-align: left;
-          @include m-theme(){
+          @include m-theme() {
             border-bottom: 1px solid themed($m-grey-50);
           }
-          
+
           &:not(.custom) {
             cursor: pointer;
           }
@@ -84,7 +85,7 @@ m-hashtags-selector, .m-hashtags-selector {
             font-size: 18px;
             vertical-align: middle;
             margin-right: 4px;
-            @include m-theme(){
+            @include m-theme() {
               color: themed($m-grey-50);
             }
           }
@@ -98,7 +99,7 @@ m-hashtags-selector, .m-hashtags-selector {
           }
         }
 
-        input:not([type=checkbox]) {
+        input:not([type='checkbox']) {
           appearance: none;
           border: none;
           border-radius: 0;

@@ -5,8 +5,12 @@
       <strong>Action taken:</strong>
       <span>
         This
-        <ng-container *ngIf="appeal.report.entity.type !== 'comment'"> post </ng-container>
-        <ng-container *ngIf="appeal.report.entity.type == 'comment'"> comment </ng-container>
+        <ng-container *ngIf="appeal.report.entity.type !== 'comment'">
+          post
+        </ng-container>
+        <ng-container *ngIf="appeal.report.entity.type == 'comment'">
+          comment
+        </ng-container>
         has been
       </span>
       <b> {{ service.getAction(appeal.report) }} </b>
@@ -24,7 +28,8 @@
         i18n="@@REPORT__CONSOLE__APPEAL_COMPOSER_PLACEHOLDER"
       ></textarea>
 
-      <button class="m-moderationAppeal__button"
+      <button
+        class="m-moderationAppeal__button"
         [disabled]="appeal.inProgress"
         (click)="sendAppeal()"
         i18n="@@REPORT__CONSOLE__APPEAL_ACTION"
@@ -34,7 +39,7 @@
     </div>
     <div class="m-moderationAppeal__appealNote" *ngIf="appeal.note">
       <b>Appeal Note: </b>
-      <p>{{appeal.note}}</p>
+      <p>{{ appeal.note }}</p>
     </div>
   </div>
 
@@ -45,9 +50,13 @@
     hostClass="mdl-card"
   ></minds-card>
 
-  <div *ngIf="appeal.report.entity && appeal.report.entity.type == 'comment'" class="m-comment-wrapper">
+  <div
+    *ngIf="appeal.report.entity && appeal.report.entity.type == 'comment'"
+    class="m-comment-wrapper"
+  >
     <div class="m-moderationAppeal__commentNote">
-      <a target="_blank"
+      <a
+        target="_blank"
         [routerLink]="['/newsfeed', appeal.report.entity.entity_guid]"
         [queryParams]="{ focusedCommentUrn: appeal.report.entity_urn }"
         i18n="@@M__COMMON__VIEW_PARENT_COMMENT_THREAD"
@@ -55,15 +64,15 @@
         View parent and its comment thread
       </a>
     </div>
-    <minds-card-comment
-      [object]="appeal.report.entity"
-      class="mdl-card"
-    >
+    <minds-card-comment [object]="appeal.report.entity" class="mdl-card">
     </minds-card-comment>
   </div>
 
   <div *ngIf="!appeal.report.entity" class="m-comment-wrapper">
-    <div class="m-moderationAppeal__commentNote" i18n="@@M__COMMON__POST_NOT_FOUND">
+    <div
+      class="m-moderationAppeal__commentNote"
+      i18n="@@M__COMMON__POST_NOT_FOUND"
+    >
       Post not found
     </div>
   </div>

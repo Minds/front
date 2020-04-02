@@ -1,0 +1,25 @@
+<div class="m-proChannel__home">
+  <m-pro--channel--categories
+    [showAllTag]="false"
+    [selectedHashtag]="''"
+    (onSelectTag)="navigateToCategory($event)"
+  ></m-pro--channel--categories>
+
+  <div class="m-proChannelHome__section">
+    <div
+      class="m-proChannelHome__featuredContent"
+      [class.m-proChannelHome__featuredContent--prominent]="false"
+    >
+      <m-proChannel__contentList
+        type="activities"
+        [limit]="12"
+        [canAutoScroll]="false"
+      >
+      </m-proChannel__contentList>
+    </div>
+  </div>
+
+  <div class="m-proChannelHome__section">
+    <m-proChannelHome__categoryContent></m-proChannelHome__categoryContent>
+  </div>
+</div>

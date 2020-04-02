@@ -1,14 +1,11 @@
-
 .m-overlay-modal--hashtag-selector {
-
   padding: $minds-padding * 2;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
-
   .m-overlay-modal--close {
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
     i {
@@ -39,7 +36,7 @@
   .m-hashtags-selector--subtext {
     line-height: 1.5;
     padding-bottom: 0;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-400);
     }
   }
@@ -61,14 +58,14 @@
         font-size: 13px;
         font-weight: 600;
         text-transform: lowercase;
-        @include m-theme(){
+        @include m-theme() {
           border: 1px solid themed($m-grey-100);
         }
       }
       i {
         font-size: 16px;
         cursor: pointer;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-400);
         }
       }
@@ -130,7 +127,7 @@
   }
 
   .selected {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-blue);
     }
   }
@@ -152,7 +149,7 @@
       font-weight: inherit;
       text-transform: uppercase;
       cursor: pointer;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-700);
         border: 1px solid themed($m-grey-700);
       }
@@ -168,7 +165,8 @@
       margin-left: $minds-padding;
       font-size: 16px;
 
-      > span, > i {
+      > span,
+      > i {
         vertical-align: middle;
       }
     }
@@ -176,10 +174,9 @@
     .m-hashtag-selector--submit-error {
       font-size: 12px;
       font-weight: 500;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-red);
       }
     }
   }
-
 }

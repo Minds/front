@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ComponentFactoryResolver, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Client } from '../../../../services/api/client';
@@ -7,14 +13,12 @@ import { TokenOnboardingService } from './onboarding.service';
 import { DynamicHostDirective } from '../../../../common/directives/dynamic-host.directive';
 import { Storage } from '../../../../services/storage';
 
-
 @Component({
   selector: 'm-token--onboarding',
   templateUrl: 'onboarding.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TokenOnboardingComponent {
-
   @ViewChild(DynamicHostDirective, { static: true }) host;
 
   inProgress: boolean = false;
@@ -28,17 +32,13 @@ export class TokenOnboardingComponent {
     public service: TokenOnboardingService,
     private _componentFactoryResolver: ComponentFactoryResolver,
     protected storage: Storage
-  ) { 
-
-  }
+  ) {}
 
   ngOnInit() {
     if (
       this.storage.get('walletOnboardingComplete') ||
-      (
-        this.session.getLoggedInUser().rewards &&
-        this.session.getLoggedInUser().eth_wallet
-      )
+      (this.session.getLoggedInUser().rewards &&
+        this.session.getLoggedInUser().eth_wallet)
     ) {
       return; //already onboarded
     }
@@ -48,12 +48,14 @@ export class TokenOnboardingComponent {
   loadSlide() {
     const viewContainerRef = this.host.viewContainerRef;
     viewContainerRef.clear();
-    
+
     if (!this.service.slide) {
       return;
     }
 
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(this.service.slide);
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+      this.service.slide
+    );
 
     let componentRef = viewContainerRef.createComponent(componentFactory);
 
@@ -73,5 +75,4 @@ export class TokenOnboardingComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

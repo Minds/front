@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'infinite-scroll',
-  template: ''
+  template: '',
 })
 export class InfiniteScrollMock {
   @Output() load: EventEmitter<any> = new EventEmitter<any>();

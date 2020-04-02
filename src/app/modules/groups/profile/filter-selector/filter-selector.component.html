@@ -3,21 +3,30 @@
     <a
       class="m-groups--filter-selector-item"
       [class.m-groups--filter-selector-active]="filter == 'activity'"
-      [routerLink]="[ '/groups/profile', group.guid, 'feed' ]"
-      i18n="group activities selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION"
-    >Feed</a>
+      [routerLink]="['/groups/profile', group.guid, 'feed']"
+      i18n="
+         group activities
+        selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION
+      "
+      >Feed</a
+    >
     <a
       class="m-groups--filter-selector-item"
       [class.m-groups--filter-selector-active]="filter == 'image'"
-      [routerLink]="[ '/groups/profile', group.guid, 'feed', 'image' ]"
-      i18n="group activities selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION"
-    >Images</a>
+      [routerLink]="['/groups/profile', group.guid, 'feed', 'image']"
+      i18n="
+         group activities
+        selector|@@GROUPS__PROFILE__FILTER_SELECTOR__FEED_OPTION
+      "
+      >Images</a
+    >
 
     <a
       class="m-groups--filter-selector-item"
       [class.m-groups--filter-selector-active]="filter == 'video'"
-      [routerLink]="[ '/groups/profile', group.guid, 'feed', 'video' ]"
+      [routerLink]="['/groups/profile', group.guid, 'feed', 'video']"
       i18n="@@GROUPS__VIDEOS"
-    >Videos</a>
+      >Videos</a
+    >
   </div>
 </ng-container>

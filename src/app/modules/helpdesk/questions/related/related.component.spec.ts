@@ -13,39 +13,36 @@ import { clientMock } from '../../../../../tests/client-mock.spec';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { MockComponent } from '../../../../utils/mock';
-import { SafePipe } from "../../../../common/pipes/safe";
+import { SafePipe } from '../../../../common/pipes/safe';
 
 describe('RelatedQuestionsComponent', () => {
-
   let comp: RelatedQuestionsComponent;
   let fixture: ComponentFixture<RelatedQuestionsComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         SafePipe,
         RelatedQuestionsComponent,
         MockComponent({
           selector: 'minds-activity',
-          inputs: [ 'object' ],
+          inputs: ['object'],
         }),
       ],
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
         CommonModule,
-        FormsModule
+        FormsModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
 
     clientMock.response = {};
@@ -59,12 +56,10 @@ describe('RelatedQuestionsComponent', () => {
     if (fixture.isStable()) {
       done();
     } else {
-      fixture.whenStable()
-        .then(() => {
-          fixture.detectChanges();
-          done();
-        });
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
     }
   });
-
 });

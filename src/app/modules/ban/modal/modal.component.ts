@@ -1,4 +1,11 @@
-import { Component, Input, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
@@ -8,11 +15,9 @@ import { MindsUser } from '../../../interfaces/entities';
 @Component({
   moduleId: module.id,
   selector: 'm-modal--ban',
-  templateUrl: 'modal.component.html'
+  templateUrl: 'modal.component.html',
 })
-
 export class BanModalComponent implements AfterViewInit {
-
   subject: number = 0;
   note: string = '';
   user: MindsUser;
@@ -36,8 +41,8 @@ export class BanModalComponent implements AfterViewInit {
     public session: Session,
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
-    private client: Client,
-  ) { }
+    private client: Client
+  ) {}
 
   ngAfterViewInit() {
     this._changeDetectorRef.detectChanges();
@@ -78,7 +83,6 @@ export class BanModalComponent implements AfterViewInit {
     }
   }
 
-
   onSelectionChange(item) {
     this.subject = item.value;
   }
@@ -92,12 +96,16 @@ export class BanModalComponent implements AfterViewInit {
    */
   submit() {
     let guid = this.guid;
-    let subject = this.subject -1;
+    let subject = this.subject - 1;
     let note = this.note;
 
     this.inProgress = true;
 
-    this.client.put(`api/v1/admin/ban/${this.guid}`, { 'subject': this.subjects[subject], note })
+    this.client
+      .put(`api/v1/admin/ban/${this.guid}`, {
+        subject: this.subjects[subject],
+        note,
+      })
       .then(() => {
         this.inProgress = false;
         this.user.banned = 'yes';
@@ -108,7 +116,7 @@ export class BanModalComponent implements AfterViewInit {
         this.inProgress = false;
         this.user.banned = 'no';
 
-        alert(e.message ? e.message: e);
+        alert(e.message ? e.message : e);
       });
   }
 }

@@ -1,4 +1,10 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
 import { ChannelBadgesComponent } from './badges.component';
@@ -9,10 +15,9 @@ import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { TooltipComponentMock } from "../../../mocks/common/components/tooltip/tooltip.component";
+import { TooltipComponentMock } from '../../../mocks/common/components/tooltip/tooltip.component';
 
 describe('ChannelBadgesComponent', () => {
-
   let comp: ChannelBadgesComponent;
   let fixture: ComponentFixture<ChannelBadgesComponent>;
   let session: Session;
@@ -22,16 +27,14 @@ describe('ChannelBadgesComponent', () => {
   }
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [TooltipComponentMock, ChannelBadgesComponent],
       imports: [RouterTestingModule, ReactiveFormsModule],
       providers: [
         { provide: Session, useValue: sessionMock },
-        { provide: Client, useValue: clientMock }
-      ]
-    })
-      .compileComponents();
+        { provide: Client, useValue: clientMock },
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -91,7 +94,6 @@ describe('ChannelBadgesComponent', () => {
     sessionMock.user.admin = false;
     sessionMock.user.founder = false;
 
-
     comp.user = sessionMock.user;
     comp.badges = ['founder'];
     fixture.detectChanges();
@@ -113,7 +115,6 @@ describe('ChannelBadgesComponent', () => {
   it('should show the founder badge for admins and also let them modify the status', fakeAsync(() => {
     sessionMock.user.admin = false;
     sessionMock.user.founder = false;
-
 
     comp.user = sessionMock.user;
     comp.badges = ['founder'];
@@ -142,7 +143,7 @@ describe('ChannelBadgesComponent', () => {
     expect(badge).not.toBeNull();
     expect(badge.nativeElement.textContent).toContain('Founder');
 
-    clientMock.response['api/v1/admin/founder/1000'] = { 'status': 'success' };
+    clientMock.response['api/v1/admin/founder/1000'] = { status: 'success' };
 
     badge.nativeElement.click();
 
@@ -196,5 +197,4 @@ describe('ChannelBadgesComponent', () => {
 
     expect(badge).toBeNull();
   }));
-
 });

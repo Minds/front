@@ -13,3 +13,15 @@
     justify-content: center;
   }
 }
+
+.m-blog--footer {
+  margin-bottom: 50px;
+}
+
+.m-share-buttons {
+  cursor: pointer;
+  padding-right: 8px;
+  @include m-theme() {
+    color: themed($m-green-light);
+  }
+}

@@ -17,14 +17,51 @@
   z-index: 9999;
   transform: translateZ(0);
 
-  @include m-theme(){
-    background-color: themed($m-white);
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
     border-bottom: 1px solid themed($m-grey-50);
   }
 
   @media screen and (max-width: 900px) {
     // Markers sidebar
     width: 100%;
+  }
+
+  &.m-v2-topbar__noBackground {
+    @include m-theme() {
+      background-color: transparent;
+    }
+  }
+
+  &.m-v2-topbar__marketingPages {
+    flex-direction: row;
+
+    @include m-theme() {
+      border: none;
+    }
+
+    .m-v2-topbar {
+      padding: 15px 0 15px;
+      max-width: 1084px;
+      margin: 0 auto;
+
+      @media screen and (max-width: 1168px) {
+        margin: 0 25px;
+      }
+
+      .m-v2-topbarNavItem__Logo {
+        margin: 0;
+        padding: 0;
+      }
+    }
+
+    .m-v2-topbar__Container__LoginWrapper > a {
+      @include m-theme() {
+        background: transparent;
+        border: 1px solid themed($m-black-always);
+        color: themed($m-black-always);
+      }
+    }
   }
 
   m-search--bar {
@@ -56,8 +93,10 @@
       top: 52px;
       width: 100%;
       border-radius: 4px;
-      @include m-theme(){
-        box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14), 0 3px 3px -2px rgba(themed($m-black), 0.2), 0 1px 8px 0 rgba(themed($m-black), 0.12);
+      @include m-theme() {
+        box-shadow: 0 3px 4px 0 rgba(themed($m-black), 0.14),
+          0 3px 3px -2px rgba(themed($m-black), 0.2),
+          0 1px 8px 0 rgba(themed($m-black), 0.12);
       }
     }
   }
@@ -121,7 +160,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
 }
 
 .m-v2-topbar__Container--left {
@@ -150,16 +188,15 @@
   align-items: center;
   border-top: 3px solid transparent;
   text-decoration: none;
-  @include m-theme(){
-    color: themed($m-grey-800);
+  @include m-theme() {
+    color: themed($m-grey-800) !important;
   }
 
   &.m-v2-topbarNav__Item--active {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-blue);
       border-color: themed($m-blue);
     }
-
   }
 
   &.m-v2-topbarNav__Item--no-padding {
@@ -210,7 +247,7 @@
 // .m-theme__light .m-v2-topbarNavItem__Logo:hover {
 //   filter: grayscale(100%);
 // }
-// 
+//
 // .m-theme__dark .m-v2-topbarNavItem__Logo:hover {
 //   filter: grayscale(0%);
 // }
@@ -229,13 +266,13 @@
     border-radius: 50%;
     background-position: center;
     background-size: cover;
-    @include m-theme(){
+    @include m-theme() {
       border: 1px solid themed($m-white);
     }
   }
 
   &.m-v2-topbar__Avatar--active .minds-avatar {
-    @include m-theme(){
+    @include m-theme() {
       box-shadow: 0 0 0 2px themed($m-blue);
     }
   }
@@ -269,11 +306,38 @@
     padding: 8px 16px;
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
       border: 1px solid themed($m-blue);
       color: themed($m-blue);
     }
+  }
+
+  > a.m-v2-topbarLoginWrapper__login,
+  > a.m-v2-topbarLoginWrapper__joinMindsNow {
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: normal;
+    text-transform: none;
+    white-space: nowrap;
+
+    @include m-theme() {
+      color: themed($m-grey-800) !important;
+    }
+  }
+
+  > a.m-v2-topbarLoginWrapper__login {
+    padding: 0;
+    border: none !important;
+    margin-right: $minds-margin * 2;
+  }
+
+  > a.m-v2-topbarLoginWrapper__joinMindsNow {
+    @include m-theme() {
+      border: 1px solid themed($m-grey-800) !important;
+    }
+    margin-right: 0 !important;
+    border-radius: 4px;
   }
 }
 
@@ -295,7 +359,7 @@
   min-height: 52px;
   z-index: 9999;
   transform: translateZ(0);
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
     border-top: 1px solid themed($m-grey-50);
   }

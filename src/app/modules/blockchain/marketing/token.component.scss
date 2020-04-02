@@ -1,0 +1,15 @@
+@import '../../../foundation/grid-values';
+
+.m-token__marketing {
+  .m-tokenMarketing__purchase {
+    max-width: 90%;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      max-width: 100%;
+    }
+
+    .m-blockchainTokenPurchase {
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.07);
+    }
+  }
+}

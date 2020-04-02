@@ -8,26 +8,28 @@ import { AttachmentService } from '../../../../services/attachment';
   selector: 'm-media--grid',
   inputs: ['_object: object'],
   template: `
-    <a *ngFor="let item of items"
-    [routerLink]="['/media', item.guid]"
-    [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(item) }"
+    <a
+      *ngFor="let item of items"
+      [routerLink]="['/media', item.guid]"
+      [ngClass]="{ 'm-mature-thumbnail': attachment.shouldBeBlurred(item) }"
     >
-      <img src="/fs/v1/thumbnail/{{item.guid}}/large" />
-      <span class="material-icons" [hidden]="item.subtype !='video'">play_circle_outline</span>
+      <img src="/fs/v1/thumbnail/{{ item.guid }}/large" />
+      <span class="material-icons" [hidden]="item.subtype != 'video'"
+        >play_circle_outline</span
+      >
       <i class="material-icons">explicit</i>
     </a>
     <infinite-scroll
-        distance="25%"
-        (load)="load()"
-        [moreData]="moreData"
-        [inProgress]="inProgress"
-        style="width:100%">
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress"
+      style="width:100%"
+    >
     </infinite-scroll>
-  `
+  `,
 })
-
 export class MediaGridComponent {
-
   object: any = {};
 
   items: Array<any> = [];
@@ -35,8 +37,11 @@ export class MediaGridComponent {
   moreData: boolean = true;
   offset: string = '';
 
-  constructor(public session: Session, public client: Client, public attachment: AttachmentService) {
-  }
+  constructor(
+    public session: Session,
+    public client: Client,
+    public attachment: AttachmentService
+  ) {}
 
   set _object(value: any) {
     this.object = value;
@@ -45,10 +50,10 @@ export class MediaGridComponent {
 
   load() {
     var self = this;
-    if (this.inProgress)
-      return;
+    if (this.inProgress) return;
     this.inProgress = true;
-    this.client.get('api/v1/media/albums/' + this.object.guid, { offset: this.offset })
+    this.client
+      .get('api/v1/media/albums/' + this.object.guid, { offset: this.offset })
       .then((response: any) => {
         if (!response.entities || response.entities.length === 0) {
           self.inProgress = false;
@@ -61,5 +66,4 @@ export class MediaGridComponent {
         self.inProgress = false;
       });
   }
-
 }

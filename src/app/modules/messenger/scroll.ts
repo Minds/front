@@ -5,11 +5,9 @@ import { debounceTime } from 'rxjs/operators';
 @Directive({
   selector: '[minds-messenger-scroll]',
   inputs: ['emitter', 'moreData'],
-  outputs: ['previous', 'next']
+  outputs: ['previous', 'next'],
 })
-
 export class MessengerScrollDirective {
-
   previous = new EventEmitter();
   next = new EventEmitter();
   scroll: Observable<any>;
@@ -27,27 +25,24 @@ export class MessengerScrollDirective {
         setTimeout(() => {
           this._element.nativeElement.scrollTop = this._element.nativeElement.scrollHeight;
         });
-      }
+      },
     });
   }
 
   ngOnInit() {
-    this.scroll
-      .pipe(debounceTime(100))
-      .subscribe(() => {
+    this.scroll.pipe(debounceTime(100)).subscribe(() => {
+      if (!this.moreData) return;
 
-        if (!this.moreData)
-          return;
+      if (this.element.scrollTop <= 12) {
+        this.previous.next(true);
+      }
 
-        if (this.element.scrollTop <= 12) {
-          this.previous.next(true);
-        }
-
-        if (this.element.scrollTop + this.element.clientHeight >= this.element.scrollHeight - 12) {
-          this.next.next(true);
-        }
-
-      });
+      if (
+        this.element.scrollTop + this.element.clientHeight >=
+        this.element.scrollHeight - 12
+      ) {
+        this.next.next(true);
+      }
+    });
   }
-
 }

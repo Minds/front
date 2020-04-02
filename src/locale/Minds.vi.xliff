@@ -2539,7 +2539,7 @@
         <target>Xem thêm</target>
       </trans-unit>
       <trans-unit id="M__COMMON__CONFIRM_18">
-        <source>Click to confirm your are 18+</source>
+        <source>Click to confirm you are 18+</source>
         <target>Nhấn để xác nhận bạn trên 18 tuổi</target>
       </trans-unit>
       <trans-unit id="M__COMMON__VIEWS_WITH_COUNT">

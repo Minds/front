@@ -14,35 +14,41 @@ import { TokenPipe } from '../../../../common/pipes/token.pipe';
 import { MockComponent } from '../../../../utils/mock';
 
 describe('BoostConsoleCard', () => {
-
   let comp: BoostConsoleCard;
   let fixture: ComponentFixture<BoostConsoleCard>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [
         MockComponent({
           selector: 'minds-card',
           template: '',
-          inputs: ['object', 'flags']
-        }), TokenPipe,
-        BoostConsoleCard
+          inputs: ['object', 'flags'],
+        }),
+        TokenPipe,
+        BoostConsoleCard,
       ],
-      imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
-    }).overrideComponent(BoostConsoleCard, {
-      set: {
-        providers: [
-          {
-            provide: BoostService,
-            useValue: boostServiceMock
-          }
-        ]
-      }
-    }).compileComponents();
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        CommonModule,
+        FormsModule,
+      ],
+    })
+      .overrideComponent(BoostConsoleCard, {
+        set: {
+          providers: [
+            {
+              provide: BoostService,
+              useValue: boostServiceMock,
+            },
+          ],
+        },
+      })
+      .compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     jasmine.clock().install();
 
@@ -52,7 +58,7 @@ describe('BoostConsoleCard', () => {
     comp.boost = {
       handler: 'newsfeed',
       destination: {
-        username: 'test-user'
+        username: 'test-user',
       },
       impressions: 3000,
       met_impressions: 1000,
@@ -62,7 +68,7 @@ describe('BoostConsoleCard', () => {
       rejectiOn_reason: -1,
       postToFacebook: true,
       scheduledTs: 1525779264,
-      entity: {}
+      entity: {},
     };
     comp.type = 'newsfeed';
 
@@ -71,11 +77,10 @@ describe('BoostConsoleCard', () => {
     if (fixture.isStable()) {
       done();
     } else {
-      fixture.whenStable()
-        .then(() => {
-          fixture.detectChanges();
-          done()
-        });
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
     }
   });
 
@@ -88,18 +93,26 @@ describe('BoostConsoleCard', () => {
   });
 
   it('should show the impressions', () => {
-    const impressions = fixture.debugElement.query(By.css('.m-boost-card--impressions'));
+    const impressions = fixture.debugElement.query(
+      By.css('.m-boost-card--impressions')
+    );
     expect(impressions).not.toBeNull();
     expect(impressions.nativeElement.textContent).toContain('3,000 views');
   });
 
   it('should show met impressions', () => {
-    const impressions = fixture.debugElement.query(By.css('.m-boost-card--met-impressions'));
+    const impressions = fixture.debugElement.query(
+      By.css('.m-boost-card--met-impressions')
+    );
     expect(impressions).not.toBeNull();
-    expect(impressions.nativeElement.textContent).toContain('1,000 views so far');
+    expect(impressions.nativeElement.textContent).toContain(
+      '1,000 views so far'
+    );
     comp.boost.state = 'completed';
     fixture.detectChanges();
-    expect(impressions.nativeElement.textContent).toContain('1,000 views delivered');
+    expect(impressions.nativeElement.textContent).toContain(
+      '1,000 views delivered'
+    );
   });
 
   it('should show the bid', () => {
@@ -115,35 +128,47 @@ describe('BoostConsoleCard', () => {
   });
 
   it('should have a facebook svg if postToFacebook', () => {
-    const postToFacebook = fixture.debugElement.query(By.css('.m-boost-card--post-to-facebook'));
-    const svg = fixture.debugElement.query(By.css('.m-boost-card--post-to-facebook svg'));
+    const postToFacebook = fixture.debugElement.query(
+      By.css('.m-boost-card--post-to-facebook')
+    );
+    const svg = fixture.debugElement.query(
+      By.css('.m-boost-card--post-to-facebook svg')
+    );
     expect(postToFacebook).not.toBeNull();
     expect(svg).not.toBeNull();
   });
 
   it('should show a button bar', () => {
-    const buttons = fixture.debugElement.query(By.css('.m-boost-card--manager-item--buttons'));
+    const buttons = fixture.debugElement.query(
+      By.css('.m-boost-card--manager-item--buttons')
+    );
     expect(buttons).not.toBeNull();
 
-    const revoke = fixture.debugElement.query(By.css('.m-boost-card--manager-item--buttons button:nth-child(1)'));
+    const revoke = fixture.debugElement.query(
+      By.css('.m-boost-card--manager-item--buttons button:nth-child(1)')
+    );
     expect(revoke).not.toBeNull();
     expect(revoke.nativeElement.textContent).toContain('Revoke');
     revoke.nativeElement.click();
     expect(boostServiceMock.revoke).toHaveBeenCalled();
 
-    const reject = fixture.debugElement.query(By.css('.m-boost-card--manager-item--buttons button:nth-child(2)'));
+    const reject = fixture.debugElement.query(
+      By.css('.m-boost-card--manager-item--buttons button:nth-child(2)')
+    );
     expect(reject).not.toBeNull();
     expect(reject.nativeElement.textContent).toContain('Reject');
     reject.nativeElement.click();
     expect(boostServiceMock.reject).toHaveBeenCalled();
 
-    spyOn(window, 'confirm').and.callFake(function() { return true; });
+    spyOn(window, 'confirm').and.callFake(function() {
+      return true;
+    });
 
-    const accept = fixture.debugElement.query(By.css('.m-boost-card--manager-item--buttons button:nth-child(3)'));
+    const accept = fixture.debugElement.query(
+      By.css('.m-boost-card--manager-item--buttons button:nth-child(3)')
+    );
     expect(accept).not.toBeNull();
     expect(accept.nativeElement.textContent).toContain('Accept');
     accept.nativeElement.click();
-
   });
-
 });

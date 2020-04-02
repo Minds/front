@@ -3,7 +3,7 @@
     font-size: 12px;
     font-weight: 300;
     text-align: center;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-200);
     }
   }

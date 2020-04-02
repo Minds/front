@@ -1,8 +1,8 @@
-.m-footer{
+.m-footer {
   text-align: center;
-  @include m-theme(){
-    background-color: themed($m-white);
-    border: 1px solid themed($m-grey-50);
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+    border: 1px solid themed($m-borderColor--primary);
   }
 
   img {
@@ -10,7 +10,7 @@
     margin: 16px 0;
   }
 
-  .copyright{
+  .copyright {
     text-transform: uppercase;
     cursor: pointer;
   }

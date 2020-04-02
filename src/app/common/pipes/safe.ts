@@ -1,21 +1,28 @@
-import { Pipe, Renderer }  from '@angular/core';
+import { Pipe, Renderer } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Pipe({
-  name: 'safe'
+  name: 'safe',
 })
-
 export class SafePipe {
-
-  constructor(private sanitizer : DomSanitizer) {
-  }
+  constructor(private sanitizer: DomSanitizer) {}
 
   transform(value: string) {
-
-    if(!value)
-      return value;
+    if (!value) return value;
 
     return this.sanitizer.bypassSecurityTrustHtml(value);
   }
+}
 
+@Pipe({
+  name: 'safeStyle',
+})
+export class SafeStylePipe {
+  constructor(private sanitizer: DomSanitizer) {}
+
+  transform(value: string) {
+    if (!value) return value;
+
+    return this.sanitizer.bypassSecurityTrustStyle(value);
+  }
 }

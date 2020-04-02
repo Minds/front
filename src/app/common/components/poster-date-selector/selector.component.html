@@ -1,0 +1,11 @@
+<m-date-selector
+  [date]="date"
+  [hideInput]="true"
+  [tooltipIcon]="'date_range'"
+  [tooltipText]="'Schedule Post'"
+  [i18n]="'@@SCHEDULE__POST__DATE__SELECTOR__TOOLTIP'"
+  [hideInput]="true"
+  [calendarType]="'both'"
+  [class.selected]="hasDateSelected()"
+  (dateChange)="onDateChange($event)"
+></m-date-selector>

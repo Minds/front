@@ -1,0 +1,60 @@
+@import '../../../foundation/grid-values';
+
+.m-marketing__asFeaturedIn {
+  min-width: 320px;
+  max-width: 1084px;
+  margin: 45px auto 80px;
+
+  .m-marketing__asFeaturedIn--noMargin & {
+    margin-bottom: 0;
+  }
+
+  @media screen and (max-width: $m-grid-min-vp) {
+    &.m-grid {
+      display: block;
+      margin-bottom: 45px;
+    }
+
+    margin: 20px 0 50px;
+    padding: 0 12px;
+  }
+
+  .m-marketingAsFeaturedIn__title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @include m-theme() {
+      color: themed($m-grey-400);
+    }
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      text-align: center;
+      margin: 0 0 20px;
+    }
+  }
+
+  ul {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    > li {
+      img {
+        width: 55px;
+        height: 55px;
+        object-fit: contain;
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
+  }
+}

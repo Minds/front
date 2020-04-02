@@ -1,7 +1,6 @@
-@import "defaults";
+@import 'defaults';
 
-minds-tutorial{
-
+minds-tutorial {
   max-height: 70vh;
   overflow: scroll;
 
@@ -14,14 +13,12 @@ minds-tutorial{
       padding: 12px 16px;
     }
 
-    .m-tutorial-reward{
-      .mdl-list__item-secondary-content{
-        font-size:22px;
+    .m-tutorial-reward {
+      .mdl-list__item-secondary-content {
+        font-size: 22px;
       }
-      padding:4px 16px;
-      min-height:6px;
+      padding: 4px 16px;
+      min-height: 6px;
     }
-
   }
-
 }

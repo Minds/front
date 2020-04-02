@@ -1,111 +1,128 @@
-.m-reports__marketing {
+m-reports__marketing {
+  grid-area: content / span 2;
 
- 
+  .m-reports__marketing {
+    .m-marketing__hero {
+      padding-bottom: 72px;
+      @include m-theme() {
+        background-color: themed($m-blue-grey-800) !important;
+      }
 
-  .m-marketing__hero {
-    background-color: #132552 !important;
-    padding-bottom: 72px;
+      .m-marketingHero__inner {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
 
-    .m-marketingHero__inner {
-      padding-top: 0;
-      padding-bottom: 0;
+      .m-btn {
+        margin-top: 32px;
+        @include m-theme() {
+          color: themed($m-white);
+          border-color: themed($m-white);
+        }
+      }
     }
 
-    .m-btn {
-      color: #FFF;
-      border-color: #FFF;
-      margin-top: 32px;
+    .m-marketingHero__actions {
+      i {
+        font-size: 170px;
+        text-align: center;
+        width: 100%;
+        @include m-theme() {
+          color: themed($m-white);
+        }
+      }
     }
   }
 
-  .m-marketingHero__actions {
-    i {
-      color: #FFF;
-      font-size: 170px;
+  .m-reportMarketing__stats,
+  .m-reportMarketing__section {
+    padding: 32px 100px 32px 52px !important;
+
+    h4 {
+      margin: 0;
+      margin-bottom: 32px;
+      font-size: 16px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 600;
+      @include m-theme() {
+        color: themed($m-grey-600);
+      }
+    }
+
+    .m-layout__row {
+      flex-wrap: wrap;
+    }
+
+    .m-layout__cell {
       text-align: center;
-      width: 100%;
+      @media screen and (max-width: 900px) {
+        padding: 32px;
+      }
     }
-  }
-}
 
-.m-reportMarketing__stats, .m-reportMarketing__section  {
-
-  padding: 32px 100px 32px 52px !important;
-
-  h4 {
-    margin: 0;
-    margin-bottom: 32px;
-    font-size: 16px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 600;
-    color: #666;
-  }
-
-  .m-layout__row {
-    flex-wrap: wrap;
-  }
-
-  .m-layout__cell {
-    text-align: center;
-    @media screen and (max-width: 900px) {
-      padding: 32px;
+    b {
+      font-size: 72px;
+      line-height: 1;
+      display: block;
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
     }
-  }
 
-  b {
-    font-size: 72px;
-    line-height: 1;
-    color: #444;
-    display: block;
-  }
-
-  span {
-    font-size: 24px;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    font-weight: 500;
-    color: #555;
-    margin-top: 16px;
-    display: block;
-  }
-
-}
-
-.m-reportMarketing__list {
-  list-style: decimal;
-  font-size: 24px;
-  font-weight: 800;
-  color: #aaa;
-
-  li {
-    padding: 16px;
-
-    p {
+    span {
       font-size: 24px;
-      color: #555;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
       font-weight: 500;
+      margin-top: 16px;
+      display: block;
+      @include m-theme() {
+        color: themed($m-grey-700);
+      }
     }
   }
 
-}
+  .m-reportMarketing__list {
+    list-style: decimal;
+    font-size: 24px;
+    font-weight: 800;
+    @include m-theme() {
+      color: themed($m-grey-200);
+    }
 
-.m-reportMarketingList__sublist {
-  display: inline-flex;
-  flex-wrap: wrap;
-  max-width: 740px;
+    li {
+      padding: 16px;
 
-  li {
-    width: 50%;
-    color: #888;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    cursor: default;
-    padding: 0;
+      p {
+        font-size: 24px;
+        font-weight: 500;
+        @include m-theme() {
+          color: themed($m-grey-700);
+        }
+      }
+    }
+  }
 
-    @media screen and (max-width: 890px) {
-      width: 100%;
+  .m-reportMarketingList__sublist {
+    display: inline-flex;
+    flex-wrap: wrap;
+    max-width: 740px;
+
+    li {
+      width: 50%;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      cursor: default;
+      padding: 0;
+      @include m-theme() {
+        color: themed($m-grey-400);
+      }
+
+      @media screen and (max-width: 890px) {
+        width: 100%;
+      }
     }
   }
 }

@@ -1,8 +1,14 @@
-<div class="m-settings--section m-border m-settings__blockedChannels">
+<div
+  class="m-settings--section m-border m-settings__blockedChannels"
+  data-cy="data-minds-blocked-channels"
+>
   <h4 i18n>Blocked Channels</h4>
 
   <div class="m-settingsBlockedChannels__List">
-    <div *ngFor="let channel of channels | async" class="m-settingsBlockedChannels__Channel m-border">
+    <div
+      *ngFor="let channel of channels | async"
+      class="m-settingsBlockedChannels__Channel m-border"
+    >
       <div class="m-settingsBlockedChannelsChannel__Avatar">
         <a [routerLink]="['/', channel.username]">
           <img [src]="getChannelIcon(channel)" />
@@ -10,19 +16,24 @@
       </div>
 
       <div class="m-settingsBlockedChannelsChannel__Username">
-        <a [routerLink]="['/', channel.username]">{{channel.username}}</a>
+        <a [routerLink]="['/', channel.username]">{{ channel.username }}</a>
       </div>
 
       <div class="m-settingsBlockedChannelsChannel__Actions">
-        <button class="m-btn m-btn--slim m-btn--with-icon"
+        <button
+          class="m-btn m-btn--slim m-btn--with-icon"
           *ngIf="!channel._unblocked; else blockButtonTemplate"
-          (click)="unblock(channel)">
+          (click)="unblock(channel)"
+        >
           <i class="material-icons">person_add</i>
           <span i18n>Unblock</span>
         </button>
 
         <ng-template #blockButtonTemplate>
-          <button class="m-btn m-btn--slim m-btn--destructive m-btn--with-icon" (click)="block(channel)">
+          <button
+            class="m-btn m-btn--slim m-btn--destructive m-btn--with-icon"
+            (click)="block(channel)"
+          >
             <i class="material-icons">block</i>
             <span i18n>Block</span>
           </button>
@@ -35,6 +46,7 @@
     distance="25%"
     (load)="loadMore()"
     [moreData]="moreData"
-    [inProgress]="inProgress">
+    [inProgress]="inProgress"
+  >
   </infinite-scroll>
 </div>

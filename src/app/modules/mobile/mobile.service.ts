@@ -1,9 +1,10 @@
-import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {FeaturesService} from '../../services/features.service';
-import {Session} from '../../services/session';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { FeaturesService } from '../../services/features.service';
+import { Session } from '../../services/session';
 
-const RELEASES_JSON_URL = 'https://cdn-assets.minds.com/android/releases/releases.json';
+const RELEASES_JSON_URL =
+  'https://cdn-assets.minds.com/android/releases/releases.json';
 
 @Injectable()
 export class MobileService {
@@ -12,27 +13,30 @@ export class MobileService {
   constructor(
     protected client: HttpClient,
     protected featuresService: FeaturesService,
-    protected session: Session,
-  ) {
-  }
+    protected session: Session
+  ) {}
 
   async getReleases() {
     const user = this.session.getLoggedInUser();
 
     const timestamp = Date.now();
-    this.releases = (<{ versions }>await this.client.get(`${RELEASES_JSON_URL}?t=${timestamp}`).toPromise()).versions;
+    this.releases = (<{ versions }>(
+      await this.client.get(`${RELEASES_JSON_URL}?t=${timestamp}`).toPromise()
+    )).versions;
 
     const latest = this.releases.findIndex(release => !release.unstable);
     if (latest > -1) {
       this.releases[latest].latest = true;
     }
 
-    const releases = this.releases.filter(release => !this.shouldBeStable() || !release.unstable);
+    const releases = this.releases.filter(
+      release => !this.shouldBeStable() || !release.unstable
+    );
 
     if (user.canary) {
-      releases.sort((r1, r2) => r1.unstable && !r2.unstable ? -1 : 0);
+      releases.sort((r1, r2) => (r1.unstable && !r2.unstable ? -1 : 0));
     } else {
-      releases.sort((r1, r2) => r2.unstable && !r1.unstable ? -1 : 0);
+      releases.sort((r1, r2) => (r2.unstable && !r1.unstable ? -1 : 0));
     }
 
     return releases;
@@ -42,7 +46,11 @@ export class MobileService {
     return !this.featuresService.has('mobile-canary');
   }
 
-  static _(client: HttpClient, featuresService: FeaturesService, session: Session) {
+  static _(
+    client: HttpClient,
+    featuresService: FeaturesService,
+    session: Session
+  ) {
     return new MobileService(client, featuresService, session);
   }
 }

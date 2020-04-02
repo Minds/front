@@ -1,0 +1,11 @@
+<div class="m-channel--explicit-overlay--container" *ngIf="!hidden">
+  <div class="m-channel--explicit-overlay--content">
+    <h3>{{ message }}</h3>
+    <div
+      class="m-btn m-btn--slim m-btn--action m-channel--explicit-overlay--action"
+      (click)="disableFilter()"
+    >
+      View
+    </div>
+  </div>
+</div>

@@ -1,4 +1,6 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, PLATFORM_ID, Inject } from '@angular/core';
+import { interval, Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 import { Client } from '../../../services/api';
 
@@ -7,31 +9,45 @@ import { Client } from '../../../services/api';
   inputs: ['_banners: banners', '_editMode: editMode'],
   outputs: ['done_event: done', 'delete_event: delete'],
   template: `
-    <i class="material-icons left" (click)="prev()" [hidden]="banners.length <= 1">keyboard_arrow_left</i>
+    <i
+      class="material-icons left"
+      (click)="prev()"
+      [hidden]="banners.length <= 1"
+      >keyboard_arrow_left</i
+    >
     <div *ngFor="let banner of banners; let i = index">
       <minds-banner
         [src]="banner.src"
         [top]="banner.top_offset"
         [overlay]="true"
-        [ngClass]="{'is-hidden': i != index, 'edit-mode': editing}"
+        [ngClass]="{ 'is-hidden': i != index, 'edit-mode': editing }"
         [editMode]="editing"
         [done]="done"
         (added)="added($event, i)"
-        ></minds-banner>
+      ></minds-banner>
 
-        <div class="delete-button" (click)="delete(i)" [hidden]="i != index || !editing"
-          title="Delete image from current banner carousel slide"
+      <div
+        class="delete-button"
+        (click)="delete(i)"
+        [hidden]="i != index || !editing"
+        title="Delete image from current banner carousel slide"
+      >
+        <button
+          class="mdl-button mdl-button--raised mdl-button--colored material-icons"
         >
-          <button class="mdl-button mdl-button--raised mdl-button--colored material-icons">delete</button>
-        </div>
+          delete
+        </button>
       </div>
-    <i class="material-icons right" (click)="next()" [hidden]="banners.length <= 1">keyboard_arrow_right</i>
-  `
+    </div>
+    <i
+      class="material-icons right"
+      (click)="next()"
+      [hidden]="banners.length <= 1"
+      >keyboard_arrow_right</i
+    >
+  `,
 })
-
 export class CarouselComponent {
-
-  minds: Minds = window.Minds;
   banners: Array<any> = [];
 
   editing: boolean = false;
@@ -42,11 +58,13 @@ export class CarouselComponent {
   delete_event = new EventEmitter();
   done: boolean = false; //if set to true, tells the child component to return "added"
   rotate: boolean = true; //if set to true enabled rotation
-  rotate_timeout; //the timeout for the rotator
+  rotator$: Subscription;
   interval: number = 3000; //the interval for each banner to stay before rotating
   index: number = 0; //the current visible index of the carousel.
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  ngOnInit() {
     this.run();
   }
 
@@ -58,7 +76,7 @@ export class CarouselComponent {
       this.banners = value;
     } else {
       this.banners.push({
-        src: null
+        src: null,
       });
     }
   }
@@ -67,7 +85,6 @@ export class CarouselComponent {
    * If the parent set edit mode
    */
   set _editMode(value: boolean) {
-    console.log('[carousel]: edit mode event received');
     //was in edit more, now settings not in edit more
     if (this.editing && !value) {
       console.log('[carousel]: edit mode ended');
@@ -84,12 +101,11 @@ export class CarouselComponent {
     this.done = false;
     var blank_banner = false;
     for (var i in this.banners) {
-      if (!this.banners[i].src)
-        blank_banner = true;
+      if (!this.banners[i].src) blank_banner = true;
     }
     if (!blank_banner) {
       this.banners.push({
-        src: null
+        src: null,
       });
     }
   }
@@ -99,18 +115,14 @@ export class CarouselComponent {
    */
   added(value: any, index) {
     console.log(this.banners[index].guid, value.file);
-    if (!this.banners[index].guid && !value.file)
-      return; //this is our 'add new' post
+    if (!this.banners[index].guid && !value.file) return; //this is our 'add new' post
 
     //detect if we have changed
     var changed = false;
-    if (value.top !== this.banners[index].top)
-      changed = false;
-    if (value.file)
-      changed = true;
+    if (value.top !== this.banners[index].top) changed = false;
+    if (value.file) changed = true;
 
-    if (!changed)
-      return;
+    if (!changed) return;
 
     if (!this.banners[index].src) {
       this.banners[index].src = value.file;
@@ -120,7 +132,7 @@ export class CarouselComponent {
       guid: this.banners[index].guid,
       index: index,
       file: value.file,
-      top: value.top
+      top: value.top,
     });
   }
 
@@ -147,8 +159,7 @@ export class CarouselComponent {
 
       let blank_banner: any = false;
       for (var i in this.banners) {
-        if (!this.banners[i].src)
-          blank_banner = i;
+        if (!this.banners[i].src) blank_banner = i;
       }
 
       if (blank_banner !== false) {
@@ -160,39 +171,32 @@ export class CarouselComponent {
 
   prev() {
     var max = this.banners.length - 1;
-    if (this.index === 0)
-      this.index = max;
-    else
-      this.index--;
-    this.run();//resets the carousel
+    if (this.index === 0) this.index = max;
+    else this.index--;
+    this.run(); //resets the carousel
   }
 
   next() {
     var max = this.banners.length - 1;
-    if (this.index >= max)
-      this.index = 0;
-    else
-      this.index++;
-    this.run();//resets the carousel
+    if (this.index >= max) this.index = 0;
+    else this.index++;
+    this.run(); //resets the carousel
   }
 
   run() {
-    if (this.rotate_timeout)
-      clearTimeout(this.rotate_timeout);
-    this.rotate_timeout = setTimeout(() => {
+    if (!isPlatformBrowser(this.platformId)) return;
+    if (this.rotator$) this.rotator$.unsubscribe();
+
+    this.rotator$ = interval(this.interval).subscribe(() => {
       if (this.rotate) {
         var max = this.banners.length - 1;
-        if (this.index >= max)
-          this.index = 0;
-        else
-          this.index++;
+        if (this.index >= max) this.index = 0;
+        else this.index++;
       }
-      this.run();
-    }, this.interval);
+    });
   }
 
   ngOnDestroy() {
-    clearTimeout(this.rotate_timeout);
+    if (this.rotator$) this.rotator$.unsubscribe();
   }
-
 }

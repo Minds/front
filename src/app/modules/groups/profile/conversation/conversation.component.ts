@@ -9,12 +9,12 @@ import { Session } from '../../../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'minds-groups-profile-conversation',
-  templateUrl: 'conversation.component.html'
+  templateUrl: 'conversation.component.html',
 })
 export class GroupsProfileConversation {
   @Input() group: any;
 
-  constructor(public session: Session, private router: Router) { }
+  constructor(public session: Session, private router: Router) {}
 
   ngOnInit() {
     if (!this.group['is:member'] && this.group.membership != 2) {

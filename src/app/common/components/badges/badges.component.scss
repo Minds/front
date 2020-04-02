@@ -1,4 +1,4 @@
-.m-channel--badges{
+.m-channel--badges {
   list-style: none;
   display: flex;
   flex-direction: row;
@@ -6,7 +6,7 @@
   padding: 0;
   margin: 0;
 
-  li{
+  li {
     display: flex;
     //flex: 1;
     flex-direction: column;
@@ -15,12 +15,12 @@
     cursor: pointer;
   }
 
-  i{
+  i {
     font-size: 24px;
     padding: 0 4px;
 
     &.admin__badge {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-green);
       }
     }
@@ -31,14 +31,14 @@
   }
 }
 
-.m-channel--badges-activity{
+.m-channel--badges-activity {
   padding: 0;
   margin: 0;
   margin-left: 4px;
   display: inline-flex;
   vertical-align: middle;
 
-  .m-channel--badges i{
+  .m-channel--badges i {
     font-size: 16px !important;
     padding: 0px;
   }

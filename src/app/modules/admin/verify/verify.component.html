@@ -1,0 +1,51 @@
+<div class="mdl-grid m-admin--verify" style="max-width:600px">
+  <div
+    *ngFor="let request of requests; let i = index"
+    class="mdl-cell mdl-cell--12-col"
+  >
+    <div class="mdl-card mdl-shadow--4dp m-admin--verify-requests">
+      <minds-card-user
+        [object]="request.user"
+        class="mdl-card mdl-shadow--2dp"
+      ></minds-card-user>
+
+      <div class="m-admin--verify-requests-info">
+        <p class="m-message">
+          {{ request.description }}
+        </p>
+        <ul>
+          <li>{{ request.link1 }}</li>
+          <li>{{ request.link2 }}</li>
+        </ul>
+      </div>
+
+      <div class="m-admin--verify-requests-cta">
+        <button
+          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--green"
+          (click)="verify(i)"
+          [disabled]="inProgress"
+          i18n="@@MINDS__ADMIN__VERIFY__VERIFY_ACTION"
+        >
+          Verify
+        </button>
+
+        <button
+          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--red"
+          (click)="reject(i)"
+          [disabled]="inProgress"
+          i18n="@@M__ACTION__REJECT"
+        >
+          Reject
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress"
+  >
+  </infinite-scroll>
+</div>

@@ -1,20 +1,36 @@
 <div class="m-group-info-members" #el>
   <div class="mdl-card__title" [routerLink]="linksTo">
-    <h2 class="mdl-card__title-text" style="text-transform:capitalize" i18n="@@M__COMMON__MEMBERS">Members</h2>
-    <a [routerLink]="['/groups/profile', group.guid, 'members']" class="mdl-color-text--blue-grey-400" i18n="verb|@@GROUPS__PROFILE__INVITE_ACTION">Invite</a>
+    <h2
+      class="mdl-card__title-text"
+      style="text-transform:capitalize"
+      i18n="@@M__COMMON__MEMBERS"
+    >
+      Members
+    </h2>
+    <a
+      [routerLink]="['/groups/profile', group.guid, 'members']"
+      class="mdl-color-text--blue-grey-400"
+      i18n="verb|@@GROUPS__PROFILE__INVITE_ACTION"
+      >Invite</a
+    >
   </div>
 
   <div class="mdl-card__supporting-text mdl-color-text--grey-600 members-grid">
-    <a *ngFor="let member of members"
-    [routerLink]="['/', member.username]"
-    [hovercard]="member.guid"
-    [hovercardAnchor]="['left', 'bottom']"
+    <a
+      *ngFor="let member of members"
+      [routerLink]="['/', member.username]"
+      [hovercard]="member.guid"
+      [hovercardAnchor]="['left', 'bottom']"
     >
       <img src="/icon/{{member.guid}}/small/{{member.icontime}}" />
     </a>
   </div>
 
-  <div class="mdl-spinner mdl-js-spinner is-active minds-group-sidebar-loader" [mdl] [hidden]="!inProgress"></div>
+  <div
+    class="mdl-spinner mdl-js-spinner is-active minds-group-sidebar-loader"
+    [mdl]
+    [hidden]="!inProgress"
+  ></div>
 </div>
 
 <ng-content></ng-content>

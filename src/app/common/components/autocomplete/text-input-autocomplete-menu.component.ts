@@ -1,4 +1,10 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Subject } from 'rxjs';
 
 @Component({
@@ -6,7 +12,9 @@ import { Subject } from 'rxjs';
   templateUrl: 'text-input-autocomplete-menu.component.html',
 })
 export class TextInputAutocompleteMenuComponent implements OnInit {
-  @ViewChild('dropdownMenu', { static: true }) dropdownMenuElement: ElementRef<HTMLUListElement>;
+  @ViewChild('dropdownMenu', { static: true }) dropdownMenuElement: ElementRef<
+    HTMLUListElement
+  >;
   @ViewChild('defaultItemTemplate', { static: true }) defaultItemTemplate;
   itemTemplate: any;
   position: { top: number; left: number };

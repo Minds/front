@@ -1,7 +1,15 @@
 <div class="m-user-menu m-dropdown">
-  <a class="m-user-menu__Anchor" (click)="toggleMenu()"><i class="material-icons">menu</i></a>
+  <a
+    class="m-user-menu__Anchor"
+    (click)="toggleMenu()"
+    data-cy="data-minds-user-menu"
+    ><i class="material-icons">menu</i>
+  </a>
 
-  <ul class="m-dropdown__list m-user-menu__Dropdown mdl-shadow--3dp" [hidden]="!isOpen">
+  <ul
+    class="m-dropdown__list m-user-menu__Dropdown mdl-shadow--3dp"
+    [hidden]="!isOpen"
+  >
     <li
       class="m-dropdownList__item m-user-menuDropdown__Item"
       *ngIf="!getCurrentUser()"
@@ -37,10 +45,9 @@
 
     <li
       class="m-dropdownList__item m-user-menuDropdown__Item"
-      *ngIf="isAdmin()"
       (click)="closeMenu()"
     >
-      <a routerLink="/analytics/admin/network">
+      <a routerLink="/analytics/dashboard/traffic">
         <i class="material-icons">timeline</i>
         <span i18n>Analytics</span>
       </a>
@@ -108,7 +115,9 @@
     >
       <a routerLink="/canary">
         <i class="material-icons">new_releases</i>
-        <span *ngIf="!getCurrentUser()?.canary; else canaryDropdownItem" i18n>Canary Mode</span>
+        <span *ngIf="!getCurrentUser()?.canary; else canaryDropdownItem" i18n
+          >Canary Mode</span
+        >
         <ng-template #canaryDropdownItem>
           <span i18n>Canary Mode</span>
         </ng-template>
@@ -125,15 +134,15 @@
       </a>
     </li>
 
-   <li
-       class="m-dropdownList__item m-user-menuDropdown__Item"
-       (click)="closeMenu()"
-   >
+    <li
+      class="m-dropdownList__item m-user-menuDropdown__Item"
+      (click)="closeMenu()"
+    >
       <a target="_blank" href="https://www.teespring.com/stores/minds">
-      <i class="material-icons">shopping_cart</i>
-      <span i18n>Store</span>
-    </a>
-   </li>
+        <i class="material-icons">shopping_cart</i>
+        <span i18n>Store</span>
+      </a>
+    </li>
 
     <li
       class="m-dropdownList__item m-user-menuDropdown__Item"
@@ -164,7 +173,7 @@
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/settings/general">
+      <a routerLink="/settings/general" data-cy="data-minds-user-menu-settings">
         <i class="material-icons">settings</i>
         <span i18n>Settings</span>
       </a>
@@ -184,4 +193,3 @@
 </div>
 
 <div class="minds-bg-overlay" (click)="closeMenu()" [hidden]="!isOpen"></div>
-

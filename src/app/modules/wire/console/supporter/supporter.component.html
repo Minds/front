@@ -1,14 +1,22 @@
 <div class="m-wire-console--supporter">
-
   <div class="m-wire-console--supporter-sent">
     <div class="m-wire-console--supporter-sent-amount">
       <span>
-        <ng-container *ngIf="method == 'money'">{{ sum | currency:'USD':true:'1.0-0' }}</ng-container>
-        <ng-container *ngIf="method == 'points'">{{ sum | number }}</ng-container>
-        <ng-container *ngIf="method == 'tokens'">{{ sum | number:'1.0-4' }}</ng-container>
+        <ng-container *ngIf="method == 'money'">{{
+          sum | currency: 'USD':true:'1.0-0'
+        }}</ng-container>
+        <ng-container *ngIf="method == 'points'">{{
+          sum | number
+        }}</ng-container>
+        <ng-container *ngIf="method == 'tokens'">{{
+          sum | number: '1.0-4'
+        }}</ng-container>
       </span>
     </div>
-    <div class="m-wire-console--supporter-sent-tag" i18n="@@WIRE__CONSOLE__SUPPORTER__THIS_MONTH">
+    <div
+      class="m-wire-console--supporter-sent-tag"
+      i18n="@@WIRE__CONSOLE__SUPPORTER__THIS_MONTH"
+    >
       this month
     </div>
   </div>

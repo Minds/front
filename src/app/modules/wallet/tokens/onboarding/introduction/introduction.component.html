@@ -1,34 +1,59 @@
 <div class="m-token--onboarding--slide m-border">
   <div class="m-token--onboarding--column">
-    <h2 i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__LETS_SETUP_TITLE">Let's setup your wallet</h2>
+    <h2 i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__LETS_SETUP_TITLE">
+      Let's setup your wallet
+    </h2>
 
-    <p class="m-token--onboarding--subtext" i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__TOKENS_DESC">Tokens are the cryptocurrency used on Minds. Your total balance of tokens will be stored in two different types of addresses:</p>
+    <p
+      class="m-token--onboarding--subtext"
+      i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__TOKENS_DESC"
+    >
+      Tokens are the cryptocurrency used on Minds. Your total balance of tokens
+      will be stored in two different types of addresses:
+    </p>
 
     <ul>
       <li>
         <i class="material-icons">check_circle</i>
-        <h4 i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__ONCHAIN_TITLE">OnChain</h4>
-        <p i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__ONCHAIN_DESC">OnChain payments will be published to the public blockchain and require a small ETH gas fee. You can setup your own private keys or use a client such as MetaMask.</p>
+        <h4 i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__ONCHAIN_TITLE">
+          OnChain
+        </h4>
+        <p i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__ONCHAIN_DESC">
+          OnChain payments will be published to the public blockchain and
+          require a small ETH gas fee. You can setup your own private keys or
+          use a client such as MetaMask.
+        </p>
       </li>
       <li>
         <i class="material-icons">donut_large</i>
-        <h4 i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__OFFCHAIN_TITLE">OffChain</h4>
-        <p i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__OFFCHAIN_DESC">OffChain payments will not be published to the blockchain and have spending limits. You will receive rewards into this address.</p>
+        <h4 i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__OFFCHAIN_TITLE">
+          OffChain
+        </h4>
+        <p i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__OFFCHAIN_DESC">
+          OffChain payments will not be published to the blockchain and have
+          spending limits. You will receive rewards into this address.
+        </p>
       </li>
     </ul>
-
   </div>
 
   <div class="m-token--onboarding--column">
     <div class="m-token--onboarding--video m-border">
-      <m-token--onboarding--video 
-        [src]="minds.cdn_assets_url + 'assets/tutorials/wallet.480.mp4'">
+      <m-token--onboarding--video
+        [src]="cdnAssetsUrl + 'assets/tutorials/wallet.480.mp4'"
+      >
       </m-token--onboarding--video>
     </div>
 
     <div class="m-layout--row">
       <div class="m-layout--spacer"></div>
-      <button class="m-btn m-btn--slim m-btn--action" (click)="next.next()" i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__NEXT_ACTION">Next</button>
+      <button
+        class="m-btn m-btn--slim m-btn--action"
+        (click)="next.next()"
+        i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__NEXT_ACTION"
+      >
+        Next
+      </button>
     </div>
   </div>
-  </div>
+</div>

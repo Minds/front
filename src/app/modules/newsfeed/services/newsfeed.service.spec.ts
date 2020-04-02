@@ -7,9 +7,11 @@ import { MockService } from '../../../utils/mock';
 import { NSFWSelectorConsumerService } from '../../../common/components/nsfw-selector/nsfw-selector.service';
 
 describe('NewsfeedService', () => {
-
   let service: NewsfeedService;
-  let NSFWSelectorServiceMock:any = MockService(NSFWSelectorConsumerService, {});
+  let NSFWSelectorServiceMock: any = MockService(
+    NSFWSelectorConsumerService,
+    {}
+  );
 
   beforeEach(() => {
     jasmine.clock().uninstall();
@@ -24,11 +26,15 @@ describe('NewsfeedService', () => {
       ],
     });
 
-    service = new NewsfeedService(clientMock, sessionMock, NSFWSelectorServiceMock);
+    service = new NewsfeedService(
+      clientMock,
+      sessionMock,
+      NSFWSelectorServiceMock
+    );
     clientMock.response = {};
   });
 
-  afterEach(()=> {
+  afterEach(() => {
     jasmine.clock().uninstall();
   });
 
@@ -38,7 +44,7 @@ describe('NewsfeedService', () => {
 
   it('should record an activity view in newsfeed', fakeAsync(() => {
     const url: string = 'api/v2/analytics/views/activity/123';
-    clientMock.response[url] =  {'status' : 'success'};
+    clientMock.response[url] = { status: 'success' };
 
     const entity: any = {
       guid: 123,
@@ -52,7 +58,7 @@ describe('NewsfeedService', () => {
 
   it('should record a boosted activity view in the newsfeed', fakeAsync(() => {
     const url: string = 'api/v2/analytics/views/boost/1234';
-    clientMock.response[url] =  {'status' : 'success'};
+    clientMock.response[url] = { status: 'success' };
 
     const entity: any = {
       guid: 123,
@@ -67,7 +73,7 @@ describe('NewsfeedService', () => {
 
   it('should record a boosted activity view stop in the newsfeed', fakeAsync(() => {
     const url: string = 'api/v2/analytics/views/boost/1234/stop';
-    clientMock.response[url] =  {'status' : 'success'};
+    clientMock.response[url] = { status: 'success' };
 
     const entity: any = {
       guid: 123,
@@ -82,14 +88,14 @@ describe('NewsfeedService', () => {
 
   it('should record a boosted activity view in a channel', fakeAsync(() => {
     const url: string = 'api/v2/analytics/views/boost/1234/456';
-    clientMock.response[url] =  {'status' : 'success'};
+    clientMock.response[url] = { status: 'success' };
 
     const entity: any = {
       guid: 123,
       boosted_guid: 1234,
     };
     const channel: any = {
-      guid: '456'
+      guid: '456',
     };
 
     service.recordView(entity, true, channel);
@@ -100,14 +106,14 @@ describe('NewsfeedService', () => {
 
   it('should record a boosted activity view stop in a channel', fakeAsync(() => {
     const url: string = 'api/v2/analytics/views/boost/1234/456/stop';
-    clientMock.response[url] =  {'status' : 'success'};
+    clientMock.response[url] = { status: 'success' };
 
     const entity: any = {
       guid: 123,
       boosted_guid: 1234,
     };
     const channel: any = {
-      guid: '456'
+      guid: '456',
     };
 
     service.recordView(entity, false, channel);

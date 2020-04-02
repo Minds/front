@@ -16,7 +16,7 @@ m-hashtags--sidebar-selector {
       font-size: 16px;
       font-weight: bold;
       line-height: 1;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-700);
       }
     }
@@ -27,7 +27,7 @@ m-hashtags--sidebar-selector {
       font-weight: bold;
       line-height: 1;
       margin-right: 8px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-400);
       }
     }
@@ -46,14 +46,13 @@ m-hashtags--sidebar-selector {
     z-index: 1;
     display: block;
     cursor: pointer;
-
   }
 
   .m-hashtagsSidebarSelector__toggleTrending {
     font-size: 9px;
     font-weight: 600;
     cursor: pointer;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-400);
     }
   }
@@ -69,7 +68,8 @@ m-hashtags--sidebar-selector {
       padding: 0;
       list-style: none;
 
-      > li, li m-hashtagsSidebarSelector__item {
+      > li,
+      li m-hashtagsSidebarSelector__item {
         display: flex;
         align-items: center;
         width: 100%;
@@ -92,7 +92,7 @@ m-hashtags--sidebar-selector {
       cursor: pointer;
       overflow: hidden;
       text-overflow: ellipsis;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
 
@@ -102,7 +102,7 @@ m-hashtags--sidebar-selector {
       }
 
       &.m-hashtagsSidebarSelectorList__label--visible {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-blue);
         }
       }
@@ -114,7 +114,7 @@ m-hashtags--sidebar-selector {
       text-align: center;
       cursor: pointer;
       user-select: none;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
 
@@ -123,7 +123,7 @@ m-hashtags--sidebar-selector {
       }
 
       &.m-hashtagsSidebarSelectorList__visibility--visible {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-blue);
         }
       }
@@ -141,9 +141,9 @@ m-hashtags--sidebar-selector {
     }
 
     .m-hashtagsSidebarSelectorItem__input {
-        margin-left: -9px;
-        padding-top: 4px;
-        width: calc(100% + 18px);
+      margin-left: -9px;
+      padding-top: 4px;
+      width: calc(100% + 18px);
     }
 
     .m-hashtagsSidebarSelectorList__addInput {
@@ -156,13 +156,13 @@ m-hashtags--sidebar-selector {
       line-height: 24px;
       outline: 0;
       font-weight: 500;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
         border: 1px solid themed($m-grey-50);
       }
 
       &::placeholder {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-200);
         }
       }
@@ -174,7 +174,7 @@ m-hashtags--sidebar-selector {
       text-align: center;
       cursor: pointer;
       user-select: none;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
       }
 
@@ -192,7 +192,7 @@ m-hashtags--sidebar-selector {
     line-height: 1;
     cursor: pointer;
     user-select: none;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-200);
     }
   }
@@ -217,8 +217,12 @@ m-hashtags--sidebar-selector {
     bottom: 0;
     width: 48px;
     z-index: 1;
-    @include m-theme(){
-      background: linear-gradient(to right, transparent 0%, rgba(themed($m-body-bg), 1) 50%);
+    @include m-theme() {
+      background: linear-gradient(
+        to right,
+        rgba(themed($m-white), 0) 0%,
+        rgba(themed($m-body-bg), 1) 50%
+      );
     }
 
     .m-hashtagsSidebarSelectorCompactListOverflow__Arrow {
@@ -257,12 +261,12 @@ m-hashtags--sidebar-selector {
     letter-spacing: 0.3px;
     max-width: 25vw;
     font-size: 12px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
     }
 
     &.m-hashtagsSidebarSelectorCompactList__Label--visible {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue);
       }
     }
@@ -280,7 +284,7 @@ m-hashtags--sidebar-selector {
   margin-top: 8px;
   overflow-y: auto;
   max-height: 70vh;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
     border: 1px solid themed($m-grey-50);
     box-shadow: 1px 1px 1px rgba(themed($m-black), 0.1);

@@ -10,19 +10,19 @@ import { OnboardingCardComponent } from './card/card.component';
 import { OnboardingFeedComponent } from './feed.component';
 import { OnboardingService } from './onboarding.service';
 import { OnboardingModalComponent } from './modal.component';
-import { ChannelOnboardingService } from "./channel/onboarding.service";
-import { TopicsOnboardingComponent } from "./channel/topics/topics.component";
-import { ChannelOnboardingComponent } from "./channel/onboarding.component";
-import { SubscriptionsOnboardingComponent } from "./channel/subscriptions/subscriptions.component";
-import { ChannelsTileComponent } from "../channels/tile/tile.component";
-import { GroupsOnboardingComponent } from "./channel/groups/groups.component";
-import { GroupsTileComponent } from "../groups/tile/tile.component";
-import { ChannelSetupOnboardingComponent } from "./channel/channel/channel.component";
-import { TokenRewardsOnboardingComponent } from "./channel/rewards/rewards.component";
-import { Client } from "../../services/api/client";
-import { SuggestionsModule } from "../suggestions/suggestions.module";
-import { Session } from "../../services/session";
-
+import { ChannelOnboardingService } from './channel/onboarding.service';
+import { TopicsOnboardingComponent } from './channel/topics/topics.component';
+import { ChannelOnboardingComponent } from './channel/onboarding.component';
+import { SubscriptionsOnboardingComponent } from './channel/subscriptions/subscriptions.component';
+import { ChannelsTileComponent } from '../channels/tile/tile.component';
+import { GroupsOnboardingComponent } from './channel/groups/groups.component';
+import { GroupsTileComponent } from '../groups/tile/tile.component';
+import { ChannelSetupOnboardingComponent } from './channel/channel/channel.component';
+import { TokenRewardsOnboardingComponent } from './channel/rewards/rewards.component';
+import { Client } from '../../services/api/client';
+import { SuggestionsModule } from '../suggestions/suggestions.module';
+import { Session } from '../../services/session';
+import { FeaturesService } from '../../services/features.service';
 
 @NgModule({
   imports: [
@@ -50,8 +50,8 @@ import { Session } from "../../services/session";
     OnboardingService,
     {
       provide: ChannelOnboardingService,
-      deps: [Client, Session],
-      useFactory: ChannelOnboardingService._
+      deps: [Client, Session, FeaturesService],
+      useFactory: ChannelOnboardingService._,
     },
   ],
   exports: [
@@ -70,5 +70,4 @@ import { Session } from "../../services/session";
     TokenRewardsOnboardingComponent,
   ],
 })
-export class OnboardingModule {
-}
+export class OnboardingModule {}

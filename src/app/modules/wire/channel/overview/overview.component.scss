@@ -1,51 +1,50 @@
 body.m-theme__dark .m-wire-channel--overview {
-    background-color: #232323;
-    color: #fff;
+  background-color: #202527;
+  color: #fff;
 }
 
-
-.m-wire-channel--overview{
+.m-wire-channel--overview {
   border-radius: 3px;
 
   padding: 16px;
   margin: auto auto 16px auto;
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   font-family: 'Roboto', Helvetica, sans-serif;
-  
+
   background-color: #4690df;
   color: #fff;
 
   @media only screen and (max-width: 400px) {
-    padding:0;
+    padding: 0;
     text-align: center;
   }
 
-  i{
+  i {
     font-style: normal;
-    font-weight:100;
+    font-weight: 100;
   }
 
-  > div{
-    font-size:32px;
-    letter-spacing:2px;
-    line-height:32px;
+  > div {
+    font-size: 32px;
+    letter-spacing: 2px;
+    line-height: 32px;
   }
 
-  .m-wire-channel--overview--label{
-    display:block;
+  .m-wire-channel--overview--label {
+    display: block;
 
     > * {
-      vertical-align:middle;
+      vertical-align: middle;
     }
 
-    label{
+    label {
       text-transform: uppercase;
       font-family: 'Roboto', Helvetica, sans-serif;
-      letter-spacing:1px;
-      font-size:14px;
+      letter-spacing: 1px;
+      font-size: 14px;
     }
-    i{
+    i {
       font-size: 16px;
       opacity: 0.5;
       cursor: pointer;
@@ -56,5 +55,4 @@ body.m-theme__dark .m-wire-channel--overview {
     font-size: 9px;
     cursor: pointer;
   }
-
 }

@@ -1,0 +1,16 @@
+.mf-jumpAnchor {
+  // used for element.scrollIntoView targets
+  position: relative;
+  top: 0;
+  width: 0;
+  height: 0;
+  visibility: hidden;
+
+  m-body.has-v2-navbar & {
+    top: -52px;
+  }
+
+  m-body.has-v3-navbar & {
+    top: -75px;
+  }
+}

@@ -1,28 +1,33 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import * as BN from 'bn.js';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { Web3WalletService } from '../../../blockchain/web3-wallet.service';
 import { TokenContractService } from '../../../blockchain/contracts/token-contract.service';
+import { ConfigsService } from '../../../../common/services/configs.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-wallet--balance-tokens',
   templateUrl: 'balance.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class WalletBalanceTokensComponent implements OnInit {
-
+  readonly cdnAssetsUrl: string;
   inProgress: boolean = false;
   balance: number = 0;
   testnetBalance: number = 0;
   ethBalance: string = '0';
   addresses: Array<any> = [];
-  minds = window.Minds;
-  isLocal:boolean = false;
- 
+  isLocal: boolean = false;
 
   constructor(
     protected client: Client,
@@ -30,10 +35,14 @@ export class WalletBalanceTokensComponent implements OnInit {
     protected web3Wallet: Web3WalletService,
     protected tokenContract: TokenContractService,
     public session: Session,
-  ) { }
+    configs: ConfigsService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
-    this.load();
+    if (isPlatformBrowser(this.platformId)) this.load();
   }
 
   async load() {
@@ -45,11 +54,9 @@ export class WalletBalanceTokensComponent implements OnInit {
   }
 
   async loadLocal() {
-
     try {
       const address = await this.web3Wallet.getCurrentWallet();
-      if (!address) 
-        return;
+      if (!address) return;
 
       //check to see if this address is different to the receiver address
       for (let i = 0; i < this.addresses.length; i++) {
@@ -61,11 +68,11 @@ export class WalletBalanceTokensComponent implements OnInit {
       }
 
       const balance = await this.tokenContract.balanceOf(address);
-      this.balance = (new BN(this.balance)).add(balance[0]);
+      this.balance = new BN(this.balance).add(balance[0]);
       this.addresses.unshift({
-        'label': "OnChain",
-        'address': address,
-        'balance': balance[0].toString(),
+        label: 'OnChain',
+        address: address,
+        balance: balance[0].toString(),
       });
 
       this.detectChanges();
@@ -76,8 +83,7 @@ export class WalletBalanceTokensComponent implements OnInit {
 
   async loadEth() {
     const address = await this.web3Wallet.getCurrentWallet();
-    if (!address)
-      return;
+    if (!address) return;
     const ethBalance = await this.web3Wallet.getBalance(address);
     this.ethBalance = ethBalance ? ethBalance : '0';
     this.detectChanges();
@@ -88,7 +94,9 @@ export class WalletBalanceTokensComponent implements OnInit {
     this.detectChanges();
 
     try {
-      let response: any = await this.client.get(`api/v2/blockchain/wallet/balance`);
+      let response: any = await this.client.get(
+        `api/v2/blockchain/wallet/balance`
+      );
 
       if (response) {
         this.balance = response.balance;

@@ -1,0 +1,13 @@
+m-btc__settings {
+  p {
+    padding-right: $minds-padding * 2;
+  }
+  label {
+    font-weight: 600;
+  }
+  input {
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 32px;
+  }
+}

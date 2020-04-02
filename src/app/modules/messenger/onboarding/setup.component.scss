@@ -2,7 +2,7 @@
   .m-input {
     max-width: 400px;
     margin-bottom: 8px;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
   }

@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 import { TokenContractService } from './token-contract.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable()
 export class BoostContractService {
@@ -8,21 +9,27 @@ export class BoostContractService {
 
   constructor(
     protected web3Wallet: Web3WalletService,
-    protected tokenContract: TokenContractService
+    protected tokenContract: TokenContractService,
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
-    this.load();
+    if (isPlatformBrowser(platformId)) {
+      this.load();
+    }
   }
 
   async load() {
     await this.web3Wallet.ready();
 
-    this.instance = this.web3Wallet.eth.contract(this.web3Wallet.config.boost.abi, '0x')
+    this.instance = this.web3Wallet.eth
+      .contract(this.web3Wallet.config.boost.abi, '0x')
       .at(this.web3Wallet.config.boost.address);
 
     this.boost(); // Refresh default account
   }
 
-  async boost(gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1) {
+  async boost(
+    gasPriceGwei: number = this.web3Wallet.config.default_gas_price || 1
+  ) {
     if (!this.instance) {
       throw new Error('No boost instance');
     }
@@ -35,7 +42,10 @@ export class BoostContractService {
     const wallet = await this.web3Wallet.getCurrentWallet();
     if (wallet) {
       this.instance.defaultTxObject.from = await this.web3Wallet.getCurrentWallet();
-      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(gasPriceGwei, 'Gwei');
+      this.instance.defaultTxObject.gasPrice = this.web3Wallet.EthJS.toWei(
+        gasPriceGwei,
+        'Gwei'
+      );
     }
 
     return this.instance;
@@ -43,7 +53,12 @@ export class BoostContractService {
 
   // Boost
 
-  async create(guid: string, amount: number, checksum: string, message: string = '') {
+  async create(
+    guid: string,
+    amount: number,
+    checksum: string,
+    message: string = ''
+  ) {
     return await this.web3Wallet.sendSignedContractMethod(
       await this.tokenContract.token(),
       'approveAndCall',
@@ -53,24 +68,30 @@ export class BoostContractService {
         this.tokenContract.encodeParams([
           {
             type: 'address',
-            value: this.web3Wallet.config.boost_wallet_address
+            value: this.web3Wallet.config.boost_wallet_address,
           },
           {
             type: 'uint256',
-            value: guid
+            value: guid,
           },
           {
             type: 'uint256',
             value: checksum,
           },
-        ])
+        ]),
       ],
       `Network Boost for ${amount} Tokens. ${message}`.trim(),
       this.tokenContract.tokenToUnit(-amount)
     );
   }
 
-  async createPeer(receiver: string, guid: string, amount: number, checksum: string, message: string = '') {
+  async createPeer(
+    receiver: string,
+    guid: string,
+    amount: number,
+    checksum: string,
+    message: string = ''
+  ) {
     return await this.web3Wallet.sendSignedContractMethod(
       await this.tokenContract.token(),
       'approveAndCall',
@@ -80,17 +101,17 @@ export class BoostContractService {
         this.tokenContract.encodeParams([
           {
             type: 'address',
-            value: receiver
+            value: receiver,
           },
           {
             type: 'uint256',
-            value: guid
+            value: guid,
           },
           {
             type: 'uint256',
             value: checksum,
           },
-        ])
+        ]),
       ],
       `Channel Boost for ${amount} Tokens to ${receiver}. ${message}`.trim(),
       this.tokenContract.tokenToUnit(-amount)
@@ -101,9 +122,7 @@ export class BoostContractService {
     return await this.web3Wallet.sendSignedContractMethod(
       await this.boost(),
       'accept',
-      [
-        guid
-      ],
+      [guid],
       `Accept a Channel Boost. ${message}`.trim()
     );
   }
@@ -112,9 +131,7 @@ export class BoostContractService {
     return await this.web3Wallet.sendSignedContractMethod(
       await this.boost(),
       'reject',
-      [
-        guid
-      ],
+      [guid],
       `Reject a Channel Boost. ${message}`.trim()
     );
   }
@@ -123,16 +140,8 @@ export class BoostContractService {
     return await this.web3Wallet.sendSignedContractMethod(
       await this.boost(),
       'revoke',
-      [
-        guid
-      ],
+      [guid],
       `Revoke a Boost. ${message}`.trim()
     );
-  }
-
-  // Service provider
-
-  static _(web3Wallet: Web3WalletService, tokenContract: TokenContractService) {
-    return new BoostContractService(web3Wallet, tokenContract);
   }
 }

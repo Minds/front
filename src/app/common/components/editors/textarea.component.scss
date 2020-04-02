@@ -1,4 +1,4 @@
-@import "defaults";
+@import 'defaults';
 
 minds-textarea {
   position: relative;
@@ -7,7 +7,7 @@ minds-textarea {
   padding: $minds-padding;
   box-sizing: border-box;
   overflow: hidden;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
     border: 1px solid themed($m-grey-100);
   }
@@ -28,7 +28,7 @@ minds-textarea {
     -moz-user-modify: read-write;
 
     &.m-editor-disabled {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-300);
       }
       -webkit-user-modify: initial;
@@ -48,7 +48,7 @@ minds-textarea {
     padding: inherit;
     width: 100%;
 
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-300);
     }
 

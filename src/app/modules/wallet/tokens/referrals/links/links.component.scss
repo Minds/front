@@ -1,19 +1,19 @@
-// display additional action button and header when displayed as a modal
-.m-overlay-modal--referrals-links .m-referrals-links {
-  .m-referrals-links__modalShow {
+// Display additional button and header when displayed as a modal
+.m-overlay-modal--referrals-links .m-referralsLinks {
+  .m-referralsLinks__modalShow {
     display: block;
 
-    &.m-referrals-links__modalButton {
+    &.m-referralsLinks__modalButton {
       margin-top: $minds-padding * 2;
     }
   }
-  .m-referrals-links__copyableLinks .m-referrals-links__modalHide {
-    display:none;
+  .m-referralsLinks__copyableLinks .m-referralsLinks__modalHide {
+    display: none;
   }
 }
 
-.m-referrals-links {
-  .m-referrals-links__modalShow {
+.m-referralsLinks {
+  .m-referralsLinks__modalShow {
     display: none;
   }
 
@@ -28,7 +28,7 @@
     margin: 16px 0 0 0;
   }
 
-  .m-referrals-links__copyableLinks {
+  .m-referralsLinks__copyableLinks {
     h3 {
       font-size: 28px;
       font-weight: 600;
@@ -42,7 +42,7 @@
       margin: 0 0 8px 0;
     }
 
-    .m-referrals-links__copyableLink {
+    .m-referralsLinks__copyableLink {
       max-width: 450px;
       margin-bottom: $minds-padding * 3;
       border-radius: 18px;
@@ -55,7 +55,7 @@
         }
       }
 
-      .m-referrals-links__copyableLinkText {
+      .m-referralsLinks__copyableLinkText {
         width: 95%;
         overflow: hidden;
         white-space: nowrap;
@@ -80,7 +80,7 @@
         }
       }
 
-      .m-referrals-links__copyableLinkButton {
+      .m-referralsLinks__copyableLinkButton {
         cursor: pointer;
         padding: 9px 14px 10px 8px;
         @include m-theme() {
@@ -94,10 +94,10 @@
     }
   }
 
-  .m-referrals-links__share {
+  .m-referralsLinks__share {
     margin-top: 24px;
 
-    .m-referrals-links__shareButtons {
+    .m-referralsLinks__shareButtons {
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
@@ -111,19 +111,7 @@
         border: none;
         margin: 12px 18px 12px 0;
         position: relative;
-
-        svg {
-          position: absolute;
-          top: calc(50% - 9px);
-          left: calc(50% - 9px);
-          height: 18px;
-          width: 18px;
-          path {
-            @include m-theme() {
-              fill: themed($m-white-always);
-            }
-          }
-        }
+        padding-top: 1px;
 
         &:hover {
           @include m-theme() {
@@ -139,29 +127,42 @@
 
         &:focus {
           outline: none;
+        }
 
+        img {
+          position: absolute;
+          top: calc(50% - 9px);
+          left: calc(50% - 9px);
         }
       }
     }
 
-    .m-referrals-links__shareButton--twitter {
-      background-color: #03b3ee;
+    .m-referralsLinks__shareButton--twitter {
+      @include m-theme() {
+        background-color: themed($m-twitter);
+      }
     }
 
-    .m-referrals-links__shareButton--messenger {
-      background-color: #0084ff;
+    .m-referralsLinks__shareButton--messenger {
+      @include m-theme() {
+        background-color: themed($m-messenger);
+      }
     }
 
-    .m-referrals-links__shareButton--facebook {
-      background-color: #3b5998;
+    .m-referralsLinks__shareButton--facebook {
+      @include m-theme() {
+        background-color: themed($m-facebook);
+      }
     }
 
-    .m-referrals-links__shareButton--whatsapp {
-      background-color: #25d366;
+    .m-referralsLinks__shareButton--whatsapp {
+      @include m-theme() {
+        background-color: themed($m-whatsapp);
+      }
     }
 
-    .m-referrals-links__shareButton--sms,
-    .m-referrals-links__shareButton--email {
+    .m-referralsLinks__shareButton--sms,
+    .m-referralsLinks__shareButton--email {
       @include m-theme() {
         background-color: themed($m-blue-grey-500);
       }

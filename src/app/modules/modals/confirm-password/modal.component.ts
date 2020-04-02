@@ -7,12 +7,9 @@ import { Session } from '../../../services/session';
 @Component({
   moduleId: module.id,
   selector: 'm-confirm-password--modal',
-  templateUrl: 'modal.component.html'
+  templateUrl: 'modal.component.html',
 })
 export class ConfirmPasswordModalComponent {
-
-  minds = window.Minds;
-
   success: boolean = false;
   criticalError: boolean = false;
   error: string = '';
@@ -32,12 +29,12 @@ export class ConfirmPasswordModalComponent {
     private cd: ChangeDetectorRef,
     public overlayModal: OverlayModalService,
     private client: Client,
-    public fb: FormBuilder,
+    public fb: FormBuilder
   ) {
     this.form = fb.group({
-      password: ['', Validators.required]
+      password: ['', Validators.required],
     });
-   }
+  }
 
   validate() {
     if (!this.form.value.password) {
@@ -49,8 +46,7 @@ export class ConfirmPasswordModalComponent {
     try {
       this.validate();
       return true;
-    } catch (e) {
-    }
+    } catch (e) {}
 
     return false;
   }
@@ -84,11 +80,13 @@ export class ConfirmPasswordModalComponent {
       this.submitted = true;
       this.error = '';
 
-      await this.client.post('api/v2/settings/password/validate', {'password': this.form.value.password});
+      await this.client.post('api/v2/settings/password/validate', {
+        password: this.form.value.password,
+      });
 
       if (this._opts && this._opts.onComplete) {
         this._opts.onComplete({
-          password: this.form.value.password
+          password: this.form.value.password,
         });
         this.overlayModal.dismiss();
       }

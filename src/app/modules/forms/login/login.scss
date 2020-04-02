@@ -1,29 +1,81 @@
-@import "defaults";
+@import 'defaults';
 
-.m-login-box{
-  margin-top:$minds-margin*2;
-  width:100% !important;
+m-login {
+  .m-login__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 16px;
 
-  h3{
-    margin:0;
-    font-size:24px;
-    line-height:26px;
+    a {
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+
+    @media screen and(max-width: 680px) {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-right: 0;
+      margin-bottom: 24px;
+
+      h3 {
+        margin-bottom: 0;
+      }
+    }
   }
 
-  .mdl-grid{
-    padding:0;
-    width:100%;
+  .m-login__error,
+  .m-login__formError {
+    font-size: 14px;
+    line-height: 19px;
+    margin-top: 3px;
+
+    @include m-theme() {
+      color: themed($m-red) !important;
+    }
   }
 
-  input{
-    padding:$minds-padding*2;
-    font-size:16px;
-    width:100%;
-    -webkit-appearance:none;
+  .m-login__error {
+    text-align: right;
+  }
+
+  .m-login__spacer {
+    flex-grow: 1;
+  }
+  a {
+    font-weight: 400;
+  }
+}
+
+.m-login-box {
+  margin-top: $minds-margin * 2;
+  width: 100% !important;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 26px;
+  }
+
+  .mdl-grid {
+    padding: 0;
+    width: 100%;
+  }
+
+  input:not([type='checkbox']) {
+    padding: $minds-padding * 2;
+    font-size: 16px;
+    width: 100%;
+    -webkit-appearance: none;
     border-radius: 3px;
     font-family: 'Roboto', Helvetica, sans-serif;
     font-weight: 800;
-    @include m-theme(){
+    @include m-theme() {
       border: 1px solid themed($m-grey-50);
     }
 
@@ -32,8 +84,12 @@
     }
   }
 
-  .m-reset-password-link{
-    padding-left:$minds-padding*2;
-    text-decoration:none;
+  .m-reset-password-link {
+    padding-left: $minds-padding * 2;
+    text-decoration: none;
   }
+}
+
+.m-login-mfa-input {
+  padding: 20px 0;
 }

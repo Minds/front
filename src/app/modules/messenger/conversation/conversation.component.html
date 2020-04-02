@@ -1,125 +1,261 @@
-<div class="m-messenger--conversation m-messenger--dockpane" [class.m-messenger--dockpane-open]="conversation.open">
-  <div class="m-messenger--dockpane-tab"
+<div
+  class="m-messenger--conversation m-messenger--dockpane"
+  [class.m-messenger--dockpane-open]="conversation.open"
+>
+  <div
+    class="m-messenger--dockpane-tab"
     [class.mdl-color--amber]="conversation.unread"
-    (click)="toggle(); initialLoad()">
+    (click)="toggle(); initialLoad()"
+  >
     <div class="m-messenger--dockpane-tab-title">
-      <span *ngFor="let participant of conversation.participants">{{participant.username}}</span>
+      <span *ngFor="let participant of conversation.participants">{{
+        participant.username
+      }}</span>
     </div>
-    <div class="m-messenger--dockpane-tab-actions" (click)="$event.stopPropagation()">
-      <i class="material-icons mdl-color-text--blue-grey-100" [hidden]="live">sync_problem</i>
-      <i class="material-icons"
+    <div
+      class="m-messenger--dockpane-tab-actions"
+      (click)="$event.stopPropagation()"
+    >
+      <i class="material-icons mdl-color-text--blue-grey-100" [hidden]="live"
+        >sync_problem</i
+      >
+      <i
+        class="material-icons"
         (click)="ribbonToggle()"
-        >more_vert</i>
-      <i class="material-icons" (click)="dockpanes.close(conversation)">close</i>
+        data-cy="data-minds-conversation-options"
+        >more_vert</i
+      >
+      <i
+        class="material-icons"
+        (click)="dockpanes.close(conversation)"
+        data-cy="data-minds-conversation-close"
+        >close</i
+      >
     </div>
   </div>
 
   <div class="m-messenger--dockpane-container">
-    <div class="m-messenger--dockpane-tab-ribbon" #ribbon [hidden]="!ribbonOpened">
-      <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="deleteHistory(); ribbonOpened = false">
-        <i class="material-icons mdl-color-text--blue-grey-100" title="Delete chat history" i18n-title="@@MESSENGER__CONVERSATION__DELETE_TOOLTIP">delete</i>
-        <ng-container i18n="@@MESSENGER__CONVERSATION__DESTROY">Destroy</ng-container>
+    <div
+      class="m-messenger--dockpane-tab-ribbon"
+      #ribbon
+      [hidden]="!ribbonOpened"
+    >
+      <div
+        class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300"
+        (click)="deleteHistory(); ribbonOpened = false"
+        data-cy="data-minds-conversation-destroy"
+      >
+        <i
+          class="material-icons mdl-color-text--blue-grey-100"
+          title="Delete chat history"
+          i18n-title="@@MESSENGER__CONVERSATION__DELETE_TOOLTIP"
+          >delete</i
+        >
+        <ng-container i18n="@@MESSENGER__CONVERSATION__DESTROY"
+          >Destroy</ng-container
+        >
       </div>
-      <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="block(); ribbonOpened = false" *ngIf="!blocked">
-        <i class="material-icons mdl-color-text--blue-grey-100" title="Block participants" i18n-title="@@MESSENGER__CONVERSATION__BLOCK_TOOLTIP">block</i>
-        <ng-container i18n="@@MESSENGER__CONVERSATION__BLOCK">Block</ng-container>
+      <div
+        class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300"
+        (click)="block(); ribbonOpened = false"
+        *ngIf="!blocked"
+      >
+        <i
+          class="material-icons mdl-color-text--blue-grey-100"
+          title="Block participants"
+          i18n-title="@@MESSENGER__CONVERSATION__BLOCK_TOOLTIP"
+          >block</i
+        >
+        <ng-container i18n="@@MESSENGER__CONVERSATION__BLOCK"
+          >Block</ng-container
+        >
       </div>
-      <div class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300" (click)="block(); ribbonOpened = false" *ngIf="blocked">
-        <i class="material-icons mdl-color-text--blue-grey-100" title="Un-block chat" i18n-title="@@MESSENGER__CONVERSATION__UNBLOCK_TOOLTIP">restore</i>
-        <ng-container i18n="@@MESSENGER__CONVERSATION__UNBLOCK">Un-block</ng-container>
+      <div
+        class="m-messenger--dockpane-tab-icon mdl-color-text--blue-grey-300"
+        (click)="block(); ribbonOpened = false"
+        *ngIf="blocked"
+      >
+        <i
+          class="material-icons mdl-color-text--blue-grey-100"
+          title="Un-block chat"
+          i18n-title="@@MESSENGER__CONVERSATION__UNBLOCK_TOOLTIP"
+          >restore</i
+        >
+        <ng-container i18n="@@MESSENGER__CONVERSATION__UNBLOCK"
+          >Un-block</ng-container
+        >
       </div>
     </div>
 
-    <div class="m-messenger--conversation-encryption-lock" *ngIf="!showMessages">
-      <m-messenger--encryption (on)="initialLoad(); showMessages = true;"></m-messenger--encryption>
+    <div
+      class="m-messenger--conversation-encryption-lock"
+      *ngIf="!showMessages"
+    >
+      <m-messenger--encryption
+        (on)="initialLoad(); showMessages = true"
+      ></m-messenger--encryption>
     </div>
 
-    <div class="m-messenger--conversation-messages" *ngIf="showMessages"
+    <div
+      class="m-messenger--conversation-messages"
+      *ngIf="showMessages"
       [class.m-messenger-ribbon-open]="ribbon.open"
       minds-messenger-scroll
       [emitter]="scrollEmitter"
       #scrollArea
-      (previous)="load({ offset: offset, container: scrollArea })">
-      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
-        *ngIf="chatNotice">
+      (previous)="load({ offset: offset, container: scrollArea })"
+    >
+      <div
+        class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
+        *ngIf="chatNotice"
+      >
         <span [innerHtml]="chatNotice"></span>
       </div>
       <div [hidden]="!inProgress" style="width:100%; text-align:center; ">
-        <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+        <div
+          class="mdl-spinner mdl-js-spinner is-active"
+          [mdl]
+          style="margin: 16px auto;"
+        ></div>
       </div>
-      <div class="m-messenger--conversation-messages-message"
+      <div
+        class="m-messenger--conversation-messages-message"
         *ngFor="let message of messages"
         [class.m-optimistic-guess]="message.optimisticGuess"
         [class.odd]="message.owner.guid == session.getLoggedInUser().guid"
-        (click)="message.showTs = !message.showTs">
-          <img [src]="minds.cdn_url + 'icon/' + message.owner.guid + '/small'"
-            *ngIf="message.owner.guid == session.getLoggedInUser().guid"
-            [routerLink]="['/', message.owner.username]">
-          <div
-            class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
-            *ngIf="message.subtype != 'call_ended' &&  message.subtype != 'call_missed'"
-            [innerHtml]="message.message | tags">
-          </div>
-          <!-- Call message -->
-          <div
-            class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
-            *ngIf="message.subtype == 'call_ended'">
-            <ng-container i18n="@@MESSENGER__CONVERSATION__CALL_ENDED">Call Ended</ng-container>
-          </div>
-          <!-- Call missed -->
-          <div
-            class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
-            *ngIf="message.subtype == 'call_missed'">
-            <ng-container i18n="@@MESSENGER__CONVERSATION__MISSED_CALL">Missed Call</ng-container>
-          </div>
-          <img [src]="minds.cdn_url + 'icon/' + message.owner.guid + '/small'"
-            *ngIf="message.owner.guid != session.getLoggedInUser().guid"
-            [routerLink]="['/', message.owner.username]">
-          <div [hidden]="!message.showTs" class="m-messenger--conversations-ts mdl-color-text--blue-grey-100">{{ message.time_created * 1000 | date: 'medium' }}</div>
+        (click)="message.showTs = !message.showTs"
+      >
+        <img
+          [src]="cdnUrl + 'icon/' + message.owner.guid + '/small'"
+          *ngIf="message.owner.guid == session.getLoggedInUser().guid"
+          [routerLink]="['/', message.owner.username]"
+        />
+        <div
+          class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
+          *ngIf="
+            message.subtype != 'call_ended' && message.subtype != 'call_missed'
+          "
+          [innerHtml]="message.message | tags"
+        ></div>
+        <!-- Call message -->
+        <div
+          class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
+          *ngIf="message.subtype == 'call_ended'"
+        >
+          <ng-container i18n="@@MESSENGER__CONVERSATION__CALL_ENDED"
+            >Call Ended</ng-container
+          >
+        </div>
+        <!-- Call missed -->
+        <div
+          class="m-messenger--conversation-message-bubble mdl-color--blue-grey-50 mdl-color-text--blue-grey-700"
+          *ngIf="message.subtype == 'call_missed'"
+        >
+          <ng-container i18n="@@MESSENGER__CONVERSATION__MISSED_CALL"
+            >Missed Call</ng-container
+          >
+        </div>
+        <img
+          [src]="cdnUrl + 'icon/' + message.owner.guid + '/small'"
+          *ngIf="message.owner.guid != session.getLoggedInUser().guid"
+          [routerLink]="['/', message.owner.username]"
+        />
+        <div
+          [hidden]="!message.showTs"
+          class="m-messenger--conversations-ts mdl-color-text--blue-grey-100"
+        >
+          {{ message.time_created * 1000 | date: 'medium' }}
+        </div>
       </div>
-      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
-        *ngIf="blocked">
-        <span i18n="@@MESSENGER__CONVERSATION__YOU_HAVE_BLOCKED_THIS_CHAT">You have blocked this chat</span>
+      <div
+        class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
+        *ngIf="blocked"
+      >
+        <span i18n="@@MESSENGER__CONVERSATION__YOU_HAVE_BLOCKED_THIS_CHAT"
+          >You have blocked this chat</span
+        >
       </div>
-      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
-        *ngIf="!blocked && unavailable">
-        <span i18n="@@MESSENGER__CONVERSATION__THIS_CHAT_IS_NO_LONGER_AVAILABLE">This chat is no longer available</span>
+      <div
+        class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
+        *ngIf="!blocked && unavailable"
+      >
+        <span i18n="@@MESSENGER__CONVERSATION__THIS_CHAT_IS_NO_LONGER_AVAILABLE"
+          >This chat is no longer available</span
+        >
       </div>
-      <div class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
-        *ngIf="!blocked && invalid">
-        <span i18n="@@MESSENGER__CONVERSATION__AWAITING_OTHER_PARTY">Awaiting other party&hellip;</span>
+      <div
+        class="m-messenger--conversation-messages-notice mdl-color-text--blue-grey-300"
+        *ngIf="!blocked && invalid"
+      >
+        <span i18n="@@MESSENGER__CONVERSATION__AWAITING_OTHER_PARTY"
+          >Awaiting other party&hellip;</span
+        >
       </div>
-      <div class="m-messenger--conversation-messages-invite mdl-color-text--blue-grey-500"
-        *ngIf="!blocked && invitable">
+      <div
+        class="m-messenger--conversation-messages-invite mdl-color-text--blue-grey-500"
+        *ngIf="!blocked && invitable"
+      >
         <p i18n="@@MESSENGER__CONVERSATION__NOT_USING_MESSENGER_YET">
-          Looks like <b>@{{ invitable[0].username }}</b> isn't using Minds Messenger yet.
+          Looks like <b>@{{ invitable[0].username }}</b> isn't using Minds
+          Messenger yet.
         </p>
         <p>
-          <button class="mdl-button mdl-button--raised mdl-button--colored"
+          <button
+            class="mdl-button mdl-button--raised mdl-button--colored"
             (click)="invite()"
             [disabled]="invited"
           >
-            <span *ngIf="!invited" i18n="@@MESSENGER__CONVERSATION__INVITE_ACTION">Invite</span>
-            <span *ngIf="invited" i18n="@@MESSENGER__CONVERSATION__INVITED_STATE">Invited</span>
+            <span
+              *ngIf="!invited"
+              i18n="@@MESSENGER__CONVERSATION__INVITE_ACTION"
+              >Invite</span
+            >
+            <span
+              *ngIf="invited"
+              i18n="@@MESSENGER__CONVERSATION__INVITED_STATE"
+              >Invited</span
+            >
           </button>
         </p>
       </div>
     </div>
 
-    <div class="m-messenger--conversation-composer" *ngIf="!blocked && !unavailable && !invalid && !invitable && conversation.open && encryption.isOn()">
-      <textarea placeholder="Send a message..."
-      i18n-placeholder="@@MESSENGER__CONVERSATION__SEND_A_MESSAGE"
-      name="message"
-      [(ngModel)]="message"
-      [disabled]="blockingActionInProgress"
-      (keydown.enter)="send($event); emoji.close()"
-      (focus)="emoji.close()"
-      (click)="emoji.close()"
-      autoGrow
-      maxlength="180"
-      rows="1"></textarea>
-      <i class="material-icons mdl-color-text--blue-grey-600" (emoji)="message = message + $event.character" #emoji="emoji">mood</i>
-      <i class="material-icons mdl-color-text--blue-grey-600" (click)="send($event); emoji.close()">send_arrow</i>
+    <div
+      class="m-messenger--conversation-composer"
+      *ngIf="
+        !blocked &&
+        !unavailable &&
+        !invalid &&
+        !invitable &&
+        conversation.open &&
+        encryption.isOn()
+      "
+    >
+      <textarea
+        placeholder="Send a message..."
+        i18n-placeholder="@@MESSENGER__CONVERSATION__SEND_A_MESSAGE"
+        name="message"
+        [(ngModel)]="message"
+        [disabled]="blockingActionInProgress"
+        (keydown.enter)="send($event); emoji.close()"
+        (focus)="emoji.close()"
+        (click)="emoji.close()"
+        autoGrow
+        maxlength="180"
+        rows="1"
+      ></textarea>
+      <i
+        class="material-icons mdl-color-text--blue-grey-600"
+        (emoji)="message = message + $event.character"
+        #emoji="emoji"
+        >mood</i
+      >
+      <i
+        class="material-icons mdl-color-text--blue-grey-600"
+        (click)="send($event); emoji.close()"
+        data-cy="data-minds-conversation-send"
+        >send_arrow</i
+      >
       <minds-emoji [localDirective]="emoji"></minds-emoji>
     </div>
   </div>

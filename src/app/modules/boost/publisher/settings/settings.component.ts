@@ -5,32 +5,27 @@ import { BoostConsoleFilter } from '../../console/console.component';
 
 @Component({
   selector: 'm-boost-publisher--settings',
-  templateUrl: 'settings.component.html'
+  templateUrl: 'settings.component.html',
 })
-
 export class BoostPublisherSettingsComponent {
   _filter: BoostConsoleFilter;
 
-  minds: Minds = window.Minds;
-
   inProgress: boolean = false;
 
-  constructor(
-    private client: Client,
-    public session: Session
-  ) {
-
-  }
+  constructor(private client: Client, public session: Session) {}
 
   submit(publisher: boolean) {
     this.inProgress = true;
-    this.minds.user.show_boosts = true;
-    this.client.post(`api/v1/settings/${this.minds.user.guid}`, { 'show_boosts': publisher })
+    this.session.getLoggedInUser().show_boosts = true;
+    this.client
+      .post(`api/v1/settings/${this.session.getLoggedInUser().guid}`, {
+        show_boosts: publisher,
+      })
       .then(() => {
         this.inProgress = false;
       })
       .catch(() => {
-        this.minds.user.show_boosts = false;
+        this.session.getLoggedInUser().show_boosts = false;
         this.inProgress = false;
       });
   }
@@ -39,5 +34,4 @@ export class BoostPublisherSettingsComponent {
     const user = this.session.getLoggedInUser();
     return user && user.merchant;
   }
-
 }

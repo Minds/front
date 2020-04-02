@@ -8,18 +8,21 @@
     (blur)="onBlur()"
     [(ngModel)]="query"
     (keydown.esc)="onBlur()"
-    (keyup)="search()">
+    (keyup)="search()"
+  />
 </div>
 
-<div *ngIf="questions.length > 0"
+<div
+  *ngIf="questions.length > 0"
   class="m-helpdeskQuestions__categories m-border"
 >
   <ul>
-    <li *ngFor="let question of questions"
+    <li
+      *ngFor="let question of questions"
       class="m-helpdeskQuestions__question"
     >
       <a [routerLink]="['/help/question/', question.uuid]">
-        <span>{{question.question}}</span>
+        <span>{{ question.question }}</span>
         <i class="material-icons">
           keyboard_arrow_right
         </i>

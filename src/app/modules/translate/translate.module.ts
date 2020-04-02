@@ -6,16 +6,8 @@ import { CommonModule } from '../../common/common.module';
 import { Translate } from './translate';
 
 @NgModule({
-  imports: [
-    NgCommonModule,
-    CommonModule,
-  ],
-  declarations: [
-    Translate
-  ],
-  exports: [
-    Translate
-  ]
+  imports: [NgCommonModule, CommonModule],
+  declarations: [Translate],
+  exports: [Translate],
 })
-export class TranslateModule {
-}
+export class TranslateModule {}

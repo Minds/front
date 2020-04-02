@@ -10,7 +10,12 @@ const routes: Routes = [
   {
     path: 'jobs',
     component: JobsMarketingComponent,
-  }
+    data: {
+      title: 'Jobs',
+      description: 'Want to join the team? View our open positions.',
+      ogImage: '/assets/photos/canyon.jpg',
+    },
+  },
 ];
 
 @NgModule({
@@ -21,16 +26,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    JobsMarketingComponent
-  ],
-  exports: [
-    JobsMarketingComponent
-  ],
-  entryComponents: [
-    JobsMarketingComponent,
-  ]
+  declarations: [JobsMarketingComponent],
+  exports: [JobsMarketingComponent],
+  entryComponents: [JobsMarketingComponent],
 })
-
-export class JobsMarketingModule {
-}
+export class JobsMarketingModule {}

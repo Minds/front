@@ -1,0 +1,71 @@
+<div class="mdl-grid m-admin-payouts" style="max-width:600px">
+  <div class="m-note">
+    <ng-container i18n="@@M__COMMON__BAN_MONETIZATION_NOTICE"
+      >Users can be banned for monetizing on the dropdown in their
+      profile.</ng-container
+    >
+  </div>
+
+  <div
+    *ngFor="let payout of payouts; let i = index"
+    class="mdl-cell mdl-cell--12-col"
+  >
+    <div class="mdl-card mdl-shadow--4dp m-payout">
+      <div class="m-payout-meta">
+        <p class="m-user" *ngIf="payout.userObj">
+          <a [routerLink]="['/', payout.userObj.username]" target="_blank">
+            <img
+              [src]="
+                '/icon/' +
+                payout.userObj.guid +
+                '/tiny/' +
+                payout.userObj.icontime
+              "
+              alt=""
+            />
+            {{ payout.userObj.username }}
+          </a>
+        </p>
+        <p class="m-date">{{ payout.ts * 1000 | date: 'medium' }}</p>
+      </div>
+
+      <div class="m-payout-cta" *ngIf="reviewing !== i">
+        <button
+          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+          (click)="review(i)"
+          [disabled]="inProgress"
+          i18n="verb|@@M__COMMON__REVIEW"
+        >
+          Review
+        </button>
+      </div>
+      <div class="m-payout-cta" *ngIf="reviewing === i">
+        <button
+          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--green"
+          (click)="pay(i)"
+          [disabled]="inProgress"
+          i18n="@@MINDS__ADMIN__PAYOUTS__PAY_ACTION"
+        >
+          Pay
+        </button>
+
+        <button
+          class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+          (click)="review(null)"
+          [disabled]="inProgress"
+          i18n="@@M__ACTION__CANCEL"
+        >
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress"
+  >
+  </infinite-scroll>
+</div>

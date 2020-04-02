@@ -1,27 +1,35 @@
-<m-dropdown class="m-nsfwSelector__dropdown" [expanded]="expanded" #dropdown>
-    <label
-      class="m-nsfwSelector__label m-posterActionBar__IconAndLabel"
-      [class.selected]="hasSelections()">
-        <m-tooltip>
-          <i m-tooltip--anchor class="material-icons">explicit</i>
-          <ng-container i18n="@@M__NSFW__FULL">Not Safe for Work</ng-container>
-        </m-tooltip>
+<m-dropdown
+  class="m-nsfwSelector__dropdown"
+  [expanded]="expanded"
+  #dropdown
+  data-cy="data-minds-nsfw-selector"
+>
+  <label
+    class="m-nsfwSelector__label m-posterActionBar__IconAndLabel"
+    [class.selected]="hasSelections()"
+  >
+    <m-tooltip>
+      <i m-tooltip--anchor class="material-icons">explicit</i>
+      <ng-container i18n="@@M__NSFW__FULL">Not Safe for Work</ng-container>
+    </m-tooltip>
 
-        <span i18n="@@M__NSFW">NSFW</span>
-     </label>
+    <span i18n="@@M__NSFW">NSFW</span>
+  </label>
 
-    <ul class="m-dropdown__list">
-        <li class="m-dropdownList__item" 
-          *ngFor="let reason of service.reasons"
-          (click)="toggle(reason)"
-        >
-            <span>{{reason.label}}</span>
-            <div class="m-layout__spacer"></div>
-            <m-tooltip icon="locked" [hidden]="!reason.locked">
-              NSFW tags are locked for this channel
-            </m-tooltip>
-            <i class="material-icons selected" [hidden]="!reason.selected">checkmark</i>
-           
-        </li>
-    </ul>
+  <ul class="m-dropdown__list">
+    <li
+      class="m-dropdownList__item"
+      *ngFor="let reason of service.reasons"
+      (click)="toggle(reason)"
+    >
+      <span>{{ reason.label }}</span>
+      <div class="m-layout__spacer"></div>
+      <m-tooltip icon="locked" [hidden]="!reason.locked">
+        NSFW tags are locked for this channel
+      </m-tooltip>
+      <i class="material-icons selected" [hidden]="!reason.selected"
+        >checkmark</i
+      >
+    </li>
+  </ul>
 </m-dropdown>

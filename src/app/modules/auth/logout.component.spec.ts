@@ -9,17 +9,15 @@ import { clientMock } from '../../../tests/client-mock.spec';
 import { Client } from '../../services/api/client';
 import { Router } from '@angular/router';
 
-let routerMock = new function () {
+let routerMock = new (function() {
   this.navigate = jasmine.createSpy('navigate');
-};
+})();
 
 xdescribe('LogoutComponent', () => {
-
   let comp: LogoutComponent;
   let fixture: ComponentFixture<LogoutComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [LogoutComponent],
       imports: [RouterTestingModule, ReactiveFormsModule],
@@ -27,9 +25,8 @@ xdescribe('LogoutComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: Router, useValue: routerMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
   // synchronous beforeEach
@@ -43,10 +40,11 @@ xdescribe('LogoutComponent', () => {
 
   it('should logout just after instantiating', () => {
     expect(clientMock.delete).toHaveBeenCalled();
-    expect(clientMock.delete.calls.mostRecent().args[0]).toBe('api/v1/authenticate');
+    expect(clientMock.delete.calls.mostRecent().args[0]).toBe(
+      'api/v1/authenticate'
+    );
     expect(sessionMock.logout).toHaveBeenCalled();
     expect(routerMock.navigate).toHaveBeenCalled();
     expect(routerMock.navigate.calls.mostRecent().args[0]).toEqual(['/login']);
   });
-
 });

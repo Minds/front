@@ -1,0 +1,57 @@
+<div class="m-calendar">
+  <div class="m-calendar__monthSelector">
+    <span class="m-calendarMonthSelector__displayName">{{
+      currentMonth | date: 'MMMM yyyy'
+    }}</span>
+
+    <a
+      class="m-calendarMonthSelector__nav"
+      [class.m-calendarMonthSelectorNav--disabled]="
+        !canSetCurrentMonth(currentMonthDelta(-1))
+      "
+      (click)="setCurrentMonth(currentMonthDelta(-1))"
+    >
+      <m-icon iconId="chevron_left"></m-icon>
+    </a>
+
+    <a
+      class="m-calendarMonthSelector__nav"
+      [class.m-calendarMonthSelectorNav--disabled]="
+        !canSetCurrentMonth(currentMonthDelta(1))
+      "
+      (click)="setCurrentMonth(currentMonthDelta(1))"
+    >
+      <m-icon iconId="chevron_right"></m-icon>
+    </a>
+  </div>
+
+  <div class="m-calendar__grid">
+    <table cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <td
+            class="m-calendarGrid__columnHeader"
+            *ngFor="let weekday of weekdays"
+          >
+            {{ weekday | date: 'EEEEE' }}
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let week of weeks">
+          <td
+            *ngFor="let date of week"
+            class="m-calendarGrid__date"
+            tabindex="0"
+            [class.m-calendarGridDate--offset]="!inCurrentMonth(date)"
+            [class.m-calendarGridDate--disabled]="!canSelect(date)"
+            [class.m-calendarGridDate--selected]="isSelected(date)"
+            (click)="onDateSelect(date)"
+          >
+            <a>{{ date.getDate() }}</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

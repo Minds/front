@@ -10,7 +10,7 @@ import { Session } from '../../../services/session';
   selector: 'm-wallet--wire',
   template: `
     <ng-template dynamic-host></ng-template>
-  `
+  `,
 })
 export class WalletWireComponent {
   @ViewChild(DynamicHostDirective, { static: true }) host: DynamicHostDirective;
@@ -18,16 +18,22 @@ export class WalletWireComponent {
   componentRef;
   componentInstance: WireConsoleComponent;
 
-  constructor(private _componentFactoryResolver: ComponentFactoryResolver, private router: Router, private session: Session) { }
+  constructor(
+    private _componentFactoryResolver: ComponentFactoryResolver,
+    private router: Router,
+    private session: Session
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     this.loadComponent();
   }
 
   loadComponent() {
-    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(WireConsoleComponent),
+    const componentFactory = this._componentFactoryResolver.resolveComponentFactory(
+        WireConsoleComponent
+      ),
       viewContainerRef = this.host.viewContainerRef;
 
     viewContainerRef.clear();

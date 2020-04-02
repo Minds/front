@@ -1,10 +1,10 @@
-import { 
+import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   Input,
   Output,
-  EventEmitter 
+  EventEmitter,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -14,6 +14,7 @@ import { LocalWalletService } from '../../../../blockchain/local-wallet.service'
 import { BlockchainService } from '../../../../blockchain/blockchain.service';
 import { Web3WalletService } from '../../../../blockchain/web3-wallet.service';
 import { getBrowser } from '../../../../../utils/browser';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 enum Views {
   CreateAddress = 1,
@@ -24,10 +25,10 @@ enum Views {
 @Component({
   selector: 'm-token--onboarding--onchain',
   templateUrl: 'onchain.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TokenOnChainOnboardingComponent {
-
+  readonly cdnAssetsUrl: string;
   @Input() skippable: boolean = true;
   @Output() next: EventEmitter<any> = new EventEmitter();
   inProgress: boolean = false;
@@ -37,7 +38,6 @@ export class TokenOnChainOnboardingComponent {
   providedAddress: string = '';
   hasExternal: boolean = false;
   downloadingMetamask: boolean = false;
-  minds = window.Minds;
 
   readonly Views = Views;
 
@@ -50,8 +50,11 @@ export class TokenOnChainOnboardingComponent {
     protected router: Router,
     protected localWallet: LocalWalletService,
     protected blockchain: BlockchainService,
-    protected web3Wallet: Web3WalletService
-  ) { }
+    protected web3Wallet: Web3WalletService,
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     //already completed step
@@ -80,7 +83,9 @@ export class TokenOnChainOnboardingComponent {
       this.detectChanges();
 
       this.generatedAccount = await this.localWallet.create(false);
-      await this.blockchain.setWallet({ address: this.generatedAccount.address });
+      await this.blockchain.setWallet({
+        address: this.generatedAccount.address,
+      });
     } catch (e) {
       console.error(e);
     } finally {
@@ -96,10 +101,10 @@ export class TokenOnChainOnboardingComponent {
 
       const { address, privateKey } = this.generatedAccount,
         filename = `pk_${address}.csv`,
-        blob = new Blob([ privateKey ], { type: 'text/csv' });
+        blob = new Blob([privateKey], { type: 'text/csv' });
 
       if (window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveBlob(blob, filename)
+        window.navigator.msSaveBlob(blob, filename);
       } else {
         const link = window.document.createElement('a'),
           objectUrl = window.URL.createObjectURL(blob);
@@ -124,7 +129,9 @@ export class TokenOnChainOnboardingComponent {
   }
 
   canProvideAddress() {
-    return this.providedAddress && /^0x[a-fA-F0-9]{40}$/.test(this.providedAddress);
+    return (
+      this.providedAddress && /^0x[a-fA-F0-9]{40}$/.test(this.providedAddress)
+    );
   }
 
   async provideAddress() {
@@ -151,7 +158,8 @@ export class TokenOnChainOnboardingComponent {
     let url = '';
     switch (browser) {
       case 'chrome':
-        url = 'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn';
+        url =
+          'https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn';
       case 'firefox':
         url = 'https://addons.mozilla.org/firefox/addon/ether-metamask/';
       case 'opera':
@@ -174,7 +182,8 @@ export class TokenOnChainOnboardingComponent {
   }
 
   async detectExternal() {
-    const address: string = (await this.web3Wallet.getCurrentWallet(true)) || '';
+    const address: string =
+      (await this.web3Wallet.getCurrentWallet(true)) || '';
 
     if (this.providedAddress !== address) {
       this.providedAddress = address;
@@ -191,5 +200,4 @@ export class TokenOnChainOnboardingComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

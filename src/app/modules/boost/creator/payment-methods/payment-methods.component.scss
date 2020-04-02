@@ -1,5 +1,4 @@
 m-boost--creator-payment-methods {
-
   .m-boost--creator--payment-method--icon {
     font-size: 42px;
     display: block;
@@ -44,17 +43,16 @@ m-boost--creator-payment-methods {
       padding-right: 0;
     }
   }
-
 }
 
 .m-boostCreatorSelector__bullets {
   padding-left: 16px;
   list-style: disc;
 
-  li { 
+  li {
     font-size: 10px;
     line-height: 16px;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;  
+    text-rendering: optimizeLegibility;
   }
 }

@@ -3,7 +3,10 @@
   max-width: 900px;
   margin: auto;
 
-  h2, h3, h4, h5 {
+  h2,
+  h3,
+  h4,
+  h5 {
     font-weight: 400;
   }
 
@@ -24,7 +27,6 @@
       text-transform: initial;
       margin-left: $minds-padding * 3;
     }
-
   }
 
   h4 {
@@ -40,8 +42,7 @@
     top: -0.15em;
   }
 
-
-  .m-boost--creator--header{
+  .m-boost--creator--header {
     position: relative;
 
     h2 {
@@ -95,14 +96,14 @@
     border: none;
     border-radius: $minds-padding / 2;
     margin: 0;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black), 0.15);
     }
 
     .m-boost--creator-wide-input--edit {
       max-width: calc(90% - 60px) !important;
-      @include m-theme(){
-        background-color: rgba(themed($m-black), 0.0);
+      @include m-theme() {
+        background-color: rgba(themed($m-black), 0);
       }
     }
 
@@ -116,7 +117,8 @@
     }
   }
 
-  .m-boost--creator--amount, .m-boost--creator--target {
+  .m-boost--creator--amount,
+  .m-boost--creator--target {
     margin-top: 16px;
     letter-spacing: 2.5px;
     input {
@@ -135,7 +137,7 @@
       border-radius: $minds-padding / 2;
       margin: 0;
       margin-right: 8px;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.15);
       }
 
@@ -156,7 +158,9 @@
 
   .m-boost--creator-selector {
     > li {
-      h4, h5, span {
+      h4,
+      h5,
+      span {
         margin: 0;
         font-weight: 400;
       }
@@ -184,10 +188,9 @@
 
       .m-boost--creator-selector--selected-label {
         font-weight: 400;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-blue);
         }
-
       }
 
       .m-boost--creator-selector--description {
@@ -195,7 +198,7 @@
         letter-spacing: 0.5px;
         line-height: 1.3;
         max-width: 300px;
-        @include m-theme(){
+        @include m-theme() {
           color: rgba(themed($m-black), 0.75);
         }
 
@@ -208,8 +211,6 @@
       }
     }
   }
-
-
 
   .m-boost--creator-wide-input {
     $fs: 48px;
@@ -268,7 +269,7 @@
 
     .m-boost--creator-toggle--selected {
       font-weight: 400;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue);
       }
     }
@@ -307,7 +308,7 @@
     width: 36px;
     height: 36px;
     vertical-align: middle;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-800);
     }
   }
@@ -323,7 +324,7 @@
     margin-top: $minds-padding * 1.5;
     overflow-y: auto;
     box-sizing: border-box;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black), 0.15);
     }
 
@@ -331,14 +332,14 @@
       bottom: 100%;
       left: 95%;
       border: solid transparent;
-      content: " ";
+      content: ' ';
       height: 0;
       width: 0;
       position: absolute;
       pointer-events: none;
       border-width: 8px;
       margin-left: -8px;
-      @include m-theme(){
+      @include m-theme() {
         border-color: rgba(themed($m-grey-600), 0);
         border-bottom-color: themed($m-white);
       }
@@ -350,9 +351,10 @@
       display: flex;
       justify-content: space-between;
 
-      &:hover, &.m-boost--creator-autocomplete--result-highlight {
+      &:hover,
+      &.m-boost--creator-autocomplete--result-highlight {
         font-weight: 400;
-        @include m-theme(){
+        @include m-theme() {
           background-color: themed($m-white);
           color: themed($m-black);
         }
@@ -368,13 +370,13 @@
         margin-left: 0.15em;
 
         .m--crypto-token-symbol--stroke {
-          @include m-theme(){
+          @include m-theme() {
             stroke: themed($m-grey-700);
           }
         }
 
         .m--crypto-token-symbol--fill {
-          @include m-theme(){
+          @include m-theme() {
             fill: themed($m-grey-700);
           }
         }
@@ -382,16 +384,11 @@
     }
   }
 
-  .m-boost--creator-section-submit--network {
-    @media screen and (min-width: 780px) {
-      margin-top: -72px;
-    }
-  }
-
   .m-boost--creator--submit {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    margin-top: 40px;
 
     .m-boost--creator-button {
       font-size: 14px;
@@ -405,7 +402,7 @@
       font-weight: inherit;
       text-transform: uppercase;
       cursor: pointer;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-600);
         border: 1px solid themed($m-grey-600);
       }
@@ -425,7 +422,8 @@
       margin-left: $minds-padding;
       font-size: 16px;
 
-      > span, > i {
+      > span,
+      > i {
         vertical-align: middle;
       }
     }
@@ -433,7 +431,7 @@
     .m-boost--creator--submit-error {
       font-size: 12px;
       font-weight: 400;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-red);
       }
     }
@@ -453,7 +451,7 @@
       m-scheduler > select.m-form-select {
         background: transparent;
         font-weight: 200;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white) !important;
         }
       }
@@ -470,7 +468,7 @@
     //margin: -252px 400px;
     margin: $minds-padding 0 0;
     min-width: 440px;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black), 0.1);
       border: 1px solid themed($m-grey-100);
     }
@@ -482,22 +480,22 @@
       max-width: initial;
     }
 
-    .mdl-card{
+    .mdl-card {
       background: transparent;
     }
 
-    .m-boost--creator-payment-attached{
+    .m-boost--creator-payment-attached {
       display: flex;
       flex-direction: column;
       justify-content: center;
       text-align: center;
       padding: 50px;
 
-      i{
+      i {
         font-size: 90px;
         cursor: default;
       }
-      span{
+      span {
         padding: 16px 0;
         text-transform: uppercase;
         letter-spacing: 2px;
@@ -509,67 +507,68 @@
       }
     }
 
-    .m-payments--saved-card-item{
-      @include m-theme(){
+    .m-payments--saved-card-item {
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.15);
         border: 1px solid themed($m-grey-100);
       }
     }
 
-    input{
+    input {
       padding: 12px;
       border: 0;
       border-radius: 3px;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.15);
         color: themed($m-white);
       }
     }
-    select{
-      padding:12px;
+    select {
+      padding: 12px;
       border: 0;
       border-radius: 3px;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.15);
         color: themed($m-white);
       }
     }
     label {
       padding: 8px 12px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
       }
     }
-    .is-focused, .is-dirty{
+    .is-focused,
+    .is-dirty {
       border: 0;
-      label{
+      label {
         border: 0;
         top: -8px;
         left: -8px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
-        &::after{
-          border:0;
-          background-color:transparent;
+        &::after {
+          border: 0;
+          background-color: transparent;
         }
       }
     }
     .minds-purchase-vendors {
       margin-bottom: ($minds-padding * 2) !important;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-white);
       }
     }
-    .m-purchase-card--highlight{
+    .m-purchase-card--highlight {
       font-weight: bold;
     }
-    .m-checkout--secure{
-      @include m-theme(){
+    .m-checkout--secure {
+      @include m-theme() {
         color: rgba(themed($m-black), 0.8);
       }
     }
-    button{
+    button {
       padding: 12px;
       -webkit-appearance: none;
       border: 0;
@@ -578,7 +577,7 @@
       letter-spacing: 1px;
       border-radius: 3px;
       cursor: pointer;
-      @include m-theme(){
+      @include m-theme() {
         background-color: rgba(themed($m-black), 0.5);
         color: themed($m-white);
       }
@@ -600,7 +599,8 @@
       padding: $minds-padding / 2;
       padding-left: $minds-padding * 2;
 
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         font-weight: 400;
       }
     }
@@ -635,15 +635,15 @@
     //   opacity: 1;
     // }
 
-
-    &:not(.m-boost--creator-selector--highlight){
-        > i, h5 > span,
-        .m-boost--creator-selector--hoverable,
-        .material-icons {
-          opacity: 0.5;
-        }
+    &:not(.m-boost--creator-selector--highlight) {
+      > i,
+      h5 > span,
+      .m-boost--creator-selector--hoverable,
+      .material-icons {
+        opacity: 0.5;
+      }
     }
-    
+
     .m-boost--creator-selector--selected-label {
       visibility: hidden;
     }
@@ -667,7 +667,8 @@
   cursor: pointer;
   user-select: none;
 
-  > span, > img {
+  > span,
+  > img {
     vertical-align: middle;
   }
 
@@ -714,7 +715,8 @@
     max-width: $min-tablet;
   }
 
-  .mdl-card, .mdl-card__supporting-text {
+  .mdl-card,
+  .mdl-card__supporting-text {
     background: transparent;
     color: inherit;
   }
@@ -725,12 +727,12 @@
   }
 
   .mdl-textfield__label {
-    @include m-theme(){
+    @include m-theme() {
       color: rgba(themed($m-black), 0.46);
     }
 
     &:after {
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-white);
       }
     }
@@ -739,16 +741,18 @@
   .mdl-textfield__input {
     font-family: inherit;
     font-weight: inherit;
-    @include m-theme(){
+    @include m-theme() {
       border-bottom: 1px solid rgba(themed($m-black), 0.32);
       color: themed($m-white);
     }
   }
 
   .mdl-textfield--floating-label {
-    &.is-focused, &.is-dirty, &.has-placeholder {
+    &.is-focused,
+    &.is-dirty,
+    &.has-placeholder {
       .mdl-textfield__label {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }
@@ -771,13 +775,13 @@
     appearance: none;
     background: transparent;
     border-radius: 0;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white);
       border: 1px solid themed($m-white);
     }
 
     &:focus {
-      @include m-theme(){
+      @include m-theme() {
         outline: 2px solid themed($m-white);
       }
     }
@@ -803,8 +807,9 @@
     user-select: none;
 
     .m-payments-saved--item {
-      &:hover, &:focus {
-        @include m-theme(){
+      &:hover,
+      &:focus {
+        @include m-theme() {
           color: themed($m-black);
           background-color: themed($m-white);
         }
@@ -818,8 +823,8 @@ m-boost--creator-payment-methods {
 }
 
 .m-boost--creator-selector--hoverable {
-  @include m-theme(){
-     border-bottom: 1px dotted rgba(themed($m-black), 0.25);
+  @include m-theme() {
+    border-bottom: 1px dotted rgba(themed($m-black), 0.25);
   }
 }
 
@@ -848,7 +853,7 @@ m-boost--creator-payment-methods {
     border-radius: 4px;
     font-weight: bold;
     text-align: right;
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-black), 0.1);
     }
 
@@ -861,7 +866,7 @@ m-boost--creator-payment-methods {
     margin-left: 1em;
     font-weight: bold;
     letter-spacing: 0.5px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-300);
     }
   }

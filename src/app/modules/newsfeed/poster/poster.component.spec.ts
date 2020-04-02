@@ -1,4 +1,10 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { Component, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { PosterComponent } from './poster.component';
@@ -21,20 +27,21 @@ import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { HashtagsSelectorComponent } from '../../hashtags/selector/selector.component';
 import { DropdownComponent } from '../../../common/components/dropdown/dropdown.component';
 import { TagsInput } from '../../hashtags/tags-input/tags.component';
-import {TopbarHashtagsService} from "../../hashtags/service/topbar.service";
-import {topbarHashtagsServiceMock} from "../../../mocks/modules/hashtags/service/topbar.service.mock";
-import { InMemoryStorageService } from "../../../services/in-memory-storage.service";
-import { inMemoryStorageServiceMock } from "../../../../tests/in-memory-storage-service-mock.spec";
-import { TextInputAutocompleteModule } from "../../../common/components/autocomplete";
-import { AutocompleteSuggestionsService } from "../../suggestions/services/autocomplete-suggestions.service";
+import { TopbarHashtagsService } from '../../hashtags/service/topbar.service';
+import { topbarHashtagsServiceMock } from '../../../mocks/modules/hashtags/service/topbar.service.mock';
+import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
+import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-service-mock.spec';
+import { TextInputAutocompleteModule } from '../../../common/components/autocomplete';
+import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { TagsService } from '../../../common/services/tags.service';
 
 @Component({
   selector: 'minds-third-party-networks-selector',
   exportAs: 'thirdPartyNetworksSelector',
   template: '',
 })
-
 class ThirdPartyNetworksSelectorMock {
   inject(data) {
     return data;
@@ -44,7 +51,6 @@ class ThirdPartyNetworksSelectorMock {
 describe('PosterComponent', () => {
   let comp: PosterComponent;
   let fixture: ComponentFixture<PosterComponent>;
-
 
   function getTextarea(): DebugElement {
     return fixture.debugElement.query(By.css('textarea'));
@@ -68,21 +74,32 @@ describe('PosterComponent', () => {
         MockComponent({
           selector: 'm-wire-threshold-input',
           inputs: ['threshold', 'disabled', 'enabled'],
-          outputs: ['thresholdChange']
+          outputs: ['thresholdChange'],
         }),
-        MockComponent({ selector: 'minds-rich-embed', inputs: ['src', 'preview', 'maxheight', 'cropimage'] }),
-        MockComponent({ selector: 'm-tooltip', template: '<ng-content></ng-content>' }),
+        MockComponent({
+          selector: 'minds-rich-embed',
+          inputs: ['src', 'preview', 'maxheight', 'cropimage'],
+        }),
+        MockComponent({
+          selector: 'm-poster-date-selector',
+          inputs: ['date', 'dateFormat'],
+          outputs: ['dateChange'],
+        }),
+        MockComponent({
+          selector: 'm-tooltip',
+          template: '<ng-content></ng-content>',
+        }),
         DropdownComponent,
         TagsInput,
         HashtagsSelectorComponent,
         PosterComponent,
         MockDirective({
           selector: '[mIfFeature]',
-          inputs: [ 'mIfFeature' ],
+          inputs: ['mIfFeature'],
         }),
         MockDirective({
           selector: '[mIfFeatureElse]',
-          inputs: [ 'mIfFeatureElse' ],
+          inputs: ['mIfFeatureElse'],
         }),
       ],
       imports: [
@@ -99,14 +116,25 @@ describe('PosterComponent', () => {
         { provide: Upload, useValue: uploadMock },
         { provide: AttachmentService, useValue: attachmentServiceMock },
         { provide: TopbarHashtagsService, useValue: topbarHashtagsServiceMock },
-        { provide: InMemoryStorageService, useValue: inMemoryStorageServiceMock },
-        { provide: AutocompleteSuggestionsService, useValue: MockService(AutocompleteSuggestionsService) },
+        {
+          provide: InMemoryStorageService,
+          useValue: inMemoryStorageServiceMock,
+        },
+        {
+          provide: AutocompleteSuggestionsService,
+          useValue: MockService(AutocompleteSuggestionsService),
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+        {
+          provide: TagsService,
+          useValue: MockService(TagsService),
+        },
       ],
-      schemas: [
-        NO_ERRORS_SCHEMA,
-      ]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(done => {
@@ -118,50 +146,6 @@ describe('PosterComponent', () => {
 
     clientMock.response = {};
 
-    window.Minds.user = {
-      "guid": "732337264197111809",
-      "type": "user",
-      "subtype": false,
-      "time_created": "1499978809",
-      "time_updated": false,
-      "container_guid": "0",
-      "owner_guid": "0",
-      "site_guid": false,
-      "access_id": "2",
-      "name": "minds",
-      "username": "minds",
-      "language": "en",
-      "icontime": "1506690756",
-      "legacy_guid": false,
-      "featured_id": false,
-      "banned": "no",
-      "website": "",
-      "dob": "",
-      "gender": "",
-      "city": "",
-      "merchant": {},
-      "boostProPlus": false,
-      "fb": false,
-      "mature": 0,
-      "monetized": "",
-      "signup_method": false,
-      "social_profiles": [],
-      "feature_flags": false,
-      "programs": ["affiliate"],
-      "plus": false,
-      "verified": false,
-      "disabled_boost": false,
-      "show_boosts": false,
-      "chat": true,
-      "subscribed": false,
-      "subscriber": false,
-      "subscriptions_count": 1,
-      "impressions": 10248,
-      "boost_rating": "2",
-      "spam": 0,
-      "deleted": 0
-    };
-
     attachmentServiceMock.rich = true;
 
     comp = fixture.componentInstance;
@@ -171,7 +155,7 @@ describe('PosterComponent', () => {
     });
 
     spyOn(comp.session, 'getLoggedInUser').and.callFake(() => {
-      return window.Minds.user;
+      return {};
     });
 
     fixture.detectChanges();
@@ -189,15 +173,19 @@ describe('PosterComponent', () => {
     jasmine.clock().uninstall();
   });
 
-  it("should have a textarea", () => {
+  it('should have a textarea', () => {
     expect(getTextarea()).not.toBeNull();
   });
 
   it('should have an attachment button', () => {
-    expect(fixture.debugElement.query(By.css('.attachment-button'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.attachment-button'))
+    ).not.toBeNull();
   });
   it('should have an input for attachments', () => {
-    expect(fixture.debugElement.query(By.css('.attachment-button > input'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.attachment-button > input'))
+    ).not.toBeNull();
   });
 
   xit('should have a mature toggle', () => {
@@ -205,18 +193,22 @@ describe('PosterComponent', () => {
   });
 
   it('should have a wire threshold input', () => {
-    expect(fixture.debugElement.query(By.css('m-wire-threshold-input'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('m-wire-threshold-input'))
+    ).not.toBeNull();
   });
 
   it('should have a post button', () => {
     expect(getPostButton()).not.toBeNull();
   });
-  
+
   it('should display an error when more than 6 hashtags are selected', fakeAsync(() => {
     const postButton: DebugElement = getPostButton();
     comp.meta.message = 'test #tags ';
-    comp.hashtagsSelector.parseTags('#test1 #test2 #test3 #test4 #test5 #test6');
-    comp.tags = comp.hashtagsSelector.tags
+    comp.hashtagsSelector.parseTags(
+      '#test1 #test2 #test3 #test4 #test5 #test6'
+    );
+    comp.tags = comp.hashtagsSelector.tags;
     tick();
 
     spyOn(comp, 'post').and.callThrough();
@@ -237,7 +229,9 @@ describe('PosterComponent', () => {
 
     clientMock.response['api/v1/newsfeed'] = { status: 'success' };
 
-    spyOn(window, 'alert').and.callFake(function() { return true; });
+    spyOn(window, 'alert').and.callFake(function() {
+      return true;
+    });
     spyOn(comp, 'post').and.callThrough();
 
     getPostButton().nativeElement.click();
@@ -245,6 +239,40 @@ describe('PosterComponent', () => {
 
     expect(comp.post).toHaveBeenCalled();
     expect(clientMock.post).toHaveBeenCalled();
-    expect(clientMock.post.calls.mostRecent().args[0]).toEqual('api/v1/newsfeed');
+    expect(clientMock.post.calls.mostRecent().args[0]).toEqual(
+      'api/v1/newsfeed'
+    );
+  }));
+
+  it('should allow the user to make an NSFW post', fakeAsync(() => {
+    comp.attachment.setNSFW([
+      { value: 'naughty', selected: true },
+      { value: 'rude', selected: true },
+      { value: 'not very nice', selected: true },
+    ]);
+
+    comp.meta.message = 'test #tags ';
+    comp.hashtagsSelector.parseTags(comp.meta.message);
+
+    fixture.detectChanges();
+
+    clientMock.response['api/v1/newsfeed'] = { status: 'success' };
+
+    spyOn(window, 'alert').and.callFake(function() {
+      return true;
+    });
+    spyOn(comp, 'post').and.callThrough();
+
+    getPostButton().nativeElement.click();
+    tick();
+
+    expect(comp.post).toHaveBeenCalled();
+    expect(clientMock.post).toHaveBeenCalled();
+
+    expect(clientMock.post.calls.mostRecent().args[1]['nsfw']).toEqual([
+      'naughty',
+      'rude',
+      'not very nice',
+    ]);
   }));
 });

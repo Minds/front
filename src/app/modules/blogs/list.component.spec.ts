@@ -11,7 +11,6 @@ import { BlogListComponent } from './list.component';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api/client';
 import { clientMock } from '../../../tests/client-mock.spec';
-import { MindsTitle } from '../../services/ux/title';
 import { ContextService } from '../../services/context.service';
 import { Observable } from 'rxjs';
 import { of } from 'rxjs/internal/observable/of';
@@ -29,24 +28,29 @@ const user = {
   boost_rating: 1,
 };
 let sessionConfig = {
-  'isAdmin': user.admin,
-  'isLoggedIn': true,
-  'getLoggedInUser': user,
+  isAdmin: user.admin,
+  isLoggedIn: true,
+  getLoggedInUser: user,
 };
 
 let sessionMock: any = MockService(Session, sessionConfig);
 
 describe('BlogListComponent', () => {
-
   let comp: BlogListComponent;
   let fixture: ComponentFixture<BlogListComponent>;
 
   function getNavigationItem(i: number): DebugElement {
-    return fixture.debugElement.query(By.css(`.m-toolbar a.m-topbar--navigation--item:nth-child(${i})`));
+    return fixture.debugElement.query(
+      By.css(`.m-toolbar a.m-topbar--navigation--item:nth-child(${i})`)
+    );
   }
 
   function getNavigationItemTooltip(i: number): DebugElement {
-    return fixture.debugElement.query(By.css(`.m-toolbar a.m-topbar--navigation--item:nth-child(${i}) m-tooltip`));
+    return fixture.debugElement.query(
+      By.css(
+        `.m-toolbar a.m-topbar--navigation--item:nth-child(${i}) m-tooltip`
+      )
+    );
   }
 
   beforeEach(async(() => {
@@ -59,13 +63,13 @@ describe('BlogListComponent', () => {
         MockComponent({
           selector: 'm-tooltip',
           template: '<ng-content></ng-content>',
-          inputs: ['icon']
+          inputs: ['icon'],
         }),
         MockComponent({
           selector: 'm-topbar--navigation--options',
           template: '',
           inputs: ['options'],
-          outputs: ['change']
+          outputs: ['change'],
         }),
         MockComponent({
           selector: 'm-blog--tile',
@@ -78,22 +82,28 @@ describe('BlogListComponent', () => {
           outputs: ['selectionChange'],
           inputs: ['enabled'],
         }),
-        BlogListComponent
+        BlogListComponent,
       ],
-      imports: [RouterTestingModule, ReactiveFormsModule, CommonModule, FormsModule],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        CommonModule,
+        FormsModule,
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useValue: MockService(MindsTitle) },
         { provide: ContextService, useValue: MockService(ContextService) },
-        { provide: ActivatedRoute, useValue: { params: of({ filter: 'trending' }) } },
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({ filter: 'trending' }) },
+        },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     jasmine.clock().install();
 
@@ -108,21 +118,21 @@ describe('BlogListComponent', () => {
       entities: [
         {
           guid: '1',
-          type: 'blog'
+          type: 'blog',
         },
         {
           guid: '2',
-          type: 'blog'
+          type: 'blog',
         },
         {
           guid: '3',
-          type: 'blog'
+          type: 'blog',
         },
         {
           guid: '4',
-          type: 'blog'
+          type: 'blog',
         },
-      ]
+      ],
     };
 
     fixture.detectChanges();
@@ -130,11 +140,10 @@ describe('BlogListComponent', () => {
     if (fixture.isStable()) {
       done();
     } else {
-      fixture.whenStable()
-        .then(() => {
-          fixture.detectChanges();
-          done()
-        });
+      fixture.whenStable().then(() => {
+        fixture.detectChanges();
+        done();
+      });
     }
   });
 
@@ -144,7 +153,9 @@ describe('BlogListComponent', () => {
 
   it('should have loaded the blogs', () => {
     expect(clientMock.get).toHaveBeenCalled();
-    expect(clientMock.get.calls.mostRecent().args[0]).toBe('api/v2/entities/suggested/blogs');
+    expect(clientMock.get.calls.mostRecent().args[0]).toBe(
+      'api/v2/entities/suggested/blogs'
+    );
   });
 
   it('should have a topbar', () => {
@@ -158,17 +169,25 @@ describe('BlogListComponent', () => {
     const nav4 = getNavigationItem(4);
     const tooltip4 = getNavigationItemTooltip(4);
 
-    const options = fixture.debugElement.query(By.css('.m-toolbar m-topbar--navigation--options'));
+    const options = fixture.debugElement.query(
+      By.css('.m-toolbar m-topbar--navigation--options')
+    );
 
     expect(nav1).not.toBeNull();
     expect(nav1.nativeElement.children[0].textContent).toContain('Top');
     expect(tooltip1).not.toBeNull();
-    expect(tooltip1.nativeElement.textContent).toContain('Top displays the top content on Minds');
+    expect(tooltip1.nativeElement.textContent).toContain(
+      'Top displays the top content on Minds'
+    );
 
     expect(nav2).not.toBeNull();
-    expect(nav2.nativeElement.children[0].textContent).toContain('Subscriptions');
+    expect(nav2.nativeElement.children[0].textContent).toContain(
+      'Subscriptions'
+    );
     expect(tooltip2).not.toBeNull();
-    expect(tooltip2.nativeElement.textContent).toContain('Blogs from channels you are subscribed to');
+    expect(tooltip2.nativeElement.textContent).toContain(
+      'Blogs from channels you are subscribed to'
+    );
 
     expect(nav3).not.toBeNull();
     expect(nav3.nativeElement.children[0].textContent).toContain('My Blogs');
@@ -176,7 +195,9 @@ describe('BlogListComponent', () => {
     expect(tooltip3.nativeElement.textContent).toContain('Your blogs');
 
     expect(nav4).not.toBeNull();
-    expect(nav4.nativeElement.children[0].textContent).toContain('Write a new blog');
+    expect(nav4.nativeElement.children[0].textContent).toContain(
+      'Write a new blog'
+    );
     expect(tooltip4).not.toBeNull();
     expect(tooltip4.nativeElement.textContent).toContain('Write a new Blog');
 
@@ -185,16 +206,21 @@ describe('BlogListComponent', () => {
 
   it('should have a list of blogs in two columns', () => {
     expect(fixture.debugElement.query(By.css('.m-blog--list'))).not.toBeNull();
-    const column1 = fixture.debugElement.query(By.css('.m-blog--list > .m-blog--list--column-0'));
-    const column2 = fixture.debugElement.query(By.css('.m-blog--list > .m-blog--list--column-1'));
+    const column1 = fixture.debugElement.query(
+      By.css('.m-blog--list > .m-blog--list--column-0')
+    );
+    const column2 = fixture.debugElement.query(
+      By.css('.m-blog--list > .m-blog--list--column-1')
+    );
     expect(column1).not.toBeNull();
     expect(column1.nativeElement.children.length).toBe(2);
     expect(column2).not.toBeNull();
     expect(column2.nativeElement.children.length).toBe(2);
-
   });
 
   it('should have an infinite-scroll', () => {
-    expect(fixture.debugElement.query(By.css('infinite-scroll'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('infinite-scroll'))
+    ).not.toBeNull();
   });
 });

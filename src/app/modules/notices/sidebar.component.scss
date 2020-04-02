@@ -4,7 +4,7 @@
     font-size: 13px;
     font-weight: 600;
     padding: 0 8px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
   }
@@ -22,7 +22,7 @@
       font-size: 16px;
       margin-left: 7px;
       cursor: pointer;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-200);
       }
     }
@@ -32,7 +32,7 @@
 .m-noticesSidebar__empty {
   padding: 8px;
   font-size: 10px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-400);
   }
 }
@@ -40,10 +40,10 @@
 .m-noticesSidebar__list {
   margin: 0;
   padding: 0;
-  list-style: none; 
+  list-style: none;
   overflow: hidden;
-  @include m-theme(){
-    background-color: themed($m-white);
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
   }
 }
 
@@ -54,16 +54,16 @@
   padding-left: 7px; // border takes 5px (12px)
   display: block;
   box-sizing: border-box;
-  @include m-theme(){
+  @include m-theme() {
     border-left: 5px solid themed($m-white);
   }
 
   &.m-notices__notice--recent {
-    @include m-theme(){
+    @include m-theme() {
       border-left: 5px solid themed($m-blue);
     }
   }
- 
+
   h3 {
     margin: 0;
     font-size: 13px;
@@ -71,7 +71,7 @@
     font-weight: 800;
     padding: 0;
     display: block;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
   }
@@ -81,7 +81,7 @@
     font-weight: 400;
     margin-top: 8px;
     margin-bottom: 0;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
     }
   }
@@ -92,24 +92,26 @@
   top: 0;
   right: 0;
   margin: 6px 12px;
-  font-size: 11px;  
+  font-size: 11px;
   font-weight: 600;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-blue);
   }
 }
 
 .m-noticesSidebarList__item {
-  @include m-theme(){
+  @include m-theme() {
     border-bottom: 1px solid themed($m-grey-50);
   }
 
   &:last-of-type {
-    border-bottom:0;
+    @include m-theme() {
+      border-bottom: 0;
+    }
   }
-  
+
   .m-noticesSidebarListItem__body {
     display: inline-flex;
     vertical-align: middle;
@@ -122,7 +124,7 @@
       font-size: 13px;
       line-height: 18px;
       font-weight: 600;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
     }
@@ -140,14 +142,14 @@
       white-space: nowrap;
       padding-right: 8px;
       font-weight: 400;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-400);
       }
     }
     > i {
-       font-size: 13px;
-       margin-right: 8px;
-     }
+      font-size: 13px;
+      margin-right: 8px;
+    }
     .m-btn {
       height: 30px;
       font-size: 10px;
@@ -177,7 +179,23 @@
   display: block;
   padding: 4px 8px;
   box-sizing: border-box;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-200);
+  }
+}
+
+m-sidebarWidget {
+  .m-noticesSidebar__list {
+    border-radius: 0;
+    @include m-theme() {
+      border: 0;
+    }
+  }
+  .m-notices__notice {
+    padding-left: 17px;
+    padding-right: 20px;
+  }
+  .m-noticesNotice__cta {
+    margin-right: 20px;
   }
 }

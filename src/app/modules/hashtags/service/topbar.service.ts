@@ -2,15 +2,18 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { Client } from '../../../services/api/client';
 
 type Hashtag = {
-  value: string, selected: boolean
+  value: string;
+  selected: boolean;
 };
 
 @Injectable()
 export class TopbarHashtagsService {
-  selectionChange: EventEmitter<{ hashtag: Hashtag, emitter: any }> = new EventEmitter<{ hashtag: Hashtag, emitter: any }>();
+  selectionChange: EventEmitter<{
+    hashtag: Hashtag;
+    emitter: any;
+  }> = new EventEmitter<{ hashtag: Hashtag; emitter: any }>();
 
-  constructor(private client: Client) {
-  }
+  constructor(private client: Client) {}
 
   async load(limit: number, opts: any = {}) {
     const response: any = await this.client.get(`api/v2/hashtags/suggested`, {

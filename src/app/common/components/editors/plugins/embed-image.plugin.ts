@@ -1,8 +1,10 @@
 import Editor = MediumEditor.MediumEditor;
+import { ConfigsService } from '../../../services/configs.service';
 
-type Options = { buttonText?: string, placeholder?: string };
+type Options = { buttonText?: string; placeholder?: string };
 
 export class EmbedImage {
+  readonly siteUrl: string;
   button: HTMLButtonElement;
   options: any = { placeholder: '' };
   base: Editor;
@@ -13,12 +15,13 @@ export class EmbedImage {
   $currentImage;
   private readonly urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
-  constructor(options: Options) {
+  constructor(options: Options, configs: ConfigsService) {
     this.options = { ...options };
     this.button = document.createElement('button');
     this.button.className = 'medium-editor-action';
-    this.button.innerHTML = options.buttonText || "</>";
+    this.button.innerHTML = options.buttonText || '</>';
     this.button.onclick = this.handleClick.bind(this);
+    this.siteUrl = configs.get('site_url');
   }
 
   public init() {
@@ -46,8 +49,13 @@ export class EmbedImage {
     }
   }
 
-  private insertHTML(imgSrc: string, $place: HTMLElement = null, timestamp: string = '') {
-    let sel = window.getSelection(), range;
+  private insertHTML(
+    imgSrc: string,
+    $place: HTMLElement = null,
+    timestamp: string = ''
+  ) {
+    let sel = window.getSelection(),
+      range;
     const div = this.getHTML(imgSrc, timestamp);
 
     if ($place) {
@@ -112,7 +120,7 @@ export class EmbedImage {
     }
 
     img.src = imgSrc;
-    img.onerror = function () {
+    img.onerror = function() {
       this.classList.add('m--img-not-found');
     };
     img.addEventListener('click', this.selectImage.bind(this));
@@ -128,13 +136,15 @@ export class EmbedImage {
 
     if (inProgressOverlay) {
       div.appendChild(inProgressOverlay);
-
     }
     return div;
   }
 
   public handleClick(event: any) {
-    const src = this.window.getSelection().toString().trim();
+    const src = this.window
+      .getSelection()
+      .toString()
+      .trim();
 
     if (this.urlRegex.exec(src)) {
       this.insertHTML(src);
@@ -143,18 +153,21 @@ export class EmbedImage {
     this.base.checkContentChanged();
   }
 
+  /**
+   * Event handler registration.
+   */
   public events() {
     /* prevent default image drag&drop */
-    this.$element.addEventListener('dragover', (e) => {
+    this.$element.addEventListener('dragover', e => {
       e.preventDefault();
       e.stopPropagation();
     });
-    this.$element.addEventListener('drop', (e) => {
+    this.$element.addEventListener('drop', e => {
       e.preventDefault();
       e.stopPropagation();
     });
 
-    this.$element.addEventListener('keypress', (e) => {
+    this.$element.addEventListener('keypress', e => {
       if (e.keyCode == 13) {
         this.unselectImage(e);
       }
@@ -165,32 +178,48 @@ export class EmbedImage {
     this.$element.addEventListener('click', this.selectImage.bind(this));
 
     this.base.subscribe('action-images', (data, editable) => {
-
       let $place = this.$element.querySelector('.medium-insert-active');
       this.insertHTML(data.link, $place, '');
     });
 
-    this.window.addEventListener('attachment-preview-loaded', (event: CustomEvent) => {
-      let $place = this.$element.querySelector('.medium-insert-active');
-      this.insertHTML(event.detail.src, $place, event.detail.timestamp);
-    });
+    this.window.addEventListener(
+      'attachment-preview-loaded',
+      (event: CustomEvent) => {
+        let $place = this.$element.querySelector('.medium-insert-active');
+        this.insertHTML(event.detail.src, $place, event.detail.timestamp);
+      }
+    );
 
-    this.window.addEventListener('attachment-upload-finished', (event: CustomEvent) => {
-      const imgClass: string = 'medium-image-preview-' + event.detail.timestamp;
+    this.window.addEventListener(
+      'attachment-upload-finished',
+      (event: CustomEvent) => {
+        const imgClass: string =
+          'medium-image-preview-' + event.detail.timestamp;
 
-      const image: HTMLImageElement = this.$element.querySelector('.' + imgClass);
+        const image: HTMLImageElement = this.$element.querySelector(
+          '.' + imgClass
+        );
 
-      const overlay = image.parentElement.querySelector('.m-blog--image--in-progress-overlay');
-      overlay.parentElement.removeChild(overlay);
-      image.classList.remove(imgClass);
+        if (!image) {
+          return;
+        }
 
-      image.setAttribute('src', window.Minds.site_url + 'fs/v1/thumbnail/' + event.detail.guid);
-    });
-  };
+        const overlay = image.parentElement.querySelector(
+          '.m-blog--image--in-progress-overlay'
+        );
+        overlay.parentElement.removeChild(overlay);
+        image.classList.remove(imgClass);
+
+        image.setAttribute(
+          'src',
+          this.siteUrl + 'fs/v1/thumbnail/' + event.detail.guid
+        );
+      }
+    );
+  }
 
   public editorSerialize() {
     const data = this._serializePreImages();
-
 
     for (let i: number = 0; i < data.length; ++i) {
       const key = data[i];
@@ -198,20 +227,32 @@ export class EmbedImage {
       let $data: HTMLDivElement = document.createElement('div');
       $data.innerHTML = data[key].value;
 
-      $data.querySelector('.medium-insert-images').querySelector('figcaption, figure').removeAttribute('contenteditable');
+      $data
+        .querySelector('.medium-insert-images')
+        .querySelector('figcaption, figure')
+        .removeAttribute('contenteditable');
       data[key].value = $data.innerHTML;
     }
 
     return data;
   }
 
+  /**
+   * On image select, responds to image click.
+   * @param { event }  e - event from DOM.
+   */
   public selectImage(e) {
     let $image = e.target;
+
+    if (!$image || $image.tagName === null) {
+      return;
+    }
+
     if ($image.tagName === 'SPAN') {
       $image = $image.parentNode.querySelector('img');
     }
 
-    if ($image.tagName !== 'IMG') {
+    if (!$image || $image.tagName !== 'IMG') {
       return;
     }
 
@@ -232,15 +273,22 @@ export class EmbedImage {
     event.stopPropagation();
   }
 
+  /**
+   * On image deselect, called when image clicked away from.
+   * @param { event }  e - event from DOM.
+   */
   public unselectImage(e) {
     let $el = e.target,
       $image = document.querySelector('.medium-insert-image-active');
 
-    if (!$image) {
+    if (!$image || !$el || $el.tagName === null) {
       return;
     }
 
-    if ($el.tagName === 'IMG' && $el.classList.contains('medium-insert-image-active')) {
+    if (
+      $el.tagName === 'IMG' &&
+      $el.classList.contains('medium-insert-image-active')
+    ) {
       if ($image !== $el) {
         $image.classList.remove('medium-insert-image-active');
         (<any>$image.parentNode).setAttribute('contenteditable', 'false');
@@ -268,7 +316,6 @@ export class EmbedImage {
     this.$currentImage = null;
   }
 
-
   /**
    * Move caret at the beginning of the empty paragraph
    */
@@ -289,7 +336,6 @@ export class EmbedImage {
     sel.removeAllRanges();
     sel.addRange(range);
   }
-
 
   public prepare() {
     let elements = this.$element.querySelectorAll('.m-blog--image');

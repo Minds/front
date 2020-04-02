@@ -4,12 +4,9 @@ import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 
 @Component({
   selector: 'm-referrals--dashboard',
-  templateUrl: 'dashboard.component.html'
+  templateUrl: 'dashboard.component.html',
 })
-
 export class ReferralsDashboardComponent implements OnInit, OnDestroy {
-
-  minds = window.Minds;
   referrals: Array<any> = [];
   offset: string = '';
   limit = 12;
@@ -19,8 +16,7 @@ export class ReferralsDashboardComponent implements OnInit, OnDestroy {
   fewerResultsThanLimit = false;
   timeoutIds: number[] = [];
 
-  constructor(public client: Client) {
-  }
+  constructor(public client: Client) {}
 
   ngOnInit() {
     this.load(true);
@@ -40,7 +36,8 @@ export class ReferralsDashboardComponent implements OnInit, OnDestroy {
       this.moreData = true;
     }
 
-    this.client.get(`api/v2/referrals`, {limit: this.limit, offset: this.offset})
+    this.client
+      .get(`api/v2/referrals`, { limit: this.limit, offset: this.offset })
       .then((response: any) => {
         // Response is an array of current user's referrals (see `Referral.php`)
 
@@ -80,7 +77,6 @@ export class ReferralsDashboardComponent implements OnInit, OnDestroy {
   // If the prospect hasn't joined rewards yet, the 'Rewards Signup' date column
   // will display a 'ping' notification button instead
   triggerNotification(referral: any) {
-
     // Don't trigger a notification if insufficient time has elapsed since last ping
     // Note: waiting period duration is set in `Referral.php`
     if (!referral.pingable || referral.pingInProgress) {
@@ -90,7 +86,8 @@ export class ReferralsDashboardComponent implements OnInit, OnDestroy {
     referral.pingInProgress = true;
 
     // Trigger the ping notification
-    this.client.put(`api/v2/referrals/` + referral.prospect.guid)
+    this.client
+      .put(`api/v2/referrals/` + referral.prospect.guid)
       .then((response: any) => {
         if (response.done) {
           referral.pingable = false;
@@ -102,10 +99,7 @@ export class ReferralsDashboardComponent implements OnInit, OnDestroy {
             referral.pingRecentlySent = false;
           }, 3000);
 
-
-          this.timeoutIds.push(
-            setTimeout(() => referral.timeout)
-          );
+          this.timeoutIds.push(setTimeout(() => referral.timeout));
 
           return;
         }
@@ -122,7 +116,7 @@ export class ReferralsDashboardComponent implements OnInit, OnDestroy {
     return isMobileOrTablet();
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     // Clear any remaining timeouts
     this.timeoutIds.forEach(id => clearTimeout(id));
   }

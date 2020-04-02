@@ -7,9 +7,16 @@ import { CommonModule } from '../../common/common.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { I18nMarketingComponent } from './marketing.component';
 
-
-const i18nRoutes : Routes = [
-  { path: 'localization',  component: I18nMarketingComponent }
+const i18nRoutes: Routes = [
+  {
+    path: 'localization',
+    component: I18nMarketingComponent,
+    data: {
+      title: 'Localization',
+      description: 'Help translate Minds into every global language',
+      ogImage: '/assets/photos/satellite.jpg',
+    },
+  },
 ];
 
 @NgModule({
@@ -19,16 +26,10 @@ const i18nRoutes : Routes = [
     ReactiveFormsModule,
     CommonModule,
     CheckoutModule,
-    RouterModule.forChild(i18nRoutes)
+    RouterModule.forChild(i18nRoutes),
   ],
-  declarations: [
-    I18nMarketingComponent,
-  ],
-  exports: [
-  ],
-  entryComponents: [
-    I18nMarketingComponent,
-  ]
+  declarations: [I18nMarketingComponent],
+  exports: [],
+  entryComponents: [I18nMarketingComponent],
 })
-
 export class I18nModule {}

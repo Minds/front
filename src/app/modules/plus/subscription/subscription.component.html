@@ -1,0 +1,77 @@
+<ng-container *ngIf="!inProgress; else inProgressSpinner">
+  <div *ngIf="!active; else cancelButton">
+    <div class="m-plusSubscriptionPlan__toggleContainer">
+      <div class="m-plusSubscriptionPlan__toggle">
+        <span i18n>Yearly</span>
+        <span
+          ><m-toggle
+            [(mModel)]="interval"
+            leftValue="yearly"
+            rightValue="monthly"
+          ></m-toggle
+        ></span>
+        <span i18n>Monthly</span>
+      </div>
+
+      <div class="m-plusSubscriptionPlan__toggle">
+        <span i18n>USD</span>
+        <span
+          ><m-toggle
+            [(mModel)]="currency"
+            leftValue="usd"
+            rightValue="tokens"
+          ></m-toggle
+        ></span>
+        <span i18n>Tokens</span>
+      </div>
+    </div>
+
+    <div class="m-plusSubscriptionPlan__pricing">
+      <span class="m-plusSubscriptionPlanPricing__amount" i18n>
+        <span>{{ pricing.amount }}</span> per month
+      </span>
+
+      <span
+        class="m-plusSubscriptionPlanPricing__offer"
+        *ngIf="pricing.offerFrom"
+        i18n
+      >
+        {{ pricing.offerFrom }} per month
+      </span>
+    </div>
+
+    <div>
+      <button
+        class="mf-button mf-button--alt"
+        [disabled]="inProgress || criticalError"
+        (click)="enable()"
+        i18n
+      >
+        Upgrade to Plus
+      </button>
+    </div>
+  </div>
+
+  <ng-template #cancelButton>
+    <div>
+      <button
+        class="mf-button mf-button--destructive"
+        [disabled]="!canBeCancelled || inProgress || criticalError"
+        (click)="disable()"
+        i18n
+      >
+        Cancel Plus
+      </button>
+    </div>
+  </ng-template>
+
+  <span *ngIf="error" class="m-plusSubscription__error">
+    {{ error }}
+  </span>
+</ng-container>
+
+<ng-template #inProgressSpinner>
+  <div class="m-plusSubscription__inProgress">
+    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+  </div>
+</ng-template>

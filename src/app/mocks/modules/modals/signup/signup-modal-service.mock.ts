@@ -1,7 +1,8 @@
 import { EventEmitter } from '@angular/core';
 
-export let signupModalServiceMock = new function () {
-  this.defaultSubtitle = 'Signup to comment, upload, vote and earn 100+ free views on your content daily.';
+export let signupModalServiceMock = new (function() {
+  this.defaultSubtitle =
+    'Signup to comment, upload, vote and earn 100+ free views on your content daily.';
   this.subtitle = this.defaultSubtitle;
   this.isOpen = new EventEmitter();
   this.display = new EventEmitter();
@@ -19,12 +20,12 @@ export let signupModalServiceMock = new function () {
     this.subtitle = this.defaultSubtitle;
   });
 
-  this.setSubtitle = jasmine.createSpy('setSubtitle').and.callFake((text) => {
+  this.setSubtitle = jasmine.createSpy('setSubtitle').and.callFake(text => {
     this.subtitle = text;
   });
 
-  this.setDisplay = jasmine.createSpy('setDisplay').and.callFake((display) => {
+  this.setDisplay = jasmine.createSpy('setDisplay').and.callFake(display => {
     this.display.next(display);
     return this;
   });
-};
+})();

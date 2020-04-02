@@ -2,28 +2,51 @@
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
 <div class="m-thumbnail-selector--video-wrapper" hidden>
-  <div class="m-thumbnail-selector--thumbnail" *ngIf="thumbnailFromFile || thumbnailNotChanged">
-    <img [src]="thumbnailSrc"/>
+  <div
+    class="m-thumbnail-selector--thumbnail"
+    *ngIf="thumbnailFromFile || thumbnailNotChanged"
+  >
+    <img [src]="thumbnailSrc" />
   </div>
-  <video preload="metadata" muted crossOrigin="anonymous" [src]="src" [class.hide]="thumbnailFromFile"></video>
+  <video
+    preload="metadata"
+    muted
+    crossOrigin="anonymous"
+    [src]="src"
+    [class.hide]="thumbnailFromFile"
+  ></video>
 </div>
 
 <div class="m-thumbnail-selector--thumbnails">
-  <h5 class="m-thumbnail-selector--thumbnails--title" i18n="@@MEDIA__THUMBNAIL_SELECTOR__THUMBNAILS_TITLE">Thumbnails</h5>
+  <h5
+    class="m-thumbnail-selector--thumbnails--title"
+    i18n="@@MEDIA__THUMBNAIL_SELECTOR__THUMBNAILS_TITLE"
+  >
+    Thumbnails
+  </h5>
 
   <span class="m-thumbnail-selector--thumbnails--subtext">
-    <ng-container i18n="@@MEDIA__THUMBNAIL_SELECTOR__SELECT_ONE_OR">Select one from the list or </ng-container>
-    <a (click)="uploadThumbnail($event)" i18n="@@MEDIA__THUMBNAIL_SELECTOR__UPLOAD_A_NEW_ONE">upload a new one</a>
+    <ng-container i18n="@@MEDIA__THUMBNAIL_SELECTOR__SELECT_ONE_OR"
+      >Select one from the list or
+    </ng-container>
+    <a
+      (click)="uploadThumbnail($event)"
+      i18n="@@MEDIA__THUMBNAIL_SELECTOR__UPLOAD_A_NEW_ONE"
+      >upload a new one</a
+    >
   </span>
 
   <div class="m-thumbnail-selector--thumbnails-list">
-    <img class="m-thumbnail-selector--thumbnails-list--thumbnail"
+    <img
+      class="m-thumbnail-selector--thumbnails-list--thumbnail"
       *ngFor="let thumb of thumbnails; let i = index"
       [src]="thumb"
       crossOrigin="anonymous"
-      [class.m-thumbnail-selector--thumbnails-list--thumbnail--selected]="i === selectedThumbnail"
-      (click)="selectThumbnail(i)">
+      [class.m-thumbnail-selector--thumbnails-list--thumbnail--selected]="
+        i === selectedThumbnail
+      "
+      (click)="selectThumbnail(i)"
+    />
   </div>
 </div>
-<input type="file" (change)="addNewThumbnail($event)" hidden #thumbnailInput/>
-  
+<input type="file" (change)="addNewThumbnail($event)" hidden #thumbnailInput />

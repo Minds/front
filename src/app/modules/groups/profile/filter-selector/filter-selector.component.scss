@@ -29,7 +29,7 @@ m-groups--filter-selector {
     line-height: 1;
     text-align: right;
     display: inline-block;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
 
@@ -47,7 +47,7 @@ m-groups--filter-selector {
       text-decoration: none;
       letter-spacing: 2px;
       cursor: pointer;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
         border-right: 1px solid rgba(themed($m-grey-300), 0.25);
       }
@@ -56,8 +56,9 @@ m-groups--filter-selector {
         border-right: none;
       }
 
-      &:hover, &.m-groups--filter-selector-active {
-        @include m-theme(){
+      &:hover,
+      &.m-groups--filter-selector-active {
+        @include m-theme() {
           color: themed($m-blue);
         }
       }

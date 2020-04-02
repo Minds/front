@@ -13,15 +13,19 @@
   @media screen and (max-width: 600px) {
     max-width: 65%;
   }
-
 }
 
-.m-groupMemberPreviews__member, .m-groupMemberPreviews__member--count {
+.m-groupMemberPreviews__member,
+.m-groupMemberPreviews__member--count {
   border-radius: 100px;
   overflow: hidden;
   width: 32px;
   height: 32px;
   margin-right: 8px;
+
+  &:not(.m-groupMemberPreviews__member--count) {
+    flex-shrink: 0;
+  }
 
   &.m-groupMemberPreviews__member--count {
     width: auto;
@@ -33,7 +37,7 @@
     box-sizing: border-box;
     text-align: center;
     cursor: pointer;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-grey-50);
       color: themed($m-grey-500);
     }

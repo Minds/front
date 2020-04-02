@@ -1,4 +1,12 @@
-import { Component, ElementRef, forwardRef, ViewChild, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  forwardRef,
+  ViewChild,
+  Output,
+  EventEmitter,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { Country } from './country';
@@ -7,11 +15,9 @@ import { CountryCode } from './countries';
 
 @Component({
   selector: 'm-phone-input--country',
-  templateUrl: 'country.component.html'
+  templateUrl: 'country.component.html',
 })
-
-export class PhoneInputCountryComponent {
-
+export class PhoneInputCountryComponent implements OnInit {
   @Output('country') selectedCountryEvt = new EventEmitter();
   countries: Array<Country> = [];
   selectedCountry: Country = new Country();
@@ -24,8 +30,7 @@ export class PhoneInputCountryComponent {
   showDropdownMenu: boolean = false;
   allowedKeyCodes: Array<number> = [8, 33, 34, 35, 36, 37, 39, 46];
 
-  constructor(private fb: FormBuilder) {
-  }
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.fetchCountryData();
@@ -40,7 +45,10 @@ export class PhoneInputCountryComponent {
       let items = this.dropdownMenu.nativeElement.querySelectorAll('.country');
 
       for (let i: number = 0; i < items.length; ++i) {
-        if (items[i].children[1].innerText.trim()[0].toUpperCase() === uppercaseKey) {
+        if (
+          items[i].children[1].innerText.trim()[0].toUpperCase() ===
+          uppercaseKey
+        ) {
           this.dropdownMenu.nativeElement.scrollTop = items[i].offsetTop;
           break;
         }
@@ -71,5 +79,4 @@ export class PhoneInputCountryComponent {
       this.countries.push(country);
     });
   }
-
 }

@@ -1,0 +1,110 @@
+@import '../../../foundation/grid-values';
+
+m-blockchain--purchase {
+  h4 {
+    font-size: 16px;
+    line-height: 44px;
+    font-weight: bold;
+    opacity: 0.7;
+
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
+}
+
+.m-blockchainTokenPurchase {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 2px;
+  padding: 20px 35px;
+
+  @include m-theme() {
+    background: themed($m-white);
+    color: themed($m-black);
+  }
+
+  @media screen and (max-width: $m-grid-min-vp) {
+    padding: 10px 15px;
+  }
+
+  .m-blockchainTokenPurchase__amount {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 24px;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      font-size: 18px;
+    }
+
+    label {
+      display: inline-block;
+      font: inherit;
+      margin-right: 0.1em;
+
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+    }
+
+    input {
+      display: inline-block;
+      font: inherit;
+      appearance: none;
+      border: none;
+      margin: 0 0.35em 0 0;
+      padding: 0;
+      line-height: 1;
+      vertical-align: top;
+      border-radius: 0;
+      width: 5em;
+      text-align: right;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        width: 4em;
+      }
+
+      &:focus {
+        outline: none !important;
+      }
+
+      @include m-theme() {
+        color: themed($m-black);
+        box-shadow: 0 1px 0 rgba(themed($m-black), 0.1);
+
+        &:focus {
+          box-shadow: 0 1px 0 rgba(themed($m-black), 0.3);
+        }
+      }
+    }
+  }
+
+  .m-blockchainTokenPurchase__ethTotal {
+    @include m-theme() {
+      color: themed($m-grey-300);
+    }
+
+    .m-blockchainTokenPurchaseEthTotal__value {
+      @include m-theme() {
+        color: themed($m-black);
+      }
+    }
+  }
+}
+
+.m-blockchainTokenPurchase__ethRate {
+  display: block;
+  margin: 24px 0 0;
+
+  @include m-theme() {
+    color: themed($m-grey-300);
+  }
+
+  a {
+    cursor: pointer;
+  }
+}

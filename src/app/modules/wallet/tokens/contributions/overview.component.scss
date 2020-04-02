@@ -1,8 +1,8 @@
 .m-token-contributions--overview {
   padding: 16px;
   margin-bottom: 8px;
-  @include m-theme(){
-    background-color: themed($m-white);
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
   }
 
   .m-token-contributions--overview--columns {
@@ -30,8 +30,8 @@
           width: 64px;
           height: 64px;
           border-radius: 50%;
-          @include m-theme(){
-             border: 2px solid themed($m-grey-50);
+          @include m-theme() {
+            border: 2px solid themed($m-grey-50);
           }
         }
       }
@@ -42,13 +42,13 @@
     font-weight: bold;
     margin-bottom: 16px;
     font-size: 16px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-green-light);
     }
 
     span {
       width: 15em;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-900);
       }
     }

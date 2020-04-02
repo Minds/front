@@ -1,76 +1,148 @@
-import { Component, EventEmitter } from '@angular/core';
-
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Session } from '../../../services/session';
-import { EmbedService } from '../../../services/embed';
+import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
+import isMobile from '../../../helpers/is-mobile';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-modal-share',
-  inputs: ['open', '_url: url', '_embed: embed'],
-  outputs: ['closed'],
-  template: `
-    <m-modal [open]="open" (closed)="close($event)">
-
-      <div class="mdl-card__supporting-text">
-        <input class="" value="{{url}}" (click)="copy($event)"/>
-
-      </div>
-
-      <div class="m-social-share-buttons">
-        <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-fb"
-          (click)="openWindow('https://www.facebook.com/sharer/sharer.php?u=' + encodedUrl + '&display=popup&ref=plugin&src=share_button')">
-          <ng-container i18n="@@MODALS__SHARE__ON_FACEBOOK">Share on Facebook</ng-container>
-        </button>
-        <button class="mdl-button mdl-button--raised mdl-color-text--white m-social-share-twitter"
-          (click)="openWindow('https://twitter.com/intent/tweet?text=Shared%20via%20Minds.com&tw_p=tweetbutton&url=' + encodedUrl)">
-          <ng-container i18n="@@MODALS__SHARE__ON_TWITTER">Share on Twitter</ng-container>
-        </button>
-      </div>
-
-      <div class="m-modal-share-embed" *ngIf="embedCode">
-        <span class="m-modal-share-embed__label mdl-color-text--blue-grey-300">
-          <ng-container i18n="@@M__COMMON__EMBED_INTO_WEBSITE">Embed into your website:</ng-container>
-        </span>
-        <div>
-          <textarea (click)="copy($event)" readonly>{{ embedCode }}</textarea>
-        </div>
-      </div>
-
-    </m-modal>
-  `
+  templateUrl: 'share.html',
 })
+export class ShareModalComponent implements OnInit, OnDestroy {
+  readonly cdnAssetsUrl: string;
 
-export class ShareModal {
+  rawUrl: string = '';
+  encodedRawUrl: string = '';
+  referrerParam: string = '';
 
-  open: boolean = false;
-  closed: EventEmitter<any> = new EventEmitter();
-  url: string = '';
-  encodedUrl: string = '';
-  embedCode: string = '';
+  shareUrl: string = '';
+  encodedShareUrl: string = '';
 
-  constructor(public session: Session, public embed: EmbedService) {
+  shareUrlRecentlyCopied: boolean = false;
+  shareUrlFocused: boolean = false;
+  shareUrlTimeout;
+
+  includeReferrerParam: boolean = true; // Include referrer param in url by default
+  flashing: boolean = false;
+  flashTimeout;
+
+  @Input('url') set data(url) {
+    this.rawUrl = url;
+    this.encodedRawUrl = encodeURI(this.rawUrl);
   }
 
-  set _url(value: string) {
-    this.url = value;
-    this.encodedUrl = encodeURI(this.url);
+  constructor(public session: Session, configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
-  set _embed(object: any) {
-    this.embedCode = this.embed.getIframeFromObject(object);
+  ngOnInit() {
+    if (this.session.getLoggedInUser()) {
+      // Create custom referral param for current user
+      this.referrerParam =
+        '?referrer=' + this.session.getLoggedInUser().username;
+    }
+
+    // Include referrerParam in url by default
+    this.shareUrl = this.rawUrl + this.referrerParam;
+    this.encodedShareUrl = encodeURIComponent(this.shareUrl);
   }
 
-  close(e?) {
-    this.open = false;
-    this.closed.next(true);
+  // Only show Messenger/Whatsapp share buttons if mobile or tablet
+  isMobileOrTablet() {
+    return isMobileOrTablet();
   }
 
-  copy(e) {
-    e.target.select();
-    document.execCommand('copy');
+  // Only show SMS share button if mobile
+  isMobile() {
+    return isMobile();
   }
 
   openWindow(url: string) {
     window.open(url, '_blank', 'width=600, height=300, left=80, top=80');
   }
 
+  openTwitter() {
+    const url =
+      'https://twitter.com/intent/tweet?tw_p=tweetbutton&url=' +
+      this.encodedShareUrl;
+    window.open(url, '_blank', 'width=620, height=220, left=80, top=80');
+  }
+
+  openFacebook() {
+    this.openWindow(
+      'https://www.facebook.com/sharer/sharer.php?u=' +
+        this.encodedShareUrl +
+        '&display=popup&ref=plugin&src=share_button'
+    );
+  }
+
+  openMessenger() {
+    const encodedFacebookAppId = encodeURIComponent('184865748231073');
+    this.openWindow(
+      'fb-messenger://share?link=' +
+        this.encodedShareUrl +
+        '&app_id=' +
+        encodedFacebookAppId
+    );
+  }
+
+  openWhatsapp() {
+    this.openWindow(
+      'https://api.whatsapp.com/send?text=' + this.encodedShareUrl
+    );
+  }
+
+  openSMS() {
+    this.openWindow('sms:?&body=' + this.encodedShareUrl);
+  }
+
+  openEmail() {
+    this.openWindow('mailto:?body=' + this.encodedShareUrl);
+  }
+
+  // Add or remove referrerParam from share url based on checkbox input
+  toggleReferrerParam() {
+    if (!this.includeReferrerParam) {
+      this.includeReferrerParam = true;
+      this.shareUrl = this.rawUrl + this.referrerParam;
+      this.encodedShareUrl = encodeURIComponent(this.shareUrl);
+    } else {
+      this.includeReferrerParam = false;
+      this.shareUrl = this.rawUrl;
+      this.encodedShareUrl = encodeURIComponent(this.shareUrl);
+    }
+
+    // Animate opacity of input text to indicate toggle occured
+    this.flashing = true;
+    clearTimeout(this.flashTimeout);
+    this.flashTimeout = setTimeout(() => {
+      this.flashing = false;
+    }, 160);
+  }
+
+  // Receives input element whose text you want to copy
+  copyToClipboard(inputElement) {
+    inputElement.select();
+    document.execCommand('copy');
+
+    // Temporarily change button text from 'copy' to 'copied'
+    clearTimeout(this.shareUrlTimeout);
+    this.shareUrlRecentlyCopied = true;
+    this.shareUrlTimeout = setTimeout(() => {
+      this.shareUrlRecentlyCopied = false;
+    }, 2000);
+  }
+
+  // Make copyable link container appear focused when you click on it
+  // Receives the inputElement to be focused
+  applyFocus(inputElement) {
+    inputElement.focus();
+    inputElement.select();
+    this.shareUrlFocused = true;
+  }
+
+  ngOnDestroy() {
+    clearTimeout(this.shareUrlTimeout);
+    clearTimeout(this.flashTimeout);
+  }
 }

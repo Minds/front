@@ -1,7 +1,7 @@
 @import 'defaults.scss';
 
-.m-messenger--encryption{
-  input{
+.m-messenger--encryption {
+  input {
     -webkit-appearance: none;
     outline: none;
     border: 0;
@@ -9,11 +9,12 @@
     padding: 12px;
     width: 132px;
   }
-  .mdl-button, button{
-    padding:0;
+  .mdl-button,
+  button {
+    padding: 0;
     font-size: 12px;
   }
-  p.m-messenger--error{
+  p.m-messenger--error {
     font-size: 11px;
     margin: 0;
     padding: 8px;
@@ -30,11 +31,11 @@
     line-height: 1.35;
     margin: 0;
     padding: 8px 12px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-blue-grey-700);
     }
   }
-  .m-messenger--encryption-rekey{
+  .m-messenger--encryption-rekey {
     p {
       line-height: 11px;
       font-size: 10px;
@@ -42,7 +43,7 @@
       padding: $minds-padding;
     }
     a {
-      cursor:pointer;
+      cursor: pointer;
     }
   }
 }

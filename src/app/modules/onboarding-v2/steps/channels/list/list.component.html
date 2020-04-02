@@ -1,0 +1,39 @@
+<div class="m-onboarding__channelList">
+  <span *ngIf="error && !inProgress" class="m-channelList__empty">
+    {{ error }}
+  </span>
+  <span
+    *ngIf="!error && !inProgress && !entities.length"
+    class="m-channelList__empty"
+  >
+    You have no suggestions at this time
+  </span>
+  <ul class="m-channelList__list" *ngIf="entities.length">
+    <li class="m-channelList__item" *ngFor="let entity of entities">
+      <a [routerLink]="['/', entity.username]" target="_blank">
+        <div
+          class="m-channelListItem__avatar"
+          [style.background-image]="
+            'url(' + cdnUrl + '/icon/' + entity.guid + ')'
+          "
+        ></div>
+        <div class="m-channelListItem__body">
+          <div [title]="entity.briefdescription">
+            <h4>{{ entity.username }}</h4>
+            <span i18n>{{ entity.subscribers_count | abbr }} subscribers</span>
+          </div>
+          <div class="m-layout__spacer"></div>
+          <minds-button-subscribe
+            [user]="entity"
+            [iconsOnly]="true"
+          ></minds-button-subscribe>
+        </div>
+      </a>
+    </li>
+  </ul>
+  <div
+    class="mdl-spinner mdl-js-spinner is-active"
+    [mdl]
+    [hidden]="!inProgress"
+  ></div>
+</div>

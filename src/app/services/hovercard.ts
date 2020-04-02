@@ -10,7 +10,7 @@ export class HovercardService {
     top: 'auto',
     right: 'auto',
     bottom: 'auto',
-    left: 'auto'
+    left: 'auto',
   };
 
   sticky: boolean = false;
@@ -19,8 +19,7 @@ export class HovercardService {
     return new HovercardService(client, cache);
   }
 
-  constructor(public client: Client, public cache: CacheService) {
-  }
+  constructor(public client: Client, public cache: CacheService) {}
 
   show(guid: any, elem: any, anchor: any) {
     if (!guid) {
@@ -50,7 +49,8 @@ export class HovercardService {
     this.cache.set(`hovercard-${this.guid}`, false);
 
     let currentGuid = this.guid; // Cache parameter scoping (`this` might change)
-    this.client.get(`api/v1/entities/entity/${this.guid}`, {})
+    this.client
+      .get(`api/v1/entities/entity/${this.guid}`, {})
       .then((response: any) => {
         if (response.entity) {
           this.cache.set(`hovercard-${currentGuid}`, response.entity);
@@ -114,7 +114,8 @@ export class HovercardService {
     if (anchor.indexOf('left') !== -1) {
       this.anchor.left = 'auto';
       this.anchor.right = docW - left + yPadding;
-    } else { // right: default
+    } else {
+      // right: default
       this.anchor.right = 'auto';
       this.anchor.left = right + yPadding;
     }
@@ -122,10 +123,10 @@ export class HovercardService {
     if (anchor.indexOf('bottom') !== -1) {
       this.anchor.top = 'auto';
       this.anchor.bottom = docH - top - rect.height;
-    } else { // top: default
+    } else {
+      // top: default
       this.anchor.bottom = 'auto';
       this.anchor.top = top;
     }
   }
-
 }

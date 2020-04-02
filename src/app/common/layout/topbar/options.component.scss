@@ -2,11 +2,11 @@ m-topbar--navigation--options {
   padding-right: 16px;
 }
 
-m-topbar--navigation--options m-dropdown{
+m-topbar--navigation--options m-dropdown {
   .m-dropdown--label-icon {
     font-size: 18px;
     cursor: pointer;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
   }
@@ -14,10 +14,12 @@ m-topbar--navigation--options m-dropdown{
   m-tooltip i.material-icons {
     font-size: 16px;
     margin: 0 8px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-400);
     }
   }
 
-  .mdl-switch { width: 38px; }
+  .mdl-switch {
+    width: 38px;
+  }
 }

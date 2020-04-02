@@ -1,15 +1,14 @@
 m-wallet--flyout {
-
   z-index: 1000;
   width: 320px;
   position: absolute;
   top: 24px;
   right: -120px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-grey-100);
   }
 
-  @media screen and (max-width: $max-mobile){
+  @media screen and (max-width: $max-mobile) {
     right: -50px;
   }
 
@@ -40,7 +39,7 @@ m-wallet--flyout {
     text-align: left;
     word-wrap: break-word;
     cursor: pointer;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white);
       background-color: themed($m-blue);
     }
@@ -52,7 +51,7 @@ m-wallet--flyout {
       right: 0;
       top: 0;
       i {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-white);
         }
       }
@@ -90,7 +89,7 @@ m-wallet--flyout {
 
   .m-wallet--flyout-balance i {
     font-style: normal;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-600);
     }
   }
@@ -111,7 +110,6 @@ m-wallet--flyout {
     }
   }
 }
-
 
 .m-wallet--topbar-toggle-overlay {
   position: fixed;

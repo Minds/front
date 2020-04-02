@@ -1,0 +1,47 @@
+<div class="m-adminFeatures">
+  <ng-container *ngIf="!isLoading && !error">
+    <div class="m-adminFeatures--label" i18n>
+      <b>Environment</b>: {{ environment }}
+    </div>
+
+    <div class="m-adminFeatures--label" i18n>
+      <b>Features for</b>: {{ readableFor }}
+    </div>
+
+    <table class="m-adminFeatures--table" cellspacing="0" cellpadding="0">
+      <thead>
+        <tr>
+          <th class="m-adminFeaturesTable--cell__first">Feature</th>
+          <th *ngFor="let service of services">{{ service }}</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let feature of features">
+          <td class="m-adminFeaturesTable--cell__first">{{ feature.name }}</td>
+          <td
+            *ngFor="let service of services"
+            class="m-adminFeaturesTable--cell__value"
+            [class.m-adminFeaturesTable--cell__bestValue]="
+              isBestService(service, feature.services)
+            "
+          >
+            {{ labelForValue(feature.services[service]) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-container>
+
+  <ng-container *ngIf="isLoading">
+    <div class="m-adminFeatures--loader">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="error">
+    <div class="m-adminFeatures--error">
+      {{ error }}
+    </div>
+  </ng-container>
+</div>

@@ -1,4 +1,12 @@
-import { Component, Injector, Input, OnDestroy, OnInit, SkipSelf, ViewChild } from '@angular/core';
+import {
+  Component,
+  Injector,
+  Input,
+  OnDestroy,
+  OnInit,
+  SkipSelf,
+  ViewChild,
+} from '@angular/core';
 
 import { Subject, Subscription } from 'rxjs';
 
@@ -10,29 +18,26 @@ import { MindsActivityObject } from '../../../interfaces/entities';
 import { MindsUser } from '../../../interfaces/entities';
 import { PosterComponent } from '../../../modules/newsfeed/poster/poster.component';
 import { WireChannelComponent } from '../../../modules/wire/channel/channel.component';
-import { debounceTime } from "rxjs/operators";
-import { ClientMetaService } from "../../../common/services/client-meta.service";
+import { debounceTime } from 'rxjs/operators';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { ComposerComponent } from '../../composer/composer.component';
 
 @Component({
   moduleId: module.id,
   selector: 'm-channel--feed',
-  providers: [ ClientMetaService ],
-  templateUrl: 'feed.html'
+  providers: [ClientMetaService],
+  templateUrl: 'feed.html',
 })
-
 export class ChannelFeedComponent implements OnInit, OnDestroy {
-
   @Input() user: MindsUser;
   @Input() openWireModal: boolean = false;
-
-  minds = window.Minds;
 
   filter: any = 'feed';
   isLocked: boolean = false;
   username: string;
   feed: Array<Object> = [];
   pinned: Array<Object> = [];
-  offset: string|number = '';
+  offset: string | number = '';
   moreData: boolean = true;
   inProgress: boolean = false;
   editing: boolean = false;
@@ -41,6 +46,9 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
 
   @ViewChild('poster', { static: false }) private poster: PosterComponent;
+
+  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
+
   @ViewChild('wire', { static: false }) private wire: WireChannelComponent;
 
   protected loadFeedObservable: Subject<any> = new Subject();
@@ -52,7 +60,7 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     public upload: Upload,
     public scroll: ScrollService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
+    @SkipSelf() injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)
@@ -91,7 +99,7 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
 
     let params: any = {
       limit: 12,
-      offset: ''
+      offset: '',
     };
 
     if (!this.offset && this.user.pinned_posts.length > 0) {
@@ -102,7 +110,10 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
 
     params.offset = this.offset;
 
-    this.client.get('api/v1/newsfeed/personal/' + this.user.guid, params, { cache: true })
+    this.client
+      .get('api/v1/newsfeed/personal/' + this.user.guid, params, {
+        cache: true,
+      })
       .then((data: MindsActivityObject) => {
         if (!data.activity || !data.activity.length) {
           this.moreData = false;
@@ -129,22 +140,22 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     return this.session.getLoggedInUser().guid === this.user.guid;
   }
 
-  filterPinned(activities){
-    return activities.filter( (activity) => {
-      if (this.user.pinned_posts.indexOf(activity.guid) >= 0) {
-        activity.pinned = true;
-      } else {
-        return activity;
-      }
-    }).filter(x=>!!x);
+  filterPinned(activities) {
+    return activities
+      .filter(activity => {
+        if (this.user.pinned_posts.indexOf(activity.guid) >= 0) {
+          activity.pinned = true;
+        } else {
+          return activity;
+        }
+      })
+      .filter(x => !!x);
   }
 
   onScroll() {
-    var listen = this.scroll.listen((view) => {
-      if (view.top > 250)
-        this.isLocked = true;
-      if (view.top < 250)
-        this.isLocked = false;
+    var listen = this.scroll.listen(view => {
+      if (view.top > 250) this.isLocked = true;
+      if (view.top < 250) this.isLocked = false;
     });
   }
 
@@ -163,14 +174,22 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     this.feed.unshift(activity);
   }
 
-  canDeactivate() {
-    if (!this.poster || !this.poster.attachment)
-      return true;
+  protected v1CanDeactivate(): boolean {
+    if (!this.poster || !this.poster.attachment) return true;
     const progress = this.poster.attachment.getUploadProgress();
     if (progress > 0 && progress < 100) {
       return confirm('Your file is still uploading. Are you sure?');
     }
 
     return true;
+  }
+
+  canDeactivate(): boolean | Promise<boolean> {
+    if (this.composer) {
+      return this.composer.canDeactivate();
+    }
+
+    // Check v1 Poster component
+    return this.v1CanDeactivate();
   }
 }

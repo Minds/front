@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api';
 import { Session } from '../../services/session';
 import { ContextService } from '../../services/context.service';
@@ -13,13 +12,9 @@ import { OverlayModalService } from '../../services/ux/overlay-modal';
 @Component({
   moduleId: module.id,
   selector: 'm-blog--list',
-  templateUrl: 'list.component.html'
+  templateUrl: 'list.component.html',
 })
-
 export class BlogListComponent {
-
-  minds;
-
   offset: string = '';
   moreData: boolean = true;
   inProgress: boolean = false;
@@ -35,17 +30,12 @@ export class BlogListComponent {
     public client: Client,
     public route: ActivatedRoute,
     public router: Router,
-    public title: MindsTitle,
     private context: ContextService,
     public session: Session,
-    private overlayModal: OverlayModalService,
-  ) {
-  }
+    private overlayModal: OverlayModalService
+  ) {}
 
   ngOnInit() {
-    this.title.setTitle('Blogs');
-    this.minds = window.Minds;
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       this.filter = params['filter'];
 
@@ -54,10 +44,9 @@ export class BlogListComponent {
           this.filter = 'network';
           break;
         case 'trending':
-          this.title.setTitle('Trending Blogs');
           break;
         case 'top':
-          this.router.navigate(['/newsfeed/global/top', { 'type': 'blogs' }]);
+          this.router.navigate(['/newsfeed/global/top', { type: 'blogs' }]);
 
           // if (!this.session.isLoggedIn()) {
           //   this.router.navigate(['/login']);
@@ -70,7 +59,6 @@ export class BlogListComponent {
           }
           this.filter = 'trending';
         case 'featured':
-          this.title.setTitle('Blogs');
           break;
         case 'all':
           break;
@@ -108,8 +96,7 @@ export class BlogListComponent {
   }
 
   load(refresh: boolean = false) {
-    if (this.inProgress)
-      return false;
+    if (this.inProgress) return false;
 
     if (refresh) {
       this.offset = '';
@@ -123,18 +110,17 @@ export class BlogListComponent {
 
     if (this.filter === 'trending') {
       endpoint = 'api/v2/entities/suggested/blogs';
-      if (this.all)
-        endpoint += '/all';
+      if (this.all) endpoint += '/all';
     } else {
       endpoint = 'api/v1/blog/' + this.filter + '/' + this._filter2;
     }
-    this.client.get(endpoint, {
-      limit: 12,
-      offset: this.offset,
-      rating: this.rating,
-    })
+    this.client
+      .get(endpoint, {
+        limit: 12,
+        offset: this.offset,
+        rating: this.rating,
+      })
       .then((response: any) => {
-
         if (!response.entities || !response.entities.length) {
           this.moreData = false;
           this.inProgress = false;
@@ -152,7 +138,7 @@ export class BlogListComponent {
         }
         this.inProgress = false;
       })
-      .catch((e) => {
+      .catch(e => {
         this.inProgress = false;
       });
   }
@@ -173,12 +159,19 @@ export class BlogListComponent {
   }
 
   openHashtagsSelector() {
-    this.overlayModal.create(HashtagsSelectorModalComponent, {}, {
-      class: 'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
-      onSelected: () => {
-        this.load(true); //refresh list
-      },
-    }).present();
+    this.overlayModal
+      .create(
+        HashtagsSelectorModalComponent,
+        {},
+        {
+          class:
+            'm-overlay-modal--hashtag-selector m-overlay-modal--medium-large',
+          onSelected: () => {
+            this.load(true); //refresh list
+          },
+        }
+      )
+      .present();
   }
 
   pushToColumns(blogs) {
@@ -202,7 +195,6 @@ export class BlogListComponent {
       }
     }
   }
-
 }
 
 export { BlogView } from './view/view';

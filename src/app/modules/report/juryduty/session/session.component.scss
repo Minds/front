@@ -1,11 +1,15 @@
 .m-juryDutySession__hero {
-  background: #132552;
   padding: 42px 0;
   text-align: center;
+  @include m-theme() {
+    background: themed($m-blue-grey-800);
+  }
 
   i {
-      font-size: 112px;
-      color: #FFF;
+    font-size: 112px;
+    @include m-theme() {
+      color: themed($m-white);
+    }
   }
 }
 
@@ -20,6 +24,8 @@
     letter-spacing: 2px;
     text-transform: uppercase;
     font-weight: 600;
-    color: #666;
+    @include m-theme() {
+      color: themed($m-grey-600);
+    }
   }
 }

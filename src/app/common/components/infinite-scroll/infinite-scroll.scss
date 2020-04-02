@@ -1,9 +1,9 @@
-infinite-scroll{
+infinite-scroll {
   display: block;
   width: 100%;
   text-transform: uppercase;
 
-  .m-infinite-scroll-manual{
+  .m-infinite-scroll-manual {
     padding: 8px;
     display: block;
     width: auto;
@@ -12,27 +12,27 @@ infinite-scroll{
     border-radius: 4px;
     font-size: 12px;
     font-weight: 600;
-    cursor:pointer;
+    cursor: pointer;
   }
 
-  .m-infinite-scroll-manual__noMore{
+  .m-infinite-scroll-manual__noMore {
     cursor: text;
-    
-    @include m-theme(){
+
+    @include m-theme() {
       color: themed($m-blue-grey-300) !important;
       background-color: themed($m-blue-grey-50) !important;
     }
   }
 
-  .m-infinite-scroll-manual__loadMore{
+  .m-infinite-scroll-manual__loadMore {
     &:hover {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue-grey-700) !important;
         background-color: themed($m-blue-grey-300) !important;
       }
     }
     &:active {
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-blue-grey-200) !important;
       }
     }

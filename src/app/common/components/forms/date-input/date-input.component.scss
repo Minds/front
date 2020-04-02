@@ -1,9 +1,9 @@
-.m-date-input--field{
+.m-date-input--field {
   display: inline-block;
   max-width: 100%;
-  position:relative;
+  position: relative;
 
-  &::before{
+  &::before {
     content: '\25bc';
     position: absolute;
     pointer-events: none;
@@ -16,7 +16,7 @@
     text-align: center;
     transform: scale(0.84, 0.42);
     filter: progid:DXImageTransform.Microsoft.Matrix(M11=.84, M12=0, M21=0, M22=.42, SizingMethod='auto expand');
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-500);
     }
   }
@@ -24,8 +24,8 @@
   select {
     padding: 8px 40px 8px 8px;
     appearance: none;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-100);
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
     }
   }
 }

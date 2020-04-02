@@ -1,0 +1,101 @@
+@import './grid-values';
+@import '../../stylesheets/themes';
+@import 'defaults';
+
+.mf-button {
+  display: inline-block;
+  padding: 14px 32px;
+  font: inherit;
+  font-size: 18px;
+  line-height: 24px;
+  border: 1px solid;
+  border-radius: 2px;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  text-align: center;
+  appearance: none;
+  text-decoration: none;
+
+  > * {
+    vertical-align: middle;
+    margin-right: 0.35em; // A space
+
+    &:last-child {
+      margin-right: initial;
+    }
+  }
+
+  i.material-icons {
+    line-height: 1em;
+    font-size: 20px;
+    height: auto;
+    color: inherit;
+    opacity: 0.4;
+  }
+
+  @include m-theme() {
+    background: themed($m-blue);
+    color: themed($m-white-always);
+    border-color: themed($m-blue);
+  }
+
+  &.mf-button--smaller {
+    font-size: 15px;
+    line-height: 21px;
+    padding: 10px 20px;
+    border-radius: 3px;
+  }
+
+  &.mf-button--alt {
+    @include m-theme() {
+      background: themed($m-aqua);
+      border-color: themed($m-aqua);
+      color: themed($m-white-always);
+    }
+  }
+
+  &.mf-button--destructive {
+    @include m-theme() {
+      background: themed($m-red);
+      border-color: themed($m-red);
+      color: themed($m-white-always);
+    }
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    display: block;
+    font-size: 15px;
+    padding: 12px 15px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &.mf-button--always-inline {
+    @media screen and (max-width: $m-grid-min-vp) {
+      display: inline-block;
+    }
+  }
+
+  &.mf-button--hollow {
+    @include m-theme() {
+      background: transparent; // Within theme because of cascading
+      color: themed($m-black);
+      border-color: themed($m-blue);
+    }
+  }
+
+  &.mf-button--hollow-mono {
+    @include m-theme() {
+      background: transparent; // Within theme because of cascading
+      color: themed($m-black);
+      border-color: themed($m-grey-200);
+    }
+  }
+
+  &[disabled] {
+    cursor: default;
+    opacity: 0.6;
+  }
+}

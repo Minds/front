@@ -1,52 +1,82 @@
 <div class="m-boost-console-booster--cta">
-  <span i18n="@@BOOST__CONSOLE__BOOSTER__CTA">Boosting guarantees more views on your posts and content.</span>
+  <span i18n="@@BOOST__CONSOLE__BOOSTER__CTA"
+    >Boosting guarantees more views on your posts and content.</span
+  >
   <!--<button class="mdl-button mdl-button&#45;&#45;raised mdl-color-text&#45;&#45;white" (click)="toggle()" i18n="verb|@@M__ACTION__BOOST">Boost</button>-->
 </div>
 
 <div class="m-boost-console-booster--content">
   <!-- Posts  -->
   <ng-container *ngIf="type == 'newsfeed' || type == 'offers'">
-    <ng-container *ngIf="posts && posts.length > 0">
+    <ng-container>
       <div class="m-boost-console--booster--posts-list">
-          <minds-card [object]="object" class="m-border" hostClass="mdl-card" *ngFor="let object of posts"></minds-card>
+        <ng-container *ngFor="let entity of feed$ | async">
+          <minds-card
+            [object]="entity | async"
+            class="m-border"
+            hostClass="mdl-card"
+          ></minds-card>
+        </ng-container>
       </div>
     </ng-container>
 
-    <h3 [hidden]="inProgress || posts.length > 0" i18n="@@BOOST__CONSOLE__BOOSTER__POST_SOMETHING">You have no content yet. Why don't you post
-      something?</h3>
-    <div *ngIf="inProgress"
+    <h3 [hidden]="noContent" i18n="@@BOOST__CONSOLE__BOOSTER__POST_SOMETHING">
+      You have no content yet. Why don't you post something?
+    </h3>
+    <div
+      *ngIf="inProgress"
       class="mdl-spinner mdl-js-spinner is-active"
       [mdl]
     ></div>
-    <div #poster [hidden]="!inProgress && posts.length > 0">
-
-    </div>
+    <div #poster [hidden]="!inProgress && noContent"></div>
   </ng-container>
 
   <!-- User and Media  -->
   <ng-container *ngIf="type == 'content'">
     <h3 i18n="@@BOOST__CONSOLE__BOOSTER__YOUR_CHANNEL_TITLE">Your channel</h3>
-    <minds-card [object]="session.getLoggedInUser()" hostClass="mdl-shadow--2dp"></minds-card>
+    <minds-card
+      [object]="session.getLoggedInUser()"
+      hostClass="mdl-shadow--2dp"
+    ></minds-card>
 
-    <ng-container *ngIf="media.length > 0">
-      <h3 i18n="@@BOOST__CONSOLE__BOOSTER__YOUR_RECENT_MEDIA_TITLE">Your recent media</h3>
+    <ng-container *ngIf="(feed$ | async)?.length != 0">
+      <h3 i18n="@@BOOST__CONSOLE__BOOSTER__YOUR_RECENT_MEDIA_TITLE">
+        Your recent media
+      </h3>
       <div class="mdl-grid m-boost-console-booster--content-grid">
-        <div class="mdl-cell mdl-cell--6-col" *ngFor="let object of media">
-          <minds-card [object]="object" hostClass="mdl-shadow--2dp"></minds-card>
-          <minds-button type="boost" [object]="object"></minds-button>
+        <div
+          class="mdl-cell mdl-cell--6-col"
+          *ngFor="let entity of feed$ | async"
+        >
+          <ng-container *ngIf="(entity | async)?.thumbnail_src">
+            <minds-card
+              [object]="entity | async"
+              hostClass="mdl-shadow--2dp"
+            ></minds-card>
+            <minds-button type="boost" [object]="entity | async"></minds-button>
+          </ng-container>
         </div>
       </div>
     </ng-container>
 
-    <h3 [hidden]="inProgress || media.length > 0" i18n="@@BOOST__CONSOLE__BOOSTER__POST_SOMETHING">You have no content yet. Why don't you post
-      something?</h3>
-    <div *ngIf="inProgress"
+    <h3
+      [hidden]="!inProgress && noContent"
+      i18n="@@BOOST__CONSOLE__BOOSTER__POST_SOMETHING"
+    >
+      You have no content yet. Why don't you post something?
+    </h3>
+    <div
+      *ngIf="inProgress"
       class="mdl-spinner mdl-js-spinner is-active"
       [mdl]
     ></div>
-    <div #poster [hidden]="inProgress && media.length > 0">
-
-    </div>
-
+    <div #poster [hidden]="!inProgress && noContent"></div>
   </ng-container>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="loadNext()"
+    [moreData]="feedsService.hasMore | async"
+    [inProgress]="inProgress"
+  ></infinite-scroll>
 </div>

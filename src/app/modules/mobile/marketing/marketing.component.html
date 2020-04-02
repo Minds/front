@@ -1,87 +1,180 @@
 <div class="m-marketing m-mobile--marketing">
-
+  <!--Top / Hero -->
   <div class="m-marketing--hero">
     <div class="m-marketing--hero--video">
-      <img [src]="minds.cdn_assets_url + 'assets/photos/circles.png'">
+      <img [src]="cdnAssetsUrl + 'assets/photos/circles.png'" />
     </div>
-
     <div class="m-marketing--hero--inner">
-
       <div class="m-marketing--hero--slogans">
-
-        <h2>
-          Minds Android App
-        </h2>
-
+        <h1>
+          Minds Mobile App
+        </h1>
       </div>
-
       <div class="m-marketing--hero--actions">
-        <i class="material-icons m-mobile__giantDroid">android</i>
+        <!-- Space for an icon -->
       </div>
-
     </div>
-
   </div>
 
-  <section class="m-marketing--section mdl-color--white" style="padding-bottom: 0; padding-top: 0">
-
-    <div class="m-marketing--section--subsection m-marketing--section--subsection--first">
+  <section
+    class="m-marketing--section mdl-color--white"
+    style="padding-bottom: 0; padding-top: 0"
+  >
+    <div class="m-marketing--downloadPlatform">
+      <h2>
+        For Android:
+      </h2>
+      <!--Android APK -->
+      <div class="m-marketing--downloadOption">
+        <div class="m-marketing--downloadButton">
+          <a [href]="latestRelease.href" target="_blank"
+            ><img [src]="cdnAssetsUrl + 'assets/marketing/mobile-dl-button.png'"
+          /></a>
+          <span>(recommended)</span>
+        </div>
+        <p>
+          Download the mobile app directly from Minds for the best experience.
+          All content is accessible.
+        </p>
+        <p>In order to install this version you must:</p>
+        <ul>
+          <li>Be running a minimum of Android 5 (Lollipop).</li>
+          <li>
+            Update Phone settings to "Allow installation of apps from unknown
+            sources".
+          </li>
+          <li>Download and install!</li>
+        </ul>
+      </div>
+      <!--Play Store -->
+      <div class="m-marketing--downloadOption">
+        <div class="m-marketing--downloadButton">
+          <a
+            href="https://play.google.com/store/apps/details?id=com.minds.mobile&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"
+            target="_blank"
+            ><img
+              alt="Get it on Google Play"
+              src="https://play.google.com/intl/en_gb/badges/images/generic/en_badge_web_generic.png"
+          /></a>
+        </div>
+        <p>
+          You may also download the mobile app from the Google Play Store. Due
+          to the Google Play Store terms of service, NSFW content is not
+          accessible in this version.
+        </p>
+      </div>
+    </div>
+    <!--iOS Download -->
+    <div class="m-marketing--downloadPlatform">
+      <h2>
+        For iPhone:
+      </h2>
+      <div class="m-marketing--downloadOption">
+        <div
+          class="m-marketing--downloadButton m-marketing--downloadButton--iOS"
+        >
+          <a
+            href="https://geo.itunes.apple.com/us/app/minds-com/id961771928?mt=8&amp;uo=6"
+            target="_blank"
+            ><img
+              alt="iOS App"
+              src="https://devimages-cdn.apple.com/app-store/marketing/guidelines/images/badge-download-on-the-app-store.svg"
+          /></a>
+        </div>
+        <p>
+          iPhone users may download the mobile app directly from the iOS App
+          Store. All features of the Minds Token (wallet, boost, wire, etc) are
+          not currently supported in this version. All content is accessible.
+        </p>
+      </div>
+    </div>
+    <div
+      class="m-marketing--section--subsection m-marketing--section--subsection--first"
+    >
       <div class="m-marketing--section--subsection-container">
-        <div class="m-marketing--section--subsection-left m-marketing--section--subsection-text">
+        <div
+          class="m-marketing--section--subsection-left m-marketing--section--subsection-text"
+        >
           <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--12-col m-mobile--marketing--spinner" *ngIf="inProgress">
+            <h2>
+              Release History:
+            </h2>
+            <div
+              class="mdl-cell mdl-cell--12-col m-mobile--marketing--spinner"
+              *ngIf="inProgress"
+            >
               <div class="mdl-spinner mdl-js-spinner is-active"></div>
             </div>
 
             <div class="mdl-cell mdl-cell--12-col" *ngIf="error">
-              <p class="m-mobile--marketing--error">Oops! There was an issue retrieving mobile releases: <i>{{error}}</i></p>
+              <p class="m-mobile--marketing--error">
+                Oops! There was an issue retrieving mobile releases:
+                <i>{{ error }}</i>
+              </p>
             </div>
 
-            <div class="mdl-cell mdl-cell--12-col" *ngFor="let release of releases">
+            <div
+              class="mdl-cell mdl-cell--12-col"
+              *ngFor="let release of releases"
+            >
               <h2>
                 <ng-container *ngIf="release.latest">Latest -</ng-container>
                 <ng-container *ngIf="release.unstable">Canary -</ng-container>
-                {{release.version}}
+                {{ release.version }}
               </h2>
-
-              <p>Released: {{release.timestamp * 1000 | date:'longDate'}} -
+              <p>
+                Released: {{ release.timestamp * 1000 | date: 'longDate' }} -
                 <a [href]="release.href" target="_blank">
                   Download
                 </a>
               </p>
 
-              <p class="m-marketing-show-mobile">You need to tap and hold the download link</p>
-
-              <p *ngIf="release.unstable" class="m-mobile--marketing--canary-note">
-                Disclaimer: This is a Canary version of the app targeted to test users. It might contain bugs or
-                unfinished features. Use at your own risk.
+              <p class="m-marketing-show-mobile">
+                You need to tap and hold the download link
               </p>
 
-              <a *ngIf="release.sourceHref" [href]="release.sourceHref" target="_blank" class="m-mobile--marketing--codelink">
+              <p
+                *ngIf="release.unstable"
+                class="m-mobile--marketing--canary-note"
+              >
+                Disclaimer: This is a Canary version of the app targeted to test
+                users. It might contain bugs or unfinished features. Use at your
+                own risk.
+              </p>
+
+              <a
+                *ngIf="release.sourceHref"
+                [href]="release.sourceHref"
+                target="_blank"
+                class="m-mobile--marketing--codelink"
+              >
                 Check out the #changelog:
               </a>
 
               <ul class="m-mobile--marketing--list" *ngIf="release.changelog">
-                <li *ngFor="let entry of release.changelog">{{entry}}</li>
+                <li *ngFor="let entry of release.changelog">{{ entry }}</li>
               </ul>
 
-              <ul class="m-mobile--marketing--list m-mobile--marketing--list--hashes" *ngIf="release.hashes">
-                <li *ngFor="let hash of release.hashes">{{ hash.type | uppercase }}: {{hash.value}}</li>
+              <ul
+                class="m-mobile--marketing--list m-mobile--marketing--list--hashes"
+                *ngIf="release.hashes"
+              >
+                <li *ngFor="let hash of release.hashes">
+                  {{ hash.type | uppercase }}: {{ hash.value }}
+                </li>
               </ul>
             </div>
           </div>
-
         </div>
-        <div class="m-marketing--section--subsection-right m-marketing--section--subsection-image"
-             style="text-align: center">
-          <img [src]="minds.cdn_assets_url + 'assets/logos/bulb.jpg'"/>
+        <div
+          class="m-marketing--section--subsection-right m-marketing--section--subsection-image"
+          style="text-align: center"
+        >
+          <img [src]="cdnAssetsUrl + 'assets/logos/bulb.jpg'" />
         </div>
       </div>
     </div>
-
   </section>
-
-
 </div>
 
 <m-footer></m-footer>

@@ -1,4 +1,9 @@
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+} from '@angular/core/testing';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
@@ -7,7 +12,6 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 describe('PhoneInputCountryComponent', () => {
-
   let comp: PhoneInputCountryComponent;
   let fixture: ComponentFixture<PhoneInputCountryComponent>;
 
@@ -16,20 +20,22 @@ describe('PhoneInputCountryComponent', () => {
   }
 
   function getFlagDropdown(): DebugElement {
-    return fixture.debugElement.query(By.css('ul.m-phone-input--country-list.dropdown-menu'));
+    return fixture.debugElement.query(
+      By.css('ul.m-phone-input--country-list.dropdown-menu')
+    );
   }
 
   function getFlagItem(i: number = 0): DebugElement {
-    return fixture.debugElement.query(By.css(`ul.m-phone-input--country-list > li:nth-child(${i})`));
+    return fixture.debugElement.query(
+      By.css(`ul.m-phone-input--country-list > li:nth-child(${i})`)
+    );
   }
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
       declarations: [MaterialMock, PhoneInputCountryComponent], // declare the test component
       imports: [ReactiveFormsModule, FormsModule],
-    })
-      .compileComponents();  // compile template and css
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
@@ -45,8 +51,16 @@ describe('PhoneInputCountryComponent', () => {
     expect(getSelectedFlagButton()).not.toBeNull();
   }));
   it('flag button should have a flag and an arrow', fakeAsync(() => {
-    expect(fixture.debugElement.query(By.css('.m-phone-input--selected-flag > .m-phone-input--flag'))).not.toBeNull();
-    expect(fixture.debugElement.query(By.css('.m-phone-input--selected-flag > .m-phone-input--arrow'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(
+        By.css('.m-phone-input--selected-flag > .m-phone-input--flag')
+      )
+    ).not.toBeNull();
+    expect(
+      fixture.debugElement.query(
+        By.css('.m-phone-input--selected-flag > .m-phone-input--arrow')
+      )
+    ).not.toBeNull();
   }));
   it('should have a flag button', fakeAsync(() => {
     expect(getSelectedFlagButton()).not.toBeNull();
@@ -58,9 +72,15 @@ describe('PhoneInputCountryComponent', () => {
 
   it('dropdown list should have a list of countries', fakeAsync(() => {
     const selector = 'ul.m-phone-input--country-list > .m-phone-input--country';
-    const flag = fixture.debugElement.query(By.css(selector + ' > .m-phone-input--flag-box'));
-    const countryName = fixture.debugElement.query(By.css(selector + ' > .m-phone-input--country-name'));
-    const dialCode = fixture.debugElement.query(By.css(selector + ' > .m-phone-input--dial-code'));
+    const flag = fixture.debugElement.query(
+      By.css(selector + ' > .m-phone-input--flag-box')
+    );
+    const countryName = fixture.debugElement.query(
+      By.css(selector + ' > .m-phone-input--country-name')
+    );
+    const dialCode = fixture.debugElement.query(
+      By.css(selector + ' > .m-phone-input--dial-code')
+    );
 
     expect(flag).not.toBeNull();
     expect(countryName).not.toBeNull();
@@ -84,5 +104,4 @@ describe('PhoneInputCountryComponent', () => {
 
     expect(comp.selectedCountry).not.toBeNull();
   }));
-
 });

@@ -1,14 +1,20 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  Inject,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Router } from '@angular/router';
+import { isPlatformServer } from '@angular/common';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-wallet-token--contributions',
   templateUrl: 'contributions.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WalletTokenContributionsComponent {
   startDate: string;
@@ -22,12 +28,10 @@ export class WalletTokenContributionsComponent {
     protected cd: ChangeDetectorRef,
     public session: Session,
     protected router: Router,
-  ) {
-
-  }
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {}
 
   ngOnInit() {
-
     const d = new Date();
 
     d.setHours(23, 59, 59);
@@ -41,6 +45,10 @@ export class WalletTokenContributionsComponent {
 
   async load(refresh: boolean) {
     if (this.inProgress && !refresh) {
+      return;
+    }
+
+    if (isPlatformServer(this.platformId)) {
       return;
     }
 
@@ -59,27 +67,30 @@ export class WalletTokenContributionsComponent {
       startDate.setHours(0, 0, 0);
       endDate.setHours(23, 59, 59);
 
-      let response: any = await this.client.get(`api/v2/blockchain/contributions`, {
-        from: Math.floor(+startDate / 1000),
-        to: Math.floor(+endDate / 1000),
-      }); 
+      let response: any = await this.client.get(
+        `api/v2/blockchain/contributions`,
+        {
+          from: Math.floor(+startDate / 1000),
+          to: Math.floor(+endDate / 1000),
+        }
+      );
 
       if (refresh) {
         this.contributions = [];
       }
 
       if (response) {
-        response.contributions.forEach( (item, index) => {
+        response.contributions.forEach((item, index) => {
           response.contributions[index].detailedMetrics = [];
           response.contributions[index].visible = false;
-          Object.keys(item.metrics).forEach((key) => {
+          Object.keys(item.metrics).forEach(key => {
             let data = item.metrics[key];
             data.key = key;
-            const share = data.score/item.score * item.share;
+            const share = (data.score / item.score) * item.share;
             data.share = share;
             response.contributions[index].detailedMetrics.push(data);
           });
-        })
+        });
         this.contributions.push(...(response.contributions || []));
       } else {
         console.error('No data');

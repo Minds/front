@@ -1,11 +1,14 @@
 import {
   ChangeDetectorRef,
   Component,
-  HostBinding, Input,
+  HostBinding,
+  Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { JitsiConfig, VideoChatService } from './videochat.service';
+import { Session } from '../../services/session';
+import { ConfigsService } from '../../common/services/configs.service';
 
 declare const JitsiMeetExternalAPI: any;
 
@@ -14,8 +17,6 @@ declare const JitsiMeetExternalAPI: any;
   templateUrl: './videochat.component.html',
 })
 export class VideoChatComponent implements OnInit {
-
-  minds = window.Minds;
   isActive$;
   isFullWidth$;
 
@@ -26,24 +27,30 @@ export class VideoChatComponent implements OnInit {
 
   constructor(
     private service: VideoChatService,
-    private cd: ChangeDetectorRef,
-  ) {
-  }
+    private session: Session,
+    private mindsConfigs: ConfigsService,
+    private cd: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.isActive$ = this.service.activate$.subscribe((configs: JitsiConfig) => {
-      if (configs) {
-        this.configs = configs;
-        this.startJitsi();
-      } else {
-        this.isActive = false;
+    this.isActive$ = this.service.activate$.subscribe(
+      (configs: JitsiConfig) => {
+        if (configs) {
+          this.configs = configs;
+          this.startJitsi();
+        } else {
+          this.isActive = false;
+        }
+        this.cd.markForCheck();
+        if (!this.cd['destroyed']) {
+          this.cd.detectChanges();
+        }
       }
-      this.cd.markForCheck();
-      this.cd.detectChanges();
-    });
+    );
   }
 
   ngOnDestroy() {
+    this.cd.detach();
     this.service.deactivate();
     this.isActive$.unsubscribe();
   }
@@ -58,7 +65,9 @@ export class VideoChatComponent implements OnInit {
       roomName: this.configs.roomName,
       width: '100%',
       parentNode: this.meet.nativeElement,
-      avatarUrl: `${this.minds.cdn_url}icon/${this.minds.user.guid}/large/${this.minds.user.icontime}`,
+      avatarUrl: `${this.mindsConfigs.get('cdn_url')}icon/${
+        this.session.getLoggedInUser().guid
+      }/large/${this.session.getLoggedInUser().icontime}`,
       interfaceConfigOverwrite: {
         // filmStripOnly: true,
         DEFAULT_REMOTE_DISPLAY_NAME: this.configs.username,
@@ -68,24 +77,37 @@ export class VideoChatComponent implements OnInit {
         APP_NAME: 'Minds',
 
         TOOLBAR_BUTTONS: [
-
           // main toolbar
-          'microphone', 'camera', 'desktop', 'fullscreen', 'fodeviceselection', 'hangup', 'tileview',
+          'microphone',
+          'camera',
+          'desktop',
+          'fullscreen',
+          'fodeviceselection',
+          'hangup',
+          'tileview',
           // extended toolbar
           'settings',
           'raisehand',
           'invite',
           'livestreaming',
-          'videoquality', 'filmstrip',
+          'videoquality',
+          'filmstrip',
           'stats',
         ],
       },
-
     };
     const api = new JitsiMeetExternalAPI(domain, options);
 
-    api.executeCommand('displayName', this.configs.username || 'Unknown Minds User');
-    api.executeCommand('avatarUrl', `${this.minds.cdn_url}icon/${this.minds.user.guid}/large/${this.minds.user.icontime}`);
+    api.executeCommand(
+      'displayName',
+      this.configs.username || 'Unknown Minds User'
+    );
+    api.executeCommand(
+      'avatarUrl',
+      `${this.mindsConfigs.get('cdn_url')}icon/${
+        this.session.getLoggedInUser().guid
+      }/large/${this.session.getLoggedInUser().icontime}`
+    );
 
     api.on('videoConferenceLeft', () => {
       this.service.deactivate();
@@ -95,5 +117,4 @@ export class VideoChatComponent implements OnInit {
   end() {
     // this.service.isActive.next(false);
   }
-
 }

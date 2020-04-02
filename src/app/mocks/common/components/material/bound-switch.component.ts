@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'm-material--bound-switch',
-  template: ''
+  template: '',
 })
 export class MaterialBoundSwitchComponentMock {
   @Input() toggled: boolean;

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Client } from '../../../services/api/client';
 import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
@@ -6,20 +6,16 @@ import { JurySessionService } from '../juryduty/session/session.service';
 
 @Component({
   selector: 'm-moderation__strikes',
-  templateUrl: 'strikes.component.html'
+  templateUrl: 'strikes.component.html',
 })
 export class StrikesComponent implements OnInit {
-
   strikes: any[] = [];
 
   inProgress: boolean = false;
   offset: string = '';
   moreData: boolean = true;
 
-  constructor(
-    private client: Client,
-    public service: JurySessionService,
-  ) { }
+  constructor(private client: Client, public service: JurySessionService) {}
 
   ngOnInit() {
     this.load();
@@ -35,10 +31,9 @@ export class StrikesComponent implements OnInit {
     this.inProgress = true;
 
     try {
-  
       let response: any = await this.client.get(`api/v2/moderation/strikes`, {
         limit: 12,
-        offset: this.offset
+        offset: this.offset,
       });
 
       if (refresh) {
@@ -76,8 +71,7 @@ export class StrikesComponent implements OnInit {
           return 'Appeal accepted'; // Strike should have been removed by this stage
         }
         break;
-      }
-      return 'Unknown';
+    }
+    return 'Unknown';
   }
-
 }

@@ -1,0 +1,36 @@
+<div
+  class="m-analytics__searchSuggestions__list"
+  [hidden]="disabled || !active"
+  (mousedown)="mousedown($event)"
+  *ngIf="session.isLoggedIn()"
+>
+  <ng-container *ngIf="!q">
+    <ng-container *ngFor="let suggestion of recent">
+      <a
+        class="m-analytics__searchSuggestions__suggestion"
+        *ngIf="suggestion.type == 'user'"
+        (click)="applyChannelFilter(suggestion)"
+      >
+        <img src="icon/{{ suggestion.guid }}/small" />
+        <div>
+          <div>{{ suggestion.name }}</div>
+          <div>@{{ suggestion.username }}</div>
+        </div>
+      </a>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="q">
+    <a
+      class="m-analytics__searchSuggestions__suggestion"
+      *ngFor="let suggestion of suggestions"
+      [routerLink]="['/', suggestion.username]"
+    >
+      <img src="icon/{{ suggestion.guid }}/small" />
+      <div>
+        <div>{{ suggestion.name }}</div>
+        <div>@{{ suggestion.username }}</div>
+      </div>
+    </a>
+  </ng-container>
+</div>

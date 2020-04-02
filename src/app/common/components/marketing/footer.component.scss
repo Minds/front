@@ -1,0 +1,173 @@
+@import '../../../foundation/grid-values';
+
+m-marketing__footer {
+  display: block;
+  margin: 105px 0 20px 0;
+
+  @media screen and (max-width: $m-grid-min-vp) {
+    margin: 80px 0 0;
+  }
+
+  @include m-theme() {
+    background: linear-gradient(
+      180deg,
+      themed($m-marketing-bg-gradient-start) 0%,
+      themed($m-white) 100%
+    );
+  }
+}
+
+.m-marketing__footer {
+  padding: 60px 0 48px;
+  border-top: 1px dashed;
+
+  @media screen and (max-width: $m-grid-min-vp) {
+    padding: 32px 0;
+  }
+
+  @include m-theme() {
+    border-color: themed($m-grey-50);
+    color: themed($m-grey-800);
+  }
+
+  .m-marketingFooter__columns {
+    max-width: 1084px;
+    margin: 0 auto;
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      padding: 0 32px;
+    }
+  }
+
+  .m-marketingFooter__column {
+    @media screen and(max-width: $m-grid-max-mobile) {
+      @for $i from 1 through 5 {
+        &:nth-child(#{$i}) {
+          grid-row: $i;
+        }
+      }
+    }
+
+    @media screen and (max-width: $m-grid-min-vp) {
+      margin-bottom: 32px;
+
+      &:last-child,
+      &.m-marketingFooter__column--noMobileSpacing {
+        margin-bottom: 0;
+      }
+    }
+
+    &.m-marketingFooter__brandColumn {
+      width: 60%;
+      margin: 0 auto;
+
+      @media screen and (max-width: $m-grid-max-mobile) {
+        width: 60%;
+        grid-row: 999;
+        margin: 32px 0 0;
+      }
+    }
+
+    h4 {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 21px;
+      margin: 0 0 26px;
+
+      @media screen and (max-width: $m-grid-min-vp) {
+        margin: 0 0 8px;
+      }
+
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+
+      &.m-marketingFooter__sloganText {
+        font-weight: 400;
+        margin: 0 0 21px;
+
+        @include m-theme() {
+          color: themed($m-grey-600);
+        }
+      }
+    }
+
+    .m-marketingFooter__mindsLogo {
+      width: 116px;
+      height: 43px;
+      margin: 0 0 35px;
+      background: url('<%= APP_CDN %>/assets/logos/logo.svg') no-repeat center
+        left;
+      background-size: contain;
+
+      @include m-on-theme(dark) {
+        background: url('<%= APP_CDN %>/assets/logos/logo-white.svg') no-repeat
+          center left;
+        background-size: contain;
+      }
+    }
+
+    .m-marketingFooter__text {
+      font-size: 14px;
+      line-height: 26px;
+
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+    }
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      > li {
+        @extend .m-marketingFooter__text;
+
+        @include m-theme() {
+          color: themed($m-grey-300);
+        }
+
+        @media screen and (max-width: $m-grid-min-vp) {
+          display: inline-block;
+          margin-right: 1em;
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+
+        a {
+          color: inherit;
+          font-weight: normal;
+          text-decoration: none;
+        }
+      }
+
+      &.m-marketingFooter__inlineList {
+        > li {
+          display: inline-block;
+          margin-right: 40px;
+
+          @media screen and (max-width: $m-grid-min-vp) {
+            margin-right: 1em;
+          }
+
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+
+        &.m-marketingFooter__legalLinks {
+          text-align: right;
+          padding-right: 92px;
+
+          @media screen and (max-width: $m-grid-min-vp) {
+            text-align: inherit;
+            padding-right: initial;
+          }
+        }
+      }
+    }
+  }
+}

@@ -8,17 +8,12 @@ import { animations } from '../animations';
   selector: 'm-messenger--setup',
   templateUrl: 'setup.component.html',
   animations: animations,
-  })
-
+})
 export class MessengerSetupChat {
-
   open: boolean = false;
   attentionNeededTrigger: any;
 
-  constructor(
-    public encryption: MessengerEncryptionService
-  ) {}
-
+  constructor(public encryption: MessengerEncryptionService) {}
 
   toggle() {
     this.open = !this.open;

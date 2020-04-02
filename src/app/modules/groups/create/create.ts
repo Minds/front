@@ -1,24 +1,19 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
-import { MindsTitle } from '../../../services/ux/title';
 import { Session } from '../../../services/session';
 
 @Component({
   moduleId: module.id,
   selector: 'minds-groups-create',
   host: {
-    '(keydown)': 'keyDown($event)'
+    '(keydown)': 'keyDown($event)',
   },
-  templateUrl: 'create.html'
+  templateUrl: 'create.html',
 })
-
 export class GroupsCreator {
-
-  minds = window.Minds;
-
   banner: any = false;
   avatar: any = false;
   group: any = {
@@ -28,16 +23,19 @@ export class GroupsCreator {
     tags: '',
     invitees: '',
     moderated: 0,
-    default_view: 0
+    default_view: 0,
   };
   invitees: Array<any> = [];
   editing: boolean = true;
   editDone: boolean = false;
   inProgress: boolean = false;
 
-  constructor(public session: Session, public service: GroupsService, public router: Router, public title: MindsTitle) {
-    this.title.setTitle('Create Group');
-  }
+  constructor(
+    public session: Session,
+    public service: GroupsService,
+    public router: Router,
+    private groupsService: GroupsService
+  ) {}
 
   addBanner(banner: any) {
     this.banner = banner.file;
@@ -52,11 +50,9 @@ export class GroupsCreator {
     this.group.membership = value;
   }
 
-
   invite(user: any) {
     for (let i of this.invitees) {
-      if (i.guid === user.guid)
-        return;
+      if (i.guid === user.guid) return;
     }
     this.invitees.push(user);
   }
@@ -73,7 +69,6 @@ export class GroupsCreator {
   }
 
   save(e) {
-
     if (!this.group.name) {
       return;
     }
@@ -82,24 +77,28 @@ export class GroupsCreator {
     this.editDone = true;
     this.inProgress = true;
 
-    this.group.invitees = this.invitees.map((user) => {
+    this.group.invitees = this.invitees.map(user => {
       return user.guid;
     });
 
-    this.service.save(this.group)
+    this.service
+      .save(this.group)
       .then((guid: any) => {
-
-        this.service.upload({
-          guid,
-          banner_position: this.group.banner_position
-        }, {
-            banner: this.banner,
-            avatar: this.avatar
-          })
+        this.service
+          .upload(
+            {
+              guid,
+              banner_position: this.group.banner_position,
+            },
+            {
+              banner: this.banner,
+              avatar: this.avatar,
+            }
+          )
           .then(() => {
+            this.groupsService.updateMembership(true, guid);
             this.router.navigate(['/groups/profile', guid]);
           });
-
       })
       .catch(e => {
         this.editing = true;
@@ -107,12 +106,10 @@ export class GroupsCreator {
       });
   }
 
-  onTagsChange(tags) {
-  }
+  onTagsChange(tags) {}
 
   onTagsAdded(tags) {
-    if (!this.group.tags)
-      this.group.tags = [];
+    if (!this.group.tags) this.group.tags = [];
 
     for (let tag of tags) {
       this.group.tags.push(tag.value);
@@ -129,5 +126,4 @@ export class GroupsCreator {
       }
     }
   }
-
 }

@@ -1,16 +1,15 @@
-
-.m-revenue--options{
+.m-revenue--options {
   margin: auto;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
-  .m-revenue--options-payout-method{
+  .m-revenue--options-payout-method {
     width: 100%;
     padding: 16px;
     box-sizing: border-box;
 
-    h3{
+    h3 {
       margin: 0;
       text-transform: uppercase;
       letter-spacing: 2px;
@@ -18,12 +17,18 @@
     }
   }
 
-  .m-revenue--options-payout-method-bank{
-    p{
+  .m-revenueOptions__input {
+    margin: 16px 0;
+    width: 300px;
+    border-radius: 36px;
+  }
+
+  .m-revenue--options-payout-method-bank {
+    p {
       font-family: 'Roboto', Helvetica, sans-serif;
-      margin:0;
+      margin: 0;
     }
-    .m-revenue--options-payout-method-bank-account{
+    .m-revenue--options-payout-method-bank-account {
       display: flex;
       align-items: center;
       padding: 16px;
@@ -31,7 +36,7 @@
       font-family: 'Roboto', Helvetica, sans-serif;
       letter-spacing: 1px;
       margin: 16px 0;
-      @include m-theme(){
+      @include m-theme() {
         border: 1px solid themed($m-grey-100);
       }
 
@@ -43,32 +48,32 @@
         letter-spacing: 6px;
         flex: 2;
       }
-      .m-revenue--options-payout-method-bank--actions{
+      .m-revenue--options-payout-method-bank--actions {
         text-align: right;
         text-transform: uppercase;
         font-weight: 300;
         font-size: 14px;
         cursor: pointer;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-200);
         }
       }
     }
   }
 
-  .m-revenue--options-payout-method-setup{
-    p{
+  .m-revenue--options-payout-method-setup {
+    p {
       font-family: 'Roboto', Helvetica, sans-serif;
     }
 
-    form{
-      label{
+    form {
+      label {
         text-transform: uppercase;
         font-family: 'Roboto', Helvetica, sans-serif;
         letter-spacing: 1px;
         word-spacing: 4px;
       }
-      input{
+      input {
         width: 100%;
         margin: 16px 0;
         padding: 8px;
@@ -76,16 +81,16 @@
         font-size: 16px;
       }
 
-      minds-country-input{
-        width:100%;
-        display:block;
+      minds-country-input {
+        width: 100%;
+        display: block;
         margin: 16px 0;
 
-        select{
+        select {
           font-size: 16px;
           font-family: 'Roboto', Helvetica, sans-serif;
           font-weight: 300;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-grey-400);
           }
         }
@@ -93,7 +98,7 @@
     }
   }
 
-  .m-error{
+  .m-error {
     padding: 16px;
     letter-spacing: 2px;
     font-size: 14px;
@@ -103,23 +108,26 @@
     border-radius: 2px;
   }
 
-  .m-revenue--options-cancel{
-    margin-top:32px;
-    padding:16px;
+  .m-revenue--options-cancel,
+  .m-revenue--options-requirements {
+    margin-top: 32px;
+    &.m-revenue--options-requirements {
+      margin-top: 0;
+    }
+    padding: 16px;
 
-    h3{
+    h3 {
       margin: 0;
       text-transform: uppercase;
       letter-spacing: 2px;
       font-size: 24px;
     }
-    p{
+    p {
       font-family: 'Roboto', Helvetica, sans-serif;
       //margin:0;
     }
-    button{
+    button {
       width: 200px;
     }
   }
-
 }

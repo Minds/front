@@ -16,7 +16,7 @@ m-boost-console-card {
     padding: ($minds-padding + 4px) $minds-padding $minds-padding;
     font-family: Roboto, sans-serif;
     font-weight: 300;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-blue-grey-500);
       background-color: themed($m-blue-grey-50);
     }
@@ -29,13 +29,12 @@ m-boost-console-card {
     display: flex;
     align-items: center;
     justify-content: center;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-blue-grey-500);
       background-color: themed($m-blue-grey-50);
       border-top: 1px solid themed($m-grey-100);
     }
   }
-
 
   .m-boost-card--manager-item {
     display: flex;
@@ -67,13 +66,13 @@ m-boost-console-card {
     }
 
     .m--crypto-token-symbol--stroke {
-      @include m-theme(){
+      @include m-theme() {
         stroke: themed($m-blue-grey-500);
       }
     }
 
     .m--crypto-token-symbol--fill {
-      @include m-theme(){
+      @include m-theme() {
         fill: themed($m-blue-grey-500);
       }
     }

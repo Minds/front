@@ -1,42 +1,36 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { SubscriptionsOnboardingComponent } from "./subscriptions.component";
-import { MockComponent } from "../../../../utils/mock";
-import { Client } from "../../../../services/api/client";
-import { clientMock } from "../../../../../tests/client-mock.spec";
-import { Upload } from "../../../../services/api/upload";
-import { uploadMock } from "../../../../../tests/upload-mock.spec";
-import { Session } from "../../../../services/session";
-import { sessionMock } from "../../../../../tests/session-mock.spec";
-import { By } from "@angular/platform-browser";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { SubscriptionsOnboardingComponent } from './subscriptions.component';
+import { MockComponent } from '../../../../utils/mock';
+import { Client } from '../../../../services/api/client';
+import { clientMock } from '../../../../../tests/client-mock.spec';
+import { Upload } from '../../../../services/api/upload';
+import { uploadMock } from '../../../../../tests/upload-mock.spec';
+import { Session } from '../../../../services/session';
+import { sessionMock } from '../../../../../tests/session-mock.spec';
+import { By } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 describe('SubscriptionsOnboardingComponent', () => {
-
   let comp: SubscriptionsOnboardingComponent;
   let fixture: ComponentFixture<SubscriptionsOnboardingComponent>;
 
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-      ],
+      imports: [FormsModule, ReactiveFormsModule],
       declarations: [
         MockComponent({
           selector: 'm-suggestions__sidebar',
           inputs: [],
-          outputs: []
+          outputs: [],
         }),
-        SubscriptionsOnboardingComponent
+        SubscriptionsOnboardingComponent,
       ],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: Session, useValue: sessionMock },
-      ]
-    })
-        .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -44,15 +38,6 @@ describe('SubscriptionsOnboardingComponent', () => {
     jasmine.clock().uninstall();
     jasmine.clock().install();
     fixture = TestBed.createComponent(SubscriptionsOnboardingComponent);
-
-    window.Minds = <any>{
-      user: {
-        guid: 1,
-        name: 'test',
-        briefdescription: '',
-        opted_in_hashtags: 1
-      }
-    };
 
     clientMock.response = {};
 
@@ -65,11 +50,14 @@ describe('SubscriptionsOnboardingComponent', () => {
   });
 
   it('should have a title', () => {
-    expect(fixture.debugElement.query(By.css('h2')).nativeElement.textContent).toBe('Subscribe to some popular channels');
+    expect(
+      fixture.debugElement.query(By.css('h2')).nativeElement.textContent
+    ).toBe('Subscribe to some popular channels');
   });
 
   it('should have an instance of m-suggestions__sidebar', () => {
-    expect(fixture.debugElement.query(By.css('m-suggestions__sidebar'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('m-suggestions__sidebar'))
+    ).not.toBeNull();
   });
-
 });

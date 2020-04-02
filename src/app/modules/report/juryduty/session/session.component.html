@@ -1,38 +1,36 @@
 <div class="m-juryDutySession__hero m-layout__hero">
-    <i class="material-icons">gavel</i>
+  <i class="material-icons">gavel</i>
 </div>
 
 <div class="m-juryDutySession__wrapper m-page">
+  <div
+    class="m-page__main"
+    *ngIf="session.getLoggedInUser().rewards; else onboardToRewards"
+  >
+    <ng-container *ngIf="juryType === 'appeal'">
+      <h4>
+        Appeal Jury
+        <a routerLink="../initial" *ngIf="session.isAdmin()">(Initial jury)</a>
+      </h4>
+      <m-jurydutySession__list juryType="appeal"> </m-jurydutySession__list>
+    </ng-container>
 
-    <div class="m-page__main" *ngIf="session.getLoggedInUser().rewards; else onboardToRewards">
-        <ng-container *ngIf="juryType === 'appeal'">
-            <h4>
-                Appeal Jury
-                <a routerLink="../initial" *ngIf="session.isAdmin()">(Initial jury)</a>
-            </h4>
-            <m-jurydutySession__list
-                juryType="appeal"
-            >
-            </m-jurydutySession__list>
-        </ng-container>
+    <ng-container *ngIf="juryType === 'initial'">
+      <h4>Initial Jury</h4>
+      <m-jurydutySession__list juryType="initial"> </m-jurydutySession__list>
+    </ng-container>
+  </div>
 
-        <ng-container *ngIf="juryType === 'initial'">
-            <h4>Initial Jury</h4>
-            <m-jurydutySession__list
-                juryType="initial"
-            >
-            </m-jurydutySession__list>
-        </ng-container>
+  <ng-template #onboardToRewards>
+    <div class="m-page__main">
+      <p>
+        You must join the rewards program to take part in the community jury.
+      </p>
+      <div class="m-token--onboarding">
+        <m-token--onboarding--rewards
+          skippable="false"
+        ></m-token--onboarding--rewards>
+      </div>
     </div>
-
-    <ng-template #onboardToRewards>
-        <div class="m-page__main">
-            <p>
-                You must join the rewards program to take part in the community jury.
-            </p>
-            <div class="m-token--onboarding">
-                <m-token--onboarding--rewards skippable="false"></m-token--onboarding--rewards>
-            </div>
-        </div>
-    </ng-template>
+  </ng-template>
 </div>

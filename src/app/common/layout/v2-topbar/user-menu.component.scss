@@ -7,15 +7,14 @@ m-user-menu {
 .m-user-menu__Dropdown {
   list-style: none;
   margin: 34px 0 0;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
     color: themed($m-grey-700);
   }
 
   li:hover {
-    @include m-theme(){
+    @include m-theme() {
       background-color: rgba(themed($m-grey-50), 0.5);
     }
   }
-
 }

@@ -1,0 +1,25 @@
+<table class="m-walletUsdTransactions__table m-border">
+  <tr>
+    <td>Date</td>
+    <td>User</td>
+    <td>Gross</td>
+    <td>Net</td>
+  </tr>
+
+  <tr *ngFor="let transaction of transactions">
+    <td>{{ transaction.timestamp * 1000 | date: 'medium' }}</td>
+    <td>
+      <a
+        *ngIf="transaction.customer_user"
+        [routerLink]="['/', transaction.customer_user.username]"
+      >
+        <span>@</span>{{ transaction.customer_user.username }}
+      </a>
+    </td>
+    <td>{{ transaction.gross / 100 | number: '1.2-2' }} USD</td>
+    <td>
+      {{ transaction.net / 100 | number: '1.2-2' }}
+      {{ transaction.currency | uppercase }}
+    </td>
+  </tr>
+</table>

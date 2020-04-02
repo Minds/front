@@ -3,24 +3,33 @@
 </h2>
 <div class="mdl-grid mdl-grid--no-spacing">
   <div class="mdl-cell mdl-cell--4-col m-get-metamask--logo-container">
-    <img class="m-get-metamask--logo" [src]="minds.cdn_assets_url + 'assets/ext/metamask.png'" />
+    <img
+      class="m-get-metamask--logo"
+      [src]="cdnAssetsUrl + 'assets/ext/metamask.png'"
+    />
   </div>
   <div class="mdl-cell mdl-cell--4-col">
     <h4>MetaMask</h4>
-    <p>Minds recommends using MetaMask for the most seamless user experience.</p>
-    <p class="m-get-metamask--button">
-        <a href="https://metamask.io/" target="_blank">
-          <button class="m-btn m-btn--slim m-btn--action">Download Metamask</button>
-        </a>
-    </p>             
     <p>
-        Be sure to refresh your browser after installing the plugin. 
-        You can also 
-        <a class="m-get-metamask--create-link" (click)="create()">create</a> or 
-        <a class="m-get-metamask--provide-link" (click)="unlock()">provide</a> your own existing address.
+      Minds recommends using MetaMask for the most seamless user experience.
     </p>
     <p class="m-get-metamask--button">
-      <button class="m-get-metamask--cancel-btn m-btn" (click)="cancel()">Cancel</button>
+      <a href="https://metamask.io/" target="_blank">
+        <button class="m-btn m-btn--slim m-btn--action">
+          Download Metamask
+        </button>
+      </a>
+    </p>
+    <p>
+      Be sure to refresh your browser after installing the plugin. You can also
+      <a class="m-get-metamask--create-link" (click)="create()">create</a> or
+      <a class="m-get-metamask--provide-link" (click)="unlock()">provide</a>
+      your own existing address.
+    </p>
+    <p class="m-get-metamask--button">
+      <button class="m-get-metamask--cancel-btn m-btn" (click)="cancel()">
+        Cancel
+      </button>
     </p>
   </div>
 </div>

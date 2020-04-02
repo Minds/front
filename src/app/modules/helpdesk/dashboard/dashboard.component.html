@@ -2,36 +2,42 @@
   <section class="m-layout__hero m-helpdesk--dashboard--section">
     <div class="m-layout__inner m-layout__row">
       <div class="m-layout__cell">
-        <h2 *ngIf="session.isLoggedIn()">How can we help you, @{{session.getLoggedInUser().username}}?</h2>
+        <h2 *ngIf="session.isLoggedIn()">
+          How can we help you, @{{ session.getLoggedInUser().username }}?
+        </h2>
         <h2 *ngIf="!session.isLoggedIn()">How can we help you?</h2>
         <div class="m-helpdesk__dashboardInput">
           <i class="material-icons">
             search
           </i>
-          <input placeholder="Enter your question here"
+          <input
+            placeholder="Enter your question here"
             class="m-input m-border"
             (blur)="onBlur()"
             [(ngModel)]="query"
             (keydown.esc)="onBlur()"
-            (keyup)="search()">
+            (keyup)="search()"
+          />
         </div>
 
-        <div *ngIf="results.length > 0"
+        <div
+          *ngIf="results.length > 0"
           class="m-helpdeskSearch__results m-border"
         >
-          <div *ngFor="let question of results"
+          <div
+            *ngFor="let question of results"
             class="m-helpdeskSearch__result"
             [routerLink]="['/help/question', question.uuid]"
           >
-            <span>{{question.question}}</span>
+            <span>{{ question.question }}</span>
           </div>
         </div>
 
-        <div *ngIf="noResults"
-           class="m-helpdeskSearch__results m-border"
-        >
+        <div *ngIf="noResults" class="m-helpdeskSearch__results m-border">
           <div class="m-helpdeskSearch__result">
-            <span i18n="@@HELPDESK__DASHBOARD_NO_RESULTS">No Results Found</span>
+            <span i18n="@@HELPDESK__DASHBOARD_NO_RESULTS"
+              >No Results Found</span
+            >
           </div>
         </div>
 
@@ -52,7 +58,10 @@
           </button>
         </div>
         <div class="m-helpdesk__dashboardButtons">
-          <a class="m-btn m-btn--slim" routerLink="/groups/profile/100000000000000681/feed">
+          <a
+            class="m-btn m-btn--slim"
+            routerLink="/groups/profile/100000000000000681/feed"
+          >
             Help & Support Group
           </a>
           <a class="m-btn m-btn--slim" routerLink="/issues/report">
@@ -64,9 +73,12 @@
         <div class="m-helpdeskQuestions__questions m-border">
           <ul>
             <h4>Popular Questions</h4>
-            <li class="m-helpdeskQuestions__question" *ngFor="let question of topQuestions">
+            <li
+              class="m-helpdeskQuestions__question"
+              *ngFor="let question of topQuestions"
+            >
               <a [routerLink]="['/help/question/', question.uuid]">
-                <span>{{question.question}}</span>
+                <span>{{ question.question }}</span>
                 <i class="material-icons">
                   keyboard_arrow_right
                 </i>
@@ -78,23 +90,28 @@
     </div>
   </section>
 
-  <section class="m-layout__section m-helpdesk--dashboard--section" style="padding-bottom: 0;">
-
+  <section
+    class="m-layout__section m-helpdesk--dashboard--section"
+    style="padding-bottom: 0;"
+  >
     <div class="m-layout__inner" style="padding-top: 36px">
       <m-helpdesk--dashboard--all></m-helpdesk--dashboard--all>
     </div>
-
   </section>
 
-  <section class="m-layout__section m-helpdesk--dashboard--section" style="padding-bottom: 0;" *ngIf="false">
+  <section
+    class="m-layout__section m-helpdesk--dashboard--section"
+    style="padding-bottom: 0;"
+    *ngIf="false"
+  >
     <div class="m-layout__inner m-layout__row">
-
       <div class="m-layout__cell">
         <div class="m-helpdesk--dashboard--links">
-
-          <div class="m-helpdesk--dashboard--big-item m-helpdesk--dashboard--help-and-support"
-            (click)="router.navigate(['/groups/profile', '100000000000000681'])">
-            <img [src]="minds.cdn_assets_url + 'assets/help-desk/chat.png'">
+          <div
+            class="m-helpdesk--dashboard--big-item m-helpdesk--dashboard--help-and-support"
+            (click)="router.navigate(['/groups/profile', '100000000000000681'])"
+          >
+            <img [src]="cdnAssetsUrl + 'assets/help-desk/chat.png'" />
             <div class="m-helpdesk--dashboard--big-item--text">
               <h3 class="m-helpdesk--dashboard--big-item--title">
                 Help & Support Group
@@ -105,16 +122,19 @@
             </div>
           </div>
 
-          <hr/>
+          <hr />
 
-          <div class="m-helpdesk--dashboard--big-item m-helpdesk--dashboard--token-sales-and-enterprise">
-            <img [src]="minds.cdn_assets_url + 'assets/help-desk/briefcase.png'">
+          <div
+            class="m-helpdesk--dashboard--big-item m-helpdesk--dashboard--token-sales-and-enterprise"
+          >
+            <img [src]="cdnAssetsUrl + 'assets/help-desk/briefcase.png'" />
             <div class="m-helpdesk--dashboard--big-item--text">
               <h3 class="m-helpdesk--dashboard--big-item--title">
                 Token Sales & Enterprise
               </h3>
               <p class="m-helpdesk--dashboard--big-item--subtext">
-                Support with purchasing the Minds Token or your hosted Minds Node
+                Support with purchasing the Minds Token or your hosted Minds
+                Node
               </p>
             </div>
           </div>

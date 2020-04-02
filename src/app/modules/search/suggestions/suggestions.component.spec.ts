@@ -16,9 +16,9 @@ import { contextServiceMock } from '../../../../tests/context-service-mock.spec'
 import { SearchBarSuggestionsComponent } from './suggestions.component';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { FeaturesService } from "../../../services/features.service";
-import { featuresServiceMock } from "../../../../tests/features-service-mock.spec";
-import { IfFeatureDirective } from "../../../common/directives/if-feature.directive";
+import { FeaturesService } from '../../../services/features.service';
+import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
+import { IfFeatureDirective } from '../../../common/directives/if-feature.directive';
 
 /* tslint:disable */
 
@@ -27,20 +27,17 @@ describe('SearchBarSuggestionsComponent', () => {
   let fixture: ComponentFixture<SearchBarSuggestionsComponent>;
 
   const recentResults = [
-    { 'type': 'user', 'guid': 1111, 'username': 'test1' },
-    { 'type': 'user', 'guid': 2222, 'username': 'test2' },
-    { 'type': 'user', 'guid': 3333, 'username': 'test3' },
-    { 'type': 'group', 'guid': 4444, 'name': 'test4' },
-    { 'type': 'group', 'guid': 5555, 'name': 'test5' },
-    { 'type': 'group', 'guid': 6666, 'name': 'test6' }
+    { type: 'user', guid: 1111, username: 'test1' },
+    { type: 'user', guid: 2222, username: 'test2' },
+    { type: 'user', guid: 3333, username: 'test3' },
+    { type: 'group', guid: 4444, name: 'test4' },
+    { type: 'group', guid: 5555, name: 'test5' },
+    { type: 'group', guid: 6666, name: 'test6' },
   ];
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        IfFeatureDirective,
-        SearchBarSuggestionsComponent
-      ],
+      declarations: [IfFeatureDirective, SearchBarSuggestionsComponent],
       imports: [
         NgCommonModule,
         RouterTestingModule,
@@ -54,11 +51,11 @@ describe('SearchBarSuggestionsComponent', () => {
         { provide: RecentService, useValue: recentServiceMock },
         { provide: ContextService, useValue: contextServiceMock },
         { provide: FeaturesService, useValue: featuresServiceMock },
-      ]
+      ],
     }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -90,26 +87,28 @@ describe('SearchBarSuggestionsComponent', () => {
 
     comp.loadRecent();
 
-    expect(recentServiceMock.fetch).toHaveBeenCalledWith('recent', 6);
+    expect(recentServiceMock.fetch).toHaveBeenCalledWith('recent:text', 6);
     expect(comp.recent).toEqual(recentResults);
   });
 
   it('should hide suggestions when not active', () => {
-    let el = fixture.debugElement.query(By.css('.m-search-bar-suggestions-list'));
+    let el = fixture.debugElement.query(
+      By.css('.m-search-bar-suggestions-list')
+    );
     comp.active = false;
-    comp.q = "hello world";
+    comp.q = 'hello world';
 
     fixture.detectChanges();
     expect(el.nativeElement.hidden).toBeTruthy();
   });
 
   it('should be visible when active', () => {
-    let el = fixture.debugElement.query(By.css('.m-search-bar-suggestions-list'));
+    let el = fixture.debugElement.query(
+      By.css('.m-search-bar-suggestions-list')
+    );
     comp.active = true;
 
     fixture.detectChanges();
     expect(el.nativeElement.hidden).toBeFalsy();
   });
-
 });
-

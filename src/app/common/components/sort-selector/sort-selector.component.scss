@@ -19,14 +19,14 @@ m-sort-selector {
 
   .m-dropdown--expanded {
     .m-dropdown--list--item--selected {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue);
       }
     }
   }
 
   .m-dropdown--list--item--disabled {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-300);
     }
   }

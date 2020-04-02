@@ -1,5 +1,5 @@
 .m-wallet--points--transaction {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
   padding: 16px;
@@ -11,12 +11,12 @@
     font-weight: 800;
 
     .positive {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-green-dark);
       }
     }
     .negative {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-red);
       }
     }
@@ -25,7 +25,7 @@
   .m-wallet--points--transaction-details {
     display: flex;
     align-items: center;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
 
@@ -43,7 +43,7 @@
       text-transform: uppercase;
       font-weight: 400;
       font-family: 'Roboto', Helvetica, sans-serif;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
     }

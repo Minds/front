@@ -5,16 +5,16 @@ minds-settings-subscriptions .m-settings-subscriptions-list {
     max-height: 94px;
   }
 
-  .mdl-card__title{
+  .mdl-card__title {
     position: relative;
     top: 14px - $minds-padding;
     padding: $minds-padding;
   }
 
-  .minds-avatar{
-    margin-right:$minds-margin;
-    img{
-      width:50px;
+  .minds-avatar {
+    margin-right: $minds-margin;
+    img {
+      width: 50px;
     }
   }
 
@@ -31,13 +31,13 @@ minds-settings-subscriptions .m-settings-subscriptions-list {
     }
   }
 
-  .mdl-card__actions{
+  .mdl-card__actions {
     border-top: 0;
     width: auto;
     right: 0;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    padding: 0 $minds-padding*2;
+    padding: 0 $minds-padding * 2;
   }
 }

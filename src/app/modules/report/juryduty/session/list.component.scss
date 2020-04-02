@@ -4,13 +4,15 @@
   padding: 0;
 }
 .m-juryDutySessionList__item {
-  margin-bottom: 16px;  
+  margin-bottom: 16px;
 }
 
 .m-juryDutySessionList__number {
   font-size: 56px;
   font-weight: 800;
-  color: #444;
   padding: 32px;
   display: block;
+  @include m-theme() {
+    color: themed($m-grey-800);
+  }
 }

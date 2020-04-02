@@ -1,41 +1,78 @@
 <div class="m--spam-notice" *ngIf="user?.spam">
-  <ng-container *ngIf="user?.spam" i18n="@@MINDS__CHANNELS__FLAGGED_AS_SPAM">This user was flagged as spam.</ng-container>
-  <ng-container *ngIf="user?.deleted" i18n="@@MINDS__CHANNELS__FLAGGED_AS_DELETED">This user was flagged as deleted.</ng-container>
+  <ng-container *ngIf="user?.spam" i18n="@@MINDS__CHANNELS__FLAGGED_AS_SPAM"
+    >This user was flagged as spam.</ng-container
+  >
+  <ng-container
+    *ngIf="user?.deleted"
+    i18n="@@MINDS__CHANNELS__FLAGGED_AS_DELETED"
+    >This user was flagged as deleted.</ng-container
+  >
 
   <ng-container *ngIf="!session.isAdmin()" i18n="@@M__ACTION__APPEAL_MARK">
-    If you wish to appeal, please check your <a routerLink="/settings/reported-content">Reported Content console</a>.
+    If you wish to appeal, please check your
+    <a routerLink="/settings/reported-content">Reported Content console</a>.
   </ng-container>
 </div>
 
 <div [hidden]="user || error" style="width:100%; text-align:center; ">
-  <div class="mdl-spinner mdl-js-spinner is-active" [mdl] style="margin: 16px auto;"></div>
+  <div
+    class="mdl-spinner mdl-js-spinner is-active"
+    [mdl]
+    style="margin: 16px auto;"
+  ></div>
 </div>
 <div class="m-error-splash" *ngIf="error && !user">
-  <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'">
-  <h3 class="mdl-color-text--red-300">{{error}}</h3>
-  <span class="mdl-color-text--blue-grey-300" i18n="@@MINDS__CHANNELS__ERROR_CHECK_USERNAME">Please check the username</span>
+  <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
+  <h3 class="mdl-color-text--red-300">{{ error }}</h3>
+  <span
+    class="mdl-color-text--blue-grey-300"
+    i18n="@@MINDS__CHANNELS__ERROR_CHECK_USERNAME"
+    >Please check the username</span
+  >
 </div>
 
 <header [hidden]="!isLocked"></header>
 
-<header  *ngIf="user" [ngClass]="{'isLocked': isLocked}">
-  <m-channel--carousel [banners]="user.carousels" [editMode]="editing" (done)="updateCarousels($event)" (delete)="removeCarousel($event)"></m-channel--carousel>
+<header *ngIf="user" [ngClass]="{ isLocked: isLocked }">
+  <m-channel--carousel
+    [banners]="user.carousels"
+    [editMode]="editing"
+    (done)="updateCarousels($event)"
+    (delete)="removeCarousel($event)"
+  ></m-channel--carousel>
 </header>
 
-
-<div class="mdl-grid channel-grid m-channel--blocked" style="max-width:900px" *ngIf="user && user?.blocked">
-  <h3 class="mdl-color-text--blue-grey-300" i18n="@@MINDS__CHANNELS__BLOCKED_NOTICE">You have blocked @{{user.username}}</h3>
-  <a (click)="unBlock()" i18n="@@MINDS__CHANNELS__UNBLOCK_ACTION">Click to Unblock</a>
+<div
+  class="mdl-grid channel-grid m-channel--blocked"
+  style="max-width:900px"
+  *ngIf="user && user?.blocked"
+>
+  <h3
+    class="mdl-color-text--blue-grey-300"
+    i18n="@@MINDS__CHANNELS__BLOCKED_NOTICE"
+  >
+    You have blocked @{{ user.username }}
+  </h3>
+  <a (click)="unBlock()" i18n="@@MINDS__CHANNELS__UNBLOCK_ACTION"
+    >Click to Unblock</a
+  >
 </div>
 
-
-<div class="mdl-grid channel-grid" style="max-width:990px" *ngIf="user && !user?.blocked">
+<div
+  class="mdl-grid channel-grid"
+  style="max-width:990px"
+  *ngIf="user && !user?.blocked"
+>
   <section class="mdl-cell mdl-cell--4-col m-channel-sidebar">
-    <m-channel--sidebar [user]="user" [editing]="editing" (changeEditing)="toggleEditing($event)"></m-channel--sidebar>
+    <m-channel--sidebar
+      [user]="user"
+      [editing]="editing"
+      (changeEditing)="toggleEditing($event)"
+    ></m-channel--sidebar>
   </section>
-  
+
   <!-- Feed list -->
-  
+
   <ng-container *mIfFeature="'es-feeds'; else legacyFeed">
     <section class="mdl-cell mdl-cell--8-col" *ngIf="shouldShowFeeds()">
       <m-channel--sorted
@@ -46,49 +83,79 @@
     </section>
   </ng-container>
   <ng-template #legacyFeed>
-    <section class="mdl-cell mdl-cell--8-col m-channel-feed" *ngIf="filter == 'feed'">
-      <m-channel--feed 
-        [user]="user"
-        #feed
-      ></m-channel--feed>
+    <section
+      class="mdl-cell mdl-cell--8-col m-channel-feed"
+      *ngIf="filter == 'feed'"
+    >
+      <m-channel--feed [user]="user" #feed></m-channel--feed>
     </section>
   </ng-template>
 
   <!-- Supporters list -->
   <section class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'supporters'">
-
-    <m-channel--supporters [channel]="user" class="mdl-grid"></m-channel--supporters>
-
+    <m-channel--supporters
+      [channel]="user"
+      class="mdl-grid"
+    ></m-channel--supporters>
   </section>
 
   <!-- Subscriptions list -->
   <section class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'subscriptions'">
-
     <div class="mdl-card m-channel--subscribers-tabs">
       <div class="mdl-tabs__tab-bar">
-        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter === 'subscribers' }" i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT">Subscribers ({{user.subscribers_count}})</a>
-        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter === 'subscriptions' }" i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT">Subscriptions ({{user.subscriptions_count}})</a>
+        <a
+          [routerLink]="['/', user.username, 'subscribers']"
+          class="mdl-tabs__tab"
+          [ngClass]="{ 'is-active': filter === 'subscribers' }"
+          i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT"
+          >Subscribers ({{ user.subscribers_count }})</a
+        >
+        <a
+          [routerLink]="['/', user.username, 'subscriptions']"
+          class="mdl-tabs__tab"
+          [ngClass]="{ 'is-active': filter === 'subscriptions' }"
+          i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT"
+          >Subscriptions ({{ user.subscriptions_count }})</a
+        >
       </div>
     </div>
 
-    <m-channel--subscriptions [channel]="user" class="mdl-grid"></m-channel--subscriptions>
-
+    <m-channel--subscriptions
+      [channel]="user"
+      class="mdl-grid"
+    ></m-channel--subscriptions>
   </section>
 
   <!-- Subscriptions list -->
   <section class="mdl-cell mdl-cell--8-col" *ngIf="filter == 'subscribers'">
-
     <div class="mdl-card m-channel--subscribers-tabs">
       <div class="mdl-tabs__tab-bar">
-        <a [routerLink]="['/', user.username, 'subscribers']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter === 'subscribers' }" i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT">Subscribers ({{user.subscribers_count}})</a>
-        <a [routerLink]="['/', user.username, 'subscriptions']" class="mdl-tabs__tab" [ngClass]="{ 'is-active': filter === 'subscriptions' }" i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT">Subscriptions ({{user.subscriptions_count}})</a>
+        <a
+          [routerLink]="['/', user.username, 'subscribers']"
+          class="mdl-tabs__tab"
+          [ngClass]="{ 'is-active': filter === 'subscribers' }"
+          i18n="@@MINDS__CHANNELS__SUBSCRIBERS_WITH_COUNT"
+          >Subscribers ({{ user.subscribers_count }})</a
+        >
+        <a
+          [routerLink]="['/', user.username, 'subscriptions']"
+          class="mdl-tabs__tab"
+          [ngClass]="{ 'is-active': filter === 'subscriptions' }"
+          i18n="@@MINDS__CHANNELS__SUBSCRIPTIONS_WITH_COUNT"
+          >Subscriptions ({{ user.subscriptions_count }})</a
+        >
       </div>
     </div>
 
-    <m-channel--subscribers [channel]="user" class="mdl-grid"></m-channel--subscribers>
-
+    <m-channel--subscribers
+      [channel]="user"
+      class="mdl-grid"
+    ></m-channel--subscribers>
   </section>
-
 </div>
 
-<m-channel--explicit-overlay [channel]="user"></m-channel--explicit-overlay>
+<m-explicit-overlay
+  [entity]="user"
+  message="This channel contains content that is NSFW"
+  i18n-message
+></m-explicit-overlay>

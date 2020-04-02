@@ -4,14 +4,21 @@
       <li *ngFor="let hashtag of hashtags">
         <a
           class="m-hashtagsSidebarSelectorCompactList__Label"
-          [class.m-hashtagsSidebarSelectorCompactList__Label--visible]="!disabled && currentHashtag === hashtag.value"
+          [class.m-hashtagsSidebarSelectorCompactList__Label--visible]="
+            !disabled && currentHashtag === hashtag.value
+          "
           [title]="'#' + hashtag.value"
           (click)="hashtagVisibilityChange(hashtag)"
-        >#{{hashtag.value}}</a>
+          >#{{ hashtag.value }}</a
+        >
       </li>
     </ul>
-    <div class="m-hashtagsSidebarSelectorCompactList__Overflow" (click)="toggleShowExtendedList()">
-      <i class="fa m-hashtagsSidebarSelectorCompactListOverflow__Arrow"
+    <div
+      class="m-hashtagsSidebarSelectorCompactList__Overflow"
+      (click)="toggleShowExtendedList()"
+    >
+      <i
+        class="fa m-hashtagsSidebarSelectorCompactListOverflow__Arrow"
         [class.fa-chevron-down]="!showExtendedList"
         [class.fa-chevron-up]="showExtendedList"
       ></i>
@@ -19,7 +26,9 @@
   </div>
 </ng-container>
 
-<div class="m-hashtags--sidebar-selector" *ngIf="!compact || showExtendedList"
+<div
+  class="m-hashtags--sidebar-selector"
+  *ngIf="!compact || showExtendedList"
   [class.m-hashtags--sidebar-selector--expanded]="compact && showExtendedList"
 >
   <div class="m-hashtagsSidebarSelector__header">
@@ -37,14 +46,17 @@
         [disabled]="disabled"
         labelPosition="left"
         i18n
-        >
+      >
         On
       </m-switch>
     </span>
   </div>
 
   <div class="m-hashtagsSidebarSelector__spinner" *ngIf="loading">
-    <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active" [mdl]></div>
+    <div
+      class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"
+      [mdl]
+    ></div>
   </div>
 
   <div class="m-hashtagsSidebarSelector__list">
@@ -60,9 +72,12 @@
         ></m-hashtagsSidebarSelector__item>
       </li>
 
-      <li *ngIf="initialized && !disabled && (!hasBelowTheFoldHashtags || showAll)"
+      <li
+        *ngIf="
+          initialized && !disabled && (!hasBelowTheFoldHashtags || showAll)
+        "
         class="m-hashtagsSidebarSelectorItem__input"
-        >
+      >
         <input
           type="text"
           class="m-hashtagsSidebarSelectorList__addInput"
@@ -80,52 +95,75 @@
           title="Filter by this hashtag"
           i18n-title
           [hidden]="!newHashtagInput.value"
-        ><i class="material-icons">check</i></a>
+          ><i class="material-icons">check</i></a
+        >
 
         <a
           class="m-hashtagsSidebarSelectorList__addButton"
           (click)="resetAddHashtag(newHashtagInput)"
           [hidden]="!newHashtagInput.value"
-        ><i class="material-icons">close</i></a>
+          ><i class="material-icons">close</i></a
+        >
       </li>
 
       <ng-container *ngIf="showSuggested">
-      <div class="m-hashtagsSidebarSelector__header"
-        *ngIf="!loading"
-        style="margin-top: 12px;"
+        <div
+          class="m-hashtagsSidebarSelector__header"
+          *ngIf="!loading"
+          style="margin-top: 12px;"
         >
-        <h3>
-          <ng-container *ngIf="showTrending; else showTrendingHeader">Trending</ng-container>
-          <ng-template #showTrendingHeader>Suggested</ng-template>
-        </h3>
+          <h3>
+            <ng-container *ngIf="showTrending; else showTrendingHeader"
+              >Trending</ng-container
+            >
+            <ng-template #showTrendingHeader>Suggested</ng-template>
+          </h3>
 
-        <span (click)="toggleTrending()" class="m-hashtagsSidebarSelector__toggleTrending">
-          <ng-container *ngIf="showTrending; else showTrendingText">Suggested</ng-container>
-	      <ng-template #showTrendingText>Trending</ng-template>
-        </span>
-      </div> 
+          <span
+            (click)="toggleTrending()"
+            class="m-hashtagsSidebarSelector__toggleTrending"
+          >
+            <ng-container *ngIf="showTrending; else showTrendingText"
+              >Suggested</ng-container
+            >
+            <ng-template #showTrendingText>Trending</ng-template>
+          </span>
+        </div>
 
-      <li *ngFor="let hashtag of moreHashtags">
-        <m-hashtagsSidebarSelector__item
-          [currentHashtag]="currentHashtag"
-          [hashtag]="hashtag"
-          [disabled]="disabled"
-          [preferred]="preferred"
-          (hashtagVisibilityChange)="hashtagVisibilityChange($event)"
-          (toggleHashtag)="toggleHashtag($event)"
-        ></m-hashtagsSidebarSelector__item>
-      </li>
+        <li *ngFor="let hashtag of moreHashtags">
+          <m-hashtagsSidebarSelector__item
+            [currentHashtag]="currentHashtag"
+            [hashtag]="hashtag"
+            [disabled]="disabled"
+            [preferred]="preferred"
+            (hashtagVisibilityChange)="hashtagVisibilityChange($event)"
+            (toggleHashtag)="toggleHashtag($event)"
+          ></m-hashtagsSidebarSelector__item>
+        </li>
       </ng-container>
     </ul>
 
-    <a (click)="toggleSuggested()" *ngIf="!loading" class="m-hashtagsSidebarSelector__showMoreLink">
-      <ng-container *ngIf="showSuggested; else showLabel" i18n>Hide</ng-container>
-      <ng-template #showLabel i18n>Show
-        <ng-container *ngIf="showTrending; else showSuggestedHiddenText">trending</ng-container>
+    <a
+      (click)="toggleSuggested()"
+      *ngIf="!loading"
+      class="m-hashtagsSidebarSelector__showMoreLink"
+    >
+      <ng-container *ngIf="showSuggested; else showLabel" i18n
+        >Hide</ng-container
+      >
+      <ng-template #showLabel i18n
+        >Show
+        <ng-container *ngIf="showTrending; else showSuggestedHiddenText"
+          >trending</ng-container
+        >
         <ng-template #showSuggestedHiddenText>suggested</ng-template>
       </ng-template>
     </a>
   </div>
 </div>
 
-<div class="minds-bg-overlay" (click)="closeExtendedList()" [hidden]="!showExtendedList"></div>
+<div
+  class="minds-bg-overlay"
+  (click)="closeExtendedList()"
+  [hidden]="!showExtendedList"
+></div>

@@ -4,13 +4,12 @@ import { Component } from '@angular/core';
   selector: 'm-text-input--autocomplete-container',
   styles: [
     `
-          :host {
-              position: relative;
-              display: block;
-          }
-    `
+      :host {
+        position: relative;
+        display: block;
+      }
+    `,
   ],
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
 })
-export class TextInputAutocompleteContainerComponent {
-}
+export class TextInputAutocompleteContainerComponent {}

@@ -1,15 +1,23 @@
-import { Component, Input, Output, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+  EventEmitter,
+} from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 
 type CurrencyType = 'points' | 'usd' | 'tokens';
 
 @Component({
-  providers: [ CurrencyPipe ],
+  providers: [CurrencyPipe],
   selector: 'm-boost--creator-checkout',
-  templateUrl: 'checkout.component.html'
+  templateUrl: 'checkout.component.html',
 })
 export class BoostCreatorCheckoutComponent {
-
   @Input() boost;
   @Output() boostChanged: EventEmitter<any> = new EventEmitter();
 
@@ -22,12 +30,10 @@ export class BoostCreatorCheckoutComponent {
     tokens: 1000,
     minUsd: 1,
     priority: 1,
-    maxCategories: 3
+    maxCategories: 3,
   };
 
-  constructor(
-    private _changeDetectorRef: ChangeDetectorRef,
-  ) { }
+  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
 
   setNonce(nonce) {
     this.boost.nonce = nonce;

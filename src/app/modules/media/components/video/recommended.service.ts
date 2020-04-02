@@ -13,20 +13,24 @@ export class RecommendedService {
     this.recommended = [];
   }
 
-  public getRecommended(type: string, channel: string | number, params: any): Promise<any> {
-    return this.client.get(`api/v1/media/recommended/${type}/${channel}`, params)
+  public getRecommended(
+    type: string,
+    channel: string | number,
+    params: any
+  ): Promise<any> {
+    return this.client
+      .get(`api/v1/media/recommended/${type}/${channel}`, params)
       .then(({ entities }) => {
         this.recommended = entities;
         return entities;
-    });
+      });
   }
 
   public getFirstRecommended(): any {
-    if(this.recommended.length > 0){
-        return this.recommended[0];
-      }else{
-        return false;
+    if (this.recommended.length > 0) {
+      return this.recommended[0];
+    } else {
+      return false;
     }
   }
-
 }

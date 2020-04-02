@@ -1,5 +1,4 @@
 m-safe-toggle {
-
   .m-safe-toggle {
     cursor: pointer;
 
@@ -8,16 +7,15 @@ m-safe-toggle {
     }
 
     i.material-icons {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-300);
       }
 
       &.m-safe-toggle--active {
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-blue);
         }
       }
     }
-
   }
 }

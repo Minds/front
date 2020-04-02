@@ -1,11 +1,9 @@
 <div class="m-settings--wrapper">
-
   <div class="m-page">
-
     <div class="m-page--sidebar">
-
       <div class="m-page--sidebar--navigation">
-        <a class="m-page--sidebar--navigation--item"
+        <a
+          class="m-page--sidebar--navigation--item"
           routerLink="/settings/general"
           routerLinkActive="m-page--sidebar--navigation--item-active"
         >
@@ -13,39 +11,61 @@
           <span i18n="@@SETTINGS__NAVIGATION__GENERAL_NAV">General</span>
         </a>
 
-        <a class="m-page--sidebar--navigation--item"
+        <a
+          class="m-page--sidebar--navigation--item"
           routerLink="/settings/emails"
           routerLinkActive="m-page--sidebar--navigation--item-active"
         >
           <i class="material-icons">email</i>
-          <span i18n="@@SETTINGS__NAVIGATION__EMAIL_NOTIFICATIONS_NAV">Email Notifications</span>
+          <span i18n="@@SETTINGS__NAVIGATION__EMAIL_NOTIFICATIONS_NAV"
+            >Email Notifications</span
+          >
         </a>
 
-          <a class="m-page--sidebar--navigation--item"
-            routerLink="/settings/wire"
-            routerLinkActive="m-page--sidebar--navigation--item-active"
-          >
-            <i class="ion-icon ion-flash"></i>
-            <span i18n="@@SETTINGS__NAVIGATION__GENERAL_NAV">Wire</span>
-          </a>
+        <a
+          class="m-page--sidebar--navigation--item"
+          routerLink="/settings/wire"
+          routerLinkActive="m-page--sidebar--navigation--item-active"
+        >
+          <i class="ion-icon ion-flash"></i>
+          <span i18n="@@SETTINGS__NAVIGATION__GENERAL_NAV">Wire</span>
+        </a>
 
-        <a class="m-page--sidebar--navigation--item"
+        <a
+          class="m-page--sidebar--navigation--item"
           routerLink="/settings/disable"
           routerLinkActive="m-page--sidebar--navigation--item-active"
         >
           <i class="material-icons">warning</i>
-          <span  i18n="@@SETTINGS__NAVIGATION__DISABLE_NAV">Deactivate Channel</span>
+          <span i18n="@@SETTINGS__NAVIGATION__DISABLE_NAV"
+            >Deactivate Channel</span
+          >
         </a>
 
-        <a class="m-page--sidebar--navigation--item"
+        <a
+          class="m-page--sidebar--navigation--item"
           routerLink="/settings/twoFactor"
           routerLinkActive="m-page--sidebar--navigation--item-active"
         >
           <i class="material-icons">security</i>
-          <span i18n="@@SETTINGS__NAVIGATION__2FA_NAV">TwoFactor Authentication</span>
+          <span i18n="@@SETTINGS__NAVIGATION__2FA_NAV"
+            >TwoFactor Authentication</span
+          >
         </a>
 
-        <a class="m-page--sidebar--navigation--item"
+        <a
+          class="m-page--sidebar--navigation--item"
+          routerLink="/settings/tiers"
+          routerLinkActive="m-page--sidebar--navigation--item-active"
+        >
+          <i class="material-icons">card_giftcard</i>
+          <span i18n="@@SETTINGS__NAVIGATION__SUBSCRIPTIONS_NAV"
+            >Subscription Tiers</span
+          >
+        </a>
+
+        <a
+          class="m-page--sidebar--navigation--item"
           routerLink="/settings/billing"
           routerLinkActive="m-page--sidebar--navigation--item-active"
         >
@@ -53,25 +73,22 @@
           <span i18n="@@SETTINGS__NAVIGATION__BILLINGS_NAV">Billing</span>
         </a>
 
-        <a class="m-page--sidebar--navigation--item"
-          routerLink="/settings/p2pmedia"
-          routerLinkActive="m-page--sidebar--navigation--item-active"
-        >
-          <i class="material-icons">ondemand_video</i>
-          <span i18n="@@SETTINGS__NAVIGATION__P2PMEDIA_NAV">P2P Media</span>
-        </a>
-
-        <a class="m-page--sidebar--navigation--item"
+        <a
+          class="m-page--sidebar--navigation--item"
           routerLink="/settings/reported-content"
           routerLinkActive="m-page--sidebar--navigation--item-active"
         >
           <i class="material-icons">assignment</i>
-          <span i18n="@@SETTINGS__NAVIGATION__REPORTED_CONTENT_NAV">Reported Content</span>
+          <span i18n="@@SETTINGS__NAVIGATION__REPORTED_CONTENT_NAV"
+            >Reported Content</span
+          >
         </a>
 
-        <a class="m-page--sidebar--navigation--item"
+        <a
+          class="m-page--sidebar--navigation--item"
           routerLink="/settings/blocked-channels"
           routerLinkActive="m-page--sidebar--navigation--item-active"
+          data-cy="data-minds-settings-banned-channels"
         >
           <i class="material-icons">block</i>
           <span i18n>Blocked Channels</span>
@@ -84,7 +101,18 @@
           <span i18n="@@M__ACTION__SUGGESTED_HASHTAGS">Suggested Hashtags</span>
         </a> -->
 
-        <a class="m-page--sidebar--navigation--item"
+        <a
+          class="m-page--sidebar--navigation--item"
+          [routerLink]="[
+            '/pro/' + session.getLoggedInUser().username + '/settings'
+          ]"
+        >
+          <i class="material-icons">business_center</i>
+          <span i18n>Pro Settings</span>
+        </a>
+
+        <a
+          class="m-page--sidebar--navigation--item"
           (click)="openReferralsModal()"
         >
           <i class="material-icons">people</i>
@@ -96,7 +124,9 @@
     <div class="m-page--main">
       <router-outlet></router-outlet>
       <p class="m-settings--created-date">
-        <span i18n="@@MINDS__SETTINGS__ACCOUNT_TIMESTAMP">Account created on:</span>
+        <span i18n="@@MINDS__SETTINGS__ACCOUNT_TIMESTAMP"
+          >Account created on:</span
+        >
         {{ account_time_created * 1000 | date: 'medium' }}
       </p>
     </div>

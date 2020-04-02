@@ -1,7 +1,11 @@
-@import "defaults";
+@import 'defaults';
+
+m-helpdesk--dashboard {
+  grid-area: content / span 2;
+}
 
 .m-helpdesk__dashboard {
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -26,7 +30,7 @@
     margin-top: $minds-margin * 1.5;
     overflow-y: auto;
     box-sizing: border-box;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
 
@@ -34,14 +38,14 @@
       bottom: 100%;
       left: 95%;
       border: solid transparent;
-      content: " ";
+      content: ' ';
       height: 0;
       width: 0;
       position: absolute;
       pointer-events: none;
       border-width: 8px;
       margin-left: -8px;
-      @include m-theme(){
+      @include m-theme() {
         border-color: rgba(themed($m-grey-600), 0);
         border-bottom-color: themed($m-white);
       }
@@ -53,12 +57,13 @@
       display: flex;
       justify-content: space-between;
       font-weight: 400;
-      @include m-theme(){
+      @include m-theme() {
         border-top: 1px solid themed($m-grey-50);
       }
 
-      &:hover, &.m-helpdeskSearch__result--highlight {
-        @include m-theme(){
+      &:hover,
+      &.m-helpdeskSearch__result--highlight {
+        @include m-theme() {
           color: themed($m-black);
         }
       }
@@ -70,7 +75,6 @@
 }
 
 .m-helpdesk__dashboardInput {
-
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -82,7 +86,7 @@
     position: absolute;
     left: 8px;
     font-size: 40px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-400);
     }
   }
@@ -90,7 +94,7 @@
     font-size: 18px;
     width: 100%;
     padding: 16px 16px 16px 56px;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-white);
     }
   }
@@ -119,7 +123,7 @@
     display: inline-block;
     box-sizing: border-box;
     line-height: 1.25;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white-always);
       border-color: rgba(themed($m-white-always), 0.7);
     }
@@ -130,10 +134,12 @@
   }
 }
 
-.m-helpdesk__dashboard h1, .m-helpdesk__dashboard h3, .m-helpdesk__dashboard h2 {
+.m-helpdesk__dashboard h1,
+.m-helpdesk__dashboard h3,
+.m-helpdesk__dashboard h2 {
   font-family: 'Roboto', Helvetica, sans-serif;
   margin: 0;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-white);
   }
 }
@@ -174,12 +180,12 @@
   text-align: left;
   //padding: 80px 0;
   height: auto;
-  @include m-theme(){
-    background-color: themed($m-grey-50);
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
   }
 
   @media screen and (max-width: 720px) {
-  //  padding: 16px 0;
+    //  padding: 16px 0;
   }
 
   &.m-helpdesk--dashboard--section-margin {
@@ -199,7 +205,7 @@
     letter-spacing: 0.25px;
     margin-left: 8px;
     margin-right: 8px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
 
@@ -213,7 +219,7 @@
     line-height: 1;
     font-weight: 600;
     letter-spacing: 1.25px;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-800);
     }
 
@@ -244,7 +250,7 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     text-transform: uppercase;
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-grey-200);
     }
 
@@ -256,7 +262,7 @@
 
 .m-helpdesk--dashboard--popular-questions {
   text-align: left;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -274,7 +280,7 @@
     font-size: 18px;
 
     &:hover {
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-grey-50);
       }
     }
@@ -302,14 +308,14 @@
         font-size: 30px;
         font-weight: bold;
         line-height: 1.2em;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-700);
         }
       }
 
       .m-helpdesk--dashboard--big-item--subtext {
         font-size: 16px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-800);
         }
       }
@@ -322,7 +328,6 @@
       }
     }
   }
-
 }
 
 @media screen and (max-width: $max-mobile) {
@@ -341,7 +346,7 @@
   }
 
   h2 {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-white-always);
     }
   }

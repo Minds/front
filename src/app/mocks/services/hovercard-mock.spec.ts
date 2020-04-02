@@ -1,4 +1,4 @@
-export let hovercardServiceMock = new function () {
+export let hovercardServiceMock = new (function() {
   this.shown = false;
   this.guid = '';
   this.data = null;
@@ -7,7 +7,7 @@ export let hovercardServiceMock = new function () {
     top: 'auto',
     right: 'auto',
     bottom: 'auto',
-    left: 'auto'
+    left: 'auto',
   };
 
   this.sticky = false;
@@ -21,4 +21,4 @@ export let hovercardServiceMock = new function () {
   this.unstick = jasmine.createSpy('unstick').and.stub();
 
   this.setAnchor = jasmine.createSpy('setAnchor').and.stub();
-}
+})();

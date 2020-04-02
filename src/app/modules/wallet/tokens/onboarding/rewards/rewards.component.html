@@ -2,23 +2,51 @@
   <div class="m-token--onboarding--column">
     <h2 i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_TITLE">Rewards</h2>
 
-    <p class="m-token--onboarding--subtext" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_DESC">
-      You can earn tokens for your contributions to the Minds network. The more interactions on your content, the greater your share of the daily token reward pool to your OffChain address.
+    <p
+      class="m-token--onboarding--subtext"
+      i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_DESC"
+    >
+      You can earn tokens for your contributions to the Minds network. The more
+      interactions on your content, the greater your share of the daily token
+      reward pool to your OffChain address.
     </p>
-    <p class="m-token--onboarding--subtext" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_PHONE_DESC">
+    <p
+      class="m-token--onboarding--subtext"
+      i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_PHONE_DESC"
+    >
       To start earning rewards, you will need to enter a unique phone number.
     </p>
 
     <div class="m-token--onboarding--rewards-input" *ngIf="!confirming">
       <m-phone-input [(ngModel)]="number" ngDefaultControl></m-phone-input>
-      <m-tooltip icon="help" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_PHONE_TOLTIP">Please enter your phone number in order to join the rewards program</m-tooltip>
-      <button class="m-btn m-btn--slim m-btn--action" (click)="verify()" [disabled]="inProgress" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__JOIN_ACTION">Join</button>
-      <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+      <m-tooltip
+        icon="help"
+        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_PHONE_TOLTIP"
+        >Please enter your phone number in order to join the rewards
+        program</m-tooltip
+      >
+      <button
+        class="m-btn m-btn--slim m-btn--action"
+        (click)="verify()"
+        [disabled]="inProgress"
+        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__JOIN_ACTION"
+      >
+        Join
+      </button>
+      <div
+        *ngIf="inProgress"
+        class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active"
+        [mdl]
+      ></div>
     </div>
 
     <div class="m-token--onboarding--rewards-input" *ngIf="confirming">
-      <p class="m-token--onboarding--subtext m-token--onboarding--prompt" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_DESC">
-        Please enter the code we just sent to <b>+{{number}}</b>, to verify your number.
+      <p
+        class="m-token--onboarding--subtext m-token--onboarding--prompt"
+        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_DESC"
+      >
+        Please enter the code we just sent to <b>+{{ number }}</b
+        >, to verify your number.
       </p>
       <input
         type="number"
@@ -26,41 +54,67 @@
         placeholder="eg. 198349"
         i18n-placeholder="@@WALLET__TOKENS__REWARDS__CODE_EXAMPLE_PH"
         class="m-token-join--form--input-input m-border"
-        />
-      <m-tooltip icon="help" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_TOOLTIP">Please enter the code we just sent you, to verify that your number is correct</m-tooltip>
+      />
+      <m-tooltip
+        icon="help"
+        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_TOOLTIP"
+        >Please enter the code we just sent you, to verify that your number is
+        correct</m-tooltip
+      >
 
-      <button class="m-btn m-btn--slim m-btn--action" (click)="confirm()" [disabled]="inProgress" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__CONFIRM_ACTION">Confirm</button>
-      <button class="m-btn m-btn--slim" (click)="cancel()" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__GO_BACK_ACTION">Go Back</button>
+      <button
+        class="m-btn m-btn--slim m-btn--action"
+        (click)="confirm()"
+        [disabled]="inProgress"
+        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__CONFIRM_ACTION"
+      >
+        Confirm
+      </button>
+      <button
+        class="m-btn m-btn--slim"
+        (click)="cancel()"
+        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__GO_BACK_ACTION"
+      >
+        Go Back
+      </button>
 
-      <div *ngIf="inProgress" class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+      <div
+        *ngIf="inProgress"
+        class="m-token-join--form--inprogress mdl-spinner mdl-js-spinner is-active"
+        [mdl]
+      ></div>
     </div>
 
     <p class="m-token-join--form--error" *ngIf="error">
-      {{error}}
+      {{ error }}
     </p>
 
-    <p class="m-token--onboarding--subtext m-token--onboarding--subtext-note" i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__PHONE_HASH_DESC">
-      Note: Minds does not store the phone numbers you provide. The numbers are hashed using SHA-256
-      and combined with a salt key for privacy and security purposes.
+    <p
+      class="m-token--onboarding--subtext m-token--onboarding--subtext-note"
+      i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__PHONE_HASH_DESC"
+    >
+      Note: Minds does not store the phone numbers you provide. The numbers are
+      hashed using SHA-256 and combined with a salt key for privacy and security
+      purposes.
     </p>
-
   </div>
 
   <div class="m-token--onboarding--column">
     <div class="m-token--onboarding--video m-border">
-      <m-token--onboarding--video 
-        [src]="minds.cdn_assets_url + 'assets/tutorials/rewards.480.mp4'">
+      <m-token--onboarding--video
+        [src]="cdnAssetsUrl + 'assets/tutorials/rewards.480.mp4'"
+      >
       </m-token--onboarding--video>
     </div>
 
     <div class="m-layout--row">
       <div class="m-layout--spacer"></div>
-      <button 
+      <button
         *ngIf="skippable === true"
-        class="m-btn m-btn--slim" 
+        class="m-btn m-btn--slim"
         (click)="next.next()"
         i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__SKIP_ACTION"
-        >
+      >
         Skip. I don't want to earn tokens
       </button>
     </div>

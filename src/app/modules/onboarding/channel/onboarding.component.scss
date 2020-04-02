@@ -1,8 +1,8 @@
-@import "defaults";
+@import 'defaults';
 
 m-channel--onboarding {
   user-select: none;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-900);
   }
 
@@ -26,7 +26,7 @@ m-channel--onboarding {
   font-size: 24px;
   line-height: 1.5em;
   padding-top: 24px;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
   }
 
@@ -62,7 +62,7 @@ m-channel--onboarding {
 
     p {
       font-size: 16px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
 
@@ -72,12 +72,12 @@ m-channel--onboarding {
         font-weight: bold;
         text-align: center;
         margin-top: 24px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-800);
         }
 
         i.material-icons {
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-blue);
           }
         }
@@ -130,7 +130,7 @@ m-channel--onboarding {
       border-radius: 3px;
       text-transform: capitalize;
       text-align: center;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-red) !important;
       }
     }
@@ -139,12 +139,11 @@ m-channel--onboarding {
       border-radius: 8px;
       padding: 16px;
 
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-blue-light);
         color: white;
       }
     }
-
 
     .m-channelOnboardingSlide__component {
       display: flex;
@@ -155,7 +154,7 @@ m-channel--onboarding {
       label {
         font-size: 16px;
         font-weight: bold;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-800);
         }
       }
@@ -176,8 +175,8 @@ m-channel--onboarding {
           width: 64px;
           height: 64px;
           border-radius: 50%;
-          @include m-theme(){
-             border: 1px solid themed($m-grey-50);
+          @include m-theme() {
+            border: 1px solid themed($m-grey-50);
           }
 
           .overlay {
@@ -194,7 +193,7 @@ m-channel--onboarding {
             }
           }
 
-          input[type=file] {
+          input[type='file'] {
             cursor: pointer;
           }
         }
@@ -207,14 +206,14 @@ m-channel--onboarding {
         min-width: 220px;
         text-align: center;
         padding: 8px 16px;
-        @include m-theme(){
-           border: 1px solid themed($m-grey-50);
+        @include m-theme() {
+          border: 1px solid themed($m-grey-50);
         }
 
         &:focus {
           outline: 0;
-          @include m-theme(){
-             border-color: themed($m-grey-200);
+          @include m-theme() {
+            border-color: themed($m-grey-200);
           }
         }
       }
@@ -228,7 +227,7 @@ m-channel--onboarding {
       font-size: 13px;
       font-weight: 600;
       text-transform: lowercase;
-      @include m-theme(){
+      @include m-theme() {
         border: 1px solid themed($m-grey-50);
         color: themed($m-grey-700);
       }
@@ -237,7 +236,7 @@ m-channel--onboarding {
     i {
       font-size: 16px;
       cursor: pointer;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-400);
       }
     }
@@ -255,16 +254,17 @@ m-channel--onboarding {
       line-height: 14px;
       border-radius: 24px;
       padding: 8px 12px;
-      @include m-theme(){
-         border: 1px solid themed($m-grey-50);
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
       }
 
       &li {
-        list-style:none;
+        list-style: none;
       }
     }
 
-    .m-channelOnboardingSlideSection__row, .m-channelOnboardingSlideSection__list {
+    .m-channelOnboardingSlideSection__row,
+    .m-channelOnboardingSlideSection__list {
       display: flex;
       flex-wrap: wrap;
       width: calc(100% - 16px);
@@ -286,15 +286,15 @@ m-channel--onboarding {
           font-weight: 600;
           text-transform: lowercase;
           margin-right: 8px;
-          @include m-theme(){
-             border: 1px solid themed($m-grey-100);
+          @include m-theme() {
+            border: 1px solid themed($m-grey-100);
           }
         }
 
         i {
           font-size: 16px;
           cursor: pointer;
-          @include m-theme(){
+          @include m-theme() {
             color: themed($m-grey-400);
           }
         }
@@ -315,7 +315,7 @@ m-channel--onboarding {
     }
 
     .selected {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-blue);
       }
     }
@@ -336,7 +336,7 @@ m-channel--onboarding {
       text-align: center;
       font-weight: bold;
       line-height: 42px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
     }
@@ -371,7 +371,8 @@ m-channel--onboarding {
       }
     }
 
-    m-suggestions__sidebar, m-suggestions__sidebarGroups {
+    m-suggestions__sidebar,
+    m-suggestions__sidebarGroups {
       margin: 0 auto;
     }
 
@@ -398,7 +399,7 @@ m-channel--onboarding {
         width: 100%;
         padding: 8px 16px;
         cursor: pointer;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-800);
           border-bottom: 1px solid themed($m-grey-50);
         }
@@ -406,7 +407,7 @@ m-channel--onboarding {
 
       i {
         line-height: 1;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-blue);
         }
       }
@@ -416,11 +417,10 @@ m-channel--onboarding {
         margin-bottom: 0;
         font-size: 12px;
         line-height: 14px;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-400);
         }
       }
-
     }
 
     @media screen and (max-width: 1120px) {
@@ -476,7 +476,6 @@ m-channel--onboarding {
 
         overflow: hidden;
       }
-
     }
   }
 
@@ -486,11 +485,12 @@ m-channel--onboarding {
     justify-content: space-between;
     padding: 8px 24px;
 
-    .m-channelOnboarding__previous, .m-channelOnboarding__next {
+    .m-channelOnboarding__previous,
+    .m-channelOnboarding__next {
       font-size: 14px;
       cursor: pointer;
       font-weight: bold;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800);
       }
     }
@@ -499,5 +499,4 @@ m-channel--onboarding {
       text-align: right;
     }
   }
-
 }

@@ -2,9 +2,18 @@
   margin-bottom: $minds-padding;
   padding: $minds-padding * 2;
 
+  > p {
+    margin-bottom: 8px;
+
+    &.m-token-withdraw__note {
+      font-size: 12px;
+      opacity: 0.7;
+    }
+  }
+
   .m-token-withdraw--form {
     display: flex;
-    margin-bottom: $minds-padding;
+    margin: 16px 0 8px;
 
     .m-token-withdraw--input,
     .m-token-withdraw--submit-button {
@@ -21,8 +30,8 @@
       width: 15em;
       text-align: right;
 
-      @include m-theme(){
-         border: 1px solid themed($m-grey-50);
+      @include m-theme() {
+        border: 1px solid themed($m-grey-50);
       }
     }
 
@@ -36,7 +45,7 @@
       text-transform: uppercase;
       cursor: pointer;
 
-      @include m-theme(){
+      @include m-theme() {
         border: 1px solid themed($m-grey-700);
         color: themed($m-grey-700);
       }
@@ -53,7 +62,7 @@
   }
 
   .m-token-withdraw--error {
-    @include m-theme(){
+    @include m-theme() {
       color: themed($m-red);
     }
     font-size: 12px;

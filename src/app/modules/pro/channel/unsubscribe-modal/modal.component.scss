@@ -1,0 +1,32 @@
+m-pro__unsubscribeModal {
+  @include m-theme() {
+    background-color: rgba(themed($m-black-always), 0.95);
+  }
+}
+
+.m-pro__unsubscribeModal {
+  > * {
+    color: var(--m-pro--text-color);
+    font-size: 16px;
+
+    @media screen and (max-width: 420px) {
+      font-size: 14px;
+    }
+  }
+
+  .m-ProUnsubscribeModal__response {
+    margin-top: 20px;
+    text-align: end;
+
+    span {
+      text-transform: uppercase;
+      padding: 8px;
+      cursor: pointer;
+    }
+
+    .m-ProUnsubscribeModalResponse__unsubscribe {
+      color: var(--m-pro--primary-color);
+      margin-left: 12px;
+    }
+  }
+}

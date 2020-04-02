@@ -9,7 +9,11 @@ import { ChannelsModule } from '../channels/channels.module';
 import { ModalsModule } from '../modals/modals.module';
 import { VideoChatModule } from '../videochat/videochat.module';
 
-import { GroupsCreator, GroupsListComponent, GroupsProfile } from './list.component';
+import {
+  GroupsCreator,
+  GroupsListComponent,
+  GroupsProfile,
+} from './list.component';
 import { GroupsJoinButton } from './groups-join-button';
 import { GroupsProfileMembersInvite } from './profile/members/invite/invite';
 import { GroupsCard } from './card/card';
@@ -29,24 +33,36 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
 import { GroupMemberPreviews } from './profile/member-previews/member-previews.component';
 import { CanDeactivateGroupService } from './profile/can-deactivate/can-deactivate-group.service';
 import { GroupProfileFeedComponent } from './profile/feed/feed.component';
-import { GroupProfileFeedSortedComponent } from "./profile/feed/sorted.component";
-import { NewsfeedModule } from "../newsfeed/newsfeed.module";
-import { GroupsProfileReviewComponent } from "./profile/review/review.component";
-import { GroupsKickModalComponent } from "./kick-modal/kick-modal.component";
-import { TextInputAutocompleteModule } from "../../common/components/autocomplete";
+import { GroupProfileFeedSortedComponent } from './profile/feed/sorted.component';
+import { NewsfeedModule } from '../newsfeed/newsfeed.module';
+import { GroupsProfileReviewComponent } from './profile/review/review.component';
+import { GroupsKickModalComponent } from './kick-modal/kick-modal.component';
+import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
+import { ComposerModule } from '../composer/composer.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 
 const routes: Routes = [
-  { path: 'groups/profile/:guid', component: GroupsProfile, canDeactivate: [CanDeactivateGroupService], children: [
+  {
+    path: 'groups/profile/:guid',
+    component: GroupsProfile,
+    canDeactivate: [CanDeactivateGroupService],
+    children: [
       { path: '', redirectTo: 'feed', pathMatch: 'full' },
       { path: 'feed/review', component: GroupsProfileReviewComponent },
       { path: 'feed/:filter', component: GroupProfileFeedComponent },
       { path: 'feed', component: GroupProfileFeedComponent },
       { path: 'activity', redirectTo: 'feed' },
       { path: 'members', component: GroupsProfileMembers },
-      { path: 'requests',  component: GroupsProfileRequests },
+      { path: 'requests', component: GroupsProfileRequests },
     ],
   },
-  { path: 'groups/create', component: GroupsCreator },
+  {
+    path: 'groups/create',
+    component: GroupsCreator,
+    data: {
+      title: 'Create a group',
+    },
+  },
   { path: 'groups/:filter', component: GroupsListComponent },
   { path: 'groups', redirectTo: '/groups/top', pathMatch: 'full' },
 ];
@@ -67,6 +83,8 @@ const routes: Routes = [
     TextInputAutocompleteModule,
     VideoChatModule,
     NewsfeedModule,
+    ComposerModule,
+    ActivityModule,
   ],
   declarations: [
     GroupsListComponent,
@@ -108,13 +126,7 @@ const routes: Routes = [
     GroupsMembersModuleComponent,
     GroupsSidebarMarkersComponent,
   ],
-  entryComponents: [
-    GroupsCard,
-    GroupsSidebarMarkersComponent,
-  ],
-  providers: [
-    CanDeactivateGroupService
-  ]
+  entryComponents: [GroupsCard, GroupsSidebarMarkersComponent],
+  providers: [CanDeactivateGroupService],
 })
-export class GroupsModule {
-}
+export class GroupsModule {}

@@ -1,4 +1,4 @@
-import { Directive,  EventEmitter, ElementRef, OnDestroy } from '@angular/core';
+import { Directive, EventEmitter, ElementRef, OnDestroy } from '@angular/core';
 import { HovercardService } from '../../services/hovercard';
 
 @Directive({
@@ -7,11 +7,10 @@ import { HovercardService } from '../../services/hovercard';
   host: {
     '(mouseenter)': 'show()',
     '(mouseleave)': 'hide()',
-    '(click)': 'hideForcefully()'
-  }
+    '(click)': 'hideForcefully()',
+  },
 })
 export class Hovercard implements OnDestroy {
-
   guid: any = '';
   anchor: any = ['right', 'top'];
   _element: any;

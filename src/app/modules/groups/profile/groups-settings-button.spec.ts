@@ -1,4 +1,10 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
 import { GroupsSettingsButton } from './groups-settings-button';
@@ -12,16 +18,15 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
 let groupConfig = {
-  'countMembers': Promise.resolve(1)
+  countMembers: Promise.resolve(1),
 };
 
 let groupsServiceMock: any = MockService(GroupsService, groupConfig);
 
 describe('GroupsSettingsButton', () => {
-
   let comp: GroupsSettingsButton;
   let fixture: ComponentFixture<GroupsSettingsButton>;
 
@@ -30,7 +35,9 @@ describe('GroupsSettingsButton', () => {
   }
 
   function getMenuItem(i: number): DebugElement {
-    return fixture.debugElement.query(By.css(`.minds-dropdown-menu .mdl-menu__item:nth-child(${i})`))
+    return fixture.debugElement.query(
+      By.css(`.minds-dropdown-menu .mdl-menu__item:nth-child(${i})`)
+    );
   }
 
   beforeEach(async(() => {
@@ -41,23 +48,23 @@ describe('GroupsSettingsButton', () => {
           selector: 'm-modal',
           template: '<ng-content></ng-content>',
           inputs: ['open'],
-          outputs: ['closed']
+          outputs: ['closed'],
         }),
-        MockComponent({ 
+        MockComponent({
           selector: 'm-nsfw-selector',
-          inputs: [ 'selected' ],
-          outputs: [ 'selected'],
+          inputs: ['selected'],
+          outputs: ['selected'],
         }),
-        GroupsSettingsButton],
+        GroupsSettingsButton,
+      ],
       imports: [RouterTestingModule, FormsModule],
       providers: [
         { provide: GroupsService, useValue: groupsServiceMock },
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -71,7 +78,7 @@ describe('GroupsSettingsButton', () => {
     comp._group = {
       guid: '1234',
       'is:muted': false,
-      'is:creator': true
+      'is:creator': true,
     };
 
     clientMock.response = {};
@@ -89,7 +96,9 @@ describe('GroupsSettingsButton', () => {
     expect(button).not.toBeNull();
     expect(button.nativeElement.textContent).toContain('settings');
 
-    expect(fixture.debugElement.query(By.css('.minds-dropdown-menu'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('.minds-dropdown-menu'))
+    ).not.toBeNull();
   });
 
   it('should have button that lets you toggle the menu', () => {
@@ -110,7 +119,6 @@ describe('GroupsSettingsButton', () => {
     expect(mute).not.toBeNull();
     expect(mute.nativeElement.textContent).toContain('Disable Notifications');
     expect(mute.nativeElement.hidden).toBeFalsy();
-
 
     expect(unmute).not.toBeNull();
     expect(unmute.nativeElement.textContent).toContain('Enable Notifications');
@@ -136,9 +144,13 @@ describe('GroupsSettingsButton', () => {
     feature.nativeElement.click();
     expect(comp.featureModalOpen).toBeTruthy();
 
-    clientMock.response['api/v1/admin/feature/1234/not-selected'] = { status: 'success' };
+    clientMock.response['api/v1/admin/feature/1234/not-selected'] = {
+      status: 'success',
+    };
 
-    const modalButton = fixture.debugElement.query(By.css('m-modal .m-button-feature-modal button.mdl-button'));
+    const modalButton = fixture.debugElement.query(
+      By.css('m-modal .m-button-feature-modal button.mdl-button')
+    );
     expect(modalButton).not.toBeNull();
     expect(modalButton.nativeElement.textContent).toContain('Feature');
     modalButton.nativeElement.click();
@@ -147,7 +159,9 @@ describe('GroupsSettingsButton', () => {
     jasmine.clock().tick(10);
 
     expect(clientMock.put).toHaveBeenCalled();
-    expect(clientMock.put.calls.mostRecent().args[0]).toBe('api/v1/admin/feature/1234/not-selected');
+    expect(clientMock.put.calls.mostRecent().args[0]).toBe(
+      'api/v1/admin/feature/1234/not-selected'
+    );
 
     expect(comp.group.featured).toBeTruthy();
 
@@ -160,10 +174,12 @@ describe('GroupsSettingsButton', () => {
 
     unfeature.nativeElement.click();
     expect(clientMock.delete).toHaveBeenCalled();
-    expect(clientMock.delete.calls.mostRecent().args[0]).toBe('api/v1/admin/feature/1234');
+    expect(clientMock.delete.calls.mostRecent().args[0]).toBe(
+      'api/v1/admin/feature/1234'
+    );
   }));
 
-  it('should have an option to report', ()=> {
+  it('should have an option to report', () => {
     const report = getMenuItem(4);
     expect(report).not.toBeNull();
     expect(report.nativeElement.textContent).toContain('Report');
@@ -172,11 +188,11 @@ describe('GroupsSettingsButton', () => {
     expect(overlayModalServiceMock.present).toHaveBeenCalled();
   });
 
-  it('should have an option to delete the group only if the user is a creator', ()=> {
+  it('should have an option to delete the group only if the user is a creator', () => {
     const group = {
       guid: '1234',
       'is:muted': false,
-      'is:creator': true
+      'is:creator': true,
     };
 
     const deleteGroup = getMenuItem(5);
@@ -190,7 +206,7 @@ describe('GroupsSettingsButton', () => {
     expect(getMenuItem(6)).toBeNull();
   });
 
-  it('should delete the group if there is one member', fakeAsync(()=> {
+  it('should delete the group if there is one member', fakeAsync(() => {
     const deleteGroup = getMenuItem(5);
 
     deleteGroup.nativeElement.click();
@@ -200,7 +216,9 @@ describe('GroupsSettingsButton', () => {
 
     expect(comp.isGoingToBeDeleted).toBeTruthy();
 
-    const confirmButton = fixture.debugElement.query(By.css('m-modal button.mdl-button'));
+    const confirmButton = fixture.debugElement.query(
+      By.css('m-modal button.mdl-button')
+    );
     expect(confirmButton.nativeElement.textContent).toContain('Confirm');
 
     confirmButton.nativeElement.click();
@@ -211,7 +229,7 @@ describe('GroupsSettingsButton', () => {
     expect(groupsServiceMock.deleteGroup).toHaveBeenCalled();
   }));
 
-  it('should not allow group deletion if there is more than one member', fakeAsync(()=> {
+  it('should not allow group deletion if there is more than one member', fakeAsync(() => {
     groupConfig.countMembers = Promise.resolve(2);
     const deleteGroup = getMenuItem(5);
 
@@ -221,5 +239,4 @@ describe('GroupsSettingsButton', () => {
     expect(groupsServiceMock.countMembers).toHaveBeenCalled();
     expect(comp.isGoingToBeDeleted).toBeFalsy();
   }));
-
 });

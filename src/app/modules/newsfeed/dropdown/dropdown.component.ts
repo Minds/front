@@ -7,11 +7,9 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-newsfeed--dropdown',
-  templateUrl: 'dropdown.component.html'
+  templateUrl: 'dropdown.component.html',
 })
-
 export class NewsfeedDropdownComponent implements OnInit {
-
   boostRating: number = 2;
   plus: boolean = false;
   @Input('showBoost') showBoostOptions: boolean = true;
@@ -21,9 +19,8 @@ export class NewsfeedDropdownComponent implements OnInit {
     public router: Router,
     public boostService: NewsfeedBoostService,
     private newsfeedService: NewsfeedService,
-    private settingsService: SettingsService,
-  ) {
-  }
+    private settingsService: SettingsService
+  ) {}
 
   ngOnInit() {
     this.boostRating = this.session.getLoggedInUser().boost_rating;
@@ -51,7 +48,7 @@ export class NewsfeedDropdownComponent implements OnInit {
   }
 
   onNSFWSelected(reasons) {
-    this.newsfeedService.setNSFW(reasons);    
+    this.newsfeedService.setNSFW(reasons);
   }
 
   toggleRating(e) {
@@ -71,4 +68,3 @@ export class NewsfeedDropdownComponent implements OnInit {
     return this.session.getLoggedInUser().boost_rating;
   }
 }
-

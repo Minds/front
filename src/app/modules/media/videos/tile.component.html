@@ -1,28 +1,38 @@
-<div class="m-media--videos--tile"
-  [ngClass]="{ 'm-video-tile-mature-thumbnail': attachment.shouldBeBlurred(entity) }">
-
+<div
+  class="m-media--videos--tile"
+  [ngClass]="{
+    'm-video-tile-mature-thumbnail': attachment.shouldBeBlurred(entity)
+  }"
+>
   <a
     class="m-media--videos--tile-thumbnail"
-    [ngStyle]="{'background': '#444 url(' + entity.thumbnail_src + ') center center / cover'}"
+    [ngStyle]="{
+      background: '#444 url(' + entity.thumbnail_src + ') center center / cover'
+    }"
     [routerLink]="['/media', entity.guid]"
-    >
+  >
     <span class="material-icons">
       play_circle_outline
     </span>
-
-   
   </a>
   <i class="material-icons">explicit</i>
   <div class="m-media--videos--tile-title m-border">
     <label>{{ entity.title }}</label>
     <div class="m-inline-owner-block">
       <a [routerLink]="['/', entity.ownerObj.username]">
-        <img src="/icon/{{entity.ownerObj.guid}}/small/{{entity.ownerObj.icontime}}" class="m-border"/>
-        {{entity.ownerObj.username}}
+        <img
+          src="/icon/{{ entity.ownerObj.guid }}/small/{{
+            entity.ownerObj.icontime
+          }}"
+          class="m-border"
+        />
+        {{ entity.ownerObj.username }}
       </a>
-      <span>{{ entity.time_created * 1000 | date:'mediumDate' }}</span>
+      <span>{{ entity.time_created * 1000 | date: 'mediumDate' }}</span>
     </div>
-    <m-safe-toggle *ngIf="session.isAdmin()" [(entity)]="entity"></m-safe-toggle>
+    <m-safe-toggle
+      *ngIf="session.isAdmin()"
+      [(entity)]="entity"
+    ></m-safe-toggle>
   </div>
-
 </div>

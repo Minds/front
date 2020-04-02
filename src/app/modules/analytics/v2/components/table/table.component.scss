@@ -1,0 +1,210 @@
+.m-analyticsTable__wrapper {
+  font-size: 13px;
+  font-weight: 300;
+  overflow-x: scroll;
+  @include m-theme() {
+    color: themed($m-grey-800);
+  }
+  a {
+    text-decoration: none;
+    font-weight: 300;
+    @include m-theme() {
+      color: themed($m-grey-800);
+    }
+  }
+}
+.m-analyticsTable__cell {
+  display: flex;
+  overflow: hidden;
+  white-space: nowrap;
+  height: 76px;
+}
+.m-analyticsTable__subCol--value {
+  white-space: normal;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  min-width: 50px;
+}
+[class*='m-analyticsTable__row'] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+// ***********************************************
+
+.m-analyticsTable__row--header {
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-grey-50);
+    color: themed($m-grey-200);
+  }
+  .m-analyticsTable__col--entity {
+    flex-direction: row;
+    align-items: center;
+  }
+  .m-analyticsTable__col--values {
+    .m-analyticsTable__subCol--value {
+      white-space: normal;
+      text-align: center;
+    }
+  }
+}
+
+// ***********************************************
+
+.m-analyticsTable__row--data {
+  &:hover {
+    @include m-theme() {
+      background-color: rgba(themed($m-blue-grey-50), 0.5);
+    }
+    .m-analyticsTable__col--entity .m-analyticsTable__entityTitle i {
+      visibility: visible;
+    }
+  }
+  .m-analyticsTable__col--entity {
+    flex-direction: row;
+    align-items: center;
+    @include m-theme() {
+      border-right: 1px solid themed($m-grey-50);
+    }
+
+    .m-analyticsTable__entityWrapper {
+      display: flex;
+      flex-direction: column;
+      width: 87%;
+    }
+  }
+
+  [class*='m-analyticsTable__col'],
+  [class*='m-analyticsTable__col'] * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+// ***********************************************
+
+.m-analyticsTable__col--values {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  .m-analyticsTable__subCol--value {
+    flex: 1 1 0;
+    align-items: center;
+
+    &:last-of-type {
+      padding-right: 50px;
+    }
+  }
+}
+
+// ***********************************************
+
+.m-analyticsTable__col--entity {
+  flex-direction: column;
+  padding-left: 50px;
+  min-width: 170px;
+
+  .m-analyticsTable__usernameWrapper a {
+    font-weight: 300;
+    text-decoration: none;
+  }
+  .m-analyticsTable__entityTitle {
+    display: flex;
+    > * {
+      display: inline-block;
+    }
+    span {
+      max-width: 90%;
+    }
+
+    i {
+      font-size: 12px;
+      margin: 3px 0 0 3px;
+      visibility: hidden;
+      @include m-theme() {
+        color: themed($m-grey-800);
+      }
+    }
+  }
+  .m-analyticsTable__entityDetails {
+    display: inline;
+    @include m-theme() {
+      color: themed($m-grey-200);
+    }
+    > * {
+      margin-right: $minds-margin;
+    }
+    .m-analyticsTable__usernameWrapper {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    a {
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+    }
+  }
+}
+
+// ***********************************************
+
+.m-analyticsTable__col--entity {
+  flex: 2 3 0;
+}
+.m-analyticsTable__col--values {
+  flex: 2 2 0;
+}
+
+// ***********************************************
+
+@media screen and (max-width: $min-tablet) {
+  .m-analyticsTable__wrapper {
+    .m-analyticsTable__col--entity {
+      flex: 3 1 0;
+      padding-left: 24px;
+      .m-analyticsTable__entityType,
+      .m-analyticsTable__entityPublishDate {
+        display: none;
+      }
+    }
+    .m-analyticsTable__col--values {
+      flex: 2 2 0;
+
+      .m-analyticsTable__subCol--value:last-of-type {
+        padding-right: 16px;
+      }
+
+      .m-analyticsTable__row--header {
+        @include m-theme() {
+          border: none !important;
+        }
+      }
+      .m-analyticsTable__row--data {
+        .m-analyticsTable__col--entity {
+          padding-left: 16px;
+          @include m-theme() {
+            border: none !important;
+          }
+        }
+      }
+      .m-analyticsTable__cell {
+        height: 48px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $max-mobile) {
+  .m-analyticsTable__wrapper {
+    .m-analyticsTable__col--entity {
+      flex: 2 1 0;
+      padding-left: 24px;
+    }
+  }
+}

@@ -1,70 +1,77 @@
-@import "defaults";
+@import 'defaults';
 
+m-wallet {
+  grid-area: content / span 2;
+  min-width: 0;
+}
+
+.m-grid .m-wallet--wrapper {
+  margin: unset;
+}
 .m-wallet--wrapper {
   max-width: 1280px;
   margin: auto;
 }
 
-.minds-wallet-points{
+.minds-wallet-points {
   width: auto;
   min-height: 0;
 
-  h2{
-    @include m-theme(){
+  h2 {
+    @include m-theme() {
       color: themed($m-white);
     }
   }
 }
 
-.minds-quote-card{
-  width:100%;
-  min-height:0;
-  border-radius:0;
+.minds-quote-card {
+  width: 100%;
+  min-height: 0;
+  border-radius: 0;
 
-  margin-bottom:$minds-margin*2;
+  margin-bottom: $minds-margin * 2;
 
-  .minds-boost-points-input{
-    input{
-      @include m-theme(){
+  .minds-boost-points-input {
+    input {
+      @include m-theme() {
         color: themed($m-grey-100);
         background-color: rgba(themed($m-white), 0.3);
       }
     }
-    input:disabled{
-      @include m-theme(){
+    input:disabled {
+      @include m-theme() {
         background-color: rgba(themed($m-white), 0.3);
       }
     }
   }
 }
 
-.m-points-balance{
-  padding:$minds-padding*4 $minds-padding;
+.m-points-balance {
+  padding: $minds-padding * 4 $minds-padding;
   text-align: center;
 
-  i{
+  i {
     width: 100%;
     font-size: 100px;
     text-align: center;
   }
-  h2{
-    text-align:center;
+  h2 {
+    text-align: center;
   }
-
 }
 
-.minds-purchase-card{
-  width:100%;
-  min-height:0;
-  padding:0;
-  border-radius:0;
+.minds-purchase-card {
+  width: 100%;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
 
-  .minds-purchase-vendors{
-    span{
-      font-size:13px;
-      padding:8px;
-      cursor:pointer;
-      text-transform:uppercase;
+  .minds-purchase-vendors {
+    span {
+      font-size: 13px;
+      padding: 8px;
+      cursor: pointer;
+      text-transform: uppercase;
 
       &:first-child {
         padding-left: 0;
@@ -72,18 +79,17 @@
     }
   }
 
-  .mdl-grid{
-
-    .mdl-cell{
-      margin:0;
-      padding:0;
+  .mdl-grid {
+    .mdl-cell {
+      margin: 0;
+      padding: 0;
       display: flex;
       align-items: center;
       -webkit-align-items: center;
     }
   }
 
-  select{
+  select {
     padding: 8px 16px;
     margin-right: 16px;
     font-size: 16px;
@@ -92,65 +98,65 @@
     -moz-appearance: none;
     /* border-right: 1px solid themed($m-grey-100); */
     border-radius: 0;
-    @include m-theme(){
-       border: 1px solid themed($m-grey-50);
-       background-color: rgba(themed($m-grey-50), 0.8)
+    @include m-theme() {
+      border: 1px solid themed($m-grey-50);
+      background-color: rgba(themed($m-grey-50), 0.8);
     }
   }
 }
 
-.minds-purchase-card-confirm{
-  width:100%;
-  min-height:0;
-  margin-top:$minds-margin;
+.minds-purchase-card-confirm {
+  width: 100%;
+  min-height: 0;
+  margin-top: $minds-margin;
 
   button {
-    float:right;
+    float: right;
   }
 }
 
-.minds-purchase-recurring-option{
-  padding:16px;
-  label{
-    font-size:12px;
+.minds-purchase-recurring-option {
+  padding: 16px;
+  label {
+    font-size: 12px;
   }
-  span{
-    font-style:italic;
-    font-size:12px;
+  span {
+    font-style: italic;
+    font-size: 12px;
   }
-  .minds-purchase-recurring-cancel{
-    cursor:pointer;
-    font-weigth:bold;
+  .minds-purchase-recurring-cancel {
+    cursor: pointer;
+    font-weigth: bold;
   }
 }
 
-.minds-transaction-card{
-  width:auto;
-  min-height:0;
-  margin-bottom:$minds-padding * 2;
+.minds-transaction-card {
+  width: auto;
+  min-height: 0;
+  margin-bottom: $minds-padding * 2;
 
-  .minds-transaction-points{
-    font-size:30px;
-    .positive{
-      @include m-theme(){
+  .minds-transaction-points {
+    font-size: 30px;
+    .positive {
+      @include m-theme() {
         color: themed($m-green-dark);
       }
     }
-    .negative{
-      @include m-theme(){
+    .negative {
+      @include m-theme() {
         color: themed($m-red);
       }
     }
   }
 
-  .minds-transaction-details{
-    display:flex;
-    p{
-      margin:0;
+  .minds-transaction-details {
+    display: flex;
+    p {
+      margin: 0;
     }
-    .ts{
-      font-size:11px;
-      padding-left:$minds-padding;
+    .ts {
+      font-size: 11px;
+      padding-left: $minds-padding;
     }
   }
 }
@@ -165,7 +171,7 @@ minds-wallet-transactions {
   font-size: 12px;
   font-weight: 400;
   text-align: center;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-200);
   }
 }
@@ -183,81 +189,81 @@ minds-wallet-transactions {
   margin-top: $minds-padding * 2;
 }
 
-.m-wallet--wire-link{
+.m-wallet--wire-link {
   i {
     width: 25px;
     text-align: center;
   }
 }
 
-.m-wire--overview-hero{
+.m-wire--overview-hero {
   padding-bottom: 32px;
 
   @media only screen and (max-width: 400px) {
-    padding-bottom:0;
+    padding-bottom: 0;
   }
 }
-.m-wire--overview-overview{
+.m-wire--overview-overview {
   padding: 100px 16px 75px 140px;
   margin: auto;
-  max-width:990px;
-  display:flex;
-  align-items:center;
+  max-width: 990px;
+  display: flex;
+  align-items: center;
   font-family: 'Roboto', Helvetica, sans-serif;
 
   @media only screen and (max-width: 400px) {
-    padding:0;
+    padding: 0;
     text-align: center;
   }
 
-  i{
+  i {
     font-style: normal;
-    font-weight:100;
+    font-weight: 100;
   }
 
   m--crypto-token-symbol {
     .m--crypto-token-symbol--stroke {
-      @include m-theme(){
+      @include m-theme() {
         stroke: themed($m-white);
       }
     }
 
     .m--crypto-token-symbol--fill {
-      @include m-theme(){
+      @include m-theme() {
         fill: themed($m-white);
       }
     }
   }
 
-  > div{
-    font-size:48px;
-    letter-spacing:2px;
-    line-height:48px;
-    flex:1;
-    padding:8px 16px;
+  > div {
+    font-size: 48px;
+    letter-spacing: 2px;
+    line-height: 48px;
+    flex: 1;
+    padding: 8px 16px;
   }
 
-  .m-wire--overview-label{
-    display:block;
+  .m-wire--overview-label {
+    display: block;
 
     > * {
-      vertical-align:middle;
+      vertical-align: middle;
     }
 
-    label{
+    label {
       text-transform: uppercase;
       font-family: 'Roboto', Helvetica, sans-serif;
-      letter-spacing:1px;
-      font-size:14px;
+      letter-spacing: 1px;
+      font-size: 14px;
     }
-    i{
+    i {
       font-size: 16px;
       opacity: 0.5;
       cursor: pointer;
     }
   }
 
-  .m-wire--overview-breakdown{
+  .m-wire--overview-breakdown {
     flex: 1;
     letter-spacing: 2px;
     font-size: 16px;
@@ -268,11 +274,11 @@ minds-wallet-transactions {
   }
 }
 
-m-monetization--graph{
-  margin-bottom:32px;
+m-monetization--graph {
+  margin-bottom: 32px;
 }
 
-.m-wire--overview-nav{
+.m-wire--overview-nav {
   padding: 0;
   text-align: center;
   text-transform: uppercase;
@@ -298,15 +304,14 @@ m-monetization--graph{
   }
 }
 
-.m-wire--overview{
-
-  m-revenue--ledger{
+.m-wire--overview {
+  m-revenue--ledger {
     display: block;
     max-width: 600px;
     margin: auto;
 
-    table{
-      width:100%;
+    table {
+      width: 100%;
     }
   }
 
@@ -315,13 +320,13 @@ m-monetization--graph{
       font-size: 24px;
 
       .m--crypto-token-symbol--stroke {
-        @include m-theme(){
+        @include m-theme() {
           stroke: themed($m-blue-grey-500);
         }
       }
 
       .m--crypto-token-symbol--fill {
-        @include m-theme(){
+        @include m-theme() {
           fill: themed($m-blue-grey-500);
         }
       }
@@ -329,20 +334,20 @@ m-monetization--graph{
 
     .selected m--crypto-token-symbol {
       .m--crypto-token-symbol--stroke {
-        @include m-theme(){
+        @include m-theme() {
           stroke: themed($m-blue);
         }
       }
 
       .m--crypto-token-symbol--fill {
-        @include m-theme(){
+        @include m-theme() {
           fill: themed($m-blue);
         }
       }
     }
   }
 }
-h2.m-wire--overview-product-header{
+h2.m-wire--overview-product-header {
   margin: 0;
   padding: 16px 16px 0;
   text-transform: uppercase;
@@ -351,10 +356,8 @@ h2.m-wire--overview-product-header{
   letter-spacing: 2px;
 }
 
-
-
 .m-wallet--token {
-  img{
+  img {
     width: 30px;
     //margin-top: 4px;
     margin-right: 8px;
@@ -363,7 +366,7 @@ h2.m-wire--overview-product-header{
     opacity: 0.75;
   }
 
-  span{
+  span {
     vertical-align: middle;
   }
 }

@@ -1,13 +1,23 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+} from '@angular/core/testing';
 
 import { ForgotPasswordComponent } from './forgot-password.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
-import { Component, DebugElement, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  DebugElement,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { clientMock } from '../../../../tests/client-mock.spec';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { MindsTitle } from '../../../services/ux/title';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api/client';
@@ -15,7 +25,7 @@ import { MockDirective } from '../../../utils/mock';
 
 @Component({
   selector: '',
-  template: ''
+  template: '',
 })
 class BlankComponent {
   @Input() referrer: string;
@@ -23,7 +33,6 @@ class BlankComponent {
 }
 
 describe('ForgotPasswordComponent', () => {
-
   let comp: ForgotPasswordComponent;
   let fixture: ComponentFixture<ForgotPasswordComponent>;
 
@@ -32,35 +41,43 @@ describe('ForgotPasswordComponent', () => {
   }
 
   function getContinueButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-forgot-password--step-1 button'));
+    return fixture.debugElement.query(
+      By.css('.m-forgot-password--step-1 button')
+    );
   }
 
   function getResetButton(): DebugElement {
-    return fixture.debugElement.query(By.css('.m-forgot-password--step-3 button'));
+    return fixture.debugElement.query(
+      By.css('.m-forgot-password--step-3 button')
+    );
   }
 
   function getPassword1Input(): DebugElement {
     return fixture.debugElement.query(By.css('input#password'));
   }
 
-
   function getPassword2Input(): DebugElement {
     return fixture.debugElement.query(By.css('input#password2'));
   }
 
-
   beforeEach(async(() => {
-
     TestBed.configureTestingModule({
-      declarations: [MockDirective({selector: '[mdl]', inputs: ['mdl']}), BlankComponent, ForgotPasswordComponent],
-      imports: [RouterTestingModule.withRoutes([{ path: 'newsfeed', component: BlankComponent }]), ReactiveFormsModule],
+      declarations: [
+        MockDirective({ selector: '[mdl]', inputs: ['mdl'] }),
+        BlankComponent,
+        ForgotPasswordComponent,
+      ],
+      imports: [
+        RouterTestingModule.withRoutes([
+          { path: 'newsfeed', component: BlankComponent },
+        ]),
+        ReactiveFormsModule,
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
-      ]
-    })
-      .compileComponents();
+      ],
+    }).compileComponents();
   }));
 
   // synchronous beforeEach
@@ -76,9 +93,13 @@ describe('ForgotPasswordComponent', () => {
   });
 
   it('should have a prompt to enter your username', () => {
-    const prompt = fixture.debugElement.query(By.css('.m-forgot-password--step-1 .mdl-card__supporting-text'));
+    const prompt = fixture.debugElement.query(
+      By.css('.m-forgot-password--step-1')
+    );
     expect(prompt).not.toBeNull();
-    expect(prompt.nativeElement.textContent).toContain('To request a new password, enter your username');
+    expect(prompt.nativeElement.textContent).toContain(
+      'To request a new password, enter your username'
+    );
   });
 
   it('should have a username input and a continue button', () => {
@@ -106,7 +127,9 @@ describe('ForgotPasswordComponent', () => {
     expect(comp.request).toHaveBeenCalled();
     expect(clientMock.post).toHaveBeenCalled();
     expect(clientMock.post.calls.mostRecent().args[0]).toBe(url);
-    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({ username: 'test' });
+    expect(clientMock.post.calls.mostRecent().args[1]).toEqual({
+      username: 'test',
+    });
     expect(comp.step).toBe(2);
   }));
 
@@ -114,9 +137,13 @@ describe('ForgotPasswordComponent', () => {
     comp.step = 2;
     fixture.detectChanges();
 
-    const prompt = fixture.debugElement.query(By.css('.m-forgot-password--step-2 .mdl-card__supporting-text'));
+    const prompt = fixture.debugElement.query(
+      By.css('.m-forgot-password--step-2')
+    );
     expect(prompt).not.toBeNull();
-    expect(prompt.nativeElement.textContent).toContain('We have sent an unlock code to your registered email address.');
+    expect(prompt.nativeElement.textContent).toContain(
+      'We have sent an unlock code to your registered email address.'
+    );
   });
 
   it('should allow the user to change its password in step 3', fakeAsync(() => {
@@ -126,9 +153,13 @@ describe('ForgotPasswordComponent', () => {
 
     fixture.detectChanges();
 
-    const prompt = fixture.debugElement.query(By.css('.m-forgot-password--step-3 .mdl-card__supporting-text'));
+    const prompt = fixture.debugElement.query(
+      By.css('.m-forgot-password--step-3')
+    );
     expect(prompt).not.toBeNull();
-    expect(prompt.nativeElement.textContent).toContain('Please enter your new password');
+    expect(prompt.nativeElement.textContent).toContain(
+      'Enter Your New Password'
+    );
 
     const input1 = getPassword1Input();
     expect(input1).not.toBeNull();
@@ -148,7 +179,7 @@ describe('ForgotPasswordComponent', () => {
 
     clientMock.post.calls.reset();
     const url = 'api/v1/forgotpassword/reset';
-    clientMock.post[url] = { 'status': 'success' };
+    clientMock.post[url] = { status: 'success' };
 
     getResetButton().nativeElement.click();
     jasmine.clock().tick(10);
@@ -158,8 +189,11 @@ describe('ForgotPasswordComponent', () => {
     expect(clientMock.post).toHaveBeenCalled();
     const args = clientMock.post.calls.mostRecent().args;
     expect(args[0]).toBe(url);
-    expect(args[1]).toEqual({ password: '123456', code: 'code', username: 'test' });
+    expect(args[1]).toEqual({
+      password: '123456',
+      code: 'code',
+      username: 'test',
+    });
     expect(sessionMock.login).toHaveBeenCalled();
   }));
-
 });

@@ -10,7 +10,12 @@ const routes: Routes = [
   {
     path: 'nodes',
     component: NodesMarketingComponent,
-  }
+    data: {
+      title: 'Minds Nodes',
+      description: 'Launch your own social networking app',
+      ogImage: '/assets/product-pages/nodes/nodes-1.jpg',
+    },
+  },
 ];
 
 @NgModule({
@@ -21,15 +26,8 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [
-    NodesMarketingComponent
-  ],
-  exports: [
-    NodesMarketingComponent
-  ],
-  entryComponents: [
-    NodesMarketingComponent,
-  ]
+  declarations: [NodesMarketingComponent],
+  exports: [NodesMarketingComponent],
+  entryComponents: [NodesMarketingComponent],
 })
-export class NodesMarketingModule {
-}
+export class NodesMarketingModule {}

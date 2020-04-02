@@ -3,14 +3,15 @@ import { Session } from '../../../../../services/session';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
 import isMobile from '../../../../../helpers/is-mobile';
-
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-referrals--links',
   templateUrl: 'links.component.html',
 })
-
 export class ReferralsLinksComponent implements OnInit, OnDestroy {
+  readonly cdnAssetsUrl: string;
+  readonly siteUrl: string;
 
   referrerParam = '';
   registerUrl = '';
@@ -20,22 +21,27 @@ export class ReferralsLinksComponent implements OnInit, OnDestroy {
 
   registerUrlTimeout;
   referrerParamTimeout;
-  registerUrlRecentlyCopied = false;
-  referrerParamRecentlyCopied = false;
-  registerUrlFocused = false;
-  referrerParamFocused = false;
+  registerUrlRecentlyCopied: boolean = false;
+  referrerParamRecentlyCopied: boolean = false;
+  registerUrlFocused: boolean = false;
+  referrerParamFocused: boolean = false;
 
   constructor(
     public session: Session,
-    private overlayModal: OverlayModalService
+    private overlayModal: OverlayModalService,
+    configs: ConfigsService
   ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
   }
 
   ngOnInit() {
     // Create custom referral links for current user
     this.referrerParam = '?referrer=' + this.session.getLoggedInUser().username;
-    this.registerUrl = window.Minds.site_url + 'register' + this.referrerParam;
-    this.encodedRegisterUrl = encodeURI(window.Minds.site_url) + encodeURIComponent('register' + this.referrerParam);
+    this.registerUrl = this.siteUrl + 'register' + this.referrerParam;
+    this.encodedRegisterUrl =
+      encodeURI(this.siteUrl) +
+      encodeURIComponent('register' + this.referrerParam);
     this.encodedRegisterMessage = 'Join%20me%20on%20Minds%20%f0%9f%92%a1%20';
   }
 
@@ -54,26 +60,37 @@ export class ReferralsLinksComponent implements OnInit, OnDestroy {
   }
 
   openTwitter() {
-    const url = 'https://twitter.com/intent/tweet?tw_p=tweetbutton&text=' + this.encodedRegisterMessage + '&url=' + this.encodedRegisterUrl;
+    const url =
+      'https://twitter.com/intent/tweet?tw_p=tweetbutton&text=' +
+      this.encodedRegisterMessage +
+      '&url=' +
+      this.encodedRegisterUrl;
     window.open(url, '_blank', 'width=620, height=220, left=80, top=80');
   }
 
   openFacebook() {
     this.openWindow(
-      'https://www.facebook.com/sharer/sharer.php?u=' + this.encodedRegisterUrl + '&display=popup&ref=plugin&src=share_button'
+      'https://www.facebook.com/sharer/sharer.php?u=' +
+        this.encodedRegisterUrl +
+        '&display=popup&ref=plugin&src=share_button'
     );
   }
 
   openMessenger() {
     const encodedFacebookAppId = encodeURIComponent('184865748231073');
     this.openWindow(
-      'fb-messenger://share?link=' + this.encodedRegisterUrl + '&app_id=' + encodedFacebookAppId
+      'fb-messenger://share?link=' +
+        this.encodedRegisterUrl +
+        '&app_id=' +
+        encodedFacebookAppId
     );
   }
 
   openWhatsapp() {
     this.openWindow(
-      'https://api.whatsapp.com/send?text=' + this.encodedRegisterMessage + this.encodedRegisterUrl
+      'https://api.whatsapp.com/send?text=' +
+        this.encodedRegisterMessage +
+        this.encodedRegisterUrl
     );
   }
 
@@ -85,16 +102,17 @@ export class ReferralsLinksComponent implements OnInit, OnDestroy {
 
   openEmail() {
     this.openWindow(
-      'mailto:?subject=Join%20me%20on%20Minds&body=Join me on Minds%0D%0A' + this.encodedRegisterUrl
+      'mailto:?subject=Join%20me%20on%20Minds&body=Join me on Minds%0D%0A' +
+        this.encodedRegisterUrl
     );
   }
 
   // Receives the inputElement whose text you want to copy and linkType ('registerUrl' || 'referrerParam')
   copyToClipboard(inputElement, linkType) {
-
     inputElement.select();
     document.execCommand('copy');
 
+    // Temporarily change button text from 'copy' to 'copied'
     if (linkType === 'registerUrl') {
       clearTimeout(this.registerUrlTimeout);
       this.registerUrlRecentlyCopied = true;
@@ -105,7 +123,7 @@ export class ReferralsLinksComponent implements OnInit, OnDestroy {
       clearTimeout(this.referrerParamTimeout);
       this.referrerParamRecentlyCopied = true;
       this.referrerParamTimeout = setTimeout(() => {
-        this.referrerParamRecentlyCopied = false; ;
+        this.referrerParamRecentlyCopied = false;
       }, 2000);
     }
   }
@@ -113,7 +131,6 @@ export class ReferralsLinksComponent implements OnInit, OnDestroy {
   // Make copyable link container appear focused when you click on it
   // Receives the inputElement to be focused and linkType ('registerUrl' || 'referrerParam')
   applyFocus(inputElement, linkType) {
-
     inputElement.focus();
     inputElement.select();
 

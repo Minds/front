@@ -1,13 +1,13 @@
-import { TopicsOnboardingComponent } from "./topics/topics.component";
-import { SubscriptionsOnboardingComponent } from "./subscriptions/subscriptions.component";
-import { ChannelSetupOnboardingComponent } from "./channel/channel.component";
-import { TokenRewardsOnboardingComponent } from "./rewards/rewards.component";
-import { EventEmitter } from "@angular/core";
-import { Client } from "../../../services/api/client";
-import { Session } from "../../../services/session";
+import { TopicsOnboardingComponent } from './topics/topics.component';
+import { SubscriptionsOnboardingComponent } from './subscriptions/subscriptions.component';
+import { ChannelSetupOnboardingComponent } from './channel/channel.component';
+import { TokenRewardsOnboardingComponent } from './rewards/rewards.component';
+import { EventEmitter } from '@angular/core';
+import { Client } from '../../../services/api/client';
+import { Session } from '../../../services/session';
+import { FeaturesService } from '../../../services/features.service';
 
 export class ChannelOnboardingService {
-
   slides = [
     TopicsOnboardingComponent,
     SubscriptionsOnboardingComponent,
@@ -32,29 +32,31 @@ export class ChannelOnboardingService {
   // these are updated per each slide when calculating the next one, except for the first time onboarding
   pendingItems: Array<string> = [];
 
-  static _(client: Client, session: Session) {
-    return new ChannelOnboardingService(client, session);
+  static _(client: Client, session: Session, featuresService: FeaturesService) {
+    return new ChannelOnboardingService(client, session, featuresService);
   }
 
   constructor(
-      private client: Client,
-      private session: Session,
+    private client: Client,
+    private session: Session,
+    private featuresService: FeaturesService
   ) {
-    this.session.userEmitter.subscribe((v) => {
+    this.session.userEmitter.subscribe(v => {
       if (!v) {
         this.reset();
       }
     });
-
   }
 
   async checkProgress() {
-    if (!this.session.isLoggedIn())
+    if (!this.session.isLoggedIn() || this.featuresService.has('ux-2020')) {
       return;
+    }
     try {
       const response: any = await this.client.get('api/v2/onboarding/progress');
 
-      this.completedPercentage = response.completed_items.length * 100 / response.all_items.length;
+      this.completedPercentage =
+        (response.completed_items.length * 100) / response.all_items.length;
       this.completedItems = response.completed_items;
       this.showOnboarding = response.show_onboarding;
     } catch (e) {
@@ -63,6 +65,9 @@ export class ChannelOnboardingService {
   }
 
   async showModal(force: boolean = false) {
+    if (!this.session.isLoggedIn() || this.featuresService.has('ux-2020')) {
+      return false;
+    }
     if (!force) {
       const status = localStorage.getItem('already_onboarded');
 
@@ -90,7 +95,6 @@ export class ChannelOnboardingService {
     return false;
   }
 
-
   previous() {
     if (this.currentSlide === 0) {
       return;
@@ -110,10 +114,11 @@ export class ChannelOnboardingService {
     }
 
     // first time onboarding
-    if (this.completedItems.length === 1) { // empty is 1 because username is always there from the beginning
+    if (this.completedItems.length === 1) {
+      // empty is 1 because username is always there from the beginning
       this.currentSlide++;
     } else {
-      //here we just go to the next slide with incomplete stuff
+      // here we just go to the next slide with incomplete stuff
       const i = this.currentSlide + 1;
 
       this.pendingItems = [];
@@ -149,5 +154,4 @@ export class ChannelOnboardingService {
     this.currentSlide = 0;
     this.completed = false;
   }
-
 }

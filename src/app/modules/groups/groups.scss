@@ -1,60 +1,58 @@
-@import "defaults";
+@import 'defaults';
 
 .groups-grid {
   max-width: 990px;
   margin: 0 auto;
 }
-.minds-banner-card{
-  minds-groups-join-button{
+.minds-banner-card {
+  minds-groups-join-button {
     position: absolute;
     margin: -38px 130px;
   }
-  .m-groups-card-stats{
+  .m-groups-card-stats {
     position: absolute;
     margin: -48px 0 0 116px;
     width: 168px;
   }
-  &.m-group-card{
+  &.m-group-card {
     min-height: 142px !important;
 
     .minds-usercard-banner {
-      img{
-        margin-top:-24px;
+      img {
+        margin-top: -24px;
       }
     }
   }
 }
-minds-groups-profile{
-
-  .members-grid{
-    display:flex;
-    flex-flow:row wrap;
+minds-groups-profile {
+  .members-grid {
+    display: flex;
+    flex-flow: row wrap;
   }
 
-  .minds-channel-media-sidebard{
+  .minds-channel-media-sidebard {
     display: flex;
     flex-wrap: wrap;
-    padding:0;
+    padding: 0;
     width: calc(100% + 2px);
     margin: 0 -2px;
 
     a {
       height: 88px;
-      display:inline-block;
-      width:calc(100% / 3);
+      display: inline-block;
+      width: calc(100% / 3);
       padding: 1px;
       box-sizing: border-box;
-      background-position:
-      center center;
-      background-size:cover;
-      @include m-theme(){
-        background-color:themed($m-grey-900);
+      background-position: center center;
+      background-size: cover;
+      @include m-theme() {
+        background-color: themed($m-grey-900);
       }
     }
-    img{
+    img {
       width: 100%;
-      max-width:80px;
-      max-height:80px;
+      max-width: 80px;
+      max-height: 80px;
     }
   }
 
@@ -66,7 +64,7 @@ minds-groups-profile{
     box-sizing: content-box;
     overflow: visible;
 
-    @media screen and (max-width: 720px){
+    @media screen and (max-width: 720px) {
       height: 160px;
     }
 
@@ -83,24 +81,26 @@ minds-groups-profile{
     height: 100%;
     overflow: visible;
 
-    .minds-banner{
-      max-height:440px;
-      height:440px;
+    .minds-banner {
+      max-height: 440px;
+      height: 440px;
 
-      @media screen and (max-width: 720px){
+      @media screen and (max-width: 720px) {
         height: 240px;
       }
     }
 
     .save-bar {
       background: transparent !important;
-      .save-button{
+      .save-button {
         display: none !important;
       }
     }
   }
 
-  header.m-group--conversation-view.m-group--view-mode minds-banner .minds-banner {
+  header.m-group--conversation-view.m-group--view-mode
+    minds-banner
+    .minds-banner {
     height: 200px;
   }
 
@@ -108,26 +108,26 @@ minds-groups-profile{
     z-index: 9999;
   }
 
-  .m-group--sidebar{
+  .m-group--sidebar {
     @media screen and (max-width: 840px) {
       margin: 0 auto;
     }
     @media screen and (max-width: 650px) {
       width: calc(85% - 16px);
     }
-    .mdl-card{
-      padding:0;
-      overflow:visible;
+    .mdl-card {
+      padding: 0;
+      overflow: visible;
     }
-    minds-avatar{
+    minds-avatar {
       margin-top: -75px;
       width: 150px;
       height: 150px;
       margin: -75px auto 0;
       padding: 0;
 
-      .minds-avatar{
-        margin:0;
+      .minds-avatar {
+        margin: 0;
         background-position: center center;
         background-size: cover;
         width: 100%;
@@ -137,45 +137,45 @@ minds-groups-profile{
     }
   }
 
-  .m-group--stats{
-      border: 0;
-      pointer-events: all;
+  .m-group--stats {
+    border: 0;
+    pointer-events: all;
 
-      @media screen and (max-width: $min-tablet) {
-        justify-content: center;
-      }
+    @media screen and (max-width: $min-tablet) {
+      justify-content: center;
+    }
 
-      &.m-group--stats--narrow .mdl-tabs__tab {
-        padding: 0 16px;
-      }
+    &.m-group--stats--narrow .mdl-tabs__tab {
+      padding: 0 16px;
+    }
 
-      a span {
-        width: 100%;
-        display: block;
-        font-size: 11px;
-        height: 11px;
-        vertical-align: middle;
-        line-height: 36px;
-      }
+    a span {
+      width: 100%;
+      display: block;
+      font-size: 11px;
+      height: 11px;
+      vertical-align: middle;
+      line-height: 36px;
+    }
 
-      &.m-group--stats--narrow a span {
-        font-size: 9px;
-      }
+    &.m-group--stats--narrow a span {
+      font-size: 9px;
+    }
 
-      .mdl-tabs__action-buttons {
-        padding-top: 4px;
-        padding-right: 0;
-        display: flex;
-        flex-flow: row nowrap;
-        overflow: visible;
-      }
+    .mdl-tabs__action-buttons {
+      padding-top: 4px;
+      padding-right: 0;
+      display: flex;
+      flex-flow: row nowrap;
+      overflow: visible;
+    }
   }
 
   .groups-grid-bottom {
     pointer-events: none;
     align-items: flex-end;
     padding: 0;
-    width: 100%
+    width: 100%;
   }
 
   .m-groups-invite-form {
@@ -208,10 +208,8 @@ minds-groups-profile{
     }
   }
 
-
-  .m-group-closed-splash{
-
-    .m-group-closed-splash-inner{
+  .m-group-closed-splash {
+    .m-group-closed-splash-inner {
       width: 360px;
       margin: 290px auto;
       text-align: center;
@@ -221,16 +219,15 @@ minds-groups-profile{
         margin: 200px auto;
       }
 
-      .m-group-avatar{
-        min-height:140px;
+      .m-group-avatar {
+        min-height: 140px;
       }
 
-      .minds-avatar{
-        background:transparent;
-        margin:auto;
+      .minds-avatar {
+        background: transparent;
+        margin: auto;
       }
     }
-
   }
 
   .m-groups-search-member {
@@ -257,22 +254,22 @@ minds-groups-profile{
 minds-groups-profile-members-invite {
   width: 100%;
 
-  .mdl-card__title{
-    padding-bottom:0;
+  .mdl-card__title {
+    padding-bottom: 0;
   }
 
-  .mdl-card__supporting-text{
+  .mdl-card__supporting-text {
     width: 100%;
     box-sizing: border-box;
   }
 
-  span{
-    display:block;
-    padding:$minds-padding;
+  span {
+    display: block;
+    padding: $minds-padding;
   }
 
-  .m-search-inline{
-    margin-top:$minds-margin*2;
+  .m-search-inline {
+    margin-top: $minds-margin * 2;
   }
 }
 
@@ -289,18 +286,20 @@ minds-groups-profile-members-invite {
 
   .m-group-info-members,
   .m-group--sidebar .mdl-card__supporting-text {
-    display:none;
+    display: none;
   }
 }
 
 .m-group__infoWrapper {
   .m-groupInfo__name,
   .m-groupInfo__description {
-    input[type=text], select, textarea {
+    input[type='text'],
+    select,
+    textarea {
       width: 100%;
       padding: $minds-padding;
       vertical-align: middle;
-      @include m-theme(){
+      @include m-theme() {
         border: 1px solid themed($m-grey-100);
       }
 
@@ -313,25 +312,23 @@ minds-groups-profile-members-invite {
         width: 85%;
         width: calc(100% - 38px);
       }
-
     }
   }
 }
 
 .m-group-info {
-
   @media screen and (max-width: $min-tablet) {
     order: -1;
   }
 
-  .mdl-card{
-    padding:$minds-padding;
-    margin-bottom:$minds-margin;
+  .mdl-card {
+    padding: $minds-padding;
+    margin-bottom: $minds-margin;
   }
 
   m-channel--modules.mdl-card {
-    padding:0;
-    min-height:0;
+    padding: 0;
+    min-height: 0;
     margin-top: $minds-margin;
   }
 
@@ -347,17 +344,18 @@ minds-groups-profile-members-invite {
   .m-group-info-default-view,
   .m-group-info-video-calls,
   .m-group-boost {
-    width:auto;
-    min-height:0;
-    padding:$minds-padding * 2;
+    width: auto;
+    min-height: 0;
+    padding: $minds-padding * 2;
 
     i.material-icons {
       //font-size: 16px;
       vertical-align: middle;
-      padding-right:$minds-padding;
+      padding-right: $minds-padding;
     }
 
-    > div, > div > a {
+    > div,
+    > div > a {
       color: inherit;
       text-decoration: inherit;
 
@@ -368,7 +366,7 @@ minds-groups-profile-members-invite {
         margin: 2px 2px;
         border-radius: 3px;
         display: inline-block;
-        @include m-theme(){
+        @include m-theme() {
           border: 1px solid themed($m-grey-50);
         }
       }
@@ -377,14 +375,16 @@ minds-groups-profile-members-invite {
     h1 {
       font-size: 26px;
       font-weight: 400;
-      margin:0;
-      text-align:center;
+      margin: 0;
+      text-align: center;
     }
-    input[type=text], select, textarea {
+    input[type='text'],
+    select,
+    textarea {
       width: 100%;
       padding: $minds-padding;
       vertical-align: middle;
-      @include m-theme(){
+      @include m-theme() {
         border: 1px solid themed($m-grey-100);
       }
 
@@ -397,11 +397,10 @@ minds-groups-profile-members-invite {
         width: 85%;
         width: calc(100% - 38px);
       }
-
     }
 
-    &.m-group-info-brief-description{
-      span{
+    &.m-group-info-brief-description {
+      span {
         white-space: pre-line;
         word-wrap: break-word;
         max-width: 100%;
@@ -409,22 +408,21 @@ minds-groups-profile-members-invite {
       }
     }
 
-    minds-form-tags-input{
+    minds-form-tags-input {
       width: 80%;
       width: calc(100% - 48px);
-      display:inline-block;
+      display: inline-block;
     }
 
-    select{
+    select {
       padding: 8px;
       border-radius: 0;
       -webkit-appearance: none;
     }
-
   }
 
-  .m-group-info-membership{
-    font-size:12px;
+  .m-group-info-membership {
+    font-size: 12px;
   }
 
   .m-group-info-brief-description {
@@ -447,7 +445,7 @@ minds-groups-profile-members-invite {
         font-size: 13px;
         color: inherit;
         text-decoration: none;
-        @include m-theme(){
+        @include m-theme() {
           border-bottom: 1px dotted themed($m-grey-100);
         }
       }
@@ -459,98 +457,93 @@ minds-groups-profile-members-invite {
   }
 }
 
-.group-avatar{
-  padding:$minds-padding;
-  img{
-    width:100%;
+.group-avatar {
+  padding: $minds-padding;
+  img {
+    width: 100%;
   }
 }
 
-minds-groups-create{
-
-  .m-group-saving-overlay{
-    width:100%;
-    height:100%;
-    position:fixed;
+minds-groups-create {
+  .m-group-saving-overlay {
+    width: 100%;
+    height: 100%;
+    position: fixed;
 
     text-align: center;
     padding-top: 30%;
     padding-top: 50vh;
     padding-top: calc(50vh - 50px);
 
-    z-index:999;
-    @include m-theme(){
-      background:rgba(themed($m-black),0.8);
+    z-index: 999;
+    @include m-theme() {
+      background: rgba(themed($m-black), 0.8);
     }
   }
 
-  .minds-banner{
-    max-height:400px;
-    height:400px;
+  .minds-banner {
+    max-height: 400px;
+    height: 400px;
   }
 
-  form{
-    width:100%;
+  form {
+    width: 100%;
   }
   .m-groups-name,
   .m-groups-tags,
   .m-groups-new-invitee {
-    width:100%;
+    width: 100%;
 
-    input{
-      padding:$minds-padding*2;
+    input {
+      padding: $minds-padding * 2;
     }
-    label{
-      padding:($minds-padding*2)-4 $minds-padding*2;
-    }
-  }
-
-  .m-groups-brief{
-    width:100%;
-
-    textarea{
-      padding:$minds-padding*2;
-    }
-    label{
-      top:inherit;
-      bottom:24px;
-      padding:($minds-padding*2)-4 $minds-padding*2;
-    }
-
-  }
-  .m-groups-brief.is-focused{
-    label{
-      bottom:0;
-      top:24px;
+    label {
+      padding: ($minds-padding * 2)-4 $minds-padding * 2;
     }
   }
 
-  .m-groups-visibilty{
-    width:100%;
-    .mdl-radio{
-      display:block;
+  .m-groups-brief {
+    width: 100%;
+
+    textarea {
+      padding: $minds-padding * 2;
+    }
+    label {
+      top: inherit;
+      bottom: 24px;
+      padding: ($minds-padding * 2)-4 $minds-padding * 2;
+    }
+  }
+  .m-groups-brief.is-focused {
+    label {
+      bottom: 0;
+      top: 24px;
     }
   }
 
-  .m-groups-save{
-
-    button{
-      float:right;
-      margin:$minds-margin;
+  .m-groups-visibilty {
+    width: 100%;
+    .mdl-radio {
+      display: block;
     }
-
   }
 
+  .m-groups-save {
+    button {
+      float: right;
+      margin: $minds-margin;
+    }
+  }
 }
 
-.m-group--action-buttons{
-  padding:0;
-  margin:auto;
-  display:flex;
+.m-group--action-buttons {
+  padding: 0;
+  margin: auto;
+  display: flex;
 
   minds-groups-settings-button {
     position: relative;
-    margin:0 16px;
+    margin: 0 16px;
 
     > button {
       position: relative;
@@ -560,7 +553,7 @@ minds-groups-create{
     }
 
     .minds-dropdown-menu {
-      position: absolute;;
+      position: absolute;
       top: 44px;
       right: 0;
       left: auto;
@@ -569,61 +562,63 @@ minds-groups-create{
       text-transform: capitalize;
     }
 
-    m-modal{
+    m-modal {
       z-index: 999;
       position: relative;
     }
   }
 
-  .minds-button-edit, minds-button-feature{
-    padding:$minds-padding;
+  .minds-button-edit,
+  minds-button-feature {
+    padding: $minds-padding;
 
-    button.material-icons{
+    button.material-icons {
       padding: 4px 8px;
       font-size: 23px;
     }
-    button > .material-icons{
+    button > .material-icons {
       font-size: 23px;
     }
   }
-  minds-groups-join-button{
-    padding:$minds-padding 0;
+  minds-groups-join-button {
+    padding: $minds-padding 0;
 
     .m-btn.subscribed {
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-800) !important;
       }
     }
   }
 }
 
-.m-group-title{
-  h1, input{
+.m-group-title {
+  h1,
+  input {
     font-size: 56px;
   }
 }
 
-minds-groups-profile-requests{
+minds-groups-profile-requests {
   transform-style: preserve-3d;
 
   > .mdl-card {
     max-height: 94px;
   }
 
-  .mdl-cell{
-    min-height:0;
+  .mdl-cell {
+    min-height: 0;
   }
 
-  .mdl-card__title{
+  .mdl-card__title {
     position: relative;
     top: 14px - $minds-padding;
     padding: $minds-padding;
   }
 
-  .minds-avatar{
-    margin-right:$minds-margin;
-    img{
-      width:50px;
+  .minds-avatar {
+    margin-right: $minds-margin;
+    img {
+      width: 50px;
     }
   }
 
@@ -640,14 +635,14 @@ minds-groups-profile-requests{
     }
   }
 
-  .mdl-card__actions{
+  .mdl-card__actions {
     border-top: 0;
     width: auto;
     right: 0;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    padding: 0 $minds-padding*2;
+    padding: 0 $minds-padding * 2;
   }
 }
 
@@ -658,19 +653,19 @@ minds-groups-profile-requests{
   right: 0;
   border-radius: 2px;
   opacity: 0.65;
-  @include m-theme(){
+  @include m-theme() {
     background-color: themed($m-white);
     color: themed($m-blue-grey-700);
   }
 }
 
-.m-group-closed{
-  .tabs{
-    minds-button-remind{
-      display:none;
+.m-group-closed {
+  .tabs {
+    minds-button-remind {
+      display: none;
     }
-    .minds-boost-button{
-      display:none;
+    .minds-boost-button {
+      display: none;
     }
   }
 }
@@ -687,7 +682,7 @@ minds-groups-card-user-actions-button {
     z-index: 10000;
   }
 
-  m-modal{
+  m-modal {
     z-index: 99999;
 
     position: fixed;
@@ -700,14 +695,13 @@ minds-groups-card-user-actions-button {
       max-width: 480px;
       min-width: 0;
       height: auto;
-      min-height:0;
+      min-height: 0;
       margin: 0 auto;
       text-transform: none;
       text-align: left;
 
-
-      .mdl-card{
-        min-height:0;
+      .mdl-card {
+        min-height: 0;
       }
     }
 
@@ -720,25 +714,23 @@ minds-groups-card-user-actions-button {
         line-height: 1em;
       }
     }
-
   }
 }
 
 .minds-dropdown-menu .minds-menu-info-item {
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-grey-300);
   }
 }
 
 minds-groups-create {
-
   .invitees {
     > span {
       display: inline-block;
       padding: 1px 6px 2px;
       border-radius: 2px;
       margin-right: 0.35em;
-      @include m-theme(){
+      @include m-theme() {
         background-color: themed($m-grey-100);
       }
 
@@ -747,7 +739,7 @@ minds-groups-create {
         position: relative;
         top: 2px;
         cursor: pointer;
-        @include m-theme(){
+        @include m-theme() {
           color: themed($m-grey-300);
         }
       }
@@ -790,7 +782,7 @@ minds-groups-create {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    @include m-theme(){
+    @include m-theme() {
       background-color: themed($m-green);
     }
   }

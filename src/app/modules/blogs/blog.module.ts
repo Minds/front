@@ -9,8 +9,11 @@ import { AdsModule } from '../ads/ads.module';
 import { LegacyModule } from '../legacy/legacy.module';
 import { PostMenuModule } from '../../common/components/post-menu/post-menu.module';
 
-
-import { BlogListComponent, BlogEdit, BlogViewInfinite } from './list.component';
+import {
+  BlogListComponent,
+  BlogEdit,
+  BlogViewInfinite,
+} from './list.component';
 import { BlogCard } from './card/card';
 import { BlogView } from './view/view';
 import { BlogTileComponent } from './tile/tile.component';
@@ -22,7 +25,14 @@ import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
   { path: 'blog/view/:guid', component: BlogViewInfinite },
-  { path: 'blog/edit/:guid', component: BlogEdit, canDeactivate: [CanDeactivateGuardService]},
+  {
+    path: 'blog/edit/:guid',
+    component: BlogEdit,
+    canDeactivate: [CanDeactivateGuardService],
+    data: {
+      title: 'Edit Blog',
+    },
+  },
   { path: 'blog/:filter', component: BlogListComponent },
   { path: 'blog', redirectTo: '/blog/top', pathMatch: 'full' },
   { path: ':username/blog/:slugid', component: BlogViewInfinite },
@@ -42,6 +52,7 @@ const routes: Routes = [
     PostMenuModule,
     WireModule,
     HashtagsModule,
+    ModalsModule,
   ],
   declarations: [
     BlogView,
@@ -59,9 +70,6 @@ const routes: Routes = [
     BlogListComponent,
     BlogTileComponent,
   ],
-  entryComponents: [
-    BlogCard
-  ]
+  entryComponents: [BlogCard],
 })
-export class BlogModule {
-}
+export class BlogModule {}

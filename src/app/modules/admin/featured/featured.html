@@ -1,0 +1,34 @@
+<div class="mdl-grid m-admin-reports" style="max-width:600px">
+  <div class="mdl-cell mdl-cell--12-col" style="text-align: center;">
+    <select *ngIf="categories" (change)="setCategory($event.target.value)">
+      <option value="" i18n="@@M__COMMON__CATEGORY_PLACEHOLDER"
+        >-- Category --</option
+      >
+      <option *ngFor="let category of categories" [value]="category.key"
+        >{{ category.value }}</option
+      >
+    </select>
+  </div>
+
+  <div class="mdl-cell mdl-cell--12-col">
+    <div
+      class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"
+      [hidden]="featured.length > 0 || !inProgress"
+    ></div>
+
+    <div
+      class="mdl-card mdl-shadow--4dp m-report"
+      *ngFor="let channel of featured; let i = index"
+    >
+      <minds-card-user [object]="channel" class="mdl-card"></minds-card-user>
+    </div>
+  </div>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress"
+  >
+  </infinite-scroll>
+</div>

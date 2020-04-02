@@ -1,5 +1,4 @@
 <div class="m-blockchain--options m-border">
-
   <div class="m-blockchain--options-wallet">
     <h3 i18n="@@BLOCKCHAIN__OPTIONS__WALLET_TITLE">Token Configuration</h3>
 
@@ -9,21 +8,33 @@
 
     <div class="m-blockchain--options-wallet--setup" *ngIf="!inProgress">
       <p i18n="@@BLOCKCHAIN__OPTIONS__WALLET_DESC">
-        Enter your Ethereum wallet address below. If you installed and unlocked MetaMask, or have a web3-enabled browser your local wallets will be listed below. You can click on them to auto-fill the address field.
+        Enter your Ethereum wallet address below. If you installed and unlocked
+        MetaMask, or have a web3-enabled browser your local wallets will be
+        listed below. You can click on them to auto-fill the address field.
       </p>
 
-      <form (submit)="setWallet()" [formGroup]="form" #f="ngForm" class="m-form">
-
+      <form
+        (submit)="setWallet()"
+        [formGroup]="form"
+        #f="ngForm"
+        class="m-form"
+      >
         <div class="mdl-grid mdl-grid--no-spacing">
           <div class="mdl-cell mdl-cell--12-col" *ngIf="error">
             <div class="m-error mdl-color--red mdl-color-text--white">
-              {{error}}
+              {{ error }}
             </div>
           </div>
 
           <div class="mdl-cell mdl-cell--12-col m-blockchain--options--section">
-            <label i18n="@@BLOCKCHAIN__OPTIONS__WALLET_LABEL">Ethereum Wallet Address</label>
-            <input formControlName="address" type="text" placeholder="0x0000000000000000000000000000000000000000" />
+            <label i18n="@@BLOCKCHAIN__OPTIONS__WALLET_LABEL"
+              >Ethereum Wallet Address</label
+            >
+            <input
+              formControlName="address"
+              type="text"
+              placeholder="0x0000000000000000000000000000000000000000"
+            />
           </div>
 
           <div class="mdl-cell mdl-cell--12-col m-blockchain--options--section">
@@ -31,9 +42,11 @@
               Local Wallets
             </label>
 
-            <i class="material-icons m-blockchain--options--local-wallets--refresh"
+            <i
+              class="material-icons m-blockchain--options--local-wallets--refresh"
               (click)="walletSelector.refresh()"
-            >autorenew</i>
+              >autorenew</i
+            >
 
             <m-blockchain--wallet-selector
               class="m-blockchain--options--wallet-selector"
@@ -56,10 +69,7 @@
             </button>
           </div>
         </div>
-
       </form>
     </div>
-
   </div>
-
 </div>

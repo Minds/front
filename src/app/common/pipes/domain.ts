@@ -1,29 +1,22 @@
-import { Pipe, Inject, Renderer }  from '@angular/core';
+import { Pipe, Inject, Renderer } from '@angular/core';
 
 @Pipe({
-  name: 'domain'
+  name: 'domain',
 })
-
 export class DomainPipe {
-
   transform(value: string) {
-
-    if(!value)
-      return value;
+    if (!value) return value;
 
     var matches,
       output = value,
-			urls = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im;
+      urls = /^(?:https?:\/\/)?(?:[^@\n]+@)?(?:www\.)?([^:\/\n]+)/im;
 
-		matches = urls.exec( value );
+    matches = urls.exec(value);
 
-		if (matches !== null)
-			output = matches[1];
+    if (matches !== null) output = matches[1];
 
-		if (output.indexOf('www.') > -1)
-			output = output.split('www.').pop();
+    if (output.indexOf('www.') > -1) output = output.split('www.').pop();
 
     return output;
   }
-
 }

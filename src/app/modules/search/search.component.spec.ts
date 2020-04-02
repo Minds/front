@@ -4,14 +4,19 @@ import { Component, Input } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { Title } from '@angular/platform-browser';
 
-import { ComponentFixture, async, TestBed, tick, fakeAsync } from '@angular/core/testing';
+import {
+  ComponentFixture,
+  async,
+  TestBed,
+  tick,
+  fakeAsync,
+} from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { Client } from '../../services/api/client';
 import { clientMock } from '../../../tests/client-mock.spec';
-import { MindsTitle } from '../../services/ux/title';
 import { Storage } from '../../services/storage';
-import { storageMock } from "../../../tests/storage-mock.spec";
+import { storageMock } from '../../../tests/storage-mock.spec';
 import { Session } from '../../services/session';
 import { sessionMock } from '../../../tests/session-mock.spec';
 
@@ -25,7 +30,7 @@ import { MaterialBoundSwitchComponentMock } from '../../mocks/common/components/
 
 @Component({
   selector: 'm-search--hybrid-list',
-  template: ''
+  template: '',
 })
 class SearchHybridListComponentMock {
   @Input() entities;
@@ -33,7 +38,7 @@ class SearchHybridListComponentMock {
 
 @Component({
   selector: 'm-search--simple-list',
-  template: ''
+  template: '',
 })
 class SearchSimpleListComponentMock {
   @Input() entities;
@@ -54,34 +59,30 @@ describe('Search', () => {
       declarations: [
         MockComponent({
           selector: 'infinite-scroll',
-          inputs: [ 'inProgress', 'moreData', 'inProgress' ],
+          inputs: ['inProgress', 'moreData', 'inProgress'],
         }),
         MockComponent({
           selector: 'm-topbar--navigation--options',
           template: '',
           inputs: ['options'],
-          outputs: ['change']
+          outputs: ['change'],
         }),
         TooltipComponentMock,
         MaterialBoundSwitchComponentMock,
         SearchHybridListComponentMock,
         SearchSimpleListComponentMock,
-        SearchComponent
+        SearchComponent,
       ],
-      imports: [
-        NgCommonModule,
-        RouterTestingModule
-      ],
+      imports: [NgCommonModule, RouterTestingModule],
       providers: [
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useClass: Title, deps: [ Title ] },
         { provide: Storage, useValue: storageMock },
-        { provide: Session, useValue: sessionMock }
-      ]
+        { provide: Session, useValue: sessionMock },
+      ],
     }).compileComponents();
   }));
 
-  beforeEach((done) => {
+  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
@@ -91,18 +92,18 @@ describe('Search', () => {
 
     clientMock.response = {};
 
-    clientMock.response[ `api/v2/search` ] = {
+    clientMock.response[`api/v2/search`] = {
       status: 'success',
-      entities: [ 5000, 5001 ]
+      entities: [5000, 5001],
     };
 
-    clientMock.response[ `api/v2/search/top` ] = {
+    clientMock.response[`api/v2/search/top`] = {
       status: 'success',
       entities: {
-        user: [ 1000, 1001 ],
-        group: [ 2000, 2001 ],
-        activity: [ 5000, 5001 ]
-      }
+        user: [1000, 1001],
+        group: [2000, 2001],
+        activity: [5000, 5001],
+      },
     };
 
     fixture.detectChanges();
@@ -119,7 +120,6 @@ describe('Search', () => {
   afterEach(() => {
     jasmine.clock().uninstall();
   });
-
 
   // Tests
 
@@ -228,7 +228,7 @@ describe('Search', () => {
     comp.mature = false;
     comp.paywall = true;
 
-    comp.entities = [ 4998, 4999 ];
+    comp.entities = [4998, 4999];
 
     clientMock.get.calls.reset();
     comp.search(false);
@@ -240,7 +240,7 @@ describe('Search', () => {
 
     tick();
 
-    expect(comp.entities).toEqual([ 4998, 4999, 5000, 5001 ]);
+    expect(comp.entities).toEqual([4998, 4999, 5000, 5001]);
   }));
 
   it('should search and replace results', fakeAsync(() => {
@@ -252,7 +252,7 @@ describe('Search', () => {
     comp.mature = false;
     comp.paywall = true;
 
-    comp.entities = [ 4998, 4999 ];
+    comp.entities = [4998, 4999];
 
     clientMock.get.calls.reset();
     comp.search(true);
@@ -264,7 +264,7 @@ describe('Search', () => {
 
     tick();
 
-    expect(comp.entities).toEqual([ 5000, 5001 ]);
+    expect(comp.entities).toEqual([5000, 5001]);
   }));
 
   it('should search with an offset', fakeAsync(() => {
@@ -309,12 +309,12 @@ describe('Search', () => {
     comp.paywall = true;
 
     comp.hybridEntities = {
-      user: [ 999 ],
-      group: [ 1999 ],
+      user: [999],
+      group: [1999],
       'object:video': [],
       'object:image': [],
       'object:blog': [],
-      activity: [ 4999 ]
+      activity: [4999],
     };
 
     clientMock.get.calls.reset();
@@ -327,9 +327,9 @@ describe('Search', () => {
 
     tick();
 
-    expect(comp.hybridEntities.user).toEqual([ 1000, 1001 ]);
-    expect(comp.hybridEntities.group).toEqual([ 2000, 2001 ]);
-    expect(comp.hybridEntities.activity).toEqual([ 5000, 5001 ]);
+    expect(comp.hybridEntities.user).toEqual([1000, 1001]);
+    expect(comp.hybridEntities.group).toEqual([2000, 2001]);
+    expect(comp.hybridEntities.activity).toEqual([5000, 5001]);
   }));
 
   it('should search top and concat results', fakeAsync(() => {
@@ -342,12 +342,12 @@ describe('Search', () => {
     comp.paywall = true;
 
     comp.hybridEntities = {
-      user: [ 999 ],
-      group: [ 1999 ],
+      user: [999],
+      group: [1999],
       'object:video': [],
       'object:image': [],
       'object:blog': [],
-      activity: [ 4999 ]
+      activity: [4999],
     };
 
     clientMock.get.calls.reset();
@@ -360,9 +360,9 @@ describe('Search', () => {
 
     tick();
 
-    expect(comp.hybridEntities.user).toEqual([ 999, 1000, 1001 ]);
-    expect(comp.hybridEntities.group).toEqual([ 1999, 2000, 2001 ]);
-    expect(comp.hybridEntities.activity).toEqual([ 4999, 5000, 5001 ]);
+    expect(comp.hybridEntities.user).toEqual([999, 1000, 1001]);
+    expect(comp.hybridEntities.group).toEqual([1999, 2000, 2001]);
+    expect(comp.hybridEntities.activity).toEqual([4999, 5000, 5001]);
   }));
 
   it('should search with an offset', fakeAsync(() => {
@@ -483,7 +483,10 @@ describe('Search', () => {
   });
 
   it('should load options from storage', () => {
-    storageMock.set('search:options', JSON.stringify({ mature: true, paywall: true }));
+    storageMock.set(
+      'search:options',
+      JSON.stringify({ mature: true, paywall: true })
+    );
 
     comp.loadOptions();
 
@@ -521,5 +524,4 @@ describe('Search', () => {
     comp.ref = 'test';
     expect(comp.hasRef('not-a-spec')).toBe(false);
   });
-
 });

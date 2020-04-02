@@ -1,10 +1,14 @@
 <div class="mdl-card m-border post m-poster" *ngIf="session.isLoggedIn()">
   <div class="mdl-card__supporting-text">
     <form (submit)="post()">
-      <ng-template #itemTemplate let-choice="choice" let-selectChoice="selectChoice">
+      <ng-template
+        #itemTemplate
+        let-choice="choice"
+        let-selectChoice="selectChoice"
+      >
         <m-post-autocomplete-item-renderer
-            [choice]="choice"
-            [selectChoice]="selectChoice"
+          [choice]="choice"
+          [selectChoice]="selectChoice"
         ></m-post-autocomplete-item-renderer>
       </ng-template>
 
@@ -26,6 +30,8 @@
           [getChoiceLabel]="suggestions.getChoiceLabel"
           [itemTemplate]="itemTemplate"
           [triggerCharacters]="['#', '@']"
+          m-attachment-paste
+          (filePaste)="uploadAttachment($event)"
         ></textarea>
       </m-text-input--autocomplete-container>
 
@@ -39,19 +45,30 @@
         </a>
 
         <!-- Attachments -->
-        <label for="attachment-input-poster" class="attachment-button m-posterActionBar__Attach" [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }">
+        <label
+          for="attachment-input-poster"
+          class="attachment-button m-posterActionBar__Attach"
+          [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
+        >
           <i class="material-icons m-posterActionBar__Icon">attachment</i>
           <span class="m-posterActionBar__Label">Attach</span>
-          <input type="file" id="attachment-input-poster" #file name="attachment" (change)="uploadAttachment(file, $event)" />
+          <input
+            type="file"
+            id="attachment-input-poster"
+            #file
+            name="attachment"
+            (change)="uploadFile(file, $event)"
+          />
         </label>
 
         <ng-container *mIfFeature="'top-feeds'; else oldNSFW">
           <m-nsfw-selector
-            (selected)="onNSWFSelections($event)"
+            #nsfwSelector
+            (selectedChange)="onNSWFSelections($event)"
           >
           </m-nsfw-selector>
         </ng-container>
-        
+
         <ng-template #oldNSFW>
           <a
             class="m-mature-button m-posterActionBar__MatureButton"
@@ -84,42 +101,61 @@
           (validThreshold)="validThreshold = $event"
         ></m-wire-threshold-input>
 
+        <m-poster-date-selector
+          [date]="meta.time_created"
+          (dateChange)="onTimeCreatedChange($event)"
+          (onError)="posterDateSelectorError($event)"
+          *mIfFeature="'post-scheduler'"
+        ></m-poster-date-selector>
+
         <button
           type="submit"
           class="m-posterActionBar__PostButton"
-          [disabled]="!canPost || !validThreshold || inProgress || this.hashtagsSelector.tags.length > 5"
+          [disabled]="
+            !canPost ||
+            !validThreshold ||
+            inProgress ||
+            this.hashtagsSelector.tags.length > 5
+          "
         >
-          <span class="m-posterActionBar__Label" i18n="Action of posting@@MINDS__POSTER__POST_ACTION">Post</span>
+          <span
+            class="m-posterActionBar__Label"
+            i18n="Action of posting@@MINDS__POSTER__POST_ACTION"
+            >Post</span
+          >
           <i class="material-icons m-posterActionBar__Icon">send</i>
         </button>
       </div>
-
     </form>
   </div>
   <div
-    class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp" style="min-height:0;"
+    class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50  mdl-shadow--2dp"
+    style="min-height:0;"
     *ngIf="errorMessage"
   >
     <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-      {{errorMessage}}
+      {{ errorMessage }}
     </div>
   </div>
   <!-- Rich embed preview -->
   <div class="post-preview" *ngIf="attachment.isRich()">
-    <div class="mdl-spinner mdl-js-spinner is-active" [mdl] [hidden]="attachment.getMeta().title"></div>
+    <div
+      class="mdl-spinner mdl-js-spinner is-active"
+      [mdl]
+      [hidden]="attachment.getMeta().title"
+    ></div>
     <div class="m-rich-embed" *ngIf="attachment.getMeta().title">
       <div class="attachment-preview-delete" (click)="removeRichEmbed()">
         <i class="material-icons">delete</i>
       </div>
-      <minds-rich-embed
-        [preview]="attachment.getMeta()"
-      ></minds-rich-embed>
+      <minds-rich-embed [preview]="attachment.getMeta()"></minds-rich-embed>
     </div>
   </div>
 
   <!-- Attachment preview -->
   <div
-    class="post-preview" *ngIf="attachment.hasFile() || (attachment.progress | async) > 0"
+    class="post-preview"
+    *ngIf="attachment.hasFile() || (attachment.progress | async) > 0"
     (click)="removeAttachment(file)"
   >
     <div
@@ -127,26 +163,37 @@
       [mdlUpload]
       [progress]="attachment.progress | async"
       [hidden]="(attachment.progress | async) == 0"
-      [ngClass]="{ 'complete': (attachment.progress | async) == 100 }"
+      [ngClass]="{ complete: (attachment.progress | async) == 100 }"
     ></div>
-    <div *ngIf="attachment.getMime() == 'video'" class="attachment-preview video-placeholder mdl-color--blue-grey-600">
-      <i class="material-icons" *ngIf="!attachment.isPendingDelete()">videocam</i>
+    <div
+      *ngIf="attachment.getMime() == 'video'"
+      class="attachment-preview video-placeholder mdl-color--blue-grey-600"
+    >
+      <i class="material-icons" *ngIf="!attachment.isPendingDelete()"
+        >videocam</i
+      >
     </div>
 
     <ng-container>
-      <img *ngIf="attachment.getMime() != 'video'" [src]="attachment.getPreview()" class="attachment-preview" />
-      <div class="attachment-preview-delete" *ngIf="!attachment.isPendingDelete()">
+      <img
+        *ngIf="attachment.getMime() != 'video'"
+        [src]="attachment.getPreview()"
+        class="attachment-preview"
+      />
+      <div
+        class="attachment-preview-delete"
+        *ngIf="!attachment.isPendingDelete()"
+      >
         <i class="material-icons">delete</i>
       </div>
       <div
-        class="mdl-spinner attachment-preview-delete-in-progress mdl-js-spinner is-active" [mdl]
+        class="mdl-spinner attachment-preview-delete-in-progress mdl-js-spinner is-active"
+        [mdl]
         *ngIf="attachment.isPendingDelete()"
       ></div>
-
     </ng-container>
     <!--<div class="attachment-preview-delete-in-progress" *ngIf="attachment.isPendingDelete()">-->
     <!--<div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>-->
     <!--</div>-->
   </div>
-
 </div>

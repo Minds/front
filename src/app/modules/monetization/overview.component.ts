@@ -1,24 +1,30 @@
-import { Component, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 
 import { Client } from '../../common/api/client.service';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'm-monetization--overview',
   templateUrl: 'overview.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class MonetizationOverviewComponent {
-
   balance: number | string = 0;
   payouts: number | string = 0;
   net: number | string = 0;
   ready: boolean = false;
+  user;
 
-  user = window.Minds.user;
-
-  constructor(private client: Client, private cd: ChangeDetectorRef) {
-
+  constructor(
+    private client: Client,
+    private cd: ChangeDetectorRef,
+    private session: Session
+  ) {
+    this.user = this.session.getLoggedInUser();
   }
 
   ngOnInit() {
@@ -26,7 +32,8 @@ export class MonetizationOverviewComponent {
   }
 
   getTotals() {
-    this.client.get('api/v1/monetization/revenue/overview')
+    this.client
+      .get('api/v1/monetization/revenue/overview')
       .then((response: any) => {
         console.log(response);
         this.balance = response.balance;
@@ -38,5 +45,4 @@ export class MonetizationOverviewComponent {
         this.cd.detectChanges();
       });
   }
-
 }

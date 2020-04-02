@@ -1,32 +1,32 @@
-@import "defaults.scss";
+@import 'defaults.scss';
 
-m-modal-signup, m-modal-signup-on-action{
-  z-index:1000;
+m-modal-signup,
+m-modal-signup-on-action {
+  z-index: 1000;
 
-  m-modal{
+  m-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index:101;
+    z-index: 9999990;
   }
 
-  .m-modal-container{
+  .m-modal-container {
     max-width: 368px;
     min-width: 0;
   }
 
-  .mdl-card__title{
+  .mdl-card__title {
     flex-wrap: wrap;
     margin-bottom: 0;
-    //padding-bottom: 0;
 
-    img{
+    img {
       width: 168px;
       margin: auto;
     }
-    h4{
+    h4 {
       width: 100%;
       font-size: 14px;
       margin: 0;
@@ -36,30 +36,31 @@ m-modal-signup, m-modal-signup-on-action{
     }
   }
 
-  .m-signup-modal-feature-icons{
-    display:flex;
-    flex-flow:row nowrap;
-    align-items:center;
+  .m-signup-modal-feature-icons {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
 
     > div {
-      text-align:center;
-      flex:1;
-      i{
-        width:100%;
+      text-align: center;
+      flex: 1;
+      i {
+        width: 100%;
         font-size: 42px;
       }
-      span{
-        width:100%;
-        display:block;
-        font-size:9px;
-        text-transform:uppercase;
+      span {
+        width: 100%;
+        display: block;
+        font-size: 9px;
+        text-transform: uppercase;
       }
     }
   }
 
-  .m-signup-modal-feature-text{
+  .m-signup-modal-feature-text {
     padding: 0px 8px;
     margin: 0px 8px;
+    min-width: 240px;
   }
 
   .m-signup-buttons {
@@ -75,10 +76,10 @@ m-modal-signup, m-modal-signup-on-action{
     }
   }
 
-  .m-modal-signup-apps{
-    display:flex;
-    flex-flow:row nowrap;
-    align-items:center;
+  .m-modal-signup-apps {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
     width: 100%;
     box-sizing: border-box;
     padding: 0 40px;
@@ -90,61 +91,22 @@ m-modal-signup, m-modal-signup-on-action{
     }
 
     .m-androidApp__download {
-        margin: 0;
+      margin: 0;
     }
 
-    a{
+    a {
       @media screen and (min-width: $max-mobile) {
-        flex:1;
+        flex: 1;
       }
-      margin:$minds-margin/2;
+      margin: $minds-margin/2;
 
-      img{
+      img {
         min-width: 130px;
       }
     }
   }
 
-  .m-modal-signup-skip{
-    cursor:pointer;
+  .m-modal-signup-skip {
+    cursor: pointer;
   }
-}
-
-m-modal-share {
-  z-index: 1000;
-  position: relative;
-
-  input {
-    font-size: 28px;
-    padding: $minds-padding*2;
-    width: calc(100% - 34px);
-    @include m-theme(){
-      border: 1px solid themed($m-grey-50);
-    }
-  }
-  .m-social-share-buttons {
-    padding: $minds-padding*2;
-
-    & > button {
-      margin: 0 4px;
-    }
-    .m-social-share-twitter {
-      background: #4099FF !important;
-    }
-    .m-social-share-fb {
-      background: #335795 !important;
-    }
-    .m-social-share-email {
-      @include m-theme(){
-        color: themed($m-grey-900) !important;
-      }
-    }
-  }
-
-  .mdl-card__supporting-text {
-    @media screen and (max-width: 720px) {
-      width: calc(90% - 20px);
-    }
-  }
-
 }

@@ -1,7 +1,7 @@
 m--tree {
   display: block;
   font-size: 14px;
-  @include m-theme(){
+  @include m-theme() {
     color: themed($m-black);
   }
 
@@ -17,13 +17,13 @@ m--tree {
       align-items: center;
       justify-content: center;
       margin-right: 3px;
-      @include m-theme(){
-         border: 1px solid themed($m-black);
+      @include m-theme() {
+        border: 1px solid themed($m-black);
       }
 
       cursor: pointer;
       user-select: none;
-      font-size:16px;
+      font-size: 16px;
     }
 
     .m-tree--items--label {
@@ -31,7 +31,7 @@ m--tree {
       cursor: pointer;
 
       &:hover {
-        @include m-theme(){
+        @include m-theme() {
           background-color: themed($m-blue);
         }
       }

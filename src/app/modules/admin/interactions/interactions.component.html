@@ -1,0 +1,49 @@
+<div class="m-admin--interactions">
+  <div class="m-admin--interactions--filters m-border">
+    <div class="m-admin--interactions--filters--tables">
+      <div
+        class="item"
+        [class.active]="type === 'actors'"
+        (click)="show('actors')"
+        i18n="@@M__ADMIN__INTERACTIONS__ACTORS"
+      >
+        Actors
+      </div>
+      <div
+        class="item"
+        [class.active]="type === 'beneficiaries'"
+        (click)="show('beneficiaries')"
+        i18n="@@M__ADMIN__INTERACTIONS__BENEFICIARIES"
+      >
+        Beneficiaries
+      </div>
+    </div>
+    <div class="m-admin--interactions--filters--dates">
+      <m-date-selector
+        label="From:"
+        i18n-label="@@M__ADMIN__INTERACTIONS__FROM"
+        [date]="startDate"
+        (dateChange)="onStartDateChange($event)"
+        dateFormat="shortDate"
+      ></m-date-selector>
+      <m-date-selector
+        label="To:"
+        i18n-label="@@M__ADMIN__INTERACTIONS__TO"
+        [date]="endDate"
+        (dateChange)="onEndDateChange($event)"
+        dateFormat="shortDate"
+      ></m-date-selector>
+    </div>
+  </div>
+
+  <div class="m-admin--interactions--results">
+    <m-admin--interactions--table
+      *ngFor="let metric of metrics"
+      [metric]="metric"
+      [type]="type"
+      [startDate]="startDate"
+      [endDate]="endDate"
+    >
+    </m-admin--interactions--table>
+  </div>
+</div>

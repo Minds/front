@@ -1,4 +1,4 @@
-@import "defaults";
+@import 'defaults';
 
 .m-sidebarMarkers__container {
   top: 52px;
@@ -7,18 +7,18 @@
   z-index: 999;
   width: 48px;
   height: calc(100% - 52px);
-  
-  @include m-theme(){
-     background-color: themed($m-white);
-   }
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+  }
 
   @media screen and(max-width: $min-desktop) {
     left: 0;
     height: 48px;
     width: 100%;
     overflow-y: hidden;
-    @include m-theme(){
-       border-bottom: 1px solid themed($m-grey-50);
+    @include m-theme() {
+      border-bottom: 1px solid themed($m-grey-50);
     }
   }
 
@@ -31,7 +31,7 @@
   margin-right: 48px;
 
   @media screen and(max-width: $min-desktop) {
-    margin-top:  calc(52px + 48px) !important;
+    margin-top: calc(52px + 48px) !important;
     margin-right: 0;
   }
 }

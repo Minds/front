@@ -3,22 +3,21 @@
 </header>
 
 <div class="mdl-grid m-pages" style="max-width:900px">
-
   <div class="mdl-cell mdl-cell--4-col">
     <ul class="m-content-sidebar-nav">
       <li *ngFor="let page of pages" class="m-content-sidebar-nav-item">
-        <a 
-          *ngIf="page.path && page.path.indexOf('p/') === 0"
+        <a
+          *ngIf="pagesService.isInternalLink(page.path)"
           [routerLink]="['/' + page.path]"
           [ngClass]="{'is-active': path == page.path }"
-          >
+        >
           {{page.title}}
         </a>
-        <a 
-          *ngIf="page.path.indexOf('p/') !== 0"
+        <a
+          *ngIf="!pagesService.isInternalLink(page.path)"
           [href]="page.path"
           target="_blank"
-          >
+        >
           {{page.title}}
         </a>
       </li>
@@ -26,8 +25,7 @@
   </div>
 
   <div class="mdl-cell mdl-cell--8-col">
-      <h1>{{title}}</h1>
-      <div #body></div>
+    <h1>{{title}}</h1>
+    <div #body></div>
   </div>
-
 </div>

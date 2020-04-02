@@ -1,7 +1,7 @@
 import { Pipe } from '@angular/core';
 
 @Pipe({
-  name: 'timediff'
+  name: 'timediff',
 })
 export class TimediffPipe {
   transform(time: number, displaySeconds: boolean = false) {
@@ -20,7 +20,8 @@ export class TimediffPipe {
     }
 
     if (displaySeconds) {
-      output += `${seconds}s`;
+      const paddedSeconds = seconds.toString().padStart(2, '0');
+      output += `${paddedSeconds}s`;
     }
 
     return output;

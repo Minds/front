@@ -1,43 +1,35 @@
-<m-modal
-  [open]="true"
-  (closed)="onClose($event)"
-  *ngIf="showModal"
->
-    <div class="m-juryDutySession__summons">
-        <ng-container *ngIf="!report">
-            <h2>You've been selected for Jury Duty</h2>
+<m-modal [open]="true" (closed)="onClose($event)" *ngIf="showModal">
+  <div class="m-juryDutySession__summons">
+    <ng-container *ngIf="!report">
+      <h2>You've been selected for Jury Duty</h2>
 
-            <p>
-                The Minds Jury decides on what content is within our <a routerLink="/content-policy" target="_blank">Content Policy</a>.
-                We randomly select 12 members of the community to uphold or overturn decisions made. 
-            </p>
-        </ng-container>
+      <p>
+        The Minds Jury decides on what content is within our
+        <a routerLink="/content-policy" target="_blank">Content Policy</a>. We
+        randomly select 12 members of the community to uphold or overturn
+        decisions made.
+      </p>
+    </ng-container>
 
-        <div class="m-juryDutySessionSummons__buttons" *ngIf="!accepted">
-            <button
-              class="m-btn m-btn--slim m-btn--action"
-              (click)="accept()"
-            >
-                Accept
-            </button>
-            <button
-              class="m-btn m-btn--slim"
-              (click)="decline()"
-            >
-              <span>Decline - </span>
-              <span class="countdown">{{ expires | timediff: true }}</span>
-            </button>
-        </div>
-
-        <div *ngIf="inProgress"
-          class="mdl-spinner mdl-js-spinner is-active"
-          [mdl]
-        ></div>
-
-        <div class="m-juryDutySessionSummons__report" *ngIf="report">
-            <m-juryDutySession__content [report]="report">
-            </m-juryDutySession__content>
-        </div>
-
+    <div class="m-juryDutySessionSummons__buttons" *ngIf="!accepted">
+      <button class="m-btn m-btn--slim m-btn--action" (click)="accept()">
+        Accept
+      </button>
+      <button class="m-btn m-btn--slim" (click)="decline()">
+        <span>Decline - </span>
+        <span class="countdown">{{ expires | timediff: true }}</span>
+      </button>
     </div>
+
+    <div
+      *ngIf="inProgress"
+      class="mdl-spinner mdl-js-spinner is-active"
+      [mdl]
+    ></div>
+
+    <div class="m-juryDutySessionSummons__report" *ngIf="report">
+      <m-juryDutySession__content [report]="report">
+      </m-juryDutySession__content>
+    </div>
+  </div>
 </m-modal>

@@ -1,48 +1,128 @@
 <div class="m-social-icons">
   <div class="m-social-icons-icon m-social-icons-icon--facebook">
-    <a class="m-social-icons-wrapper" (click)="openWindow('https://www.facebook.com/dialog/share?app_id=184865748231073&href=' + encodedUrl)" target="_blank" title="Facebook" i18n-title="@@M__NAMES__FACEBOOK">
+    <a
+      class="m-social-icons-wrapper"
+      (click)="openWindow('https://www.facebook.com/dialog/share?app_id=184865748231073&href=' + encodedUrl)"
+      target="_blank"
+      title="Facebook"
+      i18n-title="@@M__NAMES__FACEBOOK"
+    >
       <span class="m-social-icons-icon-inline ">
         <svg width="40" height="40" viewBox="-2 -2 32 32">
-          <path d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"></path>
+          <path
+            d="M17.9 14h-3v8H12v-8h-2v-2.9h2V8.7C12 6.8 13.1 5 16 5c1.2 0 2 .1 2 .1v3h-1.8c-1 0-1.2.5-1.2 1.3v1.8h3l-.1 2.8z"
+          ></path>
         </svg>
       </span>
     </a>
   </div>
   <div class="m-social-icons-icon m-social-icons-icon--twitter">
-    <a class="m-social-icons-wrapper" (click)="openWindow('https://twitter.com/intent/tweet?text=' + encodedTitle + '&tw_p=tweetbutton&url=' + encodedUrl)" target="_blank" title="Twitter" i18n-title="@@M__NAMES__TWITTER">
+    <a
+      class="m-social-icons-wrapper"
+      (click)="openWindow('https://twitter.com/intent/tweet?text=' + encodedTitle + '&tw_p=tweetbutton&url=' + encodedUrl)"
+      target="_blank"
+      title="Twitter"
+      i18n-title="@@M__NAMES__TWITTER"
+    >
       <span class="m-social-icons-icon-inline ">
-        <svg width="40" height="40" viewBox="-2 -2 32 32"><path d="M21.3 10.5v.5c0 4.7-3.5 10.1-9.9 10.1-2 0-3.8-.6-5.3-1.6.3 0 .6.1.8.1 1.6 0 3.1-.6 4.3-1.5-1.5 0-2.8-1-3.3-2.4.2 0 .4.1.7.1l.9-.1c-1.6-.3-2.8-1.8-2.8-3.5.5.3 1 .4 1.6.4-.9-.6-1.6-1.7-1.6-2.9 0-.6.2-1.3.5-1.8 1.7 2.1 4.3 3.6 7.2 3.7-.1-.3-.1-.5-.1-.8 0-2 1.6-3.5 3.5-3.5 1 0 1.9.4 2.5 1.1.8-.1 1.5-.4 2.2-.8-.3.8-.8 1.5-1.5 1.9.7-.1 1.4-.3 2-.5-.4.4-1 1-1.7 1.5z"></path></svg>
+        <svg width="40" height="40" viewBox="-2 -2 32 32">
+          <path
+            d="M21.3 10.5v.5c0 4.7-3.5 10.1-9.9 10.1-2 0-3.8-.6-5.3-1.6.3 0 .6.1.8.1 1.6 0 3.1-.6 4.3-1.5-1.5 0-2.8-1-3.3-2.4.2 0 .4.1.7.1l.9-.1c-1.6-.3-2.8-1.8-2.8-3.5.5.3 1 .4 1.6.4-.9-.6-1.6-1.7-1.6-2.9 0-.6.2-1.3.5-1.8 1.7 2.1 4.3 3.6 7.2 3.7-.1-.3-.1-.5-.1-.8 0-2 1.6-3.5 3.5-3.5 1 0 1.9.4 2.5 1.1.8-.1 1.5-.4 2.2-.8-.3.8-.8 1.5-1.5 1.9.7-.1 1.4-.3 2-.5-.4.4-1 1-1.7 1.5z"
+          ></path>
+        </svg>
       </span>
     </a>
   </div>
   <div class="m-social-icons-icon m-social-icons-icon--email">
-    <a class="m-social-icons-wrapper" [href]="'mailto:?subject=' + encodedTitle + '&body=' + encodedUrl" target="_blank" title="Email" i18n-title="@@M__COMMON__EMAIL">
+    <a
+      class="m-social-icons-wrapper"
+      [href]="'mailto:?subject=' + encodedTitle + '&body=' + encodedUrl"
+      target="_blank"
+      title="Email"
+      i18n-title="@@M__COMMON__EMAIL"
+    >
       <span class="m-social-icons-icon-inline ">
-        <svg width="40" height="40" viewBox="-2 -2 32 32"><path d="M20.2 11.7l-.4-.4-5.7 2.7-5.7-2.7-.3.4 6 4.9 6.1-4.9zM21.4 7H6.5L5 9.5v9.3L6.6 20h14.9l1.5-1.2V9.5L21.4 7zm-.5 10.8H7.1V9.2h13.8v8.6z"></path></svg>
+        <svg width="40" height="40" viewBox="-2 -2 32 32">
+          <path
+            d="M20.2 11.7l-.4-.4-5.7 2.7-5.7-2.7-.3.4 6 4.9 6.1-4.9zM21.4 7H6.5L5 9.5v9.3L6.6 20h14.9l1.5-1.2V9.5L21.4 7zm-.5 10.8H7.1V9.2h13.8v8.6z"
+          ></path>
+        </svg>
       </span>
     </a>
   </div>
   <div class="m-social-icons-icon m-social-icons-icon--linkedin">
-    <a class="m-social-icons-wrapper" (click)="openWindow('http://www.linkedin.com/shareArticle?mini=true&title=' + encodedTitle + '&url=' + encodedUrl)" target="_blank" title="LinkedIn" i18n-title="@@MINDS__SOCIAL_ICONS__LINKEDIN">
+    <a
+      class="m-social-icons-wrapper"
+      (click)="openWindow('http://www.linkedin.com/shareArticle?mini=true&title=' + encodedTitle + '&url=' + encodedUrl)"
+      target="_blank"
+      title="LinkedIn"
+      i18n-title="@@MINDS__SOCIAL_ICONS__LINKEDIN"
+    >
       <span class="m-social-icons-icon-inline ">
-        <svg width="40" height="40" viewBox="0 0 30 30"><path d="M10.576 7.985c.865 0 1.568.703 1.568 1.568 0 .866-.703 1.57-1.568 1.57-.867 0-1.568-.704-1.568-1.57 0-.865.7-1.568 1.568-1.568zm-1.353 4.327h2.706v8.704H9.222v-8.704zm4.403 0h2.595v1.19h.038c.36-.685 1.244-1.407 2.56-1.407 2.737 0 3.243 1.803 3.243 4.147v4.774h-2.7v-4.232c0-1.01-.02-2.308-1.407-2.308-1.408 0-1.623 1.1-1.623 2.235v4.306h-2.704v-8.704"></path></svg>
+        <svg width="40" height="40" viewBox="0 0 30 30">
+          <path
+            d="M10.576 7.985c.865 0 1.568.703 1.568 1.568 0 .866-.703 1.57-1.568 1.57-.867 0-1.568-.704-1.568-1.57 0-.865.7-1.568 1.568-1.568zm-1.353 4.327h2.706v8.704H9.222v-8.704zm4.403 0h2.595v1.19h.038c.36-.685 1.244-1.407 2.56-1.407 2.737 0 3.243 1.803 3.243 4.147v4.774h-2.7v-4.232c0-1.01-.02-2.308-1.407-2.308-1.408 0-1.623 1.1-1.623 2.235v4.306h-2.704v-8.704"
+          ></path>
+        </svg>
       </span>
     </a>
   </div>
-  <div class="m-social-icons-icon m-social-icons-icon--gplus">
-    <a class="m-social-icons-wrapper" (click)="openWindow('https://plus.google.com/share?url=' + encodedUrl)" target="_blank" title="Google Plus" i18n-title="@@MINDS__SOCIAL_ICONS__GOOGLE_PLUS">
+  <div class="m-social-icons-icon m-social-icons-icon--reddit">
+    <a
+      class="m-social-icons-wrapper"
+      (click)="openWindow('https://www.reddit.com/submit?url=' + encodedUrl)"
+      target="_blank"
+      title="Reddit"
+      i18n-title="@@MINDS__SOCIAL_ICONS__REDDIT"
+    >
       <span class="m-social-icons-icon-inline ">
-        <svg width="40" height="40" viewBox="4 -4 32 32"><path d="M8.8 12c-.1 2.9 2 5.7 4.7 6.6 2.6.9 5.8.2 7.5-2 1.3-1.6 1.6-3.6 1.4-5.6h-6.7v2.4h4c-.3 1.2-1.1 2.2-2.3 2.7-2.3 1-5.1-.3-5.8-2.7-.9-2.3.5-5 2.9-5.7 1.4-.5 2.9.1 4.1.8l1.8-1.8c-1.4-1.2-3.2-1.9-5-1.7-3.6.1-6.8 3.4-6.6 7zm18-3v2h-2v2h2v2h2v-2h2v-2h-2V9h-2z"></path></svg>
+        <svg width="40" height="40" viewBox="-6 -6 45 45">
+          <circle cx="11.079" cy="17.836" r="2.126" />
+          <path
+            d="M31.553,16.116c0-2.627-2.068-4.764-4.61-4.764c-0.892,0-1.72,0.27-2.425,0.722c-2.187-1.27-4.945-2.059-7.957-2.167
+			l1.736-4.984l3.596,0.861c-0.012,0.119-0.035,0.233-0.035,0.355c0,1.982,1.613,3.595,3.596,3.595c1.98,0,3.596-1.612,3.596-3.595
+			s-1.615-3.595-3.596-3.595c-1.293,0-2.417,0.69-3.05,1.715l-5.142-1.23l-2.4,6.888c-2.998,0.154-5.727,0.99-7.873,2.294
+			c0.043-0.03,0.08-0.064,0.123-0.094c-0.722-0.482-1.579-0.766-2.501-0.766c-2.543,0-4.61,2.136-4.61,4.764
+			c0,1.757,0.935,3.281,2.312,4.104c0.564,4.912,6.419,8.789,13.549,8.789c7.176,0,13.061-3.929,13.559-8.886
+			C30.699,19.279,31.553,17.8,31.553,16.116z M25.452,4.146c1.099,0,1.994,0.895,1.994,1.995c0,1.099-0.896,1.994-1.994,1.994
+			c-1.103,0-1.996-0.895-1.996-1.994C23.456,5.04,24.352,4.146,25.452,4.146z M4.61,12.952c0.363,0,0.705,0.079,1.027,0.203
+			c-1.74,1.395-2.909,3.145-3.261,5.077c-0.481-0.562-0.778-1.302-0.778-2.116C1.598,14.372,2.95,12.952,4.61,12.952z M15.86,27.41
+			c-6.621,0-12.006-3.572-12.006-7.963c0-4.392,5.385-7.963,12.006-7.963c6.62,0,12.004,3.572,12.004,7.963
+			C27.864,23.837,22.48,27.41,15.86,27.41z M29.305,18.058c-0.393-1.88-1.559-3.581-3.272-4.941c0.289-0.098,0.591-0.165,0.91-0.165
+			c1.659,0,3.01,1.419,3.01,3.164C29.951,16.85,29.705,17.521,29.305,18.058z"
+          />
+          <circle cx="20.221" cy="17.836" r="2.126" />
+          <path
+            d="M19.879,22.562c-4.504,2.973-8.138,0.172-8.3,0.045c-0.345-0.277-0.847-0.222-1.123,0.121
+			c-0.276,0.346-0.224,0.848,0.12,1.125c0.03,0.025,2.106,1.657,5.121,1.657c1.499,0,3.232-0.405,5.062-1.612
+			c0.369-0.244,0.471-0.74,0.229-1.107C20.743,22.421,20.247,22.318,19.879,22.562z"
+          />
+        </svg>
       </span>
     </a>
   </div>
-  <div class="m-social-icons-icon m-social-icons-icon--embed" *ngIf="embedCode">
-    <a class="m-social-icons-wrapper" (click)="embedModalOpen = true" target="_blank" title="Embeddable code" i18n-title="@@MINDS__SOCIAL_ICONS__EMBED_CODE">
+  <div
+    class="m-social-icons-icon m-social-icons-icon--embed"
+    *ngIf="embedCode && false"
+  >
+    <a
+      class="m-social-icons-wrapper"
+      (click)="embedModalOpen = true"
+      target="_blank"
+      title="Embeddable code"
+      i18n-title="@@MINDS__SOCIAL_ICONS__EMBED_CODE"
+    >
       <span class="m-social-icons-icon-inline ">
         <svg width="40" height="40" viewBox="-100 -50 703 603">
-          <path d="M153.821,358.226L0,274.337v-46.463l153.821-83.414v54.574L46.636,250.523l107.185,53.431   C153.821,303.954,153.821,358.226,153.821,358.226z"></path>
-          <path d="M180.094,387.584L282.103,115.08h32.227L212.084,387.584H180.094z"></path>
-          <path d="M348.843,358.226v-54.272l107.164-52.999l-107.164-52.59v-53.927l153.821,83.522v46.183    L348.843,358.226z"></path>
+          <path
+            d="M153.821,358.226L0,274.337v-46.463l153.821-83.414v54.574L46.636,250.523l107.185,53.431   C153.821,303.954,153.821,358.226,153.821,358.226z"
+          ></path>
+          <path
+            d="M180.094,387.584L282.103,115.08h32.227L212.084,387.584H180.094z"
+          ></path>
+          <path
+            d="M348.843,358.226v-54.272l107.164-52.999l-107.164-52.59v-53.927l153.821,83.522v46.183    L348.843,358.226z"
+          ></path>
         </svg>
       </span>
     </a>
@@ -50,14 +130,14 @@
 </div>
 
 <m-modal [open]="embedModalOpen" (closed)="embedModalClose()" *ngIf="embedCode">
-
   <div class="m-modal-share-embed m-modal-share-embed--first">
     <span class="m-modal-share-embed__label mdl-color-text--blue-grey-300">
-      <ng-container i18n="@@M__COMMON__EMBED_INTO_WEBSITE">Embed into your website:</ng-container>
+      <ng-container i18n="@@M__COMMON__EMBED_INTO_WEBSITE"
+        >Embed into your website:</ng-container
+      >
     </span>
     <div>
       <textarea (click)="copy($event)" readonly>{{ embedCode }}</textarea>
     </div>
   </div>
-
 </m-modal>

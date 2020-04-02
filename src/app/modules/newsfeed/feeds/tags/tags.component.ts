@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ContextService } from '../../../../services/context.service';
-import { MindsTitle } from '../../../../services/ux/title';
 import { Upload } from '../../../../services/api/upload';
 import { Client } from '../../../../services/api';
 import { Navigation } from '../../../../services/navigation';
@@ -10,7 +9,7 @@ import { Storage } from '../../../../services/storage';
 
 @Component({
   selector: 'm-newsfeed--tags',
-  templateUrl: 'tags.component.html'
+  templateUrl: 'tags.component.html',
 })
 export class NewsfeedTagsComponent implements OnDestroy {
   newsfeed: Array<Object>;
@@ -18,7 +17,6 @@ export class NewsfeedTagsComponent implements OnDestroy {
   offset: number = 0;
   inProgress: boolean = false;
   moreData: boolean = true;
-  minds;
   paramsSubscription: Subscription;
   tag: string;
 
@@ -28,13 +26,9 @@ export class NewsfeedTagsComponent implements OnDestroy {
     public navigation: Navigation,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private storage: Storage,
-    private context: ContextService,
+    private context: ContextService
   ) {
-    this.minds = window.Minds;
-
-    this.title.setTitle('Newsfeed');
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['tag']) {
         this.tag = params['tag'];
@@ -56,8 +50,7 @@ export class NewsfeedTagsComponent implements OnDestroy {
    * Load newsfeed
    */
   async load(refresh: boolean = false) {
-    if (this.inProgress)
-      return false;
+    if (this.inProgress) return false;
 
     if (refresh) {
       this.offset = 0;
@@ -73,7 +66,10 @@ export class NewsfeedTagsComponent implements OnDestroy {
     };
 
     try {
-      const response: any = await this.client.get('api/v2/entities/suggested/activities', data);
+      const response: any = await this.client.get(
+        'api/v2/entities/suggested/activities',
+        data
+      );
 
       if (!response.entities || !response.entities.length) {
         this.moreData = false;
@@ -88,7 +84,6 @@ export class NewsfeedTagsComponent implements OnDestroy {
       }
       this.offset = response['load-next'];
       this.inProgress = false;
-
     } catch (e) {
       this.inProgress = false;
     }

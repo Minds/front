@@ -1,3 +1,1 @@
-export class JoinJuryService {
-    
-}
+export class JoinJuryService {}

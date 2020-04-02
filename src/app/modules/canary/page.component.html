@@ -1,78 +1,69 @@
 <div class="m-marketing m-canary__page">
-
   <div class="m-marketing--hero">
-
     <div class="m-marketing--hero--inner">
-
       <div class="m-marketing--hero--slogans">
-
         <h1 i18n="@@M__CANARY_TITLE">
           Canary
         </h1>
 
-        <h3>Receive the latest Minds features before everyone else
-        </h3>
+        <h3>Receive the latest Minds features before everyone else</h3>
 
         <div class="m-canaryPage__buttons">
           <button
             class="m-btn m-btn--slim"
             *ngIf="!user.canary"
             (click)="turnOn()"
-            >
+          >
             Turn on
           </button>
           <button
             class="m-btn m-btn--slim"
             *ngIf="user.canary"
             (click)="turnOff()"
-            >
+          >
             Turn off
           </button>
         </div>
-
       </div>
-
     </div>
-
   </div>
 
-  <section class="m-marketing--section mdl-color--white" style="padding-bottom: 0; padding-top: 0">
-
-    <div class="m-marketing--section--subsection m-marketing--section--subsection--first">
-      <div class="m-marketing--section--subsection-container" style="align-items: flex-start;">
-        <div class="m-marketing--section--subsection-left m-marketing--section--subsection-text">
+  <section
+    class="m-marketing--section mdl-color--white"
+    style="padding-bottom: 0; padding-top: 0"
+  >
+    <div
+      class="m-marketing--section--subsection m-marketing--section--subsection--first"
+    >
+      <div
+        class="m-marketing--section--subsection-container"
+        style="align-items: flex-start;"
+      >
+        <div
+          class="m-marketing--section--subsection-left m-marketing--section--subsection-text"
+        >
           <h2>Experiments</h2>
           <ul class="m-canaryExperiments__list">
             <li>
-              Suggested Users - 15th Feb '19 (Production 15th April '19')
-            </li>
-            <li>
-              Discovery - 18th March '19 (Production 15th April '19')
-            </li>
-            <li>
-              Dark Mode - 18th April '19 (Production 23rd May '19)
-            </li>
-            <li>
-              Subscribed, Channel and Group Feeds - 6th May '19
-            </li>
-            <li>
-              Boost Rotator - 6th May '19
+              Server Side Rendering - 5th Feb 2020
             </li>
           </ul>
         </div>
 
-        <div class="m-marketing--section--subsection-right m-marketing--section--subsection-text">
+        <div
+          class="m-marketing--section--subsection-right m-marketing--section--subsection-text"
+        >
           <p>
-            In the early 20th century, coal miners would send Canaries into the mines first as an early-warning signal for potential dangers or obstacles ahead. By turning on Canary mode, you can help test out all of our newest features so we can be sure to work out any issues before rolling it out to everyone.
+            In the early 20th century, coal miners would send Canaries into the
+            mines first as an early-warning signal for potential dangers or
+            obstacles ahead. By turning on Canary mode, you can help test out
+            all of our newest features so we can be sure to work out any issues
+            before rolling it out to everyone.
           </p>
         </div>
       </div>
     </div>
-
   </section>
-
-
-
 </div>
 
 <m-footer></m-footer>

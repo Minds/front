@@ -1,4 +1,4 @@
-import { 
+import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
@@ -10,14 +10,14 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-token--onboarding--rewards',
   templateUrl: 'rewards.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TokenRewardsOnboardingComponent {
-
   @Input() skippable: boolean = true;
   @Output() next: EventEmitter<any> = new EventEmitter();
 
@@ -27,7 +27,7 @@ export class TokenRewardsOnboardingComponent {
   secret: string;
   inProgress: boolean = false;
   error: string;
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   plusPrompt: boolean = false;
 
   constructor(
@@ -35,8 +35,9 @@ export class TokenRewardsOnboardingComponent {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected router: Router,
-  ) { 
-
+    configs: ConfigsService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {
@@ -50,9 +51,12 @@ export class TokenRewardsOnboardingComponent {
     this.inProgress = true;
     this.error = null;
     try {
-      let response: any = await this.client.post('api/v2/blockchain/rewards/verify', {
+      let response: any = await this.client.post(
+        'api/v2/blockchain/rewards/verify',
+        {
           number: this.number,
-        });
+        }
+      );
       this.secret = response.secret;
       this.confirming = true;
     } catch (e) {
@@ -76,13 +80,16 @@ export class TokenRewardsOnboardingComponent {
     this.inProgress = true;
     this.error = null;
     try {
-      let response: any = await this.client.post('api/v2/blockchain/rewards/confirm', {
-        number: this.number,
-        code: this.code,
-        secret: this.secret,
-      });
+      let response: any = await this.client.post(
+        'api/v2/blockchain/rewards/confirm',
+        {
+          number: this.number,
+          code: this.code,
+          secret: this.secret,
+        }
+      );
 
-      window.Minds.user.rewards = true;
+      this.session.getLoggedInUser().rewards = true;
       this.join();
     } catch (e) {
       this.error = e.message;
@@ -100,5 +107,4 @@ export class TokenRewardsOnboardingComponent {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
-
 }

@@ -1,28 +1,28 @@
-.m-revenue--ledger-table{
-  table{
-    width:100%;
+.m-revenue--ledger-table {
+  table {
+    width: 100%;
     font-family: 'Roboto', Helvetica, sans-serif;
   }
 
-  .m-revenue--ledger-header{
-    th{
+  .m-revenue--ledger-header {
+    th {
       font-size: 14px;
       letter-spacing: 1px;
       text-transform: uppercase;
     }
   }
 
-  .m-revenue--ledger-row{
-    td{
+  .m-revenue--ledger-row {
+    td {
       letter-spacing: 1px;
       text-transform: uppercase;
     }
 
-    .m-revenue--ledger-amount{
+    .m-revenue--ledger-amount {
       font-size: 26px;
     }
 
-    .m-revenue--ledger-refunded{
+    .m-revenue--ledger-refunded {
       border-radius: 3px;
       font-size: 11px;
       display: inline-block;
@@ -30,7 +30,7 @@
       vertical-align: middle;
       margin-top: -6px;
       margin-right: 8px;
-      @include m-theme(){
+      @include m-theme() {
         color: themed($m-grey-400);
         border: 1px solid themed($m-grey-50);
       }
@@ -38,10 +38,9 @@
       > * {
         vertical-align: middle;
       }
-      m-tooltip i{
-        font-size:14px;
+      m-tooltip i {
+        font-size: 14px;
       }
     }
   }
-
 }

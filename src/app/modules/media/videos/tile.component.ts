@@ -8,10 +8,8 @@ import { AttachmentService } from '../../../services/attachment';
   selector: 'm-media--videos--tile',
   templateUrl: 'tile.component.html',
 })
-
 export class MediaVideosTileComponent {
   @Input() entity;
 
-  constructor(public session: Session,
-    public attachment: AttachmentService) {}
+  constructor(public session: Session, public attachment: AttachmentService) {}
 }

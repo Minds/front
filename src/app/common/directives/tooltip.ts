@@ -6,11 +6,10 @@ import { AnchorPosition } from '../../services/ux/anchor-position';
   exportAs: 'tooltip',
   host: {
     '(mouseenter)': 'show()',
-    '(mouseleave)': 'hide()'
-  }
+    '(mouseleave)': 'hide()',
+  },
 })
 export class Tooltip {
-
   shown: boolean = false;
   style: any = {};
   private _element: any;
@@ -35,7 +34,7 @@ export class Tooltip {
         top: position.top,
         right: position.right,
         bottom: position.bottom,
-        left: position.left
+        left: position.left,
       };
     }, 1000);
   }

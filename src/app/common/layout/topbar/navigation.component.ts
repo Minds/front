@@ -6,27 +6,24 @@ import { Session } from '../../../services/session';
 import { UpdateMarkersService } from '../../services/update-markers.service';
 
 @Component({
-	selector: 'm-topbar--navigation',
-	templateUrl: 'navigation.component.html'
+  selector: 'm-topbar--navigation',
+  templateUrl: 'navigation.component.html',
 })
-
 export class TopbarNavigationComponent {
+  user;
+  items;
+  hasMarker$;
 
-	user;
-	items;
-    hasMarker$;
+  constructor(
+    public navigation: NavigationService,
+    public session: Session,
+    private updateMarkers: UpdateMarkersService
+  ) {}
 
-	constructor(
-		public navigation: NavigationService,
-        public session: Session,
-        private updateMarkers: UpdateMarkersService,
-	) {
-    }
-
-    ngOnInit() {
-        this.items = this.navigation.getItems('topbar');
-		this.getUser();
-        /*this.hasMarker$ = this.updateMarkers.markers
+  ngOnInit() {
+    this.items = this.navigation.getItems('topbar');
+    this.getUser();
+    /*this.hasMarker$ = this.updateMarkers.markers
           .pipe(
             map((markers: any) => {
               if (!markers)
@@ -39,12 +36,11 @@ export class TopbarNavigationComponent {
                 .length;
             })
             );*/
-    }
+  }
 
-	getUser() {
-		this.user = this.session.getLoggedInUser((user) => {
-			this.user = user;
-		});
-	}
-
+  getUser() {
+    this.user = this.session.getLoggedInUser(user => {
+      this.user = user;
+    });
+  }
 }

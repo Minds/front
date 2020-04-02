@@ -21,30 +21,44 @@ $min-tablet: 768px;
 $min-desktop: 992px;
 $min-huge: 1280px;
 
-
-@mixin flex-display(){
+@mixin flex-display() {
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flexbox;
   display: flex;
 }
-@mixin flex-direction($direction){
+@mixin flex-direction($direction) {
   -webkit-flex-direction: $direction;
   -moz-flex-direction: $direction;
   -ms-flexbox-direction: $direction;
   flex-direction: $direction;
 }
-@mixin flex-wrap($wrap){
+@mixin flex-wrap($wrap) {
   -webkit-flex-wrap: $wrap;
   -moz-flex-wrap: $wrap;
   -ms-flexbox-wrap: $wrap;
   flex-wrap: $wrap;
 }
-@mixin flex($flex){
+@mixin flex($flex) {
   -webkit-flex: $flex;
   -moz-flex: $flex;
   -ms-flexbox: $flex;
   flex: $flex;
+}
+
+@function str-replace($string, $search, $replace: '') {
+  $index: str-index($string, $search);
+
+  @if $index {
+    @return str-slice($string, 1, $index - 1) + $replace +
+      str-replace(
+        str-slice($string, $index + str-length($search)),
+        $search,
+        $replace
+      );
+  }
+
+  @return $string;
 }
 
 $layout-header-height: 64px;

@@ -1,22 +1,33 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { Web3WalletService } from '../web3-wallet.service';
 
-type Wallet = { address: string, label: string };
+type Wallet = { address: string; label: string };
 
 @Component({
   moduleId: module.id,
   selector: 'm-blockchain--wallet-selector',
   templateUrl: 'wallet-selector.component.html',
   exportAs: 'BlockchainWalletSelector',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BlockchainWalletSelector {
   @Input() current: string;
   @Input() autoselect: boolean;
   @Input() allowOffchain: boolean = false;
 
-  @Output('select') selectEventEmitter: EventEmitter<string> = new EventEmitter<string>();
-  @Output('autoselectChange') autoselectChangeEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output('select') selectEventEmitter: EventEmitter<string> = new EventEmitter<
+    string
+  >();
+  @Output('autoselectChange') autoselectChangeEmitter: EventEmitter<
+    boolean
+  > = new EventEmitter<boolean>();
 
   web3Unavailable: boolean = false;
   web3Locked: boolean = false;
@@ -27,7 +38,7 @@ export class BlockchainWalletSelector {
   constructor(
     protected web3Wallet: Web3WalletService,
     protected cd: ChangeDetectorRef
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.refresh();
@@ -52,7 +63,7 @@ export class BlockchainWalletSelector {
   }
 
   async getWallets() {
-    if (this.web3Wallet.isUnavailable() || await this.web3Wallet.isLocked()) {
+    if (this.web3Wallet.isUnavailable() || (await this.web3Wallet.isLocked())) {
       this.web3Unavailable = this.web3Wallet.isUnavailable();
       this.web3Locked = true;
       this.detectChanges();
@@ -61,8 +72,10 @@ export class BlockchainWalletSelector {
       return;
     }
 
-    let wallets = (await this.web3Wallet.getWallets())
-      .map(address => ({ address, label: address }));
+    let wallets = (await this.web3Wallet.getWallets()).map(address => ({
+      address,
+      label: address,
+    }));
 
     this.web3Unavailable = false;
     this.web3Locked = false;

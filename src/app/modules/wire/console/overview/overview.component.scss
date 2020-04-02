@@ -2,14 +2,14 @@
   padding: 16px;
   margin: auto;
   font-family: 'Roboto', Helvetica, sans-serif;
-  
-  @include m-theme(){
+
+  @include m-theme() {
     color: themed($m-white);
     background-color: themed($m-blue);
   }
 
   @media only screen and (max-width: 400px) {
-    padding:0;
+    padding: 0;
     text-align: center;
   }
 
@@ -18,8 +18,8 @@
   }
 
   .m-wire-console--overview-stat-type {
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
   }
 
   .m-wire-console--overview-stat-label {
@@ -32,35 +32,35 @@
     opacity: 0.65;
   }
 
-  i{
+  i {
     font-style: normal;
-    font-weight:100;
+    font-weight: 100;
   }
 
-  > div{
-    font-size:48px;
-    letter-spacing:2px;
-    line-height:48px;
-    flex:auto;
-    width:auto;
-    padding:8px 16px;
+  > div {
+    font-size: 48px;
+    letter-spacing: 2px;
+    line-height: 48px;
+    flex: auto;
+    width: auto;
+    padding: 8px 16px;
   }
 
-  .m-wire-console--label{
-    display:block;
+  .m-wire-console--label {
+    display: block;
 
     > * {
-      vertical-align:middle;
+      vertical-align: middle;
     }
 
-    label{
+    label {
       text-transform: uppercase;
       font-family: 'Roboto', Helvetica, sans-serif;
-      letter-spacing:1px;
-      font-size:14px;
+      letter-spacing: 1px;
+      font-size: 14px;
       font-weight: 600;
     }
-    i{
+    i {
       font-size: 16px;
       opacity: 0.5;
       cursor: pointer;

@@ -2,16 +2,17 @@
   <div class="m-topbar--row">
     <div class="m-topbar--navigation m-topbar--navigation--text-only">
       <!--<a class="m-topbar&#45;&#45;navigation&#45;&#45;item"-->
-        <!--routerLink="/blog/suggested"-->
-        <!--routerLinkActive="m-topbar&#45;&#45;navigation&#45;&#45;item-active"-->
-        <!--*ngIf="session.isLoggedIn()"-->
-        <!--&gt;-->
-          <!--<span i18n="@@M__COMMON_TOPBAR_SUGGESTED">Suggested</span>-->
-          <!--<m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_SUGGESTED_TOOLTIP">-->
-            <!--Suggested displays the suggested content on Minds-->
-          <!--</m-tooltip>-->
+      <!--routerLink="/blog/suggested"-->
+      <!--routerLinkActive="m-topbar&#45;&#45;navigation&#45;&#45;item-active"-->
+      <!--*ngIf="session.isLoggedIn()"-->
+      <!--&gt;-->
+      <!--<span i18n="@@M__COMMON_TOPBAR_SUGGESTED">Suggested</span>-->
+      <!--<m-tooltip icon="help" i18n="@@M__COMMON_TOPBAR_SUGGESTED_TOOLTIP">-->
+      <!--Suggested displays the suggested content on Minds-->
+      <!--</m-tooltip>-->
       <!--</a>-->
-      <a class="m-topbar--navigation--item"
+      <a
+        class="m-topbar--navigation--item"
         routerLink="/blog/top"
         routerLinkActive="m-topbar--navigation--item-active"
         *ngIf="session.isLoggedIn()"
@@ -21,35 +22,47 @@
           Top displays the top content on Minds
         </m-tooltip>
       </a>
-      <a class="m-topbar--navigation--item"
+      <a
+        class="m-topbar--navigation--item"
         routerLink="/blog/network"
         *ngIf="session.isLoggedIn()"
         routerLinkActive="m-topbar--navigation--item-active"
       >
         <span i18n="@@M__COMMON_TOPBAR_SUBSCRIPTIONS">Subscriptions</span>
-        <m-tooltip icon="help" i18n="@@MINDS__BLOGS__TOPBAR__SUBSCRIPTIONS_TOOLTIP">
+        <m-tooltip
+          icon="help"
+          i18n="@@MINDS__BLOGS__TOPBAR__SUBSCRIPTIONS_TOOLTIP"
+        >
           Blogs from channels you are subscribed to
         </m-tooltip>
       </a>
-      <a class="m-topbar--navigation--item"
+      <a
+        class="m-topbar--navigation--item"
         routerLink="/blog/my"
         routerLinkActive="m-topbar--navigation--item-active"
         *ngIf="session.isLoggedIn()"
+      >
+        <span i18n="@@M__COMMON_TOPBAR_MY_BLOGS">My Blogs</span>
+        <m-tooltip
+          icon="help"
+          i18n="@@MINDS__BLOGS__TOPBAR__YOUR_BLOGS_TOOLTIP"
         >
-          <span i18n="@@M__COMMON_TOPBAR_MY_BLOGS">My Blogs</span>
-          <m-tooltip icon="help" i18n="@@MINDS__BLOGS__TOPBAR__YOUR_BLOGS_TOOLTIP">
-            Your blogs
-          </m-tooltip>
+          Your blogs
+        </m-tooltip>
       </a>
-      <a class="m-topbar--navigation--item"
+      <a
+        class="m-topbar--navigation--item"
         routerLink="/blog/edit/new"
         routerLinkActive="m-topbar--navigation--item-active"
         *ngIf="session.isLoggedIn()"
+      >
+        <span i18n="@@M__COMMON_TOPBAR_WRITE_NEW_BLOG">Write a new blog</span>
+        <m-tooltip
+          icon="help"
+          i18n="@@MINDS__BLOGS__TOPBAR__WRITE_A_NEW_BLOG_TOOLTIP"
         >
-          <span i18n="@@M__COMMON_TOPBAR_WRITE_NEW_BLOG">Write a new blog</span>
-          <m-tooltip icon="help" i18n="@@MINDS__BLOGS__TOPBAR__WRITE_A_NEW_BLOG_TOOLTIP">
-            Write a new Blog
-          </m-tooltip>
+          Write a new Blog
+        </m-tooltip>
       </a>
 
       <div class="m-layout--spacer"></div>
@@ -61,17 +74,16 @@
       </m-topbar--hashtags>
 
       <m-topbar--navigation--options
-        (change)="onOptionsChange($event)" 
-        [options]="filter == 'trending' ? [ 'rating' ] : []"
+        (change)="onOptionsChange($event)"
+        [options]="filter == 'trending' ? ['rating'] : []"
         *ngIf="filter === 'trending'"
-        >
+      >
       </m-topbar--navigation--options>
     </div>
   </div>
 </div>
 
 <div class="m-blog--list">
-
   <div class="m-blog--list--column m-blog--list--column-0">
     <m-blog--tile *ngFor="let entity of entities_0" [entity]="entity">
     </m-blog--tile>
@@ -82,13 +94,11 @@
     </m-blog--tile>
   </div>
 
-
-
   <infinite-scroll
-      distance="25%"
-      (load)="load()"
-      [moreData]="moreData"
-      [inProgress]="inProgress">
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress"
+  >
   </infinite-scroll>
-
 </div>
