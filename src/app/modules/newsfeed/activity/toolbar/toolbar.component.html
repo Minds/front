@@ -5,7 +5,9 @@
 <minds-button-comment
   [object]="entity"
   (click)="toggleComments()"
-  *ngIf="!service.displayOptions.showComments"
+  *ngIf="
+    !service.displayOptions.showComments || service.displayOptions.showComments
+  "
 ></minds-button-comment>
 
 <!-- Show wire if not own post -->
