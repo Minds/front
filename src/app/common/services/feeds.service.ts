@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
@@ -6,14 +6,14 @@ import { Session } from '../../services/session';
 import { EntitiesService } from './entities.service';
 import { BlockListService } from './block-list.service';
 
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
 import { switchMap, map, tap, first } from 'rxjs/operators';
 
 /**
  * Enables the grabbing of data through observable feeds.
  */
 @Injectable()
-export class FeedsService {
+export class FeedsService implements OnDestroy {
   limit: BehaviorSubject<number> = new BehaviorSubject(12);
   offset: BehaviorSubject<number> = new BehaviorSubject(0);
   fallbackAt: number | null = null;
@@ -30,6 +30,7 @@ export class FeedsService {
   feed: Observable<BehaviorSubject<Object>[]>;
   inProgress: BehaviorSubject<boolean> = new BehaviorSubject(true);
   hasMore: Observable<boolean>;
+  blockListSubscription: Subscription;
 
   constructor(
     protected client: Client,
@@ -77,6 +78,11 @@ export class FeedsService {
       })
     );
 
+    // Trigger a re-run of the above pipe on blockedList emission.
+    this.blockListSubscription = blockListService.blocked.subscribe(block => {
+      this.rawFeed.next(this.rawFeed.getValue());
+    });
+
     this.hasMore = combineLatest(
       this.rawFeed,
       this.inProgress,
@@ -89,6 +95,12 @@ export class FeedsService {
         return inProgress || feed.length > offset;
       })
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.blockListSubscription) {
+      this.blockListSubscription.unsubscribe();
+    }
   }
 
   /**
