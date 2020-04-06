@@ -3,7 +3,7 @@
     class="m-composerPreview__image"
     alt="Uploaded image"
     i18n-alt
-    [src]="getUrl(attachmentPreviewResource)"
+    [src]="safeResourceUrl"
     (load)="fitForImage(image)"
     #image
   />
@@ -16,9 +16,19 @@
     class="m-composerPreview__video"
     (loadedmetadata)="fitForVideo(video)"
     #video
-  >
-    <source [src]="getUrl(attachmentPreviewResource)" />
-  </video>
+    [src]="safeResourceUrl"
+    *ngIf="!safeVideoPosterUrl; else videoPosterEl"
+  ></video>
+
+  <div class="m-videoPlayer__placeholder">
+    <i class="material-icons minds-video-play-icon">
+      play_circle_outline
+    </i>
+  </div>
+
+  <ng-template #videoPosterEl>
+    <img [src]="safeVideoPosterUrl" class="m-composerPreview__image" />
+  </ng-template>
 </ng-container>
 
 <ng-content></ng-content>

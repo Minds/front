@@ -17,6 +17,18 @@ import { ComposerService } from '../../services/composer.service';
 })
 export class PreviewComponent {
   /**
+   * The attachment preview metadata subject from the service
+   */
+  attachmentPreview$ = this.service.attachmentPreview$;
+
+  /**
+   * The rich embed preview metadata subject from the service
+   */
+  richEmbedPreview$ = this.service.richEmbedPreview$;
+
+  isPosting$ = this.service.isPosting$;
+
+  /**
    * Is the media in portrait mode?
    */
   portrait: boolean = false;
@@ -30,27 +42,6 @@ export class PreviewComponent {
     protected service: ComposerService,
     protected cd: ChangeDetectorRef
   ) {}
-
-  /**
-   * Gets the attachment preview metadata subject from the service
-   */
-  get attachmentPreview$() {
-    return this.service.attachmentPreview$;
-  }
-
-  /**
-   * Gets the rich embed preview metadata subject from the service
-   */
-  get richEmbedPreview$() {
-    return this.service.richEmbedPreview$;
-  }
-
-  /**
-   * Is posting flag from the service
-   */
-  get isPosting$() {
-    return this.service.isPosting$;
-  }
 
   /**
    * Sets the portrait mode

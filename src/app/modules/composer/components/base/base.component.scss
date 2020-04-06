@@ -10,7 +10,7 @@ m-composer__base {
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease 0s !important;
-  padding: 36px 0;
+  padding: 20px 0;
   box-sizing: border-box;
 
   &.m-composer__base--withPreview {
@@ -26,21 +26,7 @@ m-composer__base {
   }
 
   m-composer__titleBar {
-    margin-bottom: 16px;
-  }
-
-  &.m-composer__base--withPreview m-composer__titleBar {
-    margin-bottom: 31px;
-  }
-
-  @media screen and (max-width: $max-mobile) {
-    m-composer__titleBar {
-      margin-bottom: 49px;
-    }
-
-    &.m-composer__base--withPreview m-composer__titleBar {
-      margin-bottom: 42px;
-    }
+    margin-bottom: 20px;
   }
 
   .m-composerBase__textArea {
@@ -81,11 +67,11 @@ m-composer__base {
 
     m-composer__textArea .m-composer__textArea textarea {
       min-height: 0;
+      padding: 0 20px;
     }
 
     .m-composer__toolbar {
-      padding-top: 20px;
-      padding-bottom: 20px;
+      padding: 20px;
     }
 
     &:not(.m-composer__base--withPreview) .m-composer__toolbar {

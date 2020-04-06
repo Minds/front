@@ -1,11 +1,18 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  Subscription,
+  Subject,
+} from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
 import { ActivityEntity } from '../../newsfeed/activity/activity.service';
 import { RichEmbed, RichEmbedService } from './rich-embed.service';
 import { Attachment, AttachmentService } from './attachment.service';
 import { AttachmentPreviewResource, PreviewService } from './preview.service';
+import { VideoPoster } from './video-poster.service';
 
 /**
  * Message value type
@@ -41,6 +48,11 @@ export type AttachmentMetadataMappedValue = Attachment | null;
  * Default attachment value
  */
 export const DEFAULT_ATTACHMENT_VALUE: AttachmentSubjectValue = null;
+
+/**
+ * Default videoposter value
+ */
+export const DEFAULT_VIDEOPOSTER_VALUE: VideoPoster = null;
 
 /**
  * Rich embed value type
@@ -131,6 +143,7 @@ export interface Data {
   license: LicenseSubjectValue;
   attachment: AttachmentMetadataMappedValue;
   richEmbed: RichEmbedMetadataMappedValue;
+  videoPoster: VideoPoster;
 }
 
 /**
@@ -201,6 +214,11 @@ export class ComposerService implements OnDestroy {
   readonly attachment$: BehaviorSubject<
     AttachmentSubjectValue
   > = new BehaviorSubject<AttachmentSubjectValue>(DEFAULT_ATTACHMENT_VALUE);
+
+  /**
+   * Video Poster subject
+   */
+  videoPoster$: BehaviorSubject<VideoPoster> = new BehaviorSubject(null);
 
   /**
    * Rich embed subject
@@ -328,7 +346,8 @@ export class ComposerService implements OnDestroy {
         AccessIdSubjectValue,
         LicenseSubjectValue,
         AttachmentMetadataMappedValue,
-        RichEmbedMetadataMappedValue
+        RichEmbedMetadataMappedValue,
+        VideoPoster
       ]
     >([
       this.message$.pipe(distinctUntilChanged()),
@@ -397,6 +416,7 @@ export class ComposerService implements OnDestroy {
 
         // Value will be either a RichEmbed interface object or null
       ),
+      this.videoPoster$.pipe(distinctUntilChanged()),
     ]).pipe(
       map(
         // Create an JSON object based on an array of Subject values
@@ -411,6 +431,7 @@ export class ComposerService implements OnDestroy {
           license,
           attachment,
           richEmbed,
+          videoPoster,
         ]) => ({
           message,
           title,
@@ -422,6 +443,7 @@ export class ComposerService implements OnDestroy {
           license,
           attachment,
           richEmbed,
+          videoPoster,
         })
       ),
       tap(values => {
@@ -511,6 +533,7 @@ export class ComposerService implements OnDestroy {
     this.accessId$.next(DEFAULT_ACCESS_ID_VALUE);
     this.license$.next(DEFAULT_LICENSE_VALUE);
     this.attachment$.next(DEFAULT_ATTACHMENT_VALUE);
+    this.videoPoster$.next(DEFAULT_VIDEOPOSTER_VALUE);
 
     // Reset state
     this.inProgress$.next(false);
@@ -565,6 +588,7 @@ export class ComposerService implements OnDestroy {
 
     let attachment: AttachmentSubjectValue = DEFAULT_ATTACHMENT_VALUE;
     let richEmbed: RichEmbedSubjectValue = DEFAULT_RICH_EMBED_VALUE;
+    let videoPoster: VideoPoster;
 
     if (activity.custom_type === 'batch') {
       attachment = {
@@ -576,6 +600,7 @@ export class ComposerService implements OnDestroy {
         type: 'video',
         guid: activity.entity_guid,
       } as Attachment;
+      videoPoster = { url: activity.custom_data.thumbnail_src };
     } else if (activity.entity_guid || activity.perma_url) {
       // Rich embeds (blogs included)
       richEmbed = {
@@ -591,6 +616,7 @@ export class ComposerService implements OnDestroy {
 
     this.attachment$.next(attachment);
     this.richEmbed$.next(richEmbed);
+    this.videoPoster$.next(videoPoster);
 
     // Apply them to the service state
 
@@ -681,6 +707,7 @@ export class ComposerService implements OnDestroy {
    * @param license
    * @param schedule
    * @param richEmbed
+   * @param videoPoster
    */
   buildPayload({
     message,
@@ -693,6 +720,7 @@ export class ComposerService implements OnDestroy {
     license,
     attachment,
     richEmbed,
+    videoPoster,
   }: Data): any {
     if (this.containerGuid) {
       // Override accessId if there's a container set
@@ -736,6 +764,10 @@ export class ComposerService implements OnDestroy {
 
     if (this.containerGuid) {
       this.payload.container_guid = this.containerGuid;
+    }
+
+    if (videoPoster && videoPoster.fileBase64) {
+      this.payload.video_poster = videoPoster.fileBase64;
     }
   }
 

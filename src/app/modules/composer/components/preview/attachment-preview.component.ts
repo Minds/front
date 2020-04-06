@@ -4,17 +4,27 @@ import {
   EventEmitter,
   Input,
   Output,
+  ChangeDetectorRef,
+  OnInit,
+  OnDestroy,
+  OnChanges,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { AttachmentPreviewResource } from '../../services/preview.service';
+import { ComposerService } from '../../services/composer.service';
+import { Observable, Subscription } from 'rxjs';
+import { VideoPoster } from '../../services/video-poster.service';
 
 @Component({
   selector: 'm-composerAttachmentPreview',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'attachment-preview.component.html',
 })
-export class AttachmentPreviewComponent {
+export class AttachmentPreviewComponent
+  implements OnInit, OnDestroy, OnChanges {
+  videoPosterSubscription: Subscription;
+
   /**
    * The preview resource
    */
@@ -27,6 +37,9 @@ export class AttachmentPreviewComponent {
     boolean
   > = new EventEmitter<boolean>();
 
+  safeResourceUrl: SafeResourceUrl;
+  safeVideoPosterUrl: SafeResourceUrl;
+
   /**
    * URL for the CDN
    */
@@ -37,28 +50,55 @@ export class AttachmentPreviewComponent {
    * @param domSanitizer
    * @param configs
    */
-  constructor(protected domSanitizer: DomSanitizer, configs: ConfigsService) {
+  constructor(
+    protected domSanitizer: DomSanitizer,
+    configs: ConfigsService,
+    protected service: ComposerService,
+    private cd: ChangeDetectorRef
+  ) {
     this.cdnUrl = configs.get('cdn_url');
   }
 
+  ngOnInit() {
+    this.videoPosterSubscription = this.service.videoPoster$.subscribe(
+      (videoPoster: VideoPoster) => {
+        this.safeVideoPosterUrl = videoPoster
+          ? this.sanitizeUrl(videoPoster.url)
+          : null;
+        this.cd.markForCheck();
+        this.cd.detectChanges();
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.videoPosterSubscription.unsubscribe();
+  }
+
+  ngOnChanges(changes) {
+    this.buildSafeUrl(this.attachmentPreviewResource);
+  }
+
   /**
-   * Gets the URL for a resource
+   * Builds the safe URL for a resource
    * @param resource
    */
-  getUrl(resource: AttachmentPreviewResource) {
+  buildSafeUrl(resource: AttachmentPreviewResource) {
     switch (resource.sourceType) {
       case 'image':
         if (resource.source === 'local') {
-          return this.localTrustedUrl(resource.payload);
+          this.safeResourceUrl = this.sanitizeUrl(resource.payload);
         } else if (resource.source === 'guid') {
-          return `${this.cdnUrl}fs/v1/thumbnail/${resource.payload}/xlarge/`;
+          this.safeResourceUrl = `${this.cdnUrl}fs/v1/thumbnail/${resource.payload}/xlarge/`;
         }
         break;
       case 'video':
         if (resource.source === 'local') {
-          return `${this.localTrustedUrl(resource.payload)}#t=1`;
+          this.safeResourceUrl = this.sanitizeUrl(`${resource.payload}#t=1`);
         } else if (resource.source === 'guid') {
-          return `${this.cdnUrl}api/v1/media/${resource.payload}/play/#t=1`;
+          this.safeResourceUrl = this.sanitizeUrl(
+            `${this.cdnUrl}api/v1/media/${resource.payload}/play/#t=1`
+          );
         }
         break;
     }
@@ -68,8 +108,8 @@ export class AttachmentPreviewComponent {
    * Trust the Blob URL used to preview the media
    * @param url
    */
-  protected localTrustedUrl(url: string) {
-    return this.domSanitizer.bypassSecurityTrustUrl(url);
+  protected sanitizeUrl(url: string): SafeResourceUrl {
+    return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   /**
