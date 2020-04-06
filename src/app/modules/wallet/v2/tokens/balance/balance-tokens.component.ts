@@ -40,6 +40,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
     .add(2, 'hours')
     .local()
     .format('h:mma');
+
   nextPayoutDate = 0;
   estimatedTokenPayout;
   constructor(

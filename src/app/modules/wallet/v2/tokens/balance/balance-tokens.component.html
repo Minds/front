@@ -19,26 +19,7 @@
       >
     </div>
     <div class="m-walletBalance--tokens__equationSymbol">=</div>
-    <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
-      <div class="m-walletBalance--tokens__balanceTitle">
-        Off-Chain<m-tooltip icon="help"
-          >Store tokens on our servers for quicker transaction times and no
-          fees</m-tooltip
-        >
-      </div>
-      <div class="m-walletBalance--tokens__balanceValWrapper">
-        <span class="m-walletBalance--tokens__balanceVal--int">{{
-          offchainBalance.int | number: '1.0-0'
-        }}</span
-        ><span
-          class="m-walletBalance--tokens__balanceVal--frac"
-          *ngIf="offchainBalance.frac"
-          >.{{ offchainBalance.frac }}</span
-        >
-        tokens
-      </div>
-    </div>
-    <div class="m-walletBalance--tokens__equationSymbol">+</div>
+
     <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
       <div class="m-walletBalance--tokens__balanceTitle">
         On-Chain<m-tooltip icon="help"
@@ -57,7 +38,27 @@
         >
         tokens
       </div>
-      <a
+    </div>
+    <div class="m-walletBalance--tokens__equationSymbol">+</div>
+    <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
+      <div class="m-walletBalance--tokens__balanceTitle">
+        Off-Chain<m-tooltip icon="help"
+          >Store tokens on our servers for quicker transaction times and no
+          fees</m-tooltip
+        >
+      </div>
+      <div class="m-walletBalance--tokens__balanceValWrapper">
+        <span class="m-walletBalance--tokens__balanceVal--int">{{
+          offchainBalance.int | number: '1.0-0'
+        }}</span
+        ><span
+          class="m-walletBalance--tokens__balanceVal--frac"
+          *ngIf="offchainBalance.frac"
+          >.{{ offchainBalance.frac }}</span
+        >
+        tokens
+      </div>
+      <!-- <a
         *ngIf="
           session.getLoggedInUser().rewards &&
           wallet.offchain.balance > 0 &&
@@ -65,20 +66,27 @@
         "
         (click)="showModal = true"
         >Transfer to On-Chain</a
-      >
+      > -->
+      <a (click)="showModal = true">Transfer to On-Chain</a>
+    </div>
+  </div>
+
+  <div class="m-walletBalance--tokens__payout">
+    <div>
+      Today's estimated payout
+      <span class="m-walletBalance--tokens__payoutEstimate">{{
+        estimatedTokenPayout | token: 18 | number: '1.0-3'
+      }}</span>
+      tokens.
+    </div>
+    <div>
+      Next payout in <span>{{ nextPayoutDate | timediff: true }}</span> (Daily
+      at {{ localPayoutTime }})
     </div>
   </div>
   <div class="m-walletBalance--tokens__learnMore">
-    <a routerLink="/tokens">Learn more</a> about tokens.
-  </div>
-  <div class="m-walletBalance--tokens__payout">
-    Today's estimated payout
-    <span class="m-walletBalance--tokens__payoutEstimate">{{
-      estimatedTokenPayout | token: 18 | number: '1.0-3'
-    }}</span>
-    tokens. Next payout in
-    <span>{{ nextPayoutDate | timediff: true }}</span> (Daily at
-    {{ localPayoutTime }})
+    Learn more about <a routerLink="/tokens">Minds Tokens</a> and our
+    <a routerLink="/rewards">Rewards System</a>.
   </div>
   <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
     <m-walletOnchainTransfer

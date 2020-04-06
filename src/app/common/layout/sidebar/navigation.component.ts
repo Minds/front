@@ -113,7 +113,6 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize')
   onResize() {
-    console.log(window.innerWidth);
     if (window.innerWidth > 1000) {
       this.layoutMode = 'desktop';
     } else if (window.innerWidth > 480 && window.innerWidth <= 1000) {

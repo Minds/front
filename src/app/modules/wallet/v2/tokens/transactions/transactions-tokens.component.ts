@@ -30,10 +30,12 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
   transactions: any[] = [];
   runningTotal: number = 0;
+  previousTxAmount: number = 0;
   currentDayInLoop = moment().add(1, 'day');
 
   selectedTransactionType: string = 'all';
   filterApplied: boolean = false;
+  typeFilter: string = '';
 
   showRewardsPopup: boolean = false;
   startOfToday = moment().startOf('day');
@@ -64,7 +66,7 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
         label: 'Rewards',
       },
       {
-        id: 'token',
+        id: 'purchase',
         label: 'Purchases',
       },
       {
@@ -148,7 +150,7 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
       if (response) {
         if (response.transactions) {
-          this.formatResponse(response.transactions);
+          this.formatResponse(response.transactions, refresh);
         }
 
         if (response['load-next']) {
@@ -172,50 +174,74 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
     }
   }
 
-  formatResponse(transactions) {
-    transactions.forEach(tx => {
+  formatResponse(transactions, refresh: boolean) {
+    transactions.forEach((tx, i) => {
       if (!tx.failed) {
         const formattedTx: any = {};
 
-        const txAmount = toFriendlyCryptoVal(tx.amount);
-        formattedTx.amount = txAmount;
-        formattedTx.runningTotal = this.formatAmount(this.runningTotal);
-
+        // TYPE & SUPERTYPE -------------------------------------------
         formattedTx.type = tx.contract;
-        formattedTx.timestamp = tx.timestamp;
 
-        if (tx.contract.indexOf('offchain:') !== -1) {
-          formattedTx.superType = tx.contract.substr(9);
-        } else {
-          formattedTx.superType = tx.contract;
-        }
-
-        if (formattedTx.superType === 'reward') {
-          formattedTx.showRewardsPopup = false;
-        }
-
-        if (formattedTx.superType === 'wire') {
-          formattedTx.otherUser = this.getOtherUser(tx);
-        }
-
-        formattedTx.delta = this.getDelta(tx);
-
-        const txMoment = moment(tx.timestamp * 1000).local();
-        formattedTx.displayDate = null;
-        formattedTx.displayTime = txMoment.format('hh:mm a');
-
-        if (this.isNewDay(this.currentDayInLoop, txMoment)) {
-          this.currentDayInLoop = txMoment;
-
-          // If tx occured yesterday, use 'yesterday' instead of date
-          const yesterday = moment().subtract(1, 'day');
-          if (txMoment.isSame(yesterday, 'day')) {
-            formattedTx.displayDate = 'Yesterday';
+        // Don't show on-chain transfers twice, withdrawals should
+        // only allow 'offchain:withdraw' type to be processed
+        if (formattedTx.type !== 'withdraw') {
+          // Determine superType (aka off-chain/on-chain agnostic type)
+          // e.g. 'offchain:wire' becomes 'wire'
+          // same goes for boost, reward, withdraw
+          if (tx.contract.indexOf('offchain:') === -1) {
+            formattedTx.superType = tx.contract;
           } else {
-            formattedTx.displayDate = moment(txMoment).format('ddd MMM Do');
+            formattedTx.superType = tx.contract.substr(9);
           }
+
+          if (formattedTx.superType === 'reward') {
+            formattedTx.showRewardsPopup = false;
+          }
+
+          if (formattedTx.superType === 'wire') {
+            formattedTx.otherUser = this.getOtherUser(tx);
+          }
+
+          // AMOUNT & RUNNING TOTAL & DELTA  -------------------------------------------
+
+          // On-chain transfers should not affect the running total
+          const isWithdrawal = formattedTx.superType === 'withdraw';
+
+          let txAmount = toFriendlyCryptoVal(tx.amount);
+          if (isWithdrawal) {
+            txAmount = Math.abs(txAmount);
+          }
+
+          formattedTx.amount = txAmount;
+
+          if (i !== 0 || !refresh) {
+            this.runningTotal -= this.previousTxAmount;
+            this.previousTxAmount = isWithdrawal ? 0 : txAmount;
+          }
+          formattedTx.runningTotal = this.formatAmount(this.runningTotal);
+
+          formattedTx.delta = this.getDelta(tx);
+
+          // DATE & TIME -----------------------------------------------------
+
+          formattedTx.timestamp = tx.timestamp;
+          const txMoment = moment(tx.timestamp * 1000).local();
+          formattedTx.displayDate = null;
+          formattedTx.displayTime = txMoment.format('hh:mm a');
+          if (this.isNewDay(this.currentDayInLoop, txMoment)) {
+            this.currentDayInLoop = txMoment;
+
+            // If tx occured yesterday, use 'yesterday' instead of date
+            const yesterday = moment().subtract(1, 'day');
+            if (txMoment.isSame(yesterday, 'day')) {
+              formattedTx.displayDate = 'Yesterday';
+            } else {
+              formattedTx.displayDate = moment(txMoment).format('ddd MMM Do');
+            }
+          }
+
+          this.transactions.push(formattedTx);
         }
-        this.transactions.push(formattedTx);
       }
     });
     this.inProgress = false;
@@ -226,10 +252,10 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
   }
 
   filterSelected($event) {
-    const typeFilter = $event.option.id;
-    if (typeFilter !== this.selectedTransactionType) {
-      this.filterApplied = typeFilter === 'all' ? false : true;
-      this.selectedTransactionType = typeFilter;
+    this.typeFilter = $event.option.id;
+    if (this.typeFilter !== this.selectedTransactionType) {
+      this.filterApplied = this.typeFilter === 'all' ? false : true;
+      this.selectedTransactionType = this.typeFilter;
       this.loadTransactions(true);
     }
   }
@@ -265,9 +291,10 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
     return formattedAmount;
   }
 
-  getDelta(tx) {
+  getDelta(tx): string {
     let delta = 'neutral';
-    if (tx.type !== 'withdraw') {
+
+    if (tx.contract !== 'offchain:withdraw') {
       delta = tx.amount < 0 ? 'negative' : 'positive';
     }
     return delta;
