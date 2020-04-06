@@ -19,6 +19,7 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { isPlatformBrowser } from '@angular/common';
 import { GroupsService } from '../groups.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-group--sidebar-markers',
@@ -35,6 +36,7 @@ export class GroupsSidebarMarkersComponent
   offset = 0;
   moreData: boolean = true;
   tooltipsAnchor: string = 'right';
+  readonly hasNewNavigation: boolean;
 
   @ViewChild('list', { static: true }) list;
 
@@ -47,8 +49,11 @@ export class GroupsSidebarMarkersComponent
     private updateMarkers: UpdateMarkersService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private groupsService: GroupsService,
-    private cd: ChangeDetectorRef
-  ) {}
+    private cd: ChangeDetectorRef,
+    private featuresService: FeaturesService
+  ) {
+    this.hasNewNavigation = featuresService.has('navigation');
+  }
 
   async ngOnInit() {
     this.onResize();
