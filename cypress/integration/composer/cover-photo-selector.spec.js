@@ -1,4 +1,4 @@
-context('Composer Modal', () => {
+context('Composer Cover Photo Selector', () => {
   before(() => {
     cy.getCookie('minds_sess').then(sessionCookie => {
       if (!sessionCookie) {
@@ -26,7 +26,7 @@ context('Composer Modal', () => {
 
   const modalBaseComposer = 'm-composer__modal > m-composer__base';
 
-  it('should open a composer modal popup in newsfeed', () => {
+  it('should upload a video', () => {
     cy.visit('/newsfeed/subscriptions');
 
     cy.get(composerTrigger)
@@ -34,32 +34,21 @@ context('Composer Modal', () => {
       .click();
 
     cy.get(modalBaseComposer).should('be.visible');
+
+    // SEE https://github.com/cypress-io/cypress/issues/170
+    // Currently no support for uploading video files
+
+    // cy.uploadFile(
+    //   '[data-cy="upload-button"] input',
+    //   '../fixtures/test-video.mp4',
+    //   'video/mp4'
+    // );
   });
 
-  it('should open a composer modal popup in discovery', () => {
-    cy.visit('/newsfeed/global/top');
+  it('should allow to upload a cover photo for uploading video', () => {
+    cy.visit('/newsfeed/subscriptions');
 
     cy.get(composerTrigger)
-      .should('be.visible')
-      .click();
-
-    cy.get(modalBaseComposer).should('be.visible');
-  });
-
-  it('should open a composer modal popup in own channel', () => {
-    cy.visit(`/${Cypress.env().username}`);
-
-    cy.get(composerTrigger)
-      .should('be.visible')
-      .click();
-
-    cy.get(modalBaseComposer).should('be.visible');
-  });
-
-  it('should open a composer modal popup from topbar', () => {
-    cy.visit(`/`);
-
-    cy.get('.m-composer__topbarButton')
       .should('be.visible')
       .click();
 

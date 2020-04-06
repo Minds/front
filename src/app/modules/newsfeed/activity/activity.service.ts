@@ -198,6 +198,9 @@ export class ActivityService {
         entity.blurb = entity.description;
         entity.custom_type = 'video';
         entity.entity_guid = entity.guid;
+        entity.custom_data = {
+          thumbnail_src: entity.thumbnail_src,
+        };
         break;
       case 'album':
         // Not supported

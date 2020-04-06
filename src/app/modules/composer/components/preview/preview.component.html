@@ -17,6 +17,10 @@
     >
       <m-icon iconId="close"></m-icon>
     </div>
+
+    <m-composer__coverPhotoSelector
+      *ngIf="attachmentPreview.sourceType === 'video'"
+    ></m-composer__coverPhotoSelector>
   </m-composerAttachmentPreview>
 
   <m-composerRichEmbedPreview
