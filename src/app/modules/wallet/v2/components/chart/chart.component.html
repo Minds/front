@@ -1,9 +1,13 @@
 <ng-container *ngIf="!inProgress && dashboard">
-  <m-timespanFilter
-    [timespans]="dashboard.timespans"
-    [activeTimespanId]="activeTimespan.id"
-    (timespanChanged)="updateTimespan($event)"
-  ></m-timespanFilter>
+  <div class="m-walletChart__headerRow">
+    <h2>Off-Chain Balance</h2>
+    <m-timespanFilter
+      [timespans]="dashboard.timespans"
+      [activeTimespanId]="activeTimespan.id"
+      (timespanChanged)="updateTimespan($event)"
+    ></m-timespanFilter>
+  </div>
+
   <m-chartV2
     *ngIf="activeTimespan && activeMetric"
     [interval]="activeTimespan.interval"

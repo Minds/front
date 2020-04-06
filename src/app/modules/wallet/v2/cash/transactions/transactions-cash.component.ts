@@ -32,6 +32,7 @@ export class WalletTransactionsCashComponent implements OnInit {
 
   transactions: any[] = [];
   runningTotal: number = 0;
+  previousTxAmount: number = 0;
   currentDayInLoop = moment();
 
   filterApplied: boolean = false;
@@ -103,7 +104,7 @@ export class WalletTransactionsCashComponent implements OnInit {
 
       if (response) {
         if (response.transactions) {
-          this.formatResponse(response.transactions);
+          this.formatResponse(response.transactions, refresh);
         }
 
         if (response['load-next']) {
@@ -127,31 +128,25 @@ export class WalletTransactionsCashComponent implements OnInit {
     }
   }
 
-  formatResponse(transactions) {
+  formatResponse(transactions, refresh: boolean) {
     transactions.forEach((tx, i) => {
       const formattedTx: any = { ...tx };
-      // const formattedTx: any = {};
-
-      // formattedTx.timestamp = tx.timestamp;
-      // formattedTx.type = tx.type;
 
       formattedTx.superType = tx.type;
 
       formattedTx.amount = tx.net / 100;
 
-      // if (i !== 0) {
-      //   this.runningTotal -= formattedTx.amount;
-      // }
-
       if (tx.type !== 'payout') {
-        if (i !== 0) {
-          this.runningTotal -= formattedTx.amount;
+        if (i !== 0 || !refresh) {
           if (this.transactions[i - 1].type === 'payout') {
             this.runningTotal = formattedTx.amount;
           }
+          this.runningTotal -= this.previousTxAmount;
+          this.previousTxAmount = formattedTx.amount;
         }
       } else {
         this.runningTotal = 0;
+        this.previousTxAmount = 0;
       }
 
       formattedTx.runningTotal = this.walletService.splitBalance(
@@ -202,23 +197,6 @@ export class WalletTransactionsCashComponent implements OnInit {
       isSender,
     };
   }
-
-  // formatAmount(amount) {
-  //   const formattedAmount = {
-  //     total: amount,
-  //     int: 0,
-  //     frac: null,
-  //   };
-
-  //   const splitBalance = amount.toString().split('.');
-
-  //   formattedAmount.int = splitBalance[0];
-  //   if (splitBalance[1]) {
-  //     formattedAmount.frac = splitBalance[1].slice(0, 2);
-  //   }
-
-  //   return formattedAmount;
-  // }
 
   getDelta(tx) {
     let delta = 'neutral';

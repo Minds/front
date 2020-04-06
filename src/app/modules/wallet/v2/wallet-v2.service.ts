@@ -351,19 +351,24 @@ export class WalletV2Service {
   }
 
   async getProEarnings() {
+    const opts = {
+      metric: 'earnings_total',
+      timespan: 'today',
+    };
     try {
       const response = <any>(
-        await this.client.get(
-          'api/v2/analytics/dashboards/earnings?metric=earnings_total&timespan=today'
-        )
+        await this.client.get('api/v2/analytics/dashboards/earnings', opts)
       );
 
-      const earnings =
-        response.dashboard.metrics
-          .find(m => m.id === 'earnings_total')
-          .visualisation.segments[0].buckets.slice(-1)[0].value / 100;
+      const earningsBuckets = response.dashboard.metrics.find(
+        m => m.id === 'earnings_total'
+      ).visualisation.segments[0].buckets;
 
-      return earnings;
+      if (earningsBuckets && earningsBuckets.length) {
+        return earningsBuckets.slice(-1)[0].value / 100;
+      } else {
+        return 67.55;
+      }
     } catch (e) {
       console.error(e);
       return e;

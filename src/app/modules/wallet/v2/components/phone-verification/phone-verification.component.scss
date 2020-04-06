@@ -10,9 +10,12 @@ m-walletPhoneVerification {
     }
   }
 
+  form.m-walletButtonLayout--buttonInline {
+    margin-bottom: 30px;
+  }
   m-phoneInput {
     .m-phoneInput__countryList {
-      max-height: 124px;
+      max-height: 84px;
     }
     .m-phoneInput__wrapper {
       @media screen and (max-width: $max-mobile) {
