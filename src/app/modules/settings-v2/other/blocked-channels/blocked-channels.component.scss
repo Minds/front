@@ -1,0 +1,64 @@
+m-settingsV2__blockedChannels {
+  display: block;
+
+  .m-settingsV2BlockedChannel {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    padding: 8px 0;
+    margin-bottom: 8px;
+    @media screen and (max-width: 632px) {
+      margin-bottom: 12px;
+      flex-flow: row wrap;
+      > * {
+        flex: 1 1 100%;
+      }
+      .m-shadowboxSubmitButton {
+        width: 100%;
+      }
+      .m-settingsV2BlockedChannel__actions {
+        margin-top: 8px;
+      }
+      .m-settingsV2BlockedChannel__username {
+        max-width: 100%;
+      }
+    }
+  }
+  a.m-settingsV2BlockedChannel__detailsWrapper {
+    flex: 1 1 auto;
+    min-width: 200px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    margin-right: 20px;
+
+    text-decoration: none;
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 300;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .m-settingsV2BlockedChannel__avatar {
+    margin-right: 16px;
+
+    img {
+      width: 36px;
+      height: 36px;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+  }
+
+  .m-settingsV2BlockedChannel__username {
+    width: 100%;
+    max-width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

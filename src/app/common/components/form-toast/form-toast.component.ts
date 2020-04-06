@@ -31,7 +31,6 @@ export class FormToastComponent implements OnInit, OnDestroy {
         return;
       }
       const toastIndex = this.toasts.push(toast) - 1;
-      console.log(toastIndex);
       this.detectChanges();
 
       const toastTimeout = setTimeout(() => {

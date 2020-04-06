@@ -1,7 +1,7 @@
 <div class="m-page m-page--wrapped">
   <div class="m-page__main">
-    <h2>Strikes</h2>
-    <p>
+    <h2 *ngIf="!hasNewNav">Strikes</h2>
+    <p *ngIf="!hasNewNav">
       Strikes are imposed for violations against the terms of service. Following
       3 strikes, channels are banned or marked NSFW.
     </p>
@@ -17,7 +17,7 @@
         <m-moderation__appeal [appeal]="strike.appeal"> </m-moderation__appeal>
       </li>
       <li *ngIf="!inProgress && strikes.length === 0">
-        You have no strikes. Your channel is in good standing.
+        <p>You have no strikes. Your channel is in good standing.</p>
       </li>
     </ul>
   </div>
