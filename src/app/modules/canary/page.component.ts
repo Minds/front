@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-canary',
@@ -13,10 +14,12 @@ export class CanaryPageComponent {
   constructor(
     private session: Session,
     private client: Client,
-    private router: Router
+    private router: Router,
+    private pageLayoutService: PageLayoutService
   ) {}
 
   ngOnInit() {
+    this.pageLayoutService.useFullWidth();
     this.user = this.session.getLoggedInUser();
     this.load();
   }
