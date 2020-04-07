@@ -3,6 +3,7 @@ import { MindsUser, MindsGroup } from '../../../interfaces/entities';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { Session } from '../../../services/session';
 
 export type ActivityDisplayOptions = {
   showOwnerBlock: boolean;
@@ -87,7 +88,11 @@ export class ActivityService {
     this.isNsfwConsented$
   ).pipe(
     map(([entity, isConsented]: [ActivityEntity, boolean]) => {
-      return entity.nsfw.length > 0 && !isConsented;
+      return (
+        entity.nsfw.length > 0 &&
+        !isConsented &&
+        !(this.session.isLoggedIn() && this.session.getLoggedInUser().mature)
+      );
     })
   );
 
@@ -150,7 +155,7 @@ export class ActivityService {
     fixedHeight: false,
   };
 
-  constructor(private configs: ConfigsService) {
+  constructor(private configs: ConfigsService, private session: Session) {
     this.siteUrl = configs.get('site_url');
   }
 
