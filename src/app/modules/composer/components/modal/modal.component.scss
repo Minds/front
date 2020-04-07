@@ -26,13 +26,7 @@ m-composer__modal {
   }
 
   m-composer__base {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-
-    > * {
-      flex: 1;
-    }
+    display: block;
 
     @media screen and (max-width: $max-mobile) {
       padding-bottom: 0;
