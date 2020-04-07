@@ -10,7 +10,8 @@ m-group--sidebar-markers {
       @include m-theme() {
         color: rgba(themed($m-black), 0.3);
       }
-      @media screen and (max-width: $layoutMax3ColWidth) {
+
+      @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMin2ColWidth) {
         display: none;
       }
     }
@@ -26,7 +27,11 @@ m-group--sidebar-markers {
       display: block !important;
       overflow: unset !important;
 
-      & > li {
+      .m-sidebarNavigation--slide & {
+        padding: 0 20px;
+      }
+
+      > li {
         width: auto;
         height: auto;
         border: unset !important;
@@ -72,7 +77,7 @@ m-group--sidebar-markers {
               color: themed($m-textColor--secondary);
             }
 
-            @media screen and (max-width: $layoutMax3ColWidth) {
+            @media screen and (max-width: $layoutMax3ColWidth) and (min-width: $layoutMin2ColWidth) {
               display: none;
             }
           }

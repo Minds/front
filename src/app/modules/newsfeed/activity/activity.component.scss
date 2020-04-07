@@ -51,6 +51,12 @@ m-activity {
     margin-right: 5px;
   }
 
+  > span {
+    @media screen and (max-width: $max-mobile) {
+      display: none;
+    }
+  }
+
   @include m-theme() {
     border: 1px solid themed($m-borderColor--primary);
     background-color: themed($m-bgColor--tertiary);

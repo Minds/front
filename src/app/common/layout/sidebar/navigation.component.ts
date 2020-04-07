@@ -26,6 +26,7 @@ import { FeaturesService } from '../../../services/features.service';
 })
 export class SidebarNavigationComponent implements OnInit, AfterViewInit {
   readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
 
   @ViewChild(DynamicHostDirective, { static: true })
   host: DynamicHostDirective;
@@ -55,6 +56,7 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
     private featuresService: FeaturesService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
+    this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
     this.service.setContainer(this);
     this.getUser();
   }

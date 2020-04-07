@@ -12,9 +12,13 @@
     margin-left: 24px;
     margin-right: 24px;
   }
+  @media screen and (max-width: $layoutMin3ColWidth) {
+    padding: 0 20px;
+  }
   @media screen and (max-width: $max-mobile) {
     margin-left: 0;
     margin-right: 0;
+    padding: 0;
   }
 }
 .m-tabs__tab > a {

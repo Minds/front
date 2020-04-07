@@ -31,6 +31,10 @@
   @include m-theme() {
     color: themed($m-textColor--secondary);
   }
+
+  @media screen and (max-width: $max-mobile) {
+    display: none;
+  }
 }
 
 .m-composerTitlebar__menuButton {
@@ -42,5 +46,9 @@
 
   @include m-theme() {
     color: themed($m-borderColor--primary);
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    margin-right: 20px;
   }
 }

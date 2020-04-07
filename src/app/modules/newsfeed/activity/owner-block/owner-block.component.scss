@@ -23,6 +23,7 @@ m-activity__ownerBlock {
 .m-activityOwnerBlock__body {
   flex: 1;
   align-self: center;
+  overflow: hidden;
 
   > a {
     text-decoration: none;
@@ -49,6 +50,9 @@ m-activity__ownerBlock {
   > * {
     display: inline-block;
     vertical-align: middle;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
 

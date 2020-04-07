@@ -118,12 +118,17 @@
         padding: 0 40px;
         height: 100%;
 
+        @media screen and (max-width: $layoutMin3ColWidth) {
+          padding: 0 20px;
+        }
+
         @media screen and(max-width: $m-grid-max-mobile) {
-          width: 20px;
+          // width: 20px;
           transition: width ease-in-out 0.2s;
+          padding: 0;
 
           &.is-focused {
-            width: 270px;
+            // width: 270px;
           }
         }
 
@@ -144,6 +149,14 @@
           font-size: 16px;
           line-height: 21px;
           font-weight: normal;
+
+          @media screen and (max-width: $layoutMin3ColWidth) {
+            padding-left: 20px;
+          }
+
+          @media screen and(max-width: $m-grid-max-mobile) {
+            padding-left: 12px;
+          }
         }
       }
 
@@ -367,7 +380,7 @@
 .m-v3Topbar__userMenu {
   display: flex;
   align-items: center;
-  width: 100%;
+  // width: 100%;
 
   @media screen and(min-width: $m-grid-max-tablet) {
     // margin-left: 55px;
