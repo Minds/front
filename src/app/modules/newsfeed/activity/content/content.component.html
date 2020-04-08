@@ -71,8 +71,14 @@
   class="m-activityContent__mediaDescription"
   m-read-more
   [maxHeightAllowed]="service.displayOptions.fixedHeight ? 80 : 320"
-  *ngIf="mediaDescription"
+  *ngIf="mediaDescription || mediaTitle"
 >
+  <p
+    [innerHtml]="mediaTitle | tags"
+    class="m-activityContent__mediaTitle"
+    [class.m-activityContent__mediaTitle--noDescription]="!mediaDescription"
+    *ngIf="mediaTitle"
+  ></p>
   <p [innerHtml]="mediaDescription | tags"></p>
   <m-read-more--button [v2]="true"></m-read-more--button>
 </div>
