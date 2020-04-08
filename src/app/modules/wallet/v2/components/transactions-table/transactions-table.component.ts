@@ -23,11 +23,12 @@ export class WalletTransactionsTableComponent {
 
   constructor() {}
 
-  getTypeLabel(superType) {
-    if (this.currency !== 'tokens' && superType === 'wire') {
+  getTypeLabel(type) {
+    // type or superType - both are used
+    if (this.currency !== 'tokens' && type === 'wire') {
       return 'Wire';
     } else {
-      return this.typeLabels[superType];
+      return this.typeLabels[type];
     }
   }
 }

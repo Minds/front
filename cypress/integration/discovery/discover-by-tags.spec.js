@@ -21,6 +21,12 @@ context('Discovery -> Discover by tags', () => {
     cy.visit('/discovery/tags');
   });
 
+  after(() => {
+    cy.overrideFeatureFlags({
+      navigation: false,
+    });
+  });
+
   const discoverySettingsButton =
     '[data-cy="discover-by-tags-settings-button"]';
 

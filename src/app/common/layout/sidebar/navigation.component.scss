@@ -85,8 +85,8 @@ m-sidebar--navigation {
       align-items: center;
       justify-content: space-between;
       box-sizing: border-box;
-      height: 65px;
-      padding: 0 24px;
+      height: 75px;
+      padding: 0 20px;
 
       @include m-theme() {
         border-bottom: 1px solid themed($m-borderColor--primary);
@@ -106,7 +106,7 @@ m-sidebar--navigation {
     }
 
     .m-sidebarNavigation__list {
-      padding: 0 35px 0;
+      padding: 0 20px 0;
 
       // &.m-groupSidebarMarkers__list {
       //   padding: 0 35px 35px !important;
@@ -114,7 +114,7 @@ m-sidebar--navigation {
     }
 
     h5 {
-      padding: 0 35px;
+      padding: 0 20px;
     }
 
     .m-sidebarNavigation__item--active .m-sidebarNavigation__subnav {

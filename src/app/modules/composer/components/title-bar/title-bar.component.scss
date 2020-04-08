@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0 36px;
+  padding: 0 40px;
   user-select: none;
 }
 
@@ -31,6 +31,10 @@
   @include m-theme() {
     color: themed($m-textColor--secondary);
   }
+
+  @media screen and (max-width: $max-mobile) {
+    display: none;
+  }
 }
 
 .m-composerTitlebar__menuButton {
@@ -42,5 +46,9 @@
 
   @include m-theme() {
     color: themed($m-borderColor--primary);
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    margin-right: 20px;
   }
 }

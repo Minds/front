@@ -15,6 +15,13 @@ context('Composer Modal', () => {
     });
   });
 
+  after(() => {
+    cy.overrideFeatureFlags({
+      composer: false,
+      navigation: false,
+    });
+  });
+
   const composerTrigger = 'm-composer .m-composer__trigger';
 
   const modalBaseComposer = 'm-composer__modal > m-composer__base';

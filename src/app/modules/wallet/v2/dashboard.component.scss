@@ -5,23 +5,45 @@ m-walletDashboard {
   display: block;
   grid-area: content / span 2;
 
+  m-dashboardLayout {
+    min-height: 100%;
+    height: auto;
+    @include m-theme() {
+      border-right: 1px solid themed($m-borderColor--primary);
+    }
+    .m-tabs__container {
+      @media screen and (max-width: $min-tablet) {
+        padding: 0 24px;
+      }
+    }
+    .m-tabs__tab > a {
+      @media screen and (max-width: $max-mobile) {
+        padding: 10px 7px;
+        margin: 0px 2px;
+        &:first-child {
+          margin-left: 0px;
+        }
+      }
+    }
+  }
+
   ////////////////////////////////////////////
   // COMMON //////////////////////////////////
   ////////////////////////////////////////////
 
   m-tooltip {
-    vertical-align: middle;
+    vertical-align: top;
     .m-tooltip {
       margin-left: 4px;
-      i {
-        font-size: 12px;
+      > i {
+        font-size: 11px;
         @include m-theme() {
-          color: rgba(themed($m-grey-300), 0.7);
+          color: rgba(themed($m-textColor--tertiary), 0.6);
         }
       }
       .m-tooltip--bubble {
         z-index: 99;
-        font-size: 11px;
+        font-size: 12px;
         @include m-theme() {
           color: themed($m-white);
           background-color: themed($m-blue);
@@ -97,6 +119,12 @@ m-walletDashboard {
     }
     &[class*='--desc'] {
       margin-bottom: 40px;
+      position: relative;
+      m-tooltip {
+        .m-tooltip {
+          margin-left: 0;
+        }
+      }
     }
     &[class*='--label'] {
       margin-bottom: 13px;
@@ -217,6 +245,11 @@ m-walletDashboard {
     @media screen and (max-width: $max-mobile) {
       margin: 22px 24px 25px 24px;
     }
+    m-tooltip {
+      .m-tooltip {
+        margin-left: 4px;
+      }
+    }
   }
 
   ////////////////////////////////////////////
@@ -227,7 +260,7 @@ m-walletDashboard {
     padding: 40px;
     @media screen and (max-width: $max-mobile) {
       min-height: 0px;
-      padding: 16px;
+      padding: 24px;
     }
   }
   .m-walletDashboardViews__view {
@@ -242,6 +275,7 @@ m-walletDashboard {
       margin: 30px 16px 0 16px;
     }
   }
+
   // m-walletChart {
   //   .m-walletDashboardViews__view {
   //     margin: 50px 0 0 0;

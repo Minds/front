@@ -8,15 +8,15 @@ m-timespanFilter {
     border-radius: 5px;
     cursor: pointer;
     @include m-theme() {
-      border: 1px solid themed($m-grey-50);
-      color: themed($m-grey-300);
+      border: 1px solid themed($m-borderColor--primary);
+      color: themed($m-textColor--tertiary);
     }
   }
   .m-timespanFilter__option {
     padding: 5px 16px;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     @include m-theme() {
-      background-color: rgba(themed($m-grey-50), 0.5);
+      background-color: rgba(themed($m-bgColor--tertiary), 0.5);
     }
     &:first-child {
       border-top-left-radius: 5px;
@@ -28,22 +28,22 @@ m-timespanFilter {
     }
     &:not(:last-child) {
       @include m-theme() {
-        border-right: 1px solid themed($m-grey-50);
+        border-right: 1px solid themed($m-borderColor--primary);
       }
     }
     &.active,
     &:hover {
       @include m-theme() {
-        background-color: themed($m-white);
-        color: themed($m-grey-800);
+        background-color: themed($m-bgColor--secondary);
+        color: themed($m-textColor--secondary);
       }
     }
     &:active {
       transition: all 0.1s cubic-bezier(0.23, 1, 0.32, 1);
 
       @include m-theme() {
-        background-color: rgba(themed($m-grey-50), 0.2);
-        box-shadow: inset 0 1px 4px 0 rgba(themed($m-black), 0.6);
+        background-color: rgba(themed($m-bgColor--tertiary), 0.2);
+        box-shadow: inset 0 1px 4px 0 rgba(themed($m-black), 0.2);
       }
     }
   }

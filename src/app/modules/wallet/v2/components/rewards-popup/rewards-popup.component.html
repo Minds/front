@@ -2,12 +2,9 @@
   <div *ngIf="inProgress" class="m-wallet__spinner">
     <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
   </div>
-  <div
-    class="m-walletRewardsPopup__metricsContainer"
-    *ngFor="let metric of metrics"
-  >
-    <div class="m-walletRewardsPopup__row">
-      <span>{{ metric.id }}</span>
+  <div class="m-walletRewardsPopup__metricsContainer">
+    <div class="m-walletRewardsPopup__row" *ngFor="let metric of metrics">
+      <span>{{ metric.amount }} {{ metric.id }}</span>
       <span>{{ metric.score }}</span>
     </div>
   </div>

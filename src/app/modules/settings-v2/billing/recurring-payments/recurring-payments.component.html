@@ -1,1 +1,95 @@
-<m-settings--billing-subscriptions></m-settings--billing-subscriptions>
+<div *ngIf="!init" style="width:100%; text-align:center;">
+  <div
+    class="mdl-spinner mdl-js-spinner is-active"
+    [mdl]
+    style="margin: 16px auto;"
+  ></div>
+</div>
+
+<div class="m-settingsV2__recurringPayments" *ngIf="init">
+  <ul>
+    <li
+      *ngFor="let subscription of subscriptions; let i = index"
+      class="m-settingsV2__recurringPayment"
+    >
+      <div class="m-settingsV2__recurringPayment__detailsWrapper">
+        <div class="m-settingsV2__recurringPayment__planWrapper">
+          <span class="m-settingsV2__recurringPayment__info">
+            <m-tooltip icon="info">
+              <span i18n="@@SETTINGS__SUBSCRIPTIONS__LAST_BILLING"
+                >Last billing:
+                {{
+                  subscription.last_billing * 1000 | date: 'mediumDate'
+                }}</span
+              ><br />
+              <span i18n="@@SETTINGS__SUBSCRIPTIONS__NEXT_BILLING"
+                >Next billing:
+                {{
+                  subscription.next_billing * 1000 | date: 'mediumDate'
+                }}</span
+              >
+            </m-tooltip>
+          </span>
+
+          <span class="m-settingsV2__recurringPayment__planId">{{
+            subscription.plan_id | titlecase
+          }}</span>
+        </div>
+
+        <ng-container *ngIf="subscription.entity">
+          <span
+            *ngIf="subscription.entity.type == 'user'"
+            class="m-settingsV2__recurringPayment__recipient"
+            ><i style="text-style:normal">@</i
+            >{{ subscription.entity.username }}</span
+          >
+          <span
+            *ngIf="subscription.entity.type != 'user'"
+            class="m-settingsV2__recurringPayment__recipient"
+            ><i style="text-style:normal">@</i
+            >{{ subscription.entity.ownerObj.username }}</span
+          >
+        </ng-container>
+
+        <span
+          [ngSwitch]="subscription.payment_method"
+          class="m-settingsV2__recurringPayment__amount"
+        >
+          <ng-template ngSwitchCase="money">{{
+            subscription.amount | currency: 'USD':true
+          }}</ng-template>
+          <ng-template
+            ngSwitchCase="tokens"
+            i18n="@@SETTINGS__BILLING__SUBSCRIPTIONS__TOKENS_LABEL"
+            >{{ subscription.amount | token: 18 | number }} Tokens</ng-template
+          >
+          <ng-template
+            ngSwitchCase="points"
+            i18n="@@SETTINGS__BILLING__SUBSCRIPTIONS__POINTS_LABEL"
+            >{{ subscription.amount | number: '1.0-0' }} Points</ng-template
+          >
+          <ng-template ngSwitchCase="usd"
+            >{{ subscription.amount | token: 2 }} USD</ng-template
+          >
+        </span>
+      </div>
+      <div class="m-settingsV2__recurringPayment__cancelWrapper">
+        <m-shadowboxSubmitButton
+          [disabled]="subscription._cancelling"
+          [saving]="subscription._cancelling"
+          color="grey"
+          i18n="@@M__ACTION__CANCEL"
+          (click)="cancel(i)"
+        >
+          Cancel
+        </m-shadowboxSubmitButton>
+      </div>
+    </li>
+  </ul>
+  <div
+    *ngIf="!subscriptions.length"
+    class="m-settingsV2__desc m-settingsV2__notice"
+  >
+    <span>You haven't set up any recurring payments.</span>
+  </div>
+</div>

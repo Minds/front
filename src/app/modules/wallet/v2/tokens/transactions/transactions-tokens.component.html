@@ -5,7 +5,7 @@
   <ng-container *ngIf="init">
     <div class="m-walletTransactions__filter">
       <m-dropdownSelector
-        *ngIf="transactions"
+        *ngIf="transactions.length > 1"
         [filter]="filter"
         [inlineLabel]="true"
         (selectionMade)="filterSelected($event)"
@@ -51,7 +51,10 @@
       class="m-walletTransactions__noTxNotice"
       *ngIf="transactions.length === 0"
     >
-      <p>You don't have any token transactions yet.</p>
+      <p *ngIf="!filterApplied">You don't have any token transactions yet.</p>
+      <p *ngIf="filterApplied">
+        You don't have any {{ typeFilter | lowercase }} transactions.
+      </p>
     </div>
   </ng-container>
 </div>

@@ -18,6 +18,7 @@ import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { SidebarNavigationService } from './navigation.service';
 import { ConfigsService } from '../../services/configs.service';
 import { MindsUser } from '../../../interfaces/entities';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-sidebar--navigation',
@@ -25,6 +26,7 @@ import { MindsUser } from '../../../interfaces/entities';
 })
 export class SidebarNavigationComponent implements OnInit, AfterViewInit {
   readonly cdnUrl: string;
+  readonly cdnAssetsUrl: string;
 
   @ViewChild(DynamicHostDirective, { static: true })
   host: DynamicHostDirective;
@@ -35,6 +37,8 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
   groupsSidebar: GroupsSidebarMarkersComponent;
 
   layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
+
+  settingsLink: string = '/settings';
 
   @HostBinding('class.m-sidebarNavigation--opened')
   isOpened: boolean = false;
@@ -48,9 +52,11 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
     private service: SidebarNavigationService,
     protected configs: ConfigsService,
     private _componentFactoryResolver: ComponentFactoryResolver,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private featuresService: FeaturesService
   ) {
     this.cdnUrl = this.configs.get('cdn_url');
+    this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
     this.service.setContainer(this);
     this.getUser();
   }
@@ -69,6 +75,10 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
         this.service.visibleChange.emit(!this.hidden);
       }
     });
+
+    if (this.featuresService.has('navigation')) {
+      this.settingsLink = '/settings/canary';
+    }
   }
 
   ngAfterViewInit() {
@@ -113,7 +123,6 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize')
   onResize() {
-    console.log(window.innerWidth);
     if (window.innerWidth > 1000) {
       this.layoutMode = 'desktop';
     } else if (window.innerWidth > 480 && window.innerWidth <= 1000) {

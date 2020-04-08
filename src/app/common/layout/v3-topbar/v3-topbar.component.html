@@ -50,15 +50,11 @@
       class="m-pageLayout__pane--main"
       style="display:flex; flex-direction: row;"
     >
-      <div class="m-v3Topbar__spacer" *ngIf="isMobile"></div>
-      <div
-        class="m-v3Topbar__middleColumn"
-        *ngIf="!isMobile && getCurrentUser()"
-      >
+      <div class="m-v3Topbar__middleColumn" *ngIf="!isMobile">
         <ng-container *ngTemplateOutlet="searchBar"></ng-container>
       </div>
 
-      <div class="m-v3Topbar__spacer"></div>
+      <div class="m-v3Topbar__spacer" *ngIf="!isMobile"></div>
 
       <div class="m-v3Topbar__rightColumn">
         <ng-container *ngIf="!onAuthPages && !getCurrentUser()">
@@ -82,7 +78,7 @@
             </a>
           </div>
         </ng-container>
-        <ng-container *ngIf="isMobile && getCurrentUser()">
+        <ng-container *ngIf="isMobile">
           <ng-container *ngTemplateOutlet="searchBar"></ng-container>
         </ng-container>
 

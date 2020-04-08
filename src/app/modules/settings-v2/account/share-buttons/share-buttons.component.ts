@@ -10,8 +10,7 @@ import {
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
-import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../../interfaces/entities';
 
 import { SettingsV2Service } from '../../settings-v2.service';
@@ -32,8 +31,7 @@ export class SettingsV2ShareButtonsComponent implements OnInit, OnDestroy {
   constructor(
     protected cd: ChangeDetectorRef,
     private session: Session,
-    protected settingsService: SettingsV2Service,
-    private dialogService: DialogService
+    protected settingsService: SettingsV2Service
   ) {}
 
   ngOnInit() {

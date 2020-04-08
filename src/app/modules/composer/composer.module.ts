@@ -23,6 +23,7 @@ import { TagsComponent } from './components/popup/tags/tags.component';
 import { ScheduleComponent } from './components/popup/schedule/schedule.component';
 import { TextAreaComponent } from './components/text-area/text-area.component';
 import { ComposerTopbarButtonComponent } from './topbar-button/topbar-button.component';
+import { ComposerCoverPhotoSelectorComponent } from './components/cover-photo-selector/cover-photo-selector.component';
 
 /**
  * Exported components
@@ -50,6 +51,7 @@ const INTERNAL_COMPONENTS = [
   TitleBarComponent,
   PopupComponent,
   TextAreaComponent,
+  ComposerCoverPhotoSelectorComponent,
 ];
 
 const PROVIDERS = [

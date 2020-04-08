@@ -2,12 +2,19 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockService } from '../../../../utils/mock';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { AttachmentPreviewComponent } from './attachment-preview.component';
+import { ComposerService } from '../../services/composer.service';
+import { BehaviorSubject } from 'rxjs';
+import { ApiService } from '../../../../common/api/api.service';
+import { AttachmentService } from '../../services/attachment.service';
+import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
+import { RichEmbedService } from '../../services/rich-embed.service';
+import { PreviewService } from '../../services/preview.service';
 
 describe('Composer Attachment Preview', () => {
   let comp: AttachmentPreviewComponent;
   let fixture: ComponentFixture<AttachmentPreviewComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(done => {
     TestBed.configureTestingModule({
       declarations: [AttachmentPreviewComponent],
       providers: [
@@ -15,11 +22,21 @@ describe('Composer Attachment Preview', () => {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
+        ComposerService,
+        AttachmentService,
+        RichEmbedService,
+        PreviewService,
+        {
+          provide: ApiService,
+          useValue: MockService(ApiService, {}),
+        },
+        {
+          provide: AttachmentApiService,
+          useValue: MockService(ApiService, {}),
+        },
       ],
     }).compileComponents();
-  }));
 
-  beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(AttachmentPreviewComponent);
     comp = fixture.componentInstance;
@@ -37,6 +54,7 @@ describe('Composer Attachment Preview', () => {
   });
 
   it('should set portrait for an image', () => {
+    console.log(this.service);
     const img = document.createElement('img');
     spyOnProperty(img, 'naturalWidth').and.returnValue(1000);
     spyOnProperty(img, 'naturalHeight').and.returnValue(2000);

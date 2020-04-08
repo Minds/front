@@ -147,6 +147,10 @@ m-search--bar-suggestions {
       border: 1px solid themed($m-borderColor--primary);
     }
 
+    @media screen and (max-width: $max-mobile) {
+      position: fixed;
+    }
+
     &.m-searchBar--newDesign {
       padding: 12px 0;
       min-height: 100px;

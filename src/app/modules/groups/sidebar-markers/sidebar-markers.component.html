@@ -55,11 +55,14 @@
   <li *ngFor="let group of groups" [class.has-marker]="group.hasMarker">
     <a
       class="m-groupSidebarMarkersList__item"
-      [class.has-gathering]="group.hasGathering$ | async"
+      [class.has-gathering]="hasNewNavigation && (group.hasGathering$ | async)"
       [routerLink]="['/groups/profile', group.guid]"
     >
       <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
         <img
+          [class.m-pulsating--small]="
+            !hasNewNavigation && (group.hasGathering$ | async)
+          "
           [src]="'fs/v1/avatars/' + group.guid + '/' + group.icontime"
           m-tooltip--anchor
         />

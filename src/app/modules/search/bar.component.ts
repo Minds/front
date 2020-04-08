@@ -38,6 +38,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   routerSubscription: Subscription;
   hasSearchContext: boolean = false;
   searchContext: string | Promise<string> = '';
+  placeholder: string;
 
   @ViewChild('searchInput', { static: true }) searchInput: ElementRef;
 
@@ -72,6 +73,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
       }
     );
     this.listen();
+    this.updatePlaceholder();
   }
 
   ngOnDestroy() {
@@ -187,5 +189,17 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         );
       }
     });
+  }
+
+  @HostListener('window:resize')
+  onResize(e: Event) {
+    this.updatePlaceholder();
+  }
+
+  updatePlaceholder(): void {
+    this.placeholder = 'Search Minds';
+    if (window.innerWidth < 360) {
+      this.placeholder = 'Search';
+    }
   }
 }

@@ -17,6 +17,7 @@
     .m-shadowboxSubmitButton__status--saving {
       span {
         @include m-theme() {
+          // Color of the animated circles
           background-color: themed($m-white);
         }
       }
@@ -37,14 +38,14 @@
   }
   &.grey {
     @include m-theme() {
-      background-color: themed($m-grey-100);
+      background-color: themed($m-bgColor--tertiary);
       color: themed($m-textColor--secondary);
     }
     .m-shadowboxSubmitButton__status--saving {
       text-align: center;
       span {
         @include m-theme() {
-          background-color: themed($m-white-always);
+          background-color: themed($m-textColor--secondary);
         }
       }
     }
@@ -70,7 +71,7 @@
       }
       &.grey {
         @include m-theme() {
-          background-color: rgba(themed($m-grey-50), 0.7);
+          background-color: rgba(themed($m-bgColor--tertiary), 0.7);
         }
       }
     }
@@ -95,7 +96,7 @@
       }
       &.grey {
         @include m-theme() {
-          background-color: themed($m-grey-100);
+          background-color: themed($m-bgColor--tertiary);
         }
       }
     }
@@ -150,10 +151,16 @@ button {
   }
 }
 .m-shadowboxSubmitButton__status--unsaved {
-  font-size: 16px;
-  line-height: 22px;
-  font-weight: 400;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 20px;
+
+  i {
+    margin-right: 12px;
+    font-size: 22px;
+  }
 }
 
 @media screen and (max-width: $max-mobile) {

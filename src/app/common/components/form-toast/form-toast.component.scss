@@ -38,6 +38,8 @@ m-formToast {
   p {
     flex-grow: 1;
     margin: 0;
+    word-wrap: break-word;
+    overflow: hidden;
   }
 }
 

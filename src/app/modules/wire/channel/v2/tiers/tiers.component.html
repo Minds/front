@@ -1,0 +1,22 @@
+<div class="m-wire-channel--rewards">
+  <p
+    *ngIf="!editing && rewards.description"
+    class="m-wire-channel--description"
+    [innerText]="rewards.description"
+  ></p>
+
+  <m-wireV2__channelTable
+    [type]="'tokens'"
+    [(rewards)]="rewards.rewards.tokens"
+    [(editing)]="editing"
+    [channel]="user"
+  ></m-wireV2__channelTable>
+  <div class="m-form__fieldGroupSpacer"><hr /></div>
+  <m-wireV2__channelTable
+    [type]="'money'"
+    [(rewards)]="rewards.rewards.money"
+    [(editing)]="editing"
+    [channel]="user"
+    *mIfFeature="'wire-multi-currency'"
+  ></m-wireV2__channelTable>
+</div>

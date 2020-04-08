@@ -27,7 +27,7 @@ m-shadowboxHeader.isScrollable {
   position: relative;
   transition: all 0.3s ease;
   @include m-theme() {
-    border-top: 1px solid rgba(themed($m-borderColor--primary), 0.4);
+    border-top: 1px solid themed($m-borderColor--primary);
     background-color: themed($m-bgColor--secondary);
   }
 }
@@ -37,8 +37,8 @@ m-shadowboxHeader.isScrollable {
   justify-content: flex-end;
 
   @include m-theme() {
-    background-color: rgba(themed($m-grey-50), 0.25);
-    border-top: 1px solid rgba(themed($m-grey-50), 0.6);
+    background-color: rgba(themed($m-borderColor--primary), 0.25);
+    border-top: 1px solid themed($m-borderColor--primary);
   }
 }
 .m-shadowboxLayout__button {

@@ -1,0 +1,74 @@
+<div class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--text stretchedField">
+      <div class="m-form__row--label">
+        <label
+          for="exclusive.intro"
+          i18n="@@MINDS__SETTINGS__WIRE__DESCRIPTION_LABEL"
+          >Description</label
+        >
+      </div>
+      <div class="m-form__row--input">
+        <input
+          type="text"
+          autofocus
+          class="form-control"
+          placeholder="e.g. Support me to see my exclusive content and join me for a monthly video chat"
+          i18n-placeholder="@@MINDS__SETTINGS__WIRE__DESCRIPTION_PLACEHOLDER"
+          [(ngModel)]="exclusive.intro"
+          (keyup)="exclusive.saved = false; updatePreviewEntity()"
+        />
+      </div>
+    </div>
+
+    <div class="m-form__field--asset">
+      <div class="m-form__row--label">
+        <label for="logo" i18n="@@MINDS__SETTINGS__WIRE__BACKGROUND_LABEL"
+          >Background Image</label
+        >
+      </div>
+
+      <div class="m-form__row--input">
+        <input
+          type="file"
+          #backgroundFile
+          class="form-control"
+          name="preview"
+          (change)="updatePreview(backgroundFile)"
+          accept="image/*"
+        />
+      </div>
+    </div>
+
+    <div class="m-form__field--preview">
+      <div class="m-form__row--label">
+        <label for="logo" i18n="@@MINDS__SETTINGS__WIRE__PREVIEW_LABEL"
+          >Preview</label
+        >
+      </div>
+
+      <div class="m-form__row--input">
+        <m-wire--lock-screen
+          *ngIf="previewEntity"
+          [preview]="true"
+          [entity]="previewEntity"
+          class="mdl-shadow--4dp"
+        ></m-wire--lock-screen>
+      </div>
+    </div>
+
+    <div class="m-form__row--validation" *ngIf="error">
+      <p>{{ error }}</p>
+    </div>
+  </div>
+
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="save()"
+    >
+      Save Settings
+    </m-shadowboxSubmitButton>
+  </div>
+</div>

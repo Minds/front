@@ -40,6 +40,15 @@ m-settingsV2 {
         }
       }
     }
+
+    div.m-settingsV2__notice {
+      span {
+        font-weight: 400;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
   }
   .m-settingsV2__settingsView {
     font-size: 16px;
@@ -164,9 +173,6 @@ m-settingsV2 {
     m-settingsV2__password {
       .m-formWrapper {
         .m-form__field--text {
-          // &:first-child {
-          //   margin-bottom: 48px;
-          // }
           &:nth-child(2) {
             margin-bottom: 2px;
           }

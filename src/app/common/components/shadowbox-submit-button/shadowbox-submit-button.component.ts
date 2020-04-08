@@ -45,7 +45,7 @@ export class ShadowboxSubmitButtonComponent implements AfterViewInit {
 
   setSavingWidth() {
     if (this.buttonTextContainer && !this.saving) {
-      const elWidth = this.buttonTextContainer.nativeElement.clientWidth;
+      const elWidth = this.buttonTextContainer.nativeElement.clientWidth || 0;
       this.buttonTextWidth = elWidth > 0 ? elWidth : this.buttonTextWidth;
     }
   }

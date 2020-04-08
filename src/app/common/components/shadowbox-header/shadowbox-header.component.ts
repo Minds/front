@@ -32,7 +32,8 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
   tabsArray;
 
   childClientWidth: number;
-  faderWidth = 24;
+  faderWidthRight = 24;
+  faderWidthLeft = 36;
   isOverflown: boolean = false;
   isAtScrollEnd = false;
   isAtScrollStart = true;
@@ -71,6 +72,10 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
     const targetMetric = $event.target;
     if (targetMetric.className === 'm-shadowboxHeader__overflowFade--left') {
       this.slide('left');
+    } else if (
+      targetMetric.className === 'm-shadowboxHeader__overflowFade--right'
+    ) {
+      this.slide('right');
     } else {
       this.slideToActiveMetric(this.container, targetMetric);
       this.checkOverflow();
@@ -89,30 +94,35 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
 
   checkOverflow() {
     // assumes all metrics are equal width
-    if (!this.isScrollable) {
+    if (!this.isScrollable || !this.container) {
       return;
     }
 
-    if (this.firstMetricEl) {
-      this.childClientWidth = this.firstMetricEl.clientWidth;
+    this.firstMetricEl = <HTMLElement>(
+      document.querySelector('.m-shadowboxHeaderTab')
+    );
 
-      this.isOverflown =
-        this.container.scrollWidth - this.container.clientWidth > 0;
-
-      this.isAtScrollStart = this.container.scrollLeft < this.faderWidth;
-      this.showButton.left = this.isOverflown && !this.isAtScrollStart;
-
-      this.isAtScrollEnd =
-        !this.isOverflown ||
-        this.container.scrollWidth -
-          (this.container.scrollLeft + this.container.clientWidth) <
-          this.faderWidth;
-
-      this.showButton.right =
-        this.isOverflown &&
-        this.container.scrollLeft >= 0 &&
-        !this.isAtScrollEnd;
+    if (!this.firstMetricEl) {
+      return;
     }
+
+    this.childClientWidth = this.firstMetricEl.clientWidth;
+
+    this.isOverflown =
+      this.container.scrollWidth - this.container.clientWidth > 0;
+
+    this.isAtScrollStart = this.container.scrollLeft < this.faderWidthLeft;
+    this.showButton.left = this.isOverflown && !this.isAtScrollStart;
+
+    this.isAtScrollEnd =
+      !this.isOverflown ||
+      this.container.scrollWidth -
+        (this.container.scrollLeft + this.container.clientWidth) <
+        this.faderWidthRight;
+
+    this.showButton.right =
+      this.isOverflown && this.container.scrollLeft >= 0 && !this.isAtScrollEnd;
+
     if (!(this.cd as ViewRef).destroyed) {
       this.detectChanges();
     }
@@ -122,14 +132,16 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
     let currentScrollLeft = this.container.scrollLeft;
     let targetScrollLeft;
     let scrollEndOffset = 0;
+
+    // console.log(this.container.clientWidth);
     const partiallyVisibleMetricWidth =
       this.container.clientWidth % this.childClientWidth;
     const completelyVisibleMetricsWidth =
       this.container.clientWidth - partiallyVisibleMetricWidth;
 
     if (direction === 'right') {
-      if (currentScrollLeft < this.faderWidth) {
-        currentScrollLeft = this.faderWidth;
+      if (currentScrollLeft < this.faderWidthRight) {
+        currentScrollLeft = this.faderWidthRight;
       }
       targetScrollLeft = Math.min(
         currentScrollLeft + completelyVisibleMetricsWidth,
@@ -137,13 +149,28 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
       );
     } else {
       if (this.isAtScrollEnd) {
-        scrollEndOffset = partiallyVisibleMetricWidth - this.faderWidth;
+        scrollEndOffset = partiallyVisibleMetricWidth - this.faderWidthLeft;
       }
       targetScrollLeft = Math.max(
         currentScrollLeft - completelyVisibleMetricsWidth + scrollEndOffset,
         0
       );
     }
+    console.log('---------------');
+    console.log('direction', direction);
+    console.log(
+      'isatscroll start or end?',
+      this.isAtScrollStart,
+      this.isAtScrollEnd
+    );
+    console.log('currentscrollelft', currentScrollLeft);
+    console.log('targetscrollelft', targetScrollLeft);
+    console.log('scrollendoffset', scrollEndOffset);
+    console.log(
+      'partially completely',
+      partiallyVisibleMetricWidth,
+      completelyVisibleMetricsWidth
+    );
 
     this.container.scrollTo({
       top: 0,
