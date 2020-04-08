@@ -28,6 +28,7 @@ import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-service-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'minds-banner',
@@ -216,7 +217,7 @@ class InlineEditorComponentMock {
   registerOnTouched(fn: any) {}
 }
 
-xdescribe('BlogEdit', () => {
+describe('BlogEdit', () => {
   let comp: BlogEdit;
   let fixture: ComponentFixture<BlogEdit>;
 
@@ -232,6 +233,11 @@ xdescribe('BlogEdit', () => {
           selector: 'minds-form-tags-input',
           inputs: ['tags', 'additionalTags'],
           outputs: ['change', 'tagsChange'],
+        }),
+        MockComponent({
+          selector: 'm-blog__editor',
+          inputs: ['content'],
+          outputs: [],
         }),
         MockComponent({
           selector: 'm-hashtags-selector',
@@ -261,6 +267,7 @@ xdescribe('BlogEdit', () => {
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
         { provide: HovercardService, useValue: hovercardServiceMock },
+        { provide: FeaturesService, useValue: MockService(FeaturesService) },
         {
           provide: InMemoryStorageService,
           useValue: inMemoryStorageServiceMock,
