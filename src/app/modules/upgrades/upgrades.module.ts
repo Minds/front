@@ -15,8 +15,7 @@ export const routes = [
     component: UpgradesComponent,
     data: {
       title: 'Upgrade your Minds experience',
-      description:
-        'Minds offers a unique range of powerful upgrades that will supercharge your Minds experience',
+      description: 'Unlock powerful features to supercharge your channel',
       ogImage: '/assets/marketing/upgrades-1.jpg',
     },
   },
