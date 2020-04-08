@@ -256,19 +256,17 @@ m-group--sidebar-markers {
   .has-gathering::after {
     border-radius: 50%;
     display: block;
-    height: 8px;
-    width: 8px;
+    height: 32px;
+    width: 32px;
     content: '';
     position: absolute;
-    top: calc(50% - 4px);
-    right: 16px;
+    top: 8px;
+    right: 8px;
     animation: pulse--small 1.5s infinite;
+    z-index: -1;
+
     @include m-theme() {
       background-color: themed($m-alert);
-    }
-
-    @media screen and (max-width: $layoutMax3ColWidth) {
-      right: 6px;
     }
   }
 
