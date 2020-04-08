@@ -13,7 +13,12 @@ import {
   PLATFORM_ID,
   Inject,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  UrlSegment,
+  NavigationEnd,
+} from '@angular/router';
 import { Session } from '../../../services/session';
 import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
@@ -28,6 +33,7 @@ import { ScrollService } from '../../../services/ux/scroll';
 import { captureEvent } from '@sentry/core';
 import { isPlatformServer } from '@angular/common';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   providers: [ProChannelService, OverlayModalService, SignupModalService],
@@ -53,6 +59,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   protected params$: Subscription;
 
   protected loggedIn$: Subscription;
+
+  protected routerEventsSubscription: Subscription;
 
   @ViewChild('overlayModal', { static: true })
   protected overlayModal: OverlayModalComponent;
@@ -206,6 +214,12 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
         this.reload();
       }
     });
+
+    this.routerEventsSubscription = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(data => {
+        this.pageLayoutService.useFullWidth();
+      });
   }
 
   @HostListener('window:resize') onResize() {
@@ -214,6 +228,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.params$.unsubscribe();
+    this.routerEventsSubscription.unsubscribe();
   }
 
   async load() {
