@@ -63,6 +63,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProModule } from './modules/pro/pro.module';
 import { ChannelContainerModule } from './modules/channel-container/channel-container.module';
 import { UpgradesModule } from './modules/upgrades/upgrades.module';
+import { CodeHighlightModule } from './modules/code-highlight/code-highlight.module';
 
 import * as Sentry from '@sentry/browser';
 import { CookieModule } from '@gorniv/ngx-universal';
@@ -139,6 +140,7 @@ export class SentryErrorHandler implements ErrorHandler {
     CanaryModule,
     ChannelsModule,
     UpgradesModule,
+    CodeHighlightModule,
     SharedModule,
 
     //last due to :username route

@@ -59,6 +59,7 @@ import { ClientMetaService } from '../../../../../common/services/client-meta.se
 import { clientMetaServiceMock } from '../../../../../../tests/client-meta-service-mock.spec';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
 import { SiteService } from '../../../../../common/services/site.service';
+import { CodeHighlightModule } from '../../../../../modules/code-highlight/code-highlight.module';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { TagsPipeMock } from '../../../../../mocks/pipes/tagsPipe.mock';
 import { RedirectService } from '../../../../../common/services/redirect.service';
@@ -483,7 +484,12 @@ describe('Activity', () => {
           inputs: ['mIfFeatureElse'],
         }),
       ], // declare the test component
-      imports: [RouterTestingModule, FormsModule /*, CommonModule*/],
+      imports: [
+        RouterTestingModule,
+        FormsModule,
+        CodeHighlightModule,
+        /*CommonModule*/
+      ],
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
