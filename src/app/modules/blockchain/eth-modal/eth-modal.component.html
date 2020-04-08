@@ -34,9 +34,17 @@
       class="m-btn m-btn--slim m-btn--action"
       (click)="buy()"
       *ngIf="hasMetamask"
+      disabled="true"
     >
       Buy with SendWyre
     </button>
+
+    <!--Remove with the resolution of https://gitlab.com/minds/front/-/issues/2822-->
+    <p></p>
+    <p class="m-error mdl-color-text--red">
+      We are currently experiencing some issues with SendWyre - please check
+      back later.
+    </p>
 
     <a
       href="https://metamask.io/"
