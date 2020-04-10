@@ -53,6 +53,7 @@
         [allowAutoplayOnScroll]="true"
         [attr.data-minds-activity-guid]="entity.guid"
         [slot]="i + 1"
+        [canRecordAnalytics]="false"
         *ngIf="i === currentPosition"
       ></m-activity>
     </ng-container>

@@ -23,7 +23,7 @@ import { WireCreatorComponent } from '../../../../wire/creator/creator.component
 import { EntitiesService } from '../../../../../common/services/entities.service';
 import { Router } from '@angular/router';
 import { BlockListService } from '../../../../../common/services/block-list.service';
-import { ActivityAnalyticsOnViewService } from './activity-analytics-on-view.service';
+import { ElementVisibilityService } from '../../../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
 import { ClientMetaService } from '../../../../../common/services/client-meta.service';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
@@ -51,7 +51,7 @@ import { ModalService } from '../../../../composer/components/modal/modal.servic
   ],
   providers: [
     ClientMetaService,
-    ActivityAnalyticsOnViewService,
+    ElementVisibilityService,
     ActivityService,
     ComposerService,
     ModalService,
@@ -196,7 +196,7 @@ export class Activity implements OnInit {
     private entitiesService: EntitiesService,
     private router: Router,
     protected blockListService: BlockListService,
-    protected activityAnalyticsOnViewService: ActivityAnalyticsOnViewService,
+    protected activityAnalyticsOnViewService: ElementVisibilityService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
     protected featuresService: FeaturesService,

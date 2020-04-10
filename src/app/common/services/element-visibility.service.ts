@@ -2,19 +2,19 @@ import { ElementRef, Injectable, OnDestroy } from '@angular/core';
 import { debounceTime } from 'rxjs/operators';
 import { Subject, Subscription } from 'rxjs';
 
-import { ScrollService } from '../../../../../services/ux/scroll';
+import { ScrollService } from '../../services/ux/scroll';
 
 @Injectable()
-export class ActivityAnalyticsOnViewService implements OnDestroy {
+export class ElementVisibilityService implements OnDestroy {
   protected element: HTMLElement;
 
   protected entity;
 
-  protected visibility$: Subscription;
+  protected visibilitySubscription: Subscription;
 
-  protected visibilitySubject: Subject<boolean> = new Subject();
+  protected visibility$: Subject<boolean> = new Subject();
 
-  protected scroll$: Subscription;
+  protected scrollSubscription: Subscription;
 
   protected visible: boolean = false;
 
@@ -47,11 +47,11 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
   }
 
   init() {
-    this.visibility$ = this.visibilitySubject
+    this.visibilitySubscription = this.visibility$
       //.pipe(debounceTime(300))
       .subscribe(() => {
         if (this.entity && this.visible) {
-          this.scroll.unListen(this.scroll$);
+          this.scroll.unListen(this.scrollSubscription);
 
           if (this.onViewFn) {
             this.onViewFn(this.entity);
@@ -61,12 +61,12 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
         }
       });
 
-    this.scroll$ = this.scroll.listenForView().subscribe(() => {
+    this.scrollSubscription = this.scroll.listenForView().subscribe(() => {
       this.checkVisibility();
     });
   }
 
-  checkVisibility() {
+  checkVisibility(): void {
     if (!this.element) {
       console.warn('Missing element ref');
       return;
@@ -94,17 +94,17 @@ export class ActivityAnalyticsOnViewService implements OnDestroy {
 
     if (visible > 0 && !this.visible) {
       this.visible = true;
-      this.visibilitySubject.next(this.visible);
+      this.visibility$.next(this.visible);
     } else {
       this.visible = false;
     }
   }
 
   ngOnDestroy() {
-    this.scroll.unListen(this.scroll$);
+    this.scroll.unListen(this.scrollSubscription);
 
-    if (this.visibility$) {
-      this.visibility$.unsubscribe();
+    if (this.visibilitySubscription) {
+      this.visibilitySubscription.unsubscribe();
     }
   }
 }
