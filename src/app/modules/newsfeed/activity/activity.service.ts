@@ -38,6 +38,8 @@ export type ActivityEntity = {
   impressions: number;
   boostToggle: boolean;
   url?: string;
+  urn?: string;
+  boosted_guid?: string;
 };
 
 // Constants of blocks

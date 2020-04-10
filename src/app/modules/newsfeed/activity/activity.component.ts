@@ -12,6 +12,8 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
+  SkipSelf,
+  Injector,
 } from '@angular/core';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
@@ -22,6 +24,9 @@ import {
 } from './activity.service';
 import { Subscription, Observable } from 'rxjs';
 import { ComposerService } from '../../composer/services/composer.service';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { ElementVisibilityService } from '../../../common/services/element-visibility.service';
+import { NewsfeedService } from '../services/newsfeed.service';
 
 @Component({
   selector: 'm-activity',
@@ -31,6 +36,8 @@ import { ComposerService } from '../../composer/services/composer.service';
     ActivityService,
     ActivityServiceCommentsLegacySupport, // Comments service should never have been called this.
     ComposerService,
+    ClientMetaService,
+    ElementVisibilityService, // MH: There is too much analytics logic in this entity component. Refactor at a later date.
   ],
   host: {
     class: 'm-border',
@@ -48,6 +55,8 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     this.service.setDisplayOptions(options);
   }
 
+  @Input() slot: number = -1;
+
   /**
    * Whether or not we allow autoplay on scroll
    */
@@ -57,6 +66,8 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
    * Whether or not autoplay is allowed (this is used for single entity view, media modal and media view)
    */
   @Input() autoplayVideo: boolean = false;
+
+  @Input() canRecordAnalytics: boolean = true;
 
   @Output() deleted: EventEmitter<any> = new EventEmitter<any>();
 
@@ -77,7 +88,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     public service: ActivityService,
     private el: ElementRef,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    @SkipSelf() private injector: Injector,
+    private clientMetaService: ClientMetaService,
+    private elementVisibilityService: ElementVisibilityService,
+    private newsfeedService: NewsfeedService
   ) {}
 
   ngOnInit() {
@@ -99,6 +114,23 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     setTimeout(() => this.calculateHeight());
+    if (this.canRecordAnalytics) {
+      this.elementVisibilityService
+        .setEntity(this.service.entity$.value)
+        .setElementRef(this.el)
+        .onView((entity: ActivityEntity) => {
+          this.newsfeedService.recordView(
+            entity,
+            true,
+            null,
+            this.clientMetaService.inherit(this.injector).build({
+              campaign: entity.boosted_guid ? entity.urn : '',
+              position: this.slot,
+            })
+          );
+        });
+      this.elementVisibilityService.checkVisibility();
+    }
   }
 
   @HostListener('window:resize')

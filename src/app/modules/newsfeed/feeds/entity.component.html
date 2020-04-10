@@ -12,7 +12,11 @@
       [displayOptions]="displayOptions"
       [allowAutoplayOnScroll]="allowAutoplayOnScroll"
       (deleted)="delete($event)"
-      *mIfFeature="'navigation'; else v1"
+      [slot]="slot"
+      *ngIf="
+        displayOptions.v2 === true || featuresService.has('navigation');
+        else v1
+      "
     >
     </m-activity>
     <ng-template #v1>
