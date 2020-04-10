@@ -12,6 +12,7 @@
       [displayOptions]="displayOptions"
       [allowAutoplayOnScroll]="allowAutoplayOnScroll"
       (deleted)="delete($event)"
+      [slot]="slot"
       *ngIf="
         displayOptions.v2 === true || featuresService.has('navigation');
         else v1
