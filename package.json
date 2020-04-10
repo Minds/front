@@ -39,7 +39,7 @@
     "@angular/platform-browser-dynamic": "~8.1.1",
     "@angular/platform-server": "~8.1.1",
     "@angular/router": "~8.1.1",
-    "@bhayward93/ckeditor5-build-minds": "^1.0.11",
+    "@bhayward93/ckeditor5-build-minds": "^1.1.0",
     "@ckeditor/ckeditor5-angular": "^1.1.2",
     "@gorniv/ngx-universal": "^2.0.1",
     "@nguniversal/common": "~8.1.1",
