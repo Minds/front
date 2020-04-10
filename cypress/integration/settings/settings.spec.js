@@ -62,20 +62,8 @@ context('Settings', () => {
     );
 
     cy.get('minds-textarea .m-editor').type(title);
-    cy.get('m-inline-editor .medium-editor-element').type(body);
 
-    // // click on plus button
-    // cy.get('.medium-editor-element > .medium-insert-buttons > button.medium-insert-buttons-show').click();
-    // // click on camera
-    // cy.get('ul.medium-insert-buttons-addons > li > button.medium-insert-action:first-child').contains('photo_camera').click();
-
-    // upload the image
-    cy.uploadFile('.medium-media-file-input', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg')
-      .wait('@postMedia')
-      .then(xhr => {
-        expect(xhr.status).to.equal(200);
-        expect(xhr.response.body.status).to.equal('success');
-      });
+    cy.get('.ck-content').click({force: true}).type(body);
 
     // open license dropdown & select first license
     cy.get('.m-license-info select').select('All rights reserved');
@@ -116,49 +104,17 @@ context('Settings', () => {
       'Minds Test'
     );
 
-    if (nsfw) {
-      // click on nsfw dropdown
-      cy.get(
-        'm-nsfw-selector .m-dropdown--label-container'
-      ).click();
-
-      // select Nudity
-      cy.get('m-nsfw-selector .m-dropdownList__item')
-        .contains('Nudity')
-        .click();
-
-      // click away
-      cy.get('m-nsfw-selector .minds-bg-overlay').click({ force: true });
-
-    }
-
-    if (schedule) {
-      cy.get('.m-poster-date-selector__input').click();
-      cy.get(
-        'td.c-datepicker__day-body.c-datepicker__day--selected + td'
-      ).click();
-      cy.get('a.c-btn.c-btn--flat.js-ok').click();
-
-      // get setted date to compare
-      let scheduledDate;
-      cy.get('div.m-poster-date-selector__input div.m-tooltip--bubble')
-        .invoke('text')
-        .then(text => {
-          scheduledDate = text;
-        });
-    }
-
     cy.get('.m-button--submit')
       .click({ force: true }) // TODO: Investigate why disabled flag is being detected
       .wait('@postBlog').then(xhr => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.equal('success');
-    })
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal('success');
+      })
       .wait('@getBlog').then(xhr => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.equal('success');
-      expect(xhr.response.body).to.have.property('blog');
-    });
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal('success');
+        expect(xhr.response.body).to.have.property('blog');
+      });
 
     cy.location('pathname')
       .should('contains', `/${Cypress.env().username}/blog`);
@@ -166,18 +122,6 @@ context('Settings', () => {
     cy.get('.m-blog--title').contains(title);
     cy.get('.minds-blog-body p').contains(body);
     cy.get('.m-license-info span').contains('all-rights-reserved');
-
-    if (schedule) {
-      cy.wait(1000);
-
-      cy.get('div.m-blog-container div.mdl-grid div.minds-body span')
-        .invoke('text')
-        .then(text => {
-          const time_created = new Date(text).getTime();
-          scheduledDate = new Date(scheduledDate).getTime();
-          expect(scheduledDate).to.equal(time_created);
-        });
-    }
   };
 
   const deleteBlogPost = () => {

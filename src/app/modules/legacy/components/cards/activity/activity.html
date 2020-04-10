@@ -141,7 +141,7 @@
 
     <span
       class="m-mature-message-content"
-      [innerHtml]="activity.message | tags"
+      [innerHtml]="activity.message | tags | codeHighlight"
       [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(activity) }"
       (click)="activity.mature && !activity.mature_visibility ? toggleMatureVisibility(): null"
     >

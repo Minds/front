@@ -43,7 +43,7 @@ export class BlogEditorComponent {
     @Inject(PLATFORM_ID) protected platformId: Object,
     private attachment: AttachmentService,
     private site: SiteService,
-    private themeService: ThemeService
+    public themeService: ThemeService
   ) {}
 
   ngOnInit() {
