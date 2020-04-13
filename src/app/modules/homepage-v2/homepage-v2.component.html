@@ -43,17 +43,6 @@
             <img [src]="cdnAssetsUrl + 'assets/homepage/app-store.png'" />
           </a>
         </div>
-
-        <ng-container *ngIf="isMobile()">
-          <button
-            class="mf-button mf-button--alt m-homepage__joinButton"
-            (click)="navigate()"
-            *mExperiment="'Homepage121119'; bucket: 'base'"
-            i18n
-          >
-            Join Minds Now
-          </button>
-        </ng-container>
       </div>
 
       <div
