@@ -15,6 +15,7 @@ import { ProChannelComponent } from '../pro/channel/channel.component';
 import { Session } from '../../services/session';
 import { SiteService } from '../../common/services/site.service';
 import { FeaturesService } from '../../services/features.service';
+import { ChannelComponent as ChannelV2Component } from '../channels/v2/channel.component';
 
 @Component({
   selector: 'm-channel-container',
@@ -32,8 +33,11 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
 
   protected param$: Subscription;
 
-  @ViewChild('channelComponent', { static: false })
-  channelComponent: ChannelComponent;
+  @ViewChild('v1ChannelComponent', { static: false })
+  v1ChannelComponent: ChannelComponent;
+
+  @ViewChild('v2ChannelComponent', { static: false })
+  v2ChannelComponent: ChannelV2Component;
 
   @ViewChild('proChannelComponent', { static: false })
   proChannelComponent: ProChannelComponent;
@@ -64,8 +68,12 @@ export class ChannelContainerComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate(): boolean | Observable<boolean> {
-    if (this.channelComponent) {
-      return this.channelComponent.canDeactivate();
+    if (this.v1ChannelComponent) {
+      return this.v1ChannelComponent.canDeactivate();
+    }
+
+    if (this.v2ChannelComponent) {
+      return this.v2ChannelComponent.canDeactivate();
     }
 
     return true;

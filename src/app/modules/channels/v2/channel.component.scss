@@ -1,0 +1,31 @@
+m-channel-v2 {
+  display: block;
+  min-height: 100%;
+}
+
+.m-channel-v2 {
+  display: block;
+  min-height: 100%;
+  border-right: 1px solid;
+
+  @media screen and (max-width: $max-mobile) {
+    border: none;
+  }
+
+  @include m-theme() {
+    border-color: themed($m-borderColor--primary);
+  }
+
+  .m-channel__tabs {
+    padding: 10px 40px 0;
+
+    @media screen and (max-width: $max-mobile) {
+      justify-content: space-around;
+      padding: 20px 20px;
+
+      .m-tabs__tab > a:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+}
