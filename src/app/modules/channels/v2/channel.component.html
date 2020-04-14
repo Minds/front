@@ -1,5 +1,7 @@
 <div *ngIf="service.channel$ | async" class="m-channel-v2">
-  <m-channel__heading></m-channel__heading>
+  <m-channel__heading>
+    <m-channel__actions></m-channel__actions>
+  </m-channel__heading>
 
   <div
     *ngIf="service.username$ | async as username"

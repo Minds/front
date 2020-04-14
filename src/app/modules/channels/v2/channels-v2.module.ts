@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule as NgCommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '../../../common/common.module';
 import { ChannelComponent } from './channel.component';
 import { ChannelHeadingComponent } from './heading/heading.component';
@@ -8,7 +9,13 @@ import { ChannelFeedComponent } from './feed/feed.component';
 import { ChannelShopComponent } from './shop/shop.component';
 import { ChannelAboutComponent } from './about/about.component';
 import { ChannelEditComponent } from './edit/edit.component';
-import { RouterModule } from '@angular/router';
+import { ChannelActionsComponent } from './actions/actions.component';
+import { ChannelActionsSubscribeComponent } from './actions/subscribe.component';
+import { ChannelActionsEditComponent } from './actions/edit.component';
+import { ChannelActionsMessageComponent } from './actions/message.component';
+import { ChannelActionsWireComponent } from './actions/wire.component';
+import { ChannelActionsMenuButtonComponent } from './actions/menu-button.component';
+import { ChannelActionsMenuComponent } from './actions/menu.component';
 
 /**
  * Generally available components
@@ -23,6 +30,13 @@ const INTERNAL_COMPONENTS = [
   ChannelFeedComponent,
   ChannelShopComponent,
   ChannelAboutComponent,
+  ChannelActionsComponent,
+  ChannelActionsSubscribeComponent,
+  ChannelActionsEditComponent,
+  ChannelActionsMessageComponent,
+  ChannelActionsWireComponent,
+  ChannelActionsMenuButtonComponent,
+  ChannelActionsMenuComponent,
 ];
 
 /**
@@ -34,7 +48,7 @@ const PROVIDERS = [];
  * Module definition
  */
 @NgModule({
-  imports: [NgCommonModule, FormsModule, CommonModule, RouterModule],
+  imports: [NgCommonModule, RouterModule, FormsModule, CommonModule],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
   entryComponents: COMPONENTS,

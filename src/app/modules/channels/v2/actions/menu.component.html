@@ -1,0 +1,23 @@
+<m-dropdownMenu [menu]="actionsDropdown">
+  <ng-content></ng-content>
+</m-dropdownMenu>
+
+<ng-template #actionsDropdown>
+  <ul>
+    <li *ngIf="service.isSubscribed$ | async">
+      <span class="m-dropdownMenu__item">
+        <span i18n>Unsubscribe</span>
+      </span>
+    </li>
+    <li>
+      <span class="m-dropdownMenu__item">
+        <span i18n>Block</span>
+      </span>
+    </li>
+    <li>
+      <span class="m-dropdownMenu__item">
+        <span i18n>Report</span>
+      </span>
+    </li>
+  </ul>
+</ng-template>

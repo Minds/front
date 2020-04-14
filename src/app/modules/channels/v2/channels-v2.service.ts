@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MindsUser } from '../../../interfaces/entities';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
+import { Session } from '../../../services/session';
+import { map } from 'rxjs/operators';
 
 /**
  * Service that holds a channel information using Observables
@@ -26,27 +28,49 @@ export class ChannelsV2Service {
   >(null);
 
   /**
+   * Flag that checks if the current user is the channel owner
+   */
+  readonly isOwner$: Observable<boolean>;
+
+  /**
+   * Subscription status
+   */
+  readonly isSubscribed$: Observable<boolean>;
+
+  /**
    * Constructor
    * @param api
+   * @param session
    */
-  constructor(protected api: ApiService) {}
+  constructor(protected api: ApiService, protected session: Session) {
+    // Set isOwner$ observable
+    this.isOwner$ = combineLatest([this.guid$, this.session.user$]).pipe(
+      map(
+        ([guid, currentUser]) =>
+          guid && currentUser && guid === currentUser.guid
+      )
+    );
+
+    // Set isSubscribed$ observable
+    this.isSubscribed$ = combineLatest([
+      this.isOwner$,
+      this.session.user$,
+      this.channel$,
+    ]).pipe(
+      map(
+        ([isOwner, currentUser, channel]) =>
+          !isOwner && currentUser && channel && channel.subscribed
+      )
+    );
+  }
 
   /**
    * Loads a new channel
    * @param channel
    */
   load(channel: MindsUser | string) {
-    const guid: string = typeof channel === 'object' ? channel.guid : channel;
-
-    this.guid$.next(guid);
-
-    if (typeof channel === 'object') {
-      this.username$.next(channel.username);
-      this.channel$.next(channel);
-    } else {
-      this.username$.next('');
-      this.channel$.next(null);
-    }
+    this.guid$.next(typeof channel === 'object' ? channel.guid : channel);
+    this.setChannel(typeof channel === 'object' ? channel : null);
 
     this.sync();
   }
@@ -58,8 +82,15 @@ export class ChannelsV2Service {
     this.api
       .get(`api/v1/channel/${this.guid$.getValue()}`)
       .subscribe(response => {
-        this.username$.next(response.channel.username);
-        this.channel$.next(response.channel);
+        this.setChannel(response.channel);
       });
+  }
+
+  /**
+   * Sets the state based on a channel
+   */
+  setChannel(channel: MindsUser | null) {
+    this.channel$.next(channel);
+    this.username$.next(channel ? channel.username : '');
   }
 }
