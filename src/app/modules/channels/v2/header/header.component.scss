@@ -1,4 +1,4 @@
-.m-channelHeading__banner {
+.m-channelHeader__banner {
   position: relative;
   width: 100%;
   height: 180px;
@@ -9,7 +9,7 @@
     height: 140px;
   }
 
-  .m-channelHeadingBanner__background {
+  .m-channelHeaderBanner__background {
     position: absolute;
     top: 0;
     left: 0;
@@ -23,7 +23,7 @@
     }
   }
 
-  .m-channelHeadingBanner__avatar .minds-avatar {
+  .m-channelHeaderBanner__avatar .minds-avatar {
     position: absolute;
     bottom: 0;
     left: 50%;
@@ -57,14 +57,16 @@
   }
 }
 
-.m-channelHeading__info {
+.m-channelHeader__info {
   padding: 10px 0 0;
 
-  .m-channelHeadingInfo__name {
+  .m-channelHeaderInfo__name {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    padding: 0;
+    margin: 0;
     font-size: 22px;
     line-height: 30px;
     font-weight: bold;
@@ -83,10 +85,13 @@
     }
   }
 
-  .m-channelHeadingInfo__username {
+  .m-channelHeaderInfo__username {
+    padding: 0;
+    margin: 0;
     text-align: center;
     font-size: 16px;
     line-height: 21px;
+    font-weight: normal;
 
     @include m-theme() {
       color: themed($m-textColor--secondary);

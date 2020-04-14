@@ -5,11 +5,11 @@ import { MindsUser } from '../../../../interfaces/entities';
 import entityToBannerUrl from '../../../../helpers/entity-to-banner-url';
 
 @Component({
-  selector: 'm-channel__heading',
+  selector: 'm-channel__header',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'heading.component.html',
+  templateUrl: 'header.component.html',
 })
-export class ChannelHeadingComponent {
+export class ChannelHeaderComponent {
   /**
    * CDN URL
    */

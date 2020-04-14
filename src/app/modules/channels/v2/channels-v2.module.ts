@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '../../../common/common.module';
 import { ChannelComponent } from './channel.component';
-import { ChannelHeadingComponent } from './heading/heading.component';
+import { ChannelHeaderComponent } from './header/header.component';
 import { ChannelFeedComponent } from './feed/feed.component';
 import { ChannelShopComponent } from './shop/shop.component';
 import { ChannelAboutComponent } from './about/about.component';
@@ -26,7 +26,7 @@ const COMPONENTS = [ChannelComponent, ChannelEditComponent];
  * Internal components
  */
 const INTERNAL_COMPONENTS = [
-  ChannelHeadingComponent,
+  ChannelHeaderComponent,
   ChannelFeedComponent,
   ChannelShopComponent,
   ChannelAboutComponent,

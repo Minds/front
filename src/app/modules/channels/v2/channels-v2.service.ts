@@ -68,7 +68,7 @@ export class ChannelsV2Service {
    * Loads a new channel
    * @param channel
    */
-  load(channel: MindsUser | string) {
+  load(channel: MindsUser | string): void {
     this.guid$.next(typeof channel === 'object' ? channel.guid : channel);
     this.setChannel(typeof channel === 'object' ? channel : null);
 
@@ -78,7 +78,7 @@ export class ChannelsV2Service {
   /**
    * Re-sync current channel from server
    */
-  sync() {
+  sync(): void {
     this.api
       .get(`api/v1/channel/${this.guid$.getValue()}`)
       .subscribe(response => {
@@ -89,8 +89,9 @@ export class ChannelsV2Service {
   /**
    * Sets the state based on a channel
    */
-  setChannel(channel: MindsUser | null) {
+  setChannel(channel: MindsUser | null): ChannelsV2Service {
     this.channel$.next(channel);
     this.username$.next(channel ? channel.username : '');
+    return this;
   }
 }
