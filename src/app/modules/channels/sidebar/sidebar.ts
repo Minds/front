@@ -18,6 +18,8 @@ import { FeaturesService } from '../../../services/features.service';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { CookieService } from '../../../common/services/cookie.service';
+import { OnboardingV2Service } from '../../onboarding-v2/service/onboarding.service';
+import { OnboardingWrapperService } from '../service/onboarding-wrapper.service';
 
 @Component({
   moduleId: module.id,
@@ -45,7 +47,7 @@ export class ChannelSidebar implements OnInit {
     public client: Client,
     public upload: Upload,
     public session: Session,
-    public onboardingService: ChannelOnboardingService,
+    public onboardingService: OnboardingWrapperService,
     protected cookieService: CookieService,
     private overlayModal: OverlayModalService,
     public featuresService: FeaturesService,
@@ -64,21 +66,22 @@ export class ChannelSidebar implements OnInit {
     this.checkProgress();
   }
 
-  checkProgress() {
-    if (isPlatformServer(this.platformId)) return;
-    this.onboardingService.checkProgress().then(() => {
-      this.onboardingProgress = this.onboardingService.completedPercentage;
-    });
+  async checkProgress() {
+    if (isPlatformServer(this.platformId)) {
+      return;
+    }
+
+    await this.onboardingService.checkProgress();
+    this.onboardingProgress = this.onboardingService.completedPercentage;
   }
 
   showOnboarding() {
-    this.onboardingService.onOpen.emit();
+    this.onboardingService.open();
   }
 
   shouldShowOnboardingProgress() {
     return (
       isPlatformBrowser(this.platformId) &&
-      !this.featuresService.has('ux-2020') &&
       this.session.isLoggedIn() &&
       this.session.getLoggedInUser().guid === this.user.guid &&
       !this.cookieService.get('onboarding_hide') &&

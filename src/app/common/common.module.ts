@@ -168,6 +168,7 @@ import {
 import { FriendlyTimePipe } from './pipes/friendlytime.pipe';
 import { SidebarWidgetComponent } from './components/sidebar-widget/sidebar-widget.component';
 import { SidebarNavigationSubnavDirective } from './layout/sidebar/subnav.directive';
+import { OnboardingReminderComponent } from './components/onboarding-reminder/reminder.component';
 
 const routes: Routes = [
   {
@@ -295,7 +296,7 @@ const routes: Routes = [
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
-    EmailConfirmationComponent,
+    OnboardingReminderComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,
@@ -422,7 +423,7 @@ const routes: Routes = [
     ShadowboxHeaderTabsComponent,
     TimespanFilterComponent,
     EmailConfirmationComponent,
-    EmailConfirmationComponent,
+    OnboardingReminderComponent,
     DateDropdownsComponent,
     PhoneInputV2Component,
     PhoneInputCountryV2Component,

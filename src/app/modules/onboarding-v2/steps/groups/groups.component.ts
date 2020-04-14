@@ -1,18 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { OnboardingV2Service } from '../../service/onboarding.service';
 
 @Component({
   selector: 'm-onboarding__groupsStep',
   templateUrl: 'groups.component.html',
 })
 export class GroupsStepComponent {
-  constructor(private router: Router) {}
+  pendingItems: string[];
+
+  constructor(protected onboardingService: OnboardingV2Service) {
+    this.onboardingService.setCurrentStep('groups');
+    this.pendingItems = this.onboardingService.getPendingItems();
+  }
 
   skip() {
-    this.router.navigate(['/onboarding', 'channels']);
+    this.onboardingService.next();
   }
 
   continue() {
-    this.router.navigate(['/onboarding', 'channels']);
+    this.onboardingService.next();
   }
 }

@@ -1,14 +1,19 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { OnboardingV2Service } from '../../service/onboarding.service';
 
 @Component({
   selector: 'm-onboarding__channelsStep',
   templateUrl: 'channels.component.html',
 })
 export class ChannelsStepComponent {
-  constructor(private router: Router) {}
+  pendingItems: string[];
+
+  constructor(protected onboardingService: OnboardingV2Service) {
+    this.onboardingService.setCurrentStep('channels');
+    this.pendingItems = this.onboardingService.getPendingItems();
+  }
 
   finish() {
-    this.router.navigate(['/newsfeed/global/top']);
+    this.onboardingService.next();
   }
 }

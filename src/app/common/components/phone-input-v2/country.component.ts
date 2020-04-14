@@ -1,18 +1,18 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
-  ViewChild,
-  Input,
-  Output,
   EventEmitter,
-  OnInit,
   HostListener,
-  AfterViewInit,
-  ViewChildren,
-  QueryList,
-  OnDestroy,
   Inject,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
   PLATFORM_ID,
+  QueryList,
+  ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { verticallyScrollElementIntoView } from '../../../helpers/scrollable-container-visibility';
@@ -32,6 +32,7 @@ export type CountrySelectedEvent = {
 })
 export class PhoneInputCountryV2Component
   implements OnInit, AfterViewInit, OnDestroy {
+  @Input() disabled: boolean = false;
   @Input() showDropdown: boolean = false;
   @Input() initCountryCode: string;
   @Input() allowedCountries: string[];
@@ -85,6 +86,10 @@ export class PhoneInputCountryV2Component
   }
 
   openDropdown() {
+    if (this.disabled) {
+      return;
+    }
+
     this.applyFocus(this.selectedCountryIndex);
     if (isPlatformBrowser(this.platformId)) {
       this.toggleTimeout = setTimeout(() => {

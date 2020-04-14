@@ -8,6 +8,7 @@ import { PhoneInputV2Component } from '../../../../../common/components/phone-in
   templateUrl: 'input.component.html',
 })
 export class PhoneVerificationComponent {
+  @Input() disabled: boolean = false;
   @Input() tooltipAnchor: 'top' | 'left' = 'left';
 
   number: string;
