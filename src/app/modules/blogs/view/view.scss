@@ -25,3 +25,15 @@
     color: themed($m-green-light);
   }
 }
+
+table {
+  display: inline-flex;
+
+  td {
+    padding: 8px 16px;
+
+    @include m-theme() {
+      border: 1px solid themed($m-black);
+    }
+  }
+}
