@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'm-date__dropdowns',
@@ -9,6 +9,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
         data-minds="monthDropdown"
         [ngModel]="selectedMonth"
         (ngModelChange)="selectMonth($event)"
+        [disabled]="disabled"
       >
         <option *ngFor="let month of monthNames">{{ month }}</option>
       </select>
@@ -19,6 +20,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
         data-minds="dayDropdown"
         [ngModel]="selectedDay"
         (ngModelChange)="selectDay($event)"
+        [disabled]="disabled"
       >
         <option *ngFor="let day of days">{{ day }}</option>
       </select>
@@ -29,6 +31,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
         data-minds="yearDropdown"
         [ngModel]="selectedYear"
         (ngModelChange)="selectYear($event)"
+        [disabled]="disabled"
       >
         <option *ngFor="let year of years">{{ year }}</option>
       </select>
@@ -36,6 +39,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   `,
 })
 export class DateDropdownsComponent implements OnInit {
+  @Input() disabled: boolean = false;
   @Output() selectedDateChange: EventEmitter<string> = new EventEmitter<
     string
   >();

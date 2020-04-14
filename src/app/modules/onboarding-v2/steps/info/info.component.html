@@ -2,6 +2,7 @@
   <div class="m-onboarding__control">
     <m-onboarding__phoneverification
       [tooltipAnchor]="tooltipAnchor"
+      [disabled]="phoneInputDisabled"
       #phoneVerification
     >
     </m-onboarding__phoneverification>
@@ -32,6 +33,7 @@
         [ngModel]="location"
         (ngModelChange)="locationChange($event)"
         (keyup)="findCity(location)"
+        [disabled]="dobDisabled"
       />
       <div
         class="m-onboarding__error"
@@ -68,6 +70,8 @@
 
     <m-date__dropdowns
       (selectedDateChange)="selectedDateChange($event)"
+      [disabled]="dobDisabled"
+      #dateDropdowns
     ></m-date__dropdowns>
     <div
       class="m-onboarding__error"

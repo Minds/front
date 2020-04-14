@@ -13,6 +13,7 @@
     (countrySelected)="countrySelected($event)"
     (toggledDropdown)="toggledDropdown($event)"
     [showDropdown]="showDropdown"
+    [disabled]="disabled"
   ></m-phoneInput__country>
 
   <input
@@ -27,6 +28,7 @@
     class="form-control m-phoneInput__input"
     (click)="clickedInput($event)"
     (focusout)="inputFocused = false"
+    [disabled]="disabled"
     #input
   />
 </div>
