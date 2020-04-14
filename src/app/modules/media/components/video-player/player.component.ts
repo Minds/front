@@ -215,7 +215,11 @@ export class MindsVideoPlayerComponent
       return this.mediaModalRequested.next();
     }
 
-    console.error('Placeholder was clicked but we have no action to take');
+    // This is very hacky. A wrapper component needs to be made for autoplay logic.
+    this.autoplaying = true;
+    this.service.forcePlayable = true;
+
+    //console.error('Placeholder was clicked but we have no action to take');
   }
 
   unmute(): void {

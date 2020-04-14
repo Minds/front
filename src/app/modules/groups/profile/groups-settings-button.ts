@@ -146,6 +146,7 @@ import { Session } from '../../../services/session';
         [hidden]="group.deleted"
         (click)="deletePrompt()"
         i18n="@@GROUPS__PROFILE__GROUP_SETTINGS_BTN__DELETE_GROUP"
+        data-cy="data-minds-group-dropdown-delete"
       >
         Delete Group
       </li>

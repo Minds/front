@@ -105,10 +105,12 @@ Cypress.Commands.add('login', (canary = false, username, password) => {
 
 /**
  * Logs a user out of their session using the menu.
+ * 
+ * @param organic - if true, log out organically through menu rather than URL.
  * @returns void
  */
 Cypress.Commands.add('logout', () => {
-  cy.visit('/logout');
+    cy.visit('/logout');
 });
 
 /**

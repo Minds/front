@@ -15,6 +15,7 @@ import { Client } from '../../../../services/api/client';
 import { GroupsService } from '../../groups.service';
 import { Observable } from 'rxjs';
 import { ComposerComponent } from '../../../composer/composer.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'm-group-profile-feed__sorted',
@@ -196,8 +197,21 @@ export class GroupProfileFeedSortedComponent implements OnInit {
     return this.v1CanDeactivate();
   }
 
-  kick(user: any) {
-    this.kicking = user;
+  /**
+   * Sets the value of kick, triggering the kick modal.
+   *
+   * @param Observable entity - entity triggering the removal
+   * @returns void
+   */
+  kick(entity: Observable<Object>): void {
+    // programmatic piping as cannot use pipes in the click event.
+    if (!entity) {
+      this.kicking = null;
+      return;
+    }
+    const asyncPipe: AsyncPipe = new AsyncPipe(this.cd);
+    const userValue: Object = asyncPipe.transform(entity);
+    this.kicking = userValue['ownerObj'];
   }
 
   //
