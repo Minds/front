@@ -14,6 +14,11 @@ export class ChannelsV2Service {
   readonly guid$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
   /**
+   * Channel username
+   */
+  readonly username$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+  /**
    * Channel data
    */
   readonly channel$: BehaviorSubject<MindsUser> = new BehaviorSubject<
@@ -36,7 +41,11 @@ export class ChannelsV2Service {
     this.guid$.next(guid);
 
     if (typeof channel === 'object') {
+      this.username$.next(channel.username);
       this.channel$.next(channel);
+    } else {
+      this.username$.next('');
+      this.channel$.next(null);
     }
 
     this.sync();
@@ -49,6 +58,7 @@ export class ChannelsV2Service {
     this.api
       .get(`api/v1/channel/${this.guid$.getValue()}`)
       .subscribe(response => {
+        this.username$.next(response.channel.username);
         this.channel$.next(response.channel);
       });
   }

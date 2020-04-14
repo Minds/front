@@ -21,7 +21,7 @@ m-channel-v2 {
 
     @media screen and (max-width: $max-mobile) {
       justify-content: space-around;
-      padding: 20px 20px;
+      padding: 20px 20px 0;
 
       .m-tabs__tab > a:first-child {
         margin-left: 0;

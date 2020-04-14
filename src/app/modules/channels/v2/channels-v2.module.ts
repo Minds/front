@@ -8,6 +8,7 @@ import { ChannelFeedComponent } from './feed/feed.component';
 import { ChannelShopComponent } from './shop/shop.component';
 import { ChannelAboutComponent } from './about/about.component';
 import { ChannelEditComponent } from './edit/edit.component';
+import { RouterModule } from '@angular/router';
 
 /**
  * Generally available components
@@ -33,7 +34,7 @@ const PROVIDERS = [];
  * Module definition
  */
 @NgModule({
-  imports: [NgCommonModule, FormsModule, CommonModule],
+  imports: [NgCommonModule, FormsModule, CommonModule, RouterModule],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
   entryComponents: COMPONENTS,
