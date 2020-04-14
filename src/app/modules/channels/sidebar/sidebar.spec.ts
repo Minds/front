@@ -51,6 +51,7 @@ import {
   COOKIE_OPTIONS,
   CookieModule,
 } from '@gorniv/ngx-universal';
+import { OnboardingWrapperService } from '../service/onboarding-wrapper.service';
 
 describe('ChannelSidebar', () => {
   let comp: ChannelSidebar;
@@ -134,10 +135,9 @@ describe('ChannelSidebar', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Storage, useValue: storageMock },
         {
-          provide: ChannelOnboardingService,
-          useValue: MockService(ChannelOnboardingService, {
-            checkProgress: Promise.resolve(),
-            onClose: new EventEmitter(),
+          provide: OnboardingWrapperService,
+          useValue: MockService(OnboardingWrapperService, {
+            props: { completedPercentage: { get: () => 100 } },
           }),
         },
         {
@@ -180,6 +180,7 @@ describe('ChannelSidebar', () => {
     featuresServiceMock.mock('pro', true);
     featuresServiceMock.mock('purchase-pro', true);
     featuresServiceMock.mock('ux-2020', true);
+    featuresServiceMock.mock('navigation', false);
     clientMock.response = {};
     uploadMock.response = {};
     comp = fixture.componentInstance;
