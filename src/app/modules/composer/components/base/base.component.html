@@ -20,6 +20,7 @@
     <m-composer__textArea
       class="m-composerBase__textArea"
       [inputId]="textareaId"
+      (filePaste)="onAttachmentPaste($event)"
       #textAreaComponent
     ></m-composer__textArea>
 

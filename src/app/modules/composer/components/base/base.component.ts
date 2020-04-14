@@ -137,6 +137,14 @@ export class BaseComponent implements AfterViewInit {
   }
 
   /**
+   * Updates the attachment. Called when pasting an image or video.
+   * @param file
+   */
+  onAttachmentPaste(file) {
+    this.service.attachment$.next(file);
+  }
+
+  /**
    * Post intent
    * @param event
    */
