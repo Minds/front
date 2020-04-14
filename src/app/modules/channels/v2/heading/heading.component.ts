@@ -5,7 +5,7 @@ import { MindsUser } from '../../../../interfaces/entities';
 import entityToBannerUrl from '../../../../helpers/entity-to-banner-url';
 
 @Component({
-  selector: 'm-channelHeading',
+  selector: 'm-channel__heading',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'heading.component.html',
 })

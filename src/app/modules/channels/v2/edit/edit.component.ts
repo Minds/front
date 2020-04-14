@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'm-channelEdit',
+  selector: 'm-channel__edit',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: ``,
 })
