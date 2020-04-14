@@ -3,6 +3,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { Client } from '../../../../services/api';
 import isMobile from '../../../../helpers/is-mobile';
 import { Session } from '../../../../services/session';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 
 export type VideoSource = {
   id: string;
@@ -52,11 +53,22 @@ export class VideoPlayerService implements OnDestroy {
   isModal = false;
 
   /**
+   * Force playable
+   */
+  forcePlayable = false;
+
+  /**
    * Observable for if ready
    */
   onReady$: Subject<void> = new Subject();
 
-  constructor(private client: Client, private session: Session) {}
+  constructor(
+    private client: Client,
+    private session: Session,
+    private overlayModalService: OverlayModalService
+  ) {
+    this.setShouldPlayInModal(true);
+  }
 
   ngOnDestroy(): void {
     if (this.poster$) {
@@ -85,7 +97,8 @@ export class VideoPlayerService implements OnDestroy {
   }
 
   setShouldPlayInModal(shouldPlayInModal: boolean): VideoPlayerService {
-    this.shouldPlayInModal = shouldPlayInModal;
+    this.shouldPlayInModal =
+      shouldPlayInModal && this.overlayModalService.canOpenInModal();
     return this;
   }
 
@@ -107,14 +120,6 @@ export class VideoPlayerService implements OnDestroy {
   }
 
   /**
-   * @return boolean
-   */
-  private canPlayInModal(): boolean {
-    const isNotTablet: boolean = Math.min(screen.width, screen.height) < 768;
-    return isMobile() && isNotTablet;
-  }
-
-  /**
    * Returns if the video is able to be played
    * @return boolean
    */
@@ -125,7 +130,8 @@ export class VideoPlayerService implements OnDestroy {
       //(user.plus && !user.disable_autoplay_videos) ||
       this.isModal || // Always playable in modal
       !this.shouldPlayInModal || // Equivalent of asking to play inline
-      (this.canPlayInModal() && !this.isModal)
+      (this.overlayModalService.canOpenInModal() && !this.isModal) ||
+      this.forcePlayable
     ); // We can play in the modal and this isn't a modal
   }
 

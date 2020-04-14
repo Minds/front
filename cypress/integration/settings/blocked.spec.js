@@ -34,8 +34,9 @@ context('Blocked', () => {
 
   after(() => {
     cy.logout();
-    cy.login(true, testUsername, testPassword)
-    cy.deleteUser(testUsername, testPassword)
+    cy.login(true, testUsername, testPassword);
+    cy.deleteUser(testUsername, testPassword);
+    cy.clearCookies({log: true});
   });
 
   it('should show nothing more to load when no users', () => {
