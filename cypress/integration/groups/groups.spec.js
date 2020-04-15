@@ -94,7 +94,7 @@ context.only('Groups', () => {
     cy.get('.m-groupInfo__description').contains('This is a test group');
   })
 
-  it.skip('should be able to toggle conversation and comment on it', () => {
+  it('should be able to toggle conversation and comment on it', () => {
     cy.contains(groupId).click({force: true});
 
     // toggle the conversation
@@ -115,7 +115,7 @@ context.only('Groups', () => {
     });
   })
 
-  it.skip('should be able to toggle conversations', () => {
+  it('should be able to toggle conversations', () => {
     cy.contains(groupId).click();
 
     cy.get('minds-groups-settings-button > button').click();
@@ -129,7 +129,7 @@ context.only('Groups', () => {
     cy.get('.m-groupGrid__right').should('exist');
   });
 
-  it.skip('should post an activity inside the group and record the view when scrolling', () => {
+  it('should post an activity inside the group and record the view when scrolling', () => {
     cy.contains(groupId).click();
 
     cy.server();
@@ -160,7 +160,7 @@ context.only('Groups', () => {
   });
 
 
-  it('should allow a user to join the group', () => {
+  it.skip('should allow a user to join the group', () => {
     // load group as group owner
     cy.contains(groupId)
       .click()
@@ -194,7 +194,7 @@ context.only('Groups', () => {
   });
    
   // Causes pipeline to hang currently.
-  xit('should allow an admin to kick the new user by post menu', () => {
+  it.skip('should allow an admin to kick the new user by post menu', () => {
     // nav to group organically.
     cy.contains(groupId)
       .click()
@@ -216,13 +216,13 @@ context.only('Groups', () => {
     // confirm
     cy.get('[data-cy=data-minds-kick-modal-confirm]').click();
     cy.get('[data-cy=data-minds-kick-modal-okay]').click();
+    
+    // reset state.
+    cy.logout();
+    cy.login();
   });
   
-  it('should allow an admin to kick the new user by members menu', () => {
-    // reset state after last test
-     cy.logout();
-     cy.login();
- 
+  it.skip('should allow an admin to kick the new user by members menu', () => {
      // nav to group.
      cy.contains(groupId)
          .click()
@@ -249,10 +249,6 @@ context.only('Groups', () => {
   
 
   it('should delete a group', () => {
-    // reset state after last test
-    cy.logout();
-    cy.login();
-
      // nav to group.
     cy.contains(groupId)
         .click()

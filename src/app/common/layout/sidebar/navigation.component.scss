@@ -2,6 +2,13 @@ m-sidebar--navigation {
   @media screen and (max-width: $max-mobile) {
     display: none;
   }
+
+  .m-pageLayout__container--fullWidth & {
+    display: none;
+    @media screen and (max-width: $layoutMax1ColWidth) {
+      display: block;
+    }
+  }
 }
 
 .m-sidebarNavigation--opened {
