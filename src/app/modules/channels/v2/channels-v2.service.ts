@@ -43,6 +43,11 @@ export class ChannelsV2Service {
   readonly isBlocked$: Observable<boolean>;
 
   /**
+   * Admin status
+   */
+  readonly isAdmin$: Observable<boolean>;
+
+  /**
    * Constructor
    * @param api
    * @param session
@@ -78,6 +83,11 @@ export class ChannelsV2Service {
         ([isOwner, currentUser, channel]) =>
           !isOwner && currentUser && channel && channel.blocked
       )
+    );
+
+    // Set isAdmin$ observable
+    this.isAdmin$ = this.channel$.pipe(
+      map(channel => channel && channel.is_admin)
     );
   }
 

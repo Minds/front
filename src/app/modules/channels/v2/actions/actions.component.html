@@ -4,12 +4,17 @@
   </ng-container>
   <ng-template #nonOwner>
     <m-channelActions__menuButton></m-channelActions__menuButton>
-    <m-channelActions__wire></m-channelActions__wire>
-    <m-channelActions__message
-      *ngIf="service.isSubscribed$ | async"
-    ></m-channelActions__message>
-    <m-channelActions__subscribe
-      *ngIf="!(service.isSubscribed$ | async)"
-    ></m-channelActions__subscribe>
+
+    <ng-container *ngIf="!(service.isBlocked$ | async)">
+      <m-channelActions__wire></m-channelActions__wire>
+
+      <m-channelActions__message
+        *ngIf="service.isSubscribed$ | async"
+      ></m-channelActions__message>
+
+      <m-channelActions__subscribe
+        *ngIf="!(service.isSubscribed$ | async)"
+      ></m-channelActions__subscribe>
+    </ng-container>
   </ng-template>
 </div>
