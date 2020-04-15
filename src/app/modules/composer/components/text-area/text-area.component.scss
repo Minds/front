@@ -7,8 +7,10 @@ m-composer__textArea {
     flex: 1;
     overflow: hidden;
 
-    @media screen and (max-width: $max-mobile) {
-      flex: unset; // Flex doesn't play well with mobile 100% height
+    m-composer__modal & {
+      @media screen and (max-width: $max-mobile) {
+        flex: unset; // Flex doesn't play well with mobile 100% height
+      }
     }
   }
 
