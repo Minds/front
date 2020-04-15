@@ -28,4 +28,15 @@ m-channel-v2 {
       }
     }
   }
+
+  .m-channel__blockedMessage {
+    padding: 40px 20px 0;
+    font-size: 18px;
+    line-height: 23px;
+    text-align: center;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
 }

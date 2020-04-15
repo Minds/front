@@ -3,44 +3,52 @@
     <m-channel__actions></m-channel__actions>
   </m-channel__header>
 
-  <div
-    *ngIf="service.username$ | async as username"
-    class="m-channel__tabs m-tabs__container"
-  >
-    <div class="m-tabs__tab">
-      <a
-        [routerLink]="['/', username, '']"
-        routerLinkActive="m-tabs__tab--selected"
-        [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
-        i18n
-        >Feed</a
-      >
+  <ng-container *ngIf="!(service.isBlocked$ | async); else blockedMessage">
+    <div
+      *ngIf="service.username$ | async as username"
+      class="m-channel__tabs m-tabs__container"
+    >
+      <div class="m-tabs__tab">
+        <a
+          [routerLink]="['/', username, '']"
+          routerLinkActive="m-tabs__tab--selected"
+          [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
+          i18n
+          >Feed</a
+        >
+      </div>
+
+      <div class="m-tabs__tab" *ngIf="false">
+        <a
+          [routerLink]="['/', username, 'shop']"
+          routerLinkActive="m-tabs__tab--selected"
+          [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
+          i18n
+          >Shop</a
+        >
+      </div>
+
+      <div class="m-tabs__tab">
+        <a
+          [routerLink]="['/', username, 'about']"
+          routerLinkActive="m-tabs__tab--selected"
+          [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
+          i18n
+          >About</a
+        >
+      </div>
     </div>
 
-    <div class="m-tabs__tab" *ngIf="false">
-      <a
-        [routerLink]="['/', username, 'shop']"
-        routerLinkActive="m-tabs__tab--selected"
-        [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
-        i18n
-        >Shop</a
-      >
-    </div>
-
-    <div class="m-tabs__tab">
-      <a
-        [routerLink]="['/', username, 'about']"
-        routerLinkActive="m-tabs__tab--selected"
-        [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
-        i18n
-        >About</a
-      >
-    </div>
-  </div>
-
-  <ng-container [ngSwitch]="view$ | async">
-    <m-channel__feed *ngSwitchCase="'feed'"></m-channel__feed>
-    <m-channel__shop *ngSwitchCase="'shop'"></m-channel__shop>
-    <m-channel__about *ngSwitchCase="'about'"></m-channel__about>
+    <ng-container [ngSwitch]="view$ | async">
+      <m-channel__feed *ngSwitchCase="'feed'"></m-channel__feed>
+      <m-channel__shop *ngSwitchCase="'shop'"></m-channel__shop>
+      <m-channel__about *ngSwitchCase="'about'"></m-channel__about>
+    </ng-container>
   </ng-container>
+
+  <ng-template #blockedMessage>
+    <div class="m-channel__blockedMessage" i18n>
+      You have blocked @{{ service.username$ | async }}
+    </div>
+  </ng-template>
 </div>
