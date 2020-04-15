@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TopbarHashtagsService } from '../../../hashtags/service/topbar.service';
 import { Router } from '@angular/router';
 import { Storage } from '../../../../services/storage';
+import { OnboardingV2Service } from '../../service/onboarding.service';
 
 type Hashtag = {
   value: string;
@@ -16,12 +17,16 @@ export class HashtagsStepComponent implements OnInit {
   hashtags: Array<Hashtag> = [];
   error: string;
   inProgress: boolean;
+  pendingItems: string[];
 
   constructor(
+    protected onboardingService: OnboardingV2Service,
     private service: TopbarHashtagsService,
-    private storage: Storage,
-    private router: Router
-  ) {}
+    private storage: Storage
+  ) {
+    this.onboardingService.setCurrentStep('hashtags');
+    this.pendingItems = this.onboardingService.getPendingItems();
+  }
 
   ngOnInit() {
     this.storage.set('preferred_hashtag_state', '1'); // turn on preferred hashtags for discovery
@@ -51,12 +56,12 @@ export class HashtagsStepComponent implements OnInit {
   }
 
   skip() {
-    this.router.navigate(['/onboarding', 'info']);
+    this.onboardingService.next();
   }
 
   continue() {
     if (this.validate()) {
-      this.router.navigate(['/onboarding', 'info']);
+      this.onboardingService.next();
     }
   }
 

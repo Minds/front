@@ -146,6 +146,6 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   delete() {
-    this.deleted.emit(this.entity);
+    this.deleted.emit(this.service.entity$.value);
   }
 }

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { Upload } from '../../../../services/api/upload';
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { OnboardingV2Service } from '../../service/onboarding.service';
 
 @Component({
   selector: 'm-onboarding--avatarStep',
@@ -20,15 +21,20 @@ export class AvatarStepComponent {
   waitForDoneSignal: boolean = true;
   croppedImage: any = '';
 
+  pendingItems: string[];
+
   @ViewChild('file', { static: false }) fileInput: ElementRef;
 
   constructor(
+    protected onboardingService: OnboardingV2Service,
     protected upload: Upload,
     protected userAvatarService: UserAvatarService,
     protected router: Router,
     private configs: ConfigsService
   ) {
     this.cdnAssetsUrl = this.configs.get('cdn_assets_url');
+    this.onboardingService.setCurrentStep('avatar');
+    this.pendingItems = this.onboardingService.getPendingItems();
   }
 
   uploadPhoto() {
@@ -89,12 +95,12 @@ export class AvatarStepComponent {
   }
 
   skip() {
-    this.router.navigate(['/newsfeed']);
+    this.onboardingService.next();
   }
 
   async continue() {
     await this.save();
-    this.router.navigate(['/newsfeed']);
+    this.onboardingService.next();
   }
 
   private dataURItoBlob(dataURI) {

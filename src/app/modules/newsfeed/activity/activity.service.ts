@@ -112,6 +112,15 @@ export class ActivityService {
   );
 
   /**
+   * If a paywall is required
+   */
+  shouldShowPaywall$: Observable<boolean> = this.entity$.pipe(
+    map((entity: ActivityEntity) => {
+      return !!entity.paywall;
+    })
+  );
+
+  /**
    * TODO
    */
   isBoost$: Observable<boolean> = this.entity$.pipe();

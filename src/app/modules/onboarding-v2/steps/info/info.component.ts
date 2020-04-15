@@ -1,18 +1,27 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Session } from '../../../../services/session';
 import { MindsUser } from '../../../../interfaces/entities';
-import { Client, Upload } from '../../../../services/api';
-import { Router } from '@angular/router';
+import { Client } from '../../../../services/api';
 import { PhoneVerificationComponent } from './phone-input/input.component';
-import { ConfigsService } from '../../../../common/services/configs.service';
 import * as moment from 'moment';
+import { OnboardingV2Service } from '../../service/onboarding.service';
+import { DateDropdownsComponent } from '../../../../common/components/date-dropdowns/date-dropdowns.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-onboarding__infoStep',
   templateUrl: 'info.component.html',
 })
-export class InfoStepComponent {
+export class InfoStepComponent implements OnInit, OnDestroy {
   user: MindsUser;
+
+  pendingItems: string[];
 
   selectedMonth = 'January';
   selectedDay = '1';
@@ -34,16 +43,59 @@ export class InfoStepComponent {
   @ViewChild('phoneVerification', { static: false })
   phoneVerification: PhoneVerificationComponent;
 
+  @ViewChild('dateDropdowns', { static: false })
+  dateDropdowns: DateDropdownsComponent;
+
+  phoneInputDisabled: boolean = false;
+  locationDisabled: boolean = false;
+  dobDisabled: boolean = false;
+  loadingSubscription: Subscription;
+
   constructor(
+    protected onboardingService: OnboardingV2Service,
     private session: Session,
-    private client: Client,
-    private upload: Upload,
-    private router: Router,
-    private configs: ConfigsService
+    private client: Client
   ) {
     this.user = session.getLoggedInUser();
 
+    this.onboardingService.setCurrentStep('info');
+
     this.onResize();
+  }
+
+  async ngOnInit() {
+    this.loadingSubscription = this.onboardingService.finishedLoading.subscribe(
+      async () => {
+        this.pendingItems = this.onboardingService.getPendingItems();
+
+        if (this.pendingItems.length > 0) {
+          const channel: any = await this.getInfo();
+          if (!this.pendingItems.includes('token_verification')) {
+            this.phoneInputDisabled = true;
+          }
+
+          if (!this.pendingItems.includes('location')) {
+            this.location = channel.city;
+            this.locationDisabled = true;
+          }
+
+          if (!this.pendingItems.includes('dob')) {
+            const dob = moment(channel.dob, 'YYYY-MM-DD');
+            this.dateDropdowns.selectYear(dob.year(), false);
+            this.dateDropdowns.selectMonth(
+              this.dateDropdowns.monthNames[dob.month()],
+              false
+            );
+            this.dateDropdowns.selectDay(dob.date().toString(), false);
+            this.dobDisabled = true;
+          }
+        }
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.loadingSubscription.unsubscribe();
   }
 
   locationChange(location: string) {
@@ -69,6 +121,15 @@ export class InfoStepComponent {
 
     this.location = row.address.city ? row.address.city : row.address.state;
     this.coordinates = row.lat + ',' + row.lon;
+  }
+
+  async getInfo() {
+    try {
+      const response: any = await this.client.get('api/v1/channel/me');
+      return response.channel;
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async updateLocation() {
@@ -109,16 +170,6 @@ export class InfoStepComponent {
     return true;
   }
 
-  updateUser(prop: string, value: any) {
-    const user = this.configs.get('user');
-    user[prop] = value;
-
-    const clonedUser = Object.assign({}, user);
-    this.configs.set('user', clonedUser);
-
-    this.session.userEmitter.next(clonedUser);
-  }
-
   selectedDateChange(date: string) {
     this.date = date;
     this.dateOfBirthChanged = true;
@@ -134,12 +185,12 @@ export class InfoStepComponent {
   }
 
   skip() {
-    this.router.navigate(['/onboarding', 'avatar']);
+    this.onboardingService.next();
   }
 
   continue() {
     if (this.saveData()) {
-      this.router.navigate(['/onboarding', 'avatar']);
+      this.onboardingService.next();
     }
   }
 

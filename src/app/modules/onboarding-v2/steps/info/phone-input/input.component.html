@@ -16,6 +16,7 @@
   <div class="m-onboarding__phoneInput">
     <div class="m-onboarding__input">
       <m-phoneInput
+        [disabled]="disabled"
         [ngModel]="number"
         (ngModelChange)="numberChange($event)"
         ngDefaultControl
@@ -29,7 +30,7 @@
       <button
         class="mf-button mf-button--alt m-onboardingInput__saveButton"
         style="height: 38px !important;"
-        [class.disabled]="!number || number.length < 13"
+        [class.disabled]="disabled || !number || number.length < 13"
         (click)="savePhoneNumber()"
         *ngIf="!inProgress"
         i18n
@@ -63,7 +64,7 @@
 
     <div class="m-onboarding__input">
       <input
-        type="number"
+        type="text"
         [ngModel]="code"
         (ngModelChange)="codeChange($event)"
         placeholder="eg. 198349"

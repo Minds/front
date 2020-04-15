@@ -5,6 +5,9 @@
   [class.is-pro-domain]="isProDomain"
 >
   <m-emailConfirmation *ngIf="!isProDomain"></m-emailConfirmation>
+  <m-onboardingReminder
+    *ngIf="!isProDomain && featuresService.has('onboarding-reminder')"
+  ></m-onboardingReminder>
   <m-announcement [id]="'festival:sale'" *mIfFeature="'radiocity'">
     <span
       class="m-blockchain--wallet-address-notice--action"
@@ -21,12 +24,12 @@
       [class.m-pageLayout__container]="
         !(pageLayoutService.isFullWidth$ | async)
       "
+      [class.m-pageLayout__container--fullWidth]="
+        pageLayoutService.isFullWidth$ | async
+      "
       [class.m-pageLayout__container--noSidebar]="!isSidebarVisible"
     >
-      <m-sidebar--navigation
-        m-pageLayout__pane="left"
-        [hidden]="pageLayoutService.isFullWidth$ | async"
-      ></m-sidebar--navigation>
+      <m-sidebar--navigation m-pageLayout__pane="left"></m-sidebar--navigation>
       <div
         [m-pageLayout__pane]="
           (pageLayoutService.isFullWidth$ | async) ? null : 'main'

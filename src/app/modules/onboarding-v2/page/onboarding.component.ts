@@ -8,34 +8,13 @@ import { iOSVersion } from '../../../helpers/is-safari';
 import { TopbarService } from '../../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../../common/layout/sidebar/navigation.service';
 import { FeaturesService } from '../../../services/features.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-onboarding',
   templateUrl: 'onboarding.component.html',
 })
 export class OnboardingComponent implements OnInit, OnDestroy {
-  steps = [
-    {
-      name: 'Hashtags',
-      selected: false,
-    },
-    {
-      name: 'Info',
-      selected: false,
-    },
-    {
-      name: 'Avatar',
-      selected: false,
-    },
-    // {
-    //   name: 'Groups',
-    //   selected: false,
-    // },
-    // {
-    //   name: 'Channels',
-    //   selected: false,
-    // },
-  ];
   showTitle: boolean = false;
   shown: boolean = false;
 
@@ -44,6 +23,10 @@ export class OnboardingComponent implements OnInit, OnDestroy {
 
   @HostBinding('class.m-onboarding--newNavigation')
   newNavigation: boolean = false;
+
+  loadingSubscription: Subscription;
+  slideChangedSubscription: Subscription;
+  closeSubscription: Subscription;
 
   constructor(
     private session: Session,
@@ -57,8 +40,29 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     private featuresService: FeaturesService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/register']);
+      return;
+    }
+
     this.iosFallback = iOSVersion() !== null;
+
+    if (!this.onboardingService.loaded) {
+      await this.onboardingService.checkProgress();
+    }
+
+    this.slideChangedSubscription = this.onboardingService.slideChanged.subscribe(
+      currentSlide => {
+        this.router.navigate([
+          this.onboardingService.steps[currentSlide].route,
+        ]);
+      }
+    );
+
+    this.closeSubscription = this.onboardingService.close.subscribe(() => {
+      this.router.navigate(['/newsfeed/global/top']);
+    });
 
     this.route.url.subscribe(() => {
       const section: string = this.route.snapshot.firstChild.routeConfig.path;
@@ -71,17 +75,12 @@ export class OnboardingComponent implements OnInit, OnDestroy {
         }
         this.showTitle = true;
 
-        for (const item of this.steps) {
+        for (const item of this.onboardingService.steps) {
           item.selected = item.name.toLowerCase() === section;
         }
-        this.steps = this.steps.slice(0);
+        this.onboardingService.steps = this.onboardingService.steps.slice(0);
       }
     });
-
-    if (!this.session.isLoggedIn()) {
-      this.router.navigate(['/register']);
-      return;
-    }
 
     this.newNavigation = this.featuresService.has('navigation');
 
@@ -95,6 +94,15 @@ export class OnboardingComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (this.loadingSubscription) {
+      this.loadingSubscription.unsubscribe();
+    }
+    if (this.slideChangedSubscription) {
+      this.slideChangedSubscription.unsubscribe();
+    }
+    if (this.closeSubscription) {
+      this.closeSubscription.unsubscribe();
+    }
     this.topbarService.toggleVisibility(true);
 
     if (this.newNavigation) {

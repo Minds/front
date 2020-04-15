@@ -23,6 +23,7 @@ import { WireModule } from '../../wire/wire.module';
 import { ActivityNsfwConsentComponent } from './nsfw-consent/nsfw-consent.component';
 import { ActivityMetricsComponent } from './metrics/metrics.component';
 import { ActivityRemindComponent } from './remind/remind.component';
+import { ActivityPaywallComponent } from './paywall/paywall.component';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import { ActivityRemindComponent } from './remind/remind.component';
     ActivityNsfwConsentComponent,
     ActivityMetricsComponent,
     ActivityRemindComponent,
+    ActivityPaywallComponent,
   ],
   providers: [],
   exports: [ActivityComponent],

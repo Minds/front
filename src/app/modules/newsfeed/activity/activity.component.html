@@ -25,6 +25,10 @@
 <m-activity__nsfwConsent *ngIf="service.shouldShowNsfwConsent$ | async">
 </m-activity__nsfwConsent>
 
+<m-activity__paywall
+  *ngIf="service.shouldShowPaywall$ | async"
+></m-activity__paywall>
+
 <m-activity__toolbar
   *ngIf="service.displayOptions.showToolbar"
 ></m-activity__toolbar>
