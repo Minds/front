@@ -113,6 +113,10 @@ m-button {
     padding: 0;
   }
 
+  &.m-button-v2--notInteractive {
+    cursor: default;
+  }
+
   @include m-theme() {
     color: themed($m-textColor--primary);
     background-color: themed($m-bgColor--primary);
