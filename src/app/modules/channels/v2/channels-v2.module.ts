@@ -16,6 +16,7 @@ import { ChannelActionsMessageComponent } from './actions/message.component';
 import { ChannelActionsWireComponent } from './actions/wire.component';
 import { ChannelActionsMenuButtonComponent } from './actions/menu-button.component';
 import { ChannelActionsMenuComponent } from './actions/menu.component';
+import { MessengerModule } from '../../messenger/messenger.module';
 
 /**
  * Generally available components
@@ -48,7 +49,13 @@ const PROVIDERS = [];
  * Module definition
  */
 @NgModule({
-  imports: [NgCommonModule, RouterModule, FormsModule, CommonModule],
+  imports: [
+    NgCommonModule,
+    RouterModule,
+    FormsModule,
+    CommonModule,
+    MessengerModule,
+  ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
   entryComponents: COMPONENTS,
