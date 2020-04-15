@@ -8,6 +8,8 @@
     <m-channelActions__message
       *ngIf="service.isSubscribed$ | async"
     ></m-channelActions__message>
-    <m-channelActions__subscribe></m-channelActions__subscribe>
+    <m-channelActions__subscribe
+      *ngIf="!(service.isSubscribed$ | async)"
+    ></m-channelActions__subscribe>
   </ng-template>
 </div>

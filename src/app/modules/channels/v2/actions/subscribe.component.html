@@ -1,12 +1,4 @@
-<ng-container *ngIf="service.isSubscribed$ | async; else unsubscribedAction">
-  <a class="m-button-v2 m-button-v2--notInteractive" i18n>
-    Subscribed
-  </a>
-</ng-container>
-
-<ng-template #unsubscribedAction>
-  <a class="m-button-v2 m-button-v2--positive" (click)="subscribe()">
-    +
-    <ng-container i18n>Subscribe</ng-container>
-  </a>
-</ng-template>
+<a class="m-button-v2 m-button-v2--positive" (click)="subscribe()">
+  +
+  <ng-container i18n>Subscribe</ng-container>
+</a>

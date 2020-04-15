@@ -16,7 +16,15 @@
 
   <div class="m-channelHeader__info">
     <h1 class="m-channelHeaderInfo__name">
-      {{ channel.name }}
+      <span>
+        {{ channel.name }}
+      </span>
+
+      <m-channel--badges
+        class="m-channelHeaderInfoName__badges"
+        [user]="service.channel$ | async"
+        [badges]="['admin', 'verified']"
+      ></m-channel--badges>
     </h1>
 
     <h2 class="m-channelHeaderInfo__username">@{{ channel.username }}</h2>

@@ -38,6 +38,11 @@ export class ChannelsV2Service {
   readonly isSubscribed$: Observable<boolean>;
 
   /**
+   * Blocked status
+   */
+  readonly isBlocked$: Observable<boolean>;
+
+  /**
    * Constructor
    * @param api
    * @param session
@@ -60,6 +65,18 @@ export class ChannelsV2Service {
       map(
         ([isOwner, currentUser, channel]) =>
           !isOwner && currentUser && channel && channel.subscribed
+      )
+    );
+
+    // Set isBlocked$ observable
+    this.isBlocked$ = combineLatest([
+      this.isOwner$,
+      this.session.user$,
+      this.channel$,
+    ]).pipe(
+      map(
+        ([isOwner, currentUser, channel]) =>
+          !isOwner && currentUser && channel && channel.blocked
       )
     );
   }
