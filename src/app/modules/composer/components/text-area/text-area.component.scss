@@ -6,6 +6,10 @@ m-composer__textArea {
     flex-direction: column;
     flex: 1;
     overflow: hidden;
+
+    @media screen and (max-width: $max-mobile) {
+      flex: unset; // Flex doesn't play well with mobile 100% height
+    }
   }
 
   textarea {
