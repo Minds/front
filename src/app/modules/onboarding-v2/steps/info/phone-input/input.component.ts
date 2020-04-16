@@ -12,7 +12,7 @@ export class PhoneVerificationComponent {
   @Input() tooltipAnchor: 'top' | 'left' = 'left';
 
   number: string;
-  code: number;
+  code: string; // string because we need to check for starting with 0
   secret: string;
 
   @Input() error: string;
@@ -57,11 +57,11 @@ export class PhoneVerificationComponent {
     this.error = null;
   }
 
-  codeChange(code: number) {
+  codeChange(code: string) {
     this.code = code;
     this.error = null;
 
-    if (code.toString().length === 6) {
+    if (code.length === 6) {
       this.confirm();
     }
   }
