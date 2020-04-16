@@ -11,6 +11,15 @@ m-blockchain--purchase {
       color: themed($m-grey-800);
     }
   }
+  .m-purchase-sendWyre__errorContainer {
+    margin-top: 16px;
+
+    .m-purchase-sendWyre__errorText {
+      @include m-theme() {
+        color: themed($m-red);
+      }
+    }
+  }
 }
 
 .m-blockchainTokenPurchase {

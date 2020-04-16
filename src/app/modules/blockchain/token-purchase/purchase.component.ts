@@ -50,6 +50,7 @@ export class BlockchainPurchaseComponent implements OnInit {
   showEthModal: boolean = false;
   confirming: boolean = false;
   confirmed: boolean = false;
+  sendWyreError: string = '';
   error: string;
 
   @Input() phase: string = 'sale';
@@ -83,6 +84,10 @@ export class BlockchainPurchaseComponent implements OnInit {
         this.purchaseEth();
       }
     });
+
+    if (this.route.snapshot.queryParamMap.get('failed') === '1') {
+      this.sendWyreError = 'Sorry, your purchase appears to have failed.';
+    }
   }
 
   ngOnDestroy() {
