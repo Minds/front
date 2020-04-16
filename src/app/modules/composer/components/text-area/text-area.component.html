@@ -38,6 +38,9 @@
     [ngModel]="message$ | async"
     [disabled]="isPosting$ | async"
     (ngModelChange)="onMessageChange($event)"
+    (filePaste)="filePaste.emit($event)"
+    m-attachment-paste
+    tabindex="0"
     data-cy="composer-textarea"
     #messageInput
   ></textarea>

@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  EventEmitter,
   Inject,
   Input,
+  Output,
   PLATFORM_ID,
   ViewChild,
 } from '@angular/core';
@@ -25,6 +27,12 @@ export class TextAreaComponent {
   @Input() inputId: string = '';
 
   /**
+   * Emits pasted file
+   */
+  @Output()
+  filePaste: EventEmitter<File> = new EventEmitter<File>();
+
+  /**
    * Temporary storage for title to avoid re-writing it in case of removing it by mistake.
    */
   titleCache: string = '';
@@ -32,16 +40,14 @@ export class TextAreaComponent {
   /**
    * Title input DOM element
    */
-  @ViewChild('titleInput', { static: false }) titleInput: ElementRef<
-    HTMLInputElement
-  >;
+  @ViewChild('titleInput', { static: false })
+  titleInput: ElementRef<HTMLInputElement>;
 
   /**
    * Message textarea DOM element
    */
-  @ViewChild('messageInput', { static: false }) messageInput: ElementRef<
-    HTMLTextAreaElement
-  >;
+  @ViewChild('messageInput', { static: false })
+  messageInput: ElementRef<HTMLTextAreaElement>;
 
   /**
    * Constructor
