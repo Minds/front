@@ -17,6 +17,7 @@ import { ChannelActionsWireComponent } from './actions/wire.component';
 import { ChannelActionsMenuButtonComponent } from './actions/menu-button.component';
 import { ChannelActionsMenuComponent } from './actions/menu.component';
 import { MessengerModule } from '../../messenger/messenger.module';
+import { NewsfeedModule } from '../../newsfeed/newsfeed.module';
 
 /**
  * Generally available components
@@ -54,6 +55,7 @@ const PROVIDERS = [];
     RouterModule,
     FormsModule,
     CommonModule,
+    NewsfeedModule,
     MessengerModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],

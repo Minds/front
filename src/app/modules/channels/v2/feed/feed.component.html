@@ -1,0 +1,33 @@
+<div class="m-pageLayout__container m-channel__feed">
+  <div class="m-channelFeed__list" m-pageLayout__pane="main">
+    <m-feedFilter
+      class="m-channelFeedList__filter"
+      [options]="['type']"
+      [type]="feed.type$ | async"
+      (typeChange)="onTypeChange($event)"
+    >
+      <!-- TODO: Scheduled count and link -->
+    </m-feedFilter>
+
+    <div class="m-channelFeedList__entities">
+      <m-newsfeed__entity
+        *ngFor="let entity of feed.service.feed | async; let i = index"
+        [entity]="entity | async"
+        [slot]="i + 1"
+        [allowAutoplayOnScroll]="true"
+      ></m-newsfeed__entity>
+      <!--(deleted)="delete($event)"-->
+
+      <infinite-scroll
+        distance="25%"
+        (load)="feed.loadNext()"
+        [moreData]="feed.service.hasMore | async"
+        [inProgress]="feed.service.inProgress | async"
+      ></infinite-scroll>
+    </div>
+  </div>
+
+  <div m-pageLayout__pane="right">
+    <!-- Bio -->
+  </div>
+</div>
