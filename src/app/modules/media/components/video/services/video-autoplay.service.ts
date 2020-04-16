@@ -57,6 +57,20 @@ export class VideoAutoplayService implements OnDestroy {
     return this;
   }
 
+  /**
+   * Removes a player from the list of autoplayable players
+   * @param player
+   */
+  unregisterPlayer(player: MindsVideoPlayerComponent) {
+    const index = this.players.findIndex(value => value === player);
+
+    if (index !== -1) {
+      this.players.splice(index, 1);
+    }
+
+    return this;
+  }
+
   init(): void {
     this.scroll$ = this.scroll.listenForView().subscribe(() => {
       this.checkVisibility();
@@ -129,7 +143,6 @@ export class VideoAutoplayService implements OnDestroy {
    */
   stopPlaying(player: MindsVideoPlayerComponent): void {
     if (!this.userPlaying && player) {
-      player.stop();
       player.setAutoplaying(false);
     }
   }
