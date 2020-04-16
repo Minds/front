@@ -10,6 +10,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 export class DiscoveryFeedItemComponent {
   @Input() entity; // TODO add type
   @Input() openComments: boolean = false;
+  @Input() allowAutoplayOnScroll: boolean;
   readonly cdnUrl: string;
 
   constructor(configs: ConfigsService) {
