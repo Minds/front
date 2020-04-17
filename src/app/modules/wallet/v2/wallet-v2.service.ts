@@ -231,7 +231,7 @@ export class WalletV2Service {
       this.wallet.cash.address = 'stripe';
       if (account.totalBalance && account.pendingBalance) {
         this.wallet.cash.balance =
-          (account.totalBalance.amount - account.pendingBalance.amount) / 100;
+          (account.totalBalance.amount + account.pendingBalance.amount) / 100;
         this.stripeDetails.pendingBalanceSplit = this.splitBalance(
           account.pendingBalance.amount / 100
         );
