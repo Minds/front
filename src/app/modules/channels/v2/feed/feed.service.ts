@@ -4,8 +4,15 @@ import {
   FeedFilterSort,
   FeedFilterType,
 } from '../../../../common/components/feed-filter/feed-filter.component';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  map,
+  startWith,
+  switchAll,
+  switchMap,
+} from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
+import { ApiService } from '../../../../common/api/api.service';
 
 /**
  * Feed component service, handles filtering and pagination
@@ -32,14 +39,22 @@ export class FeedService {
   >('activities');
 
   /**
+   * Scheduled count observable
+   */
+  readonly scheduledCount$: Observable<number>;
+
+  /**
    * Filter change subscription
    */
   protected filterChangeSubscription: Subscription;
 
   /**
    * Constructor. Sets the main observable subscription.
+   * @param service
+   * @param api
    */
-  constructor(public service: FeedsService) {
+  constructor(public service: FeedsService, protected api: ApiService) {
+    // Fetch when GUID or filter change
     this.filterChangeSubscription = combineLatest([
       this.guid$,
       this.sort$,
@@ -63,6 +78,14 @@ export class FeedService {
           .setLimit(12)
           .fetch();
       });
+
+    // Fetch scheduled count when GUID changes
+    this.scheduledCount$ = this.guid$.pipe(
+      distinctUntilChanged(),
+      map(guid => this.api.get(`api/v2/feeds/scheduled/${guid}/count`)),
+      switchAll(),
+      map(response => response.count)
+    );
   }
 
   /**
@@ -87,5 +110,19 @@ export class FeedService {
     }
 
     this.service.loadMore();
+  }
+
+  /**
+   * Handles activity deletion
+   */
+  onDelete(entity: any) {
+    if (!entity || !entity.guid) {
+      return;
+    }
+
+    this.service.deleteItem(
+      entity,
+      (item, entity) => item.guid === entity.guid
+    );
   }
 }

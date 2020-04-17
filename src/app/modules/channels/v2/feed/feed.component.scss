@@ -18,6 +18,25 @@
     padding: 0 0 20px;
   }
 
+  .m-channelFeedListFilter__scheduled {
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: normal;
+    text-decoration: none;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    strong {
+      font-weight: normal;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
   m-newsfeed__entity {
     display: block;
     margin: 0 0 20px;

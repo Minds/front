@@ -6,7 +6,15 @@
       [type]="feed.type$ | async"
       (typeChange)="onTypeChange($event)"
     >
-      <!-- TODO: Scheduled count and link -->
+      <ng-container *ngIf="service.isOwner$">
+        <a
+          *ngIf="feed.scheduledCount$ | async as scheduledCount"
+          class="m-channelFeedListFilter__scheduled"
+          [routerLink]="['/', service.username$ | async, 'scheduled']"
+        >
+          Scheduled <strong>{{ scheduledCount }}</strong>
+        </a>
+      </ng-container>
     </m-feedFilter>
 
     <div class="m-channelFeedList__entities">
@@ -15,8 +23,8 @@
         [entity]="entity | async"
         [slot]="i + 1"
         [allowAutoplayOnScroll]="true"
+        (deleted)="feed.onDelete($event)"
       ></m-newsfeed__entity>
-      <!--(deleted)="delete($event)"-->
 
       <infinite-scroll
         distance="25%"
