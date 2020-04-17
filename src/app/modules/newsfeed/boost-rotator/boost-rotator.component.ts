@@ -112,6 +112,7 @@ export class NewsfeedBoostRotatorComponent {
     this.scroll_listener = this.scroll
       .listenForView()
       .subscribe(() => this.isVisible());
+    this.isVisible();
 
     this.paused = this.service.isBoostPaused();
 
@@ -196,7 +197,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   isVisible() {
-    const bounds = this.element.nativeElement.getBoundingClientRect();
+    const bounds = this.element.nativeElement.parentElement.getBoundingClientRect();
     if (bounds.top > 0) {
       //console.log('[rotator]: in view', this.rotator);
       if (!this.running) this.start();
