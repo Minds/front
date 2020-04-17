@@ -10,6 +10,7 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { ReportModule } from '../report/report.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { WireModule } from '../wire/wire.module';
+import { YoutubeMigrationModule } from '../media/youtube-migration/youtube-migration.module';
 
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 
@@ -47,6 +48,9 @@ import { SettingsV2ProPayoutsComponent } from './pro/payouts/payouts.component';
 import { SettingsV2ProCancelComponent } from './pro/cancel/cancel.component';
 import { StrikesComponent } from '../report/strikes/strikes.component';
 import { SettingsV2AutoplayVideosComponent } from './account/autoplay-videos/autoplay-videos.component';
+import { SettingsV2YoutubeMigrationComponent } from './other/youtube-migration/youtube-migration.component';
+import { YoutubeMigrationConnectComponent } from '../media/youtube-migration/connect/connect.component';
+import { YoutubeMigrationDashboardComponent } from '../media/youtube-migration/dashboard/dashboard.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -340,6 +344,13 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
+            path: 'youtube-migration',
+            component: SettingsV2YoutubeMigrationComponent,
+            data: {
+              title: 'Youtube Migration',
+            },
+          },
+          {
             path: 'deactivate-account',
             component: SettingsV2DeactivateAccountComponent,
             data: {
@@ -385,6 +396,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsModule,
     WalletV2Module,
     ProModule,
+    YoutubeMigrationModule,
   ],
   declarations: [
     SettingsV2Component,
@@ -415,6 +427,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2ProPayoutsComponent,
     SettingsV2ProCancelComponent,
     SettingsV2AutoplayVideosComponent,
+    SettingsV2YoutubeMigrationComponent,
   ],
   providers: [SettingsV2Service],
   exports: [SettingsV2Component],

@@ -165,6 +165,13 @@ export class SettingsV2Component implements OnInit {
       },
       {
         header: {
+          label: 'Content Migration',
+          id: 'content-migration',
+        },
+        items: [{ label: 'Youtube', id: 'youtube-migration' }],
+      },
+      {
+        header: {
           label: 'Deactivate and Delete Account',
           id: 'deactivate-account',
         },

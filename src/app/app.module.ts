@@ -73,6 +73,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
+import { YoutubeMigrationModule } from './modules/media/youtube-migration/youtube-migration.module';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -140,6 +141,7 @@ export class SentryErrorHandler implements ErrorHandler {
     ChannelsModule,
     UpgradesModule,
     SharedModule,
+    YoutubeMigrationModule,
 
     //last due to :username route
     AppRoutingModule,
