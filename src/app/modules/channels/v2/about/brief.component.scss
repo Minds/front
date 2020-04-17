@@ -52,6 +52,12 @@
     }
   }
 
+  .m-channelAboutBriefBio__content {
+    max-width: 100%;
+    white-space: pre-line;
+    word-break: break-word;
+  }
+
   .m-channelAboutBriefBio__readMore {
     @include m-theme() {
       @include m-readMoreButton(themed($m-bgColor--primary)) {

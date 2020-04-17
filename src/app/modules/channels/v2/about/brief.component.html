@@ -35,9 +35,10 @@
     m-read-more
     [maxHeightAllowed]="110"
   >
-    <div>
-      {{ channel.briefdescription | tags }}
-    </div>
+    <div
+      class="m-channelAboutBriefBio__content"
+      [innerHtml]="channel.briefdescription | tags"
+    ></div>
 
     <m-read-more--button wrapperClass="m-channelAboutBriefBio__readMore" i18n>
       Read More

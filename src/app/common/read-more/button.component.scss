@@ -52,5 +52,6 @@
     rgba($backgroundColor, 0) 0%,
     rgba($backgroundColor, 1) 50%
   );
+  transform: translateZ(0) translateY(1px);
   @content;
 }
