@@ -4,6 +4,10 @@
   </m-channel__header>
 
   <ng-container *ngIf="!(service.isBlocked$ | async); else blockedMessage">
+    <m-channelAbout__brief
+      class="m-channel__narrowBrief"
+    ></m-channelAbout__brief>
+
     <div
       *ngIf="service.username$ | async as username"
       class="m-channel__tabs m-tabs__container"
