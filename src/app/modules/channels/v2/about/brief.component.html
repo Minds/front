@@ -1,0 +1,46 @@
+<div class="m-channelAbout__brief" *ngIf="service.channel$ | async as channel">
+  <div class="m-channelAboutBrief__stats">
+    <div class="m-channelAboutBriefStats__item">
+      <span class="m-channelAboutBriefStatsItem__label" i18n>Subscribers</span>
+      <span class="m-channelAboutBriefStatsItem__value">{{
+        channel.subscribers_count | abbr: 0
+      }}</span>
+    </div>
+
+    <div class="m-channelAboutBriefStats__item">
+      <span class="m-channelAboutBriefStatsItem__label" i18n
+        >Subscriptions</span
+      >
+      <span class="m-channelAboutBriefStatsItem__value">{{
+        channel.subscriptions_count | abbr: 0
+      }}</span>
+    </div>
+
+    <div class="m-channelAboutBriefStats__item">
+      <span class="m-channelAboutBriefStatsItem__label" i18n>Views</span>
+      <span class="m-channelAboutBriefStatsItem__value">{{
+        channel.impressions | abbr: 0
+      }}</span>
+    </div>
+  </div>
+
+  <div *ngIf="channel.city" class="m-channelAboutBrief__location">
+    <m-icon iconId="location_on" [sizeFactor]="10"></m-icon>
+    <span>{{ channel.city }}</span>
+  </div>
+
+  <div
+    *ngIf="channel.briefdescription"
+    class="m-channelAboutBrief__bio"
+    m-read-more
+    [maxHeightAllowed]="110"
+  >
+    <div>
+      {{ channel.briefdescription | tags }}
+    </div>
+
+    <m-read-more--button wrapperClass="m-channelAboutBriefBio__readMore" i18n>
+      Read More
+    </m-read-more--button>
+  </div>
+</div>

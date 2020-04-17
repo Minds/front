@@ -1,0 +1,63 @@
+.m-channelAbout__brief {
+  .m-channelAboutBrief__stats {
+    margin: 0 0 35px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .m-channelAboutBriefStatsItem__label {
+    display: block;
+    font-size: 13px;
+    line-height: 18px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-channelAboutBriefStatsItem__value {
+    display: block;
+    font-size: 18px;
+    line-height: 23px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-channelAboutBrief__location {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 0 10px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    > * + * {
+      margin-left: 10px;
+    }
+  }
+
+  .m-channelAboutBrief__bio {
+    font-size: 14px;
+    line-height: 19px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-channelAboutBriefBio__readMore {
+    @include m-theme() {
+      @include m-readMoreButton(themed($m-bgColor--primary)) {
+        font-size: 15px;
+        height: 70px;
+      }
+    }
+  }
+}

@@ -6,10 +6,6 @@
       padding: 20px;
     }
   }
-
-  .m-pageLayout__pane--right {
-    padding-right: 0;
-  }
 }
 
 .m-channel__feed {
@@ -40,5 +36,9 @@
   m-newsfeed__entity {
     display: block;
     margin: 0 0 20px;
+  }
+
+  .m-channelFeed__sidebar {
+    padding: 35px 0 0;
   }
 }

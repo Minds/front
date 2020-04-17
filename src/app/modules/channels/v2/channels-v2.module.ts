@@ -8,6 +8,7 @@ import { ChannelHeaderComponent } from './header/header.component';
 import { ChannelFeedComponent } from './feed/feed.component';
 import { ChannelShopComponent } from './shop/shop.component';
 import { ChannelAboutComponent } from './about/about.component';
+import { ChannelAboutBriefComponent } from './about/brief.component';
 import { ChannelEditComponent } from './edit/edit.component';
 import { ChannelActionsComponent } from './actions/actions.component';
 import { ChannelActionsSubscribeComponent } from './actions/subscribe.component';
@@ -32,6 +33,7 @@ const INTERNAL_COMPONENTS = [
   ChannelFeedComponent,
   ChannelShopComponent,
   ChannelAboutComponent,
+  ChannelAboutBriefComponent,
   ChannelActionsComponent,
   ChannelActionsSubscribeComponent,
   ChannelActionsEditComponent,
