@@ -1,0 +1,12 @@
+m-youtubeMigration {
+  .m-youtubeMigration__notice {
+    display: flex;
+    justify-content: center;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    p {
+      margin: 57px 0;
+    }
+  }
+}

@@ -6,13 +6,21 @@ import { Session } from '../../../services/session';
 export class YoutubeMigrationService {
   constructor(private client: Client, protected session: Session) {}
 
-  async requestAuthorization() {
+  async requestAuthorization(): Promise<{ url: string }> {
     const response = <any>(
       await this.client.get('api/v3/media/youtube-importer/oauth')
     );
 
     console.log('oauthresponse', response, response.url);
-    window.location.replace(response.url);
-    // return response;
+    return response;
+  }
+
+  async getVideos(channelId, status): Promise<{ videos: any }> {
+    const response = <any>(
+      await this.client.get('api/v3/media/youtube-importer/videos')
+    );
+
+    console.log('getVideos response', response);
+    return response;
   }
 }

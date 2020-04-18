@@ -10,7 +10,35 @@ import { YoutubeMigrationListComponent } from './list/list.component';
 import { YoutubeMigrationConfigComponent } from './config/config.component';
 import { YoutubeMigrationTransferStatusComponent } from './transfer-status/transfer-status.component';
 import { YoutubeMigrationService } from './youtube-migration.service';
+import { YoutubeMigrationUnmigratedVideosComponent } from './unmigrated-videos/unmigrated-videos.component';
+import { YoutubeMigrationMigratedVideosComponent } from './migrated-videos/migrated-videos.component';
 
+const routes: Routes = [
+  {
+    path: '',
+    component: YoutubeMigrationComponent,
+    children: [
+      { path: '', redirectTo: 'connect', pathMatch: 'full' },
+      { path: 'connect', component: YoutubeMigrationConnectComponent },
+      {
+        path: 'dashboard',
+        component: YoutubeMigrationDashboardComponent,
+        children: [
+          { path: '', redirectTo: 'available', pathMatch: 'full' },
+          {
+            path: 'available',
+            component: YoutubeMigrationUnmigratedVideosComponent,
+          },
+          {
+            path: 'transferred',
+            component: YoutubeMigrationMigratedVideosComponent,
+          },
+          { path: 'config', component: YoutubeMigrationConfigComponent },
+        ],
+      },
+    ],
+  },
+];
 @NgModule({
   declarations: [
     YoutubeMigrationComponent,
@@ -19,15 +47,18 @@ import { YoutubeMigrationService } from './youtube-migration.service';
     YoutubeMigrationListComponent,
     YoutubeMigrationConfigComponent,
     YoutubeMigrationTransferStatusComponent,
+    YoutubeMigrationUnmigratedVideosComponent,
+    YoutubeMigrationMigratedVideosComponent,
   ],
   imports: [
     CommonModule,
     NgCommonModule,
     RouterModule,
+    RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
   ],
-  exports: [YoutubeMigrationComponent, YoutubeMigrationConnectComponent],
+  exports: [YoutubeMigrationComponent],
   entryComponents: [YoutubeMigrationComponent],
   providers: [YoutubeMigrationService],
 })

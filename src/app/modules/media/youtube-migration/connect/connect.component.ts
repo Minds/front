@@ -16,17 +16,13 @@ export class YoutubeMigrationConnectComponent implements OnInit {
 
   inProgress: boolean = false;
 
-  ngOnInit() {
-    const user = this.session.getLoggedInUser();
-    console.log(user);
-    if (user.yt_channels) {
-      this.router.navigate(['dashboard'], { replaceUrl: true });
-      return;
-    }
-  }
+  ngOnInit() {}
 
-  async connect() {
-    this.inProgress = true;
-    this.youtubeService.requestAuthorization();
+  async connect(): Promise<void> {
+    const { url } = (await this.youtubeService.requestAuthorization()) as any;
+
+    if (url) {
+      window.location.replace(url);
+    }
   }
 }
