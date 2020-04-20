@@ -5,6 +5,7 @@
   <div class="m-channelShopBrief__title">
     <span class="m-channelShopBriefTitle__text">Shop</span>
     <a
+      *ngIf="false"
       class="m-channelShopBriefTitle__seeAll"
       [routerLink]="['/', channel.username$ | async, 'shop']"
       i18n
