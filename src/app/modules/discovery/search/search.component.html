@@ -45,6 +45,7 @@
   <m-discovery__feedItem
     *ngFor="let entity$ of entities$ | async"
     [entity]="entity$ | async"
+    [allowAutoplayOnScroll]="true"
   ></m-discovery__feedItem>
   <infinite-scroll
     distance="25%"

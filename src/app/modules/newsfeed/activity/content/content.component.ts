@@ -24,6 +24,8 @@ import {
 } from '../activity.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../media/modal/modal.component';
+import { ConfigsService } from '../../../../common/services/configs.service';
+import { RedirectService } from '../../../../common/services/redirect.service';
 
 @Component({
   selector: 'm-activity__content',
@@ -62,14 +64,20 @@ export class ActivityContentComponent
   private entitySubscription: Subscription;
   private activityHeightSubscription: Subscription;
 
+  readonly siteUrl: string;
+
   entity: ActivityEntity;
 
   constructor(
     public service: ActivityService,
     private overlayModal: OverlayModalService,
     private router: Router,
-    private el: ElementRef
-  ) {}
+    private el: ElementRef,
+    private redirectService: RedirectService,
+    configs: ConfigsService
+  ) {
+    this.siteUrl = configs.get('site_url');
+  }
 
   ngOnInit() {
     this.entitySubscription = this.service.entity$.subscribe(
@@ -239,6 +247,14 @@ export class ActivityContentComponent
     if (event) {
       event.preventDefault();
       event.stopPropagation();
+    }
+
+    if (
+      this.entity.perma_url &&
+      this.entity.perma_url.indexOf(this.siteUrl) === 0
+    ) {
+      this.redirectService.redirect(this.entity.perma_url);
+      return; // Don't open modal for minds links
     }
 
     this.entity.modal_source_url = this.router.url;

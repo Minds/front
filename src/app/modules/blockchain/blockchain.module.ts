@@ -26,6 +26,7 @@ import { GetMetamaskComponent } from './metamask/getmetamask.component';
 import { BlockchainEthModalComponent } from './eth-modal/eth-modal.component';
 import { BlockchainMarketingOnboardComponent } from './token-purchase/onboard.component';
 import { BlockchainPurchaseComponent } from './token-purchase/purchase.component';
+import { SendWyreService } from './sendwyre/sendwyre.service';
 import { ModalsModule } from '../modals/modals.module';
 import { ConfigsService } from '../../common/services/configs.service';
 
@@ -83,6 +84,7 @@ const cryptoRoutes: Routes = [
     BoostContractService,
     TokenDistributionEventService,
     OffchainPaymentService,
+    SendWyreService,
   ],
   exports: [
     BlockchainWalletSelector,

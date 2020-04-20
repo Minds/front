@@ -50,11 +50,12 @@ export class WalletTransactionsCashComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.walletService.wallet.cash.address) {
-      this.getStripeAccount();
-    } else {
-      this.init = true;
-    }
+    //if (this.walletService.wallet.cash.address) {
+    this.getStripeAccount();
+    //this.init = true;
+    // } else {
+    //   this.init = true;
+    // }
     this.detectChanges();
   }
 
@@ -188,7 +189,7 @@ export class WalletTransactionsCashComponent implements OnInit {
   }
 
   getOtherUser(tx) {
-    const isSender = false,
+    const isSender = true,
       user = tx.customer_user;
 
     return {

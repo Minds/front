@@ -73,6 +73,10 @@ export class OnboardingReminderComponent implements OnInit, OnDestroy {
    * @param {Object} user
    */
   async setShouldShow(user) {
+    if (!user) {
+      return;
+    }
+
     await this.service.checkProgress();
 
     this.shouldShow =

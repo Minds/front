@@ -16,7 +16,7 @@
       style="display: block; width: 100%; height: 100%;"
       [plyrPoster]="service.poster$ | async"
       [plyrPlaysInline]="true"
-      [plyrSources]="sources$ | async"
+      [plyrSources]="useEmptySource ? emptySource : (sources$ | async)"
       [plyrOptions]="options"
       (plyrPlay)="onPlayed($event)"
       (plyrEnterFullScreen)="fullScreenChange.next($event)"
