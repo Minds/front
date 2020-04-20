@@ -246,7 +246,7 @@ export class NewsfeedBoostRotatorComponent {
   active() {
     this.windowFocused = true;
     this.isVisible();
-    this.next(); // Show a new boost when we open our window again
+    // this.next(); // Show a new boost when we open our window again
   }
 
   inActive() {
