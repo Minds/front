@@ -1,6 +1,7 @@
 <div
   *ngIf="shop.wireRewards$ | async as wireRewards"
   class="m-channelShop__brief"
+  [hidden]="wireRewards.count === 0"
 >
   <div class="m-channelShopBrief__title">
     <span class="m-channelShopBriefTitle__text">Shop</span>
