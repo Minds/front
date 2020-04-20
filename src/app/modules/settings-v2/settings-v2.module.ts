@@ -141,8 +141,8 @@ const SETTINGS_V2_ROUTES: Routes = [
             path: 'toaster-notifications',
             component: SettingsV2ToasterNotificationsComponent,
             data: {
-              title: 'Toaster Notifications',
-              description: 'Control whether you receive toaster notifications.',
+              title: 'Notification Popovers',
+              description: 'Control whether you receive notification popovers.',
             },
           },
           { path: '**', redirectTo: 'account' },

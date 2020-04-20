@@ -57,17 +57,21 @@ export class ChannelSidebar implements OnInit {
     if (onboardingService && onboardingService.onClose) {
       onboardingService.onClose.subscribe(progress => {
         this.onboardingProgress = -1;
-        this.checkProgress();
+        this.checkOnboardingProgress();
       });
     }
   }
 
   ngOnInit() {
-    this.checkProgress();
+    this.checkOnboardingProgress();
   }
 
-  async checkProgress() {
-    if (isPlatformServer(this.platformId)) {
+  async checkOnboardingProgress() {
+    if (
+      isPlatformServer(this.platformId) ||
+      !this.session.isLoggedIn() ||
+      this.session.getLoggedInUser().guid !== this.user.guid
+    ) {
       return;
     }
 

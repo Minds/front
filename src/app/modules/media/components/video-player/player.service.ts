@@ -71,6 +71,9 @@ export class VideoPlayerService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (this.sources$) {
+      this.sources$.unsubscribe();
+    }
     if (this.poster$) {
       this.poster$.unsubscribe();
     }
@@ -108,7 +111,7 @@ export class VideoPlayerService implements OnDestroy {
    */
   async load(): Promise<void> {
     try {
-      let response = await this.client.get('api/v2/media/video/' + this.guid);
+      const response = await this.client.get('api/v2/media/video/' + this.guid);
       this.sources$.next((<any>response).sources);
       this.poster$.next((<any>response).poster);
       this.status = (<any>response).transcode_status;
@@ -127,7 +130,7 @@ export class VideoPlayerService implements OnDestroy {
     const user = this.session.getLoggedInUser();
 
     return (
-      //(user.plus && !user.disable_autoplay_videos) ||
+      (user.plus && !user.disable_autoplay_videos) ||
       this.isModal || // Always playable in modal
       !this.shouldPlayInModal || // Equivalent of asking to play inline
       (this.overlayModalService.canOpenInModal() && !this.isModal) ||

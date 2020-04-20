@@ -231,7 +231,7 @@ export class WalletV2Service {
       this.wallet.cash.address = 'stripe';
       if (account.totalBalance && account.pendingBalance) {
         this.wallet.cash.balance =
-          (account.totalBalance.amount - account.pendingBalance.amount) / 100;
+          (account.totalBalance.amount + account.pendingBalance.amount) / 100;
         this.stripeDetails.pendingBalanceSplit = this.splitBalance(
           account.pendingBalance.amount / 100
         );
@@ -350,25 +350,19 @@ export class WalletV2Service {
     }
   }
 
-  async getProEarnings() {
-    const opts = {
-      metric: 'earnings_total',
-      timespan: 'today',
-    };
+  async getProEarnings(): Promise<number> {
     try {
-      const response = <any>(
-        await this.client.get('api/v2/analytics/dashboards/earnings', opts)
-      );
-
-      const earningsBuckets = response.dashboard.metrics.find(
-        m => m.id === 'earnings_total'
-      ).visualisation.segments[0].buckets;
-
-      if (earningsBuckets && earningsBuckets.length) {
-        return earningsBuckets.slice(-1)[0].value / 100;
-      } else {
-        return 67.55;
-      }
+      const response = <
+        {
+          balance: {
+            user_guid: string;
+            amount_cents: number;
+            amount_usd: number;
+            amount_tokens: string;
+          };
+        }
+      >await this.client.get('api/v3/monetization/partners/balance');
+      return response.balance.amount_usd;
     } catch (e) {
       console.error(e);
       return e;
