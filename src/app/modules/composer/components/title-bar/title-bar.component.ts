@@ -56,7 +56,7 @@ export class TitleBarComponent {
     license => license.selectable
   );
 
-  constructor(protected service: ComposerService) {}
+  constructor(public service: ComposerService) {}
 
   /**
    * Access ID subject from service

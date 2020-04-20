@@ -25,6 +25,11 @@ export type MessageSubjectValue = string;
 export const DEFAULT_MESSAGE_VALUE: MessageSubjectValue = '';
 
 /**
+ * Type of content contained in blog.
+ */
+export type ContentType = 'blog' | 'post';
+
+/**
  * Title value type
  */
 export type TitleSubjectValue = string | null;
@@ -282,6 +287,13 @@ export class ComposerService implements OnDestroy {
   );
 
   /**
+   * Is it a blog or post? (state)
+   */
+  readonly contentType$: BehaviorSubject<ContentType> = new BehaviorSubject<
+    ContentType
+  >('post');
+
+  /**
    * Are we currently moving part of this service's state to another place? (i.e. blog editor)
    */
   readonly isMovingContent$: BehaviorSubject<boolean> = new BehaviorSubject<
@@ -369,6 +381,7 @@ export class ComposerService implements OnDestroy {
         })
       ),
       this.license$.pipe(distinctUntilChanged()),
+
       this.attachment$.pipe(
         // Only react to attachment changes from previous values (string -> File -> null -> File -> ...)
         distinctUntilChanged(),

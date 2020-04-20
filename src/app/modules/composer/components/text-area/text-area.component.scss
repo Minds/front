@@ -44,6 +44,18 @@ m-composer__textArea {
     }
   }
 
+  m-blog__editor {
+    height: 100%;
+    margin: 0 38px;
+
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   .m-composerTextarea__title {
     padding: 20px 40px;
     display: flex;
@@ -97,6 +109,38 @@ m-composer__textArea {
         margin-left: 10px;
         font-weight: 300;
       }
+    }
+  }
+}
+
+.m-composerTextarea__title.m-composerTextarea__title--blog {
+  font-size: 16px;
+  font-weight: 500;
+  padding-bottom: 0;
+  border-top-color: rgb(64, 74, 78);
+  border-top-style: solid;
+  border-width: 1px;
+}
+
+.ck-body-wrapper {
+  z-index: 999999999;
+}
+
+:root button.ck-block-toolbar-button {
+  z-index: 999999999 !important;
+  font-size: 14px !important;
+}
+
+.ck-balloon-panel {
+  z-index: 999999999 !important;
+}
+
+ckeditor {
+  .ck-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    p {
+      font-size: 16px;
     }
   }
 }

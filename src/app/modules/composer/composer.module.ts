@@ -24,6 +24,7 @@ import { ScheduleComponent } from './components/popup/schedule/schedule.componen
 import { TextAreaComponent } from './components/text-area/text-area.component';
 import { ComposerTopbarButtonComponent } from './topbar-button/topbar-button.component';
 import { ComposerCoverPhotoSelectorComponent } from './components/cover-photo-selector/cover-photo-selector.component';
+import { BlogModule } from '../blogs/blog.module';
 
 /**
  * Exported components
@@ -65,7 +66,13 @@ const PROVIDERS = [
  * Module definition
  */
 @NgModule({
-  imports: [NgCommonModule, FormsModule, CommonModule, HashtagsModule],
+  imports: [
+    NgCommonModule,
+    FormsModule,
+    CommonModule,
+    HashtagsModule,
+    BlogModule,
+  ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
   entryComponents: COMPONENTS,

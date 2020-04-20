@@ -49,6 +49,8 @@ export class TextAreaComponent {
   @ViewChild('messageInput', { static: false })
   messageInput: ElementRef<HTMLTextAreaElement>;
 
+  showBlogEditor: boolean = true;
+
   /**
    * Constructor
    * @param service

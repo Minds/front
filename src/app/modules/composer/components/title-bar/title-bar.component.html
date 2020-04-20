@@ -1,6 +1,17 @@
 <div class="m-composer__titleBar">
   <div class="m-composerTitleBar__title">
-    <label [for]="inputId" i18n>Compose</label>
+    <label
+      [for]="inputId"
+      *ngIf="(service.contentType$ | async) !== 'blog'"
+      i18n
+      >Compose</label
+    >
+    <label
+      [for]="inputId"
+      *ngIf="(service.contentType$ | async) === 'blog'"
+      i18n
+      >Blog</label
+    >
   </div>
 
   <div
@@ -9,7 +20,9 @@
     [hidden]="isPosting$ | async"
     (click)="onCreateBlogClick()"
   >
-    <ng-container i18n>Create Blog</ng-container>
+    <ng-container *ngIf="(service.contentType$ | async) !== 'blog'" i18n
+      >Create Blog</ng-container
+    >
   </div>
 
   <m-dropdownMenu

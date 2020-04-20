@@ -124,16 +124,17 @@ export class BaseComponent implements AfterViewInit {
    * Creates a blog using the current message
    */
   createBlog() {
-    const message = this.service.message$.getValue();
+    this.service.contentType$.next('blog');
+    // const message = this.service.message$.getValue();
 
-    this.service.isMovingContent$.next(true);
-    this.inMemoryStorage.set('newBlogContent', message);
+    // this.service.isMovingContent$.next(true);
+    // this.inMemoryStorage.set('newBlogContent', message);
 
-    if (this.popupComponent) {
-      this.popup.close();
-    }
+    // if (this.popupComponent) {
+    //   this.popup.close();
+    // }
 
-    this.router.navigate(['/blog/edit/new']);
+    // this.router.navigate(['/blog/edit/new']);
   }
 
   /**
@@ -141,7 +142,9 @@ export class BaseComponent implements AfterViewInit {
    * @param file
    */
   onAttachmentPaste(file) {
-    this.service.attachment$.next(file);
+    if (this.service.contentType$.getValue() === 'blog') {
+      this.service.attachment$.next(file);
+    }
   }
 
   /**
