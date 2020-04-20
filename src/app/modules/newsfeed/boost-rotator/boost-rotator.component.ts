@@ -196,9 +196,13 @@ export class NewsfeedBoostRotatorComponent {
     }, this.interval * 1000);
   }
 
-  isVisible() {
+  get bounds() {
     const bounds = this.element.nativeElement.parentElement.getBoundingClientRect();
-    if (bounds.top > 0) {
+    return bounds;
+  }
+
+  isVisible() {
+    if (this.bounds.top > 0) {
       //console.log('[rotator]: in view', this.rotator);
       if (!this.running) this.start();
     } else {
@@ -246,7 +250,7 @@ export class NewsfeedBoostRotatorComponent {
   active() {
     this.windowFocused = true;
     this.isVisible();
-    // this.next(); // Show a new boost when we open our window again
+    if (this.bounds.top > 0) this.next(); // Show a new boost when we open our window again
   }
 
   inActive() {
