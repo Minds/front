@@ -16,6 +16,19 @@ m-channel-v2 {
     border-color: themed($m-borderColor--primary);
   }
 
+  .m-channel__narrowBrief {
+    display: none;
+    padding: 25px 40px 0;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      display: block;
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 25px 20px 0;
+    }
+  }
+
   .m-channel__tabs {
     padding: 10px 40px 0;
 

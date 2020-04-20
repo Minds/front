@@ -4,15 +4,20 @@
   </m-channel__header>
 
   <ng-container *ngIf="!(service.isBlocked$ | async); else blockedMessage">
+    <m-channelAbout__brief
+      class="m-channel__narrowBrief"
+    ></m-channelAbout__brief>
+
     <div
       *ngIf="service.username$ | async as username"
       class="m-channel__tabs m-tabs__container"
     >
       <div class="m-tabs__tab">
         <a
+          [class.m-tabs__tab--selected]="
+            ['shop', 'about'].indexOf(view$ | async) === -1
+          "
           [routerLink]="['/', username, '']"
-          routerLinkActive="m-tabs__tab--selected"
-          [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
           i18n
           >Feed</a
         >
@@ -40,9 +45,12 @@
     </div>
 
     <ng-container [ngSwitch]="view$ | async">
-      <m-channel__feed *ngSwitchCase="'feed'"></m-channel__feed>
       <m-channel__shop *ngSwitchCase="'shop'"></m-channel__shop>
       <m-channel__about *ngSwitchCase="'about'"></m-channel__about>
+      <m-channel__feed
+        [view]="view$ | async"
+        *ngSwitchDefault
+      ></m-channel__feed>
     </ng-container>
   </ng-container>
 

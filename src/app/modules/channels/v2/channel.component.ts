@@ -13,7 +13,13 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 /**
  * Views
  */
-type ChannelView = 'feed' | 'shop' | 'about';
+type ChannelView =
+  | 'activities'
+  | 'images'
+  | 'videos'
+  | 'blogs'
+  | 'shop'
+  | 'about';
 
 /**
  * 2020 Design channel component
@@ -39,7 +45,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
    */
   readonly view$: BehaviorSubject<ChannelView> = new BehaviorSubject<
     ChannelView
-  >('feed');
+  >('activities');
 
   /**
    * Subscription to current active route
@@ -64,7 +70,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
     // TODO: When v1 channels are deprecated, move this and Pro to router-outlet
     this.routeSubscription = this.route.params.subscribe(params => {
       if (typeof params['filter'] !== 'undefined') {
-        this.view$.next(params['filter'] || 'feed');
+        this.view$.next(params['filter'] || 'activities');
       }
     });
   }
