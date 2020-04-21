@@ -117,12 +117,16 @@
 
     <div class="m-channelAbout__field">
       <div class="m-channelAboutField__label" i18n>Tokens Earned</div>
-      <div class="m-channelAboutField__content"></div>
+      <div class="m-channelAboutField__content">
+        {{ service.tokens$ | async | token: 18 | number }}
+      </div>
     </div>
 
     <div class="m-channelAbout__field">
       <div class="m-channelAboutField__label" i18n>Tokens Sent</div>
-      <div class="m-channelAboutField__content"></div>
+      <div class="m-channelAboutField__content">
+        {{ service.tokensSent$ | async | token: 18 | number }}
+      </div>
     </div>
   </ng-template>
 </div>

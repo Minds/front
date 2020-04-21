@@ -3,7 +3,12 @@ import { MindsUser } from '../../../interfaces/entities';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { Session } from '../../../services/session';
-import { map } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  map,
+  switchAll,
+  switchMap,
+} from 'rxjs/operators';
 
 /**
  * Service that holds a channel information using Observables
@@ -26,6 +31,16 @@ export class ChannelsV2Service {
   readonly channel$: BehaviorSubject<MindsUser> = new BehaviorSubject<
     MindsUser
   >(null);
+
+  /**
+   * Tokens the channel received in the last period
+   */
+  readonly tokens$: Observable<number>;
+
+  /**
+   * Tokens the current user sent to the channel
+   */
+  readonly tokensSent$: Observable<number>;
 
   /**
    * Flag that checks if the current user is the channel owner
@@ -53,6 +68,33 @@ export class ChannelsV2Service {
    * @param session
    */
   constructor(protected api: ApiService, protected session: Session) {
+    // Set tokens$ observable
+    this.tokens$ = this.channel$.pipe(
+      distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
+      map(
+        channel =>
+          channel &&
+          this.api.get(`api/v1/wire/sums/overview/${channel.guid}`, {
+            merchant: channel.merchant ? 1 : 0,
+          })
+      ),
+      switchAll(),
+      map(response => parseFloat((response && response.tokens) || '0'))
+    );
+
+    // Set tokensSent$ observable
+    this.tokensSent$ = this.channel$.pipe(
+      distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
+      map(
+        channel =>
+          channel && this.api.get(`api/v1/wire/rewards/${channel.guid}`)
+      ),
+      switchAll(),
+      map(response =>
+        parseFloat((response && response.sums && response.sums.tokens) || '0')
+      )
+    );
+
     // Set isOwner$ observable
     this.isOwner$ = combineLatest([this.guid$, this.session.user$]).pipe(
       map(
