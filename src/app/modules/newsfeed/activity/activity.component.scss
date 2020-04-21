@@ -3,6 +3,7 @@ $activity-padding-lr: 21px;
 m-activity {
   display: block;
   position: relative;
+  box-sizing: border-box;
 
   &,
   &.m-border {
@@ -25,6 +26,11 @@ m-activity {
   height: 750px;
   display: flex;
   flex-direction: column;
+}
+
+.m-activity--fixedHeightContainer {
+  height: 100%;
+  width: 100%;
 }
 
 .m-activity--boost {

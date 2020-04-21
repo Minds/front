@@ -9,6 +9,7 @@ m-activity__toolbar {
 
   @include m-theme() {
     border-top: 1px solid themed($m-borderColor--tertiary);
+    background-color: themed($m-bgColor--secondary);
   }
 
   > * {
@@ -82,5 +83,9 @@ m-activity__toolbar {
         border: 0;
       }
     }
+  }
+
+  .m-activity--fixedHeight & {
+    z-index: 1;
   }
 }
