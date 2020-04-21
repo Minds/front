@@ -28,6 +28,7 @@
 
     <m-composer__toolbar (onPost)="onPost($event)"></m-composer__toolbar>
 
+    <!-- Attachment error -->
     <div
       class="m-composerBase__error"
       *ngIf="attachmentError$ | async as lastError"
@@ -35,6 +36,12 @@
       {{ lastError }}
     </div>
 
+    <!-- Blog error -->
+    <div class="m-composerBase__error" *ngIf="blogsService.error$ | async">
+      {{ blogsService.error$ | async }}
+    </div>
+
+    <!-- Local state error -->
     <div class="m-composerBase__error" *ngIf="error">
       {{ error }}
     </div>

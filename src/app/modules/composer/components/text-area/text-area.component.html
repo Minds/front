@@ -71,7 +71,7 @@
       </div>
       <m-blog__editor
         (contentChanged)="onMessageChange($event)"
-        [content]="'hi'"
+        [content]="blogsService.content$ | async"
         #messageInput
       ></m-blog__editor>
     </div>

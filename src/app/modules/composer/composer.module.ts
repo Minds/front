@@ -28,6 +28,7 @@ import { ComposerCoverPhotoSelectorComponent } from './components/cover-photo-se
 import { BlogModule } from '../blogs/blog.module';
 import { MetaComponent } from './components/popup/meta/meta.component';
 import { BannerComponent } from './components/banner/banner.component';
+import { ComposerService } from './services/composer.service';
 /**
  * Exported components
  */
@@ -66,6 +67,7 @@ const PROVIDERS = [
   RichEmbedService,
   ComposerBlogsService,
   PreviewService,
+  ComposerService,
 ];
 
 /**

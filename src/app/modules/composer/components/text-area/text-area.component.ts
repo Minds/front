@@ -110,7 +110,11 @@ export class TextAreaComponent {
    * @param message
    */
   onMessageChange(message: string) {
-    this.service.message$.next(message);
+    if (this.service.contentType$.getValue() === 'post') {
+      this.service.message$.next(message);
+    } else {
+      this.blogsService.content$.next(message);
+    }
   }
 
   /**

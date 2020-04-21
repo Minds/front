@@ -805,6 +805,14 @@ export class ComposerService implements OnDestroy {
   }
 
   /**
+   * Returns whether or not there is content.
+   * @returns - true if composer contains content.
+   */
+  public hasContent(): boolean {
+    return !!(this.message$.getValue() || this.attachment$.getValue());
+  }
+
+  /**
    * Posts a new activity
    */
   async post(): Promise<ActivityEntity> {

@@ -17,6 +17,8 @@ import { TextAreaComponent } from '../text-area/text-area.component';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../../services/in-memory-storage.service';
 import { BehaviorSubject } from 'rxjs';
+import { ComposerBlogsService } from '../../services/composer-blogs.service';
+import { ActivityEntity } from '../../../newsfeed/activity/activity.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -69,6 +71,7 @@ export class BaseComponent implements AfterViewInit {
     protected router: Router,
     protected inMemoryStorage: InMemoryStorageService,
     protected cd: ChangeDetectorRef,
+    protected blogsService: ComposerBlogsService,
     protected injector: Injector
   ) {}
 
@@ -153,8 +156,13 @@ export class BaseComponent implements AfterViewInit {
     try {
       this.error = '';
       this.detectChanges();
-
-      const activity = await this.service.post();
+      let activity: ActivityEntity | null;
+      if (this.service.contentType$.getValue() === 'post') {
+        activity = await this.service.post();
+      } else {
+        // redirects
+        return await this.blogsService.save();
+      }
       this.onPostEmitter.next(activity);
     } catch (e) {
       this.error = (e && e.message) || 'Internal error';
@@ -167,10 +175,7 @@ export class BaseComponent implements AfterViewInit {
    * Displays a dialog if there are any unsaved change
    */
   canDeactivate(): boolean | Promise<boolean> {
-    if (
-      this.service.message$.getValue() ||
-      this.service.attachment$.getValue()
-    ) {
+    if (this.shouldConfirmDeactivation()) {
       const confirmation = confirm(
         this.service.isMovingContent$.getValue()
           ? `Discard changes? Text will be moved into blog editor.`
@@ -186,10 +191,25 @@ export class BaseComponent implements AfterViewInit {
   }
 
   /**
+   * Determines whether component should show prompt before deactivation.
+   * @returns true if prompt should be shown.
+   */
+  shouldConfirmDeactivation(): boolean {
+    return (
+      (this.service.hasContent() &&
+        this.service.contentType$.getValue() === 'post') ||
+      (this.blogsService.hasContent() &&
+        this.service.contentType$.getValue() === 'blog')
+    );
+  }
+
+  /**
    * Detect async changes
    */
   detectChanges(): void {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    if (!this.cd['destroyed']) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 }
