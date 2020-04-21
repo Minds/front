@@ -28,6 +28,8 @@ import { WireSubscriptionTiersComponent } from './channel/tiers.component';
 import { WirePaymentsCreatorComponent } from './creator/payments/payments.creator.component';
 import { WirePaymentHandlersService } from './wire-payment-handlers.service';
 import { PayMarketingComponent } from './marketing/marketing.component';
+import { WireV2Module } from './v2/wire-v2.module';
+import { WireModalService } from './wire-modal.service';
 import { WireV2SubscriptionTiersComponent } from './channel/v2/tiers/tiers.component';
 import { WireV2ChannelTableComponent } from './channel/v2/table/table.component';
 
@@ -54,6 +56,7 @@ const wireRoutes: Routes = [
     CheckoutModule,
     FaqModule,
     PaymentsModule,
+    WireV2Module,
   ],
   declarations: [
     WireLockScreenComponent,
@@ -77,7 +80,7 @@ const wireRoutes: Routes = [
     WireV2SubscriptionTiersComponent,
     WireV2ChannelTableComponent,
   ],
-  providers: [WireService, WirePaymentHandlersService],
+  providers: [WireService, WirePaymentHandlersService, WireModalService],
   exports: [
     WireLockScreenComponent,
     WireButtonComponent,

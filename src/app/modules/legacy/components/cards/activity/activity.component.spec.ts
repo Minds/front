@@ -64,6 +64,7 @@ import { TagsPipeMock } from '../../../../../mocks/pipes/tagsPipe.mock';
 import { RedirectService } from '../../../../../common/services/redirect.service';
 import { ModalService } from '../../../../composer/components/modal/modal.service';
 import { ComposerService } from '../../../../composer/services/composer.service';
+import { WireModalService } from '../../../../wire/wire-modal.service';
 
 /* tslint:disable */
 // START MOCKS
@@ -491,6 +492,7 @@ describe('Activity', () => {
         { provide: AttachmentService, useValue: attachmentServiceMock },
         { provide: TranslationService, useValue: translationServiceMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        { provide: WireModalService, useValue: MockService(WireModalService) },
         { provide: EntitiesService, useValue: entitiesServiceMock },
         { provide: ClientMetaService, useValue: clientMetaServiceMock },
         {
