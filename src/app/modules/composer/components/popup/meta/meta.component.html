@@ -28,7 +28,7 @@
     <div class="m-composerPopup__metaField">
       <label [for]="author$" i18n>Author</label>
       <input
-        placeholder="@{{ session.getLoggedInUser().username }}"
+        placeholder="@{{ user.username }}"
         [ngModel]="author$ | async"
         (ngModelChange)="onAuthorChange($event)"
       />

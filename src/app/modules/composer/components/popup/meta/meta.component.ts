@@ -5,14 +5,12 @@ import {
   Output,
 } from '@angular/core';
 import { ComposerService } from '../../../services/composer.service';
-import {
-  ComposerBlogsService,
-  MetaData,
-} from '../../../services/composer-blogs.service';
+import { ComposerBlogsService } from '../../../services/composer-blogs.service';
 import { Session } from '../../../../../services/session';
+import { BehaviorSubject } from 'rxjs';
 
 /**
- * Tags popup component. Called programatically via PopupService.
+ * Meta popup component. Called programatically via PopupService.
  */
 @Component({
   selector: 'm-composer__meta',
@@ -24,13 +22,6 @@ export class MetaComponent {
    * Signal event emitter to parent's popup service
    */
   @Output() dismissIntent: EventEmitter<any> = new EventEmitter<any>();
-
-  private state: MetaData = {
-    urlSlug: '',
-    title: '',
-    description: '',
-    author: '',
-  };
 
   /**
    * Constructor
@@ -44,72 +35,72 @@ export class MetaComponent {
   ) {}
 
   /**
-   * Component initialization. Sets current state.
+   * User from session service.
    */
-  ngOnInit() {
-    // this.state = (this.service.tags$.getValue() || [])
-    //   .filter(Boolean)
-    //   .filter((value, index, self) => self.indexOf(value) === index);
+  get user(): any {
+    return this.session.getLoggedInUser();
   }
 
   /**
    * URL slug from the service
    */
-  get urlSlug$() {
+  get urlSlug$(): BehaviorSubject<string> {
     return this.blogsService.urlSlug$;
-  }
-
-  onUrlSlugChange($event) {
-    this.urlSlug$.next($event);
   }
 
   /**
    * title from the service
    */
-  get title$() {
+  get title$(): BehaviorSubject<string> {
     return this.blogsService.title$;
-  }
-
-  onTitleChange($event) {
-    this.title$.next($event);
   }
 
   /**
    * description from the service
    */
-  get description$() {
+  get description$(): BehaviorSubject<string> {
     return this.blogsService.description$;
-  }
-
-  onDescriptionChange($event) {
-    this.description$.next($event);
   }
 
   /**
    * author from the service
    */
-  get author$() {
+  get author$(): BehaviorSubject<string> {
     return this.blogsService.author$;
   }
 
-  onAuthorChange($event) {
+  /**
+   * Update observable urlSlug$
+   */
+  onUrlSlugChange($event: string): void {
+    this.urlSlug$.next($event);
+  }
+
+  /**
+   * Update observable title$
+   */
+  onTitleChange($event: string): void {
+    this.title$.next($event);
+  }
+
+  /**
+   * Update observable description$
+   */
+  onDescriptionChange($event: string): void {
+    this.description$.next($event);
+  }
+
+  /**
+   * Update observable author$
+   */
+  onAuthorChange($event: string): void {
     this.author$.next($event);
   }
 
   /**
    * Emits the internal state to the composer service, stores to MRU cache and attempts to dismiss the modal
    */
-  save() {
-    if (this.validate(this.state)) {
-      this.dismissIntent.emit();
-    } else {
-      console.error('Invalid blog state');
-      // this.error = '';
-    }
-  }
-
-  validate(meta: MetaData) {
-    // TODO: Validation
-    return true;
+  save(): void {
+    this.dismissIntent.emit();
   }
 }

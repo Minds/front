@@ -1,17 +1,10 @@
 <div class="m-composer__titleBar">
-  <div class="m-composerTitleBar__title">
-    <label
-      [for]="inputId"
-      *ngIf="(service.contentType$ | async) !== 'blog'"
-      i18n
-      >Compose</label
-    >
-    <label
-      [for]="inputId"
-      *ngIf="(service.contentType$ | async) === 'blog'"
-      i18n
-      >Blog</label
-    >
+  <div
+    class="m-composerTitleBar__title"
+    [ngSwitch]="service.contentType$ | async"
+  >
+    <label [for]="inputId" *ngSwitchCase="'post'" i18n>Compose</label>
+    <label [for]="inputId" *ngSwitchCase="'blog'" i18n>Blog</label>
   </div>
 
   <div
