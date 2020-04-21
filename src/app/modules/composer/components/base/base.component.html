@@ -11,7 +11,9 @@
       (onCreateBlog)="createBlog()"
     ></m-composer__titleBar>
 
-    <m-composer__preview></m-composer__preview>
+    <m-composer__preview
+      *ngIf="(contentType$ | async) === 'post'"
+    ></m-composer__preview>
 
     <m-composer__progress
       [inProgress]="inProgress$ | async"

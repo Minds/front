@@ -35,6 +35,7 @@ import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { MetaComponent } from '../popup/meta/meta.component';
 import { isPlatformBrowser } from '@angular/common';
+import { ComposerBlogsService } from '../../services/composer-blogs.service';
 
 /**
  * Toolbar component. Interacts directly with the service.
@@ -96,6 +97,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected service: ComposerService,
     protected popup: PopupService,
     protected cd: ChangeDetectorRef,
+    protected blogsService: ComposerBlogsService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -250,8 +252,11 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       // Most likely pressed Esc on dialog
       return;
     }
-
-    this.service.attachment$.next($event);
+    if (this.contentType$.getValue() === 'post') {
+      this.service.attachment$.next($event);
+    } else {
+      this.blogsService.addBanner($event);
+    }
   }
 
   /**

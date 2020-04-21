@@ -115,19 +115,21 @@ m-composer__textArea {
     }
   }
 }
+.m-composer__textArea--blog {
+  overflow-y: auto;
 
-.m-composerTextarea__title.m-composerTextarea__title--blog {
-  font-size: 16px;
-  font-weight: 500;
-  padding-bottom: 0;
-  border-top-style: solid;
-  border-width: 1px;
+  .m-composerTextarea__title.m-composerTextarea__title--blog {
+    font-size: 16px;
+    font-weight: 500;
+    padding-bottom: 0;
+    border-top-style: solid;
+    border-width: 1px;
 
-  @include m-theme() {
-    border-top-color: themed($m-borderColor--primary);
+    @include m-theme() {
+      border-top-color: themed($m-borderColor--primary);
+    }
   }
 }
-
 .ck-body-wrapper {
   z-index: 999999999;
 }

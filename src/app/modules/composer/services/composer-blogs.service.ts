@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Attachment, AttachmentType } from './attachment.service';
-import getFileType from '../../../helpers/get-file-type';
 import { BehaviorSubject } from 'rxjs';
 
 export interface MetaData {
@@ -17,6 +15,10 @@ export class ComposerBlogsService {
     ''
   );
   readonly author$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  readonly banner$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  readonly error$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
+  constructor() {}
 
   /**
    * Runs when dependant component is destroyed
@@ -42,10 +44,29 @@ export class ComposerBlogsService {
     this.title$.next('');
     this.description$.next('');
     this.author$.next('');
+    this.error$.next('');
+    this.banner$.next('');
   }
 
   save(): void {
     // TODO: Link save.
     console.log('TODO: SAVE');
+  }
+
+  addBanner(banner: any): void {
+    if (banner.length === 0) {
+      return;
+    }
+
+    if (banner.type.match(/image\/*/) == null) {
+      this.error$.next('Banners must be an image');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(banner);
+    reader.onload = _event => {
+      this.banner$.next(reader.result.toString());
+    };
   }
 }

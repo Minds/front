@@ -2,7 +2,23 @@
   <div class="m-composerPopup__content">
     <h3 class="m-composerPopup__title" i18n>Meta</h3>
     <div class="m-composerPopup__metaField">
-      <label [for]="urlSlug$" i18n>URL Slug</label>
+      <div class="m-composerPopup__labelContainer">
+        <label [for]="urlSlug$" i18n>URL Slug</label>
+        <span
+          >{{ site.baseUrl
+          }}{{ session.getLoggedInUser().username }}/blog/<strong>{{
+            urlSlug$ | async
+          }}</strong
+          >-xxxx</span
+        >
+        <m-tooltip
+          icon="help_outline"
+          i18n="@@BLOG__URLSLUG"
+          [anchor]="'right'"
+        >
+          Set the slug of your blog URL.
+        </m-tooltip>
+      </div>
       <input
         placeholder="my-blog-slug"
         [ngModel]="urlSlug$ | async"
@@ -10,7 +26,12 @@
       />
     </div>
     <div class="m-composerPopup__metaField">
-      <label [for]="title$" i18n>Title</label>
+      <div class="m-composerPopup__labelContainer">
+        <label [for]="title$" i18n>Title</label>
+        <m-tooltip icon="help_outline" i18n="@@BLOG__TITLE" [anchor]="'right'">
+          Set the title of your blog.
+        </m-tooltip>
+      </div>
       <input
         placeholder="My title"
         [ngModel]="title$ | async"
@@ -18,7 +39,16 @@
       />
     </div>
     <div class="m-composerPopup__metaField">
-      <label [for]="description$" i18n>Description</label>
+      <div class="m-composerPopup__labelContainer">
+        <label [for]="description$" i18n>Description</label>
+        <m-tooltip
+          icon="help_outline"
+          i18n="@@BLOG__DESCRIPTION"
+          [anchor]="'right'"
+        >
+          Set the description of your blog.
+        </m-tooltip>
+      </div>
       <input
         placeholder="Description"
         [ngModel]="description$ | async"
@@ -26,7 +56,12 @@
       />
     </div>
     <div class="m-composerPopup__metaField">
-      <label [for]="author$" i18n>Author</label>
+      <div class="m-composerPopup__labelContainer">
+        <label [for]="author$" i18n>Author</label>
+        <m-tooltip icon="help_outline" i18n="@@BLOG__AUTHOR" [anchor]="'right'">
+          Set the author of your blog.
+        </m-tooltip>
+      </div>
       <input
         placeholder="@{{ user.username }}"
         [ngModel]="author$ | async"

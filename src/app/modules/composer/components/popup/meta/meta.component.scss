@@ -8,8 +8,26 @@
       flex-direction: column;
       margin: 16px 0;
 
-      label {
-        margin-bottom: 4px;
+      .m-composerPopup__labelContainer {
+        display: flex;
+        justify-content: space-between;
+
+        > label {
+          margin-bottom: 4px;
+        }
+
+        > span {
+          display: inline-block;
+          right: 60px;
+          max-width: 390px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+
+          @media screen and (max-width: $max-mobile) {
+            display: none;
+          }
+        }
       }
 
       input {

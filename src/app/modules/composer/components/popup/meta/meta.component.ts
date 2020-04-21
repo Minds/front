@@ -8,6 +8,7 @@ import { ComposerService } from '../../../services/composer.service';
 import { ComposerBlogsService } from '../../../services/composer-blogs.service';
 import { Session } from '../../../../../services/session';
 import { BehaviorSubject } from 'rxjs';
+import { SiteService } from '../../../../../common/services/site.service';
 
 /**
  * Meta popup component. Called programatically via PopupService.
@@ -31,6 +32,7 @@ export class MetaComponent {
   constructor(
     protected session: Session,
     protected service: ComposerService,
+    protected site: SiteService,
     protected blogsService: ComposerBlogsService
   ) {}
 

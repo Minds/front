@@ -27,6 +27,7 @@ import { ComposerTopbarButtonComponent } from './topbar-button/topbar-button.com
 import { ComposerCoverPhotoSelectorComponent } from './components/cover-photo-selector/cover-photo-selector.component';
 import { BlogModule } from '../blogs/blog.module';
 import { MetaComponent } from './components/popup/meta/meta.component';
+import { BannerComponent } from './components/banner/banner.component';
 /**
  * Exported components
  */
@@ -56,6 +57,7 @@ const INTERNAL_COMPONENTS = [
   TextAreaComponent,
   ComposerCoverPhotoSelectorComponent,
   MetaComponent,
+  BannerComponent,
 ];
 
 const PROVIDERS = [

@@ -16,6 +16,7 @@ import {
   LicenseSubjectValue,
 } from '../../services/composer.service';
 import { BehaviorSubject } from 'rxjs';
+import { ComposerBlogsService } from '../../services/composer-blogs.service';
 
 /**
  * Composer title bar component. It features a label and a dropdown menu
