@@ -1,0 +1,7 @@
+<div class="m-accordionPane__title" (click)="toggleEmitter.emit()">
+  {{ title }}
+</div>
+
+<div class="m-accordionPane__content" [hidden]="!opened">
+  <ng-content></ng-content>
+</div>

@@ -1,0 +1,60 @@
+m-channel__edit {
+  @media screen and (max-width: $max-mobile) {
+    width: 100%;
+  }
+}
+
+.m-modalV2__inner.m-channel__edit {
+  width: 710px;
+
+  @media screen and (max-width: $max-mobile) {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+  }
+}
+
+.m-channel__edit {
+  padding: 0 0 80px;
+
+  @media screen and (max-width: $max-mobile) {
+    padding: 0 0 20px;
+  }
+
+  .m-channelEdit__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 50px 30px;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 20px;
+    }
+
+    a {
+      font-size: 15px;
+      line-height: 20px;
+      text-decoration: none;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+
+      span {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+
+  .m-channelEdit__content {
+    flex: 1;
+  }
+}

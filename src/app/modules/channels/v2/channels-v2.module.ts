@@ -20,6 +20,7 @@ import { ChannelActionsMessageComponent } from './actions/message.component';
 import { ChannelActionsWireComponent } from './actions/wire.component';
 import { ChannelActionsMenuButtonComponent } from './actions/menu-button.component';
 import { ChannelActionsMenuComponent } from './actions/menu.component';
+import { ChannelEditModalService } from './edit/edit-modal.service';
 
 /**
  * Generally available components
@@ -48,7 +49,7 @@ const INTERNAL_COMPONENTS = [
 /**
  * Service providers
  */
-const PROVIDERS = [];
+const PROVIDERS = [ChannelEditModalService];
 
 /**
  * Module definition

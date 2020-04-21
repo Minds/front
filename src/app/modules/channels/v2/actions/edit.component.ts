@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Injector,
+  OnDestroy,
+} from '@angular/core';
+import { ChannelEditModalService } from '../edit/edit-modal.service';
+import { Subscription } from 'rxjs';
+import { ChannelsV2Service } from '../channels-v2.service';
 
 /**
  * Edit channel button (owner)
@@ -8,6 +16,50 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'edit.component.html',
 })
-export class ChannelActionsEditComponent {
-  edit(): void {}
+export class ChannelActionsEditComponent implements OnDestroy {
+  /**
+   * Open modal subscription
+   */
+  protected modalSubscription: Subscription;
+
+  /**
+   * Constructor
+   * @param service
+   * @param editModal
+   * @param injector
+   */
+  constructor(
+    public service: ChannelsV2Service,
+    protected editModal: ChannelEditModalService,
+    protected injector: Injector
+  ) {}
+
+  /**
+   * Destroys edit modal if button is destroyed
+   */
+  ngOnDestroy(): void {
+    if (this.modalSubscription) {
+      this.modalSubscription.unsubscribe();
+    }
+  }
+
+  /**
+   * Opens edit modal
+   */
+  edit(): void {
+    if (this.modalSubscription) {
+      this.modalSubscription.unsubscribe();
+    }
+
+    this.modalSubscription = this.editModal
+      .setInjector(this.injector)
+      .present(this.service.channel$.getValue())
+      .subscribe(channel => {
+        console.log({ channel });
+        if (channel) {
+          this.service.load(channel);
+          // TODO: Reload session, if current user
+        }
+      });
+  }
 }

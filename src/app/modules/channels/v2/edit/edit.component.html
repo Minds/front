@@ -1,0 +1,30 @@
+<div
+  class="m-modalV2__inner m-channel__edit"
+  *ngIf="service.channel$ | async as channel"
+>
+  <div class="m-modalV2__header m-channelEdit__header">
+    <h2 class="m-modalV2Header__title" i18n>Edit Profile</h2>
+    <a [routerLink]="getProSettingsRouterLink(channel)" ngPreserveWhitespaces>
+      <ng-container i18n>Pro Settings</ng-container>
+      <span>&rarr;</span>
+    </a>
+  </div>
+
+  <m-accordion class="m-accordionV2 m-formWrapper m-channelEdit__content">
+    <m-accordion__pane title="Bio &amp; Imagery" i18n-title>
+      TBD
+    </m-accordion__pane>
+
+    <m-accordion__pane title="About Info" i18n-title>
+      TBD
+    </m-accordion__pane>
+
+    <m-accordion__pane title="Hashtags" i18n-title>
+      TBD
+    </m-accordion__pane>
+
+    <m-accordion__pane title="Social Links" i18n-title>
+      TBD
+    </m-accordion__pane>
+  </m-accordion>
+</div>
