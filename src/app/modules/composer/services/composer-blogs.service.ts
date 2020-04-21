@@ -103,7 +103,6 @@ export class ComposerBlogsService {
   }
 
   async save() {
-    //: Promise<ActivityEntity> {
     const blog = await this.buildBlog();
 
     if (!this.bannerFile$.getValue()) {
