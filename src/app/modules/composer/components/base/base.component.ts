@@ -86,6 +86,13 @@ export class BaseComponent implements AfterViewInit {
   }
 
   /**
+   * Content type subject in service.
+   */
+  get contentType$() {
+    return this.service.contentType$;
+  }
+
+  /**
    * Rich embed preview subject in service
    */
   get richEmbedPreview$() {

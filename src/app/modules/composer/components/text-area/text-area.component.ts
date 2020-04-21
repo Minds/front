@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { ComposerService } from '../../services/composer.service';
 import { isPlatformBrowser } from '@angular/common';
+import { ComposerBlogsService } from '../../services/composer-blogs.service';
 
 /**
  * Composer message and title components.
@@ -58,6 +59,7 @@ export class TextAreaComponent {
    */
   constructor(
     protected service: ComposerService,
+    protected blogsService: ComposerBlogsService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -66,6 +68,13 @@ export class TextAreaComponent {
    */
   get message$() {
     return this.service.message$;
+  }
+
+  /**
+   * Content type subject from service
+   */
+  get contentType$() {
+    return this.service.contentType$;
   }
 
   /**
@@ -112,6 +121,7 @@ export class TextAreaComponent {
    */
   onTitleChange(title: string) {
     this.service.title$.next(title);
+    this.blogsService.title$.next(title);
   }
 
   /**

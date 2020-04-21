@@ -6,6 +6,7 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
 import { ModalService } from './components/modal/modal.service';
 import { RichEmbedService } from './services/rich-embed.service';
 import { AttachmentService } from './services/attachment.service';
+import { ComposerBlogsService } from './services/composer-blogs.service';
 import { ComposerComponent } from './composer.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { BaseComponent } from './components/base/base.component';
@@ -25,7 +26,7 @@ import { TextAreaComponent } from './components/text-area/text-area.component';
 import { ComposerTopbarButtonComponent } from './topbar-button/topbar-button.component';
 import { ComposerCoverPhotoSelectorComponent } from './components/cover-photo-selector/cover-photo-selector.component';
 import { BlogModule } from '../blogs/blog.module';
-
+import { MetaComponent } from './components/popup/meta/meta.component';
 /**
  * Exported components
  */
@@ -37,6 +38,7 @@ const COMPONENTS = [
   TagsComponent,
   ScheduleComponent,
   ComposerTopbarButtonComponent,
+  MetaComponent,
 ];
 
 /**
@@ -53,12 +55,14 @@ const INTERNAL_COMPONENTS = [
   PopupComponent,
   TextAreaComponent,
   ComposerCoverPhotoSelectorComponent,
+  MetaComponent,
 ];
 
 const PROVIDERS = [
   ModalService,
   AttachmentService,
   RichEmbedService,
+  ComposerBlogsService,
   PreviewService,
 ];
 

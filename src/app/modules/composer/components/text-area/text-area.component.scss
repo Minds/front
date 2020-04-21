@@ -46,7 +46,10 @@ m-composer__textArea {
 
   m-blog__editor {
     height: 100%;
-    margin: 0 38px;
+
+    .m-ck-editor-wrapper {
+      margin: 0 38px;
+    }
 
     overflow-y: scroll;
     -ms-overflow-style: none;
@@ -117,9 +120,12 @@ m-composer__textArea {
   font-size: 16px;
   font-weight: 500;
   padding-bottom: 0;
-  border-top-color: rgb(64, 74, 78);
   border-top-style: solid;
   border-width: 1px;
+
+  @include m-theme() {
+    border-top-color: themed($m-borderColor--primary);
+  }
 }
 
 .ck-body-wrapper {
@@ -143,4 +149,8 @@ ckeditor {
       font-size: 16px;
     }
   }
+}
+
+body {
+  scrollbar-width: none;
 }

@@ -21,6 +21,7 @@ import {
   MonetizationSubjectValue,
   NsfwSubjectValue,
   TagsSubjectValue,
+  ContentType,
 } from '../../services/composer.service';
 import {
   FileUploadComponent,
@@ -32,6 +33,7 @@ import { NsfwComponent } from '../popup/nsfw/nsfw.component';
 import { MonetizeComponent } from '../popup/monetize/monetize.component';
 import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
+import { MetaComponent } from '../popup/meta/meta.component';
 import { isPlatformBrowser } from '@angular/common';
 
 /**
@@ -166,6 +168,13 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Tags subject from service
+   */
+  get contentType$(): BehaviorSubject<ContentType> {
+    return this.service.contentType$;
+  }
+
+  /**
    * NSFW subject from service
    */
   get nsfw$(): BehaviorSubject<NsfwSubjectValue> {
@@ -276,6 +285,21 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       .create(TagsComponent)
       .present()
       .toPromise(/* Promise is needed to boot-up the Observable */);
+  }
+
+  /**
+   * Shows meta-data popup
+   */
+  async onMetaClick($event?: MouseEvent): Promise<void> {
+    try {
+      await this.popup
+        .create(MetaComponent)
+        .present()
+        .toPromise(/* Promise is needed to boot-up the Observable */);
+    } catch (e) {
+      console.log('-----------');
+      console.dir(e);
+    }
   }
 
   /**

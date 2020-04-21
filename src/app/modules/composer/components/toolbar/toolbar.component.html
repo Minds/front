@@ -20,7 +20,9 @@
       from="ion"
       iconId="image"
     ></m-icon>
-    <span class="m-composerToolbarItem__label" i18n>Upload</span>
+    <span class="m-composerToolbarItem__label" i18n
+      >Upload {{ (contentType$ | async) === 'blog' ? 'Banner' : null }}</span
+    >
   </m-file-upload>
 
   <a
@@ -64,6 +66,22 @@
       [sizeFactor]="25"
     ></m-icon>
     <span class="m-composerToolbarItem__label" i18n>Tags</span>
+  </a>
+
+  <a
+    *ngIf="(contentType$ | async) === 'blog'"
+    class="m-composerToolbar__item"
+    [class.m-composerToolbar__item--active]="(tags$ | async)?.length"
+    [class.m-composerToolbar__item--disabled]="isPosting$ | async"
+    (click)="onMetaClick($event)"
+    data-cy="data-minds-meta-button"
+  >
+    <m-icon
+      class="m-composerToolbarItem__icon"
+      iconId="menu"
+      [sizeFactor]="25"
+    ></m-icon>
+    <span class="m-composerToolbarItem__label" i18n>Meta</span>
   </a>
 
   <span class="m-composerToolbar__itemSpacer"></span>

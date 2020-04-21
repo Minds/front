@@ -1,5 +1,5 @@
 <div class="m-composer__textArea">
-  <ng-container *ngIf="(service.contentType$ | async) !== 'blog'">
+  <ng-container *ngIf="(contentType$ | async) !== 'blog'">
     <div class="m-composerTextarea__title" *ngIf="attachment$ | async">
       <input
         type="text"
@@ -49,7 +49,7 @@
       #messageInput
     ></textarea>
   </ng-container>
-  <ng-container *ngIf="(service.contentType$ | async) === 'blog'">
+  <ng-container *ngIf="(contentType$ | async) === 'blog'">
     <div
       class="m-composerTextarea__title m-composerTextarea__title--blog"
       id="blogWrapper"
@@ -59,9 +59,6 @@
         placeholder="Title"
         i18n-placeholder
         [ngModel]="(title$ | async) || ''"
-        [hidden]="
-          (title$ | async) === null && (service.contentType$ | async) !== 'blog'
-        "
         [disabled]="isPosting$ | async"
         (ngModelChange)="onTitleChange($event)"
         data-cy="composer-activity-title"
@@ -69,7 +66,6 @@
       />
     </div>
     <m-blog__editor
-      *ngIf="(service.contentType$ | async) === 'blog'"
       (contentChanged)="onMessageChange($event)"
       [content]="'hi'"
       #messageInput

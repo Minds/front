@@ -1,0 +1,28 @@
+.m-composer__meta {
+  .m-composerPopup__content {
+    display: flex;
+    flex-direction: column;
+
+    .m-composerPopup__metaField {
+      display: flex;
+      flex-direction: column;
+      margin: 16px 0;
+
+      label {
+        margin-bottom: 4px;
+      }
+
+      input {
+        background-color: transparent;
+        padding: 8px;
+        border-radius: 4px;
+
+        @include m-theme() {
+          border: 1px solid themed($m-borderColor--primary);
+          color: themed($m-textColor--secondary);
+          background: themed($m-bgColor--secondary);
+        }
+      }
+    }
+  }
+}

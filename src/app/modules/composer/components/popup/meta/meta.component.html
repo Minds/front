@@ -1,0 +1,48 @@
+<div class="m-composerPopup__body m-composer__meta">
+  <div class="m-composerPopup__content">
+    <h3 class="m-composerPopup__title" i18n>Meta</h3>
+    <div class="m-composerPopup__metaField">
+      <label [for]="urlSlug$" i18n>URL Slug</label>
+      <input
+        placeholder="my-blog-slug"
+        [ngModel]="urlSlug$ | async"
+        (ngModelChange)="onUrlSlugChange($event)"
+      />
+    </div>
+    <div class="m-composerPopup__metaField">
+      <label [for]="title$" i18n>Title</label>
+      <input
+        placeholder="My title"
+        [ngModel]="title$ | async"
+        (ngModelChange)="onTitleChange($event)"
+      />
+    </div>
+    <div class="m-composerPopup__metaField">
+      <label [for]="description$" i18n>Description</label>
+      <input
+        placeholder="Description"
+        [ngModel]="description$ | async"
+        (ngModelChange)="onDescriptionChange($event)"
+      />
+    </div>
+    <div class="m-composerPopup__metaField">
+      <label [for]="author$" i18n>Author</label>
+      <input
+        placeholder="@{{ session.getLoggedInUser().username }}"
+        [ngModel]="author$ | async"
+        (ngModelChange)="onAuthorChange($event)"
+      />
+    </div>
+  </div>
+
+  <div class="m-composerPopup__action">
+    <m-button
+      class="m-composerPopup__save"
+      (onAction)="save()"
+      data-cy="tags-save-button"
+      i18nm-composer__meta
+    >
+      Save Meta
+    </m-button>
+  </div>
+</div>

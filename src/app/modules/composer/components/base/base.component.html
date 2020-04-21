@@ -1,5 +1,6 @@
 <div
   class="m-composer__base"
+  [class.m-composer__base--blog]="(contentType$ | async) === 'blog'"
   [class.m-composer__base--withPreview]="
     (attachmentPreview$ | async) || (richEmbedPreview$ | async)
   "

@@ -1,3 +1,5 @@
+$min-height: 390px;
+
 m-composer__base {
   display: block;
 }
@@ -6,7 +8,7 @@ m-composer__base {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 390px;
+  height: $min-height;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease 0s !important;
@@ -15,6 +17,12 @@ m-composer__base {
 
   &.m-composer__base--withPreview {
     height: 669px;
+  }
+
+  &.m-composer__base--blog {
+    height: unset;
+    max-height: 80vh;
+    min-height: $min-height;
   }
 
   .m-composerBase__container {

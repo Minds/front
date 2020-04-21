@@ -417,9 +417,17 @@ export class ComposerService implements OnDestroy {
 
         // Value will be either an Attachment interface object or null
       ),
-      this.richEmbed$.pipe(
-        // Only react to rich-embed URL changes
-        distinctUntilChanged(),
+      // Use both observables, only react to changes.
+      combineLatest([
+        this.richEmbed$.pipe(distinctUntilChanged()),
+        this.contentType$.pipe(distinctUntilChanged()),
+      ]).pipe(
+        // only return a value if this is not a blog.
+        map(([richEmbed, contentType]) => {
+          if (contentType !== 'blog') {
+            return richEmbed;
+          }
+        }),
 
         // Call the engine endpoint to resolve the URL, debouncing the request to avoid server overload
         this.richEmbed.resolve(200),
