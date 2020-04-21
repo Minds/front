@@ -4,7 +4,11 @@ import { Pipe } from '@angular/core';
   name: 'token',
 })
 export class TokenPipe {
-  transform(number: number, decimals: number = 18) {
+  transform(number: number | string, decimals: number = 18) {
+    if (typeof number === 'string') {
+      number = parseFloat(number);
+    }
+
     decimals = Math.pow(10, decimals);
     return number / decimals;
   }

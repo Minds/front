@@ -10,6 +10,7 @@ import { UtcDatePipe } from './utcdate';
 import { AddressExcerptPipe } from './address-excerpt';
 import { TimediffPipe } from './timediff.pipe';
 import { FriendlyDateDiffPipe } from './friendlydatediff';
+import { AsyncStatePipe } from './async-state.pipe';
 
 export const MINDS_PIPES = [
   AbbrPipe,
@@ -25,4 +26,5 @@ export const MINDS_PIPES = [
   TimediffPipe,
   FriendlyDateDiffPipe,
   SafeStylePipe,
+  AsyncStatePipe,
 ];
