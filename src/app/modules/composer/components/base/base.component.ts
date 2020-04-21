@@ -10,12 +10,13 @@ import {
 } from '@angular/core';
 import { UniqueId } from '../../../../helpers/unique-id.helper';
 import { ButtonComponentAction } from '../../../../common/components/button-v2/button.component';
-import { ComposerService } from '../../services/composer.service';
+import { ComposerService, ContentType } from '../../services/composer.service';
 import { PopupService } from '../popup/popup.service';
 import { PopupComponent } from '../popup/popup.component';
 import { TextAreaComponent } from '../text-area/text-area.component';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../../services/in-memory-storage.service';
+import { BehaviorSubject } from 'rxjs';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -88,7 +89,7 @@ export class BaseComponent implements AfterViewInit {
   /**
    * Content type subject in service.
    */
-  get contentType$() {
+  get contentType$(): BehaviorSubject<ContentType> {
     return this.service.contentType$;
   }
 
@@ -128,20 +129,10 @@ export class BaseComponent implements AfterViewInit {
   }
 
   /**
-   * Creates a blog using the current message
+   * Sets contentType to 'blog' to dynamically switch the window.
    */
   createBlog() {
     this.service.contentType$.next('blog');
-    // const message = this.service.message$.getValue();
-
-    // this.service.isMovingContent$.next(true);
-    // this.inMemoryStorage.set('newBlogContent', message);
-
-    // if (this.popupComponent) {
-    //   this.popup.close();
-    // }
-
-    // this.router.navigate(['/blog/edit/new']);
   }
 
   /**

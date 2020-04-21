@@ -297,8 +297,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
         .present()
         .toPromise(/* Promise is needed to boot-up the Observable */);
     } catch (e) {
-      console.log('-----------');
-      console.dir(e);
+      console.error(e);
     }
   }
 

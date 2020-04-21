@@ -42,14 +42,6 @@ export class ComposerBlogsService {
     this.title$.next('');
     this.description$.next('');
     this.author$.next('');
-    // // Reset preview (state + blob URL)
-    // this.setPreview(null);
-
-    // // Reset rich embed preview
-    // this.richEmbedPreview$.next(null);
-
-    // // Reset original source
-    // this.entity = null;
   }
 
   save(): void {
