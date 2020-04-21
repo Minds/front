@@ -10,7 +10,7 @@
       >
         <div class="m-channelAboutField__label" i18n>Bio</div>
         <div
-          class="m-channelAboutField__content"
+          class="m-channelAboutField__content m-channelAboutField__content--preserveBlanks"
           [innerHtml]="channel.briefdescription | tags"
         ></div>
       </div>
@@ -20,15 +20,16 @@
         class="m-channelAbout__field m-channelAbout__field--fullWidth"
       >
         <div class="m-channelAboutField__label" i18n>Hashtags</div>
-        <div class="m-channelAboutField__content">
-          <a
-            *ngFor="let tag of channel.tags"
-            [routerLink]="[
-              '/newsfeed/global/top',
-              { hashtag: tag.toLowerCase(), period: '7d' }
-            ]"
-            >#{{ tag }}</a
-          >
+        <div class="m-channelAboutField__content" ngPreserveWhitespaces>
+          <ng-container *ngFor="let tag of channel.tags">
+            <a
+              [routerLink]="[
+                '/newsfeed/global/top',
+                { hashtag: tag.toLowerCase(), period: '7d' }
+              ]"
+              >#{{ tag }}</a
+            >
+          </ng-container>
         </div>
       </div>
     </div>
