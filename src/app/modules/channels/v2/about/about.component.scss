@@ -1,0 +1,35 @@
+.m-theme__2020 .m-channel__about {
+  [class*='m-pageLayout__pane'] {
+    padding: 20px 40px;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      padding: 20px;
+    }
+  }
+}
+
+.m-channel__about {
+  .m-channelAbout__container {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    &.m-channelAbout__narrowExtraInfo {
+      display: none;
+
+      @media screen and (max-width: $layoutMin3ColWidth) {
+        display: flex;
+      }
+    }
+
+    .m-channelAbout__field {
+      width: 50%;
+
+      &.m-channelAbout__field--fullWidth {
+        width: 100%;
+      }
+    }
+  }
+}

@@ -1,0 +1,127 @@
+<div
+  *ngIf="service.channel$ | async as channel"
+  class="m-pageLayout__container m-channel__about"
+>
+  <div m-pageLayout__pane="main">
+    <div class="m-channelAbout__container">
+      <div
+        *ngIf="channel.briefdescription"
+        class="m-channelAbout__field m-channelAbout__field--fullWidth"
+      >
+        <div class="m-channelAboutField__label" i18n>Bio</div>
+        <div
+          class="m-channelAboutField__content"
+          [innerHtml]="channel.briefdescription | tags"
+        ></div>
+      </div>
+
+      <div
+        *ngIf="channel?.tags?.length"
+        class="m-channelAbout__field m-channelAbout__field--fullWidth"
+      >
+        <div class="m-channelAboutField__label" i18n>Hashtags</div>
+        <div class="m-channelAboutField__content">
+          <a
+            *ngFor="let tag of channel.tags"
+            [routerLink]="[
+              '/newsfeed/global/top',
+              { hashtag: tag.toLowerCase(), period: '7d' }
+            ]"
+            >#{{ tag }}</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="m-channelAbout__narrowExtraInfo m-channelAbout__container">
+      <ng-container *ngTemplateOutlet="extraInfo"></ng-container>
+    </div>
+  </div>
+
+  <div m-pageLayout__pane="right">
+    <div class="m-channelAbout__container">
+      <ng-container *ngTemplateOutlet="extraInfo"></ng-container>
+    </div>
+  </div>
+
+  <ng-template #extraInfo>
+    <div
+      *ngIf="channel.city"
+      class="m-channelAbout__field m-channelAbout__field--fullWidth"
+    >
+      <div class="m-channelAboutField__label" i18n>Location</div>
+      <div class="m-channelAboutField__content">
+        {{ channel.city }}
+      </div>
+    </div>
+
+    <div
+      *ngIf="channel.dob"
+      class="m-channelAbout__field m-channelAbout__field--fullWidth"
+    >
+      <div class="m-channelAboutField__label" i18n>Date of birth</div>
+      <div class="m-channelAboutField__content">
+        {{ channel.dob }}
+      </div>
+    </div>
+
+    <div class="m-channelAbout__field">
+      <div class="m-channelAboutField__label" i18n>Badges</div>
+      <div class="m-channelAboutField__content">
+        <m-channel--badges [user]="channel"></m-channel--badges>
+      </div>
+    </div>
+
+    <div class="m-channelAbout__field">
+      <div class="m-channelAboutField__label" i18n>Joined</div>
+      <div class="m-channelAboutField__content">
+        {{ channel.time_created * 1000 | date: 'MMM yyyy' }}
+      </div>
+    </div>
+
+    <div *ngIf="false" class="m-channelAbout__field">
+      <div class="m-channelAboutField__label" i18n>Groups</div>
+      <div class="m-channelAboutField__content"></div>
+    </div>
+
+    <div class="m-channelAbout__field">
+      <div class="m-channelAboutField__label" i18n>Channel Views</div>
+      <div class="m-channelAboutField__content">
+        {{ channel.impressions | abbr }}
+      </div>
+    </div>
+
+    <div class="m-channelAbout__field">
+      <div class="m-channelAboutField__label" i18n>Subscribers</div>
+      <div class="m-channelAboutField__content">
+        {{ channel.subscribers_count | number }}
+      </div>
+    </div>
+
+    <div class="m-channelAbout__field">
+      <div class="m-channelAboutField__label" i18n>Subscriptions</div>
+      <div class="m-channelAboutField__content">
+        {{ channel.subscriptions_count | number }}
+      </div>
+    </div>
+
+    <div class="m-channelAbout__field m-channelAbout__field--fullWidth">
+      <div class="m-channelAboutField__label" i18n>
+        Accepted Payment Methods
+      </div>
+      <div class="m-channelAboutField__content">
+        {{ getPaymentMethods(channel) }}
+      </div>
+    </div>
+
+    <div class="m-channelAbout__field">
+      <div class="m-channelAboutField__label" i18n>Tokens Earned</div>
+      <div class="m-channelAboutField__content"></div>
+    </div>
+
+    <div class="m-channelAbout__field">
+      <div class="m-channelAboutField__label" i18n>Tokens Sent</div>
+      <div class="m-channelAboutField__content"></div>
+    </div>
+  </ng-template>
+</div>

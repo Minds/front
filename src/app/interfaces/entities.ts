@@ -61,6 +61,7 @@ export interface MindsUser {
   guid: string;
   name: string;
   username: string;
+  time_created: number;
   chat?: boolean;
   icontime: number;
   avatar_url?: {
@@ -90,6 +91,7 @@ export interface MindsUser {
   subscribed?: boolean;
   rating?: number;
   eth_wallet?: string;
+  btc_address?: string;
   is_admin?: boolean;
   is_mature?: boolean;
   mature_lock?: boolean;
@@ -118,6 +120,7 @@ export interface MindsUser {
   nsfw: Array<number>;
   plus?: boolean;
   disable_autoplay_videos?: boolean;
+  dob?: string;
 }
 
 export interface MindsGroup {
