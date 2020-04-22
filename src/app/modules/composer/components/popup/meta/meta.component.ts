@@ -5,7 +5,7 @@ import {
   Output,
 } from '@angular/core';
 import { ComposerService } from '../../../services/composer.service';
-import { ComposerBlogsService } from '../../../services/composer-blogs.service';
+import { ComposerBlogsService } from '../../../services/blogs.service';
 import { Session } from '../../../../../services/session';
 import { BehaviorSubject } from 'rxjs';
 import { SiteService } from '../../../../../common/services/site.service';

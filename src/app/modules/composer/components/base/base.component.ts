@@ -17,7 +17,7 @@ import { TextAreaComponent } from '../text-area/text-area.component';
 import { Router } from '@angular/router';
 import { InMemoryStorageService } from '../../../../services/in-memory-storage.service';
 import { BehaviorSubject } from 'rxjs';
-import { ComposerBlogsService } from '../../services/composer-blogs.service';
+import { ComposerBlogsService } from '../../services/blogs.service';
 import { ActivityEntity } from '../../../newsfeed/activity/activity.service';
 
 /**

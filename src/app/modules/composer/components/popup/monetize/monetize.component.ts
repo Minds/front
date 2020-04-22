@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { ComposerService } from '../../../services/composer.service';
 import { UniqueId } from '../../../../../helpers/unique-id.helper';
-import { ComposerBlogsService } from '../../../services/composer-blogs.service';
+import { ComposerBlogsService } from '../../../services/blogs.service';
 
 @Component({
   selector: 'm-composer__monetize',

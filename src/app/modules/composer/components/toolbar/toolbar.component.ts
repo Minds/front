@@ -35,7 +35,7 @@ import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
 import { MetaComponent } from '../popup/meta/meta.component';
 import { isPlatformBrowser } from '@angular/common';
-import { ComposerBlogsService } from '../../services/composer-blogs.service';
+import { ComposerBlogsService } from '../../services/blogs.service';
 
 /**
  * Toolbar component. Interacts directly with the service.

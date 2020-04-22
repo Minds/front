@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { ComposerService } from '../../services/composer.service';
 import { isPlatformBrowser } from '@angular/common';
-import { ComposerBlogsService } from '../../services/composer-blogs.service';
+import { ComposerBlogsService } from '../../services/blogs.service';
 
 /**
  * Composer message and title components.

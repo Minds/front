@@ -6,7 +6,7 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
 import { ModalService } from './components/modal/modal.service';
 import { RichEmbedService } from './services/rich-embed.service';
 import { AttachmentService } from './services/attachment.service';
-import { ComposerBlogsService } from './services/composer-blogs.service';
+import { ComposerBlogsService } from './services/blogs.service';
 import { ComposerComponent } from './composer.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { BaseComponent } from './components/base/base.component';

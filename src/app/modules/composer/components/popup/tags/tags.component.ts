@@ -9,7 +9,7 @@ import { ComposerService } from '../../../services/composer.service';
 import { TypeaheadInputComponent } from '../../../../hashtags/typeahead-input/typeahead-input.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { UniqueId } from '../../../../../helpers/unique-id.helper';
-import { ComposerBlogsService } from '../../../services/composer-blogs.service';
+import { ComposerBlogsService } from '../../../services/blogs.service';
 
 /**
  * Tags popup component. Called programatically via PopupService.
