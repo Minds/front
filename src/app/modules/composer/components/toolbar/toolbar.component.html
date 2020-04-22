@@ -82,7 +82,11 @@
   <m-button
     class="m-composerToolbar__action"
     [disabled]="
-      (inProgress$ | async) || (isPosting$ | async) || !(canPost$ | async)
+      (inProgress$ | async) ||
+      (isPosting$ | async) ||
+      (!(canPost$ | async) && (service.contentType$ | async) === 'post') ||
+      (!(blogsService.canPost$ | async) &&
+        (service.contentType$ | async) === 'blog')
     "
     [dropdown]="postButtonDropdown"
     (onAction)="onPost($event)"
