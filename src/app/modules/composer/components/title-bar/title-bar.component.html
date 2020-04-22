@@ -20,6 +20,9 @@
       </div>
     </ng-container>
     <ng-container *ngSwitchCase="'blog'">
+      <span>{{
+        (blogsService.draftSaved$ | async) ? 'Draft Saved' : null
+      }}</span>
       <div
         *ngIf="!(isEditing$ | async) && !(attachment$ | async)"
         class="m-composerTitleBar__createBlogTrigger"

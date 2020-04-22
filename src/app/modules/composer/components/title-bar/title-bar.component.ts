@@ -18,6 +18,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { MetaComponent } from '../popup/meta/meta.component';
 import { PopupService } from '../popup/popup.service';
+import { ComposerBlogsService } from '../../services/blogs.service';
 
 /**
  * Composer title bar component. It features a label and a dropdown menu
@@ -65,7 +66,11 @@ export class TitleBarComponent {
     license => license.selectable
   );
 
-  constructor(public service: ComposerService, protected popup: PopupService) {}
+  constructor(
+    public service: ComposerService,
+    public blogsService: ComposerBlogsService,
+    protected popup: PopupService
+  ) {}
 
   /**
    * Access ID subject from service

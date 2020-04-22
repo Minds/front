@@ -109,5 +109,14 @@
         <span i18n>Schedule Post</span>
       </span>
     </li>
+    <li
+      (click)="onSaveDraftClick()"
+      *ngIf="(service.contentType$ | async) === 'blog'"
+    >
+      <span class="m-dropdownMenu__item">
+        <m-icon iconId="save"></m-icon>
+        <span i18n>Save Draft</span>
+      </span>
+    </li>
   </ul>
 </ng-template>

@@ -312,6 +312,13 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
+   * Calls to save draft of post.
+   */
+  async onSaveDraftClick(): Promise<void> {
+    await this.blogsService.saveDraft();
+  }
+
+  /**
    * Triggers change detection
    */
   detectChanges() {
