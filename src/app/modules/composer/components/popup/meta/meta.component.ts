@@ -30,7 +30,7 @@ export class MetaComponent {
    * @param configs
    */
   constructor(
-    protected session: Session,
+    public session: Session,
     protected service: ComposerService,
     protected site: SiteService,
     protected blogsService: ComposerBlogsService

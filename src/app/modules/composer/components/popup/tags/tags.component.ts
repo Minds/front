@@ -9,6 +9,7 @@ import { ComposerService } from '../../../services/composer.service';
 import { TypeaheadInputComponent } from '../../../../hashtags/typeahead-input/typeahead-input.component';
 import { ConfigsService } from '../../../../../common/services/configs.service';
 import { UniqueId } from '../../../../../helpers/unique-id.helper';
+import { ComposerBlogsService } from '../../../services/composer-blogs.service';
 
 /**
  * Tags popup component. Called programatically via PopupService.
@@ -55,7 +56,11 @@ export class TagsComponent {
    * @param service
    * @param configs
    */
-  constructor(protected service: ComposerService, configs: ConfigsService) {
+  constructor(
+    protected service: ComposerService,
+    protected blogsService: ComposerBlogsService,
+    configs: ConfigsService
+  ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
@@ -63,7 +68,7 @@ export class TagsComponent {
    * Component initialization. Sets current state.
    */
   ngOnInit() {
-    this.state = (this.service.tags$.getValue() || [])
+    this.state = (this.getComposerService().tags$.getValue() || [])
       .filter(Boolean)
       .filter((value, index, self) => self.indexOf(value) === index);
   }
@@ -118,8 +123,18 @@ export class TagsComponent {
    * Emits the internal state to the composer service, stores to MRU cache and attempts to dismiss the modal
    */
   save() {
-    this.service.tags$.next(this.state);
+    this.getComposerService().tags$.next(this.state);
     this.hashtagsTypeaheadInput.pushMRUItems(this.state);
     this.dismissIntent.emit();
+  }
+
+  /**
+   * Returns either the ComposerService or BlogService depending on the contentType$.
+   * @returns { ComposerService | BlogService } - service to handle state.
+   */
+  getComposerService(): ComposerService | ComposerBlogsService {
+    return this.service.contentType$.getValue() === 'post'
+      ? this.service
+      : this.blogsService;
   }
 }

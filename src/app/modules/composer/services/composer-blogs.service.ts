@@ -4,10 +4,12 @@ import {
   ComposerService,
   NsfwSubjectValue,
   TagsSubjectValue,
+  MonetizationSubjectValue,
 } from './composer.service';
 import { Upload } from '../../../services/api';
 import { Router } from '@angular/router';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { ComposerServiceType } from './provider.service';
 
 export interface MetaData {
   title: string;
@@ -26,18 +28,18 @@ export interface Blog {
   fileKey: string;
   mature: number;
   nsfw: NsfwSubjectValue;
-  monetized: number;
+  paywall: boolean;
+  wire_threshold: number;
   published: number;
   custom_meta: MetaData;
   slug: string;
   tags: TagsSubjectValue;
-  monetization: { type: string; min: number };
   time_created: number;
   editor_version: number;
 }
 
 @Injectable()
-export class ComposerBlogsService {
+export class ComposerBlogsService implements ComposerServiceType {
   readonly urlSlug$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly error$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly title$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -50,6 +52,13 @@ export class ComposerBlogsService {
   readonly description$: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''
   );
+  readonly monetization$: BehaviorSubject<
+    MonetizationSubjectValue
+  > = new BehaviorSubject<MonetizationSubjectValue>(null);
+
+  readonly tags$: BehaviorSubject<TagsSubjectValue> = new BehaviorSubject<
+    TagsSubjectValue
+  >([]);
 
   private contentSubscription: Subscription;
 
@@ -152,9 +161,12 @@ export class ComposerBlogsService {
       category: null,
       license: this.composerService.license$.getValue(),
       fileKey: 'header',
-      mature: this.composerService.nsfw$.getValue() ? 1 : 0,
+      mature: this.composerService.nsfw$.getValue().length ? 1 : 0,
       nsfw: this.composerService.nsfw$.getValue(),
-      monetized: 0,
+      paywall: Boolean(this.monetization$.getValue()),
+      wire_threshold: this.monetization$.getValue()
+        ? this.monetization$.getValue().min
+        : 0,
       published: 1,
       custom_meta: {
         title: this.title$.getValue(),
@@ -162,8 +174,7 @@ export class ComposerBlogsService {
         author: this.author$.getValue(),
       },
       slug: this.urlSlug$.getValue(),
-      tags: this.composerService.tags$.getValue(),
-      monetization: this.composerService.monetization$.getValue(),
+      tags: this.tags$.getValue(),
       time_created: this.composerService.schedule$.getValue(),
       editor_version: 2,
     };

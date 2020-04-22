@@ -97,7 +97,7 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
     protected service: ComposerService,
     protected popup: PopupService,
     protected cd: ChangeDetectorRef,
-    protected blogsService: ComposerBlogsService,
+    public blogsService: ComposerBlogsService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 

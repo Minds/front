@@ -38,7 +38,9 @@
 
   <a
     class="m-composerToolbar__item"
-    [class.m-composerToolbar__item--active]="monetization$ | async"
+    [class.m-composerToolbar__item--active]="
+      (monetization$ | async) || (blogsService.monetization$ | async)
+    "
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
     (click)="onMonetizeClick($event)"
     data-cy="monetize-button"
@@ -54,7 +56,9 @@
 
   <a
     class="m-composerToolbar__item"
-    [class.m-composerToolbar__item--active]="(tags$ | async)?.length"
+    [class.m-composerToolbar__item--active]="
+      (tags$ | async)?.length || (blogsService.tags$ | async)?.length
+    "
     [class.m-composerToolbar__item--disabled]="isPosting$ | async"
     (click)="onTagsClick($event)"
     data-cy="tags-button"

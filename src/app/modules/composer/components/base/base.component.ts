@@ -83,6 +83,13 @@ export class BaseComponent implements AfterViewInit {
   }
 
   /**
+   * Blogs service error
+   */
+  get blogsError$(): BehaviorSubject<string> {
+    return this.blogsService.error$;
+  }
+
+  /**
    * Attachment preview subject in service
    */
   get attachmentPreview$() {

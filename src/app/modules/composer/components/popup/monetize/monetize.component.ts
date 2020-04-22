@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ComposerService } from '../../../services/composer.service';
 import { UniqueId } from '../../../../../helpers/unique-id.helper';
+import { ComposerBlogsService } from '../../../services/composer-blogs.service';
 
 @Component({
   selector: 'm-composer__monetize',
@@ -27,10 +28,13 @@ export class MonetizeComponent implements OnInit {
     amount: 0,
   };
 
-  constructor(protected service: ComposerService) {}
+  constructor(
+    protected service: ComposerService,
+    protected blogsService: ComposerBlogsService
+  ) {}
 
   ngOnInit(): void {
-    const monetization = this.service.monetization$.getValue();
+    const monetization = this.getComposerService().monetization$.getValue();
 
     this.state = {
       enabled: Boolean(monetization),
@@ -40,7 +44,7 @@ export class MonetizeComponent implements OnInit {
   }
 
   save() {
-    this.service.monetization$.next(
+    this.getComposerService().monetization$.next(
       this.state.enabled
         ? {
             type: this.state.type,
@@ -49,5 +53,15 @@ export class MonetizeComponent implements OnInit {
         : null
     );
     this.dismissIntent.emit();
+  }
+
+  /**
+   * Returns either the ComposerService or BlogService depending on the contentType$.
+   * @returns { ComposerService | BlogService } - service to handle state.
+   */
+  getComposerService(): ComposerService | ComposerBlogsService {
+    return this.service.contentType$.getValue() === 'post'
+      ? this.service
+      : this.blogsService;
   }
 }
