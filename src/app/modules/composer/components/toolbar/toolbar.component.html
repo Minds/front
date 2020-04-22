@@ -20,9 +20,14 @@
       from="ion"
       iconId="image"
     ></m-icon>
-    <span class="m-composerToolbarItem__label" i18n>
-      Upload
-    </span>
+    <ng-container [ngSwitch]="service.contentType$ | async">
+      <span *ngSwitchCase="'blog'" class="m-composerToolbarItem__label" i18n>
+        Banner
+      </span>
+      <span *ngSwitchCase="'post'" class="m-composerToolbarItem__label" i18n>
+        Upload
+      </span>
+    </ng-container>
   </m-file-upload>
 
   <a
