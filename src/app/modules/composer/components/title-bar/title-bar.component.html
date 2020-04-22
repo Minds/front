@@ -6,17 +6,32 @@
     <label [for]="inputId" *ngSwitchCase="'post'" i18n>Compose</label>
     <label [for]="inputId" *ngSwitchCase="'blog'" i18n>Blog</label>
   </div>
-
-  <div
-    *ngIf="!(isEditing$ | async) && !(attachment$ | async)"
-    class="m-composerTitleBar__createBlogTrigger"
-    [hidden]="isPosting$ | async"
-    (click)="onCreateBlogClick()"
-  >
-    <ng-container *ngIf="(service.contentType$ | async) !== 'blog'" i18n
-      >Create Blog</ng-container
-    >
-  </div>
+  <ng-container [ngSwitch]="service.contentType$ | async">
+    <ng-container *ngSwitchCase="'post'">
+      <div
+        *ngIf="!(isEditing$ | async) && !(attachment$ | async)"
+        class="m-composerTitleBar__createBlogTrigger"
+        [hidden]="isPosting$ | async"
+        (click)="onCreateBlogClick()"
+      >
+        <ng-container i18n>
+          Create Blog
+        </ng-container>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="'blog'">
+      <div
+        *ngIf="!(isEditing$ | async) && !(attachment$ | async)"
+        class="m-composerTitleBar__createBlogTrigger"
+        [hidden]="isPosting$ | async"
+        (click)="onCreatePostClick()"
+      >
+        <ng-container i18n>
+          Create Post
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
 
   <m-dropdownMenu
     triggerClass="m-composerTitleBar__menuButton"
@@ -31,6 +46,14 @@
 
 <ng-template #menu>
   <ul data-cy="meatball-menu">
+    <li
+      (click)="onMetaClick()"
+      data-cy="meatball-menu-meta"
+      *ngIf="(service.contentType$ | async) === 'blog'"
+    >
+      <span i18n>Meta</span>
+    </li>
+
     <li>
       <m-dropdownMenu
         *ngIf="canChangeVisibility"
@@ -38,7 +61,7 @@
         triggerClass="m-dropdownMenu__item"
         data-cy="meatball-menu-visibility"
       >
-        <span>Visibility</span>
+        <span i18n>Visibility</span>
         <m-icon iconId="chevron_right"></m-icon>
       </m-dropdownMenu>
     </li>
@@ -49,7 +72,7 @@
         triggerClass="m-dropdownMenu__item"
         data-cy="meatball-menu-license"
       >
-        <span>License</span>
+        <span i18n>License</span>
         <m-icon iconId="chevron_right"></m-icon>
       </m-dropdownMenu>
     </li>

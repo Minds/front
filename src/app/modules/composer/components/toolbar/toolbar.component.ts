@@ -293,20 +293,6 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * Shows meta-data popup
-   */
-  async onMetaClick($event?: MouseEvent): Promise<void> {
-    try {
-      await this.popup
-        .create(MetaComponent)
-        .present()
-        .toPromise(/* Promise is needed to boot-up the Observable */);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  /**
    * Shows scheduler popup
    * @param $event
    */

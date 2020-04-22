@@ -16,7 +16,8 @@ import {
   LicenseSubjectValue,
 } from '../../services/composer.service';
 import { BehaviorSubject } from 'rxjs';
-import { ComposerBlogsService } from '../../services/composer-blogs.service';
+import { MetaComponent } from '../popup/meta/meta.component';
+import { PopupService } from '../popup/popup.service';
 
 /**
  * Composer title bar component. It features a label and a dropdown menu
@@ -41,6 +42,13 @@ export class TitleBarComponent {
   > = new EventEmitter<void>();
 
   /**
+   * Create post intent
+   */
+  @Output('onCreatePost') onCreatePostEmitter: EventEmitter<
+    void
+  > = new EventEmitter<void>();
+
+  /**
    * Visibility items list
    */
   visibilityItems: Array<{ text: string; value: string }> = ACCESS.map(
@@ -57,7 +65,7 @@ export class TitleBarComponent {
     license => license.selectable
   );
 
-  constructor(public service: ComposerService) {}
+  constructor(public service: ComposerService, protected popup: PopupService) {}
 
   /**
    * Access ID subject from service
@@ -109,6 +117,13 @@ export class TitleBarComponent {
   }
 
   /**
+   * Clicked Create Post trigger
+   */
+  onCreatePostClick() {
+    this.onCreatePostEmitter.emit();
+  }
+
+  /**
    * Emits the new visibility (access ID)
    * @param $event
    */
@@ -126,5 +141,19 @@ export class TitleBarComponent {
    */
   onLicenseClick($event) {
     this.license$.next($event);
+  }
+
+  /**
+   * Shows meta-data popup
+   */
+  async onMetaClick($event?: MouseEvent): Promise<void> {
+    try {
+      await this.popup
+        .create(MetaComponent)
+        .present()
+        .toPromise(/* Promise is needed to boot-up the Observable */);
+    } catch (e) {
+      console.error(e);
+    }
   }
 }

@@ -146,6 +146,13 @@ export class BaseComponent implements AfterViewInit {
   }
 
   /**
+   * Sets contentType to 'blog' to dynamically switch the window.
+   */
+  createPost() {
+    this.service.contentType$.next('post');
+  }
+
+  /**
    * Updates the attachment. Called when pasting an image or video.
    * @param file
    */
