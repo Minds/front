@@ -93,7 +93,7 @@
         </a>
 
         <div
-          [class.hidden]="content.length === 0"
+          [class.hidden]="content.length < 140"
           class="m-commentPoster__limit"
           [class.m-commentPoster__limit--maxed]="content.length > 1500"
         >
