@@ -3,18 +3,18 @@ import {
   ChangeDetectorRef,
   Component,
   OnInit,
-  Output,
-  EventEmitter,
   OnDestroy,
 } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 import { Session } from '../../../../services/session';
-import { DialogService } from '../../../../common/services/confirm-leave-dialog.service';
-import { Observable, Subscription } from 'rxjs';
-import { MindsUser } from '../../../../interfaces/entities';
-import { YoutubeMigrationService } from '../youtube-migration.service';
-// import { SettingsV2Service } from '../../settings-v2.service';
+import {
+  YoutubeMigrationService,
+  YoutubeChannel,
+} from '../youtube-migration.service';
+import { Router } from '@angular/router';
+import { FormToastService } from '../../../../common/services/form-toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-youtubeMigration__config',
@@ -22,82 +22,124 @@ import { YoutubeMigrationService } from '../youtube-migration.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
-  @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
-  user: MindsUser;
-  settingsSubscription: Subscription;
-  form;
+  user;
+  selectedChannel: YoutubeChannel;
+  selectedChannelSubscription: Subscription;
+  form: FormGroup;
 
   constructor(
     protected cd: ChangeDetectorRef,
     private session: Session,
-    // protected settingsService: SettingsV2Service,
-    private dialogService: DialogService,
-    protected youtubeService: YoutubeMigrationService
+    protected youtubeService: YoutubeMigrationService,
+    protected router: Router,
+    protected formToastService: FormToastService
   ) {}
 
-  //   ngOnInit() {
-  //     this.user = this.session.getLoggedInUser();
-  //     this.form = new FormGroup({
-  //       autoTransfer: new FormControl(''),
-  //     });
+  ngOnInit() {
+    this.selectedChannelSubscription = this.youtubeService.selectedChannel$.subscribe(
+      channel => {
+        this.selectedChannel = channel;
+        this.detectChanges();
+      }
+    );
 
-  //     // this.settingsSubscription = this.settingsService.settings$.subscribe(
-  //     //   (settings: any) => {
-  //     //     this.mature.setValue(!!parseInt(settings.mature, 10));
-  //     //     this.detectChanges();
-  //     //   }
-  //     // );
+    this.form = new FormGroup({
+      autoImport: new FormControl(this.selectedChannel.auto_import),
+    });
 
-  //     this.init = true;
-  //     this.detectChanges();
-  //   }
+    this.autoImport.valueChanges.subscribe(val => {
+      this.submit();
+    });
 
-  //   async submit() {
-  //     if (!this.canSubmit()) {
-  //       return;
-  //     }
-  //     try {
-  //       this.inProgress = true;
-  //       this.detectChanges();
+    this.init = true;
+    this.detectChanges();
+  }
 
-  //       const formValue = {
-  //         // mature: this.mature.value ? 1 : 0,
-  //       };
+  ngOnDestroy() {
+    this.selectedChannelSubscription.unsubscribe();
+  }
 
-  //       // const response: any = await this.settingsService.updateSettings(
-  //       //   this.user.guid,
-  //       //   formValue
-  //       // );
-  //       // if (response.status === 'success') {
-  //       //   this.formSubmitted.emit({ formSubmitted: true });
-  //       //   this.form.markAsPristine();
-  //       // }
-  //     } catch (e) {
-  //       this.formSubmitted.emit({ formSubmitted: false, error: e });
-  //     } finally {
-  //       this.inProgress = false;
-  //       this.detectChanges();
-  //     }
-  //   }
+  async submit() {
+    if (!this.canSubmit()) {
+      return;
+    }
+    this.inProgress = true;
+    this.detectChanges();
 
-  //   canSubmit(): boolean {
-  //     return this.form.valid && !this.inProgress && !this.form.pristine;
-  //   }
+    if (this.autoImport.value) {
+      try {
+        const response: any = await this.youtubeService.enableAutoImport(
+          this.selectedChannel.id
+        );
+        if (response.status === 'success') {
+          this.form.markAsPristine();
+        }
+      } catch (e) {
+        console.error('error', e);
+        this.formToastService.error(
+          'Sorry, there was an error and your changes have not been saved.'
+        );
+      } finally {
+        this.inProgress = false;
+        this.detectChanges();
+      }
+    } else {
+      try {
+        const response: any = await this.youtubeService.disableAutoImport(
+          this.selectedChannel.id
+        );
+        if (response.status === 'success') {
+          this.form.markAsPristine();
+        }
+      } catch (e) {
+        console.error('error', e);
+        this.formToastService.error(
+          'Sorry, there was an error and your changes have not been saved.'
+        );
+      } finally {
+        this.inProgress = false;
+        this.detectChanges();
+      }
+    }
+  }
 
-  //   detectChanges() {
-  //     this.cd.markForCheck();
-  //     this.cd.detectChanges();
-  //   }
+  async disconnectAccount() {
+    if (
+      !confirm(
+        `Are you sure you want to disconnect your YouTube account @${this.selectedChannel.title} from Minds?`
+      )
+    ) {
+      return;
+    }
 
-  //   // ngOnDestroy() {
-  //   //   if (this.settingsSubscription) {
-  //   //     this.settingsSubscription.unsubscribe();
-  //   //   }
-  //   // }
+    this.inProgress = true;
+    this.detectChanges();
 
-  //   get autoTransfer() {
-  //     return this.form.get('autoTransfer');
-  //   }
+    try {
+      const response: any = await this.youtubeService.disconnectAccount(
+        this.selectedChannel.id
+      );
+    } catch (e) {
+      this.formToastService.error(
+        'Sorry, there was an error and your changes have not been saved.'
+      );
+      this.inProgress = false;
+      this.detectChanges();
+    }
+  }
+
+  canSubmit(): boolean {
+    return !this.inProgress && !this.form.pristine;
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
+  }
+
+  get autoImport() {
+    return this.form.get('autoImport');
+  }
 }

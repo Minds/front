@@ -1,10 +1,57 @@
-<p>AVAILABLE</p>
 <m-youtubeMigration__transferStatus></m-youtubeMigration__transferStatus>
-<div style="border-top:1px solid grey;padding: 16px 0;"></div>
-
-<m-youtubeMigration__list></m-youtubeMigration__list>
-<div style="border-top:1px solid grey;padding: 16px 0;"></div>
-
-<div class="m-youtubeMigration__notice">
-  <p>No available YouTube videos</p>
-</div>
+<ng-container *ngIf="videos">
+  <div *ngIf="videos.length > 0" class="m-youtubeMigration__videosList">
+    <div class="m-youtubeMigration__video" *ngFor="let video of videos">
+      <a (click)="openYoutubeWindow(video.youtubeUrl)">
+        <div
+          class="m-youtubeMigration__videoThumb"
+          [ngStyle]="{ 'background-image': 'url(' + video.thumbnail + ')' }"
+        >
+          <div class="m-youtubeMigration__videoOverlay">
+            <i class="material-icons">play_arrow</i>
+            <div class="m-youtubeMigration__videoDuration">
+              {{ video.friendlyDuration }}
+            </div>
+          </div>
+        </div>
+      </a>
+      <div class="m-youtubeMigration__videoInfo">
+        <div>
+          <a (click)="openYoutubeWindow(video.youtubeUrl)"
+            ><div class="m-youtubeMigration__videoTitle">
+              {{ video.title }}
+            </div></a
+          >
+          <div class="m-youtubeMigration__videoDetails">
+            <span>{{ video.friendlyDate }}</span> ·
+            <span>{{ video.views | abbr }} views</span>
+          </div>
+        </div>
+        <div class="m-youtubeMigration__videoStatus">
+          <ng-container *ngIf="video.status">
+            <a (click)="cancel(video.video_id, video.channel_id)">Cancel</a>
+            ·
+            <span
+              *ngIf="video.status === 'transcoding'"
+              class="m-youtubeMigration__videoStatus--transcoding"
+              >Transferring</span
+            >
+            <span
+              *ngIf="video.status === 'queued'"
+              class="m-youtubeMigration__videoStatus--queued"
+              >Queued</span
+            >
+          </ng-container>
+          <a
+            *ngIf="!video.status"
+            (click)="import(video.video_id, video.channel_id)"
+            >Transfer</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="videos.length === 0" class="m-youtubeMigration__notice">
+    <p>No available YouTube videos</p>
+  </div>
+</ng-container>

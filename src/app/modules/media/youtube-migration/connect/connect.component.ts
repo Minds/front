@@ -1,28 +1,40 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'm-youtubeMigration__connect',
   templateUrl: './connect.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class YoutubeMigrationConnectComponent implements OnInit {
+export class YoutubeMigrationConnectComponent {
   constructor(
     protected session: Session,
     protected youtubeService: YoutubeMigrationService,
-    public router: Router
+    public router: Router,
+    protected cd: ChangeDetectorRef
   ) {}
 
   inProgress: boolean = false;
 
-  ngOnInit() {}
-
   async connect(): Promise<void> {
-    const { url } = (await this.youtubeService.requestAuthorization()) as any;
+    this.inProgress = true;
+    this.detectChanges();
+    const { url } = (await this.youtubeService.connectAccount()) as any;
 
     if (url) {
       window.location.replace(url);
     }
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

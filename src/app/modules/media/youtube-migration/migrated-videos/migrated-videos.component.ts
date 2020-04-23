@@ -1,30 +1,67 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  OnDestroy,
+} from '@angular/core';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../media/modal/modal.component';
 import { Router } from '@angular/router';
 import { YoutubeMigrationService } from '../youtube-migration.service';
+import { Session } from '../../../../services/session';
+import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: 'm-youtubeMigration__migratedVideos',
   templateUrl: './migrated-videos.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class YoutubeMigrationMigratedVideosComponent implements OnInit {
+export class YoutubeMigrationMigratedVideosComponent
+  implements OnInit, OnDestroy {
+  init: boolean = false;
+  inProgress: boolean = false;
+  videos: any = [];
+  migratedVideosSubscription: Subscription;
+
   constructor(
-    private overlayModal: OverlayModalService,
-    private router: Router,
-    protected youtubeService: YoutubeMigrationService
+    protected youtubeService: YoutubeMigrationService,
+    protected session: Session,
+    protected cd: ChangeDetectorRef,
+    protected overlayModal: OverlayModalService,
+    protected router: Router
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.migratedVideosSubscription = this.youtubeService.migratedVideos$.subscribe(
+      migratedVideos => {
+        this.videos = migratedVideos;
+        this.formatVideos();
+        this.init = true;
+        this.detectChanges();
+      }
+    );
+  }
 
-  onModalRequested(event: MouseEvent, entity) {
+  ngOnDestroy() {
+    this.migratedVideosSubscription.unsubscribe();
+  }
+
+  formatVideos(): void {
+    this.videos.forEach(v => {
+      const durationFormat = v.duration >= 3600 ? 'H:mm:ss' : 'mm:ss';
+      v.friendlyDuration = moment
+        .utc(moment.duration(Number(v.duration), 'seconds').asMilliseconds())
+        .format(durationFormat);
+
+      v.friendlyDate = moment(v.entity.time_created, 'X').format('MMM Do YYYY');
+    });
+  }
+
+  onModalRequested(event: MouseEvent, entity): void {
     if (!this.overlayModal.canOpenInModal()) {
       return;
-    }
-
-    if (event) {
-      event.preventDefault();
-      event.stopPropagation();
     }
 
     entity.modal_source_url = this.router.url;
@@ -38,5 +75,10 @@ export class YoutubeMigrationMigratedVideosComponent implements OnInit {
         }
       )
       .present();
+  }
+
+  detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }

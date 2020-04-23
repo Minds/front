@@ -1,19 +1,36 @@
-<p>migrated-videos works!</p>
-<m-youtubeMigration__list></m-youtubeMigration__list>
-<div class="m-youtubeMigration__notice">
-  <p>No transferred videos</p>
-</div>
-
-<!-- FROM NEWSFEED/ACTIVITY/CONTENT -->
-<!-- <div class="m-activityContent__media--video" #mediaEl *ngIf="isVideo">
-  <div class="m-activityContent__fixedHeightSpacer"></div>
-  <m-videoPlayer
-    [guid]="videoGuid"
-    [shouldPlayInModal]="true"
-    [autoplay]="autoplayVideo"
-    [allowAutoplayOnScroll]="allowAutoplayOnScroll"
-    (mediaModalRequested)="onModalRequested($event)"
-    [style.height]="videoHeight"
-  ></m-videoPlayer>
-  <div class="m-activityContent__fixedHeightSpacer"></div>
-</div> -->
+<ng-container *ngIf="init">
+  <div *ngIf="videos.length > 0" class="m-youtubeMigration__videosList">
+    <div class="m-youtubeMigration__video" *ngFor="let video of videos">
+      <a (click)="onModalRequested($event, video.entity)">
+        <div
+          class="m-youtubeMigration__videoThumb"
+          [ngStyle]="{
+            'background-image': 'url(' + video.entity.thumbnail_src + ')'
+          }"
+        >
+          <div class="m-youtubeMigration__videoOverlay">
+            <i class="material-icons">play_arrow</i>
+            <div class="m-youtubeMigration__videoDuration">
+              {{ video.friendlyDuration }}
+            </div>
+          </div>
+        </div>
+      </a>
+      <div class="m-youtubeMigration__videoInfo">
+        <div>
+          <a (click)="onModalRequested($event, video.entity)"
+            ><div class="m-youtubeMigration__videoTitle">
+              {{ video.title }}
+            </div></a
+          >
+          <div class="m-youtubeMigration__videoDetails">
+            <span>{{ video.friendlyDate }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="videos.length === 0" class="m-youtubeMigration__notice">
+    <p>No transferred videos</p>
+  </div>
+</ng-container>

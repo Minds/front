@@ -1,26 +1,29 @@
-const fakeData: Array<any> = [
-  // 0: transferred videos
-  {
-    video_id: '111',
-    channel_id: 'aaa',
-    status: 'completed', // 'queued', 'transcoding'
-    title: 'my video title 111',
-    description: 'my video desc 111',
-    thumbnail: '',
-    // Below this line - only exists if migrated
-    ownerGuid: 996936419819659279,
-    entity: {
-      status: 'success',
+const fakeData: any = {
+  migrated: [
+    {
+      video_id: '111',
+      channel_id: 'aaa',
+      status: 'completed', // 'queued', 'transcoding'
+      title: 'my video title 111',
+      description: 'my video desc 111',
+      duration: '842',
+      thumbnail: '',
+      ownerGuid: 996936419819659279,
       entity: {
         guid: '1077002658870206464',
-
+        type: 'object',
+        subtype: 'video',
         time_created: '1582153459',
         time_updated: '1582153459',
         container_guid: '996936419819659279',
         owner_guid: '996936419819659279',
+        access_id: '2',
+        nsfw: [1, 4],
+        nsfw_lock: [],
+        allow_comments: true,
         title: 'I am an explicit dog video',
-        cinemr_guid: '1077002658870206464',
-
+        featured: false,
+        featured_id: false,
         ownerObj: {
           guid: '996936419819659279',
           type: 'user',
@@ -93,79 +96,130 @@ const fakeData: Array<any> = [
           eth_wallet: '0xfeaf4450e5e551e759d990f1ca0d4ad35c37dae9',
           rating: '1',
         },
-        // type: 'object',
-        // subtype: 'video',
-        // featured: false,
-        // featured_id: false,
-        // category: false,
-        // 'comments:count': false,
-        // 'thumbs:up:count': 0,
-        // 'thumbs:up:user_guids': false,
-        // 'thumbs:down:count': 0,
-        // 'thumbs:down:user_guids': false,
-        // flags: {
-        //   mature: false,
-        // },
-        // wire_threshold: '0',
-        // thumbnail: false,
-
-        // license: false,
-        // monetized: false,
-        // mature: false,
-        // boost_rejection_reason: -1,
+        category: false,
+        'comments:count': false,
+        'thumbs:up:count': 0,
+        'thumbs:up:user_guids': false,
+        'thumbs:down:count': 0,
+        'thumbs:down:user_guids': false,
+        flags: {
+          mature: false,
+        },
+        wire_threshold: '0',
+        thumbnail: false,
+        cinemr_guid: '1077002658870206464',
+        license: false,
+        monetized: false,
+        mature: false,
+        boost_rejection_reason: -1,
         urn: 'urn:video:1077002658870206464',
-        thumbnail_src: 'http://place-puppy.com/100x100',
-        // 'https://cdn.minds.com/fs/v1/thumbnail/1077002658870206464/medium/',
+        thumbnail_src:
+          'https://cdn.minds.com/fs/v1/thumbnail/1077002658870206464/medium/',
         src: {
           '360.mp4':
             'https://cdn-cinemr.minds.com/cinemr_com/1077002658870206464/360.mp4',
           '720.mp4':
             'https://cdn-cinemr.minds.com/cinemr_com/1077002658870206464/720.mp4',
         },
-        // 'play:count': 0,
+        'play:count': 0,
         description: '<?xml encoding="utf-8" ?>\n',
-        // rating: 2,
-        // time_sent: null,
+        rating: 2,
+        time_sent: null,
       },
-      sources: [
-        {
-          guid: '1077002658870206464',
-          src:
-            'https://cdn-cinemr.minds.com/cinemr_com/1077002658870206464/360.mp4',
-          type: 'video/mp4',
-          size: 360,
-          label: 'X264_360p',
-        },
-        {
-          guid: '1077002658870206464',
-          src:
-            'https://cdn-cinemr.minds.com/cinemr_com/1077002658870206464/720.mp4',
-          type: 'video/mp4',
-          size: 720,
-          label: 'X264_720p',
-        },
-        {
-          guid: '1077002658870206464',
-          src:
-            'https://cdn-cinemr.minds.com/cinemr_com/1077002658870206464/720.webm',
-          type: 'video/webm',
-          size: 720,
-          label: 'Webm_720p',
-        },
-        {
-          guid: '1077002658870206464',
-          src:
-            'https://cdn-cinemr.minds.com/cinemr_com/1077002658870206464/360.webm',
-          type: 'video/webm',
-          size: 360,
-          label: 'Webm_360p',
-        },
-      ],
-      poster: 'http://place-puppy.com/100x100',
-      // 'https://cdn.minds.com/fs/v1/thumbnail/1077002658870206464/medium/',
-      transcode_status: 'completed',
     },
-  },
-];
+    {
+      video_id: '111',
+      channel_id: 'aaa',
+      status: 'completed', // 'queued', 'transcoding'
+      title: 'my video title 111',
+      description: 'my video desc 111',
+      duration: '842',
+      thumbnail: '',
+      ownerGuid: 996936419819659279,
+      entity: {
+        status: 'success',
+        entity: {
+          guid: '1077002658870206464',
+          time_created: '1582153459',
+          container_guid: '996936419819659279',
+          owner_guid: '996936419819659279',
+          title: 'I am an explicit dog video2',
+          urn: 'urn:video:1077002658870206464',
+          thumbnail_src: 'http://place-puppy.com/100x100',
+          // 'play:count': 0,
+          description: '<?xml encoding="utf-8" ?>\n',
+        },
+        poster: 'http://place-puppy.com/100x100',
+        // 'https://cdn.minds.com/fs/v1/thumbnail/1077002658870206464/medium/',
+      },
+    },
+  ],
+  unmigrated: [
+    {
+      //status: null
+      video_id: '111',
+      channel_id: 'aaa',
+      title: 'my video title 111',
+      description: 'my video desc 111',
+      thumbnail: 'http://place-puppy.com/700x501',
+      ownerGuid: 996936419819659279,
+      youtubeCreationDate: '1582153459',
+      duration: '842',
+      views: 7777777,
+      youtubeUrl: 'https://www.youtube.com/watch?v=Iu4wQn8sEp8',
+    },
+    {
+      status: 'queued',
+      video_id: '222',
+      channel_id: 'aaa',
+      title: 'my video title 222',
+      thumbnail: 'http://place-puppy.com/150x150',
+      ownerGuid: 996936419819659279,
+      youtubeCreationDate: '1582153459',
+      duration: '90842',
+      views: 7777777,
+      youtubeUrl: 'https://www.youtube.com/watch?v=Iu4wQn8sEp8',
+      entity: {
+        status: 'success',
+        entity: {
+          guid: '1077002658870206464',
+          time_created: '1582153459',
+          title: 'I am an explicit dog video',
+          urn: 'urn:video:1077002658870206464',
+          thumbnail_src: 'http://place-puppy.com/100x100',
+          // 'play:count': 0,
+          description: '<?xml encoding="utf-8" ?>\n',
+        },
+        poster: 'http://place-puppy.com/100x200',
+        // 'https://cdn.minds.com/fs/v1/thumbnail/1077002658870206464/medium/',
+      },
+    },
+    {
+      status: 'transcoding',
+      video_id: '333',
+      channel_id: 'aaa',
+      title: 'my video title 333 my video title 333 my video title 333',
+      youtubeCreationDate: '1582153459',
+      duration: '8842',
+      views: 77,
+      youtubeUrl: 'https://www.youtube.com/watch?v=Iu4wQn8sEp8',
+      thumbnail: 'http://place-puppy.com/100x100',
+      entity: {
+        status: 'success',
+        entity: {
+          guid: '1077002658870206464',
+          time_created: '1582153459',
+          title: 'I am an explicit dog video',
+          urn: 'urn:video:1077002658870206464',
+          thumbnail_src: 'http://place-puppy.com/100x100',
+          // 'play:count': 0,
+          description: '<?xml encoding="utf-8" ?>\n',
+        },
+        poster: 'http://place-puppy.com/100x100',
+        // 'https://cdn.minds.com/fs/v1/thumbnail/1077002658870206464/medium/',
+      },
+    },
+  ],
+};
 
 export default fakeData;
