@@ -103,9 +103,11 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
       case 'edit':
         if (this.features.has('activity-composer')) {
           // check if entity is a blog.
-          if (this.entity.blurb) {
+          if (this.features.has('composer-blogs') && this.entity.blurb) {
             this.composer.contentType$.next('blog');
             this.blogsService.load(this.entity);
+          } else {
+            this.composer.load(this.entity);
           }
 
           this.composerModal

@@ -1,60 +1,22 @@
+/**
+ * Service for managing blog state in Composer.
+ * @author Ben Hayward
+ */
+
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Subscription,
-  timer,
-  merge,
-  interval,
-  zip,
-  of,
-  Observable,
-  from,
-} from 'rxjs';
-import {
-  ComposerService,
-  NsfwSubjectValue,
-  TagsSubjectValue,
-  MonetizationSubjectValue,
-} from './composer.service';
+import { BehaviorSubject, Subscription, timer } from 'rxjs';
+import { ComposerService, MonetizationSubjectValue } from './composer.service';
 import { Upload, Client } from '../../../services/api';
 import { Router } from '@angular/router';
-import {
-  distinctUntilChanged,
-  tap,
-  map,
-  delay,
-  concatMap,
-} from 'rxjs/operators';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { ComposerServiceType } from './provider.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { SiteService } from '../../../common/services/site.service';
+import { MindsBlogEntity } from '../../../interfaces/entities';
 
 export interface MetaData {
   title: string;
   description: string;
   author: string;
-}
-
-export interface Blog {
-  file: string;
-  guid: string;
-  title: string;
-  description: string;
-  access_id: string;
-  category: string | null;
-  license: string | null;
-  fileKey: string;
-  mature: number;
-  nsfw: NsfwSubjectValue;
-  paywall: boolean;
-  wire_threshold: number;
-  published: number;
-  custom_meta: MetaData;
-  slug: string;
-  tags: TagsSubjectValue;
-  time_created: number;
-  editor_version: number;
 }
 
 export interface BlogResponse {
@@ -64,7 +26,6 @@ export interface BlogResponse {
   status: string;
   message?: string;
 }
-
 @Injectable()
 export class ComposerBlogsService implements ComposerServiceType {
   readonly urlSlug$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -72,35 +33,41 @@ export class ComposerBlogsService implements ComposerServiceType {
   readonly title$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly author$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly banner$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  readonly guid$: BehaviorSubject<string> = new BehaviorSubject<string>('new');
+  readonly published$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  readonly license$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  readonly content$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  readonly accessId$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  readonly nsfw$: BehaviorSubject<number[]> = new BehaviorSubject<number[]>([]);
+  readonly tags$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+
   readonly canPost$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
-  readonly guid$: BehaviorSubject<string> = new BehaviorSubject<string>('new');
-  readonly published$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
   readonly draftSaved$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
+
   readonly bannerFile$: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''
   );
-  readonly license$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  readonly content$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  readonly description$: BehaviorSubject<string> = new BehaviorSubject<string>(
-    ''
-  );
-  readonly accessId$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+
   readonly schedule$: BehaviorSubject<number> = new BehaviorSubject<number>(
     null
   );
+
   readonly savedContent$: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''
   );
+
+  readonly description$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    ''
+  );
+
   readonly monetization$: BehaviorSubject<
     MonetizationSubjectValue
   > = new BehaviorSubject<MonetizationSubjectValue>(null);
-  readonly tags$: BehaviorSubject<TagsSubjectValue> = new BehaviorSubject<
-    TagsSubjectValue
-  >([]);
 
   private contentSubscription: Subscription;
   private timerSubscription: Subscription;
@@ -134,14 +101,13 @@ export class ComposerBlogsService implements ComposerServiceType {
       .then((response: any) => {
         if (response.blog) {
           const blog = response.blog;
-          console.log('response.blog', response.blog);
-          console.log('blog.monetization', blog.monetization);
 
           this.urlSlug$.next(blog.slug);
           this.title$.next(blog.title);
           this.description$.next(blog.description);
           this.author$.next(blog.custom_meta.author);
           this.content$.next(blog.description);
+          this.nsfw$.next(blog.nsfw);
           this.error$.next('');
           this.banner$.next(
             this.site.baseUrl +
@@ -203,6 +169,7 @@ export class ComposerBlogsService implements ComposerServiceType {
     this.savedContent$.next('');
     this.monetization$.next(null);
     this.tags$.next([]);
+    this.nsfw$.next([]);
   }
 
   /**
@@ -290,18 +257,17 @@ export class ComposerBlogsService implements ComposerServiceType {
    * Assembles blog from current values.
    * @returns { Promise<Blog>} the built blog.
    */
-  async buildBlog(): Promise<Blog> {
+  async buildBlog(): Promise<MindsBlogEntity> {
     return {
       file: this.bannerFile$.getValue(),
       guid: this.guid$.getValue(),
       title: this.title$.getValue(),
       description: this.content$.getValue(),
-      access_id: this.accessId$.getValue(),
-      category: null,
+      access_id: Number(this.accessId$.getValue()),
       license: this.license$.getValue(),
       fileKey: 'header',
-      mature: this.composerService.nsfw$.getValue().length ? 1 : 0,
-      nsfw: this.composerService.nsfw$.getValue(),
+      mature: this.nsfw$.getValue().length > 0,
+      nsfw: this.nsfw$.getValue(),
       paywall: Boolean(this.monetization$.getValue()),
       wire_threshold: this.monetization$.getValue()
         ? this.monetization$.getValue().min

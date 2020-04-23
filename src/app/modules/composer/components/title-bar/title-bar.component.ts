@@ -78,10 +78,10 @@ export class TitleBarComponent {
    * Access ID subject from service
    */
   get accessId$(): BehaviorSubject<AccessIdSubjectValue> {
-    if (this.service.contentType$.getValue() === 'post') {
-      return this.service.accessId$;
-    } else {
+    if (this.service.contentType$.getValue() === 'blog') {
       return this.blogsService.accessId$;
+    } else {
+      return this.service.accessId$;
     }
   }
 
@@ -89,10 +89,10 @@ export class TitleBarComponent {
    * License subject from service
    */
   get license$(): BehaviorSubject<LicenseSubjectValue> {
-    if (this.service.contentType$.getValue() === 'post') {
-      return this.service.license$;
-    } else {
+    if (this.service.contentType$.getValue() === 'blog') {
       return this.blogsService.license$;
+    } else {
+      return this.service.license$;
     }
   }
 

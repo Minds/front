@@ -19,6 +19,7 @@ import { InMemoryStorageService } from '../../../../services/in-memory-storage.s
 import { BehaviorSubject } from 'rxjs';
 import { ComposerBlogsService } from '../../services/blogs.service';
 import { ActivityEntity } from '../../../newsfeed/activity/activity.service';
+import { FeaturesService } from '../../../../services/features.service';
 
 /**
  * Base component for composer. It contains all the parts.
@@ -72,7 +73,8 @@ export class BaseComponent implements AfterViewInit {
     protected inMemoryStorage: InMemoryStorageService,
     protected cd: ChangeDetectorRef,
     protected blogsService: ComposerBlogsService,
-    protected injector: Injector
+    protected injector: Injector,
+    protected features: FeaturesService
   ) {}
 
   /**
@@ -142,7 +144,20 @@ export class BaseComponent implements AfterViewInit {
    * Sets contentType to 'blog' to dynamically switch the window.
    */
   createBlog() {
-    this.service.contentType$.next('blog');
+    if (this.features.has('composer-blogs')) {
+      this.service.contentType$.next('blog');
+    } else {
+      const message = this.service.message$.getValue();
+
+      this.service.isMovingContent$.next(true);
+      this.inMemoryStorage.set('newBlogContent', message);
+
+      if (this.popupComponent) {
+        this.popup.close();
+      }
+
+      this.router.navigate(['/blog/edit/new']);
+    }
   }
 
   /**
@@ -171,11 +186,11 @@ export class BaseComponent implements AfterViewInit {
       this.error = '';
       this.detectChanges();
       let activity: ActivityEntity | null;
-      if (this.service.contentType$.getValue() === 'post') {
-        activity = await this.service.post();
-      } else {
+      if (this.service.contentType$.getValue() === 'blog') {
         // redirects
         return await this.blogsService.save();
+      } else {
+        activity = await this.service.post();
       }
       this.onPostEmitter.next(activity);
     } catch (e) {

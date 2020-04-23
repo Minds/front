@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { ComposerService } from '../../services/composer.service';
 import { ComposerBlogsService } from '../../services/blogs.service';
 
@@ -17,12 +16,10 @@ export class BannerComponent {
 
   /**
    * Constructor
-   * @param domSanitizer
    * @param configs
    * @param service
    */
   constructor(
-    protected domSanitizer: DomSanitizer,
     protected blogsService: ComposerBlogsService,
     protected service: ComposerService
   ) {}

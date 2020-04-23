@@ -252,10 +252,10 @@ export class ToolbarComponent implements OnInit, AfterViewInit, OnDestroy {
       // Most likely pressed Esc on dialog
       return;
     }
-    if (this.contentType$.getValue() === 'post') {
-      this.service.attachment$.next($event);
-    } else {
+    if (this.contentType$.getValue() === 'blog') {
       this.blogsService.addBanner($event);
+    } else {
+      this.service.attachment$.next($event);
     }
   }
 

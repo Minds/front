@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { ComposerService } from '../../../services/composer.service';
 import { NSFW_REASONS } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
+import { ComposerBlogsService } from '../../../services/blogs.service';
 
 /**
  * Composer's NSFW popup modal
@@ -37,13 +38,16 @@ export class NsfwComponent {
    */
   state: number[] = [];
 
-  constructor(protected service: ComposerService) {}
+  constructor(
+    protected service: ComposerService,
+    protected blogsService: ComposerBlogsService
+  ) {}
 
   /**
    * Component initialization. Sets current state.
    */
   ngOnInit() {
-    this.state = (this.service.nsfw$.getValue() || []).filter(
+    this.state = (this.getComposerService().nsfw$.getValue() || []).filter(
       (value, index, self) => self.indexOf(value) === index
     );
   }
@@ -68,7 +72,17 @@ export class NsfwComponent {
    * Emits the internal state to the composer service and attempts to dismiss the modal
    */
   save() {
-    this.service.nsfw$.next(this.state.sort());
+    this.getComposerService().nsfw$.next(this.state.sort());
     this.dismissIntent.emit();
+  }
+
+  /**
+   * Returns either the ComposerService or BlogService depending on the contentType$.
+   * @returns { ComposerService | BlogService } - service to handle state.
+   */
+  getComposerService(): ComposerService | ComposerBlogsService {
+    return this.service.contentType$.getValue() === 'post'
+      ? this.service
+      : this.blogsService;
   }
 }

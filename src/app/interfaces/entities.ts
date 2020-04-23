@@ -13,7 +13,7 @@ export interface MindsBlogEntity {
   guid: string;
   title: string;
   description: string;
-  ownerObj: any;
+  ownerObj?: any;
   spam?: boolean;
   deleted?: boolean;
   paywall?: boolean;
@@ -28,15 +28,20 @@ export interface MindsBlogEntity {
   time_published?: number;
   access_id?: number;
   license?: string;
-  allow_comments: boolean;
+  allow_comments?: boolean;
   custom_meta?: {
     title: string;
     description: string;
     author: string;
   };
-  perma_url: string;
-  thumbnail: string;
+  perma_url?: string;
+  thumbnail?: string;
   editor_version?: number;
+  published?: number;
+  nsfw?: number[];
+  tags?: string[];
+  file?: any;
+  fileKey?: string;
 }
 
 export interface Message {}

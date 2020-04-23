@@ -381,7 +381,6 @@ export class ComposerService implements OnDestroy {
         })
       ),
       this.license$.pipe(distinctUntilChanged()),
-
       this.attachment$.pipe(
         // Only react to attachment changes from previous values (string -> File -> null -> File -> ...)
         distinctUntilChanged(),
@@ -417,7 +416,18 @@ export class ComposerService implements OnDestroy {
 
         // Value will be either an Attachment interface object or null
       ),
-      // Use both observables, only react to changes.
+      this.richEmbed$.pipe(
+        // Only react to rich-embed URL changes
+        distinctUntilChanged(),
+
+        // Call the engine endpoint to resolve the URL, debouncing the request to avoid server overload
+        this.richEmbed.resolve(200),
+
+        // Update the preview
+        tap((richEmbed: RichEmbed) => this.richEmbedPreview$.next(richEmbed))
+
+        // Value will be either a RichEmbed interface object or null
+      ),
       this.videoPoster$.pipe(distinctUntilChanged()),
     ]).pipe(
       map(
