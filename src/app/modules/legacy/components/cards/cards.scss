@@ -447,6 +447,9 @@ minds-activity-preview {
   }
 
   .item-image-video {
+    m-videoPlayer {
+      display: inline;
+    }
     video {
       width: 100%;
       height: auto;
