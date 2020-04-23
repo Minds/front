@@ -1,0 +1,152 @@
+.m-wireCreator__form {
+  margin: 11px 0 0;
+
+  @media screen and (max-width: $max-mobile) {
+    margin: 31px 0 0;
+  }
+
+  .m-wireCreatorForm__tabs {
+    padding: 0 50px;
+
+    @media screen and (max-width: $max-mobile) {
+      justify-content: flex-start;
+      padding: 0 20px;
+
+      .m-tabs__tab > a:first-child {
+        margin-left: 0;
+      }
+    }
+  }
+
+  .m-wireCreatorForm__fieldset {
+    margin: 39px 0 0;
+  }
+
+  .m-wireCreatorForm__fields {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: stretch;
+    padding: 0 50px;
+
+    > .m-wireCreatorForm__field {
+      flex: 1;
+      margin: 0 0 27px;
+
+      @media screen and (max-width: $max-mobile) {
+        margin: 0 0 35px;
+      }
+
+      // Margin fix to take in account select box height change. This is awful :(
+      .m-wireCreatorFormRecurring--usdMarginFix {
+        margin-top: 21px;
+
+        @media screen and (max-width: $max-mobile) {
+          margin-top: 0;
+        }
+      }
+    }
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: flex-start;
+      padding: 0 20px;
+    }
+  }
+
+  .m-wireCreatorForm__field {
+    font-size: 16px;
+    line-height: 21px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    input[type='text'],
+    input[type='number'],
+    input[type='email'],
+    input[type='date'] {
+      appearance: none;
+      width: 6em;
+      padding: 6px 10px;
+      border-radius: 2px;
+      border: 1px solid;
+      font-size: 20px;
+      line-height: 24px;
+      background: none transparent;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+        border-color: themed($m-borderColor--primary);
+      }
+    }
+
+    m-payments__selectCard {
+      display: block;
+      width: calc(100% - 20px);
+
+      @media screen and (max-width: $max-mobile) {
+        width: 100%;
+      }
+
+      .m-selector select {
+        width: 100%;
+      }
+
+      .m-paymentsSelectCard__addNewCard {
+        position: relative;
+
+        iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 660px;
+          max-width: calc(100vw - 40px);
+          height: auto;
+          z-index: 1;
+
+          @include m-on-theme(light) {
+            box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+          }
+
+          @include m-on-theme(dark) {
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+    }
+  }
+
+  .m-wireCreatorForm__label {
+    display: block;
+    margin: 0 0 11px;
+    font-size: 15px;
+    line-height: 20px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-wireCreatorForm__toggleContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    user-select: none;
+
+    .m-wireCreatorForm__toggle {
+      margin: 0 12px;
+    }
+  }
+
+  .m-wireCreatorFormRecurring__tooltip {
+    font-size: 15px;
+    line-height: 18px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

@@ -44,11 +44,13 @@
   <ng-container *ngFor="let entity of boosts; let i = index">
     <ng-container *mIfFeature="'navigation'; else legacyActivity">
       <m-activity
+        @fastFade
         [entity]="entity"
         [displayOptions]="{
           showOnlyCommentsInput: false,
           showComments: false,
-          fixedHeight: true
+          fixedHeight: true,
+          fixedHeightContainer: true
         }"
         [allowAutoplayOnScroll]="true"
         [attr.data-minds-activity-guid]="entity.guid"

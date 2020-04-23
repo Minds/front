@@ -7,6 +7,7 @@ import { TagsService } from '../services/tags.service';
 describe('TagPipe', () => {
   const featuresServiceMock: any = MockService(FeaturesService, {
     has: feature => {
+      if (feature === 'navigation') return false;
       return true;
     },
   });

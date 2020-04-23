@@ -96,6 +96,7 @@ export interface MindsUser {
   subscribed?: boolean;
   rating?: number;
   eth_wallet?: string;
+  btc_address?: string;
   is_admin?: boolean;
   is_mature?: boolean;
   mature_lock?: boolean;

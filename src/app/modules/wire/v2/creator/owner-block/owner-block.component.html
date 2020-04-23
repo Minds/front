@@ -1,0 +1,24 @@
+<div class="m-wireCreator__ownerBlock" *ngIf="service.owner$ | async as owner">
+  <div class="m-wireCreatorOwnerBlock__channelBanner">
+    <div
+      class="m-wireCreatorOwnerBlockChannelBanner__background"
+      [ngStyle]="bannerBackgroundImageCss(owner)"
+    ></div>
+
+    <minds-avatar
+      class="m-wireCreatorOwnerBlockChannelBanner__avatar"
+      [object]="owner"
+      [editMode]="false"
+    ></minds-avatar>
+  </div>
+
+  <div class="m-wireCreatorOwnerBlock__heading">
+    <div class="m-wireCreatorOwnerBlockHeading__title">
+      <span i18n>Pay</span>
+      <span><m-icon iconId="chevron_right" [sizeFactor]="0"></m-icon></span>
+      <span>{{ owner.name }}</span>
+    </div>
+
+    <div class="m-wireCreatorOwnerBlock__username">@{{ owner.username }}</div>
+  </div>
+</div>
