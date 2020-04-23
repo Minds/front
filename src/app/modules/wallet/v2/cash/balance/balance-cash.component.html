@@ -59,29 +59,6 @@
     </div>
 
     <!-- -------------------------------------------- -->
-    <!--- TOTAL PAID OUT-------------------------------->
-    <!-- -------------------------------------------- -->
-
-    <div class="m-walletBalance--cash__col" *ngIf="hasBank">
-      <div class="m-walletBalance--cash__colTitle">
-        Total Paid Out<m-tooltip icon="help"
-          >The amount you've already received</m-tooltip
-        >
-      </div>
-
-      <div class="m-walletBalance--cash__colValWrapper">
-        <span class="m-walletBalance--cash__colVal--int">{{
-          totalPaidOut.int | number: '1.0-0' | currency: currency | slice: 0:-3
-        }}</span
-        ><span
-          class="m-walletBalance--cash__colVal--frac"
-          *ngIf="totalPaidOut.frac"
-          >.{{ totalPaidOut.frac }}</span
-        >
-      </div>
-    </div>
-
-    <!-- -------------------------------------------- -->
     <!--- PRO EARNINGS --------------------------------->
     <!-- -------------------------------------------- -->
 

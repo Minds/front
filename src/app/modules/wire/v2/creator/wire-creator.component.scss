@@ -1,0 +1,22 @@
+m-wireCreator {
+  @media screen and (max-width: $max-mobile) {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    width: 100%;
+  }
+}
+
+.m-wireCreator {
+  width: 778px;
+  max-width: 100%;
+
+  @media screen and (max-width: $max-mobile) {
+    flex: 1;
+    width: 100%;
+
+    m-wireCreator__form {
+      flex: 1;
+    }
+  }
+}

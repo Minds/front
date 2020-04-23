@@ -1,0 +1,56 @@
+<div class="m-wireCreator__shop m-formWrapper">
+  <div class="m-wireCreatorShop__heading">
+    <div class="m-wireCreatorShopHeading__title" i18n>
+      Shop
+    </div>
+
+    <div
+      class="m-wireCreatorShopHeading__description"
+      *ngIf="service.owner$ | async as owner"
+    >
+      <ng-container i18n
+        >@{{ owner?.username }} has support tiers exclusive offers</ng-container
+      >
+      &middot;
+      <a [routerLink]="['/', owner.username]">Explore Shop</a>
+    </div>
+  </div>
+
+  <div
+    *ngIf="service.wireRewards$ | async as wireRewards"
+    class="m-wireCreatorShop__select m-form__field--select"
+    [class.m-wireCreatorShopSelect__placeholder]="!(shop.selectedId$ | async)"
+  >
+    <div class="m-form__row--input">
+      <select
+        [ngModel]="shop.selectedId$ | async"
+        (ngModelChange)="shop.select($event)"
+      >
+        <option value="" disabled i18n>Select Support Tier</option>
+
+        <optgroup label="Tokens" i18n-label>
+          <option
+            *ngFor="let entry of wireRewards.tokens"
+            [value]="'tokens:' + entry.amount"
+          >
+            <ng-container i18n
+              >{entry.amount, plural, =1 {{{entry.amount | number}} token} other
+              {{{entry.amount | number}} tokens}}</ng-container
+            >
+            - {{ entry.description }}
+          </option>
+        </optgroup>
+
+        <optgroup label="USD" i18n-label>
+          <option
+            *ngFor="let entry of wireRewards.usd"
+            [value]="'usd:' + entry.amount"
+          >
+            <ng-container i18n>${{ entry.amount | number }}</ng-container> -
+            {{ entry.description }}
+          </option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+</div>

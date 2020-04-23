@@ -32,7 +32,12 @@ export interface WalletCurrency {
   stripeDetails?: StripeDetails;
 }
 
+export interface WalletLimits {
+  wire: number;
+}
+
 export interface Wallet {
+  loaded: boolean;
   tokens: WalletCurrency;
   offchain: WalletCurrency;
   onchain: WalletCurrency;
@@ -40,6 +45,7 @@ export interface Wallet {
   cash: WalletCurrency;
   eth: WalletCurrency;
   btc: WalletCurrency;
+  limits: WalletLimits;
 }
 
 @Injectable()
@@ -50,6 +56,7 @@ export class WalletV2Service {
   stripeDetails: StripeDetails;
 
   wallet: Wallet = {
+    loaded: false,
     tokens: {
       label: 'Tokens',
       unit: 'tokens',
@@ -91,6 +98,9 @@ export class WalletV2Service {
       unit: 'btc',
       balance: 0,
       address: null,
+    },
+    limits: {
+      wire: 0,
     },
   };
 
@@ -138,6 +148,7 @@ export class WalletV2Service {
       if (response && response.addresses) {
         this.totalTokens = toFriendlyCryptoVal(response.balance);
         this.wallet.tokens.balance = toFriendlyCryptoVal(response.balance);
+        this.wallet.limits.wire = toFriendlyCryptoVal(response.wireCap);
         response.addresses.forEach(address => {
           if (address.address === 'offchain') {
             this.wallet.offchain.balance = toFriendlyCryptoVal(address.balance);
@@ -147,6 +158,7 @@ export class WalletV2Service {
             this.wallet.receiver.address = address.address;
           }
         });
+        this.wallet.loaded = true;
         this.wallet$.next(this.wallet);
         return this.wallet;
       } else {
@@ -166,6 +178,7 @@ export class WalletV2Service {
 
       this.wallet.onchain.address = address;
       if (this.wallet.receiver.address === address) {
+        this.wallet.loaded = true;
         this.wallet$.next(this.wallet);
         return; // don't re-add onchain balance to totalTokens
       }
@@ -177,6 +190,7 @@ export class WalletV2Service {
       this.wallet.tokens.balance += toFriendlyCryptoVal(
         this.wallet.onchain.balance
       );
+      this.wallet.loaded = true;
       this.wallet$.next(this.wallet);
     } catch (e) {
       console.error(e);
@@ -231,7 +245,7 @@ export class WalletV2Service {
       this.wallet.cash.address = 'stripe';
       if (account.totalBalance && account.pendingBalance) {
         this.wallet.cash.balance =
-          (account.totalBalance.amount - account.pendingBalance.amount) / 100;
+          (account.totalBalance.amount + account.pendingBalance.amount) / 100;
         this.stripeDetails.pendingBalanceSplit = this.splitBalance(
           account.pendingBalance.amount / 100
         );
@@ -350,25 +364,19 @@ export class WalletV2Service {
     }
   }
 
-  async getProEarnings() {
-    const opts = {
-      metric: 'earnings_total',
-      timespan: 'today',
-    };
+  async getProEarnings(): Promise<number> {
     try {
-      const response = <any>(
-        await this.client.get('api/v2/analytics/dashboards/earnings', opts)
-      );
-
-      const earningsBuckets = response.dashboard.metrics.find(
-        m => m.id === 'earnings_total'
-      ).visualisation.segments[0].buckets;
-
-      if (earningsBuckets && earningsBuckets.length) {
-        return earningsBuckets.slice(-1)[0].value / 100;
-      } else {
-        return 67.55;
-      }
+      const response = <
+        {
+          balance: {
+            user_guid: string;
+            amount_cents: number;
+            amount_usd: number;
+            amount_tokens: string;
+          };
+        }
+      >await this.client.get('api/v3/monetization/partners/balance');
+      return response.balance.amount_usd;
     } catch (e) {
       console.error(e);
       return e;

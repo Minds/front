@@ -73,7 +73,7 @@ export class SettingsV2Component implements OnInit {
         },
         items: [
           { label: 'Email', id: 'email-notifications' },
-          { label: 'Toaster', id: 'toaster-notifications' },
+          { label: 'Popovers', id: 'toaster-notifications' },
         ],
       },
       {

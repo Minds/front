@@ -7,11 +7,12 @@ import normalizeUrn from '../../../helpers/normalize-urn';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../common/services/site.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AnalyticsService } from '../../../services/analytics';
+import { WireEventType } from '../../wire/v2/wire-v2.service';
+import { WireModalService } from '../../wire/wire-modal.service';
 
 export type RouterLinkToType =
   | 'home'
@@ -53,7 +54,7 @@ export class ProChannelService implements OnDestroy {
     protected feedsService: FeedsService,
     protected session: Session,
     protected route: ActivatedRoute,
-    protected modalService: OverlayModalService,
+    protected wireModal: WireModalService,
     protected sessionStorage: SessionsStorageService,
     protected router: Router,
     protected site: SiteService,
@@ -234,16 +235,17 @@ export class ProChannelService implements OnDestroy {
       return;
     }
 
-    this.modalService
-      .create(WireCreatorComponent, this.currentChannel, {
-        onComplete: () => {
+    this.wireModal.present(this.currentChannel).subscribe(payEvent => {
+      console.log({ payEvent });
+      switch (payEvent.type) {
+        case WireEventType.Completed:
           this.sessionStorage.destroy('pro::wire-modal::open');
-        },
-      })
-      .onDidDismiss(() => {
-        this.sessionStorage.destroy('pro::wire-modal::open');
-      })
-      .present();
+          break;
+        case WireEventType.Cancelled:
+          this.sessionStorage.destroy('pro::wire-modal::open');
+          break;
+      }
+    });
 
     this.analytics.send('pageview', {
       url: `/pro/${this.currentChannel.guid}/wire?ismodal=true`,
