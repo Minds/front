@@ -20,7 +20,7 @@
       from="ion"
       iconId="image"
     ></m-icon>
-    <ng-container [ngSwitch]="service.contentType$ | async">
+    <ng-container [ngSwitch]="contentType$ | async">
       <span *ngSwitchCase="'blog'" class="m-composerToolbarItem__label" i18n>
         Banner
       </span>
@@ -84,9 +84,8 @@
     [disabled]="
       (inProgress$ | async) ||
       (isPosting$ | async) ||
-      (!(canPost$ | async) && (service.contentType$ | async) === 'post') ||
-      (!(blogsService.canPost$ | async) &&
-        (service.contentType$ | async) === 'blog')
+      (!(canPost$ | async) && (contentType$ | async) === 'post') ||
+      (!(blogsService.canPost$ | async) && (contentType$ | async) === 'blog')
     "
     [dropdown]="postButtonDropdown"
     (onAction)="onPost($event)"
@@ -109,10 +108,7 @@
         <span i18n>Schedule Post</span>
       </span>
     </li>
-    <li
-      (click)="onSaveDraftClick()"
-      *ngIf="(service.contentType$ | async) === 'blog'"
-    >
+    <li (click)="onSaveDraftClick()" *ngIf="(contentType$ | async) === 'blog'">
       <span class="m-dropdownMenu__item">
         <m-icon iconId="save"></m-icon>
         <span i18n>Save Draft</span>

@@ -40,7 +40,7 @@ export interface Blog {
   guid: string;
   title: string;
   description: string;
-  access_id: number;
+  access_id: string;
   category: string | null;
   license: string | null;
   fileKey: string;
@@ -52,7 +52,7 @@ export interface Blog {
   custom_meta: MetaData;
   slug: string;
   tags: TagsSubjectValue;
-  time_created: number;
+  time_created: string;
   editor_version: number;
 }
 
@@ -66,6 +66,7 @@ export class ComposerBlogsService implements ComposerServiceType {
   readonly canPost$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
+  readonly guid$: BehaviorSubject<string> = new BehaviorSubject<string>('new');
   readonly published$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   readonly draftSaved$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -73,14 +74,16 @@ export class ComposerBlogsService implements ComposerServiceType {
   readonly bannerFile$: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''
   );
+  readonly license$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly content$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly description$: BehaviorSubject<string> = new BehaviorSubject<string>(
     ''
   );
+  readonly accessId$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  readonly schedule$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly monetization$: BehaviorSubject<
     MonetizationSubjectValue
   > = new BehaviorSubject<MonetizationSubjectValue>(null);
-
   readonly tags$: BehaviorSubject<TagsSubjectValue> = new BehaviorSubject<
     TagsSubjectValue
   >([]);
@@ -137,7 +140,12 @@ export class ComposerBlogsService implements ComposerServiceType {
     this.bannerFile$.next('');
   }
 
-  async save(draft = false) {
+  /**
+   * Saves a blog
+   * @param { boolean } - whether to save as draft
+   * @returns { Promise<void> }
+   */
+  async save(draft = false): Promise<void> {
     if (!this.bannerFile$.getValue()) {
       this.error$.next('You must upload a banner');
       return;
@@ -177,6 +185,7 @@ export class ComposerBlogsService implements ComposerServiceType {
         }
         // else
         this.emitDraftSaved();
+        this.guid$.next(response.guid);
       })
       .catch(e => {
         console.error(e);
@@ -185,28 +194,39 @@ export class ComposerBlogsService implements ComposerServiceType {
       });
   }
 
-  private emitDraftSaved() {
+  /**
+   * Sets draftSaved to true for 5 seconds.
+   */
+  private emitDraftSaved(): void {
     this.draftSaved$.next(true);
     const observableTimer = timer(5000);
-    this.timerSubscription = observableTimer.subscribe(t =>
-      this.draftSaved$.next(false)
-    );
-    this.timerSubscription.unsubscribe();
+    this.timerSubscription = observableTimer.subscribe(t => {
+      this.draftSaved$.next(false);
+      this.timerSubscription.unsubscribe();
+    });
   }
 
+  /**
+   * Saves as draft.
+   * @returns { Promise<void> }
+   */
   public async saveDraft(): Promise<void> {
     await this.save(true);
   }
 
+  /**
+   * Assembles blog from current values.
+   * @returns { Promise<Blog>} the built blog.
+   */
   async buildBlog(): Promise<Blog> {
     return {
       file: this.bannerFile$.getValue(),
-      guid: 'new',
+      guid: this.guid$.getValue(),
       title: this.title$.getValue(),
       description: this.content$.getValue(),
-      access_id: 2,
+      access_id: this.accessId$.getValue(),
       category: null,
-      license: this.composerService.license$.getValue(),
+      license: this.license$.getValue(),
       fileKey: 'header',
       mature: this.composerService.nsfw$.getValue().length ? 1 : 0,
       nsfw: this.composerService.nsfw$.getValue(),
@@ -222,13 +242,13 @@ export class ComposerBlogsService implements ComposerServiceType {
       },
       slug: this.urlSlug$.getValue(),
       tags: this.tags$.getValue(),
-      time_created: this.composerService.schedule$.getValue(),
+      time_created: this.schedule$.getValue(),
       editor_version: 2,
     };
   }
 
   /**
-   * Valiates a banner is an image,
+   * Validates a banner is an image,
    * adds it as a file and a preview.
    */
   addBanner(banner: any): void {

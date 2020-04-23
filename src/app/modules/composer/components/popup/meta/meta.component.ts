@@ -31,8 +31,8 @@ export class MetaComponent {
    */
   constructor(
     public session: Session,
+    public site: SiteService,
     protected service: ComposerService,
-    protected site: SiteService,
     protected blogsService: ComposerBlogsService
   ) {}
 
