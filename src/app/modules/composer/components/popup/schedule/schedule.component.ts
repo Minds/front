@@ -5,6 +5,7 @@ import {
   Output,
 } from '@angular/core';
 import { ComposerService } from '../../../services/composer.service';
+import { ComposerBlogsService } from '../../../services/blogs.service';
 
 /**
  * Composer's Schedule popup modal
@@ -48,8 +49,12 @@ export class ScheduleComponent {
   /**
    * Constructor. Initializes state, min and max dates
    * @param service
+   * @param blogsService
    */
-  constructor(protected service: ComposerService) {
+  constructor(
+    protected service: ComposerService,
+    protected blogsService: ComposerBlogsService
+  ) {
     // Set minimum date to select (now)
     this.minDate = new Date();
 
@@ -65,7 +70,12 @@ export class ScheduleComponent {
    * Initialize. Set state to service's scheduler value
    */
   ngOnInit() {
-    const currentValue = this.service.schedule$.getValue();
+    let currentValue = null;
+    if (this.service.contentType$.getValue() === 'blog') {
+      currentValue = this.blogsService.schedule$.getValue();
+    } else {
+      currentValue = this.service.schedule$.getValue();
+    }
 
     if (currentValue) {
       this.setState(new Date(currentValue * 1000));
@@ -169,8 +179,11 @@ export class ScheduleComponent {
     if (!this.canSave()) {
       return;
     }
-
-    this.service.schedule$.next(this.buildTimestamp());
+    if (this.service.contentType$.getValue() === 'blog') {
+      this.blogsService.schedule$.next(this.buildTimestamp());
+    } else {
+      this.service.schedule$.next(this.buildTimestamp());
+    }
     this.dismissIntent.emit();
   }
 

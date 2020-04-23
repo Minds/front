@@ -52,7 +52,7 @@ export interface Blog {
   custom_meta: MetaData;
   slug: string;
   tags: TagsSubjectValue;
-  time_created: string;
+  time_created: number;
   editor_version: number;
 }
 
@@ -80,7 +80,9 @@ export class ComposerBlogsService implements ComposerServiceType {
     ''
   );
   readonly accessId$: BehaviorSubject<string> = new BehaviorSubject<string>('');
-  readonly schedule$: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  readonly schedule$: BehaviorSubject<number> = new BehaviorSubject<number>(
+    null
+  );
   readonly monetization$: BehaviorSubject<
     MonetizationSubjectValue
   > = new BehaviorSubject<MonetizationSubjectValue>(null);
