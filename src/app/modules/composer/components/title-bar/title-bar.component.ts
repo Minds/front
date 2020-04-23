@@ -19,6 +19,7 @@ import { BehaviorSubject } from 'rxjs';
 import { MetaComponent } from '../popup/meta/meta.component';
 import { PopupService } from '../popup/popup.service';
 import { ComposerBlogsService } from '../../services/blogs.service';
+import { Router } from '@angular/router';
 
 /**
  * Composer title bar component. It features a label and a dropdown menu
@@ -69,7 +70,8 @@ export class TitleBarComponent {
   constructor(
     public service: ComposerService,
     public blogsService: ComposerBlogsService,
-    protected popup: PopupService
+    protected popup: PopupService,
+    protected router: Router
   ) {}
 
   /**
@@ -156,6 +158,14 @@ export class TitleBarComponent {
     this.license$.next($event);
   }
 
+  /**
+   * Saves draft blog and navigates to blog edit page for fullscreen.
+   * @returns { Promise<void> }
+   */
+  async onFullscreenClick($event): Promise<void> {
+    const response = await this.blogsService.saveDraft();
+    this.router.navigate(['/blog/edit/' + response.guid]);
+  }
   /**
    * Shows meta-data popup
    */

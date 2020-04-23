@@ -50,6 +50,13 @@
 <ng-template #menu>
   <ul data-cy="meatball-menu">
     <li
+      (click)="onFullscreenClick()"
+      data-cy="meatball-menu-fullscreen"
+      *ngIf="(service.contentType$ | async) === 'blog'"
+    >
+      <span i18n>Fullscreen</span>
+    </li>
+    <li
       (click)="onMetaClick()"
       data-cy="meatball-menu-meta"
       *ngIf="(service.contentType$ | async) === 'blog'"

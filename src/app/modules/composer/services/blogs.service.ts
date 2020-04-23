@@ -56,6 +56,14 @@ export interface Blog {
   editor_version: number;
 }
 
+export interface BlogResponse {
+  guid?: string;
+  route?: string;
+  slug?: string;
+  status: string;
+  message?: string;
+}
+
 @Injectable()
 export class ComposerBlogsService implements ComposerServiceType {
   readonly urlSlug$: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -82,6 +90,9 @@ export class ComposerBlogsService implements ComposerServiceType {
   readonly accessId$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly schedule$: BehaviorSubject<number> = new BehaviorSubject<number>(
     null
+  );
+  readonly savedContent$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    ''
   );
   readonly monetization$: BehaviorSubject<
     MonetizationSubjectValue
@@ -131,7 +142,6 @@ export class ComposerBlogsService implements ComposerServiceType {
    * Resets composer data and state
    */
   reset(): void {
-    // Reset data
     this.urlSlug$.next('');
     this.title$.next('');
     this.description$.next('');
@@ -140,6 +150,14 @@ export class ComposerBlogsService implements ComposerServiceType {
     this.error$.next('');
     this.banner$.next('');
     this.bannerFile$.next('');
+    this.canPost$.next(true);
+    this.guid$.next('');
+    this.published$.next(0);
+    this.draftSaved$.next(false);
+    this.accessId$.next(null);
+    this.schedule$.next(null);
+    this.savedContent$.next('');
+    this.monetization$.next(null);
   }
 
   /**
@@ -147,7 +165,7 @@ export class ComposerBlogsService implements ComposerServiceType {
    * @param { boolean } - whether to save as draft
    * @returns { Promise<void> }
    */
-  async save(draft = false): Promise<void> {
+  async save(draft = false): Promise<BlogResponse> {
     if (!this.bannerFile$.getValue()) {
       this.error$.next('You must upload a banner');
       return;
@@ -159,11 +177,10 @@ export class ComposerBlogsService implements ComposerServiceType {
     }
 
     this.published$.next(draft ? 0 : 1);
-
     const blog = await this.buildBlog();
-    this.composerService.canPost$.next(false);
 
-    this.upload
+    this.composerService.canPost$.next(false);
+    return this.upload
       .post('api/v1/blog/' + blog.guid, [blog.file], blog)
       .then((response: any) => {
         this.composerService.canPost$.next(true);
@@ -171,10 +188,10 @@ export class ComposerBlogsService implements ComposerServiceType {
         if (response.status !== 'success') {
           if (response.message) {
             this.error$.next('An unknown error has occured');
-            return;
+            return response;
           }
           this.error$.next(response.message);
-          return;
+          return response;
         }
 
         if (!draft) {
@@ -187,12 +204,20 @@ export class ComposerBlogsService implements ComposerServiceType {
         }
         // else
         this.emitDraftSaved();
+        this.savedContent$.next(this.content$.getValue());
         this.guid$.next(response.guid);
+
+        return response;
       })
       .catch(e => {
         console.error(e);
         this.composerService.attachmentError$.next(e);
         this.composerService.canPost$.next(true);
+
+        return {
+          status: '500',
+          message: e,
+        };
       });
   }
 
@@ -210,10 +235,10 @@ export class ComposerBlogsService implements ComposerServiceType {
 
   /**
    * Saves as draft.
-   * @returns { Promise<void> }
+   * @returns { Promise<any> }
    */
-  public async saveDraft(): Promise<void> {
-    await this.save(true);
+  public async saveDraft(): Promise<BlogResponse> {
+    return this.save(true);
   }
 
   /**
@@ -274,10 +299,10 @@ export class ComposerBlogsService implements ComposerServiceType {
   }
 
   /**
-   * Returns whether or not there is content.
+   * Returns whether or not there is unsaved content.
    * @returns - true if composer contains content.
    */
   public hasContent(): boolean {
-    return !!(this.content$.getValue() || this.bannerFile$.getValue());
+    return this.content$.getValue() !== this.savedContent$.getValue();
   }
 }
