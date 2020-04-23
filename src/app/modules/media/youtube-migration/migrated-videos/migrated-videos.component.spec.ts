@@ -4,7 +4,7 @@ import { YoutubeMigrationMigratedVideosComponent } from './migrated-videos.compo
 
 describe('YoutubeMigrationMigratedVideosComponent', () => {
   let component: YoutubeMigrationMigratedVideosComponent;
-  let fixture: ComponentFixture<MigratedVideosComponent>;
+  let fixture: ComponentFixture<YoutubeMigrationMigratedVideosComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
