@@ -62,7 +62,7 @@
           type="text"
           placeholder="Title"
           i18n-placeholder
-          [ngModel]="(title$ | async) || ''"
+          [ngModel]="(blogsService.title$ | async) || ''"
           [disabled]="isPosting$ | async"
           (ngModelChange)="onTitleChange($event)"
           data-cy="composer-activity-title"

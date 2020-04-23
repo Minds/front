@@ -14,6 +14,7 @@ import { Client } from '../../../../services/api/client';
 import { ComposerService } from '../../../composer/services/composer.service';
 import { ModalService } from '../../../composer/components/modal/modal.service';
 import { FeaturesService } from '../../../../services/features.service';
+import { ComposerBlogsService } from '../../../composer/services/blogs.service';
 
 @Component({
   selector: 'm-activity__menu',
@@ -31,6 +32,7 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     private router: Router,
     private features: FeaturesService,
     private composer: ComposerService,
+    private blogsService: ComposerBlogsService,
     private composerModal: ModalService,
     private injector: Injector
   ) {}
@@ -100,7 +102,11 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     switch (option) {
       case 'edit':
         if (this.features.has('activity-composer')) {
-          this.composer.load(this.entity);
+          // check if entity is a blog.
+          if (this.entity.blurb) {
+            this.composer.contentType$.next('blog');
+            this.blogsService.load(this.entity);
+          }
 
           this.composerModal
             .setInjector(this.injector)

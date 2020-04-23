@@ -17,7 +17,7 @@ import {
   TagsSubjectValue,
   MonetizationSubjectValue,
 } from './composer.service';
-import { Upload } from '../../../services/api';
+import { Upload, Client } from '../../../services/api';
 import { Router } from '@angular/router';
 import {
   distinctUntilChanged,
@@ -28,6 +28,7 @@ import {
 } from 'rxjs/operators';
 import { ComposerServiceType } from './provider.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { SiteService } from '../../../common/services/site.service';
 
 export interface MetaData {
   title: string;
@@ -107,7 +108,9 @@ export class ComposerBlogsService implements ComposerServiceType {
   constructor(
     protected composerService: ComposerService,
     protected upload: Upload,
-    protected router: Router
+    protected router: Router,
+    protected client: Client,
+    protected site: SiteService
   ) {
     this.contentSubscription = this.content$
       .pipe(
@@ -118,6 +121,47 @@ export class ComposerBlogsService implements ComposerServiceType {
         })
       )
       .subscribe();
+  }
+
+  /**
+   * Loads an activity by sending GET request to v1/blog endpoint
+   * Adds response to local state.
+   * @param activity - activity
+   */
+  public load(activity: any): void {
+    this.client
+      .get('api/v1/blog/' + activity.entity_guid, {})
+      .then((response: any) => {
+        if (response.blog) {
+          const blog = response.blog;
+          console.log('response.blog', response.blog);
+          console.log('blog.monetization', blog.monetization);
+
+          this.urlSlug$.next(blog.slug);
+          this.title$.next(blog.title);
+          this.description$.next(blog.description);
+          this.author$.next(blog.custom_meta.author);
+          this.content$.next(blog.description);
+          this.error$.next('');
+          this.banner$.next(
+            this.site.baseUrl +
+              'fs/v1/banners/' +
+              activity.entity_guid +
+              '/' +
+              activity.time_updated
+          );
+          this.bannerFile$.next('');
+          this.canPost$.next(true);
+          this.guid$.next(blog.guid);
+          this.published$.next(blog.published);
+          this.draftSaved$.next(false);
+          this.accessId$.next(blog.access_id);
+          this.schedule$.next(blog.time_created);
+          this.savedContent$.next(blog.description);
+          this.monetization$.next({ type: 'tokens', min: blog.wire_threshold });
+          this.tags$.next(blog.tags);
+        }
+      });
   }
 
   /**
@@ -158,6 +202,7 @@ export class ComposerBlogsService implements ComposerServiceType {
     this.schedule$.next(null);
     this.savedContent$.next('');
     this.monetization$.next(null);
+    this.tags$.next([]);
   }
 
   /**
@@ -166,7 +211,7 @@ export class ComposerBlogsService implements ComposerServiceType {
    * @returns { Promise<void> }
    */
   async save(draft = false): Promise<BlogResponse> {
-    if (!this.bannerFile$.getValue()) {
+    if (!this.bannerFile$.getValue() && !this.banner$.getValue()) {
       this.error$.next('You must upload a banner');
       return;
     }
