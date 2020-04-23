@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockComponent, MockService } from '../../../../utils/mock';
 import { TitleBarComponent } from './title-bar.component';
 import { ComposerService } from '../../services/composer.service';
+import { ComposerBlogsService } from '../../services/blogs.service';
+import { PopupService } from '../popup/popup.service';
+import { Router } from '@angular/router';
 
 describe('Composer Title Bar', () => {
   let comp: TitleBarComponent;
@@ -12,12 +15,19 @@ describe('Composer Title Bar', () => {
 
   let containerGuid;
 
+  const contentType$ = jasmine.createSpyObj('contentType$', {
+    next: () => {},
+    subscribe: { unsubscribe: () => {} },
+    getValue: () => '',
+  });
+
   const composerServiceMock: any = MockService(ComposerService, {
     getContainerGuid: () => containerGuid,
-    has: ['accessId$', 'license$'],
+    has: ['accessId$', 'license$', 'contentType$'],
     props: {
       accessId$: { get: () => accessId$ },
       license$: { get: () => license$ },
+      contentType$: { get: () => contentType$ },
     },
   });
 
@@ -39,6 +49,18 @@ describe('Composer Title Bar', () => {
           provide: ComposerService,
           useValue: composerServiceMock,
         },
+        {
+          provide: ComposerBlogsService,
+          useValue: MockService(ComposerBlogsService),
+        },
+        {
+          provide: PopupService,
+          useValue: MockService(PopupService),
+        },
+        {
+          provide: Router,
+          useValue: MockService(Router),
+        },
       ],
     }).compileComponents();
   }));
@@ -48,6 +70,8 @@ describe('Composer Title Bar', () => {
     fixture = TestBed.createComponent(TitleBarComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
+
+    contentType$.getValue.and.returnValue('post');
 
     if (fixture.isStable()) {
       done();

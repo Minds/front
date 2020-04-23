@@ -8,6 +8,7 @@ import { NsfwComponent } from '../popup/nsfw/nsfw.component';
 import { MonetizeComponent } from '../popup/monetize/monetize.component';
 import { TagsComponent } from '../popup/tags/tags.component';
 import { ScheduleComponent } from '../popup/schedule/schedule.component';
+import { ComposerBlogsService } from '../../services/blogs.service';
 
 describe('Composer Toolbar', () => {
   let comp: ToolbarComponent;
@@ -23,11 +24,18 @@ describe('Composer Toolbar', () => {
     subscribe: { unsubscribe: () => {} },
   });
 
+  const contentType$ = jasmine.createSpyObj('contentType$', {
+    next: () => {},
+    subscribe: { unsubscribe: () => {} },
+    getValue: () => '',
+  });
+
   const composerServiceMock: any = MockService(ComposerService, {
-    has: ['attachment$', 'isEditing$'],
+    has: ['attachment$', 'isEditing$', 'contentType$'],
     props: {
       attachment$: { get: () => attachment$ },
       isEditing$: { get: () => isEditing$ },
+      contentType$: { get: () => contentType$ },
     },
   });
 
@@ -69,6 +77,10 @@ describe('Composer Toolbar', () => {
           provide: PopupService,
           useValue: popupServiceMock,
         },
+        {
+          provide: ComposerBlogsService,
+          useValue: MockService(ComposerBlogsService),
+        },
       ],
     }).compileComponents();
   }));
@@ -77,6 +89,9 @@ describe('Composer Toolbar', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(ToolbarComponent);
     comp = fixture.componentInstance;
+
+    contentType$.getValue.and.returnValue('post');
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {

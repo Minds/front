@@ -110,10 +110,10 @@ export class TextAreaComponent {
    * @param message
    */
   onMessageChange(message: string) {
-    if (this.service.contentType$.getValue() === 'post') {
-      this.service.message$.next(message);
-    } else {
+    if (this.service.contentType$.getValue() === 'blog') {
       this.blogsService.content$.next(message);
+    } else {
+      this.service.message$.next(message);
     }
   }
 
@@ -122,8 +122,11 @@ export class TextAreaComponent {
    * @param title
    */
   onTitleChange(title: string) {
-    this.service.title$.next(title);
-    this.blogsService.title$.next(title);
+    if (this.service.contentType$.getValue() === 'blog') {
+      this.blogsService.title$.next(title);
+    } else {
+      this.service.title$.next(title);
+    }
   }
 
   /**

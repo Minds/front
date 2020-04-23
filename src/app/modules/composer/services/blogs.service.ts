@@ -26,6 +26,7 @@ export interface BlogResponse {
   status: string;
   message?: string;
 }
+
 @Injectable()
 export class ComposerBlogsService implements ComposerServiceType {
   readonly urlSlug$: BehaviorSubject<string> = new BehaviorSubject<string>('');

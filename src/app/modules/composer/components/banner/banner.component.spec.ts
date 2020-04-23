@@ -8,38 +8,32 @@ import { AttachmentService } from '../../services/attachment.service';
 import { AttachmentApiService } from '../../../../common/api/attachment-api.service';
 import { RichEmbedService } from '../../services/rich-embed.service';
 import { PreviewService } from '../../services/preview.service';
+import { BannerComponent } from './banner.component';
+import { ComposerBlogsService } from '../../services/blogs.service';
 
 describe('Composer Attachment Preview', () => {
-  let comp: AttachmentPreviewComponent;
-  let fixture: ComponentFixture<AttachmentPreviewComponent>;
+  let comp: BannerComponent;
+  let fixture: ComponentFixture<BannerComponent>;
 
   beforeEach(done => {
     TestBed.configureTestingModule({
-      declarations: [AttachmentPreviewComponent],
+      declarations: [BannerComponent],
       providers: [
         {
-          provide: ConfigsService,
-          useValue: MockService(ConfigsService),
-        },
-        ComposerService,
-        AttachmentService,
-        RichEmbedService,
-        PreviewService,
-        {
-          provide: ApiService,
-          useValue: MockService(ApiService, {}),
+          provide: ComposerBlogsService,
+          useValue: MockService(ComposerBlogsService),
         },
         {
-          provide: AttachmentApiService,
-          useValue: MockService(ApiService, {}),
+          provide: ComposerService,
+          useValue: MockService(ComposerService),
         },
       ],
     }).compileComponents();
 
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
-    fixture = TestBed.createComponent(AttachmentPreviewComponent);
+    fixture = TestBed.createComponent(BannerComponent);
     comp = fixture.componentInstance;
-    spyOn(comp.onPortraitOrientationEmitter, 'emit').and.stub();
+    // spyOn(comp.onPortraitOrientationEmitter, 'emit').and.stub();
     fixture.detectChanges();
 
     if (fixture.isStable()) {
@@ -52,44 +46,7 @@ describe('Composer Attachment Preview', () => {
     }
   });
 
-  it('should set portrait for an image', () => {
-    console.log(this.service);
-    const img = document.createElement('img');
-    spyOnProperty(img, 'naturalWidth').and.returnValue(1000);
-    spyOnProperty(img, 'naturalHeight').and.returnValue(2000);
-    fixture.detectChanges();
-
-    comp.fitForImage(img);
-    expect(comp.onPortraitOrientationEmitter.emit).toHaveBeenCalledWith(true);
-  });
-
-  it('should set landscape for an image', () => {
-    const img = document.createElement('img');
-    spyOnProperty(img, 'naturalWidth').and.returnValue(2000);
-    spyOnProperty(img, 'naturalHeight').and.returnValue(1000);
-    fixture.detectChanges();
-
-    comp.fitForImage(img);
-    expect(comp.onPortraitOrientationEmitter.emit).toHaveBeenCalledWith(false);
-  });
-
-  it('should set portrait for an video', () => {
-    const video = document.createElement('video');
-    spyOnProperty(video, 'videoWidth').and.returnValue(1000);
-    spyOnProperty(video, 'videoHeight').and.returnValue(2000);
-    fixture.detectChanges();
-
-    comp.fitForVideo(video);
-    expect(comp.onPortraitOrientationEmitter.emit).toHaveBeenCalledWith(true);
-  });
-
-  it('should set landscape for an video', () => {
-    const video = document.createElement('video');
-    spyOnProperty(video, 'videoWidth').and.returnValue(2000);
-    spyOnProperty(video, 'videoHeight').and.returnValue(1000);
-    fixture.detectChanges();
-
-    comp.fitForVideo(video);
-    expect(comp.onPortraitOrientationEmitter.emit).toHaveBeenCalledWith(false);
+  it('should instantiate banner', () => {
+    expect(comp).toBeTruthy();
   });
 });

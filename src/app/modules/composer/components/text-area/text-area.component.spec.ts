@@ -3,6 +3,7 @@ import { MockComponent, MockService } from '../../../../utils/mock';
 import { TextAreaComponent } from './text-area.component';
 import { ComposerService } from '../../services/composer.service';
 import { FormsModule } from '@angular/forms';
+import { ComposerBlogsService } from '../../services/blogs.service';
 
 describe('Composer Text Area', () => {
   let comp: TextAreaComponent;
@@ -19,11 +20,18 @@ describe('Composer Text Area', () => {
     getValue: '',
   });
 
+  const contentType$ = jasmine.createSpyObj('contentType$', {
+    next: () => {},
+    subscribe: { unsubscribe: () => {} },
+    getValue: () => '',
+  });
+
   const composerServiceMock: any = MockService(ComposerService, {
-    has: ['message$', 'title$'],
+    has: ['message$', 'title$', 'contentType$'],
     props: {
       message$: { get: () => message$ },
       title$: { get: () => title$ },
+      contentType$: { get: () => contentType$ },
     },
   });
 
@@ -36,11 +44,22 @@ describe('Composer Text Area', () => {
           selector: 'm-icon',
           inputs: ['from', 'iconId', 'sizeFactor'],
         }),
+        MockComponent({
+          selector: 'm-composer__banner',
+        }),
+        MockComponent({
+          selector: 'm-blog__editor',
+          inputs: ['content'],
+        }),
       ],
       providers: [
         {
           provide: ComposerService,
           useValue: composerServiceMock,
+        },
+        {
+          provide: ComposerBlogsService,
+          useValue: MockService(ComposerBlogsService),
         },
       ],
     }).compileComponents();
@@ -50,6 +69,9 @@ describe('Composer Text Area', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
     fixture = TestBed.createComponent(TextAreaComponent);
     comp = fixture.componentInstance;
+
+    contentType$.getValue.and.returnValue('post');
+
     fixture.detectChanges();
 
     if (fixture.isStable()) {
