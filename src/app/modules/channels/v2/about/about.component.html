@@ -62,7 +62,7 @@
     >
       <div class="m-channelAboutField__label" i18n>Date of birth</div>
       <div class="m-channelAboutField__content">
-        {{ channel.dob }}
+        {{ dobToDate(channel.dob) | date: 'mediumDate' }}
       </div>
     </div>
 
@@ -80,9 +80,11 @@
       </div>
     </div>
 
-    <div *ngIf="false" class="m-channelAbout__field">
+    <div class="m-channelAbout__field">
       <div class="m-channelAboutField__label" i18n>Groups</div>
-      <div class="m-channelAboutField__content"></div>
+      <div class="m-channelAboutField__content">
+        {{ service.groupCount$ | async | number }}
+      </div>
     </div>
 
     <div class="m-channelAbout__field">
@@ -122,7 +124,7 @@
       </div>
     </div>
 
-    <div class="m-channelAbout__field">
+    <div class="m-channelAbout__field" *ngIf="session.isLoggedIn()">
       <div class="m-channelAboutField__label" i18n>Tokens Sent</div>
       <div class="m-channelAboutField__content">
         {{ service.tokensSent$ | async | token: 18 | number }}

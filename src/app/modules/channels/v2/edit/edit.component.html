@@ -17,8 +17,8 @@
     <m-accordion class="m-accordionV2 m-formLayout--buttonRight">
       <m-accordion__pane
         class="m-channelEdit__imageryPane"
-        title="Bio &amp; Imagery"
-        i18n-title
+        headerTitle="Bio &amp; Imagery"
+        i18n-headerTitle
       >
         <div
           class="m-channelEdit__imagery"
@@ -76,7 +76,7 @@
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
 
-      <m-accordion__pane title="About Info" i18n-title>
+      <m-accordion__pane headerTitle="About Info" i18n-headerTitle>
         <div class="m-form__fieldsContainer">
           <div class="m-form__row--label">
             <label i18n>Display Name</label>
@@ -130,6 +130,9 @@
                   type="checkbox"
                   id="channel-v2-edit-public-dob"
                   class="form-control"
+                  name="publicDob"
+                  [ngModel]="service.publicDob$ | async"
+                  (ngModelChange)="service.publicDob$.next($event)"
                 />
 
                 <span class="m-form__customInput__checkbox"></span>
@@ -145,11 +148,15 @@
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
 
-      <m-accordion__pane *ngIf="false" title="Hashtags" i18n-title>
+      <m-accordion__pane *ngIf="false" headerTitle="Hashtags" i18n-headerTitle>
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
 
-      <m-accordion__pane *ngIf="false" title="Social Links" i18n-title>
+      <m-accordion__pane
+        *ngIf="false"
+        headerTitle="Social Links"
+        i18n-headerTitle
+      >
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
     </m-accordion>

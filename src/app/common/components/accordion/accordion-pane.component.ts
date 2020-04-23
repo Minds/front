@@ -19,7 +19,7 @@ export class AccordionPaneComponent {
   /**
    * Pane title
    */
-  @Input() title: string;
+  @Input() headerTitle: string;
 
   /**
    * Is the pane opened? (shown)

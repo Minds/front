@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
 import { MindsUser } from '../../../../interfaces/entities';
+import { Session } from '../../../../services/session';
 
 /**
  * Channel About component
@@ -14,8 +15,9 @@ export class ChannelAboutComponent {
   /**
    * Constructor
    * @param service
+   * @param session
    */
-  constructor(public service: ChannelsV2Service) {}
+  constructor(public service: ChannelsV2Service, public session: Session) {}
 
   /**
    * Builds a payment methods list string
@@ -44,5 +46,19 @@ export class ChannelAboutComponent {
 
     // Build the list
     return paymentMethods.join(', ').replace(/,(?!.*,)/gim, ' &');
+  }
+
+  /**
+   * Converts DOB date string into a Date object
+   * @param dateStr
+   */
+  dobToDate(dateStr: string): Date {
+    const parts = dateStr.split('-').map(part => parseInt(part));
+
+    if (parts.length !== 3) {
+      return null;
+    }
+
+    return new Date(parts[0], parts[1] - 1, parts[2], 0, 0, 0);
   }
 }

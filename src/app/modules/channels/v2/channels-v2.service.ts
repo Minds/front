@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MindsUser } from '../../../interfaces/entities';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { ApiService } from '../../../common/api/api.service';
 import { Session } from '../../../services/session';
 import {
@@ -63,6 +63,11 @@ export class ChannelsV2Service {
   readonly isAdmin$: Observable<boolean>;
 
   /**
+   * Amount of public groups the user is member of
+   */
+  readonly groupCount$: Observable<number>;
+
+  /**
    * Constructor
    * @param api
    * @param session
@@ -94,6 +99,20 @@ export class ChannelsV2Service {
         parseFloat((response && response.sums && response.sums.tokens) || '0')
       )
     );
+
+    // Set groupCount$ observable
+    // this.groupCount$ = this.channel$.pipe(
+    //   distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
+    //   map(
+    //     channel =>
+    //       channel && this.api.get(`api/v2/channel/groups/${channel.guid}/count`)
+    //   ),
+    //   switchAll(),
+    //   map(response =>
+    //     (response && response.count) || 0
+    //   )
+    // );
+    this.groupCount$ = of(0);
 
     // Set isOwner$ observable
     this.isOwner$ = combineLatest([this.guid$, this.session.user$]).pipe(
@@ -138,7 +157,6 @@ export class ChannelsV2Service {
    * @param channel
    */
   load(channel: MindsUser | string): void {
-    console.log('222', { channel });
     this.guid$.next(typeof channel === 'object' ? channel.guid : channel);
     this.setChannel(typeof channel === 'object' ? channel : null);
 

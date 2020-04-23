@@ -74,7 +74,7 @@ m-channel__edit {
     position: relative;
     height: 148px;
     margin: 0 -50px;
-    background: none no-repeat center center transparent;
+    background: none no-repeat center center rgba(0, 0, 0, 0.1);
     background-size: cover;
 
     @media screen and (max-width: $max-mobile) {
@@ -90,7 +90,7 @@ m-channel__edit {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background: none no-repeat center center transparent;
+    background: none no-repeat center center rgba(0, 0, 0, 0.1);
     background-size: cover;
 
     @media screen and (max-width: $max-mobile) {
