@@ -33,6 +33,7 @@ import {
   keyframes,
   style,
 } from '@angular/animations';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -108,8 +109,10 @@ export class NewsfeedBoostRotatorComponent {
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    configs: ConfigsService
   ) {
+    this.interval = configs.get('boost_rotator_interval') || 5;
     this.subscriptions = [
       this.settingsService.ratingChanged.subscribe(event =>
         this.onRatingChanged(event)
