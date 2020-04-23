@@ -1,3 +1,4 @@
+<div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
 <div
   #messageEl
   m-read-more
@@ -22,6 +23,7 @@
     #translate
   ></m-translate>
 </div>
+<div class="m-activityContent__fixedHeightSpacer" *ngIf="isTextOnly"></div>
 
 <!-- Rich content -->
 <div class="m-activityContent__media--richEmbed" *ngIf="isRichEmbed">

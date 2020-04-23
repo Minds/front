@@ -77,6 +77,9 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding('class.m-activity--fixedHeight')
   isFixedHeight: boolean;
 
+  @HostBinding('class.m-activity--fixedHeightContainer')
+  isFixedHeightContainer: boolean;
+
   @HostBinding('class.m-activity--noOwnerBlock')
   noOwnerBlock: boolean;
 
@@ -97,10 +100,12 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.isFixedHeight = this.service.displayOptions.fixedHeight;
+    this.isFixedHeightContainer = this.service.displayOptions.fixedHeightContainer;
     this.noOwnerBlock = !this.service.displayOptions.showOwnerBlock;
     this.heightSubscription = this.service.height$.subscribe(
       (height: number) => {
         if (!this.service.displayOptions.fixedHeight) return;
+        if (this.service.displayOptions.fixedHeightContainer) return;
         this.heightPx = `${height}px`;
         this.cd.markForCheck();
         this.cd.detectChanges();
@@ -140,6 +145,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   calculateHeight(): void {
     if (!this.service.displayOptions.fixedHeight) return;
+    if (this.service.displayOptions.fixedHeightContainer) return;
     const height =
       this.el.nativeElement.clientWidth / ACTIVITY_FIXED_HEIGHT_RATIO;
     this.service.height$.next(height);

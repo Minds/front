@@ -20,7 +20,10 @@
   </a>
   <ng-container *ngIf="group">
     <!-- Show group name-->
-    <a [routerLink]="['/groups/profile', group.guid]">
+    <a
+      [routerLink]="['/groups/profile', group.guid]"
+      class="m-activityOwnerBlock__groupName"
+    >
       <strong>({{ group.name }})</strong>
     </a>
   </ng-container>

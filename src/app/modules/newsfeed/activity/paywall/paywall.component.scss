@@ -2,7 +2,28 @@ m-activity__paywall {
   display: block;
   width: 100%;
 
+  .m-wire--lock-screen-introduction {
+    p {
+      padding: 10px 10px 10px 0;
+      line-height: initial;
+    }
+    b {
+      display: none;
+    }
+  }
+
   .m-wire--lock-screen--button {
     padding: 0 20px;
+  }
+  .m-wire--lock-screen .ion-icon {
+    font-size: 52px;
+  }
+  .m-wire--lock-screen-amount {
+    font-size: 20px;
+    letter-spacing: initial;
+    font-weight: bold;
+  }
+  .m-wire--lock-screen--message {
+    display: none;
   }
 }
