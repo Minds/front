@@ -6,6 +6,7 @@ import {
 import { WireCreatorComponent } from '../../creator/creator.component';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { Session } from '../../../../services/session';
+import { WireModalService } from '../../wire-modal.service';
 
 @Component({
   moduleId: module.id,
@@ -44,10 +45,7 @@ export class WireChannelTableComponent {
     boolean
   > = new EventEmitter<boolean>();
 
-  constructor(
-    public session: Session,
-    private overlayModal: OverlayModalService
-  ) {}
+  constructor(public session: Session, private wireModal: WireModalService) {}
 
   addTier() {
     this.editing = true;
@@ -86,21 +84,18 @@ export class WireChannelTableComponent {
     return placeholder;
   }
 
-  openWireModal(reward) {
+  async openWireModal(reward) {
     const user = this.session.getLoggedInUser();
     if (user.guid !== this.channel.guid) {
-      const creator = this.overlayModal.create(
-        WireCreatorComponent,
-        this.channel,
-        {
+      await this.wireModal
+        .present(this.channel, {
           default: {
             min: reward.amount,
             type: this.type,
           },
           disableThresholdCheck: true,
-        }
-      );
-      creator.present();
+        })
+        .toPromise();
     }
   }
 }
