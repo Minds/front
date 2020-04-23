@@ -138,6 +138,7 @@ export class ChannelsV2Service {
    * @param channel
    */
   load(channel: MindsUser | string): void {
+    console.log('222', { channel });
     this.guid$.next(typeof channel === 'object' ? channel.guid : channel);
     this.setChannel(typeof channel === 'object' ? channel : null);
 

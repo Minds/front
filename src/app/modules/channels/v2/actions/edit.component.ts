@@ -7,6 +7,7 @@ import {
 import { ChannelEditModalService } from '../edit/edit-modal.service';
 import { Subscription } from 'rxjs';
 import { ChannelsV2Service } from '../channels-v2.service';
+import { Session } from '../../../../services/session';
 
 /**
  * Edit channel button (owner)
@@ -26,11 +27,13 @@ export class ChannelActionsEditComponent implements OnDestroy {
    * Constructor
    * @param service
    * @param editModal
+   * @param session
    * @param injector
    */
   constructor(
     public service: ChannelsV2Service,
     protected editModal: ChannelEditModalService,
+    protected session: Session,
     protected injector: Injector
   ) {}
 
@@ -55,10 +58,9 @@ export class ChannelActionsEditComponent implements OnDestroy {
       .setInjector(this.injector)
       .present(this.service.channel$.getValue())
       .subscribe(channel => {
-        console.log({ channel });
         if (channel) {
           this.service.load(channel);
-          // TODO: Reload session, if current user
+          this.session.inject(channel);
         }
       });
   }

@@ -121,6 +121,7 @@ export interface MindsUser {
   plus?: boolean;
   disable_autoplay_videos?: boolean;
   dob?: string;
+  public_dob?: boolean;
 }
 
 export interface MindsGroup {

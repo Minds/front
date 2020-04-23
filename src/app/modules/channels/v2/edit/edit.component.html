@@ -10,21 +10,161 @@
     </a>
   </div>
 
-  <m-accordion class="m-accordionV2 m-formWrapper m-channelEdit__content">
-    <m-accordion__pane title="Bio &amp; Imagery" i18n-title>
-      TBD
-    </m-accordion__pane>
+  <form
+    class="m-channelEdit__content m-formWrapper"
+    (keydown.enter)="$event.preventDefault()"
+  >
+    <m-accordion class="m-accordionV2 m-formLayout--buttonRight">
+      <m-accordion__pane
+        class="m-channelEdit__imageryPane"
+        title="Bio &amp; Imagery"
+        i18n-title
+      >
+        <div
+          class="m-channelEdit__imagery"
+          [ngStyle]="{ backgroundImage: bannerAssetCssUrl$ | async }"
+        >
+          <label
+            for="channel-v2-edit-banner"
+            class="m-channelEditImagery__uploadTrigger m-channelEditImagery__uploadBanner"
+          >
+            <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
+            <input
+              id="channel-v2-edit-banner"
+              type="file"
+              accept="image/*"
+              (change)="uploadBanner(bannerFile)"
+              #bannerFile
+            />
+          </label>
 
-    <m-accordion__pane title="About Info" i18n-title>
-      TBD
-    </m-accordion__pane>
+          <div
+            class="m-channelEditImagery__avatar"
+            [ngStyle]="{ backgroundImage: avatarAssetCssUrl$ | async }"
+          >
+            <label
+              for="channel-v2-edit-avatar"
+              class="m-channelEditImagery__uploadTrigger m-channelEditImagery__uploadAvatar"
+            >
+              <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
+              <input
+                id="channel-v2-edit-avatar"
+                type="file"
+                accept="image/*"
+                (change)="uploadAvatar(avatarFile)"
+                #avatarFile
+              />
+            </label>
+          </div>
+        </div>
 
-    <m-accordion__pane title="Hashtags" i18n-title>
-      TBD
-    </m-accordion__pane>
+        <div class="m-form__fieldsContainer">
+          <div class="m-form__row--label">
+            <label i18n>Bio</label>
+          </div>
 
-    <m-accordion__pane title="Social Links" i18n-title>
-      TBD
-    </m-accordion__pane>
-  </m-accordion>
+          <div class="m-form__row--input m-channelEdit__bioInput">
+            <textarea
+              class="form-control"
+              name="bio"
+              [ngModel]="service.bio$ | async"
+              (ngModelChange)="service.bio$.next($event)"
+            ></textarea>
+          </div>
+        </div>
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+
+      <m-accordion__pane title="About Info" i18n-title>
+        <div class="m-form__fieldsContainer">
+          <div class="m-form__row--label">
+            <label i18n>Display Name</label>
+          </div>
+
+          <div class="m-form__row--input">
+            <input
+              type="text"
+              class="form-control"
+              name="displayName"
+              [ngModel]="service.displayName$ | async"
+              (ngModelChange)="service.displayName$.next($event)"
+            />
+          </div>
+        </div>
+
+        <div class="m-form__fieldsContainer">
+          <div class="m-form__row--label">
+            <label i18n>Location</label>
+          </div>
+
+          <div class="m-form__row--input">
+            <input
+              type="text"
+              class="form-control"
+              name="location"
+              [ngModel]="service.location$ | async"
+              (ngModelChange)="service.location$.next($event)"
+            />
+          </div>
+        </div>
+
+        <div class="m-form__fieldsContainer">
+          <div class="m-form__row--label">
+            <label i18n>Date of birth</label>
+          </div>
+
+          <div class="m-form__row--input">
+            <m-date__dropdowns
+              [selectedDate]="service.dob$ | async"
+              (selectedDateChange)="service.dob$.next($event)"
+            ></m-date__dropdowns>
+
+            <div class="m-channelEdit__innerField">
+              <label
+                for="channel-v2-edit-public-dob"
+                class="m-form__customInputWrapper__checkbox"
+                i18n
+              >
+                <input
+                  type="checkbox"
+                  id="channel-v2-edit-public-dob"
+                  class="form-control"
+                />
+
+                <span class="m-form__customInput__checkbox"></span>
+
+                <ng-container i18n>
+                  Make my date of birth public
+                </ng-container>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+
+      <m-accordion__pane *ngIf="false" title="Hashtags" i18n-title>
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+
+      <m-accordion__pane *ngIf="false" title="Social Links" i18n-title>
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+    </m-accordion>
+
+    <ng-template #saveButton>
+      <div class="m-form__buttonsContainer m-channelEdit__buttonsContainer">
+        <m-shadowboxSubmitButton
+          type="button"
+          [disabled]="false"
+          [saving]="service.inProgress$ | async"
+          (click)="onSubmit()"
+        >
+          Save
+        </m-shadowboxSubmitButton>
+      </div>
+    </ng-template>
+  </form>
 </div>
