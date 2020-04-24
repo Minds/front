@@ -1,24 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+// import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { YoutubeMigrationTransferStatusComponent } from './transfer-status.component';
+// import { YoutubeMigrationTransferStatusComponent } from './transfer-status.component';
 
-describe('YoutubeMigrationTransferStatusComponent', () => {
-  let component: YoutubeMigrationTransferStatusComponent;
-  let fixture: ComponentFixture<YoutubeMigrationTransferStatusComponent>;
+// describe('YoutubeMigrationTransferStatusComponent', () => {
+//   let component: YoutubeMigrationTransferStatusComponent;
+//   let fixture: ComponentFixture<YoutubeMigrationTransferStatusComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [YoutubeMigrationTransferStatusComponent],
-    }).compileComponents();
-  }));
+//   beforeEach(async(() => {
+//     TestBed.configureTestingModule({
+//       declarations: [YoutubeMigrationTransferStatusComponent],
+//     }).compileComponents();
+//   }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(YoutubeMigrationTransferStatusComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+//   beforeEach(() => {
+//     fixture = TestBed.createComponent(YoutubeMigrationTransferStatusComponent);
+//     component = fixture.componentInstance;
+//     fixture.detectChanges();
+//   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-});
+//   it('should create', () => {
+//     expect(component).toBeTruthy();
+//   });
+// });

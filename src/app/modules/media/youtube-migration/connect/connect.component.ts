@@ -5,8 +5,7 @@ import {
   ChangeDetectorRef,
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
-import { Session } from '../../../../services/session';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-youtubeMigration__connect',
@@ -15,7 +14,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class YoutubeMigrationConnectComponent {
   constructor(
-    protected session: Session,
     protected youtubeService: YoutubeMigrationService,
     public router: Router,
     protected cd: ChangeDetectorRef
