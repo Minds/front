@@ -203,7 +203,7 @@ m-channel__edit {
 
   .m-channelEdit__hashtagList {
     list-style: none;
-    margin: 0 0 32px; // <li> have extra 20 bottom margin
+    margin: 0;
     padding: 0;
 
     .m-channelEditHashtagList__item {
@@ -211,12 +211,12 @@ m-channel__edit {
       flex-direction: row;
       align-items: center;
       justify-content: flex-start;
-      margin: 0 15px 20px 0;
-      padding: 5px 8px 6px 15px;
+      margin: 0 10px 14px 0;
+      padding: 5px 5px 5px 15px;
       border: 1px solid;
-      border-radius: 17px;
-      font-size: 17px;
-      line-height: 23px;
+      border-radius: 19px;
+      font-size: 14px;
+      line-height: 19px;
 
       &:last-child {
         margin-right: 0;
