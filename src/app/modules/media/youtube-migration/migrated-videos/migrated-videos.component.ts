@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
-import * as moment from 'moment';
 
 @Component({
   selector: 'm-youtubeMigration__migratedVideos',
@@ -37,7 +36,6 @@ export class YoutubeMigrationMigratedVideosComponent
     this.migratedVideosSubscription = this.youtubeService.migratedVideos$.subscribe(
       migratedVideos => {
         this.videos = migratedVideos;
-        this.formatVideos();
         this.init = true;
         this.detectChanges();
       }
@@ -48,18 +46,9 @@ export class YoutubeMigrationMigratedVideosComponent
     this.migratedVideosSubscription.unsubscribe();
   }
 
-  formatVideos(): void {
-    this.videos.forEach(v => {
-      const durationFormat = v.duration >= 3600 ? 'H:mm:ss' : 'mm:ss';
-      v.friendlyDuration = moment
-        .utc(moment.duration(Number(v.duration), 'seconds').asMilliseconds())
-        .format(durationFormat);
-
-      v.friendlyDate = moment(v.entity.time_created, 'X').format('MMM Do YYYY');
-    });
-  }
-
-  onModalRequested(event: MouseEvent, entity): void {
+  // TODO: consider refactoring bc it is duplicated
+  onModalRequested($event): void {
+    const entity = $event.video.entity;
     if (!this.overlayModal.canOpenInModal()) {
       return;
     }

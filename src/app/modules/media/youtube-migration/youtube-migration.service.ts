@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Client } from '../../../common/api/client.service';
 import { Session } from '../../../services/session';
 import { BehaviorSubject } from 'rxjs';
+import * as moment from 'moment';
 import fakeData from './fake-data';
 
 export interface YoutubeChannel {
@@ -15,11 +16,12 @@ export interface YoutubeChannel {
 export class YoutubeMigrationService {
   initChannels: boolean = false;
   endpoint = 'api/v3/media/youtube-importer/';
-  initVideos: any = [
+  initVideos: Array<any> = [
     {
       video_id: '',
     },
   ];
+  // TODOOJM remove moonboot 123
   selectedChannel: YoutubeChannel = {
     id: '123',
     title: 'Moonboot',
@@ -119,6 +121,20 @@ export class YoutubeMigrationService {
       );
 
       console.log('getAllVideos: ', response);
+      response.forEach(v => {
+        v.display = {};
+        v.display.duration = this.formatDuration(v.duration);
+
+        if (v.status === 'completed') {
+          v.display.title = v.entity.title;
+          v.display.thumb = v.entity.thumbnail_src;
+          v.display.date = this.formatDate(v.entity.time_created);
+        } else {
+          v.display.title = v.title;
+          v.display.thumb = v.thumbnail;
+          v.display.date = this.formatDate(v.youtubeCreationDate);
+        }
+      });
 
       this.unmigratedVideos$.next(
         // fakeData.unmigrated
@@ -130,9 +146,20 @@ export class YoutubeMigrationService {
       );
       // return response;
     } catch (e) {
-      console.error(e);
+      console.error('getAllVideos(): ', e);
       return e;
     }
+  }
+
+  formatDuration(duration: string | number): string {
+    const durationFormat = duration >= 3600 ? 'H:mm:ss' : 'mm:ss';
+    return moment
+      .utc(moment.duration(Number(duration), 'seconds').asMilliseconds())
+      .format(durationFormat);
+  }
+
+  formatDate(date: string | number): string {
+    return moment(date, 'X').format('MMM Do YYYY');
   }
 
   /**
@@ -158,7 +185,7 @@ export class YoutubeMigrationService {
       this.getAllVideos(channelId);
       return response;
     } catch (e) {
-      console.error(e);
+      console.error('import(): ', e);
       return e;
     }
   }
@@ -183,7 +210,7 @@ export class YoutubeMigrationService {
       this.getAllVideos(channelId);
       return response;
     } catch (e) {
-      console.error(e);
+      console.error('cancelImport()', e);
       return e;
     }
   }
@@ -204,7 +231,7 @@ export class YoutubeMigrationService {
       console.log('EnableAutoTransfer: ', response);
       return response;
     } catch (e) {
-      console.error(e);
+      console.error('enableAutoImport: ', e);
       return e;
     }
   }
@@ -225,7 +252,7 @@ export class YoutubeMigrationService {
       console.log('DisableAutoTransfer: ', response);
       return response;
     } catch (e) {
-      console.error(e);
+      console.error('disableAutoImport(): ', e);
       return e;
     }
   }
@@ -243,7 +270,7 @@ export class YoutubeMigrationService {
       console.log('connectAccount:', response, response.url);
       return response;
     } catch (e) {
-      console.error(e);
+      console.error('connectAccount(): ', e);
       return e;
     }
   }
@@ -263,7 +290,7 @@ export class YoutubeMigrationService {
         console.log('disconnectAccount:', response);
         return response;
       } catch (e) {
-        console.error(e);
+        console.error('disconnectAccount(): ', e);
         return e;
       }
     }

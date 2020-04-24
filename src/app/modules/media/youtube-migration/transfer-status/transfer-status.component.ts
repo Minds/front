@@ -36,6 +36,7 @@ export class YoutubeMigrationTransferStatusComponent
   transferringCount: number = 0;
   unmigratedVideos: any = [];
   unmigratedVideosSubscription: Subscription;
+  init: boolean = false;
 
   ngOnInit() {
     this.selectedChannelSubscription = this.youtubeService.selectedChannel$.subscribe(
@@ -49,6 +50,7 @@ export class YoutubeMigrationTransferStatusComponent
       unmigratedVideos => {
         this.unmigratedVideos = unmigratedVideos;
         this.getCounts();
+        this.init = true;
         this.detectChanges();
       }
     );

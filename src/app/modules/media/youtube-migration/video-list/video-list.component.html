@@ -1,0 +1,53 @@
+<ng-container *ngIf="videos">
+  <div class="m-youtubeMigration__video" *ngFor="let v of videos">
+    <a (click)="clickedVideo(v)">
+      <div
+        class="m-youtubeMigration__videoThumb"
+        [ngStyle]="{ 'background-image': 'url(' + v.display.thumb + ')' }"
+      >
+        <div class="m-youtubeMigration__videoOverlay">
+          <i class="material-icons">play_arrow</i>
+          <div class="m-youtubeMigration__videoDuration">
+            {{ v.display.duration }}
+          </div>
+        </div>
+      </div>
+    </a>
+    <div class="m-youtubeMigration__videoInfo">
+      <div>
+        <a (click)="clickedVideo(v)"
+          ><div class="m-youtubeMigration__videoTitle">
+            {{ v.display.title }}
+          </div></a
+        >
+        <div class="m-youtubeMigration__videoDetails">
+          <span>{{ v.display.date }}</span>
+          <ng-container *ngIf="v.status !== 'completed'">
+            · <span>{{ v.views | abbr }} views</span></ng-container
+          >
+        </div>
+      </div>
+      <ng-container *ngIf="v.status !== 'completed'">
+        <div class="m-youtubeMigration__videoStatus">
+          <ng-container *ngIf="v.status">
+            <a (click)="cancel(v.video_id, v.channel_id)">Cancel</a>
+            ·
+            <span
+              *ngIf="v.status === 'transcoding'"
+              class="m-youtubeMigration__videoStatus--transcoding"
+              >Transferring</span
+            >
+            <span
+              *ngIf="v.status === 'queued'"
+              class="m-youtubeMigration__videoStatus--queued"
+              >Queued</span
+            >
+          </ng-container>
+          <a *ngIf="!v.status" (click)="import(v.video_id, v.channel_id)"
+            >Transfer</a
+          >
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

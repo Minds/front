@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
-import * as moment from 'moment';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'm-youtubeMigration__unmigratedVideos',
@@ -18,13 +18,13 @@ import { Subscription } from 'rxjs';
 export class YoutubeMigrationUnmigratedVideosComponent
   implements OnInit, OnDestroy {
   init: boolean = false;
-  inProgress: boolean = false;
   videos: any = [];
   unmigratedVideosSubscription: Subscription;
 
   constructor(
     protected youtubeService: YoutubeMigrationService,
     protected session: Session,
+    protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef
   ) {}
 
@@ -32,37 +32,24 @@ export class YoutubeMigrationUnmigratedVideosComponent
     this.unmigratedVideosSubscription = this.youtubeService.unmigratedVideos$.subscribe(
       unmigratedVideos => {
         this.videos = unmigratedVideos;
-        this.formatVideos();
-
+        this.init = true;
         this.detectChanges();
       }
     );
+
+    this.route.queryParamMap.subscribe(params => {
+      if (params.get('status') === 'setup') {
+        alert('first time setup');
+      }
+    });
   }
 
   ngOnDestroy() {
     this.unmigratedVideosSubscription.unsubscribe();
   }
 
-  formatVideos() {
-    this.videos.forEach(v => {
-      const durationFormat = v.duration >= 3600 ? 'H:mm:ss' : 'mm:ss';
-      v.friendlyDuration = moment
-        .utc(moment.duration(Number(v.duration), 'seconds').asMilliseconds())
-        .format(durationFormat);
-
-      v.friendlyDate = moment(v.youtubeCreationDate, 'X').format('MMM Do YYYY');
-    });
-  }
-
-  cancel(channelId, videoId) {
-    this.youtubeService.cancelImport(channelId, videoId);
-  }
-
-  import(channelId, videoId) {
-    this.youtubeService.import(channelId, videoId);
-  }
-
-  openYoutubeWindow(url: string): void {
+  openYoutubeWindow($event): void {
+    const url: string = $event.video.url;
     window.open(url, '_blank');
   }
 

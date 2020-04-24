@@ -1,42 +1,45 @@
-<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
-  <div class="m-form__fieldsContainer">
-    <div class="m-form__field--checkbox stretchedField">
-      <div class="m-form__row--label">
-        <div class="m-settingsV2__headerLabel">New YouTube Videos</div>
-      </div>
-      <div class="m-form__row--input">
-        <div class="m-form__field--checkbox">
-          <div class="m-form__row--input">
-            <label
-              for="autoImport"
-              class="m-form__customInputWrapper__checkbox"
-              i18n
-              >Automatically transfer newly added YouTube videos across to Minds
-              <input
-                type="checkbox"
-                id="autoImport"
-                name="autoImport"
-                formControlName="autoImport"
-                class="form-control"
-                data-minds="autoImport"
-                [readonly]="inProgress || !init"
-              />
-              <span class="m-form__customInput__checkbox"></span>
-            </label>
+<ng-container *ngIf="init"
+  ><form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+    <div class="m-form__fieldsContainer">
+      <div class="m-form__field--checkbox stretchedField">
+        <div class="m-form__row--label">
+          <div class="m-settingsV2__headerLabel">New YouTube Videos</div>
+        </div>
+        <div class="m-form__row--input">
+          <div class="m-form__field--checkbox">
+            <div class="m-form__row--input">
+              <label
+                for="autoImport"
+                class="m-form__customInputWrapper__checkbox"
+                i18n
+                >Automatically transfer newly added YouTube videos across to
+                Minds
+                <input
+                  type="checkbox"
+                  id="autoImport"
+                  name="autoImport"
+                  formControlName="autoImport"
+                  class="form-control"
+                  data-minds="autoImport"
+                  [readonly]="inProgress || !init"
+                />
+                <span class="m-form__customInput__checkbox"></span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </form>
+  <div class="m-settingsV2__headerLabel m-youtubeMigration__headerLabel">
+    <span>Disconnect YouTube Account</span>
   </div>
-</form>
-<div class="m-settingsV2__headerLabel m-youtubeMigration__headerLabel">
-  Disconnect YouTube Account
-</div>
-<div class="m-settingsV2__desc m-youtubeMigration__desc">
-  <p>Status: <span>Connected</span></p>
-  <p>
-    You can simply disconnect your YouTube account from Minds. In doing so, any
-    previously transferred videos will continue to be available on Minds.
-  </p>
-  <p><a (click)="disconnectAccount()">Disconnect YouTube account</a></p>
-</div>
+  <div class="m-settingsV2__desc m-youtubeMigration__desc">
+    <p>Status: <span>Connected</span></p>
+    <p>
+      You can simply disconnect your YouTube account from Minds. In doing so,
+      any previously transferred videos will continue to be available on Minds.
+    </p>
+    <p><a (click)="disconnectAccount()">Disconnect YouTube account</a></p>
+  </div>
+</ng-container>

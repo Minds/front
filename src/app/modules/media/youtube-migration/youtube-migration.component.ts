@@ -62,17 +62,19 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
 
     this.selectedChannelSubscription = this.youtubeService.selectedChannel$.subscribe(
       channel => {
-        this.channelTitle = channel.title;
-        if (this.refreshInterval) {
-          clearInterval(this.refreshInterval);
+        if (this.isConnected) {
+          this.channelTitle = channel.title;
+          if (this.refreshInterval) {
+            clearInterval(this.refreshInterval);
+          }
+          if (isPlatformBrowser(this.platformId)) {
+            this.refreshInterval = setInterval(() => {
+              this.youtubeService.getAllVideos(channel.id);
+            }, 5000);
+          }
+          this.init = true;
+          this.detectChanges();
         }
-        if (isPlatformBrowser(this.platformId)) {
-          this.refreshInterval = setInterval(() => {
-            this.youtubeService.getAllVideos(channel.id);
-          }, 5000);
-        }
-        this.init = true;
-        this.detectChanges();
       }
     );
   }

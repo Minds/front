@@ -1,35 +1,12 @@
+<div *ngIf="!init" class="m-settingsV2__spinner">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
 <ng-container *ngIf="init">
-  <div *ngIf="videos.length > 0" class="m-youtubeMigration__videosList">
-    <div class="m-youtubeMigration__video" *ngFor="let video of videos">
-      <a (click)="onModalRequested($event, video.entity)">
-        <div
-          class="m-youtubeMigration__videoThumb"
-          [ngStyle]="{
-            'background-image': 'url(' + video.entity.thumbnail_src + ')'
-          }"
-        >
-          <div class="m-youtubeMigration__videoOverlay">
-            <i class="material-icons">play_arrow</i>
-            <div class="m-youtubeMigration__videoDuration">
-              {{ video.friendlyDuration }}
-            </div>
-          </div>
-        </div>
-      </a>
-      <div class="m-youtubeMigration__videoInfo">
-        <div>
-          <a (click)="onModalRequested($event, video.entity)"
-            ><div class="m-youtubeMigration__videoTitle">
-              {{ video.title }}
-            </div></a
-          >
-          <div class="m-youtubeMigration__videoDetails">
-            <span>{{ video.friendlyDate }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <m-youtubeMigration__videoList
+    *ngIf="videos.length > 0"
+    [videos]="videos"
+    (requestPlay)="onModalRequested($event)"
+  ></m-youtubeMigration__videoList>
   <div *ngIf="videos.length === 0" class="m-youtubeMigration__notice">
     <p>No transferred videos</p>
   </div>
