@@ -164,7 +164,11 @@ export class TitleBarComponent {
    */
   async onFullscreenClick($event): Promise<void> {
     const response = await this.blogsService.saveDraft();
-    this.router.navigate(['/blog/edit/' + response.guid]);
+    if (response.guid) {
+      this.router.navigate(['/blog/edit/' + response.guid]);
+    } else {
+      this.blogsService.error$.next('Error saving draft for fullscreen.');
+    }
   }
   /**
    * Shows meta-data popup

@@ -31,6 +31,17 @@ describe('Composer Title Bar', () => {
     },
   });
 
+  const composerBlogServiceMock: any = MockService(ComposerBlogsService, {
+    getContainerGuid: () => containerGuid,
+    saveDraft: () => true,
+    has: ['accessId$', 'license$', 'contentType$'],
+    props: {
+      accessId$: { get: () => accessId$ },
+      license$: { get: () => license$ },
+      contentType$: { get: () => contentType$ },
+    },
+  });
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
@@ -51,7 +62,7 @@ describe('Composer Title Bar', () => {
         },
         {
           provide: ComposerBlogsService,
-          useValue: MockService(ComposerBlogsService),
+          useValue: composerBlogServiceMock,
         },
         {
           provide: PopupService,
@@ -107,5 +118,54 @@ describe('Composer Title Bar', () => {
 
     comp.onLicenseClick('spec-test');
     expect(license$.next).toHaveBeenCalledWith('spec-test');
+  });
+
+  it('should call composer blogs service on visibility change when content type is blog', () => {
+    contentType$.getValue.and.returnValue('blog');
+    containerGuid = '';
+    accessId$.next.calls.reset();
+    fixture.detectChanges();
+
+    comp.onVisibilityClick('2');
+    expect(accessId$.next).toHaveBeenCalledWith('2');
+  });
+
+  it('should call composer service on visibility change when content type is post', () => {
+    contentType$.getValue.and.returnValue('post');
+
+    comp.onVisibilityClick('1');
+    expect(comp.service.accessId$.next).toHaveBeenCalledWith('1');
+  });
+
+  it('should call composer blogs service on license change when content type is blog', () => {
+    contentType$.getValue.and.returnValue('blog');
+    license$.next.calls.reset();
+    fixture.detectChanges();
+
+    comp.onLicenseClick('2');
+    expect(license$.next).toHaveBeenCalledWith('2');
+  });
+
+  it('should call composer service on license change when content type is post', () => {
+    contentType$.getValue.and.returnValue('post');
+
+    comp.onLicenseClick('1');
+    expect(comp.service.license$.next).toHaveBeenCalledWith('1');
+  });
+
+  it('should trigger onCreatePostEmitter on post click', () => {
+    spyOn(comp.onCreatePostEmitter, 'emit').and.callFake(() => {});
+    fixture.detectChanges();
+
+    comp.onCreatePostClick();
+    expect(comp.onCreatePostEmitter.emit).toHaveBeenCalled();
+  });
+
+  it('should trigger onCreateBlogEmitter on blog post click', () => {
+    spyOn(comp.onCreateBlogEmitter, 'emit').and.callFake(() => {});
+    fixture.detectChanges();
+
+    comp.onCreateBlogClick();
+    expect(comp.onCreateBlogEmitter.emit).toHaveBeenCalled();
   });
 });
