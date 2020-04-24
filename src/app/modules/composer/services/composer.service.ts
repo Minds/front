@@ -6,7 +6,7 @@ import {
   Subscription,
   Subject,
 } from 'rxjs';
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
 import { ActivityEntity } from '../../newsfeed/activity/activity.service';
 import { RichEmbed, RichEmbedService } from './rich-embed.service';
@@ -289,6 +289,11 @@ export class ComposerService implements OnDestroy {
   >(false);
 
   /**
+   * URL in the message
+   */
+  readonly messageUrl$: Observable<string>;
+
+  /**
    * Data structure observable
    */
   readonly data$: Observable<Data>;
@@ -447,7 +452,9 @@ export class ComposerService implements OnDestroy {
         })
       ),
       tap(values => {
-        this.canPost$.next(Boolean(values.message || values.attachment));
+        this.canPost$.next(
+          Boolean(values.message || values.attachment || values.richEmbed)
+        );
       })
     );
 
@@ -457,29 +464,42 @@ export class ComposerService implements OnDestroy {
       this.buildPayload(data)
     );
 
-    // Subscribe to message and rich embed in order to know if a URL should be extracted
+    // Subscribe to message and extract any URL it finds
+    this.messageUrl$ = this.message$.pipe(
+      map(message => this.richEmbed.extract(message))
+    );
+
+    // Subscribe to message URL and rich embed in order to know if a URL should be resolved
 
     this.richEmbedExtractorSubscription = combineLatest([
-      this.message$.pipe(distinctUntilChanged()),
+      this.messageUrl$.pipe(distinctUntilChanged()),
       this.richEmbed$.pipe(distinctUntilChanged()),
-    ]).subscribe(([message, richEmbed]) => {
-      // Be very careful, as it depends on the same observable we're modifying
-      if (
-        !richEmbed ||
-        typeof richEmbed === 'string' ||
-        !richEmbed.entityGuid
-      ) {
-        if (!this.canEditMetadata()) {
-          return;
-        }
-
-        // Extract rich embed from URL when:
+    ])
+      .pipe(debounceTime(500))
+      .subscribe(([messageUrl, richEmbed]) => {
+        // Use current message URL when:
         // a) there's no rich embed already set; or
         // b) rich embed's type is a string (locally extracted); or
         // c) loaded activity don't have the entity GUID set (which mean is a blog)
-        this.richEmbed$.next(this.richEmbed.extract(message));
-      }
-    });
+        //
+        // It won't emit an empty extraction to allow keeping embeds when deleting text
+        // thanks to debounceTime pipe above.
+        //
+        // Be very careful, as it depends on the same observable we're modifying
+        if (
+          !richEmbed ||
+          typeof richEmbed === 'string' ||
+          !richEmbed.entityGuid
+        ) {
+          if (!this.canEditMetadata()) {
+            return;
+          }
+
+          if (messageUrl) {
+            this.richEmbed$.next(messageUrl);
+          }
+        }
+      });
   }
 
   /**
@@ -533,6 +553,7 @@ export class ComposerService implements OnDestroy {
     this.accessId$.next(DEFAULT_ACCESS_ID_VALUE);
     this.license$.next(DEFAULT_LICENSE_VALUE);
     this.attachment$.next(DEFAULT_ATTACHMENT_VALUE);
+    this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
     this.videoPoster$.next(DEFAULT_VIDEOPOSTER_VALUE);
 
     // Reset state
@@ -668,6 +689,17 @@ export class ComposerService implements OnDestroy {
     }
 
     this.attachment$.next(null);
+  }
+
+  /**
+   * Deletes the current rich embed
+   */
+  removeRichEmbed(): void {
+    if (!this.canEditMetadata()) {
+      return;
+    }
+
+    this.richEmbed$.next(DEFAULT_RICH_EMBED_VALUE);
   }
 
   /**

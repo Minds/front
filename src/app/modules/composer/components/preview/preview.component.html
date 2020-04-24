@@ -13,7 +13,7 @@
     <div
       class="m-composerPreview__close"
       [hidden]="isPosting$ | async"
-      (click)="remove()"
+      (click)="removeAttachment()"
     >
       <m-icon iconId="close"></m-icon>
     </div>
@@ -27,5 +27,13 @@
     [hidden]="attachmentPreview$ | async"
     *ngIf="richEmbedPreview$ | async as richEmbed"
     [richEmbed]="richEmbed"
-  ></m-composerRichEmbedPreview>
+  >
+    <div
+      class="m-composerPreview__close"
+      [hidden]="(isPosting$ | async) || (messageUrl$ | async)"
+      (click)="removeRichEmbed()"
+    >
+      <m-icon iconId="close"></m-icon>
+    </div>
+  </m-composerRichEmbedPreview>
 </div>
