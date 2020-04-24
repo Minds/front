@@ -1,4 +1,5 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { MindsVideoPlayerComponent } from '../../video-player/player.component';
 import { ScrollService } from '../../../../../services/ux/scroll';
@@ -27,7 +28,11 @@ export class VideoAutoplayService implements OnDestroy {
    */
   protected players: MindsVideoPlayerComponent[] = [];
 
-  constructor(protected scroll: ScrollService, protected session: Session) {
+  constructor(
+    protected scroll: ScrollService,
+    protected session: Session,
+    @Inject(PLATFORM_ID) protected platformId: Object
+  ) {
     const user = this.session.getLoggedInUser();
 
     this.setEnabled(user.plus && !user.disable_autoplay_videos);
@@ -45,6 +50,8 @@ export class VideoAutoplayService implements OnDestroy {
    * @param player
    */
   registerPlayer(player: MindsVideoPlayerComponent) {
+    if (isPlatformServer(this.platformId)) return;
+
     this.players.push(player);
 
     // sort players by Y their positions in axis so we prioritize visibility on videos that are closer to the top

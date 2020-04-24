@@ -26,6 +26,14 @@ import { BoostedContentService } from '../../../common/services/boosted-content.
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { ACTIVITY_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
+import {
+  trigger,
+  transition,
+  animate,
+  keyframes,
+  style,
+} from '@angular/animations';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -39,6 +47,22 @@ import { ACTIVITY_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
   inputs: ['interval', 'channel'],
   providers: [ClientMetaService, FeedsService],
   templateUrl: 'boost-rotator.component.html',
+  animations: [
+    trigger('fastFade', [
+      transition(':enter', [
+        animate(
+          '400ms',
+          keyframes([style({ opacity: 0 }), style({ opacity: 1 })])
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '400ms',
+          keyframes([style({ opacity: 1 }), style({ opacity: 0 })])
+        ),
+      ]),
+    ]),
+  ],
 })
 export class NewsfeedBoostRotatorComponent {
   boosts: Array<any> = [];
@@ -85,8 +109,10 @@ export class NewsfeedBoostRotatorComponent {
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    configs: ConfigsService
   ) {
+    this.interval = configs.get('boost_rotator_interval') || 5;
     this.subscriptions = [
       this.settingsService.ratingChanged.subscribe(event =>
         this.onRatingChanged(event)
@@ -316,10 +342,13 @@ export class NewsfeedBoostRotatorComponent {
     if (!this.featuresService.has('navigation') || !this.rotatorEl) return;
     this.height =
       this.rotatorEl.nativeElement.clientWidth / ACTIVITY_FIXED_HEIGHT_RATIO;
-    console.log(
-      'boost rotator',
-      this.rotatorEl.nativeElement.clientWidth,
-      this.height
-    );
+
+    if (this.height < 500) this.height = 500;
+
+    // console.log(
+    //   'boost rotator',
+    //   this.rotatorEl.nativeElement.clientWidth,
+    //   this.height
+    // );
   }
 }
