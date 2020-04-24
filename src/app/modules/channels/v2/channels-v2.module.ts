@@ -21,6 +21,7 @@ import { ChannelActionsWireComponent } from './actions/wire.component';
 import { ChannelActionsMenuButtonComponent } from './actions/menu-button.component';
 import { ChannelActionsMenuComponent } from './actions/menu.component';
 import { ChannelEditModalService } from './edit/edit-modal.service';
+import { HashtagsModule } from '../../hashtags/hashtags.module';
 
 /**
  * Generally available components
@@ -62,6 +63,7 @@ const PROVIDERS = [ChannelEditModalService];
     CommonModule,
     NewsfeedModule,
     MessengerModule,
+    HashtagsModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

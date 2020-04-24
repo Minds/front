@@ -139,3 +139,37 @@ m-button {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
   }
 }
+
+.m-fieldButton-v2 {
+  padding: 8px 23px;
+  margin: 0;
+  cursor: pointer;
+  font-weight: bold;
+
+  position: relative;
+  appearance: none;
+  box-sizing: border-box;
+  background: transparent;
+  border: 1px solid;
+  border-radius: 2px;
+  font-size: inherit;
+  line-height: inherit;
+
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+    background: themed($m-bgColor--secondary);
+    border-color: themed($m-borderColor--primary);
+  }
+
+  @include m-on-theme(light) {
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  @include m-on-theme(dark) {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &[disabled] {
+    cursor: initial;
+  }
+}

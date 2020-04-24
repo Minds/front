@@ -189,4 +189,53 @@ m-channel__edit {
       }
     }
   }
+
+  // Hashtags
+  .m-channelEdit__hashtagInput {
+    > * + * {
+      margin-left: 10px;
+    }
+
+    m-hashtags__typeaheadInput {
+      flex: 1;
+    }
+  }
+
+  .m-channelEdit__hashtagList {
+    list-style: none;
+    margin: 0 0 32px; // <li> have extra 20 bottom margin
+    padding: 0;
+
+    .m-channelEditHashtagList__item {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 0 15px 20px 0;
+      padding: 5px 8px 6px 15px;
+      border: 1px solid;
+      border-radius: 17px;
+      font-size: 17px;
+      line-height: 23px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      @include m-theme() {
+        color: themed($m-borderColor--primary);
+        border-color: themed($m-textColor--secondary);
+        background: themed($m-textColor--secondary);
+      }
+
+      .m-channelEditHashtagListItem__remove {
+        padding: 3px;
+        cursor: pointer;
+
+        @include m-theme() {
+          color: transparentize(themed($m-borderColor--primary), 0.15);
+        }
+      }
+    }
+  }
 }

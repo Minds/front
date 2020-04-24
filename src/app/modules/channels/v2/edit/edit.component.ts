@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Input,
+  ViewChild,
+} from '@angular/core';
 import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { ChannelEditService } from './edit.service';
@@ -6,6 +11,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { map } from 'rxjs/operators';
 import entityToBannerUrl from '../../../../helpers/entity-to-banner-url';
+import { TypeaheadInputComponent } from '../../../hashtags/typeahead-input/typeahead-input.component';
 
 @Component({
   selector: 'm-channel__edit',
@@ -21,6 +27,12 @@ export class ChannelEditComponent {
   @Input('channel') set data(channel: MindsUser) {
     this.service.setChannel(channel);
   }
+
+  /**
+   * Typeahead component
+   */
+  @ViewChild('hashtagsTypeaheadInput', { static: false })
+  protected hashtagsTypeaheadInput: TypeaheadInputComponent;
 
   /**
    * Modal options
@@ -147,6 +159,18 @@ export class ChannelEditComponent {
     }
 
     this.service.avatar$.next(file);
+  }
+
+  /**
+   * Intent to add a tag
+   * @param hashtag
+   */
+  addHashtagIntent(hashtag: string) {
+    this.service.addHashtag(hashtag);
+
+    if (this.hashtagsTypeaheadInput) {
+      this.hashtagsTypeaheadInput.reset();
+    }
   }
 
   /**

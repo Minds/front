@@ -96,6 +96,24 @@ export class ChannelEditService {
   }
 
   /**
+   * Pushes a hashtag onto the array
+   * @param hashtag
+   */
+  addHashtag(hashtag: string): void {
+    this.hashtags$.next([...this.hashtags$.getValue(), hashtag]);
+  }
+
+  /**
+   * Removes a hashtag from the array
+   * @param hashtag
+   */
+  removeHashtag(hashtag: string): void {
+    this.hashtags$.next(
+      this.hashtags$.getValue().filter(entry => entry !== hashtag)
+    );
+  }
+
+  /**
    * Saves to server
    */
   async save(): Promise<MindsUser> {
@@ -112,6 +130,7 @@ export class ChannelEditService {
             city: this.location$.getValue(),
             dob: this.dob$.getValue(),
             public_dob: this.publicDob$.getValue() ? 1 : 0,
+            tags: this.hashtags$.getValue(),
           })
           .toPromise()
       );
