@@ -102,8 +102,12 @@ export class ActivityMenuComponent implements OnInit, OnDestroy {
     switch (option) {
       case 'edit':
         if (this.features.has('activity-composer')) {
+          console.log('this.entity', this.entity);
           // check if entity is a blog.
-          if (this.features.has('composer-blogs') && this.entity.blurb) {
+          if (
+            this.features.has('composer-blogs') &&
+            (this.entity.blurb || this.entity.subtype === 'blog')
+          ) {
             this.composer.contentType$.next('blog');
             this.blogsService.load(this.entity);
           } else {

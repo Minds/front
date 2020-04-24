@@ -96,38 +96,40 @@ export class ComposerBlogsService {
    * @param activity - activity
    */
   public load(activity: any): void {
-    this.client
-      .get('api/v1/blog/' + activity.entity_guid, {})
-      .then((response: any) => {
-        if (response.blog) {
-          const blog = response.blog;
+    let guid: string = activity.entity_guid
+      ? activity.entity_guid
+      : activity.guid;
 
-          this.urlSlug$.next(blog.slug);
-          this.title$.next(blog.title);
-          this.description$.next(blog.description);
-          this.author$.next(blog.custom_meta.author);
-          this.content$.next(blog.description);
-          this.nsfw$.next(blog.nsfw);
-          this.error$.next('');
-          this.banner$.next(
-            this.site.baseUrl +
-              'fs/v1/banners/' +
-              activity.entity_guid +
-              '/' +
-              activity.time_updated
-          );
-          this.bannerFile$.next('');
-          this.canPost$.next(true);
-          this.guid$.next(blog.guid);
-          this.published$.next(blog.published);
-          this.draftSaved$.next(false);
-          this.accessId$.next(blog.access_id);
-          this.schedule$.next(blog.time_created);
-          this.savedContent$.next(blog.description);
-          this.monetization$.next({ type: 'tokens', min: blog.wire_threshold });
-          this.tags$.next(blog.tags);
-        }
-      });
+    this.client.get('api/v1/blog/' + guid, {}).then((response: any) => {
+      if (response.blog) {
+        const blog = response.blog;
+
+        this.urlSlug$.next(blog.slug);
+        this.title$.next(blog.title);
+        this.description$.next(blog.description);
+        this.author$.next(blog.custom_meta.author);
+        this.content$.next(blog.description);
+        this.nsfw$.next(blog.nsfw);
+        this.error$.next('');
+        this.banner$.next(
+          this.site.baseUrl +
+            'fs/v1/banners/' +
+            guid +
+            '/' +
+            activity.time_updated
+        );
+        this.bannerFile$.next('');
+        this.canPost$.next(true);
+        this.guid$.next(guid);
+        this.published$.next(blog.published);
+        this.draftSaved$.next(false);
+        this.accessId$.next(blog.access_id);
+        this.schedule$.next(blog.time_created);
+        this.savedContent$.next(blog.description);
+        this.monetization$.next({ type: 'tokens', min: blog.wire_threshold });
+        this.tags$.next(blog.tags);
+      }
+    });
   }
 
   /**
