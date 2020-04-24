@@ -35,6 +35,20 @@ describe('Composer Text Area', () => {
     },
   });
 
+  const content$ = jasmine.createSpyObj('content$', {
+    next: () => {},
+    subscribe: { unsubscribe: () => {} },
+    getValue: () => '',
+  });
+
+  const composerBlogsServiceMock: any = MockService(ComposerService, {
+    has: ['content$', 'title$'],
+    props: {
+      content$: { get: () => content$ },
+      title$: { get: () => title$ },
+    },
+  });
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
@@ -59,7 +73,7 @@ describe('Composer Text Area', () => {
         },
         {
           provide: ComposerBlogsService,
-          useValue: MockService(ComposerBlogsService),
+          useValue: composerBlogsServiceMock,
         },
       ],
     }).compileComponents();
@@ -122,5 +136,35 @@ describe('Composer Text Area', () => {
 
     comp.toggleTitle();
     expect(title$.next).toHaveBeenCalledWith(null);
+  });
+
+  it('should call composer service when content type is post on message change', () => {
+    contentType$.getValue.and.returnValue('post');
+
+    comp.onMessageChange('Hello world');
+    // @ts-ignore
+    expect(comp.service.message$.next).toHaveBeenCalledWith('Hello world');
+  });
+
+  it('should call blogs service when content type is blog on message change', () => {
+    contentType$.getValue.and.returnValue('blog');
+
+    comp.onMessageChange('Hello world');
+    expect(comp.blogsService.content$.next).toHaveBeenCalledWith('Hello world');
+  });
+
+  it('should call composer service when content type is post on title change', () => {
+    contentType$.getValue.and.returnValue('post');
+
+    comp.onTitleChange('Hello world');
+    // @ts-ignore
+    expect(comp.service.title$.next).toHaveBeenCalledWith('Hello world');
+  });
+
+  it('should call blogs service when content type is blog on title change', () => {
+    contentType$.getValue.and.returnValue('blog');
+
+    comp.onTitleChange('Hello world');
+    expect(comp.blogsService.title$.next).toHaveBeenCalledWith('Hello world');
   });
 });

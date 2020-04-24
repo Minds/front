@@ -9,7 +9,6 @@ import { ComposerService, MonetizationSubjectValue } from './composer.service';
 import { Upload, Client } from '../../../services/api';
 import { Router } from '@angular/router';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
-import { ComposerServiceType } from './provider.service';
 import { SiteService } from '../../../common/services/site.service';
 import { MindsBlogEntity } from '../../../interfaces/entities';
 
@@ -28,7 +27,7 @@ export interface BlogResponse {
 }
 
 @Injectable()
-export class ComposerBlogsService implements ComposerServiceType {
+export class ComposerBlogsService {
   readonly urlSlug$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly error$: BehaviorSubject<string> = new BehaviorSubject<string>('');
   readonly title$: BehaviorSubject<string> = new BehaviorSubject<string>('');

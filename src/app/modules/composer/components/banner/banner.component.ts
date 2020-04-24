@@ -20,7 +20,7 @@ export class BannerComponent {
    * @param service
    */
   constructor(
-    protected blogsService: ComposerBlogsService,
+    public blogsService: ComposerBlogsService,
     protected service: ComposerService
   ) {}
 }

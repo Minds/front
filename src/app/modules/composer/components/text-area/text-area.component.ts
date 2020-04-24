@@ -57,7 +57,7 @@ export class TextAreaComponent {
    */
   constructor(
     protected service: ComposerService,
-    protected blogsService: ComposerBlogsService,
+    public blogsService: ComposerBlogsService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
