@@ -191,6 +191,7 @@ m-channel__edit {
   }
 
   // Hashtags
+
   .m-channelEdit__hashtagInput {
     > * + * {
       margin-left: 10px;
@@ -223,17 +224,17 @@ m-channel__edit {
       }
 
       @include m-theme() {
-        color: themed($m-borderColor--primary);
-        border-color: themed($m-textColor--secondary);
-        background: themed($m-textColor--secondary);
+        color: themed($m-textColor--primary);
+        border-color: themed($m-bgColor--secondary);
+        background: themed($m-bgColor--secondary);
       }
 
       .m-channelEditHashtagListItem__remove {
-        padding: 3px;
+        padding: 0 3px;
         cursor: pointer;
 
         @include m-theme() {
-          color: transparentize(themed($m-borderColor--primary), 0.15);
+          color: rgba(themed($m-textColor--primary), 0.85);
         }
       }
     }
