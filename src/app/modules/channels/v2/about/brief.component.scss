@@ -79,6 +79,7 @@ m-channelAbout__brief {
   .m-channelAboutBrief__bio {
     font-size: 14px;
     line-height: 19px;
+    margin: 0 0 20px;
 
     @include m-theme() {
       color: themed($m-textColor--secondary);

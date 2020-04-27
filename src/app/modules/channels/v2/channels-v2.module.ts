@@ -26,6 +26,7 @@ import { ChannelEditBioComponent } from './edit/bio.component';
 import { ChannelEditInfoComponent } from './edit/info.component';
 import { ChannelEditHashtagsComponent } from './edit/hashtags.component';
 import { ChannelEditSocialLinksComponent } from './edit/social-links.component';
+import { ChannelSocialLinksComponent } from './social-links/social-links.component';
 
 /**
  * Generally available components
@@ -53,6 +54,7 @@ const INTERNAL_COMPONENTS = [
   ChannelEditInfoComponent,
   ChannelEditHashtagsComponent,
   ChannelEditSocialLinksComponent,
+  ChannelSocialLinksComponent,
 ];
 
 /**

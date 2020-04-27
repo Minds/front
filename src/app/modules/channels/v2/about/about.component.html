@@ -32,6 +32,18 @@
           </ng-container>
         </div>
       </div>
+
+      <div
+        *ngIf="channel?.social_profiles?.length"
+        class="m-channelAbout__field m-channelAbout__field--fullWidth"
+      >
+        <div class="m-channelAboutField__label" i18n>Social Links</div>
+        <div class="m-channelAboutField__content">
+          <m-channel__socialLinks
+            [socialLinks]="channel.social_profiles"
+          ></m-channel__socialLinks>
+        </div>
+      </div>
     </div>
 
     <div class="m-channelAbout__narrowExtraInfo m-channelAbout__container">

@@ -44,4 +44,13 @@
       Read More
     </m-read-more--button>
   </div>
+
+  <div
+    *ngIf="channel.social_profiles?.length"
+    class="m-channelAboutBrief__socialLinks"
+  >
+    <m-channel__socialLinks
+      [socialLinks]="channel.social_profiles"
+    ></m-channel__socialLinks>
+  </div>
 </div>

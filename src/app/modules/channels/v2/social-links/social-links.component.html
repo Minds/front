@@ -1,0 +1,11 @@
+<span
+  *ngFor="let socialLink of socialLinks"
+  [ngClass]="[
+    'm-channelSocialLinks__link',
+    'm-channelSocialLinksLink--' + socialLink.key
+  ]"
+>
+  <a [href]="socialLink.value" rel="noopener nofollow ugc" target="_blank"
+    ><i [ngClass]="buildSocialLinkNgClass(socialLink)"></i
+  ></a>
+</span>
