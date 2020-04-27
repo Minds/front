@@ -1,8 +1,6 @@
 import { Component, Input, EventEmitter, Output, OnInit } from '@angular/core';
 
 import { Session } from '../../../services/session';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { WireCreatorComponent } from '../creator/creator.component';
 import { Client } from '../../../services/api';
 import {
   WireRewardsType,
@@ -10,6 +8,7 @@ import {
 } from '../interfaces/wire.interfaces';
 import { WireTypeLabels } from '../wire';
 import { SignupModalService } from '../../modals/signup/service';
+import { WireModalService } from '../wire-modal.service';
 
 @Component({
   moduleId: module.id,
@@ -43,7 +42,7 @@ export class WireChannelComponent implements OnInit {
 
   constructor(
     public session: Session,
-    private overlayModal: OverlayModalService,
+    private wireModal: WireModalService,
     private client: Client,
     private signupModal: SignupModalService
   ) {}
@@ -109,18 +108,14 @@ export class WireChannelComponent implements OnInit {
     }
   }
 
-  sendWire() {
+  async sendWire() {
     if (!this.session.isLoggedIn()) {
       this.signupModal.open();
 
       return;
     }
 
-    const creator = this.overlayModal.create(
-      WireCreatorComponent,
-      this.channel
-    );
-    creator.present();
+    await this.wireModal.present(this.channel).toPromise();
   }
 
   isOwner() {

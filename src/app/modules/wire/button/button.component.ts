@@ -2,8 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { SignupModalService } from '../../modals/signup/service';
-import { WireCreatorComponent } from '../creator/creator.component';
 import { Session } from '../../../services/session';
+import { WireModalService } from '../wire-modal.service';
+import { WireEventType } from '../v2/wire-v2.service';
 
 @Component({
   selector: 'm-wire-button',
@@ -24,30 +25,31 @@ export class WireButtonComponent {
   constructor(
     public session: Session,
     private overlayModal: OverlayModalService,
-    private modal: SignupModalService
+    private modal: SignupModalService,
+    private wireModal: WireModalService
   ) {}
 
-  wire() {
+  async wire() {
     if (!this.session.isLoggedIn()) {
       this.modal.open();
 
       return;
     }
 
-    const creator = this.overlayModal.create(
-      WireCreatorComponent,
-      this.object,
-      {
+    const wireEvent = await this.wireModal
+      .present(this.object, {
         default: this.object && this.object.wire_threshold,
-        onComplete: wire => {
-          if (this.object.wire_totals) {
-            this.object.wire_totals[wire.currency] = wire.amount;
-          }
+      })
+      .toPromise();
 
-          this.doneEmitter.emit(wire);
-        },
+    if (wireEvent.type === WireEventType.Completed) {
+      const wire = wireEvent.payload;
+
+      if (this.object.wire_totals) {
+        this.object.wire_totals[wire.currency] = wire.amount;
       }
-    );
-    creator.present();
+
+      this.doneEmitter.emit(wire);
+    }
   }
 }
