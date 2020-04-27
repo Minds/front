@@ -22,6 +22,9 @@ import { ChannelActionsMenuButtonComponent } from './actions/menu-button.compone
 import { ChannelActionsMenuComponent } from './actions/menu.component';
 import { ChannelEditModalService } from './edit/edit-modal.service';
 import { HashtagsModule } from '../../hashtags/hashtags.module';
+import { ChannelEditBioComponent } from './edit/bio.component';
+import { ChannelEditInfoComponent } from './edit/info.component';
+import { ChannelEditHashtagsComponent } from './edit/hashtags.component';
 
 /**
  * Generally available components
@@ -45,6 +48,9 @@ const INTERNAL_COMPONENTS = [
   ChannelActionsWireComponent,
   ChannelActionsMenuButtonComponent,
   ChannelActionsMenuComponent,
+  ChannelEditBioComponent,
+  ChannelEditInfoComponent,
+  ChannelEditHashtagsComponent,
 ];
 
 /**

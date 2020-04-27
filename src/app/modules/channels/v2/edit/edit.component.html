@@ -16,175 +16,29 @@
   >
     <m-accordion class="m-accordionV2 m-formLayout--buttonRight">
       <m-accordion__pane
-        class="m-channelEdit__imageryPane"
+        class="m-accordion__pane--noTopPadding"
         headerTitle="Bio &amp; Imagery"
         i18n-headerTitle
       >
-        <div
-          class="m-channelEdit__imagery"
-          [ngStyle]="{ backgroundImage: bannerAssetCssUrl$ | async }"
-        >
-          <label
-            for="channel-v2-edit-banner"
-            class="m-channelEditImagery__uploadTrigger m-channelEditImagery__uploadBanner"
-          >
-            <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
-            <input
-              id="channel-v2-edit-banner"
-              type="file"
-              accept="image/*"
-              (change)="uploadBanner(bannerFile)"
-              #bannerFile
-            />
-          </label>
-
-          <div
-            class="m-channelEditImagery__avatar"
-            [ngStyle]="{ backgroundImage: avatarAssetCssUrl$ | async }"
-          >
-            <label
-              for="channel-v2-edit-avatar"
-              class="m-channelEditImagery__uploadTrigger m-channelEditImagery__uploadAvatar"
-            >
-              <m-icon iconId="file_upload" [sizeFactor]="0"></m-icon>
-              <input
-                id="channel-v2-edit-avatar"
-                type="file"
-                accept="image/*"
-                (change)="uploadAvatar(avatarFile)"
-                #avatarFile
-              />
-            </label>
-          </div>
-        </div>
-
-        <div class="m-form__fieldsContainer">
-          <div class="m-form__row--label">
-            <label i18n>Bio</label>
-          </div>
-
-          <div class="m-form__row--input m-channelEdit__bioInput">
-            <textarea
-              class="form-control"
-              name="bio"
-              [ngModel]="service.bio$ | async"
-              (ngModelChange)="service.bio$.next($event)"
-            ></textarea>
-          </div>
-        </div>
+        <m-channelEdit__bio
+          class="m-accordionPane__innerContentContainer"
+        ></m-channelEdit__bio>
 
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
 
       <m-accordion__pane headerTitle="About Info" i18n-headerTitle>
-        <div class="m-form__fieldsContainer">
-          <div class="m-form__row--label">
-            <label i18n>Display Name</label>
-          </div>
-
-          <div class="m-form__row--input">
-            <input
-              type="text"
-              class="form-control"
-              name="displayName"
-              [ngModel]="service.displayName$ | async"
-              (ngModelChange)="service.displayName$.next($event)"
-            />
-          </div>
-        </div>
-
-        <div class="m-form__fieldsContainer">
-          <div class="m-form__row--label">
-            <label i18n>Location</label>
-          </div>
-
-          <div class="m-form__row--input">
-            <input
-              type="text"
-              class="form-control"
-              name="location"
-              [ngModel]="service.location$ | async"
-              (ngModelChange)="service.location$.next($event)"
-            />
-          </div>
-        </div>
-
-        <div class="m-form__fieldsContainer">
-          <div class="m-form__row--label">
-            <label i18n>Date of birth</label>
-          </div>
-
-          <div class="m-form__row--input">
-            <m-date__dropdowns
-              [selectedDate]="service.dob$ | async"
-              (selectedDateChange)="service.dob$.next($event)"
-            ></m-date__dropdowns>
-
-            <div class="m-channelEdit__innerField">
-              <label
-                for="channel-v2-edit-public-dob"
-                class="m-form__customInputWrapper__checkbox"
-                i18n
-              >
-                <input
-                  type="checkbox"
-                  id="channel-v2-edit-public-dob"
-                  class="form-control"
-                  name="publicDob"
-                  [ngModel]="service.publicDob$ | async"
-                  (ngModelChange)="service.publicDob$.next($event)"
-                />
-
-                <span class="m-form__customInput__checkbox"></span>
-
-                <ng-container i18n>
-                  Make my date of birth public
-                </ng-container>
-              </label>
-            </div>
-          </div>
-        </div>
+        <m-channelEdit__info
+          class="m-accordionPane__innerContentContainer"
+        ></m-channelEdit__info>
 
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
 
       <m-accordion__pane headerTitle="Hashtags" i18n-headerTitle>
-        <div class="m-form__fieldsContainer">
-          <div class="m-form__row--input m-channelEdit__hashtagInput">
-            <m-hashtags__typeaheadInput
-              placeholder="Enter tag"
-              historyKey="channel-edit"
-              [disabled]="(service.hashtags$ | async)?.length >= 5"
-              [maxEntries]="5"
-              (onAction)="addHashtagIntent($event)"
-              #hashtagsTypeaheadInput
-            ></m-hashtags__typeaheadInput>
-
-            <button
-              class="m-fieldButton-v2"
-              [disabled]="(service.hashtags$ | async)?.length >= 5"
-              (click)="hashtagsTypeaheadInput.triggerAction()"
-              i18n
-            >
-              Add
-            </button>
-          </div>
-        </div>
-
-        <ul class="m-channelEdit__hashtagList">
-          <li
-            *ngFor="let tag of service.hashtags$ | async"
-            class="m-channelEditHashtagList__item"
-          >
-            <span>#{{ tag }}</span>
-            <m-icon
-              class="m-channelEditHashtagListItem__remove"
-              iconId="close"
-              [sizeFactor]="-20"
-              (click)="service.removeHashtag(tag)"
-            ></m-icon>
-          </li>
-        </ul>
+        <m-channelEdit__hashtags
+          class="m-accordionPane__innerContentContainer"
+        ></m-channelEdit__hashtags>
 
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>

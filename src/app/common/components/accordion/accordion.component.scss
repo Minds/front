@@ -48,6 +48,10 @@ m-accordion {
       }
     }
 
+    &.m-accordion__pane--noTopPadding .m-accordionPane__content {
+      padding-top: 0;
+    }
+
     &.m-accordion__pane--opened {
       position: relative;
       z-index: 1;
