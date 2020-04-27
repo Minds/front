@@ -11,7 +11,7 @@ import {
   SkipSelf,
   ViewChild,
 } from '@angular/core';
-
+import { Subscription } from 'rxjs';
 import { Client } from '../../../../../services/api';
 import { Session } from '../../../../../services/session';
 import { AttachmentService } from '../../../../../services/attachment';
@@ -19,7 +19,6 @@ import { TranslationService } from '../../../../../services/translation';
 import { OverlayModalService } from '../../../../../services/ux/overlay-modal';
 import { MediaModalComponent } from '../../../../media/modal/modal.component';
 import { BoostCreatorComponent } from '../../../../boost/creator/creator.component';
-import { WireCreatorComponent } from '../../../../wire/creator/creator.component';
 import { EntitiesService } from '../../../../../common/services/entities.service';
 import { Router } from '@angular/router';
 import { BlockListService } from '../../../../../common/services/block-list.service';
@@ -35,6 +34,8 @@ import { ConfigsService } from '../../../../../common/services/configs.service';
 import { RedirectService } from '../../../../../common/services/redirect.service';
 import { ComposerService } from '../../../../composer/services/composer.service';
 import { ModalService } from '../../../../composer/components/modal/modal.service';
+import { WireModalService } from '../../../../wire/wire-modal.service';
+import { WireEventType } from '../../../../wire/v2/wire-v2.service';
 
 @Component({
   selector: 'minds-activity',
@@ -127,6 +128,8 @@ export class Activity implements OnInit {
 
   videoDimensions: Array<any> = null;
 
+  protected payModalEventSubscription: Subscription;
+
   get menuOptions(): Array<string> {
     if (!this.activity || !this.activity.ephemeral) {
       if (this.showBoostMenuOptions) {
@@ -208,6 +211,7 @@ export class Activity implements OnInit {
     private redirectService: RedirectService,
     protected composer: ComposerService,
     protected composerModal: ModalService,
+    protected payModal: WireModalService,
     protected selfInjector: Injector
   ) {
     this.clientMetaService.inherit(injector);
@@ -237,6 +241,12 @@ export class Activity implements OnInit {
     this.activityAnalyticsOnViewService.setEnabled(this.visibilityEvents);
 
     this.loadBlockedUsers();
+  }
+
+  ngOnDestroy() {
+    if (this.payModalEventSubscription) {
+      this.payModalEventSubscription.unsubscribe();
+    }
   }
 
   set object(value: any) {
@@ -420,13 +430,15 @@ export class Activity implements OnInit {
         }
       }
 
-      this.overlayModal
-        .create(
-          WireCreatorComponent,
-          activity.remind_object ? activity.remind_object : activity,
-          { onComplete: wire => this.wireSubmitted(wire) }
-        )
-        .present();
+      const entity = activity.remind_object ? activity.remind_object : activity;
+
+      this.payModalEventSubscription = this.payModal
+        .present(entity)
+        .subscribe(payEvent => {
+          if (payEvent.type === WireEventType.Completed) {
+            this.wireSubmitted(payEvent.payload);
+          }
+        });
     }
   }
 

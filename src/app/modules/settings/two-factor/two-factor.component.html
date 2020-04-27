@@ -10,39 +10,36 @@
       class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
       (click)="cancel()"
     >
-      <ng-container i18n="@@MINDS__SETTINGS__REMOVE_2FA_ACTION"
-        >Remove two factor</ng-container
-      >
+      <ng-container i18n="@@MINDS__SETTINGS__REMOVE_2FA_ACTION">
+        Remove two factor
+      </ng-container>
     </button>
   </div>
 
   <!-- SETUP -->
   <div class="mdl-card__supporting-text" *ngIf="!inProgress && !telno">
     <div class="minds-settings-text">
-      <ng-container i18n="@@MINDS__SETTINGS__SMS_INPUT_HELP"
-        >Your SMS number.
-        <b>Enter your country code too (eg. +1, +44, etc)</b></ng-container
-      >
+      <ng-container i18n="@@MINDS__SETTINGS__SMS_INPUT_HELP">
+        Your SMS number.
+      </ng-container>
     </div>
     <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdl]>
-      <input class="mdl-textfield__input" type="text" #smsNumber />
-      <label
-        class="mdl-textfield__label"
-        for="twoFactorAuthentication"
-        i18n="@@MINDS__SETTINGS__SMS_INPUT_LABEL"
-        >eg. +44 07999 000909</label
-      >
+      <m-phoneInput
+        [ngModel]="number"
+        (ngModelChange)="numberChange($event)"
+        ngDefaultControl
+      ></m-phoneInput>
     </div>
     <p class="mdl-color-text--red">{{ error }}</p>
     <div>
       <button
         class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-        (click)="setup(smsNumber.value)"
+        (click)="setup()"
         [disabled]="waitingForCheck"
       >
-        <ng-container i18n="@@MINDS__SETTINGS__SETUP_ACTION"
-          >Setup</ng-container
-        >
+        <ng-container i18n="@@MINDS__SETTINGS__SETUP_ACTION">
+          Setup
+        </ng-container>
       </button>
     </div>
   </div>
@@ -53,16 +50,16 @@
     *ngIf="!inProgress && telno && waitingForCheck"
   >
     <div class="minds-settings-text" *ngIf="!sendingSms">
-      <ng-container i18n="@@MINDS__SETTINGS__SENT_SMS_LABEL"
-        >We sent an SMS to <b>{{ telno }}</b
-        >. Enter the code below to complete your two factor setup.</ng-container
-      >
+      <ng-container i18n="@@MINDS__SETTINGS__SENT_SMS_LABEL">
+        We sent an SMS to <b>{{ telno }}</b
+        >. Enter the code below to complete your two factor setup.
+      </ng-container>
     </div>
     <div class="minds-settings-text" *ngIf="sendingSms">
-      <ng-container i18n="@@MINDS__SETTINGS__SENDING_SMS_LABEL"
-        >We are sending an SMS to <b>{{ telno }}</b
-        >. Enter the code below to complete your two factor</ng-container
-      >
+      <ng-container i18n="@@MINDS__SETTINGS__SENDING_SMS_LABEL">
+        We are sending an SMS to <b>{{ telno }}</b
+        >. Enter the code below to complete your two factor
+      </ng-container>
       setup.
     </div>
     <div class="mdl-textfield mdl-js-textfield textfield-demo" [mdl]>
@@ -71,8 +68,9 @@
         class="mdl-textfield__label"
         for="twoFactorAuthentication"
         i18n="@@M__COMMON__ENTER_2FA_CODE"
-        >Enter your code here</label
       >
+        Enter your code here
+      </label>
     </div>
     <div>
       <button
@@ -85,9 +83,9 @@
         class="mdl-button mdl-js-button mdl-button--raised "
         (click)="check(code.value)"
       >
-        <ng-container i18n="@@MINDS__SETTINGS__2FA_RETRY_ACTION"
-          >Retry</ng-container
-        >
+        <ng-container i18n="@@MINDS__SETTINGS__2FA_RETRY_ACTION">
+          Retry
+        </ng-container>
       </button>
     </div>
   </div>

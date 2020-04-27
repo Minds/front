@@ -80,9 +80,9 @@
 
 .m-modalV2__toolbar {
   display: flex;
-  padding: 20px;
   flex-direction: row;
   align-items: center;
+  padding: 20px;
 
   @include m-theme() {
     border-top: 1px solid themed($m-borderColor--primary);

@@ -56,6 +56,14 @@ m-activity__ownerBlock {
   }
 }
 
+.m-activityOwnerBlock__groupName {
+  display: block;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .m-activityOwnerBlock__remindIcon {
   font-size: 18px;
   margin-right: $minds-margin / 2;

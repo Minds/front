@@ -14,6 +14,7 @@ export type ActivityDisplayOptions = {
   showEditedTag: boolean;
   showVisibiltyState: boolean;
   fixedHeight: boolean;
+  fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height
 };
 
 export type ActivityEntity = {
@@ -164,6 +165,7 @@ export class ActivityService {
     showEditedTag: false,
     showVisibiltyState: false,
     fixedHeight: false,
+    fixedHeightContainer: false,
   };
 
   constructor(private configs: ConfigsService, private session: Session) {
