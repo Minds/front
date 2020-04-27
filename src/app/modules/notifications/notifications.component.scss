@@ -78,6 +78,12 @@ minds-notifications {
   .mdl-tabs__tab {
     overflow: visible;
     flex: 1;
+    padding: 0 12px;
+    text-transform: unset;
+
+    m-tooltip {
+      padding-right: 4px;
+    }
 
     .m-full-label {
       display: inline-block;
