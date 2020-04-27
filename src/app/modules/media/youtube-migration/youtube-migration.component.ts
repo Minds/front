@@ -43,11 +43,12 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
     this.connectedSubscription = this.youtubeService.connected$.subscribe(
       connected => {
         this.isConnected = connected;
-
+        console.log('888 isconnected??', this.isConnected);
         // Initialize video list observables
         if (this.isConnected) {
           // TODO populate multi-channel dropdown with channels
           // this.channels = this.youtubeService.getChannels();
+          console.log('888 getting channels');
           this.youtubeService.getChannels();
         } else {
           this.init = true;
@@ -62,16 +63,28 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
 
     this.selectedChannelSubscription = this.youtubeService.selectedChannel$.subscribe(
       channel => {
+        console.log(
+          '888 interval is connected?channel?',
+          this.isConnected,
+          channel
+        );
         if (this.isConnected) {
-          this.channelTitle = channel.title;
-          if (this.refreshInterval) {
-            clearInterval(this.refreshInterval);
-          }
-          if (isPlatformBrowser(this.platformId)) {
-            this.refreshInterval = setInterval(() => {
-              this.youtubeService.getAllVideos(channel.id);
-            }, 5000);
-          }
+          this.youtubeService.getAllVideos(channel.id);
+
+          // TODOOJM handle the daily limit
+          // refresh only when click transfer all
+          // or click import
+
+          // this.channelTitle = channel.title;
+          // if (this.refreshInterval) {
+          //   clearInterval(this.refreshInterval);
+          // }
+          // if (isPlatformBrowser(this.platformId)) {
+          //   this.refreshInterval = setInterval(() => {
+          //     console.log('888 getting all vids interval');
+          //     this.youtubeService.getAllVideos(channel.id);
+          //   }, 5000);
+          // }
           this.init = true;
           this.detectChanges();
         }

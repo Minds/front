@@ -8,7 +8,7 @@ import fakeData from './fake-data';
 export interface YoutubeChannel {
   id: string;
   title: string;
-  connected: boolean;
+  connected: number;
   auto_import: boolean;
 }
 
@@ -23,9 +23,9 @@ export class YoutubeMigrationService {
   ];
   // TODOOJM remove moonboot 123
   selectedChannel: YoutubeChannel = {
-    id: '123',
-    title: 'Moonboot',
-    connected: true,
+    id: '',
+    title: '',
+    connected: 1588013297,
     auto_import: false,
   };
   channels: YoutubeChannel[];
@@ -47,16 +47,13 @@ export class YoutubeMigrationService {
    */
   isConnected(): boolean {
     const user = this.session.getLoggedInUser();
+    console.log('888 isconnected ch', user.yt_channels);
     if (!user.yt_channels || user.yt_channels.length < 1) {
-      // TODOOJM delete fake-data;
-      // TODOOJM toggle comment
+      this.connected = false;
       this.connected$.next(false);
       return false;
-      // this.connected = true;
-      // this.connected$.next(true);
-      return true;
     } else {
-      this.connected = false;
+      this.connected = true;
       this.connected$.next(true);
       return true;
     }
@@ -64,12 +61,12 @@ export class YoutubeMigrationService {
 
   getChannels(): YoutubeChannel[] | null {
     if (!this.connected) {
+      console.log('888 getchannels is connected?', this.connected);
       return;
     }
-
-    //TODOOJM toggle comments
-    // this.channels = [this.selectedChannel];
     this.channels = this.session.getLoggedInUser().yt_channels;
+
+    console.log('888getchannels()', this.channels);
     if (!this.initChannels) {
       this.selectChannel(this.channels[0].id);
     }
@@ -90,6 +87,8 @@ export class YoutubeMigrationService {
     if (!this.selectedChannel.connected) {
       return;
     }
+    //todoojm remove
+    console.log('888 selected channel', selectedChannel);
 
     this.selectedChannel$.next(selectedChannel);
 
@@ -109,9 +108,13 @@ export class YoutubeMigrationService {
    * videos that have been transferred to Minds (or are queued/transcoding)
    * @param channelId
    */
-  async getAllVideos(channelId: string): Promise<{ videos: any }> {
+  async getAllVideos(channelId: string): Promise<{ void }> {
+    console.log('888 getallvids run?');
+    if (!channelId) {
+      console.log('888 not giving an id to getallvideos');
+    }
     const opts = {
-      channel_id: channelId,
+      channelId: channelId,
       status: null,
     };
 
@@ -120,8 +123,8 @@ export class YoutubeMigrationService {
         await this.client.get(`${this.endpoint}videos`, opts)
       );
 
-      console.log('getAllVideos: ', response);
-      response.forEach(v => {
+      console.log('888 getAllVideos: ', response);
+      response.videos.forEach(v => {
         v.display = {};
         v.display.duration = this.formatDuration(v.duration);
 
@@ -136,15 +139,15 @@ export class YoutubeMigrationService {
         }
       });
 
+      console.log(
+        '888 formatted vids',
+        response.videos,
+        response.videos[0].display
+      );
       this.unmigratedVideos$.next(
-        // fakeData.unmigrated
         response.filter(v => v.status !== 'completed')
       );
-      this.migratedVideos$.next(
-        // fakeData.migrated
-        response.filter(v => v.status === 'completed')
-      );
-      // return response;
+      this.migratedVideos$.next(response.filter(v => v.status === 'completed'));
     } catch (e) {
       console.error('getAllVideos(): ', e);
       return e;
