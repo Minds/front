@@ -21,7 +21,7 @@ import { Client } from '../../../../services/api/client';
     <table>
       <tbody>
         <tr *ngFor="let item of data[type]">
-          <td [routerLink]="['/', item.user.guid]">
+          <td [routerLink]="['/', item.user.guid]" target="_blank">
             <img
               class="m-admin--interactions--avatar"
               src="/icon/{{ item.user.guid }}/medium/{{ item.user.icontime }}"
