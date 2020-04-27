@@ -27,6 +27,7 @@ import { ChannelEditInfoComponent } from './edit/info.component';
 import { ChannelEditHashtagsComponent } from './edit/hashtags.component';
 import { ChannelEditSocialLinksComponent } from './edit/social-links.component';
 import { ChannelSocialLinksComponent } from './social-links/social-links.component';
+import { ChannelLocationTypeaheadComponent } from './location-typeahead/location-typeahead.component';
 
 /**
  * Generally available components
@@ -55,6 +56,7 @@ const INTERNAL_COMPONENTS = [
   ChannelEditHashtagsComponent,
   ChannelEditSocialLinksComponent,
   ChannelSocialLinksComponent,
+  ChannelLocationTypeaheadComponent,
 ];
 
 /**

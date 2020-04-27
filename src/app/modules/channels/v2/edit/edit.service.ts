@@ -47,6 +47,13 @@ export class ChannelEditService {
   readonly location$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   /**
+   * Coordinates subject. As it's not public, null = unchanged.
+   */
+  readonly coordinates$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    null
+  );
+
+  /**
    * Date of birth subject
    */
   readonly dob$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
@@ -94,6 +101,7 @@ export class ChannelEditService {
     this.bio$.next(channel.briefdescription);
     this.displayName$.next(channel.name);
     this.location$.next(channel.city);
+    this.coordinates$.next(null /* Unchanged */);
     this.dob$.next(channel.dob);
     this.publicDob$.next(channel.public_dob);
     this.hashtags$.next(channel.tags);
@@ -153,19 +161,21 @@ export class ChannelEditService {
     try {
       const requests: Array<Promise<any>> = [];
 
-      requests.push(
-        this.api
-          .post(`api/v1/channel/info`, {
-            briefdescription: this.bio$.getValue(),
-            name: this.displayName$.getValue(),
-            city: this.location$.getValue(),
-            dob: this.dob$.getValue(),
-            public_dob: this.publicDob$.getValue() ? 1 : 0,
-            tags: this.hashtags$.getValue(),
-            social_profiles: this.socialLinks$.getValue(),
-          })
-          .toPromise()
-      );
+      const data = {
+        briefdescription: this.bio$.getValue(),
+        name: this.displayName$.getValue(),
+        city: this.location$.getValue(),
+        dob: this.dob$.getValue(),
+        public_dob: this.publicDob$.getValue() ? 1 : 0,
+        tags: this.hashtags$.getValue(),
+        social_profiles: this.socialLinks$.getValue(),
+      };
+
+      if (this.coordinates$.getValue() !== null) {
+        data['coordinates'] = this.coordinates$.getValue();
+      }
+
+      requests.push(this.api.post(`api/v1/channel/info`, data).toPromise());
 
       if (this.avatar$.getValue()) {
         requests.push(

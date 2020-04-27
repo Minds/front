@@ -20,13 +20,10 @@
   </div>
 
   <div class="m-form__row--input">
-    <input
-      type="text"
-      class="form-control"
-      name="location"
-      [ngModel]="service.location$ | async"
-      (ngModelChange)="service.location$.next($event)"
-    />
+    <m-channel__locationTypeahead
+      [location]="service.location$ | async"
+      (locationChange)="onLocation($event)"
+    ></m-channel__locationTypeahead>
   </div>
 </div>
 
