@@ -4,6 +4,9 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { ChannelEditComponent } from './edit.component';
 import { MindsUser } from '../../../../interfaces/entities';
 
+/**
+ * Help showing Edit modal and handling its response
+ */
 @Injectable()
 export class ChannelEditModalService {
   /**

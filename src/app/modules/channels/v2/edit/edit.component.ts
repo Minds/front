@@ -3,6 +3,9 @@ import { FeaturesService } from '../../../../services/features.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import { ChannelEditService } from './edit.service';
 
+/**
+ * Edit modal component
+ */
 @Component({
   selector: 'm-channel__edit',
   changeDetection: ChangeDetectionStrategy.OnPush,

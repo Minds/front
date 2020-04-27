@@ -2,10 +2,13 @@ import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { TypeaheadInputComponent } from '../../../hashtags/typeahead-input/typeahead-input.component';
 import { ChannelEditService } from './edit.service';
 
+/**
+ * Hashtags accordion pane component
+ */
 @Component({
   selector: 'm-channelEdit__hashtags',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  templateUrl: 'hashtags.components.html',
+  templateUrl: 'hashtags.component.html',
 })
 export class ChannelEditHashtagsComponent {
   /**

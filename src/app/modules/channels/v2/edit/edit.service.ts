@@ -2,7 +2,14 @@ import { Injectable } from '@angular/core';
 import { KeyVal, MindsUser } from '../../../../interfaces/entities';
 import { BehaviorSubject } from 'rxjs';
 import { ApiService } from '../../../../common/api/api.service';
+import {
+  buildFromV1ChannelProfile,
+  buildKeyVal,
+} from '../../social-profiles-meta';
 
+/**
+ * Hold edit component state and interact with the API
+ */
 @Injectable()
 export class ChannelEditService {
   /**
@@ -59,11 +66,11 @@ export class ChannelEditService {
   >([]);
 
   /**
-   * Social profiles subject
+   * Social links subject
    */
-  readonly socialProfiles$: BehaviorSubject<
+  readonly socialLinks$: BehaviorSubject<Array<KeyVal>> = new BehaviorSubject<
     Array<KeyVal>
-  > = new BehaviorSubject<Array<KeyVal>>([]);
+  >([]);
 
   /**
    * In Progress flag subject
@@ -90,7 +97,9 @@ export class ChannelEditService {
     this.dob$.next(channel.dob);
     this.publicDob$.next(channel.public_dob);
     this.hashtags$.next(channel.tags);
-    this.socialProfiles$.next(channel.social_profiles); // TODO: Polyfill old entities
+    this.socialLinks$.next(
+      buildFromV1ChannelProfile(channel.social_profiles || [])
+    );
 
     return this;
   }
@@ -114,6 +123,28 @@ export class ChannelEditService {
   }
 
   /**
+   * Adds a new social link to the array
+   * @param url
+   */
+  addSocialLink(url: string): void {
+    if (!url) {
+      return;
+    }
+
+    this.socialLinks$.next([...this.socialLinks$.getValue(), buildKeyVal(url)]);
+  }
+
+  /**
+   * Removes a social link from the array based on the specified index
+   * @param index
+   */
+  removeSocialLink(index: number): void {
+    const socialLinks = this.socialLinks$.getValue();
+    socialLinks.splice(index, 1);
+    this.socialLinks$.next([...socialLinks]);
+  }
+
+  /**
    * Saves to server
    */
   async save(): Promise<MindsUser> {
@@ -124,13 +155,14 @@ export class ChannelEditService {
 
       requests.push(
         this.api
-          .post(`api/v1/channel`, {
+          .post(`api/v1/channel/info`, {
             briefdescription: this.bio$.getValue(),
             name: this.displayName$.getValue(),
             city: this.location$.getValue(),
             dob: this.dob$.getValue(),
             public_dob: this.publicDob$.getValue() ? 1 : 0,
             tags: this.hashtags$.getValue(),
+            social_profiles: this.socialLinks$.getValue(),
           })
           .toPromise()
       );

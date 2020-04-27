@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChannelEditService } from './edit.service';
 
+/**
+ * About Info accordion pane component
+ */
 @Component({
   selector: 'm-channelEdit__info',
   changeDetection: ChangeDetectionStrategy.OnPush,

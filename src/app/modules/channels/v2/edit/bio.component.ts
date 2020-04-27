@@ -5,6 +5,9 @@ import { map } from 'rxjs/operators';
 import entityToBannerUrl from '../../../../helpers/entity-to-banner-url';
 import { ConfigsService } from '../../../../common/services/configs.service';
 
+/**
+ * Bio accordion pane component
+ */
 @Component({
   selector: 'm-channelEdit__bio',
   changeDetection: ChangeDetectionStrategy.OnPush,

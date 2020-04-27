@@ -43,11 +43,11 @@
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
 
-      <m-accordion__pane
-        *ngIf="false"
-        headerTitle="Social Links"
-        i18n-headerTitle
-      >
+      <m-accordion__pane headerTitle="Social Links" i18n-headerTitle>
+        <m-channelEdit__socialLinks
+          class="m-accordionPane__innerContentContainer"
+        ></m-channelEdit__socialLinks>
+
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
     </m-accordion>
