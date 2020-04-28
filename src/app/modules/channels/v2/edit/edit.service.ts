@@ -103,7 +103,7 @@ export class ChannelEditService {
     this.location$.next(channel.city);
     this.coordinates$.next(null /* Unchanged */);
     this.dob$.next(channel.dob);
-    this.publicDob$.next(channel.public_dob);
+    this.publicDob$.next(Boolean(channel.public_dob));
     this.hashtags$.next(channel.tags);
     this.socialLinks$.next(
       buildFromV1ChannelProfile(channel.social_profiles || [])
@@ -161,7 +161,7 @@ export class ChannelEditService {
     try {
       const requests: Array<Promise<any>> = [];
 
-      const data = {
+      const data: Partial<MindsUser> = {
         briefdescription: this.bio$.getValue(),
         name: this.displayName$.getValue(),
         city: this.location$.getValue(),
