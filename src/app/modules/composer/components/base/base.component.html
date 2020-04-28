@@ -38,8 +38,11 @@
     </div>
 
     <!-- Blog error -->
-    <div class="m-composerBase__error" *ngIf="blogsError$ | async">
-      {{ blogsError$ | async }}
+    <div
+      class="m-composerBase__error"
+      *ngIf="blogsError$ | async as blogsError"
+    >
+      {{ blogsError }}
     </div>
 
     <!-- Local state error -->

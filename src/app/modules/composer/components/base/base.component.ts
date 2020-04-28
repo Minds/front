@@ -185,14 +185,13 @@ export class BaseComponent implements AfterViewInit {
     try {
       this.error = '';
       this.detectChanges();
-      let activity: ActivityEntity | null;
       if (this.service.contentType$.getValue() === 'blog') {
         // redirects
         return await this.blogsService.save();
       } else {
-        activity = await this.service.post();
+        const activity = await this.service.post();
+        this.onPostEmitter.next(activity);
       }
-      this.onPostEmitter.next(activity);
     } catch (e) {
       this.error = (e && e.message) || 'Internal error';
     }

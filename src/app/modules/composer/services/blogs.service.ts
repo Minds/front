@@ -194,45 +194,48 @@ export class ComposerBlogsService {
     const blog = await this.buildBlog();
 
     this.composerService.canPost$.next(false);
-    return this.upload
-      .post('api/v1/blog/' + blog.guid, [blog.file], blog)
-      .then((response: any) => {
-        this.composerService.canPost$.next(true);
+    try {
+      const response: any = await this.upload.post(
+        'api/v1/blog/' + blog.guid,
+        [blog.file],
+        blog
+      );
 
-        if (response.status !== 'success') {
-          if (response.message) {
-            this.error$.next('An unknown error has occured');
-            return response;
-          }
-          this.error$.next(response.message);
+      this.composerService.canPost$.next(true);
+
+      if (response.status !== 'success') {
+        if (response.message) {
+          this.error$.next('An unknown error has occured');
           return response;
         }
-
-        if (!draft) {
-          this.tearDown();
-          this.router.navigate(
-            response.route
-              ? ['/' + response.route]
-              : ['/blog/view', response.guid]
-          );
-        }
-        // else
-        this.emitDraftSaved();
-        this.savedContent$.next(this.content$.getValue());
-        this.guid$.next(response.guid);
-
+        this.error$.next(response.message);
         return response;
-      })
-      .catch(e => {
-        console.error(e);
-        this.composerService.attachmentError$.next(e);
-        this.composerService.canPost$.next(true);
+      }
 
-        return {
-          status: '500',
-          message: e,
-        };
-      });
+      if (!draft) {
+        this.tearDown();
+        this.router.navigate(
+          response.route
+            ? ['/' + response.route]
+            : ['/blog/view', response.guid]
+        );
+      }
+      // else
+      this.emitDraftSaved();
+      this.savedContent$.next(this.content$.getValue());
+      this.guid$.next(response.guid);
+
+      return response;
+    } catch (e) {
+      console.error(e);
+      this.composerService.attachmentError$.next(e);
+      this.composerService.canPost$.next(true);
+
+      return {
+        status: '500',
+        message: e,
+      };
+    }
   }
 
   /**
@@ -296,7 +299,7 @@ export class ComposerBlogsService {
       return;
     }
 
-    if (banner.type.match(/image\/*/) == null) {
+    if (banner.type.match(/image\/*/) === null) {
       this.error$.next('Banners must be an image');
       return;
     }
