@@ -14,11 +14,7 @@
     </li>
     <li
       class="m-dropdownList__item"
-      *ngIf="
-        (options.indexOf('edit') !== -1 &&
-          entity.owner_guid == session.getLoggedInUser().guid) ||
-        session.isAdmin()
-      "
+      *ngIf="shouldShowEdit()"
       (click)="onSelectedOption('edit')"
       i18n="@@M__ACTION__EDIT"
     >
@@ -190,12 +186,7 @@
     <!-- DELETE -->
     <li
       class="m-dropdownList__item m-dropdownList__item--destructive"
-      *ngIf="
-        (options.indexOf('delete') !== -1 &&
-          entity.owner_guid == session.getLoggedInUser().guid) ||
-        session.isAdmin() ||
-        canDelete
-      "
+      *ngIf="shouldShowDelete()"
       (click)="onSelectedOption('delete')"
       i18n="@@M__ACTION__DELETE"
     >

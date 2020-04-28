@@ -416,6 +416,7 @@ m-media--modal {
   padding-left: 100px;
   padding-right: 50px;
 
+  min-height: 320px;
   height: 100%;
   outline: none;
   overflow-x: hidden;
@@ -551,6 +552,11 @@ m-media--modal {
         }
       }
     }
+  }
+
+  m-postMenu--v2 {
+    margin-left: auto;
+    margin-right: -15px;
   }
 }
 

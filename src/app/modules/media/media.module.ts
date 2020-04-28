@@ -27,6 +27,7 @@ import { ThumbnailSelectorComponent } from './components/thumbnail-selector.comp
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { BlogModule } from '../blogs/blog.module';
+import { TranslateModule } from '../translate/translate.module';
 
 const routes: Routes = [
   { path: 'media/videos/:filter', redirectTo: '/newsfeed/global/top' },
@@ -68,6 +69,7 @@ const routes: Routes = [
     VideoModule,
     HashtagsModule,
     BlogModule,
+    TranslateModule,
   ],
   declarations: [
     MediaVideosTileComponent,
