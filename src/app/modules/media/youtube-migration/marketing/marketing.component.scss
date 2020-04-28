@@ -7,32 +7,13 @@ m-youtubeMigration__marketing {
       em {
         &::after {
           top: 0.09em;
-          right: -0.43em;
+          right: -0.08em;
           bottom: 0.12em;
         }
       }
     }
   }
-  .m-marketing__section {
-    ul.m-marketing__points {
-      list-style-type: none;
-      padding-left: 1.8em;
-      line-height: inherit;
-      > li {
-        margin-bottom: 30px;
-        line-height: inherit;
-        &::before {
-          content: '\2022';
-          font-weight: bold;
-          display: inline-block;
-          width: 1.3em;
-          margin-left: -1.5em;
-          transform: scale(1.7);
-          opacity: 0.4;
-        }
-      }
-    }
-  }
+
   .m-marketing__section--tail {
     button {
       margin: 45px 0;

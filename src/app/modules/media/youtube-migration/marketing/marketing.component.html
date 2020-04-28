@@ -12,7 +12,7 @@
 
         <h2 ngPreserveWhitespaces i18n>
           Break free from the
-          <em>Google machine </em>
+          <em>Google machine</em>
         </h2>
 
         <p class="m-marketing__description" i18n>
@@ -43,7 +43,7 @@
   </div>
 
   <ng-container slot="2">
-    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
+    <m-marketing__asFeaturedIn inThePress="true"></m-marketing__asFeaturedIn>
 
     <!-- Section 2 -->
 
@@ -67,7 +67,7 @@
             payments for pageviews and referrals.
           </p>
 
-          <ul class="m-marketing__points m-marketing__description">
+          <ul class="m-marketing__points">
             <li i18n>
               If you have over 1,000 YouTube subscribers,
               <a routerLink="/plus" i18n
@@ -92,6 +92,13 @@
               [src]="
                 cdnAssetsUrl +
                 'assets/product-pages/youtube-migration/spectators.jpg'
+              "
+            />
+            <img
+              class="m-marketing__image--2"
+              [src]="
+                cdnAssetsUrl +
+                'assets/product-pages/youtube-migration/youtube-1-ux.png'
               "
             />
           </span>
@@ -130,6 +137,13 @@
               [src]="
                 cdnAssetsUrl +
                 'assets/product-pages/youtube-migration/book-burning.jpg'
+              "
+            />
+            <img
+              class="m-marketing__image--2"
+              [src]="
+                cdnAssetsUrl +
+                'assets/product-pages/youtube-migration/youtube-2-ux.png'
               "
             />
           </span>

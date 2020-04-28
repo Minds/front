@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { Session } from '../../../../services/session';
+import { LoginReferrerService } from '../../../../services/login-referrer.service';
 
 @Component({
   selector: 'm-youtubeMigration__marketing',
@@ -22,6 +23,7 @@ export class YoutubeMigrationMarketingComponent {
     protected router: Router,
     protected cd: ChangeDetectorRef,
     protected session: Session,
+    protected loginReferrer: LoginReferrerService,
     configs: ConfigsService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -31,8 +33,9 @@ export class YoutubeMigrationMarketingComponent {
     if (this.session.isLoggedIn()) {
       this.router.navigate([this.youtubeSettingsUrl]);
     } else {
-      // TODOOJM look up login referrer and redirect back to this.youtubeSettingsUrl
+      this.loginReferrer.register(this.youtubeSettingsUrl);
       this.router.navigate(['/login']);
+      return;
     }
   }
 
