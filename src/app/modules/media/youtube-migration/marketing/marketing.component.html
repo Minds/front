@@ -1,0 +1,161 @@
+<m-marketing
+  class="m-nodes__marketing"
+  pageTitle="YouTube Migration"
+  i18n-pageTitle
+>
+  <div class="m-marketing__main m-marketing__section--style-2">
+    <div class="m-grid m-marketing__wrapper">
+      <div class="m-grid__column-7 m-grid__column-12--mobile m-marketing__body">
+        <h1 i18n>
+          YouTube Migration
+        </h1>
+
+        <h2 ngPreserveWhitespaces i18n>
+          Break free from the
+          <em>Google machine </em>
+        </h2>
+
+        <p class="m-marketing__description" i18n>
+          Link your accounts so that every new upload to YouTube also posts to
+          Minds. Import your full video library to protect your content from
+          unfair censorship and demonetization.
+        </p>
+        <div>
+          <button class="mf-button mf-button--alt" (click)="action()" i18n>
+            Break free from Google
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="m-grid__column-5 m-grid__column-12--mobile m-marketing__image"
+      >
+        <span>
+          <img
+            [src]="
+              cdnAssetsUrl +
+              'assets/product-pages/youtube-migration/cappadocia-balloons.jpg'
+            "
+          />
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <ng-container slot="2">
+    <m-marketing__asFeaturedIn></m-marketing__asFeaturedIn>
+
+    <!-- Section 2 -->
+
+    <div class="m-marketing__section m-marketing__section--style-3">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Monetize your content</h2>
+
+          <p class="m-marketing__description" i18n>
+            Everyone earns <a routerLink="/token" i18n>Minds Tokens</a> based on
+            their daily contribution to the network, which can be used to boost
+            your content and grow your audience.
+          </p>
+
+          <p class="m-marketing__description" i18n>
+            <a routerLink="/plus" i18n>Minds Plus</a> and
+            <a routerLink="/pro" i18n>Pro</a> members unlock additional
+            monetization features, including revenue-sharing and monthly cash
+            payments for pageviews and referrals.
+          </p>
+
+          <ul class="m-marketing__points m-marketing__description">
+            <li i18n>
+              If you have over 1,000 YouTube subscribers,
+              <a routerLink="/plus" i18n
+                >claim a free annual subscription to Minds Plus</a
+              >.
+            </li>
+
+            <li i18n>
+              If you have over 10,000 YouTube subscribers,
+              <a routerLink="/pro" i18n
+                >claim a free annual subscription to Minds Pro</a
+              >.
+            </li>
+          </ul>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="
+                cdnAssetsUrl +
+                'assets/product-pages/youtube-migration/spectators.jpg'
+              "
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3 -->
+
+    <div class="m-marketing__section m-marketing__section--style-4">
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__body"
+        >
+          <h2 i18n>Regain your freedom</h2>
+
+          <p class="m-marketing__description" i18n>
+            Tired of the unfair treatment from traditional social networks?
+          </p>
+          <p class="m-marketing__description" i18n>
+            Minds offers a fully transparent, privacy-focused platform built for
+            creators.
+          </p>
+          <ul class="m-marketing__points">
+            <li>No demonetization</li>
+            <li>No censorship</li>
+            <li>No algorithm manipulation</li>
+          </ul>
+        </div>
+        <div
+          class="m-grid__column-6 m-grid__column-12--mobile m-marketing__image"
+        >
+          <span>
+            <img
+              class="m-marketing__image--1"
+              [src]="
+                cdnAssetsUrl +
+                'assets/product-pages/youtube-migration/book-burning.jpg'
+              "
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final section -->
+
+    <div class="m-marketing__section m-marketing__section--tail">
+      <div class="m-grid m-marketing__wrapper">
+        <div class="m-grid__column-12 m-marketing__body">
+          <h3 class="m-marketingTitle__centered" i18n>
+            Take back control of your social media
+          </h3>
+        </div>
+      </div>
+      <div class="m-grid m-marketing__wrapper">
+        <div
+          class="m-grid__column-12 m-grid__column-12--mobile m-marketing__body m-marketing__body--extra"
+        >
+          <button class="mf-button mf-button--alt" (click)="action()" i18n>
+            Break free from Google
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</m-marketing>

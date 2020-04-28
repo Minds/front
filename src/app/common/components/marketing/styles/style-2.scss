@@ -18,7 +18,8 @@
     .m-marketing__body {
       position: relative;
 
-      @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+      // @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-max-tablet) {
+      @media screen and(min-width: $m-grid-max-mobile) and (max-width: $m-grid-min-vp) {
         padding: 0 60px 30px;
         margin-left: 30px;
       }

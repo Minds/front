@@ -27,6 +27,7 @@ import { ThumbnailSelectorComponent } from './components/thumbnail-selector.comp
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { BlogModule } from '../blogs/blog.module';
+import { YoutubeMigrationMarketingComponent } from './youtube-migration/marketing/marketing.component';
 
 const routes: Routes = [
   { path: 'media/videos/:filter', redirectTo: '/newsfeed/global/top' },
@@ -45,6 +46,16 @@ const routes: Routes = [
   { path: 'media/edit/:guid', component: MediaEditComponent },
   { path: 'media/:container/:guid', component: MediaViewComponent },
   { path: 'media/:guid', component: MediaViewComponent },
+
+  {
+    path: 'youtube-migration',
+    component: YoutubeMigrationMarketingComponent,
+    data: {
+      title: 'YouTube Migration',
+      description:
+        'Link your accounts so that every new upload to YouTube also posts to Minds. Import your full video library to protect your content from unfair censorship and demonetization.',
+    },
+  },
 
   /* Legacy routes */
   { path: 'archive/view/:container/:guid', component: MediaViewComponent },
