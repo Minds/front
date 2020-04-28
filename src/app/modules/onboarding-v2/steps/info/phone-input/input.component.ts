@@ -26,6 +26,8 @@ export class PhoneVerificationComponent {
 
   @ViewChild('input', { static: false }) input: PhoneInputV2Component;
 
+  protected resendButtonDisabled: boolean = false;
+
   constructor(private client: Client, private session: Session) {}
 
   async savePhoneNumber() {
@@ -64,6 +66,16 @@ export class PhoneVerificationComponent {
     if (code.length === 6) {
       this.confirm();
     }
+  }
+
+  async reSendCode() {
+    this.resendButtonDisabled = true;
+
+    await this.verify();
+
+    setTimeout(() => {
+      this.resendButtonDisabled = false;
+    }, 3000);
   }
 
   async confirm() {
