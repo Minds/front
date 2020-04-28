@@ -358,6 +358,17 @@
                     </div>
                   </a>
                 </div>
+                <m-postMenu--v2
+                  [entity]="entity"
+                  [mediaModal]="true"
+                  [isTranslatable]="isTranslatable"
+                  [options]="menuOptions"
+                  (optionSelected)="menuOptionSelected($event)"
+                >
+                  <ng-container post-menu
+                    ><ng-content select="[post-menu]"></ng-content
+                  ></ng-container>
+                </m-postMenu--v2>
               </div>
               <!-- MESSAGE -->
               <div
@@ -400,6 +411,16 @@
                 >
                 </span>
                 <m-read-more--button></m-read-more--button>
+
+                <m-translate
+                  *mIfBrowser
+                  [open]="translateToggle"
+                  [entity]="entity"
+                  [translateEvent]="translateEvent"
+                  (onTranslate)="translateToggle = false"
+                  (onTranslateError)="translateToggle = false"
+                  #translate
+                ></m-translate>
               </div>
               <!-- ACTION BUTTONS -->
               <div class="m-mediaModal__actionButtonsWrapper">

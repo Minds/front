@@ -8,6 +8,7 @@ import {
   SkipSelf,
   ViewChild,
   ComponentRef,
+  EventEmitter,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
@@ -32,6 +33,8 @@ import { HorizontalFeedService } from '../../../common/services/horizontal-feed.
 import { ShareModalComponent } from '../../modals/share/share';
 import { AttachmentService } from '../../../services/attachment';
 import { DynamicModalSettings } from '../../../common/components/stackable-modal/stackable-modal.component';
+import { TranslationService } from '../../../services/translation';
+import { Client } from '../../../services/api/client';
 
 export type MediaModalParams = {
   entity: any;
@@ -125,6 +128,10 @@ export class MediaModalComponent implements OnInit, OnDestroy {
   };
   canToggleMatureVideoOverlay: boolean = true;
 
+  isTranslatable: boolean = false;
+  translateToggle: boolean = false;
+  translateEvent: EventEmitter<any> = new EventEmitter();
+
   protected modalPager$: Subscription;
 
   protected asyncEntity$: Subscription;
@@ -142,9 +149,39 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
   videoTorrentSrc = [];
 
+  get menuOptions(): Array<string> {
+    if (!this.entity || !this.entity.ephemeral) {
+      return [
+        'translate',
+        'share',
+        'follow',
+        'feature',
+        'report',
+        'set-explicit',
+        'block',
+        'rating',
+        'allow-comments',
+      ];
+    } else {
+      return [
+        'translate',
+        'share',
+        'follow',
+        'feature',
+        'report',
+        'set-explicit',
+        'block',
+        'rating',
+        'allow-comments',
+      ];
+    }
+  }
+
   constructor(
+    public client: Client,
     public session: Session,
     public analyticsService: AnalyticsService,
+    public translationService: TranslationService,
     private overlayModal: OverlayModalService,
     private router: Router,
     private location: Location,
@@ -247,6 +284,49 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     });
   }
 
+  menuOptionSelected(option: string) {
+    switch (option) {
+      case 'set-explicit':
+        this.setExplicit(true);
+        break;
+      case 'remove-explicit':
+        this.setExplicit(false);
+        break;
+      case 'translate':
+        this.translateToggle = true;
+        break;
+    }
+  }
+
+  async setExplicit(value: boolean) {
+    const oldValue = this.entity.mature,
+      oldMatureVisibility = this.entity.mature_visibility;
+
+    this.entity.mature = value;
+    this.entity.mature_visibility = void 0;
+
+    if (this.entity.custom_data && this.entity.custom_data[0]) {
+      this.entity.custom_data[0].mature = value;
+    } else if (this.entity.custom_data) {
+      this.entity.custom_data.mature = value;
+    }
+
+    try {
+      await this.client.post(`api/v1/entities/explicit/${this.entity.guid}`, {
+        value: value ? '1' : '0',
+      });
+    } catch (e) {
+      this.entity.mature = oldValue;
+      this.entity.mature_visibility = oldMatureVisibility;
+
+      if (this.entity.custom_data && this.entity.custom_data[0]) {
+        this.entity.custom_data[0].mature = oldValue;
+      } else if (this.entity.custom_data) {
+        this.entity.custom_data.mature = oldValue;
+      }
+    }
+  }
+
   setEntity(entity: any) {
     if (!entity) {
       return;
@@ -254,6 +334,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
 
     this.originalEntity = entity;
     this.entity = entity && JSON.parse(JSON.stringify(entity)); // deep clone
+
+    this.isTranslatable = this.translationService.isTranslatable(this.entity);
   }
 
   clearAsyncEntity() {

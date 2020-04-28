@@ -79,7 +79,7 @@ export class BoostConsoleNetworkListComponent {
         if (!boosts.length) {
           this.moreData = false;
           if (this.boosts.length == 0 && type == 'content') {
-            this.router.navigate(['/boost/console/sidebar/create']);
+            this.router.navigate(['/boost/console/content/create']);
           } else {
             this.router.navigate(['/boost/console/newsfeed/create']);
           }
