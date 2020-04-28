@@ -19,4 +19,18 @@ m-youtubeMigration__marketing {
       margin: 45px 0;
     }
   }
+  .m-marketing__section ul.m-marketing__points > li {
+    font-size: 18px;
+    line-height: 27px;
+
+    @media screen and(min-width: 700px) and (max-width: $m-grid-min-vp) {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    @media screen and(max-width: 700px) {
+      font-size: 15px;
+      line-height: 22px;
+    }
+  }
 }
