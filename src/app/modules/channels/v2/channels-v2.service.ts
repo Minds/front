@@ -100,6 +100,8 @@ export class ChannelsV2Service {
       )
     );
 
+    // TODO: To be done in another iteration
+    //
     // Set groupCount$ observable
     // this.groupCount$ = this.channel$.pipe(
     //   distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
