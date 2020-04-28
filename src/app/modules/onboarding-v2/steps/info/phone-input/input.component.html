@@ -71,6 +71,27 @@
         i18n-placeholder
       />
 
+      <button
+        class="mf-button mf-button--alt m-onboardingInput__smallButton"
+        [disabled]="resendButtonDisabled"
+        (click)="reSendCode()"
+        *ngIf="!inProgress"
+        title="Re-send verification code"
+        i18n-title
+      >
+        <i class="material-icons">refresh</i>
+      </button>
+
+      <button
+        class="mf-button mf-button--alt m-onboardingInput__smallButton"
+        (click)="reset()"
+        *ngIf="!inProgress"
+        title="Go back"
+        i18n-title
+      >
+        <i class="material-icons">keyboard_backspace</i>
+      </button>
+
       <div
         class="m-onboarding__error"
         [style.visibility]="codeError && !this.error ? 'visible' : 'hidden'"

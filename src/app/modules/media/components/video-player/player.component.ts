@@ -51,6 +51,10 @@ export class MindsVideoPlayerComponent
    * Setting this to true makes the video autoplay
    */
   @Input() autoplay: boolean = false;
+  /**
+   * It's used to detect if the video has been clicked when it's autoplaying
+   */
+  clicked: boolean = false;
 
   @Input('allowAutoplayOnScroll') set _allowAutoplayOnScroll(value: boolean) {
     this.allowAutoplayOnScroll = value;
@@ -333,7 +337,12 @@ export class MindsVideoPlayerComponent
   }
 
   onClick(): void {
-    if ((this.autoplay || this.autoplaying) && this.isMuted()) {
+    if (
+      !this.clicked &&
+      (this.autoplay || this.autoplaying) &&
+      this.isMuted()
+    ) {
+      this.clicked = true;
       this.autoplayService.muted = false;
       this.unmute();
       this.play();
