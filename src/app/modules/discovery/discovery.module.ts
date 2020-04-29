@@ -18,6 +18,7 @@ import { DiscoverySharedModule } from './discovery-shared.module';
 import { DiscoveryFeedsComponent } from './feeds/feeds.component';
 import { DiscoveryFeedItemComponent } from './feeds/feed-item.component';
 import { DiscoveryFeedsSettingsButtonComponent } from './feeds/settings-button.component';
+import { DiscoveryDisclaimerComponent } from './disclaimer/disclaimer.component';
 
 @NgModule({
   imports: [
@@ -79,6 +80,7 @@ import { DiscoveryFeedsSettingsButtonComponent } from './feeds/settings-button.c
     DiscoveryFeedsComponent,
     DiscoveryFeedItemComponent,
     DiscoveryFeedsSettingsButtonComponent,
+    DiscoveryDisclaimerComponent,
   ],
   exports: [DiscoveryComponent],
   entryComponents: [DiscoveryComponent],
