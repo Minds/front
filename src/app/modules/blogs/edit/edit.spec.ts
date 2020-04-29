@@ -28,6 +28,7 @@ import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-service-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'minds-banner',
@@ -269,6 +270,7 @@ describe('BlogEdit', () => {
           provide: ConfigsService,
           useValue: MockService(ConfigsService),
         },
+        FormToastService,
       ],
     }).compileComponents(); // compile template and css
   }));

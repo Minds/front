@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription, Observable } from 'rxjs';
@@ -13,6 +14,7 @@ import { Tag } from '../../hashtags/types/tag';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { DialogService } from '../../../common/services/confirm-leave-dialog.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'minds-blog-edit',
@@ -79,7 +81,9 @@ export class BlogEdit implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     protected inMemoryStorageService: InMemoryStorageService,
     private dialogService: DialogService,
-    configs: ConfigsService
+    configs: ConfigsService,
+    private location: Location,
+    private toasterService: FormToastService
   ) {
     this.cdnUrl = configs.get('cdn_url');
 
@@ -102,9 +106,21 @@ export class BlogEdit implements OnInit, OnDestroy {
     );
   }
 
+  canCreateBlog(): boolean {
+    return this.session.getLoggedInUser().email_confirmed;
+  }
+
   ngOnInit() {
     if (!this.session.isLoggedIn()) {
       this.router.navigate(['/login']);
+      return;
+    }
+
+    if (!this.canCreateBlog()) {
+      this.toasterService.error(
+        'Please confirm your email address before creating a blog'
+      );
+      this.location.back();
       return;
     }
 
@@ -166,7 +182,11 @@ export class BlogEdit implements OnInit, OnDestroy {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (!this.editing || !this.session.getLoggedInUser()) {
+    if (
+      !this.canCreateBlog() ||
+      !this.editing ||
+      !this.session.getLoggedInUser()
+    ) {
       return true;
     }
 
