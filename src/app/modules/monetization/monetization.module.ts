@@ -11,9 +11,6 @@ import { WalletTransactionsComponent } from '../wallet/transactions/transactions
 import { MonetizationMarketingComponent } from './marketing.component';
 import { MonetizationTermsComponent } from './terms.component';
 import { MonetizationOnboardingComponent } from './onboarding/onboarding.component';
-import { AffiliateMarketingComponent } from './affiliate/marketing.component';
-import { AffiliateLinkComponent } from './affiliate/link.component';
-import { AffiliateTermsComponent } from './affiliate/terms.component';
 import { RevenueGraphComponent } from './revenue/graph.component';
 import { RevenueLedgerComponent } from './revenue/ledger.component';
 import { RevenueOptionsComponent } from './revenue/options.component';
@@ -23,22 +20,14 @@ import { RevenueConsoleComponent } from './revenue/console.component';
 // external
 import { WalletComponent } from '../wallet/wallet.component';
 
-const monetizationRoutes: Routes = [
-  //{ path: 'affiliates',  component: AffiliateMarketingComponent },
-  //{ path: 'monetization', component: MonetizationMarketingComponent },
-  {
-    path: 'wallet/revenue',
-    component: WalletComponent,
-    children: [
-      { path: '', redirectTo: 'earnings', pathMatch: 'full' },
-      { path: 'points', component: WalletTransactionsComponent },
-      { path: 'points/:stub', component: WalletTransactionsComponent },
-      { path: 'earnings', component: RevenueLedgerComponent },
-      { path: 'payouts', component: RevenueLedgerComponent },
-      { path: 'options', component: RevenueOptionsComponent },
-      { path: 'affiliates', component: AffiliateLinkComponent },
-    ],
-  },
+export { RevenueConsoleComponent } from './revenue/console.component';
+export { RevenueOptionsComponent } from './revenue/options.component';
+
+export const MONETIZATION_REVENUE_COMPONENTS = [
+  RevenueConsoleComponent,
+  RevenueGraphComponent,
+  RevenueLedgerComponent,
+  RevenueOptionsComponent,
 ];
 
 @NgModule({
@@ -50,36 +39,17 @@ const monetizationRoutes: Routes = [
     WalletModule,
     FaqModule,
     MonetizationOverviewModule,
-    RouterModule.forChild(monetizationRoutes),
   ],
   declarations: [
     MonetizationMarketingComponent,
     MonetizationTermsComponent,
     MonetizationOnboardingComponent,
-    AffiliateMarketingComponent,
-    AffiliateLinkComponent,
-    AffiliateTermsComponent,
-    RevenueGraphComponent,
-    RevenueLedgerComponent,
-    RevenueOptionsComponent,
-    RevenueConsoleComponent,
   ],
   exports: [
     MonetizationMarketingComponent,
     MonetizationTermsComponent,
     MonetizationOnboardingComponent,
-    AffiliateMarketingComponent,
-    AffiliateTermsComponent,
-    RevenueGraphComponent,
-    RevenueLedgerComponent,
-    RevenueOptionsComponent,
-    RouterModule,
   ],
-  entryComponents: [
-    MonetizationMarketingComponent,
-    AffiliateMarketingComponent,
-    AffiliateLinkComponent,
-    RevenueConsoleComponent,
-  ],
+  entryComponents: [MonetizationMarketingComponent],
 })
 export class MonetizationModule {}

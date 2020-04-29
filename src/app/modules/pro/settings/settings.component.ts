@@ -11,7 +11,6 @@ import { Subject, Subscription, from } from 'rxjs';
 import { ProService } from '../pro.service';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { MindsTitle } from '../../../services/ux/title';
 import { SiteService } from '../../../common/services/site.service';
 import { debounceTime } from 'rxjs/operators';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -43,8 +42,10 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     'footer',
     'domain',
     'payouts',
+    'subscription',
   ];
 
+  isActive: boolean;
   settings: any;
 
   inProgress: boolean;
@@ -60,6 +61,8 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
   textColorPickerVal: string;
   primaryColorPickerVal: string;
   plainBgColorPickerVal: string;
+
+  bgImageSelected: boolean = false;
 
   hexPattern = '^#([0-9A-Fa-f]{6})$'; // accepts 6-digit codes only, hash required
 
@@ -111,7 +114,6 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
-    protected title: MindsTitle,
     protected site: SiteService,
     protected sanitizer: DomSanitizer,
     private formToastService: FormToastService,
@@ -131,6 +133,10 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       this.detectChanges();
       this.load();
     });
+    if (!this.session.isLoggedIn()) {
+      this.router.navigate(['/login'], { replaceUrl: true });
+      return;
+    }
   }
 
   ngOnDestroy() {
@@ -143,7 +149,22 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
     const { isActive, settings } = await this.service.get(this.user);
 
-    if (!isActive && !this.user) {
+    this.isActive = isActive;
+
+    if (!isActive) {
+      // Non-actives have no domain control
+      this.form
+        .get('domain')
+        .get('domain')
+        .setValidators([]);
+      this.form
+        .get('domain')
+        .get('domain')
+        .disable();
+      this.form.get('published').disable();
+    }
+
+    if (!settings) {
       this.router.navigate(['/pro'], { replaceUrl: true });
       return;
     }
@@ -178,8 +199,6 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     this.setFooterLinks(settings.footer_links);
 
     this.settings = settings;
-
-    this.title.setTitle('Pro Settings');
 
     this.inProgress = false;
     this.detectChanges();
@@ -217,6 +236,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     }
 
     this.settings[type] = files.item(0);
+    this.bgImageSelected = true;
     this.form.markAsDirty();
     this.detectChanges();
   }
@@ -244,6 +264,9 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
           this.settings[type] as File
         );
       }
+      if (type === 'background') {
+        this.bgImageSelected = true;
+      }
 
       return this.sanitizer.bypassSecurityTrustUrl(
         this.settings[type]._mindsBlobUrl
@@ -251,6 +274,17 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     }
 
     return this.settings[`${type}_image`] + '?cb=' + Date.now();
+  }
+
+  async cancelSubscription() {
+    this.error = null;
+    try {
+      await this.service.disable();
+      this.router.navigate(['/', this.session.getLoggedInUser().name]);
+    } catch (e) {
+      this.error = e.message;
+      this.formToastService.error('Error: ' + this.error);
+    }
   }
 
   async onSubmit() {
@@ -336,6 +370,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     for (const tag of tags) {
       this.addTag(tag.label, tag.tag);
     }
+    this.form.markAsDirty();
     this.detectChanges();
   }
 
@@ -360,6 +395,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     for (let link of links) {
       this.addFooterLink(link.title, link.href);
     }
+    this.form.markAsDirty();
     this.detectChanges();
   }
 
@@ -385,6 +421,16 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     ) {
       colorPickerControl.setValue(updatedColor);
     }
+  }
+
+  onEnableProThemeClick(e: MouseEvent): void {
+    if (!this.isActive) {
+      this.router.navigate(['/pro']);
+    }
+  }
+
+  showFilePreviewOverlay() {
+    return !this.settings.has_custom_background && !this.bgImageSelected;
   }
 
   detectChanges() {

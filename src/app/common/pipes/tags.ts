@@ -1,7 +1,7 @@
 import { Pipe, Inject, PipeTransform } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { FeaturesService } from '../../services/features.service';
 import { SiteService } from '../services/site.service';
+import { TagsService } from '../services/tags.service';
 
 @Pipe({
   name: 'tags',
@@ -18,36 +18,40 @@ export class TagsPipe implements PipeTransform {
    */
   tags = {
     url: {
-      rule: /(\b(https?|ftp|file):\/\/[^\s\]]+)/gim,
+      rule: this.tagsService.getRegex('url'),
       replace: m => {
-        return `<a href="${m.match[1]}" target="_blank" rel="noopener noreferrer">${m.match[1]}</a>`;
+        return `<a href="${m.match[1]}" target="_blank" rel="noopener nofollow ugc">${m.match[1]}</a>`;
       },
     },
     mail: {
-      rule: /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gim,
+      rule: this.tagsService.getRegex('mail'),
       replace: m => {
-        return `<a href="mailto:${m.match[0]}" target="_blank" rel="noopener noreferrer">${m.match[0]}</a>`;
+        return `<a href="mailto:${m.match[0]}" target="_blank" rel="noopener nofollow ugc">${m.match[0]}</a>`;
       },
     },
     hash: {
-      rule: /(^|\s||)#(\w+)/gim,
+      rule: this.tagsService.getRegex('hash'),
       replace: m => {
         if (this.siteService.isProDomain) {
           return `${
             m.match[1]
           }<a href="/all;query=${m.match[2].toLowerCase()}">#${m.match[2]}</a>`;
-        } else if (this.featureService.has('top-feeds')) {
+        } else if (this.featureService.has('navigation')) {
           return `${
             m.match[1]
-          }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=24h">#${
+          }<a href="/discovery/search?f=top&q=%23${m.match[2].toLowerCase()}">#${
             m.match[2]
-          }</a>`;
+          }</a>`; // TODO: make these link locally
         }
-        return `${m.match[1]}<a href="/newsfeed/tag/${m.match[2]};ref=hashtag">#${m.match[2]}</a>`;
+        return `${
+          m.match[1]
+        }<a href="/newsfeed/global/top;hashtag=${m.match[2].toLowerCase()};period=7d">#${
+          m.match[2]
+        }</a>`;
       },
     },
     at: {
-      rule: /(^|\W|\s)@([a-z0-9_\-\.]+[a-z0-9_])/gim,
+      rule: this.tagsService.getRegex('at'),
       replace: m => {
         return `${m.match[1]}<a class="tag" href="/${m.match[2]}" target="_blank">@${m.match[2]}</a>`;
       },
@@ -56,7 +60,8 @@ export class TagsPipe implements PipeTransform {
 
   constructor(
     private featureService: FeaturesService,
-    private siteService: SiteService
+    private siteService: SiteService,
+    public tagsService: TagsService
   ) {}
 
   /**

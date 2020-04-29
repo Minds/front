@@ -1,8 +1,9 @@
 import { Component, EventEmitter } from '@angular/core';
 
 import { Client } from '../../../../../services/api';
-import { GroupsService } from '../../../groups-service';
+import { GroupsService } from '../../../groups.service';
 import { PermissionsService } from '../../../../../common/services/permissions/permissions.service';
+import { ConfigsService } from '../../../../../common/services/configs.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import { Flags } from '../../../../../common/services/permissions/flags';
 
@@ -14,7 +15,7 @@ import { Flags } from '../../../../../common/services/permissions/flags';
   templateUrl: 'invite.html',
 })
 export class GroupsProfileMembersInvite {
-  minds = window.Minds;
+  readonly cdnUrl: string;
 
   group: any;
   invited: EventEmitter<any> = new EventEmitter();
@@ -35,8 +36,11 @@ export class GroupsProfileMembersInvite {
     public client: Client,
     public service: GroupsService,
     private permissionsService: PermissionsService,
-    private featuresService: FeaturesService
-  ) {}
+    private featuresService: FeaturesService,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   set _group(value: any) {
     this.group = value;

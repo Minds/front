@@ -55,13 +55,13 @@
 <!-- <div [ngSwitch]="unit" class="m-chartV2__hoverInfo__row--primary">
   <ng-template ngSwitchCase="number">
   {{ hoverInfo.value | number: '1.0-0' | abbr }}
-  {{ rawData.label | lowercase }}
+  {{ label | lowercase }}
 </ng-template>
 <ng-template ngSwitchCase="usd">
   {{ hoverInfo.value | currency }} USD
 </ng-template>
 <ng-template ngSwitchDefault>
-  {{ hoverInfo.value | number: '1.1-3' }} {{ rawData?.unit }}
+  {{ hoverInfo.value | number: '1.1-3' }} {{ unit }}
 </ng-template>
 </div>
 </div> -->

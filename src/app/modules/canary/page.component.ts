@@ -1,27 +1,25 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-canary',
   templateUrl: 'page.component.html',
 })
 export class CanaryPageComponent {
-  minds = window.Minds;
   user;
 
   constructor(
-    private title: MindsTitle,
     private session: Session,
     private client: Client,
-    private router: Router
-  ) {
-    this.title.setTitle('Canary - Experiments');
-  }
+    private router: Router,
+    private pageLayoutService: PageLayoutService
+  ) {}
 
   ngOnInit() {
+    this.pageLayoutService.useFullWidth();
     this.user = this.session.getLoggedInUser();
     this.load();
   }

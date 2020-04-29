@@ -69,7 +69,7 @@
         #withdrawPending
         i18n="@@WALLET__TOKENS__WITHDRAW__LEDGER__PENDING_LABEL"
       >
-        PENDING
+        {{ withdrawal.status.replace('_', ' ') | uppercase }}
       </ng-template>
 
       <div class="mdl-layout-spacer"></div>

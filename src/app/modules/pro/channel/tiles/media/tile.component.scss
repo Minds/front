@@ -19,6 +19,10 @@ m-pro--channel-tile {
     > img {
       object-fit: cover;
     }
+
+    .m-videoPlayer__placeholder {
+      height: 100%;
+    }
   }
 
   .m-proChannelTile__text {

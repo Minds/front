@@ -5,6 +5,7 @@
     routerLinkActive="m-v2-topbarNav__Item--active"
     title="Newsfeed"
     i18n-title
+    data-cy="data-minds-nav-newsfeed-button"
   >
     <i class="material-icons">home</i>
     <span class="m-v2-topbarNavItem__Text" i18n>Newsfeed</span>
@@ -16,6 +17,7 @@
     routerLinkActive="m-v2-topbarNav__Item--active"
     title="Discovery"
     i18n-title
+    data-cy="data-minds-nav-discovery-button"
   >
     <i class="material-icons">search</i>
     <span class="m-v2-topbarNavItem__Text" i18n>Discovery</span>
@@ -23,17 +25,25 @@
 
   <a
     class="m-v2-topbarNav__Item m-v2-topbarNav__RouterNav"
-    routerLink="/wallet"
+    [routerLink]="
+      featuresService.has('wallet-upgrade') ? '/wallet/canary' : '/wallet'
+    "
     routerLinkActive="m-v2-topbarNav__Item--active"
     title="Wallet"
     i18n-title
+    data-cy="data-minds-nav-wallet-button"
   >
     <i class="material-icons">account_balance</i>
     <span class="m-v2-topbarNavItem__Text" i18n>Wallet</span>
   </a>
 </ng-template>
 
-<div class="m-v2-topbar__Top">
+<div
+  class="m-v2-topbar__Top"
+  [class.m-v2-topbar__marketingPages]="marketingPages"
+  [class.m-v2-topbar__noBackground]="!showBackground"
+  [style.visibility]="showTopbar ? 'visible' : 'hidden'"
+>
   <div class="m-v2-topbar">
     <div class="m-v2-topbar__Container--left">
       <nav class="m-v2-topbar__Nav">
@@ -44,7 +54,7 @@
           i18n-title
         >
           <img
-            [src]="minds.cdn_assets_url + 'assets/logos/bulb.svg'"
+            [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'"
             (touchstart)="touchStart()"
             (mouseenter)="mouseEnter()"
             (mouseleave)="mouseLeave()"
@@ -75,11 +85,39 @@
         </div>
       </ng-container>
       <ng-template #loggedOutRightContainer>
-        <div class="m-v2-topbar__Container__LoginWrapper">
-          <a routerLink="/login" title="Login" i18n-title>
-            Login / Signup
-          </a>
-        </div>
+        <ng-container *mIfFeature="'ux-2020'; else singleButton">
+          <ng-container *ngIf="!onAuthPages">
+            <div class="m-v2-topbar__Container__LoginWrapper">
+              <a
+                class="m-v2-topbarLoginWrapper__login"
+                routerLink="/login"
+                title="Login"
+                i18n-title
+              >
+                Login
+              </a>
+
+              <a
+                class="m-v2-topbarLoginWrapper__joinMindsNow"
+                routerLink="/register"
+                title="Join Minds Now"
+                i18n-title
+              >
+                Join Minds Now
+              </a>
+            </div>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #singleButton>
+          <ng-container *ngIf="!onAuthPages">
+            <div class="m-v2-topbar__Container__LoginWrapper">
+              <a routerLink="/login" title="Login" i18n-title>
+                Login / Signup
+              </a>
+            </div>
+          </ng-container>
+        </ng-template>
       </ng-template>
 
       <div class="m-v2-topbar__UserMenu" *ngIf="getCurrentUser()">
@@ -90,7 +128,7 @@
   </div>
 </div>
 
-<div class="m-v2-topbar__Bottom">
+<div class="m-v2-topbar__Bottom" *ngIf="getCurrentUser() && showBottombar">
   <ng-container *ngTemplateOutlet="navLinks"></ng-container>
 </div>
 

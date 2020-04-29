@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
-import { WireCreatorComponent } from '../creator/creator.component';
 import { SignupModalService } from '../../modals/signup/service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { WireModalService } from '../wire-modal.service';
 
 @Component({
   moduleId: module.id,
@@ -31,8 +31,9 @@ export class WireLockScreenComponent {
     public session: Session,
     private client: Client,
     private cd: ChangeDetectorRef,
-    private overlayModal: OverlayModalService,
-    private modal: SignupModalService
+    private wireModal: WireModalService,
+    private modal: SignupModalService,
+    private configs: ConfigsService
   ) {}
 
   unlock() {
@@ -72,17 +73,18 @@ export class WireLockScreenComponent {
       });
   }
 
-  showWire() {
+  async showWire() {
     if (this.preview) {
       return;
     }
 
-    this.overlayModal
-      .create(WireCreatorComponent, this.entity, {
-        onComplete: () => this.wireSubmitted(),
+    await this.wireModal
+      .present(this.entity, {
         default: this.entity.wire_threshold,
       })
-      .present();
+      .toPromise();
+
+    this.wireSubmitted();
   }
 
   wireSubmitted() {
@@ -113,7 +115,7 @@ export class WireLockScreenComponent {
     }
 
     let image =
-      window.Minds.cdn_url +
+      this.configs.get('cdn_assets_url') +
       'fs/v1/paywall/preview/' +
       this.entity.ownerObj.guid +
       '/' +

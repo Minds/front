@@ -1,0 +1,100 @@
+<ng-container *ngIf="!inProgress; else loading">
+  <div class="m-walletBalance--tokens__equationWrapper">
+    <div class="m-walletBalance--tokens__equationLeft">
+      <div class="m-walletBalance--tokens__balanceWrapper--total">
+        <div class="m-walletBalance--tokens__balanceTitle">Token Balance</div>
+        <div class="m-walletBalance--tokens__balanceValWrapper">
+          <span class="m-walletBalance--tokens__balanceVal--int">{{
+            tokenBalance.int | number: '1.0-0'
+          }}</span
+          ><span
+            class="m-walletBalance--tokens__balanceVal--frac"
+            *ngIf="tokenBalance.frac"
+            >.{{ tokenBalance.frac }}</span
+          >
+        </div>
+      </div>
+      <a class="m-walletBalance--tokens__buyButtonWrapper" routerLink="/tokens"
+        ><m-shadowboxSubmitButton>Buy tokens</m-shadowboxSubmitButton></a
+      >
+    </div>
+    <div class="m-walletBalance--tokens__equationSymbol">=</div>
+
+    <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
+      <div class="m-walletBalance--tokens__balanceTitle">
+        On-Chain<m-tooltip icon="help"
+          >Store tokens on your device instead of our servers for more control
+          and portability</m-tooltip
+        >
+      </div>
+      <div class="m-walletBalance--tokens__balanceValWrapper">
+        <span class="m-walletBalance--tokens__balanceVal--int">{{
+          onchainBalance.int | number
+        }}</span
+        ><span
+          class="m-walletBalance--tokens__balanceVal--frac"
+          *ngIf="onchainBalance.frac"
+          >.{{ onchainBalance.frac }}</span
+        >
+        tokens
+      </div>
+    </div>
+    <div class="m-walletBalance--tokens__equationSymbol">+</div>
+    <div class="m-walletBalance--tokens__balanceWrapper--subtotal">
+      <div class="m-walletBalance--tokens__balanceTitle">
+        Off-Chain<m-tooltip icon="help"
+          >Store tokens on our servers for quicker transaction times and no
+          fees</m-tooltip
+        >
+      </div>
+      <div class="m-walletBalance--tokens__balanceValWrapper">
+        <span class="m-walletBalance--tokens__balanceVal--int">{{
+          offchainBalance.int | number: '1.0-0'
+        }}</span
+        ><span
+          class="m-walletBalance--tokens__balanceVal--frac"
+          *ngIf="offchainBalance.frac"
+          >.{{ offchainBalance.frac }}</span
+        >
+        tokens
+      </div>
+      <!-- <a
+        *ngIf="
+          session.getLoggedInUser().rewards &&
+          wallet.offchain.balance > 0 &&
+          (wallet.onchain.address || wallet.receiver.address)
+        "
+        (click)="showModal = true"
+        >Transfer to On-Chain</a
+      > -->
+      <a (click)="showModal = true">Transfer to On-Chain</a>
+    </div>
+  </div>
+
+  <div class="m-walletBalance--tokens__payout">
+    <div>
+      Today's estimated payout
+      <span class="m-walletBalance--tokens__payoutEstimate">{{
+        estimatedTokenPayout | token: 18 | number: '1.0-3'
+      }}</span>
+      tokens.
+    </div>
+    <div>
+      Next payout in <span>{{ nextPayoutDate | timediff: true }}</span> (Daily
+      at {{ localPayoutTime }})
+    </div>
+  </div>
+  <div class="m-walletBalance--tokens__learnMore">
+    Learn more about <a routerLink="/tokens">Minds Tokens</a> and our
+    <a routerLink="/rewards">Rewards System</a>.
+  </div>
+  <m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
+    <m-walletOnchainTransfer
+      *ngIf="wallet && showModal"
+      (transferComplete)="transferComplete()"
+    ></m-walletOnchainTransfer>
+  </m-walletModal>
+</ng-container>
+<ng-template #loading>
+  <h2>...</h2>
+</ng-template>

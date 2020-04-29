@@ -35,24 +35,14 @@
 
       <div *ngSwitchCase="'date'">
         <div>
-          <label class="m-date-selector--label" *ngIf="field.label"
-            >{{ field.label }}:</label
-          >
-          <div
-            class="m-date-selector--input"
-            mdl-datetime-picker
+          <m-date-selector
             [date]="form.get(field.key).value"
             (dateChange)="form.get(field.key).setValue($event)"
-          >
-            <input
-              type="text"
-              placeholder="Select a date"
-              i18n-placeholder="@@COMMON__DATE_SELECTOR__PLACEHOLDER"
-              [value]="form.get(field.key).value | date"
-              place
-            />
-            <i class="material-icons">keyboard_arrow_down</i>
-          </div>
+            [calendarType]="'both'"
+            [tooltipIcon]="'keyboard_arrow_down'"
+            label="{{ field.label }}"
+            dateFormat="short"
+          ></m-date-selector>
         </div>
       </div>
 

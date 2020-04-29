@@ -127,6 +127,10 @@
         <li i18n>
           Professional media tools
         </li>
+
+        <li i18n>
+          Custom support
+        </li>
       </ul>
 
       <p>
@@ -136,6 +140,17 @@
           i18n
         >
           More info
+        </a>
+        <a
+          class="m-upgradesUpgradeOptionsPlan__moreInfo"
+          [routerLink]="[
+            '/pro/' + session.getLoggedInUser().username + '/settings'
+          ]"
+          i18n
+          *ngIf="session.getLoggedInUser()"
+          style="padding-left: 16px"
+        >
+          Try Pro
         </a>
       </p>
     </div>

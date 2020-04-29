@@ -7,7 +7,6 @@ import isMobileOrTablet from '../../../../../helpers/is-mobile-or-tablet';
   templateUrl: 'dashboard.component.html',
 })
 export class ReferralsDashboardComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
   referrals: Array<any> = [];
   offset: string = '';
   limit = 12;

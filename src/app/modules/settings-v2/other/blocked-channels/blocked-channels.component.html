@@ -1,0 +1,53 @@
+<ng-container *ngIf="hasList">
+  <div
+    *ngFor="let channel of channels | async"
+    class="m-settingsV2BlockedChannel"
+  >
+    <a
+      class="m-settingsV2BlockedChannel__detailsWrapper"
+      [routerLink]="['/', channel.username]"
+    >
+      <div class="m-settingsV2BlockedChannel__avatar">
+        <img [src]="getChannelIcon(channel)" />
+      </div>
+
+      <span class="m-settingsV2BlockedChannel__username">
+        @{{ channel.username }}
+      </span>
+    </a>
+
+    <div class="m-settingsV2BlockedChannel__actions">
+      <!-- *ngIf="!channel._unblocked; else blockButtonTemplate" -->
+      <m-shadowboxSubmitButton
+        [disabled]="channel._saving"
+        [saving]="channel._saving"
+        color="grey"
+        (click)="unblock(channel)"
+      >
+        <i class="material-icons">person_add</i><span i18n>Unblock</span>
+      </m-shadowboxSubmitButton>
+      <!-- <ng-template #blockButtonTemplate>
+      <m-shadowboxSubmitButton
+        [disabled]="channel._saving"
+        [saving]="channel._saving"
+        color="red"
+        (click)="block(channel)"
+      >
+        <i class="material-icons">block</i><span i18n>Block</span>
+      </m-shadowboxSubmitButton>
+    </ng-template> -->
+    </div>
+  </div>
+
+  <infinite-scroll
+    *ngIf="moreData"
+    distance="25%"
+    (load)="loadMore()"
+    [moreData]="moreData"
+    [inProgress]="inProgress"
+  >
+  </infinite-scroll>
+</ng-container>
+<div *ngIf="!hasList" class="m-settingsV2__desc m-settingsV2__notice">
+  <span>You haven't blocked any channels.</span>
+</div>

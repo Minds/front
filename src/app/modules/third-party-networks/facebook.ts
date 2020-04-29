@@ -1,6 +1,7 @@
 import { Component, EventEmitter, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../services/api';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
   selector: 'm-third-party-networks-facebook',
@@ -95,7 +96,7 @@ import { Client } from '../../services/api';
   `,
 })
 export class ThirdPartyNetworksFacebook {
-  minds = window.Minds;
+  readonly siteUrl: string;
   done: EventEmitter<any> = new EventEmitter(true);
 
   page;
@@ -103,7 +104,12 @@ export class ThirdPartyNetworksFacebook {
 
   inProgress: boolean = false;
 
-  constructor(public client: Client, private cd: ChangeDetectorRef) {
+  constructor(
+    public client: Client,
+    private cd: ChangeDetectorRef,
+    configs: ConfigsService
+  ) {
+    this.siteUrl = configs.get('site_url');
     this.getPage();
   }
 
@@ -126,9 +132,7 @@ export class ThirdPartyNetworksFacebook {
     window.onSuccessCallback = () => {
       this.getAccounts();
     };
-    window.open(
-      this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/link'
-    );
+    window.open(this.siteUrl + 'api/v1/thirdpartynetworks/facebook/link');
   }
 
   getAccounts() {

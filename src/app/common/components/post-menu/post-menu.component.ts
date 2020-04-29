@@ -1,3 +1,8 @@
+/////
+/// This component is deprevted.
+/// Use v2 for new components
+/////
+
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -79,18 +84,9 @@ export class PostMenuComponent {
     protected activityService: ActivityService,
     public featuresService: FeaturesService,
     private permissionsService: PermissionsService
-  ) {
-    this.initCategories();
-  }
+  ) {}
 
-  initCategories() {
-    for (let category in window.Minds.categories) {
-      this.categories.push({
-        id: category,
-        label: window.Minds.categories[category],
-      });
-    }
-  }
+  ngOnInit() {}
 
   cardMenuHandler() {
     this.opened = !this.opened;

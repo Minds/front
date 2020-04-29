@@ -1,0 +1,112 @@
+<div class="m-modalV2__inner">
+  <div class="m-modalV2__header">
+    <h2 class="m-modalV2Header__title">Feed Settings</h2>
+  </div>
+
+  <div class="m-modalV2__body">
+    <form class="m-formWrapper" [formGroup]="form">
+      <section
+        class="m-discoveryTagSettings__section"
+        data-cy="discovery-settings-section--selected"
+        *ngIf="(filter$ | async) === 'trending'"
+      >
+        <h3>Trending Timespan</h3>
+        <div class="m-form__fieldsContainer">
+          <ng-container *ngFor="let periodOption of periodOptions">
+            <label
+              [for]="periodOption.id"
+              class="m-form__customInputWrapper__radio"
+              i18n
+              >{{ periodOption.label }}
+              <input
+                type="radio"
+                [id]="periodOption.id"
+                [value]="periodOption.id"
+                formControlName="period"
+                class="form-control"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label>
+          </ng-container>
+        </div>
+      </section>
+      <section
+        class="m-discoveryTagSettings__section"
+        data-cy="discovery-settings-section--selected"
+      >
+        <h3>Content Types</h3>
+        <div class="m-form__fieldsContainer">
+          <ng-container *ngFor="let contentType of contentTypes">
+            <label
+              [for]="contentType.id"
+              class="m-form__customInputWrapper__radio"
+              i18n
+              >{{ contentType.label }}
+              <input
+                type="radio"
+                [id]="contentType.id"
+                [value]="contentType.id"
+                formControlName="contentType"
+                class="form-control"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label>
+          </ng-container>
+        </div>
+      </section>
+      <section
+        class="m-discoveryTagSettings__section"
+        data-cy="discovery-settings-section--selected"
+      >
+        <h3>NSFW</h3>
+        <div class="m-form__fieldsContainer">
+          <label
+            for="showNsfwOptions"
+            class="m-form__customInputWrapper__checkbox"
+            i18n
+            >Show NSFW content in results
+            <input
+              type="checkbox"
+              value="true"
+              id="showNsfwOptions"
+              formControlName="showNsfw"
+            />
+            <span class="m-form__customInput__checkbox"></span>
+          </label>
+          <ng-container *ngIf="hasNsfwSelections">
+            <ng-container
+              *ngFor="let nsfwOption of nsfwOptions; let i = index"
+              formArrayName="nsfw"
+            >
+              <label
+                [for]="nsfwOption.id"
+                class="m-form__customInputWrapper__checkbox"
+                i18n
+                >{{ nsfwOption.label }}
+                <input
+                  type="checkbox"
+                  value="selected"
+                  [id]="nsfwOption.id"
+                  [formControlName]="i"
+                  class="form-control"
+                />
+                <span class="m-form__customInput__checkbox"></span>
+              </label>
+            </ng-container>
+          </ng-container>
+        </div>
+      </section>
+    </form>
+  </div>
+  <div class="m-modalV2__toolbar">
+    <div class="m-layout__spacer"></div>
+
+    <m-shadowboxSubmitButton
+      [saving]="saving$ | async"
+      (click)="onSave($event)"
+      data-cy="discovery-feeds-settings-save-button"
+    >
+      <ng-container i18n>Save</ng-container>
+    </m-shadowboxSubmitButton>
+  </div>
+</div>

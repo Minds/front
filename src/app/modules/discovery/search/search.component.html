@@ -1,0 +1,57 @@
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a
+      routerLink="./"
+      routerLinkActive="m-tabs__tab--selected"
+      [queryParams]="{ q: q, f: 'top' }"
+      >Top</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
+      routerLink="./"
+      routerLinkActive="m-tabs__tab--selected"
+      [queryParams]="{ q: q, f: 'latest' }"
+      >Latest</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
+      routerLink="./"
+      routerLinkActive="m-tabs__tab--selected"
+      [queryParams]="{ q: q, f: 'channels' }"
+      >Channels</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a
+      routerLink="./"
+      routerLinkActive="m-tabs__tab--selected"
+      [queryParams]="{ q: q, f: 'groups' }"
+      >Groups</a
+    >
+  </div>
+  <div class="m-layout__spacer"></div>
+  <m-discoveryFeeds__settingsButton></m-discoveryFeeds__settingsButton>
+</div>
+
+<div class="m-goBack">
+  <a routerLink="../" [queryParams]="{ reload: false }">
+    <i class="material-icons">arrow_back</i><span>Back</span>
+  </a>
+</div>
+
+<div class="m-discoveryFeeds__feed">
+  <m-discovery__feedItem
+    *ngFor="let entity$ of entities$ | async"
+    [entity]="entity$ | async"
+    [allowAutoplayOnScroll]="true"
+  ></m-discovery__feedItem>
+  <infinite-scroll
+    distance="25%"
+    (load)="loadMore()"
+    [moreData]="hasMoreData$ | async"
+    [inProgress]="inProgress$ | async"
+  >
+  </infinite-scroll>
+</div>

@@ -17,13 +17,21 @@ import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'minds-button-thumbs-up',
+  inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <a (click)="thumb()" [ngClass]="{ selected: has(), disabled: !enabled }">
+    <a
+      (click)="thumb()"
+      [ngClass]="{ selected: has() }"
+      data-cy="data-minds-thumbs-up-button"
+    >
       <i class="material-icons">thumb_up</i>
-      <span class="minds-counter" *ngIf="object['thumbs:up:count'] > 0">{{
-        object['thumbs:up:count'] | number
-      }}</span>
+      <span
+        class="minds-counter"
+        *ngIf="object['thumbs:up:count'] > 0"
+        data-cy="data-minds-thumbs-up-counter"
+        >{{ object['thumbs:up:count'] | number }}</span
+      >
     </a>
   `,
   styles: [

@@ -1,0 +1,74 @@
+<h2>
+  On-Chain Transfer
+</h2>
+<div class="m-walletTertiaryText--desc">
+  <p class="m-walletTertiaryText--16">
+    You can request to transfer up to
+    <span class="m-walletTertiaryText--16 m-walletTertiaryText--emphasis"
+      >{balance, plural, =1 {{{balance | number}} token} other
+      {{{balance | number}} tokens}}</span
+    >
+    from your rewards to your on-chain wallet below. You may only transfer once
+    per day.
+  </p>
+  <p class="m-walletTertiaryText--15">
+    Note: a small amount of ETH will be charged to cover the transaction fee.
+    Transfers go through an approval process and may take up to 72 hours to
+    complete.
+  </p>
+</div>
+<div *ngIf="!form" class="m-wallet__spinner m-wallet__spinner--tokenSettings">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+<form
+  *ngIf="form"
+  [formGroup]="form"
+  class="m-walletButtonLayout--buttonInline"
+>
+  <div class="m-walletForm__fieldsContainer">
+    <div class="m-walletForm__field--text stretchedField">
+      <div class="m-walletForm__row--label">
+        <label for="amount" i18n>Amount</label>
+      </div>
+      <div
+        class="m-walletForm__row--input"
+        [ngClass]="{
+          invalid: !isFormValid() || submitError
+        }"
+      >
+        <input
+          type="number"
+          id="amount"
+          name="amount"
+          formControlName="amount"
+          class="form-control"
+          required
+        />
+      </div>
+      <div class="m-walletForm__row--validation">
+        <ng-container *ngIf="!submitError && canTransfer">
+          <p *ngIf="amount.errors?.required">
+            Transfer amount required
+          </p>
+          <p *ngIf="amount.errors?.moreThanZero && !amount.errors?.required">
+            Transfer amount must be greater than zero
+          </p>
+          <p *ngIf="amount.errors?.max">
+            You don't have enough tokens to make this transfer
+          </p>
+        </ng-container>
+        <p *ngIf="!canTransfer">
+          You may only transfer once per day
+        </p>
+        <p *ngIf="submitError">{{ submitError }}</p>
+      </div>
+    </div>
+  </div>
+  <m-shadowboxSubmitButton
+    [disabled]="!isFormValid() || loading"
+    [saving]="transferring"
+    (click)="submitError ? load() : onSubmit()"
+  >
+    {{ submitError ? 'Reset' : 'Transfer' }}
+  </m-shadowboxSubmitButton>
+</form>

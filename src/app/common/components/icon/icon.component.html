@@ -1,0 +1,25 @@
+<ng-container [ngSwitch]="from">
+  <i *ngSwitchCase="'md'" class="material-icons" [ngStyle]="sizeCss">{{
+    iconId
+  }}</i>
+  <i
+    *ngSwitchCase="'ion'"
+    [ngClass]="['ion-icon', 'ion-' + iconId]"
+    [ngStyle]="sizeCss"
+  ></i>
+  <span *ngSwitchCase="'text'" class="m-icon__text" [ngStyle]="sizeCss">{{
+    iconId
+  }}</span>
+  <span
+    *ngSwitchCase="'custom'"
+    class="m-icon__custom"
+    [ngStyle]="sizeCss"
+    [innerHTML]="getCustomSvg() | safe"
+  >
+  </span>
+  <span
+    *ngSwitchCase="'assets-file'"
+    class="m-icon__assetsFile"
+    [ngStyle]="maskAndSizeCss"
+  ></span>
+</ng-container>

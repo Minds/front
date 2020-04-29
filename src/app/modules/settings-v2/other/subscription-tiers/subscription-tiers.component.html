@@ -1,0 +1,25 @@
+<div class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <m-wireV2__subscriptionTiers
+      [user]="session.getLoggedInUser()"
+      [editing]="true"
+      (isSaving)="isSaving = $event"
+      (isSaved)="isSaved = $event"
+      [saveEventListener]="triggerSave"
+    >
+    </m-wireV2__subscriptionTiers>
+
+    <div class="m-form__row--validation" *ngIf="error">
+      <p>{{ error }}</p>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="isSaving"
+      [saving]="isSaving"
+      (click)="save()"
+    >
+      Save Subscription Tiers
+    </m-shadowboxSubmitButton>
+  </div>
+</div>

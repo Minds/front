@@ -6,11 +6,14 @@ import {
   Input,
   OnInit,
   Output,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { TopbarHashtagsService } from '../service/topbar.service';
 import { Tag } from '../types/tag';
 import { findLastIndex } from '../../../utils/array-utils';
-import { Storage } from '../../../services/storage';
+import { CookieService } from '../../../common/services/cookie.service';
+import { isPlatformServer } from '@angular/common';
 
 export type SideBarSelectorChange = { type: string; value?: any };
 
@@ -35,18 +38,19 @@ export class SidebarSelectorComponent implements OnInit {
   showAll: boolean = true;
   loading: boolean;
   showExtendedList: boolean = false;
-  showTrending: boolean = false;
-
-  protected lastPreferredEmission: boolean;
+  showTrending: boolean = true;
 
   constructor(
     protected topbarHashtagsService: TopbarHashtagsService,
     protected changeDetectorRef: ChangeDetectorRef,
-    protected storage: Storage
+    protected cookieService: CookieService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   ngOnInit() {
-    this.lastPreferredEmission = this.preferred;
+    this.preferred = this.cookieService.get('preferred_hashtag_state')
+      ? this.cookieService.get('preferred_hashtag_state') === '1'
+      : false;
     this.init();
   }
 
@@ -60,6 +64,8 @@ export class SidebarSelectorComponent implements OnInit {
   async load() {
     this.loading = true;
     this.detectChanges();
+
+    if (isPlatformServer(this.platformId)) return; // Don't load server side, do async
 
     try {
       this.hashtags = await this.topbarHashtagsService.loadAll({
@@ -122,24 +128,19 @@ export class SidebarSelectorComponent implements OnInit {
   }
 
   hashtagVisibilityChange(hashtag) {
-    if (this.currentHashtag !== hashtag.value) {
-      this.currentHashtag = hashtag.value;
-
-      this.filterChange.emit({
-        type: 'single',
-        value: this.currentHashtag,
-      });
-    } else {
-      this.currentHashtag = null;
-      this.preferred = this.lastPreferredEmission;
-
-      this.preferredChange();
-    }
+    this.currentHashtag =
+      this.currentHashtag !== hashtag.value ? hashtag.value : null;
+    this.filterChange.emit({
+      type: 'single',
+      value: this.currentHashtag,
+    });
   }
 
   preferredChange() {
-    this.lastPreferredEmission = this.preferred;
-
+    this.cookieService.put(
+      'preferred_hashtag_state',
+      this.preferred ? '1' : '0'
+    );
     this.filterChange.emit({
       type: this.preferred ? 'preferred' : 'all',
     });
@@ -205,15 +206,15 @@ export class SidebarSelectorComponent implements OnInit {
 
   toggleSuggested() {
     if (this.showSuggested) {
-      this.storage.set('hide-suggested', true);
+      this.cookieService.put('hide-suggested', '1');
     } else {
-      this.storage.destroy('hide-suggested');
+      this.cookieService.remove('hide-suggested');
     }
     this.detectChanges();
   }
 
   get showSuggested() {
-    return !this.storage.get('hide-suggested');
+    return !this.cookieService.get('hide-suggested');
   }
 
   detectChanges() {

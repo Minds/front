@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -17,11 +17,12 @@ export class SignupOnScrollModal implements OnInit, OnDestroy {
   open: boolean = false;
   route: string = '';
   scroll_listener;
-  minds = window.Minds;
 
   display: string = 'initial';
 
   routerSubscription: Subscription;
+
+  @Input() enableScrollListener: boolean = true;
 
   @ViewChild('modal', { static: true }) modal: SignupModal;
 
@@ -41,6 +42,10 @@ export class SignupOnScrollModal implements OnInit, OnDestroy {
   }
 
   listen() {
+    if (!this.enableScrollListener) {
+      return;
+    }
+
     this.routerSubscription = this.router.events.subscribe(
       (navigationEvent: NavigationEnd) => {
         try {
@@ -90,7 +95,10 @@ export class SignupOnScrollModal implements OnInit, OnDestroy {
   }
 
   unListen() {
-    this.routerSubscription.unsubscribe();
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+
     this.unlistenScroll();
   }
 

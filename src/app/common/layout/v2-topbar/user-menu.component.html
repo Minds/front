@@ -1,7 +1,10 @@
 <div class="m-user-menu m-dropdown">
-  <a class="m-user-menu__Anchor" (click)="toggleMenu()"
-    ><i class="material-icons">menu</i></a
-  >
+  <a
+    class="m-user-menu__Anchor"
+    (click)="toggleMenu()"
+    data-cy="data-minds-user-menu"
+    ><i class="material-icons">menu</i>
+  </a>
 
   <ul
     class="m-dropdown__list m-user-menu__Dropdown mdl-shadow--3dp"
@@ -43,7 +46,6 @@
     <li
       class="m-dropdownList__item m-user-menuDropdown__Item"
       (click)="closeMenu()"
-      *ngIf="getCurrentUser()?.pro"
     >
       <a routerLink="/analytics/dashboard/traffic">
         <i class="material-icons">timeline</i>
@@ -171,7 +173,7 @@
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/settings/general">
+      <a routerLink="/settings/general" data-cy="data-minds-user-menu-settings">
         <i class="material-icons">settings</i>
         <span i18n>Settings</span>
       </a>

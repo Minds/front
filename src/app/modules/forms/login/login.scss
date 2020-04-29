@@ -1,5 +1,53 @@
 @import 'defaults';
 
+m-login {
+  .m-login__title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 16px;
+
+    a {
+      @include m-theme() {
+        color: themed($m-blue);
+      }
+    }
+
+    @media screen and(max-width: 680px) {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-right: 0;
+      margin-bottom: 24px;
+
+      h3 {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .m-login__error,
+  .m-login__formError {
+    font-size: 14px;
+    line-height: 19px;
+    margin-top: 3px;
+
+    @include m-theme() {
+      color: themed($m-red) !important;
+    }
+  }
+
+  .m-login__error {
+    text-align: right;
+  }
+
+  .m-login__spacer {
+    flex-grow: 1;
+  }
+  a {
+    font-weight: 400;
+  }
+}
+
 .m-login-box {
   margin-top: $minds-margin * 2;
   width: 100% !important;
@@ -19,7 +67,7 @@
     width: 100%;
   }
 
-  input {
+  input:not([type='checkbox']) {
     padding: $minds-padding * 2;
     font-size: 16px;
     width: 100%;
@@ -40,4 +88,8 @@
     padding-left: $minds-padding * 2;
     text-decoration: none;
   }
+}
+
+.m-login-mfa-input {
+  padding: 20px 0;
 }

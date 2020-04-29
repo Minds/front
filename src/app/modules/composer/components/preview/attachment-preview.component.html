@@ -1,0 +1,34 @@
+<ng-container *ngIf="attachmentPreviewResource?.sourceType === 'image'">
+  <img
+    class="m-composerPreview__image"
+    alt="Uploaded image"
+    i18n-alt
+    [src]="safeResourceUrl"
+    (load)="fitForImage(image)"
+    #image
+  />
+</ng-container>
+
+<ng-container *ngIf="attachmentPreviewResource?.sourceType === 'video'">
+  <video
+    muted
+    title="Uploaded video"
+    class="m-composerPreview__video"
+    (loadedmetadata)="fitForVideo(video)"
+    #video
+    [src]="safeResourceUrl"
+    *ngIf="!safeVideoPosterUrl; else videoPosterEl"
+  ></video>
+
+  <div class="m-videoPlayer__placeholder">
+    <i class="material-icons minds-video-play-icon">
+      play_circle_outline
+    </i>
+  </div>
+
+  <ng-template #videoPosterEl>
+    <img [src]="safeVideoPosterUrl" class="m-composerPreview__image" />
+  </ng-template>
+</ng-container>
+
+<ng-content></ng-content>

@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { MindsTitle } from '../../../services/ux/title';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MetaService } from '../../../common/services/meta.service';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-helpdesk--questions',
@@ -11,20 +13,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class QuestionsComponent implements OnInit {
   question: any = {};
 
-  minds: Minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   constructor(
     public client: Client,
     public session: Session,
     public router: Router,
     private route: ActivatedRoute,
-    private title: MindsTitle
-  ) {}
+    private metaService: MetaService,
+    configs: ConfigsService,
+    private pageLayoutService: PageLayoutService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
       this.load(params['uuid']);
     });
+    this.pageLayoutService.useFullWidth();
   }
 
   async load(uuid: string) {
@@ -35,7 +42,10 @@ export class QuestionsComponent implements OnInit {
         `api/v2/helpdesk/questions/question/${uuid}`
       );
       this.question = response.question;
-      this.title.setTitle(this.question.question);
+      this.metaService
+        .setTitle(this.question.question)
+        .setDescription(this.question.answer)
+        .setOgImage('/assets/photos/balloon.jpg');
     } catch (e) {
       console.error(e);
     }

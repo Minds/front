@@ -9,7 +9,6 @@ import { RouterLinkWithHref } from '@angular/router';
 
 import { Client } from '../../services/api/client';
 import { clientMock } from '../../../tests/client-mock.spec';
-import { MindsTitle } from '../../services/ux/title';
 import { Session } from '../../services/session';
 import { TooltipComponent } from '../../common/components/tooltip/tooltip.component';
 
@@ -18,9 +17,11 @@ import { GroupsListComponent } from './list.component';
 import { ContextService } from '../../services/context.service';
 import { contextServiceMock } from '../../../tests/context-service-mock.spec';
 
-import { MockComponent } from '../../utils/mock';
+import { MockComponent, MockService } from '../../utils/mock';
 import { OverlayModalService } from '../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../tests/overlay-modal-service-mock.spec';
+import { ConfigsService } from '../../common/services/configs.service';
+import { Storage } from '../../services/storage';
 
 @Component({
   selector: 'm-groups--tile',
@@ -81,10 +82,12 @@ describe('Groups List', () => {
       imports: [NgCommonModule, RouterTestingModule],
       providers: [
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useClass: Title, deps: [Title] },
         { provide: ContextService, useValue: contextServiceMock },
-        { provide: Session, useClass: Session },
+        ConfigsService,
+        Session,
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        Storage,
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents();
   }));

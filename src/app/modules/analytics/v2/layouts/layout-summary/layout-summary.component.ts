@@ -17,7 +17,7 @@ export class AnalyticsLayoutSummaryComponent implements OnInit {
   tiles = [
     {
       id: 'pageviews',
-      label: 'Daily pageviews',
+      label: 'Daily Pageviews',
       unit: 'number',
       interval: 'day',
       endpoint:
@@ -62,7 +62,7 @@ export class AnalyticsLayoutSummaryComponent implements OnInit {
     },
     {
       id: 'earnings_total',
-      label: 'Total PRO Earnings',
+      label: 'Total Pro Earnings',
       unit: 'usd',
       interval: 'day',
       endpoint: this.url + 'earnings',

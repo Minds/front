@@ -1,0 +1,8 @@
+<div class="m-wireCreator m-modalV2__inner">
+  <m-wireCreator__ownerBlock></m-wireCreator__ownerBlock>
+  <m-wireCreator__form></m-wireCreator__form>
+  <m-wireCreator__shop
+    *ngIf="(service.wireRewards$ | async)?.count"
+  ></m-wireCreator__shop>
+  <m-wireCreator__toolbar (onSubmit)="onSubmit()"></m-wireCreator__toolbar>
+</div>

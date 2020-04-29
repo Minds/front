@@ -1,6 +1,6 @@
 .m-mindsList__tools {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
   display: flex;
   position: relative;
@@ -28,5 +28,18 @@
 
   .m-channel--sorted__SortSelector {
     margin-left: auto;
+  }
+}
+
+.m-theme__2020 m-channel--sorted {
+  display: block;
+  padding: 0 40px;
+
+  @media screen and (max-width: $layoutMin2ColWidth) {
+    padding: 0;
+  }
+
+  m-activity {
+    margin-bottom: 20px;
   }
 }

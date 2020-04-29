@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
@@ -6,27 +6,31 @@ import { Session } from '../../services/session';
 import { EntitiesService } from './entities.service';
 import { BlockListService } from './block-list.service';
 
-import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
 import { switchMap, map, tap, first } from 'rxjs/operators';
 
 /**
  * Enables the grabbing of data through observable feeds.
  */
 @Injectable()
-export class FeedsService {
+export class FeedsService implements OnDestroy {
   limit: BehaviorSubject<number> = new BehaviorSubject(12);
   offset: BehaviorSubject<number> = new BehaviorSubject(0);
+  fallbackAt: number | null = null;
+  fallbackAtIndex: BehaviorSubject<number | null> = new BehaviorSubject(null);
   pageSize: Observable<number>;
   pagingToken: string = '';
   canFetchMore: boolean = true;
   endpoint: string = '';
   params: any = { sync: 1 };
   castToActivities: boolean = false;
+  exportUserCounts: boolean = false;
 
   rawFeed: BehaviorSubject<Object[]> = new BehaviorSubject([]);
   feed: Observable<BehaviorSubject<Object>[]>;
   inProgress: BehaviorSubject<boolean> = new BehaviorSubject(true);
   hasMore: Observable<boolean>;
+  blockListSubscription: Subscription;
 
   constructor(
     protected client: Client,
@@ -48,14 +52,36 @@ export class FeedsService {
       switchMap(feed =>
         this.entitiesService
           .setCastToActivities(this.castToActivities)
+          .setExportUserCounts(this.exportUserCounts)
           .getFromFeed(feed)
       ),
+      tap(feed => {
+        if (feed.length && this.fallbackAt) {
+          for (let i = 0; i < feed.length; i++) {
+            const entity: any = feed[i].getValue();
+
+            if (
+              entity &&
+              entity.time_created &&
+              entity.time_created < this.fallbackAt
+            ) {
+              this.fallbackAtIndex.next(i);
+              break;
+            }
+          }
+        }
+      }),
       tap(feed => {
         if (feed.length)
           // We should have skipped but..
           this.inProgress.next(false);
       })
     );
+
+    // Trigger a re-run of the above pipe on blockedList emission.
+    this.blockListSubscription = blockListService.blocked.subscribe(block => {
+      this.rawFeed.next(this.rawFeed.getValue());
+    });
 
     this.hasMore = combineLatest(
       this.rawFeed,
@@ -69,6 +95,12 @@ export class FeedsService {
         return inProgress || feed.length > offset;
       })
     );
+  }
+
+  ngOnDestroy(): void {
+    if (this.blockListSubscription) {
+      this.blockListSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -120,18 +152,28 @@ export class FeedsService {
   }
 
   /**
+   * Sets exportUserCounts
+   * @param { boolean } export - whether or not to export user's subscribers_count and subscriptions_count.
+   */
+  setExportUserCounts(value: boolean): FeedsService {
+    this.exportUserCounts = value;
+    return this;
+  }
+
+  /**
    * Fetches the data.
    */
-  fetch(): FeedsService {
+  fetch(): Promise<any> {
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
-    this.client
+    return this.client
       .get(this.endpoint, {
         ...this.params,
         ...{
           limit: 150, // Over 12 scrolls
           as_activities: this.castToActivities ? 1 : 0,
+          export_user_counts: this.exportUserCounts ? 1 : 0,
           from_timestamp: this.pagingToken,
         },
       })
@@ -143,6 +185,8 @@ export class FeedsService {
           response.entities = response.activity;
         }
         if (response.entities.length) {
+          this.fallbackAt = response['fallback_at'];
+          this.fallbackAtIndex.next(null);
           this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
           this.pagingToken = response['load-next'];
         } else {
@@ -150,7 +194,6 @@ export class FeedsService {
         }
       })
       .catch(e => console.log(e));
-    return this;
   }
 
   /**
@@ -164,10 +207,23 @@ export class FeedsService {
     return this;
   }
 
+  deleteItem(obj: any, comparatorFn: (item, obj) => boolean): FeedsService {
+    const feed: any[] = this.rawFeed.getValue();
+    feed.forEach((item, index) => {
+      if (comparatorFn(item, obj)) {
+        feed.splice(index, 1);
+      }
+    });
+    this.rawFeed.next(feed);
+    return this;
+  }
+
   /**
    * To clear data.
    */
   clear(): FeedsService {
+    this.fallbackAt = null;
+    this.fallbackAtIndex.next(null);
     this.offset.next(0);
     this.pagingToken = '';
     this.rawFeed.next([]);

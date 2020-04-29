@@ -20,21 +20,23 @@ import { ChannelSidebar } from './sidebar/sidebar';
 import { ChannelFeedComponent } from './feed/feed';
 import { ChannelSocialProfiles } from './social-profiles/social-profiles';
 import { ChannelComponent } from './channel.component';
-import { ChannelsListComponent } from './list.component';
 import { ChannelsTileComponent } from './tile/tile.component';
 import { PosterModule } from '../newsfeed/poster/poster.module';
 import { NewsfeedModule } from '../newsfeed/newsfeed.module';
-import { ExplicitOverlayComponent } from './explicit-overlay/overlay.component';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ChannelSortedModuleComponent } from './sorted/module.component';
 import { ReferralsModule } from '../wallet/tokens/referrals/referrals.module';
+import { ChannelSidebarV2Component } from './sidebar-v2/sidebar-v2.component';
+import { ChannelStatsComponent } from './sidebar-v2/stats/channel-stats.component';
+import { ChannelBiofieldsComponent } from './sidebar-v2/biofields/biofields.component';
+import { ComposerModule } from '../composer/composer.module';
+import { OnboardingWrapperService } from './service/onboarding-wrapper.service';
 import { SubscriptionsRequestsListComponent } from './requests/list.component';
 import { SubscriptionsRequestsRequestComponent } from './requests/request.component';
 
 const routes: Routes = [
-  { path: 'channels/:filter', component: ChannelsListComponent },
-  { path: 'channels', redirectTo: '/channels/top', pathMatch: 'full' },
+  { path: 'channels', redirectTo: '/newsfeed/global/top', pathMatch: 'full' },
 ];
 
 @NgModule({
@@ -52,6 +54,7 @@ const routes: Routes = [
     NewsfeedModule,
     HashtagsModule,
     ReferralsModule,
+    ComposerModule,
   ],
   declarations: [
     ChannelModulesComponent,
@@ -60,16 +63,18 @@ const routes: Routes = [
     ChannelSubscribers,
     ChannelSubscriptions,
     ChannelSocialProfiles,
-    ChannelsListComponent,
     ChannelsTileComponent,
     ChannelFeedComponent,
     ChannelSidebar,
-    ExplicitOverlayComponent,
+    ChannelSidebarV2Component,
     ChannelSortedComponent,
     ChannelSortedModuleComponent,
+    ChannelStatsComponent,
+    ChannelBiofieldsComponent,
     SubscriptionsRequestsListComponent,
     SubscriptionsRequestsRequestComponent,
   ],
+  providers: [OnboardingWrapperService],
   exports: [
     ChannelModulesComponent,
     ChannelSupporters,
@@ -78,8 +83,9 @@ const routes: Routes = [
     ChannelSocialProfiles,
     ChannelFeedComponent,
     ChannelSidebar,
+    ChannelSidebarV2Component,
     ChannelComponent,
   ],
-  entryComponents: [ChannelComponent, ChannelsListComponent],
+  entryComponents: [ChannelComponent],
 })
 export class ChannelsModule {}

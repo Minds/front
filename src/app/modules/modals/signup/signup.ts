@@ -14,6 +14,7 @@ import { Session } from '../../../services/session';
 import { AnalyticsService } from '../../../services/analytics';
 import { LoginReferrerService } from '../../../services/login-referrer.service';
 import { SiteService } from '../../../common/services/site.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-modal-signup',
@@ -24,7 +25,6 @@ export class SignupModal {
   @Output('onClose') onClosed: EventEmitter<any> = new EventEmitter<any>();
   open: boolean = false;
   route: string = '';
-  minds = window.Minds;
 
   subtitle: string =
     'Signup to comment, upload, vote and receive 100 free views on your content.';
@@ -32,9 +32,9 @@ export class SignupModal {
   overrideOnboarding: boolean = false;
 
   get logo() {
-    return this.site.isProDomain
-      ? `${this.minds.cdn_url}fs/v1/thumbnail/${this.site.pro.logo_guid}/master`
-      : `${this.minds.cdn_assets_url}assets/logos/logo.svg`;
+    return this.site.isProDomain && this.site.pro.logo_image
+      ? this.site.pro.logo_image
+      : `${this.configs.get('cdn_assets_url')}assets/logos/logo.svg`;
   }
 
   constructor(
@@ -47,7 +47,8 @@ export class SignupModal {
     private applicationRef: ApplicationRef,
     private loginReferrer: LoginReferrerService,
     private analyticsService: AnalyticsService,
-    private site: SiteService
+    private site: SiteService,
+    private configs: ConfigsService
   ) {
     this.listen();
     this.service.isOpen.subscribe({
@@ -127,7 +128,7 @@ export class SignupModal {
           }
         };
         window.open(
-          this.minds.site_url + 'api/v1/thirdpartynetworks/facebook/login',
+          this.site.baseUrl + 'api/v1/thirdpartynetworks/facebook/login',
           'Login with Facebook',
           'toolbar=no, location=no, directories=no, status=no, menubar=no, copyhistory=no, width=600, height=400, top=100, left=100'
         );

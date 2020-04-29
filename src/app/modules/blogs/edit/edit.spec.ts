@@ -19,16 +19,15 @@ import {
 import { Hovercard } from '../../../common/directives/hovercard';
 import { uploadMock } from '../../../../tests/upload-mock.spec';
 import { Upload } from '../../../services/api/upload';
-import { MindsTitle } from '../../../services/ux/title';
 import { HovercardService } from '../../../services/hovercard';
 import { hovercardServiceMock } from '../../../mocks/services/hovercard-mock.spec';
 import { By } from '@angular/platform-browser';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { MockComponent, MockDirective } from '../../../utils/mock';
+import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { InMemoryStorageService } from '../../../services/in-memory-storage.service';
 import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-service-mock.spec';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'minds-banner',
@@ -44,7 +43,6 @@ import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-
   template: ``,
 })
 class MindsBannerMock {
-  minds: Minds = window.Minds;
   object;
   editing: boolean = false;
   src: string = '';
@@ -245,6 +243,11 @@ describe('BlogEdit', () => {
           inputs: ['date', 'dateFormat'],
           outputs: ['dateChange'],
         }),
+        MockComponent({
+          selector: 'm-nsfw-selector',
+          outputs: ['selectedChanged'],
+          inputs: ['selected'],
+        }),
         MockDirective({
           selector: '[mIfFeature]',
           inputs: ['mIfFeature'],
@@ -257,11 +260,14 @@ describe('BlogEdit', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: Upload, useValue: uploadMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: HovercardService, useValue: hovercardServiceMock },
         {
           provide: InMemoryStorageService,
           useValue: inMemoryStorageServiceMock,
+        },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
         },
       ],
     }).compileComponents(); // compile template and css
@@ -283,26 +289,6 @@ describe('BlogEdit', () => {
 
     clientMock.response[`api/v1/admin/boosts/newsfeed`] = {
       status: 'success',
-    };
-
-    window.Minds.categories = {
-      art: 'Art',
-      animals: 'Animals',
-      music: 'Music',
-      science: 'Science',
-      technology: 'Technology',
-      gaming: 'Gaming',
-      nature: 'Nature',
-      news: 'News',
-      politics: 'Politics',
-      comedy: 'Comedy',
-      film: 'Film ',
-      education: 'Education',
-      sports: 'Sports',
-      food: 'Food',
-      modeling: 'Modeling',
-      spirituality: 'Spirituality ',
-      health: 'Health',
     };
 
     fixture.detectChanges();

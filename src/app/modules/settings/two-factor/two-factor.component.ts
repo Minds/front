@@ -11,8 +11,8 @@ import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/mod
   templateUrl: 'two-factor.component.html',
 })
 export class SettingsTwoFactorComponent {
-  minds: Minds;
-  telno: number;
+  telno: string;
+  number: string;
   secret;
   waitingForCheck: boolean = false;
   sendingSms: boolean = false;
@@ -25,7 +25,6 @@ export class SettingsTwoFactorComponent {
     public client: Client,
     private overlayModal: OverlayModalService
   ) {
-    this.minds = window.Minds;
     this.load();
   }
 
@@ -37,13 +36,17 @@ export class SettingsTwoFactorComponent {
     });
   }
 
-  setup(smsNumber: any) {
-    this.telno = smsNumber;
+  numberChange(number: string) {
+    this.number = number;
+  }
+
+  setup() {
+    this.telno = this.number;
     this.waitingForCheck = true;
     this.sendingSms = true;
     this.error = '';
     this.client
-      .post('api/v1/twofactor/setup', { tel: smsNumber })
+      .post('api/v1/twofactor/setup', { tel: this.telno })
       .then((response: any) => {
         this.secret = response.secret;
         this.sendingSms = false;

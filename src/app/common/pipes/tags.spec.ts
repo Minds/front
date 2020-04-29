@@ -2,10 +2,12 @@ import { TagsPipe } from './tags';
 import { FeaturesService } from '../../services/features.service';
 import { MockService } from '../../utils/mock';
 import { SiteService } from '../services/site.service';
+import { TagsService } from '../services/tags.service';
 
 describe('TagPipe', () => {
   const featuresServiceMock: any = MockService(FeaturesService, {
     has: feature => {
+      if (feature === 'navigation') return false;
       return true;
     },
   });
@@ -17,17 +19,19 @@ describe('TagPipe', () => {
     },
   });
 
+  const tagsService: any = new TagsService();
+
   let pipe;
 
   beforeEach(() => {
-    pipe = new TagsPipe(featuresServiceMock, siteServiceMock);
+    pipe = new TagsPipe(featuresServiceMock, siteServiceMock, tagsService);
   });
 
   it('should transform when # in the middle ', () => {
     const string = 'textstring#name';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/newsfeed/global/top;hashtag=name;period=24h'
+      '<a href="/newsfeed/global/top;hashtag=name;period=7d'
     );
   });
 
@@ -35,7 +39,7 @@ describe('TagPipe', () => {
     const string = 'textstring #name';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/newsfeed/global/top;hashtag=name;period=24h'
+      '<a href="/newsfeed/global/top;hashtag=name;period=7d'
     );
   });
 
@@ -43,7 +47,7 @@ describe('TagPipe', () => {
     const string = 'textstring [#name';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/newsfeed/global/top;hashtag=name;period=24h'
+      '<a href="/newsfeed/global/top;hashtag=name;period=7d'
     );
   });
 
@@ -51,7 +55,7 @@ describe('TagPipe', () => {
     const string = 'textstring (#name)';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/newsfeed/global/top;hashtag=name;period=24h'
+      '<a href="/newsfeed/global/top;hashtag=name;period=7d'
     );
   });
 
@@ -59,7 +63,7 @@ describe('TagPipe', () => {
     const string = 'textString #NaMe';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/newsfeed/global/top;hashtag=name;period=24h'
+      '<a href="/newsfeed/global/top;hashtag=name;period=7d'
     );
   });
 
@@ -67,10 +71,10 @@ describe('TagPipe', () => {
     const string = '#hash #hashlonger';
     const transformedString = pipe.transform(<any>string);
     expect(transformedString).toContain(
-      '<a href="/newsfeed/global/top;hashtag=hash;period=24h'
+      '<a href="/newsfeed/global/top;hashtag=hash;period=7d'
     );
     expect(transformedString).toContain(
-      '<a href="/newsfeed/global/top;hashtag=hashlonger;period=24h'
+      '<a href="/newsfeed/global/top;hashtag=hashlonger;period=7d'
     );
   });
 
@@ -188,13 +192,13 @@ describe('TagPipe', () => {
     expect(transformedString).toContain('<a class="tag" href="/name"');
     expect(transformedString).toContain('<a class="tag" href="/name1"');
     expect(transformedString).toContain(
-      '<a href="/newsfeed/global/top;hashtag=hash1;period=24h'
+      '<a href="/newsfeed/global/top;hashtag=hash1;period=7d'
     );
     expect(transformedString).toContain(
-      '<a href="/newsfeed/global/top;hashtag=hash2;period=24h'
+      '<a href="/newsfeed/global/top;hashtag=hash2;period=7d'
     );
     expect(transformedString).toContain(
-      '<a href="/newsfeed/global/top;hashtag=hash3;period=24h'
+      '<a href="/newsfeed/global/top;hashtag=hash3;period=7d'
     );
     expect(transformedString).toContain('<a href="ftp://s.com"');
     expect(transformedString).toContain('<a href="mailto:name@mail.com"');

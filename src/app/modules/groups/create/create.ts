@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
-import { MindsTitle } from '../../../services/ux/title';
 import { Session } from '../../../services/session';
 
 @Component({
@@ -15,8 +14,6 @@ import { Session } from '../../../services/session';
   templateUrl: 'create.html',
 })
 export class GroupsCreator {
-  minds = window.Minds;
-
   banner: any = false;
   avatar: any = false;
   group: any = {
@@ -37,10 +34,8 @@ export class GroupsCreator {
     public session: Session,
     public service: GroupsService,
     public router: Router,
-    public title: MindsTitle
-  ) {
-    this.title.setTitle('Create Group');
-  }
+    private groupsService: GroupsService
+  ) {}
 
   addBanner(banner: any) {
     this.banner = banner.file;
@@ -101,6 +96,7 @@ export class GroupsCreator {
             }
           )
           .then(() => {
+            this.groupsService.updateMembership(true, guid);
             this.router.navigate(['/groups/profile', guid]);
           });
       })

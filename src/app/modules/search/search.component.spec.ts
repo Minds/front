@@ -15,7 +15,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { Client } from '../../services/api/client';
 import { clientMock } from '../../../tests/client-mock.spec';
-import { MindsTitle } from '../../services/ux/title';
 import { Storage } from '../../services/storage';
 import { storageMock } from '../../../tests/storage-mock.spec';
 import { Session } from '../../services/session';
@@ -77,7 +76,6 @@ describe('Search', () => {
       imports: [NgCommonModule, RouterTestingModule],
       providers: [
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useClass: Title, deps: [Title] },
         { provide: Storage, useValue: storageMock },
         { provide: Session, useValue: sessionMock },
       ],

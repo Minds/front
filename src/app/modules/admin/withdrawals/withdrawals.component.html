@@ -1,0 +1,124 @@
+<div class="m-admin-withdrawals">
+  <div class="m-admin-withdrawals__legend">
+    <ng-container *ngIf="user" i18n>
+      <b>@{{ user }}</b
+      >'s withdrawals
+    </ng-container>
+
+    <ng-container *ngIf="!user" i18n>
+      Pending Withdrawals
+    </ng-container>
+  </div>
+
+  <div
+    class="m-admin-withdrawals__card"
+    *ngFor="let request of withdrawals; let i = index"
+  >
+    <ng-container *ngIf="request">
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>Requested</div>
+
+        <div class="m-admin-withdrawalsCardCell__body">
+          {{ request.timestamp * 1000 | date: 'short' }}
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>User</div>
+
+        <div class="m-admin-withdrawalsCardCell__body">
+          <a [routerLink]="['/', request.user?.username]"
+            >@{{ request.user?.username }}</a
+          >
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>Signed up</div>
+
+        <div class="m-admin-withdrawalsCardCell__body">
+          {{ request.user?.time_created * 1000 | date: 'shortDate' }}
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>Referrer</div>
+
+        <div class="m-admin-withdrawalsCardCell__body">
+          <ng-container *ngIf="request.referrer; else organicText">
+            <a [routerLink]="['/', request.referrer.username]"
+              >@{{ request.referrer.username }}</a
+            >
+          </ng-container>
+          <ng-template #organicText>
+            <ng-container>(organic)</ng-container>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>Amount</div>
+
+        <div
+          class="m-admin-withdrawalsCardCell__body m-admin-withdrawalsCardCell__body--bolder"
+        >
+          {{ request.amount | token: 18 | number: '1.0-4' }}
+        </div>
+      </div>
+
+      <div class="m-admin-withdrawalsCard__cell">
+        <div class="m-admin-withdrawalsCardCell__label" i18n>Status</div>
+
+        <div class="m-admin-withdrawalsCardCell__body">
+          {{ request.status?.replace('_', ' ') | uppercase }}
+        </div>
+      </div>
+
+      <div
+        class="m-admin-withdrawalsCard__cell m-admin-withdrawalsCard__cell--actions"
+        *ngIf="request.status === 'pending_approval'"
+      >
+        <div class="m-admin-withdrawalsCardCell__body">
+          <a
+            [routerLink]="[
+              '/admin/withdrawals',
+              { user: request.user?.username }
+            ]"
+            >History</a
+          >
+
+          <button
+            class="mf-button mf-button--smaller"
+            [disabled]="inProgress"
+            (click)="approve(request)"
+          >
+            Approve
+          </button>
+
+          <button
+            class="mf-button mf-button--destructive mf-button--smaller"
+            [disabled]="inProgress"
+            (click)="reject(request)"
+          >
+            Reject
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div
+    class="m-admin-withdrawals__notice"
+    *ngIf="!inProgress && !withdrawals?.length"
+  >
+    No withdrawals to show. You can access a user's ledger by using the admin
+    drop-down on their channel.
+  </div>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress"
+  ></infinite-scroll>
+</div>

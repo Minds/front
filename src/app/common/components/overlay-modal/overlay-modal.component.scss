@@ -86,12 +86,12 @@
 
 .m-overlay-modal--close {
   position: absolute;
-  top: $minds-padding * 2;
-  right: $minds-padding * 2;
+  top: 10px;
+  right: 10px;
   z-index: 99999999;
 
   display: inline-block;
-  padding: $minds-padding;
+  padding: 10px;
   border-radius: 4px;
 
   cursor: pointer;
@@ -136,5 +136,15 @@
   z-index: 9999998;
   @include m-theme() {
     background-color: rgba(themed($m-black-always), 0.5);
+  }
+}
+
+.m-overlay-modal.m-overlayModal--media {
+  .m-overlay-modal--close {
+    .m-overlay-modal--escHint {
+      font-weight: 400;
+      display: block;
+      opacity: 0;
+    }
   }
 }

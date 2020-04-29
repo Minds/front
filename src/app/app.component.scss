@@ -1,5 +1,6 @@
 @import 'defaults';
 @import 'themes';
+@import 'foundation/grid-values.scss';
 
 html,
 body {
@@ -25,19 +26,8 @@ m-app {
 
   m-body {
     @include m-theme() {
-      background-color: themed($m-body-bg);
+      background-color: themed($m-bgColor--primary);
     }
-    //  display: inline-block;
-    //  overflow:visible;
-    //  flex-grow: 1;
-    //  z-index: 1;
-    //  margin-top: $layout-header-height;
-    //  margin-left: $layout-sidebar-width;
-    //  width: 100%;
-    //
-    // @media screen and (max-width: $min-tablet){
-    //   margin-left:0;
-    //  }
   }
 
   p {
@@ -55,6 +45,7 @@ m-app {
       color: rgba(themed($m-black), 0.75);
     }
   }
+
   .mdl-card__supporting-text {
     font-family: 'Roboto', Helvetica, sans-serif;
   }
@@ -122,8 +113,8 @@ m-app {
     font-size: 13px;
 
     @include m-theme() {
-      background-color: themed($m-white);
-      border: 1px solid themed($m-grey-50);
+      background-color: themed($m-bgColor--secondary);
+      border: 1px solid themed($m-borderColor--tertiary);
     }
 
     &.m-page--sidebar--navigation--item-active {
@@ -142,6 +133,7 @@ m-app {
     }
   }
 }
+
 .m-loader {
   width: 100%;
   padding: 16px;

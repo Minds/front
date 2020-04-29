@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../services/api/client';
+import { Session } from '../../services/session';
 
 @Injectable()
 export class BlockchainService {
   protected serverWalletAddressCache: string;
   protected serverBalanceCache: number | string;
 
-  constructor(private client: Client) {}
+  constructor(private client: Client, private session: Session) {}
 
   // Wallet
 
@@ -33,7 +34,8 @@ export class BlockchainService {
     await this.client.post(`api/v2/blockchain/wallet`, data);
 
     this.serverWalletAddressCache = data.address;
-    window.Minds.user.eth_wallet = data.address;
+    const user = this.session.getLoggedInUser();
+    user.eth_wallet = data.address;
   }
 
   async getBalance(refresh?: boolean) {
@@ -58,7 +60,7 @@ export class BlockchainService {
 
   // Service provider
 
-  static _(client: Client) {
-    return new BlockchainService(client);
+  static _(client: Client, session: Session) {
+    return new BlockchainService(client, session);
   }
 }

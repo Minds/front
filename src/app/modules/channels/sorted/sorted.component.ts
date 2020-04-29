@@ -9,13 +9,17 @@ import {
   ViewChild,
   SkipSelf,
   Injector,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { Session } from '../../../services/session';
 import { PosterComponent } from '../../newsfeed/poster/poster.component';
 import { SortedService } from './sorted.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { Client } from '../../../services/api';
+import { ComposerComponent } from '../../composer/composer.component';
 
 @Component({
   selector: 'm-channel--sorted',
@@ -65,6 +69,8 @@ export class ChannelSortedComponent implements OnInit {
 
   @ViewChild('poster', { static: false }) protected poster: PosterComponent;
 
+  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
+
   scheduledCount: number = 0;
 
   constructor(
@@ -74,6 +80,7 @@ export class ChannelSortedComponent implements OnInit {
     protected clientMetaService: ClientMetaService,
     @SkipSelf() injector: Injector,
     protected cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object,
     public client: Client
   ) {
     this.clientMetaService
@@ -104,9 +111,11 @@ export class ChannelSortedComponent implements OnInit {
     }
 
     try {
+      const limit = isPlatformBrowser(this.platformId) ? 12 : 2;
+
       this.feedsService
         .setEndpoint(`${endpoint}/${this.channel.guid}/${this.type}`)
-        .setLimit(12)
+        .setLimit(limit)
         .fetch();
 
       this.getScheduledCount();
@@ -148,6 +157,10 @@ export class ChannelSortedComponent implements OnInit {
       return;
     }
 
+    if (activity.time_created > Date.now() / 1000) {
+      this.scheduledCount += 1;
+    }
+
     this.entities.unshift(activity);
 
     let feedItem = {
@@ -165,7 +178,7 @@ export class ChannelSortedComponent implements OnInit {
     this.detectChanges();
   }
 
-  canDeactivate() {
+  protected v1CanDeactivate(): boolean {
     if (!this.poster || !this.poster.attachment) {
       return true;
     }
@@ -177,6 +190,15 @@ export class ChannelSortedComponent implements OnInit {
     }
 
     return true;
+  }
+
+  canDeactivate(): boolean | Promise<boolean> {
+    if (this.composer) {
+      return this.composer.canDeactivate();
+    }
+
+    // Check v1 Poster component
+    return this.v1CanDeactivate();
   }
 
   detectChanges() {
@@ -194,5 +216,11 @@ export class ChannelSortedComponent implements OnInit {
     const response: any = await this.client.get(url);
     this.scheduledCount = response.count;
     this.detectChanges();
+  }
+
+  delete(activity: any) {
+    this.feedsService.deleteItem(activity, (item, obj) => {
+      return item.guid === obj.guid;
+    });
   }
 }

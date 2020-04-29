@@ -75,15 +75,6 @@
 
         <a
           class="m-page--sidebar--navigation--item"
-          routerLink="/settings/p2pmedia"
-          routerLinkActive="m-page--sidebar--navigation--item-active"
-        >
-          <i class="material-icons">ondemand_video</i>
-          <span i18n="@@SETTINGS__NAVIGATION__P2PMEDIA_NAV">P2P Media</span>
-        </a>
-
-        <a
-          class="m-page--sidebar--navigation--item"
           routerLink="/settings/reported-content"
           routerLinkActive="m-page--sidebar--navigation--item-active"
         >
@@ -97,6 +88,7 @@
           class="m-page--sidebar--navigation--item"
           routerLink="/settings/blocked-channels"
           routerLinkActive="m-page--sidebar--navigation--item-active"
+          data-cy="data-minds-settings-banned-channels"
         >
           <i class="material-icons">block</i>
           <span i18n>Blocked Channels</span>
@@ -111,7 +103,6 @@
 
         <a
           class="m-page--sidebar--navigation--item"
-          *ngIf="session.getLoggedInUser().pro"
           [routerLink]="[
             '/pro/' + session.getLoggedInUser().username + '/settings'
           ]"

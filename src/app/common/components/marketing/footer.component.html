@@ -8,8 +8,9 @@
       <h4 class="m-marketingFooter__sloganText" i18n>
         Take back control of your social media
       </h4>
-
-      <div class="m-marketingFooter__text">&copy; {{ year }} Minds, Inc.</div>
+      <div class="m-marketingFooter__text" *ngIf="!isMobile">
+        &copy; {{ year }} Minds, Inc.
+      </div>
     </div>
 
     <div
@@ -53,8 +54,8 @@
         </li>
 
         <li>
-          <a href="https://irl.minds.com/" target="_blank" i18n>
-            Minds IRL
+          <a href="https://change.minds.com/" target="_blank" i18n>
+            Events
           </a>
         </li>
       </ul>
@@ -201,6 +202,9 @@
     <div
       class="m-grid__column-12 m-grid__column-12--mobile m-marketingFooter__column"
     >
+      <div class="m-marketingFooter__text" *ngIf="isMobile">
+        &copy; {{ year }} Minds, Inc.
+      </div>
       <ul class="m-marketingFooter__inlineList m-marketingFooter__legalLinks">
         <li>
           <a routerLink="/p/terms" i18n>

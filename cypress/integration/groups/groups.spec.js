@@ -1,21 +1,37 @@
-context('Groups', () => {
+import generateRandomId from '../../support/utilities';
+
+const groupId = generateRandomId();
+
+const member = {
+  username: generateRandomId(),
+  password: generateRandomId()+'A1a#!'
+}
+
+const postContent = generateRandomId();
+
+context.only('Groups', () => {
   before(() => {
-    cy.getCookie('minds_sess')
-    .then((sessionCookie) => {
-      if (sessionCookie === null) {
-        return cy.login(true);
-      }
-    });
+    cy.newUser(member.username, member.password);
+    cy.logout();
+    cy.login(true);
   });
 
   beforeEach(()=> {
     cy.preserveCookies();
+    cy.server();
+    cy.route('GET', '**/api/v2/feeds/container/**').as('getGroupsFeed');
+    cy.route("POST", "**/api/v1/groups/group*").as("postGroup");
+    cy.route('GET', "**/api/v1/groups/member/**").as("getGroupsMember")
+    cy.route('GET', '**/v1/groups/group/**').as('getGroupsGroup');
+  });
+
+  after(() => {
+    cy.logout(true);
+    cy.login(false, member.username, member.password);
+    cy.deleteUser(member.username, member.password);  
   });
 
   it('should create and edit a group', () => {
-
-    cy.server();
-    cy.route("POST", "**/api/v1/groups/group*").as("postGroup");
 
     cy.get('m-group--sidebar-markers li:first-child').contains('New group').click();
 
@@ -25,31 +41,37 @@ context('Groups', () => {
     cy.uploadFile('minds-banner #file', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg');
 
     // add a name
-    cy.get('.m-group-info-name > input').type('test');
+    cy.get('.m-group-info-name > input').type(groupId);
     // add a description
     cy.get('.m-group-info-brief-description > textarea').type('This is a test');
 
     // click on hashtags dropdown
     cy.get('m-hashtags-selector .m-dropdown--label-container').click();
-    // select #ART
-    cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div > span').contains('art').click();
+    // select #ART TODO: Set tags on sandboxes
+    // cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div > span').contains('art').click();
+
     // type in another hashtag manually
     cy.get('m-hashtags-selector m-form-tags-input input').type('hashtag{enter}').click();
     // click away
-    cy.get('m-hashtags-selector .minds-bg-overlay').click();
+    cy.get('m-hashtags-selector .minds-bg-overlay').click({force: true});
 
     cy.get('.m-groups-save > button').contains('Create').click();
     cy.route("POST", "**/api/v1/groups/group/*/banner*").as("postBanner");
 
-    cy.wait('@postGroup').then((xhr) => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.equal('success');
-    }).wait('@postBanner').then((xhr) => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.equal('success');
-    });
+    // get current groups count of sidebar
+    cy.get('.m-groupSidebarMarkers__list').children().its('length').then((size) => {
+      cy.wait('@postGroup').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal('success');
+      }).wait('@postBanner').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal('success');
+      });
 
-    cy.get('.m-groupInfo__name').contains('test');
+      //check count changed.
+      cy.get('.m-groupSidebarMarkers__list').children().should('have.length', size + 1);
+    });
+    cy.get('.m-groupInfo__name').contains(groupId);
     cy.get('.m-groupInfo__description').contains('This is a test');
 
     // open settings button
@@ -58,7 +80,7 @@ context('Groups', () => {
     cy.get('minds-groups-settings-button ul.minds-dropdown-menu li:first-child').contains('Edit').click();
 
     // edit name
-    cy.get('.m-groupInfo__name input').type(' group');
+    cy.get('.m-groupInfo__name input').type(' edit');
 
     // edit description
     cy.get('.m-groupInfo__description textarea').type(' group');
@@ -68,16 +90,12 @@ context('Groups', () => {
 
     cy.get('minds-groups-settings-button ul.minds-dropdown-menu li:first-child').contains('Save').click();
 
-    cy.get('.m-groupInfo__name').contains('test group');
+    cy.get('.m-groupInfo__name').contains(groupId + ' edit');
     cy.get('.m-groupInfo__description').contains('This is a test group');
   })
 
   it('should be able to toggle conversation and comment on it', () => {
-
-    cy.get("m-group--sidebar-markers li:contains('test group')")
-      .first()
-      .click();
-
+    cy.contains(groupId).click({force: true});
 
     // toggle the conversation
     cy.get('.m-groupGrid__right').should('be.visible');
@@ -97,27 +115,35 @@ context('Groups', () => {
     });
   })
 
+  it('should be able to toggle conversations', () => {
+    cy.contains(groupId).click();
+
+    cy.get('minds-groups-settings-button > button').click();
+    cy.contains('Disable Conversation').click();
+
+    cy.get('.m-groupGrid__right').should('not.exist');
+
+    cy.get('minds-groups-settings-button > button').click();
+    cy.contains('Enable Conversation').click();
+
+    cy.get('.m-groupGrid__right').should('exist');
+  });
+
   it('should post an activity inside the group and record the view when scrolling', () => {
-    cy.get("m-group--sidebar-markers li:contains('test group')")
-      .first()
-      .click();
+    cy.contains(groupId).click();
 
     cy.server();
     cy.route("POST", "**/api/v2/analytics/views/activity/*").as("view");
 
-    cy.get('minds-newsfeed-poster textarea').type('This is a post');
-
-    cy.get('.m-posterActionBar__PostButton').click();
+    cy.post('This is a post');
 
     // the activity should show that it was posted in this group
-    cy.get('.minds-list minds-activity .body a:nth-child(2)').contains('(test group)');
+    cy.get('.minds-list minds-activity .body a:nth-child(2)').contains(`(${groupId} edit)`);
 
     cy.get('.minds-list minds-activity .m-mature-message-content').contains('This is a post');
 
     // create the post
-    cy.get('minds-newsfeed-poster textarea').type('This is a post that will record a view');
-
-    cy.get('.m-posterActionBar__PostButton').click();
+    cy.post('This is a post that will record a view');
 
     cy.scrollTo(0, '20px');
 
@@ -127,15 +153,129 @@ context('Groups', () => {
     });
   });
 
+  it('should navigate to discovery when Find a Group clicked', () => {
+    cy.contains('Discover Groups').click()
+    cy.location('pathname')
+      .should('eq', '/newsfeed/global/top;period=12h;type=groups;all=1');
+  });
+
+
+  it.skip('should allow a user to join the group', () => {
+    // load group as group owner
+    cy.contains(groupId)
+      .click()
+      .wait('@getGroupsFeed').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal("success");
+      });
+
+    // store URL
+    cy.url().then(url => {
+
+      // logout and login as new user.
+      cy.logout();
+      cy.login(true, member.username, member.password);
+      
+      // go to group as new user.
+      cy.visit(url)
+        .wait('@getGroupsFeed').then((xhr) => {
+          expect(xhr.status).to.equal(200);
+          expect(xhr.response.body.status).to.equal("success");
+        });
+      
+      // join.
+      cy.get('.m-groupInfo__actionButtons')
+        .contains('Join')
+        .click();
+
+      // make a post.
+      cy.post(postContent);
+    });
+  });
+   
+  // Causes pipeline to hang currently.
+  it.skip('should allow an admin to kick the new user by post menu', () => {
+    // nav to group organically.
+    cy.contains(groupId)
+      .click()
+      .wait('@getGroupsFeed').then((xhr) => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.equal("success");
+      });
+
+    // get the parental activity, and within it...
+    cy.contains(postContent)
+      .parentsUntil('minds-activity')
+      .parent()
+      .within(($list) => {
+        // click dropdown and then remove option.
+        cy.get('[data-cy=data-minds-post-menu-button]').click();
+        cy.get('[data-cy=data-minds-group-dropdown-remove]').click();
+      });
+
+    // confirm
+    cy.get('[data-cy=data-minds-kick-modal-confirm]').click();
+    cy.get('[data-cy=data-minds-kick-modal-okay]').click();
+    
+    // reset state.
+    cy.logout();
+    cy.login();
+  });
+  
+  it.skip('should allow an admin to kick the new user by members menu', () => {
+     // nav to group.
+     cy.contains(groupId)
+         .click()
+         .wait('@getGroupsFeed')
+         .then((xhr) => {
+           expect(xhr.status).to.equal(200);
+           expect(xhr.response.body.status).to.equal("success");
+         });
+ 
+     cy.contains('+ Members')
+       .click()
+       .wait('@getGroupsGroup')
+       .then((xhr) => {
+         expect(xhr.status).to.equal(200);
+         expect(xhr.response.body.status).to.equal("success");
+       });
+     cy.get('.minds-usercard-buttons')
+       .contains('settings')
+       .click();
+ 
+     cy.contains('Remove from Group').click();
+     cy.get('[data-cy=data-minds-modal-confirm]').click();
+  });
+  
+
   it('should delete a group', () => {
-    cy.get('m-group--sidebar-markers li:nth-child(3)').contains('test group').click();
+     // nav to group.
+    cy.contains(groupId)
+        .click()
+        .wait('@getGroupsFeed')
+        .then((xhr) => {
+          expect(xhr.status).to.equal(200);
+          expect(xhr.response.body.status).to.equal("success");
+        });
 
-    // cleanup
+    // click settings cog.
     cy.get('minds-groups-settings-button > button').click();
-    cy.get('minds-groups-settings-button ul.minds-dropdown-menu > li:nth-child(8)').contains('Delete Group').click();
-    cy.get('minds-groups-settings-button m-modal .mdl-button--raised').contains('Confirm').click();
 
-    cy.location('pathname').should('eq', '/groups/member');
-  })
+    cy.wait(500);
+    
+    // hit delete group, and confirm.
+    cy.get('[data-cy=data-minds-group-dropdown-delete]')
+      .click({force: true});
+    
+    cy.wait(500);
+    
+    cy.contains('Confirm')
+      .click()
+      .location('pathname')
+      .should('eq', '/groups/member');
+    
+    // assert groupId no longer exists on sidebar.
+    cy.contains(groupId).should('not.exist');
+  });
 
 })

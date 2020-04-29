@@ -7,18 +7,29 @@
 </div>
 
 <div class="m-error-splash" *ngIf="error && !group">
-  <img [src]="minds.cdn_assets_url + 'assets/logos/logo.svg'" />
+  <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
   <h3 class="mdl-color-text--red-300">{{error}}</h3>
   <span class="mdl-color-text--blue-grey-300">Check the url is correct</span>
   <router-outlet></router-outlet>
 </div>
 
+<m-explicit-overlay
+  [entity]="group"
+  message="This group contains content that is NSFW"
+  i18n-message
+></m-explicit-overlay>
+
 <div
   class="m-group__grid"
+  [class.m-pageLayout__container]="hasNewNavigation"
   *ngIf="group && (group['is:member'] || group.membership == 2)"
 >
   <!-- Sidebar -->
-  <div class="m-groupGrid__left">
+  <div
+    class="m-groupGrid__left"
+    [m-pageLayout__pane]="showRight ? 'main' : null"
+    *mIfBrowser
+  >
     <m-videochat></m-videochat>
 
     <header
@@ -163,21 +174,21 @@
             </div>
 
             <div *ngIf="editing && group['is:owner']">
-              <i class="material-icons"
-                >{{ group.membership == 2 ? 'public' : 'lock' }}</i
-              >
+              <i class="material-icons">
+                {{ group.membership == 2 ? 'public' : 'lock' }}
+              </i>
               <select
                 class="icon-prefix"
                 name="membership"
                 [ngModel]="group.membership"
                 (change)="group.membership = $event.target.value"
               >
-                <option value="2" i18n="@@GROUPS__OPEN_GROUP"
-                  >Open Group</option
-                >
-                <option value="0" i18n="@@GROUPS__CLOSED_GROUP"
-                  >Closed Group</option
-                >
+                <option value="2" i18n="@@GROUPS__OPEN_GROUP">
+                  Open Group
+                </option>
+                <option value="0" i18n="@@GROUPS__CLOSED_GROUP">
+                  Closed Group
+                </option>
               </select>
             </div>
           </div>
@@ -213,12 +224,12 @@
                 [ngModel]="group.moderated"
                 (change)="group.moderated = $event.target.value"
               >
-                <option value="0" i18n="@@GROUPS__ANYONE_CAN_POST"
-                  >Anyone can post</option
-                >
-                <option value="1" i18n="@@GROUPS__POSTS_ARE_MODERATED"
-                  >Posts are moderated</option
-                >
+                <option value="0" i18n="@@GROUPS__ANYONE_CAN_POST">
+                  Anyone can post
+                </option>
+                <option value="1" i18n="@@GROUPS__POSTS_ARE_MODERATED">
+                  Posts are moderated
+                </option>
               </select>
             </div>
           </div>
@@ -232,9 +243,9 @@
 
             <div [hidden]="editing || group.default_view != 1">
               <i class="material-icons">pageview</i>
-              <span i18n="@@GROUPS__DEFAULT_VIEW_CONVERSATIONS"
-                >Default view: Conversations</span
-              >
+              <span i18n="@@GROUPS__DEFAULT_VIEW_CONVERSATIONS">
+                Default view: Conversations
+              </span>
             </div>
 
             <div *ngIf="editing && group['is:owner']">
@@ -245,12 +256,12 @@
                 [ngModel]="group.default_view"
                 (change)="group.default_view = $event.target.value"
               >
-                <option value="0" i18n="@@GROUPS__DEFAULT_VIEW_FEED"
-                  >Default view: Feed</option
-                >
-                <option value="1" i18n="@@GROUPS__DEFAULT_VIEW_CONVERSATIONS"
-                  >Default view: Conversations</option
-                >
+                <option value="0" i18n="@@GROUPS__DEFAULT_VIEW_FEED">
+                  Default view: Feed
+                </option>
+                <option value="1" i18n="@@GROUPS__DEFAULT_VIEW_CONVERSATIONS">
+                  Default view: Conversations
+                </option>
               </select>
             </div>
           </div>
@@ -262,16 +273,16 @@
           >
             <div [hidden]="editing" *ngIf="group.videoChatDisabled == 0">
               <i class="material-icons">call</i>
-              <span i18n="@@GROUPS__VIDEO_CALLS_ENABLED"
-                >Video calls enabled</span
-              >
+              <span i18n="@@GROUPS__VIDEO_CALLS_ENABLED">
+                Video calls enabled
+              </span>
             </div>
 
             <div [hidden]="editing" *ngIf="group.videoChatDisabled == 1">
               <i class="material-icons">call</i>
-              <span i18n="@@GROUPS__VIDEO_CALLS_DISABLED"
-                >Video calls disabled</span
-              >
+              <span i18n="@@GROUPS__VIDEO_CALLS_DISABLED">
+                Video calls disabled
+              </span>
             </div>
 
             <div *ngIf="editing && group['is:owner']">
@@ -282,12 +293,12 @@
                 [ngModel]="group.videoChatDisabled"
                 (change)="group.videoChatDisabled = $event.target.value"
               >
-                <option value="0" i18n="@@GROUPS__VIDEO_CALLS_ENABLED"
-                  >Video calls enabled</option
-                >
-                <option value="1" i18n="@@GROUPS__VIDEO_CALLS_DISABLED"
-                  >Video calls disabled</option
-                >
+                <option value="0" i18n="@@GROUPS__VIDEO_CALLS_ENABLED">
+                  Video calls enabled
+                </option>
+                <option value="1" i18n="@@GROUPS__VIDEO_CALLS_DISABLED">
+                  Video calls disabled
+                </option>
               </select>
             </div>
           </div>
@@ -321,17 +332,24 @@
   </div>
   <!-- END LEFT BLOCK -->
 
-  <div class="m-groupGrid__toggleBtn" (click)="toggleConversations()">
-    <i class="material-icons" *ngIf="showRight">keyboard_arrow_right</i>
-    <i class="material-icons" *ngIf="!showRight">keyboard_arrow_left</i>
-  </div>
+  <ng-container *ngIf="!group.conversationDisabled">
+    <div class="m-groupGrid__toggleBtn" (click)="toggleConversations()">
+      <i class="material-icons" *ngIf="showRight">keyboard_arrow_right</i>
+      <i class="material-icons" *ngIf="!showRight">keyboard_arrow_left</i>
+    </div>
 
-  <div class="m-groupGrid__right" [hidden]="!showRight">
-    <!-- Conversation filter -->
-    <minds-groups-profile-conversation [group]="group">
-    </minds-groups-profile-conversation>
-    <!-- END: Conversation filter -->
-  </div>
+    <div
+      class="m-groupGrid__right"
+      [m-pageLayout__pane]="hasNewNavigation ? 'right' : null"
+      [hidden]="!showRight"
+      *ngIf="!hasNewNavigation || showRight"
+    >
+      <!-- Conversation filter -->
+      <minds-groups-profile-conversation [group]="group" *mIfBrowser>
+      </minds-groups-profile-conversation>
+      <!-- END: Conversation filter -->
+    </div>
+  </ng-container>
   <!-- END RIGHT BLOCK -->
 </div>
 
@@ -359,13 +377,15 @@
       <ng-container
         i18n="@@GROUPS__YOU_HAVE_BEEN_BANNED__NOTICE"
         *ngSwitchCase="'banned'"
-        >You've been banned from this group</ng-container
       >
+        You've been banned from this group
+      </ng-container>
       <ng-container
         i18n="@@GROUPS__YOU_HAVE_BEEN_BANNED__NOTICE"
         *ngSwitchDefault
-        >{{error}}</ng-container
       >
+        {{error}}
+      </ng-container>
     </div>
 
     <minds-groups-join-button

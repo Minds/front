@@ -4,34 +4,37 @@ import {
   ComponentFactoryResolver,
   ComponentRef,
   ElementRef,
+  HostBinding,
   Injector,
   ViewChild,
 } from '@angular/core';
 
 import { DynamicHostDirective } from '../../directives/dynamic-host.directive';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   moduleId: module.id,
   selector: 'm-overlay-modal',
-  template: `
-    <div
-      class="m-overlay-modal--backdrop"
-      [hidden]="hidden"
-      (click)="dismiss()"
-    ></div>
-    <div class="m-overlay-modal {{ class }}" [hidden]="hidden" #modalElement>
-      <a class="m-overlay-modal--close" (click)="dismiss()"
-        ><i class="material-icons">close</i></a
-      >
-      <ng-template dynamic-host></ng-template>
-    </div>
-  `,
+  templateUrl: 'overlay-modal.component.html',
+  animations: [
+    trigger('fadeOut', [
+      transition(':enter', [
+        style({ opacity: '1' }),
+        animate(
+          '500ms 1s cubic-bezier(0.23, 1, 0.32, 1)',
+          style({ opacity: '0' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class OverlayModalComponent implements AfterViewInit {
   hidden: boolean = true;
   class: string = '';
+  wrapperClass: string = '';
   root: HTMLElement;
+  isMediaModal: boolean = false;
 
   @ViewChild(DynamicHostDirective, { static: true })
   private host: DynamicHostDirective;
@@ -59,13 +62,17 @@ export class OverlayModalComponent implements AfterViewInit {
     this.dismiss();
 
     opts = {
-      ...{
-        class: '',
-      },
+      class: '',
+      wrapperClass: '',
+      inputValues: {},
       ...opts,
     };
 
     this.class = opts.class;
+    this.wrapperClass = opts.wrapperClass || '';
+
+    this.isMediaModal =
+      this.class.indexOf('m-overlayModal--media') > -1 ? true : false;
 
     if (!componentClass) {
       throw new Error('Unknown component class');
@@ -85,6 +92,18 @@ export class OverlayModalComponent implements AfterViewInit {
     );
     this.componentInstance = this.componentRef.instance;
     this.componentInstance.parent = this.modalElement.nativeElement;
+
+    for (const inputKey in opts.inputValues) {
+      if (opts.inputValues.hasOwnProperty(inputKey)) {
+        if (!this.componentInstance.hasOwnProperty(inputKey)) {
+          throw new Error(
+            `${inputKey} does not exist in ${this.componentInstance}`
+          );
+        }
+
+        this.componentInstance[inputKey] = opts.inputValues[inputKey];
+      }
+    }
   }
 
   setRoot(root: HTMLElement) {
@@ -121,6 +140,12 @@ export class OverlayModalComponent implements AfterViewInit {
     }
   }
 
+  onEscKeyup() {
+    if (this.isMediaModal) {
+      this.dismiss();
+    }
+  }
+
   dismiss() {
     this.hidden = true;
 
@@ -133,9 +158,17 @@ export class OverlayModalComponent implements AfterViewInit {
       return;
     }
 
+    try {
+      this.service._didDismiss();
+    } catch (e) {
+      console.warn('Error on callback while dismissing modal', e);
+    }
+
     this.componentRef.destroy();
     this.host.viewContainerRef.clear();
+  }
 
-    this.service._didDismiss();
+  @HostBinding('class') get wrapperComponentCssClass() {
+    return this.wrapperClass || '';
   }
 }

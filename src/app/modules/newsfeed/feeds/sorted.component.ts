@@ -5,6 +5,8 @@ import {
   OnInit,
   SkipSelf,
   ViewChild,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { take, map, mergeMap } from 'rxjs/operators';
@@ -12,10 +14,9 @@ import { take, map, mergeMap } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
-import { MindsTitle } from '../../../services/ux/title';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { Session } from '../../../services/session';
-import { Storage } from '../../../services/storage';
+import { CookieService } from '../../../common/services/cookie.service';
 import { ContextService } from '../../../services/context.service';
 import { SettingsService } from '../../settings/settings.service';
 import { PosterComponent } from '../poster/poster.component';
@@ -26,6 +27,7 @@ import { NewsfeedHashtagSelectorService } from '../services/newsfeed-hashtag-sel
 import { FeedsService } from '../../../common/services/feeds.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'm-newsfeed--sorted',
@@ -46,7 +48,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   inProgress: boolean = false;
   moreData: boolean = true;
   rating: number = 1;
-  minds;
 
   paramsSubscription: Subscription;
   ratingSubscription: Subscription;
@@ -63,8 +64,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
-    protected storage: Storage,
+    protected cookieService: CookieService,
     protected context: ContextService,
     protected session: Session,
     protected settingsService: SettingsService,
@@ -75,10 +75,9 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     public feedsService: FeedsService,
     protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.title.setTitle('Newsfeed');
-
     this.clientMetaService
       .inherit(injector)
       .setSource('feed/discovery')
@@ -113,7 +112,10 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
       if (typeof params['hashtag'] !== 'undefined') {
         this.hashtag = params['hashtag'] || null;
         this.all = false;
-      } else if (typeof params['all'] !== 'undefined') {
+      } else if (
+        typeof params['all'] !== 'undefined' ||
+        this.cookieService.get('preferred_hashtag_state') !== '1'
+      ) {
         this.hashtag = null;
         this.all = true;
       } else if (params['query']) {
@@ -137,7 +139,6 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.minds = window.Minds;
     this.context.set('activity');
 
     this.hashtagFilterChangeSubscription = this.newsfeedHashtagSelectorService.subscribe(
@@ -206,6 +207,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
     refresh: boolean = false,
     forceSync: boolean = false
   ) {
+    if (isPlatformServer(this.platformId)) return; // Logged in newsfeed for browser only
     if (refresh) {
       this.feedsService.clear();
     }
@@ -227,6 +229,7 @@ export class NewsfeedSortedComponent implements OnInit, OnDestroy {
           all,
           query,
           nsfw,
+          period_fallback: 1,
         })
         .setLimit(12)
         .setCastToActivities(true)

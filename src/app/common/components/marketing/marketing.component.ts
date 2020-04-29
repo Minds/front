@@ -2,23 +2,44 @@ import {
   ChangeDetectionStrategy,
   Component,
   Input,
+  OnDestroy,
   OnInit,
 } from '@angular/core';
-import { MindsTitle } from '../../../services/ux/title';
+import { MetaService } from '../../services/meta.service';
+import { TopbarService } from '../../layout/topbar.service';
+import { PageLayoutService } from '../../layout/page-layout.service';
 
 @Component({
   selector: 'm-marketing',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'marketing.component.html',
 })
-export class MarketingComponent implements OnInit {
+export class MarketingComponent implements OnInit, OnDestroy {
   @Input() pageTitle: string = '';
+  @Input() showBottombar: boolean = true;
+  @Input() forceBackground: boolean = true;
 
-  constructor(protected title: MindsTitle) {}
+  constructor(
+    protected metaService: MetaService,
+    private navigationService: TopbarService,
+    private pageLayoutService: PageLayoutService
+  ) {}
 
   ngOnInit() {
     if (this.pageTitle) {
-      this.title.setTitle(this.pageTitle);
+      this.metaService.setTitle(this.pageTitle);
     }
+
+    this.pageLayoutService.useFullWidth();
+
+    this.navigationService.toggleMarketingPages(
+      true,
+      this.showBottombar,
+      this.forceBackground
+    );
+  }
+
+  ngOnDestroy() {
+    this.navigationService.toggleMarketingPages(false);
   }
 }

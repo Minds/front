@@ -1,64 +1,75 @@
 <div
   class="mdl-card mdl-color--red-500 mdl-color-text--blue-grey-50 m-error-box mdl-shadow--2dp minds-login-box m-error-box"
   style="min-height:0;"
-  [hidden]="!errorMessage"
+  [hidden]="showInlineErrors || !errorMessage"
 >
   <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">
-    <ng-container
-      *ngIf="errorMessage == 'LoginException::AttemptsExceeded'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__ATTEMPTS_EXCEEDED"
-    >
-      You have exceeded your login attempts. Please try again in a few minutes.
-    </ng-container>
-    <ng-container
-      *ngIf="errorMessage == 'LoginException::DisabledUser'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__DISABLED_USER"
-    >
-      This account has been disabled
-    </ng-container>
-    <ng-container
-      *ngIf="errorMessage == 'LoginException::AuthenticationFailed'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__INCORRECT_USERNAME_PASSWORD"
-    >
-      Incorrect username/password. Please try again.
-    </ng-container>
-    <ng-container
-      *ngIf="errorMessage == 'LoginException::AccountLocked'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__ACCOUNT_LOCKED"
-    >
-      Account locked
-    </ng-container>
-    <ng-container
-      *ngIf="errorMessage == 'LoginException:BannedUser'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__BANNED_USER"
-    >
-      You are not allowed to login.
-    </ng-container>
-    <ng-container
-      *ngIf="errorMessage == 'LoginException::CodeVerificationFailed'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__CODE_VERIFICATION_FAILED"
-    >
-      Sorry, we couldn't verify your two factor code. Please try logging again.
-    </ng-container>
-    <ng-container
-      *ngIf="errorMessage == 'LoginException::InvalidToken'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__INVALID_TOKEN"
-    >
-      Invalid token
-    </ng-container>
-    <ng-container
-      *ngIf="errorMessage == 'LoginException::EmailAddress'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__ENTERED_EMAIL_ADDRESS_NOT_USERNAME"
-    >
-      Please enter a username instead of an email address.
-    </ng-container>
-    <ng-container
-      *ngIf="errorMessage == 'LoginException::Unknown'"
-      i18n="@@MINDS__LOGIN__EXCEPTION__SORRY_THERE_WAS_AN_ERROR_PLEASE_TRY_AGAIN"
-    >
-      Sorry, there was an error. Please try again.
-    </ng-container>
+    <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
   </div>
+</div>
+
+<ng-template #errorTemplate>
+  <ng-container
+    *ngIf="errorMessage == 'LoginException::AttemptsExceeded'"
+    i18n="@@MINDS__LOGIN__EXCEPTION__ATTEMPTS_EXCEEDED"
+  >
+    You have exceeded your login attempts. Please try again in a few minutes.
+  </ng-container>
+  <ng-container
+    *ngIf="errorMessage == 'LoginException::DisabledUser'"
+    i18n="@@MINDS__LOGIN__EXCEPTION__DISABLED_USER"
+  >
+    This account has been disabled
+  </ng-container>
+  <ng-container
+    *ngIf="errorMessage == 'LoginException::AuthenticationFailed'"
+    i18n="@@MINDS__LOGIN__EXCEPTION__INCORRECT_USERNAME_PASSWORD"
+  >
+    Incorrect username/password. Please try again.
+  </ng-container>
+  <ng-container
+    *ngIf="errorMessage == 'LoginException::AccountLocked'"
+    i18n="@@MINDS__LOGIN__EXCEPTION__ACCOUNT_LOCKED"
+  >
+    Account locked
+  </ng-container>
+  <ng-container
+    *ngIf="errorMessage == 'LoginException:BannedUser'"
+    i18n="@@MINDS__LOGIN__EXCEPTION__BANNED_USER"
+  >
+    You are not allowed to login.
+  </ng-container>
+  <ng-container
+    *ngIf="errorMessage == 'LoginException::CodeVerificationFailed'"
+    i18n="@@MINDS__LOGIN__EXCEPTION__CODE_VERIFICATION_FAILED"
+  >
+    Sorry, we couldn't verify your two factor code. Please try logging again.
+  </ng-container>
+  <ng-container
+    *ngIf="errorMessage == 'LoginException::InvalidToken'"
+    i18n="@@MINDS__LOGIN__EXCEPTION__INVALID_TOKEN"
+  >
+    Invalid token
+  </ng-container>
+
+  <ng-container
+    *ngIf="errorMessage == 'LoginException::Unknown'"
+    i18n="@@MINDS__LOGIN__EXCEPTION__SORRY_THERE_WAS_AN_ERROR_PLEASE_TRY_AGAIN"
+  >
+    Sorry, there was an error. Please try again.
+  </ng-container>
+</ng-template>
+
+<div class="m-login__title">
+  <h3 *ngIf="showTitle">Login to Minds</h3>
+
+  <a
+    *ngIf="showTitle"
+    [routerLink]="['/forgot-password']"
+    data-cy="data-minds-forgot-password-button"
+  >
+    Forgot your Password?
+  </a>
 </div>
 
 <!-- START: LOGIN -->
@@ -66,49 +77,100 @@
   (submit)="$event.preventDefault()"
   [formGroup]="form"
   class="mdl-card mdl-color-text--blue-grey-400 m-form m-login-box"
+  [class.m-loginBox__bigButton]="showBigButton"
   [hidden]="hideLogin"
 >
   <div class="mdl-card__supporting-text mdl-grid">
     <div class="mdl-cell mdl-cell--12-col">
+      <label for="username" *ngIf="showLabels" i18n>
+        Username
+      </label>
       <input
         type="text"
         id="username"
         formControlName="username"
-        placeholder="Username"
+        [placeholder]="showLabels ? '' : 'Username'"
         i18n-placeholder="@@M__COMMON__USERNAME"
         autocomplete="username"
         (keydown.enter)="login(); $event.preventDefault();"
       />
+      <div class="m-login__error" *ngIf="!!usernameError">
+        <ng-container
+          *ngIf="usernameError == 'LoginException::EmailAddress'"
+          i18n="@@MINDS__LOGIN__EXCEPTION__ENTERED_EMAIL_ADDRESS_NOT_USERNAME"
+        >
+          Please enter a username instead of an email address.
+        </ng-container>
+        <ng-container
+          *ngIf="usernameError == 'LoginException::UsernameRequired'"
+          i18n="@@MINDS__LOGIN__EXCEPTION__USERNAME_REQUIRED"
+        >
+          Username is required.
+        </ng-container>
+      </div>
     </div>
 
     <div class="mdl-cell mdl-cell--12-col">
+      <label for="password" *ngIf="showLabels" i18n>
+        Password
+      </label>
       <input
         type="password"
         id="password"
         formControlName="password"
-        placeholder="Password"
+        [placeholder]="showLabels ? '' : 'Password'"
         i18n-placeholder="@@M__COMMON__PASSWORD"
         autocomplete="current-password"
         (keydown.enter)="login(); $event.preventDefault();"
       />
     </div>
   </div>
+  <a
+    class="m-login__joinTheConversation"
+    [routerLink]="['/register']"
+    *ngIf="showTitle"
+    i18n
+  >
+    Join the conversation
+  </a>
 
   <div class="mdl-card__actions">
+    <div
+      class="m-login__formError"
+      *ngIf="showInlineErrors && showBigButton && errorMessage"
+    >
+      <ng-container *ngTemplateOutlet="errorTemplate"></ng-container>
+    </div>
+    <div class="m-login__spacer" *ngIf="showBigButton"></div>
     <button
       class="m-btn m-btn--action m-btn--login"
       (click)="login()"
       [disabled]="inProgress"
+      *ngIf="!showBigButton"
+      data-cy="data-minds-login-button"
     >
       <ng-container i18n="@@M__ACTION__LOGIN">Login</ng-container>
+    </button>
+    <button
+      class="mf-button mf-button--alt"
+      (click)="login()"
+      [disabled]="inProgress"
+      *ngIf="showBigButton"
+      data-cy="data-minds-login-button"
+    >
+      <ng-container i18n="@@M__ACTION__LOGIN">
+        Login
+      </ng-container>
     </button>
     <a
       class="mdl-card__subtitle-text mdl-color-text--blue-grey-300 m-reset-password-link"
       [routerLink]="['/forgot-password']"
+      *ngIf="!showTitle"
+      data-cy="data-minds-forgot-password-button"
     >
-      <ng-container i18n="@@FORMS__LOGIN__FORGOT_PASSWORD_LINK"
-        >Forgot Password?</ng-container
-      >
+      <ng-container i18n="@@FORMS__LOGIN__FORGOT_PASSWORD_LINK">
+        Forgot Password?
+      </ng-container>
     </a>
   </div>
 </form>
@@ -123,29 +185,21 @@
   </div>
 
   <div class="mdl-card__supporting-text">
-    <ng-container i18n="@@FORMS__LOGIN__2FA_LOGIN_SMS_SENT"
-      >We just sent you a text. Enter the code below to
-      authenticate.</ng-container
-    >
+    <ng-container i18n="@@FORMS__LOGIN__2FA_LOGIN_SMS_SENT">
+      We just sent you a text. Enter the code below to authenticate.
+    </ng-container>
   </div>
 
-  <div
-    class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label"
-    [mdl]
-  >
+  <div class="m-login-mfa-input">
     <input
+      #code
       class="mdl-textfield__input"
       type="text"
       id="code"
-      #code
+      placeholder="Enter your code here"
+      i18n="@@M__COMMON__ENTER_2FA_CODE"
       (keydown.enter)="twofactorAuth(code)"
     />
-    <label
-      class="mdl-textfield__label"
-      for="code"
-      i18n="@@M__COMMON__ENTER_2FA_CODE"
-      >Enter your code here</label
-    >
   </div>
   <div></div>
 

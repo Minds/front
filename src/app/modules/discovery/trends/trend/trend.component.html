@@ -1,0 +1,15 @@
+<div class="m-goBack">
+  <a routerLink="../.." [queryParams]="{ reload: false }">
+    <i class="material-icons">arrow_back</i><span>Back</span>
+  </a>
+</div>
+
+<m-loadingSpinner [inProgress]="!(entity$ | async)"> </m-loadingSpinner>
+
+<div class="m-discoverySearchFeed__item" *ngIf="entity$ | async">
+  <m-discovery__feedItem
+    [entity]="entity$ | async"
+    [openComments]="true"
+    [allowAutoplayOnScroll]="true"
+  ></m-discovery__feedItem>
+</div>

@@ -39,6 +39,8 @@ import { GroupsProfileReviewComponent } from './profile/review/review.component'
 import { GroupsKickModalComponent } from './kick-modal/kick-modal.component';
 import { TextInputAutocompleteModule } from '../../common/components/autocomplete';
 import { CanCreateGroupGuardService } from './create/can-create-group-guard.service';
+import { ComposerModule } from '../composer/composer.module';
+import { ActivityModule } from '../newsfeed/activity/activity.module';
 
 const routes: Routes = [
   {
@@ -59,6 +61,9 @@ const routes: Routes = [
     path: 'groups/create',
     component: GroupsCreator,
     canActivate: [CanCreateGroupGuardService],
+    data: {
+      title: 'Create a group',
+    },
   },
   { path: 'groups/:filter', component: GroupsListComponent },
   { path: 'groups', redirectTo: '/groups/top', pathMatch: 'full' },
@@ -80,6 +85,8 @@ const routes: Routes = [
     TextInputAutocompleteModule,
     VideoChatModule,
     NewsfeedModule,
+    ComposerModule,
+    ActivityModule,
   ],
   declarations: [
     GroupsListComponent,

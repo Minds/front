@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ConfigsService } from '../../../services/configs.service';
 
 @Component({
   selector: 'm-post-autocomplete-item-renderer',
@@ -8,5 +9,9 @@ export class PostsAutocompleteItemRendererComponent {
   @Input() choice;
   @Input() selectChoice;
 
-  minds = window.Minds;
+  readonly cdnUrl: string;
+
+  constructor(configs: ConfigsService) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 }

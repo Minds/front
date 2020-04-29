@@ -5,6 +5,7 @@ import {
   ElementRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
   selector: 'm-pro__marketing',
@@ -12,12 +13,14 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProMarketingComponent {
-  readonly cdnAssetsUrl: string = window.Minds.cdn_assets_url;
+  readonly cdnAssetsUrl: string;
 
   @ViewChild('topAnchor', { static: false })
   readonly topAnchor: ElementRef;
 
-  constructor(protected router: Router) {}
+  constructor(protected router: Router, configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   goToSettings() {
     this.router.navigate(['/pro/settings']);

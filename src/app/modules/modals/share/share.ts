@@ -2,13 +2,14 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Session } from '../../../services/session';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import isMobile from '../../../helpers/is-mobile';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-modal-share',
   templateUrl: 'share.html',
 })
 export class ShareModalComponent implements OnInit, OnDestroy {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   rawUrl: string = '';
   encodedRawUrl: string = '';
@@ -30,7 +31,9 @@ export class ShareModalComponent implements OnInit, OnDestroy {
     this.encodedRawUrl = encodeURI(this.rawUrl);
   }
 
-  constructor(public session: Session) {}
+  constructor(public session: Session, configs: ConfigsService) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     if (this.session.getLoggedInUser()) {

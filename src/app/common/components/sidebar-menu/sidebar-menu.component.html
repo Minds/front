@@ -16,7 +16,7 @@
   <a class="m-sidebarMenu__userWrapper" [routerLink]="['/', user.username]">
     <img
       class="m-sidebarMenu__userAvatar"
-      [src]="minds.cdn_url + 'icon/' + user.guid + '/medium/' + user.icontime"
+      [src]="cdnUrl + 'icon/' + user.guid + '/medium/' + user.icontime"
     />
     <div class="m-sidebarMenu__userDetails">
       <div class="m-sidebarMenu__userDetails__name">{{ user.name }}</div>
@@ -37,7 +37,11 @@
       <h3>{{ menu.header.label }}</h3>
     </div>
 
-    <nav class="m-sidebarMenu__linksContainer" *ngIf="menu.links">
+    <nav
+      class="m-sidebarMenu__linksContainer"
+      *ngIf="menu.links"
+      data-minds="sidebarMenuLinks"
+    >
       <div class="m-sidebarMenu__link" *ngFor="let link of menu.links">
         <ng-container *ngIf="link.permissionGranted">
           <ng-container *ngIf="!link.newWindow">

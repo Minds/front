@@ -5,6 +5,7 @@ import {
 } from '@angular/core';
 
 import { Client } from '../../common/api/client.service';
+import { Session } from '../../services/session';
 
 @Component({
   selector: 'm-monetization--overview',
@@ -16,10 +17,15 @@ export class MonetizationOverviewComponent {
   payouts: number | string = 0;
   net: number | string = 0;
   ready: boolean = false;
+  user;
 
-  user = window.Minds.user;
-
-  constructor(private client: Client, private cd: ChangeDetectorRef) {}
+  constructor(
+    private client: Client,
+    private cd: ChangeDetectorRef,
+    private session: Session
+  ) {
+    this.user = this.session.getLoggedInUser();
+  }
 
   ngOnInit() {
     this.getTotals();

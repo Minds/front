@@ -15,12 +15,14 @@ import { notificationServiceMock } from '../../../tests/notification-service-moc
 import { MaterialMock } from '../../../tests/material-mock.spec';
 import { NotificationsComponent } from './notifications.component';
 
-import { MindsTitle } from '../../services/ux/title';
 import { NotificationService } from './notification.service';
 import { Session } from '../../services/session';
-import { Mock, MockComponent } from '../../utils/mock';
+import { Mock, MockComponent, MockService } from '../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { sessionMock } from '../../../tests/session-mock.spec';
+import { ConfigsService } from '../../common/services/configs.service';
+import { TimeDiffService } from '../../services/timediff.service';
+import { FriendlyDateDiffPipe } from '../../common/pipes/friendlydatediff';
 
 describe('NotificationsComponent', () => {
   let comp: NotificationsComponent;
@@ -33,7 +35,7 @@ describe('NotificationsComponent', () => {
         NotificationsComponent,
         MockComponent({
           selector: 'minds-notification',
-          inputs: ['notification'],
+          inputs: ['notification', 'showElapsedTime'],
         }),
         MockComponent({
           selector: 'infinite-scroll',
@@ -45,15 +47,10 @@ describe('NotificationsComponent', () => {
       ],
       imports: [RouterTestingModule],
       providers: [
-        {
-          provide: MindsTitle,
-          useValue: {
-            setTitle: function() {},
-          },
-        },
         { provide: NotificationService, useValue: notificationServiceMock },
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents(); // compile template and css
   }));
@@ -66,7 +63,6 @@ describe('NotificationsComponent', () => {
     fixture = TestBed.createComponent(NotificationsComponent);
     clientMock.response = {};
 
-    window.Minds.notifications_count = 10;
     clientMock.response[`api/v1/notifications/all`] = {
       status: 'success',
       notifications: [
@@ -127,7 +123,7 @@ describe('NotificationsComponent', () => {
   });
 
   it('infinite load on click', () => {
-    window.Minds.notifications_count = 10;
+    comp.notificationService.count = 1;
     fixture.detectChanges();
     const notifications = fixture.debugElement.query(
       By.css('.m-notifications--load-new a')

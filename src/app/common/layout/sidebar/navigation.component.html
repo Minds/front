@@ -1,33 +1,172 @@
-<nav class="m-sidebar--navigation">
-  <div *ngFor="let item of navigation.getItems()">
-    <a
-      class="m-sidebar--navigation--item"
-      [ngClass]="{ 'm-sidebar--navigation--item-active': item.active }"
-      [routerLink]="[item.path, item.params]"
-      [title]="item.text"
-      *ngIf="
-        item.visibility == 2 ||
-        (item.visibility === 0 && session.isLoggedIn()) ||
-        (item.visibility === -1 && session.isAdmin())
-      "
-    >
-      <i class="material-icons">{{ item.icon }}</i>
-
-      <span class="m-sidebar--navigation--text">{{ item.text }}</span>
-    </a>
-
-    <div *ngFor="let subitem of item.submenus" [hidden]="!item.active">
-      <a
-        class="m-sidebar--navigation--item subitem"
-        [ngClass]="{ 'm-sidebar--navigation--item-active': subitem.active }"
-        [routerLink]="[subitem.path, subitem.params]"
-        [title]="subitem.text"
-        *ngIf="!(!session.isLoggedIn() && subitem.visibility < 2)"
-      >
-        <i class="material-icons">{{ subitem.icon }}</i>
-
-        <span class="m-sidebar--navigation--text">{{ subitem.text }}</span>
+<div
+  class="m-sidebarNavigation__overlay"
+  (click)="toggle()"
+  *ngIf="false"
+></div>
+<div
+  class="m-sidebarNavigation"
+  [class.m-sidebarNavigation--slide]="layoutMode === 'phone'"
+>
+  <nav>
+    <div class="m-sidebarNavigation__top">
+      <a routerLink="/" title="Home" i18n-title>
+        <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
       </a>
+
+      <i class="material-icons" (click)="toggle()">close</i>
     </div>
+
+    <ul class="m-sidebarNavigation__list">
+      <li
+        *ngIf="user"
+        class="m-sidebarNavigation__item m-sidebarNavigation__item--user"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a [routerLink]="['/' + user.username]" (click)="toggle()">
+          <img
+            [src]="cdnUrl + 'icon/' + user.guid + '/small/' + user.icontime"
+            alt=""
+          />
+          <span class="m-sidebarNavigationItem__text">
+            @{{ user.username }}
+          </span>
+        </a>
+      </li>
+
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a [routerLink]="['/newsfeed/subscriptions']" (click)="toggle()">
+          <m-tooltip
+            icon="home"
+            i18n="@@COMMON__NEWSFEED"
+            [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            Newsfeed
+          </m-tooltip>
+
+          <span class="m-sidebarNavigationItem__text" i18n>
+            Newsfeed
+          </span>
+        </a>
+      </li>
+
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a routerLink="/discovery" (click)="toggle()">
+          <m-tooltip
+            i18n="@@COMMON__DISCOVER"
+            [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <i class="m-icon--hashtag" m-tooltip--anchor>#</i>
+            Discovery
+          </m-tooltip>
+
+          <span class="m-sidebarNavigationItem__text" i18n>
+            Discovery
+          </span>
+        </a>
+      </li>
+
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a [routerLink]="['/wallet/canary']" (click)="toggle()">
+          <m-tooltip
+            i18n="@@COMMON__WALLET"
+            [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
+            Wallet
+          </m-tooltip>
+
+          <span class="m-sidebarNavigationItem__text" i18n>
+            Wallet
+          </span>
+        </a>
+      </li>
+
+      <li
+        class="m-sidebarNavigation__item"
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+      >
+        <a routerLink="/analytics" (click)="toggle()">
+          <m-tooltip
+            icon="insert_chart"
+            i18n="@@COMMON__ANALYTICS"
+            [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            Analytics
+          </m-tooltip>
+          <span class="m-sidebarNavigationItem__text" i18n>
+            Analytics
+          </span>
+        </a>
+
+        <ul class="m-sidebarNavigation__subnav" m-sidebarNavigation__subnav>
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          >
+            <a routerLink="/analytics/dashboard/traffic">Traffic</a>
+          </li>
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          >
+            <a routerLink="/analytics/dashboard/engagement">Engagement</a>
+          </li>
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          >
+            <a routerLink="/analytics/dashboard/earnings">Earnings</a>
+          </li>
+          <li
+            class="m-sidebarNavigation__item"
+            [routerLinkActive]="'m-sidebarNavigation__item--active'"
+          >
+            <a routerLink="/analytics/dashboard/trending">Trending</a>
+          </li>
+        </ul>
+      </li>
+
+      <li
+        [routerLinkActive]="'m-sidebarNavigation__item--active'"
+        class="m-sidebarNavigation__item"
+      >
+        <a [routerLink]="[settingsLink]" (click)="toggle()">
+          <m-tooltip
+            icon="more_horiz"
+            i18n="@@COMMON__SETTINGS"
+            [enabled]="layoutMode === 'tablet'"
+            [anchor]="'left'"
+            [useParentPosition]="true"
+          >
+            Settings
+          </m-tooltip>
+
+          <span class="m-sidebarNavigationItem__text" i18n>
+            Settings
+          </span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="m-sidebar--groups" [hidden]="!user">
+    <ng-template dynamic-host></ng-template>
   </div>
-</nav>
+</div>

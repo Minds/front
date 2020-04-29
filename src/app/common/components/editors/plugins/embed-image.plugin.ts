@@ -1,8 +1,10 @@
 import Editor = MediumEditor.MediumEditor;
+import { ConfigsService } from '../../../services/configs.service';
 
 type Options = { buttonText?: string; placeholder?: string };
 
 export class EmbedImage {
+  readonly siteUrl: string;
   button: HTMLButtonElement;
   options: any = { placeholder: '' };
   base: Editor;
@@ -13,12 +15,13 @@ export class EmbedImage {
   $currentImage;
   private readonly urlRegex = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
-  constructor(options: Options) {
+  constructor(options: Options, configs: ConfigsService) {
     this.options = { ...options };
     this.button = document.createElement('button');
     this.button.className = 'medium-editor-action';
     this.button.innerHTML = options.buttonText || '</>';
     this.button.onclick = this.handleClick.bind(this);
+    this.siteUrl = configs.get('site_url');
   }
 
   public init() {
@@ -209,7 +212,7 @@ export class EmbedImage {
 
         image.setAttribute(
           'src',
-          window.Minds.site_url + 'fs/v1/thumbnail/' + event.detail.guid
+          this.siteUrl + 'fs/v1/thumbnail/' + event.detail.guid
         );
       }
     );

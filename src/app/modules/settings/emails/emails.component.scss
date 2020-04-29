@@ -26,5 +26,15 @@ m-settings--emails {
         margin-left: 8px;
       }
     }
+
+    .m-settings--emails-campaigns__note {
+      font-size: 0.8em;
+      line-height: 1;
+      padding: 2px 8px 0;
+
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+    }
   }
 }

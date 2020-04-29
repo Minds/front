@@ -1,0 +1,33 @@
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--checkbox stretchedField">
+      <div class="m-form__row--input">
+        <label
+          for="toasterNotifications"
+          class="m-form__customInputWrapper__checkbox"
+          i18n
+          >Enable notification popovers
+          <input
+            type="checkbox"
+            id="toasterNotifications"
+            name="toasterNotifications"
+            formControlName="toasterNotifications"
+            class="form-control"
+            data-minds="toasterNotifications"
+            [readonly]="inProgress || !init"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Update Popover Preference
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

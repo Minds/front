@@ -2,7 +2,7 @@
 
 m-marketing__footer {
   display: block;
-  margin: 105px 0 95px;
+  margin: 105px 0 20px 0;
 
   @media screen and (max-width: $m-grid-min-vp) {
     margin: 80px 0 0;
@@ -40,6 +40,14 @@ m-marketing__footer {
   }
 
   .m-marketingFooter__column {
+    @media screen and(max-width: $m-grid-max-mobile) {
+      @for $i from 1 through 5 {
+        &:nth-child(#{$i}) {
+          grid-row: $i;
+        }
+      }
+    }
+
     @media screen and (max-width: $m-grid-min-vp) {
       margin-bottom: 32px;
 
@@ -53,7 +61,7 @@ m-marketing__footer {
       width: 60%;
       margin: 0 auto;
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and (max-width: $m-grid-max-mobile) {
         width: 60%;
         grid-row: 999;
         margin: 32px 0 0;
@@ -75,7 +83,12 @@ m-marketing__footer {
       }
 
       &.m-marketingFooter__sloganText {
+        font-weight: 400;
         margin: 0 0 21px;
+
+        @include m-theme() {
+          color: themed($m-grey-600);
+        }
       }
     }
 

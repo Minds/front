@@ -58,7 +58,6 @@ import { Client } from '../../../../services/api';
   `,
 })
 export class MindsBanner {
-  minds: Minds = window.Minds;
   object;
   editing: boolean = false;
   src: string = '';

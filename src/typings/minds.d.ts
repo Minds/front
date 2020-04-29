@@ -39,6 +39,7 @@ interface Minds {
     };
   };
   contribution_values: { [key: string]: number };
+  from_email_confirmation?: boolean;
 }
 
 interface MindsNavigation {

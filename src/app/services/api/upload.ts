@@ -1,25 +1,19 @@
-import { Cookie } from '../cookie';
+import { CookieService } from '../../common/services/cookie.service';
 import { HttpClient } from '@angular/common/http';
-import { SiteService } from '../../common/services/site.service';
+import { EventEmitter } from '@angular/core';
 
 /**
  * API Class
  */
 export class Upload {
   base: string = '/';
-  origin: string = '';
-  cookie: Cookie = new Cookie();
+  onError: EventEmitter<any> = new EventEmitter<any>();
 
-  static _(http: HttpClient, site: SiteService) {
-    return new Upload(http, site);
+  static _(http: HttpClient, cookie: CookieService) {
+    return new Upload(http, cookie);
   }
 
-  constructor(public http: HttpClient, protected site: SiteService) {
-    if (this.site.isProDomain) {
-      this.base = window.Minds.site_url;
-      this.origin = document.location.host;
-    }
-  }
+  constructor(public http: HttpClient, private cookie: CookieService) {}
 
   /**
    * Return a POST request
@@ -33,6 +27,7 @@ export class Upload {
     },
     xhr: XMLHttpRequest = null
   ) {
+    const self = this;
     const formData = new FormData();
     if (!data.filekey) {
       data.filekey = 'file';
@@ -69,10 +64,14 @@ export class Upload {
           progress(100);
           resolve(JSON.parse(this.response));
         } else {
+          self.onError.next({
+            error: { ...JSON.parse(this.response) },
+            status: this.status,
+          });
           if (this.status === 504) {
             reject('error:gateway-timeout');
           } else {
-            reject(this.response);
+            reject(JSON.parse(this.response));
           }
         }
       };
@@ -81,16 +80,6 @@ export class Upload {
       };
       const XSRF_TOKEN = this.cookie.get('XSRF-TOKEN');
       xhr.setRequestHeader('X-XSRF-TOKEN', XSRF_TOKEN);
-
-      if (this.origin) {
-        const PRO_XSRF_JWT = this.cookie.get('PRO-XSRF-JWT') || '';
-
-        xhr.withCredentials = true;
-
-        xhr.setRequestHeader('X-MINDS-ORIGIN', this.origin);
-        xhr.setRequestHeader('X-PRO-XSRF-JWT', PRO_XSRF_JWT);
-      }
-
       xhr.send(formData);
     });
   }

@@ -1,0 +1,42 @@
+m-composer__modal {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 585px;
+  margin: 29px 0 34px;
+  border-radius: 5px;
+  box-sizing: border-box;
+
+  @include m-theme() {
+    background: themed($m-bgColor--secondary);
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    border-radius: 0;
+
+    // flex: 1;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: space-between;
+    // border-radius: 0;
+    // margin: 0;
+  }
+
+  m-composer__base {
+    display: block;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-bottom: 0;
+      height: 100vh;
+      max-height: 100vh;
+
+      .m-composer__base,
+      .m-composer__base.m-composer__base--withPreview {
+        height: auto;
+      }
+    }
+  }
+}

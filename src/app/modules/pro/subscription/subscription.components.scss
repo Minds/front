@@ -8,7 +8,7 @@ m-pro--subscription {
     justify-content: flex-start;
     margin-bottom: 23px;
 
-    @media screen and (max-width: $m-grid-min-vp) {
+    @media screen and (max-width: $min-tablet) {
       justify-content: center;
       margin-bottom: 40px;
     }
@@ -29,7 +29,7 @@ m-pro--subscription {
   .m-proSubscriptionPlan__pricing {
     margin-bottom: 24px;
 
-    @media screen and (max-width: $m-grid-min-vp) {
+    @media screen and (max-width: $min-tablet) {
       margin-bottom: 40px;
       text-align: center;
     }
@@ -44,7 +44,7 @@ m-pro--subscription {
         color: themed($m-grey-600);
       }
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and (max-width: $min-tablet) {
         display: block;
       }
 
@@ -67,10 +67,20 @@ m-pro--subscription {
         color: themed($m-red);
       }
 
-      @media screen and (max-width: $m-grid-min-vp) {
+      @media screen and (max-width: $min-tablet) {
         display: block;
         margin-left: 0;
       }
+    }
+  }
+
+  .m-proSubscription__button {
+    display: flex;
+
+    .m-proSubscription__alreadyAMemberNotice {
+      margin-left: 25px;
+      display: flex;
+      flex-direction: column;
     }
   }
 
@@ -82,5 +92,10 @@ m-pro--subscription {
     @include m-theme() {
       color: themed($m-red);
     }
+  }
+
+  .mf-button {
+    margin-bottom: $minds-margin;
+    margin-right: $minds-margin;
   }
 }

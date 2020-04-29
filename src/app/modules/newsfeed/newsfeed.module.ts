@@ -34,6 +34,10 @@ import { NewsfeedEntityComponent } from './feeds/entity.component';
 import { NewsfeedHashtagSelectorService } from './services/newsfeed-hashtag-selector.service';
 import { SearchModule } from '../search/search.module';
 import { NewsfeedTilesComponent } from './feeds/tiles.component';
+import { ActivityModule } from './activity/activity.module';
+import { FeedGridComponent } from './feed-grid/feed-grid.component';
+import { ComposerModule } from '../composer/composer.module';
+import { DiscoverySharedModule } from '../discovery/discovery-shared.module';
 
 const routes: Routes = [
   {
@@ -50,11 +54,19 @@ const routes: Routes = [
         path: 'subscriptions',
         component: NewsfeedSubscribedComponent,
         canDeactivate: [CanDeactivateGuardService],
+        data: {
+          title: 'Newsfeed',
+          description: 'Posts from channels your subscribe to',
+        },
       },
       {
         path: 'boost',
         component: NewsfeedBoostComponent,
         canDeactivate: [CanDeactivateGuardService],
+        data: {
+          title: 'Boost Feed',
+          description: 'Posts that have been boosted on the network',
+        },
       },
       { path: 'tag/:tag', component: NewsfeedTagsComponent },
     ],
@@ -80,6 +92,9 @@ const routes: Routes = [
     NoticesModule,
     SearchModule,
     ReferralsModule,
+    ActivityModule,
+    ComposerModule,
+    DiscoverySharedModule,
   ],
   declarations: [
     NewsfeedDropdownComponent,
@@ -93,6 +108,7 @@ const routes: Routes = [
     NewsfeedSortedComponent,
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
+    FeedGridComponent,
   ],
   providers: [
     NewsfeedService,
@@ -105,6 +121,7 @@ const routes: Routes = [
     NewsfeedEntityComponent,
     NewsfeedTilesComponent,
     NewsfeedComponent,
+    FeedGridComponent,
   ],
   entryComponents: [NewsfeedComponent, NewsfeedSingleComponent],
 })

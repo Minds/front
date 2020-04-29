@@ -10,9 +10,9 @@ import { Client, Upload } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 import { WalletService } from '../../../../services/wallet';
 import { Storage } from '../../../../services/storage';
+import { ConfigsService } from '../../../../common/services/configs.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-wire-console-settings',
   templateUrl: 'settings.component.html',
 })
@@ -20,9 +20,6 @@ export class WireConsoleSettingsComponent {
   @Output('saved') savedEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   ts: number = Date.now();
-
-  user = window.Minds.user;
-  minds = window.Minds;
 
   error: string = '';
 
@@ -40,7 +37,8 @@ export class WireConsoleSettingsComponent {
     public session: Session,
     public client: Client,
     public upload: Upload,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private configs: ConfigsService
   ) {}
 
   ngOnInit() {
@@ -48,8 +46,8 @@ export class WireConsoleSettingsComponent {
   }
 
   setUp() {
-    if (this.user.merchant.exclusive) {
-      this.exclusive = this.user.merchant.exclusive;
+    if (this.session.getLoggedInUser().merchant.exclusive) {
+      this.exclusive = this.session.getLoggedInUser().merchant.exclusive;
     }
 
     this.updatePreviewEntity();
@@ -63,13 +61,13 @@ export class WireConsoleSettingsComponent {
         min: 50,
       },
       ownerObj: {
-        ...this.user,
+        ...this.session.getLoggedInUser(),
         merchant: {
           exclusive: {
             intro: this.exclusive.intro,
             _backgroundPreview:
               this.preview.src ||
-              this.minds.cdn_url +
+              this.configs.get('cdn_url') +
                 'fs/v1/paywall/preview/' +
                 this.session.getLoggedInUser().guid +
                 '/' +
@@ -145,7 +143,7 @@ export class WireConsoleSettingsComponent {
       return this.client
         .post('api/v1/merchant/exclusive', this.exclusive)
         .then(() => {
-          this.minds.user.merchant.exclusive = this.exclusive;
+          this.session.getLoggedInUser().merchant.exclusive = this.exclusive;
           this.exclusive.saved = true;
           this.exclusive.saving = false;
           this.detectChanges();

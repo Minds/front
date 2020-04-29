@@ -1,10 +1,19 @@
-<minds-newsfeed-poster
-  *ngIf="isMember()"
-  (load)="prepend($event)"
-  [container]="group"
-  [accessId]="group.guid"
-  #poster
-></minds-newsfeed-poster>
+<ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+  <m-composer
+    *ngIf="isMember()"
+    (onPost)="prepend($event)"
+    [containerGuid]="group.guid"
+    #composer
+  ></m-composer>
+</ng-container>
+<ng-template #v1NewsfeedPoster>
+  <minds-newsfeed-poster
+    *ngIf="isMember()"
+    (load)="prepend($event)"
+    [containerGuid]="group.guid"
+    #poster
+  ></minds-newsfeed-poster>
+</ng-template>
 
 <div class="minds-list">
   <div>
@@ -44,39 +53,60 @@
       </a>
     </ng-container>
 
-    <ng-container
-      *ngIf="['images', 'videos'].indexOf(type) > -1; else entityListView"
-    >
-      <m-newsfeed__tiles
-        [entities]="feedsService.feed | async"
-      ></m-newsfeed__tiles>
-    </ng-container>
-    <ng-template #entityListView>
+    <ng-container *mIfFeature="'navigation'; else legacyActivity">
       <ng-container
-        *ngFor="let entity of feedsService.feed | async; let i = index"
+        *ngFor="let entity$ of feedsService.feed | async; let i = index"
       >
-        <minds-activity
-          *ngIf="entity | async"
-          class="mdl-card item"
-          [object]="entity | async"
-          [canDelete]="group['is:owner'] || group['is:moderator']"
-          (delete)="delete(entity)"
+        <m-activity
+          *ngIf="entity$ | async as entity"
+          [entity]="entity"
+          [displayOptions]="{
+            showOnlyCommentsInput: true
+          }"
+          [allowAutoplayOnScroll]="true"
           [slot]="i + 1"
-          [attr.data-minds-activity-guid]="entity.guid"
-        >
-          <!-- Menu Actions -->
-
-          <li
-            post-menu
-            class="mdl-menu__item"
-            *ngIf="group['is:owner'] && (entity | async)"
-            (click)="kick(entity?.ownerObj)"
-            i18n="@@GROUPS__PROFILE__FEED__REMOVE_USER"
-          >
-            Remove user
-          </li>
-        </minds-activity>
+        ></m-activity>
       </ng-container>
+    </ng-container>
+    <ng-template #legacyActivity>
+      <ng-container
+        *ngIf="['images', 'videos'].indexOf(type) > -1; else entityListView"
+      >
+        <m-newsfeed__tiles
+          [entities]="feedsService.feed | async"
+        ></m-newsfeed__tiles>
+      </ng-container>
+      <ng-template #entityListView>
+        <ng-container
+          *ngFor="let entity of feedsService.feed | async; let i = index"
+        >
+          <minds-activity
+            *ngIf="entity | async"
+            class="mdl-card item"
+            [object]="entity | async"
+            [canDelete]="group['is:owner'] || group['is:moderator']"
+            (deleted)="delete($event)"
+            [slot]="i + 1"
+            [attr.data-minds-activity-guid]="entity.guid"
+            [disableBoosting]="group['membership'] === 0"
+            [disableReminding]="group['membership'] === 0"
+            [allowAutoplayOnScroll]="true"
+          >
+            <!-- Menu Actions -->
+
+            <li
+              post-menu
+              class="mdl-menu__item"
+              *ngIf="group['is:owner'] && (entity | async)"
+              (click)="kick(entity)"
+              i18n="@@GROUPS__PROFILE__FEED__REMOVE_USER"
+              data-cy="data-minds-group-dropdown-remove"
+            >
+              Remove user
+            </li>
+          </minds-activity>
+        </ng-container>
+      </ng-template>
     </ng-template>
 
     <infinite-scroll
@@ -92,5 +122,5 @@
   *ngIf="kicking"
   [user]="kicking"
   [group]="group"
-  (closed)="kick(null)"
+  (closed)="kick()"
 ></m-groups__kick-modal>

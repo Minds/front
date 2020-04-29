@@ -1,0 +1,53 @@
+m-onboarding__hashtagsStep {
+  .m-onboarding__description {
+    margin: 0 0 35px !important;
+    font-weight: normal !important;
+    line-height: 21px !important;
+    color: #4a4a4a !important;
+  }
+
+  ul.m-hashtags__list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    list-style: none;
+    width: calc(100% - 16px);
+    margin: 0;
+    padding: 0;
+
+    li.m-hashtagsList__item {
+      align-self: center;
+      cursor: pointer;
+      margin: 2px 4.5px;
+      padding: 0 10px;
+
+      border-radius: 5px;
+
+      font-size: 18px;
+      line-height: 44px;
+      font-weight: bold;
+      border: 1px solid transparent;
+
+      @media screen and(max-width: $max-mobile) {
+        font-size: 16px;
+        line-height: 35px;
+      }
+
+      &.m-hashtagsList__item--selected {
+        span {
+          @include m-theme() {
+            color: themed($m-aqua);
+          }
+        }
+
+        @media screen and (min-width: $max-mobile) {
+          border: 1px solid #ececec;
+        }
+      }
+    }
+  }
+
+  .m-onboarding__actionButtons {
+    justify-content: flex-end;
+  }
+}

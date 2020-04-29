@@ -1,9 +1,15 @@
-import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import {
+  Component,
+  Input,
+  ElementRef,
+  ViewChild,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { MindsTitle } from '../../services/ux/title';
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { NotificationService } from './notification.service';
@@ -14,12 +20,17 @@ import { InfiniteScroll } from '../../common/components/infinite-scroll/infinite
   selector: 'minds-notifications',
   templateUrl: 'notifications.component.html',
 })
-export class NotificationsComponent {
+export class NotificationsComponent implements OnInit, OnDestroy {
   @Input() visible: boolean = true;
   @Input() params: any;
   @Input() count: number;
   @Input() loadOnDemand: boolean;
   @Input() useOwnScrollSource: boolean;
+  @Input() showTabs: boolean = true;
+  @Input() showShadows: boolean = true;
+  @Input() showInfiniteScroll: boolean = true;
+  @Input() showElapsedTime: boolean = false;
+  @Input() limit: number = 12;
   @ViewChild('notificationGrid', { static: true }) notificationList: ElementRef;
   notifications: Array<Object> = [];
   entity;
@@ -28,14 +39,12 @@ export class NotificationsComponent {
   inProgress: boolean = false;
   _filter: string = 'all';
 
-  minds: any = window.Minds;
   paramsSubscription: Subscription;
 
   constructor(
     public session: Session,
     public client: Client,
     public router: Router,
-    public title: MindsTitle,
     public notificationService: NotificationService,
     public route: ActivatedRoute,
     public el: ElementRef
@@ -62,7 +71,6 @@ export class NotificationsComponent {
 
     this.notificationService.clear();
     if (!this.loadOnDemand) {
-      this.title.setTitle('Notifications');
       this.load(true);
     }
   }
@@ -73,7 +81,7 @@ export class NotificationsComponent {
     } else {
       setTimeout(() => {
         if (
-          this.minds.notifications_count > 0 &&
+          this.notificationService.count > 0 &&
           this.notificationList.nativeElement.scrollTop <= 100
         ) {
           this.load(true);
@@ -95,7 +103,7 @@ export class NotificationsComponent {
 
     this.client
       .get(`api/v1/notifications/${this._filter}`, {
-        limit: 12,
+        limit: this.limit,
         offset: this.offset,
       })
       .then((data: any) => {
@@ -115,7 +123,6 @@ export class NotificationsComponent {
         if (!data['load-next']) this.moreData = false;
         this.offset = data['load-next'];
         this.inProgress = false;
-        this.minds.notifications_count = 0;
         this.notificationService.clear();
       });
   }

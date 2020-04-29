@@ -5,22 +5,24 @@ import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { MindsTitle } from '../../../services/ux/title';
 import { AnalyticsService } from '../../../services/analytics';
-
-import { MindsBlogResponse } from '../../../interfaces/responses';
-import { MindsBlogEntity } from '../../../interfaces/entities';
 import { Flags } from '../../../common/services/permissions/flags';
 import { FeaturesService } from '../../../services/features.service';
 import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { MindsBlogResponse } from '../../../interfaces/responses';
+import { MindsBlogEntity } from '../../../interfaces/entities';
+import { ConfigsService } from '../../../common/services/configs.service';
+import {
+  MetaService,
+  MIN_METRIC_FOR_ROBOTS,
+} from '../../../common/services/meta.service';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-blog-view-infinite',
   templateUrl: 'infinite.html',
 })
 export class BlogViewInfinite {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
   guid: string;
   blogs: Array<Object> = [];
   sharetoggle: boolean = false;
@@ -37,13 +39,16 @@ export class BlogViewInfinite {
     public client: Client,
     public route: ActivatedRoute,
     public router: Router,
-    public title: MindsTitle,
     private applicationRef: ApplicationRef,
     private cd: ChangeDetectorRef,
     private analytics: AnalyticsService,
+    configs: ConfigsService,
+    private metaService: MetaService,
     private featuresService: FeaturesService,
     private permissionsService: PermissionsService
-  ) {}
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   ngOnInit() {
     this.paramsSubscription = this.route.params.subscribe(params => {
@@ -91,7 +96,6 @@ export class BlogViewInfinite {
       .then((response: MindsBlogResponse) => {
         if (response.blog) {
           this.blogs = [response.blog];
-          this.title.setTitle(response.blog.title);
           this.analytics.send(
             'pageview',
             {
@@ -101,6 +105,7 @@ export class BlogViewInfinite {
             },
             response.blog.guid
           );
+          this.updateMeta(response.blog);
         } else if (
           this.blogs.length === 0 ||
           (this.featuresService.has('permissions') &&
@@ -120,5 +125,27 @@ export class BlogViewInfinite {
         }
         this.inProgress = false;
       });
+  }
+
+  private updateMeta(blog): void {
+    const description =
+      blog.description.length > 140
+        ? blog.excerpt.substr(0, 140) + '...'
+        : blog.excerpt;
+    this.metaService
+      .setTitle(blog.custom_meta['title'] || blog.title)
+      .setDescription(description)
+      //.setAuthor(this.blog.custom_meta['author'] || `@${this.blog.ownerObj.username}`)
+      .setOgType('article')
+      .setCanonicalUrl(blog.perma_url)
+      .setOgUrl(blog.perma_url)
+      .setOgImage(blog.thumbnail_src)
+      .setRobots(
+        blog['thumbs:up:count'] >= MIN_METRIC_FOR_ROBOTS ? 'all' : 'noindex'
+      );
+
+    if (blog.nsfw.length) {
+      this.metaService.setNsfw(true);
+    }
   }
 }

@@ -1,0 +1,111 @@
+<ng-container *ngIf="!confirming; else confirmBlock">
+  <div class="m-onboardingControl__label">
+    <label i18n>Mobile Phone Number</label>
+
+    <m-tooltip [anchor]="tooltipAnchor">
+      <span m-tooltip--anchor>𝒊</span>
+      <ng-container i18n>
+        Your mobile number may be used for additional account security, unique
+        identification and to help your friends find you. This data is private
+        and encrypted.
+      </ng-container>
+    </m-tooltip>
+
+    <span i18n>Optional</span>
+  </div>
+  <div class="m-onboarding__phoneInput">
+    <div class="m-onboarding__input">
+      <m-phoneInput
+        [disabled]="disabled"
+        [ngModel]="number"
+        (ngModelChange)="numberChange($event)"
+        ngDefaultControl
+        #input
+      ></m-phoneInput>
+
+      <div class="m-onboarding__spinnerWrapper" *ngIf="inProgress">
+        <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+      </div>
+
+      <button
+        class="mf-button mf-button--alt m-onboardingInput__saveButton"
+        style="height: 38px !important;"
+        [class.disabled]="disabled || !number || number.length < 13"
+        (click)="savePhoneNumber()"
+        *ngIf="!inProgress"
+        i18n
+      >
+        Verify
+      </button>
+    </div>
+    <div
+      class="m-onboarding__error"
+      [style.visibility]="numberError && !this.error ? 'visible' : 'hidden'"
+    >
+      {{ numberError }}
+    </div>
+  </div>
+</ng-container>
+
+<ng-template #confirmBlock>
+  <p *ngIf="confirmed" i18n>Your phone number has been verified.</p>
+  <ng-container *ngIf="!confirmed">
+    <div class="m-onboardingControl__label">
+      <label i18n>Verification Code</label>
+
+      <m-tooltip [anchor]="tooltipAnchor">
+        <span m-tooltip--anchor>𝒊</span>
+        <ng-container i18n>
+          Please enter the code we just sent to +{{ number }}, to verify your
+          number.
+        </ng-container>
+      </m-tooltip>
+    </div>
+
+    <div class="m-onboarding__input">
+      <input
+        type="text"
+        [ngModel]="code"
+        (ngModelChange)="codeChange($event)"
+        placeholder="eg. 198349"
+        i18n-placeholder
+      />
+
+      <button
+        class="mf-button mf-button--alt m-onboardingInput__smallButton"
+        [disabled]="resendButtonDisabled"
+        (click)="reSendCode()"
+        *ngIf="!inProgress"
+        title="Re-send verification code"
+        i18n-title
+      >
+        <i class="material-icons">refresh</i>
+      </button>
+
+      <button
+        class="mf-button mf-button--alt m-onboardingInput__smallButton"
+        (click)="reset()"
+        *ngIf="!inProgress"
+        title="Go back"
+        i18n-title
+      >
+        <i class="material-icons">keyboard_backspace</i>
+      </button>
+
+      <div
+        class="m-onboarding__error"
+        [style.visibility]="codeError && !this.error ? 'visible' : 'hidden'"
+      >
+        {{ codeError }}
+      </div>
+    </div>
+  </ng-container>
+</ng-template>
+<div
+  class="m-onboarding__error"
+  [style.visibility]="
+    error && error === 'verify:phonenumber' ? 'visible' : 'hidden'
+  "
+>
+  <span i18n>You must verify your phone number</span>
+</div>

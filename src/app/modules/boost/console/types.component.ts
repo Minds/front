@@ -22,8 +22,6 @@ export class BoostConsoleTypesComponent {
   type: BoostConsoleType;
   filter: BoostConsoleFilter;
 
-  minds: Minds = window.Minds;
-
   constructor(
     public session: Session,
     private router: Router,

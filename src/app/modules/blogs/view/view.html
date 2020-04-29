@@ -60,7 +60,7 @@
       <div class="minds-avatar" [hovercard]="blog.ownerObj.guid">
         <a [routerLink]="['/', blog.ownerObj.username]">
           <img
-            src="{{minds.cdn_url}}icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
+            src="{{cdnUrl}}icon/{{blog.ownerObj.guid}}/small/{{blog.ownerObj.icontime}}"
             class="mdl-shadow--2dp"
           />
         </a>
@@ -144,13 +144,22 @@
   #lockScreen
 ></m-wire--lock-screen>
 
-<div
-  class="mdl-grid blogs-grid"
-  style="max-width:660px"
-  *ngIf="showComments && blog.guid"
+<ng-container *mIfBrowser>
+  <div
+    class="mdl-grid blogs-grid"
+    style="max-width:660px"
+    *ngIf="showComments && blog.guid"
+  >
+    <m-comments__tree [entity]="blog"> </m-comments__tree>
+  </div>
+</ng-container>
+
+<m-social-icons
+  [url]="blog.perma_url"
+  [title]="blog.title"
+  *ngIf="!session.getLoggedInUser().hide_share_buttons"
 >
-  <m-comments__tree [entity]="blog"> </m-comments__tree>
-</div>
+</m-social-icons>
 
 <m-modal-confirm
   *ngIf="deleteToggle"

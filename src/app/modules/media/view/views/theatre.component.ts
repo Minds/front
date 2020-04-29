@@ -6,7 +6,6 @@ import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 
 import { RecommendedService } from '../../components/video/recommended.service';
-import { MindsVideoComponent } from '../../components/video/video.component';
 
 @Component({
   selector: 'm-media--theatre',
@@ -38,19 +37,11 @@ import { MindsVideoComponent } from '../../components/video/video.component';
           >.
         </span>
       </div>
-      <m-video
-        [poster]="object.thumbnail_src"
-        [autoplay]="!object.monetized"
-        [muted]="false"
-        (finished)="loadNext()"
-        [src]="videoDirectSrc"
-        [torrent]="videoTorrentSrc"
-        [log]="object.guid"
-        [playCount]="false"
-        #player
-      >
-        <video-ads [player]="player" *ngIf="object.monetized"></video-ads>
-      </m-video>
+      <m-videoPlayer
+        [guid]="object.guid"
+        [shouldPlayInModal]="false"
+        [autoplay]="true"
+      ></m-videoPlayer>
     </div>
     <i class="material-icons right" (click)="next()" [hidden]="!isAlbum()">
       keyboard_arrow_right
@@ -66,11 +57,6 @@ export class MediaTheatreComponent {
   counterSeconds: number = 0;
   counterLimit: number = 10;
 
-  minds = window.Minds;
-
-  @ViewChild(MindsVideoComponent, { static: false })
-  videoComponent: MindsVideoComponent;
-
   videoDirectSrc = [];
   videoTorrentSrc = [];
 
@@ -81,53 +67,12 @@ export class MediaTheatreComponent {
     private recommended: RecommendedService
   ) {}
 
-  updateSources() {
-    this.videoDirectSrc = [
-      {
-        res: '720',
-        uri: 'api/v1/media/' + this.object.guid + '/play?s=modal&res=720',
-        type: 'video/mp4',
-      },
-      {
-        res: '360',
-        uri: 'api/v1/media/' + this.object.guid + '/play?s=modal',
-        type: 'video/mp4',
-      },
-    ];
-
-    this.videoTorrentSrc = [
-      { res: '720', key: this.object.guid + '/720.mp4' },
-      { res: '360', key: this.object.guid + '/360.mp4' },
-    ];
-
-    if (this.object.flags.full_hd) {
-      this.videoDirectSrc.unshift({
-        res: '1080',
-        uri: 'api/v1/media/' + this.object.guid + '/play?s=modal&res=1080',
-        type: 'video/mp4',
-      });
-
-      this.videoTorrentSrc.unshift({
-        res: '1080',
-        key: this.object.guid + '/1080.mp4',
-      });
-    }
-  }
-
   set _object(value: any) {
     if (!value.guid) return;
     this.object = value;
-    this.updateSources();
   }
 
   getThumbnail() {
-    // const url =
-    //   this.object.paywalled ||
-    //   (this.object.wire_threshold && this.object.wire_threshold !== '0')
-    //     ? this.minds.site_url
-    //     : this.minds.cdn_url;
-
-    // return url + `fs/v1/thumbnail/${this.object.guid}/xlarge`;
     return this.object.thumbnail_src;
   }
 
@@ -176,22 +121,6 @@ export class MediaTheatreComponent {
   cancelCountdown() {
     this.counterSeconds = 0;
     this.timerSubscribe.unsubscribe();
-  }
-
-  togglePlay($event) {
-    this.videoComponent.toggle();
-  }
-
-  // Show video controls
-  onMouseEnterStage() {
-    this.videoComponent.stageHover = true;
-    this.videoComponent.onMouseEnter();
-  }
-
-  // Hide video controls
-  onMouseLeaveStage() {
-    this.videoComponent.stageHover = false;
-    this.videoComponent.onMouseLeave();
   }
 
   ngOnDestroy() {

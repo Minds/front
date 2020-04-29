@@ -4,7 +4,11 @@ export class SessionsStorageService {
   }
 
   get(key: string) {
-    return window.sessionStorage.getItem(key);
+    try {
+      return window.sessionStorage.getItem(key);
+    } catch (err) {
+      return null;
+    }
   }
   set(key: string, value: any) {
     return window.sessionStorage.setItem(key, value);

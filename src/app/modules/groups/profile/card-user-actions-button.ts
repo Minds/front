@@ -1,6 +1,6 @@
 import { Component, EventEmitter } from '@angular/core';
 
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 
 @Component({
   selector: 'minds-groups-card-user-actions-button',
@@ -115,6 +115,7 @@ import { GroupsService } from '../groups-service';
         <button
           (click)="kick(ban.checked)"
           class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+          data-cy="data-minds-modal-confirm"
         >
           <ng-container i18n="@@M__ACTION__CONFIRM">Confirm</ng-container>
         </button>

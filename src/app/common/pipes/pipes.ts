@@ -2,7 +2,7 @@ import { AbbrPipe } from './abbr';
 import { DomainPipe } from './domain';
 import { TagsPipe } from './tags';
 import { SanitizePipe } from './sanitize';
-import { SafePipe } from './safe';
+import { SafePipe, SafeStylePipe } from './safe';
 import { ListablePipe } from './listable';
 import { ExcerptPipe } from './excerpt';
 import { TokenPipe } from './token.pipe';
@@ -10,6 +10,7 @@ import { UtcDatePipe } from './utcdate';
 import { AddressExcerptPipe } from './address-excerpt';
 import { TimediffPipe } from './timediff.pipe';
 import { FriendlyDateDiffPipe } from './friendlydatediff';
+import { AsyncStatePipe } from './async-state.pipe';
 
 export const MINDS_PIPES = [
   AbbrPipe,
@@ -24,4 +25,6 @@ export const MINDS_PIPES = [
   AddressExcerptPipe,
   TimediffPipe,
   FriendlyDateDiffPipe,
+  SafeStylePipe,
+  AsyncStatePipe,
 ];

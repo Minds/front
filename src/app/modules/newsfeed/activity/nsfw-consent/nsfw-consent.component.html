@@ -1,0 +1,17 @@
+<div class="m-activityContent__fixedHeightSpacer"></div>
+
+<div class="m-activityNsfwConsent__container">
+  <i class="material-icons m-activityNsfwConsent__icon">lock</i>
+
+  <h2 class="m-activityNsfwConsent__title">NSFW</h2>
+  <h3 class="m-activityNsfwConsent__reasons">{{ reasonsLabel$ | async }}</h3>
+
+  <button
+    class="m-activityNsfwConsent__button"
+    (click)="onConsentedClick($event)"
+  >
+    I am over 18 years of age
+  </button>
+</div>
+
+<div class="m-activityContent__fixedHeightSpacer"></div>

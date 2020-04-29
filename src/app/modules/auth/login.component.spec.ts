@@ -22,11 +22,23 @@ import { LoginReferrerService } from '../../services/login-referrer.service';
 import { loginReferrerServiceMock } from '../../mocks/services/login-referrer-service-mock.spec';
 import { onboardingServiceMock } from '../../mocks/modules/onboarding/onboarding.service.mock.spec';
 import { OnboardingService } from '../onboarding/onboarding.service';
-import { MindsTitle } from '../../services/ux/title';
-import { mindsTitleMock } from '../../mocks/services/ux/minds-title.service.mock.spec';
 import { signupModalServiceMock } from '../../mocks/modules/modals/signup/signup-modal-service.mock';
 import { SignupModalService } from '../modals/signup/service';
 import { By } from '@angular/platform-browser';
+import { Storage } from '../../services/storage';
+import {
+  CookieService,
+  CookieOptionsProvider,
+  COOKIE_OPTIONS,
+  CookieModule,
+} from '@gorniv/ngx-universal';
+import { FeaturesService } from '../../services/features.service';
+import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
+import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
+import { TopbarService } from '../../common/layout/topbar.service';
+import { MockService } from '../../utils/mock';
+import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
+import { MarketingFooterComponent } from '../../common/components/marketing/footer.component';
 
 @Component({
   selector: 'minds-form-login',
@@ -35,6 +47,10 @@ import { By } from '@angular/platform-browser';
 class MindsFormLoginMock {
   @Output() done: EventEmitter<any> = new EventEmitter<any>();
   @Output() doneRegistered: EventEmitter<any> = new EventEmitter<any>();
+  @Input() showBigButton: boolean = false;
+  @Input() showInlineErrors: boolean = false;
+  @Input() showTitle: boolean = false;
+  @Input() showLabels: boolean = false;
 }
 
 @Component({
@@ -57,20 +73,31 @@ describe('LoginComponent', () => {
         MindsFormLoginMock,
         MindsFormRegisterMock,
         LoginComponent,
+        IfFeatureDirective,
+        MarketingFooterComponent,
       ],
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
         CommonModule,
         FormsModule,
+        CookieModule,
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: LoginReferrerService, useValue: loginReferrerServiceMock },
         { provide: OnboardingService, useValue: onboardingServiceMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: SignupModalService, useValue: signupModalServiceMock },
+        Storage,
+        CookieService,
+        { provide: COOKIE_OPTIONS, useValue: CookieOptionsProvider },
+        { provide: FeaturesService, useValue: featuresServiceMock },
+        { provide: TopbarService, useValue: MockService(TopbarService) },
+        {
+          provide: SidebarNavigationService,
+          useValue: MockService(SidebarNavigationService),
+        },
       ],
     }).compileComponents();
   }));
@@ -79,6 +106,9 @@ describe('LoginComponent', () => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 10;
     jasmine.clock().uninstall();
     jasmine.clock().install();
+
+    featuresServiceMock.mock('ux-2020', false);
+    featuresServiceMock.mock('navigation', false);
 
     fixture = TestBed.createComponent(LoginComponent);
 

@@ -6,6 +6,8 @@ import {
   QueryList,
   SkipSelf,
   ViewChildren,
+  HostBinding,
+  ViewChild,
 } from '@angular/core';
 import { first } from 'rxjs/operators';
 
@@ -23,6 +25,15 @@ import { FeaturesService } from '../../../services/features.service';
 import { BoostedContentService } from '../../../common/services/boosted-content.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { ACTIVITY_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
+import {
+  trigger,
+  transition,
+  animate,
+  keyframes,
+  style,
+} from '@angular/animations';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -36,6 +47,22 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
   inputs: ['interval', 'channel'],
   providers: [ClientMetaService, FeedsService],
   templateUrl: 'boost-rotator.component.html',
+  animations: [
+    trigger('fastFade', [
+      transition(':enter', [
+        animate(
+          '400ms',
+          keyframes([style({ opacity: 0 }), style({ opacity: 1 })])
+        ),
+      ]),
+      transition(':leave', [
+        animate(
+          '400ms',
+          keyframes([style({ opacity: 1 }), style({ opacity: 0 })])
+        ),
+      ]),
+    ]),
+  ],
 })
 export class NewsfeedBoostRotatorComponent {
   boosts: Array<any> = [];
@@ -57,10 +84,16 @@ export class NewsfeedBoostRotatorComponent {
   ratingMenuToggle: boolean = false;
   plus: boolean = false;
   disabled: boolean = false;
+  useNewNavigation = false;
+
+  height: number;
 
   subscriptions: Array<any>;
 
   @ViewChildren('activities') activities: QueryList<Activity>;
+
+  @ViewChild('rotatorEl', { static: false })
+  rotatorEl: ElementRef;
 
   constructor(
     public session: Session,
@@ -76,8 +109,10 @@ export class NewsfeedBoostRotatorComponent {
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    configs: ConfigsService
   ) {
+    this.interval = configs.get('boost_rotator_interval') || 5;
     this.subscriptions = [
       this.settingsService.ratingChanged.subscribe(event =>
         this.onRatingChanged(event)
@@ -95,6 +130,7 @@ export class NewsfeedBoostRotatorComponent {
   }
 
   ngOnInit() {
+    this.useNewNavigation = this.featuresService.has('navigation');
     this.rating = this.session.getLoggedInUser().boost_rating;
     this.plus = this.session.getLoggedInUser().plus;
     this.disabled = !this.service.isBoostEnabled();
@@ -102,6 +138,7 @@ export class NewsfeedBoostRotatorComponent {
     this.scroll_listener = this.scroll
       .listenForView()
       .subscribe(() => this.isVisible());
+    this.isVisible();
 
     this.paused = this.service.isBoostPaused();
 
@@ -118,6 +155,10 @@ export class NewsfeedBoostRotatorComponent {
       //   this.recordImpression(this.currentPosition, true);
       // }
     });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => this.calculateHeight()); // will only run for new nav
   }
 
   load() {
@@ -181,9 +222,13 @@ export class NewsfeedBoostRotatorComponent {
     }, this.interval * 1000);
   }
 
+  get bounds() {
+    const bounds = this.element.nativeElement.parentElement.getBoundingClientRect();
+    return bounds;
+  }
+
   isVisible() {
-    const bounds = this.element.nativeElement.getBoundingClientRect();
-    if (bounds.top > 0) {
+    if (this.bounds.top > 0) {
       //console.log('[rotator]: in view', this.rotator);
       if (!this.running) this.start();
     } else {
@@ -231,7 +276,7 @@ export class NewsfeedBoostRotatorComponent {
   active() {
     this.windowFocused = true;
     this.isVisible();
-    this.next(); // Show a new boost when we open our window again
+    if (this.bounds.top > 0) this.next(); // Show a new boost when we open our window again
   }
 
   inActive() {
@@ -291,5 +336,19 @@ export class NewsfeedBoostRotatorComponent {
     for (let subscription of this.subscriptions) {
       subscription.unsubscribe();
     }
+  }
+
+  calculateHeight(): void {
+    if (!this.featuresService.has('navigation') || !this.rotatorEl) return;
+    this.height =
+      this.rotatorEl.nativeElement.clientWidth / ACTIVITY_FIXED_HEIGHT_RATIO;
+
+    if (this.height < 500) this.height = 500;
+
+    // console.log(
+    //   'boost rotator',
+    //   this.rotatorEl.nativeElement.clientWidth,
+    //   this.height
+    // );
   }
 }

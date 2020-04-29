@@ -20,8 +20,6 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { scrollServiceMock } from '../../../../tests/scroll-service-mock.spec';
 import { ScrollService } from '../../../services/ux/scroll';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { MindsTitle } from '../../../services/ux/title';
 import { AttachmentService } from '../../../services/attachment';
 import { attachmentServiceMock } from '../../../../tests/attachment-service-mock.spec';
 import { contextServiceMock } from '../../../../tests/context-service-mock.spec';
@@ -30,9 +28,17 @@ import { AnalyticsService } from '../../../services/analytics';
 import { analyticsServiceMock } from '../../../../tests/analytics-service-mock.spec';
 import { ActivityService } from '../../../common/services/activity.service';
 import { activityServiceMock } from '../../../../tests/activity-service-mock.spec';
+import { By } from '@angular/platform-browser';
+import { MetaService } from '../../../common/services/meta.service';
+import { metaServiceMock } from '../../notifications/notification.service.spec';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { PermissionsService } from '../../../common/services/permissions/permissions.service';
+import { clientMetaServiceMock } from '../../../../tests/client-meta-service-mock.spec';
+import { ConfigsService } from '../../../common/services/configs.service';
 import { MockService } from '../../../utils/mock';
 
 describe('Blog view component', () => {
@@ -44,6 +50,8 @@ describe('Blog view component', () => {
     description: 'description',
     ownerObj: {},
     allow_comments: true,
+    perma_url: '/perma',
+    thumbnail: '/thumbnail',
   };
 
   beforeEach(async(() => {
@@ -56,9 +64,12 @@ describe('Blog view component', () => {
         { provide: AttachmentService, useValue: attachmentServiceMock },
         { provide: Client, useValue: clientMock },
         { provide: ContextService, useValue: contextServiceMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: ScrollService, useValue: scrollServiceMock },
         { provide: Session, useValue: sessionMock },
+        { provide: MetaService, useValue: metaServiceMock },
+        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        { provide: ClientMetaService, useValue: clientMetaServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
         { provide: FeaturesService, useValue: featuresServiceMock },
         {
           provide: PermissionsService,
@@ -74,9 +85,32 @@ describe('Blog view component', () => {
   // synchronous beforeEach
   beforeEach(() => {
     featuresServiceMock.mock('permissions', false);
+    jasmine.clock().uninstall();
+    jasmine.clock().install();
+
     fixture = TestBed.createComponent(BlogView);
     comp = fixture.componentInstance;
     comp.blog = blog;
+
+    sessionMock.user.hide_share_buttons = false;
+
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    jasmine.clock().uninstall();
+  });
+
+  it('should have an instance of m-social-icons if the owner has it enabled', () => {
+    let socialIcons = fixture.debugElement.query(By.css('m-social-icons'));
+
+    expect(socialIcons).not.toBeNull();
+
+    sessionMock.user.hide_share_buttons = true;
+
+    fixture.detectChanges();
+
+    socialIcons = fixture.debugElement.query(By.css('m-social-icons'));
+    expect(socialIcons).toBeNull();
   });
 });

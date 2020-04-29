@@ -1,0 +1,22 @@
+<div class="m-popover__wrapper">
+  <ng-content></ng-content>
+  <div class="m-popover__content" #content>
+    <ul class="m-popover__rules">
+      <li [class.m-popover__rule--checked]="lengthCheck" i18n>
+        8 or more characters
+      </li>
+      <li [class.m-popover__rule--checked]="specialCharCheck" i18n>
+        At least 1 special character
+      </li>
+      <li [class.m-popover__rule--checked]="mixedCaseCheck" i18n>
+        Mixed case
+      </li>
+      <li [class.m-popover__rule--checked]="numbersCheck" i18n>
+        At least 1 number
+      </li>
+      <li [class.m-popover__rule--checked]="spacesCheck" i18n>
+        Doesn't have spaces
+      </li>
+    </ul>
+  </div>
+</div>

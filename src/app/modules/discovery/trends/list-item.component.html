@@ -1,0 +1,35 @@
+<a
+  [routerLink]="
+    trend.guid ? '/discovery/trend/' + trend.guid : '/discovery/search'
+  "
+  [queryParams]="{ q: !trend.guid ? '#' + trend.hashtag : null, f: 'top' }"
+>
+  <ng-container *ngIf="trend.title">
+    <div>
+      <h4>
+        {{
+          trend.title.length <= 200
+            ? trend.title
+            : trend.title.substr(0, 200) + '...'
+        }}
+      </h4>
+      <div class="m-discoveryTrendListItem__supportingText--below">
+        <span>{{ trend.volume }} channels discussing</span>
+        <span>{{ trend.entity.time_created | friendlytime }}</span>
+      </div>
+    </div>
+    <img [src]="trend.entity.thumbnail_src" />
+  </ng-container>
+  <ng-container *ngIf="!trend.title">
+    <div>
+      <div class="m-discoveryTrendListItem__supportingText--above">
+        <span>Trending {{ trend.period }}h</span>
+        <span>{{ trend.volume }} posts</span>
+      </div>
+      <h4>#{{ trend.hashtag }}</h4>
+    </div>
+    <i class="m-discoveryTrendListItem__chevron material-icons">
+      chevron_right
+    </i>
+  </ng-container>
+</a>

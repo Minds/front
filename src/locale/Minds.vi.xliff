@@ -753,8 +753,8 @@
         <target>Bỏ bảo mật 2 lớp</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__SMS_INPUT_HELP">
-        <source>Your SMS number. <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;" />Enter your country code too (eg. +1, +44, etc)<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;" /></source>
-        <target>Số tin nhắn của bạn. <x id="START_BOLD_TEXT" ctype="x-b" /> Nhập mã quốc gia (ví dụ +1, +44) <x id="CLOSE_BOLD_TEXT" ctype="x-b" /></target>
+        <source>Your SMS number.</source>
+        <target>Số tin nhắn của bạn.</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__SMS_INPUT_LABEL">
         <source>eg. +44 07999 000909</source>

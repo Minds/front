@@ -67,12 +67,13 @@ $blue-light: #71aae7;
 $green-dark: #388e3c;
 $green: #4caf50;
 $green-light: #8bc34a;
-$aqua: #4fc3a9;
+$aqua: #5dbac0;
 $amber-dark: #ffa000;
 $amber: #ffc108;
+$amber-medium: #fed12f;
 $amber-light: #ffecb3;
 $red-dark: #c62828;
-$red: #f44336;
+$red: #e03c20;
 $red-light: #e57373;
 
 $black: #000;
@@ -88,7 +89,23 @@ $linkedin: #0071a1;
 // e.g. m-grey-100 in light mode will become m-grey-900 in dark mode
 $themes: (
   light: (
-    m-grey-950: $grey-950,
+    m-textColor--primary: #4f4f50,
+    m-textColor--secondary: #7d7d82,
+    m-textColor--tertiary: #9b9b9b,
+    m-bgColor--primary: #fafafa,
+    m-bgColor--secondary: #ffffff,
+    m-bgColor--tertiary: #e3e4e9,
+    m-bgColor--quaternary: #e3e4e9,
+    m-borderColor--primary: #dce2e4,
+    m-borderColor--secondary: #979797,
+    m-borderColor--tertiary: #ececec,
+    m-alert: #e03c20,
+    m-link: #1b85d6,
+    m-positive: #95c064,
+    m-btn--primary: #5dbac0,
+    m-btn--primaryText: #ffffff,
+    // legacy colors
+      m-grey-950: $grey-950,
     m-grey-900: $grey-900,
     m-grey-800: $grey-800,
     m-grey-700: $grey-700,
@@ -121,6 +138,7 @@ $themes: (
     m-green-light: $green-light,
     m-amber-dark: $amber-dark,
     m-amber: $amber,
+    m-amber-medium: $amber-medium,
     m-amber-light: $amber-light,
     m-red-dark: $red-dark,
     m-red: $red,
@@ -142,7 +160,23 @@ $themes: (
     m-linkedin: $linkedin,
   ),
   dark: (
-    m-grey-950: lighten($grey-50, $percent),
+    m-textColor--primary: #ffffff,
+    m-textColor--secondary: #aeb0b8,
+    m-textColor--tertiary: #797b82,
+    m-bgColor--primary: #252e31,
+    m-bgColor--secondary: #202527,
+    m-bgColor--tertiary: #404e53,
+    m-bgColor--quaternary: #323c3f,
+    m-borderColor--primary: #404a4e,
+    m-borderColor--secondary: #979797,
+    m-borderColor--tertiary: #202527,
+    m-alert: #e03c20,
+    m-link: #1b85d6,
+    m-positive: #95c064,
+    m-btn--primary: #5dbac0,
+    m-btn--primaryText: #ffffff,
+    // legacy colors
+      m-grey-950: lighten($grey-50, $percent),
     m-grey-900: lighten($grey-100, $percent),
     m-grey-800: lighten($grey-200, $percent),
     m-grey-700: lighten($grey-300, $percent),
@@ -168,10 +202,10 @@ $themes: (
     m-blue-grey-50: lighten($blue-grey-950, $percent),
     m-black: $white,
     m-black-always: $black,
-    m-white: lighten($grey-990, $percent),
+    m-white: #202527,
     m-white-always: $white,
     m-body-bg: lighten(#080808, $percent),
-    m-marketing-bg-gradient-start: #292827,
+    m-marketing-bg-gradient-start: #202527,
     m-marketing-bg-colored-gradient-start: #4e5965,
     m-marketing-bg-colored-gradient-end: #58565c,
     m-blue-dark: lighten($blue-bright, 15%),
@@ -183,6 +217,7 @@ $themes: (
     m-green-light: lighten($green-light, $percent),
     m-amber-dark: lighten($amber-dark, $percent),
     m-amber: lighten($amber, $percent),
+    m-amber-medium: lighten($amber-medium, $percent),
     m-amber-light: lighten($amber-light, $percent),
     m-red-dark: lighten($red-dark, $percent),
     m-red: lighten($red, $percent),
@@ -243,6 +278,7 @@ $m-green: 'm-green';
 $m-green-light: 'm-green-light';
 $m-amber-dark: 'm-amber-dark';
 $m-amber: 'm-amber';
+$m-amber-medium: 'm-amber-medium';
 $m-amber-light: 'm-amber-light';
 $m-red-dark: 'm-red-dark';
 $m-red: 'm-red';
@@ -256,3 +292,30 @@ $m-messenger: 'm-messenger';
 $m-twitter: 'm-twitter';
 $m-whatsapp: 'm-whatsapp';
 $m-linkedin: 'm-linkedin';
+
+$m-textColor--primary: 'm-textColor--primary';
+$m-textColor--secondary: 'm-textColor--secondary';
+$m-textColor--tertiary: 'm-textColor--tertiary';
+$m-bgColor--primary: 'm-bgColor--primary';
+$m-bgColor--secondary: 'm-bgColor--secondary';
+$m-bgColor--tertiary: 'm-bgColor--tertiary';
+$m-bgColor--quaternary: 'm-bgColor--quaternary';
+$m-borderColor--primary: 'm-borderColor--primary';
+$m-borderColor--secondary: 'm-borderColor--secondary';
+$m-borderColor--tertiary: 'm-borderColor--tertiary';
+$m-alert: 'm-alert';
+$m-link: 'm-link';
+$m-positive: 'm-positive';
+$m-btn--primary: 'm-btn--primary';
+$m-btn--primaryText: 'm-btn--primaryText';
+
+$m-borderRadius: 2px;
+$m-boxShadowBlur: 10px;
+$m-boxShadowOffset: 2px;
+
+// Helpers
+
+@function checkmark-image($color) {
+  $urlEncodedColor: str-replace('' + $color, '#', '%23'); // `#` signs are bad
+  @return 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z" fill="#{$urlEncodedColor}"/></svg>';
+}

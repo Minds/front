@@ -1,42 +1,50 @@
-m-date-selector {
-  .m-date-selector--label {
-    text-transform: uppercase;
-    letter-spacing: 2.5px;
-    align-self: center;
-    font-size: 12px;
-    @include m-theme() {
-      color: themed($m-grey-600);
-    }
+.m-dateSelector__label {
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  align-self: center;
+  font-size: 12px;
+  @include m-theme() {
+    color: themed($m-grey-600);
+  }
+}
+
+.m-dateSelector__input {
+  font-size: 12px;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 8px 0;
+
+  @media screen and (max-width: $min-tablet) {
+    margin: 8px 0;
   }
 
-  .m-date-selector--input {
-    display: flex;
-    align-items: center;
-    @include m-theme() {
-      color: themed($m-grey-600);
-      background-color: themed($m-white);
-      //border: 1px solid themed($m-grey-100);
-    }
+  @include m-theme() {
+    color: themed($m-grey-600);
+    background-color: themed($m-white);
+  }
+}
 
-    input {
-      font-size: 12px;
-      text-transform: uppercase;
-      background-color: transparent;
-      padding: 8px 0;
-      border: none;
-      text-align: center;
-      width: auto;
-      height: auto;
-      align-self: center;
-      @include m-theme() {
-        color: rgba(themed($m-black), 0.54);
+.cdk-overlay-container {
+  z-index: 10000 !important;
+  .owl-dt-container {
+    @include m-theme() {
+      background: themed($m-white);
+
+      * {
+        color: themed($m-grey-600);
+      }
+
+      .owl-dt-calendar-cell-selected {
+        background-color: themed($m-blue);
+        color: themed($m-white);
       }
     }
-
-    i {
-      vertical-align: middle;
-      cursor: pointer;
-      margin-right: 8px;
-    }
   }
+}
+
+.m-dateSelector__input--hidden {
+  visibility: hidden;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }

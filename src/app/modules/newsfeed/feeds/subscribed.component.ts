@@ -1,42 +1,48 @@
-import { Component, Injector, SkipSelf, ViewChild } from '@angular/core';
-import { Subscription, BehaviorSubject } from 'rxjs';
+import {
+  Component,
+  Inject,
+  Injector,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  SkipSelf,
+  ViewChild,
+} from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import {
   ActivatedRoute,
+  NavigationEnd,
   Router,
   RouterEvent,
-  NavigationEnd,
 } from '@angular/router';
 
 import { Client, Upload } from '../../../services/api';
-import { MindsTitle } from '../../../services/ux/title';
 import { Navigation as NavigationService } from '../../../services/navigation';
 import { MindsActivityObject } from '../../../interfaces/entities';
-import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 import { ContextService } from '../../../services/context.service';
 import { PosterComponent } from '../poster/poster.component';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { FeaturesService } from '../../../services/features.service';
 import { FeedsService } from '../../../common/services/feeds.service';
 import { NewsfeedService } from '../services/newsfeed.service';
 import { ClientMetaService } from '../../../common/services/client-meta.service';
+import { isPlatformServer } from '@angular/common';
+import { ComposerComponent } from '../../composer/composer.component';
 
 @Component({
   selector: 'm-newsfeed--subscribed',
   providers: [ClientMetaService, FeedsService],
   templateUrl: 'subscribed.component.html',
 })
-export class NewsfeedSubscribedComponent {
-  newsfeed: Array<Object>;
+export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
   feed: BehaviorSubject<Array<Object>> = new BehaviorSubject([]);
   prepended: Array<any> = [];
   offset: string | number = '';
   showBoostRotator: boolean = true;
   inProgress: boolean = false;
   moreData: boolean = true;
-  minds;
 
   attachment_preview;
 
@@ -55,7 +61,9 @@ export class NewsfeedSubscribedComponent {
   reloadFeedSubscription: Subscription;
   routerSubscription: Subscription;
 
-  @ViewChild('poster', { static: true }) private poster: PosterComponent;
+  @ViewChild('poster', { static: false }) private poster: PosterComponent;
+
+  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
 
   constructor(
     public client: Client,
@@ -63,17 +71,15 @@ export class NewsfeedSubscribedComponent {
     public navigation: NavigationService,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     private storage: Storage,
     private context: ContextService,
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    @SkipSelf() injector: Injector,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.title.setTitle('Newsfeed');
-
     this.clientMetaService
       .inherit(injector)
       .setSource('feed/subscribed')
@@ -98,7 +104,6 @@ export class NewsfeedSubscribedComponent {
     );
 
     this.load(true, true);
-    this.minds = window.Minds;
 
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['message']) {
@@ -118,6 +123,7 @@ export class NewsfeedSubscribedComponent {
   }
 
   load(refresh: boolean = false, forceSync: boolean = false) {
+    if (isPlatformServer(this.platformId)) return;
     if (this.featuresService.has('es-feeds')) {
       this.loadFromService(refresh, forceSync);
     } else {
@@ -148,7 +154,6 @@ export class NewsfeedSubscribedComponent {
     if (refresh) {
       this.moreData = true;
       this.offset = 0;
-      this.newsfeed = [];
     }
 
     this.inProgress = true;
@@ -249,21 +254,20 @@ export class NewsfeedSubscribedComponent {
 
   delete(activity) {
     let i: any;
+
     for (i in this.prepended) {
       if (this.prepended[i] === activity) {
         this.prepended.splice(i, 1);
         return;
       }
     }
-    for (i in this.newsfeed) {
-      if (this.newsfeed[i] === activity) {
-        this.newsfeed.splice(i, 1);
-        return;
-      }
-    }
+
+    this.feedsService.deleteItem(activity, (item, obj) => {
+      return item.guid === obj.guid;
+    });
   }
 
-  canDeactivate() {
+  protected v1CanDeactivate(): boolean {
     if (!this.poster || !this.poster.attachment) return true;
     const progress = this.poster.attachment.getUploadProgress();
     if (progress > 0 && progress < 100) {
@@ -271,5 +275,14 @@ export class NewsfeedSubscribedComponent {
     }
 
     return true;
+  }
+
+  canDeactivate(): boolean | Promise<boolean> {
+    if (this.composer) {
+      return this.composer.canDeactivate();
+    }
+
+    // Check v1 Poster component
+    return this.v1CanDeactivate();
   }
 }

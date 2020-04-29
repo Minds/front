@@ -12,8 +12,6 @@ export class RelatedQuestionsComponent implements OnInit {
   posts: any[] = [];
   inProgress: boolean = false;
 
-  minds: Minds = window.Minds;
-
   constructor(
     public client: Client,
     public session: Session,

@@ -1,5 +1,6 @@
 @import './grid-values';
 @import '../../stylesheets/themes';
+@import 'defaults';
 
 .mf-button {
   display: inline-block;
@@ -63,7 +64,7 @@
     }
   }
 
-  @media screen and (max-width: $m-grid-min-vp) {
+  @media screen and (max-width: $max-mobile) {
     display: block;
     font-size: 15px;
     padding: 12px 15px;

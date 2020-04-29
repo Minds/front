@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   moduleId: module.id,
@@ -10,7 +11,9 @@ import { Session } from '../../../services/session';
 })
 export class ChannelsTileComponent {
   @Input() entity;
-  minds = window.Minds;
+  readonly cdnUrl;
 
-  constructor(public session: Session) {}
+  constructor(public session: Session, configs: ConfigsService) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 }

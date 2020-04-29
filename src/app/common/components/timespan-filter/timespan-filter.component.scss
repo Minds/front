@@ -1,0 +1,50 @@
+m-timespanFilter {
+  display: flex;
+  justify-content: flex-end;
+  flex-flow: row nowrap;
+  .m-timespanFilter__container {
+    display: flex;
+    flex-flow: row nowrap;
+    border-radius: 5px;
+    cursor: pointer;
+    @include m-theme() {
+      border: 1px solid themed($m-borderColor--primary);
+      color: themed($m-textColor--tertiary);
+    }
+  }
+  .m-timespanFilter__option {
+    padding: 5px 16px;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      background-color: rgba(themed($m-bgColor--tertiary), 0.5);
+    }
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+    }
+    &:last-child {
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+    &:not(:last-child) {
+      @include m-theme() {
+        border-right: 1px solid themed($m-borderColor--primary);
+      }
+    }
+    &.active,
+    &:hover {
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+        color: themed($m-textColor--secondary);
+      }
+    }
+    &:active {
+      transition: all 0.1s cubic-bezier(0.23, 1, 0.32, 1);
+
+      @include m-theme() {
+        background-color: rgba(themed($m-bgColor--tertiary), 0.2);
+        box-shadow: inset 0 1px 4px 0 rgba(themed($m-black), 0.2);
+      }
+    }
+  }
+}

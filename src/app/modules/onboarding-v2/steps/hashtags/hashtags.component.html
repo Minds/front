@@ -1,0 +1,42 @@
+<div class="m-onboarding__controls">
+  <div class="m-onboarding__description" i18n>
+    Select some hashtags that are of interest to you.
+  </div>
+
+  <ul class="m-hashtags__list">
+    <div
+      class="mdl-spinner mdl-js-spinner is-active"
+      [mdl]
+      [hidden]="!inProgress"
+    ></div>
+
+    <li
+      class="m-hashtagsList__item"
+      [class.m-hashtagsList__item--selected]="hashtag.selected"
+      (click)="toggleSelection(hashtag)"
+      *ngFor="let hashtag of hashtags"
+    >
+      <span>
+        {{ hashtag.value | titlecase }}
+      </span>
+    </li>
+  </ul>
+
+  <div class="m-onboarding__error">
+    <ng-container *ngIf="error == 'not:enough:hashtags'; else errorBlock">
+      <span i18n>You must select at least 3 hashtags</span>
+    </ng-container>
+    <ng-template #errorBlock>
+      {{ error }}
+    </ng-template>
+  </div>
+
+  <div class="m-onboarding__actionButtons">
+    <button class="mf-button mf-button--hollow" (click)="skip()" i18n>
+      Skip
+    </button>
+    <button class="mf-button mf-button--alt" (click)="continue()" i18n>
+      Continue
+    </button>
+  </div>
+</div>

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Storage } from '../../../services/storage';
 import { Client } from '../../../services/api';
-import { MindsTitle } from '../../../services/ux/title';
 import { Session } from '../../../services/session';
 
 import { WalletService } from '../../../services/wallet';
@@ -45,7 +44,6 @@ export class WalletOverviewComponent {
     public wallet: WalletService,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     public storage: Storage,
     public blockchain: BlockchainService,
     private session: Session

@@ -78,7 +78,7 @@ export class WalletTokenJoinComponent {
         }
       );
 
-      window.Minds.user.rewards = true;
+      this.session.getLoggedInUser().rewards = true;
       this.join();
     } catch (e) {
       this.error = e.message;

@@ -8,7 +8,15 @@ import { CheckoutModule } from '../checkout/checkout.module';
 import { I18nMarketingComponent } from './marketing.component';
 
 const i18nRoutes: Routes = [
-  { path: 'localization', component: I18nMarketingComponent },
+  {
+    path: 'localization',
+    component: I18nMarketingComponent,
+    data: {
+      title: 'Localization',
+      description: 'Help translate Minds into every global language',
+      ogImage: '/assets/photos/satellite.jpg',
+    },
+  },
 ];
 
 @NgModule({

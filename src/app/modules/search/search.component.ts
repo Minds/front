@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { Client } from '../../services/api';
-import { MindsTitle } from '../../services/ux/title';
 import { Storage } from '../../services/storage';
 import { Session } from '../../services/session';
 
@@ -51,7 +50,6 @@ export class SearchComponent {
     public client: Client,
     public route: ActivatedRoute,
     private router: Router,
-    public title: MindsTitle,
     private storage: Storage,
     private session: Session
   ) {
@@ -87,8 +85,6 @@ export class SearchComponent {
 
       this.search();
     });
-
-    this.title.setTitle('Search');
   }
 
   ngOnDestroy() {

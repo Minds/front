@@ -1,0 +1,95 @@
+// Modal wrapper options
+
+.m-modalV2__wrapper {
+  width: 100vw;
+  height: 100vh;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+
+  .m-overlay-modal--backdrop {
+    z-index: 0;
+  }
+
+  .m-overlay-modal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: static;
+    padding: 0;
+    margin: 0 auto;
+    transform: none !important;
+    overflow: initial;
+    width: auto;
+    height: auto;
+    max-width: initial;
+    max-height: initial;
+    min-height: 100%;
+    background: none !important;
+
+    .m-overlay-modal--close {
+      @include m-theme() {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.m-modalV2__inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 585px;
+  margin: 20px 0;
+  border-radius: 4px;
+  box-sizing: border-box;
+
+  @include m-theme() {
+    background-color: themed($m-bgColor--secondary);
+  }
+
+  @media screen and (max-width: $max-mobile) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 0;
+    margin: 0;
+  }
+}
+
+.m-modalV2__header {
+  padding: 40px 40px 0;
+  .m-modalV2Header__title {
+    margin: 0;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 32px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+}
+
+.m-modalV2__body {
+  padding: 20px 40px;
+  max-height: 420px;
+  overflow-y: scroll;
+}
+
+.m-modalV2__toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 20px;
+
+  @include m-theme() {
+    border-top: 1px solid themed($m-borderColor--primary);
+  }
+
+  m-button {
+    font-size: 16px;
+    line-height: 28px;
+  }
+}

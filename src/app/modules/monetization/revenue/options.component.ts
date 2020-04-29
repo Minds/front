@@ -57,7 +57,6 @@ export class RevenueOptionsComponent {
   addBankAccount() {
     this.inProgress = true;
     this.error = '';
-    // this.editing = false;
     this.detectChanges();
 
     this.client
@@ -100,11 +99,25 @@ export class RevenueOptionsComponent {
     this.detectChanges();
   }
 
-  async uploadRequirement(fileInput: HTMLInputElement) {
+  async uploadDocument(fileInput: HTMLInputElement, documentType: string) {
     const file = fileInput ? fileInput.files[0] : null;
     this.editing = true;
     this.detectChanges();
-    await this.upload.post('api/v2/payments/stripe/connect/photoid', [file]);
+    await this.upload.post(
+      'api/v2/payments/stripe/connect/document/' + documentType,
+      [file]
+    );
+    this.editing = false;
+    this.account = null;
+    this.getSettings();
+  }
+
+  async updateField(fieldName: string, value: string) {
+    this.editing = true;
+    this.detectChanges();
+    let body = {};
+    body[fieldName] = value;
+    await this.client.post('api/v2/payments/stripe/connect/update', body);
     this.editing = false;
     this.account = null;
     this.getSettings();

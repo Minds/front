@@ -1,5 +1,9 @@
+m-newsfeed--boost-rotator {
+  display: contents;
+}
+
 .m-boost-rotator-item {
-  transition: opacity 0.5s ease;
+  transition: opacity 1.5s ease;
   opacity: 1;
 
   &[hidden] {
@@ -201,4 +205,16 @@
   margin-top: -14px;
   padding: 8px;
   cursor: pointer;
+}
+
+.m-newsfeed__boostRotator {
+  width: 100%;
+  margin-bottom: 20px; // Make 20px constant
+  position: relative;
+
+  m-activity {
+    position: absolute;
+    top: 0;
+    overflow: hidden;
+  }
 }

@@ -11,6 +11,7 @@ export class WirePaymentsCreatorComponent extends WireCreatorComponent {
   @Input('opts') set opts(opts) {
     this._opts = opts;
     this.wire.amount = opts.amount;
+    this.wire.recurringInterval = opts.interval;
     switch (opts.currency) {
       case 'tokens':
         this.wire.payloadType = 'offchain';

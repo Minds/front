@@ -378,7 +378,7 @@ minds-activity-preview {
     }
     .mdl-card__menu {
       @include m-theme() {
-        background-color: themed($m-white);
+        background-color: themed($m-bgColor--secondary);
       }
     }
     minds-card-comment:hover {
@@ -447,6 +447,9 @@ minds-activity-preview {
   }
 
   .item-image-video {
+    m-videoPlayer {
+      display: inline;
+    }
     video {
       width: 100%;
       height: auto;

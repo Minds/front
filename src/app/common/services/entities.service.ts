@@ -4,13 +4,14 @@ import { first } from 'rxjs/operators';
 import { Client } from '../../services/api';
 import { BlockListService } from './block-list.service';
 
-type EntityObservable = BehaviorSubject<Object>;
+export type EntityObservable = BehaviorSubject<Object>;
 type EntityObservables = Map<string, EntityObservable>;
 
 @Injectable()
 export class EntitiesService {
   entities: EntityObservables = new Map<string, EntityObservable>();
   castToActivites: boolean = false;
+  exportUserCounts: boolean = false;
 
   constructor(
     protected client: Client,
@@ -111,6 +112,16 @@ export class EntitiesService {
   }
 
   /**
+   * Cast to activities or not
+   * @param cast boolean
+   * @return EntitiesService
+   */
+  setExportUserCounts(value: boolean): EntitiesService {
+    this.exportUserCounts = value;
+    return this;
+  }
+
+  /**
    * Fetch entities
    * @param urns string[]
    * @return []
@@ -120,6 +131,7 @@ export class EntitiesService {
       const response: any = await this.client.get('api/v2/entities/', {
         urns,
         as_activities: this.castToActivites ? 1 : 0,
+        export_user_counts: this.exportUserCounts,
       });
 
       if (!response.entities.length) {

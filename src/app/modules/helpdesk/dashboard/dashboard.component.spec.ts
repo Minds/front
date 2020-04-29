@@ -19,9 +19,9 @@ import { clientMock } from '../../../../tests/client-mock.spec';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { DebugElement } from '@angular/core';
-import { MindsTitle } from '../../../services/ux/title';
-import { MockComponent } from '../../../utils/mock';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
+import { MockComponent, MockService } from '../../../utils/mock';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 describe('HelpdeskDashboardComponent', () => {
   let comp: HelpdeskDashboardComponent;
@@ -49,12 +49,16 @@ describe('HelpdeskDashboardComponent', () => {
       ],
       providers: [
         { provide: Session, useValue: sessionMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
         { provide: Client, useValue: clientMock },
         {
           provide: ActivatedRoute,
           useValue: { params: of({ uuid: 'uuid1' }) },
         },
+        {
+          provide: ConfigsService,
+          useValue: MockService(ConfigsService),
+        },
+        PageLayoutService,
       ],
     }).compileComponents();
   }));

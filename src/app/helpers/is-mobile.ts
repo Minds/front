@@ -15,6 +15,6 @@ export default function isMobile() {
       )
     )
       check = true;
-  })(navigator.userAgent || navigator.vendor || (<any>window).opera);
+  })(navigator.userAgent || navigator.vendor || '');
   return check;
 }

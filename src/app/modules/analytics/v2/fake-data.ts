@@ -13,7 +13,7 @@ const fakeData: Array<any> = [
         comparison_interval: 30,
         from_ts_ms: 1567296000000,
         from_ts_iso: '2019-09-01T00:00:00+00:00',
-        selected: false,
+        selected: true,
       },
       {
         id: '12m',
@@ -119,7 +119,7 @@ const fakeData: Array<any> = [
       },
       {
         id: 'active_users',
-        label: 'Active UsersA',
+        label: 'Active Users B',
         permissions: ['admin', 'user'],
         summary: {
           current_value: 120962,
@@ -149,7 +149,7 @@ const fakeData: Array<any> = [
       },
       {
         id: 'views',
-        label: 'Pageviews',
+        label: 'Pageviews USD',
         permissions: ['admin', 'user'],
         summary: {
           current_value: 83898,

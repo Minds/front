@@ -1,0 +1,41 @@
+<div
+  class="m-composer__base"
+  [class.m-composer__base--withPreview]="
+    (attachmentPreview$ | async) || (richEmbedPreview$ | async)
+  "
+>
+  <div class="m-composerBase__container">
+    <m-composer__titleBar
+      [inputId]="textareaId"
+      (onCreateBlog)="createBlog()"
+    ></m-composer__titleBar>
+
+    <m-composer__preview></m-composer__preview>
+
+    <m-composer__progress
+      [inProgress]="inProgress$ | async"
+      [progress]="progress$ | async"
+    ></m-composer__progress>
+
+    <m-composer__textArea
+      [inputId]="textareaId"
+      (filePaste)="onAttachmentPaste($event)"
+      #textAreaComponent
+    ></m-composer__textArea>
+
+    <m-composer__toolbar (onPost)="onPost($event)"></m-composer__toolbar>
+
+    <div
+      class="m-composerBase__error"
+      *ngIf="attachmentError$ | async as lastError"
+    >
+      {{ lastError }}
+    </div>
+
+    <div class="m-composerBase__error" *ngIf="error">
+      {{ error }}
+    </div>
+  </div>
+
+  <m-composer__popup #popupComponent></m-composer__popup>
+</div>

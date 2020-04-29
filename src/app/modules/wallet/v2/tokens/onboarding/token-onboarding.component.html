@@ -1,0 +1,40 @@
+<div class="m-walletTokenOnboarding__stepsContainer">
+  <div class="m-walletTokenOnboardingStep--verifyPhone">
+    <div class="m-walletTokenOnboardingStep__title">
+      <span>1.</span>
+      <a
+        (click)="clickedPhoneStep()"
+        [ngClass]="{ stepComplete: phoneVerified }"
+        >Verify your phone number</a
+      >
+      <i class="material-icons" *ngIf="phoneVerified">check</i>
+    </div>
+    <div class="m-walletTokenOnboardingStep__desc">
+      Used simply to verify your uniqueness.
+    </div>
+  </div>
+  <div class="m-walletTokenOnboardingStep--addAddress">
+    <div class="m-walletTokenOnboardingStep__title">
+      <span>2.</span>
+      <a
+        routerLink="settings"
+        [ngClass]="{ disabled: !phoneVerified, stepComplete: hasAddress }"
+      >
+        Add your on-chain address</a
+      >
+      <i class="material-icons" *ngIf="hasAddress">check</i>
+    </div>
+    <div class="m-walletTokenOnboardingStep__desc">
+      Your Ethereum address allows you to start receiving payments on the
+      blockchain.
+    </div>
+  </div>
+</div>
+<m-walletModal [showModal]="showModal" (closeModal)="showModal = false">
+  <m-walletPhoneVerification
+    class="m-walletTokenOnboardingModal__view--verifyPhone"
+    *ngIf="activeStep === 'phone'"
+    (phoneVerificationComplete)="phoneVerificationComplete()"
+  >
+  </m-walletPhoneVerification>
+</m-walletModal>

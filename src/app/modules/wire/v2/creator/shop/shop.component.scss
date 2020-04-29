@@ -1,0 +1,73 @@
+.m-wireCreator__shop {
+  margin: 14px 0 0;
+
+  .m-wireCreatorShop__heading {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0 0 29px;
+    padding: 0 50px;
+
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 0 20px;
+    }
+
+    .m-wireCreatorShopHeading__title {
+      font-size: 18px;
+      line-height: 21px;
+      margin: 0 12px 0 0;
+
+      @media screen and (max-width: $max-mobile) {
+        margin: 0 0 11px;
+      }
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+
+    .m-wireCreatorShopHeading__description {
+      font-size: 15px;
+      line-height: 20px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+
+      a {
+        @include m-theme() {
+          color: themed($m-link) !important;
+        }
+      }
+    }
+  }
+
+  .m-wireCreatorShop__select {
+    padding: 0 50px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding: 0 20px;
+    }
+
+    .m-form__row--input {
+      width: 320px;
+
+      @media screen and (max-width: $max-mobile) {
+        width: 100%;
+      }
+
+      select {
+        width: 100%;
+      }
+    }
+
+    &.m-wireCreatorShopSelect__placeholder .m-form__row--input select {
+      @include m-theme() {
+        color: themed($m-textColor--secondary) !important;
+      }
+    }
+  }
+}

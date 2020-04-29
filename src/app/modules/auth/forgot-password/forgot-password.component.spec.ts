@@ -18,8 +18,6 @@ import {
   Output,
 } from '@angular/core';
 import { clientMock } from '../../../../tests/client-mock.spec';
-import { mindsTitleMock } from '../../../mocks/services/ux/minds-title.service.mock.spec';
-import { MindsTitle } from '../../../services/ux/title';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { Session } from '../../../services/session';
 import { Client } from '../../../services/api/client';
@@ -78,7 +76,6 @@ describe('ForgotPasswordComponent', () => {
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
-        { provide: MindsTitle, useValue: mindsTitleMock },
       ],
     }).compileComponents();
   }));
@@ -97,7 +94,7 @@ describe('ForgotPasswordComponent', () => {
 
   it('should have a prompt to enter your username', () => {
     const prompt = fixture.debugElement.query(
-      By.css('.m-forgot-password--step-1 .mdl-card__supporting-text')
+      By.css('.m-forgot-password--step-1')
     );
     expect(prompt).not.toBeNull();
     expect(prompt.nativeElement.textContent).toContain(
@@ -141,7 +138,7 @@ describe('ForgotPasswordComponent', () => {
     fixture.detectChanges();
 
     const prompt = fixture.debugElement.query(
-      By.css('.m-forgot-password--step-2 .mdl-card__supporting-text')
+      By.css('.m-forgot-password--step-2')
     );
     expect(prompt).not.toBeNull();
     expect(prompt.nativeElement.textContent).toContain(
@@ -157,11 +154,11 @@ describe('ForgotPasswordComponent', () => {
     fixture.detectChanges();
 
     const prompt = fixture.debugElement.query(
-      By.css('.m-forgot-password--step-3 .mdl-card__supporting-text')
+      By.css('.m-forgot-password--step-3')
     );
     expect(prompt).not.toBeNull();
     expect(prompt.nativeElement.textContent).toContain(
-      'Please enter your new password'
+      'Enter Your New Password'
     );
 
     const input1 = getPassword1Input();

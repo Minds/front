@@ -11,9 +11,13 @@ import { map, tap, last } from 'rxjs/operators';
 
 import { Client, Upload } from './api';
 import { Session } from './session';
+import { ConfigsService } from '../common/services/configs.service';
 
 @Injectable()
 export class AttachmentService {
+  readonly maxVideoFileSize: number;
+  readonly maxVideoLength: number;
+
   private meta: any = {};
   private attachment: any = {};
 
@@ -29,17 +33,17 @@ export class AttachmentService {
   private pendingDelete: boolean = false;
 
   private xhr: XMLHttpRequest = null;
-
-  static _(session: Session, client: Client, upload: Upload, http: HttpClient) {
-    return new AttachmentService(session, client, upload, http);
-  }
+  private previewRequests: string[] = [];
 
   constructor(
     public session: Session,
     public clientService: Client,
     public uploadService: Upload,
-    private http: HttpClient
+    private http: HttpClient,
+    configs: ConfigsService
   ) {
+    this.maxVideoFileSize = configs.get('max_video_file_size');
+    this.maxVideoLength = configs.get('max_video_length');
     this.reset();
   }
 
@@ -137,14 +141,14 @@ export class AttachmentService {
     this.meta.nsfw = nsfw.map(reason => reason.value);
   }
 
-  async upload(fileInput: HTMLInputElement, detectChangesFn?: Function) {
+  async upload(file: HTMLInputElement | File, detectChangesFn?: Function) {
     this.reset();
 
     this.progress.next(0);
     this.attachment.progress = 0;
     this.attachment.mime = '';
 
-    let file = fileInput ? fileInput.files[0] : null;
+    file = file instanceof HTMLInputElement ? file.files[0] : file;
 
     if (!file) {
       return Promise.reject(null);
@@ -247,7 +251,9 @@ export class AttachmentService {
 
   abort() {
     if (this.xhr) {
-      this.uploadSubscription.unsubscribe();
+      if (this.uploadSubscription) {
+        this.uploadSubscription.unsubscribe();
+      }
       this.xhr.abort();
       this.xhr = null;
 
@@ -258,7 +264,7 @@ export class AttachmentService {
     }
   }
 
-  remove(fileInput: HTMLInputElement) {
+  remove() {
     this.progress.next(0);
     this.attachment.progress = 0;
     this.attachment.mime = '';
@@ -351,7 +357,37 @@ export class AttachmentService {
     this.meta.description = '';
   }
 
-  preview(content: string, detectChangesFn?: Function) {
+  /**
+   * Resets preview requests to null.
+   */
+  resetPreviewRequests(): AttachmentService {
+    this.previewRequests = [];
+    return this;
+  }
+
+  /**
+   * Returns preview requests.
+   */
+  getPreviewRequests(): string[] {
+    return this.previewRequests;
+  }
+
+  /**
+   * Adds a new preview request.
+   * @param { string } url -
+   */
+  addPreviewRequest(url: string): AttachmentService {
+    this.previewRequests.push(url);
+    return this;
+  }
+
+  /**
+   * Gets attachment preview from content.
+   * @param { string } content - Content to be parsed for preview URL.
+   * @param { Function } detectChangesFn - Function to be ran on change emission.
+   * @returns void.
+   */
+  preview(content: string, detectChangesFn?: Function): void {
     let match = content.match(/(\b(https?|ftp|file):\/\/[^\s\]\)]+)/gi),
       url;
 
@@ -384,6 +420,7 @@ export class AttachmentService {
     }
 
     this.attachment.richUrl = url;
+    this.addPreviewRequest(url);
 
     if (detectChangesFn) detectChangesFn();
 
@@ -396,7 +433,7 @@ export class AttachmentService {
       this.clientService
         .get('api/v1/newsfeed/preview', { url })
         .then((data: any) => {
-          if (!data) {
+          if (!data || this.getPreviewRequests().length < 1) {
             this.resetRich();
             if (detectChangesFn) detectChangesFn();
             return;
@@ -493,7 +530,7 @@ export class AttachmentService {
   private checkFileType(file): Promise<any> {
     return new Promise((resolve, reject) => {
       if (file.type && file.type.indexOf('video/') === 0) {
-        const maxFileSize = window.Minds.max_video_file_size;
+        const maxFileSize = this.maxVideoFileSize;
         if (file.size > maxFileSize) {
           throw new Error(
             `File exceeds ${maxFileSize /
@@ -508,14 +545,15 @@ export class AttachmentService {
 
         this.checkVideoDuration(file)
           .then(duration => {
-            if (window.Minds.user.plus) {
-              window.Minds.max_video_length = window.Minds.max_video_length * 3; // Hacky
+            let maxVideoLength = this.maxVideoLength;
+            if (this.session.getLoggedInUser().plus) {
+              maxVideoLength = this.maxVideoLength * 3; // Hacky
             }
-            if (duration > window.Minds.max_video_length) {
+            if (duration > maxVideoLength) {
               return reject({
                 message:
                   'Error: Video duration exceeds ' +
-                  window.Minds.max_video_length / 60 +
+                  this.maxVideoLength / 60 +
                   ' minutes',
               });
             }

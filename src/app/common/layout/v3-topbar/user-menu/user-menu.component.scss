@@ -1,0 +1,100 @@
+m-usermenu__v3 {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+
+  .m-user-menu {
+    .minds-avatar {
+      margin: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-position: center;
+      background-size: cover;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--tertiary);
+      }
+    }
+
+    ul.m-userMenu__dropdown {
+      width: 304px;
+      list-style: none;
+      margin: 34px 0 0;
+      top: 15px;
+      right: -20px;
+
+      @include m-theme() {
+        background-color: themed($m-bgColor--secondary);
+        color: themed($m-textColor--primary);
+        box-shadow: none;
+      }
+
+      li.m-userMenuDropdown__item {
+        padding: 8px 21px;
+        font-size: 15px;
+        line-height: 20px;
+        border: 0 !important;
+
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+
+        span {
+          @include m-theme() {
+            color: themed($m-grey-700);
+          }
+        }
+
+        &:not(.m-userMenuDropdown__username):not(.m-userMenuDropdown__spacer):not(.m-userMenuDropdown__footer):hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--primary);
+            color: themed($m-textColor--primary);
+          }
+        }
+
+        &.m-userMenuDropdown__username {
+          padding-top: 26px;
+          padding-bottom: 8px;
+
+          > a {
+            font-size: 18px;
+            font-weight: bold;
+            line-height: 24px;
+            @include m-theme() {
+              color: themed($m-textColor--primary) !important;
+            }
+          }
+        }
+
+        &.m-userMenuDropdown__spacer {
+          height: 1px;
+          margin: $minds-margin 0;
+          padding: 0;
+
+          @include m-theme() {
+            background-color: themed($m-borderColor--primary);
+          }
+        }
+
+        &.m-userMenuDropdown__footer {
+          flex-wrap: wrap;
+          padding-top: 0;
+
+          a,
+          span {
+            text-decoration: none;
+            font-size: 12px;
+            line-height: 22px;
+            width: auto;
+            white-space: pre-wrap;
+            word-break: break-all;
+
+            @include m-theme() {
+              color: #777981;
+            }
+          }
+        }
+      }
+    }
+  }
+}

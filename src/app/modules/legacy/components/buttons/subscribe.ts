@@ -1,54 +1,64 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  HostBinding,
+} from '@angular/core';
 
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
-import { SignupModalService } from '../../../../modules/modals/signup/service';
+import { SignupModalService } from '../../../modals/signup/service';
 
 @Component({
   selector: 'minds-button-subscribe',
   template: `
-    <button
-      class="m-btn m-btn--with-icon m-btn--subscribe"
-      *ngIf="!_user.subscribed && !_user.pending_subscribe"
-      (click)="subscribe($event)"
-    >
-      <i class="material-icons">person_add</i>
-      <span>
-        <ng-container i18n="@@M__ACTION__SUBSCRIBE" *ngIf="!request">
-          Subscribe
-        </ng-container>
-        <ng-container
-          i18n="@@M__ACTION__SEND_SUBSCRIPTION_REQUEST"
-          *ngIf="request"
-        >
-          Send Subscription Request
-        </ng-container>
-      </span>
-    </button>
-    <button
-      class="m-btn m-btn--with-icon m-btn--subscribe subscribed"
-      *ngIf="_user.pending_subscribe"
-      (click)="unSubscribe($event)"
-    >
-      <i class="material-icons">close</i>
-      <span>
-        <ng-container i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL"
-          >Pending</ng-container
-        >
-      </span>
-    </button>
-    <button
-      class="m-btn m-btn--with-icon m-btn--subscribe subscribed"
-      *ngIf="_user.subscribed"
-      (click)="unSubscribe($event)"
-    >
-      <i class="material-icons">close</i>
-      <span>
-        <ng-container i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL">
-          Unsubscribe
-        </ng-container>
-      </span>
-    </button>
+    <ng-container *ngIf="iconsOnly; else normalView">
+      <div
+        class="m-subscribeButton__subscribe"
+        (click)="subscribe($event)"
+        *ngIf="!_user.subscribed"
+      >
+        <i class="material-icons">
+          add
+        </i>
+      </div>
+
+      <div
+        class="m-subscribeButton__subscribed"
+        (click)="unSubscribe($event)"
+        *ngIf="_user.subscribed"
+      >
+        <i class="material-icons">
+          check
+        </i>
+      </div>
+    </ng-container>
+
+    <ng-template #normalView>
+      <button
+        class="m-btn m-btn--with-icon m-btn--subscribe"
+        *ngIf="!_user.subscribed"
+        (click)="subscribe($event)"
+      >
+        <i class="material-icons">person_add</i>
+        <span>
+          <ng-container i18n="@@M__ACTION__SUBSCRIBE">Subscribe</ng-container>
+        </span>
+      </button>
+      <button
+        class="m-btn m-btn--with-icon m-btn--subscribe subscribed"
+        *ngIf="_user.subscribed"
+        (click)="unSubscribe($event)"
+      >
+        <i class="material-icons">close</i>
+        <span>
+          <ng-container i18n="@@MINDS__BUTTONS__UNSUBSCRIBE__SUBSCRIBED_LABEL"
+            >Unsubscribe</ng-container
+          >
+        </span>
+      </button>
+    </ng-template>
   `,
 })
 export class SubscribeButton {
@@ -59,8 +69,11 @@ export class SubscribeButton {
   _content: any;
   _listener: Function;
   showModal: boolean = false;
-  @Input() request: boolean = false;
   @Output('subscribed') onSubscribed: EventEmitter<any> = new EventEmitter();
+
+  @HostBinding('class.m-subscribeButton--iconsOnly')
+  @Input()
+  iconsOnly: boolean = false;
 
   constructor(
     public session: Session,
@@ -84,10 +97,6 @@ export class SubscribeButton {
       return false;
     }
 
-    if (this._user.mode === 2) {
-      return this.requestSubscribe();
-    }
-
     this._user.subscribed = true;
     this.onSubscribed.next();
 
@@ -104,17 +113,6 @@ export class SubscribeButton {
         this._user.subscribed = false;
         alert("You can't subscribe to this user.");
       });
-  }
-
-  async requestSubscribe() {
-    this._user.pending_subscribe = true;
-
-    try {
-      await this.client.put(`api/v2/subscriptions/outgoing/${this._user.guid}`);
-    } catch (err) {
-      this._user.pending_subscribe = false;
-      alert('There was an error requesting to subscribe');
-    }
   }
 
   unSubscribe(e) {

@@ -1,0 +1,102 @@
+.m-shadowboxHeaderTab {
+  cursor: pointer;
+  flex: 0 0 auto;
+  width: 160px;
+  min-height: 124px;
+  padding: 24px 20px 20px 20px;
+  font-size: 14px;
+  box-sizing: border-box;
+  overflow: visible;
+  @include m-theme() {
+    border-bottom: 8px solid transparent;
+  }
+  @include m-theme() {
+    color: themed($m-textColor--tertiary);
+  }
+  &.active {
+    @include m-theme() {
+      background-color: rgba(themed($m-bgColor--tertiary), 0.3);
+      border-bottom: 8px solid themed($m-blue);
+    }
+  }
+  &:hover:not(.active) {
+    transition: background-color 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    @include m-theme() {
+      background-color: rgba(themed($m-bgColor--tertiary), 0.3);
+      border-bottom: 8px solid rgba(0, 0, 0, 0);
+    }
+  }
+  &:first-child {
+    margin-left: 40px;
+  }
+  &:last-child {
+    margin-right: 40px;
+  }
+
+  .m-shadowboxHeaderTab__label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  m-tooltip {
+    vertical-align: middle;
+    .m-tooltip {
+      margin-left: 4px;
+      i {
+        font-size: 12px;
+        @include m-theme() {
+          color: rgba(themed($m-textColor--tertiary), 0.7);
+        }
+      }
+      .m-tooltip--bubble {
+        z-index: 99;
+        font-size: 11px;
+        @include m-theme() {
+          color: themed($m-white);
+          background-color: themed($m-blue);
+        }
+      }
+    }
+  }
+  .m-shadowboxHeaderTab__value {
+    font-size: 17px;
+    margin-top: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+  .m-shadowboxHeaderTab__delta {
+    display: flex;
+    align-items: baseline;
+    padding-top: 4px;
+    font-size: 11px;
+    .material-icons {
+      transform: scaleX(0.7);
+      font-size: 11px;
+      font-weight: bold;
+    }
+    @include m-theme() {
+      &.goodChange {
+        color: themed($m-green);
+      }
+      &.badChange {
+        color: themed($m-red);
+      }
+    }
+  }
+}
+
+@media screen and (max-width: $min-tablet) {
+  .m-shadowboxHeaderTab {
+    scroll-snap-align: start;
+    &:first-child {
+      margin-left: 16px;
+    }
+    &:last-child {
+      margin-right: 16px;
+    }
+  }
+}

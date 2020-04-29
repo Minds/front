@@ -34,7 +34,6 @@ import { Flags } from '../../../common/services/permissions/flags';
   providers: [CommentsService],
 })
 export class CommentsThreadComponent implements OnInit {
-  minds;
   @Input() parent;
   @Input('entity') set _entity(value: any) {
     this.entity = value;
@@ -86,9 +85,7 @@ export class CommentsThreadComponent implements OnInit {
     protected permissionsService: PermissionsService,
     private cd: ChangeDetectorRef,
     public activityService: ActivityService
-  ) {
-    this.minds = window.Minds;
-  }
+  ) {}
 
   private async checkPermissions() {
     if (this.featuresService.has('permissions')) {
@@ -131,17 +128,24 @@ export class CommentsThreadComponent implements OnInit {
     let el = this.scrollView.nativeElement;
     const previousScrollHeightMinusTop = el.scrollHeight - el.scrollTop;
 
-    let response: any = <
-      { comments; 'load-next'; 'load-previous'; socketRoomName }
-    >await this.commentsService.get({
-      entity_guid: this.guid,
-      parent_path,
-      level: this.level,
-      limit: 12,
-      loadNext: descending ? null : this.loadNext,
-      loadPrevious: descending ? this.loadPrevious : null,
-      descending,
-    });
+    let response: any = null;
+    try {
+      response = <{ comments; 'load-next'; 'load-previous'; socketRoomName }>(
+        await this.commentsService.get({
+          entity_guid: this.guid,
+          parent_path,
+          level: this.level,
+          limit: 12,
+          loadNext: descending ? null : this.loadNext,
+          loadPrevious: descending ? this.loadPrevious : null,
+          descending,
+        })
+      );
+    } catch (e) {}
+
+    if (!response || !response.comments) {
+      return;
+    }
 
     let comments = response.comments;
 
@@ -309,6 +313,17 @@ export class CommentsThreadComponent implements OnInit {
     }
   }
 
+  /**
+   * Retries connection to sockets manually.
+   */
+  retry() {
+    this.inProgress = true;
+    this.listen();
+    setTimeout(() => {
+      this.inProgress = false;
+    }, 2000);
+  }
+
   onOptimisticPost(comment) {
     this.comments.push(comment);
     this.detectChanges();
@@ -342,6 +357,15 @@ export class CommentsThreadComponent implements OnInit {
   }
 
   ngOnChanges(changes) {
-    //  console.log('[comment:list]: on changes', changes);
+    // console.log('[comment:thread]: on changes', changes);
+
+    // reload on entity change.
+    if (
+      changes.entity &&
+      changes.entity.previousValue &&
+      changes.entity.previousValue.guid !== changes.entity.currentValue.guid
+    ) {
+      this.load(true);
+    }
   }
 }

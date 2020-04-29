@@ -13,10 +13,10 @@ let run = (cmd: string, env: any = {}, outputAsResult: boolean = true) => {
     opts = {
       env: {
         ...process.env,
-        ...env
+        ...env,
       },
       maxBuffer: 1024 * 1024,
-      stdio: <StdioOptions>(outputAsResult ? 'pipe' : 'inherit')
+      stdio: <StdioOptions>(outputAsResult ? 'pipe' : 'inherit'),
     };
 
   if (shell) {
@@ -42,19 +42,22 @@ function transform(source, output) {
   let fileContent = readFileSync(source).toString();
 
   fileContent = fileContent
-    .replace(/\&#10;/g, "\n")
-    .replace(/\&#13;/g, "\n")
-    .replace(/<x\s+(.*?)\s*\/>/g, "{{$1}}")
+    .replace(/\&#10;/g, '\n')
+    .replace(/\&#13;/g, '\n')
+    .replace(/<x\s+(.*?)\s*\/>/g, '{{$1}}')
     .replace(/{{id="INTERPOLATION" equiv-text="[^"]+"}}/g, '%1$s')
-    .replace(/{{id="INTERPOLATION_([0-9]+)" equiv-text="[^"]+"}}/g, (substring, match_1) => {
-      const idx = parseInt(match_1) + 1;
+    .replace(
+      /{{id="INTERPOLATION_([0-9]+)" equiv-text="[^"]+"}}/g,
+      (substring, match_1) => {
+        const idx = parseInt(match_1) + 1;
 
-      if (idx < 2) {
-        process.exit(1);
+        if (idx < 2) {
+          process.exit(1);
+        }
+
+        return `%${idx}$s`;
       }
-
-      return `%${idx}$s`;
-    });
+    );
 
   writeFileSync(output, fileContent);
 }
@@ -63,7 +66,10 @@ function transform(source, output) {
 
 export = () => cb => {
   run(`node_modules/.bin/ng xi18n --i18nFormat xlf`, {}, false);
-  transform(join(APP_SRC, 'messages.xlf'), join(APP_SRC, 'locale', argv.output || 'Default.xliff'));
+  transform(
+    join(APP_SRC, 'messages.xlf'),
+    join(APP_SRC, 'locale', argv.output || 'Default.xliff')
+  );
   unlinkSync(join(APP_SRC, 'messages.xlf'));
 
   cb();

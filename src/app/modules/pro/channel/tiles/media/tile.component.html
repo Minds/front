@@ -1,32 +1,8 @@
-<div
-  class="m-proChannelTile__container"
-  (click)="tileClicked()"
-  [ngSwitch]="getType(entity)"
->
-  <m-video
-    *ngSwitchCase="'object:video'"
-    width="100%"
-    height="300px"
-    [muted]="false"
-    [poster]="entity.thumbnail_src"
-    [src]="[
-      {
-        res: '360',
-        uri: 'api/v1/media/' + entity.guid + '/play?s=tile',
-        type: 'video/mp4'
-      }
-    ]"
-    [guid]="entity.guid"
-    [playCount]="entity['play:count']"
-    [torrent]="[{ res: '360', key: entity.guid + '/360.mp4' }]"
-    (videoMetadataLoaded)="setVideoDimensions($event)"
-    [shouldPlayInModal]="true"
-    #player
-  ></m-video>
-
-  <img *ngSwitchDefault [src]="entity.thumbnail_src" #img />
-</div>
-
-<div class="m-proChannelTile__text" (click)="tileClicked()" *ngIf="getTitle()">
-  <h2 [title]="getTitle()">{{ getTitle() }}</h2>
-</div>
+<m-activity
+  [entity]="entity"
+  [displayOptions]="{
+    fixedHeight: false,
+    showComments: false,
+    showOwnerBlock: true
+  }"
+></m-activity>

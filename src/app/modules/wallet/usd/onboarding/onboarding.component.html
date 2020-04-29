@@ -108,7 +108,7 @@
       />
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col" *ngIf="isCountry(['CA', 'HK', 'SG'])">
+    <div class="mdl-cell mdl-cell--6-col" *ngIf="isCountry(['HK', 'SG'])">
       <label>
         <ng-container i18n="@@MONETIZATION__ONBOARDING__PERSONAL_ID_LABEL"
           >Personal ID</ng-container
@@ -198,10 +198,7 @@
       />
     </div>
 
-    <div
-      class="mdl-cell mdl-cell--6-col"
-      *ngIf="!isCountry(['HK', 'IE', 'JP'])"
-    >
+    <div class="mdl-cell mdl-cell--6-col" *ngIf="!isCountry(['HK', 'JP'])">
       <label i18n="@@MONETIZATION__ONBOARDING__ZIP_CODE_LABEL"
         >Zip (Postal) Code</label
       >
@@ -214,15 +211,9 @@
       />
     </div>
 
-    <div class="mdl-cell mdl-cell--6-col" *ngIf="isCountry(['JP'])">
+    <div class="mdl-cell mdl-cell--6-col">
       <label i18n="@@MONETIZATION__ONBOARDING__PHONE_LABEL">Phone Number</label>
-      <input
-        formControlName="phoneNumber"
-        type="tel"
-        placeholder="eg. 123-456789"
-        i18n-placeholder="@@MONETIZATION__ONBOARDING__PHONE_PLACEHOLDER"
-        class="m-input"
-      />
+      <m-phone-input formControlName="phoneNumber"></m-phone-input>
     </div>
   </div>
 

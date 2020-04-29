@@ -21,11 +21,11 @@ import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.se
 import { MessengerSounds } from '../sounds/service';
 import { BlockListService } from '../../../common/services/block-list.service';
 import { FeaturesService } from '../../../services/features.service';
+import { ConfigsService } from '../../../common/services/configs.service';
 import { PermissionsService } from '../../../common/services/permissions/permissions.service';
 import { Flags } from '../../../common/services/permissions/flags';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-messenger--conversation',
   host: {
     '(window:focus)': 'onFocus($event)',
@@ -34,10 +34,8 @@ import { Flags } from '../../../common/services/permissions/flags';
   inputs: ['conversation'],
   templateUrl: 'conversation.component.html',
 })
-export class MessengerConversation implements OnInit, OnDestroy {
-  minds: Minds = window.Minds;
-
-  sounds = new MessengerSounds();
+export class MessengerConversation {
+  readonly cdnUrl: string;
 
   tabId: string;
 
@@ -88,9 +86,11 @@ export class MessengerConversation implements OnInit, OnDestroy {
     public dockpanes: MessengerConversationDockpanesService,
     protected blockListService: BlockListService,
     protected featuresService: FeaturesService,
+    configs: ConfigsService,
     protected permissionsService: PermissionsService
   ) {
     this.buildTabId();
+    this.cdnUrl = configs.get('cdn_url');
   }
 
   ngOnInit() {
@@ -194,7 +194,7 @@ export class MessengerConversation implements OnInit, OnDestroy {
             if (!this.focused && document.title.indexOf('\u2022') === -1)
               document.title = '\u2022 ' + document.title;
 
-            this.sounds.play('new');
+            // this.sounds.play('new');
           }
         }
       );

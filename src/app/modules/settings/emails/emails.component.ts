@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ConfirmPasswordModalComponent } from '../../modals/confirm-password/modal.component';
+import { Session } from '../../../services/session';
 
 @Component({
   selector: 'm-settings--emails',
@@ -33,6 +34,7 @@ export class SettingsEmailsComponent implements OnInit {
 
   error: string = '';
   changed: boolean = false;
+  emailChanged: boolean = false;
   saved: boolean = false;
   inProgress: boolean = false;
   loading: boolean = false;
@@ -41,7 +43,8 @@ export class SettingsEmailsComponent implements OnInit {
 
   constructor(
     public client: Client,
-    public overlayModal: OverlayModalService
+    public overlayModal: OverlayModalService,
+    protected session: Session
   ) {}
 
   ngOnInit() {
@@ -77,6 +80,10 @@ export class SettingsEmailsComponent implements OnInit {
     this.saved = false;
   }
 
+  changeEmail() {
+    this.emailChanged = true;
+  }
+
   canSubmit() {
     return this.changed;
   }
@@ -89,7 +96,12 @@ export class SettingsEmailsComponent implements OnInit {
         notifications: this.notifications,
       })
       .then((response: any) => {
+        if (this.emailChanged && this.session.getLoggedInUser()) {
+          this.session.getLoggedInUser().email_confirmed = false;
+        }
+
         this.changed = false;
+        this.emailChanged = false;
         this.saved = true;
         this.error = '';
 

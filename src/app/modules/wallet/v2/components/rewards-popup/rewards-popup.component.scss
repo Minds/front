@@ -1,0 +1,48 @@
+m-walletRewardsPopup {
+  z-index: 1;
+  position: absolute;
+  top: 36px;
+  left: 0;
+  width: 188px;
+  min-height: 26px;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 18px;
+
+  @include m-theme() {
+    background-color: themed($m-white);
+    color: themed($m-textColor--tertiary);
+    box-shadow: 0 0 10px 0 rgba(themed($m-black), 0.1);
+    border: 1px solid themed($m-borderColor--primary);
+  }
+
+  .m-walletRewardsPopup__row {
+    display: flex;
+    justify-content: space-between;
+    text-transform: capitalize;
+  }
+
+  .m-walletRewardsPopup__metricsContainer {
+    margin: 14px 20px;
+    .m-walletRewardsPopup__row {
+      margin-bottom: 5px;
+    }
+  }
+
+  .m-walletRewardsPopup__totalScoreWrapper {
+    padding: 14px 20px;
+    @include m-theme() {
+      box-shadow: 0px -2px 6px -2px rgba(themed($m-black), 0.2);
+    }
+    span {
+      font-size: 14px;
+      line-height: 19px;
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+  .m-walletRewardsPopup__notice {
+    margin: 20px;
+  }
+}

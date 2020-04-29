@@ -6,9 +6,10 @@
         class="mdl-card item"
         [object]="entity"
         [canDelete]="group['is:owner'] || group['is:moderator']"
-        (delete)="delete(entity)"
+        (deleted)="delete(entity)"
         [hideTabs]="true"
         [attr.data-minds-activity-guid]="entity.guid"
+        [allowAutoplayOnScroll]="true"
       >
         <!-- Menu Actions -->
 

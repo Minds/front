@@ -7,6 +7,7 @@
   .m-groupGrid__left {
     flex: 2;
   }
+
   .m-groupGrid__right {
     flex: 1;
     min-width: 33%;
@@ -25,19 +26,21 @@
   }
 
   .m-groupGrid__toggleBtn {
+    position: fixed;
+    top: 55px;
+    right: 60px;
     display: block;
     z-index: 99;
-    cursor: pointer;
-    position: fixed;
-    right: 65px;
-    top: 55px;
+
     @media screen and (max-width: $min-desktop) {
       right: 8px;
       top: 106px;
     }
+
     i {
       font-size: 32px;
     }
+
     .material-icons {
       @include m-theme() {
         text-shadow: 0px 0px 1px themed($m-white), 0px 0px 1px themed($m-white);
@@ -66,7 +69,7 @@
   max-width: 780px;
   box-sizing: border-box;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 
   minds-groups-settings-button.m-button {
@@ -224,5 +227,19 @@ m-groups--profile .m-group__grid header {
   box-sizing: border-box;
   @include m-theme() {
     background-color: themed($m-white);
+  }
+}
+
+.m-theme__2020 {
+  .m-group__infoWrapper,
+  .m-group__feeds {
+    margin: 0 40px; // TODO: make constant
+
+    @media screen and (max-width: $layoutMax2ColWidth) {
+      margin: 0;
+    }
+  }
+  .m-groupGrid__toggleBtn {
+    top: 75px;
   }
 }

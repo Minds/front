@@ -1,0 +1,43 @@
+<div class="m-settingsV2__desc">
+  Control whether videos in your feed play automatically.
+  <ng-container *ngIf="!isPlus"
+    ><br /><br />This feature is only available to Plus users.
+    <a class="m-form__upgradeLink" routerLink="/plus" *ngIf="!isPlus"
+      >Upgrade to Plus</a
+    ></ng-container
+  >
+</div>
+<form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
+  <div class="m-form__fieldsContainer">
+    <div class="m-form__field--checkbox stretchedField">
+      <div class="m-form__row--input">
+        <label
+          for="autoplay_videos"
+          class="m-form__customInputWrapper__checkbox"
+          [ngClass]="{ readonly: !isPlus }"
+          i18n
+          >Enable video autoplay
+          <input
+            type="checkbox"
+            id="autoplay_videos"
+            name="autoplay_videos"
+            formControlName="autoplay_videos"
+            class="form-control"
+            data-minds="autoplay_videos"
+            [readonly]="inProgress || !init || !isPlus"
+          />
+          <span class="m-form__customInput__checkbox"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="m-form__buttonsContainer">
+    <m-shadowboxSubmitButton
+      [disabled]="!canSubmit()"
+      [saving]="inProgress"
+      (click)="submit()"
+    >
+      Update Preference
+    </m-shadowboxSubmitButton>
+  </div>
+</form>

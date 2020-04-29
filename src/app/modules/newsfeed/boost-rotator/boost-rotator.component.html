@@ -35,20 +35,46 @@
   </ul>
 </div>
 
-<ng-container *ngIf="!disabled">
-  <minds-activity
-    *ngFor="let boost of boosts; let i = index"
-    [object]="boost"
-    [boostToggle]="true"
-    [class]="
-      'mdl-card m-border item m-boost-rotator-item m-boost-rotator-item-' + i
-    "
-    visible="true"
-    [hidden]="i != currentPosition"
-    [showBoostMenuOptions]="true"
-    [slot]="i + 1"
-    [visibilityEvents]="false"
-    [attr.data-minds-activity-guid]="boost.guid"
-    #activities
-  ></minds-activity>
-</ng-container>
+<div
+  *ngIf="!disabled"
+  #rotatorEl
+  [class.m-newsfeed__boostRotator]="useNewNavigation"
+  [style.min-height]="height"
+>
+  <ng-container *ngFor="let entity of boosts; let i = index">
+    <ng-container *mIfFeature="'navigation'; else legacyActivity">
+      <m-activity
+        @fastFade
+        [entity]="entity"
+        [displayOptions]="{
+          showOnlyCommentsInput: false,
+          showComments: false,
+          fixedHeight: true,
+          fixedHeightContainer: true
+        }"
+        [allowAutoplayOnScroll]="true"
+        [attr.data-minds-activity-guid]="entity.guid"
+        [slot]="i + 1"
+        [canRecordAnalytics]="false"
+        *ngIf="i === currentPosition"
+      ></m-activity>
+    </ng-container>
+    <ng-template #legacyActivity>
+      <minds-activity
+        [object]="entity"
+        [boostToggle]="true"
+        [class]="
+          'mdl-card m-border item m-boost-rotator-item m-boost-rotator-item-' +
+          i
+        "
+        visible="true"
+        [hidden]="i != currentPosition"
+        [showBoostMenuOptions]="true"
+        [slot]="i + 1"
+        [visibilityEvents]="false"
+        [attr.data-minds-activity-guid]="entity.guid"
+        #activities
+      ></minds-activity>
+    </ng-template>
+  </ng-container>
+</div>

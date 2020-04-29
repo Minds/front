@@ -18,7 +18,7 @@ import { sessionMock } from '../../../../tests/session-mock.spec';
 import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
-import { GroupsService } from '../groups-service';
+import { GroupsService } from '../groups.service';
 import { FeaturesService } from '../../../services/features.service';
 import { featuresServiceMock } from '../../../../tests/features-service-mock.spec';
 import { PermissionsService } from '../../../common/services/permissions/permissions.service';

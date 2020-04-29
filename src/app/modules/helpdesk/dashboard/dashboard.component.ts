@@ -2,14 +2,15 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
-import { MindsTitle } from '../../../services/ux/title';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-helpdesk--dashboard',
   templateUrl: 'dashboard.component.html',
 })
 export class HelpdeskDashboardComponent implements OnInit {
-  minds = window.Minds;
+  readonly cdnAssetsUrl: string;
 
   query: string = '';
   results: any[] = [];
@@ -25,11 +26,14 @@ export class HelpdeskDashboardComponent implements OnInit {
     public router: Router,
     public client: Client,
     public session: Session,
-    private title: MindsTitle
-  ) {}
+    configs: ConfigsService,
+    private pageLayoutService: PageLayoutService
+  ) {
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+  }
 
   async ngOnInit() {
-    this.title.setTitle('Help Desk');
+    this.pageLayoutService.useFullWidth();
     await this.loadPopular();
   }
 

@@ -1,0 +1,223 @@
+<div *ngIf="inProgress" class="m-wallet__spinner">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+<div class="m-walletCashBankForm">
+  <!-- -------------------------------------------- -->
+  <!--- FORM - BANK ACCOUNT IS NOT YET SET UP -------->
+  <!--- OR IS BEING UPDATED-------- ------------------>
+  <!-- -------------------------------------------- -->
+  <!-- <ng-container *ngIf="!leftMonetization"> -->
+  <form
+    [formGroup]="form"
+    class="m-walletButtonLayout--buttonOffsetRight"
+    *ngIf="!hasBank || editing"
+  >
+    <p class="m-walletTertiaryText--desc">
+      Finish adding your bank details to start receiving cash payouts.
+    </p>
+    <div class="m-walletForm__fieldsContainer">
+      <!-- -------------------------------------------- -->
+      <!--- INPUT - COUNTRY DROPDOWN---------------------->
+      <!-- -------------------------------------------- -->
+      <div class="m-walletForm__field--text stretchedField">
+        <div class="m-walletForm__row--label">
+          <label for="country" i18n>Country</label>
+        </div>
+        <div class="m-walletForm__row--input">
+          <minds-country-input
+            type="text"
+            id="country"
+            name="country"
+            class="form-control"
+            data-minds="country"
+            [allowed]="allowedCountries"
+            [country]="country.value"
+            (countryChange)="country.setValue($event)"
+          ></minds-country-input>
+        </div>
+      </div>
+      <!-- -------------------------------------------- -->
+      <!--- INPUT - ACCOUNT NUMBER  ---------------------->
+      <!-- -------------------------------------------- -->
+      <div class="m-walletForm__field--text stretchedField">
+        <div class="m-walletForm__row--label">
+          <label for="accountNumber" i18n>Bank Account Number / IBAN</label>
+        </div>
+        <div class="m-walletForm__row--input">
+          <input
+            type="text"
+            id="accountNumber"
+            name="accountNumber"
+            formControlName="accountNumber"
+            class="form-control"
+            data-minds="accountNumber"
+          />
+        </div>
+      </div>
+      <!-- -------------------------------------------- -->
+      <!--- INPUT - ROUTING NUMBER  ---------------------->
+      <!-- -------------------------------------------- -->
+      <div class="m-walletForm__field--text stretchedField">
+        <div class="m-walletForm__row--label">
+          <label for="routingNumber" i18n>Routing Number / Sort Code</label>
+        </div>
+        <div class="m-walletForm__row--input">
+          <input
+            type="text"
+            id="routingNumber"
+            name="routingNumber"
+            formControlName="routingNumber"
+            class="form-control"
+            data-minds="routingNumber"
+          />
+        </div>
+      </div>
+      <!-- -------------------------------------------- -->
+      <!--- ERROR ---------------------------------------->
+      <!-- -------------------------------------------- -->
+      <p class="m-walletTertiaryText--error">
+        {{ error }}
+      </p>
+    </div>
+    <!-- -------------------------------------------- -->
+    <!--- FORM BUTTONS --------------------------------->
+    <!-- -------------------------------------------- -->
+    <div class="m-walletForm__buttonsContainer">
+      <m-shadowboxSubmitButton
+        (click)="cancelEdits()"
+        [disabled]="inProgress"
+        color="grey"
+        >Cancel</m-shadowboxSubmitButton
+      >
+      <m-shadowboxSubmitButton
+        (click)="addBank()"
+        [disabled]="inProgress || form.invalid"
+        [saving]="inProgress"
+        >Add Bank Account</m-shadowboxSubmitButton
+      >
+    </div>
+  </form>
+  <!-- -------------------------------------------- -->
+  <!--- BANK ACCOUNT ALREADY SET UP ------------------>
+  <!-- -------------------------------------------- -->
+  <ng-container *ngIf="hasBank && !editing">
+    <div class="m-walletSettingsView--hasAccount__accountSummary">
+      <p class="m-walletTertiaryText--desc">
+        Your bank account where cash rewards are deposited.
+      </p>
+      <div class="m-walletSettingsView--hasAccount__detailsWrapper">
+        <div class="m-walletSettingsView--hasAccount__bankWrapper">
+          <span>
+            {{ account.bankAccount.bank_name }}
+          </span>
+          <span>****{{ account.bankAccount.last4 }}</span>
+        </div>
+        <div class="m-walletSettingsView--hasAccount__linksContainer">
+          <a><span (click)="enterEditMode()">Update</span></a>
+          <a
+            ><span (click)="showModal = true; modalContent = 'removeBank'"
+              >Remove</span
+            ></a
+          >
+        </div>
+      </div>
+    </div>
+    <!-- -------------------------------------------- -->
+    <!--- LEAVE MONETIZATION BUTTON  ------------------->
+    <!-- -------------------------------------------- -->
+    <!-- <div class="m-walletSettingsView--hasAccount__leaveMonetization">
+        <h2>Leave Monetization Program</h2>
+        <p>
+          For security reasons, you won't be able to rejoin the monetization
+          program.
+        </p>
+        <m-shadowboxSubmitButton
+          color="red"
+          (click)="showModal = true; modalContent = 'leaveMonetization'"
+          >Leave Monetization Program</m-shadowboxSubmitButton
+        >
+      </div> -->
+  </ng-container>
+  <!-- -------------------------------------------- -->
+  <!--- CONFIRMATION MODAL: LEAVE EDIT MODE ---------->
+  <!-- -------------------------------------------- -->
+  <m-walletModal
+    class="m-walletModal--confirmation"
+    [showModal]="showModal && modalContent === 'leaveEditMode'"
+    (closeModal)="showModal = false"
+  >
+    <p class="m-walletTertiaryText--desc">
+      Are you sure you want to stop? Any bank information you've entered will be
+      lost.
+    </p>
+
+    <div class="m-walletForm__buttonsContainer">
+      <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
+        >Go back</m-shadowboxSubmitButton
+      >
+      <m-shadowboxSubmitButton
+        color="red"
+        (click)="leaveEditMode()"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        >I'm sure</m-shadowboxSubmitButton
+      >
+    </div>
+  </m-walletModal>
+  <!-- -------------------------------------------- -->
+  <!--- CONFIRMATION MODAL: REMOVE BANK -------------->
+  <!-- -------------------------------------------- -->
+  <m-walletModal
+    class="m-walletModal--confirmation"
+    [showModal]="showModal && modalContent === 'removeBank'"
+    (closeModal)="showModal = false"
+  >
+    <p class="m-walletTertiaryText--desc">
+      Are you sure you want to remove your bank account information? You won't
+      be able to receive payments until you add another one.
+    </p>
+    <div class="m-walletForm__buttonsContainer">
+      <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
+        >Cancel</m-shadowboxSubmitButton
+      >
+      <m-shadowboxSubmitButton
+        color="red"
+        (click)="removeBank()"
+        [disabled]="inProgress"
+        [saving]="inProgress"
+        >I'm sure</m-shadowboxSubmitButton
+      >
+    </div>
+  </m-walletModal>
+  <!-- -------------------------------------------- -->
+  <!--- CONFIRMATION MODAL: LEAVE MONETIZATION ---------->
+  <!-- -------------------------------------------- -->
+  <!-- <m-walletModal
+      class="m-walletModal--confirmation"
+      [showModal]="showModal && modalContent === 'leaveMonetization'"
+      (closeModal)="showModal = false"
+    >
+      <p class="m-walletTertiaryText--desc">
+        Are you sure you want to leave the monetization program? You won't be
+        able to rejoin again.
+      </p>
+      <div class="m-walletForm__buttonsContainer">
+        <m-shadowboxSubmitButton color="grey" (click)="showModal = false"
+          >Cancel</m-shadowboxSubmitButton
+        >
+        <m-shadowboxSubmitButton
+          color="red"
+          (click)="leaveMonetization()"
+          [disabled]="inProgress"
+          [saving]="inProgress"
+          >I'm sure</m-shadowboxSubmitButton
+        >
+      </div>
+    </m-walletModal> -->
+  <!-- </ng-container>
+  <ng-container *ngIf="leftMonetization">
+    <p class="m-walletTertiaryText--desc">
+      You have left the monetization program.
+    </p>
+  </ng-container> -->
+</div>

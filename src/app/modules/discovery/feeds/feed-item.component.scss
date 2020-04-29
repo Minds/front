@@ -1,0 +1,62 @@
+.m-discovery__feedItem {
+  padding: 20px 40px;
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+
+  @media screen and (max-width: $layoutMin3ColWidth) {
+    padding: 20px;
+  }
+
+  &.m-discovery__feedItem--user,
+  &.m-discovery__feedItem--group {
+    a {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      text-decoration: none;
+    }
+    .m-discoveryFeedItem__avatar {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background-size: cover;
+      margin-right: 20px;
+      @include m-theme() {
+        background-color: themed($m-textColor--secondary);
+      }
+    }
+    .m-discoveryFeedItem__body {
+      flex: 1;
+      h4 {
+        font-size: 16px;
+        line-height: 20px;
+        margin: 0;
+        padding: 0;
+        font-weight: 600;
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+      span {
+        font-size: 15px;
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+      }
+      p {
+        padding: 0;
+        margin: 0;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+    .m-btn {
+      @include m-theme() {
+        border-color: themed($m-borderColor--primary);
+      }
+    }
+  }
+}

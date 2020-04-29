@@ -58,7 +58,7 @@ a.m-link-btn {
 
 .m-btn--action {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
     color: themed($m-blue) !important;
     border: 1px solid themed($m-blue);
   }
@@ -79,7 +79,7 @@ a.m-link-btn {
 
 .m-btn--destructive {
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
     color: themed($m-red) !important;
     border: 1px solid themed($m-red);
   }

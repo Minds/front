@@ -6,6 +6,17 @@ m-toggle {
   margin: 0 0.35em;
   cursor: pointer;
 
+  &.disabled {
+    .m-toggle__switch {
+      .m-toggle__switch--left,
+      .m-toggle__switch--right {
+        @include m-theme() {
+          background: themed($m-grey-800);
+        }
+      }
+    }
+  }
+
   .m-toggle__track {
     display: inline-block;
     position: absolute;

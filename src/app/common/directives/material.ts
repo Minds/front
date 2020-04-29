@@ -4,7 +4,6 @@ import { Material as MaterialService } from '../../services/ui';
 import { MaterialTextfield } from './material/text-field';
 import { MaterialUpload } from './material/upload';
 import { MaterialSwitch } from './material/switch';
-import { MaterialDateTimePickerDirective } from './material/datetimepicker.directive';
 import { MaterialSlider } from './material/slider';
 import { MaterialRadio } from './material/radio/radio';
 
@@ -30,7 +29,6 @@ export const MDL_DIRECTIVES: any[] = [
   MaterialTextfield,
   MaterialUpload,
   MaterialSwitch,
-  MaterialDateTimePickerDirective,
   MaterialSlider,
   MaterialRadio,
 ];

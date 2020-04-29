@@ -13,27 +13,17 @@ import { MessengerUserlist } from './userlist/userlist.component';
 import { MessengerSetupChat } from './setup/setup.component';
 
 @Component({
-  moduleId: module.id,
   selector: 'm-messenger',
   templateUrl: 'messenger.component.html',
 })
 export class Messenger {
-  encryption = this.injector.get(MessengerEncryptionService);
-  sounds = new MessengerSounds();
-
-  dockpanes = this.injector.get(MessengerConversationDockpanesService);
-
-  minds: Minds = window.Minds;
-  storage: Storage = new Storage();
-
   @ViewChild('userList', { static: true }) userList: MessengerUserlist;
   @ViewChild('setupChat', { static: false }) setupChat: MessengerSetupChat;
 
   constructor(
     public session: Session,
     public client: Client,
-    public sockets: SocketsService,
-    private injector: Injector
+    public sockets: SocketsService
   ) {}
 
   ngAfterViewInit() {

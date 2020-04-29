@@ -1,0 +1,100 @@
+.m-admin-withdrawals {
+  max-width: 900px;
+  margin: 16px auto 0;
+
+  .m-admin-withdrawals__legend {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    margin: 8px 0 16px;
+    letter-spacing: 1px;
+  }
+
+  .m-admin-withdrawals__card {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 600px;
+    margin: 0 auto 32px;
+    padding: 8px;
+    border: 1px solid;
+    border-radius: 4px;
+
+    @include m-theme() {
+      background: themed($m-white);
+      color: themed($m-black);
+      border-color: themed($m-grey-50);
+    }
+  }
+
+  .m-admin-withdrawalsCard__cell {
+    flex-grow: 1;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    min-width: 25%;
+    padding: 8px;
+
+    &--actions {
+      width: 100%;
+      text-align: right;
+      padding-top: 24px;
+      margin-top: 16px;
+      border-top: 1px dotted;
+
+      @include m-theme() {
+        border-color: themed($m-grey-50);
+      }
+    }
+
+    a {
+      color: inherit;
+      font: inherit;
+      text-decoration: none;
+      border-bottom: 1px dotted;
+      cursor: pointer;
+
+      @include m-theme() {
+        border-color: themed($m-grey-300);
+      }
+    }
+
+    .m-admin-withdrawalsCardCell__label {
+      font-weight: 600;
+      margin-bottom: 2px;
+
+      @include m-theme() {
+        color: themed($m-grey-300);
+      }
+    }
+
+    .m-admin-withdrawalsCardCell__body {
+      &--bolder {
+        font-weight: bold;
+        letter-spacing: 0.5px;
+      }
+    }
+
+    &--actions .m-admin-withdrawalsCardCell__body {
+      > * {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 8px 8px;
+      }
+    }
+  }
+
+  .m-admin-withdrawals__notice {
+    max-width: 600px;
+    margin: 32px auto;
+    padding: 16px;
+    border: 1px solid;
+    border-radius: 4px;
+    text-align: center;
+
+    @include m-theme() {
+      background: themed($m-white);
+      color: themed($m-black);
+      border-color: themed($m-grey-50);
+    }
+  }
+}

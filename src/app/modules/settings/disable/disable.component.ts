@@ -16,7 +16,6 @@ import { Session } from '../../../services/session';
   templateUrl: 'disable.component.html',
 })
 export class SettingsDisableChannelComponent implements OnInit {
-  minds: Minds;
   user: any;
   settings: string;
   object: any;
@@ -29,9 +28,7 @@ export class SettingsDisableChannelComponent implements OnInit {
     private session: Session,
     private permissionsService: PermissionsService,
     private featuresService: FeaturesService
-  ) {
-    this.minds = window.Minds;
-  }
+  ) {}
 
   ngOnInit() {
     this.checkPermissions();

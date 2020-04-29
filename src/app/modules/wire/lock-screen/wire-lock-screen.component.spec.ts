@@ -13,12 +13,14 @@ import { Client } from '../../../services/api/client';
 import { By } from '@angular/platform-browser';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { MaterialMock } from '../../../../tests/material-mock.spec';
-import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { SignupModalService } from '../../modals/signup/service';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
 import { signupModalServiceMock } from '../../../mocks/modules/modals/signup/signup-modal-service.mock';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { MockService } from '../../../utils/mock';
+import { WireModalService } from '../wire-modal.service';
+import { of } from 'rxjs';
 
 describe('WireLockScreenComponent', () => {
   let comp: WireLockScreenComponent;
@@ -45,8 +47,14 @@ describe('WireLockScreenComponent', () => {
       providers: [
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
-        { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        {
+          provide: WireModalService,
+          useValue: MockService(WireModalService, {
+            present: () => of({}),
+          }),
+        },
         { provide: SignupModalService, useValue: signupModalServiceMock },
+        { provide: ConfigsService, useValue: MockService(ConfigsService) },
       ],
     }).compileComponents(); // compile template and css
   }));

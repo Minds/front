@@ -2,6 +2,25 @@ m-analytics__dashboard {
   display: block;
   position: relative;
   width: 100%;
+  m-tooltip {
+    .m-tooltip {
+      margin-left: 4px;
+      i {
+        font-size: 12px;
+        @include m-theme() {
+          color: rgba(themed($m-grey-300), 0.7);
+        }
+      }
+      .m-tooltip--bubble {
+        z-index: 99;
+        font-size: 11px;
+        @include m-theme() {
+          color: themed($m-white);
+          background-color: themed($m-blue);
+        }
+      }
+    }
+  }
 }
 
 .m-analytics__spinnerContainer {
@@ -11,7 +30,7 @@ m-analytics__dashboard {
   justify-content: center;
   align-items: center;
   @include m-theme() {
-    background-color: themed($m-white);
+    background-color: themed($m-bgColor--secondary);
   }
 }
 
@@ -30,25 +49,17 @@ m-analytics__dashboard {
       }
     }
   }
-  m-analytics__filter {
+  m-dropdownSelector {
     margin: 0;
   }
-  .m-analyticsFilter__wrapper {
+  .m-dropdownSelector__wrapper {
     > * {
       width: 180px;
     }
   }
-  .m-analyticsDashboard__timespanFilter {
-    .m-analytics__filterWrapper {
-      margin-top: 0px;
-    }
-    .m-analytics__filterLabel {
-      display: none;
-    }
-  }
 }
 .m-analyticsDashboard__description {
-  margin: 8px 16px 32px 0;
+  margin: 8px 16px 32px 40px;
   font-weight: 400;
   @include m-theme() {
     color: themed($m-grey-300);
@@ -57,25 +68,27 @@ m-analytics__dashboard {
 
 @media screen and (max-width: $min-tablet) {
   .m-dashboardLayout__header {
-    m-analytics__filter {
+    m-dropdownSelector {
       margin: 0 16px 8px 0;
-      .m-analyticsFilter__wrapper {
+      .m-dropdownSelector__wrapper {
         > * {
-          width: 160px;
+          width: 180px;
         }
       }
     }
   }
   .m-analyticsDashboard__description {
-    margin: 0 24px 24px 24px;
+    margin: 24px;
   }
 }
 
 @media screen and (max-width: $max-mobile) {
   .m-dashboardLayout__header {
-    .m-analyticsFilter__wrapper {
-      > * {
-        width: 140px;
+    m-dropdownSelector {
+      .m-dropdownSelector__wrapper {
+        > * {
+          width: 160px;
+        }
       }
     }
   }

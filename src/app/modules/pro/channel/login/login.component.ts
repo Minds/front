@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../../services/session';
 import { ProChannelService } from '../channel.service';
-import { Storage } from '../../../../services/storage';
+import { CookieService } from '../../../../common/services/cookie.service';
 
 @Component({
   selector: 'm-pro--channel-login',
@@ -30,7 +30,7 @@ export class ProChannelLoginComponent {
     public service: ProChannelService,
     private router: Router,
     private route: ActivatedRoute,
-    private storage: Storage
+    private cookieService: CookieService
   ) {
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['username']) {
@@ -44,12 +44,12 @@ export class ProChannelLoginComponent {
   }
 
   ngOnInit() {
-    this.redirectTo = this.storage.get('redirect');
+    this.redirectTo = this.cookieService.get('redirect');
   }
 
   registered() {
     if (this.redirectTo) {
-      this.storage.destroy('redirect');
+      this.cookieService.remove('redirect');
       this.router.navigate([this.redirectTo]);
       return;
     }

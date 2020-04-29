@@ -9,10 +9,8 @@ import {
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import {
-  AnalyticsDashboardService,
-  Visualisation,
-} from '../../dashboard.service';
+import { AnalyticsDashboardService } from '../../dashboard.service';
+import { Visualisation } from '../../../../../interfaces/dashboard';
 
 @Component({
   selector: 'm-analytics__table',
@@ -25,7 +23,6 @@ export class AnalyticsTableComponent implements OnInit, OnDestroy {
   columns: Array<any>;
   rows: Array<any>;
   reformattedBuckets: Array<any> = [];
-  minds = window.Minds;
   user;
   loadingSubscription: Subscription;
   loading: boolean;

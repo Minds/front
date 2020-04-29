@@ -1,7 +1,7 @@
-import { NgZone, RendererFactory2 } from '@angular/core';
+import { NgZone, RendererFactory2, PLATFORM_ID, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { Title } from '@angular/platform-browser';
+import { TransferState } from '@angular/platform-browser';
 
 import { ScrollService } from './ux/scroll';
 import { SocketsService } from './sockets';
@@ -20,22 +20,20 @@ import { WalletService } from './wallet';
 import { AttachmentService } from './attachment';
 import { Sidebar } from './ui/sidebar';
 import { EmbedService } from './embed';
-import { MindsTitle } from './ux/title';
 import { CanDeactivateGuardService } from './can-deactivate-guard';
 import { OverlayModalService } from './ux/overlay-modal';
 import { LoginReferrerService } from './login-referrer.service';
 import { ScrollToTopService } from './scroll-to-top.service';
-import { GroupsService } from '../modules/groups/groups-service';
+import { GroupsService } from '../modules/groups/groups.service';
 
 import { GoogleChartsLoader } from './third-party/google-charts-loader';
 import { RecentService } from './ux/recent';
 import { ContextService } from './context.service';
-import { FeaturesService } from './features.service';
+
 import { BlockchainService } from '../modules/blockchain/blockchain.service';
-import { WebtorrentService } from '../modules/webtorrent/webtorrent.service';
 import { TimeDiffService } from './timediff.service';
 import { UpdateMarkersService } from '../common/services/update-markers.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BlockListService } from '../common/services/block-list.service';
 import { EntitiesService } from '../common/services/entities.service';
 import { InMemoryStorageService } from './in-memory-storage.service';
@@ -48,6 +46,11 @@ import { SessionsStorageService } from './session-storage.service';
 import { DiagnosticsService } from './diagnostics.service';
 import { PermissionsService } from '../common/services/permissions/permissions.service';
 import { FormToastService } from '../common/services/form-toast.service';
+import { ConfigsService } from '../common/services/configs.service';
+import { TransferHttpInterceptorService } from './transfer-http-interceptor.service';
+import { CookieHttpInterceptorService } from './api/cookie-http-interceptor.service';
+import { CookieService } from '../common/services/cookie.service';
+import { RedirectService } from '../common/services/redirect.service';
 
 export const MINDS_PROVIDERS: any[] = [
   SiteService,
@@ -63,19 +66,37 @@ export const MINDS_PROVIDERS: any[] = [
   },
   {
     provide: SocketsService,
-    useFactory: SocketsService._,
-    deps: [Session, NgZone],
+    useFactory: (session, nz, configs, platformId) =>
+      new SocketsService(session, nz, configs, platformId),
+    deps: [Session, NgZone, ConfigsService, PLATFORM_ID],
   },
   {
     provide: Client,
     useFactory: Client._,
-    deps: [HttpClient, Location, SiteService],
+    deps: [
+      HttpClient,
+      Location,
+      CookieService,
+      PLATFORM_ID,
+      TransferState,
+      'ORIGIN_URL',
+    ],
   },
   PermissionsService,
   {
     provide: Upload,
     useFactory: Upload._,
-    deps: [HttpClient, SiteService],
+    deps: [HttpClient, CookieService],
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TransferHttpInterceptorService,
+    multi: true,
+  },
+  {
+    provide: HTTP_INTERCEPTORS,
+    useClass: CookieHttpInterceptorService,
+    multi: true,
   },
   {
     provide: Storage,
@@ -87,11 +108,7 @@ export const MINDS_PROVIDERS: any[] = [
     useFactory: SessionsStorageService._,
     deps: [],
   },
-  {
-    provide: SignupModalService,
-    useFactory: SignupModalService._,
-    deps: [Router, ScrollService],
-  },
+  SignupModalService,
   {
     provide: CacheService,
     useFactory: CacheService._,
@@ -105,55 +122,32 @@ export const MINDS_PROVIDERS: any[] = [
   {
     provide: TranslationService,
     useFactory: TranslationService._,
-    deps: [Client, Storage],
+    deps: [Client, Storage, PLATFORM_ID],
   },
   {
     provide: RichEmbedService,
     useFactory: RichEmbedService._,
     deps: [Client],
   },
-  {
-    provide: Session,
-    useFactory: Session._,
-  },
-  {
-    provide: ThirdPartyNetworksService,
-    useFactory: ThirdPartyNetworksService._,
-    deps: [Client, NgZone],
-  },
+  Session,
+  ThirdPartyNetworksService,
   {
     provide: AnalyticsService,
     useFactory: AnalyticsService._,
-    deps: [Router, Client, SiteService],
+    deps: [Router, Client, SiteService, PLATFORM_ID],
   },
-  {
-    provide: Navigation,
-    useFactory: Navigation._,
-    deps: [Location],
-  },
+  Navigation,
   {
     provide: WalletService,
     useFactory: WalletService._,
-    deps: [Session, Client, SocketsService],
+    deps: [Session, Client, SocketsService, PLATFORM_ID, ConfigsService],
   },
-  {
-    provide: AttachmentService,
-    useFactory: AttachmentService._,
-    deps: [Session, Client, Upload, HttpClient],
-  },
+  AttachmentService,
   {
     provide: Sidebar,
     useFactory: Sidebar._,
   },
-  {
-    provide: EmbedService,
-    useFactory: EmbedService._,
-  },
-  {
-    provide: MindsTitle,
-    useFactory: MindsTitle._,
-    deps: [Title, SiteService],
-  },
+  EmbedService,
   {
     provide: GoogleChartsLoader,
     useFactory: GoogleChartsLoader._,
@@ -193,19 +187,9 @@ export const MINDS_PROVIDERS: any[] = [
     deps: [Router, Storage, Client],
   },
   {
-    provide: FeaturesService,
-    useFactory: FeaturesService._,
-    deps: [Session, Router],
-  },
-  {
     provide: BlockchainService,
     useFactory: BlockchainService._,
-    deps: [Client],
-  },
-  {
-    provide: WebtorrentService,
-    useFactory: WebtorrentService._,
-    deps: WebtorrentService._deps,
+    deps: [Client, Session],
   },
   {
     provide: TimeDiffService,
@@ -230,11 +214,7 @@ export const MINDS_PROVIDERS: any[] = [
     provide: InMemoryStorageService,
     useFactory: InMemoryStorageService._,
   },
-  {
-    provide: ThemeService,
-    useFactory: ThemeService._,
-    deps: [RendererFactory2, Client, Session, Storage],
-  },
+  ThemeService,
   DiagnosticsService,
   AuthService,
   FormToastService,

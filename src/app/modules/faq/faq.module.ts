@@ -7,11 +7,10 @@ import { CommonModule } from '../../common/common.module';
 
 import { FaqComponent } from './faq.component';
 import { FaqService } from './faq.service';
-import { FaqPage } from './faq.page';
 
 const faqRoutes = [
-  { path: 'faq/:category', component: FaqPage },
-  { path: 'faq', component: FaqPage },
+  { path: 'faq/:category', redirectTo: '/help' },
+  { path: 'faq', redirectTo: '/help' },
 ];
 
 @NgModule({
@@ -22,9 +21,8 @@ const faqRoutes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [FaqComponent, FaqPage],
+  declarations: [FaqComponent],
   exports: [FaqComponent],
-  entryComponents: [FaqPage],
   providers: [FaqService],
 })
 export class FaqModule {}

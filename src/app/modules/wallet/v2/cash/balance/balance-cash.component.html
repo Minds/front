@@ -1,0 +1,94 @@
+<div *ngIf="!init" class="m-wallet__spinner">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+<div class="m-walletBalance--cash" *ngIf="init && cashWallet">
+  <div
+    class="m-walletBalance---cash__onboardingNotice"
+    *ngIf="childRoutePath !== 'settings' && (!hasAccount || !hasBank)"
+  >
+    <p>
+      <a routerLink="settings">Add your bank information</a>
+    </p>
+    <p>
+      <ng-container *ngIf="!hasAccount"
+        >Start receiving cash payouts by adding your bank details.
+      </ng-container>
+      <ng-container *ngIf="hasAccount"
+        >Finish adding your bank details to start receiving cash payouts.
+      </ng-container>
+    </p>
+  </div>
+  <div class="m-walletBalance--cash__colContainer">
+    <!-- -------------------------------------------- -->
+    <!--- PENDING BALANCE ------------------------------>
+    <!-- -------------------------------------------- -->
+    <div class="m-walletBalance--cash__col">
+      <div class="m-walletBalance--cash__colTitle">
+        Pending Balance<m-tooltip icon="help"
+          >The total amount of cash you are scheduled to receive from
+          wires<ng-container *ngIf="isPro"> and/or Pro earnings</ng-container>.
+          The payout date is an estimation and it may take up to 7 days before
+          your cash reaches your bank account.
+        </m-tooltip>
+      </div>
+      <div class="m-walletBalance--cash__colValWrapper" *ngIf="!hasAccount">
+        <span class="m-walletBalance--cash__colVal--int">$0</span>
+      </div>
+      <ng-container *ngIf="hasAccount">
+        <div class="m-walletBalance--cash__colValWrapper">
+          <span class="m-walletBalance--cash__colVal--int">{{
+            pendingBalance.int
+              | number: '1.0-0'
+              | currency: currency
+              | slice: 0:-3
+          }}</span
+          ><span
+            class="m-walletBalance--cash__colVal--frac"
+            *ngIf="pendingBalance.frac"
+            >.{{ pendingBalance.frac }}</span
+          >
+        </div>
+        <!-- -------------------------------------------- -->
+        <!--- PAYOUT DATE----------------------------------->
+        <!-- -------------------------------------------- -->
+        <div *ngIf="hasBank" class="m-walletBalance--cash__colSubtitle">
+          <p>Estimated Payout</p>
+          <p>{{ nextPayoutDate }}</p>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- -------------------------------------------- -->
+    <!--- PRO EARNINGS --------------------------------->
+    <!-- -------------------------------------------- -->
+
+    <div class="m-walletBalance--cash__col" *ngIf="proEarnings">
+      <div class="m-walletBalance--cash__colTitle">
+        Pro Earnings<m-tooltip icon="help"
+          >At the end of each month, your Pro earnings will move into your
+          pending balance if you've reached the $100 threshold. When this
+          happens, your Pro earnings will be reset to zero. If you haven't
+          reached the threshold, your earnings will rollover to the next
+          month.</m-tooltip
+        >
+      </div>
+      <div class="m-walletBalance--cash__colValWrapper">
+        <span class="m-walletBalance--cash__colVal--int">{{
+          proEarnings.int | number: '1.0-0' | currency: 'USD' | slice: 0:-3
+        }}</span
+        ><span
+          class="m-walletBalance--cash__colVal--frac"
+          *ngIf="proEarnings.frac"
+          >.{{ proEarnings.frac }}</span
+        >
+      </div>
+
+      <div class="m-walletBalance--cash__colSubtitle">
+        <p>
+          Go to
+          <a routerLink="/analytics/dashboard/earnings">Pro Analytics</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

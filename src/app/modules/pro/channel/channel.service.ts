@@ -2,16 +2,17 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { MindsChannelResponse } from '../../../interfaces/responses';
 import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
-import { EntitiesService } from '../../../common/services/entities.service';
+import { FeedsService } from '../../../common/services/feeds.service';
 import normalizeUrn from '../../../helpers/normalize-urn';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Session } from '../../../services/session';
 import { ActivatedRoute, Router } from '@angular/router';
-import { WireCreatorComponent } from '../../wire/creator/creator.component';
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../common/services/site.service';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { AnalyticsService } from '../../../services/analytics';
+import { WireEventType } from '../../wire/v2/wire-v2.service';
+import { WireModalService } from '../../wire/wire-modal.service';
 
 export type RouterLinkToType =
   | 'home'
@@ -50,10 +51,10 @@ export class ProChannelService implements OnDestroy {
 
   constructor(
     protected client: Client,
-    protected entitiesService: EntitiesService,
+    protected feedsService: FeedsService,
     protected session: Session,
     protected route: ActivatedRoute,
-    protected modalService: OverlayModalService,
+    protected wireModal: WireModalService,
     protected sessionStorage: SessionsStorageService,
     protected router: Router,
     protected site: SiteService,
@@ -74,20 +75,15 @@ export class ProChannelService implements OnDestroy {
     this.isLoggedIn$.unsubscribe();
   }
 
-  async loadAndAuth(id: string): Promise<MindsUser> {
+  async load(id: string): Promise<MindsUser> {
     try {
       this.currentChannel = void 0;
 
       const response = (await this.client.get(`api/v2/pro/channel/${id}`)) as {
         channel;
-        me?;
       };
 
       this.currentChannel = response.channel;
-
-      if (this.site.isProDomain && response.me) {
-        this.session.login(response.me);
-      }
 
       if (!this.currentChannel.pro_settings.tag_list) {
         this.currentChannel.pro_settings.tag_list = [];
@@ -111,7 +107,6 @@ export class ProChannelService implements OnDestroy {
     try {
       const response = (await this.client.get(`api/v2/pro/channel/${id}`)) as {
         channel;
-        me?;
       };
 
       this.currentChannel = response.channel;
@@ -125,94 +120,6 @@ export class ProChannelService implements OnDestroy {
         throw new Error('Error loading channel');
       }
     }
-  }
-
-  async getFeaturedContent(): Promise<Array<any>> {
-    if (!this.currentChannel) {
-      throw new Error('No channel');
-    }
-
-    if (!this.featuredContent) {
-      if (
-        this.currentChannel.pro_settings.featured_content &&
-        this.currentChannel.pro_settings.featured_content.length
-      ) {
-        try {
-          const urns = this.currentChannel.pro_settings.featured_content.map(
-            guid => normalizeUrn(guid)
-          );
-          const { entities } = (await this.entitiesService.fetch(urns)) as any;
-
-          this.featuredContent = entities.filter(
-            entity => !!entity.thumbnail_src
-          );
-        } catch (e) {
-          this.featuredContent = null;
-          return [];
-        }
-      } else {
-        this.featuredContent = [];
-      }
-    }
-
-    return this.featuredContent;
-  }
-
-  async getContent(params: PaginationParams = {}): Promise<FeedsResponse> {
-    if (!this.currentChannel) {
-      throw new Error('No channel');
-    }
-
-    const endpoint = `api/v2/pro/content/${this.currentChannel.guid}/all/top`;
-    const qs = {
-      limit: params.limit || 24,
-      from_timestamp: params.offset || '',
-      sync: 1,
-      exclude:
-        (this.currentChannel.pro_settings.featured_content || []).join(',') ||
-        '',
-      cache: true,
-    };
-
-    const {
-      entities: feedSyncEntities,
-      'load-next': loadNext,
-    } = (await this.client.get(endpoint, qs)) as any;
-    const { entities } = (await this.entitiesService.fetch(
-      feedSyncEntities.map(feedSyncEntity => normalizeUrn(feedSyncEntity.guid))
-    )) as any;
-
-    let nextOffset =
-      feedSyncEntities && feedSyncEntities.length ? loadNext : '';
-
-    return {
-      content: entities,
-      offset: nextOffset,
-    };
-  }
-
-  async getAllCategoriesContent() {
-    if (!this.currentChannel) {
-      throw new Error('No channel');
-    }
-
-    const { content } = (await this.client.get(
-      `api/v2/pro/channel/${this.currentChannel.guid}/content`
-    )) as any;
-
-    return content
-      .filter(entry => entry && entry.content && entry.content.length)
-      .map(entry => {
-        entry.content = entry.content.map(item => {
-          if (item.entity) {
-            return Promise.resolve(item.entity);
-          }
-
-          return this.entitiesService.single(item.urn);
-        });
-
-        return entry;
-      });
   }
 
   getRouterLink(to: RouterLinkToType, params?: { [key: string]: any }): any[] {
@@ -266,7 +173,7 @@ export class ProChannelService implements OnDestroy {
     switch (this.getEntityTaxonomy(entity)) {
       case 'group':
         window.open(
-          `${window.Minds.site_url}groups/profile/${entity.guid}`,
+          `${this.site.baseUrl}groups/profile/${entity.guid}`,
           '_blank'
         );
         break;
@@ -328,16 +235,17 @@ export class ProChannelService implements OnDestroy {
       return;
     }
 
-    this.modalService
-      .create(WireCreatorComponent, this.currentChannel, {
-        onComplete: () => {
+    this.wireModal.present(this.currentChannel).subscribe(payEvent => {
+      console.log({ payEvent });
+      switch (payEvent.type) {
+        case WireEventType.Completed:
           this.sessionStorage.destroy('pro::wire-modal::open');
-        },
-      })
-      .onDidDismiss(() => {
-        this.sessionStorage.destroy('pro::wire-modal::open');
-      })
-      .present();
+          break;
+        case WireEventType.Cancelled:
+          this.sessionStorage.destroy('pro::wire-modal::open');
+          break;
+      }
+    });
 
     this.analytics.send('pageview', {
       url: `/pro/${this.currentChannel.guid}/wire?ismodal=true`,

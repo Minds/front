@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
-import { MindsTitle } from '../../../services/ux/title';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 
@@ -25,13 +24,10 @@ export class ForgotPasswordComponent {
     public client: Client,
     public router: Router,
     public route: ActivatedRoute,
-    public title: MindsTitle,
     public session: Session
   ) {}
 
   ngOnInit() {
-    this.title.setTitle('Forgot Password');
-
     this.paramsSubscription = this.route.params.subscribe(params => {
       if (params['code']) {
         this.setCode(params['code']);
@@ -78,16 +74,9 @@ export class ForgotPasswordComponent {
     this.code = code;
   }
 
-  validatePassword(password) {
-    if (/@/.test(password.value)) {
-      this.error = '@ is not allowed';
-    } else {
-      this.error = null;
-    }
-  }
-
   reset(password) {
-    if (!this.error) {
+    if (!this.inProgress) {
+      this.inProgress = true;
       this.client
         .post('api/v1/forgotpassword/reset', {
           password: password.value,
@@ -95,10 +84,12 @@ export class ForgotPasswordComponent {
           username: this.username,
         })
         .then((response: any) => {
+          this.inProgress = false;
           this.session.login(response.user);
           this.router.navigate(['/newsfeed']);
         })
         .catch(e => {
+          this.inProgress = false;
           this.error = e.message;
         });
     }

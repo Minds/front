@@ -10,13 +10,19 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
+  PLATFORM_ID,
+  Inject,
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  UrlSegment,
+  NavigationEnd,
+} from '@angular/router';
 import { Session } from '../../../services/session';
 import { Subscription } from 'rxjs';
 import { MindsUser } from '../../../interfaces/entities';
 import { Client } from '../../../services/api/client';
-import { MindsTitle } from '../../../services/ux/title';
 import { ProChannelService } from './channel.service';
 import { SignupModalService } from '../../modals/signup/service';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
@@ -24,17 +30,13 @@ import { OverlayModalComponent } from '../../../common/components/overlay-modal/
 import { SessionsStorageService } from '../../../services/session-storage.service';
 import { SiteService } from '../../../common/services/site.service';
 import { ScrollService } from '../../../services/ux/scroll';
+import { captureEvent } from '@sentry/core';
+import { isPlatformServer } from '@angular/common';
+import { PageLayoutService } from '../../../common/layout/page-layout.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
-  providers: [
-    ProChannelService,
-    OverlayModalService,
-    {
-      provide: SignupModalService,
-      useFactory: SignupModalService._,
-      deps: [Router, ScrollService],
-    },
-  ],
+  providers: [ProChannelService, OverlayModalService, SignupModalService],
   selector: 'm-pro--channel',
   templateUrl: 'channel.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
@@ -57,6 +59,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   protected params$: Subscription;
 
   protected loggedIn$: Subscription;
+
+  protected routerEventsSubscription: Subscription;
 
   @ViewChild('overlayModal', { static: true })
   protected overlayModal: OverlayModalComponent;
@@ -122,7 +126,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get proSettingsHref() {
-    return window.Minds.site_url + 'pro/settings';
+    return this.site.baseUrl + 'pro/settings';
   }
 
   get isProDomain() {
@@ -155,11 +159,10 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   constructor(
+    public session: Session,
     protected element: ElementRef,
-    protected session: Session,
     protected channelService: ProChannelService,
     protected client: Client,
-    protected title: MindsTitle,
     protected router: Router,
     protected route: ActivatedRoute,
     protected cd: ChangeDetectorRef,
@@ -167,7 +170,9 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected modalService: OverlayModalService,
     protected sessionStorage: SessionsStorageService,
     protected site: SiteService,
-    protected injector: Injector
+    protected injector: Injector,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    protected pageLayoutService: PageLayoutService
   ) {}
 
   ngOnInit() {
@@ -177,6 +182,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.listen();
     this.onResize();
+    this.pageLayoutService.useFullWidth();
   }
 
   ngAfterViewInit() {
@@ -208,6 +214,12 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
         this.reload();
       }
     });
+
+    this.routerEventsSubscription = this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(data => {
+        this.pageLayoutService.useFullWidth();
+      });
   }
 
   @HostListener('window:resize') onResize() {
@@ -216,6 +228,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.params$.unsubscribe();
+    this.routerEventsSubscription.unsubscribe();
   }
 
   async load() {
@@ -229,12 +242,14 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     this.detectChanges();
 
     try {
-      this.channel = await this.channelService.loadAndAuth(this.username);
+      this.channel = await this.channelService.load(this.username);
 
       this.bindCssVariables();
       this.shouldOpenWireModal();
     } catch (e) {
       this.error = e.message;
+      console.error(e);
+      captureEvent(e);
 
       if (e.message === 'E_NOT_PRO') {
         if (this.site.isProDomain) {
@@ -259,6 +274,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.shouldOpenWireModal();
     } catch (e) {
+      console.error(e);
+      captureEvent(e);
       this.error = e.message;
     }
 
@@ -266,6 +283,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   bindCssVariables() {
+    if (isPlatformServer(this.platformId)) return;
     const styles = this.channel.pro_settings.styles;
 
     for (const style in styles) {

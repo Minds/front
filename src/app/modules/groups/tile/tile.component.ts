@@ -4,21 +4,25 @@ import { interval, Subscription } from 'rxjs';
 import { Session } from '../../../services/session';
 import { UpdateMarkersService } from '../../../common/services/update-markers.service';
 import { map, startWith, throttle } from 'rxjs/operators';
+import { ConfigsService } from '../../../common/services/configs.service';
 
 @Component({
   selector: 'm-groups--tile',
   templateUrl: 'tile.component.html',
 })
 export class GroupsTileComponent {
-  minds = window.Minds;
+  cdnUrl: string;
   @Input() entity;
   $updateMarker;
   hasMarker: boolean = false;
 
   constructor(
     public session: Session,
-    private updateMarkers: UpdateMarkersService
-  ) {}
+    private updateMarkers: UpdateMarkersService,
+    configs: ConfigsService
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   ngOnInit() {
     this.$updateMarker = this.updateMarkers.markers.subscribe(markers => {

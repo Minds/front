@@ -12,7 +12,7 @@
     flex-direction: row;
     top: auto;
     right: auto;
-    bottom: 0;
+    bottom: 50px;
     left: 50%;
     margin-left: -100px;
     align-items: center;
@@ -24,35 +24,6 @@
     cursor: pointer;
     @include m-theme() {
       fill: themed($m-white);
-    }
-  }
-  .m-social-icons-icon--facebook .m-social-icons-icon-inline {
-    @include m-theme() {
-      background-color: themed($m-facebook) !important;
-    }
-  }
-  .m-social-icons-icon--twitter .m-social-icons-icon-inline {
-    @include m-theme() {
-      background-color: themed($m-twitter) !important;
-    }
-  }
-  .m-social-icons-icon--email .m-social-icons-icon-inline {
-    @include m-theme() {
-      background-color: themed($m-grey-500);
-    }
-  }
-  .m-social-icons-icon--linkedin .m-social-icons-icon-inline {
-    @include m-theme() {
-      background-color: themed($m-linkedin) !important;
-    }
-  }
-  .m-social-icons-icon--gplus .m-social-icons-icon-inline {
-    @include m-theme() {
-      background-color: themed($m-red) !important;
-    }
-  }
-  .m-social-icons-icon--embed .m-social-icons-icon-inline {
-    @include m-theme() {
       background-color: themed($m-grey-500);
     }
   }

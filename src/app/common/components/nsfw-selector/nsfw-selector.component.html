@@ -1,4 +1,9 @@
-<m-dropdown class="m-nsfwSelector__dropdown" [expanded]="expanded" #dropdown>
+<m-dropdown
+  class="m-nsfwSelector__dropdown"
+  [expanded]="expanded"
+  #dropdown
+  data-cy="data-minds-nsfw-selector"
+>
   <label
     class="m-nsfwSelector__label m-posterActionBar__IconAndLabel"
     [class.selected]="hasSelections()"

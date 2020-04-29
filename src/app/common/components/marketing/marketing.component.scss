@@ -3,6 +3,10 @@
 m-marketing {
   display: block;
   font-family: Roboto, sans-serif;
+  overflow-x: hidden;
+  min-width: 320px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 
   @include m-theme() {
     background: themed($m-white);
@@ -46,5 +50,9 @@ m-marketing {
     max-width: 1084px;
     margin: 0 auto;
     box-sizing: border-box;
+  }
+
+  .m-marketing__subText {
+    font-size: 11px;
   }
 }
