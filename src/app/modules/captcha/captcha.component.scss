@@ -3,6 +3,11 @@ m-captcha {
   img {
     margin-bottom: $minds-margin;
   }
+  .m-input {
+    @include m-theme() {
+      background-color: themed($m-white);
+    }
+  }
 }
 
 .m-captcha__refresh {

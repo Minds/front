@@ -51,3 +51,28 @@
     }
   }
 }
+
+.m-blogs__captcha {
+  padding: $minds-padding;
+  box-sizing: border-box;
+
+  label {
+    padding: 10px 0;
+    font-weight: 600;
+    display: block;
+
+    > * {
+      vertical-align: middle;
+    }
+  }
+
+  m-tooltip {
+    margin-left: 5px;
+    i {
+      font-size: 16px;
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+  }
+}

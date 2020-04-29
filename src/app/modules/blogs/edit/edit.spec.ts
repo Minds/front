@@ -29,6 +29,7 @@ import { InMemoryStorageService } from '../../../services/in-memory-storage.serv
 import { inMemoryStorageServiceMock } from '../../../../tests/in-memory-storage-service-mock.spec';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { CaptchaModule } from '../../captcha/captcha.module';
 
 @Component({
   selector: 'minds-banner',
@@ -249,6 +250,9 @@ describe('BlogEdit', () => {
           outputs: ['selectedChanged'],
           inputs: ['selected'],
         }),
+        MockComponent({
+          selector: 'm-tooltip',
+        }),
         MockDirective({
           selector: '[mIfFeature]',
           inputs: ['mIfFeature'],
@@ -256,7 +260,12 @@ describe('BlogEdit', () => {
         BlogEdit,
         MDLMock,
       ], // declare the test component
-      imports: [RouterTestingModule, NgCommonModule, FormsModule],
+      imports: [
+        RouterTestingModule,
+        NgCommonModule,
+        FormsModule,
+        CaptchaModule,
+      ],
       providers: [
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },

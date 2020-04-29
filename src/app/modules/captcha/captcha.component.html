@@ -2,6 +2,7 @@
   <img [src]="captcha.base64Image" />
   <i class="material-icons m-captcha__refresh" (click)="refresh()">refresh</i>
   <input
+    class="m-input"
     [ngModel]="captcha.clientText"
     (ngModelChange)="onValueChange($event)"
     type="text"

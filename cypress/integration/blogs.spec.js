@@ -1,22 +1,19 @@
 // import 'cypress-file-upload';
 
 context('Blogs', () => {
-
   const closeButton = '[data-cy=data-minds-conversation-close]';
 
   before(() => {
-    cy.getCookie('minds_sess')
-      .then((sessionCookie) => {
-        if (sessionCookie === null) {
-          return cy.login(true);
-        }
-      });
+    cy.getCookie('minds_sess').then(sessionCookie => {
+      if (sessionCookie === null) {
+        return cy.login(true);
+      }
+    });
 
     // ensure no messenger windows are open.
-    cy.get('body').then(($body) => {
+    cy.get('body').then($body => {
       if ($body.find(closeButton).length) {
-        cy.get(closeButton)
-          .click({multiple: true});
+        cy.get(closeButton).click({ multiple: true });
       }
     });
   });
@@ -61,10 +58,15 @@ context('Blogs', () => {
     // cy.get('.medium-editor-element > .medium-insert-buttons > button.medium-insert-buttons-show').click();
     // // click on camera
     // cy.get('ul.medium-insert-buttons-addons > li > button.medium-insert-action:first-child').contains('photo_camera').click();
-    
+
     // upload the image
-    cy.uploadFile('.medium-media-file-input', '../fixtures/international-space-station-1776401_1920.jpg', 'image/jpg')
-      .wait('@postMedia').then(xhr => {
+    cy.uploadFile(
+      '.medium-media-file-input',
+      '../fixtures/international-space-station-1776401_1920.jpg',
+      'image/jpg'
+    )
+      .wait('@postMedia')
+      .then(xhr => {
         expect(xhr.status).to.equal(200);
         expect(xhr.response.body.status).to.equal('success');
       });
@@ -109,19 +111,16 @@ context('Blogs', () => {
     );
 
     if (nsfw) {
-        // click on nsfw dropdown
-        cy.get(
-          'm-nsfw-selector .m-dropdown--label-container'
-        ).click();
+      // click on nsfw dropdown
+      cy.get('m-nsfw-selector .m-dropdown--label-container').click();
 
-        // select Nudity
-        cy.get('m-nsfw-selector .m-dropdownList__item')
-          .contains('Nudity')
-          .click();
+      // select Nudity
+      cy.get('m-nsfw-selector .m-dropdownList__item')
+        .contains('Nudity')
+        .click();
 
-        // click away
-        cy.get('m-nsfw-selector .minds-bg-overlay').click({force: true});
-
+      // click away
+      cy.get('m-nsfw-selector .minds-bg-overlay').click({ force: true });
     }
 
     if (schedule) {
@@ -140,20 +139,26 @@ context('Blogs', () => {
         });
     }
 
+    cy.completeCaptcha();
+
     cy.get('.m-button--submit')
       .click({ force: true }) // TODO: Investigate why disabled flag is being detected
-      .wait('@postBlog').then(xhr => {
+      .wait('@postBlog')
+      .then(xhr => {
         expect(xhr.status).to.equal(200);
         expect(xhr.response.body.status).to.equal('success');
       })
-      .wait('@getBlog').then(xhr => {
+      .wait('@getBlog')
+      .then(xhr => {
         expect(xhr.status).to.equal(200);
         expect(xhr.response.body.status).to.equal('success');
         expect(xhr.response.body).to.have.property('blog');
       });
 
-    cy.location('pathname')
-      .should('contains', `/${Cypress.env().username}/blog`);
+    cy.location('pathname').should(
+      'contains',
+      `/${Cypress.env().username}/blog`
+    );
 
     cy.get('.m-blog--title').contains(title);
     cy.get('.minds-blog-body p').contains(body);
@@ -219,9 +224,10 @@ context('Blogs', () => {
     cy.get('.m-blog--title').contains(title);
     cy.get('.minds-blog-body p').contains(body);
   };
-  
+
   it('should not be able to create a new blog if no title or banner are specified', () => {
     cy.visit('/blog/edit/new');
+    cy.completeCaptcha();
     cy.get('.m-button--submit').click();
     cy.get('.m-blog--edit--error').contains('Error: You must provide a title');
     cy.get('minds-textarea .m-editor').type('Title');
@@ -241,7 +247,8 @@ context('Blogs', () => {
   /**
    * Skipping until the scheduling options are visible on sandboxes
    * currently they are not, missing setting perhaps?
-   */ 
+   */
+
   it.skip('should be able to create a new scheduled blog', () => {
     uploadAvatar();
     createBlogPost('Title', 'Content', true, true);
@@ -251,7 +258,8 @@ context('Blogs', () => {
   /**
    * Skipping until sandbox behaves consistently as currently when posting,
    * on the sandbox it does not update the newsfeed and channel straight away as it does on prod.
-   */ 
+   */
+
   it.skip('should create an activity for the blog post', () => {
     const identifier = Math.floor(Math.random() * 100);
     const title = 'Test Post for Activity ' + identifier;
@@ -275,16 +283,14 @@ context('Blogs', () => {
       `/${Cypress.env().username}/blog`
     );
     deleteBlogPost();
-    cy.location('pathname').should(
-      'contains',
-      `/blog/owner`
-    );
+    cy.location('pathname').should('contains', `/blog/owner`);
   });
 
   /**
    * Skipping until sandbox behaves consistently as currently when posting,
    * on the sandbox it does not update the newsfeed and channel straight away as it does on prod.
-   */ 
+   */
+
   it.skip('should update the activity when blog is updated', () => {
     const identifier = Math.floor(Math.random() * 100);
     const title = 'Test Post for Activity ' + identifier;
