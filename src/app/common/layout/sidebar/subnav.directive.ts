@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { isPlatformServer } from '@angular/common';
 
+const MAX_SLIDER_WIDTH = 480;
 const MIN_FULL_NAV_WIDTH = 1172; // TODO make this a constant
 
 @Directive({
@@ -24,7 +25,8 @@ export class SidebarNavigationSubnavDirective {
     return (
       this.isHovering &&
       (!this.parentEl.classList.contains('m-sidebarNavigation__item--active') ||
-        window.innerWidth <= MIN_FULL_NAV_WIDTH)
+        window.innerWidth <= MIN_FULL_NAV_WIDTH) &&
+      window.innerWidth > MAX_SLIDER_WIDTH
     );
   }
 

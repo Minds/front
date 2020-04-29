@@ -104,7 +104,7 @@
           <m-tooltip
             icon="insert_chart"
             i18n="@@COMMON__ANALYTICS"
-            [enabled]="layoutMode === 'tablet'"
+            [enabled]="false"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
@@ -120,25 +120,33 @@
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
           >
-            <a routerLink="/analytics/dashboard/traffic">Traffic</a>
+            <a routerLink="/analytics/dashboard/traffic" (click)="toggle()"
+              >Traffic</a
+            >
           </li>
           <li
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
           >
-            <a routerLink="/analytics/dashboard/engagement">Engagement</a>
+            <a routerLink="/analytics/dashboard/engagement" (click)="toggle()"
+              >Engagement</a
+            >
           </li>
           <li
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
           >
-            <a routerLink="/analytics/dashboard/earnings">Earnings</a>
+            <a routerLink="/analytics/dashboard/earnings" (click)="toggle()"
+              >Earnings</a
+            >
           </li>
           <li
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
           >
-            <a routerLink="/analytics/dashboard/trending">Trending</a>
+            <a routerLink="/analytics/dashboard/trending" (click)="toggle()"
+              >Trending</a
+            >
           </li>
         </ul>
       </li>
