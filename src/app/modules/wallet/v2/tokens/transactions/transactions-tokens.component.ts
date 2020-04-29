@@ -38,7 +38,10 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
   typeFilter: string = '';
 
   showRewardsPopup: boolean = false;
-  startOfToday = moment().startOf('day');
+  startOfToday = moment()
+    .startOf('day')
+    .add(1, 'day')
+    .unix();
 
   // For admins viewing a remote user's transactions
   remote: boolean = false;
