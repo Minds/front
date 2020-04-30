@@ -1,3 +1,6 @@
+m-comments__tree .m-comments-composer .mdl-card__actions {
+  margin-top: 2px;
+}
 .mdl-card__actions {
   a,
   div {
@@ -21,7 +24,7 @@
     @include m-theme() {
       background: linear-gradient(
         to right,
-        rgba(themed($m-white-always), 0) 0%,
+        rgba(themed($m-white), 0) 0%,
         rgba(themed($m-white), 1) 25%
       );
     }
