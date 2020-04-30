@@ -402,10 +402,7 @@ export class ComposerService implements OnDestroy {
           }
         ),
 
-        tap(() => this.inProgress$.next(null)),
-
-        // Update the preview
-        tap((attachment: Attachment) => this.setPreview(attachment))
+        tap(() => this.inProgress$.next(null))
 
         // Value will be either an Attachment interface object or null
       ),
@@ -689,6 +686,8 @@ export class ComposerService implements OnDestroy {
     }
 
     this.attachment$.next(null);
+    this.videoPoster$.next(null);
+    this.title$.next(null);
   }
 
   /**
