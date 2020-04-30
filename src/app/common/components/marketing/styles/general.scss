@@ -38,7 +38,7 @@
     line-height: 44px;
     margin: 0 0 23px;
     position: relative;
-    z-index: 0;
+    z-index: 1;
 
     @media screen and (min-width: $m-grid-max-tablet) and (max-width: $m-grid-min-vp) {
       font-size: 32px;

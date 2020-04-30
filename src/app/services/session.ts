@@ -4,13 +4,20 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { ConfigsService } from '../common/services/configs.service';
 import { Storage } from './storage';
+import { BehaviorSubject } from 'rxjs';
+import { MindsUser } from '../interfaces/entities';
 
 @Injectable()
 export class Session {
   loggedinEmitter: EventEmitter<any> = new EventEmitter();
   userEmitter: EventEmitter<any> = new EventEmitter();
+  readonly user$: BehaviorSubject<MindsUser | null> = new BehaviorSubject<MindsUser | null>(
+    null
+  );
 
-  constructor(private configs: ConfigsService, private storage: Storage) {}
+  constructor(private configs: ConfigsService, private storage: Storage) {
+    this.user$.next(this.configs.get('user') || null);
+  }
 
   /**
    * Return if loggedin, with an optional listener
@@ -68,6 +75,10 @@ export class Session {
 
     this.userEmitter.next(user);
 
+    // Emit to subject
+
+    this.user$.next(user ? (user as MindsUser) : null);
+
     // Set globals
     this.configs.set('LoggedIn', true);
     this.configs.set('user', user);
@@ -90,6 +101,7 @@ export class Session {
    */
   logout() {
     this.userEmitter.next(null);
+    this.user$.next(null);
     this.configs.set('user', null);
     this.configs.set('LoggedIn', false);
     this.configs.set('Admin', false);

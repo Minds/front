@@ -21,6 +21,7 @@ import { WireModule } from '../wire/wire.module';
 import { CommentsModule } from '../comments/comments.module';
 import { HashtagsModule } from '../hashtags/hashtags.module';
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
+import { CaptchaModule } from '../captcha/captcha.module';
 
 const routes: Routes = [
   { path: 'blog/view/:guid/:title', component: BlogViewInfinite },
@@ -53,6 +54,7 @@ const routes: Routes = [
     WireModule,
     HashtagsModule,
     ModalsModule,
+    CaptchaModule,
   ],
   declarations: [
     BlogView,

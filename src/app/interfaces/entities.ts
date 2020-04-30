@@ -3,6 +3,8 @@
  */
 import { WireRewardsStruc } from '../modules/wire/interfaces/wire.interfaces';
 
+export type BitBoolean = 0 | 1;
+
 export interface MindsActivityObject {
   activity: Array<any>;
   pinned: Array<any>;
@@ -61,6 +63,7 @@ export interface MindsUser {
   guid: string;
   name: string;
   username: string;
+  time_created: number;
   chat?: boolean;
   icontime: number;
   avatar_url?: {
@@ -119,6 +122,8 @@ export interface MindsUser {
   nsfw: Array<number>;
   plus?: boolean;
   disable_autoplay_videos?: boolean;
+  dob?: string;
+  public_dob?: boolean | BitBoolean;
 }
 
 export interface MindsGroup {

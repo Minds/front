@@ -5,8 +5,14 @@
     style="position: relative;"
   >
     <router-outlet></router-outlet>
+
+    <!-- We place an additional disclaimer here for popover -->
+    <m-discovery__disclaimer
+      class="m-discovery__disclaimer--popover"
+    ></m-discovery__disclaimer>
   </div>
   <div class="m-discovery__sidebar" m-pageLayout__pane="right">
+    <m-discovery__disclaimer></m-discovery__disclaimer>
     <m-discovery__sidebarTags></m-discovery__sidebarTags>
     <m-suggestions__sidebar></m-suggestions__sidebar>
   </div>

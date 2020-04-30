@@ -1,4 +1,5 @@
 m-sidebar--navigation {
+  z-index: 999999; // TODO: improve out z spatial
   @media screen and (max-width: $max-mobile) {
     display: none;
   }

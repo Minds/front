@@ -40,6 +40,11 @@ let WalletServiceMock: any = new (function() {
   this.getBalance = jasmine.createSpy('getBalance').and.callFake(async () => {
     return 2;
   });
+  this.EthJS = {
+    fromWei: function(x, y) {
+      return 1;
+    },
+  };
 })();
 
 let blockchainService: any = new (function() {

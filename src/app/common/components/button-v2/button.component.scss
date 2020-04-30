@@ -95,3 +95,81 @@ m-button {
     }
   }
 }
+
+.m-button-v2 {
+  display: inline-block;
+  font-size: 1em;
+  line-height: calc(1em + 5px);
+  border-radius: calc(1em + 4px);
+  padding: 7px 20px;
+  cursor: pointer;
+
+  &.m-button-v2--iconOnly {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(1em + 16px);
+    height: calc(1em + 16px);
+    padding: 0;
+  }
+
+  &.m-button-v2--notInteractive {
+    cursor: default;
+  }
+
+  @include m-theme() {
+    color: themed($m-textColor--primary);
+    background-color: themed($m-bgColor--primary);
+
+    &.m-button-v2--transparent {
+      background: rgba(themed($m-bgColor--primary), 0.9);
+    }
+
+    &.m-button-v2--positive {
+      color: themed($m-white-always);
+      background: themed($m-positive);
+    }
+  }
+
+  @include m-on-theme(light) {
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  @include m-on-theme(dark) {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+.m-fieldButton-v2 {
+  padding: 8px 23px;
+  margin: 0;
+  cursor: pointer;
+  font-weight: bold;
+
+  position: relative;
+  appearance: none;
+  box-sizing: border-box;
+  background: transparent;
+  border: 1px solid;
+  border-radius: 2px;
+  font-size: inherit;
+  line-height: inherit;
+
+  @include m-theme() {
+    color: themed($m-textColor--secondary);
+    background: themed($m-bgColor--secondary);
+    border-color: themed($m-borderColor--primary);
+  }
+
+  @include m-on-theme(light) {
+    box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  @include m-on-theme(dark) {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &[disabled] {
+    cursor: initial;
+  }
+}

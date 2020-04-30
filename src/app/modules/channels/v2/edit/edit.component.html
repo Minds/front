@@ -1,0 +1,68 @@
+<div
+  class="m-modalV2__inner m-channel__edit"
+  *ngIf="service.channel$ | async as channel"
+>
+  <div class="m-modalV2__header m-channelEdit__header">
+    <h2 class="m-modalV2Header__title" i18n>Edit Profile</h2>
+    <a [routerLink]="getProSettingsRouterLink(channel)" ngPreserveWhitespaces>
+      <ng-container i18n>Pro Settings</ng-container>
+      <span>&rarr;</span>
+    </a>
+  </div>
+
+  <form
+    class="m-channelEdit__content m-formWrapper"
+    (keydown.enter)="$event.preventDefault()"
+  >
+    <m-accordion class="m-accordionV2 m-formLayout--buttonRight">
+      <m-accordion__pane
+        class="m-accordion__pane--noTopPadding"
+        headerTitle="Bio &amp; Imagery"
+        i18n-headerTitle
+      >
+        <m-channelEdit__bio
+          class="m-accordionPane__innerContentContainer"
+        ></m-channelEdit__bio>
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+
+      <m-accordion__pane headerTitle="About Info" i18n-headerTitle>
+        <m-channelEdit__info
+          class="m-accordionPane__innerContentContainer"
+        ></m-channelEdit__info>
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+
+      <m-accordion__pane headerTitle="Hashtags" i18n-headerTitle>
+        <m-channelEdit__hashtags
+          class="m-accordionPane__innerContentContainer"
+        ></m-channelEdit__hashtags>
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+
+      <m-accordion__pane headerTitle="Social Links" i18n-headerTitle>
+        <m-channelEdit__socialLinks
+          class="m-accordionPane__innerContentContainer"
+        ></m-channelEdit__socialLinks>
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+    </m-accordion>
+
+    <ng-template #saveButton>
+      <div class="m-form__buttonsContainer m-channelEdit__buttonsContainer">
+        <m-shadowboxSubmitButton
+          type="button"
+          [disabled]="false"
+          [saving]="service.inProgress$ | async"
+          (click)="onSubmit()"
+        >
+          Save
+        </m-shadowboxSubmitButton>
+      </div>
+    </ng-template>
+  </form>
+</div>

@@ -56,6 +56,16 @@
     ></m-inline-editor>
   </div>
 
+  <div class="m-blogs__captcha">
+    <label>
+      <span>Captcha</span>
+      <m-tooltip icon="help">
+        Please enter the characters below to confirm that you are not a robot
+      </m-tooltip>
+    </label>
+    <m-captcha name="blog-captcha" [(ngModel)]="captcha"></m-captcha>
+  </div>
+
   <div class="mdl-cell mdl-cell--12-col">
     <button
       type="submit"

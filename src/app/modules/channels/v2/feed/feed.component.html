@@ -1,0 +1,42 @@
+<div class="m-pageLayout__container m-channel__feed">
+  <div class="m-channelFeed__list" m-pageLayout__pane="main">
+    <m-feedFilter
+      class="m-channelFeedList__filter"
+      [options]="['type']"
+      [type]="feed.type$ | async"
+      (typeChange)="onTypeChange($event)"
+    >
+      <ng-container *ngIf="service.isOwner$">
+        <a
+          *ngIf="feed.scheduledCount$ | async as scheduledCount"
+          class="m-channelFeedListFilter__scheduled"
+          [routerLink]="['/', service.username$ | async, 'scheduled']"
+        >
+          Scheduled <strong>{{ scheduledCount }}</strong>
+        </a>
+      </ng-container>
+    </m-feedFilter>
+
+    <div class="m-channelFeedList__entities">
+      <m-newsfeed__entity
+        *ngFor="let entity of feed.service.feed | async; let i = index"
+        [entity]="entity | async"
+        [slot]="i + 1"
+        [allowAutoplayOnScroll]="true"
+        (deleted)="feed.onDelete($event)"
+      ></m-newsfeed__entity>
+
+      <infinite-scroll
+        distance="25%"
+        (load)="feed.loadNext()"
+        [moreData]="feed.service.hasMore | async"
+        [inProgress]="feed.service.inProgress | async"
+      ></infinite-scroll>
+    </div>
+  </div>
+
+  <div class="m-channelFeed__sidebar" m-pageLayout__pane="right">
+    <m-channelAbout__brief></m-channelAbout__brief>
+    <m-channelShop__brief></m-channelShop__brief>
+  </div>
+</div>

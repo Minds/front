@@ -173,6 +173,7 @@ describe('ChannelComponent', () => {
         master: 'thumbs',
       },
       nsfw: [],
+      time_created: 11111,
     };
     comp.editing = false;
     fixture.detectChanges();
