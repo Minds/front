@@ -40,6 +40,24 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class DateDropdownsComponent implements OnInit {
   @Input() disabled: boolean = false;
+
+  @Input() set selectedDate(date: string) {
+    if (!date) {
+      return;
+    }
+
+    const parts = date.split('-').map(part => parseInt(part, 10));
+
+    if (!parts[0] || !parts[1] || parts[2]) {
+      return;
+    }
+
+    this.selectYear(parts[0], false);
+    this.selectMonth(parts[1].toString(), false);
+    this.selectDay(parts[2].toString(), false);
+    this.emitChanges();
+  }
+
   @Output() selectedDateChange: EventEmitter<string> = new EventEmitter<
     string
   >();

@@ -35,6 +35,7 @@ context('v1 Wire', () => {
 
     cy.overrideFeatureFlags({
       pay: false,
+      channels: false,
     });
 
     // Visit users page.
@@ -68,6 +69,7 @@ context('v1 Wire', () => {
 
     cy.overrideFeatureFlags({
       pay: false,
+      channels: false,
     });
 
     cy.visit(`/${Cypress.env().username}`);

@@ -1,0 +1,27 @@
+<input
+  type="text"
+  class="form-control"
+  name="location"
+  [ngModel]="location"
+  (ngModelChange)="onLocationChange($event)"
+  (focus)="onInputFocus()"
+  (blur)="onInputBlur()"
+/>
+<ng-container *ngIf="isOpen$ | async">
+  <ul
+    *ngIf="locationSuggestions$ | async as locationSuggestions"
+    [hidden]="!locationSuggestions?.length"
+    class="m-channelLocationTypeahead__list"
+  >
+    <li class="m-channelLocationTypeaheadList__header">
+      <span i18n>Select city</span>
+    </li>
+    <li
+      *ngFor="let locationSuggestion of locationSuggestions"
+      class="m-channelLocationTypeaheadList__item"
+      (click)="setLocation(locationSuggestion)"
+    >
+      <span>{{ locationSuggestion.location }}</span>
+    </li>
+  </ul>
+</ng-container>

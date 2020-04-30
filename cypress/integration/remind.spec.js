@@ -9,6 +9,9 @@ context('Remind', () => {
         return cy.login(true);
       }
     });
+    cy.overrideFeatureFlags({
+      channels: false,
+    });
     cy.visit(`/${Cypress.env().username}`);
   });
 

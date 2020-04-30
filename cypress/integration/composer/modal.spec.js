@@ -12,6 +12,7 @@ context('Composer Modal', () => {
     cy.overrideFeatureFlags({
       composer: true,
       navigation: true,
+      channels: false,
     });
   });
 

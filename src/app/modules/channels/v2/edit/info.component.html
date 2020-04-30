@@ -1,0 +1,64 @@
+<div class="m-form__fieldsContainer">
+  <div class="m-form__row--label">
+    <label i18n>Display Name</label>
+  </div>
+
+  <div class="m-form__row--input">
+    <input
+      type="text"
+      class="form-control"
+      name="displayName"
+      [ngModel]="service.displayName$ | async"
+      (ngModelChange)="service.displayName$.next($event)"
+    />
+  </div>
+</div>
+
+<div class="m-form__fieldsContainer">
+  <div class="m-form__row--label">
+    <label i18n>Location</label>
+  </div>
+
+  <div class="m-form__row--input">
+    <m-channel__locationTypeahead
+      [location]="service.location$ | async"
+      (locationChange)="onLocation($event)"
+    ></m-channel__locationTypeahead>
+  </div>
+</div>
+
+<div class="m-form__fieldsContainer">
+  <div class="m-form__row--label">
+    <label i18n>Date of birth</label>
+  </div>
+
+  <div class="m-form__row--input">
+    <m-date__dropdowns
+      [selectedDate]="service.dob$ | async"
+      (selectedDateChange)="service.dob$.next($event)"
+    ></m-date__dropdowns>
+
+    <div class="m-channelEdit__innerField">
+      <label
+        for="channel-v2-edit-public-dob"
+        class="m-form__customInputWrapper__checkbox"
+        i18n
+      >
+        <input
+          type="checkbox"
+          id="channel-v2-edit-public-dob"
+          class="form-control"
+          name="publicDob"
+          [ngModel]="service.publicDob$ | async"
+          (ngModelChange)="service.publicDob$.next($event)"
+        />
+
+        <span class="m-form__customInput__checkbox"></span>
+
+        <ng-container i18n>
+          Make my date of birth public
+        </ng-container>
+      </label>
+    </div>
+  </div>
+</div>

@@ -16,6 +16,7 @@ export class ShadowboxSubmitButtonComponent implements AfterViewInit {
   @ViewChild('buttonTextContainer', { static: false })
   buttonTextContainer: ElementRef;
 
+  @Input() type: string = 'submit';
   @Input() disabled: boolean = false;
   @Input() color: 'green' | 'grey' | 'red' = 'green';
 

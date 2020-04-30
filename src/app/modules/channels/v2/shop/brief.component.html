@@ -1,0 +1,43 @@
+<div
+  *ngIf="shop.wireRewards$ | async as wireRewards"
+  class="m-channelShop__brief"
+  [hidden]="wireRewards.count === 0"
+>
+  <div class="m-channelShopBrief__title">
+    <span class="m-channelShopBriefTitle__text">Shop</span>
+    <a
+      *ngIf="false"
+      class="m-channelShopBriefTitle__seeAll"
+      [routerLink]="['/', channel.username$ | async, 'shop']"
+      i18n
+      >See All</a
+    >
+  </div>
+
+  <div
+    *ngFor="let entry of wireRewards.tokens"
+    class="m-channelShopBrief__row"
+    (click)="onEntryClick('tokens', entry)"
+  >
+    <span class="m-channelShopBriefRow__description">{{
+      entry.description
+    }}</span>
+    <span class="m-channelShopBriefRow__amount" i18n
+      >{entry.amount, plural, =1 {{{entry.amount | number}} token/month} other
+      {{{entry.amount | number}} tokens/month}}</span
+    >
+  </div>
+
+  <div
+    *ngFor="let entry of wireRewards.usd"
+    class="m-channelShopBrief__row"
+    (click)="onEntryClick('money', entry)"
+  >
+    <span class="m-channelShopBriefRow__description">{{
+      entry.description
+    }}</span>
+    <span class="m-channelShopBriefRow__amount"
+      >${{ entry.amount | number }}/month</span
+    >
+  </div>
+</div>
