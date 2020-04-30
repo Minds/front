@@ -1,12 +1,11 @@
 image: minds/ci-front:latest
 
 stages:
-  - test
-  - build
+  - test and build
   - prepare
   - review
-  - deploy:staging
   - qa
+  - deploy:staging
   - deploy:canary
   - deploy:production
   - cleanup
@@ -18,13 +17,13 @@ variables:
 
 test:
   image: circleci/node:13-browsers
-  stage: test
+  stage: test and build
   script:
     - npm ci
     - npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
 
 lint:
-  stage: test
+  stage: test and build
   script:
     - npm i -g prettier@"^1.19.1"
     - prettier --check "src/**/*.ts"
@@ -35,10 +34,10 @@ lint:
 # QA Stage #
 ############
 .cypress_tests: &cypress_tests
-  image: cypress/browsers:node10.16.0-chrome77
+  image: cypress/browsers:node12.13.0-chrome80-ff74
   stage: qa
   variables:
-    CYPRESS_INSTALL_BINARY: 4.3.0 
+    CYPRESS_INSTALL_BINARY: 4.3.0
   script:
     - npm ci
     - >
@@ -51,7 +50,15 @@ lint:
       fi
     - export CYPRESS_baseUrl=$E2E_DOMAIN
     - echo "E2E tests for $CI_BUILD_REF_NAME running against $E2E_DOMAIN with user $CYPRESS_username"
-    - $(npm bin)/cypress run --browser chrome --record --key $CYPRESS_RECORD_ID --config CYPRESS_baseUrl=$E2E_DOMAIN,video=false --env captcha_bypass_key=$CYPRESS_bypass_key,production=$PRODUCTION,captcha_shared_key=$CYPRESS_shared_key
+    - >
+      $(npm bin)/cypress run --browser chrome
+      --parallel
+      --record
+      --ci-build-id $CI_PIPELINE_ID
+      --group "minds-e2e"
+      --key $CYPRESS_RECORD_ID
+      --config CYPRESS_baseUrl=$E2E_DOMAIN
+      --env captcha_bypass_key=$CYPRESS_bypass_key,production=$PRODUCTION,captcha_shared_key=$CYPRESS_shared_key
   artifacts:
     when: always
     paths:
@@ -63,12 +70,14 @@ lint:
       - cache/Cypress
 
 qa:sandbox:
+  parallel: 8
   allow_failure: false
   except:
     - /^master$/
   <<: *cypress_tests
 
 qa:production:
+  parallel: 8
   allow_failure: true
   only:
     - /^master$/
@@ -92,7 +101,7 @@ qa:manual:
 ###############
 
 build:review:
-  stage: build
+  stage: test and build
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
@@ -114,7 +123,7 @@ build:review:
       - test/gitlab-ci
 
 build:production:en:
-  stage: build
+  stage: test and build
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
@@ -138,7 +147,7 @@ build:production:en:
       - test/gitlab-ci
 
 build:production:i18n:
-  stage: build
+  stage: test and build
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:

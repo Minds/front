@@ -81,9 +81,15 @@ Cypress.Commands.add('login', (canary = false, username, password) => {
   username = username ? username : Cypress.env().username;
   password = password ? password : Cypress.env().password;
 
+  cy.server();
+
+  // We need an XSRF token before login can work
+  cy.route('POST', '/api/v2/mwa/pv').as('initXsrf');
+
   cy.visit('/login');
 
-  cy.server();
+  cy.wait('@initXsrf', { timeout: 30000 });
+
   cy.route('POST', '/api/v1/authenticate').as('postLogin');
 
   cy.get(loginForm.username)
@@ -105,7 +111,7 @@ Cypress.Commands.add('login', (canary = false, username, password) => {
 
 /**
  * Logs a user out of their session using the menu.
- * 
+ *
  * @param organic - if true, log out organically through menu rather than URL.
  * @returns void
  */
@@ -124,47 +130,58 @@ Cypress.Commands.add('logout', () => {
  * @param { string } password - The users password.
  * @returns void
  */
-Cypress.Commands.add('newUser', (username = '', password = '', skipOnboarding = true) => {
-  cy.visit('/register')
-    .location('pathname')
-    .should('eq', `/register`);
+Cypress.Commands.add(
+  'newUser',
+  (username = '', password = '', skipOnboarding = true) => {
+    cy.server();
 
-  cy.server();
-  cy.route('POST', '**/api/v1/register').as('registerPOST');
+    // We need an XSRF token before login can work
+    cy.route('POST', '/api/v2/mwa/pv').as('initXsrf');
 
-  cy.get(registerForm.username)
-    .focus()
-    .type(username);
-  cy.get(registerForm.email)
-    .focus()
-    .type(defaults.email);
-  cy.get(registerForm.password)
-    .focus()
-    .type(password);
-  cy.wait(500); // give second password field chance to appear - not tied to a request.
+    cy.visit('/register')
+      .location('pathname')
+      .should('eq', `/register`);
 
-  cy.get(registerForm.password2)
-    .focus()
-    .type(password);
-  cy.get(registerForm.checkbox).click({ force: true });
+    cy.wait('@initXsrf', { timeout: 30000 });
 
-  cy.completeCaptcha();
+    cy.setCookie('staging', '1');
+    cy.server();
+    cy.route('POST', '**/api/v1/register').as('registerPOST');
 
-  //submit.
-  cy.get(registerForm.submitButton)
-    .click({ force: true })
-    .wait('@registerPOST')
-    .then(xhr => {
-      expect(xhr.status).to.equal(200);
-      expect(xhr.response.body.status).to.deep.equal('success');
-    });
+    cy.get(registerForm.username)
+      .focus()
+      .type(username);
+    cy.get(registerForm.email)
+      .focus()
+      .type(defaults.email);
+    cy.get(registerForm.password)
+      .focus()
+      .type(password);
+    cy.wait(500); // give second password field chance to appear - not tied to a request.
 
-  // skip onboarding
-  if (skipOnboarding) {
-    cy.location('pathname').should('eq', '/onboarding/notice');
-    cy.contains("No thanks, I'll do it later").click();
+    cy.get(registerForm.password2)
+      .focus()
+      .type(password);
+    cy.get(registerForm.checkbox).click({ force: true });
+
+    cy.completeCaptcha();
+
+    //submit.
+    cy.get(registerForm.submitButton)
+      .click({ force: true })
+      .wait('@registerPOST')
+      .then(xhr => {
+        expect(xhr.status).to.equal(200);
+        expect(xhr.response.body.status).to.deep.equal('success');
+      });
+
+    // skip onboarding
+    if (skipOnboarding) {
+      cy.location('pathname').should('eq', '/onboarding/notice');
+      cy.contains("No thanks, I'll do it later").click();
+    }
   }
-});
+);
 
 Cypress.Commands.add('preserveCookies', () => {
   Cypress.Cookies.preserveOnce(
@@ -172,7 +189,8 @@ Cypress.Commands.add('preserveCookies', () => {
     'minds_sess',
     'mwa',
     'XSRF-TOKEN',
-    'staging-features'
+    'staging-features',
+    'feature_flags_override'
   );
 });
 
@@ -246,6 +264,7 @@ Cypress.Commands.add('openComposer', () => {
 
 /**
  * Creates a new post. Must be logged in.
+ * !! Requires composer to be set in feature flag !!
  * @param { string } message - The message to be posted
  * @returns void
  */

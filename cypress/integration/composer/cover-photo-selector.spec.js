@@ -10,14 +10,14 @@ context('Composer Cover Photo Selector', () => {
   beforeEach(() => {
     cy.preserveCookies();
     cy.overrideFeatureFlags({
-      composer: true,
+      'activity-composer': true,
       navigation: true,
     });
   });
 
   after(() => {
     cy.overrideFeatureFlags({
-      composer: false,
+      'activity-composer': false,
       navigation: false,
     });
   });

@@ -68,7 +68,7 @@ context('Blogs', () => {
       '../fixtures/international-space-station-1776401_1920.jpg',
       'image/jpg'
     )
-      .wait('@postMedia')
+      .wait('@postMedia', { timeout: 30000 })
       .then(xhr => {
         expect(xhr.status).to.equal(200);
         expect(xhr.response.body.status).to.equal('success');
