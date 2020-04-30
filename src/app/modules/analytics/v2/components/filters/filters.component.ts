@@ -15,10 +15,18 @@ import { Filter } from '../../../../../interfaces/dashboard';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
+  filterSubscription: Subscription;
 
   filters$ = this.analyticsService.filters$;
   filters: Filter[];
+
+  timespanSubscription: Subscription;
+  selectedTimespan;
+  timespanFilter: Filter = {
+    id: 'timespan',
+    label: 'Timespan',
+    options: [],
+  };
 
   constructor(
     private analyticsService: AnalyticsDashboardService,
@@ -28,22 +36,36 @@ export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // TODO: remove all of this once channel search is ready
     // Temporarily remove channel search from channel filter options
-    this.subscription = this.analyticsService.filters$.subscribe(filters => {
-      const channelFilter = filters.find(filter => filter.id === 'channel');
-      if (channelFilter) {
-        channelFilter.options = channelFilter.options.filter(option => {
-          return option.id === 'all' || option.id === 'self';
-        });
+    this.filterSubscription = this.analyticsService.filters$.subscribe(
+      filters => {
+        const channelFilter = filters.find(filter => filter.id === 'channel');
+        if (channelFilter) {
+          channelFilter.options = channelFilter.options.filter(option => {
+            return option.id === 'all' || option.id === 'self';
+          });
+        }
+
+        this.filters = filters;
+        this.detectChanges();
       }
-      this.filters = filters;
-      this.detectChanges();
-    });
+    );
+
+    this.timespanSubscription = this.analyticsService.timespans$.subscribe(
+      timespans => {
+        this.timespanFilter.options = timespans;
+        this.detectChanges();
+      }
+    );
   }
 
   selectionMade($event) {
-    this.analyticsService.updateFilter(
-      `${$event.filterId}::${$event.option.id}`
-    );
+    if ($event.filterId === 'timespan') {
+      this.analyticsService.updateTimespan($event.option.id);
+    } else {
+      this.analyticsService.updateFilter(
+        `${$event.filterId}::${$event.option.id}`
+      );
+    }
   }
 
   detectChanges() {
@@ -52,6 +74,7 @@ export class AnalyticsFiltersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.filterSubscription.unsubscribe();
+    this.timespanSubscription.unsubscribe();
   }
 }

@@ -68,12 +68,12 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.paramsSubscription = this.route.queryParams.subscribe(params => {
-      // TODO: handleUrl
-      if (params['timespan']) {
-        // this.updateTimespan(params['timespan']);
-      }
-    });
+    // this.paramsSubscription = this.route.queryParams.subscribe(params => {
+    //   // TODO: handleUrl
+    //   if (params['timespan']) {
+    //     // this.updateTimespan(params['timespan']);
+    //   }
+    // });
 
     this.analyticsService.timespans$.subscribe(timespans => {
       this.timespanFilter.options = timespans;
@@ -108,16 +108,16 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  filterSelectionMade($event) {
-    if ($event.filterId === 'timespan') {
-      this.analyticsService.updateTimespan($event.option.id);
-    }
-  }
+  // filterSelectionMade($event) {
+  //   if ($event.filterId === 'timespan') {
+  //     this.analyticsService.updateTimespan($event.option.id);
+  //   }
+  // }
 
-  updateTimespan(timespanId) {
-    // TODO: update url
-    // this.analyticsService.updateTimespan(timespanId);
-  }
+  // updateTimespan(timespanId) {
+  //   // TODO: update url
+  //   // this.analyticsService.updateTimespan(timespanId);
+  // }
 
   updateCategory(categoryId) {
     this.analyticsService.updateCategory(categoryId);
@@ -129,8 +129,8 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.paramsSubscription) {
-      this.paramsSubscription.unsubscribe();
-    }
+    // if (this.paramsSubscription) {
+    //   this.paramsSubscription.unsubscribe();
+    // }
   }
 }
