@@ -29,8 +29,14 @@ m-analytics__dashboard {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
   @include m-theme() {
-    background-color: themed($m-bgColor--secondary);
+    background-color: themed($m-bgColor--primary);
   }
 }
 

@@ -3,13 +3,13 @@
   font-weight: 300;
   overflow-x: scroll;
   @include m-theme() {
-    color: themed($m-grey-800);
+    color: themed($m-textColor--primary);
   }
   a {
     text-decoration: none;
     font-weight: 300;
     @include m-theme() {
-      color: themed($m-grey-800);
+      color: themed($m-textColor--primary);
     }
   }
 }
@@ -38,8 +38,8 @@
 
 .m-analyticsTable__row--header {
   @include m-theme() {
-    border-bottom: 1px solid themed($m-grey-50);
-    color: themed($m-grey-200);
+    border-bottom: 1px solid themed($m-borderColor--primary);
+    color: themed($m-textColor--tertiary);
   }
   .m-analyticsTable__col--entity {
     flex-direction: row;
@@ -58,7 +58,8 @@
 .m-analyticsTable__row--data {
   &:hover {
     @include m-theme() {
-      background-color: rgba(themed($m-blue-grey-50), 0.5);
+      background-color: rgba(themed($m-bgColor--tertiary), 0.4);
+      // background-color: rgba(themed($m-blue-grey-50), 0.5);
     }
     .m-analyticsTable__col--entity .m-analyticsTable__entityTitle i {
       visibility: visible;
@@ -68,7 +69,7 @@
     flex-direction: row;
     align-items: center;
     @include m-theme() {
-      border-right: 1px solid themed($m-grey-50);
+      border-right: 1px solid themed($m-borderColor--primary);
     }
 
     .m-analyticsTable__entityWrapper {
@@ -127,14 +128,14 @@
       margin: 3px 0 0 3px;
       visibility: hidden;
       @include m-theme() {
-        color: themed($m-grey-800);
+        color: themed($m-textColor--primary);
       }
     }
   }
   .m-analyticsTable__entityDetails {
     display: inline;
     @include m-theme() {
-      color: themed($m-grey-200);
+      color: themed($m-textColor--tertiary);
     }
     > * {
       margin-right: $minds-margin;
@@ -146,7 +147,7 @@
     }
     a {
       @include m-theme() {
-        color: themed($m-grey-300);
+        color: themed($m-textColor--tertiary);
       }
     }
   }

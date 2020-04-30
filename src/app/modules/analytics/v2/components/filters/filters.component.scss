@@ -8,6 +8,9 @@ m-analytics__filters {
   position: relative;
   margin-top: 36px;
   margin: 36px 0 0 40px;
+  @include m-theme() {
+    background-color: themed($m-bgColor--primary);
+  }
 }
 
 @media screen and (max-width: $min-tablet) {
