@@ -9,14 +9,20 @@
 
   label:not(.m-composerPopup__trigger),
   .m-composerPopup__label {
-    margin: 0 0 9px;
+    margin: 0 0 10px;
   }
 
-  .m-composerPopupField--1 {
-    margin: 0 0 51px 0;
-  }
+  .m-composerPopup__field {
+    position: relative;
+    margin: 0 0 50px 0;
 
-  .m-composerPopupField--2 {
-    margin: 0 0 53px 0;
+    &.m-composerMonetize__typeField {
+      margin: 0 0 20px 0;
+    }
+
+    .m-form__field--radio,
+    .m-form__customInputWrapper__radio {
+      margin-bottom: 0 !important;
+    }
   }
 }

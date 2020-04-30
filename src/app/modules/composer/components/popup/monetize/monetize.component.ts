@@ -21,14 +21,21 @@ export class MonetizeComponent implements OnInit {
    */
   readonly inputId: string = UniqueId.generate('m-composer__tags');
 
-  state: { enabled: boolean; type: string; amount: number } = {
+  state: { enabled: boolean; type: 'tokens' | 'money'; amount: number } = {
     enabled: false,
     type: 'tokens',
     amount: 0,
   };
 
+  /**
+   * Constructor
+   * @param service
+   */
   constructor(protected service: ComposerService) {}
 
+  /**
+   * Component initialization. Set initial state.
+   */
   ngOnInit(): void {
     const monetization = this.service.monetization$.getValue();
 
@@ -39,6 +46,9 @@ export class MonetizeComponent implements OnInit {
     };
   }
 
+  /**
+   * Emit to subject
+   */
   save() {
     this.service.monetization$.next(
       this.state.enabled
