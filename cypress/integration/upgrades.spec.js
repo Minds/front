@@ -30,7 +30,7 @@ context('Upgrades page', () => {
 
   it('should have the ability to trigger Buy Tokens modal', () => {
     cy.server();
-    cy.route("GET", '**api/v2/blockchain/purchase**').as("purchaseGET");
+    cy.route('GET', '**api/v2/blockchain/purchase**').as('purchaseGET');
 
     const tokensInput = 'm-blockchain--purchase input[name=amount]';
     const buyTokensButton =
@@ -51,16 +51,19 @@ context('Upgrades page', () => {
 
     cy.get(buyTokensButton)
       .should('not.be.disabled')
-      .click({force: true})
-      .wait('@purchaseGET').then((xhr) => {
+      .click({ force: true })
+      .wait('@purchaseGET')
+      .then(xhr => {
         expect(xhr.status).to.equal(200);
       });
 
     // alternative to waiting
-    cy.contains("Setup Your OnChain Address to buy, send and receive crypto")
+    cy.contains('Setup Your OnChain Address to buy, send and receive crypto');
 
-    cy.get('.m-get-metamask--cancel-btn').should('not.be.disabled').click();
-    
+    cy.get('.m-get-metamask--cancel-btn')
+      .should('not.be.disabled')
+      .click();
+
     cy.get(anyBuyTokensModal).should('be.visible');
   });
 

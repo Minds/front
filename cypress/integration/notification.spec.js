@@ -5,17 +5,17 @@
 import generateRandomId from '../support/utilities';
 
 context.skip('Notification', () => {
-
   //secondary user for testing.
   const username = generateRandomId();
-  const password = generateRandomId()+'X#';
+  const password = generateRandomId() + 'X#';
 
   const commentText = generateRandomId();
   const postText = generateRandomId();
-  const postCommentButton = 'm-comment__poster > div > div.minds-body > div > div > a.m-post-button';
-  const commentButton = 'minds-activity > div.tabs > minds-button-comment > a'; 
+  const postCommentButton =
+    'm-comment__poster > div > div.minds-body > div > div > a.m-post-button';
+  const commentButton = 'minds-activity > div.tabs > minds-button-comment > a';
   const commentInput = 'm-comment__poster minds-textarea > div';
-  const commentContent ='.m-comment__bubble > p';
+  const commentContent = '.m-comment__bubble > p';
   const notificationBell = 'm-notifications--topbar-toggle > a > i';
   const notification = 'minds-notification';
   /**
@@ -25,7 +25,10 @@ context.skip('Notification', () => {
   before(() => {
     cy.newUser(username, password);
     cy.logout();
-  
+
+    // This test makes use of cy.post()
+    cy.overrideFeatureFlags(['composer']);
+
     cy.login();
     cy.post(postText);
     cy.clearCookies();
@@ -36,7 +39,7 @@ context.skip('Notification', () => {
    */
   after(() => {
     cy.clearCookies();
-  
+
     cy.login(true, username, password);
     cy.visit(`/${Cypress.env().username}`);
     cy.deleteUser(username, password);
@@ -48,39 +51,47 @@ context.skip('Notification', () => {
    * then switch users and check for the notification.
    */
   beforeEach(() => {
-    cy.route("GET", '**/api/v1/notifications/all**').as('notifications');
+    cy.route('GET', '**/api/v1/notifications/all**').as('notifications');
 
     cy.clearCookies();
     cy.login(false, username, password);
-    
-    cy.location('pathname')
-      .should('eq', '/newsfeed/subscriptions');
-    
+
+    cy.location('pathname').should('eq', '/newsfeed/subscriptions');
+
     cy.visit(`/${Cypress.env().username}`);
   });
 
   it('should alert the user that a post has been commented on', () => {
     // Comment on generated 2nd users post.
-    cy.get(commentButton).first().click();
-    cy.get(commentInput).first().type(commentText);
-    cy.get(postCommentButton).first().click();
-    cy.get(commentContent).first().contains(commentText);
-    
+    cy.get(commentButton)
+      .first()
+      .click();
+    cy.get(commentInput)
+      .first()
+      .type(commentText);
+    cy.get(postCommentButton)
+      .first()
+      .click();
+    cy.get(commentContent)
+      .first()
+      .contains(commentText);
+
     // Logout, log into generated user.
     cy.logout();
     cy.login();
-  
+
     // Open their notifications
-    cy.get(notificationBell).click()
-      .wait('@notifications').then((xhr) => {
+    cy.get(notificationBell)
+      .click()
+      .wait('@notifications')
+      .then(xhr => {
         expect(xhr.status).to.equal(200);
       });
 
     cy.get(notification)
       .first()
       .click();
-    
+
     cy.contains(commentText);
   });
-
-})
+});

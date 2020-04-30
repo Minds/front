@@ -14,4 +14,14 @@
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-}
+
+  // Gitlab hangs on low memory
+  // See https://github.com/cypress-io/cypress/issues/350#issuecomment-574072211
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.name === 'chrome') {
+      launchOptions.args.push('--disable-dev-shm-usage');
+    }
+
+    return launchOptions;
+  });
+};
