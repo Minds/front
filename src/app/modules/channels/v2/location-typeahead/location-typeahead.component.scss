@@ -1,0 +1,63 @@
+m-channel__locationTypeahead {
+  display: block;
+  position: relative;
+
+  .m-channelLocationTypeahead__list {
+    position: absolute;
+    top: calc(100% - 1px);
+    left: 0;
+    z-index: 15;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    border: 1px solid;
+    border-radius: 0 0 2px 2px;
+    font-size: inherit;
+    line-height: inherit;
+
+    @include m-theme() {
+      border-color: themed($m-borderColor--primary);
+      color: themed($m-textColor--secondary);
+      background: themed($m-bgColor--secondary);
+    }
+
+    @include m-on-theme(light) {
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    @include m-on-theme(dark) {
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .m-channelLocationTypeaheadList__header {
+    display: flex;
+    flex-direction: row;
+    padding: 20px 20px 9px;
+    font-size: 14px;
+    line-height: 19px;
+    align-items: center;
+    justify-content: space-between;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-channelLocationTypeaheadList__item {
+    font-size: 16px;
+    line-height: 21px;
+    padding: 10px 20px 9px;
+    cursor: pointer;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+
+      &:hover {
+        background-color: themed($m-bgColor--quaternary);
+      }
+    }
+  }
+}

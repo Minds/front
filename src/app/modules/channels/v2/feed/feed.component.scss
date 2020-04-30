@@ -1,0 +1,48 @@
+.m-theme__2020 .m-channel__feed {
+  [class*='m-pageLayout__pane'] {
+    padding: 20px 40px;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      padding: 20px;
+    }
+  }
+}
+
+.m-channel__feed {
+  .m-channelFeedList__filter {
+    display: block;
+    padding: 0 0 20px;
+  }
+
+  .m-channelFeedListFilter__scheduled {
+    font-size: 14px;
+    line-height: 19px;
+    font-weight: normal;
+    text-decoration: none;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+
+    strong {
+      font-weight: normal;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+
+  m-newsfeed__entity {
+    display: block;
+    margin: 0 0 20px;
+  }
+
+  .m-channelFeed__sidebar {
+    padding: 35px 0 0;
+
+    > * + * {
+      margin-top: 30px;
+    }
+  }
+}

@@ -1,0 +1,37 @@
+<m-dropdownMenu [menu]="actionsDropdown">
+  <ng-content></ng-content>
+</m-dropdownMenu>
+
+<ng-template #actionsDropdown>
+  <ul>
+    <li *ngIf="service.isSubscribed$ | async" (click)="unsubscribe()">
+      <span class="m-dropdownMenu__item">
+        <span i18n>Unsubscribe</span>
+      </span>
+    </li>
+
+    <ng-container *ngIf="!(service.isAdmin$ | async)">
+      <li
+        *ngIf="service.isBlocked$ | async; else blockOption"
+        (click)="unblock()"
+      >
+        <span class="m-dropdownMenu__item">
+          <span i18n>Unblock</span>
+        </span>
+      </li>
+      <ng-template #blockOption>
+        <li (click)="block()">
+          <span class="m-dropdownMenu__item">
+            <span i18n>Block</span>
+          </span>
+        </li>
+      </ng-template>
+    </ng-container>
+
+    <li *ngIf="!(service.isAdmin$ | async)" (click)="report()">
+      <span class="m-dropdownMenu__item">
+        <span i18n>Report</span>
+      </span>
+    </li>
+  </ul>
+</ng-template>

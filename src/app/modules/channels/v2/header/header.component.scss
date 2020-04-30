@@ -1,0 +1,107 @@
+.m-channelHeader__banner {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  margin: 0 0 18px;
+  user-select: none;
+
+  @media screen and (max-width: $max-mobile) {
+    height: 140px;
+  }
+
+  .m-channelHeaderBanner__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: none no-repeat center center;
+    background-size: cover;
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--secondary);
+    }
+  }
+
+  .m-channelHeaderBanner__avatar .minds-avatar {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 18px);
+    width: 132px;
+    height: 132px;
+    margin: 0;
+    background: none no-repeat center center transparent;
+    background-size: cover;
+    border: 3px solid;
+    border-radius: 50%;
+
+    @media screen and (max-width: $max-mobile) {
+      width: 100px;
+      height: 100px;
+      transform: translate(-50%, 27px);
+    }
+
+    @include m-theme() {
+      background-color: themed($m-bgColor--primary);
+      border-color: themed($m-bgColor--primary);
+    }
+
+    @include m-on-theme(light) {
+      box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    @include m-on-theme(dark) {
+      box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+.m-channelHeader__info {
+  padding: 10px 0 0;
+
+  .m-channelHeaderInfo__name {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    font-size: 22px;
+    line-height: 30px;
+    font-weight: bold;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    m-icon {
+      font-weight: normal;
+      margin: 0 7px 0 0;
+
+      @include m-theme() {
+        color: themed($m-positive);
+      }
+    }
+  }
+
+  .m-channelHeaderInfoName__badges {
+    i.material-icons {
+      font-size: 18px;
+      padding: 0 0 0 6px;
+    }
+  }
+
+  .m-channelHeaderInfo__username {
+    padding: 0;
+    margin: 0;
+    text-align: center;
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: normal;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

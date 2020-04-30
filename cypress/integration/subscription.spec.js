@@ -17,6 +17,10 @@ context('Subscription', () => {
 
   beforeEach(() => {
     cy.preserveCookies();
+    cy.overrideFeatureFlags({
+      channels: false,
+    });
+
     cy.server();
     cy.route("POST", "**/api/v1/subscribe/*").as("subscribe");
     cy.route("DELETE", "**/api/v1/subscribe/*").as("unsubscribe");

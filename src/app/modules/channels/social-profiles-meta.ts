@@ -1,3 +1,5 @@
+import { KeyVal } from '../../interfaces/entities';
+
 export interface SocialProfileMeta {
   key: string;
   label: string;
@@ -227,4 +229,39 @@ export function getSocialProfileMeta(key: string): SocialProfileMeta {
   }
 
   return defaultMeta;
+}
+
+/**
+ * Polyfill for pre-2019 social profile metadata in channels
+ * @param profiles
+ */
+export function buildFromV1ChannelProfile(
+  profiles: Array<KeyVal>
+): Array<KeyVal> {
+  for (let i = 0; i < profiles.length; i++) {
+    if (profiles[i].key != 'other' && !profiles[i].value.includes('/')) {
+      profiles[i].value = getSocialProfileMeta(profiles[i].key).link.replace(
+        ':value',
+        profiles[i].value
+      );
+    }
+  }
+
+  return profiles;
+}
+
+export function buildKeyVal(url: string): KeyVal {
+  for (let meta of socialProfileMeta) {
+    if (url.includes(meta.domain)) {
+      return {
+        key: meta.key,
+        value: url,
+      };
+    }
+  }
+
+  return {
+    key: 'other',
+    value: url,
+  };
 }

@@ -23,6 +23,9 @@ context('Settings', () => {
 
   beforeEach(() => {
     cy.preserveCookies();
+    cy.overrideFeatureFlags({
+      channels: false,
+    });
     cy.server();
     cy.route('POST', '**/api/v1/blog/new').as('postBlog');
     cy.route('POST', '**/api/v1/media**').as('postMedia');
@@ -147,6 +150,8 @@ context('Settings', () => {
           scheduledDate = text;
         });
     }
+
+    cy.completeCaptcha();
 
     cy.get('.m-button--submit')
       .click({ force: true }) // TODO: Investigate why disabled flag is being detected
