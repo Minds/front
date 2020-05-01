@@ -1,0 +1,22 @@
+<div *ngIf="!init" class="m-settingsV2__spinner">
+  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+</div>
+<ng-container *ngIf="init">
+  <ng-container *ngIf="videos.length > 0 && videos[0].display">
+    <m-youtubeMigration__videoList
+      *ngIf="videos.length > 0"
+      [videos]="videos"
+      (requestPlay)="onModalRequested($event)"
+    ></m-youtubeMigration__videoList>
+    <infinite-scroll
+      distance="25%"
+      (load)="load()"
+      [moreData]="moreData"
+      [inProgress]="inProgress"
+    >
+    </infinite-scroll>
+  </ng-container>
+  <div *ngIf="videos.length === 0" class="m-youtubeMigration__notice">
+    <p>No transferred videos</p>
+  </div>
+</ng-container>

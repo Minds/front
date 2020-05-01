@@ -1,0 +1,32 @@
+m-youtubemigration__config {
+  display: block;
+  margin-top: 30px;
+
+  .m-youtubeMigration__desc {
+    p {
+      margin-bottom: 12px;
+      span {
+        font-weight: 500;
+        @include m-theme() {
+          color: themed($m-aqua);
+        }
+      }
+      &:last-child {
+        a {
+          display: inline-block;
+          font-weight: 500;
+          margin-top: 8px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .m-youtubeMigration__desc p,
+  .m-form__customInputWrapper__checkbox {
+    font-size: 15px;
+    line-height: 21px;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}
