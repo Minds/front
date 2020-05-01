@@ -1,0 +1,21 @@
+m-youtubeMigration__setupModal {
+  .m-youtubeMigration__setupModal__buttonsContainer {
+    display: flex;
+    flex-flow: row wrap-reverse;
+    justify-content: flex-end;
+    @media screen and (max-width: $max-mobile) {
+      width: 100%;
+    }
+    m-shadowboxSubmitButton {
+      margin: 8px 0 0 18px;
+
+      @media screen and (max-width: $max-mobile) {
+        width: 100%;
+        margin: 8px 0 0 0;
+        .m-shadowboxSubmitButton {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

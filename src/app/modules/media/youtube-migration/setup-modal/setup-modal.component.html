@@ -1,0 +1,25 @@
+<ng-container *ngIf="activeChannel"
+  ><p class="m-settingsV2__desc">
+    Your YouTube channel <em>{{ activeChannel.title }}</em
+    >is now connected to Minds. Do you want new videos uploaded to YouTube
+    automatically posted to Minds?
+  </p>
+  >
+  <p class="m-settingsV2__desc">
+    If you change your mind, you can always change this setting in the Config
+    tab of this page.
+  </p>
+
+  <div class="m-youtubeMigration__setupModal__buttonsContainer">
+    <m-shadowboxSubmitButton color="grey" (click)="disableAutoImport()"
+      >I'll do it manually</m-shadowboxSubmitButton
+    >
+    <m-shadowboxSubmitButton
+      color="green"
+      (click)="enableAutoImport()"
+      [disabled]="inProgress"
+      [saving]="inProgress"
+      >Autopost new YouTube videos</m-shadowboxSubmitButton
+    >
+  </div>
+</ng-container>

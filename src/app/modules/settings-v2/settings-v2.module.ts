@@ -10,6 +10,7 @@ import { LegacyModule } from '../legacy/legacy.module';
 import { ReportModule } from '../report/report.module';
 import { PaymentsModule } from '../payments/payments.module';
 import { WireModule } from '../wire/wire.module';
+import { YoutubeMigrationModule } from '../media/youtube-migration/youtube-migration.module';
 
 import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 
@@ -47,6 +48,13 @@ import { SettingsV2ProPayoutsComponent } from './pro/payouts/payouts.component';
 import { SettingsV2ProCancelComponent } from './pro/cancel/cancel.component';
 import { StrikesComponent } from '../report/strikes/strikes.component';
 import { SettingsV2AutoplayVideosComponent } from './account/autoplay-videos/autoplay-videos.component';
+import { YoutubeMigrationService } from '../media/youtube-migration/youtube-migration.service';
+import { YoutubeMigrationConnectComponent } from '../media/youtube-migration/connect/connect.component';
+import { YoutubeMigrationDashboardComponent } from '../media/youtube-migration/dashboard/dashboard.component';
+import { YoutubeMigrationUnmigratedVideosComponent } from '../media/youtube-migration/unmigrated-videos/unmigrated-videos.component';
+import { YoutubeMigrationMigratedVideosComponent } from '../media/youtube-migration/migrated-videos/migrated-videos.component';
+import { YoutubeMigrationConfigComponent } from '../media/youtube-migration/config/config.component';
+import { YoutubeMigrationComponent } from '../media/youtube-migration/youtube-migration.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -340,6 +348,36 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
+            path: 'youtube-migration',
+            component: YoutubeMigrationComponent,
+            data: {
+              title: 'Youtube Migration',
+              standardHeader: false,
+            },
+            children: [
+              { path: 'connect', component: YoutubeMigrationConnectComponent },
+              {
+                path: 'dashboard',
+                component: YoutubeMigrationDashboardComponent,
+                children: [
+                  { path: '', redirectTo: 'available', pathMatch: 'full' },
+                  {
+                    path: 'available',
+                    component: YoutubeMigrationUnmigratedVideosComponent,
+                  },
+                  {
+                    path: 'transferred',
+                    component: YoutubeMigrationMigratedVideosComponent,
+                  },
+                  {
+                    path: 'config',
+                    component: YoutubeMigrationConfigComponent,
+                  },
+                ],
+              },
+            ],
+          },
+          {
             path: 'deactivate-account',
             component: SettingsV2DeactivateAccountComponent,
             data: {
@@ -385,6 +423,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsModule,
     WalletV2Module,
     ProModule,
+    YoutubeMigrationModule,
   ],
   declarations: [
     SettingsV2Component,
@@ -416,7 +455,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2ProCancelComponent,
     SettingsV2AutoplayVideosComponent,
   ],
-  providers: [SettingsV2Service],
+  providers: [SettingsV2Service, YoutubeMigrationService],
   exports: [SettingsV2Component],
 })
 export class SettingsV2Module {}
