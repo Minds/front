@@ -57,6 +57,7 @@
       class="m-groupSidebarMarkersList__item"
       [class.has-gathering]="hasNewNavigation && (group.hasGathering$ | async)"
       [routerLink]="['/groups/profile', group.guid]"
+      (click)="onGroupClick()"
     >
       <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
         <img
