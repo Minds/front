@@ -4,8 +4,8 @@ stages:
   - test and build
   - prepare
   - review
-  - qa
   - deploy:staging
+  - qa
   - deploy:canary
   - deploy:production
   - cleanup
