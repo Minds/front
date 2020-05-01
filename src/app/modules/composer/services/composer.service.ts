@@ -82,7 +82,10 @@ export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
 /**
  * Monetization value type
  */
-export type MonetizationSubjectValue = { type: string; min: number } | null;
+export type MonetizationSubjectValue = {
+  type: 'tokens' | 'money';
+  min: number;
+} | null;
 
 /**
  * Default monetization value

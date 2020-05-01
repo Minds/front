@@ -1,5 +1,5 @@
 <div class="m-composerPopup__body m-composer__monetize">
-  <div class="m-composerPopup__content">
+  <div class="m-composerPopup__content m-formWrapper">
     <h3 class="m-composerPopup__title" i18n>Monetize</h3>
 
     <p class="m-composerPopup__text" i18n>
@@ -7,7 +7,7 @@
       channel.
     </p>
 
-    <div class="m-composerPopup__field m-composerPopupField--1">
+    <div class="m-composerPopup__field">
       <span class="m-composerPopup__label" i18n>Paywall status</span>
 
       <label
@@ -24,24 +24,69 @@
       </label>
     </div>
 
-    <div
-      *ngIf="state.enabled"
-      class="m-composerPopup__field m-composerPopupField--2"
-    >
-      <label [for]="inputId + '-amount'">
-        <ng-container i18n>Min Tokens per month</ng-container>
-        <m-tooltip icon="info" i18n>
-          TBD
-        </m-tooltip>
-      </label>
+    <ng-container *ngIf="state.enabled">
+      <div
+        class="m-form__fieldsContainer m-composerPopup__field m-composerMonetize__typeField"
+      >
+        <div class="m-form__field--radio">
+          <div class="m-form__row--input">
+            <label
+              for="composer-v2-monetize-type-tokens"
+              class="m-form__customInputWrapper__radio"
+            >
+              <ng-container i18n>Tokens</ng-container>
+              <input
+                type="radio"
+                id="composer-v2-monetize-type-tokens"
+                class="form-control"
+                [(ngModel)]="state.type"
+                [value]="'tokens'"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label>
 
-      <input
-        [id]="inputId + '-amount'"
-        type="number"
-        [(ngModel)]="state.amount"
-        data-cy="monetize-paywall-amount"
-      />
-    </div>
+            <label
+              for="composer-v2-monetize-type-usd"
+              class="m-form__customInputWrapper__radio"
+            >
+              <ng-container i18n>USD</ng-container>
+              <input
+                type="radio"
+                id="composer-v2-monetize-type-usd"
+                class="form-control"
+                [(ngModel)]="state.type"
+                [value]="'money'"
+              />
+              <span class="m-form__customInput__radio"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="m-composerPopup__field">
+        <label [for]="inputId + '-amount'">
+          <ng-container [ngSwitch]="state.type">
+            <ng-container *ngSwitchCase="'tokens'" i18n
+              >Minimum Tokens/Month</ng-container
+            >
+            <ng-container *ngSwitchCase="'money'" i18n
+              >Minimum USD/Month</ng-container
+            >
+          </ng-container>
+
+          <m-tooltip icon="info" i18n>
+            Amount required to access membership tier
+          </m-tooltip>
+        </label>
+
+        <input
+          [id]="inputId + '-amount'"
+          type="number"
+          [(ngModel)]="state.amount"
+          data-cy="monetize-paywall-amount"
+        />
+      </div>
+    </ng-container>
   </div>
 
   <div class="m-composerPopup__action">
