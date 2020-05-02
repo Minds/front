@@ -18,11 +18,6 @@ export class YoutubeMigrationService {
   channels: YoutubeChannel[];
 
   // Prime behavior subjects with dummy data
-  // videosPrimer: Array<any> = [
-  //   {
-  //     video_id: '',
-  //   },
-  // ];
   selectedChannelPrimer: YoutubeChannel = {
     id: '',
     title: '',
@@ -36,16 +31,11 @@ export class YoutubeMigrationService {
 
   // Set up behavior subjects
   connected$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  autoImport$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   importingAllVideos$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   selectedChannel$: BehaviorSubject<YoutubeChannel> = new BehaviorSubject(
     this.selectedChannelPrimer
   );
-  // unmigratedVideos$: BehaviorSubject<any> = new BehaviorSubject(
-  //   this.videosPrimer
-  // );
-  // migratedVideos$: BehaviorSubject<any> = new BehaviorSubject(
-  //   this.videosPrimer
-  // );
   statusCounts$: BehaviorSubject<any> = new BehaviorSubject(
     this.statusCountsPrimer
   );
@@ -53,9 +43,6 @@ export class YoutubeMigrationService {
   // These current values of the behavior subjects are used inside the service
   connected: boolean = false;
   selectedChannel: YoutubeChannel;
-  // unmigratedVideos: any;
-  // migratedVideos: any;
-  // statusCounts: any;
 
   constructor(private client: Client, protected session: Session) {}
 
@@ -72,7 +59,6 @@ export class YoutubeMigrationService {
     } else {
       this.connected$.next(true);
     }
-
     return this.connected;
   }
 
@@ -109,6 +95,7 @@ export class YoutubeMigrationService {
       this.channels.find(c => c.id === channelId) || this.channels[0];
 
     this.selectedChannel$.next(selectedChannel);
+    this.autoImport$.next(selectedChannel.auto_import);
 
     return selectedChannel;
   }
@@ -188,19 +175,12 @@ export class YoutubeMigrationService {
       return;
     }
     try {
-      // TODOOJM uncomment
-      // const response = <any>await this.client.get(
-      //   `${this.endpoint}videos/count`,
-      //   {
-      //     channelId: this.selectedChannel.id
-      //   }
-      // );
-
-      // TODOOJM remove
-      const response = {
-        status: 'success',
-        counts: { queued: 123, transferring: 789 },
-      };
+      const response = <any>await this.client.get(
+        `${this.endpoint}videos/count`,
+        {
+          channelId: this.selectedChannel.id,
+        }
+      );
 
       this.statusCounts$.next(response.counts);
 
@@ -236,6 +216,7 @@ export class YoutubeMigrationService {
       if (videoId === 'all') {
         this.importingAllVideos$.next(true);
       }
+      this.getStatusCounts();
 
       return response;
     } catch (e) {
@@ -253,14 +234,17 @@ export class YoutubeMigrationService {
     if (!this.connected) {
       return;
     }
-    const opts = {
-      channelId: this.selectedChannel.id,
-      videoId: videoId,
-    };
+    // const opts = {
+    //   channelId: this.selectedChannel.id,
+    //   videoId: videoId,
+    // };
     try {
       const response = <any>(
-        await this.client.delete(`${this.endpoint}videos/import`, opts)
+        await this.client.delete(
+          `${this.endpoint}videos/import?channelId=${this.selectedChannel.id}&videoId=${videoId}`
+        )
       );
+      this.getStatusCounts();
       return response;
     } catch (e) {
       console.error('cancelImport()', e);
@@ -273,7 +257,7 @@ export class YoutubeMigrationService {
    */
   async enableAutoImport(): Promise<any> {
     if (!this.connected) {
-      return;
+      this.getChannels();
     }
     const opts = {
       channelId: this.selectedChannel.id,
@@ -283,7 +267,7 @@ export class YoutubeMigrationService {
         await this.client.post(`${this.endpoint}subscribe`, opts)
       );
 
-      console.log('EnableAutoTransfer: ', response);
+      this.autoImport$.next(true);
       return response;
     } catch (e) {
       console.error('enableAutoImport: ', e);
@@ -298,14 +282,14 @@ export class YoutubeMigrationService {
     if (!this.connected) {
       return;
     }
-    const opts = {
-      channelId: this.selectedChannel.id,
-    };
 
     try {
       const response = <any>(
-        await this.client.delete(`${this.endpoint}subscribechannelId=`, opts)
+        await this.client.delete(
+          `${this.endpoint}subscribe?channelId=${this.selectedChannel.id}`
+        )
       );
+      this.autoImport$.next(false);
       return response;
     } catch (e) {
       console.error('disableAutoImport(): ', e);
@@ -323,7 +307,6 @@ export class YoutubeMigrationService {
       const response = <any>await this.client.get(`${this.endpoint}account`);
 
       this.connected$.next(true);
-      console.log('connectAccount:', response, response.url);
       return response;
     } catch (e) {
       console.error('connectAccount(): ', e);
@@ -337,12 +320,11 @@ export class YoutubeMigrationService {
    */
   async disconnectAccount(): Promise<any> {
     if (this.session.isLoggedIn()) {
-      const opts = {
-        channelId: this.selectedChannel.id,
-      };
       try {
         const response = <any>(
-          await this.client.delete(`${this.endpoint}account`, opts)
+          await this.client.delete(
+            `${this.endpoint}account?channelId=${this.selectedChannel.id}`
+          )
         );
 
         this.connected$.next(false);
@@ -355,6 +337,7 @@ export class YoutubeMigrationService {
     console.error('User must be logged in to disconnect youtube account');
   }
 
+  // UTILITY /////////////////////////////////////////////////////////////
   /**
    * Format video response for display template
    */

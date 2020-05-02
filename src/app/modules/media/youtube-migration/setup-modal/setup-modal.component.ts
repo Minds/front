@@ -1,69 +1,48 @@
 import {
   Component,
-  OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
-  Output,
-  EventEmitter,
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-youtubeMigration__setupModal',
   templateUrl: './setup-modal.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class YoutubeMigrationSetupModalComponent implements OnInit {
-  @Output() dismissModal: EventEmitter<any> = new EventEmitter();
-  activeChannel: any;
+export class YoutubeMigrationSetupModalComponent {
   inProgress: boolean = false;
 
   constructor(
     protected youtubeService: YoutubeMigrationService,
     protected overlayModal: OverlayModalService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    protected formToastService: FormToastService
   ) {}
 
-  ngOnInit() {
-    // TODOOJM getChannels isn't returning anything
-    // this.getChannel();
-  }
+  async submit(autoImport: boolean) {
+    this.inProgress = true;
+    this.detectChanges();
 
-  /**
-   * Select the channel that has been connected the most recently
-   */
-  getChannel() {
-    const channels = this.youtubeService.getChannels();
-    console.log(channels);
-    let activeChannel,
-      mostRecentConnectedTimestamp = 0;
-
-    channels.forEach(c => {
-      if (c.connected > mostRecentConnectedTimestamp) {
-        mostRecentConnectedTimestamp = c.connected;
-        activeChannel = c;
+    try {
+      let response: any;
+      if (autoImport) {
+        response = await this.youtubeService.enableAutoImport();
+      } else {
+        response = await this.youtubeService.disableAutoImport();
       }
-    });
-
-    this.activeChannel = activeChannel;
-    this.youtubeService.selectChannel(this.activeChannel.id);
-    this.detectChanges();
-    console.log(this.activeChannel);
-  }
-
-  enableAutoImport() {
-    this.inProgress = true;
-    this.detectChanges();
-    this.youtubeService.enableAutoImport();
-    this.overlayModal.dismiss();
-  }
-
-  disableAutoImport() {
-    this.inProgress = true;
-    this.detectChanges();
-    this.youtubeService.disableAutoImport();
-    this.overlayModal.dismiss();
+      if (response && response.status === 'success') {
+        this.formToastService.success('Auto-import preference saved');
+      } else {
+        this.formToastService.error(
+          'Sorry, there was an error and your changes have not been saved.'
+        );
+      }
+    } finally {
+      this.overlayModal.dismiss();
+    }
   }
 
   detectChanges() {

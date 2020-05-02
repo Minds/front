@@ -1,5 +1,5 @@
 <m-youtubeMigration__transferStatus></m-youtubeMigration__transferStatus>
-<div *ngIf="!init" class="m-settingsV2__spinner">
+<div class="m-settingsV2__spinner" *ngIf="!init">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
 <ng-container *ngIf="init">
@@ -8,15 +8,16 @@
       [videos]="videos"
       (requestPlay)="openYoutubeWindow($event)"
     ></m-youtubeMigration__videoList>
-    <infinite-scroll
-      distance="25%"
-      (load)="load()"
-      [moreData]="moreData"
-      [inProgress]="inProgress"
-    >
-    </infinite-scroll>
   </ng-container>
-  <div *ngIf="videos.length === 0" class="m-youtubeMigration__notice">
-    <p>No available YouTube videos</p>
+  <div *ngIf="noInitResults" class="m-youtubeMigration__notice">
+    <p i18n>No available YouTube videos</p>
   </div>
+  <infinite-scroll
+    *ngIf="!fewerResultsThanLimit"
+    distance="25%"
+    (load)="load()"
+    [moreData]="moreData"
+    [inProgress]="inProgress"
+  >
+  </infinite-scroll>
 </ng-container>

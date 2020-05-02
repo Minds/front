@@ -9,7 +9,6 @@ import { MediaModalComponent } from '../../../media/modal/modal.component';
 import { Router } from '@angular/router';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-youtubeMigration__migratedVideos',
@@ -22,6 +21,8 @@ export class YoutubeMigrationMigratedVideosComponent implements OnInit {
   nextPageToken: string = '';
   moreData = true;
   inProgress = false;
+  fewerResultsThanLimit = true;
+  noInitResults = false;
 
   constructor(
     protected youtubeService: YoutubeMigrationService,
@@ -38,6 +39,8 @@ export class YoutubeMigrationMigratedVideosComponent implements OnInit {
   }
 
   async load(refresh: boolean = false) {
+    const limit = 12;
+
     if (this.inProgress) {
       return;
     }
@@ -50,12 +53,29 @@ export class YoutubeMigrationMigratedVideosComponent implements OnInit {
 
     try {
       const response = <any>(
-        await this.youtubeService.getVideos(null, this.nextPageToken)
+        await this.youtubeService.getVideos('completed', this.nextPageToken)
       );
+
+      // Hide infinite scroll's 'nothing more to load' notice
+      // if initial load length is less than response limit
+      if (refresh && response.videos.length < limit) {
+        this.fewerResultsThanLimit = true;
+        this.moreData = false;
+      } else {
+        this.fewerResultsThanLimit = false;
+      }
 
       if (!response.videos.length) {
         this.inProgress = false;
         this.moreData = false;
+
+        // If no results on initial load, show notice instead of empty table
+        if (refresh) {
+          this.noInitResults = true;
+          this.detectChanges();
+          return;
+        }
+
         this.detectChanges();
         return;
       }
