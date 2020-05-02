@@ -5,7 +5,10 @@ import {
   ChangeDetectorRef,
   OnDestroy,
 } from '@angular/core';
-import { YoutubeMigrationService } from './youtube-migration.service';
+import {
+  YoutubeMigrationService,
+  YoutubeChannel,
+} from './youtube-migration.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Session } from '../../../services/session';

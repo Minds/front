@@ -6,8 +6,6 @@ import {
   OnDestroy,
   Injector,
   SkipSelf,
-  Inject,
-  PLATFORM_ID,
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
@@ -15,7 +13,6 @@ import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { YoutubeMigrationSetupModalComponent } from '../setup-modal/setup-modal.component';
-import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'm-youtubeMigration__unmigratedVideos',
@@ -28,9 +25,13 @@ export class YoutubeMigrationUnmigratedVideosComponent
 
   init: boolean = false;
   videos: any = [];
-  nextPageToken: string = '';
+  nextPageToken: string | null = null;
   moreData = true;
   inProgress = false;
+  limit = 12;
+  fewerResultsThanLimit = true;
+  noInitResults = false;
+
   importingAllVideosSubscription: Subscription;
 
   constructor(
@@ -38,13 +39,10 @@ export class YoutubeMigrationUnmigratedVideosComponent
     protected session: Session,
     protected route: ActivatedRoute,
     protected overlayModal: OverlayModalService,
-    protected cd: ChangeDetectorRef // @Inject(PLATFORM_ID) protected platformId: Object
+    protected cd: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
-    // TODOOJM remove this
-    // this.openSetupModal();
-
     this.load(true);
 
     this.route.queryParamMap.subscribe(params => {
@@ -60,7 +58,7 @@ export class YoutubeMigrationUnmigratedVideosComponent
           // so video transfer statuses are visually updated
           this.init = false;
           this.detectChanges();
-          this.load(false);
+          this.load(true);
           this.init = true;
         }
       }
@@ -70,11 +68,11 @@ export class YoutubeMigrationUnmigratedVideosComponent
   }
 
   async load(refresh: boolean = false) {
+    const limit = 12;
     if (this.inProgress) {
       return;
     }
     this.inProgress = true;
-
     if (refresh) {
       this.videos = [];
       this.moreData = true;
@@ -85,9 +83,26 @@ export class YoutubeMigrationUnmigratedVideosComponent
         await this.youtubeService.getVideos(null, this.nextPageToken)
       );
 
+      // Hide infinite scroll's 'nothing more to load' notice
+      // if initial load length is less than response limit
+      if (refresh && response.videos.length < limit) {
+        this.fewerResultsThanLimit = true;
+        this.moreData = false;
+      } else {
+        this.fewerResultsThanLimit = false;
+      }
+
       if (!response.videos.length) {
         this.inProgress = false;
         this.moreData = false;
+
+        // If no results on initial load, show notice instead of empty table
+        if (refresh) {
+          this.noInitResults = true;
+          this.detectChanges();
+          return;
+        }
+
         this.detectChanges();
         return;
       }
@@ -104,13 +119,14 @@ export class YoutubeMigrationUnmigratedVideosComponent
     } catch (e) {
       this.moreData = false;
       this.inProgress = false;
+
       this.detectChanges();
       console.error(e);
     }
   }
 
   openYoutubeWindow($event): void {
-    const url: string = $event.video.url;
+    const url: string = $event.video.youtubeUrl;
     window.open(url, '_blank');
   }
 
@@ -120,7 +136,7 @@ export class YoutubeMigrationUnmigratedVideosComponent
         YoutubeMigrationSetupModalComponent,
         null,
         {
-          wrapperClass: 'm-modalV2__wrapper',
+          class: 'm-overlay-modal--medium',
         },
         this.injector
       )
