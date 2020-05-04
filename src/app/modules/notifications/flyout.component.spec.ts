@@ -10,6 +10,7 @@ import { MockComponent, MockDirective } from '../../utils/mock';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
+import { NavigationStart, Router } from '@angular/router';
 
 describe('NotificationsFlyoutComponent', () => {
   let comp: NotificationsFlyoutComponent;
@@ -90,5 +91,15 @@ describe('NotificationsFlyoutComponent', () => {
   it('Should call onVisible', () => {
     comp.toggleLoad();
     expect(comp.notificationList.onVisible).toHaveBeenCalled();
+  });
+
+  it('Should subscribe to router', () => {
+    spyOn(comp.closeEvt, 'emit').and.callThrough();
+    comp.visible = true;
+    // push fake router event
+    const event = new NavigationStart(1, '/');
+    TestBed.get(Router).events.next(event);
+
+    expect(comp.closeEvt.emit).toHaveBeenCalled();
   });
 });

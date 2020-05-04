@@ -4,7 +4,7 @@
  */
 import generateRandomId from '../support/utilities';
 
-context.skip('Notification', () => {
+context('Notification', () => {
   //secondary user for testing.
   const username = generateRandomId();
   const password = generateRandomId() + 'X#';
@@ -23,45 +23,39 @@ context.skip('Notification', () => {
    * Next login to env user, make a post, and log out.
    */
   before(() => {
-    cy.newUser(username, password);
-    cy.logout();
-
-    // This test makes use of cy.post()
-    cy.overrideFeatureFlags(['composer']);
-
-    cy.login();
-    cy.post(postText);
-    cy.clearCookies();
+    cy.getCookie('minds_sess').then(sessionCookie => {
+      if (!sessionCookie) {
+        return cy.login(true);
+      }
+    });
   });
 
-  /**
-   * After all log into new user and delete user.
-   */
   after(() => {
     cy.clearCookies();
-
-    cy.login(true, username, password);
-    cy.visit(`/${Cypress.env().username}`);
-    cy.deleteUser(username, password);
   });
 
-  /**
-   * Before each test login, and visit env users channel.
-   * When testing, this means you will be ready to make a comment, remind etc,
-   * then switch users and check for the notification.
-   */
   beforeEach(() => {
+    cy.server();
     cy.route('GET', '**/api/v1/notifications/all**').as('notifications');
-
-    cy.clearCookies();
-    cy.login(false, username, password);
-
     cy.location('pathname').should('eq', '/newsfeed/subscriptions');
-
-    cy.visit(`/${Cypress.env().username}`);
   });
 
-  it('should alert the user that a post has been commented on', () => {
+  it('should close notifications flyout when clicking a notification', () => {
+    cy.get(notificationBell)
+      .click()
+      .wait('@notifications');
+
+    cy.get(notification).within($list => {
+      cy.get('a')
+        .first()
+        .click();   
+    });
+
+    cy.get(notification).should('not.be.visible');
+
+  });
+
+  it.skip('should alert the user that a post has been commented on', () => {
     // Comment on generated 2nd users post.
     cy.get(commentButton)
       .first()
