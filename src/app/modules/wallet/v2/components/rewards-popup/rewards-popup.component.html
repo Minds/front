@@ -4,7 +4,7 @@
   </div>
   <div class="m-walletRewardsPopup__metricsContainer">
     <div class="m-walletRewardsPopup__row" *ngFor="let metric of metrics">
-      <span>{{ metric.amount }} {{ metric.id }}</span>
+      <span>{{ metric.amount }} {{ metric.label | titlecase }}</span>
       <span>{{ metric.score }}</span>
     </div>
   </div>
