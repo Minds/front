@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   moduleId: module.id,
@@ -276,8 +276,10 @@ export class CountryInputComponent {
       return;
     }
 
+    const allowedUpperCase = allowed.map(code => code.toUpperCase());
+
     this.filteredCountries = this.countries.filter(item => {
-      return allowed.indexOf(item.code) > -1;
+      return allowedUpperCase.indexOf(item.code) > -1;
     });
   }
 

@@ -79,6 +79,9 @@ m-walletDashboard {
     & > p {
       margin-top: none;
     }
+    .m-walletForm__buttonsContainer {
+      justify-content: center;
+    }
   }
   ////////////////////////////////////////////
   // TEXT ////////////////////////////////////

@@ -42,7 +42,7 @@ export class WalletCashBankFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      country: ['', Validators.required],
+      country: ['US', Validators.required],
       accountNumber: ['', Validators.required],
       routingNumber: ['', requiredFor(['US'])],
     });
@@ -51,8 +51,7 @@ export class WalletCashBankFormComponent implements OnInit {
       this.initCountry = this.hasBank
         ? this.account.bankAccount.country
         : this.account.country;
-      this.country.patchValue(this.initCountry);
-
+      this.country.setValue(this.initCountry);
       this.editing = !this.hasBank;
     }
   }
@@ -131,6 +130,10 @@ export class WalletCashBankFormComponent implements OnInit {
     this.routingNumber.reset();
     this.accountNumber.reset();
     this.detectChanges();
+  }
+
+  countryChange($event) {
+    this.country.setValue($event);
   }
 
   // DISABLED b/c 'remove' button makes it redundant
