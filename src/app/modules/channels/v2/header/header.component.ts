@@ -3,6 +3,7 @@ import { ChannelsV2Service } from '../channels-v2.service';
 import { ConfigsService } from '../../../../common/services/configs.service';
 import { MindsUser } from '../../../../interfaces/entities';
 import entityToBannerUrl from '../../../../helpers/entity-to-banner-url';
+import { ChannelBannerService } from '../../../../common/services/channel-banner.service';
 
 @Component({
   selector: 'm-channel__header',
@@ -20,7 +21,11 @@ export class ChannelHeaderComponent {
    * @param service
    * @param configs
    */
-  constructor(public service: ChannelsV2Service, configs: ConfigsService) {
+  constructor(
+    private service: ChannelsV2Service,
+    private bannerService: ChannelBannerService,
+    private configs: ConfigsService
+  ) {
     this.cdnUrl = configs.get('cdn_url');
   }
 
@@ -35,8 +40,10 @@ export class ChannelHeaderComponent {
       return {};
     }
 
+    const fallbackBanner = this.bannerService.getSeededBannerUrl(channel);
+
     return {
-      backgroundImage: `url(${this.cdnUrl}${bannerUrl})`,
+      backgroundImage: `url(${this.cdnUrl}${bannerUrl}), url(${fallbackBanner})`,
     };
   }
 }

@@ -172,6 +172,7 @@ import { OnboardingReminderComponent } from './components/onboarding-reminder/re
 import { FeedFilterComponent } from './components/feed-filter/feed-filter.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { AccordionPaneComponent } from './components/accordion/accordion-pane.component';
+import { ChannelBannerService } from '../common/services/channel-banner.service';
 
 const routes: Routes = [
   {
@@ -521,6 +522,7 @@ const routes: Routes = [
     TagsService,
     ApiService,
     AttachmentApiService,
+    ChannelBannerService,
   ],
   entryComponents: [
     NotificationsToasterComponent,
