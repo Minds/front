@@ -330,7 +330,7 @@
   <div
     class="item item-image allow-select m-activity--image"
     [ngClass]="{ 'm-mature-content': attachment.shouldBeBlurred(activity), 'm-mature-content-shown': attachment.isForcefullyShown(activity) }"
-    *ngIf="activity.thumbnail_src && !activity.perma_url"
+    *ngIf="activity.thumbnail_src && !activity.perma_url && activity.custom_type !== 'batch'"
   >
     <div class="m-mature-overlay" (click)="toggleMatureVisibility()">
       <span class="m-mature-overlay-note">

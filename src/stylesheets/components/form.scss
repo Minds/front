@@ -510,6 +510,7 @@
   ////////////////////////////////////////////
   [class*='m-form__customInputWrapper'] {
     display: block;
+    box-sizing: border-box;
     position: relative;
     padding-left: 35px;
     -webkit-user-select: none;

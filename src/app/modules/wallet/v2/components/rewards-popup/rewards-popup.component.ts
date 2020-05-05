@@ -51,14 +51,66 @@ export class WalletRewardsPopupComponent implements OnInit {
         this.metrics = [];
         Object.keys(dailyContributions.metrics).forEach(key => {
           const metric = dailyContributions.metrics[key];
-          metric.key = key;
           metric.id = key;
+          metric.label = this.getLabel(metric);
           this.metrics.push(metric);
         });
       }
     } catch (e) {}
     this.inProgress = false;
     this.detectChanges();
+  }
+
+  getLabel(metric) {
+    const metricLabels: any = {
+      comments: {
+        plural: 'comments',
+        single: 'comment',
+      },
+      reminds: {
+        plural: 'reminds',
+        single: 'remind',
+      },
+      votes: {
+        plural: 'votes',
+        single: 'vote',
+      },
+      subscribers: {
+        plural: 'subscribers',
+        single: 'subscriber',
+      },
+      referrals: {
+        plural: 'referrals',
+        single: 'referral',
+      },
+      referrals_welcome: {
+        plural: 'referrals',
+        single: 'referral',
+      },
+      checkins: {
+        plural: 'check-ins',
+        single: 'check-in',
+      },
+      jury_duty: {
+        plural: 'jury duties',
+        single: 'jury duty',
+      },
+      onchain_tx: {
+        plural: 'on-chain transactions',
+        single: 'on-chain transaction',
+      },
+    };
+
+    if (metricLabels[metric.id]) {
+      const labelObj = metricLabels[metric.id];
+      if (metric.amount === '1') {
+        return labelObj.single;
+      } else {
+        return labelObj.plural;
+      }
+    } else {
+      return metric.id;
+    }
   }
   detectChanges() {
     if (!(this.cd as ViewRef).destroyed) {

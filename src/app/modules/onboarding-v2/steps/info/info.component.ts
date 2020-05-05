@@ -172,7 +172,7 @@ export class InfoStepComponent implements OnInit, OnDestroy {
 
   selectedDateChange(date: string) {
     this.date = date;
-    this.dateOfBirthChanged = true;
+    this.dateOfBirthChanged = date !== '';
 
     this.validate();
   }
