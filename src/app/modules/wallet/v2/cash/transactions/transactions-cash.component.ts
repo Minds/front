@@ -143,8 +143,8 @@ export class WalletTransactionsCashComponent implements OnInit {
             this.runningTotal = formattedTx.amount;
           }
           this.runningTotal -= this.previousTxAmount;
-          this.previousTxAmount = formattedTx.amount;
         }
+        this.previousTxAmount = formattedTx.amount;
       } else {
         this.runningTotal = 0;
         this.previousTxAmount = 0;
