@@ -22,7 +22,7 @@ export class ChannelHeaderComponent {
    * @param configs
    */
   constructor(
-    private service: ChannelsV2Service,
+    public service: ChannelsV2Service,
     private bannerService: ChannelBannerService,
     private configs: ConfigsService
   ) {
