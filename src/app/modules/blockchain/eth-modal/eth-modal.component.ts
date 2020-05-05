@@ -76,18 +76,6 @@ export class BlockchainEthModalComponent implements OnInit {
     this.error = '';
     this.detectChanges();
 
-    if (!this.session.isLoggedIn()) {
-      this.error = 'You must be signed up to buy ETH.';
-      this.detectChanges();
-      return;
-    }
-
-    if (!this.session.getLoggedInUser().rewards) {
-      this.error = 'You must be signed up for a wallet to buy ETH.';
-      this.detectChanges();
-      return;
-    }
-
     if (!this.hasMetamask) {
       this.error = 'You need to install metamask';
       this.detectChanges();

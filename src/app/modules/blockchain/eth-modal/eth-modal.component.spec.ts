@@ -73,14 +73,9 @@ describe('BlockchainEthModalComponent', () => {
     comp = fixture.componentInstance;
 
     this.hasMetamask = true;
-
     spyOn(comp.session, 'getLoggedInUser').and.returnValue({
-      eth_wallet: '0x00000000000000',
-      rewards: true,
+      eth_wallet: '0x',
     });
-
-    spyOn(comp.session, 'isLoggedIn').and.returnValue(true);
-
     fixture.detectChanges();
     if (fixture.isStable()) {
       done();
@@ -106,7 +101,7 @@ describe('BlockchainEthModalComponent', () => {
     expect(sendWyreMock.redirect).toHaveBeenCalledWith({
       paymentMethod: 'debit-card',
       accountId: 'AC_123',
-      dest: 'ethereum:0x00000000000000',
+      dest: 'ethereum:0x',
       destCurrency: 'ETH',
       sourceAmount: '40',
       redirectUrl: 'https://www.minds.com/token',
