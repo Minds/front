@@ -20,7 +20,7 @@ m-settingsV2 {
     display: flex;
     font-weight: 300;
     .m-settingsV2__mainMenu {
-      flex: 0 1 269px;
+      flex: 0 1 $layoutRightFullWidth;
       @media screen and (max-width: $layoutMax2ColWidth) {
         display: none;
         flex-grow: 1;
