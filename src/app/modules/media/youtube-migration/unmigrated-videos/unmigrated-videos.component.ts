@@ -87,7 +87,7 @@ export class YoutubeMigrationUnmigratedVideosComponent
       // if initial load length is less than response limit
       if (refresh && response.videos.length < limit) {
         this.fewerResultsThanLimit = true;
-        this.moreData = false;
+        //this.moreData = false;
       } else {
         this.fewerResultsThanLimit = false;
       }
