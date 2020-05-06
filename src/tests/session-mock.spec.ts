@@ -6,11 +6,14 @@ import { EventEmitter } from '@angular/core';
 export let sessionMock = new (function() {
   this.user = {
     guid: '1000',
+    type: 'user',
     admin: true,
     is_admin: true,
     plus: false,
+    pro: false,
     disabled_boost: false,
     username: 'test',
+    name: 'test',
     show_boosts: true,
     hide_share_buttons: false,
   };

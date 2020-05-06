@@ -10,7 +10,7 @@ import { Session } from '../../../../services/session';
 import { ThemeService } from '../../../../common/services/theme.service';
 import { Subscription } from 'rxjs';
 import { Navigation as NavigationService } from '../../../../services/navigation';
-import { RouterLink } from '@angular/router';
+import { MindsUser } from '../../../../interfaces/entities';
 
 @Component({
   selector: 'm-usermenu__v3',
@@ -23,7 +23,6 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
 
   isOpen: boolean = false;
 
-  minds = window.Minds;
   isDark: boolean = false;
   themeSubscription: Subscription;
 
@@ -41,45 +40,44 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
   maxFooterLinks = 5;
 
   constructor(
-    public navigation: NavigationService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
     private themeService: ThemeService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.session.isLoggedIn(() => this.detectChanges());
     this.themeSubscription = this.themeService.isDark$.subscribe(
       isDark => (this.isDark = isDark)
     );
   }
 
-  getCurrentUser() {
+  getCurrentUser(): MindsUser {
     return this.session.getLoggedInUser();
   }
 
-  isAdmin() {
+  isAdmin(): boolean {
     return this.session.isAdmin();
   }
 
-  toggleMenu() {
+  toggleMenu(): void {
     this.isOpen = !this.isOpen;
   }
 
-  closeMenu() {
+  closeMenu(): void {
     this.isOpen = false;
   }
 
-  detectChanges() {
+  detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
 
-  toggleTheme() {
+  toggleTheme(): void {
     this.themeService.toggleUserThemePreference();
   }
 
-  toggleFooterLinks() {
+  toggleFooterLinks(): void {
     if (this.maxFooterLinks === 5) {
       this.maxFooterLinks = Infinity;
     } else {
@@ -87,7 +85,7 @@ export class UserMenuV3Component implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.themeSubscription.unsubscribe();
   }
 }
