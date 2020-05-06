@@ -29,6 +29,8 @@ import { TagsService } from '../../../common/services/tags.service';
 @Component({
   moduleId: module.id,
   selector: 'minds-newsfeed-poster',
+  inputs: ['_container_guid: containerGuid', 'accessId', 'message'],
+  outputs: ['load'],
   providers: [AttachmentService],
   templateUrl: 'poster.component.html',
 })

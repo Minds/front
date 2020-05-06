@@ -79,7 +79,6 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     protected activityService: ActivityService,
     private clientMetaService: ClientMetaService,
-    private featuresService: FeaturesService,
     private permissionsService: PermissionsService,
     private metaService: MetaService,
     configs: ConfigsService,

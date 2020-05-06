@@ -70,10 +70,11 @@ export class SubscribeButton {
   _listener: Function;
   showModal: boolean = false;
   @Output('subscribed') onSubscribed: EventEmitter<any> = new EventEmitter();
-
   @HostBinding('class.m-subscribeButton--iconsOnly')
   @Input()
   iconsOnly: boolean = false;
+  @Input()
+  request = false;
 
   constructor(
     public session: Session,
