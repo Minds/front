@@ -13,6 +13,4 @@ export class BuyTokensComponent {
   constructor(protected router: Router, configs: ConfigsService) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
-
-  onPurchaseComplete(purchase: any) {}
 }

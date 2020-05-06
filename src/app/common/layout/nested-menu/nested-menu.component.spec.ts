@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NestedMenuComponent } from './nested-menu.component';
-import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 describe('NestedMenuComponent', () => {
   let component: NestedMenuComponent;
@@ -23,5 +23,52 @@ describe('NestedMenuComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should not show a menu item if shouldShow resolves to false', () => {
+    component.menus = [
+      {
+        header: {
+          label: 'Test',
+          id: 'test',
+        },
+        items: [
+          {
+            label: 'Test item',
+            id: 'test-item',
+            shouldShow: () => true,
+          },
+        ],
+      },
+    ];
+
+    fixture.detectChanges();
+
+    expect(
+      fixture.debugElement.query(By.css('.m-nestedMenu__itemWrapper'))
+        .nativeElement.textContent
+    ).toContain('Test item');
+
+    component.menus = [
+      {
+        header: {
+          label: 'Test',
+          id: 'test',
+        },
+        items: [
+          {
+            label: 'Test item',
+            id: 'test-item',
+            shouldShow: () => false,
+          },
+        ],
+      },
+    ];
+
+    fixture.detectChanges();
+    //
+    expect(
+      fixture.debugElement.query(By.css('.m-nestedMenu__itemWrapper'))
+    ).toBeNull();
   });
 });

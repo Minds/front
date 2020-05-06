@@ -26,12 +26,22 @@
     </li>
 
     <li
-      class="m-dropdownList__item m-userMenuDropdown__item"
+      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdownItem__upgrade"
+      *ngIf="getCurrentUser() && !getCurrentUser().pro"
+      (click)="closeMenu()"
+    >
+      <a routerLink="/upgrades" i18n>
+        Upgrade
+      </a>
+    </li>
+
+    <li
+      class="m-dropdownList__item m-userMenuDropdown__item m-userMenuDropdownItem__buyTokens"
       *ngIf="getCurrentUser()"
       (click)="closeMenu()"
     >
-      <a routerLink="/upgrades">
-        Upgrade
+      <a routerLink="/token" i18n>
+        Buy tokens
       </a>
     </li>
 

@@ -82,9 +82,20 @@ export class SettingsV2Component implements OnInit {
           label: 'Account Upgrade',
           id: 'account-upgrade',
         },
+        shouldShow: this.shouldShowUpgradesMenu.bind(this),
         items: [
-          { label: 'Upgrade to Pro', id: 'upgrade-to-pro', route: '/pro' },
-          { label: 'Upgrade to Plus', id: 'upgrade-to-plus', route: '/plus' },
+          {
+            label: 'Upgrade to Pro',
+            id: 'upgrade-to-pro',
+            route: '/pro',
+            shouldShow: this.shouldShowProMenuItem.bind(this),
+          },
+          {
+            label: 'Upgrade to Plus',
+            id: 'upgrade-to-plus',
+            route: '/plus',
+            shouldShow: this.shouldShowPlusMenuItem.bind(this),
+          },
         ],
       },
     ],
@@ -324,5 +335,17 @@ export class SettingsV2Component implements OnInit {
   // to the relevant secondary menu
   goBack(): void {
     this.router.navigate(['../'], { relativeTo: this.route.firstChild });
+  }
+
+  shouldShowUpgradesMenu(): boolean {
+    return this.shouldShowPlusMenuItem() || this.shouldShowProMenuItem();
+  }
+
+  shouldShowProMenuItem(): boolean {
+    return !this.session.getLoggedInUser().pro;
+  }
+
+  shouldShowPlusMenuItem(): boolean {
+    return !this.session.getLoggedInUser().plus;
   }
 }
