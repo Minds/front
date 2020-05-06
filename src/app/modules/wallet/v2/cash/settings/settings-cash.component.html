@@ -29,5 +29,12 @@
     <p *ngIf="view === 'error'" class="m-walletTertiaryText--error">
       {{ error }}
     </p>
+    <p *ngIf="view === 'nsfw-error'">
+      Sorry, NSFW (not safe for work) channels are unable to onboard to Cash due
+      to
+      <a href="https://stripe.com/connect-account/legal" targer="_blank"
+        >Stripe's Terms of Service</a
+      >. You may still use Tokens, ETH and BTC for payments.
+    </p>
   </ng-container>
 </div>
