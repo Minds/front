@@ -91,6 +91,10 @@ export class WalletSettingsCashComponent implements OnInit, AfterViewInit {
       !this.cashWallet.stripeDetails.hasAccount
     ) {
       this.view = 'onboarding';
+
+      if (this.session.getLoggedInUser().nsfw.length > 0) {
+        this.view = 'nsfw-error';
+      }
     } else {
       this.inProgress = true;
       this.error = '';

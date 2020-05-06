@@ -20,7 +20,7 @@ m-settingsV2 {
     display: flex;
     font-weight: 300;
     .m-settingsV2__mainMenu {
-      flex: 0 1 269px;
+      flex: 0 1 $layoutRightFullWidth;
       @media screen and (max-width: $layoutMax2ColWidth) {
         display: none;
         flex-grow: 1;
@@ -72,14 +72,18 @@ m-settingsV2 {
     .m-settingsV2__headerWrapper {
       display: flex;
       flex-flow: row nowrap;
-      margin: 0 71px 0 35px;
+      align-items: center;
+      margin: 0 71px 0 -35px;
       font-size: 24px;
       line-height: 32px;
       font-weight: 400;
+      box-sizing: border-box;
+      width: 100%;
 
       @media screen and (max-width: $layoutMax2ColWidth) {
         flex-flow: column nowrap;
-        margin: 0 24px;
+        margin: 0;
+        align-items: flex-start;
       }
 
       .m-settingsV2__backButton {
@@ -122,9 +126,13 @@ m-settingsV2 {
           }
         }
       }
-      .m-settingsV2__headerLabel {
-        flex: 1 0 auto;
-      }
+    }
+    .m-settingsV2__headerLabel {
+      flex: 1 0 auto;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 400;
+      width: 100%;
     }
     .m-settingsV2__subheader {
       font-size: 18px;

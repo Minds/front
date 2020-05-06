@@ -1,7 +1,7 @@
 <div *ngIf="inProgress" class="m-wallet__spinner">
   <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
 </div>
-<div class="m-walletCashBankForm">
+<div class="m-walletCashBankForm" *ngIf="form">
   <!-- -------------------------------------------- -->
   <!--- FORM - BANK ACCOUNT IS NOT YET SET UP -------->
   <!--- OR IS BEING UPDATED-------- ------------------>
@@ -32,7 +32,7 @@
             data-minds="country"
             [allowed]="allowedCountries"
             [country]="country.value"
-            (countryChange)="country.setValue($event)"
+            (countryChange)="countryChange($event)"
           ></minds-country-input>
         </div>
       </div>

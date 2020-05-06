@@ -23,8 +23,20 @@ m-body {
   }
 }
 
-$layoutMax3ColWidth: 1172px;
-$layoutMin3ColWidth: 1000px;
+$layoutTotalPadding: 40px;
+
+// Pane sizes
+$layoutSidebarFullWidth: 250px;
+$layoutSidebarSmallWidth: 70px;
+$layoutMainFullWidth: 620px;
+$layoutRightFullWidth: 310px;
+
+// 3 columns at full width
+$layoutMax3ColWidth: $layoutMainFullWidth + $layoutSidebarFullWidth +
+  $layoutRightFullWidth + $layoutTotalPadding; // 1172px
+// 3 columns at reduced left sidebar
+$layoutMin3ColWidth: $layoutMainFullWidth + $layoutSidebarSmallWidth +
+  $layoutRightFullWidth + $layoutTotalPadding; // 1000px;
 
 $layoutMax2ColWidth: $layoutMin3ColWidth - 1px;
 $layoutMax2ColFixedWidth: 700px; // This value is when the main column will start to shrink
@@ -32,18 +44,12 @@ $layoutMin2ColWidth: 480px;
 
 $layoutMax1ColWidth: $layoutMin2ColWidth - 1px;
 $layoutMin1ColWidth: 280px;
-$layoutTotalPadding: 16px * 2;
-
-$layoutSidebarFullWidth: 250px;
-$layoutSidebarSmallWidth: 70px;
-$layoutMainFullWidth: 580px;
-$layoutRightFullWidth: 310px;
 
 .m-pageLayout__container {
   display: flex;
   flex-direction: row;
   margin: auto;
-  padding: 0 $minds-padding * 2;
+  padding: 0 $layoutTotalPadding;
   min-width: $layoutMin1ColWidth;
   max-width: $layoutMax3ColWidth - $layoutTotalPadding;
   min-height: 100%;
@@ -51,6 +57,7 @@ $layoutRightFullWidth: 310px;
 
   .m-pageLayout__container {
     padding: 0;
+    width: 100%;
   }
 
   @media screen and (min-width: $layoutMin3ColWidth) and (max-width: $layoutMax3ColWidth) {
@@ -65,7 +72,7 @@ $layoutRightFullWidth: 310px;
   @media screen and (min-width: $layoutMin2ColWidth) and (max-width: $layoutMax2ColFixedWidth) {
     min-width: 0;
     width: auto;
-    padding-right: $minds-padding;
+    padding-right: $layoutTotalPadding / 4;
   }
   @media screen and (max-width: $layoutMin2ColWidth) {
     m-body & {

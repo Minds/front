@@ -1,0 +1,17 @@
+<div class="m-youtubeMigration__transferStatusWrapper" *ngIf="init">
+  <div class="m-youtubeMigration__transferStats">
+    <div>
+      <span>{{ dailyLimit }}</span
+      >/day limit ·
+    </div>
+    <div>
+      <div>
+        <span>{{ queuedCount }}</span> queued ·
+      </div>
+      <div>
+        <span>{{ transferringCount }}</span> transferring
+      </div>
+    </div>
+  </div>
+  <a (click)="transferAllVideos()">Transfer all videos</a>
+</div>

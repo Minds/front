@@ -82,7 +82,10 @@ export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
 /**
  * Monetization value type
  */
-export type MonetizationSubjectValue = { type: string; min: number } | null;
+export type MonetizationSubjectValue = {
+  type: 'tokens' | 'money';
+  min: number;
+} | null;
 
 /**
  * Default monetization value
@@ -402,10 +405,7 @@ export class ComposerService implements OnDestroy {
           }
         ),
 
-        tap(() => this.inProgress$.next(null)),
-
-        // Update the preview
-        tap((attachment: Attachment) => this.setPreview(attachment))
+        tap(() => this.inProgress$.next(null))
 
         // Value will be either an Attachment interface object or null
       ),
@@ -689,6 +689,8 @@ export class ComposerService implements OnDestroy {
     }
 
     this.attachment$.next(null);
+    this.videoPoster$.next(null);
+    this.title$.next(null);
   }
 
   /**

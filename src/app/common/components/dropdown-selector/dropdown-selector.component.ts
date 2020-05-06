@@ -29,9 +29,12 @@ export class DropdownSelectorComponent implements OnInit {
   constructor(public session: Session) {}
 
   ngOnInit() {
-    this.selectedOption =
-      this.filter.options.find(option => option.selected === true) ||
-      this.filter.options[0];
+    this.selectedOption = this.filter.options[0];
+    if (this.filter.options.find(opt => opt.selected === true)) {
+      this.selectedOption = this.filter.options.find(
+        opt => opt.selected === true
+      );
+    }
   }
 
   updateFilter(option: Option) {

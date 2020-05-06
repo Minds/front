@@ -30,19 +30,19 @@ m-date__dropdowns {
       }
     }
 
-    // month
+    // year
     &:nth-child(1) {
+      min-width: 77px;
+    }
+
+    // month
+    &:nth-child(2) {
       min-width: 120px;
     }
 
     // day
-    &:nth-child(2) {
-      min-width: 59px;
-    }
-
-    // year
     &:nth-child(3) {
-      min-width: 77px;
+      min-width: 59px;
     }
   }
 

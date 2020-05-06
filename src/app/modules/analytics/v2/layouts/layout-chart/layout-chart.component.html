@@ -1,9 +1,10 @@
-<!-- <div class="m-analytics__spinnerContainer" *ngIf="loading$ | async">
-  <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-</div> -->
 <m-shadowboxLayout
   *ngIf="selectedMetric && selectedMetric.visualisation"
   [hasHeader]="selectedMetric.visualisation.type === 'chart'"
+  [ngClass]="{
+    'm-shadowboxLayout__noMetricTabs':
+      selectedMetric.visualisation.type === 'table'
+  }"
 >
   <m-shadowboxHeader__tabs
     class="m-shadowboxLayout__header"

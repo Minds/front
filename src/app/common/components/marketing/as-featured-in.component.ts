@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ConfigsService } from '../../services/configs.service';
 
 @Component({
@@ -7,6 +7,8 @@ import { ConfigsService } from '../../services/configs.service';
   templateUrl: 'as-featured-in.component.html',
 })
 export class MarketingAsFeaturedInComponent {
+  @Input() inThePress: boolean = false;
+
   readonly cdnAssetsUrl: string;
 
   constructor(private configs: ConfigsService) {

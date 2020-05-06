@@ -1,0 +1,33 @@
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a routerLink="../user" routerLinkActive="m-tabs__tab--selected"
+      >Channels</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a routerLink="../group" routerLinkActive="m-tabs__tab--selected">Groups</a>
+  </div>
+</div>
+
+<div class="m-goBack">
+  <a routerLink="/discovery" [queryParams]="{ reload: false }">
+    <i class="material-icons">arrow_back</i><span>Back</span>
+  </a>
+</div>
+
+<div class="m-discoveryFeeds__feed">
+  <m-discovery__feedItem
+    *ngFor="let entity of entities$ | async"
+    [entity]="entity"
+    [allowAutoplayOnScroll]="true"
+    [openComments]="false"
+  ></m-discovery__feedItem>
+
+  <infinite-scroll
+    distance="25%"
+    (load)="loadMore()"
+    [moreData]="hasMoreData$ | async"
+    [inProgress]="inProgress$ | async"
+  >
+  </infinite-scroll>
+</div>

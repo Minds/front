@@ -219,8 +219,10 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
           if (i !== 0 || !refresh) {
             this.runningTotal -= this.previousTxAmount;
-            this.previousTxAmount = isWithdrawal ? 0 : txAmount;
           }
+
+          this.previousTxAmount = isWithdrawal ? 0 : txAmount;
+
           formattedTx.runningTotal = this.formatAmount(this.runningTotal);
 
           formattedTx.delta = this.getDelta(tx);

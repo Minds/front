@@ -282,6 +282,6 @@ export class MediaViewComponent implements OnInit, OnDestroy {
           `@${this.entity.ownerObj.username}'s ${this.entity.subtype}`
       )
       .setDescription(this.entity.description)
-      .setOgImage(this.entity.thumbnail);
+      .setOgImage(this.entity.thumbnail_src);
   }
 }

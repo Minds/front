@@ -64,10 +64,11 @@ export class MindsVideoPlayerComponent
      */
     this.useEmptySource = value;
 
-    if (value) {
-      this.autoplayService.registerPlayer(this);
-    } else {
-      this.autoplayService.unregisterPlayer(this);
+    /* this only gets called if we happen to change the value after the
+     * component has already been initialised
+     */
+    if (this.init) {
+      this.togglePlayerRegistration();
     }
   }
 
@@ -120,6 +121,11 @@ export class MindsVideoPlayerComponent
       'fullscreen',
     ],
   };
+
+  /**
+   * Flag that gets set to true in ngAfterViewInit
+   */
+  protected init: boolean = false;
 
   onReadySubscription: Subscription = this.service.onReady$.subscribe(() => {
     this.cd.markForCheck();
@@ -196,6 +202,8 @@ export class MindsVideoPlayerComponent
   }
 
   ngAfterViewInit() {
+    this.togglePlayerRegistration();
+
     this.setAutoplay(this.autoplay);
   }
 
@@ -373,6 +381,14 @@ export class MindsVideoPlayerComponent
   onPlay(): void {
     if (!this.autoplaying) {
       this.autoplayService.userPlay(this);
+    }
+  }
+
+  private togglePlayerRegistration() {
+    if (this.allowAutoplayOnScroll) {
+      this.autoplayService.registerPlayer(this);
+    } else {
+      this.autoplayService.unregisterPlayer(this);
     }
   }
 }

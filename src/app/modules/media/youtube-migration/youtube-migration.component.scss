@@ -1,0 +1,32 @@
+m-youtubeMigration {
+  .m-youtubeMigration__notice {
+    display: flex;
+    justify-content: center;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+    p {
+      margin: 57px 0;
+    }
+  }
+  .m-youtubeMigration__channelTitle {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    i.ion-icon {
+      color: #ff0000;
+      font-size: 42px;
+      margin-right: 18px;
+    }
+    > span {
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      max-width: calc(100% - 60px);
+    }
+  }
+  .m-settingsV2__spinner {
+    margin: 60px 0 !important;
+  }
+}

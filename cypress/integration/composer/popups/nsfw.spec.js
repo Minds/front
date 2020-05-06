@@ -2,14 +2,15 @@ context('Composer NSFW Popup', () => {
   const showComposer = () => {
     const composerTrigger = 'm-composer .m-composer__trigger';
 
+    cy.overrideFeatureFlags({ 'activity-composer': true });
+
     cy.visit('/newsfeed/subscriptions');
 
     cy.get(composerTrigger)
       .should('be.visible')
       .click();
 
-    cy.get(composerToolbar)
-      .should('be.visible');
+    cy.get(composerToolbar).should('be.visible');
   };
 
   before(() => {
@@ -41,20 +42,15 @@ context('Composer NSFW Popup', () => {
   //
 
   it('should show and be able to interact with the NSFW popup', () => {
-    cy.get(nsfwButton)
-      .click();
+    cy.get(nsfwButton).click();
 
-    cy.get(nsfwPopup)
-      .should('be.visible');
+    cy.get(nsfwPopup).should('be.visible');
 
-    cy.get(nsfwSaveButton)
-      .click();
+    cy.get(nsfwSaveButton).click();
 
-    cy.get(nsfwPopup)
-      .should('not.be.visible');
+    cy.get(nsfwPopup).should('not.be.visible');
 
-    cy.get(nsfwButton)
-      .click();
+    cy.get(nsfwButton).click();
 
     cy.get(`${nsfwPopup} .m-composerNsfw__list .m-composerNsfw__item:eq(1)`)
       .click()
@@ -64,27 +60,23 @@ context('Composer NSFW Popup', () => {
       .click()
       .should('have.class', 'm-composerNsfw__item--active');
 
-    cy.get(nsfwSaveButton)
-      .click();
+    cy.get(nsfwSaveButton).click();
 
-    cy.get(nsfwPopup)
-      .should('not.be.visible');
+    cy.get(nsfwPopup).should('not.be.visible');
 
-    cy.get(nsfwButton)
-      .click();
+    cy.get(nsfwButton).click();
 
-    cy.get(nsfwPopup)
-      .should('be.visible');
+    cy.get(nsfwPopup).should('be.visible');
 
     cy.get(`${nsfwPopup} .m-composerNsfw__list .m-composerNsfw__item:eq(1)`)
       .should('have.class', 'm-composerNsfw__item--active')
       .click()
       .should('not.have.class', 'm-composerNsfw__item--active');
 
-    cy.get(`${nsfwPopup} .m-composerNsfw__list .m-composerNsfw__item:eq(3)`)
-      .should('have.class', 'm-composerNsfw__item--active');
+    cy.get(
+      `${nsfwPopup} .m-composerNsfw__list .m-composerNsfw__item:eq(3)`
+    ).should('have.class', 'm-composerNsfw__item--active');
 
-    cy.get(nsfwSaveButton)
-      .click();
+    cy.get(nsfwSaveButton).click();
   });
 });

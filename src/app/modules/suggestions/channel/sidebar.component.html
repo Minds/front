@@ -20,33 +20,59 @@
     *ngIf="(suggestions$ | async).length"
   >
     <li
-      *ngFor="let suggestion of suggestions$ | async"
-      class="m-suggestionsSidebarList__item"
+      *ngFor="let suggestion of suggestions$ | async | slice: 0:displayLimit"
+      class="m-suggestionsSidebarList__item m-suggestionsSidebarList__item--{{
+        suggestion.entity.type
+      }}"
     >
-      <a [routerLink]="['/', suggestion.entity.username]">
-        <div
-          class="m-suggestionsSidebarListItem__avatar"
-          [style.background-image]="
-            'url(' + cdnUrl + 'icon/' + suggestion.entity.guid + ')'
-          "
-        ></div>
-        <div class="m-suggestionsSidebarListItem__body">
-          <div [title]="suggestion.entity.briefdescription">
-            <h4>{{ suggestion.entity.username }}</h4>
-            <span>{{ suggestion.entity.briefdescription }}</span>
-          </div>
-          <div class="m-layout__spacer"></div>
-          <i
-            class="material-icons m-suggestionsSidebarListItem__passBtn"
-            (click)="pass(suggestion, $event)"
-            >close</i
-          >
-          <minds-button-subscribe
-            [user]="suggestion.entity"
-            (subscribed)="remove(suggestion)"
-          ></minds-button-subscribe>
-        </div>
-      </a>
+      <ng-container [ngSwitch]="suggestion.entity.type">
+        <ng-template ngSwitchCase="user">
+          <a [routerLink]="['/', suggestion.entity.username]">
+            <div
+              class="m-suggestionsSidebarListItem__avatar"
+              [style.background-image]="
+                'url(' + cdnUrl + 'icon/' + suggestion.entity.guid + ')'
+              "
+            ></div>
+            <div class="m-suggestionsSidebarListItem__body">
+              <div [title]="suggestion.entity.briefdescription">
+                <h4>{{ suggestion.entity.username }}</h4>
+                <span>{{ suggestion.entity.briefdescription }}</span>
+              </div>
+              <div class="m-layout__spacer"></div>
+              <i
+                class="material-icons m-suggestionsSidebarListItem__passBtn"
+                (click)="pass(suggestion, $event)"
+                >close</i
+              >
+              <minds-button-subscribe
+                [user]="suggestion.entity"
+                (subscribed)="remove(suggestion)"
+              ></minds-button-subscribe>
+            </div>
+          </a>
+        </ng-template>
+        <ng-template ngSwitchCase="group">
+          <a [routerLink]="['/groups/profile', suggestion.entity.guid]">
+            <div
+              class="m-suggestionsSidebarListItem__avatar"
+              [style.background-image]="
+                'url(' +
+                cdnUrl +
+                'fs/v1/avatars/' +
+                suggestion.entity.guid +
+                ')'
+              "
+            ></div>
+            <div class="m-suggestionsSidebarListItem__body">
+              <div [title]="suggestion.entity.briefdescription">
+                <h4>{{ suggestion.entity.name }}</h4>
+                <span>{{ suggestion.entity['members:count'] }} members</span>
+              </div>
+            </div>
+          </a>
+        </ng-template>
+      </ng-container>
     </li>
   </ul>
   <div
@@ -59,10 +85,16 @@
 <!-- Outlets -->
 
 <ng-container *mIfFeature="'navigation'; else legacyNavigation">
-  <m-sidebarWidget title="Suggested Channels">
+  <m-sidebarWidget [title]="title">
     <div class="m-sidebarWidget__body">
       <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
     </div>
+    <a
+      class="m-sidebarWidget__seeMore"
+      (click)="seeMore()"
+      *ngIf="!(inProgress$ | async)"
+      >See more</a
+    >
   </m-sidebarWidget>
 </ng-container>
 

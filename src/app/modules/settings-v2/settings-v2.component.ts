@@ -25,11 +25,13 @@ import { Subscription } from 'rxjs';
 export class SettingsV2Component implements OnInit {
   init: boolean = false;
   secondaryPaneIsMenu: boolean = false;
+  standardHeader: boolean = true;
   menuHeaderId: string = 'account';
   routeData: any;
   newNavigation: boolean = false;
   user: string | null = null;
   onMainNav: boolean = false;
+  hasYoutubeFeature: boolean = false;
 
   protected paramMap$: Subscription;
 
@@ -80,9 +82,20 @@ export class SettingsV2Component implements OnInit {
           label: 'Account Upgrade',
           id: 'account-upgrade',
         },
+        shouldShow: this.shouldShowUpgradesMenu.bind(this),
         items: [
-          { label: 'Upgrade to Pro', id: 'upgrade-to-pro', route: '/pro' },
-          { label: 'Upgrade to Plus', id: 'upgrade-to-plus', route: '/plus' },
+          {
+            label: 'Upgrade to Pro',
+            id: 'upgrade-to-pro',
+            route: '/pro',
+            shouldShow: this.shouldShowProMenuItem.bind(this),
+          },
+          {
+            label: 'Upgrade to Plus',
+            id: 'upgrade-to-plus',
+            route: '/plus',
+            shouldShow: this.shouldShowPlusMenuItem.bind(this),
+          },
         ],
       },
     ],
@@ -186,6 +199,7 @@ export class SettingsV2Component implements OnInit {
     public featuresService: FeaturesService
   ) {
     this.newNavigation = this.featuresService.has('navigation');
+    this.hasYoutubeFeature = this.featuresService.has('yt-importer');
   }
 
   ngOnInit() {
@@ -221,6 +235,18 @@ export class SettingsV2Component implements OnInit {
       .subscribe(event => {
         this.setSecondaryPane();
       });
+
+    // Conditionally show youtube migration menu item
+    if (this.hasYoutubeFeature) {
+      const youtubeMenuItem = {
+        header: {
+          label: 'Content Migration',
+          id: 'content-migration',
+        },
+        items: [{ label: 'Youtube', id: 'youtube-migration' }],
+      };
+      this.secondaryMenus.other.splice(2, 0, youtubeMenuItem);
+    }
 
     this.setProRoutes();
     this.setSecondaryPane();
@@ -261,8 +287,16 @@ export class SettingsV2Component implements OnInit {
     this.secondaryPaneIsMenu = false;
     let snapshot = this.route.snapshot;
     if (snapshot.firstChild && snapshot.firstChild.data['title']) {
+      // Is not a menu
       snapshot = snapshot.firstChild;
+
+      if ('standardHeader' in snapshot.data) {
+        this.standardHeader = snapshot.data['standardHeader'];
+      } else {
+        this.standardHeader = true;
+      }
     } else {
+      // Is a menu
       if (snapshot.data['isMenu']) {
         this.secondaryPaneIsMenu = snapshot.data['isMenu'];
       }
@@ -301,5 +335,17 @@ export class SettingsV2Component implements OnInit {
   // to the relevant secondary menu
   goBack(): void {
     this.router.navigate(['../'], { relativeTo: this.route.firstChild });
+  }
+
+  shouldShowUpgradesMenu(): boolean {
+    return this.shouldShowPlusMenuItem() || this.shouldShowProMenuItem();
+  }
+
+  shouldShowProMenuItem(): boolean {
+    return !this.session.getLoggedInUser().pro;
+  }
+
+  shouldShowPlusMenuItem(): boolean {
+    return !this.session.getLoggedInUser().plus;
   }
 }

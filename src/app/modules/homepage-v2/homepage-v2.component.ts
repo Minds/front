@@ -57,7 +57,8 @@ export class HomepageV2Component implements OnInit {
       .setTitle(`Minds - ${this.headline}`, false)
       .setDescription(this.description)
       .setCanonicalUrl('/')
-      .setOgUrl('/');
+      .setOgUrl('/')
+      .setOgImage('/assets/logos/placeholder.jpg');
 
     this.navigationService.setVisible(false);
     this.topbarService.toggleMarketingPages(true, false, false);
