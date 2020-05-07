@@ -8,20 +8,23 @@
         <i class="material-icons">arrow_back</i><span>Back</span>
       </a>
     </div>
-    <div class="m-settingsV2__headerLabel" *ngIf="!this.isConnected">
+    <div class="m-settingsV2__headerLabel" *ngIf="!this.connected">
       YouTube Migration
     </div>
     <div
       class="m-settingsV2__headerLabel m-youtubeMigration__channelTitle"
-      *ngIf="this.isConnected"
+      *ngIf="this.connected && channelTitle"
     >
       <i class="ion-icon ion-social-youtube"></i><span>{{ channelTitle }}</span>
     </div>
   </div>
-  <div class="m-settingsV2__desc" *ngIf="!this.isConnected">
+  <div class="m-settingsV2__desc" *ngIf="!this.connected">
     Transferring your video content from YouTube to Minds doesn’t need to be an
     ordeal. Using our transfer tool, you can quickly and easily migrate your
     content to Minds, and increase your audience even more.
   </div>
+  <ng-container
+    *ngIf="!this.connected || (this.connected && channelTitle)"
+  ></ng-container>
   <router-outlet></router-outlet>
 </ng-container>

@@ -8,6 +8,7 @@ import {
 import {
   YoutubeMigrationService,
   YoutubeChannel,
+  YoutubeStatusCounts,
 } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
@@ -31,8 +32,11 @@ export class YoutubeMigrationTransferStatusComponent
 
   dailyLimit: number;
   statusCountsSubscription: Subscription;
-  queuedCount: number = 0;
-  transferringCount: number = 0;
+  counts: YoutubeStatusCounts = {
+    queued: 0,
+    transferring: 0,
+  };
+  transferringAll: boolean = false;
   init: boolean = false;
 
   ngOnInit() {
@@ -41,8 +45,7 @@ export class YoutubeMigrationTransferStatusComponent
 
     this.statusCountsSubscription = this.youtubeService.statusCounts$.subscribe(
       counts => {
-        this.queuedCount = counts.queued;
-        this.transferringCount = counts.transferring;
+        this.counts = counts;
         this.init = true;
         this.detectChanges();
       }
@@ -56,6 +59,8 @@ export class YoutubeMigrationTransferStatusComponent
   async transferAllVideos(): Promise<any> {
     this.youtubeService.import('all');
     this.youtubeService.getStatusCounts();
+    this.transferringAll = true;
+    this.detectChanges();
   }
 
   detectChanges() {

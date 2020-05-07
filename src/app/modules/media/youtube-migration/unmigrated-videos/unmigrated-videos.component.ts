@@ -6,6 +6,7 @@ import {
   OnDestroy,
   Injector,
   SkipSelf,
+  ViewRef,
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
@@ -150,7 +151,9 @@ export class YoutubeMigrationUnmigratedVideosComponent
   }
 
   detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 }

@@ -40,6 +40,7 @@ export class YoutubeMigrationSetupModalComponent {
           'Sorry, there was an error and your changes have not been saved.'
         );
       }
+      this.detectChanges();
     } finally {
       this.overlayModal.dismiss();
     }

@@ -156,21 +156,6 @@ export class ShadowboxHeaderComponent implements AfterViewInit {
         0
       );
     }
-    console.log('---------------');
-    console.log('direction', direction);
-    console.log(
-      'isatscroll start or end?',
-      this.isAtScrollStart,
-      this.isAtScrollEnd
-    );
-    console.log('currentscrollelft', currentScrollLeft);
-    console.log('targetscrollelft', targetScrollLeft);
-    console.log('scrollendoffset', scrollEndOffset);
-    console.log(
-      'partially completely',
-      partiallyVisibleMetricWidth,
-      completelyVisibleMetricsWidth
-    );
 
     this.container.scrollTo({
       top: 0,

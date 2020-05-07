@@ -3,6 +3,7 @@ import {
   OnInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  ViewRef,
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Router } from '@angular/router';
@@ -32,7 +33,9 @@ export class YoutubeMigrationConnectComponent {
   }
 
   detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 }
