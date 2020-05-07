@@ -1,19 +1,19 @@
 import {
-  Component,
-  OnInit,
-  OnDestroy,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
 } from '@angular/core';
 import { FormToast, FormToastService } from '../../services/form-toast.service';
 import { Subscription } from 'rxjs';
 import {
   animate,
+  keyframes,
   state,
   style,
   transition,
   trigger,
-  keyframes,
 } from '@angular/animations';
 
 @Component({
@@ -80,7 +80,7 @@ export class FormToastComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.subscription = this.service.onToast().subscribe(toast => {
       // clear toasts when an empty toast is received
       if (!toast.message) {
@@ -88,29 +88,47 @@ export class FormToastComponent implements OnInit, OnDestroy {
         return;
       }
 
+      // if all saved toasts have already been dismissed, then clean the array to prevent leaks
+      if (this.toasts.findIndex(value => !value.dismissed) === -1) {
+        this.timeoutIds = [];
+        this.toasts = [];
+      }
+
       const toastIndex = this.toasts.push(toast) - 1;
       this.detectChanges();
 
-      const toastTimeout = setTimeout(() => {
-        this.dismiss(toastIndex);
-
-        this.detectChanges();
-      }, 3400);
-
-      this.timeoutIds.push(setTimeout(() => toastTimeout));
+      this.setToastTimeout(toastIndex);
     });
   }
 
-  dismiss(toastIndex: number) {
-    this.toasts[toastIndex]['dismissed'] = true;
+  pauseTimeout(toastIndex: number): void {
+    clearTimeout(this.timeoutIds[toastIndex]);
   }
 
-  detectChanges() {
+  resumeTimeout(toastIndex: number): void {
+    this.setToastTimeout(toastIndex);
+  }
+
+  dismiss(toastIndex: number): void {
+    this.toasts[toastIndex].dismissed = true;
+  }
+
+  private setToastTimeout(toastIndex: number): void {
+    const toastTimeout: number = window.setTimeout(() => {
+      this.dismiss(toastIndex);
+
+      this.detectChanges();
+    }, 3400);
+
+    this.timeoutIds[toastIndex] = toastTimeout;
+  }
+
+  detectChanges(): void {
     this.cd.markForCheck();
     this.cd.detectChanges();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.timeoutIds.forEach(id => clearTimeout(id));
     this.subscription.unsubscribe();
   }
