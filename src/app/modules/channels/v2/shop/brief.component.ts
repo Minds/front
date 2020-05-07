@@ -1,42 +1,66 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { ChannelShopService } from './shop.service';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
-import { WireCreatorComponent } from '../../../wire/creator/creator.component';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { WireModalService } from '../../../wire/wire-modal.service';
+import {
+  SupportTier,
+  SupportTiersService,
+} from '../../../wire/v2/support-tiers.service';
+import { Subscription } from 'rxjs';
+import { MindsUser } from '../../../../interfaces/entities';
 
 @Component({
   selector: 'm-channelShop__brief',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: 'brief.component.html',
-  providers: [ChannelShopService],
+  providers: [SupportTiersService],
 })
-export class ChannelShopBriefComponent {
+export class ChannelShopBriefComponent implements OnDestroy {
   /**
-   * Constructor
-   * @param shop
-   * @param channel
-   * @param overlayModal
+   * Channel GUID subscription
+   */
+  protected channelGuidSubscription: Subscription;
+
+  /**
+   * Constructor. Set channel GUID subscription.
+   * @param service
+   * @param supportTiers
+   * @param wireModal
    */
   constructor(
-    public shop: ChannelShopService,
-    public channel: ChannelsV2Service,
-    protected overlayModal: OverlayModalService
-  ) {}
+    public service: ChannelsV2Service,
+    public supportTiers: SupportTiersService,
+    protected wireModal: WireModalService
+  ) {
+    this.channelGuidSubscription = this.service.guid$.subscribe(guid =>
+      this.supportTiers.setEntityGuid(guid)
+    );
+  }
+
+  /**
+   * Component destroy
+   */
+  ngOnDestroy(): void {
+    if (this.channelGuidSubscription) {
+      this.channelGuidSubscription.unsubscribe();
+    }
+  }
 
   /**
    * Triggers Wire modal
-   * @param type
-   * @param reward
-   * @todo Implement Pay modal when merged
+   * @param channel
+   * @param supportTier
    */
-  onEntryClick(type, reward) {
-    this.overlayModal
-      .create(WireCreatorComponent, this.channel.channel$.getValue(), {
+  async onEntryClick(channel: MindsUser, supportTier: SupportTier) {
+    const type =
+      supportTier.currency === 'usd' ? 'money' : supportTier.currency;
+
+    await this.wireModal
+      .present(channel, {
         default: {
-          min: reward.amount,
-          type: type,
+          min: supportTier.amount,
+          type,
         },
       })
-      .present();
+      .toPromise();
   }
 }

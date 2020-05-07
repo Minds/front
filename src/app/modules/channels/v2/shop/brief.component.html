@@ -1,43 +1,40 @@
 <div
-  *ngIf="shop.wireRewards$ | async as wireRewards"
+  *ngIf="supportTiers.list$ | async as supportTiers"
   class="m-channelShop__brief"
-  [hidden]="wireRewards.count === 0"
+  [hidden]="supportTiers.length === 0"
 >
   <div class="m-channelShopBrief__title">
     <span class="m-channelShopBriefTitle__text">Shop</span>
     <a
-      *ngIf="false"
       class="m-channelShopBriefTitle__seeAll"
-      [routerLink]="['/', channel.username$ | async, 'shop']"
+      [routerLink]="['/', service.username$ | async, 'shop']"
       i18n
       >See All</a
     >
   </div>
 
-  <div
-    *ngFor="let entry of wireRewards.tokens"
-    class="m-channelShopBrief__row"
-    (click)="onEntryClick('tokens', entry)"
-  >
-    <span class="m-channelShopBriefRow__description">{{
-      entry.description
-    }}</span>
-    <span class="m-channelShopBriefRow__amount" i18n
-      >{entry.amount, plural, =1 {{{entry.amount | number}} token/month} other
-      {{{entry.amount | number}} tokens/month}}</span
+  <ng-container *ngIf="service.channel$ | async as channel">
+    <div
+      *ngFor="let supportTier of supportTiers"
+      class="m-channelShopBrief__row"
+      (click)="onEntryClick(channel, supportTier)"
     >
-  </div>
-
-  <div
-    *ngFor="let entry of wireRewards.usd"
-    class="m-channelShopBrief__row"
-    (click)="onEntryClick('money', entry)"
-  >
-    <span class="m-channelShopBriefRow__description">{{
-      entry.description
-    }}</span>
-    <span class="m-channelShopBriefRow__amount"
-      >${{ entry.amount | number }}/month</span
-    >
-  </div>
+      <span class="m-channelShopBriefRow__description">{{
+        supportTier.name
+      }}</span>
+      <span
+        class="m-channelShopBriefRow__amount"
+        [ngSwitch]="supportTier.currency"
+      >
+        <ng-container *ngSwitchCase="'tokens'" i18n
+          >{supportTier.amount, plural, =1
+          {{{supportTier.amount | number}} token/month} other
+          {{{supportTier.amount | number}} tokens/month}}</ng-container
+        >
+        <ng-container *ngSwitchCase="'usd'" i18n
+          >${{ supportTier.amount | number }}/month</ng-container
+        >
+      </span>
+    </div>
+  </ng-container>
 </div>
