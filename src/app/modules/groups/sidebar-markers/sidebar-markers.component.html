@@ -114,6 +114,7 @@
     [inProgress]="inProgress"
     [iconOnly]="true"
     *ngIf="moreData"
+    [ngClass]="{ hasNewNavigation: hasNewNavigation }"
   >
   </infinite-scroll>
 </ul>
