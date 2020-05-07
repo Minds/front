@@ -1,0 +1,17 @@
+<m-tooltip
+  class="m-discovery__settingsButton"
+  icon="settings"
+  [attr.data-cy]="
+    modalType === 'tags'
+      ? 'discover-by-tags-settings-button'
+      : modalType === 'feed'
+      ? 'discovery-feeds-settings-button'
+      : null
+  "
+  (click)="openSettingsModal($event)"
+>
+  <ng-container [ngSwitch]="modalType">
+    <ng-template ngSwitchCase="feed">Manage Results</ng-template>
+    <ng-template ngSwitchCase="tags">Manage tags</ng-template>
+  </ng-container>
+</m-tooltip>

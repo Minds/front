@@ -23,7 +23,7 @@ context.only('Groups', () => {
 
   beforeEach(() => {
     // This test makes use of cy.post()
-    cy.overrideFeatureFlags({ 'activity-composer': true });
+    cy.overrideFeatureFlags({ 'activity-composer': true, navigation: false });
     cy.preserveCookies();
     cy.server();
     cy.route('GET', '**/api/v2/feeds/container/**').as('getGroupsFeed');

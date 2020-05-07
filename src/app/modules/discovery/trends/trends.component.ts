@@ -6,17 +6,24 @@ import {
   RouterEvent,
   NavigationEnd,
 } from '@angular/router';
-import { filter, pairwise, startWith, takeUntil } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { filter, pairwise, startWith, takeUntil, map } from 'rxjs/operators';
+import { Subscription, combineLatest, Observable } from 'rxjs';
+import { FastFadeAnimation } from '../../../animations';
 
 @Component({
   selector: 'm-discovery__trends',
   templateUrl: './trends.component.html',
+  animations: [FastFadeAnimation],
 })
 export class DiscoveryTrendsComponent {
   trends$ = this.discoveryService.trends$;
   hero$ = this.discoveryService.hero$;
   inProgress$ = this.discoveryService.inProgress$;
+  showNoTagsPrompt$: Observable<boolean> = this.discoveryService.error$.pipe(
+    map((errorId: string): boolean => {
+      return errorId === 'Minds::Core::Discovery::NoTagsException';
+    })
+  );
   routerEventsSubscription: Subscription;
 
   constructor(
@@ -47,5 +54,9 @@ export class DiscoveryTrendsComponent {
 
   ngOnDestroy() {
     this.routerEventsSubscription.unsubscribe();
+  }
+
+  refresh(): void {
+    this.discoveryService.loadTrends();
   }
 }

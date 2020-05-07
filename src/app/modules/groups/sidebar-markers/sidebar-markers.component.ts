@@ -10,6 +10,8 @@ import {
   OnInit,
   PLATFORM_ID,
   ViewChild,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { interval } from 'rxjs';
 import { map, startWith, throttle } from 'rxjs/operators';
@@ -28,6 +30,10 @@ import { FeaturesService } from '../../../services/features.service';
 export class GroupsSidebarMarkersComponent
   implements OnInit, DoCheck, OnDestroy {
   @Input() showLabels: boolean = false;
+  @Output('onGroupSelected') onGroupSelected: EventEmitter<
+    boolean
+  > = new EventEmitter<boolean>();
+
   layoutMode: 'phone' | 'tablet' | 'desktop' = 'desktop';
   inProgress: boolean = false;
   $updateMarker;
@@ -180,5 +186,12 @@ export class GroupsSidebarMarkersComponent
     } else {
       this.layoutMode = 'phone';
     }
+  }
+
+  /**
+   * Emits on group click.
+   */
+  onGroupClick(): void {
+    this.onGroupSelected.emit(true);
   }
 }

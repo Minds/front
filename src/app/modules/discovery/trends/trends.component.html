@@ -15,11 +15,19 @@
       >Discover by tags</a
     >
   </div>
+  <div class="m-layout__spacer"></div>
+  <m-discovery__settingsButton modalType="tags"></m-discovery__settingsButton>
 </div>
 
-<ul class="m-discovery__trends">
-  <m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
+<m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
 
+<m-discovery__noTagsPrompt
+  *ngIf="showNoTagsPrompt$ | async"
+  (completed)="refresh()"
+  @fastFade
+></m-discovery__noTagsPrompt>
+
+<ul class="m-discovery__trends" @fastFade *ngIf="(trends$ | async).length > 0">
   <li
     class="m-discoveryTrends__trend m-discoveryTrends__trend--hero"
     *ngIf="hero$ | async"

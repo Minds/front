@@ -8,6 +8,7 @@ import {
   OnInit,
   PLATFORM_ID,
   ViewChild,
+  OnDestroy,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
@@ -19,12 +20,14 @@ import { SidebarNavigationService } from './navigation.service';
 import { ConfigsService } from '../../services/configs.service';
 import { MindsUser } from '../../../interfaces/entities';
 import { FeaturesService } from '../../../services/features.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'm-sidebar--navigation',
   templateUrl: 'navigation.component.html',
 })
-export class SidebarNavigationComponent implements OnInit, AfterViewInit {
+export class SidebarNavigationComponent
+  implements OnInit, AfterViewInit, OnDestroy {
   readonly cdnUrl: string;
   readonly cdnAssetsUrl: string;
 
@@ -45,6 +48,8 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
 
   @HostBinding('hidden')
   hidden: boolean = true;
+
+  groupSelectedSubscription: Subscription = null;
 
   constructor(
     public navigation: NavigationService,
@@ -85,6 +90,12 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
     this.createGroupsSideBar();
   }
 
+  ngOnDestroy(): void {
+    if (this.groupSelectedSubscription) {
+      this.groupSelectedSubscription.unsubscribe();
+    }
+  }
+
   getUser() {
     this.user = this.session.getLoggedInUser(user => {
       this.user = user;
@@ -103,6 +114,13 @@ export class SidebarNavigationComponent implements OnInit, AfterViewInit {
     this.groupsSidebar = this.componentRef.instance;
     this.groupsSidebar.showLabels = true;
     this.groupsSidebar.leftSidebar = true;
+    this.groupSelectedSubscription = this.componentRef.instance.onGroupSelected.subscribe(
+      data => {
+        if (data) {
+          this.toggle();
+        }
+      }
+    );
   }
 
   toggle(): void {

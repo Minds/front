@@ -4,11 +4,13 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  ViewRef,
 } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Router } from '@angular/router';
 import { FormToastService } from '../../../../common/services/form-toast.service';
+import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -20,14 +22,15 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
   init: boolean = false;
   inProgress: boolean = false;
   user;
-  autoImportSubscription: Subscription;
   form: FormGroup;
+  autoImportSubscription: Subscription;
 
   constructor(
     protected cd: ChangeDetectorRef,
     protected youtubeService: YoutubeMigrationService,
     protected router: Router,
-    protected formToastService: FormToastService
+    protected formToastService: FormToastService,
+    protected session: Session
   ) {}
 
   ngOnInit() {
@@ -37,23 +40,19 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
 
     this.autoImportSubscription = this.youtubeService.autoImport$.subscribe(
       autoImport => {
-        if (autoImport !== this.autoImport.value) {
-          this.autoImport.patchValue(autoImport);
-          this.detectChanges();
-        }
+        this.autoImport.patchValue(autoImport);
+        this.detectChanges();
       }
     );
 
     this.autoImport.valueChanges.subscribe(val => {
-      this.submit();
+      if (this.init) {
+        this.submit();
+      }
     });
 
     this.init = true;
     this.detectChanges();
-  }
-
-  ngOnDestroy() {
-    this.autoImportSubscription.unsubscribe();
   }
 
   async submit() {
@@ -72,6 +71,7 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
       }
       if (response.status === 'success') {
         this.form.markAsPristine();
+        this.formToastService.success('Auto-import preference saved');
       }
     } catch (e) {
       console.error('error', e);
@@ -81,6 +81,12 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
     } finally {
       this.inProgress = false;
       this.detectChanges();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.autoImportSubscription) {
+      this.autoImportSubscription.unsubscribe();
     }
   }
 
@@ -97,7 +103,7 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
     this.detectChanges();
 
     try {
-      const response: any = await this.youtubeService.disconnectAccount();
+      await this.youtubeService.disconnectAccount();
     } catch (e) {
       this.formToastService.error(
         'Sorry, there was an error and your changes have not been saved.'
@@ -108,8 +114,10 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
   }
 
   detectChanges() {
-    this.cd.markForCheck();
-    this.cd.detectChanges();
+    if (!(this.cd as ViewRef).destroyed) {
+      this.cd.markForCheck();
+      this.cd.detectChanges();
+    }
   }
 
   get autoImport() {

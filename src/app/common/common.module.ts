@@ -172,6 +172,7 @@ import { OnboardingReminderComponent } from './components/onboarding-reminder/re
 import { FeedFilterComponent } from './components/feed-filter/feed-filter.component';
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { AccordionPaneComponent } from './components/accordion/accordion-pane.component';
+import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sidebar.directive';
 
 const routes: Routes = [
   {
@@ -322,6 +323,7 @@ const routes: Routes = [
     FeedFilterComponent,
     AccordionComponent,
     AccordionPaneComponent,
+    StickySidebarDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -452,6 +454,7 @@ const routes: Routes = [
     FeedFilterComponent,
     AccordionComponent,
     AccordionPaneComponent,
+    StickySidebarDirective,
   ],
   providers: [
     SiteService,

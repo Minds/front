@@ -114,11 +114,11 @@
         </div>
         <div class="m-walletSettingsView--hasAccount__linksContainer">
           <a><span (click)="enterEditMode()">Update</span></a>
-          <a
+          <!-- <a
             ><span (click)="showModal = true; modalContent = 'removeBank'"
               >Remove</span
             ></a
-          >
+          > -->
         </div>
       </div>
     </div>
@@ -167,7 +167,7 @@
   <!-- -------------------------------------------- -->
   <!--- CONFIRMATION MODAL: REMOVE BANK -------------->
   <!-- -------------------------------------------- -->
-  <m-walletModal
+  <!-- <m-walletModal
     class="m-walletModal--confirmation"
     [showModal]="showModal && modalContent === 'removeBank'"
     (closeModal)="showModal = false"
@@ -188,7 +188,7 @@
         >I'm sure</m-shadowboxSubmitButton
       >
     </div>
-  </m-walletModal>
+  </m-walletModal> -->
   <!-- -------------------------------------------- -->
   <!--- CONFIRMATION MODAL: LEAVE MONETIZATION ---------->
   <!-- -------------------------------------------- -->

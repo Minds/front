@@ -23,8 +23,8 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
   init: boolean = false;
   connectedSubscription: Subscription;
   selectedChannelSubscription: Subscription;
-  isConnected: boolean;
-  channelTitle: string = '';
+  connected: boolean;
+  channelTitle: string;
   channelId: string = '';
 
   constructor(
@@ -42,23 +42,15 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Initialize connected$ observable
-    this.youtubeService.isConnected();
+    // Initialize service observables
+    this.youtubeService.setup();
 
     this.connectedSubscription = this.youtubeService.connected$.subscribe(
       connected => {
-        this.isConnected = connected;
-
-        if (this.isConnected) {
-          this.youtubeService.getChannels();
-          // TODO populate multi-channel dropdown with channels
-        } else {
-          this.init = true;
-          this.detectChanges();
-        }
+        this.connected = connected;
 
         // Route to diff components based on connected state
-        const destination = this.isConnected ? 'dashboard' : 'connect';
+        const destination = this.connected ? 'dashboard' : 'connect';
         this.router.navigate([destination], { relativeTo: this.route });
         this.detectChanges();
       }
@@ -67,14 +59,14 @@ export class YoutubeMigrationComponent implements OnInit, OnDestroy {
     // Display the name of the selected channel
     this.selectedChannelSubscription = this.youtubeService.selectedChannel$.subscribe(
       channel => {
-        if (this.isConnected) {
+        if (this.connected && channel.title) {
           this.channelTitle = channel.title;
-
-          this.init = true;
+          this.detectChanges();
         }
-        this.detectChanges();
       }
     );
+    this.init = true;
+    this.detectChanges();
   }
 
   ngOnDestroy() {
