@@ -13,6 +13,8 @@
       >Discover by tags</a
     >
   </div>
+  <div class="m-layout__spacer"></div>
+  <m-discovery__settingsButton modalType="tags"></m-discovery__settingsButton>
 </div>
 
 <m-loadingSpinner [inProgress]="inProgress$ | async"> </m-loadingSpinner>
@@ -20,13 +22,6 @@
 <section class="m-discoveryTags__section">
   <div class="m-discoveryTags__sectionHeader">
     <h3>Your Tags</h3>
-    <m-tooltip
-      icon="settings"
-      (click)="openTagSettings()"
-      data-cy="discover-by-tags-settings-button"
-    >
-      Manage Tags
-    </m-tooltip>
   </div>
   <ul
     class="m-discoveryTags__list m-discoveryTags__list--user"
