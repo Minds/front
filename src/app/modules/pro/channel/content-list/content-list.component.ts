@@ -6,6 +6,8 @@ import {
   Input,
   OnChanges,
   SimpleChanges,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -13,6 +15,7 @@ import { catchError, map } from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ProChannelService } from '../channel.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { isPlatformServer } from '@angular/common';
 
 @Component({
   selector: 'm-proChannel__contentList',
@@ -37,7 +40,8 @@ export class ProChannelContentListComponent implements OnChanges {
     protected route: ActivatedRoute,
     protected router: Router,
     protected cd: ChangeDetectorRef,
-    protected injector: Injector
+    protected injector: Injector,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {
     this.entities$ = this.feedsService.feed.pipe();
   }
@@ -67,6 +71,10 @@ export class ProChannelContentListComponent implements OnChanges {
     params.force_public = 1;
 
     let url = `api/v2/pro/content/${this.channelService.currentChannel.guid}/${this.type}`;
+
+    if (this.type === 'groups' && isPlatformServer(this.platformId)) {
+      return; // 503 timeout error
+    }
 
     try {
       this.feedsService
