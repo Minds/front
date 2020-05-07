@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Client } from '../../../common/api/client.service';
 import { Session } from '../../../services/session';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import * as moment from 'moment';
 
 export interface YoutubeChannel {
@@ -10,69 +10,75 @@ export interface YoutubeChannel {
   connected: number;
   auto_import: boolean;
 }
+export interface YoutubeStatusCounts {
+  queued: number;
+  transferring: number;
+}
 
 @Injectable()
 export class YoutubeMigrationService {
   endpoint = 'api/v3/media/youtube-importer/';
-  initChannels: boolean = false;
   channels: YoutubeChannel[];
+  initChannels: boolean = false;
 
-  // Prime behavior subjects with dummy data
-  selectedChannelPrimer: YoutubeChannel = {
+  // Set up behavior subjects
+  connected$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  selectedChannel$: BehaviorSubject<YoutubeChannel> = new BehaviorSubject({
     id: '',
     title: '',
     connected: 1,
     auto_import: false,
-  };
-  statusCountsPrimer: any = {
+  });
+
+  autoImport$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  statusCounts$: BehaviorSubject<YoutubeStatusCounts> = new BehaviorSubject({
     queued: 0,
     transferring: 0,
-  };
+  });
 
-  // Set up behavior subjects
-  connected$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  autoImport$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   importingAllVideos$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  selectedChannel$: BehaviorSubject<YoutubeChannel> = new BehaviorSubject(
-    this.selectedChannelPrimer
-  );
-  statusCounts$: BehaviorSubject<any> = new BehaviorSubject(
-    this.statusCountsPrimer
-  );
-
-  // These current values of the behavior subjects are used inside the service
-  connected: boolean = false;
-  selectedChannel: YoutubeChannel;
 
   constructor(private client: Client, protected session: Session) {}
+
+  /**
+   * Initialize the subscriptions that update vals
+   * used in multiple functions within this service
+   */
+  setup(): void {
+    this.connected$.next(this.isConnected());
+
+    this.connected$.subscribe(connected => {
+      if (connected) {
+        this.getChannels();
+      }
+    });
+
+    this.selectedChannel$.subscribe(channel => {
+      this.autoImport$.next(channel.auto_import);
+    });
+  }
 
   /**
    * Check if current user has connected a YouTube account
    */
   isConnected(): boolean {
     const user = this.session.getLoggedInUser();
-    this.connected$.subscribe(connected => {
-      this.connected = connected;
-    });
-    if (!user.yt_channels || user.yt_channels.length < 1) {
-      this.connected$.next(false);
-    } else {
-      this.connected$.next(true);
-    }
-    return this.connected;
+    return user.yt_channels && user.yt_channels.length > 0;
   }
 
   /**
    * Get array of youtube channels associated with user
    */
   getChannels(): YoutubeChannel[] | null {
-    if (!this.connected) {
-      return;
-    }
     this.channels = this.session.getLoggedInUser().yt_channels;
 
     // On load, select the first channel by default
-    if (!this.initChannels) {
+    if (
+      (!this.initChannels || !this.selectedChannel$.value.id) &&
+      this.channels.length > 0
+    ) {
       this.selectChannel(this.channels[0].id);
     }
     this.initChannels = true;
@@ -84,19 +90,14 @@ export class YoutubeMigrationService {
    * @param channelId
    */
   selectChannel(channelId: string): YoutubeChannel | null {
-    if (!this.connected) {
+    if (!this.connected$.value) {
       return;
     }
-    this.selectedChannel$.subscribe(channel => {
-      this.selectedChannel = channel;
-    });
 
     const selectedChannel =
       this.channels.find(c => c.id === channelId) || this.channels[0];
 
     this.selectedChannel$.next(selectedChannel);
-    this.autoImport$.next(selectedChannel.auto_import);
-
     return selectedChannel;
   }
 
@@ -104,24 +105,25 @@ export class YoutubeMigrationService {
    * Get videos from selected youtube channel
    *
    * Null status returns from youtube SDK and joins with Cassandra where exists
-   * Status value queries Cassandra only
+   * Non-null status queries Cassandra only
    *
    * Additional fields (owner entity, video entity) included in response for
    * videos that have been transferred to Minds (or are queued/transcoding)
    * @param status
+   * @param nextPageToken
    */
   async getVideos(
     status: string | null = null,
     nextPageToken: string | null = null
   ): Promise<{ void }> {
-    if (!this.connected) {
+    if (!this.connected$.value) {
       return;
     }
 
     const opts = {
       status: status,
       nextPageToken: nextPageToken,
-      channelId: this.selectedChannel.id,
+      channelId: this.selectedChannel$.value.id,
     };
 
     try {
@@ -145,14 +147,14 @@ export class YoutubeMigrationService {
    * @param youtubeId
    */
   async getVideoStatus(youtubeId: string): Promise<{ void }> {
-    if (!this.connected) {
+    if (!this.connected$.value) {
       return;
     }
 
     const opts = {
       youtubeId: youtubeId,
       status: null,
-      channelId: this.selectedChannel.id,
+      channelId: this.selectedChannel$.value.id,
     };
 
     try {
@@ -171,14 +173,14 @@ export class YoutubeMigrationService {
    * Get count of video statuses (queued, transferred) from selected youtube channel
    */
   async getStatusCounts(): Promise<any> {
-    if (!this.connected) {
+    if (!this.connected$.value) {
       return;
     }
     try {
       const response = <any>await this.client.get(
         `${this.endpoint}videos/count`,
         {
-          channelId: this.selectedChannel.id,
+          channelId: this.selectedChannel$.value.id,
         }
       );
 
@@ -198,11 +200,11 @@ export class YoutubeMigrationService {
    * @param videoId
    */
   async import(videoId: string): Promise<any> {
-    if (!this.connected) {
+    if (!this.connected$.value) {
       return;
     }
     const opts = {
-      channelId: this.selectedChannel.id,
+      channelId: this.selectedChannel$.value.id,
       videoId: videoId,
     };
 
@@ -231,17 +233,13 @@ export class YoutubeMigrationService {
    * @param videoId
    */
   async cancelImport(videoId: string): Promise<any> {
-    if (!this.connected) {
+    if (!this.connected$.value) {
       return;
     }
-    // const opts = {
-    //   channelId: this.selectedChannel.id,
-    //   videoId: videoId,
-    // };
     try {
       const response = <any>(
         await this.client.delete(
-          `${this.endpoint}videos/import?channelId=${this.selectedChannel.id}&videoId=${videoId}`
+          `${this.endpoint}videos/import?channelId=${this.selectedChannel$.value.id}&videoId=${videoId}`
         )
       );
       this.getStatusCounts();
@@ -253,20 +251,28 @@ export class YoutubeMigrationService {
   }
 
   /**
-   * Automatically transfer of newly-uploaded youtube videos to Minds
+   * Automatically transfer newly-uploaded youtube videos to Minds
    */
   async enableAutoImport(): Promise<any> {
-    if (!this.connected) {
-      this.getChannels();
+    const channels: YoutubeChannel[] = this.session.getLoggedInUser()
+      .yt_channels;
+    if (!channels) {
+      return;
     }
-    const opts = {
-      channelId: this.selectedChannel.id,
-    };
+
+    let selectedChannel: YoutubeChannel;
+    if (!this.selectedChannel$.value) {
+      selectedChannel = channels[0];
+      this.selectChannel(selectedChannel.id);
+    } else {
+      selectedChannel = this.selectedChannel$.value;
+    }
     try {
       const response = <any>(
-        await this.client.post(`${this.endpoint}subscribe`, opts)
+        await this.client.post(
+          `${this.endpoint}subscribe?channelId=${selectedChannel.id}`
+        )
       );
-
       this.autoImport$.next(true);
       return response;
     } catch (e) {
@@ -279,14 +285,14 @@ export class YoutubeMigrationService {
    * Disable automatic transfer of newly-uploaded youtube videos to Minds
    */
   async disableAutoImport(): Promise<any> {
-    if (!this.connected) {
+    if (!this.connected$.value) {
       return;
     }
 
     try {
       const response = <any>(
         await this.client.delete(
-          `${this.endpoint}subscribe?channelId=${this.selectedChannel.id}`
+          `${this.endpoint}subscribe?channelId=${this.selectedChannel$.value.id}`
         )
       );
       this.autoImport$.next(false);
@@ -323,7 +329,7 @@ export class YoutubeMigrationService {
       try {
         const response = <any>(
           await this.client.delete(
-            `${this.endpoint}account?channelId=${this.selectedChannel.id}`
+            `${this.endpoint}account?channelId=${this.selectedChannel$.value.id}`
           )
         );
 

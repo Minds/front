@@ -31,12 +31,21 @@ m-youtubeMigration__transferStatus {
   a {
     text-align: right;
     font-weight: 400;
+    cursor: pointer;
     &:hover {
-      cursor: pointer;
       text-decoration: underline;
     }
     @include m-theme() {
       color: themed($m-link);
+    }
+  }
+  .m-youtubeMigration__transferAll--active {
+    cursor: default;
+    @include m-theme() {
+      color: themed($m-textColor--tertiary);
+    }
+    &:hover {
+      text-decoration: none;
     }
   }
 }

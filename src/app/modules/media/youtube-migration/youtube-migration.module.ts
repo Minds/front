@@ -14,6 +14,8 @@ import { YoutubeMigrationMigratedVideosComponent } from './migrated-videos/migra
 import { YoutubeMigrationVideoListComponent } from './video-list/video-list.component';
 import { YoutubeMigrationSetupModalComponent } from './setup-modal/setup-modal.component';
 import { YoutubeMigrationMarketingComponent } from './marketing/marketing.component';
+import { Client } from '../../../services/api';
+import { Session } from '../../../services/session';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,13 @@ import { YoutubeMigrationMarketingComponent } from './marketing/marketing.compon
     YoutubeMigrationComponent,
     YoutubeMigrationSetupModalComponent,
   ],
-  providers: [YoutubeMigrationService],
+  providers: [
+    {
+      provide: YoutubeMigrationService,
+      useFactory: (client, session) =>
+        new YoutubeMigrationService(client, session),
+      deps: [Client, Session],
+    },
+  ],
 })
 export class YoutubeMigrationModule {}
