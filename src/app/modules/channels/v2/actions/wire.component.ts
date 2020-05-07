@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
-import { WireCreatorComponent } from '../../../wire/creator/creator.component';
-import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { WireModalService } from '../../../wire/wire-modal.service';
 
 /**
  * Wire (pay) button (non-owner)
@@ -15,20 +14,17 @@ export class ChannelActionsWireComponent {
   /**
    * Constructor
    * @param service
-   * @param overlayModal
+   * @param wireModal
    */
   constructor(
     public service: ChannelsV2Service,
-    protected overlayModal: OverlayModalService
+    protected wireModal: WireModalService
   ) {}
 
   /**
    * Wires the active channel
    */
-  wire(): void {
-    // TODO: Change with Wire v2 modal call
-    this.overlayModal
-      .create(WireCreatorComponent, this.service.channel$.getValue())
-      .present();
+  async wire(): Promise<void> {
+    await this.wireModal.present(this.service.channel$.getValue()).toPromise();
   }
 }
