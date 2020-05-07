@@ -55,6 +55,8 @@ import { YoutubeMigrationUnmigratedVideosComponent } from '../media/youtube-migr
 import { YoutubeMigrationMigratedVideosComponent } from '../media/youtube-migration/migrated-videos/migrated-videos.component';
 import { YoutubeMigrationConfigComponent } from '../media/youtube-migration/config/config.component';
 import { YoutubeMigrationComponent } from '../media/youtube-migration/youtube-migration.component';
+import { ReferralsV2Module } from './other/referrals/referrals.module';
+import { SettingsV2ReferralsComponent } from './other/referrals/referrals.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -302,6 +304,15 @@ const SETTINGS_V2_ROUTES: Routes = [
         },
         children: [
           {
+            path: 'referrals',
+            component: SettingsV2ReferralsComponent,
+            data: {
+              title: 'Referrals',
+              description:
+                'If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!',
+            },
+          },
+          {
             path: 'reported-content/strikes',
             component: StrikesComponent,
             data: {
@@ -423,6 +434,8 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsModule,
     WalletV2Module,
     ProModule,
+    YoutubeMigrationModule,
+    ReferralsV2Module,
   ],
   declarations: [
     SettingsV2Component,
