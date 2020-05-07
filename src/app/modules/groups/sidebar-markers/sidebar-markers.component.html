@@ -29,7 +29,11 @@
   <li *ngIf="!inProgress && groups && groups.length > 0">
     <a
       class="m-groupSidebarMarkersList__item  m-groupSidebarMarkersList__item--discoverGroups"
-      [routerLink]="['/discovery/suggestions/group']"
+      [routerLink]="
+        hasNewNavigation
+          ? ['/discovery/suggestions/group']
+          : ['/newsfeed/global/top', { period: '12h', type: 'groups', all: 1 }]
+      "
     >
       <m-tooltip [anchor]="tooltipsAnchor" [useParentPosition]="true">
         <i class="material-icons" m-tooltip--anchor>people</i>
