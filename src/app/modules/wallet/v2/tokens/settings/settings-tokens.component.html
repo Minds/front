@@ -29,36 +29,26 @@
           <a (click)="downloadMetamask()">Install MetaMask</a>
           for the most seamless user experience.
         </p>
-        <ng-container *ngIf="hasExternal && !linkingMetamask">
-          <p *ngIf="hasExternal">
+        <ng-container *ngIf="hasExternal">
+          <p>
             Minds recommends using MetaMask for the most seamless user
             experience.
           </p>
+          <!-- <p *ngIf="linkingMetamask && !providedAddress">
+            MetaMask is either locked or connected to another network.
+          </p> -->
           <m-shadowboxSubmitButton
-            [disabled]="inProgress"
-            [saving]="inProgress"
+            [disabled]="inProgress || linkingMetamask"
+            [saving]="inProgress || linkingMetamask"
             (click)="useExternal()"
           >
             Link MetaMask
           </m-shadowboxSubmitButton>
         </ng-container>
-        <ng-container *ngIf="linkingMetamask">
-          <ng-container *ngIf="hasExternal">
-            <!-- <p *ngIf="providedAddress">
-              {{ providedAddress }}
-            </p> -->
-            <p *ngIf="!providedAddress">
-              MetaMask is either locked or connected to another network.
-            </p>
-          </ng-container>
-          <!-- <p *ngIf="hasExternal && providedAddress">
-            Please ensure you select the "Main Ethereum Network".
-          </p> -->
-          <p *ngIf="downloadingMetamask">
-            Note: You might need to reload Minds after installing and setting up
-            MetaMask.
-          </p>
-        </ng-container>
+        <p *ngIf="linkingMetamask && downloadingMetamask">
+          Note: You might need to reload Minds after installing and setting up
+          MetaMask.
+        </p>
       </li>
 
       <li class="m-walletSettings__tokenSetupOption--custom">
@@ -78,7 +68,7 @@
       <p *ngIf="currentAddress">
         <a
           class="m-walletTertiaryText--backButton"
-          (click)="display = Views.CurrentAddress"
+          (click)="backToCurrentAddress()"
           ><i class="material-icons">❮</i
           ><span>Back to current address</span></a
         >
