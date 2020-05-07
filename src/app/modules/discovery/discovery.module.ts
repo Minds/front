@@ -20,6 +20,7 @@ import { DiscoveryFeedItemComponent } from './feeds/feed-item.component';
 import { DiscoveryFeedsSettingsButtonComponent } from './feeds/settings-button.component';
 import { DiscoveryDisclaimerComponent } from './disclaimer/disclaimer.component';
 import { DiscoverySuggestionsComponent } from './suggestions/suggestions.component';
+import { DiscoveryNoTagsPromptComponent } from './tags/notags-prompt/notags-prompt.component';
 
 @NgModule({
   imports: [
@@ -97,6 +98,7 @@ import { DiscoverySuggestionsComponent } from './suggestions/suggestions.compone
     DiscoveryFeedsSettingsButtonComponent,
     DiscoveryDisclaimerComponent,
     DiscoverySuggestionsComponent,
+    DiscoveryNoTagsPromptComponent,
   ],
   exports: [DiscoveryComponent],
   entryComponents: [DiscoveryComponent],
