@@ -3,6 +3,8 @@
     <div
       class="m-formToast__wrapper"
       [@fader]="toast.dismissed ? 'dismissed' : 'active'"
+      (mouseover)="pauseTimeout(i)"
+      (mouseleave)="resumeTimeout(i)"
     >
       <div [ngClass]="['m-formToast__iconWrapper--' + toast.type]">
         <i class="material-icons">

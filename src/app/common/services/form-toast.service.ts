@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 export interface FormToast {
   type?: 'success' | 'error' | 'warning' | 'info' | null;
   message?: string;
+  dismissed?: boolean;
 }
 
 @Injectable()
