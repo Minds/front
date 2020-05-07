@@ -236,7 +236,7 @@ export class SettingsV2Component implements OnInit {
         this.setSecondaryPane();
       });
 
-    // Conditionally show youtube migration menu item
+    // Conditionally show feature flagged items
     if (this.hasYoutubeFeature) {
       const youtubeMenuItem = {
         header: {
@@ -246,6 +246,16 @@ export class SettingsV2Component implements OnInit {
         items: [{ label: 'Youtube', id: 'youtube-migration' }],
       };
       this.secondaryMenus.other.splice(2, 0, youtubeMenuItem);
+    }
+    if (this.featuresService.has('settings-referrals')) {
+      const referralsMenuItem = {
+        header: {
+          label: 'Referrals',
+          id: 'referrals',
+        },
+        items: [{ label: 'Referrals', id: 'referrals' }],
+      };
+      this.secondaryMenus.other.splice(0, 0, referralsMenuItem);
     }
 
     this.setProRoutes();
