@@ -47,6 +47,7 @@ describe('UserMenuV3Component', () => {
 
     featuresServiceMock.mock('dark-mode', false);
     featuresServiceMock.mock('helpdesk', true);
+    featuresServiceMock.mock('settings-referrals', true);
 
     fixture = TestBed.createComponent(UserMenuV3Component);
 

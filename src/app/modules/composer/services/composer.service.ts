@@ -13,6 +13,7 @@ import { RichEmbed, RichEmbedService } from './rich-embed.service';
 import { Attachment, AttachmentService } from './attachment.service';
 import { AttachmentPreviewResource, PreviewService } from './preview.service';
 import { VideoPoster } from './video-poster.service';
+import { SupportTier } from '../../wire/v2/support-tiers.service';
 
 /**
  * Message value type
@@ -85,6 +86,7 @@ export const DEFAULT_NSFW_VALUE: NsfwSubjectValue = [];
 export type MonetizationSubjectValue = {
   type: 'tokens' | 'money';
   min: number;
+  support_tier?: SupportTier;
 } | null;
 
 /**
