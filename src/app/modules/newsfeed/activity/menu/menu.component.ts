@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Injector,
+  Input,
   OnDestroy,
   OnInit,
   Output,
