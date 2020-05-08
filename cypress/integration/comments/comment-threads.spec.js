@@ -226,4 +226,47 @@ context('Comment Threads', () => {
         );
       });
   });
+
+  it('should paginate correctly', () => {
+    cy.visit('/newsfeed/subscriptions');
+    cy.location('pathname')
+      .should('eq', `/newsfeed/subscriptions`);
+
+    cy.post('test pagination');
+
+    //Reveal the conversation
+    cy.get(commentButton).click();
+
+    // make 41 comments
+    for (let i = 0; i < 41; i++) {
+      cy.get(commentInput).type(`comment n°${i}`);
+
+      cy.get(postCommentButton)
+        .click()
+        .wait('@postComment')
+        .then(xhr => {
+          expect(xhr.status).to.equal(200);
+        });
+    }
+
+    // go to single entity view
+    cy.get('minds-activity:first-child .permalink').click();
+
+    cy.get('.m-comments-load-more').click();
+    cy.wait(500);
+    cy.get('.m-comments-load-more').click();
+    cy.wait(500);
+    cy.get('.m-comments-load-more').click();
+    cy.wait(500);
+
+    let num = 0;
+    cy.get('.m-commentBubble__message').each(($el) => {
+      expect($el.text()).to.contain(num);
+      num++;
+    });
+
+    // expect(num).to.equal(41);
+  });
+
+
 });
