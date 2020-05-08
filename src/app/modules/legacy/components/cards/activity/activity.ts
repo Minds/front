@@ -215,9 +215,19 @@ export class Activity implements OnInit {
     protected selfInjector: Injector
   ) {
     this.clientMetaService.inherit(injector);
+    this.cdnUrl = configs.get('cdn_url');
+    this.cdnAssetsUrl = configs.get('cdn_assets_url');
+    this.siteUrl = configs.get('site_url');
+  }
 
+  ngOnInit() {
+    this.loadBlockedUsers();
+  }
+
+  ngAfterViewInit() {
     this.activityAnalyticsOnViewService
-      .setElementRef(elementRef)
+      .setElementRef(this.elementRef)
+      .setEnabled(this.visibilityEvents)
       .onView(activity => {
         this.newsfeedService.recordView(
           activity,
@@ -231,16 +241,6 @@ export class Activity implements OnInit {
 
         this.onViewed.emit({ activity: activity, visible: true });
       });
-
-    this.cdnUrl = configs.get('cdn_url');
-    this.cdnAssetsUrl = configs.get('cdn_assets_url');
-    this.siteUrl = configs.get('site_url');
-  }
-
-  ngOnInit() {
-    this.activityAnalyticsOnViewService.setEnabled(this.visibilityEvents);
-
-    this.loadBlockedUsers();
   }
 
   ngOnDestroy() {

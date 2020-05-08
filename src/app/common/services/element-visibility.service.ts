@@ -68,7 +68,7 @@ export class ElementVisibilityService implements OnDestroy {
 
   checkVisibility(): void {
     if (!this.element) {
-      console.warn('Missing element ref');
+      // console.warn('Missing element ref');
       return;
     }
 
