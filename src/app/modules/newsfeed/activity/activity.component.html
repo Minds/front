@@ -37,7 +37,7 @@
   <m-comments__entityOutlet
     *ngIf="service.displayOptions.showComments"
     [entity]="service.entity$ | async"
-    [canDelete]="service.canDelete$ | async"
+    [canDelete]="canDelete$ | async"
     [showOnlyPoster]="service.displayOptions.showOnlyCommentsInput"
     [fixedHeight]="service.displayOptions.fixedHeight"
   >

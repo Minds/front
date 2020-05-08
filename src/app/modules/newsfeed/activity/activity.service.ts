@@ -74,9 +74,27 @@ export class ActivityService {
   );
 
   /**
-   * TODO
+   * Subject for Activity's canDelete property, w
    */
-  canDelete$: Observable<boolean> = this.entity$.pipe();
+  canDeleteOverride$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false
+  );
+
+  /**
+   * Returns whether or not the user can edit an activity
+   */
+  canDelete$: Observable<boolean> = combineLatest([
+    this.entity$,
+    this.canDeleteOverride$,
+    this.session.user$,
+  ]).pipe(
+    map(
+      ([entity, override, user]) =>
+        entity &&
+        user &&
+        (entity.owner_guid == user.guid || user.is_admin || override)
+    )
+  );
 
   /**
    * Allows for components to give nsfw consent

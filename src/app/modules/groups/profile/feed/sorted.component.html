@@ -65,6 +65,8 @@
           }"
           [allowAutoplayOnScroll]="true"
           [slot]="i + 1"
+          [canDelete]="group['is:owner'] || group['is:moderator']"
+          (deleted)="delete($event)"
         ></m-activity>
       </ng-container>
     </ng-container>
