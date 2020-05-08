@@ -20,7 +20,7 @@ export class CommentsService {
   }
 
   async fetch(opts) {
-    let uri = `api/v2/comments/${opts.entity_guid}/0/${opts.parent_path}`;
+    const uri = `api/v2/comments/${opts.entity_guid}/0/${opts.parent_path}`;
 
     return await this.client.get(uri, opts);
   }
@@ -33,8 +33,9 @@ export class CommentsService {
     loadNext;
     loadPrevious;
     descending;
+    includeOffset?;
   }) {
-    let focusedUrnObject = this.focusedUrn
+    const focusedUrnObject = this.focusedUrn
       ? this.decodeUrn(this.focusedUrn)
       : null;
     if (this.focusedUrn) {
@@ -59,19 +60,31 @@ export class CommentsService {
       }
     }
 
-    let response: any = <{ comments; 'load-next'; 'load-previous' }>(
-      await this.fetch({
-        entity_guid: opts.entity_guid,
-        parent_path: opts.parent_path,
-        focused_urn: this.focusedUrn,
-        limit: opts.limit,
-        'load-previous': opts.loadPrevious || null,
-        'load-next': opts.loadNext || null,
-      })
+    const options: any = {
+      entity_guid: opts.entity_guid,
+      parent_path: opts.parent_path,
+      limit: opts.limit,
+      include_offset: opts.includeOffset || false,
+    };
+
+    if (this.focusedUrn) {
+      options['focused_urn'] = this.focusedUrn;
+    }
+
+    if (opts.loadPrevious) {
+      options['load-previous'] = opts.loadPrevious;
+    }
+
+    if (opts.loadNext) {
+      options['load-next'] = opts.loadNext;
+    }
+
+    const response: any = <{ comments; 'load-next'; 'load-previous' }>(
+      await this.fetch(options)
     );
 
     if (this.focusedUrn && focusedUrnObject) {
-      for (let comment of response.comments) {
+      for (const comment of response.comments) {
         switch (opts.level) {
           case 0:
             comment.show_replies =
@@ -89,13 +102,13 @@ export class CommentsService {
       }
     }
 
-    //only use once
+    // only use once
     this.focusedUrn = null;
     return response;
   }
 
   async single({ entity_guid, guid, parent_path }) {
-    let response: any = await this.client.get(
+    const response: any = await this.client.get(
       `api/v2/comments/${entity_guid}/${guid}/${parent_path}`,
       {
         limit: 1,
@@ -116,7 +129,7 @@ export class CommentsService {
   }
 
   private decodeUrn(urn) {
-    let parts = urn.split(':');
+    const parts = urn.split(':');
 
     const obj = {
       entity_guid: parts[2],
