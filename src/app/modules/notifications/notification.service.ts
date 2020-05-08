@@ -1,4 +1,10 @@
-import { EventEmitter, Inject, PLATFORM_ID } from '@angular/core';
+import {
+  AfterViewInit,
+  EventEmitter,
+  Inject,
+  OnDestroy,
+  PLATFORM_ID,
+} from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Client } from '../../services/api';
 import { SocketsService } from '../../services/sockets';
@@ -7,7 +13,7 @@ import { MetaService } from '../../common/services/meta.service';
 import { Subscription, timer } from 'rxjs';
 import { SiteService } from '../../common/services/site.service';
 
-export class NotificationService {
+export class NotificationService implements OnDestroy {
   socketSubscriptions: any = {
     notification: null,
   };

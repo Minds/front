@@ -53,6 +53,17 @@ export class SocketsService {
 
       if (this.session.isLoggedIn()) {
         this.socket.connect();
+
+        // join all rooms that have already been subscribed to
+        for (const name in this.subscriptions) {
+          this.nz.runOutsideAngular(() => {
+            this.socket.on(name, (...args) => {
+              this.nz.run(() => {
+                this.subscriptions[name].next(args);
+              });
+            });
+          });
+        }
       }
 
       this.session.isLoggedIn((is: any) => {
@@ -157,10 +168,11 @@ export class SocketsService {
   }
 
   subscribe(name: string, callback: Function) {
-    if (!this.socket) return;
     if (!this.subscriptions[name]) {
       this.subscriptions[name] = new EventEmitter();
+    }
 
+    if (this.socket) {
       this.nz.runOutsideAngular(() => {
         this.socket.on(name, (...args) => {
           this.nz.run(() => {
