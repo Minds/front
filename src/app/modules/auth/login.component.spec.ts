@@ -39,6 +39,7 @@ import { TopbarService } from '../../common/layout/topbar.service';
 import { MockService } from '../../utils/mock';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { MarketingFooterComponent } from '../../common/components/marketing/footer.component';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'minds-form-login',
@@ -98,6 +99,7 @@ describe('LoginComponent', () => {
           provide: SidebarNavigationService,
           useValue: MockService(SidebarNavigationService),
         },
+        PageLayoutService,
       ],
     }).compileComponents();
   }));

@@ -13,6 +13,7 @@ import { FeaturesService } from '../../services/features.service';
 import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-login',
@@ -52,7 +53,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private onboarding: OnboardingService,
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
-    private navigationService: SidebarNavigationService
+    private navigationService: SidebarNavigationService,
+    private pageLayoutService: PageLayoutService
   ) {}
 
   ngOnInit() {
@@ -82,6 +84,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       if (this.featuresService.has('navigation')) {
         this.navigationService.setVisible(false);
+        this.pageLayoutService.useFullWidth();
       }
     }
   }

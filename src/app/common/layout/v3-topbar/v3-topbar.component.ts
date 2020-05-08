@@ -37,6 +37,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   showTopbar: boolean = true;
   marketingPages: boolean = false;
+  showSearchBar: boolean = true;
 
   isMobile: boolean = false;
 
@@ -65,6 +66,7 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.loadComponent();
+    this.topbarService.setContainer(this);
     this.session.isLoggedIn(() => this.detectChanges());
     this.listen();
   }
@@ -145,6 +147,16 @@ export class V3TopbarComponent implements OnInit, OnDestroy {
 
   toggleVisibility(visible: boolean) {
     this.showTopbar = visible;
+    this.detectChanges();
+  }
+
+  toggleMarketingPages(visible: boolean) {
+    this.marketingPages = visible;
+    this.detectChanges();
+  }
+
+  toggleSearchBar(visible: boolean) {
+    this.showSearchBar = visible;
     this.detectChanges();
   }
 

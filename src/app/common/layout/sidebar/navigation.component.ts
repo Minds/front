@@ -47,7 +47,7 @@ export class SidebarNavigationComponent
   isOpened: boolean = false;
 
   @HostBinding('hidden')
-  hidden: boolean = true;
+  hidden: boolean = false;
 
   groupSelectedSubscription: Subscription = null;
 
@@ -70,16 +70,6 @@ export class SidebarNavigationComponent
     if (isPlatformBrowser(this.platformId)) {
       this.onResize();
     }
-
-    this.hidden = !this.session.isLoggedIn();
-    this.service.visibleChange.emit(!this.hidden);
-
-    this.session.isLoggedIn(async is => {
-      if (is) {
-        this.hidden = false;
-        this.service.visibleChange.emit(!this.hidden);
-      }
-    });
 
     if (this.featuresService.has('navigation')) {
       this.settingsLink = '/settings/canary';

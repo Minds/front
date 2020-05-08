@@ -17,6 +17,7 @@ import { MetaService } from '../../common/services/meta.service';
 import { iOSVersion } from '../../helpers/is-safari';
 import { TopbarService } from '../../common/layout/topbar.service';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-register',
@@ -63,12 +64,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private featuresService: FeaturesService,
     private topbarService: TopbarService,
     private onboardingService: OnboardingV2Service,
-    private metaService: MetaService
+    private metaService: MetaService,
+    private pageLayoutService: PageLayoutService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     if (this.session.isLoggedIn()) {
       this.router.navigate(['/newsfeed']);
       return;
+    }
+  }
+
+  ngOnInit() {
+    if (this.session.isLoggedIn()) {
+      this.loginReferrer.register('/newsfeed');
+      this.loginReferrer.navigate();
     }
 
     this.newDesign = this.featuresService.has('ux-2020');
@@ -80,14 +89,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
       if (this.featuresService.has('navigation')) {
         this.navigationService.setVisible(false);
+        this.pageLayoutService.useFullWidth();
       }
-    }
-  }
-
-  ngOnInit() {
-    if (this.session.isLoggedIn()) {
-      this.loginReferrer.register('/newsfeed');
-      this.loginReferrer.navigate();
     }
 
     this.redirectTo = localStorage.getItem('redirect');
