@@ -24,7 +24,7 @@
       </label>
     </div>
 
-    <div [hidden]="!state.enabled">
+    <div [style.visibility]="state.enabled ? 'visible' : 'hidden'">
       <div *mIfFeature="'channels-shop'" class="m-form__field--select">
         <div class="m-form__row--input">
           <select

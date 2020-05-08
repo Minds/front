@@ -74,6 +74,7 @@
       (inProgress$ | async) || (isPosting$ | async) || !(canPost$ | async)
     "
     [dropdown]="postButtonDropdown"
+    [dropdownAnchorPosition]="{ top: '100%', right: '0' }"
     (onAction)="onPost($event)"
     data-cy="post-button"
   >

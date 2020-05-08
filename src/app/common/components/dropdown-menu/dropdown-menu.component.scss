@@ -24,10 +24,6 @@ m-dropdownMenu {
     @media screen and (min-width: $max-mobile + 1) {
       display: block;
       position: absolute;
-      top: calc(100% - 8px); // TODO: Remove when smart anchoring is implemented
-      right: calc(
-        100% + 8px
-      ); // TODO: Remove when smart anchoring is implemented
     }
 
     @media screen and (max-width: $max-mobile) {
@@ -47,9 +43,11 @@ m-dropdownMenu {
       margin: 0;
       padding: 14px 0;
       min-width: 222px;
+      border: 1px solid;
       border-radius: 2px;
 
       @include m-theme() {
+        border-color: themed($m-borderColor--primary);
         background: themed($m-bgColor--secondary);
       }
 

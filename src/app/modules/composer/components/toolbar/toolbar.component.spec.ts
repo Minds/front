@@ -56,7 +56,7 @@ describe('Composer Toolbar', () => {
         }),
         MockComponent({
           selector: 'm-button',
-          inputs: ['disabled', 'dropdown'],
+          inputs: ['disabled', 'dropdown', 'dropdownAnchorPosition'],
           outputs: ['onAction'],
         }),
       ],

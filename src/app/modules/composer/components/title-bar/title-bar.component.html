@@ -15,6 +15,7 @@
   <m-dropdownMenu
     triggerClass="m-composerTitleBar__menuButton"
     menuClass="m-composerTitleBar__menu"
+    [anchorPosition]="{ top: '0', left: '0' }"
     [menu]="menu"
     [hidden]="isPosting$ | async"
     data-cy="meatball-menu-trigger"
@@ -29,6 +30,7 @@
       <m-dropdownMenu
         *ngIf="canChangeVisibility"
         [menu]="visibilityMenu"
+        [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
         triggerClass="m-dropdownMenu__item"
         data-cy="meatball-menu-visibility"
       >
@@ -40,6 +42,7 @@
     <li>
       <m-dropdownMenu
         [menu]="licenseMenu"
+        [anchorPosition]="{ top: '0', right: 'calc(100% - 4px)' }"
         triggerClass="m-dropdownMenu__item"
         data-cy="meatball-menu-license"
       >

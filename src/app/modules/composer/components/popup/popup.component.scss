@@ -48,13 +48,13 @@ m-composer__popup {
   .m-composerPopup__close {
     position: absolute;
     flex: initial;
-    top: 31px; // Icon has an intrinsic margin of about 6px
-    right: 31px;
-    font-size: 22px;
+    top: 24px;
+    right: 40px;
+    font-size: 16px;
     cursor: pointer;
 
     @include m-theme() {
-      color: themed($m-borderColor--primary);
+      color: themed($m-textColor--secondary);
     }
   }
 }
@@ -67,8 +67,7 @@ m-composer__popup {
   flex-direction: column;
   align-items: stretch;
   justify-content: space-between;
-  margin: -8px 0 0 0;
-  padding: 37px 0 31px;
+  padding: 20px 0 20px;
 
   a {
     font-size: inherit;
@@ -89,7 +88,7 @@ m-composer__popup {
 
   .m-composerPopup__content {
     flex: 1;
-    padding: 0 37px;
+    padding: 0 40px;
   }
 
   .m-composerPopup__title {
@@ -111,6 +110,11 @@ m-composer__popup {
   .m-composerPopup__text,
   .m-composerPopup__smallNote {
     font-weight: normal;
+    padding-right: 60px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-right: 0;
+    }
 
     @include m-theme() {
       color: themed($m-textColor--secondary);
@@ -247,7 +251,7 @@ m-composer__popup {
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    padding: 34px 37px 0;
+    padding: 20px 40px 0;
     border-top: 1px solid;
 
     @include m-theme() {

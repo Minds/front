@@ -9,6 +9,11 @@
 
   .m-composerTags__trending {
     margin: 0 0 6px; // Trending items have 20px bottom margin
+    padding-right: 60px;
+
+    @media screen and (max-width: $max-mobile) {
+      padding-right: 0;
+    }
   }
 
   label:not(.m-composerPopup__trigger),
@@ -84,6 +89,7 @@
     list-style: none;
     margin: 0 0 32px; // <li> have extra 20 bottom margin
     padding: 0;
+    min-height: 56px; // 1 line, to avoid jumps
 
     .m-composerTags__item {
       display: inline-flex;

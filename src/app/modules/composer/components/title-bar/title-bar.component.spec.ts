@@ -27,7 +27,7 @@ describe('Composer Title Bar', () => {
         TitleBarComponent,
         MockComponent({
           selector: 'm-dropdownMenu',
-          inputs: ['menu', 'triggerClass', 'menuClass'],
+          inputs: ['menu', 'triggerClass', 'menuClass', 'anchorPosition'],
         }),
         MockComponent({
           selector: 'm-icon',
