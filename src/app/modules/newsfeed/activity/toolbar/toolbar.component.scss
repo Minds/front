@@ -20,22 +20,23 @@ m-activity__toolbar {
 
       i.material-icons {
         font-size: 18px;
+      }
+
+      i.material-icons,
+      .minds-counter {
+        vertical-align: middle;
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
       }
 
       &.selected {
-        i.material-icons {
+        i.material-icons,
+        .minds-counter {
           @include m-theme() {
             color: themed($m-blue);
           }
         }
-      }
-
-      i.material-icons,
-      .minds-counter {
-        vertical-align: middle;
       }
     }
   }
@@ -45,7 +46,7 @@ m-activity__toolbar {
     .selected i.material-icons,
     .selected .minds-counter {
       @include m-theme() {
-        color: themed($m-grey-500);
+        color: themed($m-textColor--secondary);
       }
     }
   }
@@ -60,7 +61,7 @@ m-activity__toolbar {
       padding: 0;
       > .ion-icon {
         @include m-theme() {
-          color: themed($m-grey-500);
+          color: themed($m-textColor--secondary);
         }
       }
       span {
