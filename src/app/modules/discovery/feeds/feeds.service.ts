@@ -12,6 +12,13 @@ export type DiscoveryFeedsPeriod =
   | 'relevant';
 
 export type DiscoveryFeedsContentType = 'all' | 'images' | 'videos' | 'blogs';
+export type DiscoveryFeedsContentFilter =
+  | 'top'
+  | 'latest'
+  | 'channels'
+  | 'groups'
+  | 'trending'
+  | 'prefered';
 export type DiscoveryFeedsNsfw = number[];
 
 @Injectable()
@@ -23,7 +30,9 @@ export class DiscoveryFeedsService {
   filter$: BehaviorSubject<string> = new BehaviorSubject('preferred');
   nsfw$: BehaviorSubject<any[]>;
   period$: BehaviorSubject<string> = new BehaviorSubject('relevant');
-  type$: BehaviorSubject<string> = new BehaviorSubject('all');
+  type$: BehaviorSubject<DiscoveryFeedsContentType> = new BehaviorSubject(
+    'all'
+  );
   saving$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -58,6 +67,7 @@ export class DiscoveryFeedsService {
         period: this.period$.value,
         algorithm: this.filter$.value,
         nsfw: this.getNsfwString(),
+        type: this.type$.value,
       })
       .fetch();
   }
@@ -66,7 +76,7 @@ export class DiscoveryFeedsService {
     this.feedsService.loadMore();
   }
 
-  setFilter(filter: string): DiscoveryFeedsService {
+  setFilter(filter: DiscoveryFeedsContentFilter): DiscoveryFeedsService {
     this.filter$.next(filter);
     return this;
   }

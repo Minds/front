@@ -22,6 +22,10 @@ import { FeaturesService } from '../../services/features.service';
 import { RecentService } from '../../services/ux/recent';
 import { filter } from 'rxjs/operators';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import {
+  DiscoveryFeedsContentType,
+  DiscoveryFeedsContentFilter,
+} from '../discovery/feeds/feeds.service';
 
 @Component({
   selector: 'm-search--bar',
@@ -33,7 +37,8 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   active: boolean;
   suggestionsDisabled: boolean = false;
   q: string;
-  filter: string;
+  filter: DiscoveryFeedsContentFilter;
+  type: DiscoveryFeedsContentType;
   id: string;
   routerSubscription: Subscription;
   hasSearchContext: boolean = false;
@@ -88,7 +93,12 @@ export class SearchBarComponent implements OnInit, OnDestroy {
         try {
           const params = event.snapshot.queryParamMap;
           this.q = params.has('q') ? params.get('q') : '';
-          this.filter = params.has('f') ? params.get('f') : 'top';
+          this.filter = params.has('f')
+            ? <DiscoveryFeedsContentFilter>params.get('f')
+            : 'top';
+          this.type = params.has('t')
+            ? <DiscoveryFeedsContentType>params.get('t')
+            : 'all';
         } catch (e) {
           console.error('Minds: router hook(SearchBar)', e);
         }
@@ -129,7 +139,7 @@ export class SearchBarComponent implements OnInit, OnDestroy {
   search() {
     if (this.featureService.has('navigation')) {
       this.router.navigate(['/discovery/search'], {
-        queryParams: { q: this.q, f: this.filter },
+        queryParams: { q: this.q, f: this.filter, t: this.type },
       });
     } else {
       this.router.navigate([
