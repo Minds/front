@@ -3,7 +3,7 @@
     <a
       routerLink="./"
       routerLinkActive="m-tabs__tab--selected"
-      [queryParams]="{ q: q, f: 'top' }"
+      [queryParams]="{ q: q, f: 'top', t: type$.value }"
       >Top</a
     >
   </div>
@@ -11,7 +11,7 @@
     <a
       routerLink="./"
       routerLinkActive="m-tabs__tab--selected"
-      [queryParams]="{ q: q, f: 'latest' }"
+      [queryParams]="{ q: q, f: 'latest', t: type$.value }"
       >Latest</a
     >
   </div>
@@ -19,7 +19,7 @@
     <a
       routerLink="./"
       routerLinkActive="m-tabs__tab--selected"
-      [queryParams]="{ q: q, f: 'channels' }"
+      [queryParams]="{ q: q, f: 'channels', t: type$.value }"
       >Channels</a
     >
   </div>
@@ -27,7 +27,7 @@
     <a
       routerLink="./"
       routerLinkActive="m-tabs__tab--selected"
-      [queryParams]="{ q: q, f: 'groups' }"
+      [queryParams]="{ q: q, f: 'groups', t: type$.value }"
       >Groups</a
     >
   </div>

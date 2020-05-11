@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, UrlSegment } from '@angular/router';
-import { DiscoveryFeedsService } from './feeds.service';
+import {
+  DiscoveryFeedsService,
+  DiscoveryFeedsContentFilter,
+} from './feeds.service';
 import { Subscription, combineLatest } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { FeedsService } from '../../../common/services/feeds.service';
@@ -11,7 +14,7 @@ import { FeedsService } from '../../../common/services/feeds.service';
   providers: [DiscoveryFeedsService, FeedsService],
 })
 export class DiscoveryFeedsComponent implements OnInit, OnDestroy {
-  filter: string;
+  filter: DiscoveryFeedsContentFilter;
   entities$ = this.service.entities$;
   inProgress$ = this.service.inProgress$;
   hasMoreData$ = this.service.hasMoreData$;
@@ -25,7 +28,7 @@ export class DiscoveryFeedsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.urlSubscription = this.route.url.subscribe(
       (segments: UrlSegment[]) => {
-        this.filter = segments[0].path;
+        this.filter = <DiscoveryFeedsContentFilter>segments[0].path;
         this.service.setFilter(this.filter);
         if (this.filter === 'trending') {
           this.service.setPeriod('12h');
