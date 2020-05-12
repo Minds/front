@@ -10,7 +10,7 @@
     <h2>
       Setup your Bitcoin Address
     </h2>
-    <p class="m-walletTertiaryText--desc">
+    <p class="m-walletSecondaryText--desc">
       You can receive Bitcoin payments by linking your Bitcoin receiver address
       below.
     </p>
@@ -27,7 +27,7 @@
     <h2>
       Update Bitcoin Address
     </h2>
-    <p class="m-walletTertiaryText--desc">
+    <p class="m-walletSecondaryText--desc">
       Note: You may want to rotate this address frequently to avoid third party
       tracking.
     </p>
@@ -39,7 +39,7 @@
     >
       <div class="m-walletForm__fieldsContainer">
         <div class="m-walletForm__field--text stretchedField">
-          <div class="m-walletForm__row--label m-walletTertiaryText--label">
+          <div class="m-walletForm__row--label m-walletSecondaryText--label">
             <label for="addressInput" i18n>Bitcoin Address</label>
             <m-tooltip icon="help">
               <ng-container i18n
@@ -91,7 +91,7 @@
       </div>
     </form>
     <a
-      class="m-walletTertiaryText--backButton"
+      class="m-walletSecondaryText--backButton"
       *ngIf="currentAddress"
       (click)="showForm = false"
       ><i class="material-icons">❮</i><span>Back to current address</span></a
@@ -108,7 +108,7 @@
     </h2>
     <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
 
-    <p class="m-walletTertiaryText--label">
+    <p class="m-walletSecondaryText--label">
       Current bitcoin address
     </p>
     <div class="m-walletSettings__currentAddressContainer">

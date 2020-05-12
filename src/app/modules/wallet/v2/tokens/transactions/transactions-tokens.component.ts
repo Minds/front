@@ -36,6 +36,7 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
   selectedTransactionType: string = 'all';
   filterApplied: boolean = false;
   typeFilter: string = '';
+  typeLabel: string = '';
 
   showRewardsPopup: boolean = false;
   startOfToday = moment()
@@ -258,6 +259,8 @@ export class WalletTransactionsTokensComponent implements OnInit, OnDestroy {
 
   filterSelected($event) {
     this.typeFilter = $event.option.id;
+
+    this.typeLabel = this.typeFilter === 'all' ? 'token' : $event.option.label;
     if (this.typeFilter !== this.selectedTransactionType) {
       this.filterApplied = this.typeFilter === 'all' ? false : true;
       this.selectedTransactionType = this.typeFilter;

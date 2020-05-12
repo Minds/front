@@ -11,7 +11,7 @@ m-walletRewardsPopup {
 
   @include m-theme() {
     background-color: themed($m-white);
-    color: themed($m-textColor--tertiary);
+    color: themed($m-textColor--secondary);
     box-shadow: 0 0 10px 0 rgba(themed($m-black), 0.1);
     border: 1px solid themed($m-borderColor--primary);
   }

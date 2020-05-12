@@ -7,7 +7,7 @@
   <!-- -------------------------------------------- -->
   <div *ngIf="!display">
     <h2>
-      On-chain address
+      On-Chain Address
     </h2>
     <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
     <div class="m-walletSettings__recommendation">
@@ -67,14 +67,14 @@
       </li>
       <p *ngIf="currentAddress">
         <a
-          class="m-walletTertiaryText--backButton"
+          class="m-walletSecondaryText--backButton"
           (click)="backToCurrentAddress()"
           ><i class="material-icons">❮</i
           ><span>Back to current address</span></a
         >
       </p>
     </ul>
-    <p class="m-walletTertiaryText--error" *ngIf="error">{{ error }}</p>
+    <p class="m-walletSecondaryText--error" *ngIf="error">{{ error }}</p>
   </div>
 
   <ul *ngIf="display">
@@ -86,7 +86,7 @@
       <h2>
         Create Address
       </h2>
-      <p *ngIf="!generatedAccount" class="m-walletTertiaryText--desc">
+      <p *ngIf="!generatedAccount" class="m-walletSecondaryText--desc">
         Generate a custom address to use instead of MetaMask. Once the address
         is generated, you will be provided with a link to download the address
         and private key.
@@ -99,9 +99,9 @@
         Create Address
       </m-shadowboxSubmitButton>
       <!-- Address created -->
-      <p *ngIf="generatedAccount" class="m-walletTertiaryText--desc">
+      <p *ngIf="generatedAccount" class="m-walletSecondaryText--desc">
         The address
-        <span class="m-walletTertiaryText--emphasis">{{
+        <span class="m-walletSecondaryText--emphasis">{{
           generatedAccount.address
         }}</span>
         was successully saved as your on-chain address. Click the button below
@@ -116,7 +116,7 @@
       >
         Download Private Key
       </m-shadowboxSubmitButton>
-      <a class="m-walletTertiaryText--backButton" (click)="display = null"
+      <a class="m-walletSecondaryText--backButton" (click)="display = null"
         ><i class="material-icons">❮</i><span>Back to settings</span></a
       >
     </li>
@@ -127,7 +127,7 @@
       <h2>
         Provide Address
       </h2>
-      <p class="m-walletTertiaryText--desc">
+      <p class="m-walletSecondaryText--desc">
         Enter the address that will be stored as your wallet for Minds on-chain
         tokens and Ether payments. To conduct transactions you will need your
         wallet's private key and MetaMask cannot be installed in your browser.
@@ -191,7 +191,7 @@
           </m-shadowboxSubmitButton>
         </div>
       </form>
-      <a class="m-walletTertiaryText--backButton" (click)="display = null"
+      <a class="m-walletSecondaryText--backButton" (click)="display = null"
         ><i class="material-icons">❮</i><span>Back to settings</span></a
       >
     </li>
@@ -201,11 +201,11 @@
     <!-- -------------------------------------------- -->
     <li *ngIf="display === Views.CurrentAddress">
       <h2>
-        On-chain Address
+        On-Chain Address
       </h2>
       <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
 
-      <p class="m-walletTertiaryText--label">
+      <p class="m-walletSecondaryText--label">
         Current address
       </p>
       <div class="m-walletSettings__currentAddressContainer">
@@ -214,14 +214,14 @@
       </div>
     </li>
   </ul>
-  <p class="m-walletTertiaryText--error" *ngIf="error">{{ error }}</p>
+  <p class="m-walletSecondaryText--error" *ngIf="error">{{ error }}</p>
 </div>
 
 <!-- -------------------------------------------- -->
 <!--- ONCHAIN DESCRIPTION TEMPLATE ----------------->
 <!-- -------------------------------------------- -->
 <ng-template #onchainDesc>
-  <p class="m-walletTertiaryText--desc">
+  <p class="m-walletSecondaryText--desc">
     To receive on-chain payments from other channels (e.g. from a Wire or a
     Boost), you will need an on-chain address. You can change it here at any
     time. Note: your on-chain address is the same as your Ether address.
