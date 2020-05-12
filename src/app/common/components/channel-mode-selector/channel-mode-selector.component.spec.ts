@@ -32,6 +32,7 @@ describe('ChannelModeSelector', () => {
     comp = fixture.componentInstance;
 
     comp.user = {
+      type: 'user',
       guid: 'guidguid',
       name: 'name',
       username: 'username',

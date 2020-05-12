@@ -18,16 +18,13 @@ import { DialogService } from '../../common/services/confirm-leave-dialog.servic
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ClientMetaService } from '../../common/services/client-meta.service';
-import {
-  MetaService,
-  MIN_METRIC_FOR_ROBOTS,
-} from '../../common/services/meta.service';
 import { ConfigsService } from '../../common/services/configs.service';
+import { SeoService } from './v2/seo.service';
 
 @Component({
   selector: 'm-channel',
   templateUrl: 'channel.component.html',
-  providers: [ClientMetaService],
+  providers: [ClientMetaService, SeoService],
 })
 export class ChannelComponent {
   readonly cdnAssetsUrl: string;
@@ -52,7 +49,6 @@ export class ChannelComponent {
     public client: Client,
     public upload: Upload,
     public router: Router,
-    public metaService: MetaService,
     public scroll: ScrollService,
     public features: FeaturesService,
     private route: ActivatedRoute,
@@ -61,6 +57,7 @@ export class ChannelComponent {
     private dialogService: DialogService,
     private blockListService: BlockListService,
     private clientMetaService: ClientMetaService,
+    private seo: SeoService,
     private configs: ConfigsService,
     @SkipSelf() injector: Injector
   ) {
@@ -126,32 +123,7 @@ export class ChannelComponent {
   }
 
   private updateMeta(): void {
-    if (this.user) {
-      const url = `/${this.user.username.toLowerCase()}`;
-      this.metaService
-        .setTitle(`${this.user.name} (@${this.user.username})`)
-        .setDescription(
-          this.user.briefdescription || `Subscribe to @${this.user.username}`
-        )
-        .setOgUrl(url)
-        .setCanonicalUrl(url)
-        .setOgImage(this.user.avatar_url.master, {
-          width: 2000,
-          height: 1000,
-        })
-        .setRobots(
-          this.user['subscribers_count'] < MIN_METRIC_FOR_ROBOTS
-            ? 'noindex'
-            : 'all'
-        );
-      if (this.user.is_mature || this.user.nsfw.length) {
-        this.metaService.setNsfw(true);
-      }
-    } else if (this.username) {
-      this.metaService.setTitle(this.username);
-    } else {
-      this.metaService.setTitle('Channel');
-    }
+    this.seo.set(this.user || this.username || 'Channel');
   }
 
   load() {
