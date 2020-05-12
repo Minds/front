@@ -185,6 +185,7 @@ describe('ChannelSidebar', () => {
     uploadMock.response = {};
     comp = fixture.componentInstance;
     comp.user = {
+      type: 'user',
       guid: 'guidguid',
       name: 'name',
       username: 'username',

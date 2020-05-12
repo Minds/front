@@ -60,6 +60,7 @@ export enum ChannelMode {
 }
 
 export interface MindsUser {
+  type: 'user';
   guid: string;
   name: string;
   username: string;
