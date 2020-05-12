@@ -1,30 +1,26 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+} from '@angular/core';
 
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
-import { SignupModalService } from '../../../../modules/modals/signup/service';
+import { SignupModalService } from '../../../modals/signup/service';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { RemindComposerModalComponent } from '../../../modals/remind-composer-v2/reminder-composer.component';
 
-// had forwardRef(() => RemindComposerModal)
 @Component({
   selector: 'minds-button-remind',
   inputs: ['_object: object'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <a (click)="remind()" [ngClass]="{ selected: object.reminded }">
+    <a (click)="remind()" [ngClass]="{ selected: reminded }">
       <i class="material-icons">repeat</i>
-      <span class="minds-counter" *ngIf="object.reminds > 0">{{
-        object.reminds | number
+      <span class="minds-counter" *ngIf="counter > 0">{{
+        counter | number
       }}</span>
     </a>
-
-    <m-modal-remind-composer
-      *ngIf="remindOpen"
-      [object]="object"
-      [open]="true"
-      [default]="message"
-      (closed)="remindOpen = false"
-      (post)="send($event)"
-    ></m-modal-remind-composer>
   `,
 })
 export class RemindButton {
@@ -32,20 +28,24 @@ export class RemindButton {
   showModal: boolean = false;
   message: string = '';
   remindOpen: boolean = false;
+  counter: number = 0;
+  reminded: boolean = false;
 
   constructor(
+    public overlayModal: OverlayModalService,
     public session: Session,
     public client: Client,
-    private modal: SignupModalService
+    private modal: SignupModalService,
+    private cd: ChangeDetectorRef
   ) {}
 
   set _object(value: any) {
     this.object = value;
+    this.counter = this.object.reminds;
+    this.reminded = !!this.object.reminded;
   }
 
   remind() {
-    var self = this;
-
     if (this.object.reminded) return false;
 
     if (!this.session.isLoggedIn()) {
@@ -54,23 +54,21 @@ export class RemindButton {
     }
 
     this.remindOpen = true;
+    this.overlayModal
+      .create(RemindComposerModalComponent, this.object, {
+        class: 'm-overlayModal--remind',
+      })
+      .onDidDismiss(() => {
+        this.remindOpen = false;
+        this.counter = this.object.reminds;
+        this.reminded = this.object.reminded;
+        this.detectChanges();
+      })
+      .present();
   }
 
-  send($event) {
-    if ($event.message) {
-      this.message = $event.message;
-    }
-
-    this.object.reminded = true;
-    this.object.reminds++;
-
-    this.client
-      .post('api/v2/newsfeed/remind/' + this.object.guid, {
-        message: this.message,
-      })
-      .catch(e => {
-        this.object.reminded = false;
-        this.object.reminds--;
-      });
+  private detectChanges() {
+    this.cd.markForCheck();
+    this.cd.detectChanges();
   }
 }
