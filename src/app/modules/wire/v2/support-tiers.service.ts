@@ -67,7 +67,7 @@ export class SupportTiersService {
       map(
         (entityGuid: string): Observable<ApiResponse> =>
           entityGuid
-            ? this.api.get(`api/v3/wire/supporttiers/${entityGuid}`)
+            ? this.api.get(`api/v3/wire/supporttiers/all/${entityGuid}`)
             : of(null)
       ),
       switchAll(),
