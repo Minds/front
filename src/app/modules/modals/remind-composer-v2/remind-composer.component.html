@@ -1,0 +1,42 @@
+<div class="m-modal__remindComposer">
+  <h3
+    class="m-modalRemindComposer__title"
+    i18n="@@MODALS__REMIND_COMPOSER__REMIND_TITLE"
+  >
+    Remind
+  </h3>
+
+  <ng-template
+    #itemTemplate
+    let-choice="choice"
+    let-selectChoice="selectChoice"
+  >
+    <m-post-autocomplete-item-renderer
+      [choice]="choice"
+      [selectChoice]="selectChoice"
+    ></m-post-autocomplete-item-renderer>
+  </ng-template>
+
+  <m-text-input--autocomplete-container>
+    <textarea
+      name="message"
+      [(ngModel)]="message"
+      placeholder="Enter your remind status here (optional)"
+      i18n-placeholder="@@MODALS__REMIND_COMPOSER__PLACEHOLDER"
+      [autoGrow]
+      mTextInputAutocomplete
+      [findChoices]="suggestions.findSuggestions"
+      [getChoiceLabel]="suggestions.getChoiceLabel"
+      [itemTemplate]="itemTemplate"
+      [triggerCharacters]="['#', '@']"
+    ></textarea>
+  </m-text-input--autocomplete-container>
+
+  <div class="m-modalRemindComposer__buttons">
+    <a class="m-modal__remindComposer__send" (click)="send()">
+      <i class="material-icons">send</i>
+    </a>
+  </div>
+</div>
+
+<ng-template dynamic-host></ng-template>

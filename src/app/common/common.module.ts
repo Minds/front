@@ -173,6 +173,7 @@ import { FeedFilterComponent } from './components/feed-filter/feed-filter.compon
 import { AccordionComponent } from './components/accordion/accordion.component';
 import { AccordionPaneComponent } from './components/accordion/accordion-pane.component';
 import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sidebar.directive';
+import { RemindComposerModalComponent } from '../modules/modals/remind-composer-v2/reminder-composer.component';
 
 const routes: Routes = [
   {
@@ -529,6 +530,7 @@ const routes: Routes = [
     NotificationsToasterComponent,
     ReferralsLinksComponent,
     ShareModalComponent,
+    RemindComposerModalComponent,
   ],
 })
 export class CommonModule {}
