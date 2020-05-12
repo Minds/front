@@ -46,101 +46,16 @@
       </div>
     </div>
 
-    <div class="m-channelAbout__narrowExtraInfo m-channelAbout__container">
+    <div class="m-channelAbout__narrowExtraInfo">
       <ng-container *ngTemplateOutlet="extraInfo"></ng-container>
     </div>
   </div>
 
   <div m-pageLayout__pane="right">
-    <div class="m-channelAbout__container">
-      <ng-container *ngTemplateOutlet="extraInfo"></ng-container>
-    </div>
+    <ng-container *ngTemplateOutlet="extraInfo"></ng-container>
   </div>
 
   <ng-template #extraInfo>
-    <div
-      *ngIf="channel.city"
-      class="m-channelAbout__field m-channelAbout__field--fullWidth"
-    >
-      <div class="m-channelAboutField__label" i18n>Location</div>
-      <div class="m-channelAboutField__content">
-        {{ channel.city }}
-      </div>
-    </div>
-
-    <div
-      *ngIf="channel.dob"
-      class="m-channelAbout__field m-channelAbout__field--fullWidth"
-    >
-      <div class="m-channelAboutField__label" i18n>Date of birth</div>
-      <div class="m-channelAboutField__content">
-        {{ dobToDate(channel.dob) | date: 'mediumDate' }}
-      </div>
-    </div>
-
-    <div class="m-channelAbout__field">
-      <div class="m-channelAboutField__label" i18n>Badges</div>
-      <div class="m-channelAboutField__content">
-        <m-channel--badges [user]="channel"></m-channel--badges>
-      </div>
-    </div>
-
-    <div class="m-channelAbout__field">
-      <div class="m-channelAboutField__label" i18n>Joined</div>
-      <div class="m-channelAboutField__content">
-        {{ channel.time_created * 1000 | date: 'MMM yyyy' }}
-      </div>
-    </div>
-
-    <div class="m-channelAbout__field">
-      <div class="m-channelAboutField__label" i18n>Groups</div>
-      <div class="m-channelAboutField__content">
-        {{ service.groupCount$ | async | number }}
-      </div>
-    </div>
-
-    <div class="m-channelAbout__field">
-      <div class="m-channelAboutField__label" i18n>Channel Views</div>
-      <div class="m-channelAboutField__content">
-        {{ channel.impressions | abbr }}
-      </div>
-    </div>
-
-    <div class="m-channelAbout__field">
-      <div class="m-channelAboutField__label" i18n>Subscribers</div>
-      <div class="m-channelAboutField__content">
-        {{ channel.subscribers_count | number }}
-      </div>
-    </div>
-
-    <div class="m-channelAbout__field">
-      <div class="m-channelAboutField__label" i18n>Subscriptions</div>
-      <div class="m-channelAboutField__content">
-        {{ channel.subscriptions_count | number }}
-      </div>
-    </div>
-
-    <div class="m-channelAbout__field m-channelAbout__field--fullWidth">
-      <div class="m-channelAboutField__label" i18n>
-        Accepted Payment Methods
-      </div>
-      <div class="m-channelAboutField__content">
-        {{ getPaymentMethods(channel) }}
-      </div>
-    </div>
-
-    <div class="m-channelAbout__field">
-      <div class="m-channelAboutField__label" i18n>Tokens Earned</div>
-      <div class="m-channelAboutField__content">
-        {{ service.tokens$ | async | token: 18 | number }}
-      </div>
-    </div>
-
-    <div class="m-channelAbout__field" *ngIf="session.isLoggedIn()">
-      <div class="m-channelAboutField__label" i18n>Tokens Sent</div>
-      <div class="m-channelAboutField__content">
-        {{ service.tokensSent$ | async | token: 18 | number }}
-      </div>
-    </div>
+    <m-channelAbout__extraInfo></m-channelAbout__extraInfo>
   </ng-template>
 </div>

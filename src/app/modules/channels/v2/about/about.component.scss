@@ -9,20 +9,20 @@
 }
 
 .m-channel__about {
+  .m-channelAbout__narrowExtraInfo m-channelAbout__extraInfo {
+    display: none;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      display: flex;
+    }
+  }
+
   .m-channelAbout__container {
     display: flex;
     flex-direction: row;
     align-items: flex-start;
     justify-content: flex-start;
     flex-wrap: wrap;
-
-    &.m-channelAbout__narrowExtraInfo {
-      display: none;
-
-      @media screen and (max-width: $layoutMin3ColWidth) {
-        display: flex;
-      }
-    }
 
     .m-channelAbout__field {
       width: 50%;

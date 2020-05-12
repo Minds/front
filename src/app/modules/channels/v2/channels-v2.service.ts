@@ -6,6 +6,7 @@ import { Session } from '../../../services/session';
 import {
   distinctUntilChanged,
   map,
+  shareReplay,
   switchAll,
   switchMap,
 } from 'rxjs/operators';
@@ -76,45 +77,43 @@ export class ChannelsV2Service {
     // Set tokens$ observable
     this.tokens$ = this.channel$.pipe(
       distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
-      map(
-        channel =>
-          channel &&
-          this.api.get(`api/v1/wire/sums/overview/${channel.guid}`, {
-            merchant: channel.merchant ? 1 : 0,
-          })
+      map(channel =>
+        channel
+          ? this.api.get(`api/v1/wire/sums/overview/${channel.guid}`, {
+              merchant: channel.merchant ? 1 : 0,
+            })
+          : of(null)
       ),
       switchAll(),
+      shareReplay({ bufferSize: 1, refCount: true }),
       map(response => parseFloat((response && response.tokens) || '0'))
     );
 
     // Set tokensSent$ observable
     this.tokensSent$ = this.channel$.pipe(
       distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
-      map(
-        channel =>
-          channel && this.api.get(`api/v1/wire/rewards/${channel.guid}`)
+      map(channel =>
+        channel ? this.api.get(`api/v1/wire/rewards/${channel.guid}`) : of(null)
       ),
       switchAll(),
+      shareReplay({ bufferSize: 1, refCount: true }),
       map(response =>
         parseFloat((response && response.sums && response.sums.tokens) || '0')
       )
     );
 
-    // TODO: To be done in another iteration
-    //
     // Set groupCount$ observable
-    // this.groupCount$ = this.channel$.pipe(
-    //   distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
-    //   map(
-    //     channel =>
-    //       channel && this.api.get(`api/v2/channel/groups/${channel.guid}/count`)
-    //   ),
-    //   switchAll(),
-    //   map(response =>
-    //     (response && response.count) || 0
-    //   )
-    // );
-    this.groupCount$ = of(0);
+    this.groupCount$ = this.channel$.pipe(
+      distinctUntilChanged((a, b) => !a || !b || a.guid === b.guid),
+      map(channel =>
+        channel
+          ? this.api.get(`api/v3/channel/${channel.guid}/groups/count`)
+          : of(null)
+      ),
+      switchAll(),
+      shareReplay({ bufferSize: 1, refCount: true }),
+      map(response => (response && response.count) || 0)
+    );
 
     // Set isOwner$ observable
     this.isOwner$ = combineLatest([this.guid$, this.session.user$]).pipe(

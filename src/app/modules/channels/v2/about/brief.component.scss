@@ -25,6 +25,8 @@ m-channelAbout__brief {
     display: block;
     font-size: 18px;
     line-height: 23px;
+    text-decoration: none;
+    font-weight: inherit;
 
     @include m-theme() {
       color: themed($m-textColor--primary);

@@ -183,12 +183,18 @@ export class FeedsService implements OnDestroy {
         }
         if (!response.entities && response.activity) {
           response.entities = response.activity;
+        } else if (!response.entities && response.users) {
+          response.entities = response.users;
         }
         if (response.entities.length) {
           this.fallbackAt = response['fallback_at'];
           this.fallbackAtIndex.next(null);
           this.rawFeed.next(this.rawFeed.getValue().concat(response.entities));
           this.pagingToken = response['load-next'];
+
+          if (!this.pagingToken) {
+            this.canFetchMore = false;
+          }
         } else {
           this.canFetchMore = false;
         }
@@ -205,6 +211,20 @@ export class FeedsService implements OnDestroy {
       this.rawFeed.next(this.rawFeed.getValue());
     }
     return this;
+  }
+
+  /**
+   * Loads next batch. Used by infinite scroll component
+   */
+  loadNext() {
+    if (
+      this.canFetchMore &&
+      !this.inProgress.getValue() &&
+      this.offset.getValue()
+    ) {
+      this.fetch(); // load the next 150 in the background
+    }
+    this.loadMore();
   }
 
   deleteItem(obj: any, comparatorFn: (item, obj) => boolean): FeedsService {

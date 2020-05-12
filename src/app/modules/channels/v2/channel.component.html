@@ -15,7 +15,7 @@
       <div class="m-tabs__tab">
         <a
           [class.m-tabs__tab--selected]="
-            ['shop', 'about'].indexOf(view$ | async) === -1
+            ['activities', 'images', 'videos', 'blogs'].includes(view$ | async)
           "
           [routerLink]="['/', username, '']"
           i18n
@@ -36,8 +36,11 @@
       <div class="m-tabs__tab">
         <a
           [routerLink]="['/', username, 'about']"
-          routerLinkActive="m-tabs__tab--selected"
-          [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
+          [class.m-tabs__tab--selected]="
+            ['about', 'subscribers', 'subscriptions', 'groups'].includes(
+              view$ | async
+            )
+          "
           i18n
           >About</a
         >
@@ -47,6 +50,15 @@
     <ng-container [ngSwitch]="view$ | async">
       <m-channel__shop *ngSwitchCase="'shop'"></m-channel__shop>
       <m-channel__about *ngSwitchCase="'about'"></m-channel__about>
+      <m-channelList__connections
+        subscribeEndpointParam="subscribers"
+        *ngSwitchCase="'subscribers'"
+      ></m-channelList__connections>
+      <m-channelList__connections
+        subscribeEndpointParam="subscriptions"
+        *ngSwitchCase="'subscriptions'"
+      ></m-channelList__connections>
+      <m-channelList__groups *ngSwitchCase="'groups'"></m-channelList__groups>
       <m-channel__feed
         [view]="view$ | async"
         *ngSwitchDefault
