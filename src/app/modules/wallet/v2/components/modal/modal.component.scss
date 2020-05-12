@@ -20,12 +20,13 @@ m-walletModal {
     height: 100%;
     z-index: 9999995;
     @include m-theme() {
-      background-color: rgba(themed($m-white), 0.6);
+      background-color: rgba(themed($m-black-always), 0.8);
     }
   }
 
   .m-walletModal {
     padding: 56px 65px;
+    border-radius: 5px;
     z-index: 9999996;
     position: fixed;
     transform: translateY(-50%);
@@ -40,9 +41,9 @@ m-walletModal {
     overflow-y: auto;
     transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
     @include m-theme() {
-      box-shadow: 0 12px 24px rgba(themed($m-black), 0.3);
-      background-color: themed($m-white);
-      color: themed($m-grey-300);
+      box-shadow: 0 0 15px rgba(themed($m-black-always), 0.1);
+      background-color: themed($m-bgColor--secondary);
+      color: themed($m-textColor--secondary);
     }
 
     a {
@@ -60,10 +61,11 @@ m-walletModal {
     @media screen and (max-width: $max-mobile) {
       max-width: 90vw;
       max-height: 95vh;
+      padding: 46px 24px;
     }
   }
 
-  .m-walletTertiaryText--desc {
+  .m-walletSecondaryText--desc {
     margin-bottom: 30px;
   }
 
@@ -85,14 +87,9 @@ m-walletModal {
     top: 25px;
     padding: 4px;
     display: inline-block;
-    border-radius: 50%;
-
     cursor: pointer;
     transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    @include m-theme() {
-      background-color: themed($m-white);
-      box-shadow: 0 0 15px 0 rgba(themed($m-black), 0.25);
-    }
+
     i {
       position: absolute;
       top: 50%;
@@ -100,30 +97,13 @@ m-walletModal {
       margin-top: -25%;
       transform: translate(-50%);
       font-size: 28px;
-      opacity: 0.3;
-      transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+        text-shadow: 0 0 2px rgba(themed($m-black-always), 0.2);
+      }
     }
     &:hover {
-      transform: scale(1.05);
-      @include m-theme() {
-        box-shadow: 0 0 8px 0 rgba(themed($m-black), 0.22);
-      }
-      i {
-        opacity: 0.6;
-      }
+      transform: scale(1.1);
     }
-    // @media screen and (max-width: $max-mobile) {
-    //   top: 14px;
-    //   right: 20px;
-    //   @include m-theme() {
-    //     background-color: rgba(0, 0, 0, 0);
-    //     box-shadow: none;
-    //   }
-    //   &:hover {
-    //     @include m-theme() {
-    //       box-shadow: none;
-    //     }
-    //   }
-    // }
   }
 }

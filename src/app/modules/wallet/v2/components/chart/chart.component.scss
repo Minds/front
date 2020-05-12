@@ -2,6 +2,7 @@ m-walletChart {
   display: block;
   height: 44vh;
   margin-top: 12px;
+  margin: 12px 0 60px 0;
 
   m-chartV2 {
     @media screen and (max-width: $max-mobile) {

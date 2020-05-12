@@ -1,6 +1,6 @@
 <div class="m-walletCashOnboarding">
   <div class="m-walletCashOnboardingView--addDetails" *ngIf="!editing">
-    <p class="m-walletTertiaryText--desc">
+    <p class="m-walletSecondaryText--desc">
       Add your bank account details where cash rewards will be deposited.
     </p>
     <m-shadowboxSubmitButton (click)="enterEditMode()"
@@ -12,7 +12,7 @@
   <!-- -------------------------------------------- -->
   <div class="m-walletCashOnboardingView--form" *ngIf="editing">
     <form [formGroup]="form" class="m-walletButtonLayout--buttonOffsetRight">
-      <p class="m-walletTertiaryText--desc">
+      <p class="m-walletSecondaryText--desc">
         Start receiving cash payouts by adding your bank details.
       </p>
 
@@ -293,7 +293,7 @@
         <!-- -------------------------------------------- -->
         <!--- ERROR ---------------------------------------->
         <!-- -------------------------------------------- -->
-        <p class="m-walletTertiaryText--error">
+        <p class="m-walletSecondaryText--error">
           {{ error }}
         </p>
       </div>
@@ -324,7 +324,7 @@
     (closeModal)="showModal = false"
     class="m-walletModal--confirmation"
   >
-    <p class="m-walletTertiaryText--desc">
+    <p class="m-walletSecondaryText--desc">
       Are you sure you want to stop? Any personal information you've entered
       will be lost.
     </p>

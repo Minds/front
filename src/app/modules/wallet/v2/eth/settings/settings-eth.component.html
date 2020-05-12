@@ -3,7 +3,7 @@
 <!-- -------------------------------------------- -->
 <div class="m-walletSettings">
   <h2>Ether Address</h2>
-  <div class="m-walletTertiaryText--desc">
+  <div class="m-walletSecondaryText--desc">
     <p>
       Your Ether address is the same as your on-chain address.<m-tooltip
         icon="help"
@@ -21,7 +21,7 @@
   </div>
   <div *ngIf="ethWallet.address" class="m-walletSettings--eth__balanceWrapper">
     <div>
-      <p class="m-walletSettings--eth__balanceLabel m-walletTertiaryText--16">
+      <p class="m-walletSettings--eth__balanceLabel m-walletSecondaryText--16">
         Ether total
       </p>
       <p class="m-walletSettings--eth__balanceVal">{{ ethWallet.balance }}</p>

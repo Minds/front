@@ -30,7 +30,8 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
   offchainBalance;
   onchainBalance;
   inProgress = true;
-  showModal = false;
+  showTransferModal = false;
+  showTokenModal = false;
   protected updateTimer$;
 
   // display 2am UTC in local time
@@ -114,7 +115,7 @@ export class WalletBalanceTokensV2Component implements OnInit, OnDestroy {
 
   transferComplete() {
     this.formToastService.success('On-chain transfer complete');
-    this.showModal = false;
+    this.showTransferModal = false;
   }
 
   detectChanges() {

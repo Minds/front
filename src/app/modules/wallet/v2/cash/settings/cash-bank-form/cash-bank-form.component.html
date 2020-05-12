@@ -12,7 +12,7 @@
     class="m-walletButtonLayout--buttonOffsetRight"
     *ngIf="!hasBank || editing"
   >
-    <p class="m-walletTertiaryText--desc">
+    <p class="m-walletSecondaryText--desc">
       Finish adding your bank details to start receiving cash payouts.
     </p>
     <div class="m-walletForm__fieldsContainer">
@@ -75,7 +75,7 @@
       <!-- -------------------------------------------- -->
       <!--- ERROR ---------------------------------------->
       <!-- -------------------------------------------- -->
-      <p class="m-walletTertiaryText--error">
+      <p class="m-walletSecondaryText--error">
         {{ error }}
       </p>
     </div>
@@ -102,7 +102,7 @@
   <!-- -------------------------------------------- -->
   <ng-container *ngIf="hasBank && !editing">
     <div class="m-walletSettingsView--hasAccount__accountSummary">
-      <p class="m-walletTertiaryText--desc">
+      <p class="m-walletSecondaryText--desc">
         Your bank account where cash rewards are deposited.
       </p>
       <div class="m-walletSettingsView--hasAccount__detailsWrapper">
@@ -146,7 +146,7 @@
     [showModal]="showModal && modalContent === 'leaveEditMode'"
     (closeModal)="showModal = false"
   >
-    <p class="m-walletTertiaryText--desc">
+    <p class="m-walletSecondaryText--desc">
       Are you sure you want to stop? Any bank information you've entered will be
       lost.
     </p>
@@ -172,7 +172,7 @@
     [showModal]="showModal && modalContent === 'removeBank'"
     (closeModal)="showModal = false"
   >
-    <p class="m-walletTertiaryText--desc">
+    <p class="m-walletSecondaryText--desc">
       Are you sure you want to remove your bank account information? You won't
       be able to receive payments until you add another one.
     </p>
@@ -197,7 +197,7 @@
       [showModal]="showModal && modalContent === 'leaveMonetization'"
       (closeModal)="showModal = false"
     >
-      <p class="m-walletTertiaryText--desc">
+      <p class="m-walletSecondaryText--desc">
         Are you sure you want to leave the monetization program? You won't be
         able to rejoin again.
       </p>
@@ -216,7 +216,7 @@
     </m-walletModal> -->
   <!-- </ng-container>
   <ng-container *ngIf="leftMonetization">
-    <p class="m-walletTertiaryText--desc">
+    <p class="m-walletSecondaryText--desc">
       You have left the monetization program.
     </p>
   </ng-container> -->

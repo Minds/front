@@ -6,7 +6,7 @@ m-walletBalance--tokens {
     font-size: 15px;
     line-height: 20px;
     @include m-theme() {
-      color: themed($m-textColor--tertiary);
+      color: themed($m-textColor--secondary);
     }
   }
   .m-walletBalance--tokens__equationWrapper {

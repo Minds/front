@@ -2,12 +2,12 @@
   Phone Verification
 </h2>
 <div class="m-walletModal__desc">
-  <p class="m-walletTertiaryText">
+  <p class="m-walletSecondaryText">
     You can earn tokens for your contributions to the Minds network. The more
     interactions on your content, the greater your share of the daily token
     reward pool to your off-chain address.
   </p>
-  <p class="m-walletTertiaryText">
+  <p class="m-walletSecondaryText">
     To start earning rewards, you will need to enter a unique phone number.
   </p>
 </div>
@@ -80,7 +80,7 @@
 
 <div class="m-walletModal__footnote" *ngIf="confirming">
   <div>Verification code sent to +{{ form.value.number }}</div>
-  <div class="m-walletTertiaryText">
+  <div class="m-walletSecondaryText">
     Didn't receive it? <a (click)="validateNumber()">Send it again</a> or
     <a (click)="changePhone()">change phone number</a>
   </div>

@@ -63,7 +63,7 @@ m-walletTokenOnboarding {
         cursor: default;
         text-decoration: line-through;
         @include m-theme() {
-          color: themed($m-textColor--tertiary);
+          color: themed($m-textColor--secondary);
         }
       }
     }

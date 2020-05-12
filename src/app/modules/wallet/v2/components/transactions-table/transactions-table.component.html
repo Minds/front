@@ -9,7 +9,7 @@
           <td colspan="4">{{ tx.displayDate }}</td>
         </tr>
       </ng-container>
-      <tr>
+      <tr class="m-walletTransactionsTable__row--hasIcon">
         <td class="m-walletTransactionsTable__time">{{ tx.displayTime }}</td>
         <td class="m-walletTransactionsTable__details">
           <ng-container [ngSwitch]="tx.superType">

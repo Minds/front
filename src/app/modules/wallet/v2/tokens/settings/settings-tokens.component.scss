@@ -16,7 +16,7 @@ m-walletSettings--tokens {
       line-height: 16px;
       margin: 31px 0 0 0;
       @include m-theme() {
-        color: themed($m-textColor--tertiary);
+        color: themed($m-textColor--secondary);
       }
       i {
         font-size: 18px;
@@ -84,7 +84,7 @@ m-walletSettings--tokens {
           }
           span {
             @include m-theme() {
-              color: themed($m-textColor--tertiary);
+              color: themed($m-textColor--secondary);
             }
           }
         }
