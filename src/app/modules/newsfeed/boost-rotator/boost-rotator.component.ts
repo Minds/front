@@ -190,6 +190,8 @@ export class NewsfeedBoostRotatorComponent {
         if (this.currentPosition >= this.boosts.length) {
           this.currentPosition = 0;
         }
+        // Recalculate height because it may have been empty
+        setTimeout(() => this.calculateHeight());
         // distinctuntilchange is now safe
         this.viewsCollector$.next(this.currentPosition);
       })
