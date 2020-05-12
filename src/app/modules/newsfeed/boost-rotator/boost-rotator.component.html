@@ -36,10 +36,11 @@
 </div>
 
 <div
-  *ngIf="!disabled && boosts.length"
+  *ngIf="!disabled"
   #rotatorEl
   [class.m-newsfeed__boostRotator]="useNewNavigation"
   [style.min-height]="height"
+  [hidden]="!boosts.length"
 >
   <ng-container *ngFor="let entity of boosts; let i = index">
     <ng-container *mIfFeature="'navigation'; else legacyActivity">
