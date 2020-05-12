@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { Client } from '../../services/api';
 import { BlockListService } from './block-list.service';
@@ -31,18 +31,20 @@ export class EntitiesService {
     const entities = [];
 
     for (const feedItem of feed) {
-      if (feedItem.entity) {
-        this.addEntity(feedItem.entity);
-      }
-      if (!this.entities.has(feedItem.urn)) {
-        urnsToFetch.push(feedItem.urn);
-      }
-      if (
-        this.entities.has(feedItem.urn) &&
-        !feedItem.entity &&
-        feed.length < 20
-      ) {
-        urnsToResync.push(feedItem.urn);
+      if (feedItem.entity || feedItem.urn) {
+        if (feedItem.entity) {
+          this.addEntity(feedItem.entity);
+        }
+        if (!this.entities.has(feedItem.urn)) {
+          urnsToFetch.push(feedItem.urn);
+        }
+        if (
+          this.entities.has(feedItem.urn) &&
+          !feedItem.entity &&
+          feed.length < 20
+        ) {
+          urnsToResync.push(feedItem.urn);
+        }
       }
     }
 
@@ -59,16 +61,20 @@ export class EntitiesService {
     }
 
     for (const feedItem of feed) {
-      if (
-        this.entities.has(feedItem.urn) &&
-        (!blockedGuids || blockedGuids.indexOf(feedItem.owner_guid) < 0)
-      ) {
-        const entity = this.entities.get(feedItem.urn);
-        try {
-          if (await entity.pipe(first()).toPromise()) {
-            entities.push(entity);
-          }
-        } catch (err) {}
+      if (feedItem.entity || feedItem.urn) {
+        if (
+          this.entities.has(feedItem.urn) &&
+          (!blockedGuids || blockedGuids.indexOf(feedItem.owner_guid) < 0)
+        ) {
+          const entity = this.entities.get(feedItem.urn);
+          try {
+            if (await entity.pipe(first()).toPromise()) {
+              entities.push(entity);
+            }
+          } catch (err) {}
+        }
+      } else {
+        entities.push(of(feedItem));
       }
     }
 

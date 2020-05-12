@@ -2,18 +2,22 @@
   <div class="m-channelAboutBrief__stats">
     <div class="m-channelAboutBriefStats__item">
       <span class="m-channelAboutBriefStatsItem__label" i18n>Subscribers</span>
-      <span class="m-channelAboutBriefStatsItem__value">{{
-        channel.subscribers_count | abbr: 0
-      }}</span>
+      <a
+        [routerLink]="['/', this.service.username$ | async, 'subscribers']"
+        class="m-channelAboutBriefStatsItem__value"
+        >{{ channel.subscribers_count | abbr: 0 }}</a
+      >
     </div>
 
     <div class="m-channelAboutBriefStats__item">
       <span class="m-channelAboutBriefStatsItem__label" i18n
         >Subscriptions</span
       >
-      <span class="m-channelAboutBriefStatsItem__value">{{
-        channel.subscriptions_count | abbr: 0
-      }}</span>
+      <a
+        [routerLink]="['/', this.service.username$ | async, 'subscriptions']"
+        class="m-channelAboutBriefStatsItem__value"
+        >{{ channel.subscriptions_count | abbr: 0 }}</a
+      >
     </div>
 
     <div class="m-channelAboutBriefStats__item">

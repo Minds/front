@@ -1,0 +1,21 @@
+<div class="m-pageLayout__container m-channel__list">
+  <div class="m-channelList__list" m-pageLayout__pane="main">
+    <div class="m-channelListList__entities">
+      <m-newsfeed__entity
+        *ngFor="let entity$ of feedsService.feed | async"
+        [entity]="entity$ | async"
+      ></m-newsfeed__entity>
+
+      <infinite-scroll
+        distance="25%"
+        (load)="feedsService.loadNext()"
+        [moreData]="feedsService.hasMore | async"
+        [inProgress]="feedsService.inProgress | async"
+      ></infinite-scroll>
+    </div>
+  </div>
+
+  <div class="m-channelList__sidebar" m-pageLayout__pane="right">
+    <m-channelAbout__extraInfo></m-channelAbout__extraInfo>
+  </div>
+</div>
