@@ -2,7 +2,7 @@ m-composer__popup {
   display: block;
   position: absolute;
   border-radius: 5px;
-  z-index: 15;
+  z-index: 99999999;
 
   &.m-composer__popup--open {
     display: block;
@@ -23,20 +23,27 @@ m-composer__popup {
 
 .m-composer__popup {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  top: 50%;
   left: 0;
+  right: 0;
+  bottom: auto;
+  min-height: 477px;
+  max-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  min-height: 477px;
+  transform: translateY(-50%);
 
   @include m-theme() {
     background: themed($m-bgColor--secondary);
   }
 
   @media screen and (max-width: $max-mobile) {
-    max-height: 100vh;
+    top: 0;
+    bottom: 0;
     overflow: scroll;
+    transform: initial;
   }
 
   > * {
