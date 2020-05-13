@@ -21,6 +21,7 @@ import { DiscoverySettingsButtonComponent } from './settings-button/settings-but
 import { DiscoveryDisclaimerComponent } from './disclaimer/disclaimer.component';
 import { DiscoverySuggestionsComponent } from './suggestions/suggestions.component';
 import { DiscoveryNoTagsPromptComponent } from './tags/notags-prompt/notags-prompt.component';
+import { DiscoveryFeedsListComponent } from './feeds/feeds-list.component';
 
 @NgModule({
   imports: [
@@ -94,6 +95,7 @@ import { DiscoveryNoTagsPromptComponent } from './tags/notags-prompt/notags-prom
     DiscoverySearchComponent,
     DiscoveryTagsComponent,
     DiscoveryFeedsComponent,
+    DiscoveryFeedsListComponent,
     DiscoveryFeedItemComponent,
     DiscoverySettingsButtonComponent,
     DiscoveryDisclaimerComponent,

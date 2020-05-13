@@ -15,9 +15,6 @@ import { FeedsService } from '../../../common/services/feeds.service';
 })
 export class DiscoveryFeedsComponent implements OnInit, OnDestroy {
   filter: DiscoveryFeedsContentFilter;
-  entities$ = this.service.entities$;
-  inProgress$ = this.service.inProgress$;
-  hasMoreData$ = this.service.hasMoreData$;
   urlSubscription: Subscription;
 
   constructor(
@@ -35,23 +32,9 @@ export class DiscoveryFeedsComponent implements OnInit, OnDestroy {
         }
       }
     );
-    combineLatest(
-      this.service.nsfw$,
-      //this.service.filter$,
-      this.service.type$,
-      this.service.period$
-    )
-      .pipe(debounceTime(300))
-      .subscribe(() => {
-        this.service.load();
-      });
   }
 
   ngOnDestroy() {
     this.urlSubscription.unsubscribe();
-  }
-
-  loadMore() {
-    this.service.loadMore();
   }
 }

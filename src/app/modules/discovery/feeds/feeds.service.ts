@@ -18,7 +18,7 @@ export type DiscoveryFeedsContentFilter =
   | 'channels'
   | 'groups'
   | 'trending'
-  | 'prefered';
+  | 'preferred';
 export type DiscoveryFeedsNsfw = number[];
 
 @Injectable()
