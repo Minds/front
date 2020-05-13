@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { DiscoveryTrendsService } from './trends.service';
 import {
   Router,
@@ -6,16 +6,26 @@ import {
   RouterEvent,
   NavigationEnd,
 } from '@angular/router';
-import { filter, pairwise, startWith, takeUntil, map } from 'rxjs/operators';
+import {
+  filter,
+  pairwise,
+  startWith,
+  takeUntil,
+  map,
+  debounceTime,
+} from 'rxjs/operators';
 import { Subscription, combineLatest, Observable } from 'rxjs';
 import { FastFadeAnimation } from '../../../animations';
+import { DiscoveryFeedsService } from '../feeds/feeds.service';
+import { FeedsService } from '../../../common/services/feeds.service';
 
 @Component({
   selector: 'm-discovery__trends',
   templateUrl: './trends.component.html',
   animations: [FastFadeAnimation],
+  providers: [DiscoveryFeedsService, FeedsService],
 })
-export class DiscoveryTrendsComponent {
+export class DiscoveryTrendsComponent implements OnInit, OnDestroy {
   trends$ = this.discoveryService.trends$;
   hero$ = this.discoveryService.hero$;
   inProgress$ = this.discoveryService.inProgress$;
@@ -25,11 +35,13 @@ export class DiscoveryTrendsComponent {
     })
   );
   routerEventsSubscription: Subscription;
+  showPreferredFeed: boolean = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private discoveryService: DiscoveryTrendsService
+    private discoveryService: DiscoveryTrendsService,
+    private discoveryFeedsService: DiscoveryFeedsService
   ) {}
 
   ngOnInit() {
@@ -50,6 +62,22 @@ export class DiscoveryTrendsComponent {
           this.discoveryService.loadTrends();
         }
       });
+  }
+
+  loadMore() {
+    this.discoveryFeedsService.loadMore();
+  }
+
+  @HostListener('window:scroll', ['$event']) // for window scroll events
+  onScroll(event) {
+    const element = event.target.activeElement;
+    if (
+      !this.showPreferredFeed &&
+      element.scrollTop + element.clientHeight / 2 >= element.scrollHeight / 2
+    ) {
+      this.discoveryFeedsService.setFilter('preferred');
+      this.showPreferredFeed = true;
+    }
   }
 
   ngOnDestroy() {
