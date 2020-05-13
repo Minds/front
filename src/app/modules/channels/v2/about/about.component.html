@@ -22,13 +22,7 @@
         <div class="m-channelAboutField__label" i18n>Hashtags</div>
         <div class="m-channelAboutField__content" ngPreserveWhitespaces>
           <ng-container *ngFor="let tag of channel.tags">
-            <a
-              [routerLink]="[
-                '/newsfeed/global/top',
-                { hashtag: tag.toLowerCase(), period: '7d' }
-              ]"
-              >#{{ tag }}</a
-            >
+            <span [innerHTML]="'#' + tag | tags"></span>
           </ng-container>
         </div>
       </div>
