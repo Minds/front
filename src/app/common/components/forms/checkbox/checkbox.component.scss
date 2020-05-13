@@ -14,13 +14,14 @@ m-formInput__checkbox {
 
   .m-formInputCheckbox__visibleWrapper {
     display: flex;
-    align-items: center;
   }
   .m-formInputCheckbox__custom {
     display: inline-block;
     vertical-align: middle;
     height: 20px;
     width: 20px;
+    min-height: 20px;
+    min-width: 20px;
     border-radius: 2px;
     transition: all 0.3s ease;
     margin-right: $minds-margin;
@@ -49,6 +50,10 @@ m-formInput__checkbox {
         border-left: none;
       }
     }
+  }
+
+  .m-formInputCheckbox__customLabel {
+    margin-top: 2px;
   }
 
   // The input itself is invisible
