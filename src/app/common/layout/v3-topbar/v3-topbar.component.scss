@@ -25,6 +25,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  @media screen and (max-width: $max-mobile) {
+    width: 100%;
+  }
 }
 
 .m-v3Topbar__top {
