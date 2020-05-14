@@ -210,7 +210,9 @@ export class SettingsV2Component implements OnInit {
     this.user = this.session.getLoggedInUser().username;
 
     if (this.route.snapshot.url.length === 0) {
-      this.router.navigateByUrl('/settings/canary/account?ref=main');
+      this.router.navigateByUrl('/settings/canary/account?ref=main', {
+        skipLocationChange: true,
+      });
     }
 
     this.route.queryParamMap.subscribe(params => {
