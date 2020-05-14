@@ -259,9 +259,9 @@ export class YoutubeMigrationService {
     if (!channels) {
       return;
     }
-
     let selectedChannel: YoutubeChannel;
-    if (!this.selectedChannel$.value) {
+
+    if (!this.selectedChannel$.value.id) {
       selectedChannel = channels[0];
       this.selectChannel(selectedChannel.id);
     } else {
@@ -276,7 +276,7 @@ export class YoutubeMigrationService {
       this.autoImport$.next(true);
       return response;
     } catch (e) {
-      console.error('enableAutoImport: ', e);
+      console.error('enableAutoImport(): ', e);
       return e;
     }
   }
@@ -285,8 +285,18 @@ export class YoutubeMigrationService {
    * Disable automatic transfer of newly-uploaded youtube videos to Minds
    */
   async disableAutoImport(): Promise<any> {
-    if (!this.connected$.value) {
+    const channels: YoutubeChannel[] = this.session.getLoggedInUser()
+      .yt_channels;
+    if (!channels) {
       return;
+    }
+    let selectedChannel: YoutubeChannel;
+
+    if (!this.selectedChannel$.value.id) {
+      selectedChannel = channels[0];
+      this.selectChannel(selectedChannel.id);
+    } else {
+      selectedChannel = this.selectedChannel$.value;
     }
 
     try {
@@ -353,16 +363,16 @@ export class YoutubeMigrationService {
     }
     videos.forEach(v => {
       v.display = {};
-      v.display.duration = this.formatDuration(v.duration);
 
-      if (v.status === 'completed') {
-        v.display.title = v.entity.title;
-        v.display.thumb = v.entity.thumbnail_src;
-        v.display.date = this.formatDate(v.entity.time_created);
+      if (v.ownerObj) {
+        v.display.title = v.title;
+        v.display.thumb = v.thumbnail_src;
+        v.display.date = this.formatDate(v.time_created);
       } else {
         v.display.title = v.title;
         v.display.thumb = v.thumbnail;
         v.display.date = this.formatDate(v.youtubeCreationDate);
+        v.display.duration = this.formatDuration(v.duration);
       }
       // Handle null view count
       v.views = v.views || 0;

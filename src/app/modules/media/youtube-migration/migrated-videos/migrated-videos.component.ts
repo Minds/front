@@ -100,7 +100,7 @@ export class YoutubeMigrationMigratedVideosComponent implements OnInit {
 
   // TODO: consider refactoring bc it is duplicated
   onModalRequested($event): void {
-    const entity = $event.video.entity;
+    const entity = $event.video;
     if (!this.overlayModal.canOpenInModal()) {
       return;
     }

@@ -7,7 +7,10 @@
       >
         <div class="m-youtubeMigration__videoOverlay">
           <i class="material-icons">play_arrow</i>
-          <div class="m-youtubeMigration__videoDuration">
+          <div
+            *ngIf="v.display.duration"
+            class="m-youtubeMigration__videoDuration"
+          >
             {{ v.display.duration }}
           </div>
         </div>
@@ -27,7 +30,7 @@
           >
         </div>
       </div>
-      <ng-container *ngIf="v.status !== 'completed'">
+      <ng-container *ngIf="!v.ownerObj">
         <div class="m-youtubeMigration__videoStatus">
           <ng-container *ngIf="v.status">
             <a (click)="cancel(v)">Cancel</a>

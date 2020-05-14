@@ -69,7 +69,7 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
       } else {
         response = await this.youtubeService.disableAutoImport();
       }
-      if (response.status === 'success') {
+      if (response && response.status === 'success') {
         this.form.markAsPristine();
         this.formToastService.success('Auto-import preference saved');
       }
