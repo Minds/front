@@ -28,6 +28,7 @@ import { ChannelEditHashtagsComponent } from './edit/hashtags.component';
 import { ChannelEditSocialLinksComponent } from './edit/social-links.component';
 import { ChannelSocialLinksComponent } from './social-links/social-links.component';
 import { ChannelLocationTypeaheadComponent } from './location-typeahead/location-typeahead.component';
+import { ChannelContentComponent } from './content/content.component';
 import { ChannelListComponent } from './list/list.component';
 import { ChannelListConnectionsComponent } from './list/connections.component';
 import { ChannelAboutExtraInfoComponent } from './about/extra-info.component';
@@ -62,6 +63,7 @@ const INTERNAL_COMPONENTS = [
   ChannelEditSocialLinksComponent,
   ChannelSocialLinksComponent,
   ChannelLocationTypeaheadComponent,
+  ChannelContentComponent,
   ChannelListComponent,
   ChannelListConnectionsComponent,
   ChannelListGroupsComponent,

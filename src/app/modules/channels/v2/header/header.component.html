@@ -21,8 +21,9 @@
       </span>
 
       <m-channel--badges
+        *ngIf="channel.guid"
         class="m-channelHeaderInfoName__badges"
-        [user]="service.channel$ | async"
+        [user]="channel"
         [badges]="['admin', 'verified']"
       ></m-channel--badges>
     </h1>

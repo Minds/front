@@ -27,7 +27,10 @@ type ChannelView =
   | 'videos'
   | 'blogs'
   | 'shop'
-  | 'about';
+  | 'about'
+  | 'subscribers'
+  | 'subscriptions'
+  | 'groups';
 
 /**
  * 2020 Design channel component

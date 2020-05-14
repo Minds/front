@@ -1,0 +1,68 @@
+<div
+  class="m-channel__content"
+  [class.m-channelContent--unavailable]="content.state$ | async"
+  [ngSwitch]="content.state$ | async"
+>
+  <ng-template [ngSwitchCase]="'pending'">
+    <div class="m-channelContent__loading">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'not-found'">
+    <div class="m-channelContent__wrapper">
+      <i class="m-channelContent__icon material-icons">error_outline</i>
+      <h3 class="m-channelContent__primaryText" i18n>
+        Sorry, this channel doesn't appear to exist
+      </h3>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'banned'">
+    <div class="m-channelContent__wrapper">
+      <i class="m-channelContent__icon material-icons">not_interested</i>
+
+      <h3 class="m-channelContent__primaryText" i18n>Account banned</h3>
+      <span class="m-channelContent__secondaryText" i18n>
+        This account has been banned for violating the
+        <a routerLink="/content-policy">Minds content policy</a>
+      </span>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'disabled'">
+    <div class="m-channelContent__wrapper">
+      <i class="m-channelContent__icon material-icons">not_interested</i>
+      <h3 class="m-channelContent__primaryText" i18n>
+        This channel has been disabled
+      </h3>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'blocked'">
+    <div class="m-channelContent__wrapper">
+      <i class="m-channelContent__icon material-icons">block</i>
+      <h3 class="m-channelContent__primaryText" i18n>
+        You have blocked this channel
+      </h3>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'nsfw'">
+    <div class="m-channelContent__wrapper">
+      <i class="m-channelContent__icon material-icons">error_outline</i>
+      <h3 class="m-channelContent__primaryText" i18n>This channel is NSFW</h3>
+      <button
+        class="m-channelContent__confirmButton"
+        (click)="content.forceNsfwContent$.next(true)"
+        i18n
+      >
+        I am 18 or over
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template ngSwitchDefault>
+    <ng-content></ng-content>
+  </ng-template>
+</div>

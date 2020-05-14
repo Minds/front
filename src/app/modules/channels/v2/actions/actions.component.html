@@ -5,7 +5,7 @@
   <ng-template #nonOwner>
     <m-channelActions__menuButton></m-channelActions__menuButton>
 
-    <ng-container *ngIf="!(service.isBlocked$ | async)">
+    <ng-container *ngIf="service.canInteract$ | async">
       <m-channelActions__wire></m-channelActions__wire>
 
       <m-channelActions__message
