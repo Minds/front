@@ -23,6 +23,7 @@ export class ChannelBadgesComponent {
   @Input() badges: Array<string> = [
     'verified',
     'plus',
+    'pro',
     'founder',
     'admin',
     'onchain_booster',
