@@ -262,7 +262,7 @@
             [disabled]="inProgress"
           ></textarea>
           <span
-            class="minds-comment-span"
+            class="minds-comment-span m-comment__pressEscape"
             *ngIf="canPost"
             i18n="@@MINDS__CARDS__COMMENT__PRESS_ESC_TO_CANCEL"
             >Press ESC to cancel</span
@@ -278,11 +278,12 @@
 
           <div class="mdl-card__actions">
             <!-- Attachements -->
-            <div
-              class="attachment-button"
-              [ngClass]="{ 'mdl-color-text--amber-500': attachment.hasFile() }"
-            >
-              <i class="material-icons">attachment</i>
+            <div class="attachment-button">
+              <i
+                class="material-icons"
+                [ngClass]="{ 'mdl-color-text--grey-700': attachment.hasFile() }"
+                >insert_photo</i
+              >
               <input
                 type="file"
                 id="file"
@@ -294,12 +295,15 @@
 
             <a
               class="m-mature-button"
-              [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
               (click)="attachment.toggleMature()"
               title="Mature content"
               i18n-title="@@M__COMMON__MATURE_CONTENT"
             >
-              <i class="material-icons">explicit</i>
+              <i
+                class="material-icons"
+                [ngClass]="{ 'mdl-color-text--red-500': attachment.isMature() }"
+                >explicit</i
+              >
             </a>
 
             <a

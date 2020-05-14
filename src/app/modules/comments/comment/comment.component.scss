@@ -170,7 +170,6 @@
   font-size: 16px;
   cursor: pointer;
   outline: none;
-  width: 0;
   @include m-theme() {
     color: themed($m-grey-400);
   }
@@ -184,6 +183,7 @@
   &.m-comment__ribbonBtn--collapsed {
     display: none;
     background: none;
+    width: 0;
   }
 
   i {

@@ -60,6 +60,9 @@ m-comments__entityOutlet,
         font-size: 10px;
         position: relative;
         top: -1px;
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
 
         &.minds-comment-bullet:before {
           content: '·';
@@ -267,12 +270,8 @@ m-comments__entityOutlet,
   }
 
   .minds-editable-container .mdl-card__actions {
-    top: $minds-padding + 44px;
+    top: $minds-padding + 54px;
     right: $minds-padding + 14px;
-
-    @media screen and (max-width: $min-tablet) {
-      top: $minds-padding + 52px;
-    }
   }
 
   .m-comments-composer .mdl-card__actions,
@@ -294,7 +293,16 @@ m-comments__entityOutlet,
 
       i {
         cursor: pointer;
-        color: #9b9b9b;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
+        &:hover {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
       }
 
       &.m-button-disabled {
@@ -324,8 +332,20 @@ m-comments__entityOutlet,
       overflow: hidden;
       cursor: pointer;
 
+      &:hover {
+        i {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+
       i {
         cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        @include m-theme() {
+          color: themed($m-textColor--tertiary);
+        }
       }
 
       input {
@@ -352,7 +372,7 @@ m-comments__entityOutlet,
   }
 
   .post-preview {
-    margin-botom: $minds-padding;
+    margin-bottom: $minds-padding;
   }
 
   .m-comments-load-more {
