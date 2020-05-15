@@ -167,6 +167,9 @@ export class FeedsService implements OnDestroy {
     if (!this.offset.getValue()) {
       this.inProgress.next(true);
     }
+
+    const endpoint = this.endpoint;
+
     return this.client
       .get(this.endpoint, {
         ...this.params,
@@ -178,14 +181,21 @@ export class FeedsService implements OnDestroy {
         },
       })
       .then((response: any) => {
+        if (this.endpoint !== endpoint) {
+          // Avoid race conditions if endpoint changes
+          return;
+        }
+
         if (!this.offset.getValue()) {
           this.inProgress.next(false);
         }
+
         if (!response.entities && response.activity) {
           response.entities = response.activity;
         } else if (!response.entities && response.users) {
           response.entities = response.users;
         }
+
         if (response.entities.length) {
           this.fallbackAt = response['fallback_at'];
           this.fallbackAtIndex.next(null);
