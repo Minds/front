@@ -53,4 +53,10 @@ export class StickySidebarDirective implements OnInit, AfterViewInit {
       }
     });
   }
+
+  ngOnDestroy() {
+    if (this.scrollSubscription) {
+      this.scrollSubscription.unsubscribe();
+    }
+  }
 }
