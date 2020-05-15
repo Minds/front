@@ -146,7 +146,7 @@ export class OverlayModalComponent implements AfterViewInit {
     }
   }
 
-  dismiss() {
+  dismiss(data?: any) {
     this.hidden = true;
 
     if (this.root) {
@@ -159,7 +159,7 @@ export class OverlayModalComponent implements AfterViewInit {
     }
 
     try {
-      this.service._didDismiss();
+      this.service._didDismiss(data);
     } catch (e) {
       console.warn('Error on callback while dismissing modal', e);
     }

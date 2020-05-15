@@ -20,6 +20,9 @@ export class PostMenuService {
   isFollowing$: BehaviorSubject<boolean> = new BehaviorSubject(null);
   isLoadingBlock = false;
   isBlocked$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  isBanned$: BehaviorSubject<boolean> = new BehaviorSubject(null);
+  isExplicit$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  email$: BehaviorSubject<string> = new BehaviorSubject(null);
   showSubscribe$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   showUnSubscribe$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isPinned$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -166,6 +169,65 @@ export class PostMenuService {
     }
   }
 
+  async unBan(): Promise<void> {
+    this.isBanned$.next(false);
+    try {
+      await this.client.delete(
+        'api/v1/admin/ban/' + this.entity.ownerObj.guid,
+        {}
+      );
+    } catch (e) {
+      this.isBanned$.next(true);
+    }
+  }
+
+  async getEmail(): Promise<string> {
+    try {
+      const response: any = await this.client.get(
+        `api/v2/admin/user/${this.entity.ownerObj.username}/email`
+      );
+      this.email$.next(response.email);
+      return response.email;
+    } catch (e) {
+      console.error('viewEmail', e);
+      this.email$.next(null);
+    }
+  }
+
+  async setExplicit(explicit: boolean) {
+    this.isExplicit$.next(explicit);
+    try {
+      await this.client.post(
+        `api/v1/entities/explicit/${this.entity.ownerObj.guid}`,
+        {
+          value: explicit ? '1' : '0',
+        }
+      );
+    } catch (e) {
+      this.isExplicit$.next(!explicit);
+    }
+  }
+
+  async reIndex(): Promise<void> {
+    try {
+      this.client.post('api/v2/admin/reindex', {
+        guid: this.entity.ownerObj.guid,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async setRating(rating: number): Promise<void> {
+    try {
+      await this.client.post(
+        `api/v1/admin/rating/${this.entity.ownerObj.guid}/${rating}`
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   async block(): Promise<void> {
     this.isBlocked$.next(true);
     try {
@@ -198,7 +260,9 @@ export class PostMenuService {
   }
 
   async setNsfw(nsfw) {
-    await this.client.post(`api/v2/admin/nsfw/${this.entity.guid}`, { nsfw });
+    await this.client.post(`api/v2/admin/nsfw/${this.entity.ownerObj.guid}`, {
+      nsfw,
+    });
     this.entity.nsfw = nsfw;
   }
 

@@ -128,6 +128,7 @@ export interface MindsUser {
   mature?: number | boolean;
   enabled?: string | boolean;
   not_found?: boolean;
+  email?: string;
 }
 
 export interface MindsGroup {
