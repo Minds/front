@@ -8,7 +8,7 @@ import {
 import { Client } from '../../services/api/client';
 import { Session } from '../../services/session';
 import { FeaturesService } from '../../services/features.service';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DOCUMENT, isPlatformServer } from '@angular/common';
 
 @Injectable()
@@ -18,6 +18,8 @@ export class ThemeService {
   isDarkSubscription: Subscription;
   sessionSubscription: Subscription;
   timer;
+  setup: boolean = false;
+  loaded: boolean = false;
 
   constructor(
     rendererFactory: RendererFactory2,
@@ -43,6 +45,7 @@ export class ThemeService {
   // prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
 
   setUp(): void {
+    this.setup = true;
     this.emitThemePreference();
   }
 
@@ -81,7 +84,12 @@ export class ThemeService {
   }
 
   renderTheme(): void {
-    this.renderer.addClass(this.dom.body, 'm-theme-in-transition');
+    // DO NOT add transition classes for when the theme initializes
+    if (!this.loaded && this.setup) {
+      this.loaded = true;
+    } else if (this.setup) {
+      this.renderer.addClass(this.dom.body, 'm-theme-in-transition');
+    }
     if (this.features.has('navigation')) {
       this.renderer.addClass(this.dom.body, 'm-theme__2020');
     }
