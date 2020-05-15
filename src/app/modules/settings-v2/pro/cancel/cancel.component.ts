@@ -37,7 +37,7 @@ export class SettingsV2ProCancelComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     protected router: Router,
     protected route: ActivatedRoute,
-    protected formToastService: FormToastService
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -68,7 +68,7 @@ export class SettingsV2ProCancelComponent implements OnInit, OnDestroy {
       this.router.navigate(['/', this.session.getLoggedInUser().name]);
     } catch (e) {
       this.error = e.message;
-      this.formToastService.error('Error: ' + this.error);
+      this.toasterService.error('Error: ' + this.error);
     }
   }
 

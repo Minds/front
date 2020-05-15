@@ -13,6 +13,7 @@ import { Session } from '../../../services/session';
 import { Storage } from '../../../services/storage';
 
 import { MessengerEncryptionService } from './encryption.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -35,7 +36,8 @@ export class MessengerEncryption implements OnInit {
   constructor(
     public session: Session,
     public client: Client,
-    public encryption: MessengerEncryptionService
+    public encryption: MessengerEncryptionService,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -54,6 +56,7 @@ export class MessengerEncryption implements OnInit {
       })
       .catch(() => {
         this.error = 'Wrong password. Please try again.';
+        this.toasterService.error(this.error);
         this.inProgress = false;
       });
   }
@@ -75,6 +78,7 @@ export class MessengerEncryption implements OnInit {
       })
       .catch(() => {
         this.error = 'Sorry, there was a problem.';
+        this.toasterService.error(this.error);
         this.inProgress = false;
       });
   }
@@ -96,6 +100,7 @@ export class MessengerEncryption implements OnInit {
       })
       .catch(() => {
         this.error = 'Sorry, there was a problem';
+        this.toasterService.error(this.error);
         this.inProgress = false;
       });
   }

@@ -27,6 +27,7 @@ import { By } from '@angular/platform-browser';
 import { sessionMock } from '../../../../../../tests/session-mock.spec';
 import { Router } from '@angular/router';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 
 describe('TokenRewardsOnboardingComponent', () => {
   let comp: TokenRewardsOnboardingComponent;
@@ -51,6 +52,10 @@ describe('TokenRewardsOnboardingComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Router, useValue: RouterTestingModule },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
+        },
       ],
     }).compileComponents(); // compile template and css
   }));

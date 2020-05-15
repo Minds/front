@@ -6,6 +6,7 @@ import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'minds-groups-settings-button',
@@ -246,7 +247,8 @@ export class GroupsSettingsButton {
     public client: Client,
     public session: Session,
     public overlayService: OverlayModalService,
-    public router: Router
+    public router: Router,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {}
@@ -332,7 +334,7 @@ export class GroupsSettingsButton {
    */
   async deletePrompt() {
     if ((await this.service.countMembers(this.group.guid)) !== 1) {
-      alert('You cannot delete a group that has members.');
+      this.toasterService.error('You cannot delete a group that has members.');
       return;
     }
     this.isGoingToBeDeleted = true;

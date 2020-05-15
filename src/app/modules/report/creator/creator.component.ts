@@ -11,6 +11,7 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { REASONS } from '../../../services/list-options';
 import { EventEmitter } from '@angular/core';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -52,7 +53,8 @@ export class ReportCreatorComponent implements AfterViewInit {
     public session: Session,
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
-    private client: Client
+    private client: Client,
+    protected toasterService: FormToastService
   ) {}
 
   ngAfterViewInit() {
@@ -94,6 +96,9 @@ export class ReportCreatorComponent implements AfterViewInit {
       this.validate();
     } catch (e) {
       this.error = e.message;
+      if (!this.inProgress) {
+        this.toasterService.error(this.error);
+      }
     }
   }
 
@@ -144,8 +149,8 @@ export class ReportCreatorComponent implements AfterViewInit {
     } catch (e) {
       this.inProgress = false;
       //this.overlayModal.dismiss();\
-      alert('There was an error sending your report.');
-      alert(e.message ? e.message : e);
+      this.toasterService.error('There was an error sending your report.');
+      this.toasterService.error(e.message ? e.message : e);
     }
   }
 }

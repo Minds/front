@@ -19,6 +19,7 @@ import { Textarea } from '../../../common/components/editors/textarea.component'
 import { SocketsService } from '../../../services/sockets';
 import { ActivityService } from '../../../common/services/activity.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -89,7 +90,8 @@ export class CommentsListComponent implements OnInit, OnDestroy {
     private renderer: Renderer,
     private cd: ChangeDetectorRef,
     public activityService: ActivityService,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {}
 
   set _object(value: any) {
@@ -220,6 +222,7 @@ export class CommentsListComponent implements OnInit, OnDestroy {
           this.ascendingInProgress = false;
         }
         this.error = (e && e.message) || 'There was an error';
+        this.toasterService.error(this.error);
         this.detectChanges();
       });
   }

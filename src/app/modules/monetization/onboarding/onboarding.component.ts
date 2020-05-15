@@ -11,6 +11,7 @@ import { Client } from '../../../services/api';
 
 import { requiredFor, optionalFor } from './onboarding.validators';
 import { Session } from '../../../services/session';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-monetization--onboarding',
@@ -32,7 +33,8 @@ export class MonetizationOnboardingComponent implements OnInit {
     private fb: FormBuilder,
     private client: Client,
     private cd: ChangeDetectorRef,
-    private session: Session
+    private session: Session,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -120,6 +122,7 @@ export class MonetizationOnboardingComponent implements OnInit {
       .catch(e => {
         this.inProgress = false;
         this.error = e.message;
+        this.toasterService.error(this.error);
         this.detectChanges();
       });
   }
@@ -142,6 +145,7 @@ export class MonetizationOnboardingComponent implements OnInit {
       .catch(e => {
         this.inProgress = false;
         this.error = e.message;
+        this.toasterService.error(this.error);
         this.detectChanges();
       });
   }

@@ -32,10 +32,6 @@
   </div>
 </div>
 
-<div class="m-purchase-sendWyre__errorContainer">
-  <span class="m-purchase-sendWyre__errorText">{{ sendWyreError }}</span>
-</div>
-
 <div class="m-blockchainTokenPurchase__ethRate" ngPreserveWhitespaces>
   <span i18n>
     {tokens, plural, =1 {{{tokens | number}} token} other
@@ -166,8 +162,6 @@
       >
         Completed
       </button>
-
-      <span class="m-error--text">{{ error }}</span>
     </div>
   </div>
 </m-modal>

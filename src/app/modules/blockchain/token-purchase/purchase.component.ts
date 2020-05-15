@@ -21,6 +21,7 @@ import { TokenDistributionEventService } from '../contracts/token-distribution-e
 import * as BN from 'bn.js';
 import { GetMetamaskComponent } from '../../blockchain/metamask/getmetamask.component';
 import { Router } from '@angular/router';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-blockchain--purchase',
@@ -70,7 +71,8 @@ export class BlockchainPurchaseComponent implements OnInit {
     protected tde: TokenDistributionEventService,
     public session: Session,
     private route: ActivatedRoute,
-    protected router: Router
+    protected router: Router,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -87,6 +89,7 @@ export class BlockchainPurchaseComponent implements OnInit {
 
     if (this.route.snapshot.queryParamMap.get('failed') === '1') {
       this.sendWyreError = 'Sorry, your purchase appears to have failed.';
+      this.toasterService.error(this.sendWyreError);
     }
   }
 
@@ -182,6 +185,7 @@ export class BlockchainPurchaseComponent implements OnInit {
       tx = await this.tde.buy(amount, this.rate);
     } catch (err) {
       this.error = err;
+      this.toasterService.error(this.error);
       this.confirming = false;
       this.detectChanges();
       return;
@@ -208,7 +212,7 @@ export class BlockchainPurchaseComponent implements OnInit {
     this.detectChanges();
     //let win = window.open('/checkout');
     //win.onload = function() {
-    //  alert('opened');
+    //  this.toasterService.error('opened');
     //}
   }
 
@@ -229,7 +233,9 @@ export class BlockchainPurchaseComponent implements OnInit {
   }
 
   promptTokenInput(input) {
-    alert('Please enter how many tokens you wish to purchase');
+    this.toasterService.error(
+      'Please enter how many tokens you wish to purchase'
+    );
     setTimeout(() => {
       input.focus();
     }, 100);

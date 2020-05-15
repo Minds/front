@@ -235,16 +235,16 @@ export class BlogEdit implements OnInit, OnDestroy {
     this.error = '';
 
     if (!this.blog.description) {
-      this.error = 'error:no-description';
+      this.showToastError('error:no-description');
       return false;
     }
     if (!this.blog.title) {
-      this.error = 'error:no-title';
+      this.showToastError('error:no-title');
       return false;
     }
 
     if (!this.captcha) {
-      this.error = 'Please fill out the captcha';
+      this.showToastError('Please fill out the captcha');
       return false;
     }
 
@@ -252,7 +252,7 @@ export class BlogEdit implements OnInit, OnDestroy {
   }
 
   posterDateSelectorError(msg) {
-    this.error = msg;
+    this.showToastError(msg);
   }
 
   save() {
@@ -286,7 +286,7 @@ export class BlogEdit implements OnInit, OnDestroy {
               this.blog.time_created = null;
 
               if (response.status !== 'success') {
-                this.error = response.message;
+                this.showToastError(response.message);
                 return;
               }
               this.router.navigate(
@@ -297,14 +297,14 @@ export class BlogEdit implements OnInit, OnDestroy {
             })
             .catch(e => {
               if (!e.must_verify) {
-                this.error = e.message;
+                this.showToastError(e.message);
               }
               this.canSave = true;
               this.inProgress = false;
             });
         })
         .catch(() => {
-          this.error = 'error:no-banner';
+          this.showToastError('error:no-banner');
           this.inProgress = false;
           this.canSave = true;
         });
@@ -373,6 +373,17 @@ export class BlogEdit implements OnInit, OnDestroy {
       !this.blog.time_published ||
       this.blog.time_published > Math.floor(Date.now() / 1000)
     );
+  }
+
+  showToastError(error: string): void {
+    this.error = error;
+    const errorDisplays: any = {
+      'error:no-title': 'You must provide a title',
+      'error:no-description': 'You must provide a description',
+      'error:no-banner': 'You must upload a banner',
+      'error:gateway-timeout': 'Gateway Time-out',
+    };
+    this.toasterService.error(errorDisplays[error] || error);
   }
 
   /**

@@ -4,6 +4,7 @@ import { Client } from '../../../services/api';
 import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
 import { CreditCard } from '../../../interfaces/card-interface';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -32,7 +33,8 @@ export class WalletPurchaseComponent {
   constructor(
     public client: Client,
     public wallet: WalletService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    protected toasterService: FormToastService
   ) {
     this.getRate();
     this.calculateUSD();
@@ -87,6 +89,7 @@ export class WalletPurchaseComponent {
   purchase() {
     if (!this.validate()) {
       this.error = 'Sorry, please check your details and try again';
+      this.toasterService.error(this.error);
       this.detectChanges();
       return false;
     }
@@ -110,6 +113,7 @@ export class WalletPurchaseComponent {
         .then((response: any) => {
           if (response.status !== 'success') {
             this.error = 'Please check your payment details and try again.';
+            this.toasterService.error(this.error);
             this.inProgress = false;
             this.source = null;
             this.detectChanges();
@@ -121,6 +125,7 @@ export class WalletPurchaseComponent {
         })
         .catch(e => {
           this.error = e.message;
+          this.toasterService.error(this.error);
           this.inProgress = false;
           this.source = null;
           this.detectChanges();
@@ -135,6 +140,7 @@ export class WalletPurchaseComponent {
         .then((response: any) => {
           if (response.status !== 'success') {
             this.error = 'Please check your payment details and try again.';
+            this.toasterService.error(this.error);
             this.detectChanges();
             return false;
           }
@@ -144,6 +150,7 @@ export class WalletPurchaseComponent {
         })
         .catch(e => {
           this.error = e.message;
+          this.toasterService.error(this.error);
           this.inProgress = false;
           this.source = null;
           this.detectChanges();

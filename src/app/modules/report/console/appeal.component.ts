@@ -3,6 +3,7 @@ import { Component, OnInit, Input, ChangeDetectorRef } from '@angular/core';
 import { Client } from '../../../services/api/client';
 import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-moderation__appeal',
@@ -15,7 +16,8 @@ export class ModerationAppealComponent {
   constructor(
     private client: Client,
     public service: JurySessionService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    protected toasterService: FormToastService
   ) {}
 
   async sendAppeal() {
@@ -33,7 +35,7 @@ export class ModerationAppealComponent {
 
       this.detectChanges();
     } catch (e) {
-      alert((e && e.message) || 'Error sending appeal');
+      this.toasterService.error((e && e.message) || 'Error sending appeal');
     } finally {
       this.appeal.inProgress = false;
     }

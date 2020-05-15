@@ -29,6 +29,8 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { REASONS } from '../../../services/list-options';
 import { Session } from '../../../services/session';
 import { sessionMock } from '../../../../tests/session-mock.spec';
+import { FormToastService } from '../../../common/services/form-toast.service';
+import { MockService } from '../../../utils/mock';
 
 /* tslint:disable */
 @Directive({
@@ -61,6 +63,10 @@ describe('ReportCreatorComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: Client, useValue: clientMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
+        },
       ],
     }).compileComponents(); // compile template and css
   }));

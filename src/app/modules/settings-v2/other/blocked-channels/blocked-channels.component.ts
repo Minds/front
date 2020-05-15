@@ -33,7 +33,7 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     private configs: ConfigsService,
-    protected formToastService: FormToastService
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -91,12 +91,12 @@ export class SettingsV2BlockedChannelsComponent implements OnInit {
 
       await this.client.delete(`api/v1/block/${guid}`, {});
       await this.blockListService.remove(guid);
-      this.formToastService.success(channel.username + ' has been unblocked');
+      this.toasterService.success(channel.username + ' has been unblocked');
       this.load(false);
     } catch (e) {
       channel._unblocked = void 0;
       console.error(e);
-      this.formToastService.error(
+      this.toasterService.error(
         'An error occured while attempting to unblock ' + channel.username
       );
     }

@@ -24,9 +24,6 @@
             [fields]="reports[selectedReport].params"
             #reportform
           ></m-dynamic-form>
-          <span class="m-admin--reports-download-error" *ngIf="error"
-            >{{error}}</span
-          >
           <input type="checkbox" name="with_titles" [(ngModel)]="with_titles" />
           <label for="flag_mature">
             <ng-container i18n="@@M__ADMIN__REPORTS_DOWNLOAD__WITH_TITLES"

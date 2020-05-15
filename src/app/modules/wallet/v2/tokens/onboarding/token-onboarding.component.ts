@@ -49,7 +49,7 @@ export class WalletTokenOnboardingComponent {
 
   constructor(
     protected cd: ChangeDetectorRef,
-    private formToastService: FormToastService,
+    private toasterService: FormToastService,
     protected session: Session
   ) {}
 
@@ -94,7 +94,7 @@ export class WalletTokenOnboardingComponent {
   }
 
   finishedOnboarding() {
-    // this.formToastService.success(
+    // this.toasterService.success(
     //   "You're ready to start earning token rewards!"
     // );
     this.onboardingComplete.emit();

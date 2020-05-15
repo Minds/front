@@ -5,7 +5,14 @@ m-captcha {
   }
   .m-input {
     @include m-theme() {
-      background-color: themed($m-white);
+      background-color: themed($m-bgColor--secondary) !important;
+    }
+    &::placeholder {
+      font-weight: 400 !important;
+      font-size: 14px !important;
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
     }
   }
 }

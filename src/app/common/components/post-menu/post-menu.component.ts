@@ -22,6 +22,7 @@ import { BlockListService } from '../../services/block-list.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
+import { FormToastService } from '../../services/form-toast.service';
 
 type Option =
   | 'edit'
@@ -81,7 +82,8 @@ export class PostMenuComponent implements OnInit {
     public signupModal: SignupModalService,
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
-    public featuresService: FeaturesService
+    public featuresService: FeaturesService,
+    protected formToastService: FormToastService
   ) {}
 
   ngOnInit() {}
@@ -297,7 +299,7 @@ export class PostMenuComponent implements OnInit {
       })
       .catch(e => {
         this.user.subscribed = false;
-        alert("You can't subscribe to this user.");
+        this.formToastService.error("You can't subscribe to this user.");
       });
   }
 

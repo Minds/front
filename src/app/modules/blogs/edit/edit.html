@@ -90,40 +90,6 @@
       class="m-wire--creator--submit-label mdl-spinner mdl-js-spinner is-active"
       [mdl]
     ></div>
-
-    <ng-container *ngIf="error" [ngSwitch]="error">
-      <h1
-        class="m-blog--edit--error"
-        i18n="@@BLOGS__EDIT__NO_TITLE_ERROR"
-        *ngSwitchCase="'error:no-title'"
-      >
-        Error: You must provide a title
-      </h1>
-      <h1
-        class="m-blog--edit--error"
-        i18n="@@BLOGS__EDIT__NO_DESCRIPTION_ERROR"
-        *ngSwitchCase="'error:no-description'"
-      >
-        Error: You must provide a description
-      </h1>
-      <h1
-        class="m-blog--edit--error"
-        i18n="@@BLOGS__EDIT__NO_BANNER_ERROR"
-        *ngSwitchCase="'error:no-banner'"
-      >
-        Error: You must upload a banner
-      </h1>
-      <h1
-        class="m-blog--edit--error"
-        i18n="@@M__COMMON__ERROR_GATEWAY_TIMEOUT"
-        *ngSwitchCase="'error:gateway-timeout'"
-      >
-        Error: Gateway Time-out
-      </h1>
-      <h1 class="m-blog--edit--error" *ngSwitchDefault>
-        Error: {{error}}
-      </h1>
-    </ng-container>
   </div>
 
   <div

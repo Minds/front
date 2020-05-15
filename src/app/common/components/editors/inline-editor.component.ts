@@ -17,6 +17,7 @@ import { MediumEditor } from 'medium-editor';
 import { ButtonsPlugin } from './plugins/buttons.plugin';
 import { AttachmentService } from '../../../services/attachment';
 import { ConfigsService } from '../../services/configs.service';
+import { FormToastService } from '../../services/form-toast.service';
 
 export const MEDIUM_EDITOR_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
@@ -62,9 +63,12 @@ export class InlineEditorComponent
     },
     this.injector.get(ConfigsService)
   );
-  private videos = new EmbedVideo({
-    buttonText: `<i class="material-icons">play_arrow</i>`,
-  });
+  private videos = new EmbedVideo(
+    {
+      buttonText: `<i class="material-icons">play_arrow</i>`,
+    },
+    this.injector.get(FormToastService)
+  );
 
   propagateChange = (_: any) => {};
 

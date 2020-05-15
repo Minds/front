@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -27,7 +28,8 @@ export class WalletTokenJoinComponent {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected session: Session,
-    protected router: Router
+    protected router: Router,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -50,6 +52,7 @@ export class WalletTokenJoinComponent {
       this.plusPrompt = true;
     } catch (e) {
       this.error = e.message;
+      this.toasterService.error(this.error);
     }
     this.inProgress = false;
 */
@@ -82,6 +85,7 @@ export class WalletTokenJoinComponent {
       this.join();
     } catch (e) {
       this.error = e.message;
+      this.toasterService.error(this.error);
     }
 
     this.inProgress = false;

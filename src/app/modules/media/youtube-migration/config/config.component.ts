@@ -29,7 +29,7 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected youtubeService: YoutubeMigrationService,
     protected router: Router,
-    protected formToastService: FormToastService,
+    protected toasterService: FormToastService,
     protected session: Session
   ) {}
 
@@ -71,11 +71,11 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
       }
       if (response && response.status === 'success') {
         this.form.markAsPristine();
-        this.formToastService.success('Auto-import preference saved');
+        this.toasterService.success('Auto-import preference saved');
       }
     } catch (e) {
       console.error('error', e);
-      this.formToastService.error(
+      this.toasterService.error(
         'Sorry, there was an error and your changes have not been saved.'
       );
     } finally {
@@ -105,7 +105,7 @@ export class YoutubeMigrationConfigComponent implements OnInit, OnDestroy {
     try {
       await this.youtubeService.disconnectAccount();
     } catch (e) {
-      this.formToastService.error(
+      this.toasterService.error(
         'Sorry, there was an error and your changes have not been saved.'
       );
       this.inProgress = false;

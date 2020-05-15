@@ -106,13 +106,6 @@
               <div class="mdl-spinner mdl-js-spinner is-active"></div>
             </div>
 
-            <div class="mdl-cell mdl-cell--12-col" *ngIf="error">
-              <p class="m-mobile--marketing--error">
-                Oops! There was an issue retrieving mobile releases:
-                <i>{{ error }}</i>
-              </p>
-            </div>
-
             <div
               class="mdl-cell mdl-cell--12-col"
               *ngFor="let release of releases"

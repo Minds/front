@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 
 import { Client } from '../../../services/api';
 import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -24,7 +25,11 @@ export class AdminReports {
 
   reasons: Array<{ value; label }> = REASONS;
 
-  constructor(public client: Client, private route: ActivatedRoute) {}
+  constructor(
+    public client: Client,
+    private route: ActivatedRoute,
+    protected toasterService: FormToastService
+  ) {}
 
   ngOnInit() {
     this.type = 'review';
@@ -80,7 +85,7 @@ export class AdminReports {
         this.moreData = false;
       }
     } catch (e) {
-      alert((e && e.message) || 'Error getting list');
+      this.toasterService.error((e && e.message) || 'Error getting list');
     } finally {
       this.inProgress = false;
     }
@@ -122,10 +127,12 @@ export class AdminReports {
       );
 
       if (!response.done) {
-        alert('There was a problem archiving this report. Please reload.');
+        this.toasterService.error(
+          'There was a problem archiving this report. Please reload.'
+        );
       }
     } catch (e) {
-      alert(
+      this.toasterService.error(
         (e && e.message) ||
           'There was a problem archiving this report. Please reload.'
       );
@@ -146,12 +153,12 @@ export class AdminReports {
       );
 
       if (!response.done) {
-        alert(
+        this.toasterService.error(
           'There was a problem marking this content as explicit. Please reload.'
         );
       }
     } catch (e) {
-      alert(
+      this.toasterService.error(
         (e && e.message) ||
           'There was a problem marking this content as explicit. Please reload.'
       );
@@ -172,12 +179,12 @@ export class AdminReports {
       );
 
       if (!response.done) {
-        alert(
+        this.toasterService.error(
           'There was a problem marking this content as spam. Please reload.'
         );
       }
     } catch (e) {
-      alert(
+      this.toasterService.error(
         (e && e.message) ||
           'There was a problem marking this content as spam. Please reload.'
       );
@@ -198,10 +205,12 @@ export class AdminReports {
       );
 
       if (!response.done) {
-        alert('There was a problem deleting this content. Please reload.');
+        this.toasterService.error(
+          'There was a problem deleting this content. Please reload.'
+        );
       }
     } catch (e) {
-      alert(
+      this.toasterService.error(
         (e && e.message) ||
           'There was a problem deleting this content. Please reload.'
       );
@@ -226,12 +235,12 @@ export class AdminReports {
       );
 
       if (!response.done) {
-        alert(
+        this.toasterService.error(
           `There was a problem approving this content's appeal. Please reload.`
         );
       }
     } catch (e) {
-      alert(
+      this.toasterService.error(
         (e && e.message) ||
           `There was a problem approving this content's appeal. Please reload.`
       );
@@ -254,12 +263,12 @@ export class AdminReports {
       );
 
       if (!response.done) {
-        alert(
+        this.toasterService.error(
           `There was a problem rejecting this content's appeal. Please reload.`
         );
       }
     } catch (e) {
-      alert(
+      this.toasterService.error(
         (e && e.message) ||
           `There was a problem rejecting this content's appeal. Please reload.`
       );

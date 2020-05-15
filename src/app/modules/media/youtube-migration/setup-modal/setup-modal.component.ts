@@ -19,7 +19,7 @@ export class YoutubeMigrationSetupModalComponent {
     protected youtubeService: YoutubeMigrationService,
     protected overlayModal: OverlayModalService,
     protected cd: ChangeDetectorRef,
-    protected formToastService: FormToastService
+    protected toasterService: FormToastService
   ) {}
 
   async submit(autoImport: boolean) {
@@ -34,9 +34,9 @@ export class YoutubeMigrationSetupModalComponent {
         response = await this.youtubeService.disableAutoImport();
       }
       if (response && response.status === 'success') {
-        this.formToastService.success('Auto-import preference saved');
+        this.toasterService.success('Auto-import preference saved');
       } else {
-        this.formToastService.error(
+        this.toasterService.error(
           'Sorry, there was an error and your changes have not been saved.'
         );
       }

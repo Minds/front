@@ -7,8 +7,6 @@
       <a href="https://gitlab.com/minds/front/issues" target="_blank">here</a>
     </p>
     <m-dynamic-form [fields]="fields" #reportform></m-dynamic-form>
-    <span class="m-error" *ngIf="error">{{ error }}</span>
-
     <button
       class="m-btn m-btn--slim m-btn--action"
       (click)="submit(reportform)"

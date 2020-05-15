@@ -21,6 +21,7 @@ import {
 import currency from '../../../helpers/currency';
 import { Location } from '@angular/common';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-plus--subscription',
@@ -59,7 +60,8 @@ export class PlusSubscriptionComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     protected route: ActivatedRoute,
     protected router: Router,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {
     this.upgrades = configs.get('upgrades');
   }
@@ -94,6 +96,7 @@ export class PlusSubscriptionComponent implements OnInit {
     } catch (e) {
       this.criticalError = true;
       this.error = (e && e.message) || 'Unknown error';
+      this.toasterService.error(this.error);
     }
 
     this.inProgress = false;
@@ -141,6 +144,7 @@ export class PlusSubscriptionComponent implements OnInit {
       this.active = false;
       this.session.getLoggedInUser().plus = false;
       this.error = (e && e.message) || 'Unknown error';
+      this.toasterService.error(this.error);
       this.inProgress = false;
     }
 
@@ -165,6 +169,7 @@ export class PlusSubscriptionComponent implements OnInit {
       this.active = true;
       this.session.getLoggedInUser().plus = true;
       this.error = (e && e.message) || 'Unknown error';
+      this.toasterService.error(this.error);
     }
 
     this.inProgress = false;

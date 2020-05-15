@@ -8,6 +8,7 @@ import {
 import { Client } from '../../../services/api/client';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 type ServicesEntityStruc = {
   [service: string]: boolean | null;
@@ -41,7 +42,8 @@ export class AdminFeaturesComponent implements OnInit, OnDestroy {
   constructor(
     protected client: Client,
     protected cd: ChangeDetectorRef,
-    protected route: ActivatedRoute
+    protected route: ActivatedRoute,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit(): void {
@@ -75,6 +77,7 @@ export class AdminFeaturesComponent implements OnInit, OnDestroy {
       this.features = response.features;
     } catch (e) {
       this.error = (e && e.message) || 'Internal server error';
+      this.toasterService.error(this.error);
     }
 
     this.isLoading = false;

@@ -36,6 +36,7 @@ import { AutocompleteSuggestionsService } from '../../suggestions/services/autoc
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { TagsService } from '../../../common/services/tags.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'minds-third-party-networks-selector',
@@ -131,6 +132,10 @@ describe('PosterComponent', () => {
         {
           provide: TagsService,
           useValue: MockService(TagsService),
+        },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],

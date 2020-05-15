@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { blobDownload } from '../../../utils/blob-download';
 
 import { Client } from '../../../services/api';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -24,7 +25,10 @@ export class AdminReportsDownload {
    * constructor
    * @param client Client
    */
-  constructor(public client: Client) {
+  constructor(
+    public client: Client,
+    protected toasterService: FormToastService
+  ) {
     const d = new Date();
     d.setHours(23, 59, 59);
     const endDate = d.toISOString();
@@ -195,6 +199,7 @@ export class AdminReportsDownload {
       blobDownload(res._body, selectedReport.options, selectedReport.file_name);
     } catch (e) {
       this.error = e.message || 'Download Error';
+      this.toasterService.error(this.error);
     }
     this.downloading = false;
   }

@@ -57,14 +57,6 @@
     Start the conversation!
   </p>
 
-  <p
-    class="m-comments--load-error-label"
-    *ngIf="!descendingInProgress && !ascendingInProgress && !!error"
-  >
-    <i class="material-icons">warning</i>
-    <span>{{ error }}</span>
-  </p>
-
   <div class="m-layout--spacer"></div>
   <minds-card-comment
     *ngFor="let comment of comments; let i = index"

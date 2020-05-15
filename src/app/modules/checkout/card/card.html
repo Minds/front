@@ -134,13 +134,6 @@
     </div>
 
     <div class="mdl-cell mdl-cell--6-col m-checkout-confirm">
-      <div
-        class="minds-error"
-        [hidden]="!error"
-        [class.mdl-color--red.mdl-color-text--white]="useMDLStyling"
-      >
-        {{error}}
-      </div>
       <button
         [class.mdl-button.mdl-button--colored.mdl-button--raised]="useMDLStyling"
         [disabled]="!validate()"

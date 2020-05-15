@@ -10,9 +10,6 @@
     >! Please enter your encrypted chat password to access your conversations.
     This password might be different than your account password.
   </p>
-  <p [hidden]="!error" class="m-messenger--error mdl-color-text--red">
-    {{ error }}
-  </p>
   <input
     type="password"
     placeholder="Enter password"
@@ -42,9 +39,6 @@
     >! It looks like you haven't setup your encrypted chat password yet. We
     recommend that you use a different password than your account password for
     added security.
-  </p>
-  <p [hidden]="!error" class="m-messenger--error mdl-color-text--red">
-    {{ error }}
   </p>
   <input
     type="password"
@@ -84,9 +78,6 @@
       i18n="@@MESSENGER__ENCRYPTION__CANCEL_ACTION"
       >Cancel</a
     >
-  </p>
-  <p [hidden]="!error" class="m-messenger--error mdl-color-text--red">
-    {{ error }}
   </p>
   <input
     type="password"
