@@ -4,6 +4,8 @@ import { ComposerService } from './services/composer.service';
 import { MockComponent, MockService } from '../../utils/mock';
 import { ModalService } from './components/modal/modal.service';
 import { By } from '@angular/platform-browser';
+import { FormToastService } from '../../common/services/form-toast.service';
+import { composerMockService } from '../../mocks/modules/composer/services/composer.service.mock';
 
 describe('Composer', () => {
   let comp: ComposerComponent;
@@ -11,7 +13,7 @@ describe('Composer', () => {
 
   beforeEach(async(() => {
     TestBed.overrideProvider(ComposerService, {
-      useValue: MockService(ComposerService),
+      useValue: composerMockService,
     });
 
     TestBed.configureTestingModule({
@@ -24,6 +26,7 @@ describe('Composer', () => {
       ],
       providers: [
         { provide: ModalService, useValue: MockService(ModalService) },
+        { provide: FormToastService, useValue: MockService(FormToastService) },
       ],
     }).compileComponents();
   }));

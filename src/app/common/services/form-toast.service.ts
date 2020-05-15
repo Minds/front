@@ -9,6 +9,9 @@ export interface FormToast {
 
 @Injectable()
 export class FormToastService {
+  toasts: FormToast[] = [];
+  timeoutIds: number[] = [];
+
   private subject = new Subject<FormToast>();
   constructor() {}
 
@@ -53,5 +56,13 @@ export class FormToastService {
       toast.type = 'info';
     }
     this.subject.next(toast);
+  }
+
+  isToastActive(message: string) {
+    return (
+      this.toasts.findIndex(
+        value => value.message === message && !value.dismissed
+      ) !== -1
+    );
   }
 }

@@ -23,9 +23,21 @@ context('Composer Modal', () => {
     });
   });
 
+  const composer = 'm-composer__modal > m-composer__base';
+  const composerToolbar = `${composer} .m-composer__toolbar`;
+
   const composerTrigger = 'm-composer .m-composer__trigger';
 
   const modalBaseComposer = 'm-composer__modal > m-composer__base';
+
+  const composerTextarea = `${composer} [data-cy="composer-textarea"]`;
+  const tagsButton = `${composerToolbar} a[data-cy="tags-button"]`;
+  const tagsInput = '.m-hashtagsTypeaheadInput__input';
+  const tagsAddButton = '.m-composerTags__tagInput button';
+  const saveTagsButton = 'm-button.m-composerPopup__save';
+
+
+  const toast = 'm-formToast .m-formToast__wrapper p';
 
   it('should open a composer modal popup in newsfeed', () => {
     cy.visit('/newsfeed/subscriptions');
@@ -35,6 +47,28 @@ context('Composer Modal', () => {
       .click();
 
     cy.get(modalBaseComposer).should('be.visible');
+  });
+
+  it('should show a \'too many tags\' error if you pick more than 5', () => {
+    cy.visit('/newsfeed/subscriptions');
+
+    cy.get(composerTrigger)
+      .should('be.visible')
+      .click();
+
+    cy.get(tagsButton).click();
+
+    cy.get(tagsInput).type('one');
+    cy.get(tagsAddButton).contains('Add').click();
+
+    cy.get(tagsInput).type('two');
+    cy.get(tagsAddButton).contains('Add').click();
+
+    cy.get(saveTagsButton).contains('Save Tags').click();
+
+    cy.get(composerTextarea).type('#three #four #five #six');
+
+    cy.get(toast).contains('You may include up to 5 hashtags').should('be.visible');
   });
 
   it('should open a composer modal popup in discovery', () => {

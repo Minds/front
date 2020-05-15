@@ -71,9 +71,11 @@ import {
   ],
 })
 export class FormToastComponent implements OnInit, OnDestroy {
-  toasts: FormToast[] = [];
-  timeoutIds: number[] = [];
   subscription: Subscription;
+
+  get toasts() {
+    return this.service.toasts;
+  }
 
   constructor(
     private service: FormToastService,
@@ -84,17 +86,17 @@ export class FormToastComponent implements OnInit, OnDestroy {
     this.subscription = this.service.onToast().subscribe(toast => {
       // clear toasts when an empty toast is received
       if (!toast.message) {
-        this.toasts = [];
+        this.service.toasts = [];
         return;
       }
 
       // if all saved toasts have already been dismissed, then clean the array to prevent leaks
-      if (this.toasts.findIndex(value => !value.dismissed) === -1) {
-        this.timeoutIds = [];
-        this.toasts = [];
+      if (this.service.toasts.findIndex(value => !value.dismissed) === -1) {
+        this.service.timeoutIds = [];
+        this.service.toasts = [];
       }
 
-      const toastIndex = this.toasts.push(toast) - 1;
+      const toastIndex = this.service.toasts.push(toast) - 1;
       this.detectChanges();
 
       this.setToastTimeout(toastIndex);
@@ -102,7 +104,7 @@ export class FormToastComponent implements OnInit, OnDestroy {
   }
 
   pauseTimeout(toastIndex: number): void {
-    clearTimeout(this.timeoutIds[toastIndex]);
+    clearTimeout(this.service.timeoutIds[toastIndex]);
   }
 
   resumeTimeout(toastIndex: number): void {
@@ -110,7 +112,7 @@ export class FormToastComponent implements OnInit, OnDestroy {
   }
 
   dismiss(toastIndex: number): void {
-    this.toasts[toastIndex].dismissed = true;
+    this.service.toasts[toastIndex].dismissed = true;
   }
 
   private setToastTimeout(toastIndex: number): void {
@@ -120,7 +122,7 @@ export class FormToastComponent implements OnInit, OnDestroy {
       this.detectChanges();
     }, 3400);
 
-    this.timeoutIds[toastIndex] = toastTimeout;
+    this.service.timeoutIds[toastIndex] = toastTimeout;
   }
 
   detectChanges(): void {
@@ -129,7 +131,7 @@ export class FormToastComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.timeoutIds.forEach(id => clearTimeout(id));
+    this.service.timeoutIds.forEach(id => clearTimeout(id));
     this.subscription.unsubscribe();
   }
 }
