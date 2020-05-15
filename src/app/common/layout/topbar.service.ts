@@ -64,8 +64,8 @@ export class TopbarService {
 
   toggleSearchBar(visible: boolean): void {
     if (this.container) {
-      if (this.useV3Topbar && this.container instanceof V3TopbarComponent) {
-        this.container.toggleSearchBar(visible);
+      if (this.useV3Topbar) {
+        (<V3TopbarComponent>this.container).toggleSearchBar(visible);
       }
     }
   }
