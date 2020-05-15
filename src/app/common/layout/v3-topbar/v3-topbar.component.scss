@@ -397,6 +397,7 @@
   > * {
     margin-left: 20px;
   }
+
   > :first-child {
     margin-left: 0;
   }
@@ -465,9 +466,24 @@
   }
 }
 
-.m-v3Topbar__notificationsToaster {
-  .m-notifications--toaster {
-    z-index: 500;
-    right: 65px;
+.m-v3Topbar__notificationsToasterWrapper {
+  position: relative;
+  width: 0;
+  height: 0;
+
+  .m-v3Topbar__notificationsToaster {
+    position: absolute;
+    width: 1px;
+
+    .m-notifications--toaster {
+      z-index: 500;
+      position: relative;
+      top: 50px;
+      right: 350px;
+
+      @media screen and (min-width: 1083px) {
+        right: 308px;
+      }
+    }
   }
 }
