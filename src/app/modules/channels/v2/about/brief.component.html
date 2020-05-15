@@ -1,28 +1,25 @@
 <div class="m-channelAbout__brief" *ngIf="service.channel$ | async as channel">
-  <div
-    *ngIf="channel.briefdescription"
-    class="m-channelAboutBrief__bio"
-    m-read-more
-    [maxHeightAllowed]="200"
-  >
-    <div
-      class="m-channelAboutBriefBio__content"
-      [innerHtml]="channel.briefdescription | tags"
-    ></div>
+  <ng-container *ngIf="channel.briefdescription">
+    <div class="m-channelAboutBrief__bio" m-read-more [maxHeightAllowed]="200">
+      <div
+        class="m-channelAboutBriefBio__content"
+        [innerHtml]="channel.briefdescription | tags"
+      ></div>
 
-    <m-read-more--button wrapperClass="m-channelAboutBriefBio__readMore" i18n>
-      Read More
-    </m-read-more--button>
-  </div>
+      <m-read-more--button wrapperClass="m-channelAboutBriefBio__readMore" i18n>
+        Read More
+      </m-read-more--button>
+    </div>
+    <div class="m-channelAboutBrief__spacer"></div>
+  </ng-container>
 
-  <div class="m-channelAboutBrief__spacer"></div>
-
-  <div *ngIf="channel.city" class="m-channelAboutBrief__location">
-    <m-icon iconId="location_on" [sizeFactor]="10"></m-icon>
-    <span>{{ channel.city }}</span>
-  </div>
-
-  <div class="m-channelAboutBrief__spacer"></div>
+  <ng-container *ngIf="channel.city">
+    <div class="m-channelAboutBrief__location">
+      <m-icon iconId="location_on" [sizeFactor]="10"></m-icon>
+      <span>{{ channel.city }}</span>
+    </div>
+    <div class="m-channelAboutBrief__spacer"></div>
+  </ng-container>
 
   <div class="m-channelAboutBrief__stats">
     <div class="m-channelAboutBriefStats__item">
