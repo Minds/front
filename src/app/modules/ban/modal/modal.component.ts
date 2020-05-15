@@ -110,7 +110,7 @@ export class BanModalComponent implements AfterViewInit {
         this.inProgress = false;
         this.user.banned = 'yes';
         this.success = true;
-        this.overlayModal.dismiss();
+        this.overlayModal.dismiss({ banned: true });
       })
       .catch(e => {
         this.inProgress = false;

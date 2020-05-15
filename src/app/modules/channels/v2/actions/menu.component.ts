@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ChannelsV2Service } from '../channels-v2.service';
 import { PostMenuService } from '../../../../common/components/post-menu/post-menu.service';
 import { ActivityService } from '../../../../common/services/activity.service';
+import { OverlayModalService } from '../../../../services/ux/overlay-modal';
+import { Router } from '@angular/router';
 
 /**
  * Extra actions dropdown menu
@@ -16,14 +18,36 @@ export class ChannelActionsMenuComponent {
   /**
    * Constructor
    * @param service
+   * @param overlayModalService
    * @param postMenu
+   * @param router
    * @param activity
    */
   constructor(
     public service: ChannelsV2Service,
+    protected overlayModalService: OverlayModalService,
     protected postMenu: PostMenuService,
+    protected router: Router,
     activity: ActivityService
   ) {}
+
+  /**
+   * Subscribe to the user
+   * @todo Create a generic service along with post menu things
+   */
+  async subscribe(): Promise<void> {
+    // Shallow clone current user
+    const channel = { ...this.service.channel$.getValue() };
+
+    // Optimistic mutation
+    this.service.setChannel({ ...channel, subscribed: false });
+
+    // Let Post Menu service handle subscription
+    await this.postMenu.setEntityOwner(channel).subscribe();
+
+    // Post menu service mutates passed object
+    this.service.setChannel({ ...channel });
+  }
 
   /**
    * Unsubscribe from the user
@@ -41,6 +65,79 @@ export class ChannelActionsMenuComponent {
 
     // Post menu service mutates passed object
     this.service.setChannel({ ...channel });
+  }
+
+  /**
+   * Unban a user
+   * @todo Create a generic service along with post menu things
+   */
+  async unBan() {
+    // Shallow clone current user
+    const channel = { ...this.service.channel$.getValue() };
+
+    // Optimistic mutation
+    this.service.setChannel({ ...channel, banned: 'no', subscribed: false });
+
+    // Let Post Menu service handle ban operation
+    await this.postMenu.setEntity({ ownerObj: channel }).unBan();
+  }
+
+  viewLedger() {
+    this.router.navigate([
+      '/wallet/tokens/transactions',
+      { remote: this.service.channel$.getValue().username },
+    ]);
+  }
+
+  viewWithdrawals() {
+    this.router.navigate([
+      '/admin/withdrawals',
+      { user: this.service.channel$.getValue().username },
+    ]);
+  }
+
+  async viewEmail() {
+    const channel = { ...this.service.channel$.getValue() };
+
+    const email = await this.postMenu
+      .setEntity({ ownerObj: channel })
+      .getEmail();
+
+    this.service.setChannel({ ...channel, email: email, subscribed: false });
+  }
+
+  async setExplicit(explicit: boolean) {
+    const channel = { ...this.service.channel$.getValue() };
+
+    // Optimistic mutation
+    this.service.setChannel({ ...channel, is_mature: true, subscribed: false });
+
+    await this.postMenu.setEntity({ ownerObj: channel }).setExplicit(explicit);
+  }
+
+  async setNSFWLock(reasons: Array<{ label; value; selected }>) {
+    const channel = { ...this.service.channel$.getValue() };
+
+    const nsfw = reasons.map(reason => reason.value);
+
+    // Optimistic mutation
+    this.service.setChannel({ ...channel, nsfw: nsfw, subscribed: false });
+
+    await this.postMenu.setEntity({ ownerObj: channel }).setNsfw(nsfw);
+  }
+
+  async reIndex() {
+    const channel = { ...this.service.channel$.getValue() };
+    this.postMenu.setEntity({ ownerObj: channel }).reIndex();
+  }
+
+  async setRating(rating: number) {
+    const channel = { ...this.service.channel$.getValue() };
+
+    // Optimistic mutation
+    this.service.setChannel({ ...channel, rating: rating, subscribed: false });
+
+    await this.postMenu.setEntity({ ownerObj: channel }).setRating(rating);
   }
 
   /**

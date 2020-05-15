@@ -33,6 +33,7 @@ import { ChannelListComponent } from './list/list.component';
 import { ChannelListConnectionsComponent } from './list/connections.component';
 import { ChannelAboutExtraInfoComponent } from './about/extra-info.component';
 import { ChannelListGroupsComponent } from './list/groups.component';
+import { ModalsModule } from '../../modals/modals.module';
 
 /**
  * Generally available components
@@ -86,6 +87,7 @@ const PROVIDERS = [ChannelEditModalService];
     NewsfeedModule,
     MessengerModule,
     HashtagsModule,
+    ModalsModule,
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,

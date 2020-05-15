@@ -34,6 +34,23 @@ export class ChannelsV2Service {
   >(null);
 
   /**
+   * The user's email
+   */
+  readonly email$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
+  /**
+   * Nsfw reasons
+   */
+  readonly nsfw$: BehaviorSubject<Array<number>> = new BehaviorSubject<
+    Array<number>
+  >([]);
+
+  /**
+   * Boost rating
+   */
+  readonly rating$: BehaviorSubject<number> = new BehaviorSubject<number>(1);
+
+  /**
    * Tokens the channel received in the last period
    */
   readonly tokens$: Observable<number>;
@@ -62,6 +79,16 @@ export class ChannelsV2Service {
    * Can interact with channel?
    */
   readonly canInteract$: Observable<boolean>;
+
+  /**
+   * Banned status
+   */
+  readonly isBanned$: Observable<boolean>;
+
+  /**
+   * Explicit status
+   */
+  readonly isExplicit$: Observable<boolean>;
 
   /**
    * Admin status
@@ -160,8 +187,32 @@ export class ChannelsV2Service {
       )
     );
 
+    // Set isBanned$ observable
+    this.isBanned$ = combineLatest([
+      this.isOwner$,
+      this.session.user$,
+      this.channel$,
+    ]).pipe(
+      map(
+        ([isOwner, currentUser, channel]) =>
+          !isOwner && currentUser && channel && channel.banned === 'yes'
+      )
+    );
+
+    // Set isExplicit$ observable
+    this.isExplicit$ = combineLatest([
+      this.isOwner$,
+      this.session.user$,
+      this.channel$,
+    ]).pipe(
+      map(
+        ([isOwner, currentUser, channel]) =>
+          !isOwner && currentUser && channel && channel.is_mature
+      )
+    );
+
     // Set isAdmin$ observable
-    this.isAdmin$ = this.channel$.pipe(
+    this.isAdmin$ = this.session.user$.pipe(
       map(channel => channel && channel.is_admin)
     );
   }
@@ -194,6 +245,9 @@ export class ChannelsV2Service {
   setChannel(channel: MindsUser | null): ChannelsV2Service {
     this.channel$.next(channel);
     this.username$.next(channel ? channel.username : '');
+    this.email$.next(channel ? channel.email : null);
+    this.nsfw$.next(channel ? channel.nsfw : []);
+    this.rating$.next(channel ? channel.rating : 1);
     return this;
   }
 }
