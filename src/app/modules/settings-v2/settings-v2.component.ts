@@ -195,7 +195,7 @@ export class SettingsV2Component implements OnInit {
     protected session: Session,
     protected settingsService: SettingsV2Service,
     protected proService: ProService,
-    protected formToastService: FormToastService,
+    protected toasterService: FormToastService,
     public featuresService: FeaturesService
   ) {
     this.newNavigation = this.featuresService.has('navigation');
@@ -322,9 +322,9 @@ export class SettingsV2Component implements OnInit {
     if (elementRef.formSubmitted) {
       elementRef.formSubmitted.subscribe($event => {
         if ($event.formSubmitted) {
-          this.formToastService.success('Changes saved');
+          this.toasterService.success('Changes saved');
         } else {
-          this.formToastService.error($event.error || 'Save error');
+          this.toasterService.error($event.error || 'Save error');
         }
       });
     }

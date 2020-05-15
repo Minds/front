@@ -36,6 +36,8 @@ import {
 
 import { REASONS, REPORT_ACTIONS } from '../../../services/list-options';
 import { JurySessionService } from '../juryduty/session/session.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
+import { MockService } from '../../../utils/mock';
 /* tslint:disable */
 describe('ReportConsoleComponent', () => {
   let comp: ReportConsoleComponent;
@@ -54,6 +56,10 @@ describe('ReportConsoleComponent', () => {
       providers: [
         { provide: Client, useValue: clientMock },
         JurySessionService,
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents(); // compile template and css

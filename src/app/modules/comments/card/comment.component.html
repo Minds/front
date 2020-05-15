@@ -32,11 +32,6 @@
         [innerHtml]="comment.description || '' | tags"
       ></p>
 
-      <p class="m-comment--error-label" *ngIf="error">
-        <i class="material-icons">warning</i>
-        <span>{{ error }}</span>
-      </p>
-
       <m-translate
         [open]="translateToggle"
         [entity]="comment"

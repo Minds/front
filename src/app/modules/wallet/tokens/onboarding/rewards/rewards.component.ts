@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Client } from '../../../../../services/api/client';
 import { Session } from '../../../../../services/session';
 import { ConfigsService } from '../../../../../common/services/configs.service';
+import { FormToastService } from '../../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-token--onboarding--rewards',
@@ -35,7 +36,8 @@ export class TokenRewardsOnboardingComponent {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected router: Router,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -61,6 +63,7 @@ export class TokenRewardsOnboardingComponent {
       this.confirming = true;
     } catch (e) {
       this.error = e.message;
+      this.toasterService.error(this.error);
     }
     this.inProgress = false;
 
@@ -93,6 +96,7 @@ export class TokenRewardsOnboardingComponent {
       this.join();
     } catch (e) {
       this.error = e.message;
+      this.toasterService.error(this.error);
     }
 
     this.inProgress = false;

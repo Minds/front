@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { Client } from '../../../services/api/client';
 import { Session } from '../../../services/session';
 import { MessengerEncryptionService } from '../encryption/encryption.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-messenger--onboarding--setup',
@@ -31,7 +32,8 @@ export class MessengerOnboardingSetupComponent {
     protected cd: ChangeDetectorRef,
     protected session: Session,
     protected router: Router,
-    private encryption: MessengerEncryptionService
+    private encryption: MessengerEncryptionService,
+    protected toasterService: FormToastService
   ) {}
 
   setup() {
@@ -45,6 +47,7 @@ export class MessengerOnboardingSetupComponent {
       })
       .catch(() => {
         this.error = 'Sorry, there was a problem.';
+        this.toasterService.error(this.error);
         this.inProgress = false;
       });
 

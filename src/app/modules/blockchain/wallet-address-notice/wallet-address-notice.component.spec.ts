@@ -14,6 +14,7 @@ import { BlockchainService } from '../blockchain.service';
 import { Web3WalletService } from '../web3-wallet.service';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 let walletService = MockService(Web3WalletService, {
   ready: true,
@@ -43,6 +44,10 @@ describe('BlockchainWalletAddressNoticeComponent', () => {
         { provide: Web3WalletService, useValue: walletService },
         { provide: BlockchainService, useValue: blockchainService },
         { provide: Router, useValue: routerMock },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
+        },
       ],
     }).compileComponents();
   }));

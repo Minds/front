@@ -11,6 +11,7 @@ import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
 import { REASONS } from '../../../services/list-options';
 import { MindsUser } from '../../../interfaces/entities';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -41,7 +42,8 @@ export class BanModalComponent implements AfterViewInit {
     public session: Session,
     private _changeDetectorRef: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
-    private client: Client
+    private client: Client,
+    protected toasterService: FormToastService
   ) {}
 
   ngAfterViewInit() {
@@ -80,6 +82,9 @@ export class BanModalComponent implements AfterViewInit {
       this.validate();
     } catch (e) {
       this.error = e.message;
+      if (!this.inProgress) {
+        this.toasterService.error(this.error);
+      }
     }
   }
 
@@ -116,7 +121,7 @@ export class BanModalComponent implements AfterViewInit {
         this.inProgress = false;
         this.user.banned = 'no';
 
-        alert(e.message ? e.message : e);
+        this.toasterService.error(e.message ? e.message : e);
       });
   }
 }

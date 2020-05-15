@@ -179,15 +179,6 @@
       >
         <div class="mdl-grid mdl-grid--no-spacing">
           <div class="mdl-cell mdl-cell--12-col">
-            <div
-              *ngIf="error"
-              class="m-error mdl-color--red mdl-color-text--white"
-            >
-              {{ error }}
-            </div>
-          </div>
-
-          <div class="mdl-cell mdl-cell--12-col">
             <label
               i18n="@@MONETIZATION__REVENUE__OPTIONS__ACCOUNT_NUMBER_IBAN_LABEL"
               >Account Number / IBAN</label
@@ -289,12 +280,5 @@
     >
       Cancel Monetization
     </button>
-
-    <div
-      *ngIf="leaveError"
-      class="m-error mdl-color--red mdl-color-text--white"
-    >
-      {{ leaveError }}
-    </div>
   </div>
 </div>

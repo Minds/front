@@ -47,7 +47,7 @@ export class SettingsV2ProDomainComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     protected router: Router,
     protected route: ActivatedRoute,
-    protected formToastService: FormToastService
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -122,7 +122,7 @@ export class SettingsV2ProDomainComponent implements OnInit, OnDestroy {
     } catch (e) {
       this.isDomainValid = null;
       this.error = (e && e.message) || 'Error checking domain';
-      this.formToastService.error(this.error);
+      this.toasterService.error(this.error);
     }
 
     if (!this.isDomainValid) {

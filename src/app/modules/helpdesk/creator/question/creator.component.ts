@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Client } from '../../../../services/api/client';
 import { ActivatedRoute, Router } from '@angular/router';
 import { InlineEditorComponent } from '../../../../common/components/editors/inline-editor.component';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-helpdesk--question-creator',
@@ -24,7 +25,8 @@ export class QuestionCreatorComponent implements OnInit {
   constructor(
     public client: Client,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -115,12 +117,15 @@ export class QuestionCreatorComponent implements OnInit {
 
     if (!this.question.category_uuid) {
       this.error = 'You must select a category';
+      this.toasterService.error(this.error);
     }
     if (!this.question.answer) {
       this.error = 'You must provide an answer';
+      this.toasterService.error(this.error);
     }
     if (!this.question.question) {
       this.error = 'You must provide a question';
+      this.toasterService.error(this.error);
     }
 
     if (this.error) {
@@ -147,6 +152,7 @@ export class QuestionCreatorComponent implements OnInit {
     } catch (e) {
       console.error(e);
       this.error = e;
+      this.toasterService.error(this.error);
     }
   }
 }

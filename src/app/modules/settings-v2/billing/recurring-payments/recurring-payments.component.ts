@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core';
 
 import { Client } from '../../../../common/api/client.service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-settingsV2__recurringPayments',
@@ -11,7 +12,11 @@ export class SettingsV2RecurringPaymentsComponent {
   inProgress: boolean = false;
   subscriptions: Array<any> = [];
 
-  constructor(private client: Client, private cd: ChangeDetectorRef) {}
+  constructor(
+    private client: Client,
+    private cd: ChangeDetectorRef,
+    protected toasterService: FormToastService
+  ) {}
 
   ngOnInit() {
     this.loadList();
@@ -59,7 +64,7 @@ export class SettingsV2RecurringPaymentsComponent {
         this.cd.detectChanges();
       })
       .catch(e => {
-        alert('Sorry, there was an error');
+        this.toasterService.error('Sorry, there was an error');
         subscription._cancelling = false;
         this.inProgress = false;
         this.cd.detectChanges();

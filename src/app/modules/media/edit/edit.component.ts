@@ -9,6 +9,7 @@ import { ACCESS, LICENSES } from '../../../services/list-options';
 import { ThumbnailEvent } from '../components/thumbnail-selector.component';
 import { InlineEditorComponent } from '../../../common/components/editors/inline-editor.component';
 import { RecommendedService } from '../components/video/recommended.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -47,7 +48,8 @@ export class MediaEditComponent {
     public client: Client,
     public upload: Upload,
     public router: Router,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -95,6 +97,7 @@ export class MediaEditComponent {
         })
         .catch(e => {
           this.error = 'There was an error while trying to update';
+          this.toasterService.error(this.error);
         });
     });
   }

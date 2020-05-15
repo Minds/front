@@ -34,6 +34,7 @@ import { captureEvent } from '@sentry/core';
 import { isPlatformServer } from '@angular/common';
 import { PageLayoutService } from '../../../common/layout/page-layout.service';
 import { filter } from 'rxjs/operators';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   providers: [ProChannelService, OverlayModalService, SignupModalService],
@@ -172,7 +173,8 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
     protected site: SiteService,
     protected injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object,
-    protected pageLayoutService: PageLayoutService
+    protected pageLayoutService: PageLayoutService,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -248,12 +250,14 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       this.shouldOpenWireModal();
     } catch (e) {
       this.error = e.message;
+      this.toasterService.error(this.error);
       console.error(e);
       captureEvent(e);
 
       if (e.message === 'E_NOT_PRO') {
         if (this.site.isProDomain) {
           this.error = 'This is not a Minds Pro channel...';
+          this.toasterService.error(this.error);
         } else {
           this.router.navigate(['/', this.username || ''], {
             replaceUrl: true,
@@ -277,6 +281,7 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
       console.error(e);
       captureEvent(e);
       this.error = e.message;
+      this.toasterService.error(this.error);
     }
 
     this.detectChanges();

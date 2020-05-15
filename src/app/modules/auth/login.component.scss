@@ -231,7 +231,7 @@ m-login {
         margin-top: 55px;
         padding: 0;
 
-        & > *:not(button) {
+        & > *:not(button):not(.m-login__formError) {
           color: #4a4a4a !important;
         }
 

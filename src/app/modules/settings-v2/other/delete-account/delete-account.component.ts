@@ -10,6 +10,7 @@ import { Client } from '../../../../services/api';
 import { Router } from '@angular/router';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { ConfirmPasswordModalComponent } from '../../../modals/confirm-password/modal.component';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-settingsV2__deleteAccount',
@@ -24,7 +25,8 @@ export class SettingsV2DeleteAccountComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     public client: Client,
     public router: Router,
-    protected overlayModal: OverlayModalService
+    protected overlayModal: OverlayModalService,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -50,7 +52,9 @@ export class SettingsV2DeleteAccountComponent implements OnInit {
               this.router.navigate(['/logout']);
             })
             .catch((e: any) => {
-              alert('Sorry, we could not delete your account');
+              this.toasterService.error(
+                'Sorry, we could not delete your account'
+              );
               this.detectChanges();
             });
         },

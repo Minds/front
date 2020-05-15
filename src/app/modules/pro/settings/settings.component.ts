@@ -116,7 +116,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     protected cd: ChangeDetectorRef,
     protected site: SiteService,
     protected sanitizer: DomSanitizer,
-    private formToastService: FormToastService,
+    private toasterService: FormToastService,
     private fb: FormBuilder
   ) {}
 
@@ -218,7 +218,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
     } catch (e) {
       this.isDomainValid = null;
       this.error = (e && e.message) || 'Error checking domain';
-      this.formToastService.error(this.error);
+      this.toasterService.error(this.error);
     }
 
     if (!this.isDomainValid) {
@@ -283,7 +283,7 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
       this.router.navigate(['/', this.session.getLoggedInUser().name]);
     } catch (e) {
       this.error = e.message;
-      this.formToastService.error('Error: ' + this.error);
+      this.toasterService.error('Error: ' + this.error);
     }
   }
 
@@ -337,13 +337,13 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
         payout_method: this.form.value.payouts.method,
       };
       await this.service.set(this.settings, this.user);
-      this.formToastService.success(
+      this.toasterService.success(
         'Pro settings have been successfully updated'
       );
       this.form.markAsPristine();
     } catch (e) {
       this.error = e.message;
-      this.formToastService.error('Error: ' + this.error);
+      this.toasterService.error('Error: ' + this.error);
     }
     this.saveStatus = 'unsaved';
     this.inProgress = false;

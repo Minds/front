@@ -22,6 +22,7 @@ import { ClientMetaService } from '../../../common/services/client-meta.service'
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FeaturesService } from '../../../services/features.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-media--view',
@@ -81,7 +82,8 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     private metaService: MetaService,
     configs: ConfigsService,
     @SkipSelf() injector: Injector,
-    private featuresService: FeaturesService
+    private featuresService: FeaturesService,
+    protected toasterService: FormToastService
   ) {
     this.clientMetaService
       .inherit(injector)
@@ -170,7 +172,7 @@ export class MediaViewComponent implements OnInit, OnDestroy {
         this.router.navigate([`/media/${type}/my`]);
       })
       .catch(e => {
-        alert((e && e.message) || 'Server error');
+        this.toasterService.error((e && e.message) || 'Server error');
       });
   }
 

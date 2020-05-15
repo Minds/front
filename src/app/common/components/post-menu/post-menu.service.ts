@@ -10,6 +10,7 @@ import { BehaviorSubject } from 'rxjs';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
 import { DialogService } from '../../services/confirm-leave-dialog.service';
+import { FormToastService } from '../../services/form-toast.service';
 
 @Injectable()
 export class PostMenuService {
@@ -31,7 +32,8 @@ export class PostMenuService {
     public signupModal: SignupModalService,
     protected blockListService: BlockListService,
     protected activityService: ActivityService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    protected formToastService: FormToastService
   ) {}
 
   setEntity(entity): PostMenuService {
@@ -69,7 +71,7 @@ export class PostMenuService {
       this.entityOwner.subscribed = true;
     } catch (e) {
       this.entityOwner.subscribed = false;
-      alert("You can't subscribe to this user.");
+      this.formToastService.error("You can't subscribe to this user.");
     }
   }
 

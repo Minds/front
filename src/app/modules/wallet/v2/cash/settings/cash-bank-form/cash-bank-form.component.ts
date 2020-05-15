@@ -37,7 +37,7 @@ export class WalletCashBankFormComponent implements OnInit {
     private cd: ChangeDetectorRef,
     protected walletService: WalletV2Service,
     private fb: FormBuilder,
-    private formToastService: FormToastService
+    private toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -64,11 +64,11 @@ export class WalletCashBankFormComponent implements OnInit {
     try {
       const response = await this.walletService.removeStripeBank();
 
-      this.formToastService.success(
+      this.toasterService.success(
         'Your bank account was successfully removed.'
       );
     } catch (e) {
-      this.formToastService.error(e.message);
+      this.toasterService.error(e.message);
     }
 
     this.inProgress = false;
@@ -94,7 +94,7 @@ export class WalletCashBankFormComponent implements OnInit {
 
       if (response.status !== 'error') {
         const toasterMessage = 'Your bank account has been successfully added';
-        this.formToastService.success(toasterMessage);
+        this.toasterService.success(toasterMessage);
       }
     } catch (e) {
       // TODO backend should include e.param and handle errors inline
@@ -148,7 +148,7 @@ export class WalletCashBankFormComponent implements OnInit {
   //       this.leftMonetization = true;
   //     })
   //     .catch(e => {
-  //       this.formToastService.error(e.message);
+  //       this.toasterService.error(e.message);
   //     });
   //   this.inProgress = false;
   //   this.detectChanges();

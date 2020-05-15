@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ChartColumn } from '../../../common/components/chart/chart.component';
 import { Client, Upload } from '../../../services/api';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -28,7 +29,8 @@ export class RevenueOptionsComponent {
     private upload: Upload,
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -69,6 +71,7 @@ export class RevenueOptionsComponent {
       .catch(e => {
         this.inProgress = false;
         this.error = e.message;
+        this.toasterService.error(this.error);
         this.detectChanges();
       });
   }
@@ -85,6 +88,7 @@ export class RevenueOptionsComponent {
       .catch(e => {
         this.leaving = false;
         this.leaveError = e.message;
+        this.toasterService.error(this.leaveError);
         this.detectChanges();
       });
   }

@@ -9,6 +9,7 @@ import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-channel--onboarding--rewards',
@@ -97,10 +98,6 @@ import { ActivatedRoute } from '@angular/router';
         </div>
       </ng-template>
 
-      <p class="m-channelOnboardingSlideRewards__error" *ngIf="error">
-        {{ error }}
-      </p>
-
       <p class="m-channelOnboardingSlide__info">
         <i class="material-icons">info</i>
         We do not store your phone number in our servers.
@@ -129,7 +126,8 @@ export class TokenRewardsOnboardingComponent {
     protected client: Client,
     protected cd: ChangeDetectorRef,
     protected session: Session,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    protected toasterService: FormToastService
   ) {}
 
   async verify() {
@@ -146,6 +144,7 @@ export class TokenRewardsOnboardingComponent {
       this.confirming = true;
     } catch (e) {
       this.error = e.message;
+      this.toasterService.error(this.error);
     }
     this.inProgress = false;
   }
@@ -175,6 +174,7 @@ export class TokenRewardsOnboardingComponent {
       this.join();
     } catch (e) {
       this.error = e.message;
+      this.toasterService.error(this.error);
     }
 
     this.inProgress = false;

@@ -6,6 +6,7 @@ import {
 } from '../../interfaces/wire.interfaces';
 import { Client } from '../../../../services/api/client';
 import { Session } from '../../../../services/session';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -17,7 +18,11 @@ export class WireConsoleRewardsComponent {
   rewards: WireRewardsStruc;
   rewardsSaved: boolean = false;
 
-  constructor(private client: Client, private session: Session) {
+  constructor(
+    private client: Client,
+    private session: Session,
+    protected toasterService: FormToastService
+  ) {
     this.rewards = this.session.getLoggedInUser().wire_rewards;
     this.user = this.session.getLoggedInUser();
   }
@@ -46,7 +51,7 @@ export class WireConsoleRewardsComponent {
         this.rewardsSaved = true;
       })
       .catch(e => {
-        alert((e && e.message) || 'Server error');
+        this.toasterService.error((e && e.message) || 'Server error');
       });
   }
 

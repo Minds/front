@@ -12,6 +12,7 @@ import { WalletService } from '../../../services/wallet';
 import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'minds-paywall',
@@ -36,7 +37,8 @@ export class PayWall {
     public session: Session,
     public client: Client,
     public cd: ChangeDetectorRef,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {
     this.cdnUrl = configs.get('cdn_url');
   }
@@ -67,6 +69,7 @@ export class PayWall {
       .catch(e => {
         this.inProgress = false;
         this.error = 'Sorry, there was an error.';
+        this.toasterService.error(this.error);
         this.detectChanges();
       });
   }
@@ -89,6 +92,7 @@ export class PayWall {
       .catch(e => {
         this.inProgress = false;
         this.error = "Sorry, we couldn't complete the transaction.";
+        this.toasterService.error(this.error);
         this.detectChanges();
       });
   }

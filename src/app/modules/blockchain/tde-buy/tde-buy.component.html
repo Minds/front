@@ -21,14 +21,6 @@
     the button below.
   </p>
 
-  <p
-    *ngIf="error"
-    class="m-blockchain--tde-buy--error"
-    i18n="@@M__BLOCKCHAIN__TDE_BUY__ERROR_LABEL"
-  >
-    Error: {{ error }}
-  </p>
-
   <div class="m-blockchain--tde-buy--action">
     <button
       class="m-blockchain--tde-buy-button"
@@ -58,10 +50,5 @@
       <i class="material-icons">check</i>
       <span i18n="@@M__BLOCKCHAIN__TDE_BUY__BOUGHT_NOTE">Bought</span>
     </ng-container>
-
-    <div class="m-blockchain--tde-buy--error" *ngIf="metamaskError">
-      <i class="material-icons">close</i>
-      <span>{{ metamaskError }}</span>
-    </div>
   </div>
 </div>

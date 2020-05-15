@@ -35,6 +35,7 @@ import { FeaturesService } from '../../../services/features.service';
 import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-comment',
@@ -110,7 +111,8 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     protected activityService: ActivityService,
     protected featuresService: FeaturesService,
     @Inject(PLATFORM_ID) private platformId: Object,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
@@ -339,6 +341,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     this.changesDetected = false;
     if (this.comment.error != this.error) {
       this.error = this.comment.error;
+      this.toasterService.error(this.error);
       this.changesDetected = true;
     }
 

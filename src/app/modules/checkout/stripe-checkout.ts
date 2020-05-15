@@ -7,6 +7,7 @@ import {
 
 import { Client } from '../../services/api';
 import { ConfigsService } from '../../common/services/configs.service';
+import { FormToastService } from '../../common/services/form-toast.service';
 
 interface CreditCard {
   number?: number;
@@ -22,10 +23,6 @@ interface CreditCard {
   selector: 'minds-payments-stripe-checkout',
   outputs: ['inputed', 'done'],
   template: `
-    <div class="m-error mdl-color--red mdl-color-text--white" *ngIf="error">
-      {{ error }}
-    </div>
-
     <div
       class="m-payments-options"
       style="margin-bottom:8px;"
@@ -131,7 +128,8 @@ export class StripeCheckout {
   constructor(
     public client: Client,
     private cd: ChangeDetectorRef,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {
     this.stripeKey = configs.get('stripe_key');
   }
@@ -204,6 +202,7 @@ export class StripeCheckout {
       (status, response) => {
         if (response.error) {
           this.error = response.error.message;
+          this.toasterService.error(this.error);
           this.inProgress = false;
           this.detectChanges();
           return false;

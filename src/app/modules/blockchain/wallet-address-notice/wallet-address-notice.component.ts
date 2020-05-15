@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 
 import { Web3WalletService } from '../web3-wallet.service';
 import { BlockchainService } from '../blockchain.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -26,6 +27,7 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
     protected blockchain: BlockchainService,
     protected router: Router,
     protected cd: ChangeDetectorRef,
+    protected toasterService: FormToastService,
     @Inject(PLATFORM_ID) protected platformId: Object
   ) {}
 
@@ -55,7 +57,7 @@ export class BlockchainWalletAddressNoticeComponent implements OnInit {
       this.address = void 0;
       this.detectChanges();
     } catch (e) {
-      alert(e);
+      this.toasterService.error(e);
     }
   }
 

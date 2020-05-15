@@ -12,6 +12,7 @@ import {
   WireRewardsType,
 } from '../../wire/interfaces/wire.interfaces';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-settings--wire',
@@ -43,7 +44,8 @@ export class SettingsWireComponent implements OnInit {
     public client: Client,
     public upload: Upload,
     private cd: ChangeDetectorRef,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {
     this.rewards = session.getLoggedInUser().wire_rewards;
   }
@@ -127,7 +129,7 @@ export class SettingsWireComponent implements OnInit {
         return true;
       })
       .catch(e => {
-        alert('Sorry, there was a problem. Try again.');
+        this.toasterService.error('Sorry, there was a problem. Try again.');
         input.value = null;
         this.detectChanges();
 
@@ -150,7 +152,7 @@ export class SettingsWireComponent implements OnInit {
         await this.saveRewards();
       }*/
     } catch (e) {
-      alert((e && e.message) || 'Server error');
+      this.toasterService.error((e && e.message) || 'Server error');
     }
     this.inProgress = false;
   }

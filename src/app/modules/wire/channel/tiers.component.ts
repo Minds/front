@@ -7,6 +7,7 @@ import {
   WireRewardsStruc,
 } from '../interfaces/wire.interfaces';
 import { WireTypeLabels } from '../wire';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-wire__subscriptionTiers',
@@ -28,7 +29,11 @@ export class WireSubscriptionTiersComponent {
     },
   };
 
-  constructor(public session: Session, private client: Client) {}
+  constructor(
+    public session: Session,
+    private client: Client,
+    protected toasterService: FormToastService
+  ) {}
 
   ngOnInit() {
     if (this.user && this.user.wire_rewards) {
@@ -55,7 +60,7 @@ export class WireSubscriptionTiersComponent {
       this.session.getLoggedInUser().wire_rewards = this.rewards;
       this.isSaved.next(true);
     } catch (e) {
-      alert((e && e.message) || 'Server error');
+      this.toasterService.error((e && e.message) || 'Server error');
     } finally {
       this.isSaving.next(false);
     }

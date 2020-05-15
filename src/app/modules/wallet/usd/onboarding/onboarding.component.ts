@@ -15,6 +15,7 @@ import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { WalletUSDTermsComponent } from '../terms.component';
 import { Session } from '../../../../services/session';
 import { BTCSettingsComponent } from '../../../payments/btc/settings.component';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-walletUsd__onboarding',
@@ -39,7 +40,8 @@ export class WalletUSDOnboardingComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private router: Router,
     protected overlayModal: OverlayModalService,
-    private session: Session
+    private session: Session,
+    protected toasterService: FormToastService
   ) {}
 
   ngOnInit() {
@@ -137,6 +139,7 @@ export class WalletUSDOnboardingComponent implements OnInit {
     } catch (e) {
       this.inProgress = false;
       this.error = e.message;
+      this.toasterService.error(this.error);
       this.detectChanges();
     }
   }
@@ -159,6 +162,7 @@ export class WalletUSDOnboardingComponent implements OnInit {
       .catch(e => {
         this.inProgress = false;
         this.error = e.message;
+        this.toasterService.error(this.error);
         this.detectChanges();
       });
   }

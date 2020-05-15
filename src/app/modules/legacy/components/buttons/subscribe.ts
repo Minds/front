@@ -9,6 +9,7 @@ import {
 import { Session } from '../../../../services/session';
 import { Client } from '../../../../services/api';
 import { SignupModalService } from '../../../modals/signup/service';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'minds-button-subscribe',
@@ -78,7 +79,8 @@ export class SubscribeButton {
   constructor(
     public session: Session,
     public client: Client,
-    public modal: SignupModalService
+    public modal: SignupModalService,
+    protected toasterService: FormToastService
   ) {}
 
   @Input('user')
@@ -111,7 +113,7 @@ export class SubscribeButton {
       })
       .catch(e => {
         this._user.subscribed = false;
-        alert("You can't subscribe to this user.");
+        this.toasterService.error("You can't subscribe to this user.");
       });
   }
 

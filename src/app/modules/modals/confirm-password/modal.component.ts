@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 @Component({
   moduleId: module.id,
@@ -29,7 +30,8 @@ export class ConfirmPasswordModalComponent {
     private cd: ChangeDetectorRef,
     public overlayModal: OverlayModalService,
     private client: Client,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    protected toasterService: FormToastService
   ) {
     this.form = fb.group({
       password: ['', Validators.required],
@@ -61,6 +63,7 @@ export class ConfirmPasswordModalComponent {
     } catch (e) {
       if (e.visible) {
         this.error = e.message;
+        this.toasterService.error("There's been an error. Please try again.");
       }
     }
   }
@@ -94,6 +97,7 @@ export class ConfirmPasswordModalComponent {
       this.inProgress = false;
       if (e.status === 'failed') {
         this.error = 'LoginException::AuthenticationFailed';
+        this.toasterService.error('Incorrect password. Please try again.');
       }
     }
   }

@@ -19,6 +19,7 @@ import { MockComponent, MockDirective, MockService } from '../../../utils/mock';
 import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { overlayModalServiceMock } from '../../../../tests/overlay-modal-service-mock.spec';
 import { GroupsService } from '../groups.service';
+import { FormToastService } from '../../../common/services/form-toast.service';
 
 let groupConfig = {
   countMembers: Promise.resolve(1),
@@ -63,6 +64,10 @@ describe('GroupsSettingsButton', () => {
         { provide: Client, useValue: clientMock },
         { provide: Session, useValue: sessionMock },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
+        {
+          provide: FormToastService,
+          useValue: MockService(FormToastService),
+        },
       ],
     }).compileComponents();
   }));
