@@ -99,6 +99,7 @@ m-channelAbout__brief {
       @include m-readMoreButton(themed($m-bgColor--primary)) {
         font-size: 15px;
         height: 70px;
+        justify-content: flex-start;
       }
     }
   }
