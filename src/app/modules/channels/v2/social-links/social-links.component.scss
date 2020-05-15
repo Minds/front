@@ -12,7 +12,10 @@ m-channel__socialLinks {
     display: inline-block;
 
     > a {
-      color: inherit !important;
+      font-size: 18px;
+      @include m-theme() {
+        color: themed($m-textColor--secondary) !important;
+      }
     }
   }
 

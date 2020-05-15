@@ -18,23 +18,20 @@ m-channel-v2 {
 
   .m-channel__narrowBrief {
     display: none;
-    padding: 25px 40px 0;
+    padding: 20px 20px 0;
 
     @media screen and (max-width: $layoutMin3ColWidth) {
       display: block;
     }
 
-    @media screen and (max-width: $max-mobile) {
-      padding: 25px 20px 0;
-    }
+    // @media screen and (max-width: $max-mobile) {
+    //   padding: 25px 20px 0;
+    // }
   }
 
   .m-channel__tabs {
-    padding: 10px 40px 0;
-
     @media screen and (max-width: $max-mobile) {
-      justify-content: space-around;
-      padding: 20px 20px 0;
+      padding: 0 20px;
 
       .m-tabs__tab > a:first-child {
         margin-left: 0;

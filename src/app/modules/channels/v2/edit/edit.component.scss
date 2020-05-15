@@ -6,6 +6,7 @@ m-channel__edit {
 
 .m-modalV2__inner.m-channel__edit {
   width: 710px;
+  max-width: 710px;
 
   @media screen and (max-width: $max-mobile) {
     margin: 0;

@@ -22,7 +22,10 @@
         <div class="m-channelAboutField__label" i18n>Hashtags</div>
         <div class="m-channelAboutField__content" ngPreserveWhitespaces>
           <ng-container *ngFor="let tag of channel.tags">
-            <span [innerHTML]="'#' + tag | tags"></span>
+            <span
+              [innerHTML]="'#' + tag | tags"
+              class="m-channelAboutFieldContent__hashtag"
+            ></span>
           </ng-container>
         </div>
       </div>

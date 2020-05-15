@@ -1,4 +1,8 @@
-.m-theme__2020 .m-channel__feed {
+// .m-theme__2020 .m-channel__feed {
+
+// }
+
+.m-channel__feed {
   min-height: 100vh;
 
   [class*='m-pageLayout__pane'] {
@@ -8,9 +12,11 @@
       padding: 20px;
     }
   }
-}
 
-.m-channel__feed {
+  .m-pageLayout__pane--right {
+    padding-top: 20px * 3;
+  }
+
   .m-channelFeedList__filter {
     display: block;
     padding: 0 0 20px;
@@ -18,7 +24,7 @@
 
   .m-channelFeedListFilter__scheduled {
     font-size: 14px;
-    line-height: 19px;
+    line-height: 20px;
     font-weight: normal;
     text-decoration: none;
 
@@ -41,8 +47,6 @@
   }
 
   .m-channelFeed__sidebar {
-    padding: 35px 0 0;
-
     > * + * {
       margin-top: 30px;
     }

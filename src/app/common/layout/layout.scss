@@ -84,6 +84,7 @@ $layoutMin1ColWidth: 280px;
 
 [class*='m-pageLayout__pane'] {
   box-sizing: border-box;
+  position: relative;
 }
 
 .m-pageLayout__pane--left {
@@ -148,6 +149,19 @@ $layoutMin1ColWidth: 280px;
     border-left: 0;
   }
 }
+
+.m-pageLayoutPane__inner {
+  position: absolute;
+  display: contents;
+  // width: 100%;
+  // height: 100%;
+  // top: 0;
+  // left: 0;
+}
+// .m-pageLayoutPane__sticky {
+//   position: sticky;
+//   top: 95px;
+// }
 
 // Move this!
 .m-goBack {

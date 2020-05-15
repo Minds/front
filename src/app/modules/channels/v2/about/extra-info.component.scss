@@ -6,18 +6,18 @@ m-channelAbout__extraInfo {
   flex-wrap: wrap;
 
   .m-channelAbout__field {
-    width: 50%;
+    width: 100%;
     margin: 0 0 20px;
 
-    &.m-channelAbout__field--fullWidth {
-      width: 100%;
-    }
+    // &.m-channelAbout__field--fullWidth {
+    //   width: 100%;
+    // }
   }
 
   .m-channelAboutField__label {
     font-size: 15px;
-    line-height: 19px;
-    margin: 0 0 6px;
+    line-height: 20px;
+    margin: 0 0 2px;
 
     @include m-theme() {
       color: themed($m-textColor--secondary);
@@ -26,7 +26,7 @@ m-channelAbout__extraInfo {
 
   .m-channelAboutField__content {
     font-size: 15px;
-    line-height: 19px;
+    line-height: 20px;
 
     @include m-theme() {
       color: themed($m-textColor--primary);
@@ -46,8 +46,13 @@ m-channelAbout__extraInfo {
 
   .m-channel--badges {
     i.material-icons {
-      padding: 0 15px 0 0;
-      font-size: 16px;
+      padding: 0 10px 0 0;
+      font-size: 15px;
+      line-height: 20px;
+
+      @include m-theme() {
+        color: themed($m-textColor--primary) !important;
+      }
     }
   }
 }
