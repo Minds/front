@@ -73,7 +73,7 @@ context('Composer Title Bar', () => {
 
       cy.get(meatballMenuLicenseMenu).should('be.visible');
 
-      cy.get(`${meatballMenuLicense} m-overlay`).click();
+      cy.get(`${meatballMenuLicense} m-overlay`).click({force: true});
 
       cy.get(`${meatballMenuTrigger} m-overlay`).click();
 

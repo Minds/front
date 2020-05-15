@@ -1,11 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  Subscription,
-  Subject,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { ApiService } from '../../../common/api/api.service';
 import { ActivityEntity } from '../../newsfeed/activity/activity.service';
@@ -14,6 +8,7 @@ import { Attachment, AttachmentService } from './attachment.service';
 import { AttachmentPreviewResource, PreviewService } from './preview.service';
 import { VideoPoster } from './video-poster.service';
 import { SupportTier } from '../../wire/v2/support-tiers.service';
+import parseHashtagsFromString from '../../../helpers/parse-hashtags';
 
 /**
  * Message value type
@@ -294,6 +289,13 @@ export class ComposerService implements OnDestroy {
   >(false);
 
   /**
+   * Too many tags subject
+   */
+  readonly tooManyTags$: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
+
+  /**
    * URL in the message
    */
   readonly messageUrl$: Observable<string>;
@@ -454,8 +456,19 @@ export class ComposerService implements OnDestroy {
         })
       ),
       tap(values => {
+        const bodyTags = parseHashtagsFromString(values.message).concat(
+          parseHashtagsFromString(values.title)
+        );
+
+        const tooManyTags = bodyTags.length + values.tags.length > 5;
+
+        this.tooManyTags$.next(tooManyTags);
+
         this.canPost$.next(
-          Boolean(values.message || values.attachment || values.richEmbed)
+          Boolean(
+            !tooManyTags &&
+              (values.message || values.attachment || values.richEmbed)
+          )
         );
       })
     );
