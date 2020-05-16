@@ -52,14 +52,12 @@ export class DiscoverySearchComponent {
         this.service.nsfw$,
         this.service.period$,
         this.service.type$,
-        this.service.filter$
+        this.service.filter$,
+        this.route.paramMap
       )
         .pipe(distinctUntilChanged(), debounceTime(300))
-        .subscribe(([nsfw, period, type, filter]) => {
-          if (
-            filter !== this.route.snapshot.paramMap.get('f') ||
-            type !== this.route.snapshot.paramMap.get('t')
-          ) {
+        .subscribe(([nsfw, period, type, filter, paramMap]) => {
+          if (filter !== paramMap.get('f') || type !== paramMap.get('t')) {
             this.router.navigate([], {
               queryParams: { q: this.q, f: filter, t: type },
               queryParamsHandling: 'merge',
