@@ -1,0 +1,150 @@
+m-translate {
+  .m-translate__hasNav2020 {
+    > * {
+      padding: 10px $activity-padding-lr;
+      > * {
+        padding: 0;
+        margin-left: 0px;
+        margin-right: 0px;
+      }
+    }
+    hr {
+      padding: 10px 0 0 0 !important;
+      margin: 0 !important;
+      @include m-theme() {
+        border-top: 1px solid themed($m-borderColor--tertiary);
+      }
+    }
+    .m-translation-wrapper {
+      padding-bottom: 0;
+
+      .message {
+        padding: 0;
+        margin: 0;
+        font-size: inherit;
+        width: 100% !important;
+        @include m-theme() {
+          border-left: none;
+        }
+        a {
+          font-weight: 400;
+        }
+      }
+    }
+    .m-translate__selectWrapper {
+      display: flex;
+      align-items: center;
+      padding-top: 0;
+      .m-translationLabel__content {
+        padding: 0;
+      }
+    }
+
+    .m-translate-select {
+      flex-grow: 2;
+    }
+    .m-translate-select-control {
+      outline: none;
+      border-radius: 2px;
+      width: 100%;
+      padding: 10px 30px 10px 10px;
+      font-size: 14px;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+        color: themed($m-textColor--primary);
+      }
+    }
+    .m-translation-label {
+      display: flex;
+      box-sizing: border-box;
+      min-height: 60px;
+      align-items: center;
+    }
+    .m-translationLabel__content {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+      word-break: normal;
+      padding: 10px 0;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+      a {
+        text-decoration: underline;
+        font-weight: 400;
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+    }
+  }
+
+  // LEGACY //////////////////////////////////
+  a {
+    cursor: pointer;
+  }
+  .m-translate-select {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+
+    &:after {
+      font-family: 'Material Icons';
+      font-size: 8px;
+      font-feature-settings: 'liga';
+      -webkit-font-smoothing: antialiased;
+      content: '\25bc';
+      line-height: 1em;
+      position: absolute;
+      top: 50%;
+      right: 15px;
+      transform: translateY(-50%) scaleX(1.2);
+      pointer-events: none;
+      @include m-theme() {
+        color: themed($m-textColor--tertiary);
+      }
+    }
+  }
+
+  .m-translate-select-control {
+    cursor: pointer;
+    width: 200px;
+    max-width: 100%;
+    appearance: none;
+    border-radius: 0;
+    padding: $minds-padding;
+    font-size: 12px;
+    @include m-theme() {
+      border: 1px solid themed($m-grey-100);
+      background-color: themed($m-white);
+      color: rgba(themed($m-black), 0.87);
+    }
+  }
+  .m-translate__selectLabel {
+    margin-right: 15px;
+  }
+  .m-translation-wrapper {
+    .message {
+      font-size: 14px;
+      white-space: inherit !important;
+      width: calc(100% - #{$minds-padding * 4}) !important;
+      margin: 0 ($minds-padding * 2) $minds-padding;
+      padding: $minds-padding 0 $minds-padding $minds-padding;
+      @include m-theme() {
+        border-left: 2px solid themed($m-grey-100);
+      }
+
+      minds-card-comment & {
+        font-size: inherit !important;
+      }
+    }
+  }
+  .m-translate__optionsSeparator {
+    padding: 0px 3px;
+  }
+
+  i.material-icons {
+    margin-right: 3px;
+  }
+}
