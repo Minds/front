@@ -9,17 +9,18 @@
   [maxHeightAllowed]="isTextOnly ? maxFixedHeightContent : maxMessageHeight"
   *ngIf="message"
 >
-  <span [innerHtml]="message | tags"></span>
-  <m-read-more--button [v2]="true"></m-read-more--button>
-
+  <div class="m-activityContent__messageWrapper">
+    <span [innerHtml]="message | tags"></span>
+    <m-read-more--button [v2]="true"></m-read-more--button>
+  </div>
+  <!-- (onTranslateInit)="propagateTranslation($event)" -->
   <m-translate
     *mIfBrowser
-    [open]="translateToggle"
+    [open]="service.displayOptions.showTranslation"
     [entity]="entity"
     [translateEvent]="translateEvent"
-    (onTranslateInit)="propagateTranslation($event)"
-    (onTranslate)="translateToggle = false"
-    (onTranslateError)="translateToggle = false"
+    (onTranslate)="(service.displayOptions.showTranslation === false)"
+    (onTranslateError)="(service.displayOptions.showTranslation === false)"
     #translate
   ></m-translate>
 </div>
@@ -75,14 +76,26 @@
   [maxHeightAllowed]="service.displayOptions.fixedHeight ? 80 : 320"
   *ngIf="mediaDescription || mediaTitle"
 >
-  <p
-    [innerHtml]="mediaTitle | tags"
-    class="m-activityContent__mediaTitle"
-    [class.m-activityContent__mediaTitle--noDescription]="!mediaDescription"
-    *ngIf="mediaTitle"
-  ></p>
-  <p [innerHtml]="mediaDescription | tags"></p>
-  <m-read-more--button [v2]="true"></m-read-more--button>
+  <div class="m-activityContent__descriptionWrapper">
+    <p
+      [innerHtml]="mediaTitle | tags"
+      class="m-activityContent__mediaTitle"
+      [class.m-activityContent__mediaTitle--noDescription]="!mediaDescription"
+      *ngIf="mediaTitle"
+    ></p>
+    <p [innerHtml]="mediaDescription | tags"></p>
+    <m-read-more--button [v2]="true"></m-read-more--button>
+  </div>
+  <!-- (onTranslateInit)="propagateTranslation($event)" -->
+  <m-translate
+    *mIfBrowser
+    [open]="service.displayOptions.showTranslation"
+    [entity]="entity"
+    [translateEvent]="translateEvent"
+    (onTranslate)="(service.displayOptions.showTranslation === false)"
+    (onTranslateError)="(service.displayOptions.showTranslation === false)"
+    #translate
+  ></m-translate>
 </div>
 
 <!-- Translation -->

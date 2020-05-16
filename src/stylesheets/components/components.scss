@@ -517,63 +517,6 @@ minds-tooltip .m-bubble-popup {
   }
 }
 
-m-translate {
-  a {
-    cursor: pointer;
-  }
-  .m-translate-select {
-    cursor: pointer;
-    position: relative;
-    display: inline-block;
-
-    &:after {
-      font-family: 'Material Icons';
-      font-size: 14px;
-      font-feature-settings: 'liga';
-      -webkit-font-smoothing: antialiased;
-      content: '\e313';
-      line-height: 1em;
-      position: absolute;
-      top: 50%;
-      right: $minds-padding;
-      transform: translateY(-50%);
-      pointer-events: none;
-    }
-  }
-
-  .m-translate-select-control {
-    cursor: pointer;
-    width: 200px;
-    max-width: 100%;
-    appearance: none;
-    border-radius: 0;
-    padding: $minds-padding;
-    font-size: 12px;
-    @include m-theme() {
-      border: 1px solid themed($m-grey-100);
-      background-color: themed($m-white);
-      color: rgba(themed($m-black), 0.87);
-    }
-  }
-}
-
-.m-translation-wrapper {
-  .message {
-    font-size: 14px;
-    white-space: inherit !important;
-    width: calc(100% - #{$minds-padding * 4}) !important;
-    margin: 0 ($minds-padding * 2) $minds-padding;
-    padding: $minds-padding 0 $minds-padding $minds-padding;
-    @include m-theme() {
-      border-left: 2px solid themed($m-grey-100);
-    }
-
-    minds-card-comment & {
-      font-size: inherit !important;
-    }
-  }
-}
-
 .m-ribbon {
   list-style: none;
   padding: 0;

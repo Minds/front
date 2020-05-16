@@ -348,7 +348,7 @@ minds-activity-preview {
     letter-spacing: 0.5px;
   }
 
-  .m-translation-label {
+  .m-translationLabel__content {
     padding-top: 0;
     font-size: 0.75em;
 
@@ -366,7 +366,7 @@ minds-activity-preview {
   minds-comments {
     margin-top: 0;
 
-    .m-translation-label {
+    .m-translationLabel__content {
       font-size: 1em;
     }
     .m-comment-carrot.m-comment-carrot-collapsed {
