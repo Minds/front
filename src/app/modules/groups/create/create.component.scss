@@ -10,6 +10,10 @@ minds-groups-create {
     .m-modalV2__body {
       max-height: unset;
 
+      .m-channelEdit__imagery {
+        margin: 0 -40px;
+      }
+
       .m-groupsCreate__buttonsContainer {
         margin: 0 !important;
       }
