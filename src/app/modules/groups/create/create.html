@@ -138,7 +138,7 @@
           type="button"
           [saving]="inProgress"
           [disabled]="!form.valid"
-          (click)="onSubmit()"
+          (click)="onSubmit($event)"
           data-cy="minds-groups-create-submit"
         >
           Create Group
