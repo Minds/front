@@ -8,15 +8,22 @@
       <div>
         <span>{{ counts.queued }}</span> queued ·
       </div>
-      <div>
+      <!-- <div>
         <span>{{ counts.transferring }}</span> transferring
-      </div>
+      </div> -->
     </div>
   </div>
   <a
     (click)="transferAllVideos()"
-    [ngClass]="{ 'm-youtubeMigration__transferAll--active': transferringAll }"
-    ><ng-container *ngIf="!transferringAll">Transfer all videos</ng-container>
-    <ng-container *ngIf="transferringAll">Transferring</ng-container></a
+    [ngClass]="{
+      'm-youtubeMigration__transferAll--active':
+        (importingAllVideos$ | async) || transferringAll
+    }"
+    ><ng-container *ngIf="!(importingAllVideo$ | async) && !transferringAll"
+      >Transfer all videos</ng-container
+    >
+    <ng-container *ngIf="(importingAllVideos$ | async) || transferringAll"
+      >Transferring</ng-container
+    ></a
   >
 </div>

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { YoutubeMigrationService } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { YoutubeMigrationSetupModalComponent } from '../setup-modal/setup-modal.component';
@@ -57,10 +57,17 @@ export class YoutubeMigrationUnmigratedVideosComponent
         if (importing) {
           // Refresh the video list when user clicks 'transfer all'
           // so video transfer statuses are visually updated
-          this.init = false;
+
+          this.videos.forEach(video => {
+            video.status = 'queued';
+          });
+
           this.detectChanges();
-          this.load(true);
-          this.init = true;
+
+          // this.init = false;
+          // this.detectChanges();
+          // this.load(true);
+          // this.init = true;
         }
       }
     );

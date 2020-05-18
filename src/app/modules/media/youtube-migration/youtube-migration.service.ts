@@ -40,6 +40,8 @@ export class YoutubeMigrationService {
 
   importingAllVideos$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  videos$: BehaviorSubject<any[]> = new BehaviorSubject(null);
+
   constructor(private client: Client, protected session: Session) {}
 
   /**
@@ -133,6 +135,8 @@ export class YoutubeMigrationService {
 
       response.videos = this.formatVideos(response.videos);
 
+      this.videos$.next(response.videos);
+
       return response;
     } catch (e) {
       console.error('getAllVideos(): ', e);
@@ -218,12 +222,12 @@ export class YoutubeMigrationService {
       if (videoId === 'all') {
         this.importingAllVideos$.next(true);
       }
+
       this.getStatusCounts();
 
       return response;
     } catch (e) {
-      console.error('import(): ', e);
-      return e;
+      throw e;
     }
   }
 
@@ -268,10 +272,11 @@ export class YoutubeMigrationService {
       selectedChannel = this.selectedChannel$.value;
     }
     try {
-      const response = <any>(
-        await this.client.post(
-          `${this.endpoint}subscribe?channelId=${selectedChannel.id}`
-        )
+      const response = <any>await this.client.post(
+        `${this.endpoint}subscribe`,
+        {
+          channelId: selectedChannel.id,
+        }
       );
       this.autoImport$.next(true);
       return response;

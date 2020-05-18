@@ -18,12 +18,14 @@ export class YoutubeMigrationVideoListComponent {
   cancel(video: any): void {
     const videoId = video.video_id;
     this.youtubeService.cancelImport(videoId);
-    video.status = this.youtubeService.getVideoStatus(videoId);
+    // video.status = this.youtubeService.getVideoStatus(videoId);
+    video.status = null;
   }
 
   import(video: any): void {
     const videoId = video.video_id;
     this.youtubeService.import(videoId);
-    video.status = this.youtubeService.getVideoStatus(videoId);
+    // video.status = this.youtubeService.getVideoStatus(videoId);
+    video.status = 'queued';
   }
 }

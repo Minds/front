@@ -12,7 +12,8 @@ import {
 } from '../youtube-migration.service';
 import { Session } from '../../../../services/session';
 import { ConfigsService } from '../../../../common/services/configs.service';
-import { Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
+import { FormToastService } from '../../../../common/services/form-toast.service';
 
 @Component({
   selector: 'm-youtubeMigration__transferStatus',
@@ -25,18 +26,21 @@ export class YoutubeMigrationTransferStatusComponent
     protected youtubeService: YoutubeMigrationService,
     protected session: Session,
     protected cd: ChangeDetectorRef,
-    configs: ConfigsService
+    configs: ConfigsService,
+    protected toasterService: FormToastService
   ) {
     this.dailyLimit = configs.get('max_daily_imports') || 10;
   }
 
   dailyLimit: number;
   statusCountsSubscription: Subscription;
+  statusInterval: Subscription;
   counts: YoutubeStatusCounts = {
     queued: 0,
     transferring: 0,
   };
   transferringAll: boolean = false;
+  importingAllVideos$ = this.youtubeService.importingAllVideos$;
   init: boolean = false;
 
   ngOnInit() {
@@ -50,17 +54,39 @@ export class YoutubeMigrationTransferStatusComponent
         this.detectChanges();
       }
     );
+
+    // We check every 5 seconds
+    this.statusInterval = timer(0, 5000).subscribe(() => {
+      this.youtubeService.getStatusCounts();
+    });
   }
 
   ngOnDestroy() {
     this.statusCountsSubscription.unsubscribe();
+    this.statusInterval.unsubscribe();
   }
 
   async transferAllVideos(): Promise<any> {
-    this.youtubeService.import('all');
-    this.youtubeService.getStatusCounts();
-    this.transferringAll = true;
-    this.detectChanges();
+    try {
+      this.transferringAll = true;
+      this.youtubeService.statusCounts$.next({
+        queued: this.dailyLimit,
+        transferring: this.counts.transferring,
+      });
+      this.detectChanges();
+      await this.youtubeService.import('all');
+    } catch (err) {
+      this.toasterService.error(
+        'Sorry, there was an error transferring your videos'
+      );
+      this.youtubeService.statusCounts$.next({
+        queued: 0,
+        transferring: this.counts.transferring,
+      });
+    } finally {
+      this.transferringAll = false;
+      this.detectChanges();
+    }
   }
 
   detectChanges() {
