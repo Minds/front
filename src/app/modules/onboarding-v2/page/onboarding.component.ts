@@ -61,7 +61,11 @@ export class OnboardingComponent implements OnInit, OnDestroy {
     );
 
     this.closeSubscription = this.onboardingService.close.subscribe(() => {
-      this.router.navigate(['/newsfeed/global/top']);
+      if (this.featuresService.has('navigation')) {
+        this.router.navigate(['/newsfeed']);
+      } else {
+        this.router.navigate(['/newsfeed/global/top']);
+      }
     });
 
     this.route.url.subscribe(() => {
