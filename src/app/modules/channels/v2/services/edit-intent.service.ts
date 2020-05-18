@@ -3,6 +3,7 @@ import { ChannelsV2Service } from '../channels-v2.service';
 import { ChannelEditModalService } from '../edit/edit-modal.service';
 import { Session } from '../../../../services/session';
 import { Subscription } from 'rxjs';
+import { UserAvatarService } from '../../../../common/services/user-avatar.service';
 
 @Injectable()
 export class ChannelEditIntentService implements OnDestroy {
@@ -22,7 +23,8 @@ export class ChannelEditIntentService implements OnDestroy {
     public service: ChannelsV2Service,
     protected editModal: ChannelEditModalService,
     protected session: Session,
-    protected injector: Injector
+    protected injector: Injector,
+    private userAvatar: UserAvatarService
   ) {}
 
   /**
@@ -47,6 +49,7 @@ export class ChannelEditIntentService implements OnDestroy {
       .present(this.service.channel$.getValue())
       .subscribe(channel => {
         if (channel) {
+          this.userAvatar.src$.next(channel.avatar_url.large);
           this.service.load(channel);
           this.session.inject(channel);
         }
