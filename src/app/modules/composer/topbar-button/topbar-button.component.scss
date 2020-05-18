@@ -1,3 +1,10 @@
 m-composer__topbarButton {
   display: block;
+
+  i {
+    font-size: 1.75em;
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
 }
