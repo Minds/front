@@ -23,7 +23,8 @@
       <ng-container *ngFor="let suggestion of recent">
         <a
           class="m-search-bar-suggestions-suggestion"
-          [routerLink]="['/newsfeed/global/top']"
+          [routerLink]="['/discovery/search']"
+          [queryParams]="{ q: suggestion, f: 'top', t: 'all' }"
         >
           {{ suggestion }}
         </a>
