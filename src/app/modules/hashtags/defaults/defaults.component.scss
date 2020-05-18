@@ -1,4 +1,4 @@
-.m-hashtags__trending {
+.m-hashtags__defaults {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -35,7 +35,7 @@
     font-size: 15px;
     line-height: 20px;
 
-    &.m-hashtagsTrending__decoration {
+    &.m-hashtagsDefaults__decoration {
       margin: 0 17px 20px 0;
 
       img {

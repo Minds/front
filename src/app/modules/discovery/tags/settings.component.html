@@ -49,7 +49,7 @@
         <ul class="m-discoveryTagSettings__list">
           <li
             class="m-discoveryTagSettingsList__item"
-            *ngFor="let tag of other$ | async"
+            *ngFor="let tag of defaults$ | async"
           >
             <div>
               <span>#{{ tag.value }}</span>
