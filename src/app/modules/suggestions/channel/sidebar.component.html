@@ -85,7 +85,7 @@
 <!-- Outlets -->
 
 <ng-container *mIfFeature="'navigation'; else legacyNavigation">
-  <m-sidebarWidget [title]="title">
+  <m-sidebarWidget [title]="title" *ngIf="(suggestions$ | async).length">
     <div class="m-sidebarWidget__body">
       <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
     </div>
