@@ -22,6 +22,7 @@ import { DiscoveryDisclaimerComponent } from './disclaimer/disclaimer.component'
 import { DiscoverySuggestionsComponent } from './suggestions/suggestions.component';
 import { DiscoveryNoTagsPromptComponent } from './tags/notags-prompt/notags-prompt.component';
 import { DiscoveryFeedsListComponent } from './feeds/feeds-list.component';
+import { HashtagsModule } from '../hashtags/hashtags.module';
 
 @NgModule({
   imports: [
@@ -85,6 +86,7 @@ import { DiscoveryFeedsListComponent } from './feeds/feeds-list.component';
     LegacyModule, // For subscribe button
     // GroupsModule,
     DiscoverySharedModule,
+    HashtagsModule,
   ],
   providers: [DiscoveryTrendsService],
   declarations: [

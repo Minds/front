@@ -1,0 +1,8 @@
+<ul class="m-hashtags__defaults">
+  <li *ngIf="decoration" class="m-hashtagsDefaults__decoration">
+    <img [src]="cdnAssetsUrl + 'assets/icons/trending.png'" alt="" />
+  </li>
+  <li *ngFor="let tag of tags$ | async">
+    <a (click)="onAction(tag)">#{{ tag }}</a>
+  </li>
+</ul>

@@ -28,7 +28,10 @@ describe('DiscoveryNoTagsPromptComponent', () => {
         { provide: Session, useValue: sessionMock },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
         { provide: Client, useValue: clientMock },
-        DiscoveryTagsService,
+        {
+          provide: DiscoveryTagsService,
+          useValue: MockService(DiscoveryTagsService),
+        },
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
       ],
     }).compileComponents();
