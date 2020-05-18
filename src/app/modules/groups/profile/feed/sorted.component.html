@@ -54,9 +54,7 @@
     </ng-container>
 
     <ng-container *mIfFeature="'navigation'; else legacyActivity">
-      <ng-container
-        *ngFor="let entity$ of feedsService.feed | async; let i = index"
-      >
+      <ng-container *ngFor="let entity$ of feed$ | async; let i = index">
         <m-activity
           *ngIf="entity$ | async as entity"
           [entity]="entity"

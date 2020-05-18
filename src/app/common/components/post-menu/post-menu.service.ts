@@ -6,7 +6,7 @@ import { SignupModalService } from '../../../modules/modals/signup/service';
 import { BlockListService } from '../../services/block-list.service';
 import { ActivityService } from '../../services/activity.service';
 import { MindsUser } from '../../../interfaces/entities';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { ReportCreatorComponent } from '../../../modules/report/creator/creator.component';
 import { DialogService } from '../../services/confirm-leave-dialog.service';
@@ -27,6 +27,7 @@ export class PostMenuService {
   showSubscribe$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   showUnSubscribe$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isPinned$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  canPin$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     public session: Session,
@@ -43,6 +44,10 @@ export class PostMenuService {
     this.entity = entity;
 
     this.isPinned$.next(this.entity.pinned);
+    this.canPin$.next(
+      this.entity.owner_guid == this.session.getLoggedInUser().guid &&
+        !this.entity.dontPin
+    );
     return this;
   }
 
