@@ -47,29 +47,19 @@ context.only('Groups', () => {
 
     // add a banner
     cy.uploadFile(
-      'minds-banner #file',
+      '[data-cy="minds-groups-create-banner"]',
       '../fixtures/international-space-station-1776401_1920.jpg',
       'image/jpg'
     );
 
     // add a name
-    cy.get('.m-group-info-name > input').type(groupId);
+    cy.get('[data-cy="minds-groups-create-name-input"]').type(groupId);
     // add a description
-    cy.get('.m-group-info-brief-description > textarea').type('This is a test');
+    cy.get('[data-cy="minds-groups-create-description-input"]').type(
+      'This is a test'
+    );
 
-    // click on hashtags dropdown
-    cy.get('m-hashtags-selector .m-dropdown--label-container').click();
-    // select #ART TODO: Set tags on sandboxes
-    // cy.get('m-hashtags-selector  m-dropdown m-form-tags-input > div > span').contains('art').click();
-
-    // type in another hashtag manually
-    cy.get('m-hashtags-selector m-form-tags-input input')
-      .type('hashtag{enter}')
-      .click();
-    // click away
-    cy.get('m-hashtags-selector .minds-bg-overlay').click({ force: true });
-
-    cy.get('.m-groups-save > button')
+    cy.get('[data-cy="minds-groups-create-submit"]')
       .contains('Create')
       .click();
     cy.route('POST', '**/api/v1/groups/group/*/banner*').as('postBanner');
@@ -123,6 +113,8 @@ context.only('Groups', () => {
   });
 
   it('should be able to toggle conversation and comment on it', () => {
+    cy.viewport(1200, 900);
+
     cy.contains(groupId).click({ force: true });
 
     // toggle the conversation
