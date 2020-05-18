@@ -270,5 +270,13 @@ export class ActivityContentComponent
       .present();
   }
 
+  /**
+   * Gets URL to redirect.
+   * @returns { string } - equals '' if url is not needed.
+   */
+  getRedirectUrl(): string {
+    return this.entity.boosted ? `/newsfeed/${this.entity.guid}` : '';
+  }
+
   onImageError(e: Event): void {}
 }

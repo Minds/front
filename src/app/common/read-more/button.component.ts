@@ -5,6 +5,7 @@ import {
   Input,
 } from '@angular/core';
 import { ReadMoreDirective } from './read-more.directive';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'm-read-more--button',
@@ -23,7 +24,7 @@ import { ReadMoreDirective } from './read-more.directive';
           class="m-read-more--button m-readMoreButton--v2"
           *ngIf="content && content.expandable"
         >
-          <span (click)="content.expand()" i18n="@@COMMON__SEE_MORE__ACTION"
+          <span (click)="onExpandClick()" i18n="@@COMMON__SEE_MORE__ACTION"
             >See More</span
           >
         </div>
@@ -46,6 +47,9 @@ import { ReadMoreDirective } from './read-more.directive';
 export class ReadMoreButtonComponent {
   @Input() v2 = false;
 
+  // When set, forces see more to redirect.
+  @Input() redirectUrl: string = '';
+
   // Wrapper class, same type as ngClass
   @Input() wrapperClass:
     | string
@@ -57,12 +61,26 @@ export class ReadMoreButtonComponent {
 
   content: ReadMoreDirective;
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef, private router: Router) {}
+
+  /**
+   * Callback executed when expand (see more / read more) is clicked.
+   * @returns void
+   */
+  public onExpandClick(): void {
+    if (this.redirectUrl.length > 0) {
+      this.cd.detach();
+      this.router.navigate([this.redirectUrl]);
+    }
+    this.content.expand();
+  }
 
   detectChanges() {
     setTimeout(() => {
-      this.cd.markForCheck();
-      this.cd.detectChanges();
+      if (!this.cd['destroyed']) {
+        this.cd.markForCheck();
+        this.cd.detectChanges();
+      }
     });
   }
 }
