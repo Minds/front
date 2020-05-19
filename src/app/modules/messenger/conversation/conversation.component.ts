@@ -3,7 +3,7 @@ import {
   ElementRef,
   ChangeDetectorRef,
   EventEmitter,
-  Renderer,
+  Renderer2,
   ViewChild,
   Injector,
 } from '@angular/core';
@@ -76,7 +76,7 @@ export class MessengerConversation {
     public client: Client,
     public sockets: SocketsService,
     public cd: ChangeDetectorRef,
-    private renderer: Renderer,
+    private renderer: Renderer2,
     public encryption: MessengerEncryptionService,
     public dockpanes: MessengerConversationDockpanesService,
     protected blockListService: BlockListService,
