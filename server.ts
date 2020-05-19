@@ -9,7 +9,7 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
 import { enableProdMode } from '@angular/core';
 import { XhrFactory } from '@angular/common/http';
-import { NgxRequest, NgxResponce } from '@gorniv/ngx-universal';
+import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
 
 import * as express from 'express';
 import * as compression from 'compression';
@@ -171,7 +171,7 @@ app.get('*', cache(), (req, res) => {
           useValue: req,
         },
         {
-          provide: NgxResponce,
+          provide: NgxResponse,
           useValue: res,
         },
         // for absolute path
