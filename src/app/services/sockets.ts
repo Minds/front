@@ -170,16 +170,16 @@ export class SocketsService {
   subscribe(name: string, callback: Function) {
     if (!this.subscriptions[name]) {
       this.subscriptions[name] = new EventEmitter();
-    }
 
-    if (this.socket) {
-      this.nz.runOutsideAngular(() => {
-        this.socket.on(name, (...args) => {
-          this.nz.run(() => {
-            this.subscriptions[name].next(args);
+      if (this.socket) {
+        this.nz.runOutsideAngular(() => {
+          this.socket.on(name, (...args) => {
+            this.nz.run(() => {
+              this.subscriptions[name].next(args);
+            });
           });
         });
-      });
+      }
     }
 
     return this.subscriptions[name].subscribe({
