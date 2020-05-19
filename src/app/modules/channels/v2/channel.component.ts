@@ -101,7 +101,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
     protected channelEditIntent: ChannelEditIntentService,
     protected wireModal: WireModalService,
     protected recent: RecentService,
-    @SkipSelf() injector: Injector
+    injector: Injector
   ) {
     this.clientMeta
       .inherit(injector)

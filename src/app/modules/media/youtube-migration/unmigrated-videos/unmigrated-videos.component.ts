@@ -22,7 +22,7 @@ import { YoutubeMigrationSetupModalComponent } from '../setup-modal/setup-modal.
 })
 export class YoutubeMigrationUnmigratedVideosComponent
   implements OnInit, OnDestroy {
-  @SkipSelf() private injector: Injector;
+  private injector: Injector;
 
   init: boolean = false;
   videos: any = [];

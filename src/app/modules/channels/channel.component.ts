@@ -59,7 +59,7 @@ export class ChannelComponent {
     private clientMetaService: ClientMetaService,
     private seo: SeoService,
     private configs: ConfigsService,
-    @SkipSelf() injector: Injector
+    injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)

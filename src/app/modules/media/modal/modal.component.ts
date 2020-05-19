@@ -188,11 +188,11 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private site: SiteService,
     private clientMetaService: ClientMetaService,
     private featureService: FeaturesService,
-    @SkipSelf() injector: Injector,
-    configs: ConfigsService,
     private horizontalFeed: HorizontalFeedService,
     private features: FeaturesService,
-    public attachment: AttachmentService
+    public attachment: AttachmentService,
+    configs: ConfigsService,
+    injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)

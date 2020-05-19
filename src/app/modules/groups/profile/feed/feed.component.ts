@@ -26,7 +26,7 @@ export class GroupProfileFeedComponent implements OnInit, OnDestroy {
     protected service: GroupsService,
     protected route: ActivatedRoute,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)

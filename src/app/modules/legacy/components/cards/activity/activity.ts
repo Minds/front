@@ -205,7 +205,6 @@ export class Activity implements OnInit {
     protected featuresService: FeaturesService,
     public suggestions: AutocompleteSuggestionsService,
     protected activityService: ActivityService,
-    @SkipSelf() injector: Injector,
     private elementRef: ElementRef,
     private configs: ConfigsService,
     private redirectService: RedirectService,
@@ -214,7 +213,7 @@ export class Activity implements OnInit {
     protected payModal: WireModalService,
     protected selfInjector: Injector
   ) {
-    this.clientMetaService.inherit(injector);
+    this.clientMetaService.inherit(this.selfInjector);
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');

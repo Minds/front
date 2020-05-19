@@ -119,7 +119,7 @@ export class NewsfeedBoostRotatorComponent {
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
+    injector: Injector,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;

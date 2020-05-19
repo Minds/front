@@ -78,10 +78,10 @@ export class ChannelSortedComponent implements OnInit {
     protected service: SortedService,
     protected session: Session,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
     protected cd: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
-    public client: Client
+    public client: Client,
+    injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)

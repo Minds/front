@@ -39,26 +39,28 @@ export class ClientMetaService {
   }
 
   inherit(injector: Injector) {
-    const parentClientMeta: ClientMetaService = injector.get(
-      ClientMetaService,
-      null
-    );
-
-    if (parentClientMeta) {
-      if (parentClientMeta.getId() === this.id) {
-        throw new Error(
-          '[ClientMetaService] Cannot inherit client meta from itself. Did you forget to add to @Component({ providers }) or the @SkipSelf() decorator on Injector?'
-        );
-      }
-
-      this.source = parentClientMeta.getSource();
-      this.timestamp = parentClientMeta.getTimestamp();
-      this.salt = parentClientMeta.getSalt();
-      this.medium = parentClientMeta.getMedium();
-      this.campaign = parentClientMeta.getCampaign();
-    }
-
-    this.inherited = true;
+    console.warn('Fix ClientMeta inheritance');
+    // TODO
+    // const parentClientMeta: ClientMetaService = injector.get(
+    //   ClientMetaService,
+    //   null
+    // );
+    //
+    // if (parentClientMeta) {
+    //   if (parentClientMeta.getId() === this.id) {
+    //     throw new Error(
+    //       '[ClientMetaService] Cannot inherit client meta from itself. Did you forget to add to @Component({ providers })?'
+    //     );
+    //   }
+    //
+    //   this.source = parentClientMeta.getSource();
+    //   this.timestamp = parentClientMeta.getTimestamp();
+    //   this.salt = parentClientMeta.getSalt();
+    //   this.medium = parentClientMeta.getMedium();
+    //   this.campaign = parentClientMeta.getCampaign();
+    // }
+    //
+    // this.inherited = true;
 
     return this;
   }

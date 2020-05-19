@@ -43,7 +43,7 @@ export class NewsfeedSingleComponent {
     protected featuresService: FeaturesService,
     protected clientMetaService: ClientMetaService,
     private metaService: MetaService,
-    @SkipSelf() injector: Injector,
+    injector: Injector,
     configs: ConfigsService
   ) {
     this.clientMetaService

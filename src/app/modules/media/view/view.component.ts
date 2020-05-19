@@ -80,10 +80,10 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     protected activityService: ActivityService,
     private clientMetaService: ClientMetaService,
     private metaService: MetaService,
-    configs: ConfigsService,
-    @SkipSelf() injector: Injector,
     private featuresService: FeaturesService,
-    protected toasterService: FormToastService
+    protected toasterService: FormToastService,
+    configs: ConfigsService,
+    injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)

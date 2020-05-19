@@ -105,7 +105,7 @@ export class BlogView implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
     private clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
+    injector: Injector,
     configs: ConfigsService
   ) {
     this.clientMetaService

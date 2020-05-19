@@ -77,8 +77,8 @@ export class NewsfeedSubscribedComponent implements OnInit, OnDestroy {
     public feedsService: FeedsService,
     protected newsfeedService: NewsfeedService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)

@@ -60,7 +60,7 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
     public upload: Upload,
     public scroll: ScrollService,
     protected clientMetaService: ClientMetaService,
-    @SkipSelf() injector: Injector
+    injector: Injector
   ) {
     this.clientMetaService
       .inherit(injector)

@@ -40,7 +40,7 @@ export class FeaturedContentComponent implements OnInit {
     protected cd: ChangeDetectorRef,
     protected clientMetaService: ClientMetaService,
     protected featuresService: FeaturesService,
-    @SkipSelf() protected injector: Injector,
+    protected injector: Injector,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.clientMetaService.inherit(injector).setMedium('featured-content');

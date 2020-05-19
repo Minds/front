@@ -98,7 +98,7 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
     public service: ActivityService,
     private el: ElementRef,
     private cd: ChangeDetectorRef,
-    @SkipSelf() private injector: Injector,
+    private injector: Injector,
     private clientMetaService: ClientMetaService,
     private elementVisibilityService: ElementVisibilityService,
     private newsfeedService: NewsfeedService,
