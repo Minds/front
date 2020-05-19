@@ -39,8 +39,9 @@ export class ClientMetaService {
   }
 
   inherit(injector: Injector) {
-    console.warn('Fix ClientMeta inheritance');
-    // TODO
+    console.warn('Cannot inherit client meta');
+    // TODO: https://github.com/angular/angular/issues/34819
+    //
     // const parentClientMeta: ClientMetaService = injector.get(
     //   ClientMetaService,
     //   null
@@ -60,7 +61,7 @@ export class ClientMetaService {
     //   this.campaign = parentClientMeta.getCampaign();
     // }
     //
-    // this.inherited = true;
+    this.inherited = true;
 
     return this;
   }
