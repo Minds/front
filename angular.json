@@ -93,7 +93,8 @@
               "node_modules/medium-editor/dist/js/medium-editor.min.js",
               "src/shims/jitsi-api.min.js"
             ],
-            "assets": ["src/assets", "src/favicon.ico"]
+            "assets": ["src/assets", "src/favicon.ico"],
+            "polyfills": "src/polyfills.ts"
           }
         },
         "lint": {

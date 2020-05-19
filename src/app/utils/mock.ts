@@ -117,6 +117,12 @@ export function MockService(obj: any, config: any = null) {
         return null;
       },
       set: (target, prop, value, receiver) => {
+        if (prop.toString().endsWith('$')) {
+          // Do not mock Observables
+          target[prop] = value;
+          return true;
+        }
+
         target[prop] = jasmine
           .createSpy(prop.toString())
           .and.returnValue(value);
