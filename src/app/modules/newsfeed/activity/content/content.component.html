@@ -87,7 +87,10 @@
       *ngIf="mediaTitle"
     ></p>
     <p [innerHtml]="mediaDescription | tags"></p>
-    <m-read-more--button [v2]="true"></m-read-more--button>
+    <m-read-more--button
+      [v2]="true"
+      [redirectUrl]="getRedirectUrl()"
+    ></m-read-more--button>
   </div>
   <!-- (onTranslateInit)="propagateTranslation($event)" -->
   <m-translate
