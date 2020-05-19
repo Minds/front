@@ -52,10 +52,12 @@
       <m-channel__about *ngSwitchCase="'about'"></m-channel__about>
       <m-channelList__connections
         subscribeEndpointParam="subscribers"
+        [canSearch]="false"
         *ngSwitchCase="'subscribers'"
       ></m-channelList__connections>
       <m-channelList__connections
         subscribeEndpointParam="subscriptions"
+        [canSearch]="true"
         *ngSwitchCase="'subscriptions'"
       ></m-channelList__connections>
       <m-channelList__groups *ngSwitchCase="'groups'"></m-channelList__groups>

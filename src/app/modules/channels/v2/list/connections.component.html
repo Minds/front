@@ -1,1 +1,5 @@
-<m-channel__list [feedsService]="feed"></m-channel__list>
+<m-channel__list
+  [feedsService]="feed"
+  [canSearch]="canSearch"
+  (onSearch)="searchQuery$.next($event)"
+></m-channel__list>
