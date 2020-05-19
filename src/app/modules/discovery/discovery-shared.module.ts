@@ -24,9 +24,5 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   exports: [DiscoverySidebarTagsComponent, DiscoveryTagSettingsComponent],
   providers: [DiscoveryTagsService],
-  entryComponents: [
-    DiscoveryTagSettingsComponent,
-    DiscoveryFeedsSettingsComponent,
-  ],
 })
 export class DiscoverySharedModule {}

@@ -38,7 +38,6 @@ import { RemindComposerModalComponent } from './remind-composer-v2/reminder-comp
     TOSUpdatedModal,
     RemindComposerModalComponent,
   ],
-  entryComponents: [ConfirmPasswordModalComponent],
   exports: [
     ConfirmModal,
     RemindComposerModal,

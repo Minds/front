@@ -50,6 +50,5 @@ export const MONETIZATION_REVENUE_COMPONENTS = [
     MonetizationTermsComponent,
     MonetizationOnboardingComponent,
   ],
-  entryComponents: [MonetizationMarketingComponent],
 })
 export class MonetizationModule {}

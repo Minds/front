@@ -93,10 +93,5 @@ const routes: Routes = [
     ThumbnailSelectorComponent,
     MediaModalComponent,
   ],
-  entryComponents: [
-    MediaEditComponent,
-    MediaViewComponent,
-    MediaModalComponent,
-  ],
 })
 export class MediaModule {}

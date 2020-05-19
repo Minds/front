@@ -105,6 +105,5 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
     DiscoveryNoTagsPromptComponent,
   ],
   exports: [DiscoveryComponent],
-  entryComponents: [DiscoveryComponent],
 })
 export class DiscoveryModule {}

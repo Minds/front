@@ -45,10 +45,6 @@ import { Session } from '../../../services/session';
     YoutubeMigrationUnmigratedVideosComponent,
     YoutubeMigrationConfigComponent,
   ],
-  entryComponents: [
-    YoutubeMigrationComponent,
-    YoutubeMigrationSetupModalComponent,
-  ],
   providers: [
     {
       provide: YoutubeMigrationService,

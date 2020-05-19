@@ -20,6 +20,5 @@ import { PostsAutocompleteItemRendererComponent } from './item-renderers/posts-a
     TextInputAutocompleteMenuComponent,
     PostsAutocompleteItemRendererComponent,
   ],
-  entryComponents: [TextInputAutocompleteMenuComponent],
 })
 export class TextInputAutocompleteModule {}

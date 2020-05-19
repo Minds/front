@@ -123,6 +123,5 @@ const routes: Routes = [
     NewsfeedComponent,
     FeedGridComponent,
   ],
-  entryComponents: [NewsfeedComponent, NewsfeedSingleComponent],
 })
 export class NewsfeedModule {}

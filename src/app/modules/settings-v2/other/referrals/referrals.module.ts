@@ -19,10 +19,5 @@ import { RouterModule } from '@angular/router';
     SettingsV2ReferralsDashboardComponent,
     SettingsV2ReferralsLinksComponent,
   ],
-  entryComponents: [
-    SettingsV2ReferralsComponent,
-    SettingsV2ReferralsDashboardComponent,
-    SettingsV2ReferralsLinksComponent,
-  ],
 })
 export class ReferralsV2Module {}

@@ -65,14 +65,6 @@ import { ModerationAppealComponent } from './console/appeal.component';
     ModerationAppealComponent,
   ],
   exports: [ReportConsoleComponent, JuryDutySessionSummonsComponent],
-  entryComponents: [
-    ReportCreatorComponent,
-    ReportsMarketingComponent,
-    JuryDutySessionComponent,
-    JuryDutySessionSummonsComponent,
-    StrikesComponent,
-    BannedComponent,
-  ],
   providers: [JurySessionService, BannedService],
 })
 export class ReportModule {}

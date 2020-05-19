@@ -126,7 +126,6 @@ const routes: Routes = [
     GroupsMembersModuleComponent,
     GroupsSidebarMarkersComponent,
   ],
-  entryComponents: [GroupsCard, GroupsSidebarMarkersComponent],
   providers: [CanDeactivateGroupService],
 })
 export class GroupsModule {}

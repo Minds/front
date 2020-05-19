@@ -12,6 +12,5 @@ import { PostMenuV2Component } from './v2/menu.component';
   exports: [PostMenuComponent, PostMenuV2Component],
   declarations: [PostMenuComponent, PostMenuV2Component],
   providers: [],
-  entryComponents: [PostMenuComponent],
 })
 export class PostMenuModule {}

@@ -34,7 +34,6 @@ const PROVIDERS = [
   ],
   declarations: [...INTERNAL_COMPONENTS, ...COMPONENTS],
   exports: COMPONENTS,
-  entryComponents: COMPONENTS,
   providers: PROVIDERS,
 })
 export class WireV2Module {}

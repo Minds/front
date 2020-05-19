@@ -34,6 +34,5 @@ const routes: Routes = [{ path: '', component: HomepageContainerComponent }];
     HomepageV2Module,
   ],
   declarations: [HomepageComponent, HomepageContainerComponent],
-  entryComponents: [HomepageComponent],
 })
 export class HomepageModule {}

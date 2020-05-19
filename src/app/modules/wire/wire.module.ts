@@ -97,12 +97,5 @@ const wireRoutes: Routes = [
     WireSubscriptionTiersComponent,
     WireV2SubscriptionTiersComponent,
   ],
-  entryComponents: [
-    WireCreatorComponent,
-    WireConsoleComponent,
-    WirePaymentsCreatorComponent,
-    WireLockScreenComponent,
-    WireConsoleRewardsInputsComponent,
-  ],
 })
 export class WireModule {}

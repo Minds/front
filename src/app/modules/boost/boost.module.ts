@@ -107,6 +107,5 @@ const boostRoutes: Routes = [
     BoostConsoleCard,
     BoostConsoleBooster,
   ],
-  entryComponents: [BoostCreatorComponent, BoostConsoleComponent],
 })
 export class BoostModule {}

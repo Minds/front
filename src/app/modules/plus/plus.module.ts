@@ -39,6 +39,5 @@ const plusRoutes: Routes = [
   ],
   exports: [PlusSubscriptionComponent, PlusVerifyComponent],
   providers: [PlusService],
-  entryComponents: [PlusMarketingComponent],
 })
 export class PlusModule {}

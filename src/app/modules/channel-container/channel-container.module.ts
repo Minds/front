@@ -15,6 +15,5 @@ import { ChannelsV2Module } from '../channels/v2/channels-v2.module';
     ChannelsV2Module,
   ],
   declarations: [ChannelContainerComponent],
-  entryComponents: [ChannelContainerComponent],
 })
 export class ChannelContainerModule {}

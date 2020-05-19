@@ -526,11 +526,5 @@ const routes: Routes = [
     ApiService,
     AttachmentApiService,
   ],
-  entryComponents: [
-    NotificationsToasterComponent,
-    ReferralsLinksComponent,
-    ShareModalComponent,
-    RemindComposerModalComponent,
-  ],
 })
 export class CommonModule {}

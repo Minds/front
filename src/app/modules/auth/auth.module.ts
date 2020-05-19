@@ -60,11 +60,5 @@ const routes: Routes = [
     ForgotPasswordComponent,
   ],
   exports: [ForgotPasswordComponent],
-  entryComponents: [
-    LoginComponent,
-    LogoutComponent,
-    RegisterComponent,
-    ForgotPasswordComponent,
-  ],
 })
 export class AuthModule {}
