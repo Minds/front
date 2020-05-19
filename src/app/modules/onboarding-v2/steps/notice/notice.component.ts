@@ -30,7 +30,7 @@ export class NoticeStepComponent {
   }
 
   skip() {
-    this.router.navigate(['/newsfeed/global/top']);
+    this.router.navigate(['/newsfeed']);
   }
 
   isMobile() {
