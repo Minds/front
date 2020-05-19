@@ -14,11 +14,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'infinite-scroll',
   template: `
-    <div
-      class="mdl-spinner mdl-js-spinner is-active"
-      [mdl]
-      [hidden]="!inProgress"
-    ></div>
+    <m-loadingSpinner [inProgress]="inProgress"></m-loadingSpinner>
     <div
       class="m-infinite-scroll-manual"
       [class.m-infinite-scroll-manual__loadMore]="!iconOnly"
