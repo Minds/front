@@ -1,3 +1,21 @@
+<div class="m-tabs__container">
+  <div class="m-tabs__tab">
+    <a routerLink="../subscribers" routerLinkActive="m-tabs__tab--selected"
+      >Subscribers</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a routerLink="../subscriptions" routerLinkActive="m-tabs__tab--selected"
+      >Subscriptions</a
+    >
+  </div>
+  <div class="m-tabs__tab">
+    <a routerLink="../groups" routerLinkActive="m-tabs__tab--selected"
+      >Groups</a
+    >
+  </div>
+</div>
+
 <div class="m-pageLayout__container m-channel__list">
   <div class="m-channelList__list" m-pageLayout__pane="main">
     <div class="m-channelListList__entities">
@@ -5,6 +23,11 @@
         *ngFor="let entity$ of feedsService.feed | async"
         [entity]="entity$ | async"
       ></m-newsfeed__entity>
+
+      <!-- <m-discovery__feedItem
+        *ngFor="let entity$ of feedsService.feed | async"
+        [entity]="entity$ | async"
+      ></m-discovery__feedItem> -->
 
       <infinite-scroll
         distance="25%"
