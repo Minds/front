@@ -9,7 +9,7 @@ m-composer__topbarButton {
   }
 
   m-icon .m-icon__assetsFile {
-    background: url(/assets/icons/compose.svg);
+    background: url('<%= APP_CDN %>/assets/icons/compose.svg');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
