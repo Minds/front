@@ -19,7 +19,12 @@ import { FeaturesService } from '../../../services/features.service';
         <span>Wire</span>
       </ng-container>
       <ng-template #payButton>
-        Pay
+        <m-icon
+          from="assets-file"
+          iconId="assets/icons/wire.svg"
+          [sizeFactor]="25"
+        ></m-icon>
+        <span>Pay</span>
       </ng-template>
     </button>
   `,

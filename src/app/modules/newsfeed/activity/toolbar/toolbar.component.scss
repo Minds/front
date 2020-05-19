@@ -59,13 +59,23 @@ m-activity__toolbar {
     .m-wire-button {
       border: 0 !important;
       padding: 0;
+      height: 100%;
       > .ion-icon {
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
       }
+      > * {
+        @include m-theme() {
+          color: themed($m-textColor--secondary);
+        }
+      }
+      .m-icon__assetsFile {
+        margin-right: 5px;
+      }
       span {
-        display: none;
+        margin-left: 0;
+        font-weight: 500;
       }
     }
   }
@@ -83,6 +93,11 @@ m-activity__toolbar {
       @include m-theme() {
         border: 0;
       }
+    }
+
+    > m-icon {
+      margin-right: 5px;
+      vertical-align: middle;
     }
   }
 
