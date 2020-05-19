@@ -32,7 +32,7 @@ import { PopoverComponent } from '../../../forms/popover-validation/popover.comp
 export class SettingsV2PasswordComponent implements OnInit {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('popover', { static: false })
+  @ViewChild('popover')
   popover: PopoverComponent;
 
   init: boolean = false;

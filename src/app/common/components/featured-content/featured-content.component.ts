@@ -31,7 +31,7 @@ export class FeaturedContentComponent implements OnInit {
 
   @Input() slot: number = -1;
 
-  @ViewChild(DynamicHostDirective, { static: false })
+  @ViewChild(DynamicHostDirective)
   dynamicHost: DynamicHostDirective;
 
   constructor(

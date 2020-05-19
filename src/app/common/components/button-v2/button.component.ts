@@ -75,7 +75,7 @@ export class ButtonComponent {
   /**
    * Dropdown menu reference
    */
-  @ViewChild('dropdownMenuComponent', { static: false })
+  @ViewChild('dropdownMenuComponent')
   dropdownMenuComponent: DropdownMenuComponent;
 
   /**

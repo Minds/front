@@ -57,7 +57,7 @@ export class MindsAvatar {
   file: any;
   added: EventEmitter<any> = new EventEmitter();
 
-  @ViewChild('file', { static: false }) fileInput: ElementRef;
+  @ViewChild('file') fileInput: ElementRef;
 
   constructor(
     public userAvatarService: UserAvatarService,

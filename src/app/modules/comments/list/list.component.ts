@@ -47,7 +47,7 @@ export class CommentsListComponent implements OnInit, OnDestroy {
 
   focusOnInit: boolean = false;
   scrollable: boolean = false;
-  @ViewChild('message', { static: false }) textareaControl: Textarea;
+  @ViewChild('message') textareaControl: Textarea;
   @ViewChild('scrollArea', { static: true }) scrollView: ElementRef;
 
   editing: boolean = false;

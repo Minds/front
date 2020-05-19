@@ -45,11 +45,11 @@ export class ChannelFeedComponent implements OnInit, OnDestroy {
 
   paramsSubscription: Subscription;
 
-  @ViewChild('poster', { static: false }) private poster: PosterComponent;
+  @ViewChild('poster') private poster: PosterComponent;
 
-  @ViewChild('composer', { static: false }) private composer: ComposerComponent;
+  @ViewChild('composer') private composer: ComposerComponent;
 
-  @ViewChild('wire', { static: false }) private wire: WireChannelComponent;
+  @ViewChild('wire') private wire: WireChannelComponent;
 
   protected loadFeedObservable: Subject<any> = new Subject();
   protected loadFeedObservableSubscription: Subscription;

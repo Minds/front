@@ -27,7 +27,7 @@ import { ShadowboxHeaderTab } from '../../../interfaces/dashboard';
   providers: [WalletV2Service],
 })
 export class WalletDashboardComponent implements OnInit, OnDestroy {
-  @ViewChild('dashboardViews', { static: false })
+  @ViewChild('dashboardViews')
   dashboardViewsEl: ElementRef;
 
   menu: Menu = sidebarMenu;

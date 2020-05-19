@@ -113,7 +113,7 @@ export class BoostCreatorComponent implements AfterViewInit {
     this.object = object;
   }
 
-  @ViewChild('amountEditor', { static: false })
+  @ViewChild('amountEditor')
   private _amountEditor: ElementRef;
 
   constructor(

@@ -100,7 +100,7 @@ export class NewsfeedBoostRotatorComponent {
 
   @ViewChildren('activities') activities: QueryList<Activity>;
 
-  @ViewChild('rotatorEl', { static: false })
+  @ViewChild('rotatorEl')
   rotatorEl: ElementRef;
 
   viewsCollector$: Subject<number> = new Subject();

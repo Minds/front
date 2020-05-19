@@ -23,7 +23,7 @@ import { PageLayoutService } from '../../common/layout/page-layout.service';
   templateUrl: 'homepage-v2.component.html',
 })
 export class HomepageV2Component implements OnInit {
-  @ViewChild('registerForm', { static: false }) registerForm: RegisterForm;
+  @ViewChild('registerForm') registerForm: RegisterForm;
 
   readonly cdnAssetsUrl: string;
   readonly siteUrl: string;

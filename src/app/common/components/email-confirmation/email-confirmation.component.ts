@@ -35,7 +35,7 @@ export class EmailConfirmationComponent implements OnInit, OnDestroy {
   shouldShow: boolean = false;
   canClose: boolean = false;
 
-  @ViewChild('announcement', { static: false })
+  @ViewChild('announcement')
   announcement: AnnouncementComponent;
 
   protected userEmitter$: Subscription;

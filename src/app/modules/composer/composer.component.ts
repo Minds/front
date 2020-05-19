@@ -74,13 +74,13 @@ export class ComposerComponent implements OnDestroy {
   /**
    * Embedded composer ref
    */
-  @ViewChild('embeddedBaseComposer', { static: false })
+  @ViewChild('embeddedBaseComposer')
   protected embeddedBaseComposer: BaseComponent;
 
   /**
    * Popup placeholder composer ref
    */
-  @ViewChild('popOutBaseComposer', { static: false })
+  @ViewChild('popOutBaseComposer')
   protected popOutBaseComposer: BaseComponent;
 
   /**

@@ -13,7 +13,7 @@ import {
 })
 export class ShadowboxSubmitButtonComponent implements AfterViewInit {
   buttonTextWidth: number;
-  @ViewChild('buttonTextContainer', { static: false })
+  @ViewChild('buttonTextContainer')
   buttonTextContainer: ElementRef;
 
   @Input() type: string = 'submit';

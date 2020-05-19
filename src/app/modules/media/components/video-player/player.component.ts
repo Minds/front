@@ -98,9 +98,7 @@ export class MindsVideoPlayerComponent
     src: '',
   };
 
-  @ViewChild(PlyrComponent, { static: false }) set _player(
-    player: PlyrComponent
-  ) {
+  @ViewChild(PlyrComponent) set _player(player: PlyrComponent) {
     this.player = player;
   }
 

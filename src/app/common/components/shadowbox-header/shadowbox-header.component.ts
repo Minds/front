@@ -21,7 +21,7 @@ import { horizontallyScrollElementIntoView } from '../../../helpers/scrollable-c
 export class ShadowboxHeaderComponent implements AfterViewInit {
   @Input() isScrollable: boolean = true;
   @Input() itemActivated;
-  @ViewChild('shadowboxHeaderContainer', { static: false })
+  @ViewChild('shadowboxHeaderContainer')
   containerEl: ElementRef;
   container;
   public containerScrollLeft: number = 0;

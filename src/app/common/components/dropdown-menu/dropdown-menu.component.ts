@@ -40,11 +40,9 @@ export class DropdownMenuComponent implements OnInit, OnDestroy {
     left: '0',
   };
 
-  @ViewChild('triggerElement', { static: false }) triggerElement: ElementRef<
-    HTMLSpanElement
-  >;
+  @ViewChild('triggerElement') triggerElement: ElementRef<HTMLSpanElement>;
 
-  @ViewChild('menuWrapperElement', { static: false })
+  @ViewChild('menuWrapperElement')
   menuWrapperElement: ElementRef<HTMLDivElement>;
 
   isOpen: boolean = false;

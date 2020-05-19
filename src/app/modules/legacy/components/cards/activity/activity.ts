@@ -179,13 +179,11 @@ export class Activity implements OnInit {
 
   player: MindsVideoPlayerComponent;
 
-  @ViewChild('player', { static: false }) set _player(
-    player: MindsVideoPlayerComponent
-  ) {
+  @ViewChild('player') set _player(player: MindsVideoPlayerComponent) {
     this.player = player;
   }
 
-  @ViewChild('batchImage', { static: false }) batchImage: ElementRef;
+  @ViewChild('batchImage') batchImage: ElementRef;
 
   protected time_created: any;
 

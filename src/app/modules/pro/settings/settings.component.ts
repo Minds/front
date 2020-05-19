@@ -70,10 +70,10 @@ export class ProSettingsComponent implements OnInit, OnDestroy {
 
   protected paramMap$: Subscription;
 
-  @ViewChild('logoField', { static: false })
+  @ViewChild('logoField')
   protected logoField: ElementRef<HTMLInputElement>;
 
-  @ViewChild('backgroundField', { static: false })
+  @ViewChild('backgroundField')
   protected backgroundField: ElementRef<HTMLInputElement>;
 
   form = this.fb.group({

@@ -37,7 +37,7 @@ export class AdminBoosts {
 
   readonly NON_REPORTABLE_REASONS = [7, 8, 12, 13]; // spam, appeals, onchain payment failed, original post removed
 
-  @ViewChild('reasonModal', { static: false })
+  @ViewChild('reasonModal')
   modal: RejectionReasonModalComponent;
 
   constructor(
