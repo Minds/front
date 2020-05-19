@@ -275,7 +275,9 @@ export class ActivityContentComponent
    * @returns { string } - equals '' if url is not needed.
    */
   getRedirectUrl(): string {
-    return this.entity.boosted ? `/newsfeed/${this.entity.guid}` : '';
+    return this.service.displayOptions.fixedHeight
+      ? `/newsfeed/${this.entity.guid}`
+      : '';
   }
 
   onImageError(e: Event): void {}
