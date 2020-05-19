@@ -113,12 +113,9 @@
   </div>
 </div>
 
-<span
-  *ngIf="sockets.error$ | async"
-  class="m-commentsThread__connectionLost"
-  i18n="@@MINDS__COMMENTS__SOCKET_DISCONNECTED"
->
-  Could not load live comments<br />
+<span *ngIf="sockets.error$ | async" class="m-commentsThread__connectionLost">
+  <ng-container i18n>Could not load live comments</ng-container>
+  <br />
   <a
     *ngIf="!inProgress"
     (click)="retry()"

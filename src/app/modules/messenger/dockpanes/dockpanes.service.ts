@@ -1,9 +1,10 @@
 import { Storage } from '../../../services/storage';
 import { Session } from '../../../services/session';
-import { Inject, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MindsUser } from '../../../interfaces/entities';
 
+@Injectable()
 export class MessengerConversationDockpanesService {
   conversations: Array<any> = [];
 
