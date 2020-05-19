@@ -7,4 +7,11 @@ m-composer__topbarButton {
       color: themed($m-textColor--secondary);
     }
   }
+
+  m-icon .m-icon__assetsFile {
+    background: url(/assets/icons/compose.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
 }
