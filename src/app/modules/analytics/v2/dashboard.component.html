@@ -18,6 +18,8 @@
     </div>
   </ng-template>
 
+  <m-loadingSpinner [inProgress]="loading$ | async"></m-loadingSpinner>
+
   <div class="m-analyticsDashboard" *ngIf="ready$ | async">
     <m-dashboardLayout>
       <ng-container m-dashboardLayout__header>

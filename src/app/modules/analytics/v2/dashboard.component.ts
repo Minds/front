@@ -29,6 +29,7 @@ export class AnalyticsDashboardComponent implements OnInit, OnDestroy {
   menu: Menu = sidebarMenu;
   paramsSubscription: Subscription;
 
+  loading$ = this.analyticsService.loading$;
   ready$ = this.analyticsService.ready$;
   category$ = this.analyticsService.category$;
   description$ = this.analyticsService.description$;
