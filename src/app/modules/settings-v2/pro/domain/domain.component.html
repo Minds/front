@@ -12,15 +12,13 @@
         <label for="domain" i18n>Domain</label>
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n
-            ><ng-container i18n *ngIf="isActive; else previewModeDomainNote">
-              Currently only subdomains are supported. Custom domains are coming
-              soon. If you wish to use a custom domain please email
-              info@minds.com.
-            </ng-container>
-            <ng-template #previewModeDomainNote i18n
-              >You can control your domain once you purchase Pro.</ng-template
-            ></ng-container
+          <ng-container i18n *ngIf="isActive; else previewModeDomainNote">
+            Currently only subdomains are supported. Custom domains are coming
+            soon. If you wish to use a custom domain please email
+            info@minds.com.
+          </ng-container>
+          <ng-template #previewModeDomainNote i18n
+            >You can control your domain once you purchase Pro.</ng-template
           >
         </m-tooltip>
       </div>
