@@ -89,9 +89,18 @@ m-channelAbout__brief {
   }
 
   .m-channelAboutBriefBio__content {
-    max-width: 100%;
     white-space: pre-line;
     word-break: break-word;
+    max-width: 100%;
+    max-height: 70vh;
+
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   .m-channelAboutBriefBio__readMore {
