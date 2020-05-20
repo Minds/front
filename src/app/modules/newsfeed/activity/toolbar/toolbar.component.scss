@@ -59,7 +59,7 @@ m-activity__toolbar {
     .m-wire-button {
       border: 0 !important;
       padding: 0;
-      height: 100%;
+      height: auto;
       > .ion-icon {
         @include m-theme() {
           color: themed($m-textColor--secondary);
