@@ -36,7 +36,6 @@ export const MONETIZATION_REVENUE_COMPONENTS = [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    WalletModule,
     FaqModule,
     MonetizationOverviewModule,
   ],

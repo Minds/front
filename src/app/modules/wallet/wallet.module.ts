@@ -176,7 +176,7 @@ export const WALLET_ROUTES: Routes = [
     ReactiveFormsModule,
     CommonModule,
     CheckoutModule,
-    MonetizationOverviewModule,
+    //MonetizationOverviewModule,
     RouterModule,
     RouterModule.forChild([...WALLET_ROUTES, ...WALLET_V2_ROUTES]),
     AdsModule,
