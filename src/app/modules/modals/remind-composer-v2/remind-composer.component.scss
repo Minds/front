@@ -44,6 +44,12 @@ m-modal__remindComposer {
           color: themed($m-blue-grey-700);
         }
       }
+
+      .m-modalRemindComposer__send.disabled {
+        @include m-theme() {
+          color: themed($m-grey-300);
+        }
+      }
     }
   }
 
