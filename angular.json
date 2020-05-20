@@ -7,6 +7,12 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
+      "i18n": {
+        "locales": {
+          "es": "src/locale/Minds.es.xliff",
+          "vi": "src/locale/Minds.vi.xliff"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -163,7 +169,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "m",
-      "styleext": "scss"
+      "styleext": ".ng.scss"
     },
     "@schematics/angular:directive": {
       "prefix": "m"
