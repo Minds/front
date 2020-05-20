@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ChannelsV2Service } from '../channels-v2.service';
-import { Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 /**
  * Channel groups component
@@ -15,6 +15,13 @@ import { distinctUntilChanged } from 'rxjs/operators';
 })
 export class ChannelListGroupsComponent implements OnDestroy {
   /**
+   * Search query
+   */
+  readonly searchQuery$: BehaviorSubject<string> = new BehaviorSubject<string>(
+    ''
+  );
+
+  /**
    * GUID subscription
    */
   protected guidSubscription: Subscription;
@@ -25,9 +32,12 @@ export class ChannelListGroupsComponent implements OnDestroy {
    * @param feed
    */
   constructor(public service: ChannelsV2Service, public feed: FeedsService) {
-    this.guidSubscription = this.service.guid$
-      .pipe(distinctUntilChanged())
-      .subscribe(guid => {
+    this.guidSubscription = combineLatest([
+      this.service.guid$,
+      this.searchQuery$.pipe(debounceTime(300)),
+    ])
+      .pipe(distinctUntilChanged((a, b) => a.join(':') === b.join(':')))
+      .subscribe(([guid, searchQuery]) => {
         if (guid) {
           this.feed
             .clear()
@@ -35,6 +45,9 @@ export class ChannelListGroupsComponent implements OnDestroy {
             .setExportUserCounts(false)
             .setLimit(12)
             .setEndpoint(`api/v3/channel/${guid}/groups`)
+            .setParams({
+              q: searchQuery,
+            })
             .fetch();
         }
       });

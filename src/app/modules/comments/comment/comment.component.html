@@ -5,12 +5,7 @@
 >
   <div class="minds-avatar" [hovercard]="comment.ownerObj.guid">
     <a [routerLink]="['/', comment.ownerObj.username]">
-      <img
-        src="{{ cdnUrl }}icon/{{ comment.ownerObj.guid }}/small/{{
-          comment.ownerObj.icontime
-        }}"
-        class="m-border"
-      />
+      <img [src]="getAvatarSrc() | async" class="m-border" />
     </a>
   </div>
   <div class="minds-body">

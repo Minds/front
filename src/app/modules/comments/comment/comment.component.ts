@@ -27,7 +27,7 @@ import { OverlayModalService } from '../../../services/ux/overlay-modal';
 import { ReportCreatorComponent } from '../../report/creator/creator.component';
 import { CommentsListComponent } from '../list/list.component';
 import { TimeDiffService } from '../../../services/timediff.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ActivityService } from '../../../common/services/activity.service';
 import { Router } from '@angular/router';
@@ -36,6 +36,7 @@ import { MediaModalComponent } from '../../media/modal/modal.component';
 import isMobile from '../../../helpers/is-mobile';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { UserAvatarService } from '../../../common/services/user-avatar.service';
 
 @Component({
   selector: 'm-comment',
@@ -103,6 +104,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
     public client: Client,
     public attachment: AttachmentService,
     public translationService: TranslationService,
+    public userAvatar: UserAvatarService,
     private overlayModal: OverlayModalService,
     private cd: ChangeDetectorRef,
     private timeDiffService: TimeDiffService,
@@ -407,5 +409,14 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
    */
   toggleMatureVisibility() {
     this.showMature = !this.showMature;
+  }
+
+  public getAvatarSrc(): Observable<string> {
+    if (this.comment.ownerObj.guid === this.session.getLoggedInUser().guid) {
+      return this.userAvatar.src$;
+    }
+    return of(
+      `${this.cdnUrl}icon/${this.comment.ownerObj.guid}/small/${this.comment.ownerObj.icontime}`
+    );
   }
 }
