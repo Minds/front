@@ -20,6 +20,8 @@ import autobind from '../../../helpers/autobind';
 import { AutocompleteSuggestionsService } from '../../suggestions/services/autocomplete-suggestions.service';
 import { SignupModalService } from '../../modals/signup/service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { UserAvatarService } from '../../../common/services/user-avatar.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'm-comment__poster',
@@ -53,6 +55,7 @@ export class CommentPosterComponent {
     public attachment: AttachmentService,
     public sockets: SocketsService,
     public suggestions: AutocompleteSuggestionsService,
+    private userAvatar: UserAvatarService,
     private renderer: Renderer,
     private cd: ChangeDetectorRef,
     private configs: ConfigsService
@@ -202,16 +205,8 @@ export class CommentPosterComponent {
     this.attachment.preview(message, this.detectChanges.bind(this));
   }
 
-  getAvatar() {
-    if (this.session.isLoggedIn()) {
-      return `${this.configs.get('cdn_url')}icon/${
-        this.session.getLoggedInUser().guid
-      }/small/${this.session.getLoggedInUser().icontime}`;
-    } else {
-      return `${this.configs.get(
-        'cdn_assets_url'
-      )}assets/avatars/default-small.png`;
-    }
+  getAvatar(): Observable<string> {
+    return this.userAvatar.src$;
   }
 
   postEnabled() {

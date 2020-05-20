@@ -4,7 +4,7 @@
 >
   <div class="minds-avatar">
     <a [routerLink]="['/', session.getLoggedInUser().username]">
-      <img [src]="getAvatar()" class="m-border" />
+      <img [src]="getAvatar() | async" class="m-border" />
     </a>
   </div>
 
