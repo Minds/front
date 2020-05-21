@@ -41,16 +41,19 @@
 
     > p {
       margin: 0 0 10px 0 !important;
+      line-height: 20px;
     }
 
     .m-settingsV2__referralsLinks__copyableLink {
       max-width: 450px;
       margin-bottom: 30px;
-      border-radius: 18px;
+      border-radius: 2px;
       display: flex;
       justify-content: space-between;
       @include m-theme() {
         background-color: themed($m-bgColor--secondary);
+        box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+        border: 1px solid themed($m-borderColor--primary);
       }
 
       &.focused {
@@ -67,7 +70,7 @@
         text-align: left !important;
         font-size: 18px;
         border: none;
-        padding: 8px 0 8px 8px;
+        padding: 12px 0 12px 12px;
         margin: 1px 0 1px 4px;
 
         @include m-theme() {
@@ -86,7 +89,7 @@
 
       .m-settingsV2__referralsLinks__copyableLinkButton {
         cursor: pointer;
-        padding: 9px 14px 10px 8px;
+        padding: 13px 14px 10px 8px;
         @include m-theme() {
           color: themed($m-blue);
         }
@@ -105,6 +108,7 @@
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
+      margin-top: -8px;
 
       button {
         cursor: pointer;
