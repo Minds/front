@@ -7,16 +7,6 @@
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
-      "i18n": {
-        "sourceLocale": {
-          "baseHref": "/",
-          "code": "en"
-        },
-        "locales": {
-          "es": "src/locale/Minds.es.xliff",
-          "vi": "src/locale/Minds.vi.xliff"
-        }
-      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
