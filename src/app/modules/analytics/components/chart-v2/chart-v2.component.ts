@@ -24,13 +24,35 @@ export class ChartV2Component implements OnInit, OnDestroy {
   @ViewChild('hoverInfoDiv', { static: true }) hoverInfoDivEl: ElementRef;
   @ViewChild('chartContainer', { static: true }) chartContainer: ElementRef;
 
-  @Input() segments: Array<any>;
   @Input() unit: string = 'number';
   @Input() label: string = '';
 
-  @Input() interval;
   @Input() isMini: boolean = false;
   @Input() showHoverInfo: boolean = true;
+
+  private _segments: Array<any>;
+  @Input() set segments(value: Array<any>) {
+    this._segments = value;
+    if (value) {
+      //redraw chart
+      this.initPlot();
+    }
+  }
+  get segments(): Array<any> {
+    return this._segments;
+  }
+
+  private _interval: string;
+  @Input() set interval(value: string) {
+    this._interval = value;
+    if (value) {
+      //redraw chart
+      this.initPlot();
+    }
+  }
+  get interval(): string {
+    return this._interval;
+  }
 
   @HostBinding('class') get checkIsMini() {
     if (!this.isMini) {

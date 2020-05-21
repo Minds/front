@@ -3,6 +3,8 @@ import {
   Component,
   Input,
   OnDestroy,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { FeedService } from './feed.service';
 import { Router } from '@angular/router';
@@ -10,6 +12,7 @@ import { ChannelsV2Service } from '../channels-v2.service';
 import { FeedFilterType } from '../../../../common/components/feed-filter/feed-filter.component';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { Subscription } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 /**
  * Channel feed component
@@ -62,11 +65,14 @@ export class ChannelFeedComponent implements OnDestroy {
   constructor(
     public feed: FeedService,
     public service: ChannelsV2Service,
-    protected router: Router
+    protected router: Router,
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
-    this.guidSubscription = this.service.guid$.subscribe(guid =>
-      this.feed.guid$.next(guid)
-    );
+    if (isPlatformBrowser(platformId)) {
+      this.guidSubscription = this.service.guid$.subscribe(guid =>
+        this.feed.guid$.next(guid)
+      );
+    }
   }
 
   /**

@@ -89,7 +89,7 @@ export class ChannelContentService {
       return 'blocked';
     } else if (
       !forceNsfwContent &&
-      !currentUser.mature &&
+      !(currentUser && currentUser.mature) &&
       (!currentUser || currentUser.guid !== channel.guid) &&
       ((channel.nsfw && channel.nsfw.length > 0) || channel.is_mature)
     ) {

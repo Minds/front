@@ -4,13 +4,7 @@ import {
   FeedFilterSort,
   FeedFilterType,
 } from '../../../../common/components/feed-filter/feed-filter.component';
-import {
-  distinctUntilChanged,
-  map,
-  startWith,
-  switchAll,
-  switchMap,
-} from 'rxjs/operators';
+import { distinctUntilChanged, map, switchAll, filter } from 'rxjs/operators';
 import { FeedsService } from '../../../../common/services/feeds.service';
 import { ApiService } from '../../../../common/api/api.service';
 
@@ -82,6 +76,7 @@ export class FeedService {
     // Fetch scheduled count when GUID changes
     this.scheduledCount$ = this.guid$.pipe(
       distinctUntilChanged(),
+      filter(guid => !!guid),
       map(guid => this.api.get(`api/v2/feeds/scheduled/${guid}/count`)),
       switchAll(),
       map(response => response.count)

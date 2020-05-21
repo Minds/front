@@ -4,8 +4,9 @@ import {
   Input,
   ChangeDetectorRef,
   OnInit,
+  PLATFORM_ID,
 } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, isPlatformServer } from '@angular/common';
 import { Session } from '../../../services/session';
 import { Client, Upload } from '../../../services/api';
 import { RecentService } from '../../../services/ux/recent';
@@ -38,7 +39,8 @@ export class SearchBarSuggestionsComponent implements OnInit {
     public recentService: RecentService,
     private featuresService: FeaturesService,
     private context: ContextService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.newNavigation = this.featuresService.has('navigation');
   }
@@ -49,6 +51,8 @@ export class SearchBarSuggestionsComponent implements OnInit {
     }
 
     this.q = value || '';
+
+    if (isPlatformServer(this.platformId)) return;
 
     if (!value || this.location.path().indexOf('/search') === 0) {
       this.loadRecent();

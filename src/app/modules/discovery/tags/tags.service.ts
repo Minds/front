@@ -1,8 +1,9 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable, Injector, Inject, PLATFORM_ID } from '@angular/core';
 import { Client } from '../../../services/api';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HashtagDefaultsService } from '../../hashtags/service/defaults.service';
+import { isPlatformServer } from '@angular/common';
 
 export type DiscoveryTag = any;
 
@@ -52,11 +53,15 @@ export class DiscoveryTagsService {
 
   constructor(
     private client: Client,
-    private hashtagDefaults: HashtagDefaultsService
+    private hashtagDefaults: HashtagDefaultsService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
   async loadTags(refresh = false) {
     this.inProgress$.next(true);
+
+    if (isPlatformServer(this.platformId)) return;
+
     if (refresh) {
       this.tags$.next([]);
       this.trending$.next(null);

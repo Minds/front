@@ -4,9 +4,12 @@ import {
   HostBinding,
   ElementRef,
   OnInit,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
 import { fromEvent, Subscription, merge } from 'rxjs';
 import { throttleTime, debounceTime, debounce } from 'rxjs/operators';
+import { isPlatformServer } from '@angular/common';
 
 const TOPBAR_HEIGHT_PX = 75;
 
@@ -23,11 +26,15 @@ export class StickySidebarDirective implements OnInit, AfterViewInit {
 
   scrollSubscription: Subscription;
 
-  constructor(private el: ElementRef) {}
+  constructor(
+    private el: ElementRef,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit() {}
 
   ngAfterViewInit() {
+    if (isPlatformServer(this.platformId)) return;
     this.initialOffsetFromTop = this.el.nativeElement.getBoundingClientRect().y;
     this.scrollSubscription = merge(
       fromEvent(window, 'scroll').pipe(debounceTime(100)),

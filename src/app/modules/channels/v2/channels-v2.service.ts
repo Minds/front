@@ -225,7 +225,7 @@ export class ChannelsV2Service {
     this.guid$.next(typeof channel === 'object' ? channel.guid : channel);
     this.setChannel(typeof channel === 'object' ? channel : null);
 
-    this.sync();
+    // this.sync();
   }
 
   /**

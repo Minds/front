@@ -23,6 +23,8 @@ export class RemindComposerModalComponent implements AfterViewInit {
 
   message: string = '';
 
+  inProgress: boolean = false;
+
   @ViewChild(DynamicHostDirective, { static: true })
   cardHost: DynamicHostDirective;
 
@@ -53,6 +55,8 @@ export class RemindComposerModalComponent implements AfterViewInit {
     this.object.reminded = true;
     this.object.reminds++;
 
+    this.inProgress = true;
+
     try {
       const response: any = await this.client.post(
         'api/v2/newsfeed/remind/' + this.object.guid,
@@ -60,18 +64,19 @@ export class RemindComposerModalComponent implements AfterViewInit {
           message: this.message,
         }
       );
+
+      this.post.next({
+        message: this.message,
+      });
     } catch (e) {
       this.object.reminded = false;
       this.object.reminds--;
     }
+    this.inProgress = false;
     this.overlayModal.dismiss();
   }
 
   send() {
-    this.post.next({
-      message: this.message,
-    });
-
     this.close();
   }
 

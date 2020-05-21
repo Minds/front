@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { Client } from '../../../services/api';
 import { BehaviorSubject } from 'rxjs';
+import { isPlatformServer } from '@angular/common';
 
 export type DiscoveryTrend = any;
 
@@ -11,10 +12,16 @@ export class DiscoveryTrendsService {
   inProgress$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   error$: BehaviorSubject<string> = new BehaviorSubject('');
 
-  constructor(private client: Client) {}
+  constructor(
+    private client: Client,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   async loadTrends(): Promise<void> {
     this.inProgress$.next(true);
+
+    if (isPlatformServer(this.platformId)) return;
+
     this.trends$.next([]);
     this.hero$.next(null);
     this.error$.next('');

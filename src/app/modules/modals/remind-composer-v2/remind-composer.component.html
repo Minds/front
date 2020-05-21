@@ -33,7 +33,11 @@
   </m-text-input--autocomplete-container>
 
   <div class="m-modalRemindComposer__buttons">
-    <a class="m-modal__remindComposer__send" (click)="send()">
+    <a
+      class="m-modalRemindComposer__send"
+      [class.disabled]="inProgress"
+      (click)="send()"
+    >
       <i class="material-icons">send</i>
     </a>
   </div>
