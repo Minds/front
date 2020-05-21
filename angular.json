@@ -8,6 +8,10 @@
       "sourceRoot": "src",
       "projectType": "application",
       "i18n": {
+        "sourceLocale": {
+          "baseHref": "/",
+          "code": "en"
+        },
         "locales": {
           "es": "src/locale/Minds.es.xliff",
           "vi": "src/locale/Minds.vi.xliff"
@@ -137,7 +141,9 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "sourceMap": false,
+              "optimization": true
             }
           }
         }

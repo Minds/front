@@ -108,9 +108,7 @@ build:review:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
     - gulp build.sass --deploy-url=/en && gulp build.sass --deploy-url=/en ##weird build needs to be run twice for now
-    - sh build/base-locale.sh dist
-    - ng run minds:server:production
-    - npm run compile:server
+    - npm run build:client-and-server-bundles
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:

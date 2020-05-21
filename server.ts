@@ -19,12 +19,14 @@ import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 
 const PORT = process.env.PORT || 4200;
+const LANGUAGE = process.env.LANGUAGE || 'en';
 
-const distFolder = join(process.cwd(), 'dist/browser');
-
-export function app() {
+export function app(language: string) {
   // Express server
   const server = express();
+
+  // Dist folder
+  const distFolder = join(process.cwd(), 'dist', 'browser', language);
 
   // gzip
   server.use(compression());
@@ -152,9 +154,13 @@ export function app() {
 
 function run() {
   // Start up the Node server
-  const server = app();
+  console.log(`Port: ${PORT}\nLanguage: ${LANGUAGE}`);
+  const server = app(LANGUAGE);
+
   server.listen(PORT, () => {
-    console.log(`Node Express server listening on http://localhost:${PORT}`);
+    console.log(
+      `Node Express server listening on http://localhost:${PORT} for ${LANGUAGE}`
+    );
   });
 }
 
