@@ -19,7 +19,7 @@
     "postinstall": "node patch.js",
     "serve:ssr": "node dist/server/main",
     "build:ssr": "npm run build:client-and-server-bundles",
-    "build:client-and-server-bundles": "npm run build && ng run minds:server:production",
+    "build:client-and-server-bundles": "npm run build -- --stats-json && ng run minds:server:production",
     "build:ssr:dev": "ng run minds:server:production",
     "bundle-report": "webpack-bundle-analyzer dist/browser/stats.json"
   },
