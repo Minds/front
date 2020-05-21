@@ -202,8 +202,9 @@ app.get('*', cache(), (req, res) => {
 });
 
 // Start up the Node server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Node server listening on http://localhost:${PORT}`);
 });
 
 app.keepAliveTimeout = 65000;
+server.setTimeout(10000); // 10 second request timeout
