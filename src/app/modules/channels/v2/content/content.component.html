@@ -18,17 +18,19 @@
     </div>
   </ng-template>
 
-  <ng-template [ngSwitchCase]="'banned'">
-    <div class="m-channelContent__wrapper">
-      <i class="m-channelContent__icon material-icons">not_interested</i>
+  <ng-container *ngIf="!session.isAdmin()">
+    <ng-template [ngSwitchCase]="'banned'">
+      <div class="m-channelContent__wrapper">
+        <i class="m-channelContent__icon material-icons">not_interested</i>
 
-      <h3 class="m-channelContent__primaryText" i18n>Account banned</h3>
-      <span class="m-channelContent__secondaryText" i18n>
-        This account has been banned for violating the
-        <a routerLink="/content-policy">Minds content policy</a>
-      </span>
-    </div>
-  </ng-template>
+        <h3 class="m-channelContent__primaryText" i18n>Account banned</h3>
+        <span class="m-channelContent__secondaryText" i18n>
+          This account has been banned for violating the
+          <a routerLink="/content-policy">Minds content policy</a>
+        </span>
+      </div>
+    </ng-template>
+  </ng-container>
 
   <ng-template [ngSwitchCase]="'disabled'">
     <div class="m-channelContent__wrapper">
