@@ -46,7 +46,7 @@ export class DiscoveryFeedsService {
   }
 
   async load(): Promise<void> {
-    if (isPlatformServer(PLATFORM_ID)) return;
+    if (isPlatformServer(this.platformId)) return;
     const algorithm = this.filter$.value === 'preferred' ? 'topV2' : 'top';
     const type = this.type$.value;
     this.feedsService.clear();
@@ -62,7 +62,7 @@ export class DiscoveryFeedsService {
   }
 
   async search(q: string): Promise<void> {
-    if (isPlatformServer(PLATFORM_ID)) return;
+    if (isPlatformServer(this.platformId)) return;
     this.feedsService.clear();
     this.feedsService
       .setEndpoint('api/v3/discovery/search')

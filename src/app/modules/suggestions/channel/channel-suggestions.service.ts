@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Client } from '../../../services/api';
 import { Storage } from '../../../services/storage';
+import { isPlatformServer } from '@angular/common';
 
 @Injectable()
 export class SuggestionsService {
@@ -11,11 +12,17 @@ export class SuggestionsService {
   hasMoreData$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   lastOffset: number = 0;
 
-  constructor(private client: Client, private storage: Storage) {}
+  constructor(
+    private client: Client,
+    private storage: Storage,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   async load(opts: { limit: number; refresh: boolean; type: string }) {
     this.error$.next(null);
     this.inProgress$.next(true);
+
+    if (isPlatformServer(this.platformId)) return;
 
     if (opts.refresh) {
       this.suggestions$.next([]);

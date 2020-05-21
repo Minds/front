@@ -18,8 +18,10 @@ export class DiscoveryTrendsService {
   ) {}
 
   async loadTrends(): Promise<void> {
-    if (isPlatformServer(this.platformId)) return;
     this.inProgress$.next(true);
+
+    if (isPlatformServer(this.platformId)) return;
+
     this.trends$.next([]);
     this.hero$.next(null);
     this.error$.next('');
