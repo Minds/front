@@ -21,13 +21,13 @@ m-marketing__footer {
   padding: 60px 0 48px;
   border-top: 1px dashed;
 
-  @media screen and (max-width: $m-grid-min-vp) {
-    padding: 32px 0;
-  }
-
   @include m-theme() {
     border-color: themed($m-grey-50);
     color: themed($m-grey-800);
+  }
+
+  .m-grid {
+    padding: 0 !important;
   }
 
   .m-marketingFooter__columns {
@@ -36,6 +36,13 @@ m-marketing__footer {
 
     @media screen and (max-width: $m-grid-min-vp) {
       padding: 0 32px;
+    }
+
+    .m-marketingFooter__languageBar {
+      margin: 0 6%;
+      @media screen and (max-width: $m-grid-max-mobile) {
+        margin: 0;
+      }
     }
   }
 
