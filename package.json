@@ -21,7 +21,8 @@
     "build:ssr": "ng run minds:server:production",
     "build:client-and-server-bundles": "npm run build -- --stats-json && npm run build:ssr",
     "build:ssr:dev": "ng run minds:server:production",
-    "bundle-report": "webpack-bundle-analyzer dist/browser/stats.json"
+    "bundle-report": "webpack-bundle-analyzer dist/browser/stats.json",
+    "xi18n": "gulp extract.i18n"
   },
   "private": true,
   "dependencies": {

@@ -65,7 +65,7 @@ function transform(source, output) {
 // MAIN
 
 export = () => cb => {
-  run(`node_modules/.bin/ng xi18n --i18nFormat xlf`, {}, false);
+  run(`npx ng xi18n --out-file=messages.xlf --format=xlf`, {}, false);
   transform(
     join(APP_SRC, 'messages.xlf'),
     join(APP_SRC, 'locale', argv.output || 'Default.xliff')
