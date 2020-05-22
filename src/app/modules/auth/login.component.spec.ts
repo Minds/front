@@ -36,10 +36,12 @@ import { FeaturesService } from '../../services/features.service';
 import { featuresServiceMock } from '../../../tests/features-service-mock.spec';
 import { IfFeatureDirective } from '../../common/directives/if-feature.directive';
 import { TopbarService } from '../../common/layout/topbar.service';
-import { MockService } from '../../utils/mock';
+import { MockService, MockComponent } from '../../utils/mock';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
 import { MarketingFooterComponent } from '../../common/components/marketing/footer.component';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
+import { LanguageBarComponent } from '../language/language-bar.component';
+import { LanguageModalComponent } from '../language/language-modal/language-modal.component';
 
 @Component({
   selector: 'minds-form-login',
@@ -76,6 +78,8 @@ describe('LoginComponent', () => {
         LoginComponent,
         IfFeatureDirective,
         MarketingFooterComponent,
+        MockComponent({ selector: 'm-tooltip', inputs: ['icon', 'i18n'] }),
+        MockComponent({ selector: 'm-language__bar' }),
       ],
       imports: [
         RouterTestingModule,
