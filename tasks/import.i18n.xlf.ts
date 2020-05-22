@@ -9,7 +9,12 @@ const APP_SRC = join(__dirname, '..', 'src');
 
 // HTTP
 
-function req(uri, method = 'get', data = null, extraOptions = {}): Promise<string> {
+function req(
+  uri,
+  method = 'get',
+  data = null,
+  extraOptions = {}
+): Promise<string> {
   return new Promise((resolve, reject) => {
     const isPost = method.toUpperCase() === 'POST';
 
@@ -31,28 +36,30 @@ function req(uri, method = 'get', data = null, extraOptions = {}): Promise<strin
       options.headers['Content-Length'] = body.length;
     }
 
-    const req = https.request(options, res => {
-      const { statusCode } = res;
+    const req = https
+      .request(options, res => {
+        const { statusCode } = res;
 
-      if (statusCode !== 200) {
-        res.resume();
-        return reject(new Error(`HTTP ${statusCode}`));
-      }
-
-      res.setEncoding('utf8');
-
-      let body = '';
-      res.on('data', chunk => body += chunk);
-      res.on('end', () => {
-        try {
-          resolve(body);
-        } catch (e) {
-          reject(e);
+        if (statusCode !== 200) {
+          res.resume();
+          return reject(new Error(`HTTP ${statusCode}`));
         }
+
+        res.setEncoding('utf8');
+
+        let body = '';
+        res.on('data', chunk => (body += chunk));
+        res.on('end', () => {
+          try {
+            resolve(body);
+          } catch (e) {
+            reject(e);
+          }
+        });
+      })
+      .on('error', e => {
+        reject(e);
       });
-    }).on('error', e => {
-      reject(e);
-    });
 
     if (body) {
       req.write(body);
@@ -64,7 +71,7 @@ function req(uri, method = 'get', data = null, extraOptions = {}): Promise<strin
 
 // TRANSFORMER
 
-function transform(fileContent, destination) {
+function transformXliff(fileContent, destination) {
   fileContent = fileContent
     .replace(/%([0-9]+)\$s/g, (substring, match_1) => {
       let idx = parseInt(match_1) - 1;
@@ -80,6 +87,17 @@ function transform(fileContent, destination) {
   writeFileSync(destination, fileContent);
 }
 
+function transformJson(fileContent, destination) {
+  const terms = JSON.parse(fileContent);
+  const dict: any = {};
+
+  for (const term of terms) {
+    dict[term.term] = term.definition;
+  }
+
+  writeFileSync(destination, JSON.stringify(dict, null, 2));
+}
+
 // MAIN
 
 export = () => async cb => {
@@ -87,11 +105,15 @@ export = () => async cb => {
     (!argv.file && !argv['poeditor-key']) ||
     (argv.file && argv['poeditor-key'])
   ) {
-    cb('Please specify either an local file (--file) or a poeditor.com API key (--poeditor-key)');
+    cb(
+      'Please specify either an local file (--file) or a poeditor.com API key (--poeditor-key)'
+    );
   }
 
   if (!argv.locale) {
     cb('Please specify a locale');
+  } else if (!argv['type']) {
+    throw new Error('Please specify the translation file type (--type');
   }
 
   let fileContent;
@@ -105,18 +127,24 @@ export = () => async cb => {
     fileContent = readFileSync(file).toString();
   } else if (argv['poeditor-key']) {
     if (!argv['poeditor-id']) {
-      throw new Error('Please specify a poeditor.com Project ID (--poeditor-id');
+      throw new Error(
+        'Please specify a poeditor.com Project ID (--poeditor-id'
+      );
     }
 
     const locale = argv['poeditor-locale'] || argv.locale;
-    console.log(`* Requesting '${locale}' (as '${argv['locale']}') from Project #${argv['poeditor-id']}`);
+    console.log(
+      `* Requesting '${locale}' (as '${argv['locale']}') from Project #${argv['poeditor-id']}`
+    );
 
-    const { response, result } = JSON.parse(await req('https://api.poeditor.com/v2/projects/export', 'post', {
-      api_token: argv['poeditor-key'],
-      id: argv['poeditor-id'],
-      language: locale,
-      type: 'xliff',
-    }));
+    const { response, result } = JSON.parse(
+      await req('https://api.poeditor.com/v2/projects/export', 'post', {
+        api_token: argv['poeditor-key'],
+        id: argv['poeditor-id'],
+        language: locale,
+        type: argv['type'],
+      })
+    );
 
     if (response.status !== 'success' || !result.url) {
       throw new Error(response.message || JSON.stringify(response));
@@ -131,8 +159,21 @@ export = () => async cb => {
     }
   }
 
-  const dest = join(APP_SRC, 'locale', `Minds.${argv.locale}.xliff`);
-  transform(fileContent, dest);
+  let dest;
+
+  switch (argv['type']) {
+    case 'xliff': {
+      dest = join(APP_SRC, 'locale', `Minds.${argv.locale}.xliff`);
+      transformXliff(fileContent, dest);
+      break;
+    }
+
+    case 'json': {
+      dest = join(APP_SRC, 'locale', `Minds.${argv.locale}.json`);
+      transformJson(fileContent, dest);
+      break;
+    }
+  }
 
   console.log(`* Parsed and saved to ${dest}…`);
 
