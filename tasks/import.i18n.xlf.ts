@@ -169,7 +169,7 @@ export = () => async cb => {
     }
 
     case 'json': {
-      dest = join(APP_SRC, 'locale', `Minds.${argv.locale}.json`);
+      dest = join(APP_SRC, 'assets', 'locale', `Minds.${argv.locale}.json`);
       transformJson(fileContent, dest);
       break;
     }
