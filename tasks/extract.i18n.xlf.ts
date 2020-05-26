@@ -41,23 +41,7 @@ function transform(source, output) {
 
   let fileContent = readFileSync(source).toString();
 
-  fileContent = fileContent
-    .replace(/\&#10;/g, '\n')
-    .replace(/\&#13;/g, '\n')
-    .replace(/<x\s+(.*?)\s*\/>/g, '{{$1}}')
-    .replace(/{{id="INTERPOLATION" equiv-text="[^"]+"}}/g, '%1$s')
-    .replace(
-      /{{id="INTERPOLATION_([0-9]+)" equiv-text="[^"]+"}}/g,
-      (substring, match_1) => {
-        const idx = parseInt(match_1) + 1;
-
-        if (idx < 2) {
-          process.exit(1);
-        }
-
-        return `%${idx}$s`;
-      }
-    );
+  fileContent = fileContent.replace(/&#10;/g, '\n').replace(/&#13;/g, '\n');
 
   writeFileSync(output, fileContent);
 }
