@@ -91,7 +91,7 @@ qa:production:
 #   only:
 #     refs:
 #       - master
-#       - epic/SSR
+#       - epic/angular-9
 #       - production
 #       - test/gitlab-ci
 #   allow_failure: false
@@ -107,8 +107,7 @@ build:review:
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
-    - gulp build.sass --deploy-url=/en && gulp build.sass --deploy-url=/en ##weird build needs to be run twice for now
-    - sh build/ng9-bundles.sh
+    - sh build/ng9-bundles.sh dist/browser /browser dist/server
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
@@ -116,21 +115,18 @@ build:review:
   except:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - production
       - test/gitlab-ci
 
-build:production:en:
+build:production:bundles:
   stage: test and build
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
-    - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
-    - sh build/base-locale.sh dist https://cdn-assets.minds.com/front/dist
-    - ng run minds:server:production
-    - npm run compile:server
+    - sh build/ng9-bundles.sh dist/browser https://cdn-assets.minds.com/front/dist/browser dist/server
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
@@ -140,27 +136,7 @@ build:production:en:
   only:
     refs:
       - master
-      - epic/SSR
-      - production
-      - test/gitlab-ci
-
-build:production:i18n:
-  stage: test and build
-  before_script:
-    - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
-  script:
-    - npm ci && npm install -g gulp-cli
-    - npm run postinstall
-    - gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en && gulp build.sass --deploy-url=https://cdn-assets.minds.com/front/dist/en ##weird build needs to be run twice for now
-    - sh build/i18n-locales-all.sh dist https://cdn-assets.minds.com/front/dist
-  artifacts:
-    name: '$CI_COMMIT_REF_SLUG'
-    paths:
-      - dist/vi
-  only:
-    refs:
-      - master
-      - epic/SSR
+      - epic/angular-9
       - production
       - test/gitlab-ci
 
@@ -193,7 +169,7 @@ prepare:review:
   except:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - production
       - test/gitlab-ci
 
@@ -204,7 +180,7 @@ prepare:review:sentry:
   except:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - production
       - test/gitlab-ci
   dependencies:
@@ -224,12 +200,11 @@ prepare:production:
   only:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - production
       - test/gitlab-ci
   dependencies:
-    - build:production:en
-    - build:production:i18n
+    - build:production:bundles
 
 prepare:production:sentry:
   <<: *sentry_prepare
@@ -238,12 +213,11 @@ prepare:production:sentry:
   only:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - production
       - test/gitlab-ci
   dependencies:
-    - build:production:en
-    - build:production:i18n
+    - build:production:bundles
 
 ################
 # Review Stage #
@@ -263,7 +237,7 @@ prepare:production:sentry:
   except:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - production
       - test/gitlab-ci
 
@@ -292,7 +266,7 @@ review:start:
   except:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - production
       - test/gitlab-ci
 
@@ -323,8 +297,7 @@ review:stop:
     ## Update sentry
     - sentry-cli releases deploys $CI_PIPELINE_ID new -e $IMAGE_LABEL
   dependencies:
-    - build:production:en
-    - build:production:i18n
+    - build:production:bundles
 
 staging:fpm:
   <<: *deploy
@@ -338,7 +311,7 @@ staging:fpm:
   only:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - test/gitlab-ci
 
 review:preprod:
@@ -372,7 +345,7 @@ deploy:canary:
   only:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - test/gitlab-ci
 
 deploy:production:
@@ -389,7 +362,7 @@ deploy:production:
   only:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - test/gitlab-ci
 
 #################
@@ -403,6 +376,6 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
-      - epic/SSR
+      - epic/angular-9
       - production
       - test/gitlab-ci
