@@ -130,8 +130,7 @@ build:production:bundles:
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
-      - dist/en
-      - dist/server.js
+      - dist/browser
       - dist/server
   only:
     refs:
@@ -209,7 +208,7 @@ prepare:production:
 prepare:production:sentry:
   <<: *sentry_prepare
   variables:
-    SOURCEMAP_PREFIX: '~/front/dist/en'
+    SOURCEMAP_PREFIX: '~/front/dist/browser'
   only:
     refs:
       - master
