@@ -55,6 +55,8 @@ m-sidebar--navigation {
   position: fixed;
   z-index: 2;
   box-sizing: border-box;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
   &::-webkit-scrollbar {
     display: none;
