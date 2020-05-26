@@ -26,7 +26,7 @@ export class SeoService {
       return;
     }
 
-    if (user.not_found) {
+    if (user.not_found || !user.avatar_url) {
       return;
     }
 

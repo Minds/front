@@ -11,16 +11,20 @@
       padding: 0 0 16px 0;
 
       minds-card-user {
-        minds-button-subscribe {
-          button.m-btn--with-icon {
-            @media screen and (max-width: $m-grid-max-tablet) {
-              padding-left: 12px;
-              padding-right: 12px;
-              i.material-icons {
-                display: none;
-              }
+        > a {
+          margin-top: -60px;
+          .avatar {
+            img {
+              height: 84px;
+              width: 84px;
             }
           }
+          .body {
+            margin: 0 16px 16px 16px;
+          }
+        }
+        minds-button-subscribe {
+          margin: -35px 0 0 115px;
         }
       }
     }

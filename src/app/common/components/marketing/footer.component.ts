@@ -4,8 +4,14 @@ import {
   ChangeDetectorRef,
   OnInit,
   HostListener,
+  Injector,
+  SkipSelf,
 } from '@angular/core';
 import { ConfigsService } from '../../services/configs.service';
+import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { LanguageModalComponent } from '../../../modules/language/language-modal/language-modal.component';
+import { BehaviorSubject } from 'rxjs';
+import { FeaturesService } from '../../../services/features.service';
 
 @Component({
   selector: 'm-marketing__footer',
@@ -20,7 +26,10 @@ export class MarketingFooterComponent implements OnInit {
 
   constructor(
     private configs: ConfigsService,
-    protected cd: ChangeDetectorRef
+    protected cd: ChangeDetectorRef,
+    private overlayModal: OverlayModalService,
+    public features: FeaturesService,
+    @SkipSelf() private injector: Injector
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
