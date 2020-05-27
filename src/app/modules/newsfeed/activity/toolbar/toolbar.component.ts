@@ -40,9 +40,8 @@ export class ActivityToolbarComponent {
       this.router.navigate([`/newsfeed/${this.entity.guid}`]);
       return;
     }
-    this.service.displayOptions.showComments = !this.service.displayOptions
-      .showComments;
-    this.service.displayOptions.showOnlyCommentsInput = false;
+    this.service.displayOptions.showOnlyCommentsInput = !this.service
+      .displayOptions.showOnlyCommentsInput;
   }
 
   openBoostModal(e: MouseEvent): void {
