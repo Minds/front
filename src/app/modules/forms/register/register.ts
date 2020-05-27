@@ -47,6 +47,8 @@ export class RegisterForm {
   usernameValidationTimeout: any;
   passwordFieldValid: boolean = false;
 
+  alphanumericPattern = '^[a-zA-Z0-9_]+$';
+
   showFbForm: boolean = false;
 
   form: FormGroup;
