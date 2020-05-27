@@ -1,4 +1,4 @@
-<ng-container [clientMeta]="{ source: 'feed/channel', medium: 'feed' }">
+<ng-container [m-clientMeta]="{ source: 'feed/channel', medium: 'feed' }">
   <div *ngIf="service.channel$ | async" class="m-channel-v2">
     <m-channel__header>
       <m-channel__actions *ngIf="service.guid$ | async"></m-channel__actions>

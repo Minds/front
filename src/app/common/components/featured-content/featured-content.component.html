@@ -1,7 +1,7 @@
 <div *ngIf="entity">
   <ng-container
     *ngIf="entity?.type === 'activity'"
-    [clientMeta]="{ medium: 'featured-content' }"
+    [m-clientMeta]="{ medium: 'featured-content' }"
   >
     <ng-template dynamic-host></ng-template>
   </ng-container>

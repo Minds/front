@@ -5,7 +5,7 @@ import {
 } from '../services/client-meta.service';
 
 @Directive({
-  selector: '[clientMeta]',
+  selector: '[m-clientMeta]',
 })
 export class ClientMetaDirective {
   /**
@@ -13,7 +13,7 @@ export class ClientMetaDirective {
    * @param clientMetaData
    * @private
    */
-  @Input('clientMeta') set _clientMetaData(
+  @Input('m-clientMeta') set _clientMetaData(
     clientMetaData: Partial<ClientMetaData>
   ) {
     if (clientMetaData && clientMetaData.source) {

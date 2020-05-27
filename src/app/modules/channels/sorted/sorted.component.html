@@ -1,4 +1,4 @@
-<ng-container [clientMeta]="{ source: 'feed/channel', medium: 'feed' }">
+<ng-container [m-clientMeta]="{ source: 'feed/channel', medium: 'feed' }">
   <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
     <m-composer
       *ngIf="isOwner()"
