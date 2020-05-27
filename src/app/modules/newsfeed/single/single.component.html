@@ -1,86 +1,88 @@
-<div
-  [class.m-pageLayout__container]="!showLegacyActivity"
-  [class.m-newsfeed__single--legacy]="showLegacyActivity"
->
-  <div class="m-loader" *ngIf="inProgress">
-    <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
-  </div>
-
+<ng-container [clientMeta]="{ source: 'single', medium: 'single' }">
   <div
-    class="m-error-splash"
-    [class.m-pageLayout__pane--main]="!showLegacyActivity"
-    *ngIf="error && !inProgress"
+    [class.m-pageLayout__container]="!showLegacyActivity"
+    [class.m-newsfeed__single--legacy]="showLegacyActivity"
   >
-    <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
-    <h3 class="mdl-color-text--red-300">{{ error }}</h3>
-    <span
-      class="mdl-color-text--blue-grey-300"
-      i18n="@@M__COMMON__PLEASE_TRY_AGAIN"
-      >Please try again later</span
-    >
-  </div>
-
-  <div
-    [class.m-pageLayout__pane--main]="!showLegacyActivity"
-    style="padding-bottom: 37px;"
-  >
-    <div class="m--spam-notice mdl-shadow--2dp" *ngIf="activity?.spam">
-      <ng-container i18n="@@MINDS__NEWSFEED__SINGLE__FLAGGED_AS_SPAM"
-        >This activity is flagged as spam.</ng-container
-      >
-      <ng-container
-        *ngIf="!session.isAdmin()"
-        i18n="@@MINDS__NEWSFEED__SINGLE__APPEAL_FLAG_NOTE"
-      >
-        If you wish to appeal, please contact us at info@minds.com.
-      </ng-container>
-    </div>
-
-    <div class="minds-list" *ngIf="showLegacyActivity">
-      <minds-activity
-        *ngIf="activity"
-        [editing]="editing"
-        [object]="activity"
-        [commentsToggle]="true"
-        [focusedCommentGuid]="focusedCommentGuid"
-        (deleted)="delete($event)"
-        [showRatingToggle]="true"
-        [slot]="1"
-        class="mdl-card mdl-shadow--2dp item"
-        [attr.data-minds-activity-guid]="activity.guid"
-        [allowAutoplayOnScroll]="false"
-        [autoplayVideo]="true"
-      >
-      </minds-activity>
+    <div class="m-loader" *ngIf="inProgress">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
     </div>
 
     <div
-      class="minds-list"
-      style="padding: 20px 40px;"
-      *ngIf="activity && !showLegacyActivity"
+      class="m-error-splash"
+      [class.m-pageLayout__pane--main]="!showLegacyActivity"
+      *ngIf="error && !inProgress"
     >
-      <m-activity
-        [entity]="activity"
-        [displayOptions]="{
-          fixedHeight: fixedHeight,
-          showOnlyCommentsInput: false,
-          showComments: !fixedHeight
-        }"
-        [allowAutoplayOnScroll]="false"
-        [autoplayVideo]="true"
-        [slot]="1"
-        (deleted)="delete($event)"
-      ></m-activity>
+      <img [src]="cdnAssetsUrl + 'assets/logos/logo.svg'" />
+      <h3 class="mdl-color-text--red-300">{{ error }}</h3>
+      <span
+        class="mdl-color-text--blue-grey-300"
+        i18n="@@M__COMMON__PLEASE_TRY_AGAIN"
+        >Please try again later</span
+      >
     </div>
+
+    <div
+      [class.m-pageLayout__pane--main]="!showLegacyActivity"
+      style="padding-bottom: 37px;"
+    >
+      <div class="m--spam-notice mdl-shadow--2dp" *ngIf="activity?.spam">
+        <ng-container i18n="@@MINDS__NEWSFEED__SINGLE__FLAGGED_AS_SPAM"
+          >This activity is flagged as spam.</ng-container
+        >
+        <ng-container
+          *ngIf="!session.isAdmin()"
+          i18n="@@MINDS__NEWSFEED__SINGLE__APPEAL_FLAG_NOTE"
+        >
+          If you wish to appeal, please contact us at info@minds.com.
+        </ng-container>
+      </div>
+
+      <div class="minds-list" *ngIf="showLegacyActivity">
+        <minds-activity
+          *ngIf="activity"
+          [editing]="editing"
+          [object]="activity"
+          [commentsToggle]="true"
+          [focusedCommentGuid]="focusedCommentGuid"
+          (deleted)="delete($event)"
+          [showRatingToggle]="true"
+          [slot]="1"
+          class="mdl-card mdl-shadow--2dp item"
+          [attr.data-minds-activity-guid]="activity.guid"
+          [allowAutoplayOnScroll]="false"
+          [autoplayVideo]="true"
+        >
+        </minds-activity>
+      </div>
+
+      <div
+        class="minds-list"
+        style="padding: 20px 40px;"
+        *ngIf="activity && !showLegacyActivity"
+      >
+        <m-activity
+          [entity]="activity"
+          [displayOptions]="{
+            fixedHeight: fixedHeight,
+            showOnlyCommentsInput: false,
+            showComments: !fixedHeight
+          }"
+          [allowAutoplayOnScroll]="false"
+          [autoplayVideo]="true"
+          [slot]="1"
+          (deleted)="delete($event)"
+        ></m-activity>
+      </div>
+    </div>
+
+    <div *ngIf="!showLegacyActivity" m-pageLayout__pane="right"></div>
   </div>
 
-  <div *ngIf="!showLegacyActivity" m-pageLayout__pane="right"></div>
-</div>
-
-<m-social-icons
-  [url]="siteUrl + 'newsfeed/' + activity?.guid"
-  [title]="activity?.title || ''"
-  [embed]="activity"
-  *ngIf="!session.getLoggedInUser().hide_share_buttons"
->
-</m-social-icons>
+  <m-social-icons
+    [url]="siteUrl + 'newsfeed/' + activity?.guid"
+    [title]="activity?.title || ''"
+    [embed]="activity"
+    *ngIf="!session.getLoggedInUser().hide_share_buttons"
+  >
+  </m-social-icons>
+</ng-container>

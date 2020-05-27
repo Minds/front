@@ -19,6 +19,7 @@ import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ConfigsService } from '../../common/services/configs.service';
 import { SeoService } from './v2/seo.service';
+import { ClientMetaDirective } from '../../common/directives/client-meta.directive';
 
 @Component({
   selector: 'm-channel',
@@ -43,6 +44,8 @@ export class ChannelComponent {
 
   @ViewChild('feed') private feed: ChannelSortedComponent;
 
+  @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -64,7 +67,7 @@ export class ChannelComponent {
   ngOnInit() {
     this.updateMeta();
     if (this.user) {
-      // this.clientMetaService.recordView(this.user);
+      this.clientMeta.recordView(this.user);
     }
 
     this.context.set('activity');
@@ -153,7 +156,7 @@ export class ChannelComponent {
         }
 
         // this.load() is only called if this.user was not previously set
-        // this.clientMetaService.recordView(this.user);
+        this.clientMeta.recordView(this.user);
       })
       .catch(e => {
         if (e.status === 0) {

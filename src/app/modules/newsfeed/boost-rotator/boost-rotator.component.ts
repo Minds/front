@@ -37,6 +37,7 @@ import {
 } from '@angular/animations';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { BehaviorSubject, Subscription, Subject } from 'rxjs';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 const BOOST_VIEW_THESHOLD = 1000;
 
@@ -102,6 +103,8 @@ export class NewsfeedBoostRotatorComponent {
 
   viewsCollector$: Subject<number> = new Subject();
 
+  @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
+
   constructor(
     public session: Session,
     public router: Router,
@@ -141,11 +144,11 @@ export class NewsfeedBoostRotatorComponent {
             this.newsfeedService.recordView(
               this.boosts[position],
               true,
-              this.channel
-              // this.clientMetaService.build({
-              //   position: position + 1,
-              //   campaign: this.boosts[position].urn,
-              // })
+              this.channel,
+              this.clientMeta.build({
+                position: position + 1,
+                campaign: this.boosts[position].urn,
+              })
             );
 
             console.log(

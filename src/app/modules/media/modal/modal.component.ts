@@ -32,6 +32,7 @@ import { AttachmentService } from '../../../services/attachment';
 import { DynamicModalSettings } from '../../../common/components/stackable-modal/stackable-modal.component';
 import { TranslationService } from '../../../services/translation';
 import { Client } from '../../../services/api/client';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 export type MediaModalParams = {
   entity: any;
@@ -173,6 +174,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       ];
     }
   }
+
+  @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
 
   constructor(
     public client: Client,
@@ -473,7 +476,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       url = `/pro/${this.site.pro.user_guid}${url}`;
     }
 
-    // this.clientMetaService.recordView(this.entity);
+    this.clientMeta.recordView(this.entity);
     this.analyticsService.send('pageview', {
       url,
     });

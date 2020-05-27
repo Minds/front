@@ -1,81 +1,85 @@
-<div class="m-boost-rotator-tools">
-  <span
-    i1n="@@BOOST_ROTATOR__SHOWING_BOOSTS"
-    *ngIf="router.url == '/newsfeed/boost'"
-  >
-    Showing boosts
-  </span>
-  <div class="m-layout--spacer"></div>
-  <ul class="m-boost-rotator-tabs">
-    <li
-      routerLink="/newsfeed/boost"
-      *ngIf="router.url !== '/newsfeed/boost'"
-      class="m-boostRotator__tab--boost-feed"
+<ng-container [clientMeta]="{ medium: 'boost-rotator' }">
+  <div class="m-boost-rotator-tools">
+    <span
+      i1n="@@BOOST_ROTATOR__SHOWING_BOOSTS"
+      *ngIf="router.url == '/newsfeed/boost'"
     >
-      <a i18n="@@M__COMMON__BOOSTFEED">Boostfeed</a>
-    </li>
-    <ng-container *ngIf="boosts.length > 0; else noBoosts">
-      <li (click)="prev()">
-        <i class="material-icons mdl-color-text--blue-grey-400">chevron_left</i>
+      Showing boosts
+    </span>
+    <div class="m-layout--spacer"></div>
+    <ul class="m-boost-rotator-tabs">
+      <li
+        routerLink="/newsfeed/boost"
+        *ngIf="router.url !== '/newsfeed/boost'"
+        class="m-boostRotator__tab--boost-feed"
+      >
+        <a i18n="@@M__COMMON__BOOSTFEED">Boostfeed</a>
       </li>
-      <li (click)="next()">
-        <i class="material-icons mdl-color-text--blue-grey-400"
-          >chevron_right</i
-        >
+      <ng-container *ngIf="boosts.length > 0; else noBoosts">
+        <li (click)="prev()">
+          <i class="material-icons mdl-color-text--blue-grey-400"
+            >chevron_left</i
+          >
+        </li>
+        <li (click)="next()">
+          <i class="material-icons mdl-color-text--blue-grey-400"
+            >chevron_right</i
+          >
+        </li>
+      </ng-container>
+      <ng-template #noBoosts>
+        <li>
+          <i style="height: 32px;display: block;"></i>
+        </li>
+      </ng-template>
+      <li class="m-boost-rotator-tabs--settings">
+        <m-newsfeed--dropdown [showBoost]="true"></m-newsfeed--dropdown>
       </li>
-    </ng-container>
-    <ng-template #noBoosts>
-      <li>
-        <i style="height: 32px;display: block;"></i>
-      </li>
-    </ng-template>
-    <li class="m-boost-rotator-tabs--settings">
-      <m-newsfeed--dropdown [showBoost]="true"></m-newsfeed--dropdown>
-    </li>
-  </ul>
-</div>
+    </ul>
+  </div>
 
-<div
-  *ngIf="!disabled"
-  #rotatorEl
-  [class.m-newsfeed__boostRotator]="useNewNavigation"
-  [style.min-height]="height"
-  [hidden]="!boosts.length"
->
-  <ng-container *ngFor="let entity of boosts; let i = index">
-    <ng-container *mIfFeature="'navigation'; else legacyActivity">
-      <m-activity
-        @fastFade
-        [entity]="entity"
-        [displayOptions]="{
-          showOnlyCommentsInput: false,
-          showComments: false,
-          fixedHeight: true,
-          fixedHeightContainer: true
-        }"
-        [allowAutoplayOnScroll]="true"
-        [attr.data-minds-activity-guid]="entity.guid"
-        [slot]="i + 1"
-        [canRecordAnalytics]="false"
-        *ngIf="i === currentPosition"
-      ></m-activity>
+  <div
+    *ngIf="!disabled"
+    #rotatorEl
+    [class.m-newsfeed__boostRotator]="useNewNavigation"
+    [style.min-height]="height"
+    [hidden]="!boosts.length"
+  >
+    <ng-container *ngFor="let entity of boosts; let i = index">
+      <ng-container *mIfFeature="'navigation'; else legacyActivity">
+        <m-activity
+          @fastFade
+          [entity]="entity"
+          [displayOptions]="{
+            showOnlyCommentsInput: false,
+            showComments: false,
+            fixedHeight: true,
+            fixedHeightContainer: true
+          }"
+          [allowAutoplayOnScroll]="true"
+          [attr.data-minds-activity-guid]="entity.guid"
+          [slot]="i + 1"
+          [canRecordAnalytics]="false"
+          *ngIf="i === currentPosition"
+        ></m-activity>
+      </ng-container>
+      <ng-template #legacyActivity>
+        <minds-activity
+          [object]="entity"
+          [boostToggle]="true"
+          [class]="
+            'mdl-card m-border item m-boost-rotator-item m-boost-rotator-item-' +
+            i
+          "
+          visible="true"
+          [hidden]="i != currentPosition"
+          [showBoostMenuOptions]="true"
+          [slot]="i + 1"
+          [visibilityEvents]="false"
+          [attr.data-minds-activity-guid]="entity.guid"
+          #activities
+        ></minds-activity>
+      </ng-template>
     </ng-container>
-    <ng-template #legacyActivity>
-      <minds-activity
-        [object]="entity"
-        [boostToggle]="true"
-        [class]="
-          'mdl-card m-border item m-boost-rotator-item m-boost-rotator-item-' +
-          i
-        "
-        visible="true"
-        [hidden]="i != currentPosition"
-        [showBoostMenuOptions]="true"
-        [slot]="i + 1"
-        [visibilityEvents]="false"
-        [attr.data-minds-activity-guid]="entity.guid"
-        #activities
-      ></minds-activity>
-    </ng-template>
-  </ng-container>
-</div>
+  </div>
+</ng-container>

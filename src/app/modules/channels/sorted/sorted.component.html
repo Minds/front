@@ -1,64 +1,66 @@
-<ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
-  <m-composer
-    *ngIf="isOwner()"
-    (onPost)="prepend($event)"
-    #composer
-  ></m-composer>
-</ng-container>
-<ng-template #v1NewsfeedPoster>
-  <minds-newsfeed-poster
-    *ngIf="isOwner()"
-    (load)="prepend($event)"
-    #poster
-  ></minds-newsfeed-poster>
-</ng-template>
+<ng-container [clientMeta]="{ source: 'feed/channel', medium: 'feed' }">
+  <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+    <m-composer
+      *ngIf="isOwner()"
+      (onPost)="prepend($event)"
+      #composer
+    ></m-composer>
+  </ng-container>
+  <ng-template #v1NewsfeedPoster>
+    <minds-newsfeed-poster
+      *ngIf="isOwner()"
+      (load)="prepend($event)"
+      #poster
+    ></minds-newsfeed-poster>
+  </ng-template>
 
-<div class="minds-list">
-  <div>
-    <div class="m-mindsList__tools m-border">
-      <div
-        *ngIf="isOwner()"
-        class="m-mindsListTools__scheduled"
-        (click)="toggleScheduled()"
-        [class.selected]="viewScheduled"
-      >
-        <m-tooltip icon="date_range"> See Scheduled Activities </m-tooltip>
-        <span>scheduled: {{ scheduledCount }}</span>
+  <div class="minds-list">
+    <div>
+      <div class="m-mindsList__tools m-border">
+        <div
+          *ngIf="isOwner()"
+          class="m-mindsListTools__scheduled"
+          (click)="toggleScheduled()"
+          [class.selected]="viewScheduled"
+        >
+          <m-tooltip icon="date_range"> See Scheduled Activities </m-tooltip>
+          <span>scheduled: {{ scheduledCount }}</span>
+        </div>
+        <m-sort-selector
+          class="m-channel--sorted__SortSelector"
+          [allowedAlgorithms]="false"
+          [allowedPeriods]="false"
+          [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
+          [customType]="type"
+          (onChange)="setFilter($event.customType)"
+        ></m-sort-selector>
       </div>
-      <m-sort-selector
-        class="m-channel--sorted__SortSelector"
-        [allowedAlgorithms]="false"
-        [allowedPeriods]="false"
-        [allowedCustomTypes]="['activities', 'images', 'videos', 'blogs']"
-        [customType]="type"
-        (onChange)="setFilter($event.customType)"
-      ></m-sort-selector>
+
+      <m-onboarding-feed *ngIf="isOwner()"></m-onboarding-feed>
+
+      <ng-container
+        *ngIf="['images', 'videos'].indexOf(type) > -1; else entityListView"
+      >
+        <m-newsfeed__tiles
+          [entities]="feedsService.feed | async"
+        ></m-newsfeed__tiles>
+      </ng-container>
+      <ng-template #entityListView>
+        <m-newsfeed__entity
+          *ngFor="let entity of feedsService.feed | async; let i = index"
+          [entity]="entity | async"
+          (deleted)="delete($event)"
+          [slot]="i + 1"
+          [allowAutoplayOnScroll]="true"
+        ></m-newsfeed__entity>
+      </ng-template>
+
+      <infinite-scroll
+        distance="25%"
+        (load)="loadNext()"
+        [moreData]="feedsService.hasMore | async"
+        [inProgress]="feedsService.inProgress | async"
+      ></infinite-scroll>
     </div>
-
-    <m-onboarding-feed *ngIf="isOwner()"></m-onboarding-feed>
-
-    <ng-container
-      *ngIf="['images', 'videos'].indexOf(type) > -1; else entityListView"
-    >
-      <m-newsfeed__tiles
-        [entities]="feedsService.feed | async"
-      ></m-newsfeed__tiles>
-    </ng-container>
-    <ng-template #entityListView>
-      <m-newsfeed__entity
-        *ngFor="let entity of feedsService.feed | async; let i = index"
-        [entity]="entity | async"
-        (deleted)="delete($event)"
-        [slot]="i + 1"
-        [allowAutoplayOnScroll]="true"
-      ></m-newsfeed__entity>
-    </ng-template>
-
-    <infinite-scroll
-      distance="25%"
-      (load)="loadNext()"
-      [moreData]="feedsService.hasMore | async"
-      [inProgress]="feedsService.inProgress | async"
-    ></infinite-scroll>
   </div>
-</div>
+</ng-container>

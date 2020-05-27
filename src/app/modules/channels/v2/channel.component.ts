@@ -4,6 +4,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import { ChannelsV2Service } from './channels-v2.service';
 import { MindsUser } from '../../../interfaces/entities';
@@ -14,6 +15,7 @@ import { WireModalService } from '../../wire/wire-modal.service';
 import { SeoService } from './seo.service';
 import { Session } from '../../../services/session';
 import { RecentService } from '../../../services/ux/recent';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 /**
  * Views
@@ -70,18 +72,18 @@ export class ChannelComponent implements OnInit, OnDestroy {
    */
   protected lastChannel: string;
 
+  @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
+
   /**
    * Constructor
    * @param service
    * @param router
    * @param route
    * @param session
-   * @param clientMeta
    * @param seo
    * @param channelEditIntent
    * @param wireModal
    * @param recent
-   * @param injector
    */
   constructor(
     public service: ChannelsV2Service,
@@ -141,7 +143,7 @@ export class ChannelComponent implements OnInit, OnDestroy {
 
     if (user && user.guid && this.lastChannel !== user.guid) {
       this.lastChannel = user.guid;
-      // this.clientMeta.recordView(user);
+      this.clientMeta.recordView(user);
 
       if (currentUser && currentUser.guid !== user.guid) {
         this.recent

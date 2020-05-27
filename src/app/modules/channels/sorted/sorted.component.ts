@@ -7,8 +7,6 @@ import {
   Output,
   EventEmitter,
   ViewChild,
-  SkipSelf,
-  Injector,
   Inject,
   PLATFORM_ID,
 } from '@angular/core';

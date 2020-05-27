@@ -25,6 +25,7 @@ import { ActivityService } from '../../../common/services/activity.service';
 import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 @Component({
   selector: 'm-blog-view',
@@ -89,6 +90,8 @@ export class BlogView implements OnInit, OnDestroy {
 
   @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
 
+  @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
+
   constructor(
     public session: Session,
     public client: Client,
@@ -114,7 +117,7 @@ export class BlogView implements OnInit, OnDestroy {
   ngOnInit() {
     this.isVisible();
     this.context.set('object:blog');
-    // this.clientMetaService.recordView(this.blog);
+    this.clientMeta.recordView(this.blog);
   }
 
   isVisible() {

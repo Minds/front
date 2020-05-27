@@ -12,6 +12,7 @@ import {
   OnDestroy,
   Output,
   EventEmitter,
+  ViewChild,
 } from '@angular/core';
 import { ActivityService as ActivityServiceCommentsLegacySupport } from '../../../common/services/activity.service';
 
@@ -26,6 +27,7 @@ import { ElementVisibilityService } from '../../../common/services/element-visib
 import { NewsfeedService } from '../services/newsfeed.service';
 import { map } from 'rxjs/operators';
 import { TranslationService } from '../../../services/translation';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 @Component({
   selector: 'm-activity',
@@ -90,6 +92,8 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
 
   heightSubscription: Subscription;
 
+  @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
+
   constructor(
     public service: ActivityService,
     private el: ElementRef,
@@ -128,11 +132,11 @@ export class ActivityComponent implements OnInit, AfterViewInit, OnDestroy {
           this.newsfeedService.recordView(
             entity,
             true,
-            null
-            // this.clientMetaService.inherit(this.injector).build({
-            //   campaign: entity.boosted_guid ? entity.urn : '',
-            //   position: this.slot,
-            // })
+            null,
+            this.clientMeta.build({
+              campaign: entity.boosted_guid ? entity.urn : '',
+              position: this.slot,
+            })
           );
         });
       this.elementVisibilityService.checkVisibility();

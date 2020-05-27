@@ -34,6 +34,7 @@ import { ComposerService } from '../../../../composer/services/composer.service'
 import { ModalService } from '../../../../composer/components/modal/modal.service';
 import { WireModalService } from '../../../../wire/wire-modal.service';
 import { WireEventType } from '../../../../wire/v2/wire-v2.service';
+import { ClientMetaDirective } from '../../../../../common/directives/client-meta.directive';
 
 @Component({
   selector: 'minds-activity',
@@ -182,6 +183,8 @@ export class Activity implements OnInit {
 
   @ViewChild('batchImage') batchImage: ElementRef;
 
+  @ViewChild(ClientMetaDirective) clientMeta: ClientMetaDirective;
+
   protected time_created: any;
 
   constructor(
@@ -224,11 +227,11 @@ export class Activity implements OnInit {
         this.newsfeedService.recordView(
           activity,
           true,
-          null
-          // this.clientMetaService.build({
-          //   campaign: activity.boosted_guid ? activity.urn : '',
-          //   position: this.slot,
-          // })
+          null,
+          this.clientMeta.build({
+            campaign: activity.boosted_guid ? activity.urn : '',
+            position: this.slot,
+          })
         );
 
         this.onViewed.emit({ activity: activity, visible: true });

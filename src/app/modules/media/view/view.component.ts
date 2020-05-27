@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -15,6 +21,7 @@ import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FeaturesService } from '../../../services/features.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
+import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
 
 @Component({
   selector: 'm-media--view',
@@ -59,6 +66,8 @@ export class MediaViewComponent implements OnInit, OnDestroy {
   paramsSubscription: Subscription;
   queryParamsSubscription$: Subscription;
   focusedCommentGuid: string = '';
+
+  @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
 
   constructor(
     public session: Session,
@@ -138,7 +147,7 @@ export class MediaViewComponent implements OnInit, OnDestroy {
           this.updateMeta();
         }
 
-        // this.clientMetaService.recordView(this.entity);
+        this.clientMeta.recordView(this.entity);
 
         this.detectChanges();
       })

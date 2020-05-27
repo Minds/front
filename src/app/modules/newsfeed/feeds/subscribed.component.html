@@ -1,99 +1,101 @@
-<div
-  class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo"
-  *ngIf="newUserPromo"
->
-  <i class="material-icons">trending_up</i>
-  <ng-container i18n="@@MINDS__NEWSFEED__200_FREE_VIEWS"
-    >Have 200 free views on us. Hit post to be boosted.</ng-container
+<ng-container [clientMeta]="{ source: 'feed/subscribed', medium: 'feed' }">
+  <div
+    class="m-border mdl-color--green mdl-color-text--white m-newsfeed-boost-promo"
+    *ngIf="newUserPromo"
   >
-</div>
+    <i class="material-icons">trending_up</i>
+    <ng-container i18n="@@MINDS__NEWSFEED__200_FREE_VIEWS"
+      >Have 200 free views on us. Hit post to be boosted.</ng-container
+    >
+  </div>
 
-<ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
-  <m-composer
-    (onPost)="prepend($event)"
-    [activity]="message ? { message: message } : undefined"
-    #composer
-  ></m-composer>
+  <ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
+    <m-composer
+      (onPost)="prepend($event)"
+      [activity]="message ? { message: message } : undefined"
+      #composer
+    ></m-composer>
+  </ng-container>
+  <ng-template #v1NewsfeedPoster>
+    <minds-newsfeed-poster
+      (load)="prepend($event)"
+      [message]="message"
+      #poster
+    ></minds-newsfeed-poster>
+  </ng-template>
+
+  <div class="minds-list">
+    <ng-container *ngFor="let preActivity of prepended">
+      <ng-container *mIfFeature="'navigation'; else legacyActivity">
+        <m-activity
+          [entity]="preActivity"
+          [displayOptions]="{
+            showOnlyCommentsInput: true
+          }"
+          [allowAutoplayOnScroll]="true"
+        ></m-activity>
+      </ng-container>
+      <ng-template #legacyActivity>
+        <minds-activity
+          [object]="preActivity"
+          [boostToggle]="preActivity.boostToggle"
+          (deleted)="delete(preActivity)"
+          [showRatingToggle]="true"
+          [allowAutoplayOnScroll]="true"
+          class="mdl-card m-border item"
+          [attr.minds-data-activity-guid]="preActivity.guid"
+        ></minds-activity>
+      </ng-template>
+    </ng-container>
+
+    <ng-container *mIfFeature="'boost-rotator'">
+      <ng-container *mIfBrowser>
+        <m-newsfeed--boost-rotator
+          *ngIf="showBoostRotator"
+        ></m-newsfeed--boost-rotator>
+      </ng-container>
+    </ng-container>
+
+    <ng-container
+      *ngFor="let activity$ of feedsService.feed | async; let i = index"
+    >
+      <m-featured-content
+        *ngIf="(i > 0 && i % 5 === 0) || i === 2"
+        [slot]="i + 1"
+      ></m-featured-content>
+
+      <ng-container *mIfFeature="'navigation'; else legacyActivity">
+        <m-activity
+          *ngIf="activity$ | async as activity"
+          [entity]="activity"
+          [displayOptions]="{
+            showOnlyCommentsInput: true
+          }"
+          [allowAutoplayOnScroll]="true"
+          [slot]="i + 1"
+        ></m-activity>
+      </ng-container>
+      <ng-template #legacyActivity>
+        <minds-activity
+          *ngIf="activity$ | async as activity"
+          class="mdl-card m-border item"
+          [object]="activity"
+          [boostToggle]="activity.boostToggle"
+          (deleted)="delete($event)"
+          [showRatingToggle]="true"
+          [slot]="i + 1"
+          [attr.data-minds-activity-guid]="activity.guid"
+          [allowAutoplayOnScroll]="true"
+        ></minds-activity>
+      </ng-template>
+    </ng-container>
+
+    <infinite-scroll
+      distance="25%"
+      (load)="loadNext()"
+      [moreData]="feedsService.hasMore | async"
+      [inProgress]="feedsService.inProgress | async"
+    >
+    </infinite-scroll>
+  </div>
 </ng-container>
-<ng-template #v1NewsfeedPoster>
-  <minds-newsfeed-poster
-    (load)="prepend($event)"
-    [message]="message"
-    #poster
-  ></minds-newsfeed-poster>
-</ng-template>
-
-<div class="minds-list">
-  <ng-container *ngFor="let preActivity of prepended">
-    <ng-container *mIfFeature="'navigation'; else legacyActivity">
-      <m-activity
-        [entity]="preActivity"
-        [displayOptions]="{
-          showOnlyCommentsInput: true
-        }"
-        [allowAutoplayOnScroll]="true"
-      ></m-activity>
-    </ng-container>
-    <ng-template #legacyActivity>
-      <minds-activity
-        [object]="preActivity"
-        [boostToggle]="preActivity.boostToggle"
-        (deleted)="delete(preActivity)"
-        [showRatingToggle]="true"
-        [allowAutoplayOnScroll]="true"
-        class="mdl-card m-border item"
-        [attr.minds-data-activity-guid]="preActivity.guid"
-      ></minds-activity>
-    </ng-template>
-  </ng-container>
-
-  <ng-container *mIfFeature="'boost-rotator'">
-    <ng-container *mIfBrowser>
-      <m-newsfeed--boost-rotator
-        *ngIf="showBoostRotator"
-      ></m-newsfeed--boost-rotator>
-    </ng-container>
-  </ng-container>
-
-  <ng-container
-    *ngFor="let activity$ of feedsService.feed | async; let i = index"
-  >
-    <m-featured-content
-      *ngIf="(i > 0 && i % 5 === 0) || i === 2"
-      [slot]="i + 1"
-    ></m-featured-content>
-
-    <ng-container *mIfFeature="'navigation'; else legacyActivity">
-      <m-activity
-        *ngIf="activity$ | async as activity"
-        [entity]="activity"
-        [displayOptions]="{
-          showOnlyCommentsInput: true
-        }"
-        [allowAutoplayOnScroll]="true"
-        [slot]="i + 1"
-      ></m-activity>
-    </ng-container>
-    <ng-template #legacyActivity>
-      <minds-activity
-        *ngIf="activity$ | async as activity"
-        class="mdl-card m-border item"
-        [object]="activity"
-        [boostToggle]="activity.boostToggle"
-        (deleted)="delete($event)"
-        [showRatingToggle]="true"
-        [slot]="i + 1"
-        [attr.data-minds-activity-guid]="activity.guid"
-        [allowAutoplayOnScroll]="true"
-      ></minds-activity>
-    </ng-template>
-  </ng-container>
-
-  <infinite-scroll
-    distance="25%"
-    (load)="loadNext()"
-    [moreData]="feedsService.hasMore | async"
-    [inProgress]="feedsService.inProgress | async"
-  >
-  </infinite-scroll>
-</div>
