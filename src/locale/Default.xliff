@@ -87,14 +87,19 @@
           <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="COMMON__DISCOVER" datatype="html">
-        <source>
-            <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>#<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-            Discovery
-          </source>
+      <trans-unit id="471b8ed63bbcfca63bd75ab5749e55d92d577688" datatype="html">
+        <source>Discovery</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/v2-topbar.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/v2-topbar.component.html</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e683cb0954b9663b51a6fd6a7847e9cac5d116c8" datatype="html">
@@ -103,17 +108,22 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="COMMON__WALLET" datatype="html">
-        <source>
-            <x id="START_TAG_M-ICON" ctype="x-m-icon" equiv-text="&lt;m-icon&gt;"/><x id="CLOSE_TAG_M-ICON" ctype="x-m-icon" equiv-text="&lt;/m-icon&gt;"/>
-            Wallet
-          </source>
+      <trans-unit id="c0d4baf68f21ee9c4246d66f0ac828c5b73ae745" datatype="html">
+        <source>Wallet</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
           <context context-type="linenumber">88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/v2-topbar.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/v2-topbar.component.html</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="497ea697c15a2c0ce8bc61ec2cd8274a24c6cb04" datatype="html">
@@ -122,7 +132,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__ANALYTICS" datatype="html">
@@ -131,7 +141,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0204b556eda93035e07319afd3be81e704fbc4d2" datatype="html">
@@ -140,7 +150,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__SETTINGS" datatype="html">
@@ -149,7 +159,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">163</context>
         </context-group>
       </trans-unit>
       <trans-unit id="30aa81dab0ac16b4477c5a0df679382272af1f9e" datatype="html">
@@ -158,7 +168,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/sidebar/navigation.component.html</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">167</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
@@ -300,7 +310,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">350</context>
+          <context context-type="linenumber">348</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/cards/activity/activity.html</context>
@@ -324,92 +334,118 @@
         </context-group>
         <note priority="1" from="meaning">verb</note>
       </trans-unit>
-      <trans-unit id="MINDS__TOPBAR__VIEW_CHANNEL" datatype="html">
-        <source>
-          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>people<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>View Channel<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="8be27183c3495da1b6d4fe5d95e9d2fa8aa746ea" datatype="html">
+        <source>View Channel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__TOPBAR__ADMIN" datatype="html">
-        <source>
-          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>build<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Admin<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="408cb6073e60c5d966296a3207fc596adca75e01" datatype="html">
+        <source>Admin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
+          <context context-type="linenumber">68</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__TOPBAR__SETTINGS" datatype="html">
-        <source>
-          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>settings<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Settings<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
+        <source>Settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
+          <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__TOPBAR__FAQ" datatype="html">
-        <source>
-            <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>help_outline<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-            <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>FAQ<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-          </source>
+      <trans-unit id="4b6dbf2d92858e82bcf6ae5dbc8dfb4b29d82ad0" datatype="html">
+        <source>FAQ</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
-          <context context-type="linenumber">72</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__TOPBAR__HELPDESK" datatype="html">
-        <source>
-            <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>help_outline<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-            <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Help Desk<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-          </source>
+      <trans-unit id="89344cba51658a2a48cea1883693132223c7f8a3" datatype="html">
+        <source>Help Desk</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__TOPBAR__HS_GROUP" datatype="html">
-        <source>
-            <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>help_outline<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-            <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Help &amp; Support<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-          </source>
+      <trans-unit id="258586f2141d5b6c98ef28c38ac6f55a81a301b2" datatype="html">
+        <source>Help &amp; Support</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
+          <context context-type="linenumber">106</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
+          <context context-type="linenumber">117</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__TOPBAR__MENU__EXPERIMENTS" datatype="html">
-        <source>
-          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>new_releases<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Opt-in to Experiments<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-          <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&lt;span&gt;"/>Canary<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="406672d9dc7adf836b2bd31b8772c2de48321847" datatype="html">
+        <source>Opt-in to Experiments</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__TOPBAR__LOGOUT" datatype="html">
-        <source>
-          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>exit_to_app<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Logout<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="f31f8461caa69352a332cb1d1e79109021bd14d0" datatype="html">
+        <source>Canary</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
+        <source>Logout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
+          <context context-type="linenumber">189</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
+          <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__ACTION__LOGIN" datatype="html">
         <source>Login</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/topbar/topbar.component.html</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">132</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/login/login.html</context>
@@ -481,28 +517,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v2-topbar/v2-topbar.component.html</context>
           <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="471b8ed63bbcfca63bd75ab5749e55d92d577688" datatype="html">
-        <source>Discovery</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/v2-topbar.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/v2-topbar.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="c0d4baf68f21ee9c4246d66f0ac828c5b73ae745" datatype="html">
-        <source>Wallet</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/v2-topbar.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/v2-topbar.component.html</context>
-          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M_REFERRALS__LINKS_MODAL_HEADER" datatype="html">
@@ -664,24 +678,6 @@
           <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8be27183c3495da1b6d4fe5d95e9d2fa8aa746ea" datatype="html">
-        <source>View Channel</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="408cb6073e60c5d966296a3207fc596adca75e01" datatype="html">
-        <source>Admin</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="efbe55685ffef5af777f95b5b512f2c8b15cbfcc" datatype="html">
         <source>Analytics</source>
         <context-group purpose="location">
@@ -713,35 +709,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
           <context context-type="linenumber">88</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="89344cba51658a2a48cea1883693132223c7f8a3" datatype="html">
-        <source>Help Desk</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
-          <context context-type="linenumber">85</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4b6dbf2d92858e82bcf6ae5dbc8dfb4b29d82ad0" datatype="html">
-        <source>FAQ</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
-          <context context-type="linenumber">108</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="258586f2141d5b6c98ef28c38ac6f55a81a301b2" datatype="html">
-        <source>Help &amp; Support</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
-          <context context-type="linenumber">106</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
-          <context context-type="linenumber">117</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ad7688cc12aa900a4e064ff2139132b0f6e82de1" datatype="html">
@@ -790,24 +757,6 @@
           <context context-type="linenumber">167</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="121cc5391cd2a5115bc2b3160379ee5b36cd7716" datatype="html">
-        <source>Settings</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
-          <context context-type="linenumber">178</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
-        <source>Logout</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v2-topbar/user-menu.component.html</context>
-          <context context-type="linenumber">189</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
-          <context context-type="linenumber">128</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="b8944144b143874654d2d62c1be459551641aab3" datatype="html">
         <source>
         Upgrade
@@ -847,13 +796,18 @@
           <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="ded2cc93d8c35cc1d32e4626d11951d936849860" datatype="html">
-        <source>
-        <x id="INTERPOLATION" equiv-text="{{ maxFooterLinks === 5 ? &apos;More&apos; : &apos;Less&apos; }}"/>
-      </source>
+      <trans-unit id="ac0f81713a84217c9bd1d9bb460245d8190b073f" datatype="html">
+        <source>More</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
-          <context context-type="linenumber">151</context>
+          <context context-type="linenumber">153</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="03f110b6989134d0caf40ca72582afe6d0eeb76e" datatype="html">
+        <source>Less</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/common/layout/v3-topbar/user-menu/user-menu.component.html</context>
+          <context context-type="linenumber">156</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON__COPYRIGHT_YEAR" datatype="html">
@@ -869,10 +823,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/auth/register.component.html</context>
           <context context-type="linenumber">78</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/homepage/homepage.component.html</context>
-          <context context-type="linenumber">72</context>
         </context-group>
       </trans-unit>
       <trans-unit id="COMMON__INFINITE_SCROLL__LOAD_MORE" datatype="html">
@@ -1161,58 +1111,57 @@
           <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="M_SHARE__REFERRER_PARAM_CHECKBOX_TOOLTIP" datatype="html">
+      <trans-unit id="83354b6d104daba6dbb0fa5079433f92f6f7790d" datatype="html">
         <source>
-    Use your referral code to earn tokens for referring new users to Minds.
-    Learn more at the
-    <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Referrals Console<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
-    <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>open_in_new<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/>
-  </source>
+      Use your referral code to earn tokens for referring new users to Minds.
+      Learn more at the
+      <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>Referrals Console<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
+    </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_TWITTER" datatype="html">
         <source>Twitter</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_FACEBOOK" datatype="html">
         <source>Facebook</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">73</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_MESSENGER" datatype="html">
         <source>Messenger</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_Whatsapp" datatype="html">
         <source>Whatsapp</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_SMS" datatype="html">
         <source>SMS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M_SHARE__BUTTON_EMAIL" datatype="html">
         <source>Email</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/modals/share/share.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON__MATURE_CONTENT" datatype="html">
@@ -1587,7 +1536,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/banner/banner.ts</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/billing/subscriptions/subscriptions.component.html</context>
@@ -1717,27 +1666,27 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">223</context>
+          <context context-type="linenumber">220</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">245</context>
+          <context context-type="linenumber">242</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">270</context>
+          <context context-type="linenumber">267</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">295</context>
+          <context context-type="linenumber">292</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">359</context>
+          <context context-type="linenumber">356</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">380</context>
+          <context context-type="linenumber">377</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/payment-methods/payment-methods.component.html</context>
@@ -1887,41 +1836,35 @@
           <context context-type="linenumber">67</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="BOOST__CREATOR__USD_PRIORITY_FEE" datatype="html">
-        <source>
-            +
-            <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{
+      <trans-unit id="74036c51ca2421a2a586a3052aead72341e7d378" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{
                 calcPriorityChargesPreview(&apos;usd&apos;) | currency: &apos;USD&apos;:true
               }}"/>
-              USD<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>
-          </source>
+              USD</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">223</context>
+          <context context-type="linenumber">225</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="BOOST__CREATOR__TOKENS_PRIORITY_FEE" datatype="html">
-        <source>
-            +
-            <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/><x id="INTERPOLATION" equiv-text="{{
+      <trans-unit id="b8810f122011d1a2ac62d17892410ec690bbae6c" datatype="html">
+        <source><x id="INTERPOLATION" equiv-text="{{
                 calcPriorityChargesPreview(boost.currency) | number
               }}"/>
-              tokens<x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/>
-          </source>
+              tokens</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">236</context>
+          <context context-type="linenumber">237</context>
         </context-group>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__TARGET_TITLE" datatype="html">
         <source>Target</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">254</context>
+          <context context-type="linenumber">252</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">276</context>
+          <context context-type="linenumber">274</context>
         </context-group>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__CATEGORIES_TARGET_TITLE_CTX" datatype="html">
@@ -1931,7 +1874,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">259</context>
+          <context context-type="linenumber">257</context>
         </context-group>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__TARGET_TITLE_CTX" datatype="html">
@@ -1940,7 +1883,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">281</context>
+          <context context-type="linenumber">279</context>
         </context-group>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__PLEASE_ENTER_BILLING" datatype="html">
@@ -1949,7 +1892,7 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">300</context>
+          <context context-type="linenumber">298</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__ACTION__BOOST_NEXT" datatype="html">
@@ -1958,7 +1901,7 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">320</context>
+          <context context-type="linenumber">318</context>
         </context-group>
         <note priority="1" from="meaning">verb</note>
       </trans-unit>
@@ -1968,7 +1911,7 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">341</context>
+          <context context-type="linenumber">339</context>
         </context-group>
         <note priority="1" from="meaning">verb</note>
       </trans-unit>
@@ -1976,7 +1919,7 @@
         <source>Boosted!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/creator.component.html</context>
-          <context context-type="linenumber">365</context>
+          <context context-type="linenumber">363</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f4e529ae5ffd73001d1ff4bbdeeb0a72e342e5c8" datatype="html">
@@ -2004,52 +1947,40 @@
           <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="WIRE__CREATOR__WIRE_NOTICE_TOKENS" datatype="html">
-        <source>
-        <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&lt;b&gt;"/>Support <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>@<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/><x id="INTERPOLATION" equiv-text="{{ owner.username }}"/><x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&lt;/b&gt;"/> by sending them Minds
-        Tokens<x id="START_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;"/>, ETH, BTC or USD<x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;"/>. Once you send them the amount listed in the tiers, you can receive
-        rewards if they are offered<x id="START_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;"/>
-          (Tokens &amp; USD only)<x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;"/>. Otherwise, it&apos;s a donation.
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="WIRE__CREATOR__AMOUNT_TITLE_HOW_MANY_TOKENS" datatype="html">
         <source>
             Pick a subscriptions tier
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON__TOKENS_INPUT" datatype="html">
         <source>Tokens</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">87</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">92</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">97</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">102</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">107</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/payments/payments.creator.component.html</context>
@@ -2079,7 +2010,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">132</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/payments/payments.creator.component.html</context>
@@ -2090,7 +2021,7 @@
         <source>Repeat this transaction monthly.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">155</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/payments/payments.creator.component.html</context>
@@ -2103,14 +2034,14 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">169</context>
+          <context context-type="linenumber">166</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON__OFFCHAIN" datatype="html">
         <source>Tokens</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">188</context>
+          <context context-type="linenumber">185</context>
         </context-group>
       </trans-unit>
       <trans-unit id="WIRE__CREATOR__OFFCHAIN_TOOLTIP" datatype="html">
@@ -2120,30 +2051,30 @@
               </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">189</context>
+          <context context-type="linenumber">186</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">237</context>
+          <context context-type="linenumber">234</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">262</context>
+          <context context-type="linenumber">259</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">287</context>
+          <context context-type="linenumber">284</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON__BALANCE" datatype="html">
         <source>Balance</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">201</context>
+          <context context-type="linenumber">198</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">322</context>
+          <context context-type="linenumber">319</context>
         </context-group>
       </trans-unit>
       <trans-unit id="WIRE__CREATOR__BALANCE_OFFCHAIN_TOOLTIP" datatype="html">
@@ -2154,26 +2085,26 @@
                 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">204</context>
+          <context context-type="linenumber">201</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON__ONCHAIN" datatype="html">
         <source>USD</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">236</context>
+          <context context-type="linenumber">233</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">261</context>
+          <context context-type="linenumber">258</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">286</context>
+          <context context-type="linenumber">283</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">308</context>
+          <context context-type="linenumber">305</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/boost/creator/payment-methods/payment-methods.component.html</context>
@@ -2188,7 +2119,7 @@
               </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">309</context>
+          <context context-type="linenumber">306</context>
         </context-group>
       </trans-unit>
       <trans-unit id="WIRE__CREATOR__ACTIVE_ADDRESS_TOOLTIP" datatype="html">
@@ -2199,7 +2130,7 @@
                 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">331</context>
+          <context context-type="linenumber">328</context>
         </context-group>
       </trans-unit>
       <trans-unit id="WIRE__CREATOR__RECEIVER_ADDRESS_TOOLTIP" datatype="html">
@@ -2211,16 +2142,14 @@
                 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">339</context>
+          <context context-type="linenumber">336</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="M__COMMON__BUY_MINDS_TOKENS" datatype="html">
-        <source>
-              <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Buy Tokens<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-            </source>
+      <trans-unit id="7929e4abf5a32187cda839e799192d9dd648f8ba" datatype="html">
+        <source>Buy Tokens</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">366</context>
+          <context context-type="linenumber">364</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__WIRE_CREATOR__DONT_HAVE_TOKENS" datatype="html">
@@ -2229,7 +2158,7 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">373</context>
+          <context context-type="linenumber">370</context>
         </context-group>
       </trans-unit>
       <trans-unit id="WIRE__CREATOR__SEND_ACTION" datatype="html">
@@ -2238,7 +2167,7 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">431</context>
+          <context context-type="linenumber">428</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/payments/payments.creator.component.html</context>
@@ -2249,7 +2178,7 @@
         <source>Wired!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/creator.component.html</context>
-          <context context-type="linenumber">443</context>
+          <context context-type="linenumber">440</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/payments/payments.creator.component.html</context>
@@ -2375,7 +2304,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/banner/banner.ts</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">40</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/wire/wire.component.html</context>
@@ -2876,30 +2805,18 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1b00e6cd5adcd686b46e4f6a55d8f3c1eb906ccc" datatype="html">
-        <source>
-    <x id="START_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;"/>As featured in<x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;"/>
-    <x id="START_TAG_NG-CONTAINER_1" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;"/>Minds in the press<x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;"/>
-  </source>
+      <trans-unit id="b7af548814df1b1db6bb2684aa258ac02ff89d42" datatype="html">
+        <source>As featured in</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/marketing/as-featured-in.component.html</context>
-          <context context-type="linenumber">2</context>
+          <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="d0e2bb4ef40ca8492a893b262bf3d167887b8476" datatype="html">
-        <source>
-  <x id="START_TAG_NG-CONTENT" ctype="x-ng-content" equiv-text="&lt;ng-content&gt;"/><x id="CLOSE_TAG_NG-CONTENT" ctype="x-ng-content" equiv-text="&lt;/ng-content&gt;"/>
-</source>
+      <trans-unit id="966fb24274f6a4278fd49a003a5a4d7da2880734" datatype="html">
+        <source>Minds in the press</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/form-descriptor/form-descriptor.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="843ad1ba20be6236a7e0fd9a703592bdba3d53ab" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ toast.message }}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/form-toast/form-toast.component.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="sourcefile">app/common/components/marketing/as-featured-in.component.html</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d02527197823847587ac049be44683100fb66ad3" datatype="html">
@@ -2925,10 +2842,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/language/language-modal/language-modal.component.ts</context>
           <context context-type="linenumber">18</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/language/language-bar.component.ts</context>
-          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5203bb8808ba7b6cf451a3f2eccb49c88cef3753" datatype="html">
@@ -3314,6 +3227,10 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/pro/settings/settings.component.html</context>
+          <context context-type="linenumber">831</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/subscription/subscription.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
@@ -3340,6 +3257,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/shop/shop.component.html</context>
           <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="831c70609f5320ba73bb112526ec9cb86c71367c" datatype="html">
@@ -4468,31 +4389,13 @@
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="WIRE__CONSOLE__LEDGER__AMOUNT_USD_CELL_VALUE" datatype="html">
-        <source>
-                <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>$<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="INTERPOLATION" equiv-text="{{ wire.amount }}"/>
-              </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/console/ledger.component.html</context>
-          <context context-type="linenumber">137</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="WIRE__CONSOLE__LEDGER__AMOUNT_TOKEN_CELL_VALUE" datatype="html">
-        <source>
-                <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;i&gt;"/>M<x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&lt;/i&gt;"/><x id="INTERPOLATION" equiv-text="{{ wire.amount }}"/>
-              </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/console/ledger.component.html</context>
-          <context context-type="linenumber">144</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="WIRE__CONSOLE__LEDGER__NO_WIRES_NOTICE" datatype="html">
         <source>
               No Wires to show.
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/console/ledger.component.html</context>
-          <context context-type="linenumber">183</context>
+          <context context-type="linenumber">181</context>
         </context-group>
       </trans-unit>
       <trans-unit id="WIRE__CONSOLE__SUPPORTER__THIS_MONTH" datatype="html">
@@ -4987,14 +4890,19 @@
           <context context-type="linenumber">135</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BAN_USER_CONFIRM_MESSAGE" datatype="html">
-        <source>
-        Are you sure you want to ban this user?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
-        This will close all open sessions and lock him/her out from Minds.
-      </source>
+      <trans-unit id="a3b49c083bac30b5fe63f121ed6f840858a0f037" datatype="html">
+        <source>Are you sure you want to ban this user?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">156</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c77c696e2335a3b2c3c13b0de8ac96dca458576c" datatype="html">
+        <source>This will close all open sessions and lock them out from
+          Minds.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
+          <context context-type="linenumber">159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BAN_USER_SUCCESS_MESSAGE" datatype="html">
@@ -5003,7 +4911,7 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">165</context>
+          <context context-type="linenumber">166</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__ACTION__BAN_USER" datatype="html">
@@ -5014,18 +4922,30 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">176</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BAN_MONETIZATION_CONFIRM_MESSAGE" datatype="html">
-        <source>
-        Are you sure you want to ban this user from monetization?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
-        This will close all open sessions and decline pending payments.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
-        There&apos;s no UNDO. This will NOT ban the user from Minds.
-      </source>
+      <trans-unit id="1f360917a1f3abfbc275fb2adf0e9f52d4e135ac" datatype="html">
+        <source>Are you sure you want to ban this user from
+          monetization?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
           <context context-type="linenumber">181</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="af49df0ce15e764c40449c8f2f13e62cc8538d88" datatype="html">
+        <source>This will close all open sessions and decline pending
+          payments.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
+          <context context-type="linenumber">185</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c9ae7b718eee0fa6556b8e1863e0ab07c7c4a1f4" datatype="html">
+        <source>There&apos;s no UNDO. This will NOT ban the user from Minds.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
+          <context context-type="linenumber">189</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__BUTTONS__USER_DROPDOWN__BAN_MONETIZATION_SUCCESS_MESSAGE" datatype="html">
@@ -5034,17 +4954,21 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">189</context>
+          <context context-type="linenumber">195</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__BANNER__ADD_NEW_BANNER_W_RECOMMENDATION" datatype="html">
-        <source>
-          Click here to add a new banner<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>
-          <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;em&gt;"/>Recommended minimum size 2000px × 1125px (Ratio 16:9)<x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&lt;/em&gt;"/>
-        </source>
+      <trans-unit id="8b1a33a96962cf54053147fd9ca15e082b3db7bb" datatype="html">
+        <source>Click here to add a new banner</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/banner/banner.ts</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ccbfe7707dbf576cbdf0fe024e77b2b15c2a2216" datatype="html">
+        <source>Recommended minimum size 2000px × 1125px (Ratio 16:9)</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/legacy/components/banner/banner.ts</context>
+          <context context-type="linenumber">20</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__BANNER__ADD_NEW_BANNER" datatype="html">
@@ -5278,7 +5202,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/auth/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">85</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__ACTION__SUBMIT" datatype="html">
@@ -7398,24 +7322,18 @@
           <context context-type="linenumber">98</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="669001e58f83a7abe19e8fabc27c62d6f01c6ade" datatype="html">
-        <source>Closed
-              <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-              <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-            </source>
+      <trans-unit id="4804b8e78964cee9e5c85f31fd982639b97780b2" datatype="html">
+        <source>Closed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/create/create.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="00e36641b6966edbf27196d56dc7a22a50e2578d" datatype="html">
-        <source>Open
-              <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-              <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-            </source>
+      <trans-unit id="c9039b1b13b3ef165b66b3c5d79f810ab1ebb050" datatype="html">
+        <source>Open</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/create/create.html</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON_TOPBAR_TOP" datatype="html">
@@ -7491,10 +7409,6 @@
           <context context-type="sourcefile">app/modules/groups/groups-join-button.ts</context>
           <context context-type="linenumber">40</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/suggestions/groups/sidebar.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="GROUPS__JOIN_BUTTON__DECLINE_ACTION" datatype="html">
         <source>
@@ -7515,7 +7429,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/suggestions/groups/sidebar.component.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="GROUPS__JOIN_BUTTON__CANCEL_REQ_ACTION" datatype="html">
@@ -7528,7 +7442,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/suggestions/groups/sidebar.component.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="GROUPS__JOIN_BUTTON__JOIN_A_GROUP_TITLE" datatype="html">
@@ -7538,19 +7452,25 @@
           <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__NAME_TITLE" datatype="html">
-        <source>
-    <x id="START_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;"/>Invite to <x id="INTERPOLATION" equiv-text="{{ group.name }}"/><x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;"/>
-    <x id="START_TAG_NG-CONTAINER_1" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;"/>Invite<x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;"/>
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-    <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>
-      Requests
-      <x id="START_TAG_NG-CONTAINER_2" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;"/>(<x id="INTERPOLATION_1" equiv-text="{{group[&apos;requests:count&apos;]}}"/>)<x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;"/>
-    <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
-  </source>
+      <trans-unit id="4d104b7806a47e8077d14685d1a1414e1df325a4" datatype="html">
+        <source>Invite to <x id="INTERPOLATION" equiv-text="{{ group.name }}"/></source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/profile/members/invite/invite.html</context>
-          <context context-type="linenumber">5</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3d243a75c1a16642d9d887827bdaa8e97a8e6e5c" datatype="html">
+        <source>Invite</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/groups/profile/members/invite/invite.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5238405b3e8e1b72d2732f0ecbd83be35b98cd5d" datatype="html">
+        <source>Requests</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/groups/profile/members/invite/invite.html</context>
+          <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
       <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__ITEM_ONLY_SUBSCRIBERS" datatype="html">
@@ -7559,7 +7479,7 @@
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/profile/members/invite/invite.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__ITEM_NOTIFICATION_INFO" datatype="html">
@@ -7569,7 +7489,7 @@
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/profile/members/invite/invite.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__ITEM_BAN_REINVITE" datatype="html">
@@ -7578,21 +7498,21 @@
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/profile/members/invite/invite.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__INVITING" datatype="html">
         <source>Inviting...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/profile/members/invite/invite.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="GROUPS__PROFILE__MEMBERS__INVITE__SEARCH_PLACEHOLDER" datatype="html">
         <source>Search for a channel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/profile/members/invite/invite.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">51</context>
         </context-group>
       </trans-unit>
       <trans-unit id="GROUPS__PROFILE__CARD_USER_ACTIONS__REMOVE_FROM_GROUP" datatype="html">
@@ -7861,19 +7781,29 @@
           <context context-type="linenumber">132</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="BLOGS__VIEW__CONFIRM_DELETION" datatype="html">
-        <source>Are you sure you want to delete this blog?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>There&apos;s no
-      UNDO!</source>
+      <trans-unit id="02cb0e42d5d14d10a93ab57cefd4f4d8677e8256" datatype="html">
+        <source>Are you sure you want to delete this blog?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">174</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ea22e46f0779785fc5791a6a17b75b9b27623260" datatype="html">
+        <source>There&apos;s no UNDO!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
+          <context context-type="linenumber">176</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
+          <context context-type="linenumber">348</context>
         </context-group>
       </trans-unit>
       <trans-unit id="BLOGS__VIEW__DELETION_CONFIRMATION" datatype="html">
         <source>The blog has been deleted.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blogs/view/view.html</context>
-          <context context-type="linenumber">181</context>
+          <context context-type="linenumber">180</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M__COMMON__DELETE_PERMANENTLY" datatype="html">
@@ -8941,14 +8871,18 @@
           <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="0c2e539b80de59b4ffa747eb485eb7d432589de3" datatype="html">
-        <source>Show
-        <x id="START_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;"/>trending<x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;"/>
-        <x id="START_TAG_NG-TEMPLATE" ctype="x-ng-template" equiv-text="&lt;ng-template&gt;"/>suggested<x id="CLOSE_TAG_NG-TEMPLATE" ctype="x-ng-template" equiv-text="&lt;/ng-template&gt;"/>
-      </source>
+      <trans-unit id="b52a5e98cb78e0f6338aa8f251e9f0ad019a34d3" datatype="html">
+        <source>Show trending</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/hashtags/sidebar-selector/sidebar-selector.component.html</context>
-          <context context-type="linenumber">155</context>
+          <context context-type="linenumber">156</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="603b60a969c31de4f74bd16ef00a150eb6e666f3" datatype="html">
+        <source>Show suggested</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/hashtags/sidebar-selector/sidebar-selector.component.html</context>
+          <context context-type="linenumber">159</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__HOME__FORGOT_PASSWORD__ENTER_USERNAME_HELP_NOTE" datatype="html">
@@ -8978,16 +8912,20 @@
           <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__HOME__FORGOT_PASSWORD__UNLOCK_CODE_SENT" datatype="html">
-        <source>
-              <x id="START_HEADING_LEVEL3" ctype="x-h3" equiv-text="&lt;h3&gt;"/>Password Reset Email Sent<x id="CLOSE_HEADING_LEVEL3" ctype="x-h3" equiv-text="&lt;/h3&gt;"/>
-              <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>
-                We have sent an unlock code to your registered email address.
-              <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-            </source>
+      <trans-unit id="ecec2b4d37deeae4bd2ae60dc3006b3dbadaffb9" datatype="html">
+        <source>Password Reset Email Sent</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/auth/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="39ceff686c0c8f08cebfba4e75263fe4847c9318" datatype="html">
+        <source>
+                We have sent an unlock code to your registered email address.
+              </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/auth/forgot-password/forgot-password.component.html</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__HOME__FORGOT_PASSWORD__CONFIRM_PASSWORD_LABEL" datatype="html">
@@ -8995,7 +8933,7 @@
                 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/auth/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__HOME__FORGOT_PASSWORD__RESET_ACTION" datatype="html">
@@ -9004,7 +8942,7 @@
                 </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/auth/forgot-password/forgot-password.component.html</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">118</context>
         </context-group>
       </trans-unit>
       <trans-unit id="BLOCKCHAIN__OPTIONS__INSTALL_WEB3" datatype="html">
@@ -9553,24 +9491,22 @@
           <context context-type="linenumber">399</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8035738dd45244455961ae0bab2dcfdd9d7ca43d" datatype="html">
-        <source>
-    <x id="TAG_IMG" ctype="image" equiv-text="&lt;img/&gt;"/>
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Message<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-  </source>
+      <trans-unit id="ccac601bf473fa28c9ac46794f1cd40542f74347" datatype="html">
+        <source>Message</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/sidebar-v2/sidebar-v2.component.html</context>
-          <context context-type="linenumber">2</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="256e2985e41ca2bf1ecf1c6e1e8032bbe988eccd" datatype="html">
-        <source>
-    <x id="TAG_IMG" ctype="image" equiv-text="&lt;img/&gt;"/>
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>Pay<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-  </source>
+      <trans-unit id="506a8569098f2412ee410abf96f805a1eb097987" datatype="html">
+        <source>Pay</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/sidebar-v2/sidebar-v2.component.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/owner-block/owner-block.component.html</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__CHANNELS__FLAGGED_AS_SPAM" datatype="html">
@@ -9653,15 +9589,50 @@
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2f74a6e166967e31a0eb2a5833648385ef3a14a0" datatype="html">
+      <trans-unit id="f81a95ea08900f55bfdbf5d1a08378746408464b" datatype="html">
         <source>Automatically transfer newly added YouTube videos across to
-                Minds
-                <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-                <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-              </source>
+                  Minds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/youtube-migration/config/config.component.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="05c18abb5b2d2823ed2501083a23b09f1228aa32" datatype="html">
+        <source>Disconnect YouTube Account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/youtube-migration/config/config.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0d7f143bdf134cf8a34c7ca43ea3b6afc64644c7" datatype="html">
+        <source>Status:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/youtube-migration/config/config.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="db0969ff3d2ad3bbc9cd65bf8cd8f9c435341070" datatype="html">
+        <source>Connected</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/youtube-migration/config/config.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6edd32a797301ae2ee379cd69bf5ebff69c0265e" datatype="html">
+        <source>
+      You can simply disconnect your YouTube account from Minds. In doing so,
+      any previously transferred videos will continue to be available on Minds.
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/youtube-migration/config/config.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="77f3e17fd1bdb289fa3ad6454390a0dda6279e88" datatype="html">
+        <source>Disconnect YouTube account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/media/youtube-migration/config/config.component.html</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="abc0064387df2f18ea98d5ef10d64a32524e2771" datatype="html">
@@ -9972,14 +9943,15 @@
           <context context-type="linenumber">87</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e97c699edcf8a3273f5b911977a2621cfc72ef45" datatype="html">
-        <source>Enable Pro theme
-                          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-                          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-                        </source>
+      <trans-unit id="c402a2ee58af64cca2f74ab2dc0a0fe38d507b56" datatype="html">
+        <source>Enable Pro theme</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/settings/settings.component.html</context>
           <context context-type="linenumber">113</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c40e4b53daad6dcc2ea20191a388d69eb7515468" datatype="html">
@@ -10062,24 +10034,26 @@
           <context context-type="linenumber">367</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1ea13caba3b589c4bb11078988ae8bc3ac59a2b9" datatype="html">
-        <source>Light
-                          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-                          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-                        </source>
+      <trans-unit id="693d14f486a25e86bc515dfcfc4462d5201217ef" datatype="html">
+        <source>Light</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/settings/settings.component.html</context>
           <context context-type="linenumber">378</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
+          <context context-type="linenumber">195</context>
+        </context-group>
       </trans-unit>
-      <trans-unit id="aff5fbff6d130842d755e8e0245fa18dfd9de494" datatype="html">
-        <source>Dark
-                          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-                          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-                        </source>
+      <trans-unit id="adb4562d2dbd3584370e44496969d58c511ecb63" datatype="html">
+        <source>Dark</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/settings/settings.component.html</context>
           <context context-type="linenumber">396</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
+          <context context-type="linenumber">211</context>
         </context-group>
       </trans-unit>
       <trans-unit id="52877499bc3efeb9cfd1ac0cee0c0d16b035d7d0" datatype="html">
@@ -10265,44 +10239,53 @@
           <context context-type="linenumber">824</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="f236d8e84fc43c49178ead366e2a7391bc7d4e98" datatype="html">
-        <source>USD
-                          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-                          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-                        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/pro/settings/settings.component.html</context>
-          <context context-type="linenumber">831</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5208a427e2eeef1bc3a3db0a6152c10a974faacf" datatype="html">
-        <source>Minds Tokens
-                          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-                          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-                        </source>
+      <trans-unit id="c51ba5468caf40a4f13812c1f2713c4c526bc515" datatype="html">
+        <source>Minds Tokens</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/settings/settings.component.html</context>
           <context context-type="linenumber">850</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
       </trans-unit>
-      <trans-unit id="9cd7353106c99ff3c0ab47b913af2fd0897c88a9" datatype="html">
-        <source>Ether
-                          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-                          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-                        </source>
+      <trans-unit id="cd12302d4258cb76e152cc992cbd84d03e03776e" datatype="html">
+        <source>Ether</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/settings/settings.component.html</context>
           <context context-type="linenumber">869</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
       </trans-unit>
-      <trans-unit id="60ab9f06b8a8d5abd9d419d5a5fb3b82e3bf586b" datatype="html">
-        <source>Bitcoin
-                          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-                          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-                        </source>
+      <trans-unit id="9547265bc15d7634a79114260f97e069886d0518" datatype="html">
+        <source>Bitcoin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/settings/settings.component.html</context>
           <context context-type="linenumber">888</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
+          <context context-type="linenumber">57</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3151c3293fe8d6857955582331af7aecd9296032" datatype="html">
@@ -10368,33 +10351,13 @@
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="d63ca9c1deda5138d367518acbd8ec92a3f6947c" datatype="html">
-        <source>
-          @<x id="INTERPOLATION" equiv-text="{{ currentUsername }}"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/pro/channel/footer/footer.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="7d31bc3039a96d3a3c86a16e2fe4a3ae78b08b14" datatype="html">
         <source>
           Logout
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/footer/footer.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="44d058977a723b54c29b7baf950c9b2975ddb152" datatype="html">
-        <source>
-    <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/><x id="INTERPOLATION" equiv-text="{{
-      category.tag?.label
-    }}"/><x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/pro/channel/home/category-content/category-content.component.html</context>
-          <context context-type="linenumber">2</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="507868767fe47d31e8fd83f2ccdf643b6bb3d201" datatype="html">
@@ -10449,13 +10412,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/subscribe-button/subscribe-button.component.html</context>
           <context context-type="linenumber">11</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d7e4c7e2c179133be0541df77f64fb5a3d77055c" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ currentLanguage$ | async }}"/></source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/language/language-bar.component.ts</context>
-          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M_TOPBAR_NEWSFEED" datatype="html">
@@ -10545,15 +10501,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/hashtags/topbar-selector/topbar-selector.component.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/hashtags/topbar-selector/topbar-selector.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/hashtags/topbar-selector/topbar-selector.component.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3879eb5e8ce2aa8bc9d5be1ae1636ce86805f4ba" datatype="html">
@@ -10564,11 +10516,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/hashtags/topbar-selector/topbar-selector.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/hashtags/topbar-selector/topbar-selector.component.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__HASHTAGS__TOPBAR__SUGGESTED_MORE_TOOLTIP" datatype="html">
@@ -10585,11 +10537,18 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/hashtags/topbar-selector/topbar-selector.component.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/hashtags/topbar-selector/topbar-selector.component.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6354bf57c9e5996818f4580c55f28f9e55dc1c47" datatype="html">
+        <source>#hashtags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/hashtags/topbar-selector/topbar-selector.component.html</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="61526421a97f42af3b3ba5adcbeefa5eb9a95276" datatype="html">
@@ -10604,6 +10563,20 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/hashtags/typeahead-input/typeahead-input.component.html</context>
           <context context-type="linenumber">29</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="db5cc0c8d9d80c653f1b78ce2bfb1b41bc84ceeb" datatype="html">
+        <source>Join</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/suggestions/groups/sidebar.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d1b826b354c09ab7d907a7fe1033fcb8f9aee652" datatype="html">
+        <source>Joining</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/suggestions/groups/sidebar.component.html</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="M_REFERRALS__PAGE_HEADER" datatype="html">
@@ -10897,10 +10870,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/composer/components/popup/monetize/monetize.component.html</context>
           <context context-type="linenumber">58</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/v2/creator/shop/shop.component.html</context>
-          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="09a6f7d66f5ad59c08284ed6ca9fae9edefbcee4" datatype="html">
@@ -11942,13 +11911,6 @@
           <context context-type="linenumber">61</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="506a8569098f2412ee410abf96f805a1eb097987" datatype="html">
-        <source>Pay</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/v2/creator/owner-block/owner-block.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="7ecb8b95dc813971f5a98c558fcffe7537d18d2d" datatype="html">
         <source>ETH</source>
         <context-group purpose="location">
@@ -11961,28 +11923,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
           <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="cd12302d4258cb76e152cc992cbd84d03e03776e" datatype="html">
-        <source>Ether</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/v2/creator/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="9547265bc15d7634a79114260f97e069886d0518" datatype="html">
-        <source>Bitcoin</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/v2/creator/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f55e513af5e8c15caaccc9606591f9b39fd02ef8" datatype="html">
@@ -12160,19 +12100,18 @@
           <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__MEDIA__CONFIRM_DELETION" datatype="html">
-        <source>Are you sure you want to delete this?<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/><x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/&gt;"/>There&apos;s no
-      UNDO!</source>
+      <trans-unit id="140cec5b761cf91458b97afe8b5b9b09e28fc0d4" datatype="html">
+        <source>Are you sure you want to delete this?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
-          <context context-type="linenumber">347</context>
+          <context context-type="linenumber">346</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__MEDIA__DELETION_CONFIRMATION" datatype="html">
         <source>The media has been deleted.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/media/view/view.component.html</context>
-          <context context-type="linenumber">353</context>
+          <context context-type="linenumber">352</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MEDIA__THEATRE__COUNTDOWN_NEXT_IN" datatype="html">
@@ -12314,7 +12253,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">193</context>
+          <context context-type="linenumber">194</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5f674e0314ab652ed4807683795b197a777376ab" datatype="html">
@@ -12360,7 +12299,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">106</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f0cef73884b65f05536de308dfd970f5f638e962" datatype="html">
@@ -12377,44 +12316,11 @@
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="d3e8fa720920869420a15e884d1a657e44236393" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ periodOption.label }}"/>
-              <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-              <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-            </source>
+      <trans-unit id="eacb2dc505f68d8091159e780d2786e0d006f01f" datatype="html">
+        <source>Show NSFW content in results</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="767cdb79c76ab9d24fb3914785a7860578e7e069" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ contentType.label }}"/>
-              <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-              <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-            </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="12829ef0eb3341ae1337c4cf35db257b110c66ef" datatype="html">
-        <source>Show NSFW content in results
-            <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-            <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
-          <context context-type="linenumber">67</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6b3899f3e36ebc99227de1c3a41805efd41637cc" datatype="html">
-        <source><x id="INTERPOLATION" equiv-text="{{ nsfwOption.label }}"/>
-                <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-                <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-              </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__HOME__LOGIN__LOGIN" datatype="html">
@@ -12979,31 +12885,11 @@
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4cc0df8b21cf87a984161682aa3a1d898d9cdb67" datatype="html">
-        <source>
-          Minds <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="4278d0d56bf15987074af102734c503e9f06171d" datatype="html">
+        <source>Minds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a4763cb50162139e5ca144db0f3abde7fcd77058" datatype="html">
-        <source>
-          <x id="INTERPOLATION" equiv-text="{{ headline }}"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="0d6ef62d1012a75a8edd726b96de58eefdca8039" datatype="html">
-        <source>
-          <x id="INTERPOLATION" equiv-text="{{ description }}"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f2db5016fda75ab3753982d5299d96e0c5f4a7d9" datatype="html">
@@ -13012,14 +12898,14 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bdc5cd8ee8da3b2611447a34f2fa23b8382d2293" datatype="html">
         <source>How does it work?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">98</context>
+          <context context-type="linenumber">99</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f0bcef68bde41a679a00294ffaba019c97c21676" datatype="html">
@@ -13030,7 +12916,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="896794fb8f12b35e676bb63d49694bbb2b16e87d" datatype="html">
@@ -13041,7 +12927,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">107</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8bb4366434e4f88ba256cbeba6cf08f1bdc7f1bd" datatype="html">
@@ -13052,7 +12938,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="06c3a70914642a003aa0331f8467f2052a2f6c26" datatype="html">
@@ -13061,14 +12947,14 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">125</context>
         </context-group>
       </trans-unit>
       <trans-unit id="223910af7618402edabace406f9e120c998691e5" datatype="html">
         <source>Our principles</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">149</context>
+          <context context-type="linenumber">150</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bbf5782a1fc05a5af8456a8a5ef4b0cc574d8f7f" datatype="html">
@@ -13077,7 +12963,7 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">202</context>
+          <context context-type="linenumber">203</context>
         </context-group>
       </trans-unit>
       <trans-unit id="17b3e9cd105e35d26997ab3c7fb30b0c0d038fbf" datatype="html">
@@ -13736,33 +13622,21 @@
           <context context-type="sourcefile">app/modules/settings/general/general.component.html</context>
           <context context-type="linenumber">226</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings/general/general.component.html</context>
-          <context context-type="linenumber">234</context>
-        </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__SETTINGS__YOU_CURRENTLY_HAVE_X_OPENED" datatype="html">
-        <source>
-    You currently have <x id="INTERPOLATION" equiv-text="{{ openSessions }}"/> opened
-    <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>.
-  </source>
+      <trans-unit id="bb3a79e9ad3f4a756c3f3ec5e047a387d37b1071" datatype="html">
+        <source>You currently have <x id="INTERPOLATION" equiv-text="{{ openSessions }}"/> session(s) open.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/general/general.component.html</context>
           <context context-type="linenumber">228</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__SETTINGS__SESSION" datatype="html">
-        <source>session</source>
+      <trans-unit id="c1f42f2f850dbeae5233ef159b55e1733196ce2d" datatype="html">
+        <source>
+    Close All Sessions
+  </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/general/general.component.html</context>
-          <context context-type="linenumber">237</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="MINDS__SETTINGS__CLOSE_ALL_SESSIONS_CONFIRM" datatype="html">
-        <source>Close All Sessions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings/general/general.component.html</context>
-          <context context-type="linenumber">244</context>
+          <context context-type="linenumber">234</context>
         </context-group>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__DISABLE_CHANNEL" datatype="html">
@@ -13952,6 +13826,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage/homepage.component.html</context>
           <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="91ee61ab5ceed79468fda04c4d2f464138cd7481" datatype="html">
+        <source>© Minds 2020</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/homepage/homepage.component.html</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bb60ff228575ccfc02d6f3e848d3cdd443c95c55" datatype="html">
@@ -14505,10 +14386,6 @@
           <context context-type="sourcefile">app/modules/helpdesk/creator/category/creator.component.html</context>
           <context context-type="linenumber">20</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/helpdesk/creator/question/creator.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
       </trans-unit>
       <trans-unit id="HELPDESK__EDIT__SAVE_ACTION" datatype="html">
         <source>
@@ -14528,6 +14405,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/helpdesk/creator/question/creator.component.html</context>
           <context context-type="linenumber">22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="328bb30618849bf133231693736d771fb76df000" datatype="html">
+        <source>Select a Category</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/helpdesk/creator/question/creator.component.html</context>
+          <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8aee3d1bfc84c4ef7e059918b3fe461bc595f1cf" datatype="html">
@@ -15544,25 +15428,11 @@
           <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="WALLET__TOKENS__WITHDRAW__LEDGER__COMPLETED_LABEL" datatype="html">
-        <source>
-        COMPLETED |
-        <x id="START_LINK" ctype="x-a" equiv-text="&lt;a&gt;"/>
-          <x id="INTERPOLATION" equiv-text="{{ withdrawal.completed_tx }}"/>
-        <x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;"/>
-      </source>
+      <trans-unit id="35cd89851cb24c2cfb9e380283a53486946a5be4" datatype="html">
+        <source>COMPLETED</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/ledger/ledger.component.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__WITHDRAW__LEDGER__PENDING_LABEL" datatype="html">
-        <source>
-        <x id="INTERPOLATION" equiv-text="{{ withdrawal.status.replace(&apos;_&apos;, &apos; &apos;) | uppercase }}"/>
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/ledger/ledger.component.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">56</context>
         </context-group>
       </trans-unit>
       <trans-unit id="abeb6dbfbc4ce975a48bcd9e0cf5b7a9ff4c2f21" datatype="html">
@@ -16934,19 +16804,30 @@
           <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="MINDS__WALLET__USD__PAYOUT__SCHEDULE" datatype="html">
-        <source>
-        <x id="START_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;"/>
-          Daily payouts are sent <x id="INTERPOLATION" equiv-text="{{ delay }}"/> days after a payment has been
-          processed
-        <x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;"/>
-        <x id="START_TAG_NG-CONTAINER_1" ctype="x-ng-container" equiv-text="&lt;ng-container&gt;"/>
-          Monthly payouts will be issued on the <x id="INTERPOLATION_1" equiv-text="{{ anchor }}"/> day of the month
-        <x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&lt;/ng-container&gt;"/>
-      </source>
+      <trans-unit id="1235496ac338da2bd9d259270c6b12e0bad4ee93" datatype="html">
+        <source>Future Payouts</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/usd/balance.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="03db6c70c91ce7a2f1f4786bd964bf7bd689c3d6" datatype="html">
+        <source>
+          Daily payouts are sent <x id="INTERPOLATION" equiv-text="{{ delay }}"/> days after a payment has been
+          processed
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/usd/balance.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="50134bb5c6c99062533a0662a1f614e047c6f583" datatype="html">
+        <source>
+          Monthly payouts will be issued on the <x id="INTERPOLATION" equiv-text="{{ anchor }}"/> day of the month
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/usd/balance.component.html</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9eaffde39a1a05c0728131dbe7ef3174e67d3bb2" datatype="html">
@@ -17360,131 +17241,85 @@
           <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8f1d3188fdee132b32a50ac3eac085641133a8c4" datatype="html">
-        <source>I have unread notifications
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="0a3986d36705df4bf2b0f7e4198f97cf457c8eac" datatype="html">
+        <source>I have unread notifications</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="f81863e2cbbf95b9b30dc901734ae61f672422e0" datatype="html">
-        <source>I receive a wire
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="9f06704eedb50b18f8c4bdedf6b1ea79a6b3bb19" datatype="html">
+        <source>I receive a wire</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="200a4415fdd6e000f6541e2a26e8d595f6c2f96d" datatype="html">
-        <source>My boost has been completed
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="41b7d6543720935f0b3bc2d519ad562a0f482664" datatype="html">
+        <source>My boost has been completed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">52</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c45e50040feda5e3cbbc104aed09deb0efc522df" datatype="html">
-        <source>Top posts from my network
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="c5627b86fc346babb01a08a6eb949f34651cb5a2" datatype="html">
+        <source>Top posts from my network</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9e8d1537015f537daf2c937415ab66d87799ebe7" datatype="html">
-        <source>Tips on how to improve my channel
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="41148d9055ac8b982cdbd8d8c5f25756ff1d07b1" datatype="html">
+        <source>Tips on how to improve my channel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="fc52de92b64d600641e75fb22f6b40dcffa20b53" datatype="html">
-        <source>Things I&apos;ve missed since my last login
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="1c7616be9bc63c44950cbf573a22516650e022f6" datatype="html">
+        <source>Things I&apos;ve missed since my last login</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">117</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="577abab842c57802e839c209940d04596fae1b24" datatype="html">
-        <source>New channels to subscribe to
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="52878682f7c9cd9835ee7af02bfac4cfdb671335" datatype="html">
+        <source>New channels to subscribe to</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">138</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="44243fe868b645d18ba2a708518e655c6456681d" datatype="html">
-        <source>News about new Minds products and features
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="5511ff6c4377e1608777d0fba53b291ea103f8cc" datatype="html">
+        <source>News about new Minds products and features</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">155</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="054ab390fdb1a9fa64d4645483ffba657c90e0d0" datatype="html">
-        <source>Tips on how to use Minds
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="fd8a8dafb6b3e11a46365c49236fbd61532ba3be" datatype="html">
+        <source>Tips on how to use Minds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">182</context>
+          <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9e547518f3cbadfe1f9e408b5cef7580c2d42f8a" datatype="html">
-        <source>Exclusive promotions
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="8e6c794cd988823c6048a2332c550135d14460a4" datatype="html">
+        <source>Exclusive promotions</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">203</context>
+          <context context-type="linenumber">195</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="db8088599c1c9879d65fb57be0a41ad2f6363cf0" datatype="html">
-        <source>Always show NSFW content (18+)
-              <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-              <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-            </source>
+      <trans-unit id="667b9918b56c0d42c9142b92a7b92f62bf7883cd" datatype="html">
+        <source>Always show NSFW content (18+)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/nsfw-content/nsfw-content.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">8</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2f11bec2547794d0ca4e10b5800518432c217eb0" datatype="html">
-        <source>Show share buttons
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/account/share-buttons/share-buttons.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="f6033708f933df09a2bf9f7a45db0e5ceff6d2f9" datatype="html">
-        <source>Enable notification popovers
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="0d974c5c0e0660a8731a2f23a3187efebef822ab" datatype="html">
+        <source>Enable notification popovers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/toaster-notifications/toaster-notifications.component.html</context>
           <context context-type="linenumber">9</context>
@@ -17504,13 +17339,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
           <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="c402a2ee58af64cca2f74ab2dc0a0fe38d507b56" datatype="html">
-        <source>Enable Pro theme</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
-          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b0ed3368604e6ed73e4246b6a12c46088b4cefc7" datatype="html">
@@ -17547,26 +17375,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
           <context context-type="linenumber">128</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="930063fbdb20e36e0bb3daaf11f75d4693147cce" datatype="html">
-        <source>Light
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">195</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="588a5d3686c50a567b32331f56f9ac383334f2a4" datatype="html">
-        <source>Dark
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">211</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d1926b355bdb2e3a909d288214f9413b739c67dc" datatype="html">
@@ -17639,46 +17447,6 @@
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5526c2a6b6e618b3f5b8f308346feb02bb7f3d0d" datatype="html">
-        <source>USD
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4510cc359ff514278803aba07fa8a478c4f28375" datatype="html">
-        <source>Minds Tokens
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="bf178a23654c0080e37e69fbfc5c6c1f4b432f46" datatype="html">
-        <source>Ether
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="0d8ff4d933c5fe2cfa73bc2d31c2f91d61396adb" datatype="html">
-        <source>Bitcoin
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="4562cbb05f0de841288decf557319a63096c372a" datatype="html">
         <source>
       Cancel Subscription
@@ -17688,11 +17456,8 @@
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="a3c26016cd0dbb53d40c7470ab9b9af052251fd2" datatype="html">
-        <source>Enable video autoplay
-          <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
-          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/><x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/>
-        </source>
+      <trans-unit id="28f7dfdeb8fa0f424c474e8ff2000f9652707d97" datatype="html">
+        <source>Enable video autoplay</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/autoplay-videos/autoplay-videos.component.html</context>
           <context context-type="linenumber">19</context>

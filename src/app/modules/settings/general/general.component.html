@@ -225,24 +225,14 @@
 <div class="m-settings--section m-border m-settings--close-all-sessions">
   <h4 i18n="@@MINDS__SETTINGS__SESSIONS">Sessions</h4>
 
-  <p i18n="@@MINDS__SETTINGS__YOU_CURRENTLY_HAVE_X_OPENED">
-    You currently have {{ openSessions }} opened
-    <span *ngIf="openSessions > 1; then sessionsBlock; else sessionBlock"></span
-    >.
-  </p>
-  <ng-template #sessionsBlock i18n="@@MINDS__SETTINGS__SESSIONS"
-    >sessions</ng-template
-  >
-  <ng-template #sessionBlock i18n="@@MINDS__SETTINGS__SESSION"
-    >session</ng-template
-  >
+  <p i18n>You currently have {{ openSessions }} session(s) open.</p>
+
   <button
     class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-color--red"
     (click)="closeAllSessions()"
+    i18n
   >
-    <ng-container i18n="@@MINDS__SETTINGS__CLOSE_ALL_SESSIONS_CONFIRM"
-      >Close All Sessions</ng-container
-    >
+    Close All Sessions
   </button>
 </div>
 <!-- END: SESSIONS -->

@@ -151,12 +151,13 @@
       <ng-container *ngIf="showSuggested; else showLabel" i18n
         >Hide</ng-container
       >
-      <ng-template #showLabel i18n
-        >Show
-        <ng-container *ngIf="showTrending; else showSuggestedHiddenText"
-          >trending</ng-container
+      <ng-template #showLabel>
+        <ng-container *ngIf="showTrending; else showSuggestedHiddenText" i18n
+          >Show trending</ng-container
         >
-        <ng-template #showSuggestedHiddenText>suggested</ng-template>
+        <ng-template #showSuggestedHiddenText>
+          <ng-container i18n>Show suggested</ng-container>
+        </ng-template>
       </ng-template>
     </a>
   </div>

@@ -16,7 +16,6 @@
             <label
               [for]="periodOption.id"
               class="m-form__customInputWrapper__radio"
-              i18n
               >{{ periodOption.label }}
               <input
                 type="radio"
@@ -40,7 +39,6 @@
             <label
               [for]="contentType.id"
               class="m-form__customInputWrapper__radio"
-              i18n
               >{{ contentType.label }}
               <input
                 type="radio"
@@ -63,8 +61,8 @@
           <label
             for="showNsfwOptions"
             class="m-form__customInputWrapper__checkbox"
-            i18n
-            >Show NSFW content in results
+          >
+            <ng-container i18n>Show NSFW content in results</ng-container>
             <input
               type="checkbox"
               value="true"
@@ -81,7 +79,6 @@
               <label
                 [for]="nsfwOption.id"
                 class="m-form__customInputWrapper__checkbox"
-                i18n
                 >{{ nsfwOption.label }}
                 <input
                   type="checkbox"

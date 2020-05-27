@@ -166,12 +166,13 @@ import { BlockListService } from '../../../../common/services/block-list.service
       yesButton="Ban user"
       i18n-yesButton="@@M__ACTION__BAN_USER"
     >
-      <p
-        confirm-message
-        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_USER_CONFIRM_MESSAGE"
-      >
-        Are you sure you want to ban this user?<br /><br />
-        This will close all open sessions and lock him/her out from Minds.
+      <p confirm-message>
+        <ng-container i18n>Are you sure you want to ban this user?</ng-container
+        ><br /><br />
+        <ng-container i18n
+          >This will close all open sessions and lock them out from
+          Minds.</ng-container
+        >
       </p>
       <p
         confirm-success-message
@@ -189,13 +190,18 @@ import { BlockListService } from '../../../../common/services/block-list.service
       yesButton="Ban user"
       i18n-yesButton="@@M__ACTION__BAN_USER"
     >
-      <p
-        confirm-message
-        i18n="@@MINDS__BUTTONS__USER_DROPDOWN__BAN_MONETIZATION_CONFIRM_MESSAGE"
-      >
-        Are you sure you want to ban this user from monetization?<br /><br />
-        This will close all open sessions and decline pending payments.<br />
-        There's no UNDO. This will NOT ban the user from Minds.
+      <p confirm-message>
+        <ng-container i18n
+          >Are you sure you want to ban this user from
+          monetization?</ng-container
+        ><br /><br />
+        <ng-container i18n
+          >This will close all open sessions and decline pending
+          payments.</ng-container
+        ><br />
+        <ng-container i18n
+          >There's no UNDO. This will NOT ban the user from Minds.</ng-container
+        >
       </p>
       <p
         confirm-success-message
