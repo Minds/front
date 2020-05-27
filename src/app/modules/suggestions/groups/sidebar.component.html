@@ -30,10 +30,9 @@
               !entity['is:member']
             "
             (click)="join(entity)"
-            i18n="@@GROUPS__JOIN_BUTTON__JOIN_ACTION"
           >
-            <ng-container *ngIf="!inProgress">Join</ng-container>
-            <ng-container *ngIf="inProgress">Joining</ng-container>
+            <ng-container *ngIf="!inProgress" i18n>Join</ng-container>
+            <ng-container *ngIf="inProgress" i18n>Joining</ng-container>
           </button>
           <button
             class="m-btn m-btn--slim subscribed "

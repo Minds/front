@@ -13,14 +13,13 @@ import { LanguageModalComponent } from './language-modal/language-modal.componen
     <div class="m-languageBar__wrapper">
       <div class="m-languageBar__currentLanguage">
         <i class="material-icons">language</i>
-        <span i18n>{{ currentLanguage$ | async }}</span>
+        <span>{{ currentLanguage$ | async }}</span>
       </div>
       <div class="m-languageBar__languageOptions">
         <span
           *ngFor="let language of languages.slice(0, 8)"
           class="m-languageBar__languageOption"
           (click)="onLanguageSelect(language)"
-          i18n
         >
           {{ language }}
         </span>

@@ -1,5 +1,5 @@
 <div *ngFor="let category of categories$ | async">
-  <h2 i18n>
+  <h2>
     <a [routerLink]="getCategoryRoute(category.tag?.tag)">{{
       category.tag?.label
     }}</a>

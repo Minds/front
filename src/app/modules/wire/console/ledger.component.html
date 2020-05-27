@@ -133,14 +133,12 @@
               <td
                 class="m-wire-console--ledger-amount mdl-color-text--green"
                 *ngIf="wire.method == 'money'"
-                i18n="@@WIRE__CONSOLE__LEDGER__AMOUNT_USD_CELL_VALUE"
               >
                 <i>$</i>{{ wire.amount }}
               </td>
               <td
                 class="m-wire-console--ledger-amount mdl-color-text--green"
                 *ngIf="wire.method == 'tokens'"
-                i18n="@@WIRE__CONSOLE__LEDGER__AMOUNT_TOKEN_CELL_VALUE"
               >
                 <i>M</i>{{ wire.amount }}
               </td>

@@ -60,13 +60,12 @@
       >
         <a routerLink="/discovery" (click)="toggle()">
           <m-tooltip
-            i18n="@@COMMON__DISCOVER"
             [enabled]="layoutMode === 'tablet'"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
             <i class="m-icon--hashtag" m-tooltip--anchor>#</i>
-            Discovery
+            <ng-container i18n>Discovery</ng-container>
           </m-tooltip>
 
           <span class="m-sidebarNavigationItem__text" i18n>
@@ -81,13 +80,12 @@
       >
         <a [routerLink]="['/wallet/canary']" (click)="toggle()">
           <m-tooltip
-            i18n="@@COMMON__WALLET"
             [enabled]="layoutMode === 'tablet'"
             [anchor]="'left'"
             [useParentPosition]="true"
           >
             <m-icon from="custom" iconId="wallet" m-tooltip--icon></m-icon>
-            Wallet
+            <ng-container i18n>Wallet</ng-container>
           </m-tooltip>
 
           <span class="m-sidebarNavigationItem__text" i18n>

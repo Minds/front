@@ -148,8 +148,13 @@
         </a>
         <span> · </span>
       </ng-container>
-      <a (click)="toggleFooterLinks()" i18n>
-        {{ maxFooterLinks === 5 ? 'More' : 'Less' }}
+      <a (click)="toggleFooterLinks()">
+        <ng-container *ngIf="maxFooterLinks === 5; else lessView" i18n
+          >More</ng-container
+        >
+        <ng-template #lessView>
+          <ng-container i18n>Less</ng-container>
+        </ng-template>
       </a>
     </li>
   </ul>

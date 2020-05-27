@@ -29,9 +29,11 @@ import { Client } from '../../../../services/api';
     >
       <div class="overlay" [hidden]="file">
         <i class="material-icons">camera</i>
-        <span i18n="@@MINDS__BANNER__ADD_NEW_BANNER_W_RECOMMENDATION">
-          Click here to add a new banner<br />
-          <em>Recommended minimum size 2000px &times; 1125px (Ratio 16:9)</em>
+        <span>
+          <ng-container i18n>Click here to add a new banner</ng-container><br />
+          <em i18n
+            >Recommended minimum size 2000px &times; 1125px (Ratio 16:9)</em
+          >
         </span>
       </div>
       <div class="minds-banner-overlay"></div>
