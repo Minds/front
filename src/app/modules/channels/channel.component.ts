@@ -1,4 +1,4 @@
-import { Component, ViewChild, SkipSelf, Injector, Input } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -17,14 +17,13 @@ import { Observable } from 'rxjs';
 import { DialogService } from '../../common/services/confirm-leave-dialog.service';
 import { BlockListService } from '../../common/services/block-list.service';
 import { ChannelSortedComponent } from './sorted/sorted.component';
-import { ClientMetaService } from '../../common/services/client-meta.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { SeoService } from './v2/seo.service';
 
 @Component({
   selector: 'm-channel',
   templateUrl: 'channel.component.html',
-  providers: [ClientMetaService, SeoService],
+  providers: [SeoService],
 })
 export class ChannelComponent {
   readonly cdnAssetsUrl: string;
@@ -56,22 +55,16 @@ export class ChannelComponent {
     private context: ContextService,
     private dialogService: DialogService,
     private blockListService: BlockListService,
-    private clientMetaService: ClientMetaService,
     private seo: SeoService,
-    private configs: ConfigsService,
-    injector: Injector
+    private configs: ConfigsService
   ) {
-    this.clientMetaService
-      .inherit(injector)
-      .setSource('single')
-      .setMedium('single');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
 
   ngOnInit() {
     this.updateMeta();
     if (this.user) {
-      this.clientMetaService.recordView(this.user);
+      // this.clientMetaService.recordView(this.user);
     }
 
     this.context.set('activity');
@@ -160,7 +153,7 @@ export class ChannelComponent {
         }
 
         // this.load() is only called if this.user was not previously set
-        this.clientMetaService.recordView(this.user);
+        // this.clientMetaService.recordView(this.user);
       })
       .catch(e => {
         if (e.status === 0) {

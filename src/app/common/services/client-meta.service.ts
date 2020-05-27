@@ -6,6 +6,14 @@ import { Client } from '../../services/api';
 
 let uniqId = 0;
 
+export interface ClientMetaData {
+  source: string;
+  timestamp: number;
+  salt: string;
+  medium: string;
+  campaign: string;
+}
+
 @Injectable()
 export class ClientMetaService {
   protected source: string;
@@ -38,29 +46,27 @@ export class ClientMetaService {
       .replace(/[^a-z]+/g, '');
   }
 
-  inherit(injector: Injector) {
-    console.warn('Cannot inherit client meta');
-    // TODO: https://github.com/angular/angular/issues/34819
-    //
-    // const parentClientMeta: ClientMetaService = injector.get(
-    //   ClientMetaService,
-    //   null
-    // );
-    //
-    // if (parentClientMeta) {
-    //   if (parentClientMeta.getId() === this.id) {
-    //     throw new Error(
-    //       '[ClientMetaService] Cannot inherit client meta from itself. Did you forget to add to @Component({ providers })?'
-    //     );
-    //   }
-    //
-    //   this.source = parentClientMeta.getSource();
-    //   this.timestamp = parentClientMeta.getTimestamp();
-    //   this.salt = parentClientMeta.getSalt();
-    //   this.medium = parentClientMeta.getMedium();
-    //   this.campaign = parentClientMeta.getCampaign();
-    // }
-    //
+  inherit(parentInjector: Injector) {
+    const parentClientMeta: ClientMetaService = parentInjector.get(
+      ClientMetaService,
+      null
+    );
+
+    if (parentClientMeta) {
+      if (parentClientMeta.getId() === this.id) {
+        return;
+        // throw new Error(
+        //   `[ClientMetaService] Cannot inherit client meta from itself. Ensure you passed parent's injector?`
+        // );
+      }
+
+      this.source = parentClientMeta.getSource();
+      this.timestamp = parentClientMeta.getTimestamp();
+      this.salt = parentClientMeta.getSalt();
+      this.medium = parentClientMeta.getMedium();
+      this.campaign = parentClientMeta.getCampaign();
+    }
+
     this.inherited = true;
 
     return this;

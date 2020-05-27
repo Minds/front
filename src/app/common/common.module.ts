@@ -178,6 +178,7 @@ import { AccordionPaneComponent } from './components/accordion/accordion-pane.co
 import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sidebar.directive';
 import { RemindComposerModalComponent } from '../modules/modals/remind-composer-v2/reminder-composer.component';
 import { LanguageModule } from '../modules/language/language.module';
+import { ClientMetaDirective } from './directives/client-meta.directive';
 
 const routes: Routes = [
   {
@@ -330,6 +331,7 @@ const routes: Routes = [
     AccordionComponent,
     AccordionPaneComponent,
     StickySidebarDirective,
+    ClientMetaDirective,
   ],
   exports: [
     MINDS_PIPES,
@@ -461,6 +463,7 @@ const routes: Routes = [
     AccordionComponent,
     AccordionPaneComponent,
     StickySidebarDirective,
+    ClientMetaDirective,
   ],
   providers: [
     SiteService,

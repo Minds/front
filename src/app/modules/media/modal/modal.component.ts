@@ -1,11 +1,9 @@
 import {
   Component,
   HostListener,
-  Injector,
   Input,
   OnDestroy,
   OnInit,
-  SkipSelf,
   ViewChild,
   ComponentRef,
   EventEmitter,
@@ -26,7 +24,6 @@ import { AnalyticsService } from '../../../services/analytics';
 import isMobileOrTablet from '../../../helpers/is-mobile-or-tablet';
 import { ActivityService } from '../../../common/services/activity.service';
 import { SiteService } from '../../../common/services/site.service';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { FeaturesService } from '../../../services/features.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { HorizontalFeedService } from '../../../common/services/horizontal-feed.service';
@@ -70,7 +67,7 @@ export type MediaModalParams = {
       transition(':leave', [animate('300ms', style({ opacity: 0 }))]),
     ]),
   ],
-  providers: [ActivityService, ClientMetaService],
+  providers: [ActivityService],
 })
 export class MediaModalComponent implements OnInit, OnDestroy {
   readonly cdnUrl: string;
@@ -186,19 +183,12 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private router: Router,
     private location: Location,
     private site: SiteService,
-    private clientMetaService: ClientMetaService,
     private featureService: FeaturesService,
     private horizontalFeed: HorizontalFeedService,
     private features: FeaturesService,
     public attachment: AttachmentService,
-    configs: ConfigsService,
-    injector: Injector
+    configs: ConfigsService
   ) {
-    this.clientMetaService
-      .inherit(injector)
-      .setSource('single')
-      .setMedium('modal');
-
     this.cdnUrl = configs.get('cdn_url');
   }
 
@@ -483,7 +473,7 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       url = `/pro/${this.site.pro.user_guid}${url}`;
     }
 
-    this.clientMetaService.recordView(this.entity);
+    // this.clientMetaService.recordView(this.entity);
     this.analyticsService.send('pageview', {
       url,
     });

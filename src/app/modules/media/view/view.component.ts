@@ -1,11 +1,4 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-  OnDestroy,
-  SkipSelf,
-  Injector,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -18,7 +11,6 @@ import { AttachmentService } from '../../../services/attachment';
 import { ContextService } from '../../../services/context.service';
 import { ActivityService } from '../../../common/services/activity.service';
 import { AnalyticsService } from '../../../services/analytics';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { FeaturesService } from '../../../services/features.service';
@@ -34,7 +26,6 @@ import { FormToastService } from '../../../common/services/form-toast.service';
       deps: [Client],
     },
     ActivityService,
-    ClientMetaService,
   ],
 })
 export class MediaViewComponent implements OnInit, OnDestroy {
@@ -78,17 +69,11 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     public context: ContextService,
     private cd: ChangeDetectorRef,
     protected activityService: ActivityService,
-    private clientMetaService: ClientMetaService,
     private metaService: MetaService,
     private featuresService: FeaturesService,
     protected toasterService: FormToastService,
-    configs: ConfigsService,
-    injector: Injector
+    configs: ConfigsService
   ) {
-    this.clientMetaService
-      .inherit(injector)
-      .setSource('single')
-      .setMedium('single');
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
@@ -153,7 +138,7 @@ export class MediaViewComponent implements OnInit, OnDestroy {
           this.updateMeta();
         }
 
-        this.clientMetaService.recordView(this.entity);
+        // this.clientMetaService.recordView(this.entity);
 
         this.detectChanges();
       })

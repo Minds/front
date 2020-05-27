@@ -8,7 +8,6 @@ import {
   Input,
   OnInit,
   Output,
-  SkipSelf,
   ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -24,7 +23,6 @@ import { Router } from '@angular/router';
 import { BlockListService } from '../../../../../common/services/block-list.service';
 import { ElementVisibilityService } from '../../../../../common/services/element-visibility.service';
 import { NewsfeedService } from '../../../../newsfeed/services/newsfeed.service';
-import { ClientMetaService } from '../../../../../common/services/client-meta.service';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
 import { ActivityService } from '../../../../../common/services/activity.service';
 import { FeaturesService } from '../../../../../services/features.service';
@@ -51,7 +49,6 @@ import { WireEventType } from '../../../../wire/v2/wire-v2.service';
     'showRatingToggle',
   ],
   providers: [
-    ClientMetaService,
     ElementVisibilityService,
     ActivityService,
     ComposerService,
@@ -199,7 +196,6 @@ export class Activity implements OnInit {
     protected blockListService: BlockListService,
     protected activityAnalyticsOnViewService: ElementVisibilityService,
     protected newsfeedService: NewsfeedService,
-    protected clientMetaService: ClientMetaService,
     protected featuresService: FeaturesService,
     public suggestions: AutocompleteSuggestionsService,
     protected activityService: ActivityService,
@@ -209,9 +205,8 @@ export class Activity implements OnInit {
     protected composer: ComposerService,
     protected composerModal: ModalService,
     protected payModal: WireModalService,
-    protected selfInjector: Injector
+    protected injector: Injector
   ) {
-    this.clientMetaService.inherit(this.selfInjector);
     this.cdnUrl = configs.get('cdn_url');
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
     this.siteUrl = configs.get('site_url');
@@ -229,11 +224,11 @@ export class Activity implements OnInit {
         this.newsfeedService.recordView(
           activity,
           true,
-          null,
-          this.clientMetaService.build({
-            campaign: activity.boosted_guid ? activity.urn : '',
-            position: this.slot,
-          })
+          null
+          // this.clientMetaService.build({
+          //   campaign: activity.boosted_guid ? activity.urn : '',
+          //   position: this.slot,
+          // })
         );
 
         this.onViewed.emit({ activity: activity, visible: true });
@@ -459,7 +454,7 @@ export class Activity implements OnInit {
           this.composer.load(this.activity);
 
           this.composerModal
-            .setInjector(this.selfInjector)
+            .setInjector(this.injector)
             .present()
             .toPromise()
             .then(activity => {

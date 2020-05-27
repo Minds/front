@@ -2,9 +2,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
-  Injector,
   QueryList,
-  SkipSelf,
   ViewChildren,
   HostBinding,
   ViewChild,
@@ -29,7 +27,6 @@ import { SettingsService } from '../../settings/settings.service';
 import { FeaturesService } from '../../../services/features.service';
 import { BoostedContentService } from '../../../common/services/boosted-content.service';
 import { FeedsService } from '../../../common/services/feeds.service';
-import { ClientMetaService } from '../../../common/services/client-meta.service';
 import { ACTIVITY_FIXED_HEIGHT_RATIO } from '../activity/activity.service';
 import {
   trigger,
@@ -53,7 +50,7 @@ const BOOST_VIEW_THESHOLD = 1000;
     '(mouseout)': 'mouseOut()',
   },
   inputs: ['interval', 'channel'],
-  providers: [ClientMetaService, FeedsService],
+  providers: [FeedsService],
   templateUrl: 'boost-rotator.component.html',
   animations: [
     trigger('fastFade', [
@@ -118,8 +115,6 @@ export class NewsfeedBoostRotatorComponent {
     private cd: ChangeDetectorRef,
     protected featuresService: FeaturesService,
     public feedsService: FeedsService,
-    protected clientMetaService: ClientMetaService,
-    injector: Injector,
     configs: ConfigsService
   ) {
     this.interval = configs.get('boost_rotator_interval') || 5;
@@ -135,8 +130,6 @@ export class NewsfeedBoostRotatorComponent {
         this.onExplicitChanged(event)
       ),
     ];
-
-    this.clientMetaService.inherit(injector).setMedium('boost-rotator');
   }
 
   ngOnInit() {
@@ -148,11 +141,11 @@ export class NewsfeedBoostRotatorComponent {
             this.newsfeedService.recordView(
               this.boosts[position],
               true,
-              this.channel,
-              this.clientMetaService.build({
-                position: position + 1,
-                campaign: this.boosts[position].urn,
-              })
+              this.channel
+              // this.clientMetaService.build({
+              //   position: position + 1,
+              //   campaign: this.boosts[position].urn,
+              // })
             );
 
             console.log(
