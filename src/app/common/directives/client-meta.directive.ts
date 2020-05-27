@@ -108,16 +108,4 @@ export class ClientMetaDirective {
 
     return clientMetaData;
   }
-
-  /**
-   * Records a view using the service
-   * @param entity
-   */
-  async recordView(entity: any): Promise<void> {
-    if (!entity) {
-      return;
-    }
-
-    return await this.service.recordView(entity, this.build());
-  }
 }

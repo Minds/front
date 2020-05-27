@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild, Input, Optional, SkipSelf } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
@@ -20,6 +20,7 @@ import { ChannelSortedComponent } from './sorted/sorted.component';
 import { ConfigsService } from '../../common/services/configs.service';
 import { SeoService } from './v2/seo.service';
 import { ClientMetaDirective } from '../../common/directives/client-meta.directive';
+import { ClientMetaService } from '../../common/services/client-meta.service';
 
 @Component({
   selector: 'm-channel',
@@ -44,8 +45,6 @@ export class ChannelComponent {
 
   @ViewChild('feed') private feed: ChannelSortedComponent;
 
-  @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
-
   constructor(
     public session: Session,
     public client: Client,
@@ -59,7 +58,9 @@ export class ChannelComponent {
     private dialogService: DialogService,
     private blockListService: BlockListService,
     private seo: SeoService,
-    private configs: ConfigsService
+    private configs: ConfigsService,
+    @Optional() @SkipSelf() private parentClientMeta: ClientMetaDirective,
+    private clientMetaService: ClientMetaService
   ) {
     this.cdnAssetsUrl = configs.get('cdn_assets_url');
   }
@@ -67,7 +68,10 @@ export class ChannelComponent {
   ngOnInit() {
     this.updateMeta();
     if (this.user) {
-      this.clientMeta.recordView(this.user);
+      this.clientMetaService.recordView(this.user, this.parentClientMeta, {
+        source: 'single',
+        medium: 'single',
+      });
     }
 
     this.context.set('activity');
@@ -156,7 +160,10 @@ export class ChannelComponent {
         }
 
         // this.load() is only called if this.user was not previously set
-        this.clientMeta.recordView(this.user);
+        this.clientMetaService.recordView(this.user, this.parentClientMeta, {
+          source: 'single',
+          medium: 'single',
+        });
       })
       .catch(e => {
         if (e.status === 0) {

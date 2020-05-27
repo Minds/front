@@ -4,7 +4,8 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
+  Optional,
+  SkipSelf,
 } from '@angular/core';
 import { ChannelsV2Service } from './channels-v2.service';
 import { MindsUser } from '../../../interfaces/entities';
@@ -16,6 +17,7 @@ import { SeoService } from './seo.service';
 import { Session } from '../../../services/session';
 import { RecentService } from '../../../services/ux/recent';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 /**
  * Views
@@ -72,8 +74,6 @@ export class ChannelComponent implements OnInit, OnDestroy {
    */
   protected lastChannel: string;
 
-  @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
-
   /**
    * Constructor
    * @param service
@@ -84,6 +84,8 @@ export class ChannelComponent implements OnInit, OnDestroy {
    * @param channelEditIntent
    * @param wireModal
    * @param recent
+   * @param parentClientMeta
+   * @param clientMetaService
    */
   constructor(
     public service: ChannelsV2Service,
@@ -93,7 +95,9 @@ export class ChannelComponent implements OnInit, OnDestroy {
     protected seo: SeoService,
     protected channelEditIntent: ChannelEditIntentService,
     protected wireModal: WireModalService,
-    protected recent: RecentService
+    protected recent: RecentService,
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
+    protected clientMetaService: ClientMetaService
   ) {}
 
   /**
@@ -143,7 +147,10 @@ export class ChannelComponent implements OnInit, OnDestroy {
 
     if (user && user.guid && this.lastChannel !== user.guid) {
       this.lastChannel = user.guid;
-      this.clientMeta.recordView(user);
+      this.clientMetaService.recordView(user, this.parentClientMeta, {
+        source: 'single',
+        medium: 'single',
+      });
 
       if (currentUser && currentUser.guid !== user.guid) {
         this.recent

@@ -4,6 +4,8 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
+  Optional,
+  SkipSelf,
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -22,6 +24,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
 import { FeaturesService } from '../../../services/features.service';
 import { FormToastService } from '../../../common/services/form-toast.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   selector: 'm-media--view',
@@ -67,8 +70,6 @@ export class MediaViewComponent implements OnInit, OnDestroy {
   queryParamsSubscription$: Subscription;
   focusedCommentGuid: string = '';
 
-  @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
-
   constructor(
     public session: Session,
     public client: Client,
@@ -81,6 +82,8 @@ export class MediaViewComponent implements OnInit, OnDestroy {
     private metaService: MetaService,
     private featuresService: FeaturesService,
     protected toasterService: FormToastService,
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
+    protected clientMetaService: ClientMetaService,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -147,7 +150,10 @@ export class MediaViewComponent implements OnInit, OnDestroy {
           this.updateMeta();
         }
 
-        this.clientMeta.recordView(this.entity);
+        this.clientMetaService.recordView(this.entity, this.parentClientMeta, {
+          source: 'single',
+          medium: 'single',
+        });
 
         this.detectChanges();
       })

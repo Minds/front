@@ -7,6 +7,8 @@ import {
   ViewChild,
   ComponentRef,
   EventEmitter,
+  Optional,
+  SkipSelf,
 } from '@angular/core';
 import { Location } from '@angular/common';
 import { Event, NavigationStart, Router } from '@angular/router';
@@ -33,6 +35,7 @@ import { DynamicModalSettings } from '../../../common/components/stackable-modal
 import { TranslationService } from '../../../services/translation';
 import { Client } from '../../../services/api/client';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 export type MediaModalParams = {
   entity: any;
@@ -189,6 +192,8 @@ export class MediaModalComponent implements OnInit, OnDestroy {
     private featureService: FeaturesService,
     private horizontalFeed: HorizontalFeedService,
     private features: FeaturesService,
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
+    protected clientMetaService: ClientMetaService,
     public attachment: AttachmentService,
     configs: ConfigsService
   ) {
@@ -476,7 +481,11 @@ export class MediaModalComponent implements OnInit, OnDestroy {
       url = `/pro/${this.site.pro.user_guid}${url}`;
     }
 
-    this.clientMeta.recordView(this.entity);
+    this.clientMetaService.recordView(this.entity, this.parentClientMeta, {
+      source: 'single',
+      medium: 'modal',
+    });
+
     this.analyticsService.send('pageview', {
       url,
     });

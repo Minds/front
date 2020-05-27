@@ -5,9 +5,9 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  ViewChild,
-  Injector,
+  Optional,
   SkipSelf,
+  ViewChild,
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -26,6 +26,7 @@ import { ShareModalComponent } from '../../../modules/modals/share/share';
 import { MetaService } from '../../../common/services/meta.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { ClientMetaDirective } from '../../../common/directives/client-meta.directive';
+import { ClientMetaService } from '../../../common/services/client-meta.service';
 
 @Component({
   selector: 'm-blog-view',
@@ -90,8 +91,6 @@ export class BlogView implements OnInit, OnDestroy {
 
   @ViewChild('lockScreen', { read: ElementRef }) lockScreen;
 
-  @ViewChild(ClientMetaDirective) protected clientMeta: ClientMetaDirective;
-
   constructor(
     public session: Session,
     public client: Client,
@@ -106,6 +105,8 @@ export class BlogView implements OnInit, OnDestroy {
     protected activityService: ActivityService,
     private cd: ChangeDetectorRef,
     private overlayModal: OverlayModalService,
+    @Optional() @SkipSelf() protected parentClientMeta: ClientMetaDirective,
+    protected clientMetaService: ClientMetaService,
     configs: ConfigsService
   ) {
     this.cdnUrl = configs.get('cdn_url');
@@ -117,7 +118,10 @@ export class BlogView implements OnInit, OnDestroy {
   ngOnInit() {
     this.isVisible();
     this.context.set('object:blog');
-    this.clientMeta.recordView(this.blog);
+    this.clientMetaService.recordView(this.blog, this.parentClientMeta, {
+      source: 'single',
+      medium: 'single',
+    });
   }
 
   isVisible() {

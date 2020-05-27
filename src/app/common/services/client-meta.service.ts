@@ -3,6 +3,7 @@ import { Location, isPlatformServer } from '@angular/common';
 import hashCode from '../../helpers/hash-code';
 import { Session } from '../../services/session';
 import { Client } from '../../services/api';
+import { ClientMetaDirective } from '../directives/client-meta.directive';
 
 /**
  * Client meta data structure
@@ -59,15 +60,23 @@ export class ClientMetaService {
   /**
    * Records a view
    * @param entity
-   * @param data
+   * @param clientMetaDirective
+   * @param extraClientMetaData
    */
-  async recordView(entity: any, data: ClientMetaData) {
+  async recordView(
+    entity: any,
+    clientMetaDirective: ClientMetaDirective,
+    extraClientMetaData: Partial<ClientMetaData> = {}
+  ) {
     if (isPlatformServer(this.platformId)) {
       return; // Browser will record too.
     }
 
     await this.client.post('api/v2/analytics/views/entity/' + entity.guid, {
-      client_meta: data,
+      client_meta: {
+        ...(clientMetaDirective && clientMetaDirective.build()),
+        ...extraClientMetaData,
+      },
     });
   }
 }
