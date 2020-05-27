@@ -39,6 +39,7 @@
         readonly
         onfocus="this.removeAttribute('readonly');"
         [class.m-input--hide-placeholder]="showLabels"
+        [pattern]="alphanumericPattern"
       />
       <div
         class="m-register__error"
@@ -55,6 +56,13 @@
           i18n="@@MINDS__REGISTER__EXCEPTION__USERNAME_TOO_LONG"
         >
           Cannot be longer than 128 characters
+        </ng-container>
+        <ng-container
+          *ngIf="this.form.get('username').errors?.pattern"
+          i18n="@@MINDS__REGISTER__EXCEPTION__NOT_ALPHANUMERIC"
+        >
+          Usernames can only have letters, numbers or underscores. Special
+          characters (e.g. @^%.) and spaces are not allowed.
         </ng-container>
       </div>
     </div>
