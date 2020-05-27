@@ -10,10 +10,7 @@
         </a>
       </div>
 
-      <p
-        class="m-wire-creator--subtext"
-        i18n="@@WIRE__CREATOR__WIRE_NOTICE_TOKENS"
-      >
+      <p class="m-wire-creator--subtext">
         <b>Support <span>@</span>{{ owner.username }}</b> by sending them Minds
         Tokens<ng-container *mIfFeature="'wire-multi-currency'"
           >, ETH, BTC or USD</ng-container
@@ -363,8 +360,8 @@
         <li (click)="buyTokens()" *ngIf="false">
           <div class="m-wire--creator-selector-type">
             <i class="material-icons">monetization_on</i>
-            <h5 i18n="@@M__COMMON__BUY_MINDS_TOKENS">
-              <span>Buy Tokens</span>
+            <h5>
+              <span i18n>Buy Tokens</span>
             </h5>
 
             <span

@@ -219,10 +219,9 @@
           <span
             class="m-boost--creator-toggle--label"
             *ngIf="boost.currency == 'usd'"
-            i18n="@@BOOST__CREATOR__USD_PRIORITY_FEE"
           >
             +
-            <b
+            <b i18n
               >{{
                 calcPriorityChargesPreview('usd') | currency: 'USD':true
               }}
@@ -232,10 +231,9 @@
           <span
             class="m-boost--creator-toggle--label"
             *ngIf="boost.currency !== 'usd'"
-            i18n="@@BOOST__CREATOR__TOKENS_PRIORITY_FEE"
           >
             +
-            <b
+            <b i18n
               >{{
                 calcPriorityChargesPreview(boost.currency) | number
               }}

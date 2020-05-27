@@ -108,9 +108,9 @@
                         <label
                           for="publish"
                           class="m-proSettings__customInputContainer--checkbox"
-                          i18n
                           (click)="onEnableProThemeClick($event)"
-                          >Enable Pro theme
+                        >
+                          <ng-container i18n>Enable Pro theme</ng-container>
                           <input
                             type="checkbox"
                             id="publish"
@@ -373,9 +373,9 @@
                         <label
                           for="scheme_light"
                           class="m-proSettings__customInputContainer--radio"
-                          i18n
                           data-minds="schemeLight"
-                          >Light
+                        >
+                          <ng-container i18n>Light</ng-container>
                           <input
                             type="radio"
                             id="scheme_light"
@@ -393,7 +393,8 @@
                           class="m-proSettings__customInputContainer--radio"
                           i18n
                           data-minds="schemeDark"
-                          >Dark
+                        >
+                          <ng-container i18n>Dark</ng-container>
                           <input
                             type="radio"
                             id="scheme_dark"
@@ -827,8 +828,8 @@
                         <label
                           for="method_usd"
                           class="m-proSettings__customInputContainer--radio"
-                          i18n
-                          >USD
+                        >
+                          <ng-container i18n>USD</ng-container>
                           <input
                             type="radio"
                             value="usd"
@@ -846,8 +847,8 @@
                         <label
                           for="method_tokens"
                           class="m-proSettings__customInputContainer--radio"
-                          i18n
-                          >Minds Tokens
+                        >
+                          <ng-container i18n>Minds Tokens</ng-container>
                           <input
                             type="radio"
                             value="tokens"
@@ -865,8 +866,8 @@
                         <label
                           for="method_eth"
                           class="m-proSettings__customInputContainer--radio"
-                          i18n
-                          >Ether
+                        >
+                          <ng-container i18n>Ether</ng-container>
                           <input
                             type="radio"
                             value="eth"
@@ -884,8 +885,8 @@
                         <label
                           for="method_btc"
                           class="m-proSettings__customInputContainer--radio"
-                          i18n
-                          >Bitcoin
+                        >
+                          <ng-container i18n>Bitcoin</ng-container>
                           <input
                             type="radio"
                             value="btc"

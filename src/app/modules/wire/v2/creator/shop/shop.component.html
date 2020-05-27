@@ -50,7 +50,7 @@
             *ngFor="let supportTier of groupedSupportTiers.usd"
             [ngValue]="supportTier"
           >
-            <ng-container i18n>${{ supportTier.amount | number }}</ng-container>
+            ${{ supportTier.amount | number }}
             -
             {{ supportTier.description }}
           </option>

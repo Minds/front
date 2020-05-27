@@ -11,9 +11,11 @@
               <label
                 for="autoImport"
                 class="m-form__customInputWrapper__checkbox"
-                i18n
-                >Automatically transfer newly added YouTube videos across to
-                Minds
+              >
+                <ng-container i18n
+                  >Automatically transfer newly added YouTube videos across to
+                  Minds</ng-container
+                >
                 <input
                   type="checkbox"
                   id="autoImport"
@@ -32,14 +34,14 @@
     </div>
   </form>
   <div class="m-settingsV2__headerLabel m-youtubeMigration__headerLabel">
-    <span>Disconnect YouTube Account</span>
+    <span i18n>Disconnect YouTube Account</span>
   </div>
   <div class="m-settingsV2__desc m-youtubeMigration__desc">
-    <p>Status: <span>Connected</span></p>
-    <p>
+    <p><ng-container i18n>Status:</ng-container> <span i18n>Connected</span></p>
+    <p i18n>
       You can simply disconnect your YouTube account from Minds. In doing so,
       any previously transferred videos will continue to be available on Minds.
     </p>
-    <p><a (click)="disconnectAccount()">Disconnect YouTube account</a></p>
+    <p><a (click)="disconnectAccount()" i18n>Disconnect YouTube account</a></p>
   </div>
 </ng-container>
