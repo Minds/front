@@ -98,7 +98,9 @@
         <div class="mdl-grid m-media-content--meta">
           <div
             class="mdl-cell mdl-cell--12-col m-media-content--title"
-            [ngClass]="{ 'm-mature-text': attachment.shouldBeBlurred(entity) }"
+            [ngClass]="{
+              'm-mature-text': attachment.shouldBeBlurred(entity)
+            }"
           >
             <div class="mdl-cell mdl-cell--8-col mdl-cell--6-col-phone">
               <h1

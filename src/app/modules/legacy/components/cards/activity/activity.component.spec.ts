@@ -55,8 +55,6 @@ import { IfFeatureDirective } from '../../../../../common/directives/if-feature.
 import { NSFWSelectorConsumerService } from '../../../../../common/components/nsfw-selector/nsfw-selector.service';
 import { FeaturesService } from '../../../../../services/features.service';
 import { BlockListService } from '../../../../../common/services/block-list.service';
-import { ClientMetaService } from '../../../../../common/services/client-meta.service';
-import { clientMetaServiceMock } from '../../../../../../tests/client-meta-service-mock.spec';
 import { AutocompleteSuggestionsService } from '../../../../suggestions/services/autocomplete-suggestions.service';
 import { SiteService } from '../../../../../common/services/site.service';
 import { ConfigsService } from '../../../../../common/services/configs.service';
@@ -494,7 +492,6 @@ describe('Activity', () => {
         { provide: OverlayModalService, useValue: overlayModalServiceMock },
         { provide: WireModalService, useValue: MockService(WireModalService) },
         { provide: EntitiesService, useValue: entitiesServiceMock },
-        { provide: ClientMetaService, useValue: clientMetaServiceMock },
         {
           provide: NSFWSelectorConsumerService,
           useValue: NSFWSelectorServiceMock,

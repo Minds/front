@@ -1,70 +1,74 @@
-<div *ngIf="service.channel$ | async" class="m-channel-v2">
-  <m-channel__header>
-    <m-channel__actions *ngIf="service.guid$ | async"></m-channel__actions>
-  </m-channel__header>
+<ng-container [m-clientMeta]="{ source: 'feed/channel', medium: 'feed' }">
+  <div *ngIf="service.channel$ | async" class="m-channel-v2">
+    <m-channel__header>
+      <m-channel__actions *ngIf="service.guid$ | async"></m-channel__actions>
+    </m-channel__header>
 
-  <m-channel__content>
-    <m-channelAbout__brief
-      class="m-channel__narrowBrief"
-    ></m-channelAbout__brief>
+    <m-channel__content>
+      <m-channelAbout__brief
+        class="m-channel__narrowBrief"
+      ></m-channelAbout__brief>
 
-    <div
-      *ngIf="service.username$ | async as username"
-      class="m-channel__tabs m-tabs__container"
-    >
-      <div class="m-tabs__tab">
-        <a
-          [class.m-tabs__tab--selected]="
-            ['activities', 'images', 'videos', 'blogs'].includes(view$ | async)
-          "
-          [routerLink]="['/', username, '']"
-          i18n
-          >Feed</a
-        >
+      <div
+        *ngIf="service.username$ | async as username"
+        class="m-channel__tabs m-tabs__container"
+      >
+        <div class="m-tabs__tab">
+          <a
+            [class.m-tabs__tab--selected]="
+              ['activities', 'images', 'videos', 'blogs'].includes(
+                view$ | async
+              )
+            "
+            [routerLink]="['/', username, '']"
+            i18n
+            >Feed</a
+          >
+        </div>
+
+        <div class="m-tabs__tab" *ngIf="false">
+          <a
+            [routerLink]="['/', username, 'shop']"
+            routerLinkActive="m-tabs__tab--selected"
+            [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
+            i18n
+            >Shop</a
+          >
+        </div>
+
+        <div class="m-tabs__tab">
+          <a
+            [routerLink]="['/', username, 'about']"
+            [class.m-tabs__tab--selected]="
+              ['about', 'subscribers', 'subscriptions', 'groups'].includes(
+                view$ | async
+              )
+            "
+            i18n
+            >About</a
+          >
+        </div>
       </div>
 
-      <div class="m-tabs__tab" *ngIf="false">
-        <a
-          [routerLink]="['/', username, 'shop']"
-          routerLinkActive="m-tabs__tab--selected"
-          [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
-          i18n
-          >Shop</a
-        >
-      </div>
-
-      <div class="m-tabs__tab">
-        <a
-          [routerLink]="['/', username, 'about']"
-          [class.m-tabs__tab--selected]="
-            ['about', 'subscribers', 'subscriptions', 'groups'].includes(
-              view$ | async
-            )
-          "
-          i18n
-          >About</a
-        >
-      </div>
-    </div>
-
-    <ng-container [ngSwitch]="view$ | async">
-      <m-channel__shop *ngSwitchCase="'shop'"></m-channel__shop>
-      <m-channel__about *ngSwitchCase="'about'"></m-channel__about>
-      <m-channelList__connections
-        subscribeEndpointParam="subscribers"
-        [canSearch]="false"
-        *ngSwitchCase="'subscribers'"
-      ></m-channelList__connections>
-      <m-channelList__connections
-        subscribeEndpointParam="subscriptions"
-        [canSearch]="true"
-        *ngSwitchCase="'subscriptions'"
-      ></m-channelList__connections>
-      <m-channelList__groups *ngSwitchCase="'groups'"></m-channelList__groups>
-      <m-channel__feed
-        [view]="view$ | async"
-        *ngSwitchDefault
-      ></m-channel__feed>
-    </ng-container>
-  </m-channel__content>
-</div>
+      <ng-container [ngSwitch]="view$ | async">
+        <m-channel__shop *ngSwitchCase="'shop'"></m-channel__shop>
+        <m-channel__about *ngSwitchCase="'about'"></m-channel__about>
+        <m-channelList__connections
+          subscribeEndpointParam="subscribers"
+          [canSearch]="false"
+          *ngSwitchCase="'subscribers'"
+        ></m-channelList__connections>
+        <m-channelList__connections
+          subscribeEndpointParam="subscriptions"
+          [canSearch]="true"
+          *ngSwitchCase="'subscriptions'"
+        ></m-channelList__connections>
+        <m-channelList__groups *ngSwitchCase="'groups'"></m-channelList__groups>
+        <m-channel__feed
+          [view]="view$ | async"
+          *ngSwitchDefault
+        ></m-channel__feed>
+      </ng-container>
+    </m-channel__content>
+  </div>
+</ng-container>
