@@ -350,7 +350,7 @@ describe('SettingsGeneralComponent', () => {
     );
     expect(p).not.toBeNull();
     expect(p.nativeElement.textContent).toContain(
-      'You currently have 1 opened session'
+      'You currently have 1 session(s) open.'
     );
 
     const button = fixture.debugElement.query(

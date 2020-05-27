@@ -38,6 +38,7 @@ import { ChannelMode } from '../../interfaces/entities';
 import { SiteService } from '../../common/services/site.service';
 import { ConfigsService } from '../../common/services/configs.service';
 import { SeoService } from './v2/seo.service';
+import { ClientMetaService } from '../../common/services/client-meta.service';
 
 describe('ChannelComponent', () => {
   let comp: ChannelComponent;
@@ -117,6 +118,10 @@ describe('ChannelComponent', () => {
         { provide: FeaturesService, useValue: featuresServiceMock },
         { provide: BlockListService, useValue: MockService(BlockListService) },
         { provide: ConfigsService, useValue: MockService(ConfigsService) },
+        {
+          provide: ClientMetaService,
+          useValue: MockService(ClientMetaService),
+        },
       ],
     }).compileComponents(); // compile template and css
   }));
