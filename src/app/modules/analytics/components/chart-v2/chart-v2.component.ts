@@ -33,7 +33,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
   private _segments: Array<any>;
   @Input() set segments(value: Array<any>) {
     this._segments = value;
-    if (value) {
+    if (value && this.init) {
       //redraw chart
       this.initPlot();
     }
@@ -45,7 +45,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
   private _interval: string;
   @Input() set interval(value: string) {
     this._interval = value;
-    if (value) {
+    if (value && this.init) {
       //redraw chart
       this.initPlot();
     }
@@ -129,6 +129,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
 
   // * PREPARE PLOT -----------------------------
   initPlot() {
+    console.log('888 initPlot', this.isDark);
     this.pointsPerSegment = this.segments[0].buckets.length;
 
     const yLowerBound = this.getLowerBound(this.segments[0].buckets);
@@ -206,6 +207,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
 
       this.data[i] = segment;
     });
+    this.detectChanges();
   }
 
   setLayout() {
@@ -283,6 +285,7 @@ export class ChartV2Component implements OnInit, OnDestroy {
     if (this.allPointsAreZero) {
       this.layout.yaxis.range = [-1, 9];
     }
+    this.detectChanges();
   }
   // * EVENTS -----------------------------------
 
