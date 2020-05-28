@@ -77,6 +77,9 @@ export class LanguageService {
     if (!serviceOnly) {
       // TODO: Do it via API (async)
       this.cookie.put('hl', language);
+
+      // TODO: Only reload if i18n strings file exists
+      window.location.reload();
     }
   }
 
