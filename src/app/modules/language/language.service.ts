@@ -6,14 +6,14 @@ import { catchError, map } from 'rxjs/operators';
 @Injectable()
 export class LanguageService {
   /**
-   *
+   * Current language selected by user
    */
   readonly currentLanguage$: BehaviorSubject<string> = new BehaviorSubject<
     string
   >('en');
 
   /**
-   *
+   * Browser's language
    */
   readonly browserLanguage$: Observable<string> = of(
     (navigator as any).language || (navigator as any).userLanguage
@@ -24,7 +24,7 @@ export class LanguageService {
   );
 
   /**
-   *
+   * List of all languages, weighted by current, browser and site default (English)
    */
   readonly languages$: Observable<Array<LanguageListEntry>> = combineLatest([
     of(LANGUAGE_LIST),
@@ -37,7 +37,7 @@ export class LanguageService {
   );
 
   /**
-   *
+   * Current's language native name
    */
   readonly currentLanguageName$: Observable<string> = combineLatest([
     this.languages$,
@@ -51,7 +51,7 @@ export class LanguageService {
   );
 
   /**
-   *
+   * Sorts the language list based on current values
    * @param languages
    * @param current
    * @param browser
