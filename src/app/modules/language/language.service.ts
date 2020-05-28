@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import LANGUAGE_LIST, { LanguageListEntry } from './language-list';
 import { catchError, map } from 'rxjs/operators';
+import { CookieService } from '../../common/services/cookie.service';
+import LANGUAGE_LIST, { LanguageListEntry } from './language-list';
 
 @Injectable()
 export class LanguageService {
@@ -49,6 +50,35 @@ export class LanguageService {
     ),
     catchError(() => 'Unknown')
   );
+
+  /**
+   * Constructor. Sets current language.
+   * @param cookie
+   */
+  constructor(protected cookie: CookieService) {
+    const currentLanguage = this.cookie.get('hl');
+
+    if (currentLanguage) {
+      this.setCurrentLanguage(currentLanguage, true);
+    }
+  }
+
+  /**
+   * Sets the current language
+   * @param language
+   * @param serviceOnly
+   */
+  async setCurrentLanguage(
+    language: string,
+    serviceOnly: boolean = false
+  ): Promise<void> {
+    this.currentLanguage$.next(language);
+
+    if (!serviceOnly) {
+      // TODO: Do it via API (async)
+      this.cookie.put('hl', language);
+    }
+  }
 
   /**
    * Sorts the language list based on current values
