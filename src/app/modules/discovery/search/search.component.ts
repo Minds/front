@@ -57,14 +57,15 @@ export class DiscoverySearchComponent {
       )
         .pipe(distinctUntilChanged(), debounceTime(300))
         .subscribe(([nsfw, period, type, filter, paramMap]) => {
-          if (filter !== paramMap.get('f') || type !== paramMap.get('t')) {
-            this.router.navigate([], {
-              queryParams: { q: this.q, f: filter, t: type },
-              queryParamsHandling: 'merge',
-            });
-          } else {
-            this.service.search(this.q);
-          }
+          // if (filter !== paramMap.get('f') || type !== paramMap.get('t')) {
+          //   this.router.navigate([], {
+          //     relativeTo: this.route,
+          //     queryParams: { q: this.q, f: filter, t: type },
+          //     queryParamsHandling: 'merge',
+          //   });
+          // } else {
+          this.service.search(this.q);
+          // }
         }),
     ];
   }
