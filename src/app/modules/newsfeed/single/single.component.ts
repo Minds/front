@@ -173,17 +173,19 @@ export class NewsfeedSingleComponent {
 
   private updateMeta(): void {
     const activity = this.activity.remind_object || this.activity;
+    const secondaryText = activity.blurb || activity.description || '';
 
     const title: string =
       activity.title ||
       activity.message ||
+      `${secondaryText.substr(0, 57)}...` ||
       `@${activity.ownerObj.username}'s post on Minds`;
 
     let description: string;
     if (title.length > 60) {
       description = `...${title.substr(57)}`;
     } else {
-      description = activity.blurb || '';
+      description = secondaryText;
     }
     description += `. Subscribe to @${activity.ownerObj.username} on Minds`;
 
