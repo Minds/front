@@ -1,0 +1,20 @@
+<div class="m-modalV2__inner">
+  <div class="m-modalV2__header">
+    <h2 class="m-modalV2Header__title" i18n>Select Language</h2>
+  </div>
+
+  <div class="m-layout__spacer"></div>
+
+  <div
+    class="m-marketing__sep m-marketing__sep--dashed m-marketing__sep--big"
+  ></div>
+
+  <div class="m-modalV2__body m-languageModal__body">
+    <span
+      *ngFor="let language of service.languages$ | async"
+      class="m-languageModal__languageOption"
+      [innerHTML]="language.nativeName"
+      (click)="onSave(language.code)"
+    ></span>
+  </div>
+</div>

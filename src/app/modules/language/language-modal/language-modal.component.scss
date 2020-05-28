@@ -1,32 +1,37 @@
-.m-modalV2__body {
-  padding-bottom: 32px !important;
-}
-
-.m-modalV2__header {
-  padding: 24px 32px !important;
-
-  @include m-theme() {
-    border-bottom: 1px solid themed($m-borderColor--tertiary);
-  }
-}
-
-.m-languageModal__languageOption {
-  display: inline-flex;
-  width: 33.33%;
-  line-height: 3;
-
-  cursor: pointer;
-  text-decoration: underline;
-
-  @include m-theme() {
-    color: themed($m-link);
+m-languageModal {
+  .m-modalV2__body {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-bottom: 32px;
   }
 
-  &:hover {
-    text-decoration: none;
+  .m-modalV2__header {
+    padding: 24px 32px;
 
     @include m-theme() {
-      text-shadow: 1px 1px 1px themed($m-blue-grey-800);
+      border-bottom: 1px solid themed($m-borderColor--tertiary);
+    }
+  }
+
+  .m-languageModal__languageOption {
+    width: 33.33%;
+    padding: 10px;
+    text-decoration: underline;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    @include m-theme() {
+      color: themed($m-link);
+    }
+
+    &:hover {
+      text-decoration: none;
+
+      @include m-theme() {
+        text-shadow: 1px 1px 1px themed($m-blue-grey-800);
+      }
     }
   }
 }

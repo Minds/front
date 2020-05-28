@@ -1,12 +1,12 @@
 <div class="m-marketing__footer">
   <div class="m-marketingFooter__columns">
-    <div class="m-marketingFooter__languageBar">
-      <m-language__bar
-        *ngIf="features.has('localization-2020')"
-      ></m-language__bar>
+    <div
+      class="m-marketingFooter__languageBar"
+      *mIfFeature="'localization-2020'"
+    >
+      <m-language__bar></m-language__bar>
 
       <div
-        *ngIf="features.has('localization-2020')"
         class="m-marketing__sep m-marketing__sep--dashed m-marketing__sep--big"
       ></div>
     </div>
