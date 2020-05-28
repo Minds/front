@@ -107,7 +107,7 @@ build:review:
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
-    - sh build/ng9-bundles.sh dist/browser /browser dist/server
+    - sh build/ng9-bundles.sh dist/browser /browser/ dist/server
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
@@ -126,7 +126,7 @@ build:production:bundles:
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
-    - sh build/ng9-bundles.sh dist/browser https://cdn-assets.minds.com/front/dist/browser dist/server
+    - sh build/ng9-bundles.sh dist/browser https://cdn-assets.minds.com/front/dist/browser/ dist/server
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
