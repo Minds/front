@@ -13,10 +13,10 @@
             class="form-control"
           >
             <option
-              *ngFor="let language of languages"
+              *ngFor="let language of service.languages$ | async"
               [value]="language.code"
-              >{{ language.name }}</option
-            >
+              [innerHTML]="language.nativeName + ' (' + language.name + ')'"
+            ></option>
           </select>
         </div>
       </div>
@@ -31,7 +31,8 @@
       </m-shadowboxSubmitButton>
     </div>
   </form>
-  <div class="m-settingsV2__desc">
+
+  <div class="m-settingsV2__desc" *ngIf="false">
     Bring Minds to the world! If you speak another language, help the community
     by translating the Minds
     <a target="_blank" href="https://poeditor.com/join/project/A45VLCwD0Y"

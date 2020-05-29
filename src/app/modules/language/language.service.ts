@@ -3,6 +3,8 @@ import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { CookieService } from '../../common/services/cookie.service';
 import LANGUAGE_LIST, { LanguageListEntry } from './language-list';
+import { ApiService } from '../../common/api/api.service';
+import { Session } from '../../services/session';
 
 @Injectable()
 export class LanguageService {
@@ -54,8 +56,14 @@ export class LanguageService {
   /**
    * Constructor. Sets current language.
    * @param cookie
+   * @param api
+   * @param session
    */
-  constructor(protected cookie: CookieService) {
+  constructor(
+    protected cookie: CookieService,
+    protected api: ApiService,
+    protected session: Session
+  ) {
     const currentLanguage = this.cookie.get('hl');
 
     if (currentLanguage) {
@@ -64,23 +72,31 @@ export class LanguageService {
   }
 
   /**
-   * Sets the current language
+   * Sets the current language. Returns true if a reload is needed.
    * @param language
    * @param serviceOnly
    */
   async setCurrentLanguage(
     language: string,
     serviceOnly: boolean = false
-  ): Promise<void> {
+  ): Promise<boolean> {
     this.currentLanguage$.next(language);
 
     if (!serviceOnly) {
-      // TODO: Do it via API (async)
-      this.cookie.put('hl', language);
+      if (this.session.isLoggedIn()) {
+        await this.api
+          .post('api/v1/settings', {
+            language,
+          })
+          .toPromise();
+      } else {
+        this.cookie.put('hl', language);
+      }
 
-      // TODO: Only reload if i18n strings file exists
-      window.location.reload();
+      return true;
     }
+
+    return false;
   }
 
   /**

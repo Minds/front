@@ -42,6 +42,10 @@ export class LanguageBarComponent {
    * @param language - language to pass to currentLanguage$
    */
   async onLanguageSelect(language: string): Promise<void> {
-    await this.service.setCurrentLanguage(language);
+    const needsReload = await this.service.setCurrentLanguage(language);
+
+    if (needsReload) {
+      window.location.reload();
+    }
   }
 }

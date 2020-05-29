@@ -17,37 +17,27 @@ import { MindsUser } from '../../../../interfaces/entities';
 import { SettingsV2Service } from '../../settings-v2.service';
 
 import { ConfigsService } from '../../../../common/services/configs.service';
+import { LanguageService } from '../../../language/language.service';
 
 @Component({
   selector: 'm-settingsV2__displayLanguage',
-  templateUrl: './display-language.component.html',
+  templateUrl: './language.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SettingsV2DisplayLanguageComponent implements OnInit, OnDestroy {
+export class SettingsV2LanguageComponent implements OnInit, OnDestroy {
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
   init: boolean = false;
   inProgress: boolean = false;
   user: MindsUser;
   settingsSubscription: Subscription;
   form;
-  languages = [];
 
   constructor(
+    public service: LanguageService,
     protected cd: ChangeDetectorRef,
-    private session: Session,
-    protected settingsService: SettingsV2Service,
-    private dialogService: DialogService,
-    configs: ConfigsService
-  ) {
-    for (const code in configs.get('languages')) {
-      if (configs.get('languages').hasOwnProperty(code)) {
-        this.languages.push({
-          code,
-          name: configs.get('languages')[code],
-        });
-      }
-    }
-  }
+    protected session: Session,
+    protected settingsService: SettingsV2Service
+  ) {}
 
   ngOnInit() {
     this.user = this.session.getLoggedInUser();

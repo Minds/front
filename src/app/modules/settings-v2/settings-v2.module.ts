@@ -19,7 +19,7 @@ import { SettingsV2DisplayNameComponent } from './account/display-name/display-n
 import { SettingsV2SessionsComponent } from './security/sessions/sessions.component';
 import { SettingsV2TwoFactorComponent } from './security/two-factor/two-factor.component';
 import { SettingsV2EmailAddressComponent } from './account/email-address/email-address.component';
-import { SettingsV2DisplayLanguageComponent } from './account/display-language/display-language.component';
+import { SettingsV2LanguageComponent } from './account/language/language.component';
 import { SettingsV2PasswordComponent } from './account/password/password.component';
 import { SettingsV2EmailNotificationsComponent } from './account/email-notifications/email-notifications.component';
 import { SettingsV2NsfwContentComponent } from './account/nsfw-content/nsfw-content.component';
@@ -96,11 +96,12 @@ const SETTINGS_V2_ROUTES: Routes = [
             },
           },
           {
-            path: 'display-language',
-            component: SettingsV2DisplayLanguageComponent,
+            path: 'language',
+            component: SettingsV2LanguageComponent,
             data: {
-              title: 'Display Language Settings',
-              description: 'Change the web interface language.',
+              title: 'Language Settings',
+              description:
+                'Change your preferred language and, if available, the web interface display.',
             },
           },
           {
@@ -443,7 +444,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2SessionsComponent,
     SettingsV2TwoFactorComponent,
     SettingsV2EmailAddressComponent,
-    SettingsV2DisplayLanguageComponent,
+    SettingsV2LanguageComponent,
     SettingsV2PasswordComponent,
     SettingsV2EmailNotificationsComponent,
     SettingsV2NsfwContentComponent,

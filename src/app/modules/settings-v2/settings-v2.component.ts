@@ -60,7 +60,7 @@ export class SettingsV2Component implements OnInit {
         items: [
           { label: 'Display Name', id: 'display-name' },
           { label: 'Email Address', id: 'email-address' },
-          { label: 'Display Language', id: 'display-language' },
+          { label: 'Language', id: 'language' },
           { label: 'Password', id: 'password' },
           { label: 'NSFW Content', id: 'nsfw-content' },
           { label: 'Share Buttons', id: 'share-buttons' },
