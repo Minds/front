@@ -104,8 +104,6 @@ export class ClientMetaDirective {
       );
     }
 
-    console.dir(clientMetaData);
-
     return clientMetaData;
   }
 }
