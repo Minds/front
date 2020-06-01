@@ -91,7 +91,6 @@ qa:production:
 #   only:
 #     refs:
 #       - master
-#       - epic/angular-9
 #       - production
 #       - test/gitlab-ci
 #   allow_failure: false
@@ -115,7 +114,6 @@ build:review:
   except:
     refs:
       - master
-      #- epic/angular-9
       - production
       - test/gitlab-ci
 
@@ -135,9 +133,9 @@ build:production:bundles:
   only:
     refs:
       - master
-      #- epic/angular-9
       - production
       - test/gitlab-ci
+      - epic/angular-9
 
 #################
 # Prepare Stage #
@@ -168,7 +166,6 @@ prepare:review:
   except:
     refs:
       - master
-      #- epic/angular-9
       - production
       - test/gitlab-ci
 
@@ -179,7 +176,6 @@ prepare:review:sentry:
   except:
     refs:
       - master
-      #- epic/angular-9
       - production
       - test/gitlab-ci
   dependencies:
@@ -199,7 +195,6 @@ prepare:production:
   only:
     refs:
       - master
-      #- epic/angular-9
       - production
       - test/gitlab-ci
   dependencies:
@@ -212,7 +207,6 @@ prepare:production:sentry:
   only:
     refs:
       - master
-      #- epic/angular-9
       - production
       - test/gitlab-ci
   dependencies:
@@ -236,7 +230,6 @@ prepare:production:sentry:
   except:
     refs:
       - master
-      #- epic/angular-9
       - production
       - test/gitlab-ci
 
@@ -265,7 +258,6 @@ review:start:
   except:
     refs:
       - master
-      #- epic/angular-9
       - production
       - test/gitlab-ci
 
@@ -310,7 +302,6 @@ staging:fpm:
   only:
     refs:
       - master
-      #- epic/angular-9
       - test/gitlab-ci
 
 review:preprod:
@@ -324,11 +315,9 @@ review:preprod:
   environment:
     name: preprod
     url: https://www.minds.com # requires preprod cookie
-  # dependencies:
-  #   - build:review
-  # except:
-  #   refs:
-  #     - master
+  only:
+    refs:
+      - epic/angular-9
 
 deploy:canary:
   <<: *deploy
@@ -344,7 +333,6 @@ deploy:canary:
   only:
     refs:
       - master
-      #- epic/angular-9
       - test/gitlab-ci
 
 deploy:production:
@@ -361,7 +349,6 @@ deploy:production:
   only:
     refs:
       - master
-      #- epic/angular-9
       - test/gitlab-ci
 
 #################
@@ -375,6 +362,5 @@ cleanup:review: # We stop the review site after the e2e tests have run
   except:
     refs:
       - master
-      - epic/angular-9
       - production
       - test/gitlab-ci
