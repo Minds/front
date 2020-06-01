@@ -4,7 +4,7 @@
 >
   <div
     class="m-messenger--dockpane-tab"
-    [class.mdl-color--amber]="conversation.unread"
+    [class.mdl-color--amber]="conversation.unread && !conversation.open"
     (click)="toggle(); initialLoad()"
   >
     <div class="m-messenger--dockpane-tab-title">
