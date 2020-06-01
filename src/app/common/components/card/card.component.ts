@@ -169,7 +169,11 @@ export class MindsCard implements AfterViewInit {
   }
 
   updateClasses() {
-    if (!this.anchorRef || !this.anchorRef.nativeElement) {
+    if (
+      !this.anchorRef ||
+      !this.anchorRef.nativeElement ||
+      !this.anchorRef.nativeElement.nextSibling
+    ) {
       return;
     }
 
