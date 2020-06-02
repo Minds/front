@@ -39,6 +39,10 @@ m-modal__remindComposer {
       right: $minds-padding * 3;
       bottom: $minds-padding * 3;
 
+      a {
+        cursor: pointer;
+      }
+
       a:hover {
         @include m-theme() {
           color: themed($m-blue-grey-700);

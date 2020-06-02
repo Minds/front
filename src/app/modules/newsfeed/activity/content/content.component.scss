@@ -126,8 +126,9 @@ m-activity__content {
 .m-activityContent__media--richEmbed {
   img {
     width: 100%;
-    height: 220px;
-    object-fit: cover;
+    display: block;
+    height: auto;
+    max-height: 400px;
   }
   .meta {
     padding: 20px $activity-padding-lr;

@@ -410,6 +410,7 @@
       [parent]="comment"
       [level]="level + 1"
       [canEdit]="canEdit"
+      [canDelete]="canDelete"
       *ngIf="showReplies && comment.can_reply"
     >
     </m-comments__thread>
