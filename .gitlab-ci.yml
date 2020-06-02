@@ -103,6 +103,7 @@ build:review:
   stage: test and build
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
+    - sed -ri "s|'DEPLOY_URL'|''|" src/environments/environment.prod.ts
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
@@ -122,6 +123,7 @@ build:production:bundles:
   stage: test and build
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
+    - sed -ri "s|'DEPLOY_URL'|'https://cdn-assets.minds.com/front/dist/browser'|" src/environments/environment.prod.ts
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
