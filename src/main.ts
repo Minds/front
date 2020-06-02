@@ -29,9 +29,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (languageCode) {
     try {
       loadTranslations(
-        await fetch(`assets/locale/Minds.${languageCode}.json`).then(r =>
-          r.json()
-        )
+        await fetch(`assets/locale/Minds.${languageCode}.json`)
+          .then(r => r.json())
+          .then(locale => locale.translations)
       );
     } catch (e) {
       console.warn(`Couldn't load ${languageCode} file`);
