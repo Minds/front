@@ -1,6 +1,7 @@
 import { argv } from 'yargs';
 import { execSync, StdioOptions } from 'child_process';
 import { join } from 'path';
+import { create, convert } from 'xmlbuilder2';
 
 import { readFileSync, statSync, unlinkSync, writeFileSync } from 'fs';
 
@@ -41,9 +42,37 @@ function transform(source, output) {
 
   let fileContent = readFileSync(source).toString();
 
-  fileContent = fileContent.replace(/&#10;/g, '\n').replace(/&#13;/g, '\n');
+  const doc: any = convert(
+    {
+      encoding: 'UTF-8',
+    },
+    fileContent.trim(),
+    { format: 'object' }
+  );
 
-  writeFileSync(output, fileContent);
+  doc.xliff.file.body['trans-unit'] = doc.xliff.file.body['trans-unit'].map(
+    transUnit => {
+      const output = JSON.parse(JSON.stringify(transUnit));
+
+      const note = {
+        '@priority': '1',
+        '@from': 'meaning',
+        '#': 'ng2.template',
+      };
+
+      if (!output['note']) {
+        output['note'] = note;
+      } else if (typeof output['note'].length === 'undefined') {
+        output['note'] = [output['note'], note];
+      } else {
+        output['note'].push(note);
+      }
+
+      return output;
+    }
+  );
+
+  writeFileSync(output, create(doc).end({ prettyPrint: true }));
 }
 
 // MAIN
@@ -52,7 +81,7 @@ export = () => cb => {
   run(`npx ng xi18n --out-file=messages.xlf --format=xlf`, {}, false);
   transform(
     join(APP_SRC, 'messages.xlf'),
-    join(APP_SRC, 'locale', argv.output || 'Default.xliff')
+    join(APP_SRC, 'locale', argv.output || 'Base.xlf')
   );
   unlinkSync(join(APP_SRC, 'messages.xlf'));
 
