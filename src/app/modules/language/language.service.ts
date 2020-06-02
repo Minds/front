@@ -2,10 +2,23 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { CookieService } from '../../common/services/cookie.service';
-import LANGUAGE_LIST, { LanguageListEntry } from './language-list';
 import { ApiService } from '../../common/api/api.service';
 import { Session } from '../../services/session';
+import { ConfigsService } from '../../common/services/configs.service';
 
+/**
+ * Language list entry structure
+ */
+export interface LanguageListEntry {
+  code: string;
+  name: string;
+  nativeName: string;
+  nativeNames: Array<string>;
+}
+
+/**
+ * Language service
+ */
 @Injectable()
 export class LanguageService {
   /**
@@ -30,7 +43,7 @@ export class LanguageService {
    * List of all languages, weighted by current, browser and site default (English)
    */
   readonly languages$: Observable<Array<LanguageListEntry>> = combineLatest([
-    of(LANGUAGE_LIST),
+    of(this.configs.get('languages')),
     this.currentLanguage$,
     this.browserLanguage$,
   ]).pipe(
@@ -58,11 +71,13 @@ export class LanguageService {
    * @param cookie
    * @param api
    * @param session
+   * @param configs
    */
   constructor(
     protected cookie: CookieService,
     protected api: ApiService,
-    protected session: Session
+    protected session: Session,
+    protected configs: ConfigsService
   ) {
     const currentLanguage = this.cookie.get('hl');
 
