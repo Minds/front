@@ -15,7 +15,9 @@
   <div class="m-walletForm__fieldsContainer">
     <div class="m-walletForm__field--text stretchedField" *ngIf="!confirming">
       <div class="m-walletForm__row--label">
-        <label for="number" i18n>Mobile Phone Number</label>
+        <label for="number" i18n="@@COMMON__MOBILE_PHONE_NUMBER"
+          >Mobile Phone Number</label
+        >
         <m-tooltip icon="help">
           <ng-container i18n
             >Minds will not store the number you provide. It will be hashed
@@ -33,16 +35,21 @@
         ngDefaultControl
       ></m-phoneInput>
       <div class="m-walletForm__row--validation">
-        <p *ngIf="invalidNumber">
+        <p
+          *ngIf="invalidNumber"
+          i18n="@@PHONE_VERIFICATION__INVALID_PHONE_NUMBER"
+        >
           Invalid phone number
         </p>
       </div>
     </div>
     <div class="m-walletForm__field--text stretchedField" *ngIf="confirming">
       <div class="m-walletForm__row--label">
-        <label for="code" i18n>Verification Code</label>
+        <label for="code" i18n="@@PHONE_VERIFICATION__VERIFICATION_CODE"
+          >Verification Code</label
+        >
         <m-tooltip icon="help">
-          <ng-container i18n
+          <ng-container i18n="@@PHONE_VERIFICATION__PLEASE_ENTER_CODE_TO_NUMBER"
             >Please enter the code we just sent to +{{
               form.value.number
             }}.</ng-container
@@ -63,7 +70,10 @@
         />
       </div>
       <div class="m-walletForm__row--validation">
-        <p *ngIf="invalidCode">
+        <p
+          *ngIf="invalidCode"
+          i18n="@@PHONE_VERIFICATION__INVALID_VERIFICATION_CODE"
+        >
           Invalid verification code
         </p>
       </div>
@@ -79,8 +89,13 @@
 </form>
 
 <div class="m-walletModal__footnote" *ngIf="confirming">
-  <div>Verification code sent to +{{ form.value.number }}</div>
-  <div class="m-walletSecondaryText">
+  <div i18n="@@PHONE_VERIFICATION__CODE_SENT_TO">
+    Verification code sent to +{{ form.value.number }}
+  </div>
+  <div
+    class="m-walletSecondaryText"
+    i18n="@@PHONE_VERIFICATION__DIDNT_RECEIVE_IT_SEND_AGAIN"
+  >
     Didn't receive it? <a (click)="validateNumber()">Send it again</a> or
     <a (click)="changePhone()">change phone number</a>
   </div>

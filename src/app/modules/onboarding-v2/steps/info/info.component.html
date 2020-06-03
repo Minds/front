@@ -13,17 +13,19 @@
     style="padding-top: 0;"
   >
     <div class="m-onboardingControl__label">
-      <label data-minds="location" i18n>Location</label>
+      <label data-minds="location" i18n="@@ONBOARDING_INFO__LOCATION"
+        >Location</label
+      >
 
       <m-tooltip [anchor]="tooltipAnchor">
         <span m-tooltip--anchor>𝒊</span>
-        <ng-container i18n>
+        <ng-container i18n="@@ONBOARDING_INFO__PLEASE_ENTER_CITY">
           Please enter your city to help us connect you with channels in your
           area. We do not track your exact location.
         </ng-container>
       </m-tooltip>
 
-      <span i18n>Optional</span>
+      <span i18n="@@ONBOARDING_INFO__OPTIONAL">Optional</span>
     </div>
 
     <div class="m-onboarding__input m-onboarding__location">
@@ -56,12 +58,14 @@
 
   <div class="m-onboarding__control m-onboardingControl__dateOfBirth">
     <div class="m-onboardingControl__label">
-      <label data-minds="dateOfBirth" i18n>Date of Birth</label>
-      <span i18n>Optional</span>
+      <label data-minds="dateOfBirth" i18n="@@COMMON__DATE_OF_BIRTH"
+        >Date of Birth</label
+      >
+      <span i18n="@@COMMON__OPTIONAL">Optional</span>
 
       <m-tooltip [anchor]="tooltipAnchor">
         <span m-tooltip--anchor>𝒊</span>
-        <ng-container i18n>
+        <ng-container i18n="@@ONBOARDING_INFO__PLEASE_ENTER_DOB">
           Please enter your birth date to confirm your age and help us improve
           our recommendations.
         </ng-container>
@@ -83,14 +87,18 @@
   </div>
 
   <div class="m-onboarding__actionButtons">
-    <button class="mf-button mf-button--hollow" (click)="skip()" i18n>
+    <button
+      class="mf-button mf-button--hollow"
+      (click)="skip()"
+      i18n="@@COMMON__SKIP"
+    >
       Skip
     </button>
     <button
       class="mf-button mf-button--alt"
       [disabled]="!canContinue()"
       (click)="continue()"
-      i18n
+      i18n="@@COMMON__CONTINUE"
     >
       Continue
     </button>

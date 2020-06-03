@@ -6,7 +6,9 @@
           for="toasterNotifications"
           class="m-form__customInputWrapper__checkbox"
         >
-          <ng-container i18n>Enable notification popovers</ng-container>
+          <ng-container i18n="@@TOASTER_NOTIFICATION_SETTINGS__ENABLE_POPOVERS"
+            >Enable notification popovers</ng-container
+          >
           <input
             type="checkbox"
             id="toasterNotifications"
@@ -26,6 +28,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@TOASTER_NOTIFICATION_SETTINGS__UPDATE_PREFERENCE"
     >
       Update Popover Preference
     </m-shadowboxSubmitButton>

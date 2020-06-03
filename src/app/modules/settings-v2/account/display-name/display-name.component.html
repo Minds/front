@@ -2,7 +2,9 @@
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
-        <label for="name" i18n>Display Name</label>
+        <label for="name" i18n="@@ACCOUNT_DISPLAY_NAME__DISPLAY_NAME"
+          >Display Name</label
+        >
       </div>
       <div class="m-form__row--input">
         <input
@@ -21,6 +23,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@ACCOUNT_DISPLAY_NAME__SAVE_DISPLAY_NAME"
     >
       Save Display Name
     </m-shadowboxSubmitButton>

@@ -1,19 +1,25 @@
 <div class="m-walletUsd__balance m-border">
   <div class="m-layout__row">
     <div class="m-layout__cell">
-      <label i18n>Future Payouts</label>
+      <label i18n="@@BALANCE__FUTURE_PAYOUTS">Future Payouts</label>
       <span>{{ balance | number }} {{ currency | uppercase }}</span>
     </div>
     <div class="m-layout__spacer"></div>
     <div class="m-layout_cell">
-      <label>Payout Schedule:</label>
+      <label i18n="@@BALANCE__PAYOUT_SCHEDULE">Payout Schedule:</label>
       <span>{{ interval | titlecase }}</span>
       <m-tooltip icon="help">
-        <ng-container *ngIf="interval === 'daily'" i18n>
+        <ng-container
+          i18n="@@BALANCE__DAILY_PAYOUTS_SENT_INFO"
+          *ngIf="interval === 'daily'"
+        >
           Daily payouts are sent {{ delay }} days after a payment has been
           processed
         </ng-container>
-        <ng-container *ngIf="interval === 'monthly'" i18n>
+        <ng-container
+          *ngIf="interval === 'monthly'"
+          i18n="@@BALANCE__MONTHLY_PAYOUTS_INFO"
+        >
           Monthly payouts will be issued on the {{ anchor }} day of the month
         </ng-container>
       </m-tooltip>

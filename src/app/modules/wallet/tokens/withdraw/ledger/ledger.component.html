@@ -53,7 +53,10 @@
 
     <div class="m-token--ledger--reward-details">
       <p *ngIf="withdrawal.completed; else withdrawPending">
-        <ng-container i18n>COMPLETED</ng-container> |
+        <ng-container i18n="@@LEDGER__TRANSACTION_COMPLETED"
+          >COMPLETED</ng-container
+        >
+        |
         <a
           class="m-token--ledger--completed-hash"
           target="_blank"

@@ -2,7 +2,7 @@
   <div *ngIf="!active; else cancelButton">
     <div class="m-plusSubscriptionPlan__toggleContainer">
       <div class="m-plusSubscriptionPlan__toggle">
-        <span i18n>Yearly</span>
+        <span i18n="@@PLUS_SUBSCRIPTION_OPTION__YEARLY">Yearly</span>
         <span
           ><m-toggle
             [(mModel)]="interval"
@@ -10,11 +10,11 @@
             rightValue="monthly"
           ></m-toggle
         ></span>
-        <span i18n>Monthly</span>
+        <span i18n="@@PLUS_SUBSCRIPTION_OPTION__MONTHLY">Monthly</span>
       </div>
 
       <div class="m-plusSubscriptionPlan__toggle">
-        <span i18n>USD</span>
+        <span i18n="@@PLUS_SUBSCRIPTION_OPTION__USD">USD</span>
         <span
           ><m-toggle
             [(mModel)]="currency"
@@ -22,19 +22,22 @@
             rightValue="tokens"
           ></m-toggle
         ></span>
-        <span i18n>Tokens</span>
+        <span i18n="@@PLUS_SUBSCRIPTION_OPTION__TOKENS">Tokens</span>
       </div>
     </div>
 
     <div class="m-plusSubscriptionPlan__pricing">
-      <span class="m-plusSubscriptionPlanPricing__amount" i18n>
+      <span
+        class="m-plusSubscriptionPlanPricing__amount"
+        i18n="@@PLUS_SUBSCRIPTION__PER_MONTH"
+      >
         <span>{{ pricing.amount }}</span> per month
       </span>
 
       <span
         class="m-plusSubscriptionPlanPricing__offer"
         *ngIf="pricing.offerFrom"
-        i18n
+        i18n="@@PLUS_SUBSCRIPTION__PER_MONTH"
       >
         {{ pricing.offerFrom }} per month
       </span>
@@ -45,7 +48,7 @@
         class="mf-button mf-button--alt"
         [disabled]="inProgress || criticalError"
         (click)="enable()"
-        i18n
+        i18n="@@PLUS_SUBSCRIPTION__UPGRADE_TO_PLUS"
       >
         Upgrade to Plus
       </button>
@@ -58,7 +61,7 @@
         class="mf-button mf-button--destructive"
         [disabled]="!canBeCancelled || inProgress || criticalError"
         (click)="disable()"
-        i18n
+        i18n="@@PLUS_SUBSCRIPTION__CANCEL_PLUS"
       >
         Cancel Plus
       </button>

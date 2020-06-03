@@ -13,7 +13,11 @@
   </li>
 
   <li *ngIf="user.pro && badges.indexOf('plus') > -1" routerLink="/pro">
-    <m-tooltip icon="business_center" iconClass="selected" i18n>
+    <m-tooltip
+      icon="business_center"
+      iconClass="selected"
+      i18n="@@COMMON__BADGES__PRO"
+    >
       Pro
     </m-tooltip>
   </li>

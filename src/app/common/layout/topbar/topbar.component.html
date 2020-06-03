@@ -37,7 +37,7 @@
       >
         <a [routerLink]="['/', session.getLoggedInUser().username]">
           <i class="material-icons">people</i>
-          <span i18n>View Channel</span>
+          <span i18n="verb|@@M__ACTION__VIEW_CHANNEL">View Channel</span>
         </a>
       </li>
       <li
@@ -47,7 +47,7 @@
       >
         <a [routerLink]="['/admin/analytics']">
           <i class="material-icons">build</i>
-          <span i18n>Admin</span>
+          <span i18n="@@COMMON__ADMIN">Admin</span>
         </a>
       </li>
       <li
@@ -57,7 +57,7 @@
       >
         <a [routerLink]="['/settings/general']">
           <i class="material-icons">settings</i>
-          <span i18n>Settings</span>
+          <span i18n="@@COMMON_SETTINGS">Settings</span>
         </a>
       </li>
       <ng-container *mIfFeature="'helpdesk'; else faq"> </ng-container>
@@ -65,7 +65,7 @@
         <li class="m-dropdownList__item" (click)="menu.value = false">
           <a [routerLink]="['/faq']">
             <i class="material-icons">help_outline</i>
-            <span i18n>FAQ</span>
+            <span i18n="@@COMMON_FAQ">FAQ</span>
           </a>
         </li>
       </ng-template>
@@ -73,13 +73,13 @@
         <ng-container *mIfFeature="'helpdesk'; else helpAndSupport">
           <a routerLink="/help">
             <i class="material-icons">help_outline</i>
-            <span i18n>Help Desk</span>
+            <span i18n="@@COMMON__HELP DESK">Help Desk</span>
           </a>
         </ng-container>
         <ng-template #helpAndSupport>
           <a [routerLink]="['/groups/profile/', '100000000000000681']">
             <i class="material-icons">help_outline</i>
-            <span i18n>Help & Support</span>
+            <span i18n="COMMON__HELP_AND_SUPPORT">Help & Support</span>
           </a>
         </ng-template>
       </li>
@@ -89,7 +89,7 @@
           [href]="cdnAssetsUrl + 'assets/documents/Whitepaper-v0.5.pdf'"
         >
           <i class="material-icons">description</i>
-          <span>Whitepaper</span>
+          <span i18n="@@COMMON__WHITEPAPER">Whitepaper</span>
         </a>
       </li>
       <li
@@ -99,10 +99,14 @@
       >
         <a [routerLink]="['/canary']">
           <i class="material-icons">new_releases</i>
-          <span *ngIf="!session.getLoggedInUser().canary" i18n
+          <span
+            *ngIf="!session.getLoggedInUser().canary"
+            i18n="@@COMMON__OPT_INTO_EXPERIMENTS"
             >Opt-in to Experiments</span
           >
-          <span *ngIf="session.getLoggedInUser().canary" i18n>Canary</span>
+          <span *ngIf="session.getLoggedInUser().canary" i18n="@@COMMON__CANARY"
+            >Canary</span
+          >
         </a>
       </li>
       <li
@@ -112,7 +116,7 @@
       >
         <a [routerLink]="['/logout']">
           <i class="material-icons">exit_to_app</i>
-          <span i18n>Logout</span>
+          <span i18n="@@COMMON_LOGOUT">Logout</span>
         </a>
       </li>
     </ul>

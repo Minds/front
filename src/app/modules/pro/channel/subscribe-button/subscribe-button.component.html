@@ -4,11 +4,14 @@
   (click)="toggleSubscription(); $event.preventDefault()"
 >
   <span class="m-proSubscribeButton__label">
-    <ng-container *ngIf="!subscribed; else subscribedActionButton" i18n>
+    <ng-container
+      *ngIf="!subscribed; else subscribedActionButton"
+      i18n="@@COMMON__SUBSCRIBE"
+    >
       Subscribe
     </ng-container>
     <ng-template #subscribedActionButton>
-      <ng-container i18n>Subscribed</ng-container>
+      <ng-container i18n="@@COMMON__SUBSCRIBED">Subscribed</ng-container>
     </ng-template>
   </span>
 

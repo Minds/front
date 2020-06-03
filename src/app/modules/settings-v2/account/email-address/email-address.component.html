@@ -2,7 +2,9 @@
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--text stretchedField hasValidationRow">
       <div class="m-form__row--label">
-        <label for="email" i18n>Email Address</label>
+        <label for="email" i18n="@@ACCOUNT_EMAIL_ADDRESS__TITLE"
+          >Email Address</label
+        >
       </div>
       <div
         class="m-form__row--input"
@@ -20,7 +22,10 @@
         />
       </div>
       <div class="m-form__row--validation">
-        <p *ngIf="(form.touched || form.dirty) && email.hasError('email')">
+        <p
+          *ngIf="(form.touched || form.dirty) && email.hasError('email')"
+          i18n="@@ACCOUNT_EMAIL_ADDRESS__INVALID_EMAIL_ADDRESS"
+        >
           Invalid email address format.
         </p>
       </div>
@@ -31,6 +36,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="save()"
+      i18n="@@ACCOUNT_EMAIL_ADDRESS__SAVE_EMAIL_ADDRESS"
     >
       Save Email Address
     </m-shadowboxSubmitButton>

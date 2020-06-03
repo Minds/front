@@ -4,7 +4,7 @@
 
     <div class="m-upgradesUpgradeOptionsHeader__toggleContainer">
       <div class="m-upgradesUpgradeOptionsHeader__toggle">
-        <span i18n>Yearly</span>
+        <span i18n="@@COMMON__YEARLY">Yearly</span>
         <span
           ><m-toggle
             [(mModel)]="interval"
@@ -12,10 +12,10 @@
             rightValue="monthly"
           ></m-toggle
         ></span>
-        <span i18n>Monthly</span>
+        <span i18n="@@COMMON__MONTHLY">Monthly</span>
       </div>
       <div class="m-upgradesUpgradeOptionsHeader__toggle">
-        <span i18n>USD</span>
+        <span i18n="currency|@@COMMON__USD">USD</span>
         <span
           ><m-toggle
             [(mModel)]="currency"
@@ -23,7 +23,7 @@
             rightValue="tokens"
           ></m-toggle
         ></span>
-        <span i18n>Tokens</span>
+        <span i18n="currency|@@COMMON__TOKENS">Tokens</span>
       </div>
     </div>
   </div>
@@ -32,30 +32,36 @@
     <div
       class="m-upgradesUpgradeOptionsPlan__row m-upgradesUpgradeOptionsPlan__row--first"
     >
-      <h3 i18n>Plus</h3>
+      <h3 i18n="@@UPGRADE_OPTIONS__PLUS">Plus</h3>
 
-      <p class="m-upgradesUpgradeOptionsPlan__targetAudience" i18n>
+      <p
+        class="m-upgradesUpgradeOptionsPlan__targetAudience"
+        i18n="@@UPGRADE_OPTIONS__IDEAL_MINDS_USERS"
+      >
         Ideal for all Minds Users
       </p>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <p class="m-upgradesUpgradeOptionsPlan__description" i18n>
+      <p
+        class="m-upgradesUpgradeOptionsPlan__description"
+        i18n="@@UPGRADE_OPTIONS__UPGRADE_CHANNEL_INFO"
+      >
         Upgrade your channel to unlock new features and upgrade your experience.
       </p>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <ul>
-        <li i18n>
+        <li i18n="@@UPGRADE_OPTIONS__ACCESS_EXCLUSIVE_CONTENT">
           Access exclusive content
         </li>
 
-        <li i18n>
+        <li i18n="@@UPGRADE_OPTIONS__VERIFY_YOUR_CHANNEL">
           Verify your channel
         </li>
 
-        <li i18n>
+        <li i18n="@@UPGRADE_OPTIONS__HIDE_BOOSTED_CONTENT">
           Hide boosted content
         </li>
       </ul>
@@ -64,7 +70,7 @@
         <a
           class="m-upgradesUpgradeOptionsPlan__moreInfo"
           routerLink="/plus"
-          i18n
+          i18n="@@UPGRADE_OPTIONS__MORE_INFO"
         >
           More info
         </a>
@@ -72,14 +78,17 @@
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <p class="m-upgradesUpgradeOptionsPlan__pricing" i18n>
+      <p
+        class="m-upgradesUpgradeOptionsPlan__pricing"
+        i18n="@@UPGRADE_OPTIONS__PER_MONTH"
+      >
         <span>{{ plusPricing.amount }}</span> per month
       </p>
 
       <p
         class="m-upgradesUpgradeOptionsPlan__offer"
         *ngIf="plusPricing.offerFrom"
-        i18n
+        i18n="@@UPGRADE_OPTIONS__PER_MONTH"
       >
         {{ plusPricing.offerFrom }} per month
       </p>
@@ -92,7 +101,7 @@
         [queryParams]="intervalCurrencyQueryParams"
         *ngIf="!session.getLoggedInUser()?.plus"
         data-cy="m-upgradeOptions__upgrade-to-plus-button"
-        i18n
+        i18n="@@COMMON__UPGRADE_TO_PLUS"
       >
         Upgrade to Plus
       </a>
@@ -101,34 +110,40 @@
     <div
       class="m-upgradesUpgradeOptionsPlan__row m-upgradesUpgradeOptionsPlan__row--first"
     >
-      <h3 i18n>Pro</h3>
+      <h3 i18n="@@COMMON__PRO">Pro</h3>
 
-      <p class="m-upgradesUpgradeOptionsPlan__targetAudience" i18n>
+      <p
+        class="m-upgradesUpgradeOptionsPlan__targetAudience"
+        i18n="@@UPGRADE_OPTIONS__FOR_INDEPENDANT_CREATORS"
+      >
         For independent content creators
       </p>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <p class="m-upgradesUpgradeOptionsPlan__description" i18n>
+      <p
+        class="m-upgradesUpgradeOptionsPlan__description"
+        i18n="@@UPGRADE_OPTIONS__ULTIMATE_PLATFORM"
+      >
         The ultimate platform for independent creators and brands.
       </p>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <ul>
-        <li i18n>
+        <li i18n="@@UPGRADE_OPTIONS__GET_PAID_WORK">
           Get paid for your work
         </li>
 
-        <li i18n>
+        <li i18n="@@UPGRADE_OPTIONS__BUILD_OWN_CUSTOM_SITE">
           Build your own custom website
         </li>
 
-        <li i18n>
+        <li i18n="@@UPGRADE_OPTIONS__PROFESSIONAL_MEDIA_TOOLS">
           Professional media tools
         </li>
 
-        <li i18n>
+        <li i18n="@@UPGRADE_OPTIONS__CUSTOM_SUPPORT">
           Custom support
         </li>
       </ul>
@@ -137,7 +152,7 @@
         <a
           class="m-upgradesUpgradeOptionsPlan__moreInfo"
           routerLink="/pro"
-          i18n
+          i18n="@@COMMON__MORE_INFO"
         >
           More info
         </a>
@@ -146,7 +161,7 @@
           [routerLink]="[
             '/pro/' + session.getLoggedInUser().username + '/settings'
           ]"
-          i18n
+          i18n="@@COMMON__TRY_PRO"
           *ngIf="session.getLoggedInUser()"
           style="padding-left: 16px"
         >
@@ -156,14 +171,17 @@
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <p class="m-upgradesUpgradeOptionsPlan__pricing" i18n>
+      <p
+        class="m-upgradesUpgradeOptionsPlan__pricing"
+        i18n="@@COMMON__PER_MONTH"
+      >
         <span>{{ proPricing.amount }}</span> per month
       </p>
 
       <p
         class="m-upgradesUpgradeOptionsPlan__offer"
         *ngIf="proPricing.offerFrom"
-        i18n
+        i18n="@@COMMON__PER_MONTH"
       >
         {{ proPricing.offerFrom }} per month
       </p>
@@ -177,7 +195,7 @@
           [queryParams]="intervalCurrencyQueryParams"
           *ngIf="!session.getLoggedInUser()?.pro"
           data-cy="m-upgradeOptions__upgrade-to-pro-button"
-          i18n
+          i18n="@@COMMON__UPGRADE_TO_PRO"
         >
           Upgrade to Pro
         </a>
@@ -187,7 +205,7 @@
           class="mf-button m-upgradesUpgradeOptionsPlan__action"
           routerLink="/pro"
           data-cy="m-upgradeOptions__upgrade-to-pro-button"
-          i18n
+          i18n="@@COMMON__COMING_SOON"
         >
           Coming soon
         </a>
@@ -197,30 +215,36 @@
     <div
       class="m-upgradesUpgradeOptionsPlan__row m-upgradesUpgradeOptionsPlan__row--first"
     >
-      <h3 i18n>Node</h3>
+      <h3 i18n="@@UPGRADE_OPTIONS__NODE">Node</h3>
 
-      <p class="m-upgradesUpgradeOptionsPlan__targetAudience" i18n>
+      <p
+        class="m-upgradesUpgradeOptionsPlan__targetAudience"
+        i18n="@@UPGRADE_OPTIONS__NEXT_LEVEL_CREATORS"
+      >
         For next-level content creators
       </p>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <p class="m-upgradesUpgradeOptionsPlan__description" i18n>
+      <p
+        class="m-upgradesUpgradeOptionsPlan__description"
+        i18n="@@UPGRADE_OPTIONS__LAUNCH_OWN_NETWORK"
+      >
         Launch your own white-labeled social network and mobile app.
       </p>
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
       <ul>
-        <li i18n>
+        <li i18n="@@UPGRADE_OPTIONS__WHITE_LABEL_WEB_MOBILE">
           White-labeled web + mobile app
         </li>
 
-        <li i18n>
+        <li i18n="@@UPGRADE_OPTIONS__CUSTOM_DOMAIN_BRAND">
           Custom domain and brand
         </li>
 
-        <li i18n>
+        <li i18n="@@UPGRADE_OPTIONS__INDEPENDANT_FROM_MINDS">
           Independent from Minds
         </li>
       </ul>
@@ -229,7 +253,7 @@
         <a
           class="m-upgradesUpgradeOptionsPlan__moreInfo"
           routerLink="/nodes"
-          i18n
+          i18n="@@UPGRADE_OPTIONS__MORE_INFO"
         >
           More info
         </a>
@@ -237,7 +261,10 @@
     </div>
 
     <div class="m-upgradesUpgradeOptionsPlan__row">
-      <p class="m-upgradesUpgradeOptionsPlan__pricing" i18n>
+      <p
+        class="m-upgradesUpgradeOptionsPlan__pricing"
+        i18n="@@UPGRADE_OPTIONS__CONTACT_US_PRICING"
+      >
         Contact us for pricing
       </p>
     </div>
@@ -247,7 +274,7 @@
         class="mf-button m-upgradesUpgradeOptionsPlan__action"
         routerLink="/nodes"
         data-cy="m-upgradeOptions__contact-us-nodes-button"
-        i18n
+        i18n="@@COMMON__CONTACT_US"
       >
         Contact us
       </a>

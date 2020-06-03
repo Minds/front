@@ -3,7 +3,9 @@
     *ngIf="channel.city"
     class="m-channelAbout__field m-channelAbout__field--fullWidth"
   >
-    <div class="m-channelAboutField__label" i18n>Location</div>
+    <div class="m-channelAboutField__label" i18n="@@COMMON__LOCATION">
+      Location
+    </div>
     <div class="m-channelAboutField__content">
       {{ channel.city }}
     </div>
@@ -13,28 +15,30 @@
     *ngIf="channel.dob"
     class="m-channelAbout__field m-channelAbout__field--fullWidth"
   >
-    <div class="m-channelAboutField__label" i18n>Date of birth</div>
+    <div class="m-channelAboutField__label" i18n="@@COMMON__DATE_OF_BIRTH">
+      Date of birth
+    </div>
     <div class="m-channelAboutField__content">
       {{ dobToDate(channel.dob) | date: 'mediumDate' }}
     </div>
   </div>
 
   <div class="m-channelAbout__field">
-    <div class="m-channelAboutField__label" i18n>Badges</div>
+    <div class="m-channelAboutField__label" i18n="@@COMMON__BADGES">Badges</div>
     <div class="m-channelAboutField__content">
       <m-channel--badges [user]="channel"></m-channel--badges>
     </div>
   </div>
 
   <div class="m-channelAbout__field">
-    <div class="m-channelAboutField__label" i18n>Joined</div>
+    <div class="m-channelAboutField__label" i18n="@@COMMON__JOINED">Joined</div>
     <div class="m-channelAboutField__content">
       {{ channel.time_created * 1000 | date: 'MMM yyyy' }}
     </div>
   </div>
 
   <div class="m-channelAbout__field">
-    <div class="m-channelAboutField__label" i18n>Groups</div>
+    <div class="m-channelAboutField__label" i18n="@@COMMON__GROUPS">Groups</div>
     <div class="m-channelAboutField__content">
       <a [routerLink]="['/', this.service.username$ | async, 'groups']">{{
         service.groupCount$ | async | number
@@ -43,14 +47,18 @@
   </div>
 
   <div class="m-channelAbout__field">
-    <div class="m-channelAboutField__label" i18n>Channel Views</div>
+    <div class="m-channelAboutField__label" i18n="@@CHANNEL_EXTRA__VIEWS">
+      Channel Views
+    </div>
     <div class="m-channelAboutField__content">
       {{ channel.impressions | abbr: 2 }}
     </div>
   </div>
 
   <div class="m-channelAbout__field">
-    <div class="m-channelAboutField__label" i18n>Subscribers</div>
+    <div class="m-channelAboutField__label" i18n="@@COMMON_SUBSCRIBERS">
+      Subscribers
+    </div>
     <div class="m-channelAboutField__content">
       <a [routerLink]="['/', this.service.username$ | async, 'subscribers']">{{
         channel.subscribers_count | number
@@ -59,7 +67,9 @@
   </div>
 
   <div class="m-channelAbout__field">
-    <div class="m-channelAboutField__label" i18n>Subscriptions</div>
+    <div class="m-channelAboutField__label" i18n="@@COMMON__SUBSCRIPTIONS">
+      Subscriptions
+    </div>
     <div class="m-channelAboutField__content">
       <a
         [routerLink]="['/', this.service.username$ | async, 'subscriptions']"
@@ -69,7 +79,7 @@
   </div>
 
   <!-- <div class="m-channelAbout__field m-channelAbout__field--fullWidth">
-    <div class="m-channelAboutField__label" i18n>
+    <div class="m-channelAboutField__label" i18n="@@CHANNEL_EXTRA__ACCEPTED_PAYMENT">
       Accepted Payment Methods
     </div>
     <div class="m-channelAboutField__content">
@@ -78,14 +88,14 @@
   </div>
 
   <div class="m-channelAbout__field">
-    <div class="m-channelAboutField__label" i18n>Tokens Earned</div>
+    <div class="m-channelAboutField__label" i18n="@@CHANNEL_EXTRA__TOKENS_EARNED">Tokens Earned</div>
     <div class="m-channelAboutField__content">
       {{ service.tokens$ | async | token: 18 | number }}
     </div>
   </div>
 
   <div class="m-channelAbout__field" *ngIf="session.isLoggedIn()">
-    <div class="m-channelAboutField__label" i18n>Tokens Sent</div>
+    <div class="m-channelAboutField__label" i18n="@@CHANNEL_EXTRA__TOKENS_SENT">Tokens Sent</div>
     <div class="m-channelAboutField__content">
       {{ service.tokensSent$ | async | token: 18 | number }}
     </div>

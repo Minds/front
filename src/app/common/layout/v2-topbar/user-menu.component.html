@@ -17,7 +17,7 @@
     >
       <a routerLink="/login">
         <i class="material-icons">vpn_key</i>
-        <span i18n>Login</span>
+        <span i18n="@@COMMON__LOGIN">Login</span>
       </a>
     </li>
 
@@ -28,7 +28,7 @@
     >
       <a [routerLink]="['/', getCurrentUser()?.username]">
         <i class="material-icons">person</i>
-        <span i18n>View Channel</span>
+        <span i18n="@@COMMON__VIEW_CHANNEL">View Channel</span>
       </a>
     </li>
 
@@ -39,7 +39,7 @@
     >
       <a routerLink="/admin/interactions">
         <i class="material-icons">build</i>
-        <span i18n>Admin</span>
+        <span i18n="@@COMMON__ADMIN">Admin</span>
       </a>
     </li>
 
@@ -49,7 +49,7 @@
     >
       <a routerLink="/analytics/dashboard/traffic">
         <i class="material-icons">timeline</i>
-        <span i18n>Analytics</span>
+        <span i18n="@@COMMON__ANALYTICS">Analytics</span>
       </a>
     </li>
 
@@ -71,7 +71,7 @@
     >
       <a routerLink="/boost/console">
         <i class="material-icons">trending_up</i>
-        <span i18n>Boost Console</span>
+        <span i18n="@@COMMON__BOOST_CONSOLE">Boost Console</span>
       </a>
     </li>
 
@@ -82,7 +82,7 @@
       >
         <a routerLink="/help">
           <i class="material-icons">help_outline</i>
-          <span i18n>Help Desk</span>
+          <span i18n="@@COMMON__HELP_DESK">Help Desk</span>
         </a>
       </li>
     </ng-container>
@@ -93,7 +93,7 @@
       >
         <a routerLink="/faq">
           <i class="material-icons">help_outline</i>
-          <span i18n>FAQ</span>
+          <span i18n="@@COMMON__FAQ">FAQ</span>
         </a>
       </li>
 
@@ -103,7 +103,7 @@
       >
         <a routerLink="/groups/profile/100000000000000681">
           <i class="material-icons">help_outline</i>
-          <span i18n>Help &amp; Support</span>
+          <span i18n="@@COMMON__HELP_AND_SUPPORT">Help &amp; Support</span>
         </a>
       </li>
     </ng-template>
@@ -119,7 +119,7 @@
           >Canary Mode</span
         >
         <ng-template #canaryDropdownItem>
-          <span i18n>Canary Mode</span>
+          <span i18n="@@COMMON__CANARY_MODE">Canary Mode</span>
         </ng-template>
       </a>
     </li>
@@ -130,7 +130,7 @@
     >
       <a routerLink="/mobile">
         <i class="material-icons">phone_iphone</i>
-        <span i18n>Mobile App</span>
+        <span i18n="@@COMMON__MOBILE_APP">Mobile App</span>
       </a>
     </li>
 
@@ -140,7 +140,7 @@
     >
       <a target="_blank" href="https://www.teespring.com/stores/minds">
         <i class="material-icons">shopping_cart</i>
-        <span i18n>Store</span>
+        <span i18n="noun|@@COMMON__STORE">Store</span>
       </a>
     </li>
 
@@ -151,7 +151,7 @@
     >
       <a routerLink="/content-policy">
         <i class="material-icons">gavel</i>
-        <span i18n>Content Policy</span>
+        <span i18n="@@COMMON__CONTENT_POLICY">Content Policy</span>
       </a>
     </li>
 
@@ -163,8 +163,8 @@
       >
         <i class="material-icons" *ngIf="isDark">brightness_7</i>
         <i class="material-icons" *ngIf="!isDark">brightness_2</i>
-        <span i18n *ngIf="isDark">Light Mode</span>
-        <span i18n *ngIf="!isDark">Dark Mode</span>
+        <span i18n="COMMON_LIGHT_MODE" *ngIf="isDark">Light Mode</span>
+        <span i18n="@@COMMON__DARK_MODE" *ngIf="!isDark">Dark Mode</span>
       </li>
     </ng-container>
 
@@ -175,7 +175,7 @@
     >
       <a routerLink="/settings/general" data-cy="data-minds-user-menu-settings">
         <i class="material-icons">settings</i>
-        <span i18n>Settings</span>
+        <span i18n="@@COMMON__SETTINGS">Settings</span>
       </a>
     </li>
 
@@ -186,7 +186,7 @@
     >
       <a routerLink="/logout">
         <i class="material-icons">exit_to_app</i>
-        <span i18n>Logout</span>
+        <span i18n="@@COMMON__LOGOUT">Logout</span>
       </a>
     </li>
   </ul>
