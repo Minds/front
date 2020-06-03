@@ -7,7 +7,7 @@
     <span
       *ngFor="let language of (service.languages$ | async).slice(0, 8)"
       class="m-languageBar__languageOption"
-      [innerHTML]="language.nativeName"
+      [innerHTML]="language.name"
       (click)="onLanguageSelect(language.code)"
     ></span>
   </div>

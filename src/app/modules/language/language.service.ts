@@ -12,8 +12,6 @@ import { ConfigsService } from '../../common/services/configs.service';
 export interface LanguageListEntry {
   code: string;
   name: string;
-  nativeName: string;
-  nativeNames: Array<string>;
 }
 
 /**
@@ -43,7 +41,20 @@ export class LanguageService {
    * List of all languages, weighted by current, browser and site default (English)
    */
   readonly languages$: Observable<Array<LanguageListEntry>> = combineLatest([
-    of(this.configs.get('languages')),
+    of(this.configs.get('languages')).pipe(
+      map(languages => {
+        const arr = [];
+        for (const code in languages) {
+          if (languages.hasOwnProperty(code)) {
+            arr.push({
+              code,
+              name: languages[code],
+            });
+          }
+        }
+        return arr;
+      })
+    ),
     this.currentLanguage$,
     this.browserLanguage$,
   ]).pipe(
@@ -61,7 +72,7 @@ export class LanguageService {
   ]).pipe(
     map(
       ([languages, currentLanguage]) =>
-        languages.find(language => language.code === currentLanguage).nativeName
+        languages.find(language => language.code === currentLanguage).name
     ),
     catchError(() => 'Unknown')
   );

@@ -15,7 +15,7 @@
     <span
       *ngFor="let language of service.languages$ | async"
       class="m-languageModal__languageOption"
-      [innerHTML]="language.nativeName"
+      [innerHTML]="language.name"
       (click)="onSave(language.code)"
     ></span>
   </div>

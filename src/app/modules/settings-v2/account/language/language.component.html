@@ -15,7 +15,7 @@
             <option
               *ngFor="let language of service.languages$ | async"
               [value]="language.code"
-              [innerHTML]="language.nativeName + ' (' + language.name + ')'"
+              [innerHTML]="language.name"
             ></option>
           </select>
         </div>
