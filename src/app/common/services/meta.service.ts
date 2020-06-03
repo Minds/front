@@ -1,5 +1,5 @@
-import { Injectable, Optional, Inject } from '@angular/core';
-import { Title, Meta } from '@angular/platform-browser';
+import { Injectable, Optional, Inject, SecurityContext } from '@angular/core';
+import { Title, Meta, DomSanitizer } from '@angular/platform-browser';
 import { SiteService } from './site.service';
 import { Location } from '@angular/common';
 import { ConfigsService } from './configs.service';
@@ -22,7 +22,8 @@ export class MetaService {
     private site: SiteService,
     private location: Location,
     private configs: ConfigsService,
-    @Inject(DOCUMENT) private dom
+    @Inject(DOCUMENT) private dom,
+    private domSanitizer: DomSanitizer
   ) {
     this.reset();
   }
@@ -202,7 +203,7 @@ export class MetaService {
   private stripHtml(value: string): string {
     if (!value) return '';
     const fakeEl = this.dom.createElement('span');
-    fakeEl.innerHTML = value;
+    fakeEl.innerHTML = this.domSanitizer.sanitize(SecurityContext.HTML, value);
     return fakeEl.textContent || fakeEl.innerText;
   }
 }
