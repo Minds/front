@@ -200,6 +200,7 @@ prepare:production:
     refs:
       - master
       - production
+      - epic/angular-9
       - test/gitlab-ci
   dependencies:
     - build:production:bundles
