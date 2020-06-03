@@ -1,11 +1,11 @@
 <div class="m-admin-withdrawals">
   <div class="m-admin-withdrawals__legend">
-    <ng-container *ngIf="user" i18n>
+    <ng-container *ngIf="user">
       <b>@{{ user }}</b
       >'s withdrawals
     </ng-container>
 
-    <ng-container *ngIf="!user" i18n>
+    <ng-container *ngIf="!user">
       Pending Withdrawals
     </ng-container>
   </div>
@@ -16,7 +16,7 @@
   >
     <ng-container *ngIf="request">
       <div class="m-admin-withdrawalsCard__cell">
-        <div class="m-admin-withdrawalsCardCell__label" i18n>Requested</div>
+        <div class="m-admin-withdrawalsCardCell__label">Requested</div>
 
         <div class="m-admin-withdrawalsCardCell__body">
           {{ request.timestamp * 1000 | date: 'short' }}
@@ -24,7 +24,7 @@
       </div>
 
       <div class="m-admin-withdrawalsCard__cell">
-        <div class="m-admin-withdrawalsCardCell__label" i18n>User</div>
+        <div class="m-admin-withdrawalsCardCell__label">User</div>
 
         <div class="m-admin-withdrawalsCardCell__body">
           <a [routerLink]="['/', request.user?.username]"
@@ -34,7 +34,7 @@
       </div>
 
       <div class="m-admin-withdrawalsCard__cell">
-        <div class="m-admin-withdrawalsCardCell__label" i18n>Signed up</div>
+        <div class="m-admin-withdrawalsCardCell__label">Signed up</div>
 
         <div class="m-admin-withdrawalsCardCell__body">
           {{ request.user?.time_created * 1000 | date: 'shortDate' }}
@@ -42,7 +42,7 @@
       </div>
 
       <div class="m-admin-withdrawalsCard__cell">
-        <div class="m-admin-withdrawalsCardCell__label" i18n>Referrer</div>
+        <div class="m-admin-withdrawalsCardCell__label">Referrer</div>
 
         <div class="m-admin-withdrawalsCardCell__body">
           <ng-container *ngIf="request.referrer; else organicText">
@@ -57,7 +57,7 @@
       </div>
 
       <div class="m-admin-withdrawalsCard__cell">
-        <div class="m-admin-withdrawalsCardCell__label" i18n>Amount</div>
+        <div class="m-admin-withdrawalsCardCell__label">Amount</div>
 
         <div
           class="m-admin-withdrawalsCardCell__body m-admin-withdrawalsCardCell__body--bolder"
@@ -67,7 +67,7 @@
       </div>
 
       <div class="m-admin-withdrawalsCard__cell">
-        <div class="m-admin-withdrawalsCardCell__label" i18n>Status</div>
+        <div class="m-admin-withdrawalsCardCell__label">Status</div>
 
         <div class="m-admin-withdrawalsCardCell__body">
           {{ request.status?.replace('_', ' ') | uppercase }}

@@ -74,7 +74,12 @@
         <ng-container
           *ngIf="currentUser?.guid != channel.guid; else ownerNavLinks"
         >
-          <a class="m-proChannelTopbar__navItem" (click)="wire()" i18n>Wire</a>
+          <a
+            class="m-proChannelTopbar__navItem"
+            (click)="wire()"
+            i18n="@@COMMON__WIRE"
+            >Wire</a
+          >
 
           <m-pro__subscribeButton></m-pro__subscribeButton>
         </ng-container>

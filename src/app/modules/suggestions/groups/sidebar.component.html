@@ -31,8 +31,12 @@
             "
             (click)="join(entity)"
           >
-            <ng-container *ngIf="!inProgress" i18n>Join</ng-container>
-            <ng-container *ngIf="inProgress" i18n>Joining</ng-container>
+            <ng-container *ngIf="!inProgress" i18n="@@COMMON__JOIN"
+              >Join</ng-container
+            >
+            <ng-container *ngIf="inProgress" i18n="@@COMMON__JOINING"
+              >Joining</ng-container
+            >
           </button>
           <button
             class="m-btn m-btn--slim subscribed "

@@ -41,7 +41,11 @@
       />
     </li>
 
-    <li class="m-settings--emails-campaigns__note" *ngIf="emailChanged" i18n>
+    <li
+      class="m-settings--emails-campaigns__note"
+      *ngIf="emailChanged"
+      i18n="@@BLOCKED_CHANNELS__EMAIL_CHANGE_INFORMATION"
+    >
       Note: If you change your email address, it will need to be confirmed
       again.
     </li>

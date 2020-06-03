@@ -8,13 +8,16 @@
   <ng-container *ngIf="!q">
     <ng-container *ngIf="newNavigation; else oldSuggestions">
       <div class="m-searchBar__toolbar">
-        <span class="m-searchBarSuggestions__searchHistory" i18n>
+        <span
+          class="m-searchBarSuggestions__searchHistory"
+          i18n="@@SEARCH_SUGGESTIONS__CLEAR_HISTORY"
+        >
           Search History
         </span>
         <span
           class="m-searchBarSuggestions__clearHistory"
           (click)="clearHistory()"
-          i18n
+          i18n="@@SEARCH_SUGGESTIONS__CLEAR_HISTORY"
         >
           Clear History
         </span>

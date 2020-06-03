@@ -62,7 +62,9 @@
             for="showNsfwOptions"
             class="m-form__customInputWrapper__checkbox"
           >
-            <ng-container i18n>Show NSFW content in results</ng-container>
+            <ng-container i18n="@@DISCOVERY_SETTINGS__SHOW_NSFW_IN_RESULTS"
+              >Show NSFW content in results</ng-container
+            >
             <input
               type="checkbox"
               value="true"
@@ -103,7 +105,7 @@
       (click)="onSave($event)"
       data-cy="discovery-feeds-settings-save-button"
     >
-      <ng-container i18n>Save</ng-container>
+      <ng-container i18n="@@COMMON__SAVE">Save</ng-container>
     </m-shadowboxSubmitButton>
   </div>
 </div>

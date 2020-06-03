@@ -1,7 +1,11 @@
 <div class="m-grid m-marketing__asFeaturedIn">
   <div class="m-grid__column-2 m-marketingAsFeaturedIn__title">
-    <ng-container *ngIf="!inThePress" i18n>As featured in</ng-container>
-    <ng-container *ngIf="inThePress" i18n>Minds in the press</ng-container>
+    <ng-container *ngIf="!inThePress" i18n="@@AS_FEATURED_IN"
+      >As featured in</ng-container
+    >
+    <ng-container *ngIf="inThePress" i18n="@@MINDS_IN_THE_PRESS"
+      >Minds in the press</ng-container
+    >
   </div>
 
   <ul class="m-grid__column-10">

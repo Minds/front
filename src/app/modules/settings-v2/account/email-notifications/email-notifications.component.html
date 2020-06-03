@@ -3,14 +3,21 @@
 </div>
 <div *ngIf="init" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
-    <div class="m-settingsV2__subheader">Email me when</div>
+    <div
+      class="m-settingsV2__subheader"
+      i18n="@@EMAIL_NOTIFICATIONS__EMAIL_ME_WHEN"
+    >
+      Email me when
+    </div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
         <label
           for="unread-notifications"
           class="m-form__customInputWrapper__checkbox"
         >
-          <ng-container i18n>I have unread notifications</ng-container>
+          <ng-container i18n="@@EMAIL_NOTIFICATIONS__HAVE_UNREAD_NOTIFICATIONS"
+            >I have unread notifications</ng-container
+          >
           <input
             type="checkbox"
             id="unread-notifications"
@@ -28,7 +35,9 @@
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
         <label for="wire-received" class="m-form__customInputWrapper__checkbox">
-          <ng-container i18n>I receive a wire</ng-container>
+          <ng-container i18n="@@EMAIL_NOTIFICATIONS__RECEIVED_WIRE"
+            >I receive a wire</ng-container
+          >
           <input
             type="checkbox"
             id="wire-received"
@@ -49,7 +58,9 @@
           for="boost-completed"
           class="m-form__customInputWrapper__checkbox"
         >
-          <ng-container i18n>My boost has been completed</ng-container>
+          <ng-container i18n="@@EMAIL_NOTIFICATIONS__BOOST_BEEN_COMPLETED"
+            >My boost has been completed</ng-container
+          >
           <input
             type="checkbox"
             id="boost-completed"
@@ -64,11 +75,18 @@
         </label>
       </div>
     </div>
-    <div class="m-settingsV2__subheader">Email me with</div>
+    <div
+      class="m-settingsV2__subheader"
+      i18n="@@EMAIL_NOTIFICATIONS__EMAIL_ME_WITH"
+    >
+      Email me with
+    </div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
         <label for="top-posts" class="m-form__customInputWrapper__checkbox">
-          <ng-container i18n>Top posts from my network</ng-container>
+          <ng-container i18n="@@EMAIL_NOTIFICATIONS__TOP_POSTS_FROM_NETWORK"
+            >Top posts from my network</ng-container
+          >
           <input
             type="checkbox"
             id="top-posts"
@@ -90,7 +108,9 @@
           for="channel-improvement-tips"
           class="m-form__customInputWrapper__checkbox"
         >
-          <ng-container i18n>Tips on how to improve my channel</ng-container>
+          <ng-container i18n="@@EMAIL_NOTIFICATIONS__IMPROVE_CHANNEL_TIPS"
+            >Tips on how to improve my channel</ng-container
+          >
           <input
             type="checkbox"
             id="channel-improvement-tips"
@@ -111,7 +131,7 @@
           for="missed-since-login"
           class="m-form__customInputWrapper__checkbox"
         >
-          <ng-container i18n
+          <ng-container i18n="@@EMAIL_NOTIFICATIONS__MISSED_SINCE_LAST_LOGIN"
             >Things I've missed since my last login</ng-container
           >
           <input
@@ -131,7 +151,9 @@
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
         <label for="new_channels" class="m-form__customInputWrapper__checkbox">
-          <ng-container i18n>New channels to subscribe to</ng-container>
+          <ng-container i18n="@@EMAIL_NOTIFICATIONS__NEW_CHANNELS_SUB_TO"
+            >New channels to subscribe to</ng-container
+          >
           <input
             type="checkbox"
             id="new_channels"
@@ -147,11 +169,17 @@
       </div>
     </div>
 
-    <div class="m-settingsV2__subheader">Keep me updated with</div>
+    <div
+      class="m-settingsV2__subheader"
+      i18n="@@EMAIL_NOTIFICATIONS__KEEP_ME_UPDATED_WITH"
+    >
+      Keep me updated with
+    </div>
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
         <label for="minds_news" class="m-form__customInputWrapper__checkbox">
-          <ng-container i18n
+          <ng-container
+            i18n="@@EMAIL_NOTIFICATIONS__NEWS_ABOUT_NEW_MINDS_PRODUCTS"
             >News about new Minds products and features</ng-container
           >
           <input
@@ -171,7 +199,9 @@
     <div class="m-form__field--checkbox">
       <div class="m-form__row--input">
         <label for="minds-tips" class="m-form__customInputWrapper__checkbox">
-          <ng-container i18n>Tips on how to use Minds</ng-container>
+          <ng-container i18n="@@EMAIL_NOTIFICATIONS__MINDS_USAGE_TIPS"
+            >Tips on how to use Minds</ng-container
+          >
           <input
             type="checkbox"
             id="minds-tips"
@@ -192,7 +222,9 @@
           for="exclusive-promotions"
           class="m-form__customInputWrapper__checkbox"
         >
-          <ng-container i18n>Exclusive promotions</ng-container>
+          <ng-container i18n="@@EMAIL_NOTIFICATIONS__EXCLUSIVE_PROMOTIONS"
+            >Exclusive promotions</ng-container
+          >
           <input
             type="checkbox"
             id="exclusive-promotions"
@@ -214,6 +246,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@EMAIL_NOTIFICATIONS__UPDATE_PREFERENCES"
     >
       Update Preferences
     </m-shadowboxSubmitButton>

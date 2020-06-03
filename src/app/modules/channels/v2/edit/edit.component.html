@@ -3,9 +3,13 @@
   *ngIf="service.channel$ | async as channel"
 >
   <div class="m-modalV2__header m-channelEdit__header">
-    <h2 class="m-modalV2Header__title" i18n>Edit Profile</h2>
+    <h2 class="m-modalV2Header__title" i18n="@@CHANNEL_EDIT__EDIT_PROFILE">
+      Edit Profile
+    </h2>
     <a [routerLink]="getProSettingsRouterLink(channel)" ngPreserveWhitespaces>
-      <ng-container i18n>Pro Settings</ng-container>
+      <ng-container i18n="@@CHANNEL_EDIT__PRO_SETTINGS"
+        >Pro Settings</ng-container
+      >
       <span>&rarr;</span>
     </a>
   </div>

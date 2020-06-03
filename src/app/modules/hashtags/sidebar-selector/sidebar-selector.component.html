@@ -32,7 +32,7 @@
   [class.m-hashtags--sidebar-selector--expanded]="compact && showExtendedList"
 >
   <div class="m-hashtagsSidebarSelector__header">
-    <h3 i18n>Preferred</h3>
+    <h3 i18n="@@SIDEBAR_SELECTOR__PREFERRED">Preferred</h3>
 
     <span class="m-hashtagsSidebarSelector__SwitchComponent">
       <span
@@ -156,7 +156,9 @@
           >Show trending</ng-container
         >
         <ng-template #showSuggestedHiddenText>
-          <ng-container i18n>Show suggested</ng-container>
+          <ng-container i18n="@@SIDEBAR_SELECTOR__SHOW_SUGGESTED"
+            >Show suggested</ng-container
+          >
         </ng-template>
       </ng-template>
     </a>

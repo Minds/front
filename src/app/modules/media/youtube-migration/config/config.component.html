@@ -34,14 +34,25 @@
     </div>
   </form>
   <div class="m-settingsV2__headerLabel m-youtubeMigration__headerLabel">
-    <span i18n>Disconnect YouTube Account</span>
+    <span i18n="@@YOUTUBE_MIGRATOR__DISCONNECT_YOUTUBE_ACCOUNT"
+      >Disconnect YouTube Account</span
+    >
   </div>
   <div class="m-settingsV2__desc m-youtubeMigration__desc">
-    <p><ng-container i18n>Status:</ng-container> <span i18n>Connected</span></p>
-    <p i18n>
+    <p>
+      <ng-container i18n="@@YOUTUBE_MIGRATOR__STATUS">Status:</ng-container>
+      <span i18n="@@YOUTUBE_MIGRATOR__CONNECTED">Connected</span>
+    </p>
+    <p i18n="@@YOUTUBE_MIGRATOR__SIMPLY_DISCONNECT_YOUTUBE_ACCOUNT">
       You can simply disconnect your YouTube account from Minds. In doing so,
       any previously transferred videos will continue to be available on Minds.
     </p>
-    <p><a (click)="disconnectAccount()" i18n>Disconnect YouTube account</a></p>
+    <p>
+      <a
+        (click)="disconnectAccount()"
+        i18n="@@YOUTUBE_MIGRATOR__DISCONNECT_YOUTUBE_ACCOUNT"
+        >Disconnect YouTube account</a
+      >
+    </p>
   </div>
 </ng-container>

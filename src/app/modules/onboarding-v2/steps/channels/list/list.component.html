@@ -20,7 +20,9 @@
         <div class="m-channelListItem__body">
           <div [title]="entity.briefdescription">
             <h4>{{ entity.username }}</h4>
-            <span i18n>{{ entity.subscribers_count | abbr }} subscribers</span>
+            <span i18n="@@ONBOARDING_CHANNELS_LIST__SUBSCRIBERS"
+              >{{ entity.subscribers_count | abbr }} subscribers</span
+            >
           </div>
           <div class="m-layout__spacer"></div>
           <minds-button-subscribe

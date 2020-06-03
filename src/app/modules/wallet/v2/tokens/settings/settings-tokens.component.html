@@ -141,9 +141,13 @@
         <div class="m-walletForm__fieldsContainer">
           <div class="m-walletForm__field--text stretchedField">
             <div class="m-walletForm__row--label">
-              <label for="addressInput" i18n>On-chain Address</label>
+              <label
+                for="addressInput"
+                i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS"
+                >On-chain Address</label
+              >
               <m-tooltip icon="help">
-                <ng-container i18n
+                <ng-container i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS_INFO"
                   >This address is where you will receive on-chain Minds tokens
                   and Ether payments</ng-container
                 >
@@ -172,6 +176,7 @@
                   (form.dirty || form.touched) &&
                   addressInput.hasError('format')
                 "
+                i18n="@@SETTINGS_TOKENS__INVALID_ADDRESS_FORMAT"
               >
                 Invalid address format
               </p>
@@ -186,13 +191,17 @@
             "
             [saving]="inProgress"
             (click)="provideAddress()"
+            i18n="@@SETTINGS_TOKENS__UPDATE_ONCHAIN_ADDRESS"
           >
             Update on-chain address
           </m-shadowboxSubmitButton>
         </div>
       </form>
       <a class="m-walletSecondaryText--backButton" (click)="display = null"
-        ><i class="material-icons">❮</i><span>Back to settings</span></a
+        ><i class="material-icons">❮</i
+        ><span i18n="@@SETTINGS_TOKENS__BACK_TO_SETTINGS"
+          >Back to settings</span
+        ></a
       >
     </li>
 
@@ -200,17 +209,22 @@
     <!--- ADDRESS - CURRENT ---------------------------->
     <!-- -------------------------------------------- -->
     <li *ngIf="display === Views.CurrentAddress">
-      <h2>
+      <h2 i18n="@@SETTINGS_TOKENS__ONCHAIN_ADDRESS">
         On-Chain Address
       </h2>
       <ng-container *ngTemplateOutlet="onchainDesc"></ng-container>
 
-      <p class="m-walletSecondaryText--label">
+      <p
+        class="m-walletSecondaryText--label"
+        i18n="@@SETTINGS_TOKENS__CURRENT_ADDRESS"
+      >
         Current address
       </p>
       <div class="m-walletSettings__currentAddressContainer">
         <div class="m-walletPrimaryText">{{ currentAddress }}</div>
-        <a (click)="display = null">Change Address</a>
+        <a (click)="display = null" i18n="@@SETTINGS_TOKENS__CHANGE_ADDRESS"
+          >Change Address</a
+        >
       </div>
     </li>
   </ul>
@@ -221,7 +235,10 @@
 <!--- ONCHAIN DESCRIPTION TEMPLATE ----------------->
 <!-- -------------------------------------------- -->
 <ng-template #onchainDesc>
-  <p class="m-walletSecondaryText--desc">
+  <p
+    class="m-walletSecondaryText--desc"
+    i18n="@@SETTINGS_TOKENS__TO_RECEIVE_INFO"
+  >
     To receive on-chain payments from other channels (e.g. from a Wire or a
     Boost), you will need an on-chain address. You can change it here at any
     time. Note: your on-chain address is the same as your Ether address.

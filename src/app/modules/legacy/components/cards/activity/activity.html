@@ -67,7 +67,7 @@
         </div>
         <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
           <i class="material-icons unlisted">visibility_off</i>
-          <a i18n>Unlisted</a>
+          <a i18n="@@COMMON__UNLISTED">Unlisted</a>
         </div>
       </a>
       <a
@@ -88,7 +88,7 @@
         </div>
         <div class="mdl-card__supporting-text is-boosted" *ngIf="isUnlisted()">
           <i class="material-icons unlisted">visibility_off</i>
-          <a i18n>Unlisted</a>
+          <a i18n="@@COMMON__UNLISTED">Unlisted</a>
         </div>
       </a>
     </div>
@@ -406,7 +406,10 @@
       </ng-container>
       <ng-template #blockedRemindTemplate>
         <div class="m-activity__blockedRemind">
-          <div class="m-activityBlockedRemind__description" i18n>
+          <div
+            class="m-activityBlockedRemind__description"
+            i18n="@@ACTIVITY__REMIND_NOT_AVAILABLE"
+          >
             This remind is not available because you blocked
             <a
               target="_blank"

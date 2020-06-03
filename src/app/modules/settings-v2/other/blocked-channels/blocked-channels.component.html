@@ -24,7 +24,8 @@
         color="grey"
         (click)="unblock(channel)"
       >
-        <i class="material-icons">person_add</i><span i18n>Unblock</span>
+        <i class="material-icons">person_add</i
+        ><span i18n="@@COMMON__UNBLOCK">Unblock</span>
       </m-shadowboxSubmitButton>
       <!-- <ng-template #blockButtonTemplate>
       <m-shadowboxSubmitButton
@@ -33,7 +34,7 @@
         color="red"
         (click)="block(channel)"
       >
-        <i class="material-icons">block</i><span i18n>Block</span>
+        <i class="material-icons">block</i><span i18n="@@COMMON__BLOCK">Block</span>
       </m-shadowboxSubmitButton>
     </ng-template> -->
     </div>
@@ -49,5 +50,7 @@
   </infinite-scroll>
 </ng-container>
 <div *ngIf="!hasList" class="m-settingsV2__desc m-settingsV2__notice">
-  <span>You haven't blocked any channels.</span>
+  <span i18n="@@BLOCKED_CHANNELS__YOU_HAVENT_BLOCKED_ANY_CHANNELS"
+    >You haven't blocked any channels.</span
+  >
 </div>

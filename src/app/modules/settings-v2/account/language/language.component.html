@@ -3,7 +3,7 @@
     <div class="m-form__fieldsContainer">
       <div class="m-form__field--select stretchedField">
         <div class="m-form__row--label">
-          <label for="language" i18n>Language</label>
+          <label for="language" i18n="@@COMMON__LANGUAGE">Language</label>
         </div>
         <div class="m-form__row--input">
           <select
@@ -26,13 +26,18 @@
         [disabled]="!canSubmit()"
         [saving]="inProgress"
         (click)="submit()"
+        i18n="@@LANGUAGE__UPDATE_LANGUAGE"
       >
         Update Language
       </m-shadowboxSubmitButton>
     </div>
   </form>
 
-  <div class="m-settingsV2__desc" *ngIf="false">
+  <div
+    class="m-settingsV2__desc"
+    *ngIf="false"
+    i18n="@@LANGUAGE__HELP_US_TRANSLATE"
+  >
     Bring Minds to the world! If you speak another language, help the community
     by translating the Minds
     <a target="_blank" href="https://poeditor.com/join/project/A45VLCwD0Y"

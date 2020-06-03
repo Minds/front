@@ -1,8 +1,8 @@
 <div class="m-composerPopup__body m-composer__nsfw">
   <div class="m-composerPopup__content">
-    <h3 class="m-composerPopup__title" i18n>NSFW</h3>
+    <h3 class="m-composerPopup__title" i18n="@@COMMON__NSFW">NSFW</h3>
 
-    <p class="m-composerPopup__text" i18n>
+    <p class="m-composerPopup__text" i18n="@@COMPOSER_NSFW__IF_POST_CONTAINS">
       If this post contains content that is NSFW (Not Safe for Work) it is your
       responsibility to tag it accordingly. Failing to do so will violate our
       terms of use.
@@ -19,7 +19,10 @@
       </li>
     </ul>
 
-    <p class="m-composerPopup__smallNote" i18n>
+    <p
+      class="m-composerPopup__smallNote"
+      i18n="@@COMPOSER_NSFW__GUIDELINES_FURTHER_INFORMATION"
+    >
       See <a href="#">guidelines</a> for further information.
     </p>
   </div>
@@ -29,7 +32,7 @@
       class="m-composerPopup__save"
       (onAction)="save()"
       data-cy="nsfw-save-button"
-      i18n
+      i18n="@@COMMON__SAVE"
     >
       Save
     </m-button>

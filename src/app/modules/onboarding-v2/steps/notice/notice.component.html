@@ -12,7 +12,11 @@
   Welcome
 </h1>
 
-<h1 class="m-onboarding__noticeTitle" *ngIf="!isMobile()" i18n>
+<h1
+  class="m-onboarding__noticeTitle"
+  *ngIf="!isMobile()"
+  i18n="@@ONBOARDING_NOTICE__WELCOME_MINDS_COMMUNITY"
+>
   Welcome to the Minds Community
 </h1>
 <h2
@@ -22,7 +26,10 @@
   @{{ user.username }}
 </h2>
 
-<p class="m-onboarding__description" i18n>
+<p
+  class="m-onboarding__description"
+  i18n="@@ONBOARDING_NOTICE__YOUR_PRIVACY_OUR_PRIORITY"
+>
   Your privacy is our priority. You are free to provide as much or as little
   information as you wish for better recommendations and to connect with people
   in your local area.
@@ -30,9 +37,9 @@
 
 <div class="m-onboarding__actionButtons">
   <button class="mf-button mf-button--alt" (click)="continue()">
-    <span i18n>Let's Get Setup</span>
+    <span i18n="@@ONBOARDING_NOTICE__LETS_GET_SETUP">Let's Get Setup</span>
   </button>
-  <a (click)="skip()" i18n>
+  <a (click)="skip()" i18n="@@ONBOARDING_NOTICE__NO_THANKS_LATER">
     No thanks, I'll do it later
   </a>
 </div>

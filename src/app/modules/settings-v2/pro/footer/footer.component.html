@@ -8,17 +8,17 @@
   <div class="m-form__fieldsContainer containsDragDrop">
     <div class="m-form__field--grid" formArrayName="footer_links">
       <div class="m-form__row--label">
-        <label i18n>Links</label>
+        <label i18n="@@COMMON__LINKS">Links</label>
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n
+          <ng-container i18n="@@FOOTER__CAN_POST_EXTERNAL_BELOW"
             >You can post external links below</ng-container
           > </m-tooltip
         ><button
           type="button"
           (click)="addBlankFooterLink()"
           data-minds="addFooterLink"
-          i18n
+          i18n="@@FOOTER__ADD"
         >
           Add
         </button>
@@ -67,10 +67,10 @@
     </div>
     <div class="m-form__field--text stretchedField">
       <div class="m-form__row--label">
-        <label for="footer_text" i18n>Text</label>
+        <label for="footer_text" i18n="@@COMMON__TEXT">Text</label>
         <m-tooltip
           ><span m-tooltip--anchor>𝒊</span>
-          <ng-container i18n
+          <ng-container i18n="@@FOOTER__TEXT_DISPLAYED_BOTTOM_NOTICE"
             >This text will be displayed at the bottom of the page</ng-container
           >
         </m-tooltip>
@@ -92,6 +92,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@FOOTER__SAVE_FOOTER"
     >
       Save Footer
     </m-shadowboxSubmitButton>
