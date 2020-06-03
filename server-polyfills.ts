@@ -2,7 +2,7 @@ import { join } from 'path';
 import { readFileSync } from 'fs';
 
 const domino = require('domino');
-const distFolder = join(process.cwd(), 'dist/browser');
+const distFolder = join(process.cwd(), 'dist/browser/en');
 const template = readFileSync(join(distFolder, 'index.html')).toString();
 const win = domino.createWindow(template);
 

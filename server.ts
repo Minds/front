@@ -1,7 +1,7 @@
 import 'zone.js/dist/zone-node';
 
 import { join } from 'path';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'fs';
 import * as _url from 'url';
 
 import './server-polyfills';
@@ -19,13 +19,12 @@ import * as cookieparser from 'cookie-parser';
 import isMobileOrTablet from './src/app/helpers/is-mobile-or-tablet';
 
 const PORT = process.env.PORT || 4200;
+// Dist folder
+const distFolder = join(process.cwd(), 'dist', 'browser');
 
 export function app() {
   // Express server
   const server = express();
-
-  // Dist folder
-  const distFolder = join(process.cwd(), 'dist', 'browser');
 
   // gzip
   server.use(compression());
@@ -94,10 +93,12 @@ export function app() {
         : req.headers['x-forwarded-proto'];
 
     const url = req.originalUrl;
+    const locale = getLocale(req);
+
     // tslint:disable-next-line:no-console
     console.time(`GET: ${url}`);
     res.render(
-      'index',
+      `${locale}/index`,
       {
         req: req,
         res: res,
@@ -149,6 +150,22 @@ export function app() {
   });
 
   return server;
+}
+
+/**
+ * Return a valid i18n locale
+ */
+function getLocale(req): string {
+  const defaultLocale = 'en';
+  const hostLanguage =
+    req.cookies['hl'] === undefined ? defaultLocale : req.cookies['hl'];
+  if (hostLanguage && hostLanguage.length === 2) {
+    const path = join(distFolder, hostLanguage);
+    if (existsSync(path)) {
+      return hostLanguage;
+    }
+  }
+  return defaultLocale;
 }
 
 function run() {

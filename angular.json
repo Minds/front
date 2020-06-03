@@ -8,7 +8,24 @@
       "sourceRoot": "src",
       "projectType": "application",
       "i18n": {
-        "sourceLocale": "en"
+        "sourceLocale": {
+          "code": "en",
+          "baseHref": ""
+        },
+        "locales": {
+          "es": {
+            "baseHref": "",
+            "translation": "src/locale/Minds.es.xliff"
+          },
+          "vi": {
+            "baseHref": "",
+            "translation": "src/locale/Minds.vi.xliff"
+          },
+          "th": {
+            "baseHref": "",
+            "translation": "src/locale/Minds.th.xliff"
+          }
+        }
       },
       "architect": {
         "build": {
@@ -20,6 +37,8 @@
             "tsConfig": "src/tsconfig.app.json",
             "polyfills": "src/polyfills.ts",
             "extractCss": true,
+            "aot": true,
+            "localize": ["en"],
             "assets": ["src/assets", "src/favicon.ico"],
             "styles": [
               "node_modules/material-design-lite/dist/material.blue_grey-amber.min.css",
@@ -44,6 +63,7 @@
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
+              "localize": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,

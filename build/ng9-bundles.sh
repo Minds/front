@@ -4,7 +4,7 @@
 BROWSER_PATH=${1:-dist/browser}
 
 # 2nd parameter is browser bundle deploy URL
-BROWSER_DEPLOY_URL=${2:-/browser}
+BROWSER_DEPLOY_URL=${2:-/}
 
 # 3rd parameter is server bundle folder
 SERVER_PATH=${3:-dist/server}
