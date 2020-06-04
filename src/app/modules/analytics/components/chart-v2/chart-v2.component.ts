@@ -129,7 +129,6 @@ export class ChartV2Component implements OnInit, OnDestroy {
 
   // * PREPARE PLOT -----------------------------
   initPlot() {
-    console.log('888 initPlot', this.isDark);
     this.pointsPerSegment = this.segments[0].buckets.length;
 
     const yLowerBound = this.getLowerBound(this.segments[0].buckets);
