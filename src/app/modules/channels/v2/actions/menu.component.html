@@ -55,6 +55,12 @@
         </span>
       </li>
 
+      <li (click)="proAdminToggle()">
+        <span class="m-dropdownMenu__item">
+          {{ !(service.channel$ | async)?.pro ? 'Make Pro' : 'Remove Pro' }}
+        </span>
+      </li>
+
       <ng-container *ngIf="service.isExplicit$ | async">
         <li (click)="setExplicit(false)">
           <span

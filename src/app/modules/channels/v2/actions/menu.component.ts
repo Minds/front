@@ -4,6 +4,11 @@ import { PostMenuService } from '../../../../common/components/post-menu/post-me
 import { ActivityService } from '../../../../common/services/activity.service';
 import { OverlayModalService } from '../../../../services/ux/overlay-modal';
 import { Router } from '@angular/router';
+import { Client } from '../../../../services/api/client';
+
+export interface ProToggleResponse {
+  status?: string;
+}
 
 /**
  * Extra actions dropdown menu
@@ -28,6 +33,7 @@ export class ChannelActionsMenuComponent {
     protected overlayModalService: OverlayModalService,
     protected postMenu: PostMenuService,
     protected router: Router,
+    private client: Client,
     activity: ActivityService
   ) {}
 
@@ -180,5 +186,30 @@ export class ChannelActionsMenuComponent {
 
     // Let Post Menu service handle modal
     this.postMenu.setEntity(channel).openReportModal();
+  }
+
+  /**
+   * Allows an admin to toggle the pro state of a user.
+   * @returns { Promise<void> } -awaitable.
+   */
+  async proAdminToggle(): Promise<void> {
+    const channel = { ...this.service.channel$.getValue() };
+    const value = !channel.pro;
+    const method = value ? 'put' : 'delete';
+
+    try {
+      const response = (await this.client[method](
+        `api/v2/admin/pro/${channel.guid}`
+      )) as ProToggleResponse;
+
+      if (!response || response.status !== 'success') {
+        throw new Error('Invalid server response');
+      }
+
+      channel.pro = value;
+      this.service.channel$.next(channel);
+    } catch (e) {
+      console.error(e);
+    }
   }
 }
