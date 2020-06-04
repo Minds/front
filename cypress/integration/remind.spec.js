@@ -1,5 +1,7 @@
 context('Remind', () => {
   const remindText = 'remind test text';
+  const textArea = 'm-text-input--autocomplete-container textarea';
+  const sendButton = '.m-modalRemindComposer__send';
 
   before(() => {
     cy.getCookie('minds_sess').then(sessionCookie => {
@@ -30,13 +32,13 @@ context('Remind', () => {
       .click();
 
     //fill out text box in modal
-    cy.get('.m-modal-remind-composer  textarea')
+    cy.get(textArea)
       .focus()
       .clear()
       .type(remindText);
 
     //post remind.
-    cy.get('.m-modal-remind-composer-send i')
+    cy.get(sendButton)
       .click()
       .wait('@postRemind')
       .then(xhr => {

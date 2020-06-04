@@ -1,6 +1,6 @@
 // import 'cypress-file-upload';
 
-context('Blogs', () => {
+context.skip('Blogs', () => {
   const closeButton = '[data-cy=data-minds-conversation-close]';
 
   before(() => {

@@ -9,7 +9,7 @@ const member = {
 
 const postContent = generateRandomId();
 
-context.only('Groups', () => {
+context.skip('Groups', () => {
   before(() => {
     // cy.newUser(member.username, member.password);
     // cy.logout();
