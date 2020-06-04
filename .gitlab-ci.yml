@@ -103,12 +103,10 @@ build:review:
   stage: test and build
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
-    - sed -ri "s|'DEPLOY_URL'|''|" src/environments/environment.prod.ts
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
-    - sh build/ng9-bundles.sh dist/browser /browser/ dist/server
-    - sh build/ng9-locl-convert.sh dist/browser src/locale
+    - sh build/ng9-bundles.sh
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
@@ -118,17 +116,16 @@ build:review:
       - master
       - production
       - test/gitlab-ci
+      - epic/angular-9
 
 build:production:bundles:
   stage: test and build
   before_script:
     - sed -ri "s|'VERSION'|'$CI_PIPELINE_ID'|" src/environments/environment.prod.ts
-    - sed -ri "s|'DEPLOY_URL'|'https://cdn-assets.minds.com/front/dist/browser'|" src/environments/environment.prod.ts
   script:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
-    - sh build/ng9-bundles.sh dist/browser https://cdn-assets.minds.com/front/dist/browser/ dist/server
-    - sh build/ng9-locl-convert.sh dist/browser src/locale
+    - sh build/ng9-bundles.sh
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
@@ -172,6 +169,7 @@ prepare:review:
       - master
       - production
       - test/gitlab-ci
+      - epic/angular-9
 
 prepare:review:sentry:
   <<: *sentry_prepare
@@ -182,6 +180,7 @@ prepare:review:sentry:
       - master
       - production
       - test/gitlab-ci
+      - epic/angular-9
   dependencies:
     - build:review
 
@@ -214,6 +213,7 @@ prepare:production:sentry:
       - master
       - production
       - test/gitlab-ci
+      - epic/angular-9
   dependencies:
     - build:production:bundles
 
@@ -237,6 +237,7 @@ prepare:production:sentry:
       - master
       - production
       - test/gitlab-ci
+      - epic/angular-9
 
 review:start:
   stage: review
@@ -265,6 +266,7 @@ review:start:
       - master
       - production
       - test/gitlab-ci
+      - epic/angular-9
 
 review:stop:
   <<: *cleanup_review
