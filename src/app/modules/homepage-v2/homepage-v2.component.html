@@ -1,10 +1,9 @@
 <div class="mf-jumpAnchor" #topAnchor></div>
 
 <m-marketing
-  class="m-homepage"
+  class="m-homepage m-homepage__formExperiment"
   [showBottombar]="false"
   [forceBackground]="false"
-  [class.m-homepage__formExperiment]="!!registerForm"
 >
   <div class="m-marketing__main m-marketing__section--style-2">
     <div class="m-grid m-marketing__wrapper">
@@ -47,17 +46,7 @@
       </div>
 
       <div
-        class="m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile m-marketing__image"
-        *mExperiment="'Homepage121119'; bucket: 'base'"
-      >
-        <span class="m-homepage__cellphone">
-          <img [src]="cdnAssetsUrl + 'assets/homepage/homepage-1.png'" />
-        </span>
-      </div>
-
-      <div
         class="m-grid__column-5 m-grid__column-6--tablet m-grid__column-12--mobile m-homepage__registerForm"
-        *mExperiment="'Homepage121119'; bucket: 'form'"
       >
         <minds-form-register
           [showTitle]="true"
