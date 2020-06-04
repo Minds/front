@@ -123,11 +123,11 @@ export class ProChannelComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get proSettingsLink() {
-    return ['/pro/settings'];
+    return [`/settings/canary/pro_canary/${this.username}`];
   }
 
   get proSettingsHref() {
-    return this.site.baseUrl + 'pro/settings';
+    return this.site.baseUrl + `settings/canary/pro_canary/${this.username}`;
   }
 
   get isProDomain() {
