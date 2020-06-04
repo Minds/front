@@ -121,6 +121,8 @@ build:review:
       - epic/SSR
       - production
       - test/gitlab-ci
+  tags:
+    - angular
 
 build:production:en:
   stage: test and build
@@ -145,6 +147,8 @@ build:production:en:
       - epic/SSR
       - production
       - test/gitlab-ci
+  tags:
+    - angular
 
 build:production:i18n:
   stage: test and build
@@ -165,6 +169,8 @@ build:production:i18n:
       - epic/SSR
       - production
       - test/gitlab-ci
+  tags:
+    - angular
 
 #################
 # Prepare Stage #
