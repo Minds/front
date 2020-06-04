@@ -84,23 +84,14 @@
 
 <!-- Outlets -->
 
-<ng-container *mIfFeature="'navigation'; else legacyNavigation">
-  <m-sidebarWidget [title]="title" *ngIf="(suggestions$ | async).length">
-    <div class="m-sidebarWidget__body">
-      <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
-    </div>
-    <a
-      class="m-sidebarWidget__seeMore"
-      (click)="seeMore()"
-      *ngIf="!(inProgress$ | async)"
-      >See more</a
-    >
-  </m-sidebarWidget>
-</ng-container>
-
-<ng-template #legacyNavigation>
-  <div class="m-suggestions__sidebar">
-    <h3 class="m-newsfeedSidebar__header">Suggested channels</h3>
+<m-sidebarWidget [title]="title" *ngIf="(suggestions$ | async).length">
+  <div class="m-sidebarWidget__body">
     <ng-container *ngTemplateOutlet="suggestionsBody"></ng-container>
   </div>
-</ng-template>
+  <a
+    class="m-sidebarWidget__seeMore"
+    (click)="seeMore()"
+    *ngIf="!(inProgress$ | async)"
+    >See more</a
+  >
+</m-sidebarWidget>

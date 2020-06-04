@@ -103,6 +103,10 @@ describe('LoginComponent', () => {
           provide: SidebarNavigationService,
           useValue: MockService(SidebarNavigationService),
         },
+        {
+          provide: 'QUERY_STRING',
+          useValue: null,
+        },
         PageLayoutService,
       ],
     }).compileComponents();

@@ -6,7 +6,6 @@ import { OnboardingV2Module } from '../onboarding-v2/onboarding.module';
 import { CommonModule } from '../../common/common.module';
 import { SearchModule } from '../search/search.module';
 import { NotificationModule } from '../notifications/notification.module';
-import { OnboardingModule } from '../onboarding/onboarding.module';
 import { ModalsModule } from '../modals/modals.module';
 import { ReportModule } from '../report/report.module';
 import { BlockchainModule } from '../blockchain/blockchain.module';
@@ -23,7 +22,6 @@ import { ComposerModule } from '../composer/composer.module';
     SearchModule,
     NotificationModule,
     ModalsModule,
-    OnboardingModule,
     OnboardingV2Module,
     ReportModule,
     BlockchainModule,

@@ -167,7 +167,8 @@ import { BlockListService } from '../../../../common/services/block-list.service
       i18n-yesButton="@@M__ACTION__BAN_USER"
     >
       <p confirm-message>
-        <ng-container i18n>Are you sure you want to ban this user?</ng-container
+        <ng-container i18n="@@MINDS__BAN__CONFIRMATION"
+          >Are you sure you want to ban this user?</ng-container
         ><br /><br />
         <ng-container i18n
           >This will close all open sessions and lock them out from
@@ -191,7 +192,7 @@ import { BlockListService } from '../../../../common/services/block-list.service
       i18n-yesButton="@@M__ACTION__BAN_USER"
     >
       <p confirm-message>
-        <ng-container i18n
+        <ng-container i18n="@@BAN__FROM__MONETIZATION"
           >Are you sure you want to ban this user from
           monetization?</ng-container
         ><br /><br />

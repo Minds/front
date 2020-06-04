@@ -4,12 +4,6 @@ import { RouterModule, Routes, Router } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CommonModule } from '../../common/common.module';
-import { MonetizationOverviewModule } from '../monetization/monetization.overview.module';
-import {
-  MONETIZATION_REVENUE_COMPONENTS,
-  RevenueConsoleComponent,
-  RevenueOptionsComponent,
-} from '../monetization/monetization.module';
 import { CheckoutModule } from '../checkout/checkout.module';
 import { AdsModule } from '../ads/ads.module';
 import { WireModule } from '../wire/wire.module';
@@ -17,16 +11,10 @@ import { BlockchainModule } from '../blockchain/blockchain.module';
 import { PlusModule } from '../plus/plus.module';
 
 import { WalletComponent } from './wallet.component';
-import { PointsOverviewComponent } from './points-overview.component';
-import { WalletOverviewComponent } from './overview/overview.component';
-import { WalletTransactionsComponent } from './transactions/transactions.component';
-import { WalletPointsTransactionsComponent } from './transactions/points.component';
-import { WalletPurchaseComponent } from './purchase/purchase.component';
 import { WalletWireComponent } from './wire/wire.component';
 import { WalletToggleComponent } from './toggle.component';
 import { WalletFlyoutComponent } from './flyout/flyout.component';
 import { WalletTokensComponent } from './tokens/tokens.component';
-import { WalletPointsComponent } from './points/points.component';
 import { WalletTokenSettingsComponent } from './tokens/settings/settings.component';
 import { WalletTokenTransactionsComponent } from './tokens/transactions/transactions.component';
 import { WalletTokenContributionsComponent } from './tokens/contributions/contributions.component';
@@ -35,13 +23,6 @@ import { WalletTokenJoinComponent } from './tokens/join/join.component';
 import { WalletBalanceUSDComponent } from './balances/usd/balance.component';
 import { WalletBalanceTokensComponent } from './balances/tokens/balance.component';
 import { WalletBalanceRewardsComponent } from './balances/rewards/balance.component';
-import { WalletUSDComponent } from './usd/usd.component';
-import { WalletUSDEarningsComponent } from './usd/earnings.component';
-import { WalletUSDTransactionsComponent } from './usd/transactions.component';
-import { WalletUSDPayoutsComponent } from './usd/payouts.component';
-import { WalletUSDSettingsComponent } from './usd/settings.component';
-import { WalletUSDOnboardingComponent } from './usd/onboarding/onboarding.component';
-import { WalletUSDTermsComponent } from './usd/terms.component';
 import { WalletTokenWithdrawLedgerComponent } from './tokens/withdraw/ledger/ledger.component';
 import { WalletTokenAddressesComponent } from './tokens/addresses/addresses.component';
 import { TokenOnboardingModule } from './tokens/onboarding/onboarding.module';
@@ -51,12 +32,8 @@ import { WalletToken101Component } from './tokens/101/101.component';
 import { ModalsModule } from '../modals/modals.module';
 import { ReferralsModule } from './tokens/referrals/referrals.module';
 import { ReferralsComponent } from './tokens/referrals/referrals.component';
-import { WalletUSDBalanceComponent } from './usd/balance.component';
 import { WalletV2Module } from './v2/wallet-v2.module';
 import { WALLET_V2_ROUTES } from '../wallet/v2/wallet-v2.module';
-import { FeaturesService } from '../../services/features.service';
-import { ConfigsService } from '../../common/services/configs.service';
-import { WalletDashboardComponent } from './v2/dashboard.component';
 import { BlockchainConsoleComponent } from '../blockchain/console/console.component';
 import { ChartV2Module } from '../analytics/components/chart-v2/chart-v2.module';
 
@@ -139,23 +116,6 @@ export const WALLET_ROUTES: Routes = [
         ],
       },
       {
-        path: 'usd',
-        component: WalletUSDComponent,
-        data: {
-          title: 'USD',
-          description: 'Keep track of your USD transactions',
-          ogImage: '/assets/photos/graph.jpg',
-        },
-        children: [
-          { path: '', redirectTo: 'transactions', pathMatch: 'full' },
-          { path: 'transactions', component: WalletUSDTransactionsComponent },
-          { path: 'earnings', component: WalletUSDEarningsComponent },
-          { path: 'payouts', component: WalletUSDPayoutsComponent },
-          { path: 'settings', component: WalletUSDSettingsComponent },
-          { path: 'onboarding', component: WalletUSDOnboardingComponent },
-        ],
-      },
-      {
         path: 'crypto',
         component: WalletComponent,
         children: [
@@ -164,7 +124,7 @@ export const WALLET_ROUTES: Routes = [
         ],
       },
       { path: 'wire', component: WalletWireComponent },
-      { path: '**', component: WalletOverviewComponent },
+      { path: '**', redirectTo: '/wallet/canary' },
     ],
   },
 ];
@@ -191,11 +151,6 @@ export const WALLET_ROUTES: Routes = [
   ],
   declarations: [
     WalletComponent,
-    PointsOverviewComponent,
-    WalletOverviewComponent,
-    WalletTransactionsComponent,
-    WalletPointsTransactionsComponent,
-    WalletPurchaseComponent,
     WalletWireComponent,
     WalletToggleComponent,
     WalletFlyoutComponent,
@@ -206,37 +161,21 @@ export const WALLET_ROUTES: Routes = [
     WalletTokenWithdrawComponent,
     WalletTokenJoinComponent,
     WalletTokensComponent,
-    WalletPointsComponent,
     WalletBalanceUSDComponent,
     WalletBalanceTokensComponent,
     WalletBalanceRewardsComponent,
-    WalletUSDComponent,
-    WalletUSDEarningsComponent,
-    WalletUSDTransactionsComponent,
-    WalletUSDPayoutsComponent,
-    WalletUSDSettingsComponent,
-    WalletUSDOnboardingComponent,
-    WalletUSDTermsComponent,
     WalletTokenAddressesComponent,
     WalletTokenContributionsOverviewComponent,
     WalletTokenContributionsChartComponent,
     WalletToken101Component,
-    WalletUSDBalanceComponent,
-    ...MONETIZATION_REVENUE_COMPONENTS,
   ],
   exports: [
     WalletComponent,
-    PointsOverviewComponent,
-    WalletTransactionsComponent,
-    WalletPointsTransactionsComponent,
-    WalletPurchaseComponent,
     WalletWireComponent,
     WalletToggleComponent,
     WalletFlyoutComponent,
     WalletBalanceUSDComponent,
     WalletBalanceTokensComponent,
-    WalletUSDBalanceComponent,
-    ...MONETIZATION_REVENUE_COMPONENTS,
   ],
 })
 export class WalletModule {}

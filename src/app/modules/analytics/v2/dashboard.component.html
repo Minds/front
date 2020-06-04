@@ -22,21 +22,7 @@
 
   <div class="m-analyticsDashboard" *ngIf="ready$ | async">
     <m-dashboardLayout>
-      <ng-container m-dashboardLayout__header>
-        <ng-container
-          *mIfFeature="'navigation'; else oldNavHeader"
-        ></ng-container>
-        <ng-template #oldNavHeader>
-          <div>
-            <h3>
-              {{ category$ | async | titlecase }}
-            </h3>
-          </div>
-          <ng-container
-            *mIfFeature="'navigation'; else headerFilters"
-          ></ng-container>
-        </ng-template>
-      </ng-container>
+      <ng-container m-dashboardLayout__header> </ng-container>
       <p
         m-dashboardLayout__body
         class="m-analyticsDashboard__description"
@@ -75,12 +61,4 @@
   </div>
 </ng-template>
 
-<ng-container *mIfFeature="'navigation'; else oldNav">
-  <ng-container *ngTemplateOutlet="body"></ng-container>
-</ng-container>
-
-<ng-template #oldNav>
-  <m-pageLayout [menu]="menu">
-    <ng-container *ngTemplateOutlet="body" m-pageLayout__main></ng-container>
-  </m-pageLayout>
-</ng-template>
+<ng-container *ngTemplateOutlet="body"></ng-container>

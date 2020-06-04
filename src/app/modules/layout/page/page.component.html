@@ -19,28 +19,21 @@
   </m-announcement>
   <m-blockchain--wallet-address-notice></m-blockchain--wallet-address-notice>
 
-  <ng-container *mIfFeature="'navigation'; else oldLayout">
+  <div
+    [class.m-pageLayout__container]="!(pageLayoutService.isFullWidth$ | async)"
+    [class.m-pageLayout__container--fullWidth]="
+      pageLayoutService.isFullWidth$ | async
+    "
+  >
+    <m-sidebar--navigation m-pageLayout__pane="left"></m-sidebar--navigation>
     <div
-      [class.m-pageLayout__container]="
-        !(pageLayoutService.isFullWidth$ | async)
-      "
-      [class.m-pageLayout__container--fullWidth]="
-        pageLayoutService.isFullWidth$ | async
+      [m-pageLayout__pane]="
+        (pageLayoutService.isFullWidth$ | async) ? null : 'main'
       "
     >
-      <m-sidebar--navigation m-pageLayout__pane="left"></m-sidebar--navigation>
-      <div
-        [m-pageLayout__pane]="
-          (pageLayoutService.isFullWidth$ | async) ? null : 'main'
-        "
-      >
-        <router-outlet></router-outlet>
-      </div>
+      <router-outlet></router-outlet>
     </div>
-  </ng-container>
-  <ng-template #oldLayout>
-    <router-outlet></router-outlet>
-  </ng-template>
+  </div>
 </m-body>
 
 <ng-container *mIfBrowser>

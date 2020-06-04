@@ -30,7 +30,9 @@ import { Client } from '../../../../services/api';
       <div class="overlay" [hidden]="file">
         <i class="material-icons">camera</i>
         <span>
-          <ng-container i18n>Click here to add a new banner</ng-container><br />
+          <ng-container i18n="@@MINDS__BANNER__CLICK__TO__ADD"
+            >Click here to add a new banner</ng-container
+          ><br />
           <em i18n
             >Recommended minimum size 2000px &times; 1125px (Ratio 16:9)</em
           >

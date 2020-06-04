@@ -33,10 +33,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   referrer: string;
 
   @HostBinding('class.m-register--newDesign')
-  newDesign: boolean = false;
+  newDesign: boolean = true;
 
   @HostBinding('class.m-register--newNavigation')
-  newNavigation: boolean = false;
+  newNavigation: boolean = true;
 
   @HostBinding('class.m-register__iosFallback')
   iosFallback: boolean = false;
@@ -80,18 +80,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.loginReferrer.navigate();
     }
 
-    this.newDesign = this.featuresService.has('ux-2020');
-    this.newNavigation = this.featuresService.has('navigation');
+    this.topbarService.toggleVisibility(false);
+    this.iosFallback = iOSVersion() !== null;
 
-    if (this.newDesign) {
-      this.topbarService.toggleVisibility(false);
-      this.iosFallback = iOSVersion() !== null;
-
-      if (this.featuresService.has('navigation')) {
-        this.navigationService.setVisible(false);
-        this.pageLayoutService.useFullWidth();
-      }
-    }
+    this.navigationService.setVisible(false);
+    this.pageLayoutService.useFullWidth();
 
     this.redirectTo = localStorage.getItem('redirect');
 

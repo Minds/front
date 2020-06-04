@@ -1,19 +1,9 @@
-<ng-container *mIfFeature="'activity-composer'; else v1NewsfeedPoster">
-  <m-composer
-    *ngIf="isMember()"
-    (onPost)="prepend($event)"
-    [containerGuid]="group.guid"
-    #composer
-  ></m-composer>
-</ng-container>
-<ng-template #v1NewsfeedPoster>
-  <minds-newsfeed-poster
-    *ngIf="isMember()"
-    (load)="prepend($event)"
-    [containerGuid]="group.guid"
-    #poster
-  ></minds-newsfeed-poster>
-</ng-template>
+<m-composer
+  *ngIf="isMember()"
+  (onPost)="prepend($event)"
+  [containerGuid]="group.guid"
+  #composer
+></m-composer>
 
 <div class="minds-list">
   <div>
