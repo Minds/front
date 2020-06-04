@@ -1,22 +1,19 @@
 import {
-  Component,
-  ElementRef,
   ChangeDetectorRef,
+  Component,
   EventEmitter,
+  OnDestroy,
+  OnInit,
   Renderer,
-  ViewChild,
-  Injector,
 } from '@angular/core';
 
 import { Client } from '../../../services/api';
 import { Session } from '../../../services/session';
-import { Storage } from '../../../services/storage';
 import { SocketsService } from '../../../services/sockets';
 
 import { MessengerEncryptionService } from '../encryption/encryption.service';
 
 import { MessengerConversationDockpanesService } from '../dockpanes/dockpanes.service';
-import { MessengerSounds } from '../sounds/service';
 import { BlockListService } from '../../../common/services/block-list.service';
 import { ConfigsService } from '../../../common/services/configs.service';
 
@@ -29,7 +26,7 @@ import { ConfigsService } from '../../../common/services/configs.service';
   inputs: ['conversation'],
   templateUrl: 'conversation.component.html',
 })
-export class MessengerConversation {
+export class MessengerConversation implements OnInit, OnDestroy {
   readonly cdnUrl: string;
 
   tabId: string;
@@ -113,7 +110,7 @@ export class MessengerConversation {
       opts
     );
 
-    let scrollView = opts.container;
+    const scrollView = opts.container;
     delete opts.container;
 
     if (!opts.finish) this.inProgress = true;
@@ -130,8 +127,8 @@ export class MessengerConversation {
           this.messages = this.messages.concat(response.messages);
           this.scrollEmitter.next(true);
         } else if (opts.offset) {
-          let scrollTop = scrollView.scrollTop;
-          let scrollHeight = scrollView.scrollHeight;
+          const scrollTop = scrollView.scrollTop;
+          const scrollHeight = scrollView.scrollHeight;
           if (this.messages.length) {
             response.messages.pop();
           }
@@ -239,7 +236,7 @@ export class MessengerConversation {
       this.sockets.leave(this.conversation.socketRoomName);
     }
 
-    for (let sub in this.socketSubscriptions) {
+    for (const sub in this.socketSubscriptions) {
       if (this.socketSubscriptions[sub]) {
         this.socketSubscriptions[sub].unsubscribe();
       }
@@ -258,7 +255,7 @@ export class MessengerConversation {
       return;
     }
 
-    let newLength = this.messages.push({
+    const newLength = this.messages.push({
         // Optimistic
         optimisticGuess: true,
         owner: this.session.getLoggedInUser(),
@@ -332,7 +329,7 @@ export class MessengerConversation {
 
     this.blockingActionInProgress = true;
 
-    let blocks = [],
+    const blocks = [],
       newState = !this.blocked;
 
     this.conversation.participants.forEach((participant: any) => {

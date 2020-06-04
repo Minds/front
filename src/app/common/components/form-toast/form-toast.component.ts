@@ -77,6 +77,10 @@ export class FormToastComponent implements OnInit, OnDestroy {
     return this.service.toasts;
   }
 
+  get visibleToasts(): boolean {
+    return this.service.toasts.findIndex(item => !item.dismissed) !== -1;
+  }
+
   constructor(
     private service: FormToastService,
     protected cd: ChangeDetectorRef

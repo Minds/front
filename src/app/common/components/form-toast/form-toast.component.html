@@ -1,4 +1,4 @@
-<div class="m-formToast__toastsContainer">
+<div class="m-formToast__toastsContainer" *ngIf="visibleToasts">
   <ng-container *ngFor="let toast of toasts; let i = index">
     <div
       class="m-formToast__wrapper"
