@@ -1,5 +1,5 @@
-import { BehaviorSubject, Observable, combineLatest, Subject } from 'rxjs';
-import { MindsUser, MindsGroup } from '../../../interfaces/entities';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { MindsGroup, MindsUser } from '../../../interfaces/entities';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { ConfigsService } from '../../../common/services/configs.service';
@@ -56,6 +56,7 @@ export const ACTIVITY_FIXED_HEIGHT_HEIGHT = 600;
 export const ACTIVITY_FIXED_HEIGHT_WIDTH = 500;
 export const ACTIVITY_FIXED_HEIGHT_RATIO =
   ACTIVITY_FIXED_HEIGHT_WIDTH / ACTIVITY_FIXED_HEIGHT_HEIGHT;
+
 //export const ACTIVITY_FIXED_HEIGHT_CONTENT_HEIGHT = ACTIVITY_FIXED_HEIGHT_HEIGHT - ACTIVITY_OWNERBLOCK_HEIGHT;
 
 @Injectable()
@@ -156,6 +157,10 @@ export class ActivityService {
       }
       return false;
     })
+  );
+
+  isLoggedIn$: Observable<boolean> = this.session.user$.pipe(
+    map(user => user !== null)
   );
 
   /**
