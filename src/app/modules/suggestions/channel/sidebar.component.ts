@@ -84,10 +84,10 @@ export class SuggestionsSidebar {
   get title(): string {
     switch (this.type) {
       case 'user':
-        return 'Suggested Channels';
+        return $localize`:@@SUGGESTIONS__CHANNEL__TITLE: Suggested Channels`;
         break;
       case 'group':
-        return 'Suggested Groups';
+        return $localize`:@@SUGGESTIONS__CHANNEL__TITLE: Suggested Groups`;
         break;
     }
   }

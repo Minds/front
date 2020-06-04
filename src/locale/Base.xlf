@@ -171,8 +171,10 @@
         <note priority="1" from="description">@CHANNEL__ONBOARDING__USERNAME_PLACEHOLDER</note>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="95545e0c3787ddd0750506ab5ad15e9fe2254802" datatype="html">
-        <source>Briefly describe your channel</source>
+      <trans-unit id="5f32be596d6d618e47c57109debd26fc69c3c9f9" datatype="html">
+        <source>
+          Briefly describe your channel
+        </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/onboarding/channel/channel/channel.component.ts</context>
           <context context-type="linenumber">36</context>
@@ -184,7 +186,7 @@
         <source>eg. Independent Journalist</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/onboarding/channel/channel/channel.component.ts</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="description">@CHANNEL__ONBOARDING__BRIEFDESCRIPTION_PLACEHOLDER</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -586,10 +588,6 @@
           <context context-type="sourcefile">app/modules/newsfeed/newsfeed.component.html</context>
           <context context-type="linenumber">124</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/auth/register.component.html</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="COMMON__INFINITE_SCROLL__LOAD_MORE" datatype="html">
@@ -621,18 +619,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/forms/country-input/country-input.component.ts</context>
           <context context-type="linenumber">7</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">202</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">9</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -699,14 +685,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/forms/state-input/state-input.component.ts</context>
           <context context-type="linenumber">9</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">177</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">157</context>
         </context-group>
         <note priority="1" from="description">State as a country entity</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -785,15 +763,12 @@
         <note priority="1" from="description">Founder as user status</note>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="6ffa03d8ac03b0e9a7dec5b940cf289448dfb1d4" datatype="html">
-        <source>
-      Boosted OnChain in the last 7 days
-    </source>
+      <trans-unit id="BADGES__BOOSTER" datatype="html">
+        <source>Boosted OnChain in the last 7 days</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/badges/badges.component.html</context>
           <context context-type="linenumber">76</context>
         </context-group>
-        <note priority="1" from="description">Boosted OnChain in the last 7 days</note>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="MINDS__TAGCLOUD__TITLE" datatype="html">
@@ -1396,10 +1371,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/admin/payouts/payouts.component.html</context>
           <context context-type="linenumber">57</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">259</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/recurring-payments/recurring-payments.component.html</context>
@@ -4433,10 +4404,6 @@
           <context context-type="sourcefile">app/modules/wire/console/ledger.component.html</context>
           <context context-type="linenumber">58</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/purchase/purchase.component.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="M__COMMON__SYMBOL_AND_USD" datatype="html">
@@ -4475,10 +4442,6 @@
           <context context-type="sourcefile">app/modules/boost/publisher/ledger/ledger.component.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/ledger.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="WIRE__CONSOLE__LEDGER__CHANNEL_COLUMN" datatype="html">
@@ -4497,10 +4460,6 @@
           <context context-type="sourcefile">app/modules/wire/console/ledger.component.html</context>
           <context context-type="linenumber">97</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/ledger.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="M__COMMON__POINTS_WITH_VALUE" datatype="html">
@@ -4516,10 +4475,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/creator/rewards/rewards.component.html</context>
           <context context-type="linenumber">24</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/points-overview.component.html</context>
-          <context context-type="linenumber">6</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -4681,10 +4636,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/console/overview/overview.component.html</context>
           <context context-type="linenumber">36</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/overview.component.html</context>
-          <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -5114,7 +5065,7 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="1f360917a1f3abfbc275fb2adf0e9f52d4e135ac" datatype="html">
+      <trans-unit id="BAN__FROM__MONETIZATION" datatype="html">
         <source>Are you sure you want to ban this user from
           monetization?</source>
         <context-group purpose="location">
@@ -7432,10 +7383,6 @@
           <context context-type="sourcefile">app/modules/notifications/notification.component.html</context>
           <context context-type="linenumber">1382</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/purchase/purchase.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="M__COMMON__POINTS_SUFFIX" datatype="html">
@@ -7934,11 +7881,11 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/profile/feed/legacy.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/profile/feed/sorted.component.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">94</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/profile/review/review.component.html</context>
@@ -13428,10 +13375,6 @@
           <context context-type="sourcefile">app/modules/boost/creator/checkout/checkout.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">147</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="BOOST__CREATOR__TARGET_INPUT_PLACEHOLDER" datatype="html">
@@ -14432,43 +14375,6 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MINDS__HOME__LOGIN__LOGIN" datatype="html">
-        <source>Login to Minds</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/auth/login.component.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__START_A_CHANNEL_MINDS_REF" datatype="html">
-        <source>
-        Not on Minds? Start a Minds channel
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/auth/login.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__SOCIAL_NETWORK_SLOGAN" datatype="html">
-        <source>Where minds gather</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/auth/register.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MINDS__HOME__register__LAUNCH_CTA" datatype="html">
-        <source>
-          The leading open source social network for Internet freedom. Earn
-          crypto and free promotion for your contributions.
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/auth/register.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="WALLET__TOKENS__ONBOARDING__INTRODUCTION__LETS_SETUP_TITLE" datatype="html">
         <source>
       Let&amp;amp;apos;s setup your wallet
@@ -14875,207 +14781,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/completed/completed.component.html</context>
           <context context-type="linenumber">56</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__MINDS_PLUS" datatype="html">
-        <source>
-          Minds Plus
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__UPGRADE_CHANNEL_PREMIUM_FEATURES" datatype="html">
-        <source>
-          
-          Upgrade your channel and 
-          <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;amp;lt;em&amp;amp;gt;"/>
-          unlock premium features
-          <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;amp;lt;/em&amp;amp;gt;"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__SUPPORT_MINDS_UNLOCK_FEATURES" datatype="html">
-        <source>
-          Support Minds and unlock features such as hiding ads, accessing
-          exclusive content, receiving a badge and verifying your channel.
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="8c6441d1c77845aed5b926c7c2784b96b9fc88cc" datatype="html">
-        <source>Click here to request to be verified</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__YOU_ARE_VERIFIED" datatype="html">
-        <source>You are verified!</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__HIDE_BOOSTED_CONTENT" datatype="html">
-        <source>
-            Hide boosted content
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">75</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__TIRED_SEEING_ADS_SECTION" datatype="html">
-        <source>
-            Tired of seeing ads? All Plus users have the option of hiding all
-            boosted content from their feeds. Just click on the settings icon on
-            the Boost rotator in your newsfeed and select “Hide Boosts” to turn
-            this on.
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__ACCESS_EXCLUSIVE_CONTENT" datatype="html">
-        <source>
-            Access exclusive content
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">114</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__VIEW_LATEST_BEHIND_SCENES_SECTION" datatype="html">
-        <source>
-            View the latest behind-the-scenes content from the Minds team. Plus
-            members will also gain access to exclusive content from MindsTV
-            (coming soon).
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">121</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__VERIFY_YOUR_CHANNEL" datatype="html">
-        <source>
-            Verify your channel
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">152</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__MEMBERS_REQUEST_TO_VERIFY_SECTION" datatype="html">
-        <source>
-          
-            Plus members are able to request to
-            
-          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
-          verify their channel
-          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
-          
-            and receive a verified badge.
-          
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">159</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__JUST_POST_URL_SECTION" datatype="html">
-        <source>
-            Just post your Minds channel URL to two other social networks where
-            you have the same identify and provide us with the proof.
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">170</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__OTHER_PLUS_FEATURES" datatype="html">
-        <source>
-            Other Plus features
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">200</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__RECIEVE_A_BADGE" datatype="html">
-        <source>Receive a badge</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">210</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__MEMBERS_RECEIVE_BADGE_SECTION" datatype="html">
-        <source>
-            Plus members receive a badge for their channel to indicate they are
-            part of the community.
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">215</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__SUPPORT_MINDS" datatype="html">
-        <source>Support Minds</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">224</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__BUYING_PLUS_SECTION" datatype="html">
-        <source>
-            Buying Plus is a great way to keep Minds independent and show your
-            support for Internet freedom.
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">229</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MARKETING_PLUS__UPGRADE_TO_PLUS" datatype="html">
-        <source>
-            Upgrade to Plus
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">244</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="b2bdbf1ddb7b46ce1145c0cae4c08a27fcc480dc" datatype="html">
-        <source>Minds Plus</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
-          <context context-type="linenumber">3</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15539,6 +15244,207 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/onboarding-v2/steps/groups/list/list.component.html</context>
           <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__MINDS_PLUS" datatype="html">
+        <source>
+          Minds Plus
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__UPGRADE_CHANNEL_PREMIUM_FEATURES" datatype="html">
+        <source>
+          
+          Upgrade your channel and 
+          <x id="START_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;amp;lt;em&amp;amp;gt;"/>
+          unlock premium features
+          <x id="CLOSE_EMPHASISED_TEXT" ctype="x-em" equiv-text="&amp;amp;lt;/em&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__SUPPORT_MINDS_UNLOCK_FEATURES" datatype="html">
+        <source>
+          Support Minds and unlock features such as hiding ads, accessing
+          exclusive content, receiving a badge and verifying your channel.
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="8c6441d1c77845aed5b926c7c2784b96b9fc88cc" datatype="html">
+        <source>Click here to request to be verified</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__YOU_ARE_VERIFIED" datatype="html">
+        <source>You are verified!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__HIDE_BOOSTED_CONTENT" datatype="html">
+        <source>
+            Hide boosted content
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__TIRED_SEEING_ADS_SECTION" datatype="html">
+        <source>
+            Tired of seeing ads? All Plus users have the option of hiding all
+            boosted content from their feeds. Just click on the settings icon on
+            the Boost rotator in your newsfeed and select “Hide Boosts” to turn
+            this on.
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__ACCESS_EXCLUSIVE_CONTENT" datatype="html">
+        <source>
+            Access exclusive content
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">114</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__VIEW_LATEST_BEHIND_SCENES_SECTION" datatype="html">
+        <source>
+            View the latest behind-the-scenes content from the Minds team. Plus
+            members will also gain access to exclusive content from MindsTV
+            (coming soon).
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__VERIFY_YOUR_CHANNEL" datatype="html">
+        <source>
+            Verify your channel
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">152</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__MEMBERS_REQUEST_TO_VERIFY_SECTION" datatype="html">
+        <source>
+          
+            Plus members are able to request to
+            
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          verify their channel
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+          
+            and receive a verified badge.
+          
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">159</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__JUST_POST_URL_SECTION" datatype="html">
+        <source>
+            Just post your Minds channel URL to two other social networks where
+            you have the same identify and provide us with the proof.
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">170</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__OTHER_PLUS_FEATURES" datatype="html">
+        <source>
+            Other Plus features
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">200</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__RECIEVE_A_BADGE" datatype="html">
+        <source>Receive a badge</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">210</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__MEMBERS_RECEIVE_BADGE_SECTION" datatype="html">
+        <source>
+            Plus members receive a badge for their channel to indicate they are
+            part of the community.
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">215</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__SUPPORT_MINDS" datatype="html">
+        <source>Support Minds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">224</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__BUYING_PLUS_SECTION" datatype="html">
+        <source>
+            Buying Plus is a great way to keep Minds independent and show your
+            support for Internet freedom.
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">229</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MARKETING_PLUS__UPGRADE_TO_PLUS" datatype="html">
+        <source>
+            Upgrade to Plus
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">244</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="b2bdbf1ddb7b46ce1145c0cae4c08a27fcc480dc" datatype="html">
+        <source>Minds Plus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/plus/marketing.component.html</context>
+          <context context-type="linenumber">3</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17691,7 +17597,7 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="COMMON__MOBILE_PHONE_NUMBER_DISCLAIMER" datatype="html">
+      <trans-unit id="7ddfbae77c14434a6ddb174d0c1f54d268fbbd41" datatype="html">
         <source>Minds will not store the number you provide. It will be hashed
             using SHA-256 and combined with a salt key for privacy and unique
             identification purposes. VOIP numbers are not allowed.</source>
@@ -17771,122 +17677,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
           <context context-type="linenumber">98</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__OVERVIEW__JOIN_PLUS_TITLE" datatype="html">
-        <source>Join Minds Plus</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/overview/overview.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__OVERVIEW__JOIN_PLUS_DESC" datatype="html">
-        <source>
-        Opt-out of boosts, earn 1,000 monthly points, access exclusive Minds
-        content, and more
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/overview/overview.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__OVERVIEW__JOIN_PLUS_ACTION" datatype="html">
-        <source>
-        Join Plus
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/overview/overview.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__PURCHASE__BUY_ACTION" datatype="html">
-        <source>
-            BUY!
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/purchase/purchase.component.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__PURCHASE__RECURRING_10PCT_LABEL" datatype="html">
-        <source>
-          Repeat this transaction every month and get 
-          <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;b&amp;amp;gt;"/>
-          10%
-          <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;/b&amp;amp;gt;"/>
-           more
-              points
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/purchase/purchase.component.html</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__PURCHASE__CANCEL_RECURRING_ACTION" datatype="html">
-        <source>
-          Cancel recurring (
-          <x id="START_ITALIC_TEXT" ctype="x-i" equiv-text="&amp;amp;lt;i&amp;amp;gt;"/>
-          $
-          <x id="CLOSE_ITALIC_TEXT" ctype="x-i" equiv-text="&amp;amp;lt;/i&amp;amp;gt;"/>
-          <x id="INTERPOLATION" equiv-text="{{ subscription.price }}"/>
-          )
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/purchase/purchase.component.html</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__PURCHASE__COUPON_CODE_LABEL" datatype="html">
-        <source>Coupon code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/purchase/purchase.component.html</context>
-          <context context-type="linenumber">91</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__PURCHASE__COUPON_CODE_TOOLTIP" datatype="html">
-        <source>
-            If you have a discount / coupon code, please apply it here (only for
-            subscriptions)
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/purchase/purchase.component.html</context>
-          <context context-type="linenumber">93</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__PLEASE_WAIT" datatype="html">
-        <source>Please wait...</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/purchase/purchase.component.html</context>
-          <context context-type="linenumber">112</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__PURCHASE__SUCCESS_NOTICE" datatype="html">
-        <source>
-          Great, you now have 
-          <x id="INTERPOLATION" equiv-text="{{ wallet.points }}"/>
-           points!
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/purchase/purchase.component.html</context>
-          <context context-type="linenumber">127</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__PURCHASE__BUY_MORE_ACTION" datatype="html">
-        <source>Click here to BUY more.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/purchase/purchase.component.html</context>
-          <context context-type="linenumber">134</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -18462,822 +18252,6 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__CONSOLE__EARNINGS" datatype="html">
-        <source>Transactions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/console.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__CONSOLE__PAYOUTS" datatype="html">
-        <source>Payouts</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/console.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__CONSOLE__SETTINGS" datatype="html">
-        <source>Settings</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/console.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__LEDGER__TYPE_COLUMN" datatype="html">
-        <source>
-              Type
-            </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/ledger.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__LEDGER__STATUS_COLUMN" datatype="html">
-        <source>
-              Status
-            </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/ledger.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__LEDGER__REFUNDED_LABEL" datatype="html">
-        <source>Refunded</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/ledger.component.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__LEDGER__REFUNDED_TOOLTIP" datatype="html">
-        <source>
-                  A refund was issued for this payment. Funds will be deducted
-                  from your balance or reclaimed.
-                </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/ledger.component.html</context>
-          <context context-type="linenumber">67</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__LEDGER__DISPUTED_LABEL" datatype="html">
-        <source>Disputed</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/ledger.component.html</context>
-          <context context-type="linenumber">77</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__LEDGER__DISPUTED_TOOLTIP" datatype="html">
-        <source>
-                  This payment was disputed by the card holder.
-                </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/ledger.component.html</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__PAYOUT_METHOD_TITLE" datatype="html">
-        <source>
-      Payout Method
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">114</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__BANK_DETAILS_LABEL" datatype="html">
-        <source>
-        Payouts will be sent to the bank account below. If you wish to add a new
-        bank account, you can edit the account information below.
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">130</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__NO_BANK_DETAILS_LABEL" datatype="html">
-        <source>
-        You haven&amp;amp;apos;t setup your bank account yet. In order to receive payments
-        and payouts you will need to link your bank account.
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">160</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__ENTER_BANK_DETAILS_BELOW_LABEL" datatype="html">
-        <source>
-          Enter your new bank account details below.
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">169</context>
-        </context-group>
-        <note priority="1" from="description"/>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__ACCOUNT_NUMBER_IBAN_LABEL" datatype="html">
-        <source>Account Number / IBAN</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">184</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__ROUTING_NUMBER_SORT_CODE_LABEL" datatype="html">
-        <source>Routing Number / Sort Code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">196</context>
-        </context-group>
-        <note priority="1" from="description"/>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__ADD_ACCOUNT_ACTION" datatype="html">
-        <source>Add account</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">244</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__APPLY_ACTION" datatype="html">
-        <source>Apply</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">249</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__ACTION__CANCEL_MONETIZATION" datatype="html">
-        <source>Cancel Monetization</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">269</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">280</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__REVENUE__OPTIONS__CANCEL_MONETIZATION_LABEL" datatype="html">
-        <source>
-          
-      Click below to leave the monetization program. You will 
-          <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;b&amp;amp;gt;"/>
-          not
-          <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;/b&amp;amp;gt;"/>
-           be able
-      to rejoin in the future.
-    
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/revenue/options.component.html</context>
-          <context context-type="linenumber">271</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__TITLE" datatype="html">
-        <source>Terms &amp;amp;amp; Conditions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__BEEN_INVITED_PARTICIPATE_SECTION" datatype="html">
-        <source>
-    If you have been invited to participate in and have opted into our Minds
-    Monetization Program (the &amp;amp;quot;Program&amp;amp;quot;), and your participation in The Program
-    has not been terminated, then the following terms shall apply.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__PARTICIPATING_PROGRAM_AGREE_SECTION" datatype="html">
-        <source>
-    By participating in The Program you agree to become bound by the terms and
-    conditions herein (“The Agreement”). If you do not agree to all of the terms
-    and conditions herein you may not participate in The Program and are not
-    eligible to receive The Program services (including, but not limited to,
-    Program payments). To the extent that these terms and conditions are
-    considered an offer on behalf of Minds, acceptance of such offer is
-    expressly limited to these terms.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__WILL_COMPLY_SECTION" datatype="html">
-        <source>
-    You will comply with all of the terms and conditions contained in the Minds
-    Terms of Service and all other operating rules, policies, and procedures
-    that may be published by Minds.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__WILL_DISCLOSE_SECTION" datatype="html">
-        <source>
-    You will disclose to Minds any paid products or services you employ to refer
-    paid hosting customers to Minds.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__NOT_AUTHORIZED_TO_ACT_SECTION" datatype="html">
-        <source>
-    You are not authorized to act as an agent of Minds and shall not so
-    represent. You are not and shall not hold yourself out to be an employee of
-    Minds.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__MAY_NOT_FACTUALLY_MISREPRESENT_SECTION" datatype="html">
-        <source>
-    You may not factually misrepresent Minds, Minds.com or The Program
-    including, but not limited to, the services, products, and terms and
-    conditions therefor.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__HEREBY_CONSENT_NAME_USE_SECTION" datatype="html">
-        <source>
-    You hereby consent to the use of your name, likeness, blog name, and any
-    associated content or logos by Minds in connection with advertisements,
-    articles, and other similar communications conducted by Minds relating to
-    The Program.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__ATLEAST_18_SECTION" datatype="html">
-        <source>
-    You must be at least 18 years old to participate in the the Program. By
-    agreeing to these terms, you represent that you are 18 or older.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">53</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__TAX_ID_US_SECTION" datatype="html">
-        <source>
-    Program participants residing in the US must provide a tax ID if required.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__SUBJECT_TERMS_SERVICE_SECTION" datatype="html">
-        <source>
-    Subject to these terms of service, and provided that you are currently
-    participating in the Program:
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__MINDS_PAY_REVENUE_SECTION" datatype="html">
-        <source>
-    Minds will pay you 25% of the revenue share of the payments received by
-    Minds by customers who sign up through your Affiliate referral link. You are
-    not entitled to revenue sharing payments from Minds customers who fail to
-    register through your Affiliate referral link. Minds will issue payments
-    approximately 30 days following the end of each month in which the
-    applicable payment(s) are received by Minds.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">67</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__AFFILIATE_RECEIVE_REVENUE_SECTION" datatype="html">
-        <source>
-          
-    The following Minds products qualify the Affiliate to receive 25% of the
-    revenue Minds generates from users who sign up through the Affiliate’s
-    referral link:
-    
-          <x id="START_LIST_ITEM" ctype="x-li" equiv-text="&amp;amp;lt;li&amp;amp;gt;"/>
-          Point Purchases
-          <x id="CLOSE_LIST_ITEM" ctype="x-li" equiv-text="&amp;amp;lt;/li&amp;amp;gt;"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">76</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__ALL_PAYMENTS_ISSUED_SECTION" datatype="html">
-        <source>
-    All payments will be issued through a transaction medium determined by Minds
-    in its sole discretion. You must conform with Minds chosen payment method(s)
-    in order to be entitled to payment hereunder. Minds shall have no obligation
-    to make any payment under this paragraph until the outstanding amount owed
-    to you exceeds one hundred US dollars ($100). Your rights to Program
-    payments that remain unclaimed or undeliverable for a period of one year or
-    more may, in Minds sole discretion, be forfeit.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">83</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__DISCONTINUE_PARTICIPATION_SECTION" datatype="html">
-        <source>
-    If you wish to discontinue your participation in The Program, you may do so
-    in the Minds.com settings page of your participating account. Minds will
-    distribute remaining earnings to discontinued Program participants only if
-    the amount exceeds twenty five US dollars ($25).
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">93</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__BY_AGREEING_SECTION" datatype="html">
-        <source>
-    By agreeing to The Program terms, you acknowledge the possibility of
-    chargebacks due to fraudulent payments and refunds. In the event of a
-    chargeback or refund, Minds holds the right to retract any payout related to
-    the disputed transaction.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">100</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__MINDS_MAY_TERMINATE_SECTION" datatype="html">
-        <source>
-    Minds, in its sole discretion, may terminate your participation in The
-    Program at any time, with or without cause, with or without notice,
-    effective immediately.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">107</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__SUBJECT_TO_CHANGE_SECTION" datatype="html">
-        <source>
-    These terms of service are subject to change by Minds. Minds will take steps
-    to notify you of changes via the Minds.com website or email. You are
-    responsible for maintaining awareness and compliance with all future changes
-    to these terms and conditions. If you do not agree to be bound by revised
-    terms you must discontinue your participation in The Program immediately.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">113</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__SERVICE_AS_IS_SECTION" datatype="html">
-        <source>
-    The Minds services are provided “as is”. Minds and its suppliers and
-    licensors hereby disclaim all warranties of any kind, express or implied,
-    including, without limitation, the warranties of merchantability, fitness
-    for a particular purpose and non-infringement. Neither Minds nor its
-    suppliers and licensors, makes any warranty that its services will be error
-    free.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">121</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__REPRESENT_PARTICIPATION_SECTION" datatype="html">
-        <source>
-    You represent and warrant that your participation in The Program will be in
-    strict accordance with all applicable laws and regulations.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">130</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__HOLD_MINDS_HARMLESS_SECTION" datatype="html">
-        <source>
-    You agree to indemnify and hold harmless Minds, its contractors, and its
-    licensor, and their respective directors, officers, employees and agents
-    from and against any and all claims and expenses, including attorneys’ fees,
-    arising out of your participation in The Program including but not limited
-    to your violation of this Agreement.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">135</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__MONETIZE_CHANNEL_SECTION" datatype="html">
-        <source>
-    If you choose to monetize your channel, your channel must respect and abide
-    by the the terms of Stripe for all services and Google Adsense if you are
-    leveraging the Ad-Revenue sharing feature. Failure to comply with these
-    terms of service may result in loss or ban of monetization privileges.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">143</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__TERMS__SUMMARY_SECTION" datatype="html">
-        <source>
-    These Terms and Conditions constitute the entire agreement between Minds and
-    you concerning the subject matter hereof, and they may only be modified by a
-    written amendment signed by an authorized executive of Minds, or by the
-    posting by Minds of a revised version. Except to the extent applicable law,
-    if any, provides otherwise, these Terms and Conditions and/or your
-    participation in The Program shall be governed by the laws of the state of
-    Connecticut, U.S.A., excluding its conflict of law provisions, and the
-    proper venue for any disputes arising out of or relating to any of the same
-    will be the state and federal courts. Except for claims for injunctive or
-    equitable relief or claims regarding intellectual property rights (which may
-    be brought in any competent court without the posting of a bond), any
-    dispute arising under this Agreement shall be finally settled in accordance
-    with the Comprehensive Arbitration Rules of the Judicial Arbitration and
-    Mediation Service, Inc. (“JAMS”) by three arbitrators appointed in
-    accordance with such Rules. The arbitration shall take place in Hartford,
-    Connecticut, in the English language and the arbitral decision may be
-    enforced in any court. The prevailing party in any action or proceeding to
-    enforce this Agreement shall be entitled to costs and attorneys’ fees. If
-    any part of this Agreement is held invalid or unenforceable, that part will
-    be construed to reflect the parties’ original intent, and the remaining
-    portions will remain in full force and effect. A waiver by either party of
-    any term or condition of this Agreement or any breach thereof, in any one
-    instance, will not waive such term or condition or any subsequent breach
-    thereof. You may assign your rights under this Agreement to any party that
-    consents to, and agrees to be bound by, its terms and conditions; Minds may
-    assign its rights under this Agreement without condition. This Agreement
-    will be binding upon and will inure to the benefit of the parties, their
-    successors and permitted assigns.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/terms.component.html</context>
-          <context context-type="linenumber">150</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__FIRST_NAME" datatype="html">
-        <source>First name</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__LAST_NAME" datatype="html">
-        <source>Last name</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__DOB_LABEL" datatype="html">
-        <source>Date of Birth</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">77</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__GENDER_LABEL" datatype="html">
-        <source>Gender</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">86</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__FEMALE_OPTION" datatype="html">
-        <source>Female</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">90</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__MALE_OPTION" datatype="html">
-        <source>Male</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">93</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">77</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__SSN_LAST_4_LABEL" datatype="html">
-        <source>SSN (last 4 digits)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">100</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">84</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__PERSONAL_ID_LABEL" datatype="html">
-        <source>Personal ID</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">114</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">97</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__CA_PERSONAL_ID_TOOLTIP" datatype="html">
-        <source>
-          Social Insurance Number (SIN).
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">122</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">105</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__HK_PERSONAL_ID_TOOLTIP" datatype="html">
-        <source>
-          Hong Kong Identity Card (HKID).
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">130</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">113</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__SG_PERSONAL_ID_TOOLTIP" datatype="html">
-        <source>
-          National Registration Identity Card (NRIC).
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">138</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">121</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__PERSONAL_ID_PLACEHOLDER" datatype="html">
-        <source>Personal ID number or code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">145</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">128</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__ADDRESS_LABEL" datatype="html">
-        <source>Address</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">154</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">136</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__ADDRESS_PLACEHOLDER" datatype="html">
-        <source>House name/number, Street name</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">158</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">140</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__CITY_LABEL" datatype="html">
-        <source>City</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">165</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">146</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__CITY_PLACEHOLDER" datatype="html">
-        <source>eg. New York City</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">169</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">150</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__STATE_PROVINCE_LABEL" datatype="html">
-        <source>State / Province</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">188</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">168</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__STATE_PROVINCE_PLACEHOLDER" datatype="html">
-        <source>State or province</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">193</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">173</context>
-        </context-group>
-        <note priority="1" from="description"/>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__ZIP_CODE_LABEL" datatype="html">
-        <source>Zip (Postal) Code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">203</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">185</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__ZIP_CODE_PLACEHOLDER" datatype="html">
-        <source>eg. 10001</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">208</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">190</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__PHONE_LABEL" datatype="html">
-        <source>Phone Number</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">215</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">196</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__AGREE_TERMS_LABEL" datatype="html">
-        <source>
-          I have read and agree to the
-        
-          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
-          
-          Stripe Services Agreement 
-          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
-          .
-      
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">224</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">210</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__NEXT_ACTION" datatype="html">
-        <source>Next</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">237</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">222</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="WALLET__TOKENS__ADDRESSES__ADDRESSES_TITLE" datatype="html">
         <source>Addresses</source>
         <context-group purpose="location">
@@ -19576,51 +18550,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
           <context context-type="linenumber">111</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BALANCE__FUTURE_PAYOUTS" datatype="html">
-        <source>Future Payouts</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/balance.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BALANCE__PAYOUT_SCHEDULE" datatype="html">
-        <source>Payout Schedule:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/balance.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BALANCE__DAILY_PAYOUTS_SENT_INFO" datatype="html">
-        <source>
-          
-          Daily payouts are sent 
-          <x id="INTERPOLATION" equiv-text="{{ delay }}"/>
-           days after a payment has been
-          processed
-        
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/balance.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="BALANCE__MONTHLY_PAYOUTS_INFO" datatype="html">
-        <source>
-          
-          Monthly payouts will be issued on the 
-          <x id="INTERPOLATION" equiv-text="{{ anchor }}"/>
-           day of the month
-        
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/usd/balance.component.html</context>
-          <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -20039,532 +18968,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
           <context context-type="linenumber">161</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__TOTAL_EARNINGS_30_MINUS_FEES" datatype="html">
-        <source>
-        This is your total earnings for the past 30 days, minus any fees.
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/overview.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__PENDING" datatype="html">
-        <source>Pending</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/overview.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__EARNINGS_AWAITING_NEGATIVE_REFUND" datatype="html">
-        <source>
-          This is your earnings awaiting payout. A negative number indicates a
-          refund or chargeback has occured.
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/overview.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__PAID_OUT" datatype="html">
-        <source>Paid out</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/overview.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__COMMON__THIS_SENT_TO_BANK_ACCOUNT" datatype="html">
-        <source>
-          This is what has been sent to your bank account
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/overview.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__OVERVIEW__REVENUE_LABEL" datatype="html">
-        <source>
-    Revenue
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/overview.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__OVERVIEW__REVENUE_TOOLTIP" datatype="html">
-        <source>
-    You earn 25% of all revenue your referrals bring to Minds.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/overview.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__OVERVIEW__BREAKDOWN_LINK" datatype="html">
-        <source>See Breakdown</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/overview.component.html</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__OVERVIEW__MONETIZE_ACTION" datatype="html">
-        <source>Monetize now</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/overview.component.html</context>
-          <context context-type="linenumber">64</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__MONETIZATION_TITLE" datatype="html">
-        <source>Monetization</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__START_EARNING_SUBTITLE" datatype="html">
-        <source>
-      Start earning revenue on Minds by monetizing your channel
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__CLICK_TO_ONBOARD_ACTION" datatype="html">
-        <source>
-        Click to Onboard
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__VIEW_EARNINGS_ACTION" datatype="html">
-        <source>
-        View Earnings
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__AFFILIATE_TITLE" datatype="html">
-        <source>Affiliate</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__AFFILIATE_DESC" datatype="html">
-        <source>Earn 25% of the revenue Minds generates from your referrals</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__EXCLUSIVE_TITLE" datatype="html">
-        <source>Exclusive</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__EXCLUSIVE_DESC" datatype="html">
-        <source>Earn subscription revenue from your fans with exclusive content and
-        services</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__WIRE_TITLE" datatype="html">
-        <source>Wire</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__WIRE_DESC" datatype="html">
-        <source>Receive points, dollars, or Tokens directly from your fans as a reward
-        for posting quality content</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__P2P_BOOST_TITLE" datatype="html">
-        <source>P2P Boost</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">80</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__P2P_BOOST_DESC" datatype="html">
-        <source>Receive offers of points, dollars, or Tokens from other channels in
-        exchange for sharing their posts to your audience</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__INSIGHTS_TITLE" datatype="html">
-        <source>Insights</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">90</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__MKT__INSIGHTS_DESC" datatype="html">
-        <source>View analytics and breakdowns of your revenue</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/marketing.component.html</context>
-          <context context-type="linenumber">92</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__BEEN_INVITED_SECTION" datatype="html">
-        <source>
-    If you have been invited to participate in and have opted into our Minds
-    Monetization Program (the &amp;amp;quot;Program&amp;amp;quot;), and your participation in The Program
-    has not been terminated, then the following terms shall apply.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__BY_PARTICIPATING_SECTION" datatype="html">
-        <source>
-    By participating in The Program you agree to become bound by the terms and
-    conditions herein (“The Agreement”). If you do not agree to all of the terms
-    and conditions herein you may not participate in The Program and are not
-    eligible to receive The Program services (including, but not limited to,
-    Program payments). To the extent that these terms and conditions are
-    considered an offer on behalf of Minds, acceptance of such offer is
-    expressly limited to these terms.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__COMPLY_ALL_TERMS_SECTION" datatype="html">
-        <source>
-    You will comply with all of the terms and conditions contained in the Minds
-    Terms of Service and all other operating rules, policies, and procedures
-    that may be published by Minds.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__YOU_WILL_DISCLOSE_SECTION" datatype="html">
-        <source>
-    You will disclose to Minds any paid products or services you employ to refer
-    paid hosting customers to Minds.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__YOUR_NOT_AUTHORIZED_TO_ACT_SECTION" datatype="html">
-        <source>
-    You are not authorized to act as an agent of Minds and shall not so
-    represent. You are not and shall not hold yourself out to be an employee of
-    Minds.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__NO_FACTUAL_MISREPRESENTATION_SECTION" datatype="html">
-        <source>
-    You may not factually misrepresent Minds, Minds.com or The Program
-    including, but not limited to, the services, products, and terms and
-    conditions therefor.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">37</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__GIVE_CONSENT_SECTION" datatype="html">
-        <source>
-    You hereby consent to the use of your name, likeness, blog name, and any
-    associated content or logos by Minds in connection with advertisements,
-    articles, and other similar communications conducted by Minds relating to
-    The Program.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__ATLEAST_18_SECTION" datatype="html">
-        <source>
-    You must be at least 18 years old to participate in the the Program. By
-    agreeing to these terms, you represent that you are 18 or older.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__PROGRAM_PARTICIPANTS_SECTION" datatype="html">
-        <source>
-    Program participants residing in the US must provide a tax ID if required.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">55</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__SUBJECT_TERMS_SERVICE_SECTION" datatype="html">
-        <source>
-    Subject to these terms of service, and provided that you are currently
-    participating in the Program:
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__MINDS_PAY_YOU_SECTION" datatype="html">
-        <source>
-    Minds will pay you 25% of the revenue share of the payments received by
-    Minds by customers who sign up through your Affiliate referral link. You are
-    not entitled to revenue sharing payments from Minds customers who fail to
-    register through your Affiliate referral link. Minds will issue payments
-    approximately 30 days following the end of each month in which the
-    applicable payment(s) are received by Minds.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">64</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__QUALIFIES_PRODUCTS_SECTION" datatype="html">
-        <source>
-          
-    The following Minds products qualify the Affiliate to receive 25% of the
-    revenue Minds generates from users who sign up through the Affiliate’s
-    referral link:
-    
-          <x id="START_LIST_ITEM" ctype="x-li" equiv-text="&amp;amp;lt;li&amp;amp;gt;"/>
-          Point Purchases
-          <x id="CLOSE_LIST_ITEM" ctype="x-li" equiv-text="&amp;amp;lt;/li&amp;amp;gt;"/>
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">73</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__ALL_PAYMENTS_ISSUED_SECTION" datatype="html">
-        <source>
-    All payments will be issued through a transaction medium determined by Minds
-    in its sole discretion. You must conform with Minds chosen payment method(s)
-    in order to be entitled to payment hereunder. Minds shall have no obligation
-    to make any payment under this paragraph until the outstanding amount owed
-    to you exceeds one hundred US dollars ($100). Your rights to Program
-    payments that remain unclaimed or undeliverable for a period of one year or
-    more may, in Minds sole discretion, be forfeit.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">80</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__DISCONTINUE_SECTION" datatype="html">
-        <source>
-    If you wish to discontinue your participation in The Program, you may do so
-    in the Minds.com settings page of your participating account. Minds will
-    distribute remaining earnings to discontinued Program participants only if
-    the amount exceeds twenty five US dollars ($25).
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">90</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__AGREEING_PROGRAM_TERMS_SECTION" datatype="html">
-        <source>
-    By agreeing to The Program terms, you acknowledge the possibility of
-    chargebacks due to fraudulent payments and refunds. In the event of a
-    chargeback or refund, Minds holds the right to retract any payout related to
-    the disputed transaction.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">97</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__MINDS_MAY_TERMINATE_SECTION" datatype="html">
-        <source>
-    Minds, in its sole discretion, may terminate your participation in The
-    Program at any time, with or without cause, with or without notice,
-    effective immediately.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">104</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__TERMS_SUBJECT_CHANGE_SECTION" datatype="html">
-        <source>
-    These terms of service are subject to change by Minds. Minds will take steps
-    to notify you of changes via the Minds.com website or email. You are
-    responsible for maintaining awareness and compliance with all future changes
-    to these terms and conditions. If you do not agree to be bound by revised
-    terms you must discontinue your participation in The Program immediately.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">110</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__MINDS_SERVICES_AS_IS_SECTION" datatype="html">
-        <source>
-    The Minds services are provided “as is”. Minds and its suppliers and
-    licensors hereby disclaim all warranties of any kind, express or implied,
-    including, without limitation, the warranties of merchantability, fitness
-    for a particular purpose and non-infringement. Neither Minds nor its
-    suppliers and licensors, makes any warranty that its services will be error
-    free.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">118</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__ALL_APPLICABLE_LAWS_SECTION" datatype="html">
-        <source>
-    You represent and warrant that your participation in The Program will be in
-    strict accordance with all applicable laws and regulations.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">127</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__VIOLATION_ACCOUNTABILITY_SECTION" datatype="html">
-        <source>
-    You agree to indemnify and hold harmless Minds, its contractors, and its
-    licensor, and their respective directors, officers, employees and agents
-    from and against any and all claims and expenses, including attorneys’ fees,
-    arising out of your participation in The Program including but not limited
-    to your violation of this Agreement.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">132</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__MONETIZE_TERMS_STRIPE" datatype="html">
-        <source>
-    If you choose to monetize your channel, your channel must respect and abide
-    by the the terms of Stripe for all services and Google Adsense if you are
-    leveraging the Ad-Revenue sharing feature. Failure to comply with these
-    terms of service may result in loss or ban of monetization privileges.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">140</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION_TERMS__CONSTITUTE_AGREEMENT_SECTION" datatype="html">
-        <source>
-    These Terms and Conditions constitute the entire agreement between Minds and
-    you concerning the subject matter hereof, and they may only be modified by a
-    written amendment signed by an authorized executive of Minds, or by the
-    posting by Minds of a revised version. Except to the extent applicable law,
-    if any, provides otherwise, these Terms and Conditions and/or your
-    participation in The Program shall be governed by the laws of the state of
-    Connecticut, U.S.A., excluding its conflict of law provisions, and the
-    proper venue for any disputes arising out of or relating to any of the same
-    will be the state and federal courts. Except for claims for injunctive or
-    equitable relief or claims regarding intellectual property rights (which may
-    be brought in any competent court without the posting of a bond), any
-    dispute arising under this Agreement shall be finally settled in accordance
-    with the Comprehensive Arbitration Rules of the Judicial Arbitration and
-    Mediation Service, Inc. (“JAMS”) by three arbitrators appointed in
-    accordance with such Rules. The arbitration shall take place in Hartford,
-    Connecticut, in the English language and the arbitral decision may be
-    enforced in any court. The prevailing party in any action or proceeding to
-    enforce this Agreement shall be entitled to costs and attorneys’ fees. If
-    any part of this Agreement is held invalid or unenforceable, that part will
-    be construed to reflect the parties’ original intent, and the remaining
-    portions will remain in full force and effect. A waiver by either party of
-    any term or condition of this Agreement or any breach thereof, in any one
-    instance, will not waive such term or condition or any subsequent breach
-    thereof. You may assign your rights under this Agreement to any party that
-    consents to, and agrees to be bound by, its terms and conditions; Minds may
-    assign its rights under this Agreement without condition. This Agreement
-    will be binding upon and will inure to the benefit of the parties, their
-    successors and permitted assigns.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/terms.component.html</context>
-          <context context-type="linenumber">150</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MONETIZATION__ONBOARDING__PHONE_PLACEHOLDER" datatype="html">
-        <source>eg. 123-456789</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/monetization/onboarding/onboarding.component.html</context>
-          <context context-type="linenumber">200</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
