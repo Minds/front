@@ -4,7 +4,7 @@
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'tokens'"
         (click)="service.setType('tokens')"
-        i18n
+        i18n="currency|@@COMMON__TOKENS"
         >Tokens</a
       >
     </div>
@@ -13,7 +13,7 @@
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'usd'"
         (click)="service.setType('usd')"
-        i18n
+        i18n="currency|@@COMMON__USD"
         >USD</a
       >
     </div>
@@ -22,7 +22,7 @@
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'eth'"
         (click)="service.setType('eth')"
-        i18n
+        i18n="currency|@@COMMON__ETH"
         >ETH</a
       >
     </div>
@@ -31,7 +31,7 @@
       <a
         [class.m-tabs__tab--selected]="(service.type$ | async) === 'btc'"
         (click)="service.setType('btc')"
-        i18n
+        i18ni18n="currency|@@COMMON__BTC"
         >BTC</a
       >
     </div>

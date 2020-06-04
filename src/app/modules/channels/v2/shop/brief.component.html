@@ -8,7 +8,7 @@
     <a
       class="m-channelShopBriefTitle__seeAll"
       [routerLink]="['/', service.username$ | async, 'shop']"
-      i18n
+      i18n="@@COMMON__CHANNEL__BRIEF__SEE_ALL"
       >See All</a
     >
   </div>
@@ -26,12 +26,16 @@
         class="m-channelShopBriefRow__amount"
         [ngSwitch]="supportTier.currency"
       >
-        <ng-container *ngSwitchCase="'tokens'" i18n
+        <ng-container
+          *ngSwitchCase="'tokens'"
+          i18n="@@COMMON__CHANNEL__BRIEF__OTHER"
           >{supportTier.amount, plural, =1
           {{{supportTier.amount | number}} token/month} other
           {{{supportTier.amount | number}} tokens/month}}</ng-container
         >
-        <ng-container *ngSwitchCase="'usd'" i18n
+        <ng-container
+          *ngSwitchCase="'usd'"
+          i18n="@@COMMON__CHANNEL__BRIEF__PER_MONTH"
           >${{ supportTier.amount | number }}/month</ng-container
         >
       </span>

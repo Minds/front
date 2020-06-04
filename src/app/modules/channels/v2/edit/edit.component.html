@@ -22,7 +22,7 @@
       <m-accordion__pane
         class="m-accordion__pane--noTopPadding"
         headerTitle="Bio &amp; Imagery"
-        i18n-headerTitle
+        i18n-headerTitle="@@CHANNEL_EDIT__BIO_AND_IMAGERY"
       >
         <m-channelEdit__bio
           class="m-accordionPane__innerContentContainer"
@@ -31,7 +31,10 @@
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
 
-      <m-accordion__pane headerTitle="About Info" i18n-headerTitle>
+      <m-accordion__pane
+        headerTitle="About Info"
+        i18n-headerTitle="@@CHANNEL_EDIT__ABOUT_INFO"
+      >
         <m-channelEdit__info
           class="m-accordionPane__innerContentContainer"
         ></m-channelEdit__info>
@@ -39,7 +42,10 @@
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
 
-      <m-accordion__pane headerTitle="Hashtags" i18n-headerTitle>
+      <m-accordion__pane
+        headerTitle="Hashtags"
+        i18n-headerTitle="@@COMMON__HASHTAGS"
+      >
         <m-channelEdit__hashtags
           class="m-accordionPane__innerContentContainer"
         ></m-channelEdit__hashtags>
@@ -47,7 +53,10 @@
         <ng-container *ngTemplateOutlet="saveButton"></ng-container>
       </m-accordion__pane>
 
-      <m-accordion__pane headerTitle="Social Links" i18n-headerTitle>
+      <m-accordion__pane
+        headerTitle="Social Links"
+        i18n-headerTitle="@@CHANNEL_EDIT__SOCIAL_LINKS"
+      >
         <m-channelEdit__socialLinks
           class="m-accordionPane__innerContentContainer"
         ></m-channelEdit__socialLinks>
@@ -63,6 +72,7 @@
           [disabled]="false"
           [saving]="service.inProgress$ | async"
           (click)="onSubmit()"
+          i18n="@@COMMON__SAVE"
         >
           Save
         </m-shadowboxSubmitButton>

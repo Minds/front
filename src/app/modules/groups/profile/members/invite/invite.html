@@ -3,12 +3,12 @@
     <ng-container *ngIf="group" i18n="@@GROUPS__PROFILE__INVITE_TO"
       >Invite to {{ group.name }}</ng-container
     >
-    <ng-container *ngIf="!group" i18n="GROUPS__PROFILE__INVITE"
+    <ng-container *ngIf="!group" i18n="@@GROUPS__PROFILE__INVITE"
       >Invite</ng-container
     >
     <span class="m-layout--spacer"></span>
     <a routerLink="../requests" class="selected">
-      <ng-container i18n="GROUPS__PROFILE__REQUESTS">Requests</ng-container>
+      <ng-container i18n="@@GROUPS__PROFILE__REQUESTS">Requests</ng-container>
       <ng-container *ngIf="group['requests:count']"
         >({{group['requests:count']}})</ng-container
       >

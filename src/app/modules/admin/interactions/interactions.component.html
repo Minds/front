@@ -5,7 +5,6 @@
         class="item"
         [class.active]="type === 'actors'"
         (click)="show('actors')"
-        i18n="@@M__ADMIN__INTERACTIONS__ACTORS"
       >
         Actors
       </div>
@@ -13,7 +12,6 @@
         class="item"
         [class.active]="type === 'beneficiaries'"
         (click)="show('beneficiaries')"
-        i18n="@@M__ADMIN__INTERACTIONS__BENEFICIARIES"
       >
         Beneficiaries
       </div>
@@ -21,14 +19,12 @@
     <div class="m-admin--interactions--filters--dates">
       <m-date-selector
         label="From:"
-        i18n-label="@@M__ADMIN__INTERACTIONS__FROM"
         [date]="startDate"
         (dateChange)="onStartDateChange($event)"
         dateFormat="shortDate"
       ></m-date-selector>
       <m-date-selector
         label="To:"
-        i18n-label="@@M__ADMIN__INTERACTIONS__TO"
         [date]="endDate"
         (dateChange)="onEndDateChange($event)"
         dateFormat="shortDate"

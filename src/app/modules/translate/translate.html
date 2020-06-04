@@ -44,7 +44,10 @@
         <i class="material-icons m-material-icons-inline">public</i>
         <ng-container i18n="@@TRANSLATE__TRANSLATING_LABEL"
           >Translating</ng-container
-        ><span *ngIf="translation.target" i18n="Translation target">
+        ><span
+          *ngIf="translation.target"
+          i18n="@@TRANSLATE_TO_TRANSLATION_TARGET"
+        >
           to {{ translation.target }}</span
         >&hellip;
       </div>

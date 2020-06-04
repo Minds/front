@@ -37,7 +37,7 @@
         [class.disabled]="disabled || !number || number.length < 13"
         (click)="savePhoneNumber()"
         *ngIf="!inProgress"
-        i18n
+        i18n="@@ONBOARDING_PHONE__VERIFY"
       >
         Verify
       </button>
@@ -76,7 +76,7 @@
         [ngModel]="code"
         (ngModelChange)="codeChange($event)"
         placeholder="eg. 198349"
-        i18n-placeholder
+        i18n-placeholder="@@ONBOARDING_PHONE__EXAMPLE_INPUT_CODE"
       />
 
       <button
@@ -85,7 +85,7 @@
         (click)="reSendCode()"
         *ngIf="!inProgress"
         title="Re-send verification code"
-        i18n-title
+        i18n-title="@@ONBOARDING_PHONE__RESEND_VERIFICATION_CODE"
       >
         <i class="material-icons">refresh</i>
       </button>
@@ -95,7 +95,7 @@
         (click)="reset()"
         *ngIf="!inProgress"
         title="Go back"
-        i18n-title
+        i18n-title="@@ONBOARDING_PHONE__GO_BACK"
       >
         <i class="material-icons">keyboard_backspace</i>
       </button>

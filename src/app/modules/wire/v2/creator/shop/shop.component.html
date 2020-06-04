@@ -8,7 +8,7 @@
       class="m-wireCreatorShopHeading__description"
       *ngIf="service.owner$ | async as owner"
     >
-      <ng-container i18n="CREATOR_SHOP__HAS_SUPPORT_TIERS_OFFERS"
+      <ng-container i18n="@@CREATOR_SHOP__HAS_SUPPORT_TIERS_OFFERS"
         >@{{ owner?.username }} has support tiers exclusive offers</ng-container
       >
       &middot;
@@ -29,16 +29,16 @@
         [ngModel]="shop.selected$ | async"
         (ngModelChange)="shop.select($event)"
       >
-        <option value="" disabled i18n="CREATOR_SHOP__SELECT_SUPPORT_TIER"
+        <option value="" disabled i18n="@@CREATOR_SHOP__SELECT_SUPPORT_TIER"
           >Select Support Tier</option
         >
 
-        <optgroup label="Tokens" i18n-label>
+        <optgroup label="Tokens" i18n-label="@@CREATOR_SHOP__TOKENS">
           <option
             *ngFor="let supportTier of groupedSupportTiers.tokens"
             [ngValue]="supportTier"
           >
-            <ng-container i18n
+            <ng-container i18n="@@CREATOR_SHOP__OTHER"
               >{supportTier.amount, plural, =1
               {{{supportTier.amount | number}} token} other
               {{{supportTier.amount | number}} tokens}}</ng-container
@@ -47,7 +47,7 @@
           </option>
         </optgroup>
 
-        <optgroup label="USD" i18n-label>
+        <optgroup label="USD" i18n-label="@@CREATOR_SHOP__USD">
           <option
             *ngFor="let supportTier of groupedSupportTiers.usd"
             [ngValue]="supportTier"

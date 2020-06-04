@@ -3,14 +3,12 @@
     [routerLink]="['/admin/reports/review']"
     class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': filter == 'reports' }"
-    i18n="@@MINDS__ADMIN__REPORTS__REPORTS_TAB"
     >Reports</a
   >
   <a
     [routerLink]="['/admin/appeals/appealed']"
     class="mdl-tabs__tab"
     [ngClass]="{ 'is-active': filter == 'appeals' }"
-    i18n="@@MINDS__ADMIN__REPORTS__APPEALS_TAB"
     >Appeals</a
   >
   <div class="m-admin-reports--tab-spacer"></div>
@@ -19,21 +17,18 @@
       [routerLink]="['/admin', this.filter, 'review']"
       class="mdl-tabs__tab"
       [ngClass]="{ 'is-active': type == 'review' }"
-      i18n="@@M__COMMON__REVIEW_PENDING"
       >Review Pending</a
     >
     <a
       [routerLink]="['/admin', this.filter, 'archived']"
       class="mdl-tabs__tab"
       [ngClass]="{ 'is-active': type == 'archived' }"
-      i18n="@@MINDS__ADMIN__REPORTS__ARCHIVED_TAB"
       >Archived</a
     >
     <a
       [routerLink]="['/admin', this.filter, 'actioned']"
       class="mdl-tabs__tab"
       [ngClass]="{ 'is-active': type == 'actioned' }"
-      i18n="@@MINDS__ADMIN__REPORTS__HISTORY_TAB"
       >History</a
     >
   </ng-container>
@@ -42,21 +37,18 @@
       [routerLink]="['/admin', this.filter, 'appealed']"
       class="mdl-tabs__tab"
       [ngClass]="{ 'is-active': type == 'appealed' }"
-      i18n="@@M__COMMON__REVIEW_PENDING"
       >Review Pending</a
     >
     <a
       [routerLink]="['/admin', this.filter, 'appeal_approved']"
       class="mdl-tabs__tab"
       [ngClass]="{ 'is-active': type == 'appeal_approved' }"
-      i18n="@@M__COMMON__APPROVED"
       >Approved</a
     >
     <a
       [routerLink]="['/admin', this.filter, 'appeal_rejected']"
       class="mdl-tabs__tab"
       [ngClass]="{ 'is-active': type == 'appeal_rejected' }"
-      i18n="@@M__COMMON__REJECTED"
       >Rejected</a
     >
   </ng-container>
@@ -70,9 +62,7 @@
       class="mdl-card__supporting-text m-no-reports"
       [hidden]="inProgress || moreData || reports.length > 0"
     >
-      <ng-container i18n="@@MINDS__ADMIN__REPORTS__EMPTY_FILTER_LABEL"
-        >There are no {{ filter }}.</ng-container
-      >
+      <ng-container>There are no {{ filter }}.</ng-container>
     </div>
 
     <div
@@ -81,16 +71,14 @@
     >
       <div class="m-report-meta">
         <p *ngIf="report?.reporterObj?.username">
-          <span i18n="@@MINDS__ADMIN__REPORTS__REPORTED_BY_LABEL"
-            >Reported by:</span
-          >
+          <span>Reported by:</span>
           <a [routerLink]="['/', report.reporterObj.username]" target="_blank">
             @{{report.reporterObj.username }}
           </a>
         </p>
 
         <p *ngIf="report?.reason">
-          <span i18n="@@MINDS__ADMIN__REPORTS__SUBJECT_LABEL">Subject:</span>
+          <span>Subject:</span>
           <select [(ngModel)]="report.reason">
             <option
               [value]="reason.value"
@@ -103,26 +91,20 @@
         </p>
 
         <p *ngIf="report?.reason_note">
-          <span i18n="@@MINDS__ADMIN__REPORTS__MESSAGE_LABEL">Message:</span> {{
-          report.reason_note }}
+          <span>Message:</span> {{ report.reason_note }}
         </p>
 
         <p *ngIf="report?.time_created">
-          <span i18n="@@MINDS__ADMIN__REPORTS__DATE_LABEL">Date:</span> {{
-          report.time_created * 1000 | date: 'medium' }}
+          <span>Date:</span> {{ report.time_created * 1000 | date: 'medium' }}
         </p>
 
         <p *ngIf="report?.action">
-          <span i18n="@@MINDS__ADMIN__REPORTS__LAST_ACTION_LABEL"
-            >Last Action:</span
-          >
+          <span>Last Action:</span>
           {{ parseAction(report.action) }}
         </p>
 
         <p *ngIf="report?.appeal_note">
-          <span i18n="@@MINDS__ADMIN__REPORTS__APPEAL_NOTE_LABEL"
-            >Appeal Note:</span
-          >
+          <span>Appeal Note:</span>
           {{ report.appeal_note }}
         </p>
       </div>
@@ -140,7 +122,6 @@
           <a
             target="_blank"
             [routerLink]="['/newsfeed', report.entityObj.entity_guid]"
-            i18n="@@M__COMMON__VIEW_PARENT_COMMENT_THREAD"
             >View parent and its comment thread</a
           >
         </div>
@@ -150,10 +131,7 @@
         ></minds-card-comment>
       </div>
       <div *ngIf="!report.entityObj" class="m-comment-wrapper">
-        <div
-          class="m-admin-reports--comment-note"
-          i18n="@@M__COMMON__POST_NOT_FOUND"
-        >
+        <div class="m-admin-reports--comment-note">
           Post not found
         </div>
       </div>
@@ -166,7 +144,6 @@
               a
               class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--amber"
               (click)="archive(report, i)"
-              i18n="@@MINDS__ADMIN__REPORTS__ARCHIVE_ACTION"
             >
               Archive
             </button>
@@ -177,7 +154,6 @@
               type="button"
               class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--amber-dark"
               (click)="explicit(report, i)"
-              i18n="@@MINDS__ADMIN__REPORTS__MARK_AS_EXPLICIT_ACTION"
             >
               Mark as <i class="material-icons">explicit</i>
             </button>
@@ -190,7 +166,6 @@
                 "
               class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--amber-dark"
               (click)="spam(report, i)"
-              i18n="@@M__ACTION__MARK_SPAM"
             >
               Mark as spam
             </button>
@@ -199,7 +174,6 @@
               type="button"
               class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--red"
               (click)="delete(report, i)"
-              i18n="@@M__ACTION__DELETE"
             >
               Delete
             </button>
@@ -211,7 +185,6 @@
             type="button"
             class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--green"
             (click)="approveAppeal(report, i)"
-            i18n="@@M__ACTION__APPROVE"
           >
             Approve
           </button>
@@ -220,7 +193,6 @@
             type="button"
             class="mdl-button mdl-button--raised mdl-button--colored m-admin-button--red"
             (click)="rejectAppeal(report, i)"
-            i18n="@@M__ACTION__REJECT"
           >
             Reject
           </button>

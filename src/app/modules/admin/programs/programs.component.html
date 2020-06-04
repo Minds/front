@@ -1,6 +1,6 @@
 <div class="mdl-grid m-admin-programs" style="max-width:600px">
   <div class="m-note">
-    <ng-container i18n="@@M__COMMON__BAN_MONETIZATION_NOTICE"
+    <ng-container
       >Users can be banned for monetizing on the dropdown in their
       profile.</ng-container
     >
@@ -12,11 +12,7 @@
   >
     <div class="mdl-card mdl-shadow--4dp m-application">
       <div class="m-application-meta">
-        <p
-          class="m-user"
-          *ngIf="application.from"
-          i18n="@@MINDS__ADMIN__PROGRAMS__APPLICATION_DESCRIPTOR"
-        >
+        <p class="m-user" *ngIf="application.from">
           <a [routerLink]="['/', application.from.username]" target="_blank">
             <img
               [src]="
@@ -48,7 +44,6 @@
           class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
           (click)="review(i)"
           [disabled]="inProgress"
-          i18n="verb|@@M__COMMON__REVIEW"
         >
           Review
         </button>
@@ -58,7 +53,6 @@
           class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--green"
           (click)="accept(i)"
           [disabled]="inProgress"
-          i18n="@@M__ACTION__ACCEPT"
         >
           Accept
         </button>
@@ -67,7 +61,6 @@
           class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored m-admin-button--red"
           (click)="reject(i)"
           [disabled]="inProgress"
-          i18n="@@M__ACTION__REJECT"
         >
           Reject
         </button>
@@ -76,7 +69,6 @@
           class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
           (click)="review(null)"
           [disabled]="inProgress"
-          i18n="@@M__ACTION__CANCEL"
         >
           Cancel
         </button>

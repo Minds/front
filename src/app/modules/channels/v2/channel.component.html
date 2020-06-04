@@ -21,7 +21,7 @@
               )
             "
             [routerLink]="['/', username, '']"
-            i18n
+            i18n="@@COMMON__FEED"
             >Feed</a
           >
         </div>
@@ -31,7 +31,7 @@
             [routerLink]="['/', username, 'shop']"
             routerLinkActive="m-tabs__tab--selected"
             [routerLinkActiveOptions]="{ __change_detection_hack__: username }"
-            i18n
+            i18n="@@COMMON__SHOP"
             >Shop</a
           >
         </div>
@@ -44,7 +44,7 @@
                 view$ | async
               )
             "
-            i18n
+            i18n="@@COMMON__ABOUT"
             >About</a
           >
         </div>

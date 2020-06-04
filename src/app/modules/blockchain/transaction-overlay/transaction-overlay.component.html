@@ -165,7 +165,7 @@
           </div>
 
           <div class="m--blockchain--transaction-overlay--field">
-            <button class="m-btn" (click)="cancel()">
+            <button class="m-btn" (click)="cancel()" i18n="@@COMMON__CANCEL">
               Cancel
             </button>
 
@@ -173,6 +173,7 @@
               class="m-btn m-btn--action"
               (click)="approve()"
               [disabled]="!validateTxObject()"
+              i18n="@@COMMON__APPROVE"
             >
               Approve
             </button>

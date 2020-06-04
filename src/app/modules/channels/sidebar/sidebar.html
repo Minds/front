@@ -85,17 +85,13 @@
           [(ngModel)]="user.city"
           class=""
           placeholder="Enter your city..."
-          i18n-placeholder="@@M__COMMON__ENTER_CITY"
         />
       </div>
       <div
         class="m-discovery-cities mdl-card m-border"
         *ngIf="editing && cities.length > 0"
       >
-        <p
-          class="mdl-color-text--blue-grey-300"
-          i18n="@@M__COMMON__SELECT_CITY"
-        >
+        <p class="mdl-color-text--blue-grey-300">
           Select your city:
         </p>
         <li
@@ -162,16 +158,14 @@
       class="mdl-tabs__tab mdl-color-text--blue-grey-500"
       *ngIf="user.activity_count"
     >
-      <span i18n="Count of activities@@M__COMMON__FEED_COUNT">Feed</span>
+      <span>Feed</span>
       <b>{{user.activity_count | number}}</b>
     </a>
     <a
       class="mdl-tabs__tab mdl-color-text--blue-grey-500"
       *ngIf="user.supporters_count && session.getLoggedInUser().guid != user.guid"
     >
-      <span i18n="Count of supporters@@MINDS__CHANNELS__SUPPORTERS"
-        >Supporters</span
-      >
+      <span>Supporters</span>
       <b>{{user.supporters_count | number}}</b>
     </a>
     <a
@@ -179,20 +173,18 @@
       class="mdl-tabs__tab mdl-color-text--blue-grey-500"
       *ngIf="user.supporters_count && session.getLoggedInUser().guid == user.guid"
     >
-      <span i18n="Count of supporters@@MINDS__CHANNELS__SUPPORTERS"
-        >Supporters</span
-      >
+      <span>Supporters</span>
       <b>{{user.supporters_count | number}}</b>
     </a>
     <a
       [routerLink]="['/', user.username, 'subscribers']"
       class="mdl-tabs__tab mdl-color-text--blue-grey-500"
     >
-      <span i18n="@@M__COMMON__SUBSCRIBERS">Subscribers</span>
+      <span>Subscribers</span>
       <b>{{user.subscribers_count | number}}</b>
     </a>
     <a class="mdl-tabs__tab  mdl-color-text--blue-grey-500">
-      <span i18n="@@M__COMMON__VIEWS">Views</span>
+      <span>Views</span>
       <b>{{user.impressions | number}}</b>
     </a>
   </div>
@@ -247,7 +239,7 @@
     >
       <button class="m-btn m-btn--with-icon m-btn--slim">
         <i class="material-icons">people</i>
-        <span i18n="@@M__COMMON__REFER_FRIENDS">Refer Friends</span>
+        <span>Refer Friends</span>
       </button>
     </div>
     <div
@@ -258,8 +250,8 @@
       <button class="m-btn m-btn--with-icon m-btn--slim">
         <i [hidden]="editing" class="material-icons">edit</i>
         <i [hidden]="!editing" class="material-icons">done</i>
-        <span [hidden]="editing" i18n="@@M__ACTION__EDIT">Edit</span>
-        <span [hidden]="!editing" i18n="@@M__ACTION__SAVE">Save</span>
+        <span [hidden]="editing">Edit</span>
+        <span [hidden]="!editing">Save</span>
       </button>
     </div>
 
@@ -269,7 +261,7 @@
       [routerLink]="proSettingsRouterLink"
     >
       <i class="material-icons">business_center</i>
-      <span i18n="@@CHANNEL__TRY_PRO">Try Pro</span>
+      <span>Try Pro</span>
     </a>
 
     <a
@@ -279,7 +271,7 @@
       data-cy="data-minds-sidebar-admin-pro-button"
     >
       <i class="material-icons">business_center</i>
-      <span i18n="@@COMMON__PRO">Pro</span>
+      <span>Pro</span>
     </a>
 
     <minds-button-boost
@@ -293,7 +285,6 @@
       <m-tooltip
         icon="business_center"
         [iconClass]="user.pro ? 'selected' : ''"
-        i18n="@@COMMON__PRO"
       >
         Pro
       </m-tooltip>
@@ -316,7 +307,6 @@
 <ng-container *mIfFeature="'es-feeds'; else legacyModules">
   <m-channels--sorted-module
     title="Images"
-    i18n-title
     type="images"
     [channel]="user"
     [linksTo]="['/', user.username, 'images']"
@@ -328,7 +318,6 @@
 
   <m-channels--sorted-module
     title="Videos"
-    i18n-title
     type="videos"
     [channel]="user"
     [linksTo]="['/', user.username, 'videos']"
@@ -340,7 +329,6 @@
 
   <m-channels--sorted-module
     title="Blogs"
-    i18n-title
     type="blogs"
     [channel]="user"
     [linksTo]="['/', user.username, 'blogs']"
@@ -360,7 +348,7 @@
       class="mdl-card__supporting-text mdl-color-text--grey-600"
       [routerLink]="['/media/images', user.username]"
     >
-      <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
+      <ng-container>View More</ng-container>
     </a>
   </m-channel--modules>
 
@@ -378,7 +366,7 @@
       class="mdl-card__supporting-text mdl-color-text--grey-600"
       [routerLink]="['/media/videos', user.username]"
     >
-      <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
+      <ng-container>View More</ng-container>
     </a>
   </m-channel--modules>
 
@@ -396,7 +384,7 @@
       class="mdl-card__supporting-text mdl-color-text--grey-600"
       [routerLink]="['/blog', user.username]"
     >
-      <ng-container i18n="@@M__COMMON__VIEW_MORE">View More</ng-container>
+      <ng-container>View More</ng-container>
     </a>
   </m-channel--modules>
 

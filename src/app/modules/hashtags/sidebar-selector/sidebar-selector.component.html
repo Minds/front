@@ -45,7 +45,7 @@
         (change)="preferredChange()"
         [disabled]="disabled"
         labelPosition="left"
-        i18n
+        i18n="@@SIDEBAR_SELECTOR__ON"
       >
         On
       </m-switch>
@@ -85,7 +85,7 @@
           (keydown.enter)="addHashtag($event.target); $event.preventDefault()"
           (keydown.tab)="addHashtag($event.target); $event.preventDefault()"
           placeholder="#hashtag"
-          i18n-placeholder
+          i18n-placeholder="@@SIDEBAR_SELECTOR__HASH_HASHTAG"
           #newHashtagInput
         />
 
@@ -93,7 +93,7 @@
           class="m-hashtagsSidebarSelectorList__addButton"
           (click)="addHashtag(newHashtagInput)"
           title="Filter by this hashtag"
-          i18n-title
+          i18n-title="@@SIDEBAR_SELECTOR__FILTER_BY_HASHTAG"
           [hidden]="!newHashtagInput.value"
           ><i class="material-icons">check</i></a
         >
@@ -148,11 +148,13 @@
       *ngIf="!loading"
       class="m-hashtagsSidebarSelector__showMoreLink"
     >
-      <ng-container *ngIf="showSuggested; else showLabel" i18n
+      <ng-container *ngIf="showSuggested; else showLabel" i18n="@@COMMON__HIDE"
         >Hide</ng-container
       >
       <ng-template #showLabel>
-        <ng-container *ngIf="showTrending; else showSuggestedHiddenText" i18n
+        <ng-container
+          *ngIf="showTrending; else showSuggestedHiddenText"
+          i18n="@@SIDEBAR_SELECTOR__SHOW_TRENDING"
           >Show trending</ng-container
         >
         <ng-template #showSuggestedHiddenText>
