@@ -103,6 +103,12 @@ describe('TagPipe', () => {
     expect(transformedString).toContain('@name.com');
   });
 
+  it('should not transform when # preceded by by `&`', () => {
+    const string = '&#243;';
+    const transformedString = pipe.transform(<any>string);
+    expect(transformedString).toContain('&#243;');
+  });
+
   it('should transform two adjacent tags', () => {
     const string = '@test1 @test2';
     const transformedString = pipe.transform(<any>string);
