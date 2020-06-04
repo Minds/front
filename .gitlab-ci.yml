@@ -117,6 +117,8 @@ build:review:
       - production
       - test/gitlab-ci
       - epic/angular-9
+  tags:
+    - angular
 
 build:production:bundles:
   stage: test and build
@@ -137,6 +139,8 @@ build:production:bundles:
       - production
       - test/gitlab-ci
       - epic/angular-9
+  tags:
+    - angular
 
 #################
 # Prepare Stage #
