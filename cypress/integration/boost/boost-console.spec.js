@@ -106,7 +106,7 @@ context('Boost Console', () => {
 
     cy.post(text);
 
-    cy.get('#boost-actions')
+    cy.get('.m-boostButton')
       .first()
       .click();
 
