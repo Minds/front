@@ -30,7 +30,7 @@ m-usermenu__v3 {
       }
 
       li.m-userMenuDropdown__item {
-        padding: 8px 21px;
+        padding: 0;
         font-size: 15px;
         line-height: 20px;
         border: 0 !important;
@@ -38,7 +38,11 @@ m-usermenu__v3 {
         @include m-theme() {
           color: themed($m-textColor--secondary);
         }
-
+        &:not(.m-userMenuDropdown__footer) {
+          > * {
+            padding: 8px 21px;
+          }
+        }
         span {
           @include m-theme() {
             color: themed($m-grey-700);
@@ -78,7 +82,7 @@ m-usermenu__v3 {
 
         &.m-userMenuDropdown__footer {
           flex-wrap: wrap;
-          padding-top: 0;
+          padding: 0 21px 8px;
 
           a,
           span {
