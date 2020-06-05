@@ -40,7 +40,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -50,11 +50,11 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">100</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/groups/sidebar-markers/sidebar-markers.component.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -177,6 +177,14 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/pro/channel/channel.component.html</context>
           <context context-type="linenumber">93</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/eth/eth.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/btc/btc.component.html</context>
+          <context context-type="linenumber">7</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -495,6 +503,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/marketing/token.component.html</context>
           <context context-type="linenumber">291</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">verb</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -1173,7 +1185,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/activity/owner-block/owner-block.component.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -1389,7 +1401,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">337</context>
+          <context context-type="linenumber">345</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2122,7 +2134,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/activity/owner-block/owner-block.component.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -2142,7 +2154,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/activity/owner-block/owner-block.component.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">92</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -4922,7 +4934,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">71</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -4960,7 +4972,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">87</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -4974,7 +4986,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">96</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -5253,10 +5265,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings/billing/saved-cards/saved-cards.component.html</context>
           <context context-type="linenumber">41</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
-          <context context-type="linenumber">53</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -9227,11 +9235,11 @@
         <source>Search Minds:</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/search/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/search/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">134</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -9245,11 +9253,11 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/search/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">110</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/search/suggestions/suggestions.component.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">124</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -11892,6 +11900,10 @@
           <context context-type="sourcefile">app/modules/composer/components/toolbar/toolbar.component.html</context>
           <context context-type="linenumber">36</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="COMPOSER_NSFW__IF_POST_CONTAINS" datatype="html">
@@ -11944,7 +11956,15 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">110</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding-extras/cash-onboarding-extras.component.html</context>
+          <context context-type="linenumber">157</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding-extras/cash-onboarding-extras.component.html</context>
+          <context context-type="linenumber">183</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/edit/edit.component.html</context>
@@ -12148,6 +12168,25 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="DISCOVERY_SIDEBAR_TAGS__X_POSTS" datatype="html">
+        <source>
+          <x id="INTERPOLATION" equiv-text="{{ tag.posts_count }}"/>
+           posts
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/sidebar-tags.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_SIDEBAR_TAGS__SEE_MORE" datatype="html">
+        <source>See more</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/sidebar-tags.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="TRENDING__TAGS" datatype="html">
         <source>Trending Tags</source>
         <context-group purpose="location">
@@ -12156,11 +12195,45 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="DISCOVERY_SETTINGS__MANAGE_TAGS" datatype="html">
+        <source>
+      Manage Tags
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/settings.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY__SETTINGS_ADD_CUSTOM_TAGS" datatype="html">
+        <source>Add Custom Tag</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/settings.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY__TAGS__YOUR_TAGS" datatype="html">
+        <source>Your Tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/settings.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY__TAGS__OTHER_TAGS" datatype="html">
+        <source>Other Tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/settings.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="DISCOVERY_SETTINGS__SAVE_TAGS" datatype="html">
         <source>Save Tags</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/tags/settings.component.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">79</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -12347,6 +12420,46 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/console/console.component.html</context>
           <context context-type="linenumber">59</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__WALLET__SEE_YOUR_CONTRIBUTIONS_INFO" datatype="html">
+        <source>
+          See your contributions score and rewards, withdraw them and configure
+          your ethereum wallet
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/wallet.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__WALLET__YOU_SEND_RECEIVED_WIRES_LEDGER" datatype="html">
+        <source>
+          Your sent and received wires ledger
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/wallet.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__TOKENS__MINDS_PLUS" datatype="html">
+        <source>Minds Plus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/wallet.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__WALLET__OPT_OUT" datatype="html">
+        <source>
+          Opt-out of boosts, earn 1,000 monthly points, access exclusive Minds
+          content, and more
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/wallet.component.html</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13326,7 +13439,7 @@
         <source>Unlisted</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/newsfeed/activity/owner-block/owner-block.component.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13678,11 +13791,29 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="DISCOVERY_FEEDS__FEED_SETTINGS" datatype="html">
+        <source>
+      Feed Settings
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_FEEDS__CONTENT_TYPES" datatype="html">
+        <source>Content Types</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="DISCOVERY_SETTINGS__SHOW_NSFW_IN_RESULTS" datatype="html">
         <source>Show NSFW content in results</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">68</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -14034,7 +14165,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">102</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/about/extra-info.component.html</context>
@@ -15737,11 +15868,53 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="WALLET_V2__TOKENS__YOUR_WALLETS" datatype="html">
+        <source>
+            Your Wallet
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/dashboard.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__PHONE_VERIFICATION" datatype="html">
+        <source>
+  Phone Verification
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__YOU_CAN_EARN_TEXT" datatype="html">
+        <source>
+    You can earn tokens for your contributions to the Minds network. The more
+    interactions on your content, the greater your share of the daily token
+    reward pool to your off-chain address.
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__START_EARNING_PHONE_TEXT" datatype="html">
+        <source>
+    To start earning rewards, you will need to enter a unique phone number.
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="COMMON__MOBILE_PHONE_NUMBER" datatype="html">
         <source>Mobile Phone Number</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15751,7 +15924,7 @@
             identification purposes. VOIP numbers are not allowed.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">29</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15761,7 +15934,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15769,7 +15942,7 @@
         <source>Verification Code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15783,7 +15956,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15793,7 +15966,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">82</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15805,7 +15978,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15824,7 +15997,250 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/phone-verification/phone-verification.component.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__TOKENS__WALLET" datatype="html">
+        <source>
+    Wallet
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/toggle.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_REWARDS_POPUP__TOTAL_SCORE" datatype="html">
+        <source>Total Score</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/rewards-popup/rewards-popup.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_REWARDS_POPUP__HAVEN&amp;amp;apos;T_YET_RECEIVED" datatype="html">
+        <source>
+    You haven&amp;amp;apos;t earned any daily rewards yet.
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/rewards-popup/rewards-popup.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_TX_TABLE__MINDS_REWARD" datatype="html">
+        <source>Minds Reward</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/transactions-table/transactions-table.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_TX_TABLE__PURCHASE" datatype="html">
+        <source>Purchase</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/transactions-table/transactions-table.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_TX_TABLE__PAYOUT" datatype="html">
+        <source>Payout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/transactions-table/transactions-table.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_TX_TABLE__PRO_EARNINGS" datatype="html">
+        <source>Pro Earnings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/transactions-table/transactions-table.component.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_TX_TABLE__TRANSACTION" datatype="html">
+        <source>Transaction</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/transactions-table/transactions-table.component.html</context>
+          <context context-type="linenumber">102</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__ONCHAIN_ADDRESS" datatype="html">
+        <source>
+      On-Chain Address
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__RECOMMENDED" datatype="html">
+        <source>RECOMMENDED</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__INSTALL_METAMASK" datatype="html">
+        <source>Install MetaMask</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__MINDS_RECOMMENDS_METAMASK_INFO" datatype="html">
+        <source>
+            Minds recommends using MetaMask for the most seamless user
+            experience.
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__LINK_METAMASK" datatype="html">
+        <source>
+            Link MetaMask
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__RELOAD_INFO" datatype="html">
+        <source>
+          Note: You might need to reload Minds after installing and setting up
+          MetaMask.
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__CUSTOM" datatype="html">
+        <source>
+          Custom
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__METAMASK_ALT_INFO" datatype="html">
+        <source>
+          You don’t need to use MetaMask. You can alternatively manage your own
+          address.
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__BACK_TO_CURRENT" datatype="html">
+        <source>Back to current address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__CREATE_ADDRESS" datatype="html">
+        <source>
+        Create Address
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
           <context context-type="linenumber">98</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__GENERATE_CUSTOM_ADDRESS_INFO" datatype="html">
+        <source>
+        Generate a custom address to use instead of MetaMask. Once the address
+        is generated, you will be provided with a link to download the address
+        and private key.
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__THE_ADDRESS_X_WAS_SUCCESSFULLY" datatype="html">
+        <source>
+          
+        The address
+        
+          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;span&amp;amp;gt;"/>
+          <x id="INTERPOLATION" equiv-text="{{
+          generatedAccount.address
+        }}"/>
+          <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;/span&amp;amp;gt;"/>
+          
+        was successully saved as your on-chain address. Click the button below
+        to download its private key - you will need it to conduct transactions,
+        so ensure you safely store the private key file.
+      
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">123</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__DOWNLOAD_PRIVATE_KEY" datatype="html">
+        <source>
+        Download Private Key
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">138</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__BACK_TO_SETTINGS" datatype="html">
+        <source>Back to settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">144</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__PROVIDE_ADDRESS" datatype="html">
+        <source>
+        Provide Address
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">152</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_SETTINGS_TOKENS__ENTER_ADDRESS_AS_WALLET_INFO" datatype="html">
+        <source>
+        Enter the address that will be stored as your wallet for Minds on-chain
+        tokens and Ether payments. To conduct transactions you will need your
+        wallet&amp;amp;apos;s private key and MetaMask cannot be installed in your browser.
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
+          <context context-type="linenumber">158</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15832,11 +16248,11 @@
         <source>On-chain Address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">175</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
-          <context context-type="linenumber">212</context>
+          <context context-type="linenumber">240</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15845,7 +16261,7 @@
                   and Ether payments</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
-          <context context-type="linenumber">151</context>
+          <context context-type="linenumber">179</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15855,7 +16271,7 @@
               </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
-          <context context-type="linenumber">180</context>
+          <context context-type="linenumber">208</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15865,7 +16281,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">223</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15873,7 +16289,7 @@
         <source>Back to settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
-          <context context-type="linenumber">203</context>
+          <context context-type="linenumber">231</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15883,7 +16299,7 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
-          <context context-type="linenumber">220</context>
+          <context context-type="linenumber">248</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15891,7 +16307,7 @@
         <source>Change Address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
-          <context context-type="linenumber">226</context>
+          <context context-type="linenumber">254</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15911,7 +16327,87 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/tokens/settings/settings-tokens.component.html</context>
-          <context context-type="linenumber">241</context>
+          <context context-type="linenumber">269</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_SETTINGS_CASH__BANK_INFO" datatype="html">
+        <source>Bank Information</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/settings-cash.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_SETTINGS__SORRY_NO_NSFW_CHANNELS" datatype="html">
+        <source>
+          
+      Sorry, NSFW (not safe for work) channels are unable to onboard to Cash due
+      to
+      
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          Stripe&amp;amp;apos;s Terms of Service
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+          . You may still use Tokens, ETH and BTC for payments.
+    
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/settings-cash.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_SETTINGS_ETH__SAME_AS_ONCHAIN_TEXT" datatype="html">
+        <source>
+          
+      Your Ether address is the same as your on-chain address.
+          <x id="START_TAG_M-TOOLTIP" ctype="x-m-tooltip" equiv-text="&amp;amp;lt;m-tooltip&amp;amp;gt;"/>
+          
+        Why? On-chain tokens run on the Ethereum network and require Ether to
+        send.
+      
+          <x id="CLOSE_TAG_M-TOOLTIP" ctype="x-m-tooltip" equiv-text="&amp;amp;lt;/m-tooltip&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/eth/settings/settings-eth.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_SETTINGS_ETH__CHANGE_YOUR_ADDRESS" datatype="html">
+        <source>
+          
+      To view or change your address, go to
+      
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          token settings
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+          .
+    
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/eth/settings/settings-eth.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_SETTINGS_ETH__ETHER_TOTAL" datatype="html">
+        <source>
+        Ether total
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/eth/settings/settings-eth.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_SETTINGS_ETH__BUY_ETHER" datatype="html">
+        <source>
+      Buy Ether
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/eth/settings/settings-eth.component.html</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15919,7 +16415,7 @@
         <source>Bitcoin Address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/btc/settings/settings-btc.component.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15929,7 +16425,7 @@
                 not store your Bitcoin.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/btc/settings/settings-btc.component.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15939,7 +16435,7 @@
             </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/btc/settings/settings-btc.component.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">83</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15949,7 +16445,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/btc/settings/settings-btc.component.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15957,7 +16453,7 @@
         <source>Back to current address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/btc/settings/settings-btc.component.html</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">109</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15967,7 +16463,7 @@
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/btc/settings/settings-btc.component.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">119</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15977,7 +16473,7 @@
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/btc/settings/settings-btc.component.html</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">127</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15985,7 +16481,108 @@
         <source>Change Address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/btc/settings/settings-btc.component.html</context>
-          <context context-type="linenumber">129</context>
+          <context context-type="linenumber">135</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKEN_ONBOARDING__1" datatype="html">
+        <source>1.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/onboarding/token-onboarding.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKEN__ONBOARDING__VERIFY_PHONE_NUMBER" datatype="html">
+        <source>Verify your phone number</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/onboarding/token-onboarding.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_ONBOARDING__USED_SIMPLY_TO_VERIFY" datatype="html">
+        <source>
+      Used simply to verify your uniqueness.
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/onboarding/token-onboarding.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKEN_ONBOARDING__ADD_ONCHAIN_ADDRESS" datatype="html">
+        <source>
+        Add your on-chain address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/onboarding/token-onboarding.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKEN_ONBOARDING__YOUR_ETH_ADDRESS_INFO" datatype="html">
+        <source>
+      Your Ethereum address allows you to start receiving payments on the
+      blockchain.
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/onboarding/token-onboarding.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__ONCHAIN_TRANSFER" datatype="html">
+        <source>
+  On-Chain Transfer
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/onchain-transfer/onchain-transfer.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__YOU_CAN_REQUEST_UP_TO_X" datatype="html">
+        <source>
+          
+    You can request to transfer up to
+    
+          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;span&amp;amp;gt;"/>
+          <x id="ICU" equiv-text="{balance, plural, =1 {...} other {...}}"/>
+          <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;/span&amp;amp;gt;"/>
+          
+    from your rewards to your on-chain wallet below. You may only transfer once
+    per day.
+  
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/onchain-transfer/onchain-transfer.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="6b66c653f542499f8bb0f5927aafbcd452251039" datatype="html">
+        <source>
+          {VAR_PLURAL, plural, =1 {
+          <x id="INTERPOLATION" equiv-text="{{balance | number}}"/>
+           token} other {
+          <x id="INTERPOLATION" equiv-text="{{balance | number}}"/>
+           tokens} }
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/onchain-transfer/onchain-transfer.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__GAS_FEE_NOTE" datatype="html">
+        <source>
+    Note: a small amount of ETH will be charged to cover the transaction fee.
+    Transfers go through an approval process and may take up to 72 hours to
+    complete.
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/onchain-transfer/onchain-transfer.component.html</context>
+          <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15993,14 +16590,363 @@
         <source>Amount</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/onchain-transfer/onchain-transfer.component.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__TRANSFER_AMOUNT_REQUIRED" datatype="html">
+        <source>
+            Transfer amount required
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/onchain-transfer/onchain-transfer.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__TRANSFER_MUST_BE_GREATER" datatype="html">
+        <source>
+            Transfer amount must be greater than zero
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/onchain-transfer/onchain-transfer.component.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__NOT_ENOUGH_FUNDS" datatype="html">
+        <source>
+            You don&amp;amp;apos;t have enough tokens to make this transfer
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/onchain-transfer/onchain-transfer.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLETV2_ONCHAIN_TRANSFER__ONLY_ONCE_PER_DAY" datatype="html">
+        <source>
+          You may only transfer once per day
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/components/onchain-transfer/onchain-transfer.component.html</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__TOKEN_BALANCE" datatype="html">
+        <source>
+          Token Balance
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__STORE_TOKENS_INFO" datatype="html">
+        <source>
+          
+        On-Chain
+          <x id="START_TAG_M-TOOLTIP" ctype="x-m-tooltip" equiv-text="&amp;amp;lt;m-tooltip&amp;amp;gt;"/>
+          Store tokens on your device instead of our servers for more control
+          and portability
+          <x id="CLOSE_TAG_M-TOOLTIP" ctype="x-m-tooltip" equiv-text="&amp;amp;lt;/m-tooltip&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__OFFCHAIN_TOOLTIP" datatype="html">
+        <source>
+          
+        Off-Chain
+          <x id="START_TAG_M-TOOLTIP" ctype="x-m-tooltip" equiv-text="&amp;amp;lt;m-tooltip&amp;amp;gt;"/>
+          Store tokens on our servers for quicker transaction times and no
+          fees
+          <x id="CLOSE_TAG_M-TOOLTIP" ctype="x-m-tooltip" equiv-text="&amp;amp;lt;/m-tooltip&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__TRANSFER_TO_ONCHAIN" datatype="html">
+        <source>Transfer to On-Chain</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__TODAYS_ESTIMATED_PAYOUT" datatype="html">
+        <source>
+          
+      Today&amp;amp;apos;s estimated payout
+      
+          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;span&amp;amp;gt;"/>
+          <x id="INTERPOLATION" equiv-text="{{
+        estimatedTokenPayout | token: 18 | number: &amp;amp;apos;1.0-3&amp;amp;apos;
+      }}"/>
+          <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;/span&amp;amp;gt;"/>
+          
+      tokens.
+    
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__NEXT_PAYOUT_INFO" datatype="html">
+        <source>
+          
+      Next payout in 
+          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;span&amp;amp;gt;"/>
+          <x id="INTERPOLATION" equiv-text="{{ nextPayoutDate | timediff: true }}"/>
+          <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;/span&amp;amp;gt;"/>
+           (Daily
+      at 
+          <x id="INTERPOLATION_1" equiv-text="{{ localPayoutTime }}"/>
+          )
+    
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">99</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__LEARN_MORE_ABOUT_TOKENS" datatype="html">
+        <source>Learn more</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__LEARN_ABOUT_TOKENS" datatype="html">
+        <source>
+      Learn About Tokens
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">125</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__MINDS_REWARDS_YOU_WITH_CRYPTO_INFO" datatype="html">
+        <source>
+      Minds rewards you with crypto for contributing to the network. The first
+      step in joining our rewards program is to provide your mobile number. We
+      convert your number into a hash ID using SHA-256 encryption and a salt key
+      to create a unique identifier for your account. We do not store your
+      number on our servers.
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__RATHER_THAN_REWARDING_INFO" datatype="html">
+        <source>
+      Rather than rewarding you with Points in real-time, we are now
+      distributing our crypto rewards as a “Daily Reward Pool”. During the test
+      network, we will be experimenting with how the Daily Reward Pool is
+      calculated, but it will ideally be automated based on user participation
+      once we move into the Main Ethereum network.
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__EVERY_DAY_WE_MEASURE_INFO" datatype="html">
+        <source>
+      Every day, we measure your contributions to the network and you receive a
+      “Contribution Score” which can be found in the Contributions section of
+      your wallet. We then calculate how much you contributed to the network
+      relative to the entire community, which determines the percentage of the
+      Daily Reward Pool that you earn.
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">152</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__ONLY_RECEIVE_UNIQUE_INFO" datatype="html">
+        <source>
+      It is important to note that with the new system, you will only receive
+      credit for unique interaction, and you can only earn credit from another
+      unique user once per metric per day. (If a friend votes on my content 100
+      times in a day, I will only get credit for 1 vote). This is critical in
+      preventing gaming and abuse of the system as we move into more valuable
+      token rewards. We are essentially measuring how many unique users you
+      reached in a given day.
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">162</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TOKENS_BALANCE__DAILY_REWARDS_INFO" datatype="html">
+        <source>
+      Daily rewards will be distributed at 02:00 am GMT everyday into your
+      off-chain address.
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/balance/balance-tokens.component.html</context>
+          <context context-type="linenumber">174</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__BALANCE_CASH__ADD_BANK_INFO" datatype="html">
+        <source>Add your bank information</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__BALANCE_CASH__START_RECEIVING_CASH_INFO" datatype="html">
+        <source>Start receiving cash payouts by adding your bank details.
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__BALANCE_CASH__FINISH_ADDING_DETAILS_INFO" datatype="html">
+        <source>Finish adding your bank details to start receiving cash payouts.
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__BALANCE_CASH__PENDING_BALANCE_INFO" datatype="html">
+        <source>
+          
+        Pending Balance
+          <x id="START_TAG_M-TOOLTIP" ctype="x-m-tooltip" equiv-text="&amp;amp;lt;m-tooltip&amp;amp;gt;"/>
+          The total amount of cash you are scheduled to receive from
+          wires
+          <x id="START_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&amp;amp;lt;ng-container&amp;amp;gt;"/>
+           and/or Pro earnings
+          <x id="CLOSE_TAG_NG-CONTAINER" ctype="x-ng-container" equiv-text="&amp;amp;lt;/ng-container&amp;amp;gt;"/>
+          .
+          The payout date is an estimation and it may take up to 7 days before
+          your cash reaches your bank account.
+        
+          <x id="CLOSE_TAG_M-TOOLTIP" ctype="x-m-tooltip" equiv-text="&amp;amp;lt;/m-tooltip&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__BALANCE_CASH__ESTIMATED_PAYOUT" datatype="html">
+        <source>
+            Estimated Payout
+          </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__BALANCE_CASH__PRO_EARNINGS_INFO" datatype="html">
+        <source>
+          
+        Pro Earnings
+          <x id="START_TAG_M-TOOLTIP" ctype="x-m-tooltip" equiv-text="&amp;amp;lt;m-tooltip&amp;amp;gt;"/>
+          At the end of each month, your Pro earnings will move into your
+          pending balance if you&amp;amp;apos;ve reached the $100 threshold. When this
+          happens, your Pro earnings will be reset to zero. If you haven&amp;amp;apos;t
+          reached the threshold, your earnings will rollover to the next
+          month.
+          <x id="CLOSE_TAG_M-TOOLTIP" ctype="x-m-tooltip" equiv-text="&amp;amp;lt;/m-tooltip&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__BALANCE_CASH__GO_TO_PRO_ANALYTICS" datatype="html">
+        <source>
+          
+          Go to
+          
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          Pro Analytics
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/balance/balance-cash.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TXS_TOKENS__UPCOMING" datatype="html">
+        <source>
+          Upcoming
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/transactions/transactions-tokens.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TXS_TOKENS__TODAYS_DAILY_REWARDS" datatype="html">
+        <source>Today&amp;amp;apos;s Daily Rewards</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/transactions/transactions-tokens.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TXS_TOKENS__NO_TOKEN_TX_YET" datatype="html">
+        <source>
+        You don&amp;amp;apos;t have any token transactions yet.
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/transactions/transactions-tokens.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2_TXS_TOKENS__NO_X_TX_YET" datatype="html">
+        <source>
+          
+        You don&amp;amp;apos;t have any 
+          <x id="INTERPOLATION" equiv-text="{{ typeLabel | lowercase }}"/>
+           transactions yet.
+      
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/transactions/transactions-tokens.component.html</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="WALLET__V2__CASH__NO__TRANSACTIONS__YET" datatype="html">
         <source>
           <x id="START_PARAGRAPH" ctype="x-p" equiv-text="&amp;amp;lt;p&amp;amp;gt;"/>
-          You don&amp;amp;apos;t have any cash transactions yet.
+          
+        You don&amp;amp;apos;t have any cash transactions yet.
+      
           <x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&amp;amp;lt;/p&amp;amp;gt;"/>
         </source>
         <context-group purpose="location">
@@ -16009,11 +16955,39 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="WALLET_V2__CASH_ONBOARD__ADD_BANK_ACCOUNT_INFO" datatype="html">
+        <source>
+      Add your bank account details where cash rewards will be deposited.
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__CASH_ONBOARD__ADD_BANK_DETAILS" datatype="html">
+        <source>Add your bank details</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__CASH_ONBOARD__START_RECEIVING_CASH_PAYOUTS" datatype="html">
+        <source>
+        Start receiving cash payouts by adding your bank details.
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="CASH_ONBOARDING__COUNTRY" datatype="html">
         <source>Country</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16021,7 +16995,7 @@
         <source>First Name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">61</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16029,7 +17003,7 @@
         <source>Last Name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16037,7 +17011,7 @@
         <source>Phone Number</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">120</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16045,7 +17019,7 @@
         <source>Hong Kong Identity Card (HKID)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">141</context>
+          <context context-type="linenumber">149</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16053,7 +17027,7 @@
         <source>National Registration Identity Card (NRIC)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">155</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16061,7 +17035,7 @@
         <source>SSN (last 4 digits)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">170</context>
+          <context context-type="linenumber">178</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16069,7 +17043,7 @@
         <source>Address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">194</context>
+          <context context-type="linenumber">202</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16077,7 +17051,7 @@
         <source>City</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">216</context>
+          <context context-type="linenumber">224</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16085,7 +17059,7 @@
         <source>State</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">238</context>
+          <context context-type="linenumber">246</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16093,7 +17067,7 @@
         <source>State / Province</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">257</context>
+          <context context-type="linenumber">265</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16101,7 +17075,7 @@
         <source>Zip Code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">284</context>
+          <context context-type="linenumber">292</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16109,7 +17083,7 @@
         <source>Postal Code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">290</context>
+          <context context-type="linenumber">298</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16125,7 +17099,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">312</context>
+          <context context-type="linenumber">320</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16133,7 +17107,7 @@
         <source>Update Personal Information</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">344</context>
+          <context context-type="linenumber">352</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16144,7 +17118,7 @@
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">360</context>
+          <context context-type="linenumber">368</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16152,19 +17126,7 @@
         <source>Go back</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">370</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
-          <context context-type="linenumber">171</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON__IM_SURE" datatype="html">
-        <source>I&amp;amp;apos;m sure</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
-          <context context-type="linenumber">376</context>
+          <context context-type="linenumber">378</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
@@ -16172,11 +17134,57 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="COMMON__IM_SURE" datatype="html">
+        <source>I&amp;amp;apos;m sure</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding/cash-onboarding.component.html</context>
+          <context context-type="linenumber">384</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
+          <context context-type="linenumber">187</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="CASH_ONBOARD_EXTRAS__WE_NEED_ADDITIONAL_INFO_TEXT" datatype="html">
+        <source>
+    We need some additional information before we can verify your account.
+  </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding-extras/cash-onboarding-extras.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="CASH_ONBOARD_EXTRAS__UPLOAD_PHOTO_ID" datatype="html">
+        <source>Upload Photo ID</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding-extras/cash-onboarding-extras.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="CASH_ONBOARD_EXTRAS__UPLOAD_PROOF_OF_ADDRESS" datatype="html">
+        <source>Upload Proof of Address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding-extras/cash-onboarding-extras.component.html</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="COMMON__PHONE_NUMBER" datatype="html">
         <source>Phone Number</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding-extras/cash-onboarding-extras.component.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="CASH_ONBOARD_EXTRAS__SAVE" datatype="html">
+        <source>Save</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding-extras/cash-onboarding-extras.component.html</context>
+          <context context-type="linenumber">118</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16185,7 +17193,34 @@
           Number</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding-extras/cash-onboarding-extras.component.html</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="CASH_ONBOARD_EXTRAS__READ_AGREE_STRIPE_TOS_TEXT" datatype="html">
+        <source>
+          
+          I have read and agree to the
+          
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          
+            Stripe Services Agreement
+          
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-onboarding-extras/cash-onboarding-extras.component.html</context>
+          <context context-type="linenumber">169</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__CASH_BANK_FORM__FINISH_ADDING_RECEIVE_CASH" datatype="html">
+        <source>
+      Finish adding your bank details to start receiving cash payouts.
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16193,7 +17228,7 @@
         <source>Country</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16201,7 +17236,7 @@
         <source>Bank Account Number / IBAN</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">53</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16209,7 +17244,7 @@
         <source>Routing Number / Sort Code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">73</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16217,7 +17252,7 @@
         <source>Cancel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">103</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16225,7 +17260,7 @@
         <source>Add Bank Account</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">110</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16235,7 +17270,7 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">122</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16246,7 +17281,37 @@
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/cash/settings/cash-bank-form/cash-bank-form.component.html</context>
-          <context context-type="linenumber">161</context>
+          <context context-type="linenumber">169</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__TOKENS__OVERVIEW" datatype="html">
+        <source>
+      Overview
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/tokens.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__TOKENS__TRANSACTIONS" datatype="html">
+        <source>
+      Transactions
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/tokens.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET_V2__TOKENS__SETTINGS" datatype="html">
+        <source>
+      Settings
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/tokens/tokens.component.html</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16472,6 +17537,14 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="COMMON__ACTIONS__BACK" datatype="html">
+        <source>Back</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-v2.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="ACCOUNT_DISPLAY_NAME__DISPLAY_NAME" datatype="html">
         <source>Display Name</source>
         <context-group purpose="location">
@@ -16509,6 +17582,16 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/security/sessions/sessions.component.html</context>
           <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGSV2_SESSIONS__CLOSE_ALL_SESSIONS" datatype="html">
+        <source>
+      Close all sessions
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/security/sessions/sessions.component.html</context>
+          <context context-type="linenumber">13</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16774,6 +17857,78 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="SETTINGS_V2_SHARE_BUTTONS__SHOW_SHARE_BUTTONS" datatype="html">
+        <source>Show share buttons</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/share-buttons/share-buttons.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_SHARE_BUTTONS__UPDATE_PREFERENCES" datatype="html">
+        <source>
+      Update Preference
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/share-buttons/share-buttons.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_PAYMENT_METHODS__YOUR_CARDS" datatype="html">
+        <source>Your Cards</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_PAYMENT_METHODS__EXPIRES" datatype="html">
+        <source>
+          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;span&amp;amp;gt;"/>
+          Expires
+          <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;/span&amp;amp;gt;"/>
+          <x id="START_TAG_SPAN_1" ctype="x-span" equiv-text="&amp;amp;lt;span&amp;amp;gt;"/>
+          <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;/span&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_PAYMENT_METHODS__ADD_FIRST_CARD" datatype="html">
+        <source>Add your first credit card</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_PAYMENT_METHODS__ADD_NEW_CARD" datatype="html">
+        <source>
+          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;span&amp;amp;gt;"/>
+          Add a new card
+          <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;/span&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_RECURRING_PAYMENTS__YOU_HAVENT_SETUP_ANY" datatype="html">
+        <source>
+          <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;span&amp;amp;gt;"/>
+          You haven&amp;amp;apos;t set up any recurring payments.
+          <x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&amp;amp;lt;/span&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/billing/recurring-payments/recurring-payments.component.html</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="COMMON__UNBLOCK" datatype="html">
         <source>Unblock</source>
         <context-group purpose="location">
@@ -16787,6 +17942,66 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/blocked-channels/blocked-channels.component.html</context>
           <context context-type="linenumber">54</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGSV2__SUB_TIERS__SAVE_SUBSCRIPTION_TIERS" datatype="html">
+        <source>
+      Save Subscription Tiers
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/subscription-tiers/subscription-tiers.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MINDS__SETTINGS__WIRE__SAVE_SETTINGS" datatype="html">
+        <source>
+      Save Settings
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/paywall-preview/paywall-preview.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_DEACTIVATE_ACCOUNT__I_UNDERSTAND" datatype="html">
+        <source>
+          I understand and wish to continue.
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/deactivate-account/deactivate-account.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_DEACTIVATE_ACCOUNT__DEACTIVATE_ACCOUNT" datatype="html">
+        <source>
+      Deactivate Account
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/deactivate-account/deactivate-account.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_DELETE_ACCOUNT__I_UNDERSTAND" datatype="html">
+        <source>
+          I understand and wish to continue.
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/delete-account/delete-account.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS_V2_DELETE_ACCOUNT__DELETE_ACCOUNT" datatype="html">
+        <source>
+      Delete Account
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/delete-account/delete-account.component.html</context>
+          <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -16881,6 +18096,21 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
           <context context-type="linenumber">93</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGSV2_HASHTAGS__SETUP_SITE_COLOR_THEME" datatype="html">
+        <source>
+          
+  Set up your site&amp;amp;apos;s color theme.
+  
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          Upgrade to Pro
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
+          <context context-type="linenumber">1</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17031,6 +18261,21 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="SETTINGS__PRO__ASSETS__UPLOAD_CUSTOM_LOGO" datatype="html">
+        <source>
+          
+  Upload custom logo and background images.
+  
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          Upgrade to Pro
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/assets/assets.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="COMMON__LOGO" datatype="html">
         <source>Logo</source>
         <context-group purpose="location">
@@ -17060,6 +18305,31 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/assets/assets.component.html</context>
           <context context-type="linenumber">59</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__ASSETS__SAVE_ASSETS" datatype="html">
+        <source>
+      Save Assets
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/assets/assets.component.html</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGSV2_HASHTAGS__SETUP_YOUR_CATEGORY_INFO" datatype="html">
+        <source>
+          
+  Set up your category filter hashtags.
+  
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          Upgrade to Pro
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/hashtags/hashtags.component.html</context>
+          <context context-type="linenumber">1</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17095,6 +18365,21 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/hashtags/hashtags.component.html</context>
           <context context-type="linenumber">75</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGSV2__FOOTER__SETUP_SITES_FOOTER_LINKS" datatype="html">
+        <source>
+          
+  Set up your site&amp;amp;apos;s footer links.
+  
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          Upgrade to Pro
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/footer/footer.component.html</context>
+          <context context-type="linenumber">1</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17226,6 +18511,28 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="SETTINGSV2_HASHTAGS__SELECT_CURRENCY_WISH_PAID_OUT_INFO" datatype="html">
+        <source>
+          
+  Select the currency type you wish you be paid out in. Please note payouts only
+  occur after your
+  
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          earnings
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+           are equivalent to
+  $100 or greater.
+  
+          <x id="START_LINK_1" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          Upgrade to Pro
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="PRO_PAYOUTS__PAYOUT_CURRENCY" datatype="html">
         <source>Payout Currency</source>
         <context-group purpose="location">
@@ -17259,6 +18566,21 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
           <context context-type="linenumber">79</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SETTINGSV2_CANCEL__MANAGE_YOUR_SUBSCRIPTION_UPGRADE" datatype="html">
+        <source>
+          
+  Manage your subscription.
+  
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          Upgrade to Pro
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/cancel/cancel.component.html</context>
+          <context context-type="linenumber">1</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17358,6 +18680,191 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/channel.component.html</context>
           <context context-type="linenumber">48</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY__TRENDS__JUST_FOR_YOU" datatype="html">
+        <source>Just for you</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/trends/trends.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/trends/trends.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_SEARCH__TOP" datatype="html">
+        <source>Top</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/search/search.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_SEARCH__LATEST" datatype="html">
+        <source>Latest</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/search/search.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY__SEARCH__CHANNELS" datatype="html">
+        <source>Channels</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/search/search.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_SEARCH__GROUPS" datatype="html">
+        <source>Groups</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/search/search.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_SEARCH__BACK" datatype="html">
+        <source>Back</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/search/search.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__JUST_FOR_YOU" datatype="html">
+        <source>Just for you</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__DISCOVERY_BY_TAGS" datatype="html">
+        <source>Discover by tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__YOUR_TAGS" datatype="html">
+        <source>Your Tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__SEE_YOUR_FEED" datatype="html">
+        <source>See your feed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
+          <context context-type="linenumber">53</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__TRENDING_TAGS" datatype="html">
+        <source>Trending Tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
+          <context context-type="linenumber">65</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__SEE_TRENDING_FEED" datatype="html">
+        <source>See trending feed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_FEEDS__YOUR_FEED" datatype="html">
+        <source>Your Feed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/feeds/feeds.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_FEEDS__TRENDING_FEED" datatype="html">
+        <source>Trending Feed</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/feeds/feeds.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_FEEDS__BACK" datatype="html">
+        <source>Back</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/feeds/feeds.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_SETTINGS_BUTTON__MANAGE_RESULTS" datatype="html">
+        <source>Manage Results</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/settings-button/settings-button.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_SETTINGS_BUTTON__MANAGE_TAGS" datatype="html">
+        <source>Manage tags</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/settings-button/settings-button.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_DISCLAIMER__OUR_APPROACH_INFORMATION" datatype="html">
+        <source>
+          
+      Our
+      
+          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
+          research-based
+          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
+          
+      approach in handling misinformation and other types of controversial
+      lawful content is to facilitate civil discourse through free speech, which
+      is the only way to change someone’s mind. It is your choice to engage with
+      someone, keep scrolling, report or block.
+    
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/disclaimer/disclaimer.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_SUGGESTIONS__CHANNELS" datatype="html">
+        <source>Channels</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/suggestions/suggestions.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_SUGGESTIONS__GROUPS" datatype="html">
+        <source>Groups</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/suggestions/suggestions.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_SUGGESTIONS__BACK" datatype="html">
+        <source>Back</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/suggestions/suggestions.component.html</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17543,7 +19050,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">96</context>
+          <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17551,7 +19058,7 @@
         <source>Unblock</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">114</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17559,7 +19066,7 @@
         <source>Block</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">120</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17567,7 +19074,7 @@
         <source>Report</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/actions/menu.component.html</context>
-          <context context-type="linenumber">121</context>
+          <context context-type="linenumber">127</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>

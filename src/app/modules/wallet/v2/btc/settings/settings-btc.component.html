@@ -7,10 +7,13 @@
   <!-- -------------------------------------------- -->
 
   <div *ngIf="!currentAddress && !showForm">
-    <h2>
+    <h2 18n="@@WALLET_V2__SETTINGS_BTC__SETUP_YOUR_ADDRESS">
       Setup your Bitcoin Address
     </h2>
-    <p class="m-walletSecondaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      18n="@@WALLET_V2__SETTINGS_BTC__YOU_CAN_RECEIVE_BY_INFO"
+    >
       You can receive Bitcoin payments by linking your Bitcoin receiver address
       below.
     </p>
@@ -24,10 +27,13 @@
   <!-- -------------------------------------------- -->
 
   <div *ngIf="showForm">
-    <h2>
+    <h2 18n="@@WALLET_V2__SETTINGS_BTC__UPDATED_BITCOIN_ADDRESS">
       Update Bitcoin Address
     </h2>
-    <p class="m-walletSecondaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      18n="@@WALLET_V2__SETTINGS_BTC__NOTE_ROTATE_FREQUENTLY_INFO"
+    >
       Note: You may want to rotate this address frequently to avoid third party
       tracking.
     </p>

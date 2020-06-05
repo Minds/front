@@ -3,7 +3,10 @@
   *ngIf="account"
   class="m-walletButtonLayout--buttonOffsetRight"
 >
-  <p class="m-walletSecondaryText--desc">
+  <p
+    class="m-walletSecondaryText--desc"
+    i18n="@@CASH_ONBOARD_EXTRAS__WE_NEED_ADDITIONAL_INFO_TEXT"
+  >
     We need some additional information before we can verify your account.
   </p>
   <!-- -------------------------------------------- -->
@@ -32,6 +35,7 @@
         (click)="file.click()"
         [disabled]="inProgress"
         [saving]="inProgress"
+        i18n="@@CASH_ONBOARD_EXTRAS__UPLOAD_PHOTO_ID"
         >Upload Photo ID</m-shadowboxSubmitButton
       >
     </div>
@@ -70,6 +74,7 @@
         (click)="file.click()"
         [disabled]="inProgress"
         [saving]="inProgress"
+        i18n="@@CASH_ONBOARD_EXTRAS__UPLOAD_PROOF_OF_ADDRESS"
         >Upload Proof of Address</m-shadowboxSubmitButton
       >
     </div>
@@ -109,6 +114,7 @@
         (click)="updateField('phone', phone.value)"
         [disabled]="inProgress"
         [saving]="inProgress"
+        i18n="@@CASH_ONBOARD_EXTRAS__SAVE"
         >Save</m-shadowboxSubmitButton
       >
     </div>
@@ -147,6 +153,7 @@
         (click)="updateField('id_number', personalIdNumber.value)"
         [disabled]="inProgress"
         [saving]="inProgress"
+        i18n="@@COMMON__SAVE"
         >Save</m-shadowboxSubmitButton
       >
     </div>
@@ -157,7 +164,9 @@
   <ng-container *ngIf="account.requirement.indexOf('tos_acceptance.') > -1">
     <div class="m-walletForm__field--checkbox">
       <div class="m-walletSettings__row--input">
-        <m-formInput__checkbox>
+        <m-formInput__checkbox
+          i18n="@@CASH_ONBOARD_EXTRAS__READ_AGREE_STRIPE_TOS_TEXT"
+        >
           I have read and agree to the
           <a href="https://stripe.com/legal" target="_blank">
             Stripe Services Agreement
@@ -170,6 +179,7 @@
         (click)="acceptTos()"
         [disabled]="inProgress"
         [saving]="inProgress"
+        i18n="@@COMMON__SAVE"
         >Save</m-shadowboxSubmitButton
       >
     </div>

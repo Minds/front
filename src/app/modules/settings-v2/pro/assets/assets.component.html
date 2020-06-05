@@ -1,4 +1,7 @@
-<div class="m-settingsV2__desc">
+<div
+  class="m-settingsV2__desc"
+  i18n="@@SETTINGS__PRO__ASSETS__UPLOAD_CUSTOM_LOGO"
+>
   Upload custom logo and background images.
   <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
     >Upgrade to Pro</a
@@ -94,6 +97,7 @@
       [disabled]="!canSubmit()"
       [saving]="inProgress"
       (click)="submit()"
+      i18n="@@SETTINGS__PRO__ASSETS__SAVE_ASSETS"
     >
       Save Assets
     </m-shadowboxSubmitButton>
