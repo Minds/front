@@ -64,7 +64,8 @@ export class ApiService {
     protected cookie: CookieService
   ) {
     if (baseUrl) {
-      this.baseUrl = baseUrl;
+      console.log(`${baseUrl}/`);
+      this.baseUrl = `${baseUrl}/`;
     }
   }
 
@@ -93,7 +94,12 @@ export class ApiService {
     data: ApiRequestData = null,
     options: ApiRequestOptions = {}
   ): Observable<ApiResponse> {
-    return this.request(ApiRequestMethod.POST, endpoint, data, options);
+    return this.request(
+      ApiRequestMethod.POST,
+      this.baseUrl + endpoint,
+      data,
+      options
+    );
   }
 
   put(
@@ -101,7 +107,12 @@ export class ApiService {
     data: ApiRequestData = null,
     options: ApiRequestOptions = {}
   ): Observable<ApiResponse> {
-    return this.request(ApiRequestMethod.PUT, endpoint, data, options);
+    return this.request(
+      ApiRequestMethod.PUT,
+      this.baseUrl + endpoint,
+      data,
+      options
+    );
   }
 
   delete(
@@ -111,7 +122,7 @@ export class ApiService {
   ): Observable<ApiResponse> {
     return this.request(
       ApiRequestMethod.DELETE,
-      this._buildQueryString(endpoint, queryParams),
+      this._buildQueryString(this.baseUrl + endpoint, queryParams),
       {},
       options
     );
@@ -209,7 +220,7 @@ export class ApiService {
     }
 
     output = this.baseUrl.replace(/\/+$/, '') + '/' + output;
-
+    console.log(output);
     if (queryParams) {
       const queryString = Object.keys(queryParams)
         .map(
