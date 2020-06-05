@@ -7,10 +7,16 @@
         class="m-hashtags-selector--header-switches"
         *mIfFeature="'top-feeds'"
       >
-        <m-switch [(mModel)]="showTrending" (change)="filterChange()" i18n
+        <m-switch
+          [(mModel)]="showTrending"
+          (change)="filterChange()"
+          i18n="@@M__HASHTAG__SELECTOR__TRENDING"
           >Trending</m-switch
         >
-        <m-switch [(mModel)]="showDefaults" (change)="filterChange()" i18n
+        <m-switch
+          [(mModel)]="showDefaults"
+          (change)="filterChange()"
+          i18n="@@M__HASHTAG__SELECTOR__DEFAULTS"
           >Defaults</m-switch
         >
       </span>

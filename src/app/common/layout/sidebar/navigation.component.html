@@ -9,7 +9,7 @@
 >
   <nav>
     <div class="m-sidebarNavigation__top">
-      <a routerLink="/" title="Home" i18n-title>
+      <a routerLink="/" title="Home" i18n-title="@@COMMON__HOME">
         <img [src]="cdnAssetsUrl + 'assets/logos/bulb.svg'" />
       </a>
 
@@ -124,7 +124,10 @@
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
           >
-            <a routerLink="/analytics/dashboard/traffic" (click)="toggle()"
+            <a
+              routerLink="/analytics/dashboard/traffic"
+              (click)="toggle()"
+              i18n="@@COMMON__TRAFFIC"
               >Traffic</a
             >
           </li>
@@ -132,7 +135,10 @@
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
           >
-            <a routerLink="/analytics/dashboard/engagement" (click)="toggle()"
+            <a
+              routerLink="/analytics/dashboard/engagement"
+              (click)="toggle()"
+              i18n="@@COMMON__ENGAGEMENT"
               >Engagement</a
             >
           </li>
@@ -140,7 +146,10 @@
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
           >
-            <a routerLink="/analytics/dashboard/earnings" (click)="toggle()"
+            <a
+              routerLink="/analytics/dashboard/earnings"
+              (click)="toggle()"
+              i18n="@@COMMON__EARNINGS"
               >Earnings</a
             >
           </li>
@@ -148,7 +157,10 @@
             class="m-sidebarNavigation__item"
             [routerLinkActive]="'m-sidebarNavigation__item--active'"
           >
-            <a routerLink="/analytics/dashboard/trending" (click)="toggle()"
+            <a
+              routerLink="/analytics/dashboard/trending"
+              (click)="toggle()"
+              i18n="@@COMMON__TRENDING"
               >Trending</a
             >
           </li>
@@ -170,7 +182,7 @@
             Settings
           </m-tooltip>
 
-          <span class="m-sidebarNavigationItem__text" i18n="COMMON__SETTINGS">
+          <span class="m-sidebarNavigationItem__text" i18n="@@COMMON__SETTINGS">
             Settings
           </span>
         </a>

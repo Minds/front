@@ -37,12 +37,12 @@
           >
             <option [ngValue]="null" i18n="@@COMMON__CUSTOM">Custom</option>
 
-            <optgroup label="Tokens" i18n-label>
+            <optgroup label="Tokens" i18n-label="@@COMMON__TOKENS">
               <option
                 *ngFor="let supportTier of groupedSupportTiers.tokens"
                 [ngValue]="supportTier"
               >
-                <ng-container i18n
+                <ng-container i18n="@@CHANNEL__MONETIZE__OTHER"
                   >{supportTier.amount, plural, =1
                   {{{supportTier.amount | number}} token} other
                   {{{supportTier.amount | number}} tokens}}</ng-container
@@ -56,9 +56,7 @@
                 *ngFor="let supportTier of groupedSupportTiers.usd"
                 [ngValue]="supportTier"
               >
-                <ng-container i18n
-                  >${{ supportTier.amount | number }}</ng-container
-                >
+                <ng-container>${{ supportTier.amount | number }}</ng-container>
                 -
                 {{ supportTier.description }}
               </option>
@@ -111,10 +109,14 @@
         <div class="m-composerPopup__field">
           <label [for]="inputId + '-amount'">
             <ng-container [ngSwitch]="state.type">
-              <ng-container *ngSwitchCase="'tokens'" i18n
+              <ng-container
+                *ngSwitchCase="'tokens'"
+                i18n="@@CHANNELS__MONETIZE__MIN_TOKENS_PER_MONTH"
                 >Minimum Tokens/Month</ng-container
               >
-              <ng-container *ngSwitchCase="'money'" i18n
+              <ng-container
+                *ngSwitchCase="'money'"
+                i18n="@@CHANNELS__MONETIZE__MAX_TOKENS_PER_MONTH"
                 >Minimum USD/Month</ng-container
               >
             </ng-container>
@@ -144,7 +146,7 @@
       [disabled]="state.enabled && state.amount <= 0"
       (onAction)="save()"
       data-cy="monetize-save-button"
-      i18n
+      i18n="@@COMMON__SAVE"
     >
       Save
     </m-button>

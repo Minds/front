@@ -196,11 +196,12 @@ import { BlockListService } from '../../../../common/services/block-list.service
           >Are you sure you want to ban this user from
           monetization?</ng-container
         ><br /><br />
-        <ng-container i18n
+        <ng-container
+          i18n="@@MINDS_BUTTON__USER_DROPDOWN__WILL_CLOSE_SESSIONS_TEXT"
           >This will close all open sessions and decline pending
           payments.</ng-container
         ><br />
-        <ng-container i18n
+        <ng-container i18n="@@MINDS_BUTTON__USER_DROPDOWN__THERE_IS_NO_UNDO"
           >There's no UNDO. This will NOT ban the user from Minds.</ng-container
         >
       </p>

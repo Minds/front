@@ -30,7 +30,7 @@
           class="m-proChannelTopbar__navItem"
           [routerLink]="feedRouterLink"
           routerLinkActive="active"
-          i18n
+          i18n="@@COMMON__FEED"
         >
           Feed
         </a>
@@ -39,7 +39,7 @@
           class="m-proChannelTopbar__navItem"
           [routerLink]="videosRouterLink"
           routerLinkActive="active"
-          i18n
+          i18n="@@COMMON__VIDEOS"
         >
           Videos
         </a>
@@ -48,7 +48,7 @@
           class="m-proChannelTopbar__navItem"
           [routerLink]="imagesRouterLink"
           routerLinkActive="active"
-          i18n
+          i18n="@@COMMON__IMAGES"
         >
           Images
         </a>
@@ -57,7 +57,7 @@
           class="m-proChannelTopbar__navItem"
           [routerLink]="articlesRouterLink"
           routerLinkActive="active"
-          i18n
+          i18n="@@COMMON__ARTICLES"
         >
           Articles
         </a>
@@ -66,7 +66,7 @@
           class="m-proChannelTopbar__navItem"
           [routerLink]="groupsRouterLink"
           routerLinkActive="active"
-          i18n
+          i18n="@@COMMON__GROUPS"
         >
           Groups
         </a>
@@ -89,7 +89,7 @@
             class="m-proChannelTopbar__navItem"
             [href]="proSettingsHref"
             target="root_minds"
-            i18n
+            i18n="@@COMMON__SETTINGS"
           >
             Settings
           </a>
@@ -98,7 +98,7 @@
             *ngIf="!isProDomain"
             class="m-proChannelTopbar__navItem"
             [routerLink]="proSettingsLink"
-            i18n
+            i18n="@@COMMON__SETTING"
           >
             Settings
           </a>

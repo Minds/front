@@ -38,7 +38,7 @@
       class="mf-button mf-button--hollow"
       (click)="cancel()"
       *ngIf="cropping"
-      i18n
+      i18n="@@COMMON_CANCEL"
     >
       Cancel
     </button>
@@ -46,7 +46,7 @@
       class="mf-button mf-button--hollow"
       (click)="skip()"
       *ngIf="!cropping"
-      i18n
+      i18n="@@COMMON__SKIP"
     >
       Skip
     </button>
@@ -54,7 +54,7 @@
       class="mf-button mf-button--alt"
       (click)="uploadPhoto()"
       *ngIf="!cropping"
-      i18n
+      i18n="@@COMMON__UPLOAD_A_PHOTO"
     >
       Upload a Photo
     </button>
@@ -62,7 +62,7 @@
       class="mf-button mf-button--alt"
       (click)="continue()"
       *ngIf="cropping"
-      i18n
+      i18n="@@COMMON__FINISH"
     >
       Finish
     </button>

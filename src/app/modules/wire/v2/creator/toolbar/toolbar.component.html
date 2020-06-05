@@ -1,6 +1,6 @@
 <ng-template #typeLabel>
   <ng-container [ngSwitch]="service.type$ | async">
-    <ng-container *ngSwitchCase="'tokens'" i18n
+    <ng-container *ngSwitchCase="'tokens'" i18n="@@CREATOR_TOOLBAR__OTHER"
       >{ service.amount$ | async, plural, =1 {token} other {tokens}
       }</ng-container
     >

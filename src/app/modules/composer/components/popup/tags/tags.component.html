@@ -33,7 +33,7 @@
         <button
           [disabled]="state.length >= maxTags"
           (click)="hashtagsTypeaheadInput.triggerAction()"
-          i18n
+          i18n="@@COMMON__ADD"
         >
           Add
         </button>
@@ -58,7 +58,7 @@
       class="m-composerPopup__save"
       (onAction)="save()"
       data-cy="tags-save-button"
-      i18n
+      i18n="@@COMPOSER_POPUP__SAVE_TAGS"
     >
       Save Tags
     </m-button>

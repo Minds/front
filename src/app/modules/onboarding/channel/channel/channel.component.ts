@@ -26,7 +26,7 @@ import { debounceTime } from 'rxjs/operators';
       <div class="m-channelOnboardingSlide__component">
         <label
           for="display-name"
-          i18n="@CHANNEL__ONBOARDING__CHOOSE_DISPLAY_NAME"
+          i18n="@@CHANNEL__ONBOARDING__CHOOSE_DISPLAY_NAME"
         >
           Choose your display name
         </label>
@@ -34,7 +34,7 @@ import { debounceTime } from 'rxjs/operators';
           id="display-name"
           #displayNameInput
           placeholder="eg. John Smith"
-          i18n-placeholder="@CHANNEL__ONBOARDING__USERNAME_PLACEHOLDER"
+          i18n-placeholder="@@CHANNEL__ONBOARDING__USERNAME_PLACEHOLDER"
           [ngModel]="user.username"
         />
       </div>
@@ -42,7 +42,7 @@ import { debounceTime } from 'rxjs/operators';
       <div class="m-channelOnboardingSlide__component">
         <label
           for="description"
-          i18n="@CHANNEL__ONBOARDING__BRIEFLY_DESCRIBE_YOUR_CHANNEL"
+          i18n="@@CHANNEL__ONBOARDING__BRIEFLY_DESCRIBE_YOUR_CHANNEL"
         >
           Briefly describe your channel
         </label>
@@ -50,7 +50,7 @@ import { debounceTime } from 'rxjs/operators';
           id="description"
           #descriptionInput
           placeholder="eg. Independent Journalist"
-          i18n-placeholder="@CHANNEL__ONBOARDING__BRIEFDESCRIPTION_PLACEHOLDER"
+          i18n-placeholder="@@CHANNEL__ONBOARDING__BRIEFDESCRIPTION_PLACEHOLDER"
           [ngModel]="user.briefdescription"
         />
       </div>

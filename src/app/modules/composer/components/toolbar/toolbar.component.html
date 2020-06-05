@@ -82,7 +82,9 @@
     (onAction)="onPost($event)"
     data-cy="post-button"
   >
-    <ng-container *ngIf="!(isEditing$ | async); else isEditingButtonText" i18n
+    <ng-container
+      *ngIf="!(isEditing$ | async); else isEditingButtonText"
+      i18n="verb|@@COMMON__POST"
       >Post</ng-container
     >
     <ng-template #isEditingButtonText
