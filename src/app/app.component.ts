@@ -165,6 +165,7 @@ export class Minds implements OnInit, OnDestroy {
 
     this.loginReferrer
       .avoid([
+        '/',
         '/login',
         '/logout',
         '/logout/all',

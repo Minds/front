@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.session.isLoggedIn()) {
-      this.loginReferrer.register('/newsfeed');
+      this.loginReferrer.register('/newsfeed/subscriptions');
       this.loginReferrer.navigate();
     }
 

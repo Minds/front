@@ -14,7 +14,7 @@
           <minds-card
             [object]="entity | async"
             class="m-border"
-            hostClass="mdl-card"
+            class="mdl-card"
           ></minds-card>
         </ng-container>
       </div>
@@ -36,7 +36,7 @@
     <h3 i18n="@@BOOST__CONSOLE__BOOSTER__YOUR_CHANNEL_TITLE">Your channel</h3>
     <minds-card
       [object]="session.getLoggedInUser()"
-      hostClass="mdl-shadow--2dp"
+      class="mdl-shadow--2dp"
     ></minds-card>
 
     <ng-container *ngIf="(feed$ | async)?.length != 0">
@@ -51,7 +51,7 @@
           <ng-container *ngIf="(entity | async)?.thumbnail_src">
             <minds-card
               [object]="entity | async"
-              hostClass="mdl-shadow--2dp"
+              class="mdl-shadow--2dp"
             ></minds-card>
             <minds-button type="boost" [object]="entity | async"></minds-button>
           </ng-container>
