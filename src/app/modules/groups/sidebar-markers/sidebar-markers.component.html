@@ -69,7 +69,7 @@
           [class.m-pulsating--small]="
             !hasNewNavigation && (group.hasGathering$ | async)
           "
-          [src]="'fs/v1/avatars/' + group.guid + '/' + group.icontime"
+          [src]="cdnUrl + 'fs/v1/avatars/' + group.guid + '/' + group.icontime"
           m-tooltip--anchor
         />
         <span>{{ group.name }}</span>

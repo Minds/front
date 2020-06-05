@@ -49,7 +49,7 @@
           *ngIf="suggestion.type == 'group'"
           [routerLink]="['/groups/profile/', suggestion.guid]"
         >
-          <img src="fs/v1/avatars/{{ suggestion.guid }}/small" />
+          <img src="{{ cdnUrl }}/fs/v1/avatars/{{ suggestion.guid }}/small" />
           {{ suggestion.name }}
         </a>
       </ng-container>
