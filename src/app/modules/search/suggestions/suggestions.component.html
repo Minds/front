@@ -41,7 +41,7 @@
           *ngIf="suggestion.type == 'user'"
           [routerLink]="['/', suggestion.username]"
         >
-          <img src="icon/{{ suggestion.guid }}/small" />
+          <img src="{{ cdnUrl }}icon/{{ suggestion.guid }}/small" />
           @{{ suggestion.username }}
         </a>
         <a
@@ -49,7 +49,7 @@
           *ngIf="suggestion.type == 'group'"
           [routerLink]="['/groups/profile/', suggestion.guid]"
         >
-          <img src="{{ cdnUrl }}/fs/v1/avatars/{{ suggestion.guid }}/small" />
+          <img src="{{ cdnUrl }}fs/v1/avatars/{{ suggestion.guid }}/small" />
           {{ suggestion.name }}
         </a>
       </ng-container>
@@ -62,7 +62,9 @@
       *ngFor="let suggestion of suggestions"
       [routerLink]="['/', suggestion.username]"
     >
-      <img src="icon/{{ suggestion.guid }}/small" /> @{{ suggestion.username }}
+      <img src="{{ cdnUrl }}icon/{{ suggestion.guid }}/small" /> @{{
+        suggestion.username
+      }}
     </a>
   </ng-container>
 
