@@ -345,6 +345,7 @@ deploy:canary:
     refs:
       - master
       - test/gitlab-ci
+      - epic/angular-9
 
 deploy:production:
   <<: *deploy
