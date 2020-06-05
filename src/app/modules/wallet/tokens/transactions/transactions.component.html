@@ -1,9 +1,5 @@
 <div class="m-token--ledger">
-  <div
-    class="m-token--ledger-remote"
-    *ngIf="remote"
-    i18n="@@WALLET__TOKENS__TRANSACTIONS__REMOTE_LABEL"
-  >
+  <div class="m-token--ledger-remote" *ngIf="remote">
     <b>@{{ remoteUser }}</b
     >'s transactions
   </div>
@@ -14,9 +10,7 @@
   >
     <m-dropdown class="m-token--ledger-filters--addresses">
       <label class="m-token--ledger-filters--label">
-        <span i18n="@@WALLET__TOKENS__TRANSACTIONS__ADDRESSES_DROPDOWN"
-          >Addresses</span
-        >
+        <span>Addresses</span>
         <i
           class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive"
           >keyboard_arrow_down</i
@@ -29,11 +23,7 @@
 
       <ul class="m-dropdown--list">
         <li class="m-dropdown--list--item" (click)="toggleAddress(null)">
-          <span
-            style="text-transform: capitalize"
-            i18n="@@WALLET__TOKENS__TRANSACTIONS__ALL_ADDRESSES_OPTION"
-            >All addresses</span
-          >
+          <span style="text-transform: capitalize">All addresses</span>
           <div class="m-layout--spacer"></div>
           <i
             class="material-icons m-token--ledger-filters--check selected"
@@ -70,9 +60,7 @@
 
     <m-dropdown class="m-token--ledger-filters--addresses">
       <label class="m-token--ledger-filters--label">
-        <span i18n="@@WALLET__TOKENS__TRANSACTIONS__CONTRACTS_DROPDOWN"
-          >Contracts</span
-        >
+        <span>Contracts</span>
         <i
           class="material-icons m-dropdown--label-icon m-dropdown--label-icon-inactive"
           >keyboard_arrow_down</i
@@ -84,11 +72,7 @@
       </label>
       <ul class="m-dropdown--list">
         <li class="m-dropdown--list--item" (click)="toggleContract(null)">
-          <span
-            style="text-transform: capitalize"
-            i18n="@@WALLET__TOKENS__TRANSACTIONS__ALL_CONTRACTS_OPTIONS"
-            >All contracts</span
-          >
+          <span style="text-transform: capitalize">All contracts</span>
           <div class="m-layout--spacer"></div>
           <i
             class="material-icons m-token--ledger-filters--check selected"
@@ -118,14 +102,12 @@
     <div class="m-token--ledger--date-selectors">
       <m-date-selector
         label="From:"
-        i18n-label="@@WALLET__TOKENS__TRANSACTIONS__FROM"
         [date]="startDate"
         (dateChange)="onStartDateChange($event)"
         dateFormat="shortDate"
       ></m-date-selector>
       <m-date-selector
         label="To:"
-        i18n-label="@@WALLET__TOKENS__TRANSACTIONS__TO"
         [date]="endDate"
         (dateChange)="onEndDateChange($event)"
         dateFormat="shortDate"
@@ -135,7 +117,6 @@
   <ng-template #previewHeader>
     <div
       class="m-token--ledger-filters m-token--ledger-filters--preview m-border"
-      i18n="@@WALLET__TOKENS__TRANSACTIONS__LAST_MONTH_TITLE"
     >
       Last month
     </div>
@@ -174,7 +155,7 @@
         *ngIf="transaction.failed"
         class="m-token--ledger--reward-details--meta"
       >
-        <span i18n="@@WALLET__TOKENS__TRANSACTIONS__FAILED_LABEL">FAILED</span>
+        <span>FAILED</span>
       </div>
 
       <div

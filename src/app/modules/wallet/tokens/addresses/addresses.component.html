@@ -1,16 +1,13 @@
 <div class="m-card--large m-border" *ngIf="!editing">
-  <h2 i18n="@@WALLET__TOKENS__ADDRESSES__ADDRESSES_TITLE">Addresses</h2>
+  <h2>Addresses</h2>
 
-  <p class="m-card--subtext" i18n="@@WALLET__TOKENS__ADDRESSES__ADDRESSES_DESC">
+  <p class="m-card--subtext">
     To receive OnChain payments from other channels (eg, from a Wire or a
     Boost), you will need to let us know which address to direct these tokens
     to.
   </p>
 
-  <p
-    class="m-card--subtext"
-    i18n="@@WALLET__TOKENS__ADDRESSES__ADDRESSES_DESC_LISTED"
-  >
+  <p class="m-card--subtext">
     This address will be listed in your wallet as your Receiver Address and can
     be changed here at any time.
   </p>
@@ -19,16 +16,12 @@
     class="m-wallet-token--addresses--receiver-address"
     *ngIf="receiverAddress"
   >
-    <h4 i18n="@@WALLET__TOKENS__ADDRESSES__RECEIVER_ADDRESS_LABEL">
+    <h4>
       Your receiver address
     </h4>
     <strong>{{ receiverAddress }}</strong>
 
-    <a
-      (click)="enableEditing()"
-      i18n="@@WALLET__TOKENS__ADDRESSES__CHANGE_ACTION"
-      >Change</a
-    >
+    <a (click)="enableEditing()">Change</a>
   </div>
 </div>
 

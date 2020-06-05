@@ -5,14 +5,12 @@
   >
     <m-date-selector
       label="From:"
-      i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__FROM"
       [date]="startDate"
       (dateChange)="onStartDateChange($event)"
       dateFormat="shortDate"
     ></m-date-selector>
     <m-date-selector
       label="To:"
-      i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__TO"
       [date]="endDate"
       (dateChange)="onEndDateChange($event)"
       dateFormat="shortDate"
@@ -25,14 +23,12 @@
       <div class="m-token--ledger--date-selectors">
         <m-date-selector
           label="From:"
-          i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__FROM"
           [date]="startDate"
           (dateChange)="onStartDateChange($event)"
           dateFormat="shortDate"
         ></m-date-selector>
         <m-date-selector
           label="To:"
-          i18n-label="@@WALLET__TOKENS__WITHDRAW__LEDGER__TO"
           [date]="endDate"
           (dateChange)="onEndDateChange($event)"
           dateFormat="shortDate"
@@ -53,9 +49,7 @@
 
     <div class="m-token--ledger--reward-details">
       <p *ngIf="withdrawal.completed; else withdrawPending">
-        <ng-container i18n="@@LEDGER__TRANSACTION_COMPLETED"
-          >COMPLETED</ng-container
-        >
+        <ng-container>COMPLETED</ng-container>
         |
         <a
           class="m-token--ledger--completed-hash"

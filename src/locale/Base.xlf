@@ -224,10 +224,6 @@
           <context context-type="sourcefile">app/modules/onboarding/channel/rewards/rewards.component.ts</context>
           <context context-type="linenumber">25</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_DESC" datatype="html">
@@ -245,10 +241,6 @@
           <context context-type="sourcefile">app/modules/onboarding/channel/rewards/rewards.component.ts</context>
           <context context-type="linenumber">40</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="WALLET__TOKENS__REWARDS__CODE_EXAMPLE_PH" datatype="html">
@@ -256,10 +248,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/onboarding/channel/rewards/rewards.component.ts</context>
           <context context-type="linenumber">48</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -272,10 +260,6 @@
           <context context-type="sourcefile">app/modules/onboarding/channel/rewards/rewards.component.ts</context>
           <context context-type="linenumber">55</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="WALLET__TOKENS__ONBOARDING__REWARDS__CONFIRM_ACTION" datatype="html">
@@ -286,10 +270,6 @@
           <context context-type="sourcefile">app/modules/onboarding/channel/rewards/rewards.component.ts</context>
           <context context-type="linenumber">67</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">70</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="WALLET__TOKENS__ONBOARDING__REWARDS__GO_BACK_ACTION" datatype="html">
@@ -299,10 +279,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/onboarding/channel/rewards/rewards.component.ts</context>
           <context context-type="linenumber">74</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">77</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -3921,10 +3897,6 @@
           <context context-type="linenumber">22</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/wallet.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/console/console.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
@@ -5069,7 +5041,7 @@
           payments.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">186</context>
+          <context context-type="linenumber">187</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -5077,7 +5049,7 @@
         <source>There&amp;amp;apos;s no UNDO. This will NOT ban the user from Minds.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">190</context>
+          <context context-type="linenumber">191</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -5087,7 +5059,7 @@
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/legacy/components/buttons/user-dropdown.ts</context>
-          <context context-type="linenumber">196</context>
+          <context context-type="linenumber">197</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -9830,110 +9802,11 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="M_REFERRALS__LINKS_MODAL_HEADER" datatype="html">
-        <source>
-      Earn tokens for referring your friends
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS__LINKS_REGISTER_URL_DESC" datatype="html">
-        <source>
-      Send this link to your friends to earn tokens for referrals
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS__LINKS_COPY_ACTION" datatype="html">
-        <source>
-          Copy
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">76</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
-          <context context-type="linenumber">76</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS__LINKS_COPY_STATE" datatype="html">
-        <source>
-          Copied
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS__LINKS_REFERRER_PARAM_DESC" datatype="html">
-        <source>
-      You can also get referrals by adding this code to the end of any Minds
-      link you share
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS__SHARE_HEADER" datatype="html">
-        <source>More ways to share</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">90</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
-          <context context-type="linenumber">90</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="M_REFERRALS__SHARE_BUTTON_TWITTER" datatype="html">
         <source>Twitter</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
@@ -9945,7 +9818,7 @@
         <source>Facebook</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">85</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
@@ -9957,7 +9830,7 @@
         <source>Messenger</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">94</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
@@ -9969,7 +9842,7 @@
         <source>Whatsapp</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
@@ -9981,7 +9854,7 @@
         <source>SMS</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">132</context>
+          <context context-type="linenumber">114</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
@@ -9993,7 +9866,7 @@
         <source>Email</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/tokens/referrals/links/links.component.html</context>
-          <context context-type="linenumber">142</context>
+          <context context-type="linenumber">124</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
@@ -12009,211 +11882,6 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="M_REFERRALS__PAGE_HEADER" datatype="html">
-        <source>Referrals</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/referrals.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS__BLURB_HEADER" datatype="html">
-        <source>How does it work?</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/referrals.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/referrals.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__TITLE" datatype="html">
-        <source>My Referrals</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__HEADER_USER" datatype="html">
-        <source>User</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__HEADER_STATUS" datatype="html">
-        <source>Status</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__STATUS_TOOLTIP" datatype="html">
-        <source>
-          Referrals are pending until they&amp;amp;apos;ve set up their wallet
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__HEADER_MINDS_SIGNUP" datatype="html">
-        <source>Minds Signup</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__MINDS_SIGNUP_TOOLTIP" datatype="html">
-        <source>
-          The day the referral created an account with Minds
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__HEADER_REWARDS_SIGNUP" datatype="html">
-        <source>Rewards Signup</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__REWARDS_SIGNUP_TOOLTIP" datatype="html">
-        <source>
-          The day the referral sets up their wallet (and you are rewarded with
-          tokens). Click PING to send a pending referral a notification to let
-          them know they ought to join the rewards program.
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON" datatype="html">
-        <source>ping</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">125</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">137</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__PING_STATE" datatype="html">
-        <source>pinged</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">130</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">142</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__ENABLED" datatype="html">
-        <source>
-          
-                Send 
-          <x id="INTERPOLATION" equiv-text="{{ referral.prospect.username }}"/>
-           a notification to let them
-                know they ought to join the rewards program
-              
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">138</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">150</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__SENT" datatype="html">
-        <source>
-                Ping sent!
-              </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">149</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">161</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__DISABLED" datatype="html">
-        <source>
-                You can only ping once every 7 days
-              </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">155</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">167</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M_REFERRALS_DASHBOARD__NOTICE__NO_REFERRALS" datatype="html">
-        <source>
-        You don&amp;amp;apos;t have any referrals yet.
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">171</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
-          <context context-type="linenumber">183</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="COMMON__NSFW" datatype="html">
         <source>NSFW</source>
         <context-group purpose="location">
@@ -12679,115 +12347,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/blockchain/console/console.component.html</context>
           <context context-type="linenumber">59</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_TITLE" datatype="html">
-        <source>Rewards</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_DESC" datatype="html">
-        <source>
-      You can earn tokens for your contributions to the Minds network. The more
-      interactions on your content, the greater your share of the daily token
-      reward pool to your OffChain address.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_PHONE_DESC" datatype="html">
-        <source>
-      To start earning rewards, you will need to enter a unique phone number.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_PHONE_TOLTIP" datatype="html">
-        <source>Please enter your phone number in order to join the rewards
-        program</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__REWARDS__PHONE_HASH_DESC" datatype="html">
-        <source>
-      Note: Minds does not store the phone numbers you provide. The numbers are
-      hashed using SHA-256 and combined with a salt key for privacy and security
-      purposes.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">90</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__REWARDS__SKIP_ACTION" datatype="html">
-        <source>
-        Skip. I don&amp;amp;apos;t want to earn tokens
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/rewards/rewards.component.html</context>
-          <context context-type="linenumber">112</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS_NAV" datatype="html">
-        <source>Tokens</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/wallet.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MINDS__WALLET__TOPBAR__TOKENS_TOOLTIP" datatype="html">
-        <source>
-          See your contributions score and rewards, withdraw them and configure
-          your ethereum wallet
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/wallet.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MINDS__WALLET__TOPBAR__WIRE_TOOLTIP" datatype="html">
-        <source>
-          Your sent and received wires ledger
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/wallet.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="M__FEATURE__MINDS_PLUS" datatype="html">
-        <source>Minds Plus</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/wallet.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MINDS__WALLET__TOPBAR__MINDS_PLUS_TOOLTIP" datatype="html">
-        <source>
-          Opt-out of boosts, earn 1,000 monthly points, access exclusive Minds
-          content, and more
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/wallet.component.html</context>
-          <context context-type="linenumber">46</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13353,7 +12912,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13368,7 +12927,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">15</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13379,7 +12938,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13389,11 +12948,11 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">194</context>
+          <context context-type="linenumber">198</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13403,7 +12962,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13414,7 +12973,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13425,7 +12984,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13435,7 +12994,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13447,7 +13006,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">107</context>
+          <context context-type="linenumber">111</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13458,7 +13017,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">120</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13468,7 +13027,7 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">128</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13476,7 +13035,7 @@
         <source>Tipping</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">157</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -13489,15 +13048,15 @@
           </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">158</context>
+          <context context-type="linenumber">162</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="9b47c6f818e6362f818b305a853b168df69470f7" datatype="html">
+      <trans-unit id="PAY__MARKETING__PAGE__TITLE" datatype="html">
         <source>Minds Pay</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/marketing/marketing.component.html</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -14124,415 +13683,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/feeds/settings.component.html</context>
           <context context-type="linenumber">66</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__INTRODUCTION__LETS_SETUP_TITLE" datatype="html">
-        <source>
-      Let&amp;amp;apos;s setup your wallet
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/introduction/introduction.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__INTRODUCTION__TOKENS_DESC" datatype="html">
-        <source>
-      Tokens are the cryptocurrency used on Minds. Your total balance of tokens
-      will be stored in two different types of addresses:
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/introduction/introduction.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__INTRODUCTION__ONCHAIN_TITLE" datatype="html">
-        <source>
-          OnChain
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/introduction/introduction.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__INTRODUCTION__ONCHAIN_DESC" datatype="html">
-        <source>
-          OnChain payments will be published to the public blockchain and
-          require a small ETH gas fee. You can setup your own private keys or
-          use a client such as MetaMask.
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/introduction/introduction.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__INTRODUCTION__OFFCHAIN_TITLE" datatype="html">
-        <source>
-          OffChain
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/introduction/introduction.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__INTRODUCTION__OFFCHAIN_DESC" datatype="html">
-        <source>
-          OffChain payments will not be published to the blockchain and have
-          spending limits. You will receive rewards into this address.
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/introduction/introduction.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__INTRODUCTION__NEXT_ACTION" datatype="html">
-        <source>
-        Next
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/introduction/introduction.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__SETUP_TITLE" datatype="html">
-        <source>
-      Setup your OnChain address
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__ONCHAIN_DESC" datatype="html">
-        <source>
-      To receive OnChain payments from other channels (eg, from a Wire or a
-      Boost), you will need to let us know which address to direct these tokens
-      to.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__ADDRESS_DESC" datatype="html">
-        <source>
-      This address will be listed in your wallet as your Receiver Address and
-      can be changed at any time.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_TITLE" datatype="html">
-        <source>
-          MetaMask
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">172</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_DESC" datatype="html">
-        <source>
-          Minds recommends using MetaMask for the most seamless user experience.
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__USE_METAMASK_ACTION" datatype="html">
-        <source>
-            Use MetaMask
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__DONT_WANT_METAMASK_TITLE" datatype="html">
-        <source>
-          Don&amp;amp;apos;t want to use MetaMask?
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__NON_METAMASK_DESC" datatype="html">
-        <source>
-          You can either create a new address here or let us know your existing
-          address.
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__CREATE_ADDRESS_ACTION" datatype="html">
-        <source>
-            Create Address
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">64</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">87</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__OR_PARTIAL" datatype="html">
-        <source>or</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">68</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__PROVIDE_ADDRESS_ACTION" datatype="html">
-        <source>
-            Provide Address
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__GENERATING_DESC" datatype="html">
-        <source>
-            We&amp;amp;apos;re generating a new wallet address and its private key. Ensure
-            you download and safely store the private key file. The address will
-            be set as your Receiver Address.
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">94</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__GENERATED_DESC" datatype="html">
-        <source>
-          
-            The address 
-          <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;b&amp;amp;gt;"/>
-          <x id="INTERPOLATION" equiv-text="{{ generatedAccount.address }}"/>
-          <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;/b&amp;amp;gt;"/>
-           was successfully
-            saved as your Receiver Address. Clicking the button below will
-            download its private key. Ensure you safely store the private key
-            file.
-          
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">103</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__DOWNLOAD_ACTION" datatype="html">
-        <source>
-              Download
-            </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">117</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__PROVIDE_ADDRESS_TITLE" datatype="html">
-        <source>
-            Provide Address
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">133</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__PROVIDE_ADDRESS_DESC" datatype="html">
-        <source>
-            Enter your wallet address below to be stored as your Receiver
-            Wallet. Remember that in order to do transactions you will need to
-            have the private key for it.
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">136</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__SAVE_ACTION" datatype="html">
-        <source>
-              Save
-            </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">155</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__ENSURE_RINKEBY" datatype="html">
-        <source>
-          
-              Please ensure you select the 
-          <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;b&amp;amp;gt;"/>
-          Main Ethereum Network
-          <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;/b&amp;amp;gt;"/>
-          .
-            
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">178</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_NOTE_RELOAD" datatype="html">
-        <source>
-                Note: After installing and setting up MetaMask you might need to
-                reload Minds.
-              </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">187</context>
-        </context-group>
-        <note priority="1" from="description"/>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__DOWNLOAD_METAMASK_ACTION" datatype="html">
-        <source>
-              Download MetaMask
-            </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">205</context>
-        </context-group>
-        <note priority="1" from="description"/>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__METAMASK_LOCKED_LEGEND" datatype="html">
-        <source>
-                MetaMask is either locked or connected to another network.
-              </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">227</context>
-        </context-group>
-        <note priority="1" from="description"/>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__SKIP_ACTION" datatype="html">
-        <source>
-        Skip. I&amp;amp;apos;m not interested
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">261</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__ONCHAIN__BACK_ACTION" datatype="html">
-        <source>
-        Back
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/onchain/onchain.component.html</context>
-          <context context-type="linenumber">271</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__COMPLETE__ALL_SETUP_TITLE" datatype="html">
-        <source>
-      You’re all setup and ready to go!
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/completed/completed.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__COMPLETE__DESC_SUCCESS" datatype="html">
-        <source>
-      Great, you have successfully configured your wallet to receive rewards and
-      OnChain &amp;amp;amp; OffChain payments.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/completed/completed.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__COMPLETE__DESC__LEARN_MORE" datatype="html">
-        <source>
-          
-      To learn more about tokens and crypto, visit the 
-          <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;b&amp;amp;gt;"/>
-          Tokens 101
-          <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;/b&amp;amp;gt;"/>
-           section
-      below at any time where you can find tutorials, videos and an FAQ.
-    
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/completed/completed.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__COMPLETE__MORE_ON_REWARDS" datatype="html">
-        <source>More on Rewards</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/completed/completed.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__COMPLETE__LEARN_WIRE" datatype="html">
-        <source>Learn Wire</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/completed/completed.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__COMPLETE__LEARN_BOOST" datatype="html">
-        <source>Learn Boost</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/completed/completed.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ONBOARDING__COMPLETE__COMPLETE_ACTION" datatype="html">
-        <source>
-        Complete
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/onboarding/completed/completed.component.html</context>
-          <context context-type="linenumber">56</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -15419,10 +14569,6 @@
           <context context-type="sourcefile">app/modules/settings/settings.component.html</context>
           <context context-type="linenumber">119</context>
         </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/tokens.component.html</context>
-          <context context-type="linenumber">81</context>
-        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__ACCOUNT_TIMESTAMP" datatype="html">
@@ -16087,7 +15233,7 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="COMMON__VOTES" datatype="html">
+      <trans-unit id="BLOCKCHAIN__MARKETING__VOTES__EQUALS" datatype="html">
         <source>
           
               Votes =
@@ -16116,7 +15262,7 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="COMMON__COMMENTS" datatype="html">
+      <trans-unit id="BLOCKCHAIN__MARKETING__COMMENTS__EQUALS" datatype="html">
         <source>
           
               Comments =
@@ -16145,7 +15291,7 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="COMMON__SUBSCRIBERS__EQUALS" datatype="html">
+      <trans-unit id="BLOCKCHAIN__MARKETING__SUBSCRIBERS__EQUALS" datatype="html">
         <source>
           
               Subscribers =
@@ -16174,7 +15320,7 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="COMMON__REMINDS" datatype="html">
+      <trans-unit id="BLOCKCHAIN__MARKETING__REMINDS__EQUALS" datatype="html">
         <source>
           
               Reminds =
@@ -16682,879 +15828,6 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="MINDS__WALLET__TOGGLE" datatype="html">
-        <source>
-    Wallet
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/toggle.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__FLYOUT__SETUP_WALLET_NOTICE" datatype="html">
-        <source>
-          Hey, do you want to setup your Token wallet using 
-          <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;b&amp;amp;gt;"/>
-          <x id="INTERPOLATION" equiv-text="{{ address }}"/>
-          <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;/b&amp;amp;gt;"/>
-          ?
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/flyout/flyout.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__FLYOUT_COIN__TOKENS_LABEL" datatype="html">
-        <source>Tokens</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/flyout/flyout.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__FLYOUT_COIN__TOKENS_TOOLTIP" datatype="html">
-        <source>
-          Your Tokens balance
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/flyout/flyout.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__FLYOUT__GO_TO_WALLET" datatype="html">
-        <source>
-      Go to Wallet
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/flyout/flyout.component.html</context>
-          <context context-type="linenumber">66</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TRANSACTIONS__REMOTE_LABEL" datatype="html">
-        <source>
-          <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;b&amp;amp;gt;"/>
-          @
-          <x id="INTERPOLATION" equiv-text="{{ remoteUser }}"/>
-          <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;/b&amp;amp;gt;"/>
-          &amp;amp;apos;s transactions
-  
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/transactions/transactions.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TRANSACTIONS__ADDRESSES_DROPDOWN" datatype="html">
-        <source>Addresses</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/transactions/transactions.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TRANSACTIONS__ALL_ADDRESSES_OPTION" datatype="html">
-        <source>All addresses</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/transactions/transactions.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TRANSACTIONS__CONTRACTS_DROPDOWN" datatype="html">
-        <source>Contracts</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/transactions/transactions.component.html</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TRANSACTIONS__ALL_CONTRACTS_OPTIONS" datatype="html">
-        <source>All contracts</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/transactions/transactions.component.html</context>
-          <context context-type="linenumber">90</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TRANSACTIONS__FROM" datatype="html">
-        <source>From:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/transactions/transactions.component.html</context>
-          <context context-type="linenumber">120</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TRANSACTIONS__TO" datatype="html">
-        <source>To:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/transactions/transactions.component.html</context>
-          <context context-type="linenumber">127</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TRANSACTIONS__LAST_MONTH_TITLE" datatype="html">
-        <source>
-      Last month
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/transactions/transactions.component.html</context>
-          <context context-type="linenumber">139</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TRANSACTIONS__FAILED_LABEL" datatype="html">
-        <source>FAILED</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/transactions/transactions.component.html</context>
-          <context context-type="linenumber">177</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS__DATE" datatype="html">
-        <source>
-          Date
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/contributions/contributions.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS__AMOUNT" datatype="html">
-        <source>
-          Amount
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/contributions/contributions.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS__SCORE" datatype="html">
-        <source>
-          Score
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/contributions/contributions.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS__SHARE" datatype="html">
-        <source>
-          Share
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/contributions/contributions.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS__NO_CONTRIB_LEGEND" datatype="html">
-        <source>No contributions to show.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/contributions/contributions.component.html</context>
-          <context context-type="linenumber">127</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__WITHDRAW__LEDGER__FROM" datatype="html">
-        <source>From:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/ledger/ledger.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/ledger/ledger.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__WITHDRAW__LEDGER__TO" datatype="html">
-        <source>To:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/ledger/ledger.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/ledger/ledger.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="LEDGER__TRANSACTION_COMPLETED" datatype="html">
-        <source>COMPLETED</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/ledger/ledger.component.html</context>
-          <context context-type="linenumber">57</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__CAN_REQUEST_TO_WITHDRAW_UP_TO" datatype="html">
-        <source>
-          
-    You can request to withdraw up to 
-          <x id="ICU" equiv-text="{available, plural, =1 {...} other {...}}"/>
-           from
-    your rewards to your 
-          <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;b&amp;amp;gt;"/>
-          OnChain
-          <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;/b&amp;amp;gt;"/>
-           wallet below.
-  
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/withdraw.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="c4d8de53df049f286c032f0bebaacb12d9f973da" datatype="html">
-        <source>
-          {VAR_PLURAL, plural, =1 {
-          <x id="INTERPOLATION" equiv-text="{{available | number}}"/>
-           token} other {
-          <x id="INTERPOLATION" equiv-text="{{available | number}}"/>
-           tokens} }
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/withdraw.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__WITHHOLDING__TEXT" datatype="html">
-        <source>
-          <x id="ICU" equiv-text="{withholding, plural, =1 {...} other {...}}"/>
-          
-    are unavailable due to credit card payment. They will be released 30 days
-    after the payment occurred.
-  
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/withdraw.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="17eee7e339ff093b361c660141589d7a7f5f61c6" datatype="html">
-        <source>
-          {VAR_PLURAL, plural, =1 {
-          <x id="INTERPOLATION" equiv-text="{{withholding | number}}"/>
-           token} other {
-          <x id="INTERPOLATION" equiv-text="{{withholding | number}}"/>
-           tokens} }
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/withdraw.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__SMALL_ETH_CHARGED" datatype="html">
-        <source>
-          
-    Note: a small amount of ETH will be charged to cover the transaction fee.
-    Withdrawals 
-          <x id="START_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;b&amp;amp;gt;"/>
-          go through an approval process
-          <x id="CLOSE_BOLD_TEXT" ctype="x-b" equiv-text="&amp;amp;lt;/b&amp;amp;gt;"/>
-          
-    and may take up to 72 hours to complete.
-  
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/withdraw.component.html</context>
-          <context context-type="linenumber">27</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__WITHDRAW__WITHDRAW_ACTION" datatype="html">
-        <source>
-      Withdraw
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/withdraw/withdraw.component.html</context>
-          <context context-type="linenumber">47</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__JOIN__WELCOME_TO_REWARDS_TITLE" datatype="html">
-        <source>
-    Welcome to Rewards
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/join/join.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__JOIN__DESC" datatype="html">
-        <source>
-    Rewards Tokens enable creators to earn from interactions on their content.
-    You earn tokens based on a daily contributions pool. At the end of each day,
-    your contributions score will be calculated and you will receive a share of
-    the daily reward pool. In order to verify you are a unique users, we require
-    a phone number to be provided. Your phone number will be securely hashed and
-    sent alongside all interactions to protect against fraud and gaming.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/join/join.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__JOIN__ENTER_PHONE_NUMBER_TOOLTIP" datatype="html">
-        <source>Please enter your phone number in order to join the rewards
-        program</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/join/join.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__JOIN__JOIN_ACTION" datatype="html">
-        <source>
-      Join
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/join/join.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__JOIN__ONE_MORE_STEP" datatype="html">
-        <source>
-      One more step! To qualify for our crypto rewards program, you will need to
-      sign up for Minds Plus. This will cost $1 for the first month and $5 for
-      every following month with the option for cancellation. Cancellation will
-      not impact your ability to earn rewards. This is required to help us
-      offset the expensive fees associated with sending SMS text messages
-      internationally!
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/join/join.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__JOIN__CODE_EXAMPLE_PH" datatype="html">
-        <source>eg. 198349</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/join/join.component.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__JOIN__ENTER_CODE_TOOLTIP" datatype="html">
-        <source>Please enter the code we just sent you, to verify that your number is
-        correct</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/join/join.component.html</context>
-          <context context-type="linenumber">63</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__JOIN__GO_BACK_ACTION" datatype="html">
-        <source>
-      Go Back
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/join/join.component.html</context>
-          <context context-type="linenumber">72</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__JOIN__CONFIRM_ACTION" datatype="html">
-        <source>
-      Confirm
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/join/join.component.html</context>
-          <context context-type="linenumber">80</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__PURCHASE" datatype="html">
-        <source>Buy Tokens</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/tokens.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TRANSACTIONS" datatype="html">
-        <source>Transactions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/tokens.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__WITHDRAW" datatype="html">
-        <source>Withdraw</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/tokens.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS" datatype="html">
-        <source>Contributions</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/tokens.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ADDRESSES" datatype="html">
-        <source>Addresses</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/tokens.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TOKEN_101" datatype="html">
-        <source>Token 101</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/tokens.component.html</context>
-          <context context-type="linenumber">56</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__TESTNET_TOKENS" datatype="html">
-        <source>USD Console</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/tokens.component.html</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/tokens.component.html</context>
-          <context context-type="linenumber">73</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__TOKENS_TITLE" datatype="html">
-        <source>Tokens</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">10</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__BREAKDOWN_TITLE" datatype="html">
-        <source>Breakdown</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__ADDRESS_LABEL" datatype="html">
-        <source>
-          <x id="INTERPOLATION" equiv-text="{{ address.label }}"/>
-           Address
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__ADDRESS_LABEL_TOOLTIP_RECEIVER" datatype="html">
-        <source>
-            This is your public address which will receive Boost &amp;amp;amp; Wire
-            transactions via the blockchain. You can change this in Addresses.
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__ADDRESS_LABEL_TOOLTIP_OFFCHAIN" datatype="html">
-        <source>
-            This is your offchain address where your rewards are deposited.
-            These transactions will not appear on the blockchain.
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__ADDRESS_LABEL_TOOLTIP_ONCHAIN" datatype="html">
-        <source>
-            This is your currently active Web3/Metamask wallet. This address
-            differs from what you have configured to receive Boost &amp;amp;amp; Wires via
-            the blockchain.
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__ADDRESS_LABEL_TOOLTIP_ONCHAIN_AND_RECEIVER" datatype="html">
-        <source>
-            This is your currently active Web3/Metamask wallet and is also
-            configured to receive Boost &amp;amp;amp; Wires via the blockchain.
-          </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
-        <note priority="1" from="description"/>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__TESTNET__REWARDS" datatype="html">
-        <source>Testnet Rewards</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">84</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__ETH__BALANCE" datatype="html">
-        <source>ETH Balance</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">108</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__RINKEBY_NOTICE" datatype="html">
-        <source>
-          
-      Minds is currently running on the
-      
-          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
-          Ethereum Mainnet
-          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
-          .
-    
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">149</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__BALANCES__TOKENS__TOKEN_TO_VIEWS_CONV_1_1000" datatype="html">
-        <source>1 Token = 1000 Views</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/balances/tokens/balance.component.html</context>
-          <context context-type="linenumber">159</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ADDRESSES__ADDRESSES_TITLE" datatype="html">
-        <source>Addresses</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/addresses/addresses.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ADDRESSES__ADDRESSES_DESC" datatype="html">
-        <source>
-    To receive OnChain payments from other channels (eg, from a Wire or a
-    Boost), you will need to let us know which address to direct these tokens
-    to.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/addresses/addresses.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ADDRESSES__ADDRESSES_DESC_LISTED" datatype="html">
-        <source>
-    This address will be listed in your wallet as your Receiver Address and can
-    be changed here at any time.
-  </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/addresses/addresses.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ADDRESSES__RECEIVER_ADDRESS_LABEL" datatype="html">
-        <source>
-      Your receiver address
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/addresses/addresses.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__ADDRESSES__CHANGE_ACTION" datatype="html">
-        <source>Change</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/addresses/addresses.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS__OVERVIEW__NEXT_PAYOUT" datatype="html">
-        <source>Next Payout:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/contributions/overview.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS__OVERVIEW__ESTIMATED_REWARD" datatype="html">
-        <source>Estimated Reward:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/contributions/overview.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS__OVERVIEW__YOUR_SHARE" datatype="html">
-        <source>Your Share:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/contributions/overview.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS__OVERVIEW__YOUR_SCORE" datatype="html">
-        <source>Your Score:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/contributions/overview.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__CONTRIBUTIONS__OVERVIEW__NETWORK_SCORE" datatype="html">
-        <source>Network Score:</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/contributions/overview.component.html</context>
-          <context context-type="linenumber">44</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__TOKEN_101_TITLE" datatype="html">
-        <source>Token 101</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__DOWNLOAD_WHITEPAPER_ACTION" datatype="html">
-        <source>
-        Download Whitepaper
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__HOW_REWARD_SYSTEM_WORKS_TITLE" datatype="html">
-        <source>
-      How the new rewards system works
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__MINDS_REWARDS_YOU_SECTION" datatype="html">
-        <source>
-      Minds rewards you with crypto for contributing to the network. The first
-      step in joining our rewards program is to provide your mobile number. We
-      convert your number into a hash ID using SHA-256 encryption and a salt key
-      to create a unique identifier for your account. We do not store your
-      number on our servers.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__RATHER_THAN_REWARDING_SECTION" datatype="html">
-        <source>
-      Rather than rewarding you with Points in real-time, we are now
-      distributing our crypto rewards as a “Daily Reward Pool”. During the test
-      network, we will be experimenting with how the Daily Reward Pool is
-      calculated, but it will ideally be automated based on user participation
-      once we move into the Main Ethereum network.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__EVERY_DAY_MEASURE_CONTRIBUTIONS_SECTION" datatype="html">
-        <source>
-      Every day, we measure your contributions to the network and you receive a
-      “Contribution Score” which can be found in the Contributions section of
-      your wallet. We then calculate how much you contributed to the network
-      relative to the entire community, which determines the percentage of the
-      Daily Reward Pool that you earn.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__ONLY_RECEIVE_CREDIT_UNIQUE_INTERACTION" datatype="html">
-        <source>
-      It is important to note that with the new system, you will only receive
-      credit for unique interaction, and you can only earn credit from another
-      unique user once per metric per day. (If a friend votes on my content 100
-      times in a day, I will only get credit for 1 vote). This is critical in
-      preventing gaming and abuse of the system as we move into more valuable
-      token rewards. We are essentially measuring how many unique users you
-      reached in a given day.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">43</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__DAILY_REWARDS_DISTRIBUTED_SECTION" datatype="html">
-        <source>
-      Daily rewards will be distributed at 02:00 am GMT everyday into your
-      OffChain address.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__HOW_WE_MEASURE_CONTRIB_TITLE" datatype="html">
-        <source>
-      How we measure your contributions
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">59</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__CALCULATED_YOUR_CONTRIBUTION_SCORE" datatype="html">
-        <source>
-          
-      We calculate your
-      
-          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
-          contribution score
-          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
-           each
-      day using the following weighted scoring system. Please note that the new
-      system only gives credit for unique engagement (users who have provided a
-      mobile number), so not all engagement you receive will be factored into
-      your score.
-    
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__ONCHAIN_VS_OFFCHAIN_TITLE" datatype="html">
-        <source>
-      OnChain vs. Offchain
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">75</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__OFFCHAIN_TOKENS_STORED_SECTION" datatype="html">
-        <source>
-      OffChain tokens are stored on Minds servers, and they can be used the same
-      way that you used your Points. There are no fees, and they can be used to
-      Boost content for more views from the network or to Wire other creators
-      who you support.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">78</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__WITHDRAW_TOKENS_ONCHAIN_SECTION" datatype="html">
-        <source>
-      You now have the ability to withdraw these tokens into your OnChain
-      address.
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">84</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__ONCHAIN_TOKENS_STORED_SECTION" datatype="html">
-        <source>
-          
-      OnChain tokens are stored on the
-      
-          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
-          Ethereum
-          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
-           public
-      blockchain and are accessible from outside of the Minds platform, which is
-      key for further decentralization. OnChain transactions, however, require a
-      small Ethereum “gas” fee, which is the incentive for the Ethereum miners
-      to process the transaction.
-    
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">88</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__FOR_ONCHAIN_CONFIG_SECTION" datatype="html">
-        <source>
-          
-      For OnChain configuration, you have the ability to use MetaMask (a browser
-      plugin), your mobile device, an existing Ethereum address or you can
-      create your own with Minds. We recommend using MetaMask for the most
-      seamless user experience. You can change this address by clicking on the
-      
-          <x id="START_LINK" ctype="x-a" equiv-text="&amp;amp;lt;a&amp;amp;gt;"/>
-          &amp;amp;quot;Addresses&amp;amp;quot;
-          <x id="CLOSE_LINK" ctype="x-a" equiv-text="&amp;amp;lt;/a&amp;amp;gt;"/>
-           tab on the wallet
-      menu
-    
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">96</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="WALLET__TOKENS__101__VIEW_ON_FAQ_ACTION" datatype="html">
-        <source>View our full FAQ</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wallet/tokens/101/101.component.html</context>
-          <context context-type="linenumber">111</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="SETTINGS_TOKENS__ONCHAIN_ADDRESS" datatype="html">
         <source>On-chain Address</source>
         <context-group purpose="location">
@@ -17721,6 +15994,18 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wallet/v2/components/onchain-transfer/onchain-transfer.component.html</context>
           <context context-type="linenumber">31</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET__V2__CASH__NO__TRANSACTIONS__YET" datatype="html">
+        <source>
+          <x id="START_PARAGRAPH" ctype="x-p" equiv-text="&amp;amp;lt;p&amp;amp;gt;"/>
+          You don&amp;amp;apos;t have any cash transactions yet.
+          <x id="CLOSE_PARAGRAPH" ctype="x-p" equiv-text="&amp;amp;lt;/p&amp;amp;gt;"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/transactions/transactions-cash.component.html</context>
+          <context context-type="linenumber">26</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -17965,6 +16250,26 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="WALLET__V2__TABS__TRANSACTIONS" datatype="html">
+        <source>
+      Transactions
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/cash.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="WALLET__V2__TABS__SETTINGS" datatype="html">
+        <source>
+      Settings
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wallet/v2/cash/cash.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="REFERRALS__MY_REFERRALS" datatype="html">
         <source>
     My Referrals
@@ -17972,6 +16277,198 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
           <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__HEADER_USER" datatype="html">
+        <source>User</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__HEADER_STATUS" datatype="html">
+        <source>Status</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__STATUS_TOOLTIP" datatype="html">
+        <source>
+          Referrals are pending until they&amp;amp;apos;ve set up their wallet
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__HEADER_MINDS_SIGNUP" datatype="html">
+        <source>Minds Signup</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__MINDS_SIGNUP_TOOLTIP" datatype="html">
+        <source>
+          The day the referral created an account with Minds
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__HEADER_REWARDS_SIGNUP" datatype="html">
+        <source>Rewards Signup</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__REWARDS_SIGNUP_TOOLTIP" datatype="html">
+        <source>
+          The day the referral sets up their wallet (and you are rewarded with
+          tokens). Click PING to send a pending referral a notification to let
+          them know they ought to join the rewards program.
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON" datatype="html">
+        <source>ping</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">137</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__PING_STATE" datatype="html">
+        <source>pinged</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__ENABLED" datatype="html">
+        <source>
+          
+                Send 
+          <x id="INTERPOLATION" equiv-text="{{ referral.prospect.username }}"/>
+           a notification to let them
+                know they ought to join the rewards program
+              
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">150</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__SENT" datatype="html">
+        <source>
+                Ping sent!
+              </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">161</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__PING_BUTTON_NOTICE__DISABLED" datatype="html">
+        <source>
+                You can only ping once every 7 days
+              </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS_DASHBOARD__NOTICE__NO_REFERRALS" datatype="html">
+        <source>
+        You don&amp;amp;apos;t have any referrals yet.
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/dashboard/dashboard.component.html</context>
+          <context context-type="linenumber">183</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS__LINKS_MODAL_HEADER" datatype="html">
+        <source>
+      Earn tokens for referring your friends
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS__LINKS_REGISTER_URL_DESC" datatype="html">
+        <source>
+      Send this link to your friends to earn tokens for referrals
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS__LINKS_COPY_ACTION" datatype="html">
+        <source>
+          Copy
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
+          <context context-type="linenumber">76</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS__LINKS_COPY_STATE" datatype="html">
+        <source>
+          Copied
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
+          <context context-type="linenumber">82</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS__LINKS_REFERRER_PARAM_DESC" datatype="html">
+        <source>
+      You can also get referrals by adding this code to the end of any Minds
+      link you share
+    </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
+          <context context-type="linenumber">50</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="M_REFERRALS__SHARE_HEADER" datatype="html">
+        <source>More ways to share</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/links/links.component.html</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>

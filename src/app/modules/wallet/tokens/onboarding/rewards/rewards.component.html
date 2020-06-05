@@ -1,27 +1,19 @@
 <div class="m-token--onboarding--slide m-border">
   <div class="m-token--onboarding--column">
-    <h2 i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_TITLE">Rewards</h2>
+    <h2>Rewards</h2>
 
-    <p
-      class="m-token--onboarding--subtext"
-      i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_DESC"
-    >
+    <p class="m-token--onboarding--subtext">
       You can earn tokens for your contributions to the Minds network. The more
       interactions on your content, the greater your share of the daily token
       reward pool to your OffChain address.
     </p>
-    <p
-      class="m-token--onboarding--subtext"
-      i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__REWARDS_PHONE_DESC"
-    >
+    <p class="m-token--onboarding--subtext">
       To start earning rewards, you will need to enter a unique phone number.
     </p>
 
     <div class="m-token--onboarding--rewards-input" *ngIf="!confirming">
       <m-phone-input [(ngModel)]="number" ngDefaultControl></m-phone-input>
-      <m-tooltip
-        icon="help"
-        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_PHONE_TOLTIP"
+      <m-tooltip icon="help"
         >Please enter your phone number in order to join the rewards
         program</m-tooltip
       >
@@ -29,7 +21,6 @@
         class="m-btn m-btn--slim m-btn--action"
         (click)="verify()"
         [disabled]="inProgress"
-        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__JOIN_ACTION"
       >
         Join
       </button>
@@ -41,10 +32,7 @@
     </div>
 
     <div class="m-token--onboarding--rewards-input" *ngIf="confirming">
-      <p
-        class="m-token--onboarding--subtext m-token--onboarding--prompt"
-        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_DESC"
-      >
+      <p class="m-token--onboarding--subtext m-token--onboarding--prompt">
         Please enter the code we just sent to <b>+{{ number }}</b
         >, to verify your number.
       </p>
@@ -52,12 +40,9 @@
         type="number"
         [(ngModel)]="code"
         placeholder="eg. 198349"
-        i18n-placeholder="@@WALLET__TOKENS__REWARDS__CODE_EXAMPLE_PH"
         class="m-token-join--form--input-input m-border"
       />
-      <m-tooltip
-        icon="help"
-        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__ENTER_CODE_TOOLTIP"
+      <m-tooltip icon="help"
         >Please enter the code we just sent you, to verify that your number is
         correct</m-tooltip
       >
@@ -66,15 +51,10 @@
         class="m-btn m-btn--slim m-btn--action"
         (click)="confirm()"
         [disabled]="inProgress"
-        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__CONFIRM_ACTION"
       >
         Confirm
       </button>
-      <button
-        class="m-btn m-btn--slim"
-        (click)="cancel()"
-        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__GO_BACK_ACTION"
-      >
+      <button class="m-btn m-btn--slim" (click)="cancel()">
         Go Back
       </button>
 
@@ -84,10 +64,7 @@
         [mdl]
       ></div>
     </div>
-    <p
-      class="m-token--onboarding--subtext m-token--onboarding--subtext-note"
-      i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__PHONE_HASH_DESC"
-    >
+    <p class="m-token--onboarding--subtext m-token--onboarding--subtext-note">
       Note: Minds does not store the phone numbers you provide. The numbers are
       hashed using SHA-256 and combined with a salt key for privacy and security
       purposes.
@@ -108,7 +85,6 @@
         *ngIf="skippable === true"
         class="m-btn m-btn--slim"
         (click)="next.next()"
-        i18n="@@WALLET__TOKENS__ONBOARDING__REWARDS__SKIP_ACTION"
       >
         Skip. I don't want to earn tokens
       </button>

@@ -1,13 +1,10 @@
 <div class="m-token--onboarding--slide m-border">
   <div class="m-token--onboarding--column">
-    <h2 i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__LETS_SETUP_TITLE">
+    <h2>
       Let's setup your wallet
     </h2>
 
-    <p
-      class="m-token--onboarding--subtext"
-      i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__TOKENS_DESC"
-    >
+    <p class="m-token--onboarding--subtext">
       Tokens are the cryptocurrency used on Minds. Your total balance of tokens
       will be stored in two different types of addresses:
     </p>
@@ -15,10 +12,10 @@
     <ul>
       <li>
         <i class="material-icons">check_circle</i>
-        <h4 i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__ONCHAIN_TITLE">
+        <h4>
           OnChain
         </h4>
-        <p i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__ONCHAIN_DESC">
+        <p>
           OnChain payments will be published to the public blockchain and
           require a small ETH gas fee. You can setup your own private keys or
           use a client such as MetaMask.
@@ -26,10 +23,10 @@
       </li>
       <li>
         <i class="material-icons">donut_large</i>
-        <h4 i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__OFFCHAIN_TITLE">
+        <h4>
           OffChain
         </h4>
-        <p i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__OFFCHAIN_DESC">
+        <p>
           OffChain payments will not be published to the blockchain and have
           spending limits. You will receive rewards into this address.
         </p>
@@ -47,11 +44,7 @@
 
     <div class="m-layout--row">
       <div class="m-layout--spacer"></div>
-      <button
-        class="m-btn m-btn--slim m-btn--action"
-        (click)="next.next()"
-        i18n="@@WALLET__TOKENS__ONBOARDING__INTRODUCTION__NEXT_ACTION"
-      >
+      <button class="m-btn m-btn--slim m-btn--action" (click)="next.next()">
         Next
       </button>
     </div>
