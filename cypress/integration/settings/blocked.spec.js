@@ -4,7 +4,7 @@
  */
 import generateRandomId from '../../support/utilities';
 
-context('Blocked', () => {
+context.skip('Blocked', () => {
 
   const testUsername = generateRandomId(); 
   const testPassword = generateRandomId()+'X#';

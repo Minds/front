@@ -135,7 +135,7 @@ context('Discovery', () => {
     ).click();
   });
 
-  it('should allow the user to turn off single hashtag filter and view all posts', () => {
+  it.skip('should allow the user to turn off single hashtag filter and view all posts', () => {
     cy.visit('/newsfeed/global/top');
     cy.get('m-hashtagssidebarselector__item')
       .first()

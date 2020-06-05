@@ -1,6 +1,9 @@
 import generateRandomId from '../support/utilities';
 
 context('Newsfeed', () => {
+
+  const postText = generateRandomId();
+
   before(() => {
     cy.getCookie('minds_sess').then(sessionCookie => {
       if (!sessionCookie) {
@@ -22,15 +25,18 @@ context('Newsfeed', () => {
   });
 
   const deleteActivityFromNewsfeed = () => {
-    cy.get(
-      '.minds-list > minds-activity:first m-post-menu .minds-more'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first m-post-menu .minds-dropdown-menu .mdl-menu__item:nth-child(4)'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first m-post-menu m-modal-confirm .mdl-button--colored'
-    ).click();
+    cy.contains(postText)
+      .parentsUntil('m-activity')
+      .parent()
+      .within($list => {
+        // get share link
+        cy.get('.m-postMenu__button')
+          .click();
+      });
+      cy.contains('Delete Post')
+        .click();
+      
+      cy.on('window:confirm', () => true);
   };
 
   const newActivityContent = content => {
@@ -113,7 +119,7 @@ context('Newsfeed', () => {
   };
 
   it('should post an activity', () => {
-    cy.post('this is a post');
+    cy.post(postText);
     deleteActivityFromNewsfeed();
   });
 
@@ -352,80 +358,54 @@ context('Newsfeed', () => {
   });
 
   it('should vote an activity', () => {
-    cy.post('This is an upvoted post');
+    cy.post(postText);
+    cy.contains(postText)
+      .parentsUntil('m-activity')
+      .parent()
+      .within($list => {
+      // upvote
+        cy.get(
+          'minds-button-thumbs-up a'
+        ).should('not.have.class', 'selected');
+        cy.get(
+          'minds-button-thumbs-up a'
+        ).click();
+        cy.get(
+          'minds-button-thumbs-up a'
+        ).should('have.class', 'selected');
+        cy.get(
+          'minds-button-thumbs-up span'
+        ).contains('1');
 
-    // upvote
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up a'
-    ).should('not.have.class', 'selected');
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up a'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up a'
-    ).should('have.class', 'selected');
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up span'
-    ).contains('1');
+        cy.get(
+          'minds-button-thumbs-up a'
+        ).click();
+        cy.get(
+          'minds-button-thumbs-up a'
+        ).should('not.have.class', 'selected');
 
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up a'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-up a'
-    ).should('not.have.class', 'selected');
+        // downvote
+        cy.get(
+          'minds-button-thumbs-down a'
+        ).should('not.have.class', 'selected');
+        cy.get(
+          'minds-button-thumbs-down a'
+        ).click();
+        cy.get(
+          'minds-button-thumbs-down a'
+        ).should('have.class', 'selected');
+        cy.get(
+          'minds-button-thumbs-down span'
+        ).contains('1');
 
-    // downvote
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down a'
-    ).should('not.have.class', 'selected');
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down a'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down a'
-    ).should('have.class', 'selected');
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down span'
-    ).contains('1');
-
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down a'
-    ).click();
-    cy.get(
-      '.minds-list > minds-activity:first-child minds-button-thumbs-down a'
-    ).should('not.have.class', 'selected');
-
+        cy.get(
+          'minds-button-thumbs-down a'
+        ).click();
+        cy.get(
+          'minds-button-thumbs-down a'
+        ).should('not.have.class', 'selected');
+      });
     deleteActivityFromNewsfeed();
-  });
-
-  it('should have an "Upgrade to Plus" button and it should redirect to /plus', () => {
-    cy.get(
-      '.m-page--sidebar--navigation a.m-page--sidebar--navigation--item:nth-child(2) span'
-    ).contains('Upgrade to Plus');
-
-    cy.get(
-      '.m-page--sidebar--navigation a.m-page--sidebar--navigation--item:nth-child(2)'
-    )
-      .should('have.attr', 'href', '/plus')
-      .click();
-
-    cy.location('pathname').should('eq', '/plus');
-  });
-
-  it('should have a "Buy Tokens" button and it should redirect to /token', () => {
-    // cy.visit('/');
-    cy.get(
-      '.m-page--sidebar--navigation a.m-page--sidebar--navigation--item:last-child span'
-    ).contains('Buy Tokens');
-
-    cy.get(
-      '.m-page--sidebar--navigation a.m-page--sidebar--navigation--item:last-child'
-    )
-      .should('have.attr', 'href', '/tokens')
-      .click();
-
-    cy.location('pathname').should('eq', '/token');
   });
 
   it.skip('"create blog" button in poster should redirect to /blog/edit/new', () => {
@@ -467,14 +447,12 @@ context('Newsfeed', () => {
     cy.server();
     cy.route('POST', '**/api/v2/analytics/views/activity/*').as('view');
 
-    cy.scrollTo(0, '20px');
+    cy.scrollTo('0', '100%', { duration: 100 });
 
     cy.wait('@view', { timeout: 10000 }).then(xhr => {
       expect(xhr.status).to.equal(200);
       expect(xhr.response.body).to.deep.equal({ status: 'success' });
     });
-
-    deleteActivityFromNewsfeed();
   });
 
   it('clicking on the plus button on the sidebar should redirect the user to  /groups/create', () => {

@@ -1,4 +1,4 @@
-context('Topbar', () => {
+context.skip('Topbar', () => {
   before(() => {
     cy.getCookie('minds_sess')
     .then((sessionCookie) => {

@@ -7,7 +7,7 @@ context('Login', () => {
   })
 
   it('should login', () => {
-    cy.get('.m-v2-topbar__Container__LoginWrapper > a').contains('Login').click();
+    cy.get('.m-v3TopbarLoginWrapper__login').contains('Login').click();
 
     cy.location('pathname').should('eq', '/login');
 
@@ -30,7 +30,7 @@ context('Login', () => {
   })
 
   it('should fail to login because of incorrect password', () => {
-    cy.get('.m-v2-topbar__Container__LoginWrapper > a').contains('Login').click();
+    cy.get('.m-v3TopbarLoginWrapper__login').contains('Login').click();
 
     cy.location('pathname').should('eq', '/login');
 
