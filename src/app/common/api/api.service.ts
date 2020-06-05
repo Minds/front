@@ -56,7 +56,7 @@ export type ApiRequestOptions = {
  */
 @Injectable()
 export class ApiService {
-  protected baseUrl: string = '';
+  protected baseUrl: string = '/';
 
   constructor(
     @Inject('ORIGIN_URL') baseUrl: string,
