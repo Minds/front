@@ -34,7 +34,6 @@ import { debounceTime } from 'rxjs/operators';
           id="display-name"
           #displayNameInput
           placeholder="eg. John Smith"
-          i18n-placeholder="@@CHANNEL__ONBOARDING__USERNAME_PLACEHOLDER"
           [ngModel]="user.username"
         />
       </div>
@@ -50,7 +49,6 @@ import { debounceTime } from 'rxjs/operators';
           id="description"
           #descriptionInput
           placeholder="eg. Independent Journalist"
-          i18n-placeholder="@@CHANNEL__ONBOARDING__BRIEFDESCRIPTION_PLACEHOLDER"
           [ngModel]="user.briefdescription"
         />
       </div>
