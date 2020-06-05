@@ -14,6 +14,7 @@ import {
 } from './common/services/redirect.service';
 
 PlotlyModule.plotlyjs = {
+  react: () => {},
   plot: () => {
     // This simply satisfies the isValid() error
   },
