@@ -136,7 +136,7 @@ export class ApiService {
     return this.httpClient
       .request<ApiResponse>(
         ApiRequestMethod.POST,
-        endpoint,
+        this.baseUrl + endpoint,
         this._buildOptions(
           {
             ...options,
