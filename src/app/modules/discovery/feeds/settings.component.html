@@ -1,6 +1,8 @@
 <div class="m-modalV2__inner">
   <div class="m-modalV2__header">
-    <h2 class="m-modalV2Header__title">Feed Settings</h2>
+    <h2 class="m-modalV2Header__title" i18n="@@DISCOVERY_FEEDS__FEED_SETTINGS">
+      Feed Settings
+    </h2>
   </div>
 
   <div class="m-modalV2__body">
@@ -33,7 +35,7 @@
         class="m-discoveryTagSettings__section"
         data-cy="discovery-settings-section--selected"
       >
-        <h3>Content Types</h3>
+        <h3 i18n="@@DISCOVERY_FEEDS__CONTENT_TYPES">Content Types</h3>
         <div class="m-form__fieldsContainer">
           <ng-container *ngFor="let contentType of contentTypes">
             <label
@@ -56,7 +58,7 @@
         class="m-discoveryTagSettings__section"
         data-cy="discovery-settings-section--selected"
       >
-        <h3>NSFW</h3>
+        <h3 i18n="@@COMMON__NSFW">NSFW</h3>
         <div class="m-form__fieldsContainer">
           <label
             for="showNsfwOptions"

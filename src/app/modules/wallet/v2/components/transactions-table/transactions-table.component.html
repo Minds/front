@@ -21,7 +21,9 @@
                 (mouseleave)="tx.showRewardsPopup = false"
               >
                 <i class="material-icons">star_border</i
-                ><span>Minds Reward</span>
+                ><span i18n="@@WALLETV2_TX_TABLE__MINDS_REWARD"
+                  >Minds Reward</span
+                >
                 <m-walletRewardsPopup
                   *ngIf="tx.showRewardsPopup"
                   [timestamp]="tx.timestamp"
@@ -40,7 +42,8 @@
             <!-- PURCHASES -->
             <ng-template ngSwitchCase="purchase">
               <div class="m-walletTransactionsTable__typeWrapper--purchase">
-                <i class="material-icons">shopping_cart</i><span>Purchase</span>
+                <i class="material-icons">shopping_cart</i
+                ><span i18n="@@WALLETV2_TX_TABLE__PURCHASE">Purchase</span>
               </div></ng-template
             >
 
@@ -58,7 +61,7 @@
               ><div class="m-walletTransactionsTable__typeWrapper--payout">
                 <i class="material-icons m-walletTransactionsTable__icon--arrow"
                   >arrow_forward</i
-                ><span>Payout</span>
+                ><span i18n="@@WALLETV2_TX_TABLE__PAYOUT">Payout</span>
               </div></ng-template
             >
 
@@ -67,7 +70,9 @@
               ><div class="m-walletTransactionsTable__typeWrapper--pro_earning">
                 <i class="material-icons m-walletTransactionsTable__icon--arrow"
                   >arrow_forward</i
-                ><span>Pro Earnings</span>
+                ><span i18n="@@WALLETV2_TX_TABLE__PRO_EARNINGS"
+                  >Pro Earnings</span
+                >
               </div></ng-template
             >
 
@@ -94,7 +99,7 @@
 
             <ng-template ngSwitchDefault
               ><div class="m-walletTransactionsTable__typeWrapper--default">
-                <span>Transaction</span>
+                <span i18n="@@WALLETV2_TX_TABLE__TRANSACTION">Transaction</span>
               </div></ng-template
             >
           </ng-container>

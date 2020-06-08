@@ -15,7 +15,10 @@
       <tr
         class="m-walletTransactionsTable__row--top m-walletTransactionsTable__row--hasIcon"
       >
-        <td class="m-walletTransactionsTable__row--date">
+        <td
+          class="m-walletTransactionsTable__row--date"
+          i18n="@@WALLET_V2_TXS_TOKENS__UPCOMING"
+        >
           Upcoming
         </td>
         <td
@@ -25,7 +28,9 @@
           (mouseleave)="showRewardsPopup = false"
         >
           <i class="material-icons">star_border</i
-          ><span>Today's Daily Rewards</span>
+          ><span i18n="@@WALLET_V2_TXS_TOKENS__TODAYS_DAILY_REWARDS"
+            >Today's Daily Rewards</span
+          >
           <m-walletRewardsPopup
             [timestamp]="startOfToday"
             *ngIf="showRewardsPopup"
@@ -52,8 +57,10 @@
       class="m-walletTransactions__noTxNotice"
       *ngIf="transactions.length === 0"
     >
-      <p *ngIf="!filterApplied">You don't have any token transactions yet.</p>
-      <p *ngIf="filterApplied">
+      <p *ngIf="!filterApplied" i18n="@@WALLET_V2_TXS_TOKENS__NO_TOKEN_TX_YET">
+        You don't have any token transactions yet.
+      </p>
+      <p *ngIf="filterApplied" i18n="@@WALLET_V2_TXS_TOKENS__NO_X_TX_YET">
         You don't have any {{ typeLabel | lowercase }} transactions yet.
       </p>
     </div>

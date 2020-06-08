@@ -12,7 +12,10 @@
     class="m-walletButtonLayout--buttonOffsetRight"
     *ngIf="!hasBank || editing"
   >
-    <p class="m-walletSecondaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@WALLET_V2__CASH_BANK_FORM__FINISH_ADDING_RECEIVE_CASH"
+    >
       Finish adding your bank details to start receiving cash payouts.
     </p>
     <div class="m-walletForm__fieldsContainer">
@@ -21,7 +24,12 @@
       <!-- -------------------------------------------- -->
       <div class="m-walletForm__field--text stretchedField">
         <div class="m-walletForm__row--label">
-          <label for="country" i18n="@@CASH_BANK_FORM__COUNTRY">Country</label>
+          <label
+            for="country"
+            i18n="@@CASH_BANK_FORM__COUNTRY"
+            i18n="@@COMMON__COUNTRY"
+            >Country</label
+          >
         </div>
         <div class="m-walletForm__row--input">
           <minds-country-input

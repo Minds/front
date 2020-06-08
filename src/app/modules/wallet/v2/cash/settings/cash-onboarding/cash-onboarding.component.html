@@ -1,9 +1,14 @@
 <div class="m-walletCashOnboarding">
   <div class="m-walletCashOnboardingView--addDetails" *ngIf="!editing">
-    <p class="m-walletSecondaryText--desc">
+    <p
+      class="m-walletSecondaryText--desc"
+      i18n="@@WALLET_V2__CASH_ONBOARD__ADD_BANK_ACCOUNT_INFO"
+    >
       Add your bank account details where cash rewards will be deposited.
     </p>
-    <m-shadowboxSubmitButton (click)="enterEditMode()"
+    <m-shadowboxSubmitButton
+      (click)="enterEditMode()"
+      i18n="@@WALLET_V2__CASH_ONBOARD__ADD_BANK_DETAILS"
       >Add your bank details</m-shadowboxSubmitButton
     >
   </div>
@@ -12,7 +17,10 @@
   <!-- -------------------------------------------- -->
   <div class="m-walletCashOnboardingView--form" *ngIf="editing">
     <form [formGroup]="form" class="m-walletButtonLayout--buttonOffsetRight">
-      <p class="m-walletSecondaryText--desc">
+      <p
+        class="m-walletSecondaryText--desc"
+        i18n="@@WALLET_V2__CASH_ONBOARD__START_RECEIVING_CASH_PAYOUTS"
+      >
         Start receiving cash payouts by adding your bank details.
       </p>
 

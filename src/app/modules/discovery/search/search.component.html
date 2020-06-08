@@ -7,6 +7,7 @@
         routerLink="./"
         routerLinkActive="m-tabs__tab--selected"
         [queryParams]="{ q: q, f: 'top', t: type$.value }"
+        i18n="@@DISCOVERY_SEARCH__TOP"
         >Top</a
       >
     </div>
@@ -15,6 +16,7 @@
         routerLink="./"
         routerLinkActive="m-tabs__tab--selected"
         [queryParams]="{ q: q, f: 'latest', t: type$.value }"
+        i18n="@@DISCOVERY_SEARCH__LATEST"
         >Latest</a
       >
     </div>
@@ -23,6 +25,7 @@
         routerLink="./"
         routerLinkActive="m-tabs__tab--selected"
         [queryParams]="{ q: q, f: 'channels', t: type$.value }"
+        i18n="@@DISCOVERY__SEARCH__CHANNELS"
         >Channels</a
       >
     </div>
@@ -31,6 +34,7 @@
         routerLink="./"
         routerLinkActive="m-tabs__tab--selected"
         [queryParams]="{ q: q, f: 'groups', t: type$.value }"
+        i18n="@@DISCOVERY_SEARCH__GROUPS"
         >Groups</a
       >
     </div>
@@ -40,7 +44,8 @@
 
   <div class="m-goBack">
     <a routerLink="../" [queryParams]="{ reload: false }">
-      <i class="material-icons">arrow_back</i><span>Back</span>
+      <i class="material-icons">arrow_back</i
+      ><span i18n="@@DISCOVERY_SEARCH__BACK">Back</span>
     </a>
   </div>
 

@@ -7,13 +7,19 @@
     *ngIf="childRoutePath !== 'settings' && (!hasAccount || !hasBank)"
   >
     <p>
-      <a routerLink="settings">Add your bank information</a>
+      <a routerLink="settings" i18n="@@WALLET_V2__BALANCE_CASH__ADD_BANK_INFO"
+        >Add your bank information</a
+      >
     </p>
     <p>
-      <ng-container *ngIf="!hasAccount"
+      <ng-container
+        *ngIf="!hasAccount"
+        i18n="@@WALLET_V2__BALANCE_CASH__START_RECEIVING_CASH_INFO"
         >Start receiving cash payouts by adding your bank details.
       </ng-container>
-      <ng-container *ngIf="hasAccount"
+      <ng-container
+        *ngIf="hasAccount"
+        i18n="@@WALLET_V2__BALANCE_CASH__FINISH_ADDING_DETAILS_INFO"
         >Finish adding your bank details to start receiving cash payouts.
       </ng-container>
     </p>
@@ -23,7 +29,10 @@
     <!--- PENDING BALANCE ------------------------------>
     <!-- -------------------------------------------- -->
     <div class="m-walletBalance--cash__col">
-      <div class="m-walletBalance--cash__colTitle">
+      <div
+        class="m-walletBalance--cash__colTitle"
+        i18n="@@WALLET_V2__BALANCE_CASH__PENDING_BALANCE_INFO"
+      >
         Pending Balance<m-tooltip icon="help"
           >The total amount of cash you are scheduled to receive from
           wires<ng-container *ngIf="isPro"> and/or Pro earnings</ng-container>.
@@ -52,7 +61,9 @@
         <!--- PAYOUT DATE----------------------------------->
         <!-- -------------------------------------------- -->
         <div *ngIf="hasBank" class="m-walletBalance--cash__colSubtitle">
-          <p>Estimated Payout</p>
+          <p i18n="@@WALLET_V2__BALANCE_CASH__ESTIMATED_PAYOUT">
+            Estimated Payout
+          </p>
           <p>{{ nextPayoutDate }}</p>
         </div>
       </ng-container>
@@ -63,7 +74,10 @@
     <!-- -------------------------------------------- -->
 
     <div class="m-walletBalance--cash__col" *ngIf="proEarnings">
-      <div class="m-walletBalance--cash__colTitle">
+      <div
+        class="m-walletBalance--cash__colTitle"
+        i18n="@@WALLET_V2__BALANCE_CASH__PRO_EARNINGS_INFO"
+      >
         Pro Earnings<m-tooltip icon="help"
           >At the end of each month, your Pro earnings will move into your
           pending balance if you've reached the $100 threshold. When this
@@ -84,7 +98,7 @@
       </div>
 
       <div class="m-walletBalance--cash__colSubtitle">
-        <p>
+        <p i18n="@@WALLET_V2__BALANCE_CASH__GO_TO_PRO_ANALYTICS">
           Go to
           <a routerLink="/analytics/dashboard/earnings">Pro Analytics</a>
         </p>
