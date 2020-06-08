@@ -47,7 +47,7 @@ function transform(source, output) {
       encoding: 'UTF-8',
     },
     fileContent.trim(),
-    { format: 'object' }
+    { format: 'object', wellFormed: true, noDoubleEncoding: true }
   );
 
   doc.xliff.file.body['trans-unit'] = doc.xliff.file.body['trans-unit'].map(
@@ -68,11 +68,31 @@ function transform(source, output) {
         output['note'].push(note);
       }
 
+      if (typeof output.source === 'object') {
+        const nodeStr = convert(
+          { root: output.source },
+          { noDoubleEncoding: true }
+        ).replace(/<x id="([^"]+)" [^>]+\/>/g, '{$$$1}');
+        const node = convert(nodeStr, {
+          format: 'object',
+          noDoubleEncoding: true,
+        });
+        output.source = node['root'];
+      }
+
+      output.source = `${output.source}`
+        .replace(/[\r\n]+/g, ' ')
+        .replace(/[ ]{2,}/g, ' ')
+        .trim();
+
       return output;
     }
   );
 
-  writeFileSync(output, create(doc).end({ prettyPrint: true }));
+  writeFileSync(
+    output,
+    create(doc).end({ noDoubleEncoding: true, prettyPrint: true })
+  );
 }
 
 // MAIN
