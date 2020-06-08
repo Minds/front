@@ -221,7 +221,7 @@
             *ngIf="boost.currency == 'usd'"
           >
             +
-            <b i18n="currency|@@COMMON__USD"
+            <b i18n="currency|@@COMMON__USD__BOOST_CREATOR_WITH_AMOUNT"
               >{{
                 calcPriorityChargesPreview('usd') | currency: 'USD':true
               }}
@@ -233,7 +233,7 @@
             *ngIf="boost.currency !== 'usd'"
           >
             +
-            <b i18n="currency|@@COMMON__TOKENS"
+            <b i18n="currency|@@COMMON__TOKENS__BOOST_CREATOR_AMOUNT"
               >{{
                 calcPriorityChargesPreview(boost.currency) | number
               }}
