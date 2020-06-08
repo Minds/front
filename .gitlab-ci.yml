@@ -1,6 +1,7 @@
 image: minds/ci-front:latest
 
 stages:
+  - l10n
   - test and build
   - prepare
   - review
@@ -14,6 +15,18 @@ variables:
   CYPRESS_INSTALL_BINARY: 0 # Speeds up the install process
   npm_config_cache: '$CI_PROJECT_DIR/.npm'
   CYPRESS_CACHE_FOLDER: '$CI_PROJECT_DIR/cache/Cypress'
+
+l10n-sync:
+  stage: l10n
+  script:
+    - >
+      git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/l10n.git
+      cp --force src/locale/Base.xlf l10n/front/Default.xliff
+      cd l10n
+      #git commit -am '(feat): update default language for front'
+    - >
+      cd .. # back to front
+      cp --force l10n/front/locale/ locale/
 
 test:
   image: circleci/node:13-browsers
