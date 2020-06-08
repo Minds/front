@@ -21,12 +21,12 @@ l10n-sync:
   script:
     - >
       git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/minds/l10n.git
-      cp --force src/locale/Base.xlf l10n/front/Default.xliff
+      cp src/locale/Base.xlf l10n/front/Default.xliff
       cd l10n
       #git commit -am '(feat): update default language for front'
     - >
       cd .. # back to front
-      cp --force l10n/front/locale/ locale/
+      cp l10n/front/locale/ locale/
 
 test:
   image: circleci/node:13-browsers
