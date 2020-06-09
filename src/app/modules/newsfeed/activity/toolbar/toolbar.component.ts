@@ -36,7 +36,10 @@ export class ActivityToolbarComponent {
   }
 
   toggleComments(): void {
-    if (this.service.displayOptions.fixedHeight) {
+    if (
+      this.service.displayOptions.fixedHeight ||
+      this.service.displayOptions.redirectComments
+    ) {
       this.router.navigate([`/newsfeed/${this.entity.guid}`]);
       return;
     }

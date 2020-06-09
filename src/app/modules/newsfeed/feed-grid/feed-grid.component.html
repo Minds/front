@@ -2,7 +2,7 @@
   <m-newsfeed__entity
     [entity]="entity"
     *ngIf="entity$ | async as entity"
-    [displayOptions]="{ showComments: false, v2: true }"
+    [displayOptions]="{ showComments: false, v2: true, redirectComments: true }"
     (deleted)="delete($event)"
     [slot]="i"
   ></m-newsfeed__entity>

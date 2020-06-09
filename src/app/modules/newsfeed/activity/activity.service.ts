@@ -16,6 +16,7 @@ export type ActivityDisplayOptions = {
   showTranslation: boolean;
   fixedHeight: boolean;
   fixedHeightContainer: boolean; // Will use fixedHeight but relies on container to set the height
+  redirectComments: boolean;
 };
 
 export type ActivityEntity = {
@@ -209,6 +210,7 @@ export class ActivityService {
     showTranslation: false,
     fixedHeight: false,
     fixedHeightContainer: false,
+    redirectComments: false,
   };
 
   constructor(private configs: ConfigsService, private session: Session) {
