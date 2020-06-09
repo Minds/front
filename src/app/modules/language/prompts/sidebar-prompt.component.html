@@ -1,0 +1,25 @@
+<ng-container *mIfFeature="'language-prompts'">
+  <ng-container *ngIf="shouldShow$ | async">
+    <m-sidebarWidget title="" dismissibleId="language-sidebar-2020">
+      <div class="m-sidebarWidget__body">
+        <p
+          class="m-languageSidebarPrompt__text"
+          i18n="@@LANGUAGE_SIDEBAR__PROMPT"
+        >
+          Did you know that Minds will soon be available in
+          {{ languageName$ | async }}?
+        </p>
+
+        <m-shadowboxSubmitButton
+          (click)="onClick($event)"
+          [saving]="saving"
+          data-cy="language-sidebar-prompt-button"
+        >
+          <ng-container i18n="@@LANGUAGE__SIDEBAR__PROMPT__BUTTON"
+            >Switch to {{ languageName$ | async }}</ng-container
+          >
+        </m-shadowboxSubmitButton>
+      </div>
+    </m-sidebarWidget>
+  </ng-container>
+</ng-container>

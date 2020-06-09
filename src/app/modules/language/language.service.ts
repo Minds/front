@@ -14,6 +14,9 @@ export interface LanguageListEntry {
   name: string;
 }
 
+const isoCodeToLanguageName = ([languages, currentLanguage]) =>
+  languages.find(language => language.code === currentLanguage).name;
+
 /**
  * Language service
  */
@@ -70,10 +73,18 @@ export class LanguageService {
     this.languages$,
     this.currentLanguage$,
   ]).pipe(
-    map(
-      ([languages, currentLanguage]) =>
-        languages.find(language => language.code === currentLanguage).name
-    ),
+    map(isoCodeToLanguageName),
+    catchError(() => 'Unknown')
+  );
+
+  /**
+   * Browser's language native name
+   */
+  readonly browserLanguageName$: Observable<string> = combineLatest([
+    this.languages$,
+    this.browserLanguage$,
+  ]).pipe(
+    map(isoCodeToLanguageName),
     catchError(() => 'Unknown')
   );
 

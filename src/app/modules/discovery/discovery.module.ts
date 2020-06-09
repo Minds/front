@@ -20,6 +20,7 @@ import { DiscoverySuggestionsComponent } from './suggestions/suggestions.compone
 import { DiscoveryNoTagsPromptComponent } from './tags/notags-prompt/notags-prompt.component';
 import { DiscoveryFeedsListComponent } from './feeds/feeds-list.component';
 import { HashtagsModule } from '../hashtags/hashtags.module';
+import { LanguageModule } from '../language/language.module';
 
 @NgModule({
   imports: [
@@ -84,6 +85,7 @@ import { HashtagsModule } from '../hashtags/hashtags.module';
     // GroupsModule,
     DiscoverySharedModule,
     HashtagsModule,
+    LanguageModule,
   ],
   providers: [DiscoveryTrendsService],
   declarations: [
