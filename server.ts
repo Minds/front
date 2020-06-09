@@ -8,7 +8,12 @@ import './server-polyfills';
 
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
-import { enableProdMode } from '@angular/core';
+import {
+  enableProdMode,
+  TRANSLATIONS,
+  TRANSLATIONS_FORMAT,
+  LOCALE_ID,
+} from '@angular/core';
 import { XhrFactory } from '@angular/common/http';
 import { NgxRequest, NgxResponse } from '@gorniv/ngx-universal';
 import { AppServerModule } from './src/main.server';
@@ -67,6 +72,7 @@ export function app() {
       const key =
         `__express__/${sessKey}/` +
         (req.originalUrl || req.url) +
+        req.headers['x-minds-locale'] +
         (isMobileOrTablet() ? '/mobile' : '/desktop');
       const exists = myCache.has(key);
       if (exists) {
@@ -135,6 +141,12 @@ export function app() {
             },
             deps: [],
           },
+          {
+            provide: TRANSLATIONS,
+            useValue: getLocaleTranslations(locale),
+          },
+          { provide: TRANSLATIONS_FORMAT, useValue: 'xlf' },
+          // { provide: LOCALE_ID, useValue: locale },
         ],
       },
       (err, html) => {
@@ -157,15 +169,28 @@ export function app() {
  */
 function getLocale(req): string {
   const defaultLocale = 'en';
-  const hostLanguage =
-    req.cookies['hl'] === undefined ? defaultLocale : req.cookies['hl'];
+
+  // Nginx should pass through Minds-Locale Header
+  const hostLanguage = req.headers['x-minds-locale'] || defaultLocale;
+
   if (hostLanguage && hostLanguage.length === 2) {
     const path = join(distFolder, hostLanguage);
     if (existsSync(path)) {
       return hostLanguage;
     }
   }
+
   return defaultLocale;
+}
+
+function getLocaleTranslations(locale: string): string {
+  let fileName: string;
+  if (locale === 'en') {
+    fileName = 'Base.xlf';
+  } else {
+    fileName = `Minds.${locale}.xliff`;
+  }
+  return require(`raw-loader!./src/locale/${fileName}`);
 }
 
 function run() {
