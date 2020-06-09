@@ -57,6 +57,7 @@ import { YoutubeMigrationConfigComponent } from '../media/youtube-migration/conf
 import { YoutubeMigrationComponent } from '../media/youtube-migration/youtube-migration.component';
 import { ReferralsV2Module } from './other/referrals/referrals.module';
 import { SettingsV2ReferralsComponent } from './other/referrals/referrals.component';
+import { LanguageModule } from '../language/language.module';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -437,6 +438,7 @@ const SETTINGS_V2_ROUTES: Routes = [
     ProModule,
     YoutubeMigrationModule,
     ReferralsV2Module,
+    LanguageModule,
   ],
   declarations: [
     SettingsV2Component,
