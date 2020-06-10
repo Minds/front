@@ -38,7 +38,7 @@ import { IfFeatureDirective } from '../../common/directives/if-feature.directive
 import { TopbarService } from '../../common/layout/topbar.service';
 import { MockService, MockComponent } from '../../utils/mock';
 import { SidebarNavigationService } from '../../common/layout/sidebar/navigation.service';
-import { MarketingFooterComponent } from '../../common/components/marketing/footer.component';
+import { MarketingFooterComponent } from '../../modules/marketing/footer.component';
 import { PageLayoutService } from '../../common/layout/page-layout.service';
 import { LanguageBarComponent } from '../language/language-bar.component';
 import { LanguageModalComponent } from '../language/language-modal/language-modal.component';
