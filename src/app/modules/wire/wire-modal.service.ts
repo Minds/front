@@ -11,7 +11,8 @@ import { WireCreatorComponent as WireV2CreatorComponent } from './v2/creator/wir
  */
 interface WireModalPresentDefaultOptions {
   type: string;
-  min: number;
+  min?: number;
+  upgradeType?: string;
 }
 
 /**
