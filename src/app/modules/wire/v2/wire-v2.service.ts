@@ -9,7 +9,6 @@ import { WireStruc } from '../creator/creator.component';
 import { UpgradeOptionInterval } from '../../upgrades/upgrade-options.component';
 import { ConfigsService } from '../../../common/services/configs.service';
 import { PlusService } from '../../plus/plus.service';
-import { PlusSubscription } from '../../../mocks/modules/plus/subscription';
 import { ProService } from '../../pro/pro.service';
 
 /**
