@@ -4,6 +4,7 @@ import {
   FormsModule as NgFormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { CommonModule } from '../../common/common.module';
 import { ModalsModule } from '../modals/modals.module';
@@ -19,6 +20,7 @@ import { LanguageModule } from '../language/language.module';
     NgCommonModule,
     NgFormsModule,
     ReactiveFormsModule,
+    RouterModule,
     CommonModule,
     ModalsModule,
     LanguageModule,
