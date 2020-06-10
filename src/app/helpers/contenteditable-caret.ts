@@ -10,19 +10,28 @@ function node_walk(node, func) {
   return result;
 }
 
-// getCaretPosition: return [start, end] as offsets to elem.textContent that
-//   correspond to the selected portion of text
-//   (if start == end, caret is at given position and no text is selected)
-export function getContentEditableCaretCoordinates(elem) {
+/**
+ * return [start, end] as offsets to elem.textContent that
+ * correspond to the selected portion of text
+ * (if start == end, caret is at given position and no text is selected)
+ */
+export function getContentEditableCaretCoordinates(
+  elem
+): { start: number; end: number } {
   var sel: any = window.getSelection();
   var cum_length = [0, 0];
 
-  if (sel.anchorNode == elem) cum_length = [sel.anchorOffset, sel.extentOffset];
-  else {
-    var nodes_to_find = [sel.anchorNode, sel.extentNode];
-    if (!elem.contains(sel.anchorNode) || !elem.contains(sel.extentNode))
-      return undefined;
-    else {
+  if (sel.anchorNode == elem) {
+    cum_length = [sel.anchorOffset, sel.focusOffset];
+  } else {
+    var nodes_to_find = [sel.anchorNode, sel.focusNode];
+
+    if (!elem.contains(sel.anchorNode) || !elem.contains(sel.focusNode)) {
+      return {
+        start: undefined,
+        end: undefined,
+      };
+    } else {
       var found: any = [0, 0];
       var i;
       node_walk(elem, function(node) {
@@ -40,7 +49,7 @@ export function getContentEditableCaretCoordinates(elem) {
         }
       });
       cum_length[0] += sel.anchorOffset;
-      cum_length[1] += sel.extentOffset;
+      cum_length[1] += sel.focusOffset;
     }
   }
   let coordinates = {
