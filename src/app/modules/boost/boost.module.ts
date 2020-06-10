@@ -28,6 +28,7 @@ import { BoostPublisherEarningsComponent } from './publisher/earnings/earnings.c
 import { BoostPublisherPayoutsComponent } from './publisher/payouts/payouts.component';
 import { BoostPublisherSettingsComponent } from './publisher/settings/settings.component';
 import { BoostPublisherLedgerComponent } from './publisher/ledger/ledger.component';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const boostRoutes: Routes = [
   {
@@ -80,6 +81,7 @@ const boostRoutes: Routes = [
     ThirdPartyNetworksModule,
     AdsModule,
     FaqModule,
+    MarketingModule,
   ],
   declarations: [
     BoostCreatorComponent,

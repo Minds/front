@@ -29,6 +29,7 @@ import { RouterModule } from '@angular/router';
     ExperimentsModule,
     CaptchaModule,
     RouterModule,
+    MarketingModule,
   ],
   declarations: [HomepageV2Component],
   exports: [HomepageV2Component],

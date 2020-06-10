@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ConfigsService } from '../../services/configs.service';
+import { ConfigsService } from '../../common/services/configs.service';
 
 @Component({
   selector: 'm-marketing__asFeaturedIn',

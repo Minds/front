@@ -2406,295 +2406,11 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="AS_FEATURED_IN" datatype="html">
-        <source>As featured in</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/as-featured-in.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="MINDS_IN_THE_PRESS" datatype="html">
-        <source>Minds in the press</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/as-featured-in.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="ONBOARDING__FINISHED_SETTING_UP" datatype="html">
         <source>Finish setting up your account</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/common/components/onboarding-reminder/reminder.component.html</context>
           <context context-type="linenumber">7</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="TAKE_BACK_CONTROL" datatype="html">
-        <source>Take back control of your social media</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__ABOUT" datatype="html">
-        <source>About</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__MOBILE" datatype="html">
-        <source>Mobile</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__CAREERS" datatype="html">
-        <source>Careers</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__INVESTORS" datatype="html">
-        <source>Investors</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">48</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__BLOG" datatype="html">
-        <source>Blog</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__WHITEPAPER" datatype="html">
-        <source>Whitepaper</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">64</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__EVENTS" datatype="html">
-        <source>Events</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__STORE" datatype="html">
-        <source>Store</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">83</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__BUSINESS" datatype="html">
-        <source>Business</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">93</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__UPGRADE" datatype="html">
-        <source>Upgrade</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">97</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__TOKEN" datatype="html">
-        <source>Token</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">103</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__PLUS" datatype="html">
-        <source>Plus</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">109</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__PRO" datatype="html">
-        <source>Pro</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">115</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__PAY" datatype="html">
-        <source>Pay</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">121</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__NODES" datatype="html">
-        <source>Nodes</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">127</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__BOOST" datatype="html">
-        <source>Boost</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">133</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__REWARDS" datatype="html">
-        <source>Rewards</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">139</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__YOUTUBE_MIGRATION" datatype="html">
-        <source>YouTube Migration</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">148</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__DEVELOPERS" datatype="html">
-        <source>Developers</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">158</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__DOCUMENTATION" datatype="html">
-        <source>Documentation</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">166</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__COMMUNITY" datatype="html">
-        <source>Community</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">175</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">220</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__CODE" datatype="html">
-        <source>Code</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">185</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__CANARY" datatype="html">
-        <source>Canary</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">191</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__BRANDING" datatype="html">
-        <source>Branding</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">197</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__SUPPORT" datatype="html">
-        <source>Support</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">207</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__HELP_DESK" datatype="html">
-        <source>Help Desk</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">211</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__LANGUAGES" datatype="html">
-        <source>Languages</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">226</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__STATUS" datatype="html">
-        <source>Status</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">236</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__TERMS_OF_SERVICE" datatype="html">
-        <source>Terms of Service</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">257</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__PRIVACY_POLICY" datatype="html">
-        <source>Privacy Policy</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">263</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__CONTENT_POLICY" datatype="html">
-        <source>Content Policy</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">272</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
-      <trans-unit id="COMMON_FOOTER__DMCA" datatype="html">
-        <source>DMCA</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/common/components/marketing/footer.component.html</context>
-          <context context-type="linenumber">278</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -8863,6 +8579,290 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="TAKE_BACK_CONTROL" datatype="html">
+        <source>Take back control of your social media</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__ABOUT" datatype="html">
+        <source>About</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__MOBILE" datatype="html">
+        <source>Mobile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__CAREERS" datatype="html">
+        <source>Careers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__INVESTORS" datatype="html">
+        <source>Investors</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__BLOG" datatype="html">
+        <source>Blog</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__WHITEPAPER" datatype="html">
+        <source>Whitepaper</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__EVENTS" datatype="html">
+        <source>Events</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__STORE" datatype="html">
+        <source>Store</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__BUSINESS" datatype="html">
+        <source>Business</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">93</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__UPGRADE" datatype="html">
+        <source>Upgrade</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">97</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__TOKEN" datatype="html">
+        <source>Token</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__PLUS" datatype="html">
+        <source>Plus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__PRO" datatype="html">
+        <source>Pro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">115</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__PAY" datatype="html">
+        <source>Pay</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__NODES" datatype="html">
+        <source>Nodes</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__BOOST" datatype="html">
+        <source>Boost</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__REWARDS" datatype="html">
+        <source>Rewards</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__YOUTUBE_MIGRATION" datatype="html">
+        <source>YouTube Migration</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__DEVELOPERS" datatype="html">
+        <source>Developers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">158</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__DOCUMENTATION" datatype="html">
+        <source>Documentation</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">166</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__COMMUNITY" datatype="html">
+        <source>Community</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">175</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">220</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__CODE" datatype="html">
+        <source>Code</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">185</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__CANARY" datatype="html">
+        <source>Canary</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">191</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__BRANDING" datatype="html">
+        <source>Branding</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">197</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__SUPPORT" datatype="html">
+        <source>Support</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">207</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__HELP_DESK" datatype="html">
+        <source>Help Desk</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">211</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__LANGUAGES" datatype="html">
+        <source>Languages</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">226</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__STATUS" datatype="html">
+        <source>Status</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">236</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__TERMS_OF_SERVICE" datatype="html">
+        <source>Terms of Service</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">257</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__PRIVACY_POLICY" datatype="html">
+        <source>Privacy Policy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">263</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__CONTENT_POLICY" datatype="html">
+        <source>Content Policy</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">272</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="COMMON_FOOTER__DMCA" datatype="html">
+        <source>DMCA</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/footer.component.html</context>
+          <context context-type="linenumber">278</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="AS_FEATURED_IN" datatype="html">
+        <source>As featured in</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/as-featured-in.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="MINDS_IN_THE_PRESS" datatype="html">
+        <source>Minds in the press</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/marketing/as-featured-in.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="MARKETING_PRO__MINDS_PRO" datatype="html">
         <source>Minds Pro</source>
         <context-group purpose="location">
@@ -9768,14 +9768,6 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="LANGUAGE_MODAL__SELECT_LANGUAGE" datatype="html">
-        <source>Select Language</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/language/language-modal/language-modal.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-      </trans-unit>
       <trans-unit id="MINDS__HASHTAGS__TOPBAR__HASHTAGS" datatype="html">
         <source>#hashtags {$START_ITALIC_TEXT}arrow_drop_down{$CLOSE_ITALIC_TEXT}</source>
         <context-group purpose="location">
@@ -10185,6 +10177,30 @@
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/tags/settings.component.html</context>
           <context context-type="linenumber">79</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="LANGUAGE_MODAL__SELECT_LANGUAGE" datatype="html">
+        <source>Select Language</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/language/language-modal/language-modal.component.html</context>
+          <context context-type="linenumber">3</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="LANGUAGE_SIDEBAR__PROMPT" datatype="html">
+        <source>Did you know that Minds will soon be available in {$INTERPOLATION}?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/language/prompts/sidebar-prompt.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="LANGUAGE__SIDEBAR__PROMPT__BUTTON" datatype="html">
+        <source>Switch to {$INTERPOLATION}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/language/prompts/sidebar-prompt.component.html</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
@@ -14499,11 +14515,11 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
-      <trans-unit id="LANGUAGE__HELP_US_TRANSLATE" datatype="html">
-        <source>Bring Minds to the world! If you speak another language, help the community by translating the Minds {$START_LINK}Web App{$CLOSE_LINK} and {$START_LINK_1}Mobile App{$CLOSE_LINK}.</source>
+      <trans-unit id="LANGUAGE__HELP_US_TRANSLATE__WITH__LINK" datatype="html">
+        <source>Bring Minds to the world! If you speak another language, help the community with translations on {$START_LINK}translate.minds.com{$CLOSE_LINK}.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/language/language.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>

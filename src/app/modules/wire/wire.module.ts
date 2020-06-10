@@ -32,6 +32,7 @@ import { WireV2Module } from './v2/wire-v2.module';
 import { WireModalService } from './wire-modal.service';
 import { WireV2SubscriptionTiersComponent } from './channel/v2/tiers/tiers.component';
 import { WireV2ChannelTableComponent } from './channel/v2/table/table.component';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const wireRoutes: Routes = [
   { path: 'wire', redirectTo: 'pay' },
@@ -57,6 +58,7 @@ const wireRoutes: Routes = [
     FaqModule,
     PaymentsModule,
     WireV2Module,
+    MarketingModule,
   ],
   declarations: [
     WireLockScreenComponent,

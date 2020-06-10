@@ -10,6 +10,7 @@ import { PlusMarketingComponent } from './marketing.component';
 import { PlusSubscriptionComponent } from './subscription/subscription.component';
 import { PlusVerifyComponent } from './verify/verify.component';
 import { PlusService } from './plus.service';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const plusRoutes: Routes = [
   {
@@ -31,6 +32,7 @@ const plusRoutes: Routes = [
     CheckoutModule,
     FaqModule,
     RouterModule.forChild(plusRoutes),
+    MarketingModule,
   ],
   declarations: [
     PlusMarketingComponent,

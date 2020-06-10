@@ -109,10 +109,7 @@ import { RouterHistoryService } from './services/router-history.service';
 import { DraggableListComponent } from './components/draggable-list/list.component';
 import { DndModule } from 'ngx-drag-drop';
 import { SiteService } from './services/site.service';
-import { MarketingComponent } from './components/marketing/marketing.component';
-import { MarketingFooterComponent } from './components/marketing/footer.component';
 import { ToggleComponent } from './components/toggle/toggle.component';
-import { MarketingAsFeaturedInComponent } from './components/marketing/as-featured-in.component';
 import { SidebarMenuComponent } from './components/sidebar-menu/sidebar-menu.component';
 import { PageLayoutComponent } from './components/page-layout/page-layout.component';
 import { DashboardLayoutComponent } from './components/dashboard-layout/dashboard-layout.component';
@@ -286,9 +283,6 @@ const routes: Routes = [
     PosterDateSelectorComponent,
     DraggableListComponent,
     ToggleComponent,
-    MarketingComponent,
-    MarketingFooterComponent,
-    MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
     PageLayoutComponent,
     DashboardLayoutComponent,
@@ -415,8 +409,6 @@ const routes: Routes = [
     ChannelModeSelectorComponent,
     DraggableListComponent,
     ToggleComponent,
-    MarketingComponent,
-    MarketingAsFeaturedInComponent,
     SidebarMenuComponent,
     PageLayoutComponent,
     DashboardLayoutComponent,
@@ -436,7 +428,6 @@ const routes: Routes = [
     FormInputCheckboxComponent,
     ExplicitOverlayComponent,
     NestedMenuComponent,
-    MarketingFooterComponent,
     StackableModalComponent,
     FileUploadComponent,
     IconComponent,

@@ -7,6 +7,7 @@ import { BlockchainModule } from '../blockchain/blockchain.module';
 import { UpgradesComponent } from './upgrades.component';
 import { UpgradeOptionsComponent } from './upgrade-options.component';
 import { BuyTokensComponent } from './buy-tokens.component';
+import { MarketingModule } from '../marketing/marketing.module';
 
 export const routes = [
   { path: 'upgrade', pathMatch: 'full', redirectTo: 'upgrades' },
@@ -29,6 +30,7 @@ export const routes = [
     ReactiveFormsModule,
     CommonModule,
     BlockchainModule,
+    MarketingModule,
   ],
   declarations: [
     UpgradesComponent,

@@ -5,9 +5,9 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { MetaService } from '../../services/meta.service';
-import { TopbarService } from '../../layout/topbar.service';
-import { PageLayoutService } from '../../layout/page-layout.service';
+import { MetaService } from '../../common/services/meta.service';
+import { TopbarService } from '../../common/layout/topbar.service';
+import { PageLayoutService } from '../../common/layout/page-layout.service';
 
 @Component({
   selector: 'm-marketing',

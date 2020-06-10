@@ -7,8 +7,8 @@ import {
   Injector,
   SkipSelf,
 } from '@angular/core';
-import { ConfigsService } from '../../services/configs.service';
-import { OverlayModalService } from '../../../services/ux/overlay-modal';
+import { ConfigsService } from '../../common/services/configs.service';
+import { OverlayModalService } from '../../services/ux/overlay-modal';
 
 @Component({
   selector: 'm-marketing__footer',

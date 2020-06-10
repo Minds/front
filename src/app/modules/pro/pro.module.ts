@@ -39,6 +39,7 @@ import { CanDeactivateGuardService } from '../../services/can-deactivate-guard';
 import { ModalsModule } from '../modals/modals.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
 import { ProRedirectComponent } from './redirect.component';
+import { MarketingModule } from '../marketing/marketing.module';
 
 const routes: Routes = [
   {
@@ -158,6 +159,7 @@ export const PRO_DOMAIN_ROUTES = [
     AuthModule,
     ModalsModule,
     ActivityModule,
+    MarketingModule,
   ],
   providers: [ProService],
   declarations: [
