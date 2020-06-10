@@ -47,7 +47,7 @@ export class QuestionCreatorComponent implements OnInit {
     try {
       const response: any = await this.client.get(
         `api/v2/helpdesk/categories`,
-        { limit: 200, recursive: true }
+        { limit: 200, recursive: true, translate: 'no' }
       );
       this.categories = this.categoriesToArray(response.categories);
     } catch (e) {
@@ -99,7 +99,8 @@ export class QuestionCreatorComponent implements OnInit {
   async load(uuid: string) {
     try {
       const response: any = await this.client.get(
-        `api/v2/helpdesk/questions/question/${uuid}`
+        `api/v2/helpdesk/questions/question/${uuid}`,
+        { translate: 'no' }
       );
 
       this.question = response.question;
