@@ -87,7 +87,7 @@ export class SuggestionsSidebar {
         return $localize`:@@SUGGESTIONS__CHANNEL__TITLE: Suggested Channels`;
         break;
       case 'group':
-        return $localize`:@@SUGGESTIONS__CHANNEL__TITLE: Suggested Groups`;
+        return $localize`:@@SUGGESTIONS__GROUP__TITLE: Suggested Groups`;
         break;
     }
   }
