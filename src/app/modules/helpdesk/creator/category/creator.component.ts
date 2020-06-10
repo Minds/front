@@ -94,7 +94,8 @@ export class CategoryCreatorComponent implements OnInit {
   async load(uuid: string) {
     try {
       const response: any = await this.client.get(
-        `api/v2/helpdesk/categories/category/${uuid}`
+        `api/v2/helpdesk/categories/category/${uuid}`,
+        { translate: 'no' }
       );
 
       this.category = response.category;
