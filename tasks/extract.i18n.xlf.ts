@@ -101,7 +101,7 @@ export = () => cb => {
   run(`npx ng xi18n --out-file=messages.xlf --format=xlf`, {}, false);
   transform(
     join(APP_SRC, 'messages.xlf'),
-    join(APP_SRC, 'locale', argv.output || 'Base.xlf')
+    join(APP_SRC, 'locale', argv.output || 'Base.xliff')
   );
   unlinkSync(join(APP_SRC, 'messages.xlf'));
 

@@ -2030,6 +2030,401 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">สนับสนุน!</target>
       </trans-unit>
+      <trans-unit id="COMMON__YEARLY" datatype="html">
+        <source>Yearly</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Yearly</target>
+      </trans-unit>
+      <trans-unit id="COMMON__MONTHLY" datatype="html">
+        <source>Monthly</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">120</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Monthly</target>
+      </trans-unit>
+      <trans-unit id="COMMON__USD" datatype="html">
+        <source>USD</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">23</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">162</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">currency</note>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">ดอลลาร์สหรัฐ</target>
+      </trans-unit>
+      <trans-unit id="COMMON__TOKENS" datatype="html">
+        <source>Tokens</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blockchain/token-purchase/purchase.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/composer/components/popup/monetize/monetize.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/composer/components/popup/monetize/monetize.component.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">75</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">159</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blockchain/marketing/token.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/blockchain/marketing/token.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">currency</note>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">โทเคน</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__PLUS" datatype="html">
+        <source>Plus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Plus</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__IDEAL_MINDS_USERS" datatype="html">
+        <source>Ideal for all Minds Users</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Ideal for all Minds Users</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__UPGRADE_CHANNEL_INFO" datatype="html">
+        <source>Upgrade your channel to unlock new features and upgrade your experience.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Upgrade your channel to unlock new features and upgrade your experience.</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__ACCESS_EXCLUSIVE_CONTENT" datatype="html">
+        <source>Access exclusive content</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">56</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Access exclusive content</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__VERIFY_YOUR_CHANNEL" datatype="html">
+        <source>Verify your channel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Verify your channel</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__HIDE_BOOSTED_CONTENT" datatype="html">
+        <source>Hide boosted content</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Hide boosted content</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__MORE_INFO" datatype="html">
+        <source>More info</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">257</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">More info</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__PER_MONTH" datatype="html">
+        <source>
+          <x id="START_TAG_SPAN"/>
+          <x id="INTERPOLATION"/>
+          <x id="CLOSE_TAG_SPAN"/>
+           per month
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">84</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">92</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">
+          <x id="START_TAG_SPAN"/>
+          <x id="INTERPOLATION"/>
+          <x id="CLOSE_TAG_SPAN"/>
+           per month
+        </target>
+      </trans-unit>
+      <trans-unit id="COMMON__UPGRADE_TO_PLUS" datatype="html">
+        <source>Upgrade to Plus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Upgrade to Plus</target>
+      </trans-unit>
+      <trans-unit id="COMMON__PRO" datatype="html">
+        <source>Pro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">113</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Pro</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__FOR_INDEPENDANT_CREATORS" datatype="html">
+        <source>For independent content creators</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">For independent content creators</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__ULTIMATE_PLATFORM" datatype="html">
+        <source>The ultimate platform for independent creators and brands.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">127</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">The ultimate platform for independent creators and brands.</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__GET_PAID_WORK" datatype="html">
+        <source>Get paid for your work</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">134</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Get paid for your work</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__BUILD_OWN_CUSTOM_SITE" datatype="html">
+        <source>Build your own custom website</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">138</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Build your own custom website</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__PROFESSIONAL_MEDIA_TOOLS" datatype="html">
+        <source>Professional media tools</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Professional media tools</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__CUSTOM_SUPPORT" datatype="html">
+        <source>Custom support</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">146</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Custom support</target>
+      </trans-unit>
+      <trans-unit id="COMMON__MORE_INFO" datatype="html">
+        <source>More info</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">156</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">More info</target>
+      </trans-unit>
+      <trans-unit id="COMMON__TRY_PRO" datatype="html">
+        <source>Try Pro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">167</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Try Pro</target>
+      </trans-unit>
+      <trans-unit id="COMMON__PER_MONTH" datatype="html">
+        <source>
+          <x id="START_TAG_SPAN"/>
+          <x id="INTERPOLATION"/>
+          <x id="CLOSE_TAG_SPAN"/>
+           per month
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">177</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">185</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">
+          <x id="START_TAG_SPAN"/>
+          <x id="INTERPOLATION"/>
+          <x id="CLOSE_TAG_SPAN"/>
+           per month
+        </target>
+      </trans-unit>
+      <trans-unit id="COMMON__UPGRADE_TO_PRO" datatype="html">
+        <source>Upgrade to Pro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">199</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Upgrade to Pro</target>
+      </trans-unit>
+      <trans-unit id="COMMON__COMING_SOON" datatype="html">
+        <source>Coming soon</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">209</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/pro/subscription/subscription.component.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Coming soon</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__NODE" datatype="html">
+        <source>Node</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">218</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Node</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__NEXT_LEVEL_CREATORS" datatype="html">
+        <source>For next-level content creators</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">223</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">For next-level content creators</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__LAUNCH_OWN_NETWORK" datatype="html">
+        <source>Launch your own white-labeled social network and mobile app.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">232</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Launch your own white-labeled social network and mobile app.</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__WHITE_LABEL_WEB_MOBILE" datatype="html">
+        <source>White-labeled web + mobile app</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">239</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">White-labeled web + mobile app</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__CUSTOM_DOMAIN_BRAND" datatype="html">
+        <source>Custom domain and brand</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">243</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Custom domain and brand</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__INDEPENDANT_FROM_MINDS" datatype="html">
+        <source>Independent from Minds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">247</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Independent from Minds</target>
+      </trans-unit>
+      <trans-unit id="UPGRADE_OPTIONS__CONTACT_US_PRICING" datatype="html">
+        <source>Contact us for pricing</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">267</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Contact us for pricing</target>
+      </trans-unit>
+      <trans-unit id="COMMON__CONTACT_US" datatype="html">
+        <source>Contact us</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
+          <context context-type="linenumber">278</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Contact us</target>
+      </trans-unit>
       <trans-unit id="MINDS__CARDS__ACTIVITY__BOOSTED_LABEL" datatype="html">
         <source>Boosted</source>
         <context-group purpose="location">
@@ -2809,381 +3204,6 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">การตั้งค่า</target>
-      </trans-unit>
-      <trans-unit id="COMMON__YEARLY" datatype="html">
-        <source>Yearly</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Yearly</target>
-      </trans-unit>
-      <trans-unit id="COMMON__MONTHLY" datatype="html">
-        <source>Monthly</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Monthly</target>
-      </trans-unit>
-      <trans-unit id="COMMON__USD" datatype="html">
-        <source>USD</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <note priority="1" from="meaning">currency</note>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">ดอลลาร์สหรัฐ</target>
-      </trans-unit>
-      <trans-unit id="COMMON__TOKENS" datatype="html">
-        <source>Tokens</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blockchain/token-purchase/purchase.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/composer/components/popup/monetize/monetize.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/composer/components/popup/monetize/monetize.component.html</context>
-          <context context-type="linenumber">80</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">8</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">51</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blockchain/marketing/token.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/blockchain/marketing/token.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-        <note priority="1" from="meaning">currency</note>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">โทเคน</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__PLUS" datatype="html">
-        <source>Plus</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Plus</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__IDEAL_MINDS_USERS" datatype="html">
-        <source>Ideal for all Minds Users</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">40</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Ideal for all Minds Users</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__UPGRADE_CHANNEL_INFO" datatype="html">
-        <source>Upgrade your channel to unlock new features and upgrade your experience.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upgrade your channel to unlock new features and upgrade your experience.</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__ACCESS_EXCLUSIVE_CONTENT" datatype="html">
-        <source>Access exclusive content</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">56</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Access exclusive content</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__VERIFY_YOUR_CHANNEL" datatype="html">
-        <source>Verify your channel</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">60</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Verify your channel</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__HIDE_BOOSTED_CONTENT" datatype="html">
-        <source>Hide boosted content</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">64</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Hide boosted content</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__MORE_INFO" datatype="html">
-        <source>More info</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">257</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">More info</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__PER_MONTH" datatype="html">
-        <source>
-          <x id="START_TAG_SPAN"/>
-          <x id="INTERPOLATION"/>
-          <x id="CLOSE_TAG_SPAN"/>
-           per month
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">84</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">92</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          <x id="START_TAG_SPAN"/>
-          <x id="INTERPOLATION"/>
-          <x id="CLOSE_TAG_SPAN"/>
-           per month
-        </target>
-      </trans-unit>
-      <trans-unit id="COMMON__UPGRADE_TO_PLUS" datatype="html">
-        <source>Upgrade to Plus</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">105</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upgrade to Plus</target>
-      </trans-unit>
-      <trans-unit id="COMMON__PRO" datatype="html">
-        <source>Pro</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">113</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Pro</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__FOR_INDEPENDANT_CREATORS" datatype="html">
-        <source>For independent content creators</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">118</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">For independent content creators</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__ULTIMATE_PLATFORM" datatype="html">
-        <source>The ultimate platform for independent creators and brands.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">127</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">The ultimate platform for independent creators and brands.</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__GET_PAID_WORK" datatype="html">
-        <source>Get paid for your work</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">134</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Get paid for your work</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__BUILD_OWN_CUSTOM_SITE" datatype="html">
-        <source>Build your own custom website</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">138</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Build your own custom website</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__PROFESSIONAL_MEDIA_TOOLS" datatype="html">
-        <source>Professional media tools</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">142</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Professional media tools</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__CUSTOM_SUPPORT" datatype="html">
-        <source>Custom support</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">146</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Custom support</target>
-      </trans-unit>
-      <trans-unit id="COMMON__MORE_INFO" datatype="html">
-        <source>More info</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">156</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">More info</target>
-      </trans-unit>
-      <trans-unit id="COMMON__TRY_PRO" datatype="html">
-        <source>Try Pro</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">167</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Try Pro</target>
-      </trans-unit>
-      <trans-unit id="COMMON__PER_MONTH" datatype="html">
-        <source>
-          <x id="START_TAG_SPAN"/>
-          <x id="INTERPOLATION"/>
-          <x id="CLOSE_TAG_SPAN"/>
-           per month
-        </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">177</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">185</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">
-          <x id="START_TAG_SPAN"/>
-          <x id="INTERPOLATION"/>
-          <x id="CLOSE_TAG_SPAN"/>
-           per month
-        </target>
-      </trans-unit>
-      <trans-unit id="COMMON__UPGRADE_TO_PRO" datatype="html">
-        <source>Upgrade to Pro</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">199</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Upgrade to Pro</target>
-      </trans-unit>
-      <trans-unit id="COMMON__COMING_SOON" datatype="html">
-        <source>Coming soon</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">209</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/pro/subscription/subscription.component.html</context>
-          <context context-type="linenumber">86</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Coming soon</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__NODE" datatype="html">
-        <source>Node</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">218</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Node</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__NEXT_LEVEL_CREATORS" datatype="html">
-        <source>For next-level content creators</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">223</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">For next-level content creators</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__LAUNCH_OWN_NETWORK" datatype="html">
-        <source>Launch your own white-labeled social network and mobile app.</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">232</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Launch your own white-labeled social network and mobile app.</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__WHITE_LABEL_WEB_MOBILE" datatype="html">
-        <source>White-labeled web + mobile app</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">239</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">White-labeled web + mobile app</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__CUSTOM_DOMAIN_BRAND" datatype="html">
-        <source>Custom domain and brand</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">243</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Custom domain and brand</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__INDEPENDANT_FROM_MINDS" datatype="html">
-        <source>Independent from Minds</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">247</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Independent from Minds</target>
-      </trans-unit>
-      <trans-unit id="UPGRADE_OPTIONS__CONTACT_US_PRICING" datatype="html">
-        <source>Contact us for pricing</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">267</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Contact us for pricing</target>
-      </trans-unit>
-      <trans-unit id="COMMON__CONTACT_US" datatype="html">
-        <source>Contact us</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/upgrades/upgrade-options.component.html</context>
-          <context context-type="linenumber">278</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="needs-translation">Contact us</target>
       </trans-unit>
       <trans-unit id="PLUS_SUBSCRIPTION_OPTION__YEARLY" datatype="html">
         <source>Yearly</source>
@@ -13704,17 +13724,39 @@
         <source>ETH</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">currency</note>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">ETH</target>
       </trans-unit>
+      <trans-unit id="COMMON__ANNUALLY" datatype="html">
+        <source>Annually</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">94</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Annually</target>
+      </trans-unit>
+      <trans-unit id="COMMON__MONTH" datatype="html">
+        <source>month</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">109</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">136</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">เดือน</target>
+      </trans-unit>
       <trans-unit id="COMMON__ETHER" datatype="html">
         <source>Ether</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">165</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
@@ -13728,7 +13770,7 @@
         <source>Bitcoin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">168</context>
         </context-group>
         <note priority="1" from="meaning">currency</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -13738,7 +13780,7 @@
         <source>Wallet Type</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">195</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Wallet Type</target>
@@ -13747,7 +13789,7 @@
         <source>On-chain</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">203</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">On-chain</target>
@@ -13756,7 +13798,7 @@
         <source>Off-chain</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">106</context>
+          <context context-type="linenumber">218</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Off-chain</target>
@@ -13765,16 +13807,25 @@
         <source>Wallet Balance</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">116</context>
+          <context context-type="linenumber">231</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Wallet Balance</target>
+      </trans-unit>
+      <trans-unit id="WIRE_CREATOR_FORM__TOP_UP_WALLET" datatype="html">
+        <source>Top-up wallet</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
+          <context context-type="linenumber">260</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Top-up wallet</target>
       </trans-unit>
       <trans-unit id="WIRE_CREATOR_FORM__PAYMENT_METHOD" datatype="html">
         <source>Payment Method</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">278</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Payment Method</target>
@@ -13783,7 +13834,7 @@
         <source>Repeat Payment Monthly</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">302</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Repeat Payment Monthly</target>
@@ -13792,7 +13843,7 @@
         <source>Repeat</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">193</context>
+          <context context-type="linenumber">320</context>
         </context-group>
         <note priority="1" from="meaning">action</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -13802,12 +13853,12 @@
         <source>Monthly recurrent payments may be cancelled at any point within in your wallet.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/form/form.component.html</context>
-          <context context-type="linenumber">196</context>
+          <context context-type="linenumber">323</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Monthly recurrent payments may be cancelled at any point within in your wallet.</target>
       </trans-unit>
-      <trans-unit id="CREATOR_TOOLBAR__OTHER" datatype="html">
+      <trans-unit id="WIRE_CREATOR_TOOLBAR__OTHER" datatype="html">
         <source>{VAR_PLURAL, plural, =1 {token} other {tokens} }</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/toolbar/toolbar.component.html</context>
@@ -13846,16 +13897,25 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Bitcoin</target>
       </trans-unit>
-      <trans-unit id="CREATOR_TOOLBAR__POWERED_BY" datatype="html">
+      <trans-unit id="WIRE_CREATOR_TOOLBAR__POWERED_BY" datatype="html">
         <source>Powered by</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">24</context>
+          <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Powered by</target>
       </trans-unit>
-      <trans-unit id="CREATOR_TOOLBAR__SEND" datatype="html">
+      <trans-unit id="c353261d661ecf3223fab68c5c32d5d95fa97460" datatype="html">
+        <source>MindsPay</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">MindsPay</target>
+      </trans-unit>
+      <trans-unit id="WIRE_CREATOR_TOOLBAR__SEND" datatype="html">
         <source>
           Send 
           <x id="INTERPOLATION"/>
@@ -13865,11 +13925,11 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/wire/v2/creator/toolbar/toolbar.component.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">59</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">
@@ -13878,6 +13938,31 @@
           <x id="START_TAG_NG-CONTAINER"/>
           <x id="CLOSE_TAG_NG-CONTAINER"/>
            monthly
+        </target>
+      </trans-unit>
+      <trans-unit id="WIRE_CREATOR_TOOLBAR__SUBMIT_UPGRADE" datatype="html">
+        <source>
+          Upgrade to Minds
+          <x id="START_TAG_NG-CONTAINER"/>
+          +
+          <x id="CLOSE_TAG_NG-CONTAINER"/>
+          <x id="START_TAG_NG-CONTAINER_1"/>
+           Pro
+          <x id="CLOSE_TAG_NG-CONTAINER"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/toolbar/toolbar.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">
+          Upgrade to Minds
+          <x id="START_TAG_NG-CONTAINER"/>
+          +
+          <x id="CLOSE_TAG_NG-CONTAINER"/>
+          <x id="START_TAG_NG-CONTAINER_1"/>
+           Pro
+          <x id="CLOSE_TAG_NG-CONTAINER"/>
         </target>
       </trans-unit>
       <trans-unit id="COMMON__SHOP" datatype="html">
@@ -13958,6 +14043,76 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">ดอลลาร์สหรัฐ</target>
+      </trans-unit>
+      <trans-unit id="4278d0d56bf15987074af102734c503e9f06171d" datatype="html">
+        <source>Minds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/marketing-block/marketing-block.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Minds</target>
+      </trans-unit>
+      <trans-unit id="687659a5a833d857275a474d021d250836324054" datatype="html">
+        <source>Pro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/marketing-block/marketing-block.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Pro</target>
+      </trans-unit>
+      <trans-unit id="WIRE_CREATOR_MARKETING__UNLOCK_POWER" datatype="html">
+        <source>Unlock the power of Minds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/marketing-block/marketing-block.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Unlock the power of Minds</target>
+      </trans-unit>
+      <trans-unit id="WIRE_CREATOR_MARKETING__PLUS_DESC" datatype="html">
+        <source>Support Minds and unlock features such as earning revenue for your content, hiding ads, accessing exclusive content, receiving a badge and verifying your channel.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/marketing-block/marketing-block.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Support Minds and unlock features such as earning revenue for your content, hiding ads, accessing exclusive content, receiving a badge and verifying your channel.</target>
+      </trans-unit>
+      <trans-unit id="WIRE_CREATOR_MARKETING__PRO_DESC" datatype="html">
+        <source>Get paid for your traffic and referrals, launch your own website, receive multi-currency tips and subscription payments from fans and much more.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/marketing-block/marketing-block.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Get paid for your traffic and referrals, launch your own website, receive multi-currency tips and subscription payments from fans and much more.</target>
+      </trans-unit>
+      <trans-unit id="WIRE_CREATOR_MARKETING__LEARN_MORE" datatype="html">
+        <source>
+          Learn More about Minds
+          <x id="START_TAG_NG-CONTAINER"/>
+          +
+          <x id="CLOSE_TAG_NG-CONTAINER"/>
+          <x id="START_TAG_NG-CONTAINER_1"/>
+           Pro
+          <x id="CLOSE_TAG_NG-CONTAINER"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/wire/v2/creator/marketing-block/marketing-block.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">
+          Learn More about Minds
+          <x id="START_TAG_NG-CONTAINER"/>
+          +
+          <x id="CLOSE_TAG_NG-CONTAINER"/>
+          <x id="START_TAG_NG-CONTAINER_1"/>
+           Pro
+          <x id="CLOSE_TAG_NG-CONTAINER"/>
+        </target>
       </trans-unit>
       <trans-unit id="OWNER_BLOCK__UNLISTED" datatype="html">
         <source>Unlisted</source>
