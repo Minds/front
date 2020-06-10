@@ -84,11 +84,7 @@
 
     m-payments__selectCard {
       display: block;
-      width: calc(100% - 20px);
-
-      @media screen and (max-width: $max-mobile) {
-        width: 100%;
-      }
+      width: 100%;
 
       .m-selector select {
         width: 100%;
@@ -114,6 +110,13 @@
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
           }
         }
+      }
+    }
+    &.m-wireCreatorForm__field--recurring {
+      margin-left: 20px;
+
+      @media screen and (max-width: $max-mobile) {
+        margin-left: 0;
       }
     }
   }
@@ -147,6 +150,61 @@
 
     @include m-theme() {
       color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-wireCreatorForm__intervalToggleContainer {
+    display: flex;
+    flex-direction: row;
+    font-size: 21px;
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+    @media screen and (max-width: $max-mobile) {
+      flex-direction: column;
+    }
+    .m-wireCreatorForm__intervalOption {
+      flex-grow: 1;
+      cursor: pointer;
+      padding: 12px 14px;
+      border-radius: 3px;
+      @include m-theme() {
+        border: 1px solid themed($m-borderColor--primary);
+        box-shadow: 0 1px 4px 0 rgba(themed($m-black), 0.1);
+      }
+      &.m-wireCreatorForm__intervalOption--selected {
+        @include m-theme() {
+          border-color: themed($m-blue);
+          box-shadow: 0 1px 4px 0 rgba(themed($m-blue), 0.4);
+        }
+      }
+      &:first-child {
+        margin-right: 30px;
+        @media screen and (max-width: $max-mobile) {
+          margin-right: 0;
+          margin-bottom: 15px;
+        }
+      }
+      > div:first-child {
+        font-size: 17px;
+        margin-bottom: 4px;
+      }
+      > div:last-child {
+        span:last-child {
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+      }
+    }
+  }
+  .m-wireCreatorForm__topUpLink {
+    font-weight: 400;
+    font-size: 15px;
+    display: inline-block;
+    margin-left: 5px;
+    @include m-theme() {
+      color: themed($m-link);
     }
   }
 }

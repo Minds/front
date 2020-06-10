@@ -6,6 +6,11 @@ import { ApiService } from '../../../common/api/api.service';
 import { Wallet, WalletV2Service } from '../../wallet/v2/wallet-v2.service';
 import { WireService as WireV1Service } from '../wire.service';
 import { WireStruc } from '../creator/creator.component';
+import { UpgradeOptionInterval } from '../../upgrades/upgrade-options.component';
+import { ConfigsService } from '../../../common/services/configs.service';
+import { PlusService } from '../../plus/plus.service';
+import { PlusSubscription } from '../../../mocks/modules/plus/subscription';
+import { ProService } from '../../pro/pro.service';
 
 /**
  * Wire event types
@@ -55,6 +60,14 @@ interface WireRewards {
 }
 
 /**
+ * Upgrade pricing structure
+ *  */
+export interface WireUpgradePricingOptions {
+  monthly: number;
+  yearly: number;
+}
+
+/**
  * Wire types
  */
 export type WireType = 'tokens' | 'usd' | 'eth' | 'btc';
@@ -63,6 +76,35 @@ export type WireType = 'tokens' | 'usd' | 'eth' | 'btc';
  * Default type value
  */
 const DEFAULT_TYPE_VALUE: WireType = 'tokens';
+
+/**
+ * Upgrade types
+ */
+export type WireUpgradeType = 'plus' | 'pro';
+
+/**
+ * Default upgrade type value
+ */
+const DEFAULT_UPGRADE_TYPE_VALUE: WireUpgradeType = 'plus';
+
+/**
+ * Default isUpgrade flag value
+ */
+const DEFAULT_IS_UPGRADE_VALUE: boolean = false;
+
+/**
+ * Default upgrade type value
+ */
+const DEFAULT_UPGRADE_INTERVAL_VALUE: UpgradeOptionInterval = 'yearly';
+
+/**
+ * Default empty upgrade pricing options
+ * (to be populated from configs later)
+ */
+const DEFAULT_WIRE_UPGRADE_PRICING_OPTIONS: WireUpgradePricingOptions = {
+  monthly: 0,
+  yearly: 0,
+};
 
 /**
  * Wire token types
@@ -101,6 +143,10 @@ const DEFAULT_WIRE_REWARDS_VALUE: WireRewards = {
 interface Data {
   entityGuid: string;
   type: WireType;
+  upgradeType: WireUpgradeType;
+  isUpgrade: boolean;
+  upgradeInterval: UpgradeOptionInterval;
+  upgradePricingOptions: WireUpgradePricingOptions;
   tokenType: WireTokenType;
   amount: number;
   recurring: boolean;
@@ -116,6 +162,10 @@ interface Data {
 type DataArray = [
   string,
   WireType,
+  WireUpgradeType,
+  boolean,
+  UpgradeOptionInterval,
+  WireUpgradePricingOptions,
   WireTokenType,
   number,
   boolean,
@@ -150,6 +200,38 @@ export class WireV2Service implements OnDestroy {
    */
   readonly type$: BehaviorSubject<WireType> = new BehaviorSubject<WireType>(
     DEFAULT_TYPE_VALUE
+  );
+
+  /**
+   * Wire upgrade type subject
+   */
+  readonly upgradeType$: BehaviorSubject<WireUpgradeType> = new BehaviorSubject<
+    WireUpgradeType
+  >(DEFAULT_UPGRADE_TYPE_VALUE);
+
+  /**
+   * Wire type subject
+   */
+  readonly isUpgrade$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    DEFAULT_IS_UPGRADE_VALUE
+  );
+
+  /**
+   * Wire upgrade interval subject
+   */
+  readonly upgradeInterval$: BehaviorSubject<
+    UpgradeOptionInterval
+  > = new BehaviorSubject<UpgradeOptionInterval>(
+    DEFAULT_UPGRADE_INTERVAL_VALUE
+  );
+
+  /**
+   * Wire upgrade pricing options subject
+   */
+  readonly upgradePricingOptions$: BehaviorSubject<
+    WireUpgradePricingOptions
+  > = new BehaviorSubject<WireUpgradePricingOptions>(
+    DEFAULT_WIRE_UPGRADE_PRICING_OPTIONS
   );
 
   /**
@@ -241,6 +323,11 @@ export class WireV2Service implements OnDestroy {
   protected ownerResolverSubscription: Subscription;
 
   /**
+   * Prices for upgrades to Pro/Plus
+   */
+  readonly upgrades: any;
+
+  /**
    * Constructor. Initializes data payload observable subscription.
    * @param wallet
    * @param api
@@ -249,12 +336,21 @@ export class WireV2Service implements OnDestroy {
   constructor(
     public wallet: WalletV2Service,
     protected api: ApiService,
-    protected v1Wire: WireV1Service
+    protected v1Wire: WireV1Service,
+    private plusService: PlusService,
+    private proService: ProService,
+    configs: ConfigsService
   ) {
+    this.upgrades = configs.get('upgrades');
+
     // Combine state
     const wireData$ = combineLatest([
       this.entityGuid$,
       this.type$,
+      this.upgradeType$,
+      this.isUpgrade$,
+      this.upgradeInterval$,
+      this.upgradePricingOptions$,
       this.tokenType$,
       this.amount$,
       this.recurring$,
@@ -266,6 +362,10 @@ export class WireV2Service implements OnDestroy {
         ([
           entityGuid,
           type,
+          upgradeType,
+          isUpgrade,
+          upgradeInterval,
+          upgradePricingOptions,
           tokenType,
           amount,
           recurring,
@@ -275,6 +375,10 @@ export class WireV2Service implements OnDestroy {
         ]: DataArray): Data => ({
           entityGuid,
           type,
+          upgradeType,
+          isUpgrade,
+          upgradeInterval,
+          upgradePricingOptions,
           tokenType,
           amount,
           recurring,
@@ -394,7 +498,6 @@ export class WireV2Service implements OnDestroy {
     this.entityGuid$.next(guid);
     this.ownerResolver$.next(owner);
 
-    //
     return this;
   }
 
@@ -409,6 +512,71 @@ export class WireV2Service implements OnDestroy {
       this.recurring$.next(false);
     }
 
+    this.setUpgradePricingOptions(type, this.upgradeType$.value);
+
+    return this;
+  }
+
+  /**
+   * Sets whether the wire is paying for a channel upgrade
+   * and assumes the upgrade is recurring
+   * @param isUpgrade
+   */
+  setIsUpgrade(isUpgrade: boolean): WireV2Service {
+    this.isUpgrade$.next(isUpgrade);
+    this.recurring$.next(true);
+
+    return this;
+  }
+
+  /**
+   * Sets the upgrade type
+   * @param upgradeType
+   */
+  setUpgradeType(upgradeType: WireUpgradeType): WireV2Service {
+    this.upgradeType$.next(upgradeType);
+    this.setUpgradePricingOptions(this.type$.value, upgradeType);
+    return this;
+  }
+
+  /**
+   * Sets the upgrade time interval
+   * @param upgradeInterval
+   */
+  setUpgradeInterval(upgradeInterval: UpgradeOptionInterval): WireV2Service {
+    // Update the amount when the interval changes
+    let upgradePrice = this.upgrades[this.upgradeType$.value][upgradeInterval][
+      this.type$.value
+    ];
+    if (upgradeInterval === 'yearly') {
+      upgradePrice = upgradePrice;
+    }
+
+    this.setAmount(upgradePrice);
+
+    this.upgradeInterval$.next(upgradeInterval);
+    return this;
+  }
+
+  /**
+   * Sets the upgrade pricing options for the selected
+   * upgrade type and currency
+   */
+  setUpgradePricingOptions(
+    type: WireType,
+    upgradeType: WireUpgradeType
+  ): WireV2Service {
+    // If it's an upgrade, calculate the pricing options
+    // for the selected currency
+    let upgradePricingOptions;
+
+    if (this.isUpgrade$.value) {
+      upgradePricingOptions = {
+        monthly: this.upgrades[upgradeType]['monthly'][type],
+        yearly: this.upgrades[upgradeType]['yearly'][type],
+      };
+      this.upgradePricingOptions$.next(upgradePricingOptions);
+    }
     return this;
   }
 
@@ -440,10 +608,9 @@ export class WireV2Service implements OnDestroy {
    * @param recurring
    */
   setRecurring(recurring: boolean): WireV2Service {
-    const canRecur = this.canRecur(
-      this.type$.getValue(),
-      this.tokenType$.getValue()
-    );
+    const canRecur =
+      this.canRecur(this.type$.getValue(), this.tokenType$.getValue()) ||
+      this.isUpgrade$.getValue();
 
     this.recurring$.next(canRecur && recurring);
     return this;
@@ -508,6 +675,15 @@ export class WireV2Service implements OnDestroy {
 
     if (!data || !data.entityGuid) {
       return invalid();
+    }
+
+    if (this.isUpgrade$.value) {
+      if (this.upgradeType$.value === 'pro' && this.proService.isActive()) {
+        return invalid('You are already a Pro member', true);
+      }
+      if (this.upgradeType$.value === 'plus' && this.plusService.isActive()) {
+        return invalid('You are already a Minds+ member', true);
+      }
     }
 
     if (data.amount <= 0) {
@@ -616,6 +792,10 @@ export class WireV2Service implements OnDestroy {
           receiver: data.owner && data.owner.btc_address,
         };
         break;
+    }
+
+    if (data.isUpgrade && data.upgradeInterval) {
+      wire.recurringInterval = data.upgradeInterval;
     }
 
     return wire as WireStruc;
