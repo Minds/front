@@ -20,7 +20,8 @@
     "build:ssr": "ng run minds:server:production",
     "build:ssr:dev": "ng run minds:server:production",
     "bundle-report": "webpack-bundle-analyzer dist/browser/stats.json",
-    "xi18n": "gulp extract.i18n"
+    "xi18n": "gulp extract.i18n",
+    "xi18n-import": "gulp import.i18n"
   },
   "private": true,
   "dependencies": {

@@ -15,6 +15,9 @@
           "es": {
             "translation": "src/locale/Minds.es.xliff"
           },
+          "fr": {
+            "translation": "src/locale/Minds.fr.xliff"
+          },
           "vi": {
             "translation": "src/locale/Minds.vi.xliff"
           },
