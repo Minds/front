@@ -186,7 +186,7 @@ function getLocale(req): string {
 function getLocaleTranslations(locale: string): string {
   let fileName: string;
   if (locale === 'en') {
-    fileName = 'Base.xlf';
+    fileName = 'Base.xliff';
   } else {
     fileName = `Minds.${locale}.xliff`;
   }
