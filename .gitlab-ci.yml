@@ -107,6 +107,7 @@ build:review:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
     - sh build/ng9-bundles.sh
+    - sh build/ng9-remove-locale-assets.sh # Remove assets from locales
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
@@ -128,6 +129,7 @@ build:production:bundles:
     - npm ci && npm install -g gulp-cli
     - npm run postinstall
     - sh build/ng9-bundles.sh
+    - sh build/ng9-remove-locale-assets.sh # Remove assets from locales
   artifacts:
     name: '$CI_COMMIT_REF_SLUG'
     paths:
