@@ -51,13 +51,26 @@ export class ChannelShopBriefComponent implements OnDestroy {
    * @param supportTier
    */
   async onEntryClick(channel: MindsUser, supportTier: SupportTier) {
-    const type =
-      supportTier.currency === 'usd' ? 'money' : supportTier.currency;
+    const type = supportTier.has_usd
+      ? 'usd'
+      : supportTier.has_tokens
+      ? 'tokens'
+      : null;
+    let min: number;
+
+    switch (type) {
+      case 'usd':
+        min = supportTier.usd;
+        break;
+      case 'tokens':
+        min = supportTier.tokens;
+        break;
+    }
 
     await this.wireModal
       .present(channel, {
         default: {
-          min: supportTier.amount,
+          min,
           type,
         },
       })

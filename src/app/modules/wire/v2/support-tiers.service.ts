@@ -9,22 +9,25 @@ import {
 import { ApiResponse, ApiService } from '../../../common/api/api.service';
 
 /**
- *
- */
-export type SupportTierCurrency = 'tokens' | 'usd';
-
-/**
- *
+ * Support Tier entity
  */
 export interface SupportTier {
   urn: string;
   entity_guid: string;
-  currency: SupportTierCurrency;
   guid: string;
-  amount: number;
+  public: boolean;
   name: string;
   description: string;
+  usd: number;
+  has_usd: boolean;
+  tokens?: number;
+  has_tokens: boolean;
 }
+
+/**
+ * Supported currencies
+ */
+export type SupportTierCurrency = 'tokens' | 'usd';
 
 /**
  *
@@ -40,19 +43,19 @@ export interface GroupedSupportTiers {
 @Injectable()
 export class SupportTiersService {
   /**
-   *
+   * Current entity GUID
    */
   readonly entityGuid$: BehaviorSubject<string> = new BehaviorSubject<string>(
     null
   );
 
   /**
-   *
+   * List of Support Tiers as they come from API
    */
   readonly list$: Observable<Array<SupportTier>>;
 
   /**
-   *
+   * Grouped by currency Support Tier list
    */
   readonly groupedList$: Observable<GroupedSupportTiers>;
 
@@ -72,16 +75,14 @@ export class SupportTiersService {
       ),
       switchAll(),
       shareReplay({ bufferSize: 1, refCount: true }),
-      map(response => this.parseApiResponse(response && response.support_tiers))
+      map(response => (response && response.support_tiers) || [])
     );
 
     // Grouped
     this.groupedList$ = this.list$.pipe(
       map(supportTiers => ({
-        tokens: supportTiers.filter(
-          supportTier => supportTier.currency === 'tokens'
-        ),
-        usd: supportTiers.filter(supportTier => supportTier.currency === 'usd'),
+        tokens: supportTiers.filter(supportTier => supportTier.has_tokens),
+        usd: supportTiers.filter(supportTier => supportTier.has_usd),
       }))
     );
   }
@@ -92,22 +93,6 @@ export class SupportTiersService {
    */
   setEntityGuid(entityGuid: string) {
     this.entityGuid$.next(entityGuid);
-  }
-
-  /**
-   * Transforms wire_threshold/wire_rewards type to Support Tier currency
-   * @param monetizationType
-   */
-  toSupportTierCurrency(
-    monetizationType: 'tokens' | 'money'
-  ): SupportTierCurrency {
-    switch (monetizationType) {
-      case 'money':
-        return 'usd';
-
-      default:
-        return monetizationType;
-    }
   }
 
   /**
@@ -124,25 +109,5 @@ export class SupportTiersService {
       default:
         return supportTierCurrency;
     }
-  }
-
-  /**
-   *
-   * @param supportTiers
-   */
-  protected parseApiResponse(
-    supportTiers: Array<SupportTier>
-  ): Array<SupportTier> {
-    if (!supportTiers) {
-      return [];
-    }
-
-    return supportTiers.sort((a, b) => {
-      if (a.currency === b.currency) {
-        return a.amount - b.amount;
-      }
-
-      return a.currency < b.currency ? -1 : 1;
-    });
   }
 }
