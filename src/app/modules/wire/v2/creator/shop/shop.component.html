@@ -33,28 +33,28 @@
           >Select Support Tier</option
         >
 
+        <optgroup label="USD" i18n-label="@@CREATOR_SHOP__USD">
+          <option
+            *ngFor="let supportTier of groupedSupportTiers.usd"
+            [ngValue]="supportTier"
+          >
+            ${{ supportTier.usd | number }}
+            -
+            {{ supportTier.description }}
+          </option>
+        </optgroup>
+
         <optgroup label="Tokens" i18n-label="@@CREATOR_SHOP__TOKENS">
           <option
             *ngFor="let supportTier of groupedSupportTiers.tokens"
             [ngValue]="supportTier"
           >
             <ng-container i18n="@@CREATOR_SHOP__OTHER"
-              >{supportTier.amount, plural, =1
-              {{{supportTier.amount | number}} token} other
-              {{{supportTier.amount | number}} tokens}}</ng-container
+              >{supportTier.tokens, plural, =1
+              {{{supportTier.tokens | number}} token} other
+              {{{supportTier.tokens | number}} tokens}}</ng-container
             >
             - {{ supportTier.name }}
-          </option>
-        </optgroup>
-
-        <optgroup label="USD" i18n-label="@@CREATOR_SHOP__USD">
-          <option
-            *ngFor="let supportTier of groupedSupportTiers.usd"
-            [ngValue]="supportTier"
-          >
-            ${{ supportTier.amount | number }}
-            -
-            {{ supportTier.description }}
           </option>
         </optgroup>
       </select>

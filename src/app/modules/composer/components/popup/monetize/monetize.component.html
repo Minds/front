@@ -30,37 +30,19 @@
       <div *mIfFeature="'channels-shop'" class="m-form__field--select">
         <div class="m-form__row--input">
           <select
-            *ngIf="supportTiers.groupedList$ | async as groupedSupportTiers"
+            *ngIf="supportTiers.list$ | async as supportTiersList"
             [compareWith]="byUrn"
             [ngModel]="state.supportTier"
             (ngModelChange)="selectSupportTier($event)"
           >
             <option [ngValue]="null" i18n="@@COMMON__CUSTOM">Custom</option>
 
-            <optgroup label="Tokens" i18n-label="@@COMMON__TOKENS">
-              <option
-                *ngFor="let supportTier of groupedSupportTiers.tokens"
-                [ngValue]="supportTier"
-              >
-                <ng-container i18n="@@CHANNEL__MONETIZE__OTHER"
-                  >{supportTier.amount, plural, =1
-                  {{{supportTier.amount | number}} token} other
-                  {{{supportTier.amount | number}} tokens}}</ng-container
-                >
-                - {{ supportTier.name }}
-              </option>
-            </optgroup>
-
-            <optgroup label="USD" i18n-label="@@SUPPORT_TIER__LABEL">
-              <option
-                *ngFor="let supportTier of groupedSupportTiers.usd"
-                [ngValue]="supportTier"
-              >
-                <ng-container>${{ supportTier.amount | number }}</ng-container>
-                -
-                {{ supportTier.description }}
-              </option>
-            </optgroup>
+            <option
+              *ngFor="let supportTier of supportTiersList"
+              [ngValue]="supportTier"
+            >
+              {{ supportTier.name }}
+            </option>
           </select>
         </div>
       </div>

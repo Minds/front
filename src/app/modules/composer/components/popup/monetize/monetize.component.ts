@@ -86,10 +86,15 @@ export class MonetizeComponent implements OnInit {
     this.state.supportTier = supportTier;
 
     if (supportTier) {
-      this.state.type = this.supportTiers.toMonetizationType(
-        supportTier.currency
-      );
-      this.state.amount = supportTier.amount;
+      this.state.type = supportTier.has_usd
+        ? 'money'
+        : supportTier.has_tokens
+        ? 'tokens'
+        : null;
+      this.state.amount =
+        supportTier[
+          supportTier.has_usd ? 'usd' : supportTier.has_tokens ? 'tokens' : null
+        ];
     }
   }
 
