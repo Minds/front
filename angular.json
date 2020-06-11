@@ -12,11 +12,47 @@
           "code": "en"
         },
         "locales": {
+          "cs": {
+            "translation": "src/locale/Minds.cs.xliff"
+          },
+          "de": {
+            "translation": "src/locale/Minds.de.xliff"
+          },
           "es": {
             "translation": "src/locale/Minds.es.xliff"
           },
           "fr": {
             "translation": "src/locale/Minds.fr.xliff"
+          },
+          "it": {
+            "translation": "src/locale/Minds.it.xliff"
+          },
+          "ja": {
+            "translation": "src/locale/Minds.ja.xliff"
+          },
+          "nl": {
+            "translation": "src/locale/Minds.nl.xliff"
+          },
+          "no": {
+            "translation": "src/locale/Minds.no.xliff"
+          },
+          "pl": {
+            "translation": "src/locale/Minds.pl.xliff"
+          },
+          "pt": {
+            "translation": "src/locale/Minds.pt.xliff"
+          },
+          "ro": {
+            "translation": "src/locale/Minds.ro.xliff"
+          },
+          "ru": {
+            "translation": "src/locale/Minds.ru.xliff"
+          },
+          "sv": {
+            "translation": "src/locale/Minds.sv.xliff"
+          },
+          "uk": {
+            "translation": "src/locale/Minds.uk.xliff"
           },
           "vi": {
             "translation": "src/locale/Minds.vi.xliff"
