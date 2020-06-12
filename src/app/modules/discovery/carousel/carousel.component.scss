@@ -47,8 +47,6 @@
           text-rendering: optimizeLegibility;
           -webkit-font-smoothing: antialiased;
           cursor: pointer;
-
-          //TODO: remove - added for groups
           max-width: calc(100% - 16px);
           text-overflow: ellipsis;
           overflow: hidden;
