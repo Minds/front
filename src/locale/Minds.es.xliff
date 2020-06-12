@@ -12323,6 +12323,24 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Borrar historial</target>
       </trans-unit>
+      <trans-unit id="SUGGESTIONS__CHANNEL__TITLE" datatype="html">
+        <source>Suggested Channels</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/suggestions/channel/sidebar.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Canales sugeridos</target>
+      </trans-unit>
+      <trans-unit id="SUGGESTIONS__GROUP__TITLE" datatype="html">
+        <source>Suggested Groups</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/suggestions/channel/sidebar.component.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Grupos sugeridos</target>
+      </trans-unit>
       <trans-unit id="COMMON__JOIN" datatype="html">
         <source>Join</source>
         <context-group purpose="location">
@@ -19607,7 +19625,7 @@
           <context context-type="linenumber">2</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Pie</target>
+        <target state="translated">Footer</target>
       </trans-unit>
       <trans-unit id="SETTINGS__PRO__FOOTER___DESCRIPTION" datatype="html">
         <source>

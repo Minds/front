@@ -9876,6 +9876,22 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
       </trans-unit>
+      <trans-unit id="SUGGESTIONS__CHANNEL__TITLE" datatype="html">
+        <source>Suggested Channels</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/suggestions/channel/sidebar.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
+      <trans-unit id="SUGGESTIONS__GROUP__TITLE" datatype="html">
+        <source>Suggested Groups</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/suggestions/channel/sidebar.component.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+      </trans-unit>
       <trans-unit id="COMMON__JOIN" datatype="html">
         <source>Join</source>
         <context-group purpose="location">
