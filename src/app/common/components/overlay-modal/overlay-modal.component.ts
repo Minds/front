@@ -35,6 +35,7 @@ export class OverlayModalComponent implements AfterViewInit {
   wrapperClass: string = '';
   root: HTMLElement;
   isMediaModal: boolean = false;
+  stackable: boolean = false;
 
   @ViewChild(DynamicHostDirective, { static: true })
   private host: DynamicHostDirective;
@@ -55,21 +56,35 @@ export class OverlayModalComponent implements AfterViewInit {
       this.root = document.body;
     }
 
+    // TODOOJM remove all of these console logs
+    console.log('CMP ngAfterViewInit()');
+
+    /**
+     * Connect this component with its corresponding service instance
+     */
     this.service.setContainer(this);
   }
 
   create(componentClass, opts?, injector?: Injector) {
+    console.log('CMP create()');
+
+    /**
+     * Remove possible existing modal component refs, etc. before creating a new one
+     */
     this.dismiss();
 
     opts = {
       class: '',
       wrapperClass: '',
       inputValues: {},
+      stackable: false,
       ...opts,
     };
 
     this.class = opts.class;
     this.wrapperClass = opts.wrapperClass || '';
+
+    this.stackable = opts.stackable;
 
     this.isMediaModal =
       this.class.indexOf('m-overlayModal--media') > -1 ? true : false;
@@ -107,10 +122,12 @@ export class OverlayModalComponent implements AfterViewInit {
   }
 
   setRoot(root: HTMLElement) {
+    console.log('CMP setRoot()');
     this.root = root;
   }
 
   setData(data) {
+    console.log('CMP setData()');
     if (!this.componentInstance) {
       return;
     }
@@ -120,6 +137,7 @@ export class OverlayModalComponent implements AfterViewInit {
   }
 
   setOpts(opts) {
+    console.log('CMP setOpts()');
     if (!this.componentInstance) {
       return;
     }
@@ -128,6 +146,7 @@ export class OverlayModalComponent implements AfterViewInit {
   }
 
   present() {
+    console.log('CMP present()');
     if (!this.componentInstance) {
       return;
     }
@@ -137,6 +156,10 @@ export class OverlayModalComponent implements AfterViewInit {
     if (this.root) {
       this.root.classList.add('m-overlay-modal--shown');
       document.body.classList.add('m-overlay-modal--shown--no-scroll');
+
+      if (this.stackable) {
+        // TODOOJM handle height issue here?
+      }
     }
   }
 
@@ -147,6 +170,7 @@ export class OverlayModalComponent implements AfterViewInit {
   }
 
   dismiss(data?: any) {
+    console.log('CMP dismiss()');
     this.hidden = true;
 
     if (this.root) {
