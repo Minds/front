@@ -1,12 +1,15 @@
-<div
-  class="m-settingsV2__desc"
-  i18n="@@SETTINGS__PRO__ASSETS__UPLOAD_CUSTOM_LOGO"
->
-  Upload custom logo and background images.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
-  >
-</div>
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__ASSETS__LABEL">
+    Assets
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__ASSETS__DESCRIPTION">
+    Upload custom logo and background images.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
+
 <div *ngIf="init" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">
     <div class="m-form__field--asset">
