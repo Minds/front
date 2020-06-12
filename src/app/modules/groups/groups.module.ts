@@ -69,7 +69,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     NgCommonModule,
-    RouterModule.forChild(routes),
+    RouterModule,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
@@ -123,6 +123,8 @@ const routes: Routes = [
     GroupsProfileFilterSelector,
     GroupsMembersModuleComponent,
     GroupsSidebarMarkersComponent,
+    GroupProfileFeedSortedComponent,
+    GroupMemberPreviews,
   ],
   providers: [CanDeactivateGroupService],
 })

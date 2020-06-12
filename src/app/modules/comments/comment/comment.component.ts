@@ -96,6 +96,7 @@ export class CommentComponentV2 implements OnChanges, OnInit, AfterViewInit {
   @Input() canEdit: boolean = false;
   @Input() canDelete: boolean = false;
   @Input() hideToolbar: boolean = false;
+  @Input() newDesign: boolean = false;
 
   @Output() onReply = new EventEmitter();
 

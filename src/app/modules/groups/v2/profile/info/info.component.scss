@@ -1,0 +1,61 @@
+m-groupProfile__info {
+  .m-groupProfileInfo__type {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 30px;
+
+    i.material-icons {
+      margin-right: 9px;
+
+      @include m-theme() {
+        color: themed($m-textColor--secondary);
+      }
+    }
+  }
+
+  p.m-groupProfileInfo__description {
+    font-size: 14px;
+    text-align: left;
+    line-height: 19px;
+    margin-top: 6px;
+    margin-bottom: 38px;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+
+  .m-groupProfileInfo__membersTitle {
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 0;
+    text-align: left;
+    line-height: 30px;
+    display: none;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+
+    @media screen and (min-width: $m-grid-max-mobile) {
+      display: block;
+    }
+  }
+
+  .m-groupMemberPreviews__member {
+    width: 40px;
+    height: 40px;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .m-groupMemberPreviews__member--count {
+    line-height: 40px;
+  }
+}

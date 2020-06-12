@@ -1,0 +1,21 @@
+m-groupEdit__other {
+  display: flex;
+
+  .m-groupEditOther__column {
+    width: 50%;
+    margin: 0 !important;
+  }
+
+  .m-form__row--input {
+    width: 100% !important;
+
+    input[type='radio'] {
+      margin-right: 13px;
+      margin-bottom: 35px;
+    }
+
+    label {
+      margin-right: 34px;
+    }
+  }
+}

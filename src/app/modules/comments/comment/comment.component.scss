@@ -1,5 +1,13 @@
 .m-comment {
   position: relative;
+
+  &.m-comment__own {
+    flex-direction: row-reverse;
+
+    & > .minds-body > .m-comment__wrapper {
+      margin-left: auto;
+    }
+  }
 }
 
 .m-comment--focused {
@@ -13,12 +21,25 @@
   padding: 12px;
 }
 
+.m-comment__wrapper {
+  max-width: 75%;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-comment__bubbleWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
 .m-comment__bubble {
   display: inline-block;
   border-radius: 24px;
   padding: 8px 16px;
-  max-width: 75%;
+  max-width: 95%;
   white-space: pre-line;
+  box-sizing: border-box;
+
   @include m-theme() {
     background-color: rgba(themed($m-grey-50), 0.7);
   }
@@ -56,6 +77,7 @@
       max-width: 100%;
     }
   }
+
   .m-channel--badges-activity {
     vertical-align: unset;
     margin-top: -1px;
@@ -101,6 +123,7 @@
       @include m-theme() {
         color: themed($m-blue-grey-500);
       }
+
       .material-icons {
         margin-top: -2px;
       }

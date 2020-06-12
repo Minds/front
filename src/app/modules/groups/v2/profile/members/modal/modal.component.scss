@@ -1,0 +1,79 @@
+m-groupMembers__invite {
+  h1.m-groupMemberInvite__title {
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-size: 24px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  p.m-groupMemberInvite__subtext {
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 16px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  h2.m-groupMemberInvite__subtitle {
+    font-size: 18px;
+    text-align: left;
+    margin-top: 48px;
+    margin-bottom: 17px;
+
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+    }
+  }
+
+  .m-groupMemberInvite__requestList {
+    background-color: transparent !important;
+
+    table {
+      width: 100%;
+      border-spacing: 0;
+
+      tr {
+        td {
+          padding: 5px 7px;
+        }
+
+        m-groupMember__button {
+          visibility: hidden;
+          margin-left: auto;
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--tertiary);
+          }
+
+          m-groupMember__button {
+            visibility: visible;
+          }
+        }
+      }
+
+      .m-groupEntity__user {
+        display: flex;
+        align-items: center;
+
+        .minds-avatar {
+          margin: 0 12px 0 0;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-position: center;
+          background-size: cover;
+          @include m-theme() {
+            border: 1px solid themed($m-borderColor--tertiary);
+          }
+        }
+      }
+    }
+  }
+}

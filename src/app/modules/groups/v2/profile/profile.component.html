@@ -1,0 +1,80 @@
+<div *ngIf="service.group$ | async as group" class="m-groupProfile">
+  <m-group__header>
+    <m-group__actions *ngIf="service.guid$ | async"></m-group__actions>
+  </m-group__header>
+
+  <m-group__content>
+    <m-groupProfile__info
+      [group]="group"
+      [editing]="editing"
+      *ngIf="!desktopResolution"
+    ></m-groupProfile__info>
+    <div
+      *ngIf="service.guid$ | async as guid"
+      class="m-group__tabs m-tabs__container"
+    >
+      <div class="m-tabs__tab">
+        <a
+          [routerLink]="['/groups/profile', guid, 'feed']"
+          routerLinkActive="m-tabs__tab--selected"
+          i18n="@@COMMON__FEED"
+        >
+          Feed
+        </a>
+      </div>
+
+      <div class="m-tabs__tab">
+        <a
+          [routerLink]="['/groups/profile', guid, 'chat']"
+          routerLinkActive="m-tabs__tab--selected"
+          [routerLinkActiveOptions]="{ __change_detection_hack__: guid }"
+          i18n="@@COMMON__CHAT"
+        >
+          Chat
+        </a>
+      </div>
+
+      <div class="m-tabs__tab">
+        <a
+          [routerLink]="['/groups/profile', guid, 'members']"
+          routerLinkActive="m-tabs__tab--selected"
+          i18n="@@COMMON_MEMBERS"
+        >
+          Members
+        </a>
+      </div>
+
+      <div class="m-tabs__spacer"></div>
+
+      <div class="m-tabs__tab m-tab__gathering">
+        <a (click)="toggleGathering()">
+          <i class="material-icons">videocam</i>
+          <span i18n="@@COMMON__JOIN_GATHERING">
+            Join Gathering
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div
+      class="m-groupTab__content"
+      [class.m-groupTabContent__showSidebar]="desktopResolution"
+    >
+      <m-videochat></m-videochat>
+
+      <div class="m-groupTabContent__columns">
+        <router-outlet></router-outlet>
+
+        <div
+          class="m-groupProfile__infoSidebar"
+          *ngIf="desktopResolution && showProfileSidebar"
+        >
+          <m-groupProfile__info
+            [group]="group"
+            [editing]="editing"
+          ></m-groupProfile__info>
+        </div>
+      </div>
+    </div>
+  </m-group__content>
+</div>

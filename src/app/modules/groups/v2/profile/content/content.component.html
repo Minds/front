@@ -1,0 +1,80 @@
+<div
+  class="m-group__content"
+  [class.m-groupContent--unavailable]="content.state$ | async"
+  [ngSwitch]="content.state$ | async"
+>
+  <ng-template [ngSwitchCase]="'loading'">
+    <div class="m-groupContent__loading">
+      <div class="mdl-spinner mdl-js-spinner is-active" [mdl]></div>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'request-pending'">
+    <div class="m-groupContent__wrapper">
+      <i class="m-groupContent__icon material-icons">error_outline</i>
+      <h3
+        class="m-groupContent__primaryText"
+        i18n="@@GROUP_CONTENT__SORRY_GROUP_DOES_NOT_EXIST"
+      >
+        Your request to join this group hasn't been accepted yet
+        <br />
+        <minds-groups-join-button [group]="service.group$ | async">
+        </minds-groups-join-button>
+      </h3>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'not-found'">
+    <div class="m-groupContent__wrapper">
+      <i class="m-groupContent__icon material-icons">error_outline</i>
+      <h3
+        class="m-groupContent__primaryText"
+        i18n="@@GROUP_CONTENT__SORRY_GROUP_DOES_NOT_EXIST"
+      >
+        Sorry, this group doesn't appear to exist
+      </h3>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'not-a-member'">
+    <div class="m-groupContent__wrapper">
+      <minds-groups-join-button [group]="service.group$ | async">
+      </minds-groups-join-button>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'deleted'">
+    <div class="m-groupContent__wrapper">
+      <i class="m-groupContent__icon material-icons">not_interested</i>
+      <h3
+        class="m-groupContent__primaryText"
+        i18n="@@GROUP_CONTENT__ACCOUNT_DISABLED"
+      >
+        This group has been deleted
+      </h3>
+    </div>
+  </ng-template>
+
+  <ng-template [ngSwitchCase]="'nsfw'">
+    <div class="m-groupContent__wrapper">
+      <i class="m-groupContent__icon material-icons">error_outline</i>
+      <h3
+        class="m-groupContent__primaryText"
+        i18n="@@GROUP_CONTENT__GROUP_NSFW"
+      >
+        This group is NSFW
+      </h3>
+      <button
+        class="m-groupContent__confirmButton"
+        (click)="content.forceNsfwContent$.next(true)"
+        i18n="@@GROUP_CONTENT__I_AM_OVER_18"
+      >
+        I am 18 or over
+      </button>
+    </div>
+  </ng-template>
+
+  <ng-template ngSwitchDefault>
+    <ng-content></ng-content>
+  </ng-template>
+</div>

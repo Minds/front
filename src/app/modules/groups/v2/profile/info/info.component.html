@@ -1,0 +1,23 @@
+<div class="m-groupProfileInfo__type">
+  <ng-container
+    *ngIf="group.membership !== 2"
+    i18n="@@M__COMMON__PRIVATE_GROUP"
+  >
+    <i class="material-icons" *ngIf="group.membership !== 2">lock</i>
+    Private group
+  </ng-container>
+
+  <ng-container *ngIf="group.membership === 2" i18n="@@M__COMMON__PUBLIC_GROUP">
+    <i class="material-icons">lock_open</i>
+    Public group
+  </ng-container>
+</div>
+
+<p
+  class="m-groupProfileInfo__description"
+  [hidden]="editing || !group.briefdescription"
+  [innerHtml]="group.briefdescription | tags"
+></p>
+
+<div class="m-groupProfileInfo__membersTitle">Members</div>
+<m-group--member-previews [group]="group"></m-group--member-previews>

@@ -1,0 +1,112 @@
+<div class="m-groupEditOther__column">
+  <div class="m-form__row--label">
+    <label i18n="@@GROUP_EDIT__GROUP_TYPE">Group Type</label>
+  </div>
+  <div class="m-form__row--input m-groupEdit__typeInputs">
+    <input
+      type="radio"
+      class="form-control"
+      id="open-radio"
+      name="group-type"
+      [value]="2"
+      [ngModel]="service.membership$ | async"
+      (ngModelChange)="service.membership$.next($event)"
+    />
+    <label for="open-radio">Open</label>
+
+    <input
+      type="radio"
+      class="form-control"
+      id="closed-radio"
+      name="group-type"
+      [value]="0"
+      [ngModel]="service.membership$ | async"
+      (ngModelChange)="service.membership$.next($event)"
+    />
+    <label for="closed-radio">Closed</label>
+  </div>
+
+  <div class="m-form__row--label">
+    <label i18n="@@GROUP_EDIT__DEFAULT_VIEW">Default View</label>
+  </div>
+  <div class="m-form__row--input m-groupEdit__typeInputs">
+    <input
+      type="radio"
+      class="form-control"
+      id="feed-radio"
+      name="group-feed-type"
+      [value]="0"
+      [ngModel]="service.defaultView$ | async"
+      (ngModelChange)="service.defaultView$.next($event)"
+    />
+    <label for="feed-radio">Feed</label>
+
+    <input
+      type="radio"
+      class="form-control"
+      id="chat-radio"
+      name="group-feed-type"
+      [value]="1"
+      [ngModel]="service.defaultView$ | async"
+      (ngModelChange)="service.defaultView$.next($event)"
+    />
+    <label for="chat-radio">Chat</label>
+  </div>
+</div>
+<div class="m-groupEditOther__column">
+  <div class="m-form__row--label">
+    <label i18n="@@GROUP_EDIT__ENABLE_POST_MODERATION"
+      >Enable Post Moderation</label
+    >
+  </div>
+  <div class="m-form__row--input m-groupEdit__typeInputs">
+    <input
+      type="radio"
+      class="form-control"
+      id="moderation-enabled"
+      name="group-moderation"
+      [value]="1"
+      [ngModel]="service.moderated$ | async"
+      (ngModelChange)="service.moderated$.next($event)"
+    />
+    <label for="moderation-enabled">Enabled</label>
+
+    <input
+      type="radio"
+      class="form-control"
+      id="moderation-disabled"
+      name="group-moderation"
+      [value]="0"
+      [ngModel]="service.moderated$ | async"
+      (ngModelChange)="service.moderated$.next($event)"
+    />
+    <label for="moderation-disabled">Disabled</label>
+  </div>
+
+  <div class="m-form__row--label">
+    <label i18n="@@GROUP_EDIT__GATHERING">Gathering</label>
+  </div>
+  <div class="m-form__row--input m-groupEdit__typeInputs">
+    <input
+      type="radio"
+      class="form-control"
+      id="gathering-enabled"
+      name="group-gathering"
+      [value]="true"
+      [ngModel]="service.videoChatDisabled$ | async"
+      (ngModelChange)="service.videoChatDisabled$.next($event)"
+    />
+    <label for="gathering-enabled">Enabled</label>
+
+    <input
+      type="radio"
+      class="form-control"
+      id="gathering-disabled"
+      name="group-gathering"
+      [value]="false"
+      [ngModel]="service.videoChatDisabled$ | async"
+      (ngModelChange)="service.videoChatDisabled$.next($event)"
+    />
+    <label for="gathering-disabled">Disabled</label>
+  </div>
+</div>

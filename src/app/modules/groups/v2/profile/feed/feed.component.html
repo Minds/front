@@ -1,0 +1,7 @@
+<ng-container [m-clientMeta]="{ source: 'feed/group', medium: 'feed' }">
+  <m-group-profile-feed__sorted
+    *ngIf="service.group$ | async"
+    [group]="service.group$ | async"
+    [type]="'activity'"
+  ></m-group-profile-feed__sorted>
+</ng-container>

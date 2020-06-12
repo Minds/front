@@ -28,6 +28,28 @@ minds-groups-profile-conversation {
     width: 100%;
   }
 
+  &.m-groupConversation__newDesign {
+    top: unset;
+    position: initial;
+    width: unset;
+
+    m-comments__tree.m-group__chat {
+      &,
+      & > m-comments__thread,
+      button.m-comment__ribbonBtn,
+      .minds-avatar {
+        @include m-theme() {
+          background-color: transparent;
+        }
+      }
+      & > m-comments__thread > .m-comments__thread > m-comment {
+        .minds-body {
+          display: flex;
+        }
+      }
+    }
+  }
+
   .m-group__chat,
   .m-group__chat > m-comments__thread {
     height: 100%;

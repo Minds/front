@@ -1,17 +1,16 @@
-import { Component, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
 import { Client } from '../../../../services/api';
 import { UpdateMarkersService } from '../../../../common/services/update-markers.service';
 import { VideoChatService } from '../../../videochat/videochat.service';
-import { timer, Subscription } from 'rxjs';
+import { Subscription, timer } from 'rxjs';
 import { ConfigsService } from '../../../../common/services/configs.service';
 
 @Component({
   selector: 'm-group--member-previews',
   templateUrl: 'member-previews.component.html',
 })
-export class GroupMemberPreviews {
+export class GroupMemberPreviews implements OnInit, OnDestroy {
   readonly cdnUrl: string;
   @Input() group;
   members: Array<any> = [];
@@ -50,7 +49,7 @@ export class GroupMemberPreviews {
     this.inProgress = true;
 
     try {
-      let response: any = await this.client.get(
+      const response: any = await this.client.get(
         `api/v1/groups/membership/${this.group.guid}`,
         { limit: 5 }
       );
@@ -93,7 +92,7 @@ export class GroupMemberPreviews {
   }
 
   userIsInGathering(user_guid) {
-    for (let member of this.members) {
+    for (const member of this.members) {
       if (member.guid === user_guid) {
         member.inGathering = true;
         member.lastGatheringMarkerTimestamp = this.currentTimestamp();
@@ -104,7 +103,7 @@ export class GroupMemberPreviews {
   updateGatheringParticipants() {
     const timestampThreshold =
       this.currentTimestamp() - 2 * VideoChatService.heartBeatIntervalSeconds;
-    for (let member of this.members) {
+    for (const member of this.members) {
       if (member.inGathering) {
         if (member.lastGatheringMarkerTimestamp < timestampThreshold) {
           member.inGathering = false;

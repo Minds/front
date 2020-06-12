@@ -10,11 +10,7 @@ export class FeaturesService {
   protected _warnedCache: { [key: string]: number } = {};
   private features = {};
 
-  constructor(
-    private session: Session,
-    private router: Router,
-    private configs: ConfigsService
-  ) {}
+  constructor(private session: Session, public configs: ConfigsService) {}
 
   has(feature: string): boolean {
     const features = this.configs.get('features');
@@ -51,20 +47,6 @@ export class FeaturesService {
     return features[feature] === true;
   }
 
-  async check(feature: string, { redirectTo }: { redirectTo?: any[] } = {}) {
-    if (feature.indexOf('!') === 0) {
-      throw new Error('Cannot negate feature when using check()');
-    }
-
-    const has = this.has(feature);
-
-    if (!has && redirectTo) {
-      this.router.navigate(redirectTo, { replaceUrl: true });
-    }
-
-    return has;
-  }
-
   protected _hasWarned(feature: string) {
     if (!this._warnedCache[feature]) {
       return false;
@@ -74,7 +56,7 @@ export class FeaturesService {
     return this._warnedCache[feature] + 5000 < Date.now();
   }
 
-  static _(session: Session, router: Router, configs: ConfigsService) {
-    return new FeaturesService(session, router, configs);
+  static _(session: Session, configs: ConfigsService) {
+    return new FeaturesService(session, configs);
   }
 }

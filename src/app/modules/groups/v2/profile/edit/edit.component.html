@@ -1,0 +1,65 @@
+<div
+  class="m-modalV2__inner m-group__edit"
+  *ngIf="service.group$ | async as group"
+>
+  <div class="m-modalV2__header m-groupEdit__header">
+    <h2 class="m-modalV2Header__title" i18n="@@GROUP_EDIT__EDIT_PROFILE">
+      Edit Profile
+    </h2>
+  </div>
+
+  <form
+    class="m-groupEdit__content m-formWrapper"
+    (keydown.enter)="$event.preventDefault()"
+  >
+    <m-accordion class="m-accordionV2 m-formLayout--buttonRight">
+      <m-accordion__pane
+        class="m-accordion__pane--noTopPadding"
+        headerTitle="Description &amp; Imagery"
+        i18n-headerTitle="@@GROUP_EDIT__BIO_AND_IMAGERY"
+      >
+        <m-groupEdit__description
+          class="m-accordionPane__innerContentContainer"
+        ></m-groupEdit__description>
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+
+      <m-accordion__pane
+        headerTitle="Hashtags"
+        i18n-headerTitle="@@COMMON__HASHTAGS"
+      >
+        <m-groupEdit__hashtags
+          class="m-accordionPane__innerContentContainer"
+        ></m-groupEdit__hashtags>
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+
+      <m-accordion__pane
+        headerTitle="Other"
+        i18n-headerTitle="@@GROUP_EDIT__OTHER"
+      >
+        <m-groupEdit__other
+          class="m-accordionPane__innerContentContainer"
+        ></m-groupEdit__other>
+
+        <ng-container *ngTemplateOutlet="saveButton"></ng-container>
+      </m-accordion__pane>
+    </m-accordion>
+
+    <ng-template #saveButton>
+      <div class="m-form__buttonsContainer m-groupEdit__buttonsContainer">
+        <m-shadowboxSubmitButton
+          type="button"
+          [disabled]="false"
+          [saving]="service.inProgress$ | async"
+          (click)="onSubmit()"
+          i18n="@@COMMON__SAVE"
+        >
+          Save
+        </m-shadowboxSubmitButton>
+      </div>
+    </ng-template>
+  </form>
+</div>

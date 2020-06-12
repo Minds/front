@@ -1,0 +1,33 @@
+<div class="m-groupHeader" *ngIf="service.group$ | async as group">
+  <div class="m-groupHeader__banner">
+    <div
+      class="m-groupHeaderBanner__background"
+      [ngStyle]="bannerBackgroundImageCss(group)"
+    ></div>
+
+    <minds-avatar
+      class="m-groupHeaderBanner__avatar"
+      [object]="group"
+      [editMode]="false"
+    ></minds-avatar>
+
+    <ng-content></ng-content>
+  </div>
+
+  <div class="m-groupHeader__info">
+    <h1 class="m-groupHeaderInfo__name">
+      <span>
+        {{ group.name }}
+      </span>
+
+      <!--
+      <m-group--badges
+        *ngIf="group.guid"
+        class="m-groupHeaderInfoName__badges"
+        [user]="group"
+        [badges]="['admin', 'verified']"
+      ></m-group--badges>
+      -->
+    </h1>
+  </div>
+</div>

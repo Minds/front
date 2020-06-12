@@ -1,9 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-// import { GroupsService } from '../../groups-service';
-
-import { Client } from '../../../../services/api';
 import { Session } from '../../../../services/session';
 
 @Component({
@@ -11,8 +7,12 @@ import { Session } from '../../../../services/session';
   selector: 'minds-groups-profile-conversation',
   templateUrl: 'conversation.component.html',
 })
-export class GroupsProfileConversation {
+export class GroupsProfileConversation implements OnInit {
   @Input() group: any;
+
+  @HostBinding('class.m-groupConversation__newDesign')
+  @Input()
+  newDesign: boolean = false;
 
   constructor(public session: Session, private router: Router) {}
 

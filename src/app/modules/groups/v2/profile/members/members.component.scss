@@ -1,0 +1,124 @@
+m-group__members {
+  width: 100%;
+  margin-top: 34px;
+
+  .m-theme__2020 .m-group__members {
+    [class*='m-pageLayout__pane'] {
+      padding: 20px 40px;
+
+      @media screen and (max-width: $layoutMin3ColWidth) {
+        padding: 20px;
+      }
+    }
+  }
+
+  .m-groupMembers__list {
+    padding: 43px 0 0;
+
+    background-color: transparent !important;
+
+    table {
+      width: 100%;
+      border-spacing: 0;
+
+      tr {
+        td {
+          padding: 5px 7px;
+        }
+
+        m-groupMember__button {
+          visibility: hidden;
+          margin-left: auto;
+        }
+
+        &:hover {
+          @include m-theme() {
+            background-color: themed($m-bgColor--tertiary);
+          }
+
+          m-groupMember__button {
+            visibility: visible;
+          }
+        }
+      }
+
+      .m-groupEntity__user {
+        display: flex;
+        align-items: center;
+
+        .minds-avatar {
+          margin: 0 12px 0 0;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-position: center;
+          background-size: cover;
+          @include m-theme() {
+            border: 1px solid themed($m-borderColor--tertiary);
+          }
+        }
+      }
+    }
+  }
+
+  .m-group__members {
+    .m-groupMembers__top {
+      display: flex;
+      align-items: center;
+
+      .m-groupMembers__searchBox {
+        display: flex;
+        align-items: center;
+        border: 1px solid;
+        flex-grow: 1;
+
+        @include m-theme() {
+          border-color: themed($m-borderColor--primary);
+        }
+
+        > i.material-icons {
+          font-size: 20px;
+          margin-left: 10px;
+          margin-right: 15px;
+          cursor: pointer;
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+        }
+
+        > input {
+          appearance: none;
+          padding: 10px 0;
+          width: 100%;
+          background: transparent;
+          border: none;
+          box-sizing: border-box;
+          font-size: 16px;
+
+          &:focus {
+            outline: 0;
+          }
+
+          @include m-theme() {
+            color: themed($m-textColor--secondary);
+          }
+
+          @media screen and (max-width: $layoutMin3ColWidth) {
+            padding: 20px;
+          }
+        }
+      }
+
+      .m-groupMembers__invite {
+        margin-left: 28px;
+        font-size: 16px;
+        cursor: pointer;
+
+        @include m-theme() {
+          color: themed($m-textColor--primary);
+        }
+      }
+    }
+  }
+}

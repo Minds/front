@@ -74,6 +74,7 @@ import { Pages } from './controllers/pages/pages';
 import { LayoutModule } from './modules/layout/layout.module';
 import { SharedModule } from './common/shared.module';
 import { YoutubeMigrationModule } from './modules/media/youtube-migration/youtube-migration.module';
+import { GroupsV2Module } from './modules/groups/v2/groups-v2.module';
 
 @Injectable()
 export class SentryErrorHandler implements ErrorHandler {
@@ -101,7 +102,7 @@ export class SentryErrorHandler implements ErrorHandler {
     LayoutModule,
     CommonModule,
     ProModule, // NOTE: Pro Module should be declared _BEFORE_ anything else
-    //CheckoutModule,
+    // CheckoutModule,
     PlusModule,
     AdsModule,
     BoostModule,
@@ -119,7 +120,8 @@ export class SentryErrorHandler implements ErrorHandler {
     OnboardingModule,
     OnboardingV2Module,
     NotificationModule,
-    GroupsModule,
+    // GroupContainerModule,
+    GroupsV2Module,
     BlogModule,
     PostMenuModule,
     SearchModule,
@@ -143,9 +145,8 @@ export class SentryErrorHandler implements ErrorHandler {
     SharedModule,
     YoutubeMigrationModule,
 
-    //last due to :username route
+    // last due to :username route
     AppRoutingModule,
-    ChannelContainerModule,
   ],
   providers: [
     { provide: ErrorHandler, useClass: SentryErrorHandler },

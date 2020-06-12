@@ -1,0 +1,121 @@
+m-groupProfile {
+  display: block;
+  min-height: 100%;
+}
+
+.m-groupProfile {
+  display: block;
+  min-height: 100%;
+  border-right: 1px solid;
+
+  @media screen and (max-width: $max-mobile) {
+    border: none;
+  }
+
+  @include m-theme() {
+    border-color: themed($m-borderColor--primary);
+  }
+
+  .m-group__narrowBrief {
+    display: none;
+    padding: 20px 20px 0;
+
+    @media screen and (max-width: $layoutMin3ColWidth) {
+      display: block;
+    }
+
+    // @media screen and (max-width: $max-mobile) {
+    //   padding: 25px 20px 0;
+    // }
+  }
+
+  m-group__content {
+    .m-group__content > m-groupProfile__info {
+      & > * {
+        display: block;
+        margin-left: 16px;
+        margin-right: 16px;
+      }
+
+      & > p {
+        margin-bottom: 24px;
+      }
+    }
+  }
+
+  .m-group__tabs {
+    @media screen and (max-width: $max-mobile) {
+      padding: 0 20px;
+
+      .m-tabs__tab > a:first-child {
+        margin-left: 0;
+      }
+    }
+
+    .m-tab__gathering {
+      flex-shrink: 0;
+
+      a {
+        display: flex;
+        align-items: center;
+
+        i.material-icons {
+          font-size: 15px;
+        }
+
+        @media screen and (max-width: $m-grid-max-mobile) {
+          span {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .m-groupTab__content {
+    &.m-groupTabContent__showSidebar {
+      .m-groupTabContent__columns {
+        margin: 0 40px;
+
+        m-group__feed {
+          min-width: 55.16%;
+          margin-top: 34px;
+          margin-right: 39px;
+        }
+
+        m-group__chat {
+          width: 100%;
+        }
+
+        .m-groupProfile__infoSidebar {
+          min-width: 27.9%;
+          padding-top: 26px;
+          padding-left: 38px;
+
+          @include m-theme() {
+            border-left: 1px solid themed($m-borderColor--primary);
+          }
+        }
+      }
+    }
+
+    .m-groupTabContent__columns {
+      display: flex;
+
+      @media screen and(min-width: $m-grid-max-mobile) {
+        margin: 34px 40px 0;
+      }
+    }
+  }
+
+  .m-group__blockedMessage {
+    padding: 40px 20px 0;
+    font-size: 18px;
+    line-height: 23px;
+    text-align: center;
+
+    @include m-theme() {
+      color: themed($m-textColor--secondary);
+    }
+  }
+}

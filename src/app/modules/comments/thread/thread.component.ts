@@ -38,6 +38,7 @@ export class CommentsThreadComponent implements OnInit {
   @Input() canDelete: boolean = false;
   @Input() readonly: boolean = false;
   @Input() conversation: boolean = false;
+  @Input() newDesign: boolean = false;
   @Input() limit: number = 12;
   @Input() level = 0;
   @Output() scrollToBottom: EventEmitter<boolean> = new EventEmitter(true);

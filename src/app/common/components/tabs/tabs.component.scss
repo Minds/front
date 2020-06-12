@@ -20,6 +20,12 @@
     margin-right: 0;
   }
 }
+
+.m-tabs__spacer {
+  width: 100%;
+  flex-shrink: 1;
+}
+
 .m-tabs__tab > a {
   cursor: pointer;
   padding: 13px 0;
@@ -37,6 +43,7 @@
     color: themed($m-textColor--tertiary);
     border-bottom: 3px solid transparent;
   }
+
   &.selected,
   &.m-tabs__tab--selected {
     @include m-theme() {
@@ -44,11 +51,13 @@
       border-bottom: 3px solid themed($m-blue);
     }
   }
+
   &:hover {
     @include m-theme() {
       color: themed($m-textColor--primary);
     }
   }
+
   @media screen and (max-width: $max-mobile) {
     padding: 10px 0;
     // margin: 0 10px;

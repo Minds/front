@@ -1,0 +1,7 @@
+<div class="m-group__actions">
+  <m-groupActions__edit></m-groupActions__edit>
+
+  <ng-container *ngIf="(service.group$ | async)['is:owner']">
+    <m-groupActions__join></m-groupActions__join>
+  </ng-container>
+</div>
