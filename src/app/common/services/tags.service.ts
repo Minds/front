@@ -27,7 +27,6 @@ export class TagsService {
    * Get regex for url, mail, hash or at.
    */
   public getRegex(key: string): RegExp {
-    console.log(this.regex['hash']);
     return this.regex[key];
   }
 }
