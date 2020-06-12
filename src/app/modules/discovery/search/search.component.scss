@@ -1,0 +1,5 @@
+.m-discoveryFeeds__carouselContainer {
+  @include m-theme() {
+    border-bottom: 1px solid themed($m-borderColor--primary);
+  }
+}

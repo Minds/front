@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DiscoveryFeedItemComponent } from './feeds/feed-item.component';
 import { LegacyModule } from '../legacy/legacy.module';
 import { ActivityModule } from '../newsfeed/activity/activity.module';
+import { CarouselEntitiesService } from './carousel/carousel-entities.service';
+import { DiscoveryCarouselComponent } from '../discovery/carousel/carousel.component';
 
 @NgModule({
   imports: [
@@ -27,12 +29,14 @@ import { ActivityModule } from '../newsfeed/activity/activity.module';
     DiscoveryTagSettingsComponent,
     DiscoveryFeedsSettingsComponent,
     DiscoveryFeedItemComponent,
+    DiscoveryCarouselComponent,
   ],
   exports: [
     DiscoverySidebarTagsComponent,
     DiscoveryTagSettingsComponent,
     DiscoveryFeedItemComponent,
+    DiscoveryCarouselComponent,
   ],
-  providers: [DiscoveryTagsService],
+  providers: [DiscoveryTagsService, CarouselEntitiesService],
 })
 export class DiscoverySharedModule {}

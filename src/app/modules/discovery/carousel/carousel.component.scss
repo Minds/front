@@ -1,0 +1,93 @@
+.m-discoveryCarousel__wrapper {
+  position: relative;
+
+  .m-discoveryCarousel__carousel {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    position: relative;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .m-discoveryCarousel__item {
+      scroll-snap-align: start;
+
+      .m-discoveryCarousel__entityBlock {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        height: 166px;
+        width: 130px;
+        margin: 16px;
+        border-radius: 4px;
+        @include m-theme() {
+          border: solid 1px themed($m-borderColor--primary);
+        }
+
+        * + * {
+          margin-top: 10px;
+        }
+
+        .m-discoveryCarousel__avatar {
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          background-size: cover;
+          cursor: pointer;
+        }
+
+        .m-discoveryCarousel__name {
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: antialiased;
+          cursor: pointer;
+
+          //TODO: remove - added for groups
+          max-width: calc(100% - 16px);
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        .m-discoveryCarousel__button {
+          border-radius: 20px;
+          padding: 6px 12px;
+          background-color: unset;
+          text-rendering: optimizeLegibility;
+          -webkit-font-smoothing: antialiased;
+          cursor: pointer;
+
+          @include m-theme() {
+            border: solid 1px themed($m-borderColor--primary);
+            color: themed($m-textColor--primary);
+          }
+        }
+      }
+    }
+  }
+
+  .m-discoveryCarousel__nextButton {
+    position: absolute;
+    z-index: 1;
+    border-radius: 50%;
+    padding: 0;
+    height: 30px;
+    width: 30px;
+    top: calc(50% - 24px); /* offset for button padding */
+    right: -15px;
+    @media screen and (max-width: $max-mobile) {
+      right: 0;
+    }
+    @include m-theme() {
+      color: themed($m-textColor--primary);
+      background-color: themed($m-bgColor--secondary);
+      border: 1px solid themed($m-borderColor--primary);
+    }
+  }
+}
