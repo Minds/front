@@ -109,6 +109,10 @@ $layoutMin1ColWidth: 280px;
   .m-pageLayout__pane--main {
     width: $layoutMainFullWidth;
     max-width: $layoutMainFullWidth;
+
+    @media screen and (max-width: $layoutMax2ColFixedWidth) {
+      width: auto;
+    }
   }
 
   @media screen and (max-width: $layoutMax2ColFixedWidth) {
