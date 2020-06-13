@@ -58,6 +58,8 @@ import { YoutubeMigrationComponent } from '../media/youtube-migration/youtube-mi
 import { ReferralsV2Module } from './other/referrals/referrals.module';
 import { SettingsV2ReferralsComponent } from './other/referrals/referrals.component';
 import { LanguageModule } from '../language/language.module';
+import { SettingsV2I18nHack } from './settings-i18n-hack.component';
+import { SettingsV2HeaderComponent } from './settings-header.component';
 
 const SETTINGS_V2_ROUTES: Routes = [
   {
@@ -84,6 +86,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Display Name',
               description: 'Customize your display name.',
+              id: 'display-name',
             },
           },
           {
@@ -94,6 +97,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Email Address',
               description:
                 'Change the email address where notifications are sent.',
+              id: 'email-address',
             },
           },
           {
@@ -103,6 +107,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Language Settings',
               description:
                 'Change your preferred language and, if available, the web interface display.',
+              id: 'language',
             },
           },
           {
@@ -112,9 +117,9 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Password',
               description: 'Change account password.',
+              id: 'password',
             },
           },
-
           {
             path: 'nsfw-content',
             component: SettingsV2NsfwContentComponent,
@@ -122,6 +127,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'NSFW Content',
               description:
                 'Control how NSFW content is displayed in your newsfeed.',
+              id: 'nsfw-content',
             },
           },
           {
@@ -130,6 +136,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Share Buttons',
               description: 'Control whether you see the share button overlay.',
+              id: 'share-buttons',
             },
           },
           {
@@ -137,6 +144,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             component: SettingsV2AutoplayVideosComponent,
             data: {
               title: 'Autoplay Videos',
+              id: 'autoplay-videos',
             },
           },
           {
@@ -147,6 +155,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Email Notifications',
               description:
                 'Control what email notifications you receive, and when.',
+              id: 'email-notifications',
             },
           },
           {
@@ -155,6 +164,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Notification Popovers',
               description: 'Control whether you receive notification popovers.',
+              id: 'toaster-notifications',
             },
           },
           { path: '**', redirectTo: 'account' },
@@ -254,6 +264,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Two-factor Authentication',
               description:
                 'Add an extra layer of security to your account by enabling 2FA.',
+              id: 'two-factor',
             },
           },
           {
@@ -262,6 +273,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Sessions',
               description: 'Close all sessions with a single click.',
+              id: 'sessions',
             },
           },
         ],
@@ -283,6 +295,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Payment Methods',
               description:
                 'Manage credit cards associated with your Minds account.',
+              id: 'payment-methods',
             },
           },
           {
@@ -292,6 +305,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Recurring Payments',
               description:
                 'Track recurring payments you make to support other channels.',
+              id: 'recurring-payments',
             },
           },
         ],
@@ -312,6 +326,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Referrals',
               description:
                 'If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!',
+              id: 'referrals',
             },
           },
           {
@@ -330,6 +345,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Reported Content',
               description:
                 'Oversee disciplinary measures taken on your posts and channel.',
+              id: 'reported-content',
             },
           },
           {
@@ -338,6 +354,7 @@ const SETTINGS_V2_ROUTES: Routes = [
             data: {
               title: 'Blocked Channels',
               description: 'Block channels from appearing in your feed.',
+              id: 'blocked-channels',
             },
           },
           {
@@ -348,6 +365,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Subscription Tiers',
               description:
                 "Define incentives for users to support your channel. These tiers will be displayed on your channel's sidebar and wire screen.",
+              id: 'subscription-tiers',
             },
           },
           {
@@ -358,6 +376,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Paywall Preview',
               description:
                 'Customize the appearance of your paywalled posts. The below description and preview image is what your subscribers will see on your exclusive posts until they become a supporter.',
+              id: 'paywall-preview',
             },
           },
           {
@@ -397,6 +416,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Deactivate Account',
               description:
                 'Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.',
+              id: 'deactivate-account',
             },
           },
           {
@@ -406,6 +426,7 @@ const SETTINGS_V2_ROUTES: Routes = [
               title: 'Delete Account',
               description:
                 'Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable. Your username will be released back to the public.',
+              id: 'delete-account',
             },
           },
         ],
@@ -469,6 +490,8 @@ const SETTINGS_V2_ROUTES: Routes = [
     SettingsV2ProPayoutsComponent,
     SettingsV2ProCancelComponent,
     SettingsV2AutoplayVideosComponent,
+    SettingsV2I18nHack,
+    SettingsV2HeaderComponent,
   ],
   providers: [SettingsV2Service],
   exports: [SettingsV2Component],

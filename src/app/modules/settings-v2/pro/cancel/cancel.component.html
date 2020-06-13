@@ -1,12 +1,21 @@
-<div
-  class="m-settingsV2__desc"
-  i18n="@@SETTINGSV2_CANCEL__MANAGE_YOUR_SUBSCRIPTION_UPGRADE"
->
-  Manage your subscription.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__PRO__SUBSCRIPTION__CANCEL__LABEL"
   >
-</div>
+    Cancel Pro Subscription
+  </div>
+  <div
+    class="m-settingsV2__desc"
+    i18n="@@SETTINGS__PRO__SUBSCRIPTION__CANCEL__DESCRIPTION"
+  >
+    Manage your subscription.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
+
 <div *ngIf="init" class="m-formLayout--buttonLeft">
   <div class="m-form__buttonsContainer">
     <m-shadowboxSubmitButton

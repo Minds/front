@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
-  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="pt-PT">
+  <file source-language="en" datatype="plaintext" original="ng2.template" target-language="pt-BR">
     <body>
       <trans-unit id="SIDEBAR_MARKERS__GROUPS" datatype="html">
         <source>Groups</source>
@@ -1315,7 +1315,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/recurring-payments/recurring-payments.component.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">98</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Cancelar</target>
@@ -2072,7 +2072,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">currency</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -5044,7 +5044,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
-          <context context-type="linenumber">47</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Excluir</target>
@@ -5087,7 +5087,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/recurring-payments/recurring-payments.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -5106,7 +5106,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/recurring-payments/recurring-payments.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -5125,7 +5125,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/recurring-payments/recurring-payments.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">79</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -5144,7 +5144,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/recurring-payments/recurring-payments.component.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -5321,7 +5321,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/paywall-preview/paywall-preview.component.html</context>
-          <context context-type="linenumber">8</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Descrição</target>
@@ -5334,7 +5334,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/paywall-preview/paywall-preview.component.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">ex. Me ajude a ver meu conteúdo exclusivo e junte-se a mim para um chat de vídeo mensal</target>
@@ -5347,7 +5347,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/paywall-preview/paywall-preview.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Fundo</target>
@@ -5360,7 +5360,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/paywall-preview/paywall-preview.component.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Pré-visualizar</target>
@@ -12577,7 +12577,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/hashtags/hashtags.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/edit/hashtags.component.html</context>
@@ -13754,7 +13754,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">51</context>
         </context-group>
         <note priority="1" from="meaning">currency</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -18141,6 +18141,37 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Configurações</target>
       </trans-unit>
+      <trans-unit id="COMMON__ACTIONS__BACK" datatype="html">
+        <source>Back</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/referrals.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-header.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Anterior</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__REFERRALS__LABEL" datatype="html">
+        <source>Referrals</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/referrals.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Referências</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__REFERRALS__DESCRIPTION" datatype="html">
+        <source>If your friend signs up for Minds within 24 hours of clicking the link you shared with them, they’ll be added to your pending referrals. Once they sign up for the rewards program by setting up their Minds wallet, the referral is complete and you’ll both get +1 added to your contribution scores!</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/referrals/referrals.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Se seu amigo se inscrever em Mentes no prazo de 24 horas depois de clicar no link que você compartilhou com ele, ele será adicionado às suas referências pendentes. Uma vez que eles se inscrevem para o programa de recompensas, configurando sua carteira de Mentes o convite está completo e ambos receberão +1 adicionado à sua pontuação de contribuição!</target>
+      </trans-unit>
       <trans-unit id="REFERRALS__MY_REFERRALS" datatype="html">
         <source>My Referrals</source>
         <context-group purpose="location">
@@ -18337,20 +18368,29 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Mais formas de compartilhar</target>
       </trans-unit>
-      <trans-unit id="COMMON__ACTIONS__BACK" datatype="html">
-        <source>Back</source>
+      <trans-unit id="SETTINGS__ACCOUNT__DISPLAYNAME__LABEL" datatype="html">
+        <source>Display Name</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/settings-v2/settings-v2.component.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="sourcefile">app/modules/settings-v2/account/display-name/display-name.component.html</context>
+          <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Anterior</target>
+        <target state="translated">Nome para exibição</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__DISPLAYNAME__DESCRIPTION" datatype="html">
+        <source>Customize your display name.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/display-name/display-name.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Personalize seu nome de exibição.</target>
       </trans-unit>
       <trans-unit id="ACCOUNT_DISPLAY_NAME__DISPLAY_NAME" datatype="html">
         <source>Display Name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/display-name/display-name.component.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Nome para exibição</target>
@@ -18359,10 +18399,28 @@
         <source>Save Display Name</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/display-name/display-name.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar Nome de Exibição</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__SECURITY__SESSIONS__LABEL" datatype="html">
+        <source>Sessions</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/security/sessions/sessions.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Sessões</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__SECURITY__SESSIONS__DESCRIPTION" datatype="html">
+        <source>Close all sessions with a single click.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/security/sessions/sessions.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Feche todas as sessões com um único clique.</target>
       </trans-unit>
       <trans-unit id="SETTINGS__SESSIONS__YOU_CURRENTLY_HAVE_X_OPEN" datatype="html">
         <source>
@@ -18374,7 +18432,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/security/sessions/sessions.component.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -18389,7 +18447,7 @@
         <source>{VAR_PLURAL, plural, =1 {session} other {sessions} }</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/security/sessions/sessions.component.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">{VAR_PLURAL, plural, =1 {sessão} other {sessões} }</target>
@@ -18398,16 +18456,52 @@
         <source>Close all sessions</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/security/sessions/sessions.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Fechar todas as sessões</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__SECURITY__2FA__LABEL" datatype="html">
+        <source>Two-factor Authentication</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/security/two-factor/two-factor.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Autenticação de dois fatores</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__SECURITY__2FA__DESCRIPTION" datatype="html">
+        <source>Add an extra layer of security to your account by enabling 2FA.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/security/two-factor/two-factor.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Adicione uma camada extra de segurança à sua conta, ativando a autenticação 2FA.</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__EMAIL__LABEL" datatype="html">
+        <source>Email Address</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/email-address/email-address.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Endereço de e-mail</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__EMAIL__DESCRIPTION" datatype="html">
+        <source>Change the email address where notifications are sent.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/email-address/email-address.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Altere o endereço de e-mail onde as notificações são enviadas.</target>
       </trans-unit>
       <trans-unit id="ACCOUNT_EMAIL_ADDRESS__TITLE" datatype="html">
         <source>Email Address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-address/email-address.component.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Endereço de e-mail</target>
@@ -18416,7 +18510,7 @@
         <source>Invalid email address format.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-address/email-address.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Formato de endereço de e-mail inválido.</target>
@@ -18425,16 +18519,34 @@
         <source>Save Email Address</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-address/email-address.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">55</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar endereço de e-mail</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__LANGUAGE__LABEL" datatype="html">
+        <source>Language Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/language/language.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Configurações de idioma</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__LANGUAGE__DESCRIPTION" datatype="html">
+        <source>Change your preferred language and, if available, the web interface display.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/language/language.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Altere o idioma preferido e, se disponível, a interface web será exibida.</target>
       </trans-unit>
       <trans-unit id="COMMON__LANGUAGE" datatype="html">
         <source>Language</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/language/language.component.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Linguagem</target>
@@ -18443,7 +18555,7 @@
         <source>Update Language</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/language/language.component.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Atualizar Idioma</target>
@@ -18458,7 +18570,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/language/language.component.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -18469,11 +18581,29 @@
           .
         </target>
       </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__PASSWORD__LABEL" datatype="html">
+        <source>Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/password/password.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Palavra-passe</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__PASSWORD__DESCRIPTION" datatype="html">
+        <source>Change account password.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/password/password.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Alterar senha da conta.</target>
+      </trans-unit>
       <trans-unit id="PASSWORD_SETTINGS__EXISTING_PASSWORD" datatype="html">
         <source>Existing Password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/password/password.component.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Senha existente</target>
@@ -18482,7 +18612,7 @@
         <source>Incorrect password.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/password/password.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Senha incorreta.</target>
@@ -18491,7 +18621,7 @@
         <source>New Password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/password/password.component.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">50</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Nova Palavra-passe</target>
@@ -18500,7 +18630,7 @@
         <source>Confirm New Password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/password/password.component.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">72</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Confirme a nova palavra-passe</target>
@@ -18509,7 +18639,7 @@
         <source>Passwords must match.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/password/password.component.html</context>
-          <context context-type="linenumber">87</context>
+          <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">As senhas devem corresponder.</target>
@@ -18518,16 +18648,34 @@
         <source>Update Password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/password/password.component.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">114</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Atualizar Senha</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NOTIFICATIONS__EMAIL__LABEL" datatype="html">
+        <source>Email Notifications</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Notificações por e-mail</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NOTIFICATIONS__EMAIL__DESCRIPTION" datatype="html">
+        <source>Control what email notifications you receive, and when.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Controle quais notificações de e-mail você recebe e quando.</target>
       </trans-unit>
       <trans-unit id="EMAIL_NOTIFICATIONS__EMAIL_ME_WHEN" datatype="html">
         <source>Email me when</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Enviar um e-mail quando</target>
@@ -18536,7 +18684,7 @@
         <source>I have unread notifications</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">19</context>
+          <context context-type="linenumber">34</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Tenho notificações não lidas</target>
@@ -18545,7 +18693,7 @@
         <source>I receive a wire</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Eu recebo um fio</target>
@@ -18554,7 +18702,7 @@
         <source>My boost has been completed</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">77</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Meu boost foi concluído</target>
@@ -18563,7 +18711,7 @@
         <source>Email me with</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">96</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Enviar e-mail com</target>
@@ -18572,7 +18720,7 @@
         <source>Top posts from my network</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">103</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Principais postagens da minha rede</target>
@@ -18581,7 +18729,7 @@
         <source>Tips on how to improve my channel</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">127</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Dicas sobre como melhorar meu canal</target>
@@ -18590,7 +18738,7 @@
         <source>Things I&apos;ve missed since my last login</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">135</context>
+          <context context-type="linenumber">150</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Coisas que eu perdi desde o meu último login</target>
@@ -18599,7 +18747,7 @@
         <source>New channels to subscribe to</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">155</context>
+          <context context-type="linenumber">170</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Novos canais para assinar</target>
@@ -18608,7 +18756,7 @@
         <source>Keep me updated with</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">175</context>
+          <context context-type="linenumber">190</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Mantenha-me informado com</target>
@@ -18617,7 +18765,7 @@
         <source>News about new Minds products and features</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">183</context>
+          <context context-type="linenumber">198</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Notícias sobre novos produtos e recursos de novas Mentes</target>
@@ -18626,7 +18774,7 @@
         <source>Tips on how to use Minds</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">203</context>
+          <context context-type="linenumber">218</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Dicas de como usar Mentes</target>
@@ -18635,7 +18783,7 @@
         <source>Exclusive promotions</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">226</context>
+          <context context-type="linenumber">241</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Promoções exclusivas</target>
@@ -18644,16 +18792,34 @@
         <source>Update Preferences</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/email-notifications/email-notifications.component.html</context>
-          <context context-type="linenumber">250</context>
+          <context context-type="linenumber">265</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Atualizar preferências</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__NSFW__LABEL" datatype="html">
+        <source>NSFW Content</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/nsfw-content/nsfw-content.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Conteúdo NSFW</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__NSFW__DESCRIPTION" datatype="html">
+        <source>Control how NSFW content is displayed in your newsfeed.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/nsfw-content/nsfw-content.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Controle como o conteúdo NSFW é exibido no seu feed de notícias.</target>
       </trans-unit>
       <trans-unit id="NSFW_CONTENT_SETTINGS__ALWAYS_SHOW_NSFW" datatype="html">
         <source>Always show NSFW content (18+)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/nsfw-content/nsfw-content.component.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Sempre mostrar conteúdo adulto (18+)</target>
@@ -18662,16 +18828,34 @@
         <source>Update NSFW Preference</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/nsfw-content/nsfw-content.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Atualizar Preferência NSFW</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__SHAREBUTTONS__LABEL" datatype="html">
+        <source>Share Buttons</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/share-buttons/share-buttons.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Botões de Compartilhamento</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__SHAREBUTTONS__DESCRIPTION" datatype="html">
+        <source>Control whether you see the share button overlay.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/share-buttons/share-buttons.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Controle se você vê a sobreposição do botão compartilhar.</target>
       </trans-unit>
       <trans-unit id="SETTINGS_V2_SHARE_BUTTONS__SHOW_SHARE_BUTTONS" datatype="html">
         <source>Show share buttons</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/share-buttons/share-buttons.component.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">22</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Mostrar botões de compartilhamento</target>
@@ -18680,16 +18864,34 @@
         <source>Update Preference</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/share-buttons/share-buttons.component.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Preferências de atualização</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__BILLING__METHOD__LABEL" datatype="html">
+        <source>Payment Methods</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Métodos de pagamento</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__BILLING__METHOD__DESCRIPTION" datatype="html">
+        <source>Manage credit cards associated with your Minds account.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Gerencie cartões de crédito associados à sua conta Mente.</target>
       </trans-unit>
       <trans-unit id="SETTINGS_V2_PAYMENT_METHODS__YOUR_CARDS" datatype="html">
         <source>Your Cards</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
-          <context context-type="linenumber">17</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Seus Cartões</target>
@@ -18704,7 +18906,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -18719,7 +18921,7 @@
         <source>Add your first credit card</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">74</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Adicione seu primeiro cartão de crédito</target>
@@ -18732,7 +18934,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/payment-methods/payment-methods.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">79</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -18740,6 +18942,24 @@
           Adicionar um novo cartão
           <x id="CLOSE_TAG_SPAN"/>
         </target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__BILLING__RECURRING__LABEL" datatype="html">
+        <source>Recurring Payments</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/billing/recurring-payments/recurring-payments.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Pagamentos recorrentes</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__BILLING__RECURRING__DESCRIPTION" datatype="html">
+        <source>Track recurring payments you make to support other channels.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/billing/recurring-payments/recurring-payments.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Acompanhe pagamentos recorrentes que você fizer para oferecer suporte a outros canais.</target>
       </trans-unit>
       <trans-unit id="SETTINGS_V2_RECURRING_PAYMENTS__YOU_HAVENT_SETUP_ANY" datatype="html">
         <source>
@@ -18749,7 +18969,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/billing/recurring-payments/recurring-payments.component.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">108</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -18758,11 +18978,47 @@
           <x id="CLOSE_TAG_SPAN"/>
         </target>
       </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__CONTENTADMIN__REPORTED__LABEL" datatype="html">
+        <source>Reported Content</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/reported-content/reported-content.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Conteúdo relatado</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__CONTENTADMIN__REPORTED__DESCRIPTION" datatype="html">
+        <source>Oversee disciplinary measures taken on your posts and channel.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/reported-content/reported-content.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Aplique as medidas disciplinares tomadas em suas publicações e canais.</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__CONTENTADMIN__BLOCKED__LABEL" datatype="html">
+        <source>Blocked Channels</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/blocked-channels/blocked-channels.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Canais bloqueados</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__CONTENTADMIN__BLOCKED__DESCRIPTION" datatype="html">
+        <source>Block channels from appearing in your feed.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/blocked-channels/blocked-channels.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Bloqueie a exibição de canais no seu feed.</target>
+      </trans-unit>
       <trans-unit id="COMMON__UNBLOCK" datatype="html">
         <source>Unblock</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/blocked-channels/blocked-channels.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">43</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Desbloquear</target>
@@ -18771,34 +19027,88 @@
         <source>You haven&apos;t blocked any channels.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/blocked-channels/blocked-channels.component.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Você não bloqueou nenhum canal.</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__PAIDCONTENT__SUBSCRIPTIONS__LABEL" datatype="html">
+        <source>Subscription Tier Management</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/subscription-tiers/subscription-tiers.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Gerenciamento de níveis de assinatura</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__PAIDCONTENT__SUBSCRIPTIONS__DESCRIPTION" datatype="html">
+        <source>Define incentives for users to support your channel. These tiers will be displayed on your channel&apos;s sidebar and wire screen.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/subscription-tiers/subscription-tiers.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Defina incentivos para que os usuários suportem seu canal. Estes níveis serão exibidos na barra lateral e na tela de arame de seu canal.</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGSV2__SUB_TIERS__SAVE_SUBSCRIPTION_TIERS" datatype="html">
         <source>Save Subscription Tiers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/subscription-tiers/subscription-tiers.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar níveis de assinatura</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__PAIDCONTENT__PAYWALL__LABEL" datatype="html">
+        <source>Paywall Preview</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/paywall-preview/paywall-preview.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Pré-visualização do Paywall</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__PAIDCONTENT__PAYWALL__DESCRIPTION" datatype="html">
+        <source>Customize the appearance of your paywalled posts. The below description and preview image is what your subscribers will see on your exclusive posts until they become a supporter.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/paywall-preview/paywall-preview.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Personalize a aparência de suas publicações pagas. A descrição e pré-visualização da imagem abaixo é o que os seus assinantes verão em suas publicações exclusivas até se tornarem um apoiador.</target>
       </trans-unit>
       <trans-unit id="MINDS__SETTINGS__WIRE__SAVE_SETTINGS" datatype="html">
         <source>Save Settings</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/paywall-preview/paywall-preview.component.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar Configurações</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__LEAVE__DEACTIVATE__LABEL" datatype="html">
+        <source>Deactivate Account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/deactivate-account/deactivate-account.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Desativar</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__LEAVE__DEACTIVATE__DESCRIPTION" datatype="html">
+        <source>Deactivating your account will make your profile invisible. You will also not receive emails or notifications. Your username will be reserved in case you return to Minds.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/deactivate-account/deactivate-account.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Desativar sua conta tornará seu perfil invisível. Também não receberá emails ou notificações. Seu nome de utilizador será reservado caso volte para a Minds. </target>
       </trans-unit>
       <trans-unit id="SETTINGS_V2_DEACTIVATE_ACCOUNT__I_UNDERSTAND" datatype="html">
         <source>I understand and wish to continue.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/deactivate-account/deactivate-account.component.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">26</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Compreendo e desejo continuar.</target>
@@ -18807,16 +19117,34 @@
         <source>Deactivate Account</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/deactivate-account/deactivate-account.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Desativar</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__LEAVE__DELETE__LABEL" datatype="html">
+        <source>Delete Account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/delete-account/delete-account.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Apagar canal</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__LEAVE__DELETE__DESCRIPTION" datatype="html">
+        <source>Warning: This is not reversible and will result in permanent loss of your channel and all of your data. Your channel will not be recoverable. Your username will be released back to the public.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/other/delete-account/delete-account.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Aviso: isso não é reversível e resultará na perda permanente de seu canal e de todos os seus dados. Seu canal não será recuperável. Seu nome de utilizador será liberado para o público.</target>
       </trans-unit>
       <trans-unit id="SETTINGS_V2_DELETE_ACCOUNT__I_UNDERSTAND" datatype="html">
         <source>I understand and wish to continue.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/delete-account/delete-account.component.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">26</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Compreendo e desejo continuar.</target>
@@ -18825,16 +19153,34 @@
         <source>Delete Account</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/other/delete-account/delete-account.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">39</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Apagar canal</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NOTIFICATIONS__POPOVERS__LABEL" datatype="html">
+        <source>Notification Popovers</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/toaster-notifications/toaster-notifications.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Notificação Popovers</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NOTIFICATIONS__POPOVERS__DESCRIPTION" datatype="html">
+        <source>Control whether you receive notification popovers.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/toaster-notifications/toaster-notifications.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Controle se você recebe notificações de pobreza.</target>
       </trans-unit>
       <trans-unit id="TOASTER_NOTIFICATION_SETTINGS__ENABLE_POPOVERS" datatype="html">
         <source>Enable notification popovers</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/toaster-notifications/toaster-notifications.component.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Habilitar notificações bolhas</target>
@@ -18843,12 +19189,21 @@
         <source>Update Popover Preference</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/toaster-notifications/toaster-notifications.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">47</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Atualizar Preferência de Popover</target>
       </trans-unit>
-      <trans-unit id="PRO_GENERAL__CUSTOMIZE_TITLE_HEADLINE" datatype="html">
+      <trans-unit id="SETTINGS__PRO__GENERAL__LABEL" datatype="html">
+        <source>General Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Configurações Gerais</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__GENERAL__DESCRIPTION" datatype="html">
         <source>
           Customize your title and headline. 
           <x id="START_LINK"/>
@@ -18857,7 +19212,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
-          <context context-type="linenumber">1</context>
+          <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -18871,7 +19226,7 @@
         <source>Page Title</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Título da página</target>
@@ -18880,7 +19235,7 @@
         <source>The name of your pro site. This will be used in browser tab titles and your SEO tags.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">O nome do seu site profissional. Isso será usado em títulos de guias do navegador e suas tags SEO.</target>
@@ -18889,7 +19244,7 @@
         <source>Headline</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Título</target>
@@ -18898,7 +19253,7 @@
         <source>A short description about your site. This will be used in your SEO tags as well.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Uma breve descrição sobre o seu site. Isso será usado em suas etiquetas SEO também.</target>
@@ -18907,7 +19262,7 @@
         <source>Enable Pro theme</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Ativar tema Pro</target>
@@ -18916,7 +19271,7 @@
         <source>When enabled, your channel on minds.com will have your Pro site theme applied</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
-          <context context-type="linenumber">69</context>
+          <context context-type="linenumber">75</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Quando ativado, o seu canal em minds.com terá o tema Pro do site aplicado</target>
@@ -18925,12 +19280,21 @@
         <source>Save Personal Details</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/general/general.component.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">99</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar Detalhes Pessoais</target>
       </trans-unit>
-      <trans-unit id="SETTINGSV2_HASHTAGS__SETUP_SITE_COLOR_THEME" datatype="html">
+      <trans-unit id="SETTINGS__PRO__THEME__LABEL" datatype="html">
+        <source>Theme</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Tema</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__THEME__DESCRIPTION" datatype="html">
         <source>
           Set up your site&apos;s color theme. 
           <x id="START_LINK"/>
@@ -18939,7 +19303,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -18953,7 +19317,7 @@
         <source>Text Color</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Cor do texto</target>
@@ -18962,7 +19326,7 @@
         <source>The color of text on your Pro site</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">A cor do texto no seu site Pro</target>
@@ -18971,15 +19335,15 @@
         <source>Invalid hex code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">133</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">203</context>
+          <context context-type="linenumber">206</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Código hexadecimal inválido</target>
@@ -18988,7 +19352,7 @@
         <source>Text color is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">70</context>
+          <context context-type="linenumber">73</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Cor do texto necessária</target>
@@ -18997,7 +19361,7 @@
         <source>Accent Color</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">82</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Cor do acento</target>
@@ -19006,7 +19370,7 @@
         <source>Links will become this color when you hover over them</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">86</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Links se tornarão essa cor quando você passar o mouse sobre eles</target>
@@ -19015,7 +19379,7 @@
         <source>Link color is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">136</context>
+          <context context-type="linenumber">139</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Cor do link é necessária</target>
@@ -19024,7 +19388,7 @@
         <source>Background Color</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">147</context>
+          <context context-type="linenumber">150</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Cor de fundo</target>
@@ -19033,7 +19397,7 @@
         <source>The background color of some elements on your site</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">152</context>
+          <context context-type="linenumber">155</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">A cor de fundo de alguns elementos em seu site</target>
@@ -19042,7 +19406,7 @@
         <source>Background color is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">209</context>
+          <context context-type="linenumber">212</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Cor de fundo é necessária</target>
@@ -19051,7 +19415,7 @@
         <source>Color Schema</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">217</context>
+          <context context-type="linenumber">220</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Esquema de Cor</target>
@@ -19060,7 +19424,7 @@
         <source>Light</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">225</context>
+          <context context-type="linenumber">228</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Fino</target>
@@ -19069,7 +19433,7 @@
         <source>Dark</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">241</context>
+          <context context-type="linenumber">244</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Escuro</target>
@@ -19078,7 +19442,7 @@
         <source>Tiles Aspect Ratio</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">259</context>
+          <context context-type="linenumber">262</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Blocos Aspect Ratio</target>
@@ -19087,7 +19451,7 @@
         <source>The width-to-height ratio of tiles on your site</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">264</context>
+          <context context-type="linenumber">267</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">A relação largura-para-altura dos blocos no seu site</target>
@@ -19096,12 +19460,21 @@
         <source>Save Theme</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/theme/theme.component.html</context>
-          <context context-type="linenumber">296</context>
+          <context context-type="linenumber">299</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar tema</target>
       </trans-unit>
-      <trans-unit id="SETTINGS__PRO__ASSETS__UPLOAD_CUSTOM_LOGO" datatype="html">
+      <trans-unit id="SETTINGS__PRO__ASSETS__LABEL" datatype="html">
+        <source>Assets</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/assets/assets.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Mídias</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__ASSETS__DESCRIPTION" datatype="html">
         <source>
           Upload custom logo and background images. 
           <x id="START_LINK"/>
@@ -19110,7 +19483,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/assets/assets.component.html</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -19124,7 +19497,7 @@
         <source>Logo</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/assets/assets.component.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Logotipo</target>
@@ -19133,7 +19506,7 @@
         <source>This will be displayed on the top left of your site</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/assets/assets.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Isto será exibido no canto superior esquerdo do seu site</target>
@@ -19142,7 +19515,7 @@
         <source>Background Image</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/assets/assets.component.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">60</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Imagem de fundo</target>
@@ -19151,7 +19524,7 @@
         <source>This will be displayed as the background of your site</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/assets/assets.component.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">65</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Isto será exibido como plano de fundo do seu site</target>
@@ -19160,12 +19533,21 @@
         <source>Save Assets</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/assets/assets.component.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar mídias</target>
       </trans-unit>
-      <trans-unit id="SETTINGSV2_HASHTAGS__SETUP_YOUR_CATEGORY_INFO" datatype="html">
+      <trans-unit id="SETTINGS__PRO__HASHTAGS__LABEL" datatype="html">
+        <source>Theme</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/hashtags/hashtags.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Tema</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__HASHTAGS__DESCRIPTION" datatype="html">
         <source>
           Set up your category filter hashtags. 
           <x id="START_LINK"/>
@@ -19174,7 +19556,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/hashtags/hashtags.component.html</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="linenumber">8</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -19188,7 +19570,7 @@
         <source>Hashtags</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/hashtags/hashtags.component.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">20</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/channels/v2/edit/edit.component.html</context>
@@ -19205,7 +19587,7 @@
         <source>Create a topbar of links to provide easy access to site contents that share a hashtag</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/hashtags/hashtags.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">24</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Crie uma barra superior dos links para fornecer acesso fácil aos conteúdos do site que compartilhem uma hashtag</target>
@@ -19214,12 +19596,21 @@
         <source>Save Hashtags</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/hashtags/hashtags.component.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar Hashtags</target>
       </trans-unit>
-      <trans-unit id="SETTINGSV2__FOOTER__SETUP_SITES_FOOTER_LINKS" datatype="html">
+      <trans-unit id="SETTINGS__PRO__FOOTER__LABEL" datatype="html">
+        <source>Footer</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/footer/footer.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Rodapé</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__FOOTER___DESCRIPTION" datatype="html">
         <source>
           Set up your site&apos;s footer links. 
           <x id="START_LINK"/>
@@ -19228,7 +19619,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/footer/footer.component.html</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -19242,7 +19633,7 @@
         <source>Links</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/footer/footer.component.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Links</target>
@@ -19251,7 +19642,7 @@
         <source>You can post external links below</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/footer/footer.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">21</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Você pode postar links externos abaixo</target>
@@ -19260,7 +19651,7 @@
         <source>Add</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/footer/footer.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">28</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Adicionar</target>
@@ -19269,7 +19660,7 @@
         <source>Text</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/footer/footer.component.html</context>
-          <context context-type="linenumber">73</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">texto</target>
@@ -19278,7 +19669,7 @@
         <source>This text will be displayed at the bottom of the page</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/footer/footer.component.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">80</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Este texto será exibido na parte inferior da página.</target>
@@ -19287,16 +19678,44 @@
         <source>Save Footer</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/footer/footer.component.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">102</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar Rodapé</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__DOMAIN__LABEL" datatype="html">
+        <source>Domain</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/domain/domain.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Domínio</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__DOMAIN__DESCRIPTION" datatype="html">
+        <source>
+          Contact info@minds.com to customize your site domain. 
+          <x id="START_LINK"/>
+          Upgrade to Pro
+          <x id="CLOSE_LINK"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/domain/domain.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">
+          Entre em contato com info@minds.com para personalizar o domínio do seu site. 
+          <x id="START_LINK"/>
+          Atualizar para Pro
+          <x id="CLOSE_LINK"/>
+        </target>
       </trans-unit>
       <trans-unit id="DOMAIN_SETTINGS__DOMAIN" datatype="html">
         <source>Domain</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/domain/domain.component.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">17</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Domínio</target>
@@ -19305,7 +19724,7 @@
         <source>Currently only subdomains are supported. Custom domains are coming soon. If you wish to use a custom domain please email info@minds.com.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/domain/domain.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Atualmente apenas subdomínios são suportados. Domínios personalizados virão em breve. Se você desejar usar um domínio personalizado, envie um e-mail para info@minds.com.</target>
@@ -19314,7 +19733,7 @@
         <source>You can control your domain once you purchase Pro.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/domain/domain.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">31</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Você pode controlar seu domínio depois de comprar o Pro.</target>
@@ -19323,7 +19742,7 @@
         <source>Domain not available</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/domain/domain.component.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">48</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Domínio não disponível</target>
@@ -19332,7 +19751,7 @@
         <source>Domain is required</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/domain/domain.component.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">O domínio é necessário</target>
@@ -19341,7 +19760,7 @@
         <source>Custom &lt;head&gt; Code</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/domain/domain.component.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">62</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Código personalizado &lt;head&gt;</target>
@@ -19350,7 +19769,7 @@
         <source>Ad blocks or other JS head codes can go here. Please contact a Minds admin or email info@minds.com to customize this field.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/domain/domain.component.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">66</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Blocos de anúncios ou outros códigos head JS podem ir aqui. Por favor, entre em contato com um administrador de Mentes ou envie um e-mail para info@minds.com para personalizar este campo.</target>
@@ -19359,12 +19778,21 @@
         <source>Save Domain</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/domain/domain.component.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar domínio</target>
       </trans-unit>
-      <trans-unit id="SETTINGSV2_HASHTAGS__SELECT_CURRENCY_WISH_PAID_OUT_INFO" datatype="html">
+      <trans-unit id="SETTINGS__PRO__PAYOUTS__LABEL" datatype="html">
+        <source>Payouts</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Pagamentos</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__PAYOUTS__DESCRIPTION" datatype="html">
         <source>
           Select the currency type you wish you be paid out in. Please note payouts only occur after your 
           <x id="START_LINK"/>
@@ -19377,7 +19805,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="linenumber">5</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -19394,7 +19822,7 @@
         <source>Payout Currency</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">20</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Pagamento de moeda</target>
@@ -19403,7 +19831,7 @@
         <source>Minds Tokens</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">37</context>
         </context-group>
         <note priority="1" from="meaning">currency</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -19413,7 +19841,7 @@
         <source>Bitcoin</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">64</context>
         </context-group>
         <note priority="1" from="meaning">currency</note>
         <note priority="1" from="meaning">ng2.template</note>
@@ -19423,12 +19851,21 @@
         <source>Save Payout Currency</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/payouts/payouts.component.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Salvar moeda de pagamento</target>
       </trans-unit>
-      <trans-unit id="SETTINGSV2_CANCEL__MANAGE_YOUR_SUBSCRIPTION_UPGRADE" datatype="html">
+      <trans-unit id="SETTINGS__PRO__SUBSCRIPTION__CANCEL__LABEL" datatype="html">
+        <source>Cancel Pro Subscription</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/pro/cancel/cancel.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Cancelar assinatura Pro</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__SUBSCRIPTION__CANCEL__DESCRIPTION" datatype="html">
         <source>
           Manage your subscription. 
           <x id="START_LINK"/>
@@ -19437,7 +19874,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/cancel/cancel.component.html</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -19451,10 +19888,19 @@
         <source>Cancel Subscription</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/pro/cancel/cancel.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">27</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Cancelar assinatura</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__AUTOPLAY__LABEL" datatype="html">
+        <source>Autoplay Videos</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/account/autoplay-videos/autoplay-videos.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Reproduzir vídeos automaticamente</target>
       </trans-unit>
       <trans-unit id="AUTOPLAY_VIDEOS__CONTROL_AUTOPLAY_INFORMATION" datatype="html">
         <source>
@@ -19470,7 +19916,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/autoplay-videos/autoplay-videos.component.html</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="linenumber">11</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">
@@ -19489,7 +19935,7 @@
         <source>Enable video autoplay</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/autoplay-videos/autoplay-videos.component.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="linenumber">32</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Ativar reprodução automática de vídeo</target>
@@ -19498,10 +19944,181 @@
         <source>Update Preference</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/settings-v2/account/autoplay-videos/autoplay-videos.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Preferências de atualização</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__HEADER__LABEL" datatype="html">
+        <source>Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Configurações</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__LABEL" datatype="html">
+        <source>Account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">conta</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__LABEL" datatype="html">
+        <source>Pro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Pro</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__SECURITY__LABEL" datatype="html">
+        <source>Security</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Segurança</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__BILLING__LABEL" datatype="html">
+        <source>Billing</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Faturamento</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__LABEL" datatype="html">
+        <source>Other</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Outros</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNT__HEADER__LABEL" datatype="html">
+        <source>General Account Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Configurações Gerais da Conta</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__SECURITY__HEADER__LABEL" datatype="html">
+        <source>Security</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Segurança</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__NOTIFICATIONS__HEADER__LABEL" datatype="html">
+        <source>Notifications</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">notificações</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNTUPGRADE__HEADER__LABEL" datatype="html">
+        <source>Account Upgrade</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Upgrade da conta</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__BILLING__HEADER__LABEL" datatype="html">
+        <source>Billing</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Faturamento</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__CONTENTADMIN__HEADER__LABEL" datatype="html">
+        <source>Content Admin</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Administração de Conteúdo</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__PAIDCONTENT__HEADER__LABEL" datatype="html">
+        <source>Paid Content</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Conteúdo pago</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__OTHER__LEAVE__HEADER__LABEL" datatype="html">
+        <source>Deactivate and Delete Account</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Desativar e Excluir Conta</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__HEADER__LABEL" datatype="html">
+        <source>Pro Settings</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Pro Settings</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__SUBSCRIPTION__HEADER__LABEL" datatype="html">
+        <source>Pro Subscription Management</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Gerenciamento de Assinatura Pro</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNTUPGRADE__PRO__LABEL" datatype="html">
+        <source>Upgrade to Pro</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Atualizar para versão Pro</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__ACCOUNTUPGRADE__PLUS__LABEL" datatype="html">
+        <source>Upgrade to Plus</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Atualizar para o Plus</target>
+      </trans-unit>
+      <trans-unit id="SETTINGS__PRO__VIEW__CHANNEL__LABEL" datatype="html">
+        <source>View Pro Channel</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/settings-v2/settings-i18n-hack.component.ts</context>
+          <context context-type="linenumber">51</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Ver canal Pro</target>
       </trans-unit>
       <trans-unit id="CHANNEL_EDIT__EDIT_PROFILE" datatype="html">
         <source>Edit Profile</source>
@@ -19563,12 +20180,21 @@
           <context context-type="sourcefile">app/modules/discovery/trends/trends.component.html</context>
           <context context-type="linenumber">8</context>
         </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="translated">Apenas para você</target>
+      </trans-unit>
+      <trans-unit id="DISCOVERY_TAGS__DISCOVERY_BY_TAGS" datatype="html">
+        <source>Discover by tags</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/discovery/trends/trends.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
         <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Apenas para você</target>
+        <target state="translated">Descubra pelas tags</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_SEARCH__TOP" datatype="html">
         <source>Top</source>
@@ -19623,15 +20249,6 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="translated">Apenas para você</target>
-      </trans-unit>
-      <trans-unit id="DISCOVERY_TAGS__DISCOVERY_BY_TAGS" datatype="html">
-        <source>Discover by tags</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">app/modules/discovery/tags/tags.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-        <note priority="1" from="meaning">ng2.template</note>
-        <target state="translated">Descubra pelas tags</target>
       </trans-unit>
       <trans-unit id="DISCOVERY_TAGS__YOUR_TAGS" datatype="html">
         <source>Your Tags</source>

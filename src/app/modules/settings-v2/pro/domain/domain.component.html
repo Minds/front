@@ -1,9 +1,14 @@
-<div class="m-settingsV2__desc">
-  Contact info@minds.com to customize your site domain.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
-  >
-</div>
+<m-settingsV2__header>
+  <div class="m-settingsV2__headerLabel" i18n="@@SETTINGS__PRO__DOMAIN__LABEL">
+    Domain
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__DOMAIN__DESCRIPTION">
+    Contact info@minds.com to customize your site domain.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
 
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer">

@@ -1,12 +1,18 @@
-<div
-  class="m-settingsV2__desc"
-  i18n="@@SETTINGSV2_HASHTAGS__SETUP_YOUR_CATEGORY_INFO"
->
-  Set up your category filter hashtags.
-  <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
-    >Upgrade to Pro</a
+<m-settingsV2__header>
+  <div
+    class="m-settingsV2__headerLabel"
+    i18n="@@SETTINGS__PRO__HASHTAGS__LABEL"
   >
-</div>
+    Theme
+  </div>
+  <div class="m-settingsV2__desc" i18n="@@SETTINGS__PRO__HASHTAGS__DESCRIPTION">
+    Set up your category filter hashtags.
+    <a class="m-form__upgradeLink" routerLink="/pro" *ngIf="!isActive"
+      >Upgrade to Pro</a
+    >
+  </div>
+</m-settingsV2__header>
+
 <form *ngIf="form" [formGroup]="form" class="m-formLayout--buttonRight">
   <div class="m-form__fieldsContainer containsDragDrop">
     <div class="m-form__field--grid" formArrayName="tag_list">
