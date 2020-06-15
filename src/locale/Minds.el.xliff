@@ -5638,7 +5638,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">101</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Password</target>
@@ -5724,11 +5724,39 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Doesn't have spaces</target>
       </trans-unit>
+      <trans-unit id="REGISTER__JOIN__TITLE" datatype="html">
+        <source>Join the Minds Revolution</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/forms/register/register.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Join the Minds Revolution</target>
+      </trans-unit>
+      <trans-unit id="REGISTER__ALREADY__HAVE__ACOUNT__LINK" datatype="html">
+        <source>
+          Already have an account? 
+          <x id="START_LINK"/>
+          Login
+          <x id="CLOSE_LINK"/>
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/forms/register/register.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">
+          Already have an account? 
+          <x id="START_LINK"/>
+          Login
+          <x id="CLOSE_LINK"/>
+        </target>
+      </trans-unit>
       <trans-unit id="M__COMMON__USERNAME" datatype="html">
         <source>Username</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/auth/forgot-password/forgot-password.component.html</context>
@@ -5741,7 +5769,7 @@
         <source>Must be at least 4 characters long</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">51</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Must be at least 4 characters long</target>
@@ -5750,7 +5778,7 @@
         <source>Cannot be longer than 128 characters</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">63</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Cannot be longer than 128 characters</target>
@@ -5759,7 +5787,7 @@
         <source>Usernames can only have letters, numbers or underscores. Special characters (e.g. @^%.) and spaces are not allowed.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">69</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Usernames can only have letters, numbers or underscores. Special characters (e.g. @^%.) and spaces are not allowed.</target>
@@ -5768,7 +5796,7 @@
         <source>Email</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">71</context>
+          <context context-type="linenumber">77</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Email</target>
@@ -5777,11 +5805,11 @@
         <source>Invalid email</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">89</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">143</context>
+          <context context-type="linenumber">149</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Invalid email</target>
@@ -5790,7 +5818,7 @@
         <source>Confirm your password</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">122</context>
+          <context context-type="linenumber">128</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Confirm your password</target>
@@ -5799,7 +5827,7 @@
         <source>Captcha</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">153</context>
+          <context context-type="linenumber">159</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Captcha</target>
@@ -5808,7 +5836,7 @@
         <source>Signup</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">188</context>
+          <context context-type="linenumber">194</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Signup</target>
@@ -5817,7 +5845,7 @@
         <source>Join Minds Now</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/forms/register/register.html</context>
-          <context context-type="linenumber">199</context>
+          <context context-type="linenumber">205</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Join Minds Now</target>
@@ -9345,6 +9373,24 @@
           :
         </target>
       </trans-unit>
+      <trans-unit id="COMMON__SEARCH" datatype="html">
+        <source>Search Minds</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/search/bar.component.html</context>
+          <context context-type="linenumber">45</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Search Minds</target>
+      </trans-unit>
+      <trans-unit id="COMMON__SEARCH__SHORT" datatype="html">
+        <source>Search</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/search/bar.component.html</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Search</target>
+      </trans-unit>
       <trans-unit id="MESSENGER__ENCRYPTION__ENTER_CHAT_PWD_DESC" datatype="html">
         <source>
           Hey 
@@ -12330,6 +12376,24 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Clear History</target>
       </trans-unit>
+      <trans-unit id="SUGGESTIONS__CHANNEL__TITLE" datatype="html">
+        <source>Suggested Channels</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/suggestions/channel/sidebar.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Suggested Channels</target>
+      </trans-unit>
+      <trans-unit id="SUGGESTIONS__GROUP__TITLE" datatype="html">
+        <source>Suggested Groups</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/suggestions/channel/sidebar.component.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Suggested Groups</target>
+      </trans-unit>
       <trans-unit id="COMMON__JOIN" datatype="html">
         <source>Join</source>
         <context-group purpose="location">
@@ -14528,11 +14592,20 @@
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Show NSFW content in results</target>
       </trans-unit>
+      <trans-unit id="HOMEPAGE__V2__SUBHEADER" datatype="html">
+        <source>A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">A place to have open conversations and bring people together. Free your mind and get paid for creating content, driving traffic and referring friends.</target>
+      </trans-unit>
       <trans-unit id="f2db5016fda75ab3753982d5299d96e0c5f4a7d9" datatype="html">
         <source>Join Minds Now</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">31</context>
+          <context context-type="linenumber">33</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Join Minds Now</target>
@@ -14541,7 +14614,7 @@
         <source>How does it work?</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">How does it work?</target>
@@ -14550,7 +14623,7 @@
         <source>Post videos, blogs, images and statuses. Message and video chat securely with groups or directly with friends. Discover great content through trending feeds and hashtags.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">95</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Post videos, blogs, images and statuses. Message and video chat securely with groups or directly with friends. Discover great content through trending feeds and hashtags.</target>
@@ -14559,7 +14632,7 @@
         <source>Earn tokens for your daily contributions and use them to upgrade your channel, boost your content for more reach and support other creators.</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">102</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Earn tokens for your daily contributions and use them to upgrade your channel, boost your content for more reach and support other creators.</target>
@@ -14574,7 +14647,7 @@
         </source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">113</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">
@@ -14589,7 +14662,7 @@
         <source>Download Whitepaper</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">123</context>
+          <context context-type="linenumber">125</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Download Whitepaper</target>
@@ -14598,7 +14671,7 @@
         <source>Our principles</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">148</context>
+          <context context-type="linenumber">150</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Our principles</target>
@@ -14607,7 +14680,7 @@
         <source>Take back control of your social media</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">195</context>
+          <context context-type="linenumber">197</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Take back control of your social media</target>
@@ -14616,7 +14689,7 @@
         <source>Join Minds Now</source>
         <context-group purpose="location">
           <context context-type="sourcefile">app/modules/homepage-v2/homepage-v2.component.html</context>
-          <context context-type="linenumber">204</context>
+          <context context-type="linenumber">206</context>
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Join Minds Now</target>
@@ -20736,6 +20809,54 @@
         </context-group>
         <note priority="1" from="meaning">ng2.template</note>
         <target state="needs-translation">Filter...</target>
+      </trans-unit>
+      <trans-unit id="72f34b3ac267bb423e47c3bed43123f99239d1da" datatype="html">
+        <source>Shop</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/shop/brief-wire-rewards.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+        <note priority="1" from="description">CHANNEL_V2__BRIEF_WIRE_REWARD__SHOP</note>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">Shop</target>
+      </trans-unit>
+      <trans-unit id="CHANNEL_V2__BRIEF_WIRE_REWARD__TOKENS_PER_MONTH" datatype="html">
+        <source>
+          {VAR_PLURAL, plural, =1 {
+          <x id="INTERPOLATION"/>
+           token/month} other {
+          <x id="INTERPOLATION"/>
+           tokens/month} }
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/shop/brief-wire-rewards.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">
+          {VAR_PLURAL, plural, =1 {
+          <x id="INTERPOLATION"/>
+           token/month} other {
+          <x id="INTERPOLATION"/>
+           tokens/month} }
+        </target>
+      </trans-unit>
+      <trans-unit id="CHANNEL_V2__BRIEF_WIRE_REWARD__USD_PER_MONTH" datatype="html">
+        <source>
+          $
+          <x id="INTERPOLATION"/>
+          /month
+        </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/modules/channels/v2/shop/brief-wire-rewards.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+        <note priority="1" from="meaning">ng2.template</note>
+        <target state="needs-translation">
+          $
+          <x id="INTERPOLATION"/>
+          /month
+        </target>
       </trans-unit>
     </body>
   </file>
