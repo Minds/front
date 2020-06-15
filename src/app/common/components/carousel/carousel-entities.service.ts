@@ -1,12 +1,14 @@
 /**
- * Carousel entities service for the handling of
- * group membership and channel subscription.
+ * Carousel entities service for the handling of carousel entities.
+ * Acts as an adapter to group membership and channel subscription.
+ *
+ * Make sure to call setEntity.
  * @author Ben Hayward
  */
 import { Component, ViewChild, OnDestroy, Injectable } from '@angular/core';
 import { BehaviorSubject, of, Subscription } from 'rxjs';
-import { ConfigsService } from '../../../common/services/configs.service';
-import { GroupsService } from '../../groups/groups.service';
+import { ConfigsService } from '../../services/configs.service';
+import { GroupsService } from '../../../modules/groups/groups.service';
 import { map, catchError } from 'rxjs/operators';
 import { Client } from '../../../services/api';
 
@@ -299,12 +301,15 @@ export class CarouselEntitiesService implements OnDestroy {
   ]);
 
   private buttonClickSubscription: Subscription;
+  private readonly cdnUrl: string;
 
   constructor(
     private configs: ConfigsService,
     private groupsService: GroupsService,
     private client: Client
-  ) {}
+  ) {
+    this.cdnUrl = configs.get('cdn_url');
+  }
 
   ngOnDestroy(): void {
     this.destroySubscriptions();
@@ -438,6 +443,92 @@ export class CarouselEntitiesService implements OnDestroy {
   private destroySubscriptions(): void {
     if (this.buttonClickSubscription) {
       this.buttonClickSubscription.unsubscribe();
+    }
+  }
+
+  /**
+   * Gets style for ngStyle - setting background image.
+   * @param { DisplayableEntity } entity - entity to style.
+   * @returns {{ 'background-image': string }} - style object.
+   */
+  public getAvatarStyle(
+    entity: DisplayableEntity
+  ): { 'background-image': string } {
+    return {
+      'background-image':
+        entity.type === 'group'
+          ? 'url(' +
+            this.cdnUrl +
+            'fs/v1/avatars/' +
+            entity.guid +
+            '/medium/' +
+            entity.icontime +
+            ')'
+          : 'url(' + this.cdnUrl + 'icon/' + entity.guid + ')',
+    };
+  }
+
+  /**
+   * Gets name from a given entity
+   * @param { DisplayableEntity } entity - entity to get name from.
+   * @returns { string } - entity name for display.
+   */
+  public getName(entity: DisplayableEntity): string {
+    return entity.type === 'group' ? entity.name : '@' + entity.username;
+  }
+
+  /**
+   * Gets the redirect link from a given entity
+   * @param { DisplayableEntity } entity - entity to get redirect link from.
+   * @returns { string } - redirect link for entity.
+   */
+  public getLink(entity: DisplayableEntity): string {
+    return entity.type === 'group'
+      ? '/groups/profile/' + entity.guid
+      : '/' + entity.username;
+  }
+
+  /**
+   * Gets button text from a given entity
+   * @param { DisplayableEntity } entity - entity to get button text for.
+   * @returns { string } - button text for entity.
+   */
+  public getButtonText(entity: DisplayableEntity): string {
+    if (entity.type === 'group') {
+      if (entity['is:member']) {
+        return 'Joined';
+      }
+      return 'Join';
+    }
+    if (entity.type === 'user') {
+      if (entity.subscribed) {
+        return 'Subscribed';
+      }
+      return 'Subscribe';
+    }
+  }
+
+  /**
+   * Handles button click for an entity.
+   * @param { DisplayableEntity } entity - the clicked buttons attached entity.
+   * @returns { Promise<void> } - awaitable.
+   */
+  public async onButtonClick(entity: DisplayableEntity): Promise<void> {
+    if (entity.type === 'group') {
+      if (!entity['is:member']) {
+        this.joinGroup(entity);
+        return;
+      }
+      this.leaveGroup(entity);
+      return;
+    }
+    if (entity.type === 'user') {
+      if (!entity.subscribed) {
+        this.subscribeToChannel(entity);
+        return;
+      }
+      this.unsubscribeFromChannel(entity);
+      return;
     }
   }
 }

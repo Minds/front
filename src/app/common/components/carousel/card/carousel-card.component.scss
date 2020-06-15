@@ -1,0 +1,51 @@
+m-carousel__card {
+  .m-carousel-card__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 166px;
+    width: 130px;
+    margin: 16px;
+    border-radius: 4px;
+    @include m-theme() {
+      border: solid 1px themed($m-borderColor--primary);
+    }
+
+    * + * {
+      margin-top: 10px;
+    }
+
+    .m-carousel-card__avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-size: cover;
+      cursor: pointer;
+    }
+
+    .m-carousel-card__name {
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      cursor: pointer;
+      max-width: calc(100% - 16px);
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .m-carousel-card__button {
+      border-radius: 20px;
+      padding: 6px 12px;
+      background-color: unset;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      cursor: pointer;
+
+      @include m-theme() {
+        border: solid 1px themed($m-borderColor--primary);
+        color: themed($m-textColor--primary);
+      }
+    }
+  }
+}

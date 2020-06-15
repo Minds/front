@@ -1,16 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MockService } from '../../../utils/mock';
-import { DiscoveryCarouselComponent } from './carousel.component';
+import { CarouselComponent } from './carousel.component';
 import { CarouselEntitiesService } from './carousel-entities.service';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { Client } from '../../../services/api';
-import { ConfigsService } from '../../../common/services/configs.service';
+import { ConfigsService } from '../../services/configs.service';
 
-describe('DiscoveryCarouselComponent', () => {
-  let comp: DiscoveryCarouselComponent;
-  let fixture: ComponentFixture<DiscoveryCarouselComponent>;
+describe('CarouselComponent', () => {
+  let comp: CarouselComponent;
+  let fixture: ComponentFixture<CarouselComponent>;
 
   const user1 = {
     guid: '1',
@@ -122,7 +122,7 @@ describe('DiscoveryCarouselComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [FormsModule],
-      declarations: [DiscoveryCarouselComponent],
+      declarations: [CarouselComponent],
       providers: [
         {
           provide: CarouselEntitiesService,
@@ -142,7 +142,7 @@ describe('DiscoveryCarouselComponent', () => {
 
   beforeEach(done => {
     jasmine.MAX_PRETTY_PRINT_DEPTH = 2;
-    fixture = TestBed.createComponent(DiscoveryCarouselComponent);
+    fixture = TestBed.createComponent(CarouselComponent);
     comp = fixture.componentInstance;
     fixture.detectChanges();
 
@@ -181,83 +181,5 @@ describe('DiscoveryCarouselComponent', () => {
     comp.goCarousel('next');
 
     expect((comp as any).currentItemIndex).toBe(1);
-  });
-
-  it('should get background image style object for a channel', () => {
-    (comp as any).cdnUrl = 'https://www.minds.com/';
-    expect(comp.getStyle(user1.entity)).toEqual({
-      'background-image': 'url(https://www.minds.com/icon/1)',
-    });
-  });
-
-  it('should get background image style object for a group', () => {
-    (comp as any).cdnUrl = 'https://www.minds.com/';
-    expect(comp.getStyle(group1.entity)).toEqual({
-      'background-image':
-        'url(https://www.minds.com/fs/v1/avatars/1/medium/999)',
-    });
-  });
-
-  it('should get the name of a channel', () => {
-    expect(comp.getName(user1.entity)).toBe('@user1');
-  });
-
-  it('should get the name of a group', () => {
-    expect(comp.getName(group1.entity)).toBe('group1');
-  });
-
-  it('should get the redirect link for a channel', () => {
-    expect(comp.getLink(user1.entity)).toBe('/user1');
-  });
-
-  it('should get the redirect link for a channel', () => {
-    expect(comp.getLink(group1.entity)).toBe('/groups/profile/1');
-  });
-
-  it('should get the correct button text for a channel when not subscribed', () => {
-    expect(comp.getButtonText(user1.entity)).toBe('Subscribe');
-  });
-
-  it('should get the correct button text for a channel when subscribed', () => {
-    user1.entity.subscribed = true;
-    expect(comp.getButtonText(user1.entity)).toBe('Subscribed');
-  });
-
-  it('should make call to subscribe when user is not subscribed', () => {
-    user1.entity.subscribed = false;
-    comp.onButtonClick(user1.entity);
-    expect(
-      (comp as any).carouselEntitiesService.subscribeToChannel
-    ).toHaveBeenCalled();
-  });
-
-  it('should make call to unsubscribe when user is subscribed', () => {
-    user1.entity.subscribed = true;
-    fixture.detectChanges();
-    comp.onButtonClick(user1.entity);
-    expect(
-      (comp as any).carouselEntitiesService.unsubscribeFromChannel
-    ).toHaveBeenCalled();
-  });
-
-  it('should get the correct button text for a group when not a member', () => {
-    expect(comp.getButtonText(group1.entity)).toBe('Join');
-  });
-
-  it('should get the correct button text for a group when a member', () => {
-    group1.entity['is:member'] = true;
-    expect(comp.getButtonText(group1.entity)).toBe('Joined');
-  });
-
-  it('should make call to join when user is not a member of a group ', () => {
-    group1.entity['is:member'] = false;
-    comp.onButtonClick(group1.entity);
-    expect((comp as any).carouselEntitiesService.joinGroup).toHaveBeenCalled();
-  });
-
-  it('should make call to leave when user is a member of a group ', () => {
-    group1.entity['is:member'] = true;
-    comp.onButtonClick(group1.entity);
-    expect((comp as any).carouselEntitiesService.leaveGroup).toHaveBeenCalled();
   });
 });

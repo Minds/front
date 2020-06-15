@@ -173,6 +173,9 @@ import { StickySidebarDirective } from './components/sticky-sidebar/sticky-sideb
 import { RemindComposerModalComponent } from '../modules/modals/remind-composer-v2/reminder-composer.component';
 import { ClientMetaDirective } from './directives/client-meta.directive';
 import { ClientMetaService } from './services/client-meta.service';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { CarouselEntitiesService } from './components/carousel/carousel-entities.service';
+import { CarouselCardComponent } from './components/carousel/card/carousel-card.component';
 
 const routes: Routes = [
   {
@@ -320,6 +323,8 @@ const routes: Routes = [
     AccordionPaneComponent,
     StickySidebarDirective,
     ClientMetaDirective,
+    CarouselComponent,
+    CarouselCardComponent,
   ],
   exports: [
     MINDS_PIPES,
@@ -445,6 +450,8 @@ const routes: Routes = [
     AccordionPaneComponent,
     StickySidebarDirective,
     ClientMetaDirective,
+    CarouselComponent,
+    CarouselCardComponent,
   ],
   providers: [
     SiteService,
@@ -515,6 +522,7 @@ const routes: Routes = [
     ApiService,
     AttachmentApiService,
     ClientMetaService,
+    CarouselEntitiesService,
   ],
 })
 export class CommonModule {}

@@ -1,0 +1,20 @@
+<div class="m-carousel__wrapper">
+  <div class="m-carousel__carousel" #carousel>
+    <div class="m-carousel__item" *ngFor="let entity of entities$ | async">
+      <m-carousel__card
+        [imageStyle]="service.getAvatarStyle(entity.entity)"
+        [contentLink]="service.getLink(entity.entity)"
+        [title]="service.getName(entity.entity)"
+        [buttonText]="service.getButtonText(entity.entity)"
+        (buttonClick)="service.onButtonClick(entity.entity)"
+      >
+      </m-carousel__card>
+    </div>
+  </div>
+  <button class="m-carousel__nextButton" (click)="goCarousel('next')">
+    <i class="material-icons">chevron_right</i>
+  </button>
+  <!-- <button class="m-carousel__previousButton" (click)="goCarousel('previous')">
+    <i class="material-icons">chevron_left</i>
+  </button> -->
+</div>

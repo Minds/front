@@ -1,8 +1,8 @@
 import { CarouselEntitiesService } from './carousel-entities.service';
 import { clientMock } from '../../../../tests/client-mock.spec';
 import { MockService } from '../../../utils/mock';
-import { ConfigsService } from '../../../common/services/configs.service';
-import { GroupsService } from '../../groups/groups.service';
+import { ConfigsService } from '../../services/configs.service';
+import { GroupsService } from '../../../modules/groups/groups.service';
 import { BehaviorSubject } from 'rxjs';
 import { fakeAsync } from '@angular/core/testing';
 
@@ -52,7 +52,7 @@ describe('CarouselEntitiesService', () => {
     },
   };
 
-  const channels$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([
+  const channels$: BehaviorSubject<any> = new BehaviorSubject<any[]>([
     user1,
     user2,
     user3,
@@ -100,7 +100,7 @@ describe('CarouselEntitiesService', () => {
     },
   };
 
-  const groups$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([
+  const groups$: BehaviorSubject<any> = new BehaviorSubject<any[]>([
     group1,
     group2,
     group3,
@@ -188,4 +188,83 @@ describe('CarouselEntitiesService', () => {
       url
     );
   }));
+
+  it('should get background image style object for a channel', () => {
+    (service as any).cdnUrl = 'https://www.minds.com/';
+    expect(service.getAvatarStyle(user1.entity)).toEqual({
+      'background-image': 'url(https://www.minds.com/icon/1)',
+    });
+  });
+
+  it('should get background image style object for a group', () => {
+    (service as any).cdnUrl = 'https://www.minds.com/';
+    expect(service.getAvatarStyle(group1.entity)).toEqual({
+      'background-image':
+        'url(https://www.minds.com/fs/v1/avatars/1/medium/999)',
+    });
+  });
+
+  it('should get the name of a channel', () => {
+    expect(service.getName(user1.entity)).toBe('@user1');
+  });
+
+  it('should get the name of a group', () => {
+    expect(service.getName(group1.entity)).toBe('group1');
+  });
+
+  it('should get the redirect link for a channel', () => {
+    expect(service.getLink(user1.entity)).toBe('/user1');
+  });
+
+  it('should get the redirect link for a channel', () => {
+    expect(service.getLink(group1.entity)).toBe('/groups/profile/1');
+  });
+
+  it('should get the correct button text for a channel when not subscribed', () => {
+    user1.entity.subscribed = false;
+    expect(service.getButtonText(user1.entity)).toBe('Subscribe');
+  });
+
+  it('should get the correct button text for a channel when subscribed', () => {
+    user1.entity.subscribed = true;
+    expect(service.getButtonText(user1.entity)).toBe('Subscribed');
+  });
+
+  it('should make call to subscribe when user is not subscribed', () => {
+    user1.entity.subscribed = false;
+    service.onButtonClick(user1.entity);
+    expect((service as any).client.post).toHaveBeenCalledWith(
+      'api/v1/subscribe/1'
+    );
+  });
+
+  it('should make call to unsubscribe when user is subscribed', () => {
+    user1.entity.subscribed = true;
+    service.onButtonClick(user1.entity);
+    expect((service as any).client.delete).toHaveBeenCalledWith(
+      'api/v1/subscribe/1'
+    );
+  });
+
+  it('should get the correct button text for a group when not a member', () => {
+    group1.entity['is:member'] = false;
+    expect(service.getButtonText(group1.entity)).toBe('Join');
+  });
+
+  it('should get the correct button text for a group when a member', () => {
+    group1.entity['is:member'] = true;
+    expect(service.getButtonText(group1.entity)).toBe('Joined');
+  });
+
+  it('should make call to join when user is not a member of a group ', () => {
+    group1.entity['is:member'] = false;
+    service.onButtonClick(group1.entity);
+    expect((service as any).groupsService.join).toHaveBeenCalled();
+  });
+
+  it('should make call to leave when user is a member of a group ', () => {
+    group1.entity['is:member'] = true;
+    service.onButtonClick(group1.entity);
+    expect((service as any).groupsService.leave).toHaveBeenCalled();
+  });
 });
